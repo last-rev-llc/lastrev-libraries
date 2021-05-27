@@ -1,4 +1,4 @@
-exports.config = (options) => {
+exports.config = (options = {}) => {
   return {
     preset: 'ts-jest',
     globals: {
@@ -9,7 +9,7 @@ exports.config = (options) => {
         }
       }
     },
-    testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/node_modules/'],
+    testPathIgnorePatterns: ['<rootDir>/node_modules/'],
     moduleNameMapper: {
       // Mocks out all these file formats when tests are run
       '\\.(jpg|ico|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': 'identity-obj-proxy',
@@ -19,8 +19,9 @@ exports.config = (options) => {
     //   '.+\\.(css|styl|less|sass|scss)$': 'jest-css-modules-transform'
     // },
     roots: ['<rootDir>/src'],
-    setupFilesAfterEnv: ['./jest.setup.js'],
     testMatch: ['**/*.test.(ts|tsx|js)'],
+    verbose: true,
+    collectCoverage: true,
     ...options
   };
 };
