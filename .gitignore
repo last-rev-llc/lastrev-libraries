@@ -1,0 +1,12 @@
+node_modules
+.next
+.vscode
+**/dist/**
+**/build/**
+**/.next/**
+**/yarn-error.log
+**/.env
+**/out
+
+lerna-debug.log
+.env
