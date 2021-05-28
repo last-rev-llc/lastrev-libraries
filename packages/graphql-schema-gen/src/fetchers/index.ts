@@ -1,4 +1,4 @@
-import { Source, ConnectionParams, GeneratorInput } from 'types';
+import { Source, ConnectionParams, GeneratorInput } from '../types';
 import contentfulFetcher from './contentful';
 
 export default async (_source: Source, params: ConnectionParams): Promise<GeneratorInput> => {

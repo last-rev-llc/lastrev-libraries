@@ -1,0 +1,23 @@
+import { Mappers, TypeMapper } from '../mappers';
+import isFunction from 'lodash/isFunction';
+import get from 'lodash/get';
+import { getLocalizedField } from './fieldResolver';
+import { Entry } from 'contentful';
+import { GraphQLResolveInfo } from 'graphql';
+
+const getFieldDataFetcher = <T>(typeName: string, displayType: string, field: string, mappers?: Mappers) => {
+  const mapper = get(mappers, `['${typeName}']['${displayType}']`, null) as TypeMapper | null;
+
+  return async (content: Entry<T>, args: any, ctx: any, info: GraphQLResolveInfo, locale: string) => {
+    if (mapper && mapper[field]) {
+      const fieldMapper = mapper[field];
+      if (isFunction(fieldMapper)) {
+        return await fieldMapper(content, args, ctx, info);
+      }
+      return getLocalizedField(locale, content, fieldMapper as string);
+    }
+    return content.fields ? getLocalizedField(locale, content, field) : null;
+  };
+};
+
+export default getFieldDataFetcher;

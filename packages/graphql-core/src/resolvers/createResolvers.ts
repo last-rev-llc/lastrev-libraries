@@ -16,7 +16,7 @@ export interface Loaders {
   assets: ContentfulDataLoader<Asset>;
 }
 
-export type ApolloContext = Context<{ loaders: Loaders }>;
+export type ApolloContext = Context<{ loaders: Loaders; mappers: any }>;
 
 export const fieldsResolver = (type: string, fields: string[]) =>
   fields.reduce((accum: any, field: string) => ({ ...accum, [field]: fieldResolver(type, field) }), {});

@@ -4,13 +4,23 @@ import { ApolloServer } from 'apollo-server';
 import { getContentTypes } from '@last-rev/integration-contentful';
 import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
-import client from './contentful-client';
+import merge from 'lodash/merge';
 
+import client from './contentful-client';
 import typeDefs from './typeDefs';
 import { createLoader, primeLoader } from './createLoader';
 import createResolvers from './resolvers/createResolvers';
+import MAPPERS, { Mappers } from './mappers';
 
-export const getServer = async () => {
+export const getServer = async ({
+  typeDefs: clientTypeDefs,
+  resolvers: clientResolvers,
+  mappers
+}: {
+  typeDefs?: any;
+  resolvers?: any;
+  mappers?: Mappers;
+} = {}) => {
   const pages = await createLoader(fetchAllPages, 'fields.slug', true);
   const entries = await createLoader(() =>
     fetchAllEntries().then((entries) => {
@@ -32,13 +42,15 @@ export const getServer = async () => {
   // console.log('GraphQLServer -> ', JSON.stringify(resolvers, null, 2));
 
   return new ApolloServer({
-    schema: buildFederatedSchema([{ resolvers, typeDefs }]),
+    schema: buildFederatedSchema([
+      { resolvers: { ...resolvers, ...clientResolvers }, typeDefs: { ...typeDefs, ...clientTypeDefs } }
+    ]),
     introspection: true,
     debug: true,
     plugins: [ApolloServerPluginInlineTrace()],
 
     context: () => {
-      return { loaders };
+      return { loaders, mappers: merge(MAPPERS, mappers) };
     }
   });
 };

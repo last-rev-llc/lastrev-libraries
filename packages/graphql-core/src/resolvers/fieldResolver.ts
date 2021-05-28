@@ -2,8 +2,8 @@ import { Entry } from 'contentful';
 import { ApolloContext, capitalizeFirst } from './createResolvers';
 import { every, get, isArray } from 'lodash';
 import { typeMappings } from '../typeMappings';
-import MAPPERS from '../mappers';
 import { GraphQLResolveInfo } from 'graphql';
+import getFieldDataFetcher from './getFieldDataFetcher';
 
 export const getLocalizedField = (locale: string, { fields }: any, field: string) => {
   // console.log('GetLocalizedField', { locale, fields, field });
@@ -26,7 +26,7 @@ export type Resolver<TSource, TContext> = (
 type FieldResolver = <T>(display: string, field: string) => Resolver<Entry<T>, ApolloContext>;
 
 const fieldResolver: FieldResolver = (displayType: string, field: string) => async (content, args, ctx, info) => {
-  const { loaders } = ctx;
+  const { loaders, mappers } = ctx;
   // console.time(`FieldResolver:${displayType}->${field}`);
   let locale = 'en-US';
   if (info && info.variableValues && info.variableValues.locale) {
@@ -35,23 +35,15 @@ const fieldResolver: FieldResolver = (displayType: string, field: string) => asy
   if (args && args.locale) {
     locale = args.locale;
   }
-  let fieldData = content.fields ? getLocalizedField(locale, content, field) : null;
-  console.log(`FieldResolver:${displayType}->${field}:${JSON.stringify(fieldData, null, 2)}`, content);
-  //IF what we have a reference field we might need to map it
 
   const typeName =
     content && content.sys && content.sys.contentType
       ? capitalizeFirst(typeMappings[content.sys.contentType.sys.id] ?? content.sys.contentType.sys.id)
       : displayType;
-  // Check if we have a mapper for this DisplayType
-  const mapper = MAPPERS[typeName] ? MAPPERS[typeName][displayType] : null;
-  if (mapper && mapper[field] && typeof mapper[field] == 'function') {
-    console.log(`FieldResolver:MAPPERFUNCTION:${typeName}->${displayType}:${field}=${mapper}`);
-    fieldData = await mapper[field](content, args, ctx, info);
-  } else if (mapper && mapper[field] && typeof mapper[field] == 'string') {
-    // console.log(`FieldResolver:MAPPER:${typeName}->${displayType}:${field}=${mapper}`);
-    fieldData = getLocalizedField(locale, content, mapper[field]);
-  }
+
+  const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
+
+  const fieldData = await fieldDataFetcher(content, args, ctx, info, locale);
 
   //Check if the field is a reference then resolve it
   if (fieldData && fieldData.sys && fieldData.sys.linkType == 'Entry') {

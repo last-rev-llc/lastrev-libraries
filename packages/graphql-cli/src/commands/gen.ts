@@ -8,7 +8,7 @@ dotenv.config();
 program
   .description('Generates the GraphQL type definitions from your CMS. Currently supported: Contentful')
   .option('--cms <string>', 'Which CMS to use', 'Contentful')
-  .option('-o, --out <outputDirectory>', 'Path to output file to generate', 'schema.ts')
+  .option('-o, --out <outputDirectory>', 'Path to output file to generate', 'graphql/typeDefs/types.ts')
   .parse(process.argv);
 
 const opts = program.opts();

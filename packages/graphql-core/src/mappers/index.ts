@@ -1,8 +1,18 @@
 import { ApolloContext } from '../resolvers/createResolvers';
 import client from '../contentful-client';
 import fieldResolver from '../resolvers/fieldResolver';
-import linkUrlResolver from '../resolvers/linkUrlResolver';
-export const MAPPERS: any = {
+
+export type TypeMapper = {
+  [fieldName: string]: string | Function;
+};
+
+export type Mappers = {
+  [typeName: string]: {
+    [displayType: string]: TypeMapper;
+  };
+};
+
+export const MAPPERS: Mappers = {
   // The Header navigation expects NavigationItem that have a link and a children collection
   // Here we setup a mapper for displaying a link as a NavigationItem
   // This allows to use existant links and reduce the amount of nesting
@@ -13,7 +23,8 @@ export const MAPPERS: any = {
   },
   Link: {
     Link: {
-      url: linkUrlResolver,
+      // commented this out since this seems too specific to the original implementation
+      // url: linkUrlResolver,
       theme: async (link: any, args: any, ctx: any, info: any) => {
         //TODO document this use case for adapting theme fields without updating content model
         //TODO document migrating old fields to new component standards
