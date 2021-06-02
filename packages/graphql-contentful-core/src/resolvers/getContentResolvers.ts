@@ -3,8 +3,9 @@ import { ContentType } from 'contentful';
 import { typeMappings } from '../typeMappings';
 
 import { capitalizeFirst, fieldsResolver } from './createResolvers';
+import { Mappers } from 'types';
 
-const getContentResolvers = ({ contentTypes }: { contentTypes: ContentType[] }) => {
+const getContentResolvers = ({ contentTypes, mappers }: { contentTypes: ContentType[]; mappers: Mappers }) => {
   const contentResolvers = contentTypes.reduce((acc, contentType) => {
     const typeName = capitalizeFirst(typeMappings[contentType.sys.id] ?? contentType.sys.id);
     return {
@@ -14,7 +15,8 @@ const getContentResolvers = ({ contentTypes }: { contentTypes: ContentType[] }) 
         sidekickLookup: sideKickLookupResolver(typeName),
         ...fieldsResolver(
           typeName,
-          contentType.fields.map((x) => x.id)
+          contentType.fields.map((x) => x.id),
+          mappers
         )
       }
     };

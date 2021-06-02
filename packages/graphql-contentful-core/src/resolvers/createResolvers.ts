@@ -4,11 +4,13 @@ import { Kind } from 'graphql/language';
 import { ContentType, Entry, Asset } from 'contentful';
 import GraphQLJSON from 'graphql-type-json';
 import merge from 'lodash/merge';
+import mapValues from 'lodash/mapValues';
 import { Context } from 'apollo-server-core';
 import { fetchAllPages } from '../server';
 import { typeMappings } from '../typeMappings';
 import getContentResolvers from './getContentResolvers';
 import fieldResolver from './fieldResolver';
+import { Mappers } from 'types';
 
 export interface Loaders {
   entries: ContentfulDataLoader<Entry<any>>;
@@ -16,15 +18,21 @@ export interface Loaders {
   assets: ContentfulDataLoader<Asset>;
 }
 
-export type ApolloContext = Context<{ loaders: Loaders; mappers: any }>;
+export type ApolloContext = Context<{ loaders: Loaders; mappers: Mappers }>;
 
-export const fieldsResolver = (type: string, fields: string[]) =>
-  fields.reduce((accum: any, field: string) => ({ ...accum, [field]: fieldResolver(type, field) }), {});
+export const fieldsResolver = (type: string, fields: string[], mappers?: Mappers) =>
+  fields.reduce((accum: any, field: string) => {
+    const additional =
+      mappers && mappers[type] && mappers[type][type]
+        ? mapValues(mappers[type][type], (_v, k) => fieldResolver(type, k))
+        : {};
+    return { ...accum, [field]: fieldResolver(type, field), ...additional };
+  }, {});
 
 export const capitalizeFirst = (string: string) => string.charAt(0).toUpperCase() + string.slice(1);
 
-const createResolvers = ({ contentTypes }: { contentTypes: ContentType[] }) =>
-  merge(getContentResolvers({ contentTypes }), {
+const createResolvers = ({ contentTypes, mappers = {} }: { contentTypes: ContentType[]; mappers?: Mappers }) =>
+  merge(getContentResolvers({ contentTypes, mappers }), {
     Query: {
       me: () => {},
       page: async (_: any, { slug }: { slug?: string; locale?: string }, { loaders }: ApolloContext) => {
@@ -39,9 +47,9 @@ const createResolvers = ({ contentTypes }: { contentTypes: ContentType[] }) =>
     },
     Page: fieldsResolver('Page', ['contents']),
     Media: fieldsResolver('Media', ['file', 'title', 'description']),
-    NavigationItem: fieldsResolver('NavigationItem', ['link']),
-    Link: fieldsResolver('Link', ['url', 'theme']),
-    CardCollection: fieldsResolver('CardCollection', ['cards']),
+    // NavigationItem: fieldsResolver('NavigationItem', ['link']),
+    // Link: fieldsResolver('Link', ['url', 'theme']),
+    // CardCollection: fieldsResolver('CardCollection', ['cards']),
     RichText: fieldsResolver('RichText', ['raw', 'parsed']),
     // Content type resolver
     Content: {

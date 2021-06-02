@@ -5,33 +5,22 @@ dotenv.config();
 
 import intParser from '../helpers/intParser';
 import program from 'commander';
+import merge from 'lodash/merge';
 import { getServer } from '@last-rev/graphql-contentful-core';
 import generateSchema from '@last-rev/graphql-schema-gen';
-import { mergeTypeDefs } from '@graphql-tools/merge';
-
-const loadFromFile = (filename?: string) => {
-  if (!filename) return;
-
-  try {
-    return require(filename);
-  } catch (err) {
-    throw Error(`Unable to load ${filename}: ${err.message}`);
-  }
-};
+import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
+import { resolve } from 'path';
+import loadExtensions from '../helpers/loadExtensions';
 
 const run = async ({
   port,
   host,
-  typeDefinitionsFile,
-  resolversFile,
-  mappersFile,
+  extensionsDir = '',
   cms
 }: {
   port: number;
   host?: string;
-  typeDefinitionsFile?: string;
-  resolversFile?: string;
-  mappersFile?: string;
+  extensionsDir: string;
   cms: 'Contentful';
 }) => {
   const baseTypeDefs = await generateSchema({
@@ -44,16 +33,18 @@ const run = async ({
     }
   });
 
-  const extendedTypeDefs = loadFromFile(typeDefinitionsFile);
+  const { typeDefs, resolvers, mappers } = await loadExtensions(resolve(process.cwd(), extensionsDir));
 
-  const typeDefs = mergeTypeDefs([baseTypeDefs, extendedTypeDefs]);
+  const mergedTypeDefs = mergeTypeDefs([baseTypeDefs, ...typeDefs]);
+  const mergedResolvers = mergeResolvers(resolvers);
+  const mergedMappers = merge({}, ...mappers);
 
   const server = await getServer({
-    typeDefs,
-    resolvers: loadFromFile(resolversFile),
-    mappers: loadFromFile(mappersFile)
+    typeDefs: mergedTypeDefs,
+    resolvers: mergedResolvers,
+    mappers: mergedMappers
   });
-  const url = await server.listen({ port, host });
+  const { url } = await server.listen({ port, host });
   console.log(`Server ready at ${url}. `);
 };
 
@@ -61,16 +52,14 @@ program
   .option('-p, --port <port>', 'Port to run the server on', intParser, 5000)
   .option('-c, --cms <string>', 'CMS to use for schema generation', 'Contentful')
   .option('-n, --hostname <hostname>', 'Host to run the server on')
-  .option('-t --typeDefinitionsFile <typeDefinitionsFile>', 'Path to a file of Type Definitions')
-  .option('-r --resolversFile <resolversFile>', 'Path to a file of Resolvers')
-  .option('-m --mappersFile <mappersFile>', 'Path to a file of Mappers')
+  .option('-e --extensions-dir <extensions directory>', 'Path to a directory containing extensions')
   // TODO
   // .option('-w, --watch', 'Whether to run in "watch" mode, which will reload the server when the files in the config directory change')
   .parse(process.argv);
 
-const { port, hostname, typeDefinitionsFile, resolversFile, mappersFile, cms /* , watch */ } = program.opts();
+const { port, hostname, extensionsDir, cms /* , watch */ } = program.opts();
 
-run({ port, host: hostname, typeDefinitionsFile, resolversFile, mappersFile, cms }).catch((err) => {
+run({ port, host: hostname, extensionsDir, cms }).catch((err) => {
   console.log(err);
   process.exit();
 });

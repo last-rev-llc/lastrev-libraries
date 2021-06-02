@@ -4,14 +4,13 @@ import { ApolloServer } from 'apollo-server';
 import { getContentTypes } from '@last-rev/integration-contentful';
 import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
-import merge from 'lodash/merge';
-import { mergeTypeDefs } from '@graphql-tools/merge';
+import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 
 import client from './contentful-client';
 import lastRevTypeDefs from './typeDefs';
 import { createLoader, primeLoader } from './createLoader';
 import createResolvers from './resolvers/createResolvers';
-import MAPPERS, { Mappers } from './mappers';
+import { Mappers } from './types';
 import { DocumentNode } from 'apollo-link';
 
 export const getServer = async ({
@@ -38,19 +37,20 @@ export const getServer = async ({
   const { items: contentTypes } = await getContentTypes();
 
   const resolvers = createResolvers({
-    contentTypes
+    contentTypes,
+    mappers
   });
 
   const typeDefs = clientTypeDefs ? mergeTypeDefs([clientTypeDefs, lastRevTypeDefs]) : lastRevTypeDefs;
 
   return new ApolloServer({
-    schema: buildFederatedSchema([{ resolvers: merge(resolvers, clientResolvers), typeDefs }]),
+    schema: buildFederatedSchema([{ resolvers: mergeResolvers([resolvers, clientResolvers]), typeDefs }]),
     introspection: true,
     debug: true,
     plugins: [ApolloServerPluginInlineTrace()],
 
     context: () => {
-      return { loaders, mappers: merge(MAPPERS, mappers) };
+      return { loaders, mappers };
     }
   });
 };

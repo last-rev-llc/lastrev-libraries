@@ -1,4 +1,4 @@
-import { Mappers, TypeMapper } from '../mappers';
+import { Mappers, TypeMapper } from '../types';
 import isFunction from 'lodash/isFunction';
 import get from 'lodash/get';
 import { getLocalizedField } from './fieldResolver';
