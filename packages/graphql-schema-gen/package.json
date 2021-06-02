@@ -5,10 +5,9 @@
   "main": "dist/index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "run-s clean build:prod copy:template",
+    "build": "run-s clean build:prod",
     "dev": "cross-env NODE_ENV=development rollup -cw",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
-    "copy:template": "cp src/template.hbs dist",
     "lint": "tslint --project tsconfig.json",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -26,8 +25,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "apollo-server": "^2.25.0",
     "contentful": "^8.1.7",
     "fs-extra": "^10.0.0",
+    "graphql": "^15.5.0",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.20"
   }

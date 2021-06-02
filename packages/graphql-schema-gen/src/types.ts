@@ -5,14 +5,17 @@ export type TypeName =
   | 'JSON'
   | 'Date'
   | 'Theme'
-  | 'Number'
+  | 'Int'
+  | 'Float'
   | 'Link'
+  | 'Content'
   | 'Media'
   | 'File'
   | 'NavigationItem'
   | 'Card'
   | 'Boolean'
-  | 'RichText';
+  | 'RichText'
+  | 'Location';
 
 // in the future, these should support other sources
 export type Source = 'Contentful';
@@ -24,15 +27,6 @@ export type GqlField = {
   isArray: boolean;
 };
 
-export type GeneratorInputItem = {
-  typeName: string;
-  fields: GqlField[];
-};
+export type Fetcher = (connectionParams: ConnectionParams) => Promise<string>;
 
-export type GeneratorInput = GeneratorInputItem[];
-
-export type Mapper = (cmsType: string, typeData: any, activeContentTypes: string[]) => GqlField;
-
-export type Fetcher = (connectionParams: ConnectionParams) => Promise<GeneratorInput>;
-
-export type GenerateSchemaParams = { source: Source; connectionParams: ConnectionParams; outFile: string };
+export type GenerateSchemaParams = { source: Source; connectionParams: ConnectionParams };

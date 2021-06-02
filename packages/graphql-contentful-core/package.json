@@ -1,13 +1,13 @@
 {
-  "name": "@last-rev/graphql-core",
+  "name": "@last-rev/graphql-contentful-core",
   "private": false,
   "version": "0.1.0",
   "description": "",
   "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
+    "dev": "tsc -w",
     "start": "node ./dist/serve.js",
-    "dev": "nodemon",
     "lint": "tslint --project tsconfig.json"
   },
   "devDependencies": {
@@ -34,7 +34,8 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/federation": "^0.20.7",
-    "@last-rev/integration-contentful": "^4.1.7",
+    "@graphql-tools/merge": "^6.2.14",
+    "@last-rev/integration-contentful": "^5.3.1",
     "@last-rev/testing-library": "^0.1.0",
     "ajv": "^6.10.2",
     "apollo-server": "^2.19.1",

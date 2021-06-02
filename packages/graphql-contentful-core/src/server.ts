@@ -3,21 +3,23 @@ dotenv.config();
 import { ApolloServer } from 'apollo-server';
 import { getContentTypes } from '@last-rev/integration-contentful';
 import { buildFederatedSchema } from '@apollo/federation';
-import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
+import { ApolloServerPluginInlineTrace, gql } from 'apollo-server-core';
 import merge from 'lodash/merge';
+import { mergeTypeDefs } from '@graphql-tools/merge';
 
 import client from './contentful-client';
-import typeDefs from './typeDefs';
+import lastRevTypeDefs from './typeDefs';
 import { createLoader, primeLoader } from './createLoader';
 import createResolvers from './resolvers/createResolvers';
 import MAPPERS, { Mappers } from './mappers';
+import { DocumentNode } from 'apollo-link';
 
 export const getServer = async ({
   typeDefs: clientTypeDefs,
   resolvers: clientResolvers,
   mappers
 }: {
-  typeDefs?: any;
+  typeDefs?: DocumentNode;
   resolvers?: any;
   mappers?: Mappers;
 } = {}) => {
@@ -39,12 +41,10 @@ export const getServer = async ({
     contentTypes
   });
 
-  // console.log('GraphQLServer -> ', JSON.stringify(resolvers, null, 2));
+  const typeDefs = clientTypeDefs ? mergeTypeDefs([clientTypeDefs, lastRevTypeDefs]) : lastRevTypeDefs;
 
   return new ApolloServer({
-    schema: buildFederatedSchema([
-      { resolvers: { ...resolvers, ...clientResolvers }, typeDefs: { ...typeDefs, ...clientTypeDefs } }
-    ]),
+    schema: buildFederatedSchema([{ resolvers: merge(resolvers, clientResolvers), typeDefs }]),
     introspection: true,
     debug: true,
     plugins: [ApolloServerPluginInlineTrace()],
