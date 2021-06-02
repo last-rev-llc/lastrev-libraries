@@ -3,7 +3,7 @@ dotenv.config();
 import { ApolloServer } from 'apollo-server';
 import { getContentTypes } from '@last-rev/integration-contentful';
 import { buildFederatedSchema } from '@apollo/federation';
-import { ApolloServerPluginInlineTrace, gql } from 'apollo-server-core';
+import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 import merge from 'lodash/merge';
 import { mergeTypeDefs } from '@graphql-tools/merge';
 
