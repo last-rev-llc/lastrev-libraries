@@ -1,44 +1,55 @@
 import * as dotenv from 'dotenv';
+
 dotenv.config();
+
 import { ApolloServer } from 'apollo-server';
-import { getContentTypes } from '@last-rev/integration-contentful';
+import { getContentTypes, getLocales } from '@last-rev/integration-contentful';
 import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
+import find from 'lodash/find';
+import get from 'lodash/get';
+import { DocumentNode } from 'apollo-link';
 
 import client from './contentful-client';
 import lastRevTypeDefs from './typeDefs';
-import { createLoader, primeLoader } from './createLoader';
+import { createLoader } from './createLoader';
 import createResolvers from './resolvers/createResolvers';
 import { Mappers } from './types';
-import { DocumentNode } from 'apollo-link';
+import EntryFetcher from './EntryFetcher';
 
 export const getServer = async ({
   typeDefs: clientTypeDefs,
   resolvers: clientResolvers,
-  mappers
+  mappers,
+  typeMappings
 }: {
   typeDefs?: DocumentNode;
   resolvers?: any;
   mappers?: Mappers;
+  typeMappings?: { [contentfulType: string]: string };
 } = {}) => {
-  const pages = await createLoader(fetchAllPages, 'fields.slug', true);
-  const entries = await createLoader(() =>
-    fetchAllEntries().then((entries) => {
-      primeLoader(pages, () => Promise.resolve(entries), 'fields.slug');
-      return entries;
-    })
+  const [{ items: contentTypes }, locales] = await Promise.all([getContentTypes(), getLocales()]);
+
+  const defaultLocale = get(
+    find(locales, (locale) => locale.default),
+    'code',
+    'en-US'
   );
+
+  const entryFetcher = new EntryFetcher(client, contentTypes);
+
   const loaders = {
-    entries,
-    pages,
+    entries: await createLoader(() => entryFetcher.fetch()),
+    pages: await createLoader(() => entryFetcher.fetchPages(), `fields.slug['${defaultLocale}']`),
     assets: await createLoader(fetchAllAssets)
   };
-  const { items: contentTypes } = await getContentTypes();
 
   const resolvers = createResolvers({
     contentTypes,
-    mappers
+    mappers,
+    typeMappings,
+    entryFetcher
   });
 
   const typeDefs = clientTypeDefs ? mergeTypeDefs([clientTypeDefs, lastRevTypeDefs]) : lastRevTypeDefs;
@@ -50,26 +61,10 @@ export const getServer = async ({
     plugins: [ApolloServerPluginInlineTrace()],
 
     context: () => {
-      return { loaders, mappers };
+      return { loaders, mappers, defaultLocale };
     }
   });
 };
-
-export const fetchAllPages = () =>
-  client
-    .getEntries({
-      content_type: 'landingPage'
-    })
-    .then(({ items }) => items);
-
-const fetchAllEntries = () =>
-  client
-    .sync({
-      type: 'Entry',
-      initial: true,
-      resolveLinks: false
-    })
-    .then(({ entries }) => entries);
 
 const fetchAllAssets = () =>
   client

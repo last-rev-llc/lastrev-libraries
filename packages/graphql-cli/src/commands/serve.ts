@@ -33,16 +33,20 @@ const run = async ({
     }
   });
 
-  const { typeDefs, resolvers, mappers } = await loadExtensions(resolve(process.cwd(), extensionsDir));
+  const { typeDefs, resolvers, mappers, typeMappings } = await loadExtensions(
+    extensionsDir && resolve(process.cwd(), extensionsDir)
+  );
 
   const mergedTypeDefs = mergeTypeDefs([baseTypeDefs, ...typeDefs]);
   const mergedResolvers = mergeResolvers(resolvers);
   const mergedMappers = merge({}, ...mappers);
+  const mergedTypeMappings = merge({}, ...typeMappings);
 
   const server = await getServer({
     typeDefs: mergedTypeDefs,
     resolvers: mergedResolvers,
-    mappers: mergedMappers
+    mappers: mergedMappers,
+    typeMappings: mergedTypeMappings
   });
   const { url } = await server.listen({ port, host });
   console.log(`Server ready at ${url}. `);

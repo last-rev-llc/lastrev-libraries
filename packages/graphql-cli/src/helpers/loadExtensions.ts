@@ -8,14 +8,18 @@ export type Extensions = {
   typeDefs: DocumentNode[];
   resolvers: ResolversDefinition<unknown>[];
   mappers: Mappers[];
+  typeMappings: { [contentfulType: string]: string }[];
 };
 
-const loadExtensions = async (extensionsPath: string): Promise<Extensions> => {
+const loadExtensions = async (extensionsPath?: string): Promise<Extensions> => {
   const out: Extensions = {
     typeDefs: [],
     resolvers: [],
-    mappers: []
+    mappers: [],
+    typeMappings: []
   };
+
+  if (!extensionsPath) return out;
 
   const exists = await pathExists(extensionsPath);
 
@@ -24,10 +28,11 @@ const loadExtensions = async (extensionsPath: string): Promise<Extensions> => {
   const contents = await readdir(extensionsPath);
   contents.forEach((filename) => {
     try {
-      const { typeDefs, resolvers, mappers } = require(join(extensionsPath, filename))({ fieldResolver });
+      const { typeDefs, resolvers, mappers, typeMappings } = require(join(extensionsPath, filename))({ fieldResolver });
       typeDefs && out.typeDefs.push(typeDefs);
       resolvers && out.resolvers.push(resolvers);
       mappers && out.mappers.push(mappers);
+      typeMappings && out.typeMappings.push(typeMappings);
     } catch (e) {
       console.log(`Error loading extensions from ${filename}: ${e.message}`);
       process.exit();

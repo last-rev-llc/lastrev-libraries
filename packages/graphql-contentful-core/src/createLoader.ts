@@ -11,6 +11,7 @@ export const createLoader = async <T>(fetcher: FetchFunction<T>, key: string = '
     console.log('FETCH', { keys });
     // Fetch all items we can
     const items = await fetcher(keys);
+    console.log('an item', items[0]);
     const byId = keyBy(key, items);
     items.forEach((x) => loader.prime(get(key, x), x));
     const result = keys.map((x: string) => byId[x]);
