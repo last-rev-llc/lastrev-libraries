@@ -8,5 +8,7 @@ node_modules
 **/.env
 **/out
 
+**/coverage
+
 lerna-debug.log
 .env

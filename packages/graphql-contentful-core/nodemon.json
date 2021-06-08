@@ -1,0 +1,6 @@
+{
+  "watch": ["src/**/*.ts"],
+  "exec": "node --nolazy --require ts-node/register ./src/runner.ts",
+  "ext": "js json ts",
+  "ignore": ["src/**/*.test.ts"]
+}
