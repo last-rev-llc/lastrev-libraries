@@ -1,6 +1,7 @@
 import { getServer } from './server';
-import fieldResolver from './resolvers/fieldResolver';
+import getLocalizedField from './utils/getLocalizedField';
+import getFieldDataFetcher from './utils/getFieldDataFetcher';
 
 export * from './types';
 
-export { getServer, fieldResolver };
+export { getServer, getLocalizedField, getFieldDataFetcher };

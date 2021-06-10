@@ -14,11 +14,10 @@ const getFieldDataFetcher = <T>(typeName: string, displayType: string, field: st
       const fieldMapper = mapper[field];
       if (isFunction(fieldMapper)) {
         const fieldData = await fieldMapper(content, args, ctx, info);
-        console.log('this is here:', field, fieldData, fieldData.__fieldName__);
         return { fieldValue: fieldData, fieldName: fieldData.__fieldName__ || field };
       } else if (isString(fieldMapper)) {
         return {
-          fieldValue: getLocalizedField(locale, content.fields, fieldMapper as string, ctx.defaultLocale),
+          fieldValue: getLocalizedField(content.fields, fieldMapper as string, ctx),
           fieldName: mapper[field]
         };
       }
@@ -26,7 +25,7 @@ const getFieldDataFetcher = <T>(typeName: string, displayType: string, field: st
       throw Error(`Unsupported mapper type for ${typeName}.${displayType}: ${typeof fieldMapper}`);
     }
     if (content.fields) {
-      return { fieldValue: getLocalizedField(locale, content.fields, field, ctx.defaultLocale), fieldName: field };
+      return { fieldValue: getLocalizedField(content.fields, field, ctx), fieldName: field };
     }
     return {};
   };

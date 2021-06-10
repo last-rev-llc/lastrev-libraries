@@ -1,5 +1,4 @@
 import { ContentType } from 'contentful';
-import get from 'lodash/get';
 
 import { TypeMappings } from '../types';
 import getLocalizedField from '../utils/getLocalizedField';
@@ -17,15 +16,13 @@ const getPageResolvers = ({
     return {
       ...acc,
       [typeName]: {
-        pathParams: async (content: any, args: any, ctx: any, info: any) => {
-          const locale = get(info, ['infoVariables', 'locale'], get(args, 'locale', ctx.defaultLocale));
-          const slug = getLocalizedField(locale, content.fields, 'slug', ctx.defaultLocale);
+        pathParams: async (content: any, _args: any, ctx: any, _info: any) => {
+          const slug = getLocalizedField(content.fields, 'slug', ctx);
           return {
             params: {
               slug: slug.split('/')
             },
-            __fieldName__: slug,
-            locale
+            __fieldName__: slug
           };
         }
       }

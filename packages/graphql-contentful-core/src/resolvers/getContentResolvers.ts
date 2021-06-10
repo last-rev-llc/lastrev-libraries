@@ -24,8 +24,7 @@ const getContentResolvers = ({
         ...fieldsResolver(
           typeName,
           contentType.fields.map((x) => x.id),
-          mappers,
-          typeMappings
+          mappers
         )
       }
     };

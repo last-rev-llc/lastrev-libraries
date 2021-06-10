@@ -24,7 +24,7 @@ export const sideKickLookupResolver =
 
             lookup[field] = {
               contentId: content.sys.id,
-              contentTypeId: content.sys.contentType,
+              contentTypeId: get(content, 'sys.contentType.sys.id'),
               fieldName
             };
           })

@@ -1,31 +1,22 @@
-import { ContentfulDataLoader } from '../createLoader';
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
-import { ContentType, Entry, Asset } from 'contentful';
+import { ContentType } from 'contentful';
 import GraphQLJSON from 'graphql-type-json';
 import merge from 'lodash/merge';
 import mapValues from 'lodash/mapValues';
 import getContentResolvers from './getContentResolvers';
-import fieldResolver from './fieldResolver';
 import { ApolloContext, Mappers, TypeMappings } from '../types';
+import fieldResolver from './fieldResolver';
 import EntryFetcher from '../EntryFetcher';
 import getPageResolvers from './getPageResolvers';
 import capitalizeFirst from '../utils/capitalizeFirst';
 import { some } from 'lodash';
 
-export interface Loaders {
-  entries: ContentfulDataLoader<Entry<any>>;
-  pages: ContentfulDataLoader<Entry<{ slug: string }>>;
-  assets: ContentfulDataLoader<Asset>;
-}
-
-export const fieldsResolver = (type: string, fields: string[], mappers: Mappers, typeMappings: TypeMappings) =>
+export const fieldsResolver = (type: string, fields: string[], mappers: Mappers) =>
   fields.reduce((accum: any, field: string) => {
     const additional =
-      mappers && mappers[type] && mappers[type][type]
-        ? mapValues(mappers[type][type], (_v, k) => fieldResolver(type, k, typeMappings))
-        : {};
-    return { ...accum, [field]: fieldResolver(type, field, typeMappings), ...additional };
+      mappers && mappers[type] && mappers[type][type] ? mapValues(mappers[type][type], () => fieldResolver(type)) : {};
+    return { ...accum, [field]: fieldResolver(type), ...additional };
   }, {});
 
 const createResolvers = ({
@@ -48,20 +39,27 @@ const createResolvers = ({
     {
       Query: {
         me: () => {},
-        page: async (_: any, { slug }: { slug?: string; locale?: string }, { loaders }: ApolloContext) => {
+        // not locale specific. fieldsResolver handles that
+        page: async (_: any, { slug, locale }: { slug?: string; locale?: string }, ctx: ApolloContext) => {
           if (!slug) throw new Error('MissingArgumentSlug');
-          return loaders.pages.load(slug);
+          ctx.locale = locale || ctx.defaultLocale;
+          return ctx.loaders.pages.load(slug);
         },
-        pages: async (_: any, { locale }: { locale?: string }) => {
+        // not locale specific
+        pages: async (_: any) => {
           return entryFetcher.fetchPages();
         },
-        content: async (_: any, { id }: { id?: string; locale?: string }, { loaders }: ApolloContext) =>
-          !!id ? loaders.entries.load(id) : Promise.reject(new Error('MissingArgument'))
+        // not locale specific. fieldsResolver handles that
+        content: async (_: any, { id, locale }: { id?: string; locale?: string }, ctx: ApolloContext) => {
+          if (!id) throw new Error('MissingArgumentId');
+          ctx.locale = locale || ctx.defaultLocale;
+          return ctx.loaders.entries.load(id);
+        }
       },
-      Media: fieldsResolver('Media', ['file', 'title', 'description'], mappers, typeMappings),
-      RichText: fieldsResolver('RichText', ['raw', 'parsed'], mappers, typeMappings),
-      Theme: fieldsResolver('Theme', ['variant'], mappers, typeMappings),
-      PathParams: fieldsResolver('PathParams', ['params'], mappers, typeMappings),
+      Media: fieldsResolver('Media', ['file', 'title', 'description'], mappers),
+      RichText: fieldsResolver('RichText', ['raw', 'parsed'], mappers),
+      Theme: fieldsResolver('Theme', ['variant'], mappers),
+      PathParams: fieldsResolver('PathParams', ['params'], mappers),
 
       // Content type resolver
       Content: {

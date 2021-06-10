@@ -1,8 +1,9 @@
 import { Entry } from 'contentful';
 import get from 'lodash/get';
+import { ApolloContext } from 'types';
 
-const getLocalizedField = <T>(locale: string, fields: Entry<T>['fields'], field: string, defaultLocale: string) => {
-  return get(fields, [field, locale], get(fields, [field, defaultLocale]));
+const getLocalizedField = <T>(fields: Entry<T>['fields'], field: string, ctx: ApolloContext) => {
+  return get(fields, `${field}['${ctx.locale}']`, get(fields, [field, ctx.defaultLocale]));
 };
 
 export default getLocalizedField;

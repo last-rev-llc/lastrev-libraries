@@ -61,7 +61,12 @@ export const getServer = async ({
     plugins: [ApolloServerPluginInlineTrace()],
 
     context: () => {
-      return { loaders, mappers, defaultLocale };
+      return {
+        loaders,
+        mappers,
+        defaultLocale,
+        typeMappings
+      };
     }
   });
 };
