@@ -13,29 +13,32 @@ export const sideKickLookupResolver =
       typeMappings[content?.sys?.contentType?.sys?.id] ?? content?.sys?.contentType?.sys?.id
     );
     const lookup: { [key: string]: any } = {};
-    if (content.sys && content.sys.contentType && mappers[typeName] && mappers[typeName][displayType]) {
-      console.log('NeedsLookup', { content, typeName, displayType, m: mappers[typeName] });
-      await Promise.all(
-        Object.keys(mappers[typeName][displayType]).map(async (field: string) => {
-          let fieldName = field;
-          let fieldContentId = content.sys.id;
 
-          const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
+    if (content.sys && content.sys.contentType) {
+      if (mappers[typeName] && mappers[typeName][displayType]) {
+        await Promise.all(
+          Object.keys(mappers[typeName][displayType]).map(async (field: string) => {
+            const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
 
-          const fieldData = await fieldDataFetcher(content, args, ctx, info, locale);
+            const { fieldName } = await fieldDataFetcher(content, args, ctx, info, locale);
 
-          // why is this needed?
-          if (fieldData && fieldData.sys && fieldData.sys.id) {
-            fieldContentId = fieldData.sys.id;
-          }
+            lookup[field] = {
+              contentId: content.sys.id,
+              contentTypeId: content.sys.contentType,
+              fieldName
+            };
+          })
+        );
+      } else {
+        Object.keys(get(content, 'fields', {})).forEach((field: string) => {
           lookup[field] = {
-            contentId: fieldContentId,
-            fieldName
+            contentId: content.sys.id,
+            contentTypeId: content.sys.contentType,
+            fieldName: field
           };
-          return {};
-        })
-      );
+        });
+      }
       return lookup;
     }
-    return null;
+    return {};
   };

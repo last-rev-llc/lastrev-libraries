@@ -4,6 +4,7 @@ import get from 'lodash/get';
 import getLocalizedField from './getLocalizedField';
 import { Entry } from 'contentful';
 import { GraphQLResolveInfo } from 'graphql';
+import { isString } from 'lodash';
 
 const getFieldDataFetcher = <T>(typeName: string, displayType: string, field: string, mappers?: Mappers) => {
   const mapper = get(mappers, `['${typeName}']['${displayType}']`, null) as TypeMapper | null;
@@ -12,11 +13,22 @@ const getFieldDataFetcher = <T>(typeName: string, displayType: string, field: st
     if (mapper && mapper[field]) {
       const fieldMapper = mapper[field];
       if (isFunction(fieldMapper)) {
-        return await fieldMapper(content, args, ctx, info);
+        const fieldData = await fieldMapper(content, args, ctx, info);
+        console.log('this is here:', field, fieldData, fieldData.__fieldName__);
+        return { fieldValue: fieldData, fieldName: fieldData.__fieldName__ || field };
+      } else if (isString(fieldMapper)) {
+        return {
+          fieldValue: getLocalizedField(locale, content.fields, fieldMapper as string, ctx.defaultLocale),
+          fieldName: mapper[field]
+        };
       }
-      return getLocalizedField(locale, content.fields, fieldMapper as string, ctx.defaultLocale);
+      // other types not allowed
+      throw Error(`Unsupported mapper type for ${typeName}.${displayType}: ${typeof fieldMapper}`);
     }
-    return content.fields ? getLocalizedField(locale, content.fields, field, ctx.defaultLocale) : null;
+    if (content.fields) {
+      return { fieldValue: getLocalizedField(locale, content.fields, field, ctx.defaultLocale), fieldName: field };
+    }
+    return {};
   };
 };
 

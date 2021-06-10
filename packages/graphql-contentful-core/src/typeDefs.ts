@@ -37,6 +37,7 @@ const baseDefs = gql`
 
   type PathParams {
     params: JSON
+    locale: String
   }
 
   type Query {
@@ -59,6 +60,7 @@ const baseDefs = gql`
     sidekickLookup: JSON
     slug: String
     pathParams: PathParams
+    contents: [Content]
   }
 `;
 

@@ -52,17 +52,17 @@ const createResolvers = ({
           if (!slug) throw new Error('MissingArgumentSlug');
           return loaders.pages.load(slug);
         },
-        pages: async () => {
+        pages: async (_: any, { locale }: { locale?: string }) => {
           return entryFetcher.fetchPages();
         },
         content: async (_: any, { id }: { id?: string; locale?: string }, { loaders }: ApolloContext) =>
           !!id ? loaders.entries.load(id) : Promise.reject(new Error('MissingArgument'))
       },
       Media: fieldsResolver('Media', ['file', 'title', 'description'], mappers, typeMappings),
-      // NavigationItem: fieldsResolver('NavigationItem', ['link']),
-      // Link: fieldsResolver('Link', ['url', 'theme']),
-      // CardCollection: fieldsResolver('CardCollection', ['cards']),
       RichText: fieldsResolver('RichText', ['raw', 'parsed'], mappers, typeMappings),
+      Theme: fieldsResolver('Theme', ['variant'], mappers, typeMappings),
+      PathParams: fieldsResolver('PathParams', ['params'], mappers, typeMappings),
+
       // Content type resolver
       Content: {
         __resolveType: (content: any) => {

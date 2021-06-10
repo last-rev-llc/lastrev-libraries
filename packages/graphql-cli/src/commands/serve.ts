@@ -10,6 +10,7 @@ import { getServer } from '@last-rev/graphql-contentful-core';
 import generateSchema from '@last-rev/graphql-schema-gen';
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { resolve } from 'path';
+// import filewatcher from 'filewatcher';
 import loadExtensions from '../helpers/loadExtensions';
 
 const run = async ({
@@ -57,11 +58,9 @@ program
   .option('-c, --cms <string>', 'CMS to use for schema generation', 'Contentful')
   .option('-n, --hostname <hostname>', 'Host to run the server on')
   .option('-e --extensions-dir <extensions directory>', 'Path to a directory containing extensions')
-  // TODO
-  // .option('-w, --watch', 'Whether to run in "watch" mode, which will reload the server when the files in the config directory change')
   .parse(process.argv);
 
-const { port, hostname, extensionsDir, cms /* , watch */ } = program.opts();
+const { port, hostname, extensionsDir, cms } = program.opts();
 
 run({ port, host: hostname, extensionsDir, cms }).catch((err) => {
   console.log(err);

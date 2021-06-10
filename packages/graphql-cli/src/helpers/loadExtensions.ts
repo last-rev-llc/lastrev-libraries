@@ -21,9 +21,14 @@ const loadExtensions = async (extensionsPath?: string): Promise<Extensions> => {
 
   if (!extensionsPath) return out;
 
+  console.log('Attempting to load extensions from', extensionsPath);
+
   const exists = await pathExists(extensionsPath);
 
-  if (!exists) return out;
+  if (!exists) {
+    console.error(`Directory does not exist: ${extensionsPath}`);
+    return out;
+  }
 
   const contents = await readdir(extensionsPath);
   contents.forEach((filename) => {
@@ -34,7 +39,7 @@ const loadExtensions = async (extensionsPath?: string): Promise<Extensions> => {
       mappers && out.mappers.push(mappers);
       typeMappings && out.typeMappings.push(typeMappings);
     } catch (e) {
-      console.log(`Error loading extensions from ${filename}: ${e.message}`);
+      console.error(`Error loading extensions from ${filename}: ${e.message}`);
       process.exit();
     }
   });

@@ -5,7 +5,7 @@ import { TypeMappings } from '../types';
 import getLocalizedField from '../utils/getLocalizedField';
 import capitalizeFirst from '../utils/capitalizeFirst';
 
-const getContentResolvers = ({
+const getPageResolvers = ({
   contentTypes,
   typeMappings
 }: {
@@ -23,7 +23,9 @@ const getContentResolvers = ({
           return {
             params: {
               slug: slug.split('/')
-            }
+            },
+            __fieldName__: slug,
+            locale
           };
         }
       }
@@ -32,4 +34,4 @@ const getContentResolvers = ({
   return contentResolvers;
 };
 
-export default getContentResolvers;
+export default getPageResolvers;

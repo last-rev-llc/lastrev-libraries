@@ -44,7 +44,8 @@ const reservedForPages: Record<string, string> = {
   theme: 'Theme',
   animation: 'JSON',
   slug: 'String',
-  pathParams: 'PathParams'
+  pathParams: 'PathParams',
+  contents: '[Content]'
 };
 
 const isPage = (type: ContentType) => {

@@ -22,6 +22,7 @@
     "apollo-server": "^2.25.0",
     "commander": "^7.1.0",
     "dotenv": "^8.2.0",
+    "filewatcher": "^3.0.1",
     "fs-extra": "^10.0.0",
     "graphql": "^15.5.0",
     "nodemon": "^2.0.7"

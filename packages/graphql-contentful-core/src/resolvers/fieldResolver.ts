@@ -33,20 +33,20 @@ const fieldResolver: FieldResolver =
 
     const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
 
-    const fieldData = await fieldDataFetcher(content, args, ctx, info, locale);
+    const { fieldValue } = await fieldDataFetcher(content, args, ctx, info, locale);
 
     //Check if the field is a reference then resolve it
-    if (fieldData && fieldData.sys && fieldData.sys.linkType == 'Entry') {
-      return loaders.entries.load(fieldData.sys.id);
+    if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Entry') {
+      return loaders.entries.load(fieldValue.sys.id);
     }
-    if (fieldData && fieldData.sys && fieldData.sys.linkType == 'Asset') {
-      return loaders.assets.load(fieldData.sys.id);
+    if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Asset') {
+      return loaders.assets.load(fieldValue.sys.id);
     }
     //Check if the field is an reference array then resolve all of them
-    if (isArray(fieldData) && every(fieldData, (x) => !!x.sys.id)) {
-      return loaders.entries.loadMany(fieldData.map((x: any) => x.sys.id));
+    if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys.id)) {
+      return loaders.entries.loadMany(fieldValue.map((x: any) => x.sys.id));
     }
     // console.timeEnd(`FieldResolver:${displayType}->${field}`);
-    return fieldData;
+    return fieldValue;
   };
 export default fieldResolver;
