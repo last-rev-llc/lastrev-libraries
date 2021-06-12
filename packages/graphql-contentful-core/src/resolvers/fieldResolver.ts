@@ -5,7 +5,6 @@ import { GraphQLResolveInfo } from 'graphql';
 import getFieldDataFetcher from '../utils/getFieldDataFetcher';
 import { ApolloContext } from '../types';
 import capitalizeFirst from '../utils/capitalizeFirst';
-import getLocale from '../utils/getLocale';
 
 export type Resolver<TSource, TContext> = (
   content: TSource,
@@ -19,7 +18,6 @@ type FieldResolver = <T>(displayType: string) => Resolver<Entry<T>, ApolloContex
 const fieldResolver: FieldResolver = (displayType: string) => async (content, args, ctx, info) => {
   const { fieldName: field } = info;
   const { loaders, mappers, typeMappings } = ctx;
-  const locale = getLocale(content, args, ctx, info);
 
   const typeName =
     content && content.sys && content.sys.contentType
@@ -28,7 +26,7 @@ const fieldResolver: FieldResolver = (displayType: string) => async (content, ar
 
   const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
 
-  const { fieldValue } = await fieldDataFetcher(content, args, ctx, info, locale);
+  const { fieldValue } = await fieldDataFetcher(content, args, ctx, info);
 
   //Check if the field is a reference then resolve it
   if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Entry') {

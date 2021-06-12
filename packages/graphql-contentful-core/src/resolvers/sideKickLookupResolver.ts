@@ -6,8 +6,6 @@ import capitalizeFirst from '../utils/capitalizeFirst';
 
 export const sideKickLookupResolver =
   (displayType: string, typeMappings: TypeMappings) => async (content: any, args: any, ctx: any, info: any) => {
-    const locale = get(info, ['infoVariables', 'locale'], get(args, 'locale', ctx.defaultLocale));
-
     const { mappers } = ctx;
     const typeName = capitalizeFirst(
       typeMappings[content?.sys?.contentType?.sys?.id] ?? content?.sys?.contentType?.sys?.id
@@ -20,7 +18,7 @@ export const sideKickLookupResolver =
           Object.keys(mappers[typeName][displayType]).map(async (field: string) => {
             const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
 
-            const { fieldName } = await fieldDataFetcher(content, args, ctx, info, locale);
+            const { fieldName } = await fieldDataFetcher(content, args, ctx, info);
 
             lookup[field] = {
               contentId: content.sys.id,

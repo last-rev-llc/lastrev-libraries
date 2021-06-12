@@ -1,12 +1,12 @@
-import { DocumentNode } from 'graphql';
+import { DocumentNode, GraphQLSchema, Source } from 'graphql';
 import { readdir, pathExists } from 'fs-extra';
+import { GraphQLResolverMap } from 'apollo-graphql';
 import { join } from 'path';
-import { ResolversDefinition } from '@graphql-tools/merge';
-import { Mappers } from '@last-rev/graphql-contentful-core';
+import { Mappers } from '../types';
 
 export type Extensions = {
-  typeDefs: DocumentNode[];
-  resolvers: ResolversDefinition<unknown>[];
+  typeDefs: (string | DocumentNode | Source | GraphQLSchema)[];
+  resolvers: GraphQLResolverMap<any>[];
   mappers: Mappers[];
   typeMappings: { [contentfulType: string]: string }[];
 };

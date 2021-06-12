@@ -39,20 +39,20 @@ const createResolvers = ({
     {
       Query: {
         me: () => {},
-        // not locale specific. fieldsResolver handles that
         page: async (_: any, { slug, locale }: { slug?: string; locale?: string }, ctx: ApolloContext) => {
           if (!slug) throw new Error('MissingArgumentSlug');
           ctx.locale = locale || ctx.defaultLocale;
+          // not locale specific. fieldsResolver handles that
           return ctx.loaders.pages.load(slug);
         },
         // not locale specific
         pages: async (_: any) => {
           return entryFetcher.fetchPages();
         },
-        // not locale specific. fieldsResolver handles that
         content: async (_: any, { id, locale }: { id?: string; locale?: string }, ctx: ApolloContext) => {
           if (!id) throw new Error('MissingArgumentId');
           ctx.locale = locale || ctx.defaultLocale;
+          // not locale specific. fieldsResolver handles that
           return ctx.loaders.entries.load(id);
         }
       },

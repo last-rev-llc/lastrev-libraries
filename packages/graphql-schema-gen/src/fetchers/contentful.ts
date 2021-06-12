@@ -1,5 +1,5 @@
 import { ContentType, createClient, CreateClientParams, Field, FieldItem } from 'contentful';
-import { some, upperFirst } from 'lodash';
+import { has, some, upperFirst } from 'lodash';
 import { Fetcher } from '../types';
 
 const getFieldType = (typeData: Field | FieldItem): string => {
@@ -73,13 +73,27 @@ type ${upperFirst(contentType.sys.id)} implements ${implementedType} {
 )}
 `;
 
-const contentfulFetcher: Fetcher = async (clientParams: CreateClientParams) => {
+const mapContentTypeIds = (type: ContentType, typeMappings: Record<string, string>): ContentType => {
+  let contentTypeId = type.sys.id;
+  if (has(typeMappings, contentTypeId)) {
+    contentTypeId = typeMappings[contentTypeId];
+  }
+  return {
+    ...type,
+    sys: {
+      ...type.sys,
+      id: contentTypeId
+    }
+  };
+};
+
+const contentfulFetcher: Fetcher = async (typeMappings: Record<string, string>, clientParams: CreateClientParams) => {
   const client = createClient(clientParams);
 
-  const contentTypes = await client.getContentTypes();
+  const contentTypes = (await client.getContentTypes()).items.map((type) => mapContentTypeIds(type, typeMappings));
 
   // split out pages from other content types
-  const [pages, content] = contentTypes.items.reduce(([p, c], e) => (isPage(e) ? [[...p, e], c] : [p, [...c, e]]), [
+  const [pages, content] = contentTypes.reduce(([p, c], e) => (isPage(e) ? [[...p, e], c] : [p, [...c, e]]), [
     [],
     []
   ] as ContentType[][]);

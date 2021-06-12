@@ -7,9 +7,9 @@ import { GraphQLResolveInfo } from 'graphql';
 import { isString } from 'lodash';
 
 const getFieldDataFetcher = <T>(typeName: string, displayType: string, field: string, mappers?: Mappers) => {
-  const mapper = get(mappers, `['${typeName}']['${displayType}']`, null) as TypeMapper | null;
+  const mapper = get(mappers, [typeName, displayType], {}) as TypeMapper;
 
-  return async (content: Entry<T>, args: any, ctx: any, info: GraphQLResolveInfo, locale: string) => {
+  return async (content: Entry<T>, args: any, ctx: any, info: GraphQLResolveInfo) => {
     if (mapper && mapper[field]) {
       const fieldMapper = mapper[field];
       if (isFunction(fieldMapper)) {

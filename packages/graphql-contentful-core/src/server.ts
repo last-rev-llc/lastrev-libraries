@@ -7,28 +7,46 @@ import { getContentTypes, getLocales } from '@last-rev/integration-contentful';
 import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
+import generateSchema from '@last-rev/graphql-schema-gen';
 import find from 'lodash/find';
 import get from 'lodash/get';
-import { DocumentNode } from 'apollo-link';
-
+import merge from 'lodash/merge';
+import { resolve } from 'path';
 import client from './contentful-client';
 import lastRevTypeDefs from './typeDefs';
 import { createLoader } from './createLoader';
 import createResolvers from './resolvers/createResolvers';
-import { Mappers } from './types';
 import EntryFetcher from './EntryFetcher';
+import loadExtensions from './utils/loadExtensions';
 
 export const getServer = async ({
-  typeDefs: clientTypeDefs,
-  resolvers: clientResolvers,
-  mappers,
-  typeMappings
+  cms = 'Contentful',
+  extensionsDir
 }: {
-  typeDefs?: DocumentNode;
-  resolvers?: any;
-  mappers?: Mappers;
-  typeMappings?: { [contentfulType: string]: string };
-} = {}) => {
+  cms?: 'Contentful';
+  extensionsDir?: string;
+}) => {
+  const {
+    typeDefs: clientTypeDefs,
+    resolvers: clientResolvers,
+    mappers: clientMappers,
+    typeMappings: clientTypeMappings
+  } = await loadExtensions(extensionsDir && resolve(process.cwd(), extensionsDir));
+
+  const mergedMappers = merge({}, ...clientMappers);
+  const mergedTypeMappings = merge({}, ...clientTypeMappings);
+
+  const baseTypeDefs = await generateSchema({
+    source: cms,
+    typeMappings: mergedTypeMappings,
+    connectionParams: {
+      accessToken: process.env.CONTENTFUL_ACCESSTOKEN || '',
+      space: process.env.CONTENTFUL_SPACE_ID || '',
+      host: process.env.CONTENTFUL_HOST || 'cdn.contentful.com',
+      environment: process.env.CONTENTFUL_ENV || 'master'
+    }
+  });
+
   const [{ items: contentTypes }, locales] = await Promise.all([getContentTypes(), getLocales()]);
 
   const defaultLocale = get(
@@ -45,17 +63,18 @@ export const getServer = async ({
     assets: await createLoader(fetchAllAssets)
   };
 
-  const resolvers = createResolvers({
+  const defaultResolvers = createResolvers({
     contentTypes,
-    mappers,
-    typeMappings,
+    mappers: mergedMappers,
+    typeMappings: mergedTypeMappings,
     entryFetcher
   });
 
-  const typeDefs = clientTypeDefs ? mergeTypeDefs([clientTypeDefs, lastRevTypeDefs]) : lastRevTypeDefs;
+  const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, ...clientTypeDefs]);
+  const resolvers = mergeResolvers([defaultResolvers, ...clientResolvers]);
 
   return new ApolloServer({
-    schema: buildFederatedSchema([{ resolvers: mergeResolvers([resolvers, clientResolvers]), typeDefs }]),
+    schema: buildFederatedSchema([{ resolvers, typeDefs }]),
     introspection: true,
     debug: true,
     plugins: [ApolloServerPluginInlineTrace()],
@@ -63,9 +82,9 @@ export const getServer = async ({
     context: () => {
       return {
         loaders,
-        mappers,
+        mappers: mergedMappers,
         defaultLocale,
-        typeMappings
+        typeMappings: mergedTypeMappings
       };
     }
   });
