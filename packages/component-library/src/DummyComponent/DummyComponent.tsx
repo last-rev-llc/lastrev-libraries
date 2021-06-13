@@ -1,7 +1,16 @@
 import React from 'react';
+import { Button } from '@material-ui/core';
 
-export const AspectRatio = () => {
-  return <div>dummy</div>;
+interface DummyComponent {
+  variant: 'contained' | 'text' | 'outlined' | undefined;
+}
+
+export const DummyComponent = ({ variant }: DummyComponent) => {
+  return (
+    <Button variant={variant} color="primary">
+      Test
+    </Button>
+  );
 };
 
-export default AspectRatio;
+export default DummyComponent;

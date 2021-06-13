@@ -6,5 +6,5 @@ export default {
   component: DummyComponent
 };
 
-const Template = () => <DummyComponent />;
+const Template = (args) => <DummyComponent {...args} />;
 export const Default = Template.bind({});
