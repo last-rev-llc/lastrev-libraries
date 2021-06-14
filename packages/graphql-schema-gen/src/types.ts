@@ -27,6 +27,10 @@ export type GqlField = {
   isArray: boolean;
 };
 
-export type Fetcher = (connectionParams: ConnectionParams) => Promise<string>;
+export type Fetcher = (typeMappings: Record<string, string>, connectionParams: ConnectionParams) => Promise<string>;
 
-export type GenerateSchemaParams = { source: Source; connectionParams: ConnectionParams };
+export type GenerateSchemaParams = {
+  source: Source;
+  typeMappings: Record<string, string>;
+  connectionParams: ConnectionParams;
+};

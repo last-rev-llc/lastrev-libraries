@@ -1,5 +1,5 @@
-import { createClient, CreateClientParams, Field, FieldItem } from 'contentful';
-import { upperFirst } from 'lodash';
+import { ContentType, createClient, CreateClientParams, Field, FieldItem } from 'contentful';
+import { has, some, upperFirst } from 'lodash';
 import { Fetcher } from '../types';
 
 const getFieldType = (typeData: Field | FieldItem): string => {
@@ -31,37 +31,31 @@ const getFieldType = (typeData: Field | FieldItem): string => {
   }
 };
 
-const reserved: Record<string, string> = {
+const reservedForContent: Record<string, string> = {
   sidekickLookup: 'JSON',
   id: 'String',
   theme: 'Theme',
   animation: 'JSON'
 };
 
-const contentfulFetcher: Fetcher = async (clientParams: CreateClientParams) => {
-  const client = createClient(clientParams);
+const reservedForPages: Record<string, string> = {
+  sidekickLookup: 'JSON',
+  id: 'String',
+  theme: 'Theme',
+  animation: 'JSON',
+  slug: 'String',
+  pathParams: 'PathParams',
+  contents: '[Content]'
+};
 
-  const contentTypes = await client.getContentTypes();
+const isPage = (type: ContentType) => {
+  return some(type.fields, (f) => f.id === 'slug');
+};
 
-  const warnings: string[][] = [];
-
-  contentTypes.items.forEach((t) => {
-    const warnFields = t.fields.filter((f) => Object.keys(reserved).indexOf(f.id) > -1);
-    if (warnFields.length) {
-      warnings.push(...warnFields.map((w) => [t.sys.id, w.id]));
-    }
-  });
-
-  warnings.forEach((w) =>
-    console.log(
-      `Content Type ${w[0]} is using a reserved field id ${w[1]}. Please make sure that a mapper is written for this field.}`
-    )
-  );
-
-  return `
-${contentTypes.items.map(
+const getTypeDefs = (types: ContentType[], reserved: Record<string, string>, implementedType: string) => `
+${types.map(
   (contentType) => `
-type ${upperFirst(contentType.sys.id)} implements Content {
+type ${upperFirst(contentType.sys.id)} implements ${implementedType} {
   ${Object.keys(reserved).map(
     (k) => `
   ${k}: ${reserved[k]}
@@ -78,6 +72,39 @@ type ${upperFirst(contentType.sys.id)} implements Content {
 `
 )}
 `;
+
+const mapContentTypeIds = (type: ContentType, typeMappings: Record<string, string>): ContentType => {
+  let contentTypeId = type.sys.id;
+  if (has(typeMappings, contentTypeId)) {
+    contentTypeId = typeMappings[contentTypeId];
+  }
+  return {
+    ...type,
+    sys: {
+      ...type.sys,
+      id: contentTypeId
+    }
+  };
+};
+
+const contentfulFetcher: Fetcher = async (typeMappings: Record<string, string>, clientParams: CreateClientParams) => {
+  const client = createClient(clientParams);
+
+  const contentTypes = (await client.getContentTypes()).items.map((type) => mapContentTypeIds(type, typeMappings));
+
+  // split out pages from other content types
+  const [pages, content] = contentTypes.reduce(([p, c], e) => (isPage(e) ? [[...p, e], c] : [p, [...c, e]]), [
+    [],
+    []
+  ] as ContentType[][]);
+
+  const pageTypeDefs = getTypeDefs(pages, reservedForPages, 'Page');
+  const contentTypeDefs = getTypeDefs(content, reservedForContent, 'Content');
+
+  return `
+  ${contentTypeDefs}
+  ${pageTypeDefs}
+  `;
 };
 
 export default contentfulFetcher;
