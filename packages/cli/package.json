@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/cli",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "bin": {
     "last-rev": "bin/last-rev"
@@ -15,8 +15,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/graphql-contentful-core": "^0.1.0",
-    "@last-rev/testing-library": "^0.1.0",
+    "@last-rev/graphql-contentful-core": "^0.1.1",
+    "@last-rev/testing-library": "^0.1.1",
     "apollo-server": "^2.25.0",
     "commander": "^7.1.0",
     "dotenv": "^8.2.0",
