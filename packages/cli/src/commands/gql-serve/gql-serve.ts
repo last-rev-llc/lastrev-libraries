@@ -36,7 +36,7 @@ program
   .option('-c, --cms <string>', 'CMS to use for schema generation', 'Contentful')
   .option('-n, --hostname <hostname>', 'Host to run the server on')
   .option('-e --extensions-dir <extensions directory>', 'Path to a directory containing extensions')
-  .option('-d --content-dir <content directory>', 'Path to a directory containing synced CMS data', true)
+  .requiredOption('-d --content-dir <content directory>', 'Path to a directory containing synced CMS data')
   .parse(process.argv);
 
 const { port, hostname, extensionsDir, cms, contentDir } = program.opts();

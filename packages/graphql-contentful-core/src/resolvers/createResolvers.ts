@@ -42,8 +42,9 @@ const createResolvers = ({
           // not locale specific. fieldsResolver handles that
           return ctx.loaders.pageLoader.load({ slug, contentTypeId: 'pageGeneral' });
         },
-        // not locale specific
-        pages: async (_: any, __: any, ctx: ApolloContext) => {
+        pages: async (_: any, { locale }: any, ctx: ApolloContext) => {
+          ctx.locale = locale || ctx.defaultLocale;
+          // not locale specific. fieldsResolver handles that
           return ctx.loaders.fetchAllPages();
         },
         content: async (_: any, { id, locale }: { id?: string; locale?: string }, ctx: ApolloContext) => {

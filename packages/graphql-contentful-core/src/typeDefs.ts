@@ -42,7 +42,7 @@ const baseDefs = gql`
 
   type Query {
     page(slug: String!, locale: String): Page
-    pages: [Page!]
+    pages(locale: String): [Page!]
     content(id: String!, locale: String): Content
   }
 

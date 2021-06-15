@@ -1,13 +1,8 @@
-import {
-  syncAllAssets,
-  syncAllEntriesForContentType,
-  getContentTypes,
-  getLocales
-} from '@last-rev/integration-contentful';
 import { chain, flatten, find, get, has } from 'lodash';
 import { resolve, join } from 'path';
 import { ensureDir, writeFile } from 'fs-extra';
-import { Asset, Entry } from 'contentful';
+import { Asset, Entry, createClient, ContentfulClientApi } from 'contentful';
+import ora from 'ora';
 
 const ENTRIES_DIRNAME = 'entries';
 const ASSETS_DIRNAME = 'assets';
@@ -42,8 +37,6 @@ const getSlugToIdLookup = (
 };
 
 const writeEntriesOrAssets = async (items: (Entry<any> | Asset)[], root: string, dirname: string): Promise<void> => {
-  console.log('writing', dirname);
-  console.time(`finished writing ${dirname}`);
   const dir = join(root, dirname);
   await ensureDir(dir);
   await Promise.all(
@@ -57,25 +50,74 @@ const writeEntriesOrAssets = async (items: (Entry<any> | Asset)[], root: string,
       })()
     )
   );
-  console.timeEnd(`finished writing ${dirname}`);
 };
 
 const writeSingleFile = async (json: any, root: string, filename: string): Promise<void> => {
-  console.log('writing', filename);
-  console.time(`finished writing ${filename}`);
   await ensureDir(root);
   await writeFile(join(root, filename), JSON.stringify(json));
-  console.timeEnd(`finished writing ${filename}`);
 };
 
-const sync = async (rootDir: string) => {
-  const spaceId = process.env.CONTENTFUL_SPACE_ID; // assuming same env vars as required by integration-contentful
-  const env = process.env.CONTENTFUL_ENV || 'master';
-  const host = process.env.CONTENTFUL_HOST || 'cdn.contentful.com';
-  if (!spaceId) throw Error('Missing required env var: CONTENTFUL_SPACE_ID');
+export type SyncProps = {
+  rootDir: string;
+  accessToken: string;
+  space: string;
+  environment?: string;
+  host?: string;
+};
+
+const validateArg = (arg: any, argname: string) => {
+  if (!arg) throw Error(`Missing required argument: ${argname}`);
+};
+
+const syncAllEntriesForContentType = async (
+  client: ContentfulClientApi,
+  contentTypeId: string
+): Promise<Entry<any>[]> => {
+  return (
+    await client.sync({
+      initial: true,
+      content_type: contentTypeId,
+      resolveLinks: false
+    })
+  ).entries;
+};
+
+const syncAllAssets = async (client: ContentfulClientApi): Promise<Asset[]> => {
+  return (
+    await client.sync({
+      initial: true,
+      resolveLinks: false,
+      type: 'Asset'
+    })
+  ).assets;
+};
+
+const sync = async ({
+  rootDir,
+  accessToken,
+  space,
+  environment = 'master',
+  host = 'cdn.contentful.com'
+}: SyncProps) => {
+  console.time('Total elapsed time');
+  let spinner;
+  validateArg(rootDir, 'rootDir');
+  validateArg(accessToken, 'accessToken');
+  validateArg(space, 'space');
+
   const previewOrProd = host.startsWith('preview') ? 'preview' : 'production';
 
-  const [{ items: contentTypes }, locales] = await Promise.all([getContentTypes(), getLocales()]);
+  const client = createClient({
+    accessToken,
+    space,
+    environment,
+    host
+  });
+
+  const [{ items: contentTypes }, { items: locales }] = await Promise.all([
+    client.getContentTypes(),
+    client.getLocales()
+  ]);
 
   const defaultLocale = get(
     find(locales, (locale) => locale.default),
@@ -83,8 +125,9 @@ const sync = async (rootDir: string) => {
     'en-US'
   );
 
-  console.log('fetching entries...');
-  console.time('finished fetching entries');
+  let startTime = Date.now();
+  spinner = ora('fetching entries').start();
+  // console.time('finished fetching entries');
   const entries = flatten(
     await Promise.all(
       contentTypes.map((contentType, index) =>
@@ -93,28 +136,36 @@ const sync = async (rootDir: string) => {
             sys: { id: contentTypeId }
           } = contentType;
           await delay(index * 100);
-          return (await syncAllEntriesForContentType({ contentTypeId })).entries;
+          return await syncAllEntriesForContentType(client, contentTypeId);
         })()
       )
     )
   );
-  console.timeEnd('finished fetching entries');
+  spinner.succeed(`fetching entries: ${Date.now() - startTime}ms`);
+  // console.timeEnd('finished fetching entries');
 
-  console.log('fetching assets...');
-  console.time('finished fetching assets');
-  const { assets } = await syncAllAssets();
-  console.timeEnd('finished fetching assets');
+  startTime = Date.now();
+  spinner = ora('fetching assets').start();
+  // console.time('finished fetching assets');
+  const assets = await syncAllAssets(client);
+  spinner.succeed(`fetching assets: ${Date.now() - startTime}ms`);
+  // console.timeEnd('finished fetching assets');
 
   const slugToIdLookup: SlugToIdLookup = getSlugToIdLookup(entries, defaultLocale);
 
-  const root = join(resolve(process.cwd(), rootDir), spaceId, env, previewOrProd);
-
+  const root = join(resolve(process.cwd(), rootDir), space, environment, previewOrProd);
+  startTime = Date.now();
+  spinner = ora('writing files');
+  // console.time('finished writing files');
   await Promise.all([
     writeEntriesOrAssets(entries, root, ENTRIES_DIRNAME),
     writeEntriesOrAssets(assets, root, ASSETS_DIRNAME),
     writeSingleFile(contentTypes, root, CONTENT_TYPES_FILENAME),
     writeSingleFile(slugToIdLookup, root, SLUG_LOOKUP_FILENAME)
   ]);
+  spinner.succeed(`writing files: ${Date.now() - startTime}ms`);
+  // console.timeEnd('finished writing files');
+  console.timeEnd('Total elapsed time');
 };
 
 export default sync;

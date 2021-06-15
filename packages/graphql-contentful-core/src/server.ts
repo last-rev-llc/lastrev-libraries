@@ -3,7 +3,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 import { ApolloServer } from 'apollo-server';
-import { getContentTypes, getLocales } from '@last-rev/integration-contentful';
+import { getLocales } from '@last-rev/integration-contentful';
 import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
@@ -47,19 +47,19 @@ export const getServer = async ({
     }
   });
 
-  const [{ items: contentTypes }, locales] = await Promise.all([getContentTypes(), getLocales()]);
-
-  const defaultLocale = get(
-    find(locales, (locale) => locale.default),
-    'code',
-    'en-US'
-  );
-
   const loaders = await createLoaders(
     resolve(process.cwd(), contentDir),
     process.env.CONTENTFUL_SPACE_ID || '',
     process.env.CONTENTFUL_ENV || 'master',
     (process.env.CONTENTFUL_HOST || 'cdn.contentful.com').startsWith('preview') ? 'preview' : 'production'
+  );
+
+  const [contentTypes, locales] = await Promise.all([loaders.fetchAllContentTypes(), getLocales()]);
+
+  const defaultLocale = get(
+    find(locales, (locale) => locale.default),
+    'code',
+    'en-US'
   );
 
   const defaultResolvers = createResolvers({
