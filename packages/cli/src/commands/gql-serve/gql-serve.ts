@@ -18,11 +18,13 @@ const run = async ({
   host?: string;
   extensionsDir: string;
   cms: 'Contentful';
+  contentDir: string;
 }) => {
   // const mergedTypeDefs = mergeTypeDefs([baseTypeDefs, ...typeDefs]);
 
   const server = await getServer({
     extensionsDir,
+    contentDir,
     cms
   });
   const { url } = await server.listen({ port, host });
@@ -34,11 +36,12 @@ program
   .option('-c, --cms <string>', 'CMS to use for schema generation', 'Contentful')
   .option('-n, --hostname <hostname>', 'Host to run the server on')
   .option('-e --extensions-dir <extensions directory>', 'Path to a directory containing extensions')
+  .option('-d --content-dir <content directory>', 'Path to a directory containing synced CMS data', true)
   .parse(process.argv);
 
-const { port, hostname, extensionsDir, cms } = program.opts();
+const { port, hostname, extensionsDir, cms, contentDir } = program.opts();
 
-run({ port, host: hostname, extensionsDir, cms }).catch((err) => {
+run({ port, host: hostname, extensionsDir, cms, contentDir }).catch((err) => {
   console.log(err);
   process.exit();
 });

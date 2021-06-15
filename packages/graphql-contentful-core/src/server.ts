@@ -12,19 +12,19 @@ import find from 'lodash/find';
 import get from 'lodash/get';
 import merge from 'lodash/merge';
 import { resolve } from 'path';
-import client from './contentful-client';
 import lastRevTypeDefs from './typeDefs';
-import { createLoader } from './createLoader';
 import createResolvers from './resolvers/createResolvers';
-import EntryFetcher from './EntryFetcher';
 import loadExtensions from './utils/loadExtensions';
+import createLoaders from '@last-rev/contentful-fs-loader';
 
 export const getServer = async ({
   cms = 'Contentful',
-  extensionsDir
+  extensionsDir,
+  contentDir
 }: {
   cms?: 'Contentful';
   extensionsDir?: string;
+  contentDir: string;
 }) => {
   const {
     typeDefs: clientTypeDefs,
@@ -55,19 +55,17 @@ export const getServer = async ({
     'en-US'
   );
 
-  const entryFetcher = new EntryFetcher(client, contentTypes);
-
-  const loaders = {
-    entries: await createLoader(() => entryFetcher.fetch()),
-    pages: await createLoader(() => entryFetcher.fetchPages(), `fields.slug['${defaultLocale}']`),
-    assets: await createLoader(fetchAllAssets)
-  };
+  const loaders = await createLoaders(
+    resolve(process.cwd(), contentDir),
+    process.env.CONTENTFUL_SPACE_ID || '',
+    process.env.CONTENTFUL_ENV || 'master',
+    (process.env.CONTENTFUL_HOST || 'cdn.contentful.com').startsWith('preview') ? 'preview' : 'production'
+  );
 
   const defaultResolvers = createResolvers({
     contentTypes,
     mappers: mergedMappers,
-    typeMappings: mergedTypeMappings,
-    entryFetcher
+    typeMappings: mergedTypeMappings
   });
 
   const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, ...clientTypeDefs]);
@@ -89,12 +87,3 @@ export const getServer = async ({
     }
   });
 };
-
-const fetchAllAssets = () =>
-  client
-    .sync({
-      type: 'Asset',
-      initial: true,
-      resolveLinks: false
-    })
-    .then(({ assets }) => assets);

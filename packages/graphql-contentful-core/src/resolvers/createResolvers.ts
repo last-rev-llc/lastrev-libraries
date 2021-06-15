@@ -7,7 +7,6 @@ import mapValues from 'lodash/mapValues';
 import getContentResolvers from './getContentResolvers';
 import { ApolloContext, Mappers, TypeMappings } from '../types';
 import fieldResolver from './fieldResolver';
-import EntryFetcher from '../EntryFetcher';
 import getPageResolvers from './getPageResolvers';
 import capitalizeFirst from '../utils/capitalizeFirst';
 import { some } from 'lodash';
@@ -22,13 +21,11 @@ export const fieldsResolver = (type: string, fields: string[], mappers: Mappers)
 const createResolvers = ({
   contentTypes,
   mappers = {},
-  typeMappings = {},
-  entryFetcher
+  typeMappings = {}
 }: {
   contentTypes: ContentType[];
   mappers?: Mappers;
   typeMappings?: TypeMappings;
-  entryFetcher: EntryFetcher;
 }) =>
   merge(
     getPageResolvers({
@@ -43,17 +40,17 @@ const createResolvers = ({
           if (!slug) throw new Error('MissingArgumentSlug');
           ctx.locale = locale || ctx.defaultLocale;
           // not locale specific. fieldsResolver handles that
-          return ctx.loaders.pages.load(slug);
+          return ctx.loaders.pageLoader.load({ slug, contentTypeId: 'pageGeneral' });
         },
         // not locale specific
-        pages: async (_: any) => {
-          return entryFetcher.fetchPages();
+        pages: async (_: any, __: any, ctx: ApolloContext) => {
+          return ctx.loaders.fetchAllPages();
         },
         content: async (_: any, { id, locale }: { id?: string; locale?: string }, ctx: ApolloContext) => {
           if (!id) throw new Error('MissingArgumentId');
           ctx.locale = locale || ctx.defaultLocale;
           // not locale specific. fieldsResolver handles that
-          return ctx.loaders.entries.load(id);
+          return ctx.loaders.entryLoader.load(id);
         }
       },
       Media: fieldsResolver('Media', ['file', 'title', 'description'], mappers),

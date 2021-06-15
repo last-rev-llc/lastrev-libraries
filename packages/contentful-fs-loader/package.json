@@ -1,0 +1,33 @@
+{
+  "name": "@last-rev/contentful-fs-loader",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "run-s clean build:prod",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@last-rev/testing-library": "^0.1.1",
+    "@types/fs-extra": "^9.0.11",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^14.14.35",
+    "contentful": "^8.1.7",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.4",
+    "typescript": "^4.2.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dataloader": "^2.0.0",
+    "fs-extra": "^10.0.0",
+    "lodash": "^4.17.20"
+  }
+}

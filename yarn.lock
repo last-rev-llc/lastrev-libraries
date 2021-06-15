@@ -2209,6 +2209,14 @@
     dot-prop "5.2.0"
     lodash "^4.17.19"
 
+"@last-rev/adapter-contentful@^4.3.2-alpha.1":
+  version "4.3.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@last-rev/adapter-contentful/-/adapter-contentful-4.3.2-alpha.1.tgz#2de56359b893437a56f6566c3cfb1da42f7c22e1"
+  integrity sha512-5n8vzF7VurdKwv8A+xIBsEAkLtDbcFTKzZxnCYNI3mtvsVudN2duMfgiwQWpjueBHHMSaeS+6DZ2SDQcUmwukA==
+  dependencies:
+    dot-prop "5.2.0"
+    lodash "^4.17.19"
+
 "@last-rev/integration-contentful@^5.3.1":
   version "5.3.1"
   resolved "https://registry.yarnpkg.com/@last-rev/integration-contentful/-/integration-contentful-5.3.1.tgz#4450577debe110546ef4782ab8fb83416b47af02"
@@ -2216,6 +2224,18 @@
   dependencies:
     "@babel/runtime" "^7.10.4"
     "@last-rev/adapter-contentful" "^4.3.1"
+    "@types/faker" "^4.1.12"
+    contentful "^8.1.7"
+    deepdash "^5.3.5"
+    lodash "^4.17.19"
+
+"@last-rev/integration-contentful@^5.3.2-alpha.1":
+  version "5.3.2-alpha.1"
+  resolved "https://registry.yarnpkg.com/@last-rev/integration-contentful/-/integration-contentful-5.3.2-alpha.1.tgz#4024c5fb1bb2e333973b38b704f7bb46e09f5153"
+  integrity sha512-Xv7jcU/faKLciLCa5hDpxpRQdgzFmx8zLxG3ZfixIWlXmb/bVMrogurP8SvCiq1V2fbBIy27sA4TUnMFNuwDow==
+  dependencies:
+    "@babel/runtime" "^7.10.4"
+    "@last-rev/adapter-contentful" "^4.3.2-alpha.1"
     "@types/faker" "^4.1.12"
     contentful "^8.1.7"
     deepdash "^5.3.5"
