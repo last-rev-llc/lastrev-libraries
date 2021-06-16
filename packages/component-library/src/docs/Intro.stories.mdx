@@ -1,0 +1,37 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+import { linkTo } from '@storybook/addon-links';
+
+<Meta title="Intro"
+  parameters={{
+    previewTabs: {
+      'storybook/docs/panel': { hidden: true },
+    },
+    options: { isToolshown: false }
+  }}
+/>
+
+<style>{`
+  h1 {
+    line-height: 2.5rem;
+  }
+  .header {
+    display: flex;
+    align-content: center;
+  }
+  .pad {
+    padding: 10px 0 0 30px;
+  }
+`}</style>
+
+
+<div className="header">
+  <div>
+    <img src="https://images.ctfassets.net/imglmb3xms7o/6nmKqleRuQCjYEl6YdyqJB/083bb61de3f0aac739f5c01073fafa63/cmp.png?h=250" alt="Design System" width="100" />
+  </div>
+  <div className="pad">
+
+  # LR Component Library
+
+  The definitive source for building UI
+  </div>
+</div>
