@@ -3,25 +3,22 @@ import {
   Button as MuiButton,
   ButtonProps as MuiButtonProps
 } from '@material-ui/core';
+import ErrorBoundary from '../ErrorBoundary';
 
-interface ButtonProps extends MuiButtonProps {
-  // variant: 'contained' | 'text' | 'outlined' | undefined;
-  // size: 'large' | 'medium' | 'small';
-  // color: 'default' | 'inherit' | 'primary' | 'secondary';
-  // disabled: boolean;
-  // fullWidth: boolean;
-}
+interface ButtonProps extends MuiButtonProps {}
 
 export const Button = ({
   children,
-  ...restProps
+  ...props
 }: ButtonProps) => {
   return (
-    <MuiButton
-      {...restProps}
-    >
-      Button
-    </MuiButton>
+    <ErrorBoundary>
+      <MuiButton
+        {...props}
+      >
+        Button
+      </MuiButton>
+    </ErrorBoundary>
   );
 };
 

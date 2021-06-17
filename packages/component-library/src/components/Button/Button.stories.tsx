@@ -8,7 +8,7 @@ const inlineRadios = [
 ];
 
 export default {
-  title: '1. Primitives / Button',
+  title: '1. Primitives / MUI / Button',
   component: Button,
   argTypes: {
     variant: {

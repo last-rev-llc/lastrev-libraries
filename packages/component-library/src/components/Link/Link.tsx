@@ -1,26 +1,22 @@
 import React from 'react';
-import {
-  Link as MuiLink,
-  LinkProps as MuiLinkProps
-} from '@material-ui/core';
-
-
-interface LinkProps extends MuiLinkProps {
-  // test: string;
-}
+import { Link as MuiLink } from '@material-ui/core';
+import ErrorBoundary from '../ErrorBoundary';
+import { LinkProps } from './Link.types';
 
 export const Link = ({
-  // test,
+  href,
   children,
-  ...restProps
+  ...props
 }: LinkProps) => {
   return (
-    <MuiLink
-      {...restProps}
-    >
-      {children}
-      Link
-    </MuiLink>
+    <ErrorBoundary>
+      <MuiLink
+        href={href}
+        {...props}
+      >
+        {children}
+      </MuiLink>
+    </ErrorBoundary>
   );
 };
 

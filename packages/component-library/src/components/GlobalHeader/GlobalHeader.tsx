@@ -1,4 +1,5 @@
 import React from 'react';
+import ErrorBoundary from '../ErrorBoundary';
 import Grid from '../Grid'
 
 interface HeaderProps {}
@@ -8,9 +9,11 @@ export const GlobalHeader = ({
 }: HeaderProps) => {
 
   return (
-    <Grid {...props}>
-      &nbsp; [ Placeholder ] &nbsp;
-    </Grid>
+    <ErrorBoundary>
+      <Grid {...props}>
+        &nbsp; [ Placeholder ] &nbsp;
+      </Grid>
+    </ErrorBoundary>
   );
 };
 

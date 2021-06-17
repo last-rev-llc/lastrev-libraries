@@ -1,12 +1,15 @@
 import React from 'react';
+import ErrorBoundary from '../ErrorBoundary';
 
 export const Section = ({
   ...props
 }) => {
   return (
-    <section {...props}>
-      Section
-    </section>
+    <ErrorBoundary>
+      <section {...props}>
+        Section
+      </section>
+    </ErrorBoundary>
   );
 };
 

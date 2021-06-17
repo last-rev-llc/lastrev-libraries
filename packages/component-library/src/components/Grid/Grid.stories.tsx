@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box';
 import Grid from './Grid';
 
 export default {
-  title: '1. Primitives / Grid',
+  title: '1. Primitives / MUI / Grid',
   component: Grid,
   decorators: [(storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => <Box m={5}>{storyFn()}</Box>],
   argTypes: {

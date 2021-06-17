@@ -3,7 +3,7 @@ import {
   List as MuiList,
   ListProps as MuiListProps
 } from '@material-ui/core';
-
+import ErrorBoundary from '../ErrorBoundary';
 
 interface ListProps extends MuiListProps {
   // test: string;
@@ -15,12 +15,14 @@ export const List = ({
   ...restProps
 }: ListProps) => {
   return (
-    <MuiList
-      {...restProps}
-    >
-      {children}
-      List
-    </MuiList>
+    <ErrorBoundary>
+      <MuiList
+        {...restProps}
+      >
+        {children}
+        List
+      </MuiList>
+    </ErrorBoundary>
   );
 };
 

@@ -3,6 +3,7 @@ import {
   Grid as MuiGrid,
   GridProps as MuiGridProps
 } from '@material-ui/core';
+import ErrorBoundary from '../ErrorBoundary';
 
 interface GridProps extends MuiGridProps {}
 
@@ -11,14 +12,16 @@ export const Section = ({
   ...props
 }: GridProps) => {
   return (
-    <MuiGrid container {...props}>
-      {[0, 1, 2].map((k) => (
-        <MuiGrid key={k} item>
-          {children}
-          Grid {k}
-        </MuiGrid>
-      ))}
-    </MuiGrid>
+    <ErrorBoundary>
+      <MuiGrid container {...props}>
+        {[0, 1, 2].map((k) => (
+          <MuiGrid key={k} item>
+            {children}
+            Grid {k}
+          </MuiGrid>
+        ))}
+      </MuiGrid>
+    </ErrorBoundary>
   );
 };
 

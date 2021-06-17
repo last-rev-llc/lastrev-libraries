@@ -3,7 +3,7 @@ import Box from '@material-ui/core/Box';
 import List from './List';
 
 export default {
-  title: '1. Primitives / List',
+  title: '1. Primitives / MUI / List',
   component: List,
   decorators: [(storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => <Box m={5}>{storyFn()}</Box>],
   argTypes: {
