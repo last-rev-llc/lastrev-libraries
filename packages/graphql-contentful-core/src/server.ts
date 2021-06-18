@@ -8,6 +8,7 @@ import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import generateSchema from '@last-rev/graphql-schema-gen';
+import createLoaders from '@last-rev/contentful-fs-loader';
 import find from 'lodash/find';
 import get from 'lodash/get';
 import merge from 'lodash/merge';
@@ -15,7 +16,9 @@ import { resolve } from 'path';
 import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
 import loadExtensions from './utils/loadExtensions';
-import createLoaders from '@last-rev/contentful-fs-loader';
+import generatePathToIdMapping from './utils/generatePathToIdMapping';
+import { ContentfulPathsConfigs, Mappers, TypeMappings } from 'types';
+import { map } from 'lodash';
 
 export const getServer = async ({
   cms = 'Contentful',
@@ -30,22 +33,13 @@ export const getServer = async ({
     typeDefs: clientTypeDefs,
     resolvers: clientResolvers,
     mappers: clientMappers,
-    typeMappings: clientTypeMappings
+    typeMappings: clientTypeMappings,
+    pathsConfigs: clientPathsConfigs
   } = await loadExtensions(extensionsDir && resolve(process.cwd(), extensionsDir));
 
-  const mergedMappers = merge({}, ...clientMappers);
-  const mergedTypeMappings = merge({}, ...clientTypeMappings);
-
-  const baseTypeDefs = await generateSchema({
-    source: cms,
-    typeMappings: mergedTypeMappings,
-    connectionParams: {
-      accessToken: process.env.CONTENTFUL_ACCESSTOKEN || '',
-      space: process.env.CONTENTFUL_SPACE_ID || '',
-      host: process.env.CONTENTFUL_HOST || 'cdn.contentful.com',
-      environment: process.env.CONTENTFUL_ENV || 'master'
-    }
-  });
+  const mergedMappers = merge({} as Mappers, ...clientMappers);
+  const mergedTypeMappings = merge({} as TypeMappings, ...clientTypeMappings);
+  const mergedPathsConfigs = merge({} as ContentfulPathsConfigs, ...clientPathsConfigs);
 
   const loaders = await createLoaders(
     resolve(process.cwd(), contentDir),
@@ -54,12 +48,25 @@ export const getServer = async ({
     (process.env.CONTENTFUL_HOST || 'cdn.contentful.com').startsWith('preview') ? 'preview' : 'production'
   );
 
+  const baseTypeDefs = await generateSchema({
+    source: cms,
+    typeMappings: mergedTypeMappings,
+    contentTypes: await loaders.fetchAllContentTypes()
+  });
+
   const [contentTypes, locales] = await Promise.all([loaders.fetchAllContentTypes(), getLocales()]);
 
   const defaultLocale = get(
     find(locales, (locale) => locale.default),
     'code',
     'en-US'
+  );
+
+  const pathToIdMapping = await generatePathToIdMapping(
+    mergedPathsConfigs,
+    loaders,
+    defaultLocale,
+    map(locales, 'code')
   );
 
   const defaultResolvers = createResolvers({
@@ -82,7 +89,8 @@ export const getServer = async ({
         loaders,
         mappers: mergedMappers,
         defaultLocale,
-        typeMappings: mergedTypeMappings
+        typeMappings: mergedTypeMappings,
+        pathToIdMapping
       };
     }
   });

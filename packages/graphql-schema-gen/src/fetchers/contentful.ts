@@ -44,8 +44,8 @@ const reservedForPages: Record<string, string> = {
   theme: 'Theme',
   animation: 'JSON',
   slug: 'String',
-  pathParams: 'PathParams',
-  contents: '[Content]'
+  contents: '[Content]',
+  lr__path__: 'String'
 };
 
 const isPage = (type: ContentType) => {
@@ -87,11 +87,8 @@ const mapContentTypeIds = (type: ContentType, typeMappings: Record<string, strin
   };
 };
 
-const contentfulFetcher: Fetcher = async (typeMappings: Record<string, string>, clientParams: CreateClientParams) => {
-  const client = createClient(clientParams);
-
-  const contentTypes = (await client.getContentTypes()).items.map((type) => mapContentTypeIds(type, typeMappings));
-
+export const generateContentfulSchema = (typeMappings: Record<string, string>, items: ContentType[]) => {
+  const contentTypes = items.map((type) => mapContentTypeIds(type, typeMappings));
   // split out pages from other content types
   const [pages, content] = contentTypes.reduce(([p, c], e) => (isPage(e) ? [[...p, e], c] : [p, [...c, e]]), [
     [],
@@ -105,6 +102,12 @@ const contentfulFetcher: Fetcher = async (typeMappings: Record<string, string>, 
   ${contentTypeDefs}
   ${pageTypeDefs}
   `;
+};
+
+const contentfulFetcher: Fetcher = async (typeMappings: Record<string, string>, clientParams: CreateClientParams) => {
+  const client = createClient(clientParams);
+
+  return generateContentfulSchema(typeMappings, (await client.getContentTypes()).items);
 };
 
 export default contentfulFetcher;

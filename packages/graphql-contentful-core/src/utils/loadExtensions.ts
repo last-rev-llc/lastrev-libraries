@@ -2,13 +2,14 @@ import { DocumentNode, GraphQLSchema, Source } from 'graphql';
 import { readdir, pathExists } from 'fs-extra';
 import { GraphQLResolverMap } from 'apollo-graphql';
 import { join } from 'path';
-import { Mappers } from '../types';
+import { ContentfulPathsConfigs, Mappers } from '../types';
 
 export type Extensions = {
   typeDefs: (string | DocumentNode | Source | GraphQLSchema)[];
   resolvers: GraphQLResolverMap<any>[];
   mappers: Mappers[];
   typeMappings: { [contentfulType: string]: string }[];
+  pathsConfigs: ContentfulPathsConfigs[];
 };
 
 const loadExtensions = async (extensionsPath?: string): Promise<Extensions> => {
@@ -16,7 +17,8 @@ const loadExtensions = async (extensionsPath?: string): Promise<Extensions> => {
     typeDefs: [],
     resolvers: [],
     mappers: [],
-    typeMappings: []
+    typeMappings: [],
+    pathsConfigs: []
   };
 
   if (!extensionsPath) return out;
@@ -33,11 +35,12 @@ const loadExtensions = async (extensionsPath?: string): Promise<Extensions> => {
   const contents = await readdir(extensionsPath);
   contents.forEach((filename) => {
     try {
-      const { typeDefs, resolvers, mappers, typeMappings } = require(join(extensionsPath, filename));
+      const { typeDefs, resolvers, mappers, typeMappings, pathsConfigs } = require(join(extensionsPath, filename));
       typeDefs && out.typeDefs.push(typeDefs);
       resolvers && out.resolvers.push(resolvers);
       mappers && out.mappers.push(mappers);
       typeMappings && out.typeMappings.push(typeMappings);
+      pathsConfigs && out.pathsConfigs.push(pathsConfigs);
     } catch (e) {
       console.error(`Error loading extensions from ${filename}: ${e.message}`);
       process.exit();

@@ -1,4 +1,4 @@
-import { chain, flatten, find, get, has } from 'lodash';
+import { chain, flatten, find, get, has, map } from 'lodash';
 import { resolve, join } from 'path';
 import { ensureDir, writeFile } from 'fs-extra';
 import { Asset, Entry, createClient, ContentfulClientApi } from 'contentful';
@@ -8,11 +8,16 @@ const ENTRIES_DIRNAME = 'entries';
 const ASSETS_DIRNAME = 'assets';
 const CONTENT_TYPES_FILENAME = 'content_types.json';
 const SLUG_LOOKUP_FILENAME = 'content_type_slug_lookup.json';
+const CONTENT_TYPE_ENTRIES_FILENAME = 'entry_ids_by_content_type_lookup.json';
 
 const delay = (m: number) => new Promise((r) => setTimeout(r, m));
 
 export type SlugToIdLookup = {
   [contentTypeIdSlug: string]: string;
+};
+
+export type contentTypeIdToContentIdsLookup = {
+  [contentTypeId: string]: string[];
 };
 
 const getSlugToIdLookup = (
@@ -33,6 +38,15 @@ const getSlugToIdLookup = (
       return `${contentTypeId}:${slug[defaultLocale]}`;
     })
     .mapValues('sys.id')
+    .value();
+};
+
+const getEntriesByContentTypeLookup = (
+  entries: Entry<{ slug?: { [locale: string]: string } }>[]
+): contentTypeIdToContentIdsLookup => {
+  return chain(entries)
+    .groupBy('sys.contentType.sys.id')
+    .mapValues((entries) => map(entries, 'sys.id'))
     .value();
 };
 
@@ -151,7 +165,8 @@ const sync = async ({
   spinner.succeed(`fetching assets: ${Date.now() - startTime}ms`);
   // console.timeEnd('finished fetching assets');
 
-  const slugToIdLookup: SlugToIdLookup = getSlugToIdLookup(entries, defaultLocale);
+  const slugToIdLookup = getSlugToIdLookup(entries, defaultLocale);
+  const entryIdsByContentTypeLookup = getEntriesByContentTypeLookup(entries);
 
   const root = join(resolve(process.cwd(), rootDir), space, environment, previewOrProd);
   startTime = Date.now();
@@ -161,7 +176,8 @@ const sync = async ({
     writeEntriesOrAssets(entries, root, ENTRIES_DIRNAME),
     writeEntriesOrAssets(assets, root, ASSETS_DIRNAME),
     writeSingleFile(contentTypes, root, CONTENT_TYPES_FILENAME),
-    writeSingleFile(slugToIdLookup, root, SLUG_LOOKUP_FILENAME)
+    writeSingleFile(slugToIdLookup, root, SLUG_LOOKUP_FILENAME),
+    writeSingleFile(entryIdsByContentTypeLookup, root, CONTENT_TYPE_ENTRIES_FILENAME)
   ]);
   spinner.succeed(`writing files: ${Date.now() - startTime}ms`);
   // console.timeEnd('finished writing files');

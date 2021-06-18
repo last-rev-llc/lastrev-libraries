@@ -1,4 +1,4 @@
-import { CreateClientParams } from 'contentful';
+import { ContentType, CreateClientParams } from 'contentful';
 
 export type TypeName =
   | 'String'
@@ -32,5 +32,6 @@ export type Fetcher = (typeMappings: Record<string, string>, connectionParams: C
 export type GenerateSchemaParams = {
   source: Source;
   typeMappings: Record<string, string>;
-  connectionParams: ConnectionParams;
+  connectionParams?: ConnectionParams;
+  contentTypes?: ContentType[];
 };
