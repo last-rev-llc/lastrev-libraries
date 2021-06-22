@@ -1,0 +1,7 @@
+[build]
+  ignore = "git diff --quiet HEAD^ HEAD ."
+  command = "yarn build-storybook"
+  publish = "storybook-static"
+
+[build.environment]
+  NETLIFY_USE_YARN = "true"

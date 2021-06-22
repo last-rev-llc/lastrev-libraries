@@ -12,3 +12,7 @@ node_modules
 
 lerna-debug.log
 .env
+**/storybook-static
+
+# misc
+.DS_Store
