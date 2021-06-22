@@ -35,6 +35,7 @@
   "dependencies": {
     "@apollo/federation": "^0.20.7",
     "@graphql-tools/merge": "^6.2.14",
+    "@last-rev/contentful-fs-loader": "^0.1.0",
     "@last-rev/graphql-schema-gen": "^0.1.1",
     "@last-rev/integration-contentful": "^5.3.1",
     "@last-rev/testing-library": "^0.1.1",

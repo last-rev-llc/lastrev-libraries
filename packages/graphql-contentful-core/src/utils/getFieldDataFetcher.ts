@@ -14,6 +14,7 @@ const getFieldDataFetcher = <T>(typeName: string, displayType: string, field: st
       const fieldMapper = mapper[field];
       if (isFunction(fieldMapper)) {
         const fieldData = await fieldMapper(content, args, ctx, info);
+        if (!fieldData) return {};
         return { fieldValue: fieldData, fieldName: fieldData.__fieldName__ || field };
       } else if (isString(fieldMapper)) {
         return {

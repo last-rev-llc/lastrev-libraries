@@ -1,16 +1,27 @@
 import { Source, ConnectionParams } from '../types';
 import { DocumentNode } from 'graphql';
 import { gql } from 'apollo-server';
-import contentfulFetcher from './contentful';
+import contentfulFetcher, { generateContentfulSchema } from './contentful';
+import { ContentType } from 'contentful';
 
 export default async (
   _source: Source,
   typeMappings: Record<string, string>,
-  params: ConnectionParams
+  params?: ConnectionParams,
+  contentTypes?: ContentType[]
 ): Promise<DocumentNode> => {
   // in the future, switch statement to get correct fetcher for source
-  const fetched = await contentfulFetcher(typeMappings, params);
-  return gql`
-    ${fetched}
-  `;
+  if (contentTypes) {
+    const generated = generateContentfulSchema(typeMappings, contentTypes);
+    return gql`
+      ${generated}
+    `;
+  }
+  if (params) {
+    const fetched = await contentfulFetcher(typeMappings, params);
+    return gql`
+      ${fetched}
+    `;
+  }
+  throw Error('Must pass one of params or contentTypes to generate schema');
 };

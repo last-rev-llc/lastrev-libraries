@@ -1,16 +1,6 @@
 import { Context } from 'apollo-server-core';
-import { Asset, Entry } from 'contentful';
-import DataLoader from 'dataloader';
-
-export type Item<T> = Entry<T> | Asset;
-export type FetchFunction<T> = (keys?: readonly string[]) => Promise<Array<Item<T>>>;
-export type ContentfulDataLoader<T> = DataLoader<string, Item<T>> & { primeAll: () => Promise<any> };
-
-export interface Loaders {
-  entries: ContentfulDataLoader<Entry<any>>;
-  pages: ContentfulDataLoader<Entry<{ slug: string }>>;
-  assets: ContentfulDataLoader<Asset>;
-}
+import { ContentfulFsLoaders } from '@last-rev/contentful-fs-loader';
+import { Entry } from 'contentful';
 
 export type TypeMapper = {
   [fieldName: string]: string | Function;
@@ -26,10 +16,40 @@ export type TypeMappings = {
   [contentfulType: string]: string;
 };
 
+export type PathToIdMapping = {
+  [path: string]:
+    | {
+        id: string;
+        blockedLocales: string[];
+      }
+    | string;
+};
+
 export type ApolloContext = Context<{
-  loaders: Loaders;
+  loaders: ContentfulFsLoaders;
   mappers: Mappers;
   defaultLocale: string;
   locale?: string;
   typeMappings: TypeMappings;
+  pathToIdMapping: PathToIdMapping;
 }>;
+
+export type PagePathsParam = {
+  params: {
+    slug: string[];
+    locale: string;
+  };
+};
+
+export type ContentfulPathsGenerator = (
+  resolvedItem: Entry<any>,
+  loaders: ContentfulFsLoaders,
+  defaultLocale: string,
+  locales: string[]
+) => Promise<PathToIdMapping>;
+
+export type ContentfulPathsConfig = string | ContentfulPathsGenerator;
+
+export type ContentfulPathsConfigs = {
+  [contentTypeId: string]: ContentfulPathsConfig;
+};

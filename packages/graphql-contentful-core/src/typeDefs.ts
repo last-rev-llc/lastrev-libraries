@@ -35,15 +35,19 @@ const baseDefs = gql`
     variant: String
   }
 
-  type PathParams {
-    params: JSON
+  type Query {
+    page(path: String!, locale: String): Page
+    paths(locales: [String!]): [PagePathParams!]
+    content(id: String!, locale: String): Content
+  }
+
+  type PagePathParam {
+    slug: [String!]
     locale: String
   }
 
-  type Query {
-    page(slug: String!, locale: String): Page
-    pages: [Page!]
-    content(id: String!, locale: String): Content
+  type PagePathParams {
+    params: PagePathParam!
   }
 
   interface Content {
@@ -59,8 +63,8 @@ const baseDefs = gql`
     animation: JSON
     sidekickLookup: JSON
     slug: String
-    pathParams: PathParams
     contents: [Content]
+    lr__path__: String
   }
 `;
 
