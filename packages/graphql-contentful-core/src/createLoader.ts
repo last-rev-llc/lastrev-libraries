@@ -1,16 +1,13 @@
-import { Asset, Entry } from 'contentful';
 import DataLoader from 'dataloader';
 import { keyBy, get } from 'lodash/fp';
-
-export type Item<T> = Entry<T> | Asset;
-export type FetchFunction<T> = (keys?: readonly string[]) => Promise<Array<Item<T>>>;
-export type ContentfulDataLoader<T> = DataLoader<string, Item<T>> & { primeAll: () => Promise<any> };
+import { ContentfulDataLoader, FetchFunction } from './types';
 
 export const createLoader = async <T>(fetcher: FetchFunction<T>, key: string = 'sys.id', lazy: boolean = false) => {
   const loader = new DataLoader(async (keys: readonly string[]) => {
     console.log('FETCH', { keys });
     // Fetch all items we can
     const items = await fetcher(keys);
+    console.log('an item', items[0]);
     const byId = keyBy(key, items);
     items.forEach((x) => loader.prime(get(key, x), x));
     const result = keys.map((x: string) => byId[x]);

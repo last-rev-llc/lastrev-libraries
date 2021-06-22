@@ -1,75 +1,94 @@
 import * as dotenv from 'dotenv';
+
 dotenv.config();
+
 import { ApolloServer } from 'apollo-server';
-import { getContentTypes } from '@last-rev/integration-contentful';
+import { getContentTypes, getLocales } from '@last-rev/integration-contentful';
 import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
+import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
+import generateSchema from '@last-rev/graphql-schema-gen';
+import find from 'lodash/find';
+import get from 'lodash/get';
 import merge from 'lodash/merge';
-import { mergeTypeDefs } from '@graphql-tools/merge';
-
+import { resolve } from 'path';
 import client from './contentful-client';
 import lastRevTypeDefs from './typeDefs';
-import { createLoader, primeLoader } from './createLoader';
+import { createLoader } from './createLoader';
 import createResolvers from './resolvers/createResolvers';
-import MAPPERS, { Mappers } from './mappers';
-import { DocumentNode } from 'apollo-link';
+import EntryFetcher from './EntryFetcher';
+import loadExtensions from './utils/loadExtensions';
 
 export const getServer = async ({
-  typeDefs: clientTypeDefs,
-  resolvers: clientResolvers,
-  mappers
+  cms = 'Contentful',
+  extensionsDir
 }: {
-  typeDefs?: DocumentNode;
-  resolvers?: any;
-  mappers?: Mappers;
-} = {}) => {
-  const pages = await createLoader(fetchAllPages, 'fields.slug', true);
-  const entries = await createLoader(() =>
-    fetchAllEntries().then((entries) => {
-      primeLoader(pages, () => Promise.resolve(entries), 'fields.slug');
-      return entries;
-    })
-  );
-  const loaders = {
-    entries,
-    pages,
-    assets: await createLoader(fetchAllAssets)
-  };
-  const { items: contentTypes } = await getContentTypes();
+  cms?: 'Contentful';
+  extensionsDir?: string;
+}) => {
+  const {
+    typeDefs: clientTypeDefs,
+    resolvers: clientResolvers,
+    mappers: clientMappers,
+    typeMappings: clientTypeMappings
+  } = await loadExtensions(extensionsDir && resolve(process.cwd(), extensionsDir));
 
-  const resolvers = createResolvers({
-    contentTypes
+  const mergedMappers = merge({}, ...clientMappers);
+  const mergedTypeMappings = merge({}, ...clientTypeMappings);
+
+  const baseTypeDefs = await generateSchema({
+    source: cms,
+    typeMappings: mergedTypeMappings,
+    connectionParams: {
+      accessToken: process.env.CONTENTFUL_ACCESSTOKEN || '',
+      space: process.env.CONTENTFUL_SPACE_ID || '',
+      host: process.env.CONTENTFUL_HOST || 'cdn.contentful.com',
+      environment: process.env.CONTENTFUL_ENV || 'master'
+    }
   });
 
-  const typeDefs = clientTypeDefs ? mergeTypeDefs([clientTypeDefs, lastRevTypeDefs]) : lastRevTypeDefs;
+  const [{ items: contentTypes }, locales] = await Promise.all([getContentTypes(), getLocales()]);
+
+  const defaultLocale = get(
+    find(locales, (locale) => locale.default),
+    'code',
+    'en-US'
+  );
+
+  const entryFetcher = new EntryFetcher(client, contentTypes);
+
+  const loaders = {
+    entries: await createLoader(() => entryFetcher.fetch()),
+    pages: await createLoader(() => entryFetcher.fetchPages(), `fields.slug['${defaultLocale}']`),
+    assets: await createLoader(fetchAllAssets)
+  };
+
+  const defaultResolvers = createResolvers({
+    contentTypes,
+    mappers: mergedMappers,
+    typeMappings: mergedTypeMappings,
+    entryFetcher
+  });
+
+  const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, ...clientTypeDefs]);
+  const resolvers = mergeResolvers([defaultResolvers, ...clientResolvers]);
 
   return new ApolloServer({
-    schema: buildFederatedSchema([{ resolvers: merge(resolvers, clientResolvers), typeDefs }]),
+    schema: buildFederatedSchema([{ resolvers, typeDefs }]),
     introspection: true,
     debug: true,
     plugins: [ApolloServerPluginInlineTrace()],
 
     context: () => {
-      return { loaders, mappers: merge(MAPPERS, mappers) };
+      return {
+        loaders,
+        mappers: mergedMappers,
+        defaultLocale,
+        typeMappings: mergedTypeMappings
+      };
     }
   });
 };
-
-export const fetchAllPages = () =>
-  client
-    .getEntries({
-      content_type: 'landingPage'
-    })
-    .then(({ items }) => items);
-
-const fetchAllEntries = () =>
-  client
-    .sync({
-      type: 'Entry',
-      initial: true,
-      resolveLinks: false
-    })
-    .then(({ entries }) => entries);
 
 const fetchAllAssets = () =>
   client

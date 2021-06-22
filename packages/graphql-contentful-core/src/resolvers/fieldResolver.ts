@@ -1,20 +1,10 @@
 import { Entry } from 'contentful';
-import { ApolloContext, capitalizeFirst } from './createResolvers';
-import { every, get, isArray } from 'lodash';
-import { typeMappings } from '../typeMappings';
+import every from 'lodash/every';
+import isArray from 'lodash/isArray';
 import { GraphQLResolveInfo } from 'graphql';
-import getFieldDataFetcher from './getFieldDataFetcher';
-
-export const getLocalizedField = (locale: string, { fields }: any, field: string) => {
-  // console.log('GetLocalizedField', { locale, fields, field });
-  if (fields && fields[field]) {
-    if (fields[field][locale]) {
-      return get(fields, `${field}.${locale}`);
-    }
-    if (Object.keys(fields[field]).includes('en-US')) return get(fields, [field, 'en-US']);
-    return fields[field];
-  }
-};
+import getFieldDataFetcher from '../utils/getFieldDataFetcher';
+import { ApolloContext } from '../types';
+import capitalizeFirst from '../utils/capitalizeFirst';
 
 export type Resolver<TSource, TContext> = (
   content: TSource,
@@ -23,18 +13,11 @@ export type Resolver<TSource, TContext> = (
   info: GraphQLResolveInfo
 ) => Promise<any>;
 
-type FieldResolver = <T>(display: string, field: string) => Resolver<Entry<T>, ApolloContext>;
+type FieldResolver = <T>(displayType: string) => Resolver<Entry<T>, ApolloContext>;
 
-const fieldResolver: FieldResolver = (displayType: string, field: string) => async (content, args, ctx, info) => {
-  const { loaders, mappers } = ctx;
-  // console.time(`FieldResolver:${displayType}->${field}`);
-  let locale = 'en-US';
-  if (info && info.variableValues && info.variableValues.locale) {
-    locale = info.variableValues.locale;
-  }
-  if (args && args.locale) {
-    locale = args.locale;
-  }
+const fieldResolver: FieldResolver = (displayType: string) => async (content, args, ctx, info) => {
+  const { fieldName: field } = info;
+  const { loaders, mappers, typeMappings } = ctx;
 
   const typeName =
     content && content.sys && content.sys.contentType
@@ -43,20 +26,20 @@ const fieldResolver: FieldResolver = (displayType: string, field: string) => asy
 
   const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
 
-  const fieldData = await fieldDataFetcher(content, args, ctx, info, locale);
+  const { fieldValue } = await fieldDataFetcher(content, args, ctx, info);
 
   //Check if the field is a reference then resolve it
-  if (fieldData && fieldData.sys && fieldData.sys.linkType == 'Entry') {
-    return loaders.entries.load(fieldData.sys.id);
+  if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Entry') {
+    return loaders.entries.load(fieldValue.sys.id);
   }
-  if (fieldData && fieldData.sys && fieldData.sys.linkType == 'Asset') {
-    return loaders.assets.load(fieldData.sys.id);
+  if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Asset') {
+    return loaders.assets.load(fieldValue.sys.id);
   }
   //Check if the field is an reference array then resolve all of them
-  if (isArray(fieldData) && every(fieldData, (x) => !!x.sys.id)) {
-    return loaders.entries.loadMany(fieldData.map((x: any) => x.sys.id));
+  if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys.id)) {
+    return loaders.entries.loadMany(fieldValue.map((x: any) => x.sys.id));
   }
   // console.timeEnd(`FieldResolver:${displayType}->${field}`);
-  return fieldData;
+  return fieldValue;
 };
 export default fieldResolver;
