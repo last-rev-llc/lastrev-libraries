@@ -2201,32 +2201,12 @@
   resolved "https://registry.yarnpkg.com/@josephg/resolvable/-/resolvable-1.0.1.tgz#69bc4db754d79e1a2f17a650d3466e038d94a5eb"
   integrity sha512-CtzORUwWTTOTqfVtHaKRJ0I1kNQd1bpn3sUh8I3nJDVY+5/M/Oe1DnEWzPQvqq/xPIIkzzzIP7mfCoAjFRvDhg==
 
-"@last-rev/adapter-contentful@^4.3.1":
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/@last-rev/adapter-contentful/-/adapter-contentful-4.3.1.tgz#a0eef9a01ea21c3170cdeb889769af07907ede47"
-  integrity sha512-dWCGSZZPhAnseSj/AjIfJPRkVdIOCgeSizupqmmaznbCwqA0ZDGFDNRtEjO8AU2/7IY5YB1Lqoelr8iADa4sSw==
-  dependencies:
-    dot-prop "5.2.0"
-    lodash "^4.17.19"
-
 "@last-rev/adapter-contentful@^4.3.2-alpha.1":
   version "4.3.2-alpha.1"
   resolved "https://registry.yarnpkg.com/@last-rev/adapter-contentful/-/adapter-contentful-4.3.2-alpha.1.tgz#2de56359b893437a56f6566c3cfb1da42f7c22e1"
   integrity sha512-5n8vzF7VurdKwv8A+xIBsEAkLtDbcFTKzZxnCYNI3mtvsVudN2duMfgiwQWpjueBHHMSaeS+6DZ2SDQcUmwukA==
   dependencies:
     dot-prop "5.2.0"
-    lodash "^4.17.19"
-
-"@last-rev/integration-contentful@^5.3.1":
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/@last-rev/integration-contentful/-/integration-contentful-5.3.1.tgz#4450577debe110546ef4782ab8fb83416b47af02"
-  integrity sha512-wZgSyRsHbYZT5LNYMgXGMPAi8UrA3DXy8u+Jp7qzCEzFBl3fm+5JUzZUxsKZ9bx4RKHEqWVXbFzneuMu9dPS9w==
-  dependencies:
-    "@babel/runtime" "^7.10.4"
-    "@last-rev/adapter-contentful" "^4.3.1"
-    "@types/faker" "^4.1.12"
-    contentful "^8.1.7"
-    deepdash "^5.3.5"
     lodash "^4.17.19"
 
 "@last-rev/integration-contentful@^5.3.2-alpha.1":

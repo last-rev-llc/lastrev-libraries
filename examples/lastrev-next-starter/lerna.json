@@ -1,0 +1,28 @@
+{
+  "command": {
+    "publish": {
+      "allowBranch": "master",
+      "bump": "patch",
+      "conventialCommits": true,
+      "message": "chore(release): Publish"
+    }
+  },
+  "packages": ["packages/*"],
+  "loglevel": "success",
+  "version": "independent",
+  "useWorkspaces": true,
+  "registry": "https://registry.npmjs.org",
+  "npmClient": "yarn",
+  "ignoreChanges": [
+    "**/*.md",
+    "**/*.test.js",
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.mock.js",
+    "**/*.mock.ts",
+    "**/*.mock.tsx",
+    "**/__tests__/**",
+    "**/__mocks__/**",
+    "**/__testfixtures__/**"
+  ]
+}

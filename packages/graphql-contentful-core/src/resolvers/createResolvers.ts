@@ -66,13 +66,6 @@ const createResolvers = ({
         return capitalizeFirst(typeMappings[contentTypeId] ? typeMappings[contentTypeId] : contentTypeId);
       }
     },
-    // resolve href and path params
-    Page: {
-      __resolveType: (content: any) => {
-        const contentTypeId = content.sys.contentType.sys.id;
-        return capitalizeFirst(typeMappings[contentTypeId] ? typeMappings[contentTypeId] : contentTypeId);
-      }
-    },
     // Scalars
     JSON: GraphQLJSON,
     Date: new GraphQLScalarType({

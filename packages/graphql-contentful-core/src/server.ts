@@ -11,36 +11,22 @@ import generateSchema from '@last-rev/graphql-schema-gen';
 import createLoaders from '@last-rev/contentful-fs-loader';
 import find from 'lodash/find';
 import get from 'lodash/get';
-import merge from 'lodash/merge';
 import { resolve } from 'path';
 import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
-import loadExtensions from './utils/loadExtensions';
 import generatePathToIdMapping from './utils/generatePathToIdMapping';
-import { ContentfulPathsConfigs, Mappers, TypeMappings } from 'types';
-import { map } from 'lodash';
+import { Extensions } from 'types';
+import { map } from 'lodash'; // s
 
 export const getServer = async ({
   cms = 'Contentful',
-  extensionsDir,
+  extensions,
   contentDir
 }: {
   cms?: 'Contentful';
-  extensionsDir?: string;
+  extensions?: Extensions;
   contentDir: string;
 }) => {
-  const {
-    typeDefs: clientTypeDefs,
-    resolvers: clientResolvers,
-    mappers: clientMappers,
-    typeMappings: clientTypeMappings,
-    pathsConfigs: clientPathsConfigs
-  } = await loadExtensions(extensionsDir && resolve(process.cwd(), extensionsDir));
-
-  const mergedMappers = merge({} as Mappers, ...clientMappers);
-  const mergedTypeMappings = merge({} as TypeMappings, ...clientTypeMappings);
-  const mergedPathsConfigs = merge({} as ContentfulPathsConfigs, ...clientPathsConfigs);
-
   const loaders = await createLoaders(
     resolve(process.cwd(), contentDir),
     process.env.CONTENTFUL_SPACE_ID || '',
@@ -50,7 +36,7 @@ export const getServer = async ({
 
   const baseTypeDefs = await generateSchema({
     source: cms,
-    typeMappings: mergedTypeMappings,
+    typeMappings: extensions?.typeMappings || {},
     contentTypes: await loaders.fetchAllContentTypes()
   });
 
@@ -63,20 +49,23 @@ export const getServer = async ({
   );
 
   const pathToIdMapping = await generatePathToIdMapping(
-    mergedPathsConfigs,
+    extensions?.pathsConfigs || {},
     loaders,
     defaultLocale,
-    map(locales, 'code')
+    map(locales, 'code'),
+    extensions?.typeMappings
   );
 
   const defaultResolvers = createResolvers({
     contentTypes,
-    mappers: mergedMappers,
-    typeMappings: mergedTypeMappings
+    mappers: extensions?.mappers,
+    typeMappings: extensions?.typeMappings
   });
 
-  const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, ...clientTypeDefs]);
-  const resolvers = mergeResolvers([defaultResolvers, ...clientResolvers]);
+  const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, extensions?.typeDefs || ''], {
+    // ignoreFieldConflicts: true
+  });
+  const resolvers = mergeResolvers([defaultResolvers, extensions?.resolvers || {}]);
 
   return new ApolloServer({
     schema: buildFederatedSchema([{ resolvers, typeDefs }]),
@@ -87,9 +76,9 @@ export const getServer = async ({
     context: () => {
       return {
         loaders,
-        mappers: mergedMappers,
+        mappers: extensions?.mappers,
         defaultLocale,
-        typeMappings: mergedTypeMappings,
+        typeMappings: extensions?.typeMappings,
         pathToIdMapping
       };
     }
