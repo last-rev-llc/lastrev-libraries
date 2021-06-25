@@ -12,9 +12,19 @@ yarn gql:start
 yarn gql:dev
 ```
 
+## Building the app
+
+First, make sure that the [graphql server has been started](#starting-the-graphql-server).
+
+```bash
+yarn build
+```
+
 ## Starting the app
 
 First, make sure that the [graphql server has been started](#starting-the-graphql-server).
+
+This builds and exports the web project
 
 ```bash
 yarn start
@@ -31,5 +41,8 @@ yarn dev
 # Still to figure out:
 
 - locales copy after export, errors due to 404.
+- Ability to extend the apollo context
+- Utility to merge extensions in graphql-contentful-core
+- ensure build of extensions prior to gql start
 - Generate locale data prior to build/dev for web project (i18n & translations)
 - Script to auto-generate new starter
