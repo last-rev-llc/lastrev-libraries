@@ -17,6 +17,7 @@
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
     "@last-rev/graphql-contentful-core": "^0.1.2",
+    "@last-rev/contentful-sync-to-fs": "^0.1.1",
     "@last-rev/testing-library": "^0.1.1",
     "apollo-server": "^2.25.0",
     "commander": "^7.1.0",
