@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  List as MuiList,
-  ListProps as MuiListProps
-} from '@material-ui/core';
+import { List as MuiList, ListProps as MuiListProps } from '@material-ui/core';
 import ErrorBoundary from '../ErrorBoundary';
 
 interface ListProps extends MuiListProps {
@@ -16,9 +13,7 @@ export const List = ({
 }: ListProps) => {
   return (
     <ErrorBoundary>
-      <MuiList
-        {...restProps}
-      >
+      <MuiList {...restProps}>
         {children}
         List
       </MuiList>

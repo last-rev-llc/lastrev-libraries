@@ -1,6 +1,6 @@
 import { lorem } from 'faker';
 
 export default {
-  href: lorem.word(),
+  href: lorem.word()
   // text: lorem.word(),
 };

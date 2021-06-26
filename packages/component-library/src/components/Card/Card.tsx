@@ -11,16 +11,16 @@ import ErrorBoundary from '../ErrorBoundary';
 import { LinkProps } from '../Link/Link.types';
 
 interface CardProps extends MuiCardProps {
-  title?: string
-  subtitle?: string
-  body?: string
-  ctas?: LinkProps[]
+  title?: string;
+  subtitle?: string;
+  body?: string;
+  ctas?: LinkProps[];
 }
 
 export const Card = ({
   title = 'Title',
   subtitle = 'Subtitle',
-  body = 'Grayscale wireframe with elements in storybook',
+  body = 'Grayscale wireframe with elements in storybook'
 }: CardProps) => {
   return (
     <ErrorBoundary>

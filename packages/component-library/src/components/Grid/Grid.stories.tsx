@@ -5,64 +5,68 @@ import Grid from './Grid';
 export default {
   title: '1. Primitives / MUI / Grid',
   component: Grid,
-  decorators: [(storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => <Box m={5}>{storyFn()}</Box>],
+  decorators: [
+    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
+      <Box m={5}>{storyFn()}</Box>
+    )
+  ],
   argTypes: {
     container: {
       name: 'Container',
       control: {
-        type: 'boolean',
+        type: 'boolean'
       },
-      defaultValue: true,
+      defaultValue: true
     },
     justify: {
-      name: 'Justify',
+      name: 'Justify'
     },
     spacing: {
       name: 'Spacing',
-      defaultValue: 5,
+      defaultValue: 5
     },
     direction: {
       name: 'Direction',
       control: {
-        type: 'inline-radio',
-      },
+        type: 'inline-radio'
+      }
     },
     alignContent: {
       name: 'Align Content',
       control: {
-        type: 'select',
-      },
+        type: 'select'
+      }
     },
     alignItems: {
       name: 'Align Items',
       control: {
-        type: 'select',
-      },
+        type: 'select'
+      }
     },
     wrap: {
       name: 'Wrap',
       control: {
-        type: 'inline-radio',
-      },
+        type: 'inline-radio'
+      }
     },
     item: {
       name: 'Item',
       control: {
-        type: 'boolean',
+        type: 'boolean'
       },
       defaultValue: false,
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: false }
       }
     },
     zeroMinWidth: {
       name: 'Zero Min-width',
       control: {
-        type: 'boolean',
+        type: 'boolean'
       },
       defaultValue: false,
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: false }
       }
     },
     xs: { name: 'XS' },
@@ -70,7 +74,7 @@ export default {
     md: { name: 'MD' },
     lg: { name: 'LG' },
     xl: { name: 'XL' },
-    ref: { table: { disable: true } },
+    ref: { table: { disable: true } }
   }
 };
 

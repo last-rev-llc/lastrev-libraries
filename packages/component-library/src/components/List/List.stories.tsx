@@ -5,30 +5,34 @@ import List from './List';
 export default {
   title: '1. Primitives / MUI / List',
   component: List,
-  decorators: [(storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => <Box m={5}>{storyFn()}</Box>],
+  decorators: [
+    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
+      <Box m={5}>{storyFn()}</Box>
+    )
+  ],
   argTypes: {
     dense: {
       name: 'Dense',
       control: {
-        type: 'boolean',
+        type: 'boolean'
       },
       defaultValue: false,
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: false }
       }
     },
     disablePadding: {
       name: 'Disable Padding',
       control: {
-        type: 'boolean',
+        type: 'boolean'
       },
       defaultValue: false,
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: false }
       }
     },
     subheader: { name: 'Subheader' },
-    ref: { table: { disable: true } },
+    ref: { table: { disable: true } }
   }
 };
 
