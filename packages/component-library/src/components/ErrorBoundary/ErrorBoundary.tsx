@@ -20,6 +20,6 @@ export const ErrorBoundary = ({ children }: Props) => {
       {children}
     </Sentry.ErrorBoundary>
   );
-}
+};
 
 export default ErrorBoundary;

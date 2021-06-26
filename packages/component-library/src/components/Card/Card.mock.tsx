@@ -5,7 +5,5 @@ export default {
   title: capitalize(lorem.word()),
   subtitle: capitalize(lorem.words(3)),
   body: lorem.sentence(),
-  ctas: [
-
-  ],
+  ctas: []
 };

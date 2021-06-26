@@ -20,11 +20,6 @@ export type Scalars = {
   JSON: any;
 };
 
-
-
-
-
-
 export type BlogPost = Content & {
   __typename?: 'BlogPost';
   sidekickLookup?: Maybe<Scalars['JSON']>;
@@ -90,7 +85,6 @@ export type Content = {
   sidekickLookup?: Maybe<Scalars['JSON']>;
 };
 
-
 export type File = {
   __typename?: 'File';
   url?: Maybe<Scalars['String']>;
@@ -124,7 +118,6 @@ export type Hero = Content & {
   backgroundImage?: Maybe<Media>;
   ctas?: Maybe<Array<Maybe<Link>>>;
 };
-
 
 export type Link = Content & {
   __typename?: 'Link';
@@ -233,17 +226,14 @@ export type Query = {
   content?: Maybe<Content>;
 };
 
-
 export type QueryPageArgs = {
   path: Scalars['String'];
   locale?: Maybe<Scalars['String']>;
 };
 
-
 export type QueryPathsArgs = {
   locales?: Maybe<Array<Scalars['String']>>;
 };
-
 
 export type QueryContentArgs = {
   id: Scalars['String'];
@@ -289,673 +279,505 @@ export type _Service = {
   sdl?: Maybe<Scalars['String']>;
 };
 
-type ContentFragment_BlogPost_Fragment = (
-  { __typename: 'BlogPost' }
-  & Pick<BlogPost, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_BlogPost_Fragment = { __typename: 'BlogPost' } & Pick<
+  BlogPost,
+  'id' | 'sidekickLookup' | 'animation'
+> & { theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>> };
 
-type ContentFragment_Card_Fragment = (
-  { __typename: 'Card' }
-  & Pick<Card, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_Card_Fragment = { __typename: 'Card' } & Pick<Card, 'id' | 'sidekickLookup' | 'animation'> & {
+    theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+  };
 
-type ContentFragment_CardCollection_Fragment = (
-  { __typename: 'CardCollection' }
-  & Pick<CardCollection, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_CardCollection_Fragment = { __typename: 'CardCollection' } & Pick<
+  CardCollection,
+  'id' | 'sidekickLookup' | 'animation'
+> & { theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>> };
 
-type ContentFragment_Categories_Fragment = (
-  { __typename: 'Categories' }
-  & Pick<Categories, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_Categories_Fragment = { __typename: 'Categories' } & Pick<
+  Categories,
+  'id' | 'sidekickLookup' | 'animation'
+> & { theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>> };
 
-type ContentFragment_GlobalSettings_Fragment = (
-  { __typename: 'GlobalSettings' }
-  & Pick<GlobalSettings, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_GlobalSettings_Fragment = { __typename: 'GlobalSettings' } & Pick<
+  GlobalSettings,
+  'id' | 'sidekickLookup' | 'animation'
+> & { theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>> };
 
-type ContentFragment_Hero_Fragment = (
-  { __typename: 'Hero' }
-  & Pick<Hero, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_Hero_Fragment = { __typename: 'Hero' } & Pick<Hero, 'id' | 'sidekickLookup' | 'animation'> & {
+    theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+  };
 
-type ContentFragment_Link_Fragment = (
-  { __typename: 'Link' }
-  & Pick<Link, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_Link_Fragment = { __typename: 'Link' } & Pick<Link, 'id' | 'sidekickLookup' | 'animation'> & {
+    theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+  };
 
-type ContentFragment_Media_Fragment = (
-  { __typename: 'Media' }
-  & Pick<Media, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_Media_Fragment = { __typename: 'Media' } & Pick<Media, 'id' | 'sidekickLookup' | 'animation'> & {
+    theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+  };
 
-type ContentFragment_Modal_Fragment = (
-  { __typename: 'Modal' }
-  & Pick<Modal, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_Modal_Fragment = { __typename: 'Modal' } & Pick<Modal, 'id' | 'sidekickLookup' | 'animation'> & {
+    theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+  };
 
-type ContentFragment_NavigationItem_Fragment = (
-  { __typename: 'NavigationItem' }
-  & Pick<NavigationItem, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_NavigationItem_Fragment = { __typename: 'NavigationItem' } & Pick<
+  NavigationItem,
+  'id' | 'sidekickLookup' | 'animation'
+> & { theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>> };
 
-type ContentFragment_Page_Fragment = (
-  { __typename: 'Page' }
-  & Pick<Page, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_Page_Fragment = { __typename: 'Page' } & Pick<Page, 'id' | 'sidekickLookup' | 'animation'> & {
+    theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+  };
 
-type ContentFragment_PanelImage_Fragment = (
-  { __typename: 'PanelImage' }
-  & Pick<PanelImage, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_PanelImage_Fragment = { __typename: 'PanelImage' } & Pick<
+  PanelImage,
+  'id' | 'sidekickLookup' | 'animation'
+> & { theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>> };
 
-type ContentFragment_PanelRichText_Fragment = (
-  { __typename: 'PanelRichText' }
-  & Pick<PanelRichText, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_PanelRichText_Fragment = { __typename: 'PanelRichText' } & Pick<
+  PanelRichText,
+  'id' | 'sidekickLookup' | 'animation'
+> & { theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>> };
 
-type ContentFragment_Quote_Fragment = (
-  { __typename: 'Quote' }
-  & Pick<Quote, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_Quote_Fragment = { __typename: 'Quote' } & Pick<Quote, 'id' | 'sidekickLookup' | 'animation'> & {
+    theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+  };
 
-type ContentFragment_SplitColumn_Fragment = (
-  { __typename: 'SplitColumn' }
-  & Pick<SplitColumn, 'id' | 'sidekickLookup' | 'animation'>
-  & { theme?: Maybe<(
-    { __typename?: 'Theme' }
-    & Pick<Theme, 'variant'>
-  )> }
-);
+type ContentFragment_SplitColumn_Fragment = { __typename: 'SplitColumn' } & Pick<
+  SplitColumn,
+  'id' | 'sidekickLookup' | 'animation'
+> & { theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>> };
 
-export type ContentFragmentFragment = ContentFragment_BlogPost_Fragment | ContentFragment_Card_Fragment | ContentFragment_CardCollection_Fragment | ContentFragment_Categories_Fragment | ContentFragment_GlobalSettings_Fragment | ContentFragment_Hero_Fragment | ContentFragment_Link_Fragment | ContentFragment_Media_Fragment | ContentFragment_Modal_Fragment | ContentFragment_NavigationItem_Fragment | ContentFragment_Page_Fragment | ContentFragment_PanelImage_Fragment | ContentFragment_PanelRichText_Fragment | ContentFragment_Quote_Fragment | ContentFragment_SplitColumn_Fragment;
+export type ContentFragmentFragment =
+  | ContentFragment_BlogPost_Fragment
+  | ContentFragment_Card_Fragment
+  | ContentFragment_CardCollection_Fragment
+  | ContentFragment_Categories_Fragment
+  | ContentFragment_GlobalSettings_Fragment
+  | ContentFragment_Hero_Fragment
+  | ContentFragment_Link_Fragment
+  | ContentFragment_Media_Fragment
+  | ContentFragment_Modal_Fragment
+  | ContentFragment_NavigationItem_Fragment
+  | ContentFragment_Page_Fragment
+  | ContentFragment_PanelImage_Fragment
+  | ContentFragment_PanelRichText_Fragment
+  | ContentFragment_Quote_Fragment
+  | ContentFragment_SplitColumn_Fragment;
 
-export type LinkFragmentFragment = (
-  { __typename?: 'Link' }
-  & Pick<Link, 'text' | 'url' | 'target'>
-  & ContentFragment_Link_Fragment
-);
+export type LinkFragmentFragment = { __typename?: 'Link' } & Pick<Link, 'text' | 'url' | 'target'> &
+  ContentFragment_Link_Fragment;
 
-export type PanelImageFragmentFragment = (
-  { __typename?: 'PanelImage' }
-  & { image?: Maybe<(
-    { __typename?: 'Media' }
-    & { file?: Maybe<(
-      { __typename?: 'File' }
-      & Pick<File, 'fileName' | 'url'>
-    )> }
-  )> }
-  & ContentFragment_PanelImage_Fragment
-);
+export type PanelImageFragmentFragment = { __typename?: 'PanelImage' } & {
+  image?: Maybe<{ __typename?: 'Media' } & { file?: Maybe<{ __typename?: 'File' } & Pick<File, 'fileName' | 'url'>> }>;
+} & ContentFragment_PanelImage_Fragment;
 
-export type PanelRichTextFragmentFragment = (
-  { __typename?: 'PanelRichText' }
-  & { content?: Maybe<(
-    { __typename?: 'RichText' }
-    & Pick<RichText, 'raw'>
-  )> }
-  & ContentFragment_PanelRichText_Fragment
-);
+export type PanelRichTextFragmentFragment = { __typename?: 'PanelRichText' } & {
+  content?: Maybe<{ __typename?: 'RichText' } & Pick<RichText, 'raw'>>;
+} & ContentFragment_PanelRichText_Fragment;
 
-export type CardFragmentFragment = (
-  { __typename?: 'Card' }
-  & Pick<Card, 'header' | 'summary'>
-  & { image?: Maybe<(
-    { __typename?: 'Media' }
-    & Pick<Media, 'title' | 'description'>
-    & { file?: Maybe<(
-      { __typename?: 'File' }
-      & Pick<File, 'fileName' | 'url'>
-    )> }
-  )>, cta?: Maybe<(
-    { __typename?: 'Link' }
-    & LinkFragmentFragment
-  )> }
-  & ContentFragment_Card_Fragment
-);
+export type CardFragmentFragment = { __typename?: 'Card' } & Pick<Card, 'header' | 'summary'> & {
+    image?: Maybe<
+      { __typename?: 'Media' } & Pick<Media, 'title' | 'description'> & {
+          file?: Maybe<{ __typename?: 'File' } & Pick<File, 'fileName' | 'url'>>;
+        }
+    >;
+    cta?: Maybe<{ __typename?: 'Link' } & LinkFragmentFragment>;
+  } & ContentFragment_Card_Fragment;
 
-export type CardCollectionFragmentFragment = (
-  { __typename?: 'CardCollection' }
-  & Pick<CardCollection, 'layout' | 'cardStyle'>
-  & { cards?: Maybe<Array<Maybe<(
-    { __typename?: 'Card' }
-    & CardFragmentFragment
-  )>>>, featuredText?: Maybe<(
-    { __typename?: 'RichText' }
-    & Pick<RichText, 'raw'>
-  )> }
-  & ContentFragment_CardCollection_Fragment
-);
+export type CardCollectionFragmentFragment = { __typename?: 'CardCollection' } & Pick<
+  CardCollection,
+  'layout' | 'cardStyle'
+> & {
+    cards?: Maybe<Array<Maybe<{ __typename?: 'Card' } & CardFragmentFragment>>>;
+    featuredText?: Maybe<{ __typename?: 'RichText' } & Pick<RichText, 'raw'>>;
+  } & ContentFragment_CardCollection_Fragment;
 
-export type HeroFragmentFragment = (
-  { __typename?: 'Hero' }
-  & Pick<Hero, 'header' | 'summary'>
-  & { backgroundImage?: Maybe<(
-    { __typename?: 'Media' }
-    & Pick<Media, 'title' | 'description'>
-    & { file?: Maybe<(
-      { __typename?: 'File' }
-      & Pick<File, 'fileName' | 'url'>
-    )> }
-  )>, ctas?: Maybe<Array<Maybe<(
-    { __typename?: 'Link' }
-    & LinkFragmentFragment
-  )>>> }
-  & ContentFragment_Hero_Fragment
-);
+export type HeroFragmentFragment = { __typename?: 'Hero' } & Pick<Hero, 'header' | 'summary'> & {
+    backgroundImage?: Maybe<
+      { __typename?: 'Media' } & Pick<Media, 'title' | 'description'> & {
+          file?: Maybe<{ __typename?: 'File' } & Pick<File, 'fileName' | 'url'>>;
+        }
+    >;
+    ctas?: Maybe<Array<Maybe<{ __typename?: 'Link' } & LinkFragmentFragment>>>;
+  } & ContentFragment_Hero_Fragment;
 
-export type QuoteFragmentFragment = (
-  { __typename?: 'Quote' }
-  & Pick<Quote, 'quoteText'>
-  & ContentFragment_Quote_Fragment
-);
+export type QuoteFragmentFragment = { __typename?: 'Quote' } & Pick<Quote, 'quoteText'> &
+  ContentFragment_Quote_Fragment;
 
-export type SplitColumnFragmentFragment = (
-  { __typename?: 'SplitColumn' }
-  & Pick<SplitColumn, 'id'>
-  & { panels?: Maybe<Array<Maybe<(
-    { __typename: 'BlogPost' }
-    & Pick<BlogPost, 'id'>
-  ) | (
-    { __typename: 'Card' }
-    & Pick<Card, 'id'>
-  ) | (
-    { __typename: 'CardCollection' }
-    & Pick<CardCollection, 'id'>
-  ) | (
-    { __typename: 'Categories' }
-    & Pick<Categories, 'id'>
-  ) | (
-    { __typename: 'GlobalSettings' }
-    & Pick<GlobalSettings, 'id'>
-  ) | (
-    { __typename: 'Hero' }
-    & Pick<Hero, 'id'>
-  ) | (
-    { __typename: 'Link' }
-    & Pick<Link, 'id'>
-  ) | (
-    { __typename: 'Media' }
-    & Pick<Media, 'id'>
-  ) | (
-    { __typename: 'Modal' }
-    & Pick<Modal, 'id'>
-  ) | (
-    { __typename: 'NavigationItem' }
-    & Pick<NavigationItem, 'id'>
-  ) | (
-    { __typename: 'Page' }
-    & Pick<Page, 'id'>
-  ) | (
-    { __typename: 'PanelImage' }
-    & Pick<PanelImage, 'id'>
-    & PanelImageFragmentFragment
-  ) | (
-    { __typename: 'PanelRichText' }
-    & Pick<PanelRichText, 'id'>
-    & PanelRichTextFragmentFragment
-  ) | (
-    { __typename: 'Quote' }
-    & Pick<Quote, 'id'>
-  ) | (
-    { __typename: 'SplitColumn' }
-    & Pick<SplitColumn, 'id'>
-  )>>> }
-);
+export type SplitColumnFragmentFragment = { __typename?: 'SplitColumn' } & Pick<SplitColumn, 'id'> & {
+    panels?: Maybe<
+      Array<
+        Maybe<
+          | ({ __typename: 'BlogPost' } & Pick<BlogPost, 'id'>)
+          | ({ __typename: 'Card' } & Pick<Card, 'id'>)
+          | ({ __typename: 'CardCollection' } & Pick<CardCollection, 'id'>)
+          | ({ __typename: 'Categories' } & Pick<Categories, 'id'>)
+          | ({ __typename: 'GlobalSettings' } & Pick<GlobalSettings, 'id'>)
+          | ({ __typename: 'Hero' } & Pick<Hero, 'id'>)
+          | ({ __typename: 'Link' } & Pick<Link, 'id'>)
+          | ({ __typename: 'Media' } & Pick<Media, 'id'>)
+          | ({ __typename: 'Modal' } & Pick<Modal, 'id'>)
+          | ({ __typename: 'NavigationItem' } & Pick<NavigationItem, 'id'>)
+          | ({ __typename: 'Page' } & Pick<Page, 'id'>)
+          | ({ __typename: 'PanelImage' } & Pick<PanelImage, 'id'> & PanelImageFragmentFragment)
+          | ({ __typename: 'PanelRichText' } & Pick<PanelRichText, 'id'> & PanelRichTextFragmentFragment)
+          | ({ __typename: 'Quote' } & Pick<Quote, 'id'>)
+          | ({ __typename: 'SplitColumn' } & Pick<SplitColumn, 'id'>)
+        >
+      >
+    >;
+  };
 
-type PageContentModuleFragment_BlogPost_Fragment = (
-  { __typename?: 'BlogPost' }
-  & ContentFragment_BlogPost_Fragment
-);
+type PageContentModuleFragment_BlogPost_Fragment = { __typename?: 'BlogPost' } & ContentFragment_BlogPost_Fragment;
 
-type PageContentModuleFragment_Card_Fragment = (
-  { __typename?: 'Card' }
-  & CardFragmentFragment
-  & ContentFragment_Card_Fragment
-);
+type PageContentModuleFragment_Card_Fragment = { __typename?: 'Card' } & CardFragmentFragment &
+  ContentFragment_Card_Fragment;
 
-type PageContentModuleFragment_CardCollection_Fragment = (
-  { __typename?: 'CardCollection' }
-  & CardCollectionFragmentFragment
-  & ContentFragment_CardCollection_Fragment
-);
+type PageContentModuleFragment_CardCollection_Fragment = {
+  __typename?: 'CardCollection';
+} & CardCollectionFragmentFragment &
+  ContentFragment_CardCollection_Fragment;
 
-type PageContentModuleFragment_Categories_Fragment = (
-  { __typename?: 'Categories' }
-  & ContentFragment_Categories_Fragment
-);
+type PageContentModuleFragment_Categories_Fragment = {
+  __typename?: 'Categories';
+} & ContentFragment_Categories_Fragment;
 
-type PageContentModuleFragment_GlobalSettings_Fragment = (
-  { __typename?: 'GlobalSettings' }
-  & ContentFragment_GlobalSettings_Fragment
-);
+type PageContentModuleFragment_GlobalSettings_Fragment = {
+  __typename?: 'GlobalSettings';
+} & ContentFragment_GlobalSettings_Fragment;
 
-type PageContentModuleFragment_Hero_Fragment = (
-  { __typename?: 'Hero' }
-  & HeroFragmentFragment
-  & ContentFragment_Hero_Fragment
-);
+type PageContentModuleFragment_Hero_Fragment = { __typename?: 'Hero' } & HeroFragmentFragment &
+  ContentFragment_Hero_Fragment;
 
-type PageContentModuleFragment_Link_Fragment = (
-  { __typename?: 'Link' }
-  & ContentFragment_Link_Fragment
-);
+type PageContentModuleFragment_Link_Fragment = { __typename?: 'Link' } & ContentFragment_Link_Fragment;
 
-type PageContentModuleFragment_Media_Fragment = (
-  { __typename?: 'Media' }
-  & ContentFragment_Media_Fragment
-);
+type PageContentModuleFragment_Media_Fragment = { __typename?: 'Media' } & ContentFragment_Media_Fragment;
 
-type PageContentModuleFragment_Modal_Fragment = (
-  { __typename?: 'Modal' }
-  & ContentFragment_Modal_Fragment
-);
+type PageContentModuleFragment_Modal_Fragment = { __typename?: 'Modal' } & ContentFragment_Modal_Fragment;
 
-type PageContentModuleFragment_NavigationItem_Fragment = (
-  { __typename?: 'NavigationItem' }
-  & ContentFragment_NavigationItem_Fragment
-);
+type PageContentModuleFragment_NavigationItem_Fragment = {
+  __typename?: 'NavigationItem';
+} & ContentFragment_NavigationItem_Fragment;
 
-type PageContentModuleFragment_Page_Fragment = (
-  { __typename?: 'Page' }
-  & ContentFragment_Page_Fragment
-);
+type PageContentModuleFragment_Page_Fragment = { __typename?: 'Page' } & ContentFragment_Page_Fragment;
 
-type PageContentModuleFragment_PanelImage_Fragment = (
-  { __typename?: 'PanelImage' }
-  & PanelImageFragmentFragment
-  & ContentFragment_PanelImage_Fragment
-);
+type PageContentModuleFragment_PanelImage_Fragment = { __typename?: 'PanelImage' } & PanelImageFragmentFragment &
+  ContentFragment_PanelImage_Fragment;
 
-type PageContentModuleFragment_PanelRichText_Fragment = (
-  { __typename?: 'PanelRichText' }
-  & PanelRichTextFragmentFragment
-  & ContentFragment_PanelRichText_Fragment
-);
+type PageContentModuleFragment_PanelRichText_Fragment = {
+  __typename?: 'PanelRichText';
+} & PanelRichTextFragmentFragment &
+  ContentFragment_PanelRichText_Fragment;
 
-type PageContentModuleFragment_Quote_Fragment = (
-  { __typename?: 'Quote' }
-  & QuoteFragmentFragment
-  & ContentFragment_Quote_Fragment
-);
+type PageContentModuleFragment_Quote_Fragment = { __typename?: 'Quote' } & QuoteFragmentFragment &
+  ContentFragment_Quote_Fragment;
 
-type PageContentModuleFragment_SplitColumn_Fragment = (
-  { __typename?: 'SplitColumn' }
-  & SplitColumnFragmentFragment
-  & ContentFragment_SplitColumn_Fragment
-);
+type PageContentModuleFragment_SplitColumn_Fragment = { __typename?: 'SplitColumn' } & SplitColumnFragmentFragment &
+  ContentFragment_SplitColumn_Fragment;
 
-export type PageContentModuleFragmentFragment = PageContentModuleFragment_BlogPost_Fragment | PageContentModuleFragment_Card_Fragment | PageContentModuleFragment_CardCollection_Fragment | PageContentModuleFragment_Categories_Fragment | PageContentModuleFragment_GlobalSettings_Fragment | PageContentModuleFragment_Hero_Fragment | PageContentModuleFragment_Link_Fragment | PageContentModuleFragment_Media_Fragment | PageContentModuleFragment_Modal_Fragment | PageContentModuleFragment_NavigationItem_Fragment | PageContentModuleFragment_Page_Fragment | PageContentModuleFragment_PanelImage_Fragment | PageContentModuleFragment_PanelRichText_Fragment | PageContentModuleFragment_Quote_Fragment | PageContentModuleFragment_SplitColumn_Fragment;
+export type PageContentModuleFragmentFragment =
+  | PageContentModuleFragment_BlogPost_Fragment
+  | PageContentModuleFragment_Card_Fragment
+  | PageContentModuleFragment_CardCollection_Fragment
+  | PageContentModuleFragment_Categories_Fragment
+  | PageContentModuleFragment_GlobalSettings_Fragment
+  | PageContentModuleFragment_Hero_Fragment
+  | PageContentModuleFragment_Link_Fragment
+  | PageContentModuleFragment_Media_Fragment
+  | PageContentModuleFragment_Modal_Fragment
+  | PageContentModuleFragment_NavigationItem_Fragment
+  | PageContentModuleFragment_Page_Fragment
+  | PageContentModuleFragment_PanelImage_Fragment
+  | PageContentModuleFragment_PanelRichText_Fragment
+  | PageContentModuleFragment_Quote_Fragment
+  | PageContentModuleFragment_SplitColumn_Fragment;
 
 export type PageQueryVariables = Exact<{
   path: Scalars['String'];
   locale?: Maybe<Scalars['String']>;
 }>;
 
-
-export type PageQuery = (
-  { __typename?: 'Query' }
-  & { page?: Maybe<{ __typename?: 'BlogPost' } | { __typename?: 'Card' } | { __typename?: 'CardCollection' } | { __typename?: 'Categories' } | { __typename?: 'GlobalSettings' } | { __typename?: 'Hero' } | { __typename?: 'Link' } | { __typename?: 'Media' } | { __typename?: 'Modal' } | { __typename?: 'NavigationItem' } | (
-    { __typename?: 'Page' }
-    & Pick<Page, 'title' | 'slug' | 'lr__path__'>
-    & { contents?: Maybe<Array<Maybe<(
-      { __typename?: 'BlogPost' }
-      & PageContentModuleFragment_BlogPost_Fragment
-    ) | (
-      { __typename?: 'Card' }
-      & PageContentModuleFragment_Card_Fragment
-    ) | (
-      { __typename?: 'CardCollection' }
-      & PageContentModuleFragment_CardCollection_Fragment
-    ) | (
-      { __typename?: 'Categories' }
-      & PageContentModuleFragment_Categories_Fragment
-    ) | (
-      { __typename?: 'GlobalSettings' }
-      & PageContentModuleFragment_GlobalSettings_Fragment
-    ) | (
-      { __typename?: 'Hero' }
-      & PageContentModuleFragment_Hero_Fragment
-    ) | (
-      { __typename?: 'Link' }
-      & PageContentModuleFragment_Link_Fragment
-    ) | (
-      { __typename?: 'Media' }
-      & PageContentModuleFragment_Media_Fragment
-    ) | (
-      { __typename?: 'Modal' }
-      & PageContentModuleFragment_Modal_Fragment
-    ) | (
-      { __typename?: 'NavigationItem' }
-      & PageContentModuleFragment_NavigationItem_Fragment
-    ) | (
-      { __typename?: 'Page' }
-      & PageContentModuleFragment_Page_Fragment
-    ) | (
-      { __typename?: 'PanelImage' }
-      & PageContentModuleFragment_PanelImage_Fragment
-    ) | (
-      { __typename?: 'PanelRichText' }
-      & PageContentModuleFragment_PanelRichText_Fragment
-    ) | (
-      { __typename?: 'Quote' }
-      & PageContentModuleFragment_Quote_Fragment
-    ) | (
-      { __typename?: 'SplitColumn' }
-      & PageContentModuleFragment_SplitColumn_Fragment
-    )>>> }
-    & ContentFragment_Page_Fragment
-  ) | { __typename?: 'PanelImage' } | { __typename?: 'PanelRichText' } | { __typename?: 'Quote' } | { __typename?: 'SplitColumn' }> }
-);
+export type PageQuery = { __typename?: 'Query' } & {
+  page?: Maybe<
+    | { __typename?: 'BlogPost' }
+    | { __typename?: 'Card' }
+    | { __typename?: 'CardCollection' }
+    | { __typename?: 'Categories' }
+    | { __typename?: 'GlobalSettings' }
+    | { __typename?: 'Hero' }
+    | { __typename?: 'Link' }
+    | { __typename?: 'Media' }
+    | { __typename?: 'Modal' }
+    | { __typename?: 'NavigationItem' }
+    | ({ __typename?: 'Page' } & Pick<Page, 'title' | 'slug' | 'lr__path__'> & {
+          contents?: Maybe<
+            Array<
+              Maybe<
+                | ({ __typename?: 'BlogPost' } & PageContentModuleFragment_BlogPost_Fragment)
+                | ({ __typename?: 'Card' } & PageContentModuleFragment_Card_Fragment)
+                | ({ __typename?: 'CardCollection' } & PageContentModuleFragment_CardCollection_Fragment)
+                | ({ __typename?: 'Categories' } & PageContentModuleFragment_Categories_Fragment)
+                | ({ __typename?: 'GlobalSettings' } & PageContentModuleFragment_GlobalSettings_Fragment)
+                | ({ __typename?: 'Hero' } & PageContentModuleFragment_Hero_Fragment)
+                | ({ __typename?: 'Link' } & PageContentModuleFragment_Link_Fragment)
+                | ({ __typename?: 'Media' } & PageContentModuleFragment_Media_Fragment)
+                | ({ __typename?: 'Modal' } & PageContentModuleFragment_Modal_Fragment)
+                | ({ __typename?: 'NavigationItem' } & PageContentModuleFragment_NavigationItem_Fragment)
+                | ({ __typename?: 'Page' } & PageContentModuleFragment_Page_Fragment)
+                | ({ __typename?: 'PanelImage' } & PageContentModuleFragment_PanelImage_Fragment)
+                | ({ __typename?: 'PanelRichText' } & PageContentModuleFragment_PanelRichText_Fragment)
+                | ({ __typename?: 'Quote' } & PageContentModuleFragment_Quote_Fragment)
+                | ({ __typename?: 'SplitColumn' } & PageContentModuleFragment_SplitColumn_Fragment)
+              >
+            >
+          >;
+        } & ContentFragment_Page_Fragment)
+    | { __typename?: 'PanelImage' }
+    | { __typename?: 'PanelRichText' }
+    | { __typename?: 'Quote' }
+    | { __typename?: 'SplitColumn' }
+  >;
+};
 
 export type PathsQueryVariables = Exact<{
   locales?: Maybe<Array<Scalars['String']> | Scalars['String']>;
 }>;
 
+export type PathsQuery = { __typename?: 'Query' } & {
+  paths?: Maybe<
+    Array<
+      { __typename?: 'PagePathParams' } & {
+        params: { __typename?: 'PagePathParam' } & Pick<PagePathParam, 'slug' | 'locale'>;
+      }
+    >
+  >;
+};
 
-export type PathsQuery = (
-  { __typename?: 'Query' }
-  & { paths?: Maybe<Array<(
-    { __typename?: 'PagePathParams' }
-    & { params: (
-      { __typename?: 'PagePathParam' }
-      & Pick<PagePathParam, 'slug' | 'locale'>
-    ) }
-  )>> }
-);
-
-export type NavigationItemFragmentFragment = (
-  { __typename?: 'NavigationItem' }
-  & { link?: Maybe<(
-    { __typename?: 'Link' }
-    & LinkFragmentFragment
-  )>, children?: Maybe<Array<(
-    { __typename: 'NavigationItem' }
-    & Pick<NavigationItem, 'id' | 'sidekickLookup'>
-    & { theme?: Maybe<(
-      { __typename?: 'Theme' }
-      & Pick<Theme, 'variant'>
-    )>, link?: Maybe<(
-      { __typename?: 'Link' }
-      & LinkFragmentFragment
-    )>, children?: Maybe<Array<(
-      { __typename: 'NavigationItem' }
-      & Pick<NavigationItem, 'id' | 'sidekickLookup'>
-      & { theme?: Maybe<(
-        { __typename?: 'Theme' }
-        & Pick<Theme, 'variant'>
-      )>, link?: Maybe<(
-        { __typename?: 'Link' }
-        & LinkFragmentFragment
-      )>, children?: Maybe<Array<(
-        { __typename: 'NavigationItem' }
-        & Pick<NavigationItem, 'id' | 'sidekickLookup'>
-        & { theme?: Maybe<(
-          { __typename?: 'Theme' }
-          & Pick<Theme, 'variant'>
-        )>, link?: Maybe<(
-          { __typename?: 'Link' }
-          & LinkFragmentFragment
-        )>, children?: Maybe<Array<(
-          { __typename: 'NavigationItem' }
-          & Pick<NavigationItem, 'id' | 'sidekickLookup'>
-          & { theme?: Maybe<(
-            { __typename?: 'Theme' }
-            & Pick<Theme, 'variant'>
-          )>, link?: Maybe<(
-            { __typename?: 'Link' }
-            & LinkFragmentFragment
-          )> }
-        )>> }
-      )>> }
-    )>> }
-  )>> }
-  & ContentFragment_NavigationItem_Fragment
-);
+export type NavigationItemFragmentFragment = { __typename?: 'NavigationItem' } & {
+  link?: Maybe<{ __typename?: 'Link' } & LinkFragmentFragment>;
+  children?: Maybe<
+    Array<
+      { __typename: 'NavigationItem' } & Pick<NavigationItem, 'id' | 'sidekickLookup'> & {
+          theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+          link?: Maybe<{ __typename?: 'Link' } & LinkFragmentFragment>;
+          children?: Maybe<
+            Array<
+              { __typename: 'NavigationItem' } & Pick<NavigationItem, 'id' | 'sidekickLookup'> & {
+                  theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+                  link?: Maybe<{ __typename?: 'Link' } & LinkFragmentFragment>;
+                  children?: Maybe<
+                    Array<
+                      { __typename: 'NavigationItem' } & Pick<NavigationItem, 'id' | 'sidekickLookup'> & {
+                          theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+                          link?: Maybe<{ __typename?: 'Link' } & LinkFragmentFragment>;
+                          children?: Maybe<
+                            Array<
+                              { __typename: 'NavigationItem' } & Pick<NavigationItem, 'id' | 'sidekickLookup'> & {
+                                  theme?: Maybe<{ __typename?: 'Theme' } & Pick<Theme, 'variant'>>;
+                                  link?: Maybe<{ __typename?: 'Link' } & LinkFragmentFragment>;
+                                }
+                            >
+                          >;
+                        }
+                    >
+                  >;
+                }
+            >
+          >;
+        }
+    >
+  >;
+} & ContentFragment_NavigationItem_Fragment;
 
 export type SettingsQueryVariables = Exact<{
   id: Scalars['String'];
   locale?: Maybe<Scalars['String']>;
 }>;
 
-
-export type SettingsQuery = (
-  { __typename?: 'Query' }
-  & { content?: Maybe<{ __typename?: 'BlogPost' } | { __typename?: 'Card' } | { __typename?: 'CardCollection' } | { __typename?: 'Categories' } | (
-    { __typename?: 'GlobalSettings' }
-    & Pick<GlobalSettings, 'seo' | 'copyright'>
-    & { logo?: Maybe<(
-      { __typename?: 'Media' }
-      & { file?: Maybe<(
-        { __typename?: 'File' }
-        & Pick<File, 'fileName' | 'url'>
-      )> }
-    )>, footerNavigation?: Maybe<Array<(
-      { __typename?: 'NavigationItem' }
-      & NavigationItemFragmentFragment
-    )>>, mainNavigation?: Maybe<Array<(
-      { __typename?: 'NavigationItem' }
-      & NavigationItemFragmentFragment
-    )>> }
-    & ContentFragment_GlobalSettings_Fragment
-  ) | { __typename?: 'Hero' } | { __typename?: 'Link' } | { __typename?: 'Media' } | { __typename?: 'Modal' } | { __typename?: 'NavigationItem' } | { __typename?: 'Page' } | { __typename?: 'PanelImage' } | { __typename?: 'PanelRichText' } | { __typename?: 'Quote' } | { __typename?: 'SplitColumn' }> }
-);
+export type SettingsQuery = { __typename?: 'Query' } & {
+  content?: Maybe<
+    | { __typename?: 'BlogPost' }
+    | { __typename?: 'Card' }
+    | { __typename?: 'CardCollection' }
+    | { __typename?: 'Categories' }
+    | ({ __typename?: 'GlobalSettings' } & Pick<GlobalSettings, 'seo' | 'copyright'> & {
+          logo?: Maybe<
+            { __typename?: 'Media' } & { file?: Maybe<{ __typename?: 'File' } & Pick<File, 'fileName' | 'url'>> }
+          >;
+          footerNavigation?: Maybe<Array<{ __typename?: 'NavigationItem' } & NavigationItemFragmentFragment>>;
+          mainNavigation?: Maybe<Array<{ __typename?: 'NavigationItem' } & NavigationItemFragmentFragment>>;
+        } & ContentFragment_GlobalSettings_Fragment)
+    | { __typename?: 'Hero' }
+    | { __typename?: 'Link' }
+    | { __typename?: 'Media' }
+    | { __typename?: 'Modal' }
+    | { __typename?: 'NavigationItem' }
+    | { __typename?: 'Page' }
+    | { __typename?: 'PanelImage' }
+    | { __typename?: 'PanelRichText' }
+    | { __typename?: 'Quote' }
+    | { __typename?: 'SplitColumn' }
+  >;
+};
 
 export const ContentFragmentFragmentDoc = gql`
-    fragment ContentFragment on Content {
-  id
-  __typename
-  sidekickLookup
-  theme {
-    variant
-  }
-  animation
-}
-    `;
-export const PanelImageFragmentFragmentDoc = gql`
-    fragment PanelImageFragment on PanelImage {
-  ...ContentFragment
-  image {
-    file {
-      fileName
-      url
-    }
-  }
-}
-    ${ContentFragmentFragmentDoc}`;
-export const PanelRichTextFragmentFragmentDoc = gql`
-    fragment PanelRichTextFragment on PanelRichText {
-  ...ContentFragment
-  content {
-    raw
-  }
-}
-    ${ContentFragmentFragmentDoc}`;
-export const LinkFragmentFragmentDoc = gql`
-    fragment LinkFragment on Link {
-  ...ContentFragment
-  text
-  url
-  target
-}
-    ${ContentFragmentFragmentDoc}`;
-export const CardFragmentFragmentDoc = gql`
-    fragment CardFragment on Card {
-  ...ContentFragment
-  header
-  summary
-  image {
-    file {
-      fileName
-      url
-    }
-    title
-    description
-  }
-  cta {
-    ...LinkFragment
-  }
-}
-    ${ContentFragmentFragmentDoc}
-${LinkFragmentFragmentDoc}`;
-export const CardCollectionFragmentFragmentDoc = gql`
-    fragment CardCollectionFragment on CardCollection {
-  ...ContentFragment
-  layout
-  cardStyle
-  cards {
-    ...CardFragment
-  }
-  featuredText {
-    raw
-  }
-}
-    ${ContentFragmentFragmentDoc}
-${CardFragmentFragmentDoc}`;
-export const HeroFragmentFragmentDoc = gql`
-    fragment HeroFragment on Hero {
-  ...ContentFragment
-  header
-  summary
-  backgroundImage {
-    file {
-      fileName
-      url
-    }
-    title
-    description
-  }
-  ctas {
-    ...LinkFragment
-  }
-}
-    ${ContentFragmentFragmentDoc}
-${LinkFragmentFragmentDoc}`;
-export const QuoteFragmentFragmentDoc = gql`
-    fragment QuoteFragment on Quote {
-  ...ContentFragment
-  quoteText
-}
-    ${ContentFragmentFragmentDoc}`;
-export const SplitColumnFragmentFragmentDoc = gql`
-    fragment SplitColumnFragment on SplitColumn {
-  id
-  id
-  panels {
+  fragment ContentFragment on Content {
     id
     __typename
-    ... on PanelRichText {
-      ...PanelRichTextFragment
-    }
-    ... on PanelImage {
-      ...PanelImageFragment
-    }
-  }
-}
-    ${PanelRichTextFragmentFragmentDoc}
-${PanelImageFragmentFragmentDoc}`;
-export const PageContentModuleFragmentFragmentDoc = gql`
-    fragment PageContentModuleFragment on Content {
-  ...ContentFragment
-  ... on PanelImage {
-    ...PanelImageFragment
-  }
-  ... on PanelRichText {
-    ...PanelRichTextFragment
-  }
-  ... on Card {
-    ...CardFragment
-  }
-  ... on CardCollection {
-    ...CardCollectionFragment
-  }
-  ... on Hero {
-    ...HeroFragment
-  }
-  ... on Quote {
-    ...QuoteFragment
-  }
-  ... on SplitColumn {
-    ...SplitColumnFragment
-  }
-}
-    ${ContentFragmentFragmentDoc}
-${PanelImageFragmentFragmentDoc}
-${PanelRichTextFragmentFragmentDoc}
-${CardFragmentFragmentDoc}
-${CardCollectionFragmentFragmentDoc}
-${HeroFragmentFragmentDoc}
-${QuoteFragmentFragmentDoc}
-${SplitColumnFragmentFragmentDoc}`;
-export const NavigationItemFragmentFragmentDoc = gql`
-    fragment NavigationItemFragment on NavigationItem {
-  ...ContentFragment
-  link {
-    ...LinkFragment
-  }
-  children {
-    __typename
-    id
     sidekickLookup
     theme {
       variant
     }
+    animation
+  }
+`;
+export const PanelImageFragmentFragmentDoc = gql`
+  fragment PanelImageFragment on PanelImage {
+    ...ContentFragment
+    image {
+      file {
+        fileName
+        url
+      }
+    }
+  }
+  ${ContentFragmentFragmentDoc}
+`;
+export const PanelRichTextFragmentFragmentDoc = gql`
+  fragment PanelRichTextFragment on PanelRichText {
+    ...ContentFragment
+    content {
+      raw
+    }
+  }
+  ${ContentFragmentFragmentDoc}
+`;
+export const LinkFragmentFragmentDoc = gql`
+  fragment LinkFragment on Link {
+    ...ContentFragment
+    text
+    url
+    target
+  }
+  ${ContentFragmentFragmentDoc}
+`;
+export const CardFragmentFragmentDoc = gql`
+  fragment CardFragment on Card {
+    ...ContentFragment
+    header
+    summary
+    image {
+      file {
+        fileName
+        url
+      }
+      title
+      description
+    }
+    cta {
+      ...LinkFragment
+    }
+  }
+  ${ContentFragmentFragmentDoc}
+  ${LinkFragmentFragmentDoc}
+`;
+export const CardCollectionFragmentFragmentDoc = gql`
+  fragment CardCollectionFragment on CardCollection {
+    ...ContentFragment
+    layout
+    cardStyle
+    cards {
+      ...CardFragment
+    }
+    featuredText {
+      raw
+    }
+  }
+  ${ContentFragmentFragmentDoc}
+  ${CardFragmentFragmentDoc}
+`;
+export const HeroFragmentFragmentDoc = gql`
+  fragment HeroFragment on Hero {
+    ...ContentFragment
+    header
+    summary
+    backgroundImage {
+      file {
+        fileName
+        url
+      }
+      title
+      description
+    }
+    ctas {
+      ...LinkFragment
+    }
+  }
+  ${ContentFragmentFragmentDoc}
+  ${LinkFragmentFragmentDoc}
+`;
+export const QuoteFragmentFragmentDoc = gql`
+  fragment QuoteFragment on Quote {
+    ...ContentFragment
+    quoteText
+  }
+  ${ContentFragmentFragmentDoc}
+`;
+export const SplitColumnFragmentFragmentDoc = gql`
+  fragment SplitColumnFragment on SplitColumn {
+    id
+    id
+    panels {
+      id
+      __typename
+      ... on PanelRichText {
+        ...PanelRichTextFragment
+      }
+      ... on PanelImage {
+        ...PanelImageFragment
+      }
+    }
+  }
+  ${PanelRichTextFragmentFragmentDoc}
+  ${PanelImageFragmentFragmentDoc}
+`;
+export const PageContentModuleFragmentFragmentDoc = gql`
+  fragment PageContentModuleFragment on Content {
+    ...ContentFragment
+    ... on PanelImage {
+      ...PanelImageFragment
+    }
+    ... on PanelRichText {
+      ...PanelRichTextFragment
+    }
+    ... on Card {
+      ...CardFragment
+    }
+    ... on CardCollection {
+      ...CardCollectionFragment
+    }
+    ... on Hero {
+      ...HeroFragment
+    }
+    ... on Quote {
+      ...QuoteFragment
+    }
+    ... on SplitColumn {
+      ...SplitColumnFragment
+    }
+  }
+  ${ContentFragmentFragmentDoc}
+  ${PanelImageFragmentFragmentDoc}
+  ${PanelRichTextFragmentFragmentDoc}
+  ${CardFragmentFragmentDoc}
+  ${CardCollectionFragmentFragmentDoc}
+  ${HeroFragmentFragmentDoc}
+  ${QuoteFragmentFragmentDoc}
+  ${SplitColumnFragmentFragmentDoc}
+`;
+export const NavigationItemFragmentFragmentDoc = gql`
+  fragment NavigationItemFragment on NavigationItem {
+    ...ContentFragment
     link {
       ...LinkFragment
     }
@@ -989,78 +811,117 @@ export const NavigationItemFragmentFragmentDoc = gql`
           link {
             ...LinkFragment
           }
+          children {
+            __typename
+            id
+            sidekickLookup
+            theme {
+              variant
+            }
+            link {
+              ...LinkFragment
+            }
+          }
         }
       }
     }
   }
-}
-    ${ContentFragmentFragmentDoc}
-${LinkFragmentFragmentDoc}`;
+  ${ContentFragmentFragmentDoc}
+  ${LinkFragmentFragmentDoc}
+`;
 export const PageDocument = gql`
-    query Page($path: String!, $locale: String) {
-  page(path: $path, locale: $locale) {
-    ... on Page {
-      ...ContentFragment
-      title
-      slug
-      lr__path__
-      contents {
-        ...PageContentModuleFragment
-      }
-    }
-  }
-}
-    ${ContentFragmentFragmentDoc}
-${PageContentModuleFragmentFragmentDoc}`;
-export const PathsDocument = gql`
-    query Paths($locales: [String!]) {
-  paths(locales: $locales) {
-    params {
-      slug
-      locale
-    }
-  }
-}
-    `;
-export const SettingsDocument = gql`
-    query Settings($id: String!, $locale: String) {
-  content(id: $id, locale: $locale) {
-    ... on GlobalSettings {
-      ...ContentFragment
-      logo {
-        file {
-          fileName
-          url
+  query Page($path: String!, $locale: String) {
+    page(path: $path, locale: $locale) {
+      ... on Page {
+        ...ContentFragment
+        title
+        slug
+        lr__path__
+        contents {
+          ...PageContentModuleFragment
         }
       }
-      seo
-      copyright
-      footerNavigation {
-        ...NavigationItemFragment
-      }
-      mainNavigation {
-        ...NavigationItemFragment
+    }
+  }
+  ${ContentFragmentFragmentDoc}
+  ${PageContentModuleFragmentFragmentDoc}
+`;
+export const PathsDocument = gql`
+  query Paths($locales: [String!]) {
+    paths(locales: $locales) {
+      params {
+        slug
+        locale
       }
     }
   }
-}
-    ${ContentFragmentFragmentDoc}
-${NavigationItemFragmentFragmentDoc}`;
+`;
+export const SettingsDocument = gql`
+  query Settings($id: String!, $locale: String) {
+    content(id: $id, locale: $locale) {
+      ... on GlobalSettings {
+        ...ContentFragment
+        logo {
+          file {
+            fileName
+            url
+          }
+        }
+        seo
+        copyright
+        footerNavigation {
+          ...NavigationItemFragment
+        }
+        mainNavigation {
+          ...NavigationItemFragment
+        }
+      }
+    }
+  }
+  ${ContentFragmentFragmentDoc}
+  ${NavigationItemFragmentFragmentDoc}
+`;
 
 export type SdkFunctionWrapper = <T>(action: () => Promise<T>) => Promise<T>;
 
-
-const defaultWrapper: SdkFunctionWrapper = sdkFunction => sdkFunction();
+const defaultWrapper: SdkFunctionWrapper = (sdkFunction) => sdkFunction();
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    Page(variables: PageQueryVariables, requestHeaders?: Headers): Promise<{ data?: PageQuery | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
-        return withWrapper(() => client.rawRequest<PageQuery>(print(PageDocument), variables, requestHeaders));
+    Page(
+      variables: PageQueryVariables,
+      requestHeaders?: Headers
+    ): Promise<{
+      data?: PageQuery | undefined;
+      extensions?: any;
+      headers: Headers;
+      status: number;
+      errors?: GraphQLError[] | undefined;
+    }> {
+      return withWrapper(() => client.rawRequest<PageQuery>(print(PageDocument), variables, requestHeaders));
     },
-    Paths(variables?: PathsQueryVariables, requestHeaders?: Headers): Promise<{ data?: PathsQuery | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
-        return withWrapper(() => client.rawRequest<PathsQuery>(print(PathsDocument), variables, requestHeaders));
+    Paths(
+      variables?: PathsQueryVariables,
+      requestHeaders?: Headers
+    ): Promise<{
+      data?: PathsQuery | undefined;
+      extensions?: any;
+      headers: Headers;
+      status: number;
+      errors?: GraphQLError[] | undefined;
+    }> {
+      return withWrapper(() => client.rawRequest<PathsQuery>(print(PathsDocument), variables, requestHeaders));
     },
-    Settings(variables: SettingsQueryVariables, requestHeaders?: Headers): Promise<{ data?: SettingsQuery | undefined; extensions?: any; headers: Headers; status: number; errors?: GraphQLError[] | undefined; }> {
-        return withWrapper(() => client.rawRequest<SettingsQuery>(print(SettingsDocument), variables, requestHeaders));
+    Settings(
+      variables: SettingsQueryVariables,
+      requestHeaders?: Headers
+    ): Promise<{
+      data?: SettingsQuery | undefined;
+      extensions?: any;
+      headers: Headers;
+      status: number;
+      errors?: GraphQLError[] | undefined;
+    }> {
+      return withWrapper(() => client.rawRequest<SettingsQuery>(print(SettingsDocument), variables, requestHeaders));
     }
   };
 }

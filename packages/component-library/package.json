@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/component-library",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Last Rev Component Library",
   "main": "index.js",
   "license": "MIT",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.12.13",
-    "@last-rev/rollup-config": "0.0.2",
+    "@last-rev/rollup-config": "0.0.3",
     "@last-rev/testing-library": "0.1.1",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",

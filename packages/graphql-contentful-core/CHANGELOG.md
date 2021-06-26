@@ -1,5 +1,17 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.2
+
+### Patch Changes
+
+- 012b51f: Added filesystem loaders and sync to fs library
+- fd9a8c6: allowing for config file for extensions. Added examples.
+- 012b51f: Switched from pages to paths query, and implemented a path to ID lookup
+- Updated dependencies [fd9a8c6]
+- Updated dependencies [012b51f]
+  - @last-rev/contentful-fs-loader@0.1.1
+  - @last-rev/graphql-schema-gen@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

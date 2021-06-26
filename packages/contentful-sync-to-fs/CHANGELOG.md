@@ -1,14 +1,9 @@
-# @last-rev/graphql-schema-gen
-
-## 0.1.2
-
-### Patch Changes
-
-- fd9a8c6: allowing for config file for extensions. Added examples.
-- 012b51f: Switched from pages to paths query, and implemented a path to ID lookup
+# @last-rev/contentful-sync-to-fs
 
 ## 0.1.1
 
 ### Patch Changes
 
-- 656bbc1: Allow for customer to extend base types/resolvers/mappers
+- fd9a8c6: allowing for config file for extensions. Added examples.
+- 012b51f: created CLI to run cms sync
+- 012b51f: Switched from pages to paths query, and implemented a path to ID lookup
