@@ -15,7 +15,6 @@
     "deps:check": "manypkg check",
     "deps:fix": "manypkg fix",
     "dev": "lerna run --parallel --include-dependencies dev",
-    "postinstall": "yarn deps:check",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
     "release": "yarn build && changeset publish",
     "start": "lerna run start",
