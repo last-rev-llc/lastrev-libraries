@@ -7,6 +7,7 @@ import { resolve } from 'path';
 import checkExampleExists from './checkExampleExists';
 import chalk from 'chalk';
 import getProjectName from './getProjectName';
+import renamePackages from './renamePackages';
 import installDependencies from './installDependencies';
 
 type RunProps = {
@@ -47,6 +48,9 @@ const createApp = async ({ example, directory, name }: CreateAppProps) => {
     example,
     root
   });
+
+  await renamePackages(root, name);
+
   await installDependencies(root);
 };
 
