@@ -39,7 +39,7 @@
     "@graphql-tools/merge": "^6.2.14",
     "@last-rev/cli": "^0.1.0",
     "@last-rev/graphql-contentful-core": "^0.1.0",
-    "@last-rev/rollup-config": "^0.0.2",
+    "@last-rev/rollup-config": "^0.0.3",
     "dotenv": "^10.0.0",
     "graphql-tag": "^2.12.4",
     "wait-on": "^5.3.0"
