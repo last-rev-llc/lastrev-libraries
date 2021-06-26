@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.1.3
+
+### Patch Changes
+
+- b83fbf7: Added dependency to @last-rev/contentful-sync-to-fs
+
 ## 0.1.2
 
 ### Patch Changes
