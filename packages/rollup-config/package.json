@@ -14,7 +14,7 @@
     "@rollup/plugin-json": "^4.0.2",
     "@rollup/plugin-node-resolve": "^7.1.1",
     "@rollup/plugin-replace": "^2.3.1",
-    "chalk": "^4.1.0",
+    "chalk": "^4.1.1",
     "figures": "3.1.0",
     "filesize": "^6.0.1",
     "fs-extra": "^10.0.0",
