@@ -10,18 +10,44 @@ If an optional extensions directory is passed in, all files in that directory wi
 Usage: gql-serve [options]
 
 Options:
-  -p, --port <port>                           Port to run the server on (default: 5000)
-  -c, --cms <string>                          CMS to use for schema generation (default: "Contentful")
-  -n, --hostname <hostname>                   Host to run the server on
-  -e --extensions-dir <extensions directory>  Path to a directory containing extensions
-  -d --content-dir <content directory>        Path to a directory containing synced CMS data
-  -h, --help                                  display help for command
+  -c, --config <config file>                          Path to a config file
 ```
 
 Example:
 
 ```bash
-last-rev gql-serve -e graphql/extensions -d graphql/content
+last-rev gql-serve -e graphql/extensions -c graphql/config
+```
+
+# Config File
+
+The config file should be a javascript file exporting the following values:
+
+```Javascript
+{
+  // optional parsed extensions
+  extensions: {
+    typeDefs, // am optional string or documentnode with defined typeDefs
+    resolvers, // an optional resolvers object
+    mappers, // an optional mappers object
+    typeMappings, // an optional typeMappings object
+    pathsConfigs, // an optional paths config object
+  },
+  // optional directory pointing to individual files containing extensions
+  // will only be read if "extensions" is not defined
+  // path should be relative to the config file
+  extensionsDir,
+  // optional cms to use. Currently only "Contentful" supported
+  // defaults to "Contentful"
+  cms,
+  // optional port. Defaults to 5000
+  port,
+  // optional hostname. Server will be started on localhost if not provided
+  host,
+  // reqiured: the directory where content JSON files are located
+  // path should be relative to the config
+  contentDir
+}
 ```
 
 # Server Documentation
@@ -51,7 +77,7 @@ cd dev/my-other-project
 3. Using nodemon, run the server, using the relative path of the `last-rev` bin file, and point it to watch the packages directory of the monorepo
 
 ```bash
-nodemon -x '../lastrev-libraries/packages/cli/bin/last-rev gql-serve -e graphql/extensions -d graphql/fs' -w ../lastrev-libraries/packages
+nodemon -x '../lastrev-libraries/packages/cli/bin/last-rev gql-serve -c graphql/config' -w ../lastrev-libraries/packages
 ```
 
 4. Any time a change is made in the monorepo, the server will restart automatically. If you want to also restart when the extensions directory changes, you can either just type `rs` in the terminal running nodemon, or add the directory to the nodemon watch argument

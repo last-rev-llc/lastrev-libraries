@@ -1,0 +1,25 @@
+overwrite: true
+schema: 'http://localhost:5000/graphql'
+documents:
+  - './src/**/*.ts'
+generates:
+  ./src/generated/sdk.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-graphql-request'
+    config:
+      rawRequest: true
+  ./src/generated/apollo.tsx:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withHooks: true
+      withHOC: false
+      withComponent: false
+      rawRequest: true
+  ./src/generated/fragmentTypes.json:
+    plugins:
+      - fragment-matcher

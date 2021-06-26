@@ -1,0 +1,21 @@
+{
+  "possibleTypes": {
+    "Content": [
+      "BlogPost",
+      "Card",
+      "CardCollection",
+      "Categories",
+      "GlobalSettings",
+      "Hero",
+      "Link",
+      "Media",
+      "Modal",
+      "NavigationItem",
+      "Page",
+      "PanelImage",
+      "PanelRichText",
+      "Quote",
+      "SplitColumn"
+    ]
+  }
+}

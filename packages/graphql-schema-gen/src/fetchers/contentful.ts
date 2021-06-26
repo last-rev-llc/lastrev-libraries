@@ -44,7 +44,6 @@ const reservedForPages: Record<string, string> = {
   theme: 'Theme',
   animation: 'JSON',
   slug: 'String',
-  contents: '[Content]',
   lr__path__: 'String'
 };
 
@@ -52,10 +51,10 @@ const isPage = (type: ContentType) => {
   return some(type.fields, (f) => f.id === 'slug');
 };
 
-const getTypeDefs = (types: ContentType[], reserved: Record<string, string>, implementedType: string) => `
+const getTypeDefs = (types: ContentType[], reserved: Record<string, string>) => `
 ${types.map(
   (contentType) => `
-type ${upperFirst(contentType.sys.id)} implements ${implementedType} {
+type ${upperFirst(contentType.sys.id)} implements Content {
   ${Object.keys(reserved).map(
     (k) => `
   ${k}: ${reserved[k]}
@@ -63,6 +62,10 @@ type ${upperFirst(contentType.sys.id)} implements ${implementedType} {
   )}
   ${contentType.fields
     .filter((t) => Object.keys(reserved).indexOf(t.id) === -1)
+    .filter((field) => {
+      const fieldType = getFieldType(field);
+      return fieldType != 'Content' && fieldType != '[Content]';
+    })
     .map(
       (field) => `
   ${field.id}: ${getFieldType(field)}
@@ -95,8 +98,8 @@ export const generateContentfulSchema = (typeMappings: Record<string, string>, i
     []
   ] as ContentType[][]);
 
-  const pageTypeDefs = getTypeDefs(pages, reservedForPages, 'Page');
-  const contentTypeDefs = getTypeDefs(content, reservedForContent, 'Content');
+  const pageTypeDefs = getTypeDefs(pages, reservedForPages);
+  const contentTypeDefs = getTypeDefs(content, reservedForContent);
 
   return `
   ${contentTypeDefs}

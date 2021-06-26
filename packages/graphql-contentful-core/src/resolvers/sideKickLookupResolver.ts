@@ -31,7 +31,7 @@ export const sideKickLookupResolver =
         Object.keys(get(content, 'fields', {})).forEach((field: string) => {
           lookup[field] = {
             contentId: content.sys.id,
-            contentTypeId: content.sys.contentType,
+            contentTypeId: get(content, 'sys.contentType.sys.id'),
             fieldName: field
           };
         });

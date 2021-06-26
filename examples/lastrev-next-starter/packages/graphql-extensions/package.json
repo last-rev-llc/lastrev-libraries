@@ -1,0 +1,26 @@
+{
+  "name": "lrns-graphql-extensions",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "run-s clean build:prod",
+    "clean": "rimraf dist",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@graphql-tools/merge": "^6.2.14",
+    "@last-rev/graphql-contentful-core": "^0.1.0",
+    "@last-rev/rollup-config": "^0.0.2",
+    "dotenv": "^10.0.0",
+    "graphql-tag": "^2.12.4"
+  },
+  "devDependencies": {}
+}

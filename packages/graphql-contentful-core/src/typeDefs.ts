@@ -36,7 +36,7 @@ const baseDefs = gql`
   }
 
   type Query {
-    page(path: String!, locale: String): Page
+    page(path: String!, locale: String): Content
     paths(locales: [String!]): [PagePathParams!]
     content(id: String!, locale: String): Content
   }
@@ -55,16 +55,6 @@ const baseDefs = gql`
     theme: Theme
     animation: JSON
     sidekickLookup: JSON
-  }
-
-  interface Page {
-    id: String
-    theme: Theme
-    animation: JSON
-    sidekickLookup: JSON
-    slug: String
-    contents: [Content]
-    lr__path__: String
   }
 `;
 
