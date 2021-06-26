@@ -14,7 +14,7 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "@last-rev/cli": "^0.1.1",
+    "@last-rev/cli": "^0.1.3",
     "lrns-graphql-extensions": "^0.1.0"
   },
   "devDependencies": {
