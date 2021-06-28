@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.1.5
+
+### Patch Changes
+
+- b4bda35: Added new create-app cli command
+
 ## 0.1.4
 
 ### Patch Changes
