@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/cli",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "",
   "bin": {
     "last-rev": "bin/last-rev"
@@ -16,9 +16,9 @@
   "license": "ISC",
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
-    "@last-rev/graphql-contentful-core": "^0.1.2",
-    "@last-rev/contentful-sync-to-fs": "^0.1.1",
-    "@last-rev/testing-library": "^0.1.1",
+    "@last-rev/graphql-contentful-core": "^0.1.3",
+    "@last-rev/contentful-sync-to-fs": "^0.1.2",
+    "@last-rev/testing-library": "^0.1.2",
     "commander": "^7.1.0",
     "dotenv": "^10.0.0",
     "fs-extra": "^10.0.0",

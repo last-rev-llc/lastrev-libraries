@@ -1,5 +1,11 @@
 # @last-rev/graphql-schema-gen
 
+## 0.1.3
+
+### Patch Changes
+
+- 840ef4a: Fixed dependencies
+
 ## 0.1.2
 
 ### Patch Changes

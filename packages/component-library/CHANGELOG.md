@@ -1,5 +1,14 @@
 # @last-rev/component-library
 
+## 0.1.2
+
+### Patch Changes
+
+- 840ef4a: Fixed dependencies
+- Updated dependencies [840ef4a]
+  - @last-rev/rollup-config@0.0.4
+  - @last-rev/testing-library@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

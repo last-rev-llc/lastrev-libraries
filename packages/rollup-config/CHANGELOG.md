@@ -1,5 +1,11 @@
 # @last-rev/rollup-config
 
+## 0.0.4
+
+### Patch Changes
+
+- 840ef4a: Fixed dependencies
+
 ## 0.0.3
 
 ### Patch Changes

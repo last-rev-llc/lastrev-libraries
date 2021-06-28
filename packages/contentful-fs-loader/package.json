@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-fs-loader",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -13,8 +13,8 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@last-rev/rollup-config": "^0.0.3",
-    "@last-rev/testing-library": "^0.1.1",
+    "@last-rev/rollup-config": "^0.0.4",
+    "@last-rev/testing-library": "^0.1.2",
     "@types/fs-extra": "^9.0.11",
     "@types/node": "^14.14.35",
     "contentful": "^8.1.7",
