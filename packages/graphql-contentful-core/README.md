@@ -171,6 +171,82 @@ const mappers = {
 };
 ```
 
+## pathsConfigs
+
+PathsConfigs allow you to define how a path is constructed from a specific content type. There are two ways to define these:
+
+1. A mapping from a contentType name to a string representing the root of the path. This will append the `slug` field of the content item to the root in order to construct the path for a specific content item:
+
+```javascript
+const pathsConfigs = {
+  // pageLanding item with slug="about" would render this path: "/about"
+  'pageLanding': '/'
+  // pageBlog item with slug="my-trip-to-italy" would render this path: "/blog/my-trip-to-italy"
+  'pageBlog': '/blog'
+}
+```
+
+2. The second way is to provide a function. This function takes four arguments: the content item itself, our file system loaders, the default locale, and the list of available locales. The function should return a mapping of path to content ID, or path to an object consisting of content ID and an array of blocked locales:
+
+```javascript
+// in this example, courses live at '/courses', and any topics that belong to
+// those courses live under the specific course slug: '/courses/course-1/topic-1
+// all topics also live at '/topics'
+const pathsConfigs = {
+  // this function will handle returning all the path mappings for the 'topic' content type
+  topic: async (topic, loaders, defaultLocale, locales) => {
+    const topicId = topic.sys.id;
+    const topicSlug = get(topic, ['fields', 'slug', defaultLocale]);
+    if (!topicSlug) return {};
+    // all topics will have a corresponding location under '/topics'
+    const mapping = {
+      // for example '/topics/topic-1'
+      [`/topics/${topicSlug}`]: topicId
+    };
+    // Here we load all courses, in order to find the topics that are listed below them
+    const courses = await loaders.entriesByContentTypeLoader.load('course');
+    for (const course of courses) {
+      const courseSlug = get(course, ['fields', 'slug', defaultLocale]);
+      if (!courseSlug) continue;
+      const blockedLocales = [];
+      for (const locale of locales) {
+        // here we check whether the field 'topics' in the course exists for the current locale, or for the default locale
+        if (!courseHasTopicForLocale(course.fields, topicId, locale, defaultLocale)) {
+          // if it does not exist, push it to blockedLocales.
+          // This topic will not generate a path under this course slug
+          // for this locale
+          blockedLocales.push(locale);
+        }
+      }
+      if (blockedLocales.length === locales.length) {
+        // all locales blocked (content not targeted), continue
+        continue;
+      }
+      if (!blockedLocales.length) {
+        // all locales are targeted, just return the ID string
+        mapping[`/courses/${courseSlug}/${topicSlug}`] = topicId;
+      } else {
+        // some locales are blocked, return an object with the ID string
+        // and the list of blockedLocales
+        mapping[`/courses/${courseSlug}/${topicSlug}`] = {
+          id: topicId,
+          blockedLocales
+        };
+      }
+    }
+    return mapping;
+  },
+  // this will simply target all courses to '/courses': '/courses/course-1'
+  course: '/courses'
+};
+
+const courseHasTopicForLocale = (courseFields, topicId, locale, defaultLocale) => {
+  const topics = get(courseFields, ['topics', locale], get(courseFields, ['topics', defaultLocale], null));
+  if (!topics) return null;
+  return some(topics, (topic) => topic.sys.id === topicId);
+};
+```
+
 # Resolver Context
 
 The 3rd argument passed to resolver functions represents the [Apollo Resolver Context](https://www.apollographql.com/docs/apollo-server/data/resolvers/#the-context-argument). We pass a number of things to this context to be used in resolvers and mappers.
@@ -184,7 +260,8 @@ resolve = async (_parent, args, context, info) => {
     defaultLocale,
     loaders,
     mappers,
-    typeMappings
+    typeMappings,
+    pathToIdMapping
   } = context;
 
   // load an entry
@@ -195,6 +272,16 @@ resolve = async (_parent, args, context, info) => {
   const page = await loaders.pages(slug, locale);
   // load an asset
   const asset = await loaders.assets(id);
+  // find an item by path
+  const mapped = pathToIdMapping[path];
+  if (isString(mapped)) {
+    const entry = await loaders.entries(mapped, locale);
+  } else {
+    const { id, blockedLocales } = mapped;
+    if (blockedLocales.indexOf(locale) === -1) {
+      const entry = await loaders.entries(id, locale);
+    }
+  }
 
   // if needed, mappers, and typeMappings are also available in the context
 };
