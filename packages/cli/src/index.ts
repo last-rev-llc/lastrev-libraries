@@ -8,4 +8,7 @@ program
   .command('cms-sync', 'Sync from a CMS to the file system', {
     executableFile: resolve(__dirname, '../dist/commands/cms-sync/cms-sync.js')
   })
+  .command('create-app', 'Create an app from one of our examples', {
+    executableFile: resolve(__dirname, '../dist/commands/create-app/create-app.js')
+  })
   .parse(process.argv);
