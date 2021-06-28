@@ -1,5 +1,5 @@
 import { compact, isString, reduce } from 'lodash';
-import { PagePathsParam, PathToIdMapping } from 'types';
+import { PagePathsParam, PathToIdMapping } from '../types';
 
 const generatePathParams = (pathToIdMapping: PathToIdMapping, locales: string[]): PagePathsParam[] =>
   reduce(

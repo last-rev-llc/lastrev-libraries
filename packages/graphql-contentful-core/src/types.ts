@@ -1,8 +1,7 @@
 import { Context } from 'apollo-server-core';
 import { ContentfulFsLoaders } from '@last-rev/contentful-fs-loader';
 import { Entry } from 'contentful';
-import { DocumentNode } from 'apollo-link';
-import { GraphQLSchema, Source } from 'graphql';
+import { GraphQLSchema, Source, DocumentNode } from 'graphql';
 import { GraphQLResolverMap } from 'apollo-graphql';
 
 export type TypeMapper = {

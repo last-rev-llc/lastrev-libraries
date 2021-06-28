@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
-import { ContentFragment } from 'src/fragments/Content.fragment';
-import { LinkFragment } from 'src/fragments/Link.fragment';
+import { ContentFragment } from '../fragments/Content.fragment';
+import { LinkFragment } from '../fragments/Link.fragment';
 
 export const ContentQuery = gql`
   ${ContentFragment}

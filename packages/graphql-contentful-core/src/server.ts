@@ -9,14 +9,13 @@ import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import generateSchema from '@last-rev/graphql-schema-gen';
 import createLoaders from '@last-rev/contentful-fs-loader';
-import find from 'lodash/find';
-import get from 'lodash/get';
+import { find, get, map } from 'lodash';
 import { resolve } from 'path';
+
 import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
 import generatePathToIdMapping from './utils/generatePathToIdMapping';
-import { Extensions } from 'types';
-import { map } from 'lodash'; // s
+import { Extensions } from './types';
 
 export const getServer = async ({
   cms = 'Contentful',

@@ -1,6 +1,6 @@
 import get from 'lodash/get';
-import { TypeMappings } from 'types';
 
+import { TypeMappings } from '../types';
 import getFieldDataFetcher from '../utils/getFieldDataFetcher';
 import capitalizeFirst from '../utils/capitalizeFirst';
 

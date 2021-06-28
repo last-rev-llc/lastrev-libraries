@@ -1,7 +1,7 @@
 import { ContentfulFsLoaders } from '@last-rev/contentful-fs-loader';
 import { get, has, isFunction, isString, merge, reduce, transform } from 'lodash';
 import { join } from 'path';
-import { ContentfulPathsConfigs, PathToIdMapping, TypeMappings } from 'types';
+import { ContentfulPathsConfigs, PathToIdMapping, TypeMappings } from '../types';
 
 const generatePathToIdMapping = async (
   pathsConfigs: ContentfulPathsConfigs,

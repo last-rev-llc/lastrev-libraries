@@ -19,13 +19,10 @@
     "@last-rev/graphql-contentful-core": "^0.1.2",
     "@last-rev/contentful-sync-to-fs": "^0.1.1",
     "@last-rev/testing-library": "^0.1.1",
-    "apollo-server": "^2.25.0",
     "commander": "^7.1.0",
     "dotenv": "^10.0.0",
-    "filewatcher": "^3.0.1",
     "fs-extra": "^10.0.0",
     "graphql": "^15.5.1",
-    "lodash": "^4.17.21",
-    "nodemon": "^2.0.7"
+    "lodash": "^4.17.21"
   }
 }

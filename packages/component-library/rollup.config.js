@@ -1,4 +1,4 @@
-import { config } from '@last-rev/rollup';
+import { config } from '@last-rev/rollup-config';
 
 export default config({
   input: [`./src/index.js`],
