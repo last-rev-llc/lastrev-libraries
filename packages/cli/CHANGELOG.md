@@ -1,5 +1,15 @@
 # @last-rev/cli
 
+## 0.1.4
+
+### Patch Changes
+
+- 840ef4a: Fixed dependencies
+- Updated dependencies [840ef4a]
+  - @last-rev/contentful-sync-to-fs@0.1.2
+  - @last-rev/graphql-contentful-core@0.1.3
+  - @last-rev/testing-library@0.1.2
+
 ## 0.1.3
 
 ### Patch Changes
