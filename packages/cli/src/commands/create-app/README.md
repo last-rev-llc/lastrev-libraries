@@ -14,7 +14,9 @@ At this point, you just need to add a `.env` file with your environment variable
 
 # usage
 
+```text
 Options:
 -e --example <example> Name of the last-rev example to use (default: "lastrev-next-starter")
 -d --directory <directory> Directory in which to extract the project (default: ".")
 -h, --help display help for command
+```
