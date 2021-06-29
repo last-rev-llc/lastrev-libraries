@@ -26,6 +26,10 @@ See below for specific command usage
 
 See documentation [here](src/commands/gql-serve).
 
-# TODO
+## cms-sync
 
-merge our other last-rev CLIs into this one
+See documentation [here](src/commands/cms-sync).
+
+## create-app
+
+See documentation [here](src/commands/create-app).
