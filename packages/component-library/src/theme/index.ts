@@ -1,4 +1,4 @@
-import createTheme from './createTheme';
+import createAppTheme from './createTheme';
 
 interface CustomTheme {
   // Example on how to pass custom fields to the Theme
@@ -7,14 +7,14 @@ interface CustomTheme {
   };
 }
 
-declare module '@material-ui/core/styles/createMuiTheme' {
+declare module '@material-ui/core/styles/createTheme' {
   // eslint-disable-next-line
   interface Theme extends CustomTheme {}
   // eslint-disable-next-line
   interface ThemeOptions extends CustomTheme {}
 }
 
-const theme = createTheme({
+const theme = createAppTheme({
   appDrawer: { width: 240 }
 });
 

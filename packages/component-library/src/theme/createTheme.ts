@@ -1,8 +1,8 @@
 import { red, blue } from '@material-ui/core/colors';
-import { createMuiTheme, ThemeOptions } from '@material-ui/core/styles';
+import { createTheme, ThemeOptions } from '@material-ui/core/styles';
 
-export default function createTheme(options: ThemeOptions) {
-  return createMuiTheme({
+export default function createAppTheme(options: ThemeOptions) {
+  return createTheme({
     palette: {
       primary: {
         main: blue[600]

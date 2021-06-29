@@ -6,37 +6,14 @@ import mockContent from './Card.mock';
 export default {
   title: '1. Primitives / MUI / Card',
   component: Card,
-  decorators: [
-    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box m={5}>{storyFn()}</Box>
-    )
-  ],
+  decorators: [(storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => <Box m={5}>{storyFn()}</Box>],
   argTypes: {
-    // raised: {
-    //   name: 'Raised',
-    //   control: {
-    //     type: 'boolean',
-    //   },
-    //   defaultValue: false,
-    //   table: {
-    //     defaultValue: { summary: false },
-    //   }
-    // },
-    // disablePadding: {
-    //   name: 'Disable Padding',
-    //   control: {
-    //     type: 'boolean',
-    //   },
-    //   defaultValue: false,
-    //   table: {
-    //     defaultValue: { summary: false },
-    //   }
-    // },
+    image: { name: 'Image' },
     title: { name: 'Title' },
     subtitle: { name: 'Subtitle' },
     body: { name: 'Body' },
     ctas: { name: 'CTAs' },
-    ref: { table: { disable: true } }
+    ref: { table: { disable: true } },
   }
 };
 

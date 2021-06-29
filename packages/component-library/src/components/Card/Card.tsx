@@ -4,47 +4,67 @@ import {
   CardProps as MuiCardProps,
   CardActions,
   CardContent,
+  CardMedia,
   Link,
   Typography
 } from '@material-ui/core';
 import ErrorBoundary from '../ErrorBoundary';
+import Image from '../Image';
+import { ImageProps } from '../Image/Image.types';
 import { LinkProps } from '../Link/Link.types';
 
 interface CardProps extends MuiCardProps {
-  title?: string;
-  subtitle?: string;
-  body?: string;
-  ctas?: LinkProps[];
+  image: ImageProps
+  title?: string
+  subtitle?: string
+  body?: string
+  ctas?: LinkProps[],
 }
 
 export const Card = ({
-  title = 'Title',
-  subtitle = 'Subtitle',
-  body = 'Grayscale wireframe with elements in storybook'
+  image,
+  title,
+  subtitle,
+  body,
+  ctas,
 }: CardProps) => {
   return (
     <ErrorBoundary>
       <MuiCard>
+        {image ? (
+          // <CardMedia
+          //   component={Image}
+          //   {...image}
+          // />
+          <Image {...image} />
+        ) : null}
         <CardContent>
-          {title && (
+          {title ? (
             <Typography variant="h4" component="h3">
               {title}
             </Typography>
-          )}
-          {subtitle && (
+          ) : null}
+          {subtitle ? (
             <Typography variant="h5" component="h4">
               {subtitle}
             </Typography>
-          )}
-          {body && (
+          ) : null}
+          {body ? (
             <Typography variant="body2" component="p">
               {body}
             </Typography>
-          )}
+          ) : null}
         </CardContent>
-        <CardActions>
-          <Link>Learn More</Link>
-        </CardActions>
+        {ctas?.length ? (
+          <CardActions>
+            <Link
+              // href={href}
+              // {...linkProps}
+            >
+              Link text
+            </Link>
+          </CardActions>
+        ) : null}
       </MuiCard>
     </ErrorBoundary>
   );
