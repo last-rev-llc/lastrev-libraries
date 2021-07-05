@@ -6,6 +6,10 @@ import { ImageProps } from './Image.types';
 
 export type Ref = HTMLImageElement;
 
+// TODO: Move this to the correct place
+type Env = 'development'| 'production'| 'test' | string | undefined;
+const NODE_ENV:Env  = process.env.NODE_ENV;
+
 const Image = React.forwardRef<Ref, ImageProps>(({
   src, className, columns = 12, lazy, itemProp, testId, ...imageProps
 }: ImageProps, ref) => {
@@ -13,7 +17,7 @@ const Image = React.forwardRef<Ref, ImageProps>(({
   try {
     return (
       <ErrorBoundary>
-        {process.env.NODE_ENV === 'test' || !lazy ? (
+        {NODE_ENV === 'test' || !lazy ? (
           <img
             {...getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj' })}
             ref={ref}

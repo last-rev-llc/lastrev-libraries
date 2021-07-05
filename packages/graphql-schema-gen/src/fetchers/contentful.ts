@@ -34,14 +34,14 @@ const getFieldType = (typeData: Field | FieldItem): string => {
 const reservedForContent: Record<string, string> = {
   sidekickLookup: 'JSON',
   id: 'String',
-  theme: 'Theme',
+  theme: '[Theme]',
   animation: 'JSON'
 };
 
 const reservedForPages: Record<string, string> = {
   sidekickLookup: 'JSON',
   id: 'String',
-  theme: 'Theme',
+  theme: '[Theme]',
   animation: 'JSON',
   slug: 'String',
   lr__path__: 'String'

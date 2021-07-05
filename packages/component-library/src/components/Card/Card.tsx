@@ -4,7 +4,7 @@ import {
   CardProps as MuiCardProps,
   CardActions,
   CardContent,
-  CardMedia,
+  // CardMedia,
   Link,
   Typography
 } from '@material-ui/core';
@@ -14,20 +14,14 @@ import { ImageProps } from '../Image/Image.types';
 import { LinkProps } from '../Link/Link.types';
 
 interface CardProps extends MuiCardProps {
-  image: ImageProps
-  title?: string
-  subtitle?: string
-  body?: string
-  ctas?: LinkProps[],
+  image: ImageProps;
+  title?: string;
+  subtitle?: string;
+  body?: string;
+  ctas?: LinkProps[];
 }
 
-export const Card = ({
-  image,
-  title,
-  subtitle,
-  body,
-  ctas,
-}: CardProps) => {
+export const Card = ({ image, title, subtitle, body, ctas }: CardProps) => {
   return (
     <ErrorBoundary>
       <MuiCard>
@@ -58,8 +52,8 @@ export const Card = ({
         {ctas?.length ? (
           <CardActions>
             <Link
-              // href={href}
-              // {...linkProps}
+            // href={href}
+            // {...linkProps}
             >
               Link text
             </Link>
