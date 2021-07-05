@@ -23,9 +23,6 @@ interface CardProps extends MuiCardProps {
 }
 
 export const Card = ({ image, title, subtitle, body, ctas }: CardProps) => {
-  const theme = useTheme();
-  console.log('Card: theme', { theme });
-
   return (
     <ErrorBoundary>
       <MuiCard>

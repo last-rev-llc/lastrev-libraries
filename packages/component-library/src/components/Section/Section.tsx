@@ -10,7 +10,6 @@ import ContentModule from '../ContentModule';
 interface Image {
   src: string;
 }
-
 interface Media {
   desktop: Image;
   tablet?: Image;
@@ -29,9 +28,6 @@ interface Props {
 }
 
 const Section = ({ contents, styles }: Props) => {
-  // console.log('Section: contents', contents);
-  // console.log('Section: styles', styles);
-
   return (
     <Root sx={styles?.root}>
       {/* <Background {...media} /> */}
