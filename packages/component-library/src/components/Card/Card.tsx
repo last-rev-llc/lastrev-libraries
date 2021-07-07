@@ -12,6 +12,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 import { ImageProps } from '../Image/Image.types';
 import { LinkProps } from '../Link/Link.types';
+import { useTheme } from '@material-ui/core/styles';
 
 interface CardProps extends MuiCardProps {
   image: ImageProps;
@@ -22,6 +23,9 @@ interface CardProps extends MuiCardProps {
 }
 
 export const Card = ({ image, title, subtitle, body, ctas }: CardProps) => {
+  const theme = useTheme();
+  console.log('Card: theme', {theme});
+
   return (
     <ErrorBoundary>
       <MuiCard>
@@ -30,7 +34,7 @@ export const Card = ({ image, title, subtitle, body, ctas }: CardProps) => {
           //   component={Image}
           //   {...image}
           // />
-          <Image {...image} />
+          <Image {...image} height="100" />
         ) : null}
         <CardContent>
           {title ? (

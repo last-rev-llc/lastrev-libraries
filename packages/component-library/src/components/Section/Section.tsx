@@ -1,7 +1,7 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
 import { styled } from '@material-ui/system';
-import { Grid } from '@material-ui/core';
+import Box from '@material-ui/core/Box';
+import Grid from '@material-ui/core/Grid';
 import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
 import get from 'lodash/get';
 // import BackgroundImage from '../BackgroundImage';
@@ -10,6 +10,7 @@ import ContentModule from '../ContentModule';
 interface Image {
   src: string;
 }
+
 interface Media {
   desktop: Image;
   tablet?: Image;
@@ -28,6 +29,9 @@ interface Props {
 }
 
 const Section = ({ contents, styles }: Props) => {
+  // console.log('Section: contents', contents);
+  // console.log('Section: styles', styles);
+
   return (
     <Root sx={styles?.root}>
       {/* <Background {...media} /> */}
