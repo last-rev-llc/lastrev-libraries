@@ -21,6 +21,10 @@ export default {
                 borderRadius: 0,
                 boxShadow: 'none',
                 fontSize: 0,
+
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                }
               }
             }
           }
@@ -45,6 +49,10 @@ export default {
                 border: '2px solid #fee501',
                 boxShadow: 'none',
                 fontSize: 0,
+
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                },
 
                 '& img': {
                   opacity: 0.5
@@ -92,11 +100,16 @@ export default {
                 alignItems: 'center',
                 height: '100%',
                 maxWidth: 540,
+                maxHeight: 240,
                 minWidth: 540,
                 padding: 20,
                 borderRadius: 0,
                 boxShadow: 'none',
                 fontSize: 0,
+
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                },
 
                 '& img': {
                   width: 150,
@@ -150,6 +163,10 @@ export default {
                 boxShadow: 'none',
                 fontSize: 0,
 
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                },
+
                 '& img': {
                   width: 150,
                   height: 150,
@@ -200,6 +217,10 @@ export default {
                 boxShadow: 'none',
                 fontSize: 0,
 
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                },
+
                 '& img': {
                   width: '100%',
                   height: '100%',
@@ -233,6 +254,10 @@ export default {
                 borderRadius: 0,
                 boxShadow: 'none',
                 fontSize: 0,
+
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                }
               }
             }
           },
@@ -282,6 +307,10 @@ export default {
                 borderRadius: 0,
                 boxShadow: 'none',
                 fontSize: 0,
+
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                }
               }
             }
           },
@@ -336,6 +365,10 @@ export default {
                 borderRadius: 0,
                 boxShadow: 'none',
                 fontSize: 0,
+
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                }
               }
             }
           },
@@ -404,6 +437,10 @@ export default {
                 borderRadius: 0,
                 boxShadow: 'none',
                 fontSize: 0,
+
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                }
               }
             }
           },
@@ -472,6 +509,10 @@ export default {
                 borderRadius: 20,
                 boxShadow: 'none',
                 fontSize: 0,
+
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                }
               }
             }
           },
@@ -531,6 +572,10 @@ export default {
                 borderRadius: 20,
                 boxShadow: 'none',
                 fontSize: 0,
+
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                },
 
                 '& img': {
                   width: 150,
@@ -605,6 +650,10 @@ export default {
                 boxShadow: 'none',
                 fontSize: 0,
 
+                '&:hover': {
+                  boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)',
+                },
+
                 '& img': {
                   width: 150,
                   height: 100,
@@ -667,7 +716,7 @@ export default {
             padding: 10
           }
         }
-      },
-    },
+      }
+    }
   }]
 };
