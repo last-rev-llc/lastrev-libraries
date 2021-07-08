@@ -12,7 +12,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 import { ImageProps } from '../Image/Image.types';
 import { LinkProps } from '../Link/Link.types';
-import { useTheme } from '@material-ui/core/styles';
+// import { useTheme } from '@material-ui/core/styles';
 
 interface CardProps extends MuiCardProps {
   image: ImageProps;
@@ -23,8 +23,8 @@ interface CardProps extends MuiCardProps {
 }
 
 export const Card = ({ image, title, subtitle, body, ctas }: CardProps) => {
-  const theme = useTheme();
-  console.log('Card: theme', {theme});
+  // const theme = useTheme();
+  // console.log('Card: theme', {theme});
 
   return (
     <ErrorBoundary>
@@ -34,25 +34,27 @@ export const Card = ({ image, title, subtitle, body, ctas }: CardProps) => {
           //   component={Image}
           //   {...image}
           // />
-          <Image {...image} height="100" />
+          <Image {...image} />
         ) : null}
-        <CardContent>
-          {title ? (
-            <Typography variant="h4" component="h3">
-              {title}
-            </Typography>
-          ) : null}
-          {subtitle ? (
-            <Typography variant="h5" component="h4">
-              {subtitle}
-            </Typography>
-          ) : null}
-          {body ? (
-            <Typography variant="body2" component="p">
-              {body}
-            </Typography>
-          ) : null}
-        </CardContent>
+        {title || subtitle || body ? (
+          <CardContent>
+            {title ? (
+              <Typography variant="h4" component="h3">
+                {title}
+              </Typography>
+            ) : null}
+            {subtitle ? (
+              <Typography variant="h5" component="h4">
+                {subtitle}
+              </Typography>
+            ) : null}
+            {body ? (
+              <Typography variant="body2" component="p">
+                {body}
+              </Typography>
+            ) : null}
+          </CardContent>
+        ) : null}
         {ctas?.length ? (
           <CardActions>
             <Link
