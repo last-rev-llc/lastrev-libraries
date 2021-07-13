@@ -1,6 +1,6 @@
 import React from 'react';
-import { styled } from '@material-ui/system';
 import Box from '@material-ui/core/Box';
+import styled from '@material-ui/system/styled';
 import Grid from '@material-ui/core/Grid';
 import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
 import get from 'lodash/get';
@@ -23,24 +23,31 @@ interface Props {
   // Enables exposing inner `sx` prop through content
   styles?: {
     root?: SystemCssProperties;
-    gridContainer?: SystemCssProperties;
-    gridItem?: Array<SystemCssProperties>;
+    gridContainer?: SystemCssProperties & { spacing: any };
+    gridItem?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
   };
 }
 
 const Section = ({ contents, styles }: Props) => {
-  // console.log('Section: contents', contents);
-  // console.log('Section: styles', styles);
-
+  const { spacing } = styles?.gridContainer ?? {};
   return (
     <Root sx={styles?.root}>
       {/* <Background {...media} /> */}
-      <GridContainer container sx={styles?.gridContainer}>
-        {contents?.map((content, idx) => (
-          <GridItem item key={content?.id} sx={get(styles?.gridItem, idx)}>
-            <ContentModule {...content} />
-          </GridItem>
-        ))}
+      <GridContainer container sx={styles?.gridContainer} spacing={spacing}>
+        {contents?.map((content, idx) => {
+          const itemStyle = get(styles?.gridItem, idx);
+          return (
+            <GridItem
+              item
+              key={content?.id}
+              xs={itemStyle?.xs ?? true}
+              md={itemStyle?.md}
+              sm={itemStyle?.sm}
+              sx={itemStyle}>
+              <ContentModule {...content} />
+            </GridItem>
+          );
+        })}
       </GridContainer>
     </Root>
   );
