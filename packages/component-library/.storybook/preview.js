@@ -1,5 +1,5 @@
 import { addDecorator, addParameters } from '@storybook/react';
-import { MuiThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 // import '@storybook/addon-console';
@@ -7,10 +7,10 @@ import theme from '../src/theme';
 import './styles.css';
 
 const StorybookWrapper = (storyFn) => (
-  <MuiThemeProvider theme={theme}>
+  <ThemeProvider theme={theme}>
     <CssBaseline />
     {storyFn()}
-  </MuiThemeProvider>
+  </ThemeProvider>
 );
 
 addDecorator(StorybookWrapper);

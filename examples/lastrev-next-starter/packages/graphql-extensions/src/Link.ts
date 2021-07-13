@@ -2,16 +2,16 @@ import { Mappers, getLocalizedField, ApolloContext, getFieldDataFetcher } from '
 import gql from 'graphql-tag';
 
 const linkUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
-  const { loaders, locale } = ctx;
+  const { loaders } = ctx;
   //TODO document this use case for adapting theme fields without updating content model
   //TODO document migrating old fields to new component standards
-  const url = getLocalizedField(locale, link, 'url');
+  const url = getLocalizedField(link, 'url', ctx);
   if (url) return url;
 
-  const pageAnchor = getLocalizedField(locale, link, 'pageAnchor');
+  const pageAnchor = getLocalizedField(link, 'pageAnchor', ctx);
   if (pageAnchor) return pageAnchor;
 
-  const contentRef = getLocalizedField(locale, link, 'content');
+  const contentRef = getLocalizedField(link, 'content', ctx);
   if (contentRef) {
     const content = await loaders.entryLoader.load(contentRef.sys.id);
     return content && getLocalizedField(content?.fields, 'slug', ctx);

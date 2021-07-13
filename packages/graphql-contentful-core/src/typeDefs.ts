@@ -14,7 +14,7 @@ const baseDefs = gql`
     source: String
     sidekickLookup: JSON
     id: String
-    theme: Theme
+    theme: [Theme]
     animation: JSON
     title: String
     description: String
@@ -52,7 +52,7 @@ const baseDefs = gql`
 
   interface Content {
     id: String
-    theme: Theme
+    theme: [Theme]
     animation: JSON
     sidekickLookup: JSON
   }

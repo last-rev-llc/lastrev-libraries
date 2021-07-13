@@ -6,5 +6,6 @@ export default {
   width: '180',
   height: '180',
   className: lorem.word(),
-  testId: lorem.word()
+  testId: 'Image',
+  // lazy: false
 };

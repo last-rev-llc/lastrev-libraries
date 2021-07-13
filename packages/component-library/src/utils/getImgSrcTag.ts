@@ -2,11 +2,28 @@
 import map from 'lodash/map';
 import filter from 'lodash/filter';
 
-const getRatio = ({ width, numColumns }) => (width > 768 ? numColumns / 12 : numColumns / 6);
+interface GetRatioParams {
+  width: number,
+  numColumns: number
+}
 
-const getImgSrcTag = (src, numColumns = 12, returnAttrsType = 'str') => {
-  const attrs = {
-    src
+interface GetImgSrcParams {
+  src: string
+  numColumns: number
+  returnAttrsType: string
+}
+
+interface GetImgSrcTag {
+  src: string
+  srcSet?: string
+  sizes?: string
+}
+
+const getRatio = ({ width, numColumns }: GetRatioParams): number => (width > 768 ? numColumns / 12 : numColumns / 6);
+
+const getImgSrcTag = ({ src, numColumns = 12, returnAttrsType = 'str' }: GetImgSrcParams): GetImgSrcTag | string => {
+  const attrs: GetImgSrcTag = {
+    src,
   };
 
   if (src.indexOf('.svg') > -1) {
@@ -22,8 +39,7 @@ const getImgSrcTag = (src, numColumns = 12, returnAttrsType = 'str') => {
   const sizes = [3840, 3520, 3200, 2880, 2560, 2240, 1920, 1600, 1440, 1280, 960, 640];
 
   // ratio = 1 for full width (12), 0.5 for half width (6)
-  const srcSets = map(
-    filter(sizes, (fs) => fs <= maxWidth),
+  const srcSets = map(filter(sizes, (fs) => fs <= maxWidth),
     (s) => `${{ url: src, width: s * getRatio({ width: s, numColumns }), settings }} ${s}w`
   );
   const attrSizes = map(
@@ -31,13 +47,14 @@ const getImgSrcTag = (src, numColumns = 12, returnAttrsType = 'str') => {
     (s) => `(max-width: ${s}x) ${s * getRatio({ width: s, numColumns })}px`
   );
 
-  attrs.src = `${{ url: src, width: sizes[sizes.length - 1], settings }}`;
+  // NOTE: Commented out, but do we need?
+  // attrs.src = `${{ url: src, width: sizes[sizes.length - 1], settings }}`;
   attrs.srcSet = srcSets.join(',');
   attrs.sizes = `${attrSizes.join(',')}`;
 
   if (returnAttrsType === 'Obj') return attrs;
   if (returnAttrsType === 'src') return attrs.src;
-  return `src="${attrs.src}" srcset="${attrs.srcset}" sizes = "${attrs.sizes}"`;
+  return `src="${attrs.src}" srcset="${attrs.srcSet}" sizes="${attrs.sizes}"`;
 };
 
 export default getImgSrcTag;

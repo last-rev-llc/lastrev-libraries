@@ -23,7 +23,7 @@
     "serve": "yarn workspace lrns-web serve",
     "start": "run-s build serve",
     "storybook": "lerna run storybook",
-    "sync:cms": "yarn workspace lrns-web sync:cms",
+    "sync:cms": "yarn workspace lrns-graphql-runner sync:cms",
     "test": "lerna run test -- --passWithNoTests",
     "test:watch": "lerna run test:watch -- --passWithNoTests",
     "test:e2e": "lerna run test:e2e",
