@@ -7,44 +7,43 @@ import { ImageProps } from './Image.types';
 export type Ref = HTMLImageElement;
 
 // TODO: Move this to the correct place
-type Env = 'development'| 'production'| 'test' | string | undefined;
-const NODE_ENV:Env  = process.env.NODE_ENV;
+type Env = 'development' | 'production' | 'test' | string | undefined;
+const NODE_ENV: Env = process.env.NODE_ENV;
 
-const Image = React.forwardRef<Ref, ImageProps>(({
-  src, className, columns = 12, lazy, itemProp, testId, ...imageProps
-}: ImageProps, ref) => {
-  if (!src) return null;
-  try {
-    return (
-      <ErrorBoundary>
-        {NODE_ENV === 'test' || !lazy ? (
-          <img
-            {...getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj' })}
-            ref={ref}
-            data-testid={testId}
-            className={className}
-            itemProp={itemProp}
-            {...imageProps}
-          />
-        ) : (
-          <LazyLoad
-            offset={typeof window === 'undefined' ? 1000 : window.innerHeight}>
+const Image = React.forwardRef<Ref, ImageProps>(
+  ({ src, className, columns = 12, lazy, itemProp, testId, ...imageProps }: ImageProps, ref) => {
+    if (!src) return null;
+    try {
+      return (
+        <ErrorBoundary>
+          {NODE_ENV === 'test' || !lazy ? (
             <img
               {...getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj' })}
               ref={ref}
               data-testid={testId}
               className={className}
               itemProp={itemProp}
-              loading="lazy"
               {...imageProps}
             />
-          </LazyLoad>
-        )}
-      </ErrorBoundary>
-    );
-  } catch (err) {
-    return null;
+          ) : (
+            <LazyLoad offset={typeof window === 'undefined' ? 1000 : window.innerHeight}>
+              <img
+                {...getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj' })}
+                ref={ref}
+                data-testid={testId}
+                className={className}
+                itemProp={itemProp}
+                loading="lazy"
+                {...imageProps}
+              />
+            </LazyLoad>
+          )}
+        </ErrorBoundary>
+      );
+    } catch (err) {
+      return null;
+    }
   }
-});
+);
 
 export default React.memo(Image);
