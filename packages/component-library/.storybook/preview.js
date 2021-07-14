@@ -1,19 +1,26 @@
 import { addDecorator, addParameters } from '@storybook/react';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import StyledEngineProvider from "@material-ui/core/StyledEngineProvider";
+import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 // import '@storybook/addon-console';
 import theme from '../src/theme';
 import './styles.css';
 
-const StorybookWrapper = (storyFn) => (
-  <StyledEngineProvider injectFirst>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {storyFn()}
-    </ThemeProvider>
-  </StyledEngineProvider>
-);
+import * as components from '../src';
+
+const StorybookWrapper = (storyFn) => {
+  console.log('StoryBook', theme);
+  return (
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <components.ContentModuleProvider contentMapping={components}>
+          <CssBaseline />
+          {storyFn()}
+        </components.ContentModuleProvider>
+      </ThemeProvider>
+    </StyledEngineProvider>
+  );
+};
 
 addDecorator(StorybookWrapper);
 
