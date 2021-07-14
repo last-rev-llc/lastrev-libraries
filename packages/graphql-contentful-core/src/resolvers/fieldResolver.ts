@@ -36,8 +36,11 @@ const fieldResolver: FieldResolver = (displayType: string) => async (content, ar
     return loaders.assetLoader.load(fieldValue.sys.id);
   }
   //Check if the field is an reference array then resolve all of them
-  if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys.id)) {
+  if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys.id && x.sys.linkType == 'Entry')) {
     return loaders.entryLoader.loadMany(fieldValue.map((x: any) => x.sys.id));
+  }
+  if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys.id && x.sys.linkType == 'Asset')) {
+    return loaders.assetLoader.loadMany(fieldValue.map((x: any) => x.sys.id));
   }
   // console.timeEnd(`FieldResolver:${displayType}->${field}`);
   return fieldValue;
