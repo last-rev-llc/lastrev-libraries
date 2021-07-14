@@ -81,7 +81,8 @@ export const avatarCardVariant = (theme: Theme) => ({
       objectFit: 'cover'
     },
     '& .MuiCardContent-root': {
-      paddingLeft: 40
+      paddingLeft: 40,
+      textAlign: 'left',
     },
     '& .MuiTypography-h4': {
       fontSize: 24,
@@ -120,7 +121,9 @@ export const avatarPortraitCardVariant = (theme: Theme) => ({
       border: `2px solid ${theme.palette.primary.main}`,
       objectFit: 'cover'
     },
-    '& .MuiCardContent-root': {},
+    '& .MuiCardContent-root': {
+      textAlign: 'left'
+    },
     '& .MuiTypography-h4': { fontSize: 24, color: 'black' },
     '& .MuiTypography-h5': { paddingBottom: 12, fontSize: 18, color: 'black' }
   }
@@ -160,9 +163,9 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
   }
 });
 
-export const lightBackgroundBorderVariant = (theme: Theme) => ({
+export const squareLightVariant = (theme: Theme) => ({
   props: {
-    variant: 'light-background-border'
+    variant: 'square-light'
   },
   style: {
     'width': '100%',
@@ -196,24 +199,9 @@ export const lightBackgroundBorderVariant = (theme: Theme) => ({
   }
 });
 
-export const lightBackgroundVariant = (theme: Theme) => ({
+export const squareDarkVariant = (theme: Theme) => ({
   props: {
-    variant: 'light-background'
-  },
-  style: {
-    'backgroundColor': theme.palette.thertiary.main,
-    '& .MuiCardContent-root': {},
-    '& .MuiTypography-h4': {
-      fontSize: 20,
-      fontWeight: 'bold'
-    },
-    '& .MuiTypography-h5': {}
-  }
-});
-
-export const darkBackgroundVariant = (theme: Theme) => ({
-  props: {
-    variant: 'dark-background'
+    variant: 'square-dark'
   },
   style: {
     'width': '100%',
@@ -246,15 +234,173 @@ export const darkBackgroundVariant = (theme: Theme) => ({
   }
 });
 
+export const standardLightVariant = (theme: Theme) => ({
+  props: {
+    variant: 'standard-light'
+  },
+  style: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'space-around',
+    'alignItems': 'center',
+    'width': '100%',
+    'height': '100%',
+    'maxWidth': 260,
+    'minWidth': 260,
+    'maxHeight': 340,
+    'minHeight': 340,
+    'boxShadow': 'none',
+    'fontSize': 0,
+    '&:hover': {
+      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
+    },
+    '& .MuiCardContent-root': {
+      width: '100%',
+      padding: 20,
+      textAlign: 'center'
+    },
+    '& .MuiTypography-h4': {
+      paddingBottom: 20,
+      fontSize: 20,
+      fontWeight: 'bold'
+    },
+    '& .MuiTypography-h5': {}
+  }
+});
+
+export const standardDarkVariant = (theme: Theme) => ({
+  props: {
+    variant: 'standard-dark'
+  },
+  style: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'space-around',
+    'alignItems': 'center',
+    'width': '100%',
+    'height': '100%',
+    'maxWidth': 260,
+    'minWidth': 260,
+    'maxHeight': 340,
+    'minHeight': 340,
+    'backgroundColor': '#bdefeb',
+    'boxShadow': 'none',
+    'fontSize': 0,
+    '&:hover': {
+      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
+    },
+    '& .MuiCardContent-root': {
+      width: '100%',
+      padding: 20,
+      textAlign: 'center'
+    },
+    '& .MuiTypography-h4': {
+      paddingBottom: 20,
+      fontSize: 20,
+      fontWeight: 'bold'
+    },
+    '& .MuiTypography-h5': {}
+  }
+});
+
+export const standardLightBorderVariant = (theme: Theme) => ({
+  props: {
+    variant: 'standard-light-border'
+  },
+  style: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'space-around',
+    'alignItems': 'center',
+    'width': '100%',
+    'height': '100%',
+    'maxWidth': 260,
+    'minWidth': 260,
+    'maxHeight': 380,
+    'minHeight': 340,
+    'border': '3px solid #497380',
+    'borderRadius': 20,
+    'boxShadow': 'none',
+    'fontSize': 0,
+    '&:hover': {
+      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
+    },
+    '& .MuiCardContent-root': {
+      width: '100%',
+      padding: 20,
+      textAlign: 'center'
+    },
+    '& .MuiTypography-h4': {
+      paddingBottom: 20,
+      fontSize: 20,
+      fontWeight: 'bold'
+    },
+    '& .MuiLink': {
+      backgroundColor: 'transparent',
+      color: '#497380',
+      textDecoration: 'underline'
+    },
+    '& img': {
+      width: 150,
+      height: 100,
+      marginTop: 20
+    }
+  }
+});
+
+export const standardDarkBorderVariant = (theme: Theme) => ({
+  props: {
+    variant: 'standard-dark-border'
+  },
+  style: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'space-around',
+    'alignItems': 'center',
+    'width': '100%',
+    'height': '100%',
+    'maxWidth': 260,
+    'minWidth': 260,
+    'maxHeight': 380,
+    'minHeight': 340,
+    'backgroundColor': '#bdefeb',
+    'border': `3px solid ${theme.palette.primary.main}`,
+    'borderRadius': 20,
+    'boxShadow': 'none',
+    'fontSize': 0,
+    '&:hover': {
+      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
+    },
+    '& .MuiCardContent-root': {
+      width: '100%',
+      padding: 20,
+      textAlign: 'center'
+    },
+    '& .MuiTypography-h4': {
+      paddingBottom: 20,
+      fontSize: 20,
+      fontWeight: 'bold'
+    },
+    '& img': {
+      width: 150,
+      height: 100,
+      marginTop: 20
+    }
+  }
+});
+
 const variants = [
   mediaCardVariant,
   mediaCardOutlinedVariant,
   avatarCardVariant,
   avatarPortraitCardVariant,
   avatarLargeCardVariant,
-  lightBackgroundBorderVariant,
-  lightBackgroundVariant,
-  darkBackgroundVariant
+  squareLightVariant,
+  squareDarkVariant,
+  standardLightVariant,
+  standardDarkVariant,
+  standardLightBorderVariant,
+  standardDarkBorderVariant,
 ];
 
 const createCardVariants = (theme: Theme) => {
