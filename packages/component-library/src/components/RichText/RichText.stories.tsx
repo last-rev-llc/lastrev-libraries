@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import RichText from './RichText';
+import mockContent, { complexMock } from './RichText.mock';
 
 export default {
   title: '2. Modules / RichText',
@@ -13,5 +14,10 @@ export default {
   argTypes: {}
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <RichText {...args} />;
-export const Default = Template.bind({});
+const Template1 = (args: JSX.IntrinsicAttributes) => <RichText {...args} />;
+export const Plaintext = Template1.bind({});
+Plaintext.args = { ...mockContent };
+
+const Template2 = (args: JSX.IntrinsicAttributes) => <RichText {...args} />;
+export const Formatted = Template2.bind({});
+Formatted.args = { ...complexMock };
