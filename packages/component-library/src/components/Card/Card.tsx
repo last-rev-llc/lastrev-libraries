@@ -13,22 +13,23 @@ import Image from '../Image';
 import { ImageProps } from '../Image/Image.types';
 import { LinkProps } from '../Link/Link.types';
 // import { useTheme } from '@material-ui/core/styles';
+import styled from '@material-ui/system/styled';
 
-interface CardProps extends MuiCardProps {
-  image: ImageProps;
+export interface CardProps extends MuiCardProps {
+  variant?: any;
   title?: string;
   subtitle?: string;
+  image?: ImageProps;
   body?: string;
   ctas?: LinkProps[];
 }
 
-export const Card = ({ image, title, subtitle, body, ctas }: CardProps) => {
-  // const theme = useTheme();
-  // console.log('Card: theme', {theme});
+export interface CardOverrides {}
 
+export const Card = ({ image, title, subtitle, body, ctas, variant }: CardProps) => {
   return (
     <ErrorBoundary>
-      <MuiCard>
+      <CardRoot variant={variant}>
         {image ? (
           // <CardMedia
           //   component={Image}
@@ -65,9 +66,19 @@ export const Card = ({ image, title, subtitle, body, ctas }: CardProps) => {
             </Link>
           </CardActions>
         ) : null}
-      </MuiCard>
+      </CardRoot>
     </ErrorBoundary>
   );
 };
+
+const CardRoot = styled(MuiCard, {
+  name: 'Card',
+  slot: 'Root',
+  overridesResolver: (props, styles) => ({
+    ...styles.root,
+    ...(props.borderColor == 'primary' && styles.primaryBorder),
+    ...(props.borderColor == 'secondary' && styles.secondaryBorder)
+  })
+})<MuiCardProps>(() => ({}));
 
 export default Card;

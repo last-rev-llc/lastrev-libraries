@@ -1,39 +1,17 @@
 import createAppTheme from './createTheme';
-declare module '@material-ui/core/styles/components' {
-  interface ComponentsProps {
-    Section: {};
-  }
-  interface ComponentElementOverrides {
-    Section: {
-      root: {};
-      gridItem: {};
-      gridContainer: {};
-      backgroundImage: {};
-    };
-  }
-  interface ComponentsOverrides {
-    Section: {
-      root: {};
-      gridItem: {};
-      gridContainer: {};
-      backgroundImage: {};
-    };
-  }
-  interface ComponentsVariants {
-    Section: {};
-  }
-  interface Components {
-    Section?: {
-      defaultProps?: ComponentsProps['Section'];
-      overrides?: ComponentElementOverrides['Section'];
-      styleOverrides?: ComponentsOverrides['Section'];
-      variants?: ComponentsVariants['Section'];
-    };
-  }
-}
+import { CardProps, CardOverrides } from './../components/Card';
+import mockTheme from './mock.theme';
 
 declare module '@material-ui/core/styles' {
   // eslint-disable-next-line
+  interface Palette {
+    thertiary: Palette['primary'];
+    quartiary: Palette['secondary'];
+  }
+  interface PaletteOptions {
+    thertiary: PaletteOptions['primary'];
+    quartiary: PaletteOptions['secondary'];
+  }
   interface Theme {
     appDrawer: {
       width: React.CSSProperties['width'];
@@ -46,12 +24,47 @@ declare module '@material-ui/core/styles' {
     };
   }
 }
+declare module '@material-ui/core/styles/components' {
+  interface ComponentsProps {
+    Section: {};
+    Card: CardProps;
+  }
+  interface ComponentElementOverrides {
+    Section: {
+      root: {};
+      gridItem: {};
+      gridContainer: {};
+      backgroundImage: {};
+    };
+    Card: CardOverrides;
+  }
+  interface ComponentsOverrides {
+    Section: {
+      root: {};
+      gridItem: {};
+      gridContainer: {};
+      backgroundImage: {};
+    };
+    Card: CardOverrides;
+  }
+  interface ComponentsVariants {
+    Section: {};
+    Card: {};
+  }
+  interface Components {
+    Section?: {
+      defaultProps?: ComponentsProps['Section'];
+      overrides?: ComponentElementOverrides['Section'];
+      styleOverrides?: ComponentsOverrides['Section'];
+      variants?: ComponentsVariants['Section'];
+    };
+    Card?: {
+      defaultProps?: ComponentsProps['Card'];
+      overrides?: ComponentElementOverrides['Card'];
+      styleOverrides?: ComponentsOverrides['Card'];
+      variants?: ComponentsVariants['Card'];
+    };
+  }
+}
 
-const theme = createAppTheme({
-  components: {
-    Section: {}
-  },
-  appDrawer: { width: 240 }
-});
-
-export default theme;
+export default mockTheme;

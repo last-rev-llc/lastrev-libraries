@@ -1,1 +1,1 @@
-export { default } from './Card';
+export { default, CardProps, CardOverrides } from './Card';

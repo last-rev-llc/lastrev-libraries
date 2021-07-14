@@ -1,0 +1,116 @@
+import createCardVariants from './createCardVariants';
+import createAppTheme from './createTheme';
+import { red } from '@material-ui/core/colors';
+export const baseTheme = createAppTheme({
+  spacing: 8,
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 684,
+      md: 768,
+      lg: 1024,
+      xl: 1440
+    }
+  },
+  palette: {
+    primary: {
+      main: '#fee501'
+    },
+    secondary: {
+      main: '#497380'
+    },
+    thertiary: {
+      main: '#bdefeb'
+    },
+    quartiary: {
+      main: '#005c7a'
+    },
+    error: {
+      main: red.A400
+    },
+    background: {
+      default: '#fFFF'
+    }
+  }
+});
+
+const theme = createAppTheme(
+  {
+    components: {
+      Card: {
+        variants: createCardVariants(baseTheme),
+        styleOverrides: {
+          borderPrimary: {
+            border: `3px solid ${baseTheme.palette.primary.main}`
+          },
+          borderSecondary: {
+            border: `3px solid ${baseTheme.palette.secondary.main}`
+          },
+          rounded: {
+            borderRadius: baseTheme.shape.borderRadius
+          }
+        }
+      },
+      MuiCard: {
+        // props: {
+        //   outlined: true
+        // },
+        styleOverrides: {
+          root: {
+            'display': 'flex',
+            'flexDirection': 'column',
+            'justifyContent': 'space-around',
+            'alignItems': 'center',
+            'width': '100%',
+            'height': '100%',
+            'borderRadius': 0,
+            'fontSize': 0,
+            'boxShadow': 'none',
+            '&:hover': {
+              boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
+            }
+          }
+        }
+      },
+      MuiCardContent: {
+        styleOverrides: {
+          root: {
+            width: '100%',
+            padding: 20,
+            textAlign: 'center'
+          }
+        }
+      },
+      MuiTypography: {
+        styleOverrides: {
+          h4: {
+            paddingBottom: 20,
+            fontSize: 22,
+            fontWeight: 'bold'
+          }
+        }
+      },
+      MuiCardActions: {
+        styleOverrides: {
+          root: {
+            fontSize: 18
+          }
+        }
+      },
+      MuiLink: {
+        styleOverrides: {
+          root: {
+            padding: '10px 20px',
+            cursor: 'pointer',
+            backgroundColor: baseTheme.palette.primary.main,
+            color: 'black',
+            textDecoration: 'none'
+          }
+        }
+      }
+    }
+  },
+  baseTheme
+);
+
+export default theme;
