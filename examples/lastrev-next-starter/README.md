@@ -40,9 +40,6 @@ yarn dev
 
 # Still to figure out:
 
-- locales copy after export, errors due to 404.
 - Ability to extend the apollo context
 - Utility to merge extensions in graphql-contentful-core
-- ensure build of extensions prior to gql start
 - Generate locale data prior to build/dev for web project (i18n & translations)
-- Script to auto-generate new starter
