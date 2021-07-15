@@ -1,0 +1,3 @@
+[build]
+  publish = "lrns-web/out"
+  command = "./install-aws.sh && yarn build:prod"

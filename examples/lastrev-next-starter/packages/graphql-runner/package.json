@@ -6,11 +6,12 @@
     "dist"
   ],
   "scripts": {
-    "dev": "run-s sync:cms gql:dev",
+    "dev": "run-s sync:cms:s3 gql:dev",
     "gql:start": "last-rev gql-serve -c config",
     "gql:dev": "nodemon -x \"last-rev gql-serve -c config\" -w config -w cms-sync -w -w ../graphql-extensions/dist",
-    "start": "run-s sync:cms gql:start",
-    "sync:cms": "last-rev cms-sync-s3 -d cms-sync"
+    "start": "run-s sync:cms:s3 gql:start",
+    "sync:cms:s3": "last-rev cms-sync-s3 -d cms-sync",
+    "sync:cms:source": "last-rev cms-sync -d cms-sync"
   },
   "peerDependencies": {},
   "dependencies": {
