@@ -8,7 +8,7 @@
   ],
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "_dev": "cross-env NODE_ENV=development rollup -cw",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

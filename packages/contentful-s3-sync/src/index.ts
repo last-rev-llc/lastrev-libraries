@@ -7,7 +7,8 @@ export type SyncS3Props = {
   apiKey: string;
   environment?: string;
   isPreview?: boolean;
-  apiUrl?: string;
+  apiUrl: string;
+  verbose?: boolean;
 };
 
 const generateCredentials = async (apiKey: string, environment: string, isPreview: boolean, apiUrl: string) => {
@@ -31,8 +32,8 @@ const generateCredentials = async (apiKey: string, environment: string, isPrevie
     );
     return { AccessKeyId, SecretAccessKey, SessionToken, spaceId, bucket };
   } catch (err) {
-    console.log(err);
-    throw Error(`Unable to generate credentials: ${err.message}`);
+    const data = err.response?.data;
+    throw Error(`Unable to generate credentials: ${err.message}${data ? ` ${data}` : ''}`);
   }
 };
 
@@ -44,7 +45,8 @@ const performS3Sync = async (
   bucket: string,
   accessKeyId: string,
   secretAccessKey: string,
-  sessionToken: string
+  sessionToken: string,
+  verbose: boolean
 ) => {
   try {
     return new Promise<void>((resolve, reject) => {
@@ -52,7 +54,9 @@ const performS3Sync = async (
         's3',
         'sync',
         `s3://${bucket}/${join(spaceId, environment, isPreview ? 'preview' : 'production')}`,
-        join(rootDir, spaceId, environment, isPreview ? 'preview' : 'production')
+        join(rootDir, spaceId, environment, isPreview ? 'preview' : 'production'),
+        '--delete',
+        ...(verbose ? [] : ['--quiet'])
       ];
 
       const command = 'aws';
@@ -70,7 +74,7 @@ const performS3Sync = async (
 
       child.on('close', (code: number) => {
         if (code !== 0) {
-          reject({ message: `${command} ${args.join(' ')}` });
+          reject({ message: `Response code ${code} returned from command: ${command} ${args.join(' ')}` });
           return;
         }
         resolve();
@@ -86,7 +90,8 @@ const syncS3 = async ({
   apiKey,
   environment = 'master',
   isPreview = false,
-  apiUrl = 'https://qzdgrstuw8.execute-api.us-east-1.amazonaws.com'
+  apiUrl,
+  verbose = false
 }: SyncS3Props) => {
   const { AccessKeyId, SecretAccessKey, SessionToken, bucket, spaceId } = await generateCredentials(
     apiKey,
@@ -95,11 +100,17 @@ const syncS3 = async ({
     apiUrl
   );
 
-  console.log(
-    `export AWS_ACCESS_KEY_ID=${AccessKeyId}; export AWS_SECRET_ACCESS_KEY=${SecretAccessKey}; export AWS_SESSION_TOKEN=${SessionToken}`
+  await performS3Sync(
+    rootDir,
+    spaceId,
+    environment,
+    isPreview,
+    bucket,
+    AccessKeyId,
+    SecretAccessKey,
+    SessionToken,
+    verbose
   );
-
-  await performS3Sync(rootDir, spaceId, environment, isPreview, bucket, AccessKeyId, SecretAccessKey, SessionToken);
 };
 
 export default syncS3;

@@ -11,7 +11,7 @@ program
   .command('create-app', 'Create an app from one of our examples', {
     executableFile: resolve(__dirname, '../dist/create-app.js')
   })
-  .command('s3-sync', 'Sync conent files from a S3 to the file system', {
-    executableFile: resolve(__dirname, '../dist/s3-sync.js')
+  .command('cms-sync-s3', 'Sync conent files from a S3 to the file system', {
+    executableFile: resolve(__dirname, '../dist/cms-sync-s3.js')
   })
   .parse(process.argv);

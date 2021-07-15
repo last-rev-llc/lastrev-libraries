@@ -10,7 +10,7 @@
     "gql:start": "last-rev gql-serve -c config",
     "gql:dev": "nodemon -x \"last-rev gql-serve -c config\" -w config -w cms-sync -w -w ../graphql-extensions/dist",
     "start": "run-s sync:cms gql:start",
-    "sync:cms": "last-rev cms-sync -d cms-sync"
+    "sync:cms": "last-rev cms-sync-s3 -d cms-sync"
   },
   "peerDependencies": {},
   "dependencies": {
