@@ -1,40 +1,28 @@
 import { Theme } from '@material-ui/core/styles';
 
-export const mediaCardVariant = () => ({
+export const mediaCardVariant = (theme: Theme) => ({
   props: {
     variant: 'media'
   },
   style: {
-    'maxWidth': 400,
-    'minWidth': 400,
-    'borderRadius': 0,
-    'boxShadow': 'none',
-    'fontSize': 0,
-    '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
-    }
-  }
-});
-export const mediaCardOutlinedVariant = (theme: Theme) => ({
-  props: {
-    variant: 'media-outlined'
-  },
-  style: {
-    'position': 'relative',
-    'borderRadius': 0,
-    'border': `2px solid ${theme.palette?.primary.main}`,
-    'maxWidth': 400,
-    'minWidth': 400,
-    'boxShadow': 'none',
-    'fontSize': 0,
-
-    '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
-    },
+    position: 'relative',
+    maxWidth: 400,
+    minWidth: 400,
 
     '& img': {
-      opacity: 0.5
+      opacity: 1,
+      transition: 'opacity ease .15s'
     },
+
+    '&:hover': {
+      boxShadow: `0 0 0 2px ${theme.palette.primary.main}`,
+
+      '& img': {
+        opacity: 0.7,
+        transition: 'opacity ease .1s'
+      },
+    },
+
     '& .MuiCardContent-root': {
       position: 'absolute',
       top: '50%',
@@ -44,11 +32,6 @@ export const mediaCardOutlinedVariant = (theme: Theme) => ({
       textAlign: 'center',
       transform: 'translate(-50%, -50%)'
     },
-    '& .MuiTypography-h4': {
-      fontSize: 26,
-      fontWeight: 'bold',
-      color: 'black'
-    }
   }
 });
 
@@ -57,37 +40,39 @@ export const avatarCardVariant = (theme: Theme) => ({
     variant: 'avatar'
   },
   style: {
-    'display': 'flex',
-    'flex-direction': 'row',
-    'alignItems': 'center',
-    'height': '100%',
-    'maxWidth': 540,
-    'maxHeight': 240,
-    'minWidth': 540,
-    'padding': 20,
-    'borderRadius': 0,
-    'boxShadow': 'none',
-    'fontSize': 0,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    maxWidth: 540,
+    // maxWidth: 320,
+    minWidth: 320,
+    // maxHeight: 240,
+    padding: 20,
 
-    '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
+    // Image wrap
+    '& .MuiBox-root': {
+      width: 'auto',
+      height: 'auto',
     },
 
     '& img': {
       width: 150,
       height: 150,
+      margin: 20,
       borderRadius: '50%',
       border: `2px solid ${theme.palette.primary.main}`,
       objectFit: 'cover'
     },
+
     '& .MuiCardContent-root': {
-      paddingLeft: 40,
       textAlign: 'left',
     },
+
     '& .MuiTypography-h4': {
       fontSize: 24,
       color: 'black'
     },
+
     '& .MuiTypography-h5': {
       paddingBottom: 12,
       fontSize: 18,
@@ -96,59 +81,17 @@ export const avatarCardVariant = (theme: Theme) => ({
   }
 });
 
-export const avatarPortraitCardVariant = (theme: Theme) => ({
-  props: {
-    variant: 'avatar-portrait'
-  },
-  style: {
-    'height': '100%',
-    'maxWidth': 320,
-    'minWidth': 320,
-    'padding': 20,
-    'borderRadius': 0,
-    'boxShadow': 'none',
-    'fontSize': 0,
-
-    '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
-    },
-
-    '& img': {
-      width: 150,
-      height: 150,
-      margin: '0 auto 20px',
-      borderRadius: '50%',
-      border: `2px solid ${theme.palette.primary.main}`,
-      objectFit: 'cover'
-    },
-    '& .MuiCardContent-root': {
-      textAlign: 'left'
-    },
-    '& .MuiTypography-h4': { fontSize: 24, color: 'black' },
-    '& .MuiTypography-h5': { paddingBottom: 12, fontSize: 18, color: 'black' }
-  }
-});
-
 export const avatarLargeCardVariant = (theme: Theme) => ({
   props: {
     variant: 'avatar-large'
   },
   style: {
-    'display': 'flex',
-    'justifyContent': 'center',
-    'alignItems': 'center',
-    'width': 300,
-    'height': 300,
+    justifyContent: 'center',
+    width: 300,
+    height: 300,
     // maxWidth: 300,
-    'minWidth': 300,
-    'padding': 20,
-    'borderRadius': 0,
-    'boxShadow': 'none',
-    'fontSize': 0,
-
-    '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
-    },
+    minWidth: 300,
+    padding: 20,
 
     '& img': {
       width: '100%',
@@ -157,250 +100,110 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
       border: `2px solid ${theme.palette.primary.main}`,
       objectFit: 'cover'
     },
+
     '& .MuiCardContent-root': {},
     '& .MuiTypography-h4': {},
     '& .MuiTypography-h5': {}
   }
 });
 
-export const squareLightVariant = (theme: Theme) => ({
+export const squareCardVariant = (theme: Theme) => ({
   props: {
-    variant: 'square-light'
+    variant: 'square'
   },
   style: {
-    'width': '100%',
-    'height': '100%',
-    'maxWidth': 300,
-    'minWidth': 300,
-    'maxHeight': 300,
-    'borderRadius': 0,
-    'boxShadow': 'none',
-    'fontSize': 0,
+    width: 300,
+    height: 300,
 
     '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
-    },
-    '& .MuiCardContent-root': {
-      backgroundColor: `2px solid ${theme.palette.secondary.main}`,
-      border: `2px solid ${theme.palette.primary.main}`,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
-      height: '100%',
-      padding: '0 30px !important',
-      textAlign: 'center'
-    },
-    '& .MuiTypography-h4': {
-      fontSize: 20,
-      fontWeight: 'bold'
-    },
-    '& .MuiTypography-h5': {}
-  }
-});
+      '& .MuiCardContent-root': {
+        backgroundColor: theme.palette.tertiary.main,
+        boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main}`,
+      },
 
-export const squareDarkVariant = (theme: Theme) => ({
-  props: {
-    variant: 'square-dark'
-  },
-  style: {
-    'width': '100%',
-    'height': '100%',
-    'maxWidth': 300,
-    'minWidth': 300,
-    'maxHeight': 300,
-    'borderRadius': 0,
-    'boxShadow': 'none',
-    'fontSize': 0,
-    '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
+      '& .MuiTypography-h4': {
+        color: 'black'
+      },
     },
+
     '& .MuiCardContent-root': {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
       height: '100%',
       padding: '0 30px !important',
-      backgroundColor: theme.palette.quartiary.main,
-      textAlign: 'center'
+      backgroundColor: theme.palette.secondary.main,
     },
+
     '& .MuiTypography-h4': {
-      color: 'white',
-      fontSize: 20,
-      fontWeight: 'bold'
+      color: 'white'
     },
+
     '& .MuiTypography-h5': {}
   }
 });
 
-export const standardLightVariant = (theme: Theme) => ({
+export const standardCardVariant = (theme: Theme) => ({
   props: {
-    variant: 'standard-light'
+    variant: 'standard'
   },
   style: {
-    'display': 'flex',
-    'flexDirection': 'column',
-    'justifyContent': 'space-around',
-    'alignItems': 'center',
-    'width': '100%',
-    'height': '100%',
-    'maxWidth': 260,
-    'minWidth': 260,
-    'maxHeight': 340,
-    'minHeight': 340,
-    'boxShadow': 'none',
-    'fontSize': 0,
+    flexDirection: 'column',
+    maxWidth: 260,
+    minWidth: 260,
+    maxHeight: 340,
+    minHeight: 340,
+    backgroundColor: 'white',
+    transition: 'background-color ease .15s',
+
     '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
+      backgroundColor: theme.palette.tertiary.main,
+      transition: 'background-color ease .15s',
     },
-    '& .MuiCardContent-root': {
-      width: '100%',
-      padding: 20,
-      textAlign: 'center'
-    },
+
     '& .MuiTypography-h4': {
       paddingBottom: 20,
-      fontSize: 20,
-      fontWeight: 'bold'
     },
+
     '& .MuiTypography-h5': {}
   }
 });
 
-export const standardDarkVariant = (theme: Theme) => ({
+export const standardRoundedCardVariant = (theme: Theme) => ({
   props: {
-    variant: 'standard-dark'
+    variant: 'standard-round'
   },
   style: {
-    'display': 'flex',
-    'flexDirection': 'column',
-    'justifyContent': 'space-around',
-    'alignItems': 'center',
-    'width': '100%',
-    'height': '100%',
-    'maxWidth': 260,
-    'minWidth': 260,
-    'maxHeight': 340,
-    'minHeight': 340,
-    'backgroundColor': '#bdefeb',
-    'boxShadow': 'none',
-    'fontSize': 0,
+    flexDirection: 'column',
+    maxWidth: 260,
+    minWidth: 260,
+    maxHeight: 340,
+    minHeight: 340,
+    border: `2px solid ${theme.palette.secondary.main}`,
+    borderRadius: 20,
+    transition: 'background-color ease .15s',
+
     '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
+      backgroundColor: theme.palette.tertiary.main,
+      borderColor: theme.palette.primary.main,
+      transition: 'background-color ease .15s',
     },
-    '& .MuiCardContent-root': {
-      width: '100%',
-      padding: 20,
-      textAlign: 'center'
-    },
+
     '& .MuiTypography-h4': {
       paddingBottom: 20,
-      fontSize: 20,
-      fontWeight: 'bold'
     },
+
     '& .MuiTypography-h5': {}
-  }
-});
-
-export const standardLightBorderVariant = (theme: Theme) => ({
-  props: {
-    variant: 'standard-light-border'
-  },
-  style: {
-    'display': 'flex',
-    'flexDirection': 'column',
-    'justifyContent': 'space-around',
-    'alignItems': 'center',
-    'width': '100%',
-    'height': '100%',
-    'maxWidth': 260,
-    'minWidth': 260,
-    'maxHeight': 380,
-    'minHeight': 340,
-    'border': '3px solid #497380',
-    'borderRadius': 20,
-    'boxShadow': 'none',
-    'fontSize': 0,
-    '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
-    },
-    '& .MuiCardContent-root': {
-      width: '100%',
-      padding: 20,
-      textAlign: 'center'
-    },
-    '& .MuiTypography-h4': {
-      paddingBottom: 20,
-      fontSize: 20,
-      fontWeight: 'bold'
-    },
-    '& .MuiLink': {
-      backgroundColor: 'transparent',
-      color: '#497380',
-      textDecoration: 'underline'
-    },
-    '& img': {
-      width: 150,
-      height: 100,
-      marginTop: 20
-    }
-  }
-});
-
-export const standardDarkBorderVariant = (theme: Theme) => ({
-  props: {
-    variant: 'standard-dark-border'
-  },
-  style: {
-    'display': 'flex',
-    'flexDirection': 'column',
-    'justifyContent': 'space-around',
-    'alignItems': 'center',
-    'width': '100%',
-    'height': '100%',
-    'maxWidth': 260,
-    'minWidth': 260,
-    'maxHeight': 380,
-    'minHeight': 340,
-    'backgroundColor': '#bdefeb',
-    'border': `3px solid ${theme.palette.primary.main}`,
-    'borderRadius': 20,
-    'boxShadow': 'none',
-    'fontSize': 0,
-    '&:hover': {
-      boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
-    },
-    '& .MuiCardContent-root': {
-      width: '100%',
-      padding: 20,
-      textAlign: 'center'
-    },
-    '& .MuiTypography-h4': {
-      paddingBottom: 20,
-      fontSize: 20,
-      fontWeight: 'bold'
-    },
-    '& img': {
-      width: 150,
-      height: 100,
-      marginTop: 20
-    }
   }
 });
 
 const variants = [
   mediaCardVariant,
-  mediaCardOutlinedVariant,
   avatarCardVariant,
-  avatarPortraitCardVariant,
   avatarLargeCardVariant,
-  squareLightVariant,
-  squareDarkVariant,
-  standardLightVariant,
-  standardDarkVariant,
-  standardLightBorderVariant,
-  standardDarkBorderVariant,
+  squareCardVariant,
+  standardCardVariant,
+  standardRoundedCardVariant,
 ];
 
 const createCardVariants = (theme: Theme) => {

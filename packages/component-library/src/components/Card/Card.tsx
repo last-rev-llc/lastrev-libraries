@@ -6,6 +6,7 @@ import {
   CardContent,
   // CardMedia,
   Link,
+  Box,
   Typography
 } from '@material-ui/core';
 import ErrorBoundary from '../ErrorBoundary';
@@ -26,7 +27,8 @@ export interface CardProps extends MuiCardProps {
 
 export interface CardOverrides {}
 
-export const Card = ({ image, title, subtitle, body, ctas, variant }: CardProps) => {
+export const Card = ({
+  image, title, subtitle, body, ctas, variant }: CardProps) => {
   return (
     <ErrorBoundary>
       <CardRoot variant={variant}>
@@ -35,7 +37,9 @@ export const Card = ({ image, title, subtitle, body, ctas, variant }: CardProps)
           //   component={Image}
           //   {...image}
           // />
-          <Image {...image} />
+          <Box>
+            <Image {...image} />
+          </Box>
         ) : null}
         {title || subtitle || body ? (
           <CardContent>
@@ -76,9 +80,7 @@ const CardRoot = styled(MuiCard, {
   slot: 'Root',
   overridesResolver: (props, styles) => ({
     ...styles.root,
-    ...(props.borderColor == 'primary' && styles.primaryBorder),
-    ...(props.borderColor == 'secondary' && styles.secondaryBorder)
   })
-})<MuiCardProps>(() => ({}));
+})<MuiCardProps & {}>(() => ({}));
 
 export default Card;

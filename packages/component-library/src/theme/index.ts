@@ -5,11 +5,11 @@ import mockTheme from './mock.theme';
 declare module '@material-ui/core/styles' {
   // eslint-disable-next-line
   interface Palette {
-    thertiary: Palette['primary'];
+    tertiary: Palette['primary'];
     quartiary: Palette['secondary'];
   }
   interface PaletteOptions {
-    thertiary: PaletteOptions['primary'];
+    tertiary: PaletteOptions['primary'];
     quartiary: PaletteOptions['secondary'];
   }
   interface Theme {
@@ -28,6 +28,7 @@ declare module '@material-ui/core/styles/components' {
   interface ComponentsProps {
     Section: {};
     Card: CardProps;
+    RichText: {};
   }
   interface ComponentElementOverrides {
     Section: {
@@ -37,6 +38,12 @@ declare module '@material-ui/core/styles/components' {
       backgroundImage: {};
     };
     Card: CardOverrides;
+    RichText: {
+      root: {};
+      gridItem: {};
+      gridContainer: {};
+      backgroundImage: {};
+    };
   }
   interface ComponentsOverrides {
     Section: {
@@ -46,10 +53,17 @@ declare module '@material-ui/core/styles/components' {
       backgroundImage: {};
     };
     Card: CardOverrides;
+    RichText: {
+      root: {};
+      gridItem: {};
+      gridContainer: {};
+      backgroundImage: {};
+    };
   }
   interface ComponentsVariants {
     Section: {};
     Card: {};
+    RichText: {};
   }
   interface Components {
     Section?: {
@@ -63,6 +77,12 @@ declare module '@material-ui/core/styles/components' {
       overrides?: ComponentElementOverrides['Card'];
       styleOverrides?: ComponentsOverrides['Card'];
       variants?: ComponentsVariants['Card'];
+    };
+    RichText: {
+      defaultProps?: ComponentsProps['RichText'];
+      overrides?: ComponentElementOverrides['RichText'];
+      styleOverrides?: ComponentsOverrides['RichText'];
+      variants?: ComponentsVariants['RichText'];
     };
   }
 }

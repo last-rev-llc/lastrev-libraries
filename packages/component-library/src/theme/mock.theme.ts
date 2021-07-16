@@ -1,6 +1,7 @@
 import createCardVariants from './createCardVariants';
 import createAppTheme from './createTheme';
 import { red } from '@material-ui/core/colors';
+
 export const baseTheme = createAppTheme({
   spacing: 8,
   breakpoints: {
@@ -17,9 +18,9 @@ export const baseTheme = createAppTheme({
       main: '#fee501'
     },
     secondary: {
-      main: '#497380'
+      main: '#005C7A'
     },
-    thertiary: {
+    tertiary: {
       main: '#bdefeb'
     },
     quartiary: {
@@ -38,36 +39,25 @@ const theme = createAppTheme(
   {
     components: {
       Card: {
-        variants: createCardVariants(baseTheme),
-        styleOverrides: {
-          borderPrimary: {
-            border: `3px solid ${baseTheme.palette.primary.main}`
-          },
-          borderSecondary: {
-            border: `3px solid ${baseTheme.palette.secondary.main}`
-          },
-          rounded: {
-            borderRadius: baseTheme.shape.borderRadius
-          }
-        }
+        variants: createCardVariants(baseTheme)
       },
       MuiCard: {
-        // props: {
-        //   outlined: true
-        // },
         styleOverrides: {
           root: {
             'display': 'flex',
             'flexDirection': 'column',
             'justifyContent': 'space-around',
             'alignItems': 'center',
-            'width': '100%',
-            'height': '100%',
+            'width': 'auto',
+            'height': 'auto',
             'borderRadius': 0,
-            'fontSize': 0,
             'boxShadow': 'none',
-            '&:hover': {
-              boxShadow: '3px 3px 10px 3px rgba(0, 0, 0, 0.2)'
+            'fontSize': 0,
+
+            // Image wrap
+            '& .MuiBox-root': {
+              width: '100%',
+              height: '100%',
             }
           }
         }

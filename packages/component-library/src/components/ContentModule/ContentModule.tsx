@@ -12,14 +12,14 @@ import { Theme } from '@material-ui/core/styles/createTheme';
 const getMUITheme = (theme?: Array<Theme>) => {
   if (Array.isArray(theme)) {
     const merged: ThemeOptions = omitBy(merge({}, ...theme), isNull);
-    console.log('ThemeMerged', merged);
+    // console.log('ThemeMerged', merged);
     return createTheme(merged);
   }
   return null;
 };
 
 const getProviders = ({ theme }: { theme?: Array<Theme> }) => {
-  console.log('getProviders', theme);
+  // console.log('getProviders', theme);
   const providers = [];
   const muiTheme = getMUITheme(theme);
   if (muiTheme) {

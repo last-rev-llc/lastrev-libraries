@@ -5,6 +5,7 @@ import Grid from '@material-ui/core/Grid';
 import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
 import get from 'lodash/get';
 // import BackgroundImage from '../BackgroundImage';
+import Image from '../Image';
 import ContentModule from '../ContentModule';
 
 interface Image {
@@ -28,11 +29,18 @@ interface Props {
   };
 }
 
-const Section = ({ contents, styles }: Props) => {
+const Section = ({ contents, styles, background }: Props) => {
   const { spacing } = styles?.gridContainer ?? {};
+  console.log('contents: ', contents);
+
   return (
     <Root sx={styles?.root}>
       {/* <Background {...media} /> */}
+      {background ? (
+        <Box>
+          <Image {...background} />
+        </Box>
+      ) : null}
       <GridContainer container sx={styles?.gridContainer} spacing={spacing}>
         {contents?.map((content, idx) => {
           const itemStyle = get(styles?.gridItem, idx);

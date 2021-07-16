@@ -133,6 +133,7 @@ const options = {
     }
   }
 };
+
 function RichText({ document }: Props) {
   // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
 
