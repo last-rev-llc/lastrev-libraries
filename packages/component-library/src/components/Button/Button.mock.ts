@@ -6,5 +6,5 @@ export default {
   color: 'primary',
   text: lorem.word(),
   className: lorem.word(),
-  testId: 'Button',
+  testId: 'Button'
 };

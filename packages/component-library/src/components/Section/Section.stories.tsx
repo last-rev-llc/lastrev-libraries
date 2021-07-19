@@ -17,13 +17,14 @@ export default {
   argTypes: {
     contents: { name: 'Contents' },
     background: { name: 'Background' },
-    styles: { name: 'Styles' },
-  },
+    styles: { name: 'Styles' }
+  }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) =>
+const Template = (args: JSX.IntrinsicAttributes) => (
   <ThemeProvider theme={merge({}, ...args.theme)}>
     <Section {...args} />
-  </ThemeProvider>;
+  </ThemeProvider>
+);
 export const Default = Template.bind({});
 Default.args = { ...mockContent };
