@@ -9,60 +9,60 @@ export default {
     variant: {
       name: 'Variant',
       control: {
-        type: 'inline-radio',
+        type: 'inline-radio'
       },
       table: {
-        defaultValue: { summary: 'contained' },
+        defaultValue: { summary: 'contained' }
       }
     },
     size: {
       name: 'Size',
       control: {
-        type: 'inline-radio',
+        type: 'inline-radio'
       },
       table: {
-        defaultValue: { summary: 'large' },
+        defaultValue: { summary: 'large' }
       }
     },
     color: {
       name: 'Color',
       control: {
-        type: 'inline-radio',
+        type: 'inline-radio'
       },
       table: {
-        defaultValue: { summary: 'primary' },
+        defaultValue: { summary: 'primary' }
       }
     },
     disabled: {
       name: 'Disabled',
       control: {
-        type: 'boolean',
+        type: 'boolean'
       },
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: false }
       }
     },
     disableElevation: {
       name: 'Disable Elevation',
       control: {
-        type: 'boolean',
+        type: 'boolean'
       },
       defaultValue: true,
       table: {
-        defaultValue: { summary: true },
+        defaultValue: { summary: true }
       }
     },
     fullWidth: {
       name: 'Full Width',
       control: {
-        type: 'boolean',
+        type: 'boolean'
       },
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: false }
       }
     },
     href: { name: 'Href' },
-    ref: { table: { disable: true } },
+    ref: { table: { disable: true } }
   }
 };
 

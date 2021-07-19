@@ -3,7 +3,7 @@ import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@material-ui
 import ErrorBoundary from '../ErrorBoundary';
 
 interface ButtonProps extends MuiButtonProps {
-  text?: string
+  text?: string;
 }
 
 export const Button = ({
@@ -13,11 +13,7 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <ErrorBoundary>
-      <MuiButton
-        {...props}
-      >
-        {text}
-      </MuiButton>
+      <MuiButton {...props}>{text}</MuiButton>
     </ErrorBoundary>
   );
 };

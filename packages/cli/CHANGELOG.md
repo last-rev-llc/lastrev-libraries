@@ -1,5 +1,14 @@
 # @last-rev/cli
 
+## 0.1.6
+
+### Patch Changes
+
+- 8d45841: added contentful s3 sync and CLI command
+- 8d45841: Added netlify.toml to rename packages script in create-app CLI
+- Updated dependencies [8d45841]
+  - @last-rev/contentful-s3-sync@0.1.1
+
 ## 0.1.5
 
 ### Patch Changes
