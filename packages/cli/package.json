@@ -6,19 +6,24 @@
     "last-rev": "bin/last-rev"
   },
   "scripts": {
-    "build": "tsc",
-    "lint": "tslint --project tsconfig.json",
-    "dev": "tsc -w"
+    "clean": "rimraf dist",
+    "build": "run-s clean build:prod",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "tslint --project tsconfig.json"
   },
   "devDependencies": {
+    "@last-rev/rollup-config": "^0.0.4",
     "@types/cross-spawn": "^6.0.2",
-    "@types/tar": "^4.0.4"
+    "@types/tar": "^4.0.4",
+    "tslib": "^2.3.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
+    "@last-rev/contentful-s3-sync": "^0.1.0",
     "@last-rev/contentful-sync-to-fs": "^0.1.2",
     "@last-rev/graphql-contentful-core": "^0.1.3",
     "@last-rev/testing-library": "^0.1.2",

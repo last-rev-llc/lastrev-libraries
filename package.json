@@ -14,7 +14,7 @@
     "clean": "lerna exec 'rm -rf node_modules/ dist/'; rm -rf node_modules/; yarn install",
     "deps:check": "manypkg check",
     "deps:fix": "manypkg fix",
-    "dev": "lerna run --stream --include-dependencies dev",
+    "dev": "lerna run --parallel --include-dependencies dev",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
     "release": "yarn build && changeset publish",
     "start": "lerna run start",
