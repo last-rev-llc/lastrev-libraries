@@ -3,12 +3,14 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 
 import { ApolloServer } from 'apollo-server';
+// import { ApolloServer as LambdaServer } from 'apollo-server-lambda';
 import { getLocales } from '@last-rev/integration-contentful';
 import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import generateSchema from '@last-rev/graphql-schema-gen';
-import createLoaders from '@last-rev/contentful-fs-loader';
+import createFsLoaders from '@last-rev/contentful-fs-loader';
+// import createS3Loaders from '@last-rev/contentful-s3-loader';
 import { find, get, map } from 'lodash';
 import { resolve } from 'path';
 
@@ -17,20 +19,38 @@ import createResolvers from './resolvers/createResolvers';
 import generatePathToIdMapping from './utils/generatePathToIdMapping';
 import { Extensions } from './types';
 
+// export const getHandler = async ({
+//   cms = 'Contentful',
+//   extensions,
+//   contentDir
+// }: {
+//   cms?: 'Contentful';
+//   extensions?: Extensions;
+//   contentDir: string;
+// }) => {
+//   // TODO
+// };
+
 export const getServer = async ({
   cms = 'Contentful',
   extensions,
-  contentDir
+  contentDir,
+  spaceId,
+  environement,
+  isPreview
 }: {
   cms?: 'Contentful';
   extensions?: Extensions;
   contentDir: string;
+  spaceId: string;
+  environement: string;
+  isPreview: boolean;
 }) => {
-  const loaders = await createLoaders(
+  const loaders = await createFsLoaders(
     resolve(process.cwd(), contentDir),
-    process.env.CONTENTFUL_SPACE_ID || '',
-    process.env.CONTENTFUL_ENV || 'master',
-    (process.env.CONTENTFUL_HOST || 'cdn.contentful.com').startsWith('preview') ? 'preview' : 'production'
+    spaceId,
+    environement,
+    isPreview ? 'preview' : 'production'
   );
 
   const baseTypeDefs = await generateSchema({

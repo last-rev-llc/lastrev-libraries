@@ -15,25 +15,27 @@ const handler: Handler = async (event) => {
 
   const { id, locale } = queryStringParameters || {};
 
-  const server = await getServer({
+  const server = await getHandler({
     cms: 'Contentful',
     extensions,
     contentDir: resolve(__dirname, '../cms-sync')
   });
 
-  const { url } = await server.listen({ port: 5000, host: 'localhost' });
+  // const { url } = await server.listen({ port: 5000, host: 'localhost' });
 
-  const sdk = getSdk(new GraphQLClient(url));
+  // const sdk = getSdk(new GraphQLClient(url));
 
-  const data = await sdk.Preview({ id, locale });
+  // const data = await sdk.Preview({ id, locale, environment });
 
-  await server.stop();
+  // await server.stop();
 
-  // space, env, "preview", extensions
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ data })
-  };
+  // // space, env, "preview", extensions
+  // return {
+  //   statusCode: 200,
+  //   body: JSON.stringify({ data })
+  // };
+  const handler = server.createHandler();
+  return handler(event);
 };
 
 export { handler };

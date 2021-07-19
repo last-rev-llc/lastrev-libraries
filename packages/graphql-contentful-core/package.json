@@ -30,6 +30,7 @@
     "apollo-graphql": "^0.9.3",
     "apollo-server": "^2.25.0",
     "apollo-server-core": "^2.19.1",
+    "apollo-server-lambda": "^3.0.1",
     "contentful": "^8.1.7",
     "dotenv": "^10.0.0",
     "graphql": "^15.5.1",
