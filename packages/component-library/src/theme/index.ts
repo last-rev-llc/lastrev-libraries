@@ -1,5 +1,6 @@
 import createAppTheme from './createTheme';
 import { CardProps, CardOverrides } from './../components/Card';
+import { Props } from './../components/Section';
 import mockTheme from './mock.theme';
 
 declare module '@material-ui/core/styles' {
@@ -26,7 +27,7 @@ declare module '@material-ui/core/styles' {
 }
 declare module '@material-ui/core/styles/components' {
   interface ComponentsProps {
-    Section: {};
+    Section: Props;
     Card: CardProps;
     RichText: {};
   }

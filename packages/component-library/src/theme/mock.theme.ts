@@ -1,4 +1,5 @@
 import createCardVariants from './createCardVariants';
+import createSectionVariants from './createSectionVariants';
 import createAppTheme from './createTheme';
 import { red } from '@material-ui/core/colors';
 
@@ -40,6 +41,28 @@ const theme = createAppTheme(
     components: {
       Card: {
         variants: createCardVariants(baseTheme)
+      },
+      Section: {
+        variants: createSectionVariants(baseTheme),
+        styleOverrides: {
+          root: {
+            display: 'flex',
+            alignItems: 'center',
+          }
+        },
+        sectionWrap: {
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+        },
+        imageWrap: {
+          width: '100%',
+          maxWidth: 500,
+          margin: '0 auto',
+          fontSize: 0
+        },
+        gridContainer: {},
+        gridItem: {}
       },
       MuiCard: {
         styleOverrides: {

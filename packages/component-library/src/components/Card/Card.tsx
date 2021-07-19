@@ -78,7 +78,7 @@ export const Card = ({
 const CardRoot = styled(MuiCard, {
   name: 'Card',
   slot: 'Root',
-  overridesResolver: (props, styles) => ({
+  overridesResolver: (_, styles) => ({
     ...styles.root,
   })
 })<MuiCardProps & {}>(() => ({}));

@@ -142,7 +142,7 @@ export const complexMock = {
 
 export default {
   __typename: 'RichText',
-  raw: {
+  document: {
     nodeType: 'document',
     data: {},
     content: [

@@ -3,6 +3,7 @@ import { capitalize } from 'lodash';
 import mockTheme from '../../theme/mock.theme';
 import cardMock from '../Card/Card.mock';
 import imageMock from '../Image/Image.mock';
+import richTextMock from '../RichText/RichText.mock';
 
 export default {
   __typename: 'Section',
@@ -90,6 +91,110 @@ export default {
             gridItem: {
               padding: 10
             }
+          }
+        }
+      }
+    }
+  ]
+};
+
+// richTextMock.document.content.push({
+//   nodeType: 'heading-5',
+//   data: {},
+//   content: [
+//     {
+//       nodeType: 'text',
+//       value: capitalize(lorem.words(5)),
+//       marks: [],
+//       data: {}
+//     }
+//   ]
+// });
+
+// console.log('richTextMock', richTextMock);
+
+
+export const singlePanelMock = {
+  __typename: 'Section',
+  contents: [
+    {
+      ...richTextMock,
+      variant: 'single-panel',
+      theme: [mockTheme]
+    },
+  ],
+  theme: [
+    {
+      components: {
+        Section: {
+          styleOverrides: {
+            root: {
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+
+              '.MuiTypography-h4': {
+                fontSize: 32,
+              },
+            },
+            // gridContainer: {
+            // },
+            gridItem: {
+              padding: 40
+            },
+          }
+        }
+      }
+    }
+  ]
+};
+
+export const splitPanelMock = {
+  __typename: 'Section',
+  background: {
+    ...imageMock,
+    src: 'https://material-ui.com/static/images/cards/contemplative-reptile.jpg',
+    height: 'auto',
+    width: '100%'
+  },
+  contents: [
+    {
+      ...richTextMock,
+      variant: 'split-panel',
+      theme: [mockTheme]
+    },
+  ],
+  theme: [
+    {
+      components: {
+        Section: {
+          styleOverrides: {
+            root: {
+              display: 'flex',
+              alignItems: 'center',
+
+              '.MuiTypography-h4': {
+                fontSize: 32,
+              },
+            },
+            sectionWrap: {
+              display: 'flex',
+              flexDirection: 'row-reverse',
+              alignItems: 'center',
+              width: '100%',
+              maxWidth: 1280,
+              margin: '0 auto',
+            },
+            imageWrap: {
+              width: '100%',
+              maxWidth: 500,
+              margin: '0 auto',
+              fontSize: 0
+            },
+            gridItem: {
+              padding: 40
+            },
           }
         }
       }

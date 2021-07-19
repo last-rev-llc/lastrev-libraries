@@ -32,6 +32,7 @@ interface Props {
   variant?: string;
   theme?: Array<Theme>;
 }
+
 function ContentModule({ __typename, ...fields }: Props) {
   const contentMapping = useContentModuleContext();
   const contentType =
