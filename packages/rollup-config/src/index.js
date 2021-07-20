@@ -13,6 +13,7 @@ const autoprefixer = require(`autoprefixer`);
 const progress = require(`rollup-plugin-progress`);
 const { terser } = require(`rollup-plugin-terser`);
 const sourcemap = require(`rollup-plugin-sourcemaps`);
+const peerDepsExternal = require('rollup-plugin-peer-deps-external');
 // const multi = require(`@rollup/plugin-multi-entry`);
 const clean = require(`./plugins/clean`);
 // const size = require(`./plugins/size`);
@@ -62,6 +63,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
   const defaultPlugins = [
     isProduction && clean(dir),
     // multi(),
+    peerDepsExternal(),
     replace({
       'process.env.NODE_ENV': JSON.stringify(isProduction ? `production` : `development`)
     }),

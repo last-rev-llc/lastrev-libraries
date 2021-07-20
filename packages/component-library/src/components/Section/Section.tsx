@@ -19,10 +19,12 @@ interface Media {
   mobile?: Image;
 }
 
-export interface Props {
+export interface SectionProps {
   // variant?: any;
   contents: Array<{ __typename: string; id: string }>;
-  background: Media;
+  background?: Media;
+  variant?: string;
+  spacing: any;
   // Enables exposing inner `sx` prop through content
   styles?: {
     root?: SystemCssProperties;
@@ -31,37 +33,35 @@ export interface Props {
   };
 }
 
-export const Section = ({ contents, styles, background }: Props) => {
-  const { spacing } = styles?.gridContainer ?? {};
+export interface SectionOverrides {}
+const Section = ({ contents, styles, spacing, background, variant }: SectionProps) => {
   // console.log('variant: ', variant);
 
   return (
     <ErrorBoundary>
-      <Root sx={styles?.root}>
+      <Root sx={styles?.root} variant={variant}>
         {/* <Background {...media} /> */}
-        <SectionWrap>
-          {background ? (
-            <ImageWrap>
-              <Image {...background} />
-            </ImageWrap>
-          ) : null}
-          <GridContainer container sx={styles?.gridContainer} spacing={spacing}>
-            {contents?.map((content, idx) => {
-              const itemStyle = get(styles?.gridItem, idx);
-              return (
-                <GridItem
-                  item
-                  key={content?.id}
-                  xs={itemStyle?.xs ?? true}
-                  md={itemStyle?.md}
-                  sm={itemStyle?.sm}
-                  sx={itemStyle}>
-                  <ContentModule {...content} />
-                </GridItem>
-              );
-            })}
-          </GridContainer>
-        </SectionWrap>
+        {background ? (
+          <ImageWrap>
+            <Image {...background?.desktop} />
+          </ImageWrap>
+        ) : null}
+        <GridContainer container sx={styles?.gridContainer} spacing={spacing}>
+          {contents?.map((content, idx) => {
+            const itemStyle = get(styles?.gridItem, idx);
+            return (
+              <GridItem
+                item
+                key={content?.id}
+                xs={itemStyle?.xs ?? true}
+                md={itemStyle?.md}
+                sm={itemStyle?.sm}
+                sx={itemStyle}>
+                <ContentModule {...content} />
+              </GridItem>
+            );
+          })}
+        </GridContainer>
       </Root>
     </ErrorBoundary>
   );
@@ -73,9 +73,11 @@ const Root = styled(Box, {
   name: 'Section',
   slot: 'Root',
   overridesResolver: (_, styles) => ({
-    ...styles.root
+    ...styles.root,
+    display: 'flex',
+    justifyContent: 'center'
   })
-})(() => ({}));
+})<{ variant?: string }>(() => ({}));
 
 // const Background = styled(BackgroundImage, {
 //   name:"Section",
@@ -84,21 +86,19 @@ const Root = styled(Box, {
 //   position: 'relative'
 // }));
 
-const SectionWrap = styled(Grid, {
-  name: 'Section',
-  slot: 'SectionWrap',
-  overridesResolver: (_, styles) => ({
-    ...styles.sectionWrap
-  })
-})(() => ({}));
-
 const ImageWrap = styled(Grid, {
   name: 'Section',
   slot: 'ImageWrap',
   overridesResolver: (_, styles) => ({
     ...styles.imageWrap
   })
-})(() => ({}));
+})(() => ({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%'
+}));
 
 const GridContainer = styled(Grid, {
   name: 'Section',

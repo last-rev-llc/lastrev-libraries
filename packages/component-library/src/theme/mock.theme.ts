@@ -48,21 +48,24 @@ const theme = createAppTheme(
           root: {
             display: 'flex',
             alignItems: 'center',
+            padding: baseTheme.spacing(5)
+          },
+          gridContainer: {
+            // alignItems: 'center'
+          },
+          gridItem: {
+            // TODO: Review if this makes sense as a default
+            '& > img': {
+              width: '100%',
+              height: 'auto',
+              display: 'block',
+              margin: 'auto'
+            }
           }
         },
-        sectionWrap: {
-          display: 'flex',
-          alignItems: 'center',
-          width: '100%',
-        },
-        imageWrap: {
-          width: '100%',
-          maxWidth: 500,
-          margin: '0 auto',
-          fontSize: 0
-        },
-        gridContainer: {},
-        gridItem: {}
+        defaultProps: {
+          spacing: 4
+        }
       },
       MuiCard: {
         styleOverrides: {
@@ -80,7 +83,7 @@ const theme = createAppTheme(
             // Image wrap
             '& .MuiBox-root': {
               width: '100%',
-              height: '100%',
+              height: '100%'
             }
           }
         }

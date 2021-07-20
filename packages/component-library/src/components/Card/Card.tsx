@@ -20,25 +20,25 @@ export interface CardProps extends MuiCardProps {
   variant?: any;
   title?: string;
   subtitle?: string;
-  image?: ImageProps;
+  media?: ImageProps;
   body?: string;
-  ctas?: LinkProps[];
+  actions?: LinkProps[];
 }
 
 export interface CardOverrides {}
 
-export const Card = ({
-  image, title, subtitle, body, ctas, variant }: CardProps) => {
+export const Card = ({ media, title, subtitle, body, actions, variant }: CardProps) => {
+  console.log('card', { media, title, subtitle, body, actions, variant });
   return (
     <ErrorBoundary>
       <CardRoot variant={variant}>
-        {image ? (
+        {media ? (
           // <CardMedia
           //   component={Image}
           //   {...image}
           // />
           <Box>
-            <Image {...image} />
+            <Image {...media} />
           </Box>
         ) : null}
         {title || subtitle || body ? (
@@ -60,7 +60,7 @@ export const Card = ({
             ) : null}
           </CardContent>
         ) : null}
-        {ctas?.length ? (
+        {actions?.length ? (
           <CardActions>
             <Link
             // href={href}
@@ -79,7 +79,7 @@ const CardRoot = styled(MuiCard, {
   name: 'Card',
   slot: 'Root',
   overridesResolver: (_, styles) => ({
-    ...styles.root,
+    ...styles.root
   })
 })<MuiCardProps & {}>(() => ({}));
 

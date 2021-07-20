@@ -5,7 +5,7 @@ import mockLink from '../Link/Link.mock';
 
 export default {
   __typename: 'Card',
-  image: {
+  media: {
     ...mockImage,
     src: 'https://material-ui.com/static/images/cards/contemplative-reptile.jpg',
     alt: 'Contemplative Lizard',

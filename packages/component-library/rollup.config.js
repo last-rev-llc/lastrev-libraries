@@ -9,7 +9,7 @@ export default config({
       sourcemap: true
     }
   ],
-
   babelHelpers: 'runtime',
-  preserveModules: true
+  preserveModules: true,
+  preserveModulesRoot: 'src'
 });

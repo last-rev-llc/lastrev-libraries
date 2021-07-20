@@ -2,174 +2,178 @@ import { lorem } from 'faker';
 import { capitalize } from 'lodash';
 
 export const complexMock = {
-  __typename: 'RichText',
-  document: {
-    data: {},
-    content: [
-      {
-        data: {},
-        content: [
-          {
-            data: {},
-            marks: [],
-            value: lorem.sentence(),
-            nodeType: 'text'
-          },
-          {
-            data: {},
-            marks: [
-              {
-                type: 'bold'
-              }
-            ],
-            value: ' Bold, ',
-            nodeType: 'text'
-          },
-          {
-            data: {},
-            marks: [
-              {
-                type: 'italic'
-              }
-            ],
-            value: 'italic and ',
-            nodeType: 'text'
-          },
-          {
-            data: {},
-            marks: [
-              {
-                type: 'italic'
-              },
-              {
-                type: 'underline'
-              }
-            ],
-            value: 'underline.',
-            nodeType: 'text'
-          }
-        ],
-        nodeType: 'paragraph'
-      },
-      {
-        data: {},
-        content: [
-          {
-            data: {},
-            marks: [],
-            value: 'This is a list:',
-            nodeType: 'text'
-          }
-        ],
-        nodeType: 'paragraph'
-      },
-      {
-        data: {},
-        content: [
-          {
-            data: {},
-            content: [
-              {
-                data: {},
-                content: [
-                  {
-                    data: {},
-                    marks: [],
-                    value: 'Item One',
-                    nodeType: 'text'
-                  }
-                ],
-                nodeType: 'paragraph'
-              }
-            ],
-            nodeType: 'list-item'
-          },
-          {
-            data: {},
-            content: [
-              {
-                data: {},
-                content: [
-                  {
-                    data: {},
-                    marks: [],
-                    value: 'Item Two',
-                    nodeType: 'text'
-                  }
-                ],
-                nodeType: 'paragraph'
-              }
-            ],
-            nodeType: 'list-item'
-          },
-          {
-            data: {},
-            content: [
-              {
-                data: {},
-                content: [
-                  {
-                    data: {},
-                    marks: [],
-                    value: 'Item Three',
-                    nodeType: 'text'
-                  }
-                ],
-                nodeType: 'paragraph'
-              }
-            ],
-            nodeType: 'list-item'
-          }
-        ],
-        nodeType: 'unordered-list'
-      },
-      {
-        data: {},
-        content: [
-          {
-            data: {},
-            marks: [],
-            value: lorem.paragraph(),
-            nodeType: 'text'
-          }
-        ],
-        nodeType: 'paragraph'
-      }
-    ],
-    nodeType: 'document'
+  __typename: 'Text',
+  body: {
+    document: {
+      data: {},
+      content: [
+        {
+          data: {},
+          content: [
+            {
+              data: {},
+              marks: [],
+              value: lorem.sentence(),
+              nodeType: 'text'
+            },
+            {
+              data: {},
+              marks: [
+                {
+                  type: 'bold'
+                }
+              ],
+              value: ' Bold, ',
+              nodeType: 'text'
+            },
+            {
+              data: {},
+              marks: [
+                {
+                  type: 'italic'
+                }
+              ],
+              value: 'italic and ',
+              nodeType: 'text'
+            },
+            {
+              data: {},
+              marks: [
+                {
+                  type: 'italic'
+                },
+                {
+                  type: 'underline'
+                }
+              ],
+              value: 'underline.',
+              nodeType: 'text'
+            }
+          ],
+          nodeType: 'paragraph'
+        },
+        {
+          data: {},
+          content: [
+            {
+              data: {},
+              marks: [],
+              value: 'This is a list:',
+              nodeType: 'text'
+            }
+          ],
+          nodeType: 'paragraph'
+        },
+        {
+          data: {},
+          content: [
+            {
+              data: {},
+              content: [
+                {
+                  data: {},
+                  content: [
+                    {
+                      data: {},
+                      marks: [],
+                      value: 'Item One',
+                      nodeType: 'text'
+                    }
+                  ],
+                  nodeType: 'paragraph'
+                }
+              ],
+              nodeType: 'list-item'
+            },
+            {
+              data: {},
+              content: [
+                {
+                  data: {},
+                  content: [
+                    {
+                      data: {},
+                      marks: [],
+                      value: 'Item Two',
+                      nodeType: 'text'
+                    }
+                  ],
+                  nodeType: 'paragraph'
+                }
+              ],
+              nodeType: 'list-item'
+            },
+            {
+              data: {},
+              content: [
+                {
+                  data: {},
+                  content: [
+                    {
+                      data: {},
+                      marks: [],
+                      value: 'Item Three',
+                      nodeType: 'text'
+                    }
+                  ],
+                  nodeType: 'paragraph'
+                }
+              ],
+              nodeType: 'list-item'
+            }
+          ],
+          nodeType: 'unordered-list'
+        },
+        {
+          data: {},
+          content: [
+            {
+              data: {},
+              marks: [],
+              value: lorem.paragraph(),
+              nodeType: 'text'
+            }
+          ],
+          nodeType: 'paragraph'
+        }
+      ],
+      nodeType: 'document'
+    }
   }
 };
 
 export default {
-  __typename: 'RichText',
-  document: {
-    nodeType: 'document',
-    data: {},
-    content: [
-      {
-        nodeType: 'heading-4',
-        data: {},
-        content: [
-          {
-            nodeType: 'text',
-            value: capitalize(lorem.words(2)),
-            marks: [],
-            data: {}
-          }
-        ]
-      },
-      {
-        nodeType: 'paragraph',
-        data: {},
-        content: [
-          {
-            nodeType: 'text',
-            value: lorem.sentences(2),
-            marks: [],
-            data: {}
-          }
-        ]
-      }
-    ],
+  __typename: 'Text',
+  body: {
+    document: {
+      nodeType: 'document',
+      data: {},
+      content: [
+        {
+          nodeType: 'heading-4',
+          data: {},
+          content: [
+            {
+              nodeType: 'text',
+              value: capitalize(lorem.words(2)),
+              marks: [],
+              data: {}
+            }
+          ]
+        },
+        {
+          nodeType: 'paragraph',
+          data: {},
+          content: [
+            {
+              nodeType: 'text',
+              value: lorem.sentences(2),
+              marks: [],
+              data: {}
+            }
+          ]
+        }
+      ]
+    }
   }
 };

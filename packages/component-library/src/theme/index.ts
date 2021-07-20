@@ -33,38 +33,46 @@ declare module '@material-ui/core/styles/components' {
   }
   interface ComponentElementOverrides {
     Section: {
-      root: {};
-      gridItem: {};
-      gridContainer: {};
-      backgroundImage: {};
+      root?: {};
+      sectionWrap?: {};
+      imageWrap?: {};
+      gridItem?: {};
+      gridContainer?: {};
+      backgroundImage?: {};
     };
     Card: CardOverrides;
-    RichText: {
-      root: {};
-      gridItem: {};
-      gridContainer: {};
-      backgroundImage: {};
+    RichText?: {
+      root?: {};
+      sectionWrap?: {};
+      imageWrap?: {};
+      gridItem?: {};
+      gridContainer?: {};
+      backgroundImage?: {};
     };
   }
   interface ComponentsOverrides {
-    Section: {
-      root: {};
-      gridItem: {};
-      gridContainer: {};
-      backgroundImage: {};
+    Section?: {
+      root?: {};
+      sectionWrap?: {};
+      imageWrap?: {};
+      gridItem?: {};
+      gridContainer?: {};
+      backgroundImage?: {};
     };
     Card: CardOverrides;
-    RichText: {
-      root: {};
-      gridItem: {};
-      gridContainer: {};
-      backgroundImage: {};
+    RichText?: {
+      root?: {};
+      sectionWrap?: {};
+      imageWrap?: {};
+      gridItem?: {};
+      gridContainer?: {};
+      backgroundImage?: {};
     };
   }
   interface ComponentsVariants {
-    Section: {};
-    Card: {};
-    RichText: {};
+    Section?: {};
+    Card?: {};
+    RichText?: {};
   }
   interface Components {
     Section?: {
@@ -79,7 +87,7 @@ declare module '@material-ui/core/styles/components' {
       styleOverrides?: ComponentsOverrides['Card'];
       variants?: ComponentsVariants['Card'];
     };
-    RichText: {
+    RichText?: {
       defaultProps?: ComponentsProps['RichText'];
       overrides?: ComponentElementOverrides['RichText'];
       styleOverrides?: ComponentsOverrides['RichText'];
