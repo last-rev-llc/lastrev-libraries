@@ -1,7 +1,7 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import { chain, filter, get, identity, pickBy } from 'lodash';
-import { GetObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import { chain, filter, identity } from 'lodash';
+import { GetObjectCommand, ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
 import { CredentialsProvider } from './CredentialsProvider';
 
@@ -52,6 +52,32 @@ const createLoaders = (
     return response?.Body ? JSON.parse(await streamToString(response.Body as Readable)) : null;
   };
 
+  const listDirectory = async (path: string) => {
+    const { accessKeyId, secretAccessKey, sessionToken, bucket, spaceId } = await credentialsProvider.load();
+
+    const client = new S3Client({
+      credentialDefaultProvider: () => async () => ({ accessKeyId, secretAccessKey, sessionToken })
+    });
+
+    const Prefix = `${spaceId}/${environment}/${isPreview ? 'preview' : 'production'}/${path}`;
+
+    const out = [];
+
+    let command = new ListObjectsV2Command({ Bucket: bucket, Prefix });
+    let response = await client.send(command);
+
+    out.push(...(response.Contents || []).filter((r) => !!r.Key).map((r) => (r.Key as string).replace(Prefix, '')));
+
+    while (response.IsTruncated) {
+      command = new ListObjectsV2Command({ Bucket: bucket, Prefix, ContinuationToken: response.NextContinuationToken });
+      response = await client.send(command);
+
+      out.push(...(response.Contents || []).filter((r) => !!r.Key).map((r) => (r.Key as string).replace(Prefix, '')));
+    }
+
+    return out;
+  };
+
   const getBatchItemFetcher = <T extends Entry<any> | Asset>(
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<string, T | null> => {
@@ -70,23 +96,33 @@ const createLoaders = (
     };
   };
 
+  const getBatchEntryIdsByContentTypeFetcher = (): DataLoader.BatchLoadFn<string, string[]> => {
+    return async (contentTypeIds) => {
+      return Promise.all(
+        contentTypeIds.map((contentTypeId) =>
+          (async () => {
+            try {
+              return await listDirectory(`entry_ids_by_content_type/${contentTypeId}`);
+            } catch (err) {
+              return [];
+            }
+          })()
+        )
+      );
+    };
+  };
+
   const getBatchEntriesByContentTypeFetcher = (
-    loader: DataLoader<string, Entry<any> | null>
+    eLoader: DataLoader<string, Entry<any> | null>,
+    idsLoader: DataLoader<string, (string | null)[]>
   ): DataLoader.BatchLoadFn<string, Entry<any>[]> => {
     return async (keys) => {
-      // TODO: this
-      const contentTypeToIdsLookup = await getObject('entry_ids_by_content_type_lookup.json');
-
-      const filteredMapping = pickBy(contentTypeToIdsLookup, (_, key) => {
-        return keys.indexOf(key) > -1;
-      });
-
+      const idsArrays = await idsLoader.loadMany(keys);
       return Promise.all(
-        chain(keys)
-          .map((k) => get(filteredMapping, k, []))
+        chain(idsArrays)
           .map((ids) =>
             (async () => {
-              const entries = await loader.loadMany(ids);
+              const entries = await eLoader.loadMany(filter(ids, (id) => id !== null));
               return filter(entries, identity) as Entry<any>[];
             })()
           )
@@ -94,13 +130,24 @@ const createLoaders = (
       );
     };
   };
-
   const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'));
   const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'));
-  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(entryLoader));
+  const entryIdsByContentTypeLoader = new DataLoader(getBatchEntryIdsByContentTypeFetcher());
+  const entriesByContentTypeLoader = new DataLoader(
+    getBatchEntriesByContentTypeFetcher(entryLoader, entryIdsByContentTypeLoader)
+  );
   const fetchAllContentTypes = async () => {
     try {
-      return await getObject('content_types.json');
+      const contentTypeFilenames = await listDirectory('content_types');
+      return Promise.all(
+        contentTypeFilenames.map(async (filename) => {
+          try {
+            return getObject(`content_types/${filename}`);
+          } catch (err) {
+            return null;
+          }
+        })
+      );
     } catch (err) {
       console.error('Unable to fetch content types:', err.message);
       return [];
