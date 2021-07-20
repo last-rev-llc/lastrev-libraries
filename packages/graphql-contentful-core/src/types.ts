@@ -1,8 +1,8 @@
 import { Context } from 'apollo-server-core';
-import { ContentfulFsLoaders } from '@last-rev/contentful-fs-loader';
-import { Entry } from 'contentful';
+import { Asset, ContentType, Entry } from 'contentful';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
 import { GraphQLResolverMap } from 'apollo-graphql';
+import DataLoader from 'dataloader';
 
 export type TypeMapper = {
   [fieldName: string]: string | Function;
@@ -27,8 +27,15 @@ export type PathToIdMapping = {
     | string;
 };
 
+export type ContentfulLoaders = {
+  entryLoader: DataLoader<string, Entry<any> | null>;
+  assetLoader: DataLoader<string, Asset | null>;
+  entriesByContentTypeLoader: DataLoader<string, Entry<any>[]>;
+  fetchAllContentTypes: () => Promise<ContentType[]>;
+};
+
 export type ApolloContext = Context<{
-  loaders: ContentfulFsLoaders;
+  loaders: ContentfulLoaders;
   mappers: Mappers;
   defaultLocale: string;
   locale?: string;
@@ -45,7 +52,7 @@ export type PagePathsParam = {
 
 export type ContentfulPathsGenerator = (
   resolvedItem: Entry<any>,
-  loaders: ContentfulFsLoaders,
+  loaders: ContentfulLoaders,
   defaultLocale: string,
   locales: string[]
 ) => Promise<PathToIdMapping>;
@@ -63,3 +70,24 @@ export type Extensions = {
   typeMappings: { [contentfulType: string]: string };
   pathsConfigs: ContentfulPathsConfigs;
 };
+
+export type BaseServerProps = {
+  cms: 'Contentful';
+  extensions?: Extensions;
+  environment: string;
+  isPreview: boolean;
+};
+
+export type FsServerProps = BaseServerProps & {
+  contentDir: string;
+  spaceId: string;
+  loaderType: 'fs';
+};
+
+export type S3ServerProps = BaseServerProps & {
+  apiUrl: string;
+  apiKey: string;
+  loaderType: 's3';
+};
+
+export type ServerProps = FsServerProps | S3ServerProps;

@@ -3,12 +3,9 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import { Handler } from '@netlify/functions';
-import { getServer } from '@last-rev/graphql-contentful-core';
-import { resolve } from 'path';
-import { GraphQLClient } from 'graphql-request';
+import { getHandler } from '@last-rev/graphql-contentful-core';
 
 import extensions from 'lrns-graphql-extensions';
-import { getSdk } from 'lrns-graphql-sdk';
 
 const handler: Handler = async (event) => {
   const { queryStringParameters } = event;
@@ -18,24 +15,17 @@ const handler: Handler = async (event) => {
   const server = await getHandler({
     cms: 'Contentful',
     extensions,
-    contentDir: resolve(__dirname, '../cms-sync')
+    apiUrl: process.env.LAST_REV_API_URL,
+    apiKey: process.env.LAST_REV_API_KEY,
+    isPreview: true,
+    loaderType: 's3'
   });
 
-  // const { url } = await server.listen({ port: 5000, host: 'localhost' });
-
-  // const sdk = getSdk(new GraphQLClient(url));
-
-  // const data = await sdk.Preview({ id, locale, environment });
-
-  // await server.stop();
-
-  // // space, env, "preview", extensions
-  // return {
-  //   statusCode: 200,
-  //   body: JSON.stringify({ data })
-  // };
   const handler = server.createHandler();
-  return handler(event);
+  return handler({
+    id,
+    locale
+  });
 };
 
 export { handler };

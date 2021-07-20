@@ -1,0 +1,36 @@
+{
+  "name": "@last-rev/contentful-s3-loader",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "run-s clean build:prod",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@last-rev/rollup-config": "^0.0.4",
+    "@last-rev/testing-library": "^0.1.2",
+    "@types/fs-extra": "^9.0.11",
+    "@types/node": "^14.14.35",
+    "contentful": "^8.1.7",
+    "jest": "^26.6.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.22.0",
+    "@aws-sdk/node-http-handler": "^3.22.0",
+    "@aws-sdk/types": "^3.22.0",
+    "axios": "^0.21.1",
+    "dataloader": "^2.0.0",
+    "fs-extra": "^10.0.0",
+    "lodash": "^4.17.21",
+    "tslib": "^2.3.0"
+  }
+}

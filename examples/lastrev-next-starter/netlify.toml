@@ -6,4 +6,4 @@
 package = "/packages/content-fs-cache-netlify-plugin"
 
 [functions]
-  directory = "packages/web/functions"
+  directory = "packages/functions"
