@@ -20,9 +20,9 @@ export const getServer = async (props: ServerProps) => {
     context: () => {
       return {
         loaders,
-        mappers: props.extensions?.mappers,
+        mappers: props.extensions?.mappers || {},
         defaultLocale,
-        typeMappings: props.extensions?.typeMappings,
+        typeMappings: props.extensions?.typeMappings || {},
         pathToIdMapping
       };
     }

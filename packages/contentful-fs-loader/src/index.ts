@@ -1,7 +1,7 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import { readJSON, readJsonSync } from 'fs-extra';
-import { chain, filter, get, identity, pickBy } from 'lodash';
+import { readJSON, readdir } from 'fs-extra';
+import { chain, filter, identity, isNull } from 'lodash';
 import { join } from 'path';
 
 export type PageKey = {
@@ -22,15 +22,6 @@ const createLoaders = (
   env: string,
   previewOrProd: 'preview' | 'production'
 ): ContentfulFsLoaders => {
-  let contentTypeToIdsLookup: Record<string, string[]>;
-  try {
-    contentTypeToIdsLookup = readJsonSync(
-      join(rootDir, spaceId, env, previewOrProd, 'entry_ids_by_content_type_lookup.json')
-    );
-  } catch (e) {
-    throw Error('No content type to entry ids lookup found!');
-  }
-
   const getBatchItemFetcher = <T extends Entry<any> | Asset>(
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<string, T | null> => {
@@ -49,20 +40,34 @@ const createLoaders = (
     };
   };
 
+  const getBatchEntryIdsByContentTypeFetcher = (): DataLoader.BatchLoadFn<string, string[]> => {
+    return async (contentTypeIds) => {
+      return Promise.all(
+        contentTypeIds.map((contentTypeId) =>
+          (async () => {
+            try {
+              const dir = join(rootDir, spaceId, env, previewOrProd, 'entry_ids_by_content_type', contentTypeId);
+              return await readdir(dir);
+            } catch (err) {
+              return [];
+            }
+          })()
+        )
+      );
+    };
+  };
+
   const getBatchEntriesByContentTypeFetcher = (
-    loader: DataLoader<string, Entry<any> | null>
+    eLoader: DataLoader<string, Entry<any> | null>,
+    idsLoader: DataLoader<string, (string | null)[]>
   ): DataLoader.BatchLoadFn<string, Entry<any>[]> => {
     return async (keys) => {
-      const filteredMapping = pickBy(contentTypeToIdsLookup, (_, key) => {
-        return keys.indexOf(key) > -1;
-      });
-
+      const idsArrays = await idsLoader.loadMany(keys);
       return Promise.all(
-        chain(keys)
-          .map((k) => get(filteredMapping, k, []))
+        chain(idsArrays)
           .map((ids) =>
             (async () => {
-              const entries = await loader.loadMany(ids);
+              const entries = await eLoader.loadMany(filter(ids, (id) => !isNull(id)));
               return filter(entries, identity) as Entry<any>[];
             })()
           )
@@ -73,10 +78,23 @@ const createLoaders = (
 
   const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'));
   const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'));
-  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(entryLoader));
+  const entryIdsByContentTypeLoader = new DataLoader(getBatchEntryIdsByContentTypeFetcher());
+  const entriesByContentTypeLoader = new DataLoader(
+    getBatchEntriesByContentTypeFetcher(entryLoader, entryIdsByContentTypeLoader)
+  );
   const fetchAllContentTypes = async () => {
     try {
-      return await readJSON(join(rootDir, spaceId, env, previewOrProd, 'content_types.json'));
+      const dir = join(rootDir, spaceId, env, previewOrProd, 'content_types');
+      const contentTypeFilenames = await readdir(dir);
+      return Promise.all(
+        contentTypeFilenames.map(async (filename) => {
+          try {
+            return readJSON(join(dir, filename));
+          } catch (err) {
+            return null;
+          }
+        })
+      );
     } catch (err) {
       console.error('Unable to fetch content types:', err.message);
       return [];
