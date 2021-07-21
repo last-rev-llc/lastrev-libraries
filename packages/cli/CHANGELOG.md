@@ -1,5 +1,14 @@
 # @last-rev/cli
 
+## 0.1.7
+
+### Patch Changes
+
+- ccc1937: Changed the FS structure to support atomic files for lookups and contentTypes
+- Updated dependencies [ccc1937]
+  - @last-rev/contentful-sync-to-fs@0.1.3
+  - @last-rev/graphql-contentful-core@0.1.4
+
 ## 0.1.6
 
 ### Patch Changes
