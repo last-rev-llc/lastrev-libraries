@@ -76,11 +76,12 @@ export type BaseServerProps = {
   extensions?: Extensions;
   environment: string;
   isPreview: boolean;
+  spaceId: string;
+  accessToken: string;
 };
 
 export type FsServerProps = BaseServerProps & {
   contentDir: string;
-  spaceId: string;
   loaderType: 'fs';
 };
 

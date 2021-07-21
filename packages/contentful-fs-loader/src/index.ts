@@ -96,7 +96,7 @@ const createLoaders = (
         })
       );
     } catch (err) {
-      console.error('Unable to fetch content types:', err.message);
+      console.error('Unable to fetch content types using FS loader:', err.message, env);
       return [];
     }
   };
