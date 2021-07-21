@@ -1,7 +1,3 @@
-import dotenv from 'dotenv';
-
-dotenv.config();
-
 import { getServer, Extensions, Mappers, TypeMappings } from '@last-rev/graphql-contentful-core';
 import { resolve, join, dirname } from 'path';
 import { pathExists, pathExistsSync, readdir } from 'fs-extra';
@@ -73,6 +69,7 @@ const run = async ({ configFile }: { configFile: string }) => {
   let port = 5000;
   let host;
   let contentfulSpaceId;
+  let contentfulAccessToken;
   let contentfulHost;
   let contentfulEnv;
   try {
@@ -83,9 +80,10 @@ const run = async ({ configFile }: { configFile: string }) => {
       extensionsDir,
       port = 5000,
       host,
-      contentfulSpaceId = process.env.CONTENTFUL_SPACE_ID,
-      contentfulEnv: process.env.CONTENTFUL_ENV,
-      contentfulHost = process.env.CONTENTFUL_HOST
+      contentfulAccessToken,
+      contentfulSpaceId,
+      contentfulEnv,
+      contentfulHost
     } = require(configFile));
   } catch (e) {
     console.error(`unable to load config: ${configFile}: ${e.message}`);
@@ -115,6 +113,7 @@ const run = async ({ configFile }: { configFile: string }) => {
     contentDir,
     cms,
     spaceId: contentfulSpaceId,
+    accessToken: contentfulAccessToken,
     environment: contentfulEnv || 'master',
     isPreview: contentfulHost === 'preview.contentful.com',
     loaderType: 'fs'

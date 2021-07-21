@@ -17,7 +17,7 @@
     "deps:check": "manypkg check",
     "deps:fix": "manypkg fix",
     "dev": "lerna run dev --parallel --scope lrns-web --include-dependencies --loglevel silly",
-    "gql:dev": "lerna run dev --scope lrns-graphql-runner --include-dependencies",
+    "gql:dev": "lerna run dev --parallel  --scope lrns-graphql-runner --include-dependencies",
     "gql:start": "lerna run start --scope lrns-graphql-runner --include-dependencies",
     "postinstall": "patch-package",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",

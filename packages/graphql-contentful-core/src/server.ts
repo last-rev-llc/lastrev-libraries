@@ -1,7 +1,3 @@
-import * as dotenv from 'dotenv';
-
-dotenv.config();
-
 import { ApolloServer } from 'apollo-server';
 import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';

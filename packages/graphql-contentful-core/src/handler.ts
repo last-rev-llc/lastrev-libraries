@@ -1,7 +1,3 @@
-import * as dotenv from 'dotenv';
-
-dotenv.config();
-
 import { ApolloServer } from 'apollo-server-lambda';
 import { buildFederatedSchema } from '@apollo/federation';
 import { ServerProps } from './types';
