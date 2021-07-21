@@ -1,5 +1,11 @@
 # @last-rev/graphql-schema-gen
 
+## 0.1.4
+
+### Patch Changes
+
+- 72044a3: Updated sschema gen to pass an array for theme
+
 ## 0.1.3
 
 ### Patch Changes
