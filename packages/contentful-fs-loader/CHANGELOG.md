@@ -1,5 +1,11 @@
 # @last-rev/contentful-fs-loader
 
+## 0.1.4
+
+### Patch Changes
+
+- a09b949: Removed env vars from gql server, requiring all to be passed in
+
 ## 0.1.3
 
 ### Patch Changes

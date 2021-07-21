@@ -1,5 +1,13 @@
 # @last-rev/cli
 
+## 0.1.8
+
+### Patch Changes
+
+- a09b949: Removed env vars from gql server, requiring all to be passed in
+- Updated dependencies [a09b949]
+  - @last-rev/graphql-contentful-core@0.1.5
+
 ## 0.1.7
 
 ### Patch Changes
