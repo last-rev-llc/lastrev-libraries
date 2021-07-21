@@ -150,7 +150,7 @@ export default {
       data: {},
       content: [
         {
-          nodeType: 'heading-4',
+          nodeType: 'heading-2',
           data: {},
           content: [
             {

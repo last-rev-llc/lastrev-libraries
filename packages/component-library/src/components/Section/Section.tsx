@@ -34,18 +34,14 @@ export interface SectionProps {
 }
 
 export interface SectionOverrides {}
+
 const Section = ({ contents, styles, spacing, background, variant }: SectionProps) => {
-  // console.log('variant: ', variant);
+  console.log('variant: ', variant);
 
   return (
     <ErrorBoundary>
       <Root sx={styles?.root} variant={variant}>
         {/* <Background {...media} /> */}
-        {background ? (
-          <ImageWrap>
-            <Image {...background?.desktop} />
-          </ImageWrap>
-        ) : null}
         <GridContainer container sx={styles?.gridContainer} spacing={spacing}>
           {contents?.map((content, idx) => {
             const itemStyle = get(styles?.gridItem, idx);
@@ -85,20 +81,6 @@ const Root = styled(Box, {
 // })(() => ({
 //   position: 'relative'
 // }));
-
-const ImageWrap = styled(Grid, {
-  name: 'Section',
-  slot: 'ImageWrap',
-  overridesResolver: (_, styles) => ({
-    ...styles.imageWrap
-  })
-})(() => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '100%',
-  height: '100%'
-}));
 
 const GridContainer = styled(Grid, {
   name: 'Section',

@@ -33,10 +33,35 @@ export const AllCards = Template.bind({});
 AllCards.args = { ...mockContent };
 
 export const Module01 = Template.bind({});
-Module01.args = { ...singlePanelMock };
+Module01.args = {
+  ...singlePanelMock,
+  styles: {
+    root: {
+      minHeight: 400,
+      '.MuiTypography-h2': {
+        color: '#005c7b'
+      }
+    },
+    gridContainer: {
+      maxWidth: 1280
+    },
+  }
+};
 
 export const Module02 = Template.bind({});
-Module02.args = { ...splitPanelMock };
+Module02.args = {
+  ...splitPanelMock,
+  styles: {
+    root: {
+      '.MuiTypography-h2': {
+        color: '#005c7b'
+      }
+    },
+    gridContainer: {
+      maxWidth: 1280
+    }
+  },
+};
 
 export const Module03 = Template.bind({});
 Module03.args = {
@@ -55,7 +80,7 @@ Module03.args = {
           data: {},
           content: [
             {
-              nodeType: 'heading-4',
+              nodeType: 'heading-2',
               data: {},
               content: [
                 {
@@ -93,7 +118,7 @@ Module04.args = {
           data: {},
           content: [
             {
-              nodeType: 'heading-4',
+              nodeType: 'heading-2',
               data: {},
               content: [
                 {
@@ -195,29 +220,27 @@ Module04.args = {
         Section: {
           styleOverrides: {
             root: {
-              // TODO: Unifiy typography global overrides
-              '.MuiTypography-h4': {
-                fontSize: '2.125rem',
-                lineHeight: '2.3rem',
-                fontWeight: 'bold'
-              },
+              padding: mockTheme.spacing(5),
 
-              '.MuiTypography-body1': {
-                fontSize: '1.125rem'
+              RichText: {
+                root: {
+                  maxWidth: '80%',
+                  backgroundColor: 'pink'
+                }
               },
 
               // TODO: move this styles to RichText when rendering lists
-              'ol': {
+              ol: {
                 listStyle: 'none',
                 counterReset: 'num',
                 marginTop: 25,
                 padding: 0
               },
 
-              'li': {
-                'counterIncrement': 'num',
-                'display': 'flex',
-                'marginBottom': 14,
+              li: {
+                counterIncrement: 'num',
+                display: 'flex',
+                marginBottom: 14,
                 '&::before': {
                   content: 'counter(num)',
                   marginRight: 14,
@@ -269,7 +292,7 @@ Module05.args = {
           data: {},
           content: [
             {
-              nodeType: 'heading-4',
+              nodeType: 'heading-2',
               data: {},
               content: [
                 {
@@ -305,19 +328,17 @@ Module05.args = {
         Section: {
           styleOverrides: {
             root: {
+              padding: mockTheme.spacing(5),
+
               // TODO: Unifiy typography global overrides
-              '.MuiTypography-h4': {
+              '.MuiTypography-h2': {
                 maxWidth: 800,
-                color: '#fff',
-                fontSize: '2.125rem',
-                lineHeight: '2.3rem',
-                fontWeight: 'bold'
+                color: '#fff'
               },
 
               '.MuiTypography-body1': {
                 maxWidth: 800,
-                color: '#fff',
-                fontSize: '1.125rem'
+                color: '#fff'
               }
             }
           }
@@ -379,39 +400,17 @@ Module06.args = {
         Section: {
           styleOverrides: {
             root: {
-              'display': 'flex',
-              'alignItems': 'center',
-              'minHeight': 400,
-
+              minHeight: 200,
               '.MuiTypography-body1': {
-                maxWidth: 800,
-                fontSize: '1.125rem',
                 margin: '0 auto'
               }
             },
-
-            imageWrap: {
-              position: 'relative',
-              zIndex: 1,
-              width: '100%',
-              maxWidth: 500,
-              margin: '0 auto -20px',
-              fontSize: 0
-            },
             gridContainer: {
-              display: 'flex',
-              flexDirection: 'column',
               justifyContent: 'center',
-              alignItems: 'center',
-              width: '100%',
-              maxWidth: 1280,
-              margin: '0 auto',
-              height: '100%',
-              padding: 40,
               backgroundColor: '#bdefeb',
-              textAlign: 'center'
             },
             gridItem: {
+              maxWidth: 800,
               padding: 40,
               textAlign: 'center'
             }
@@ -425,6 +424,7 @@ Module06.args = {
 export const Module07 = Template.bind({});
 Module07.args = {
   ...splitPanelMock,
+  variant: 'gradient-background',
   background: null,
   contents: [
     {
@@ -474,31 +474,23 @@ Module07.args = {
         Section: {
           styleOverrides: {
             root: {
-              'display': 'flex',
-              'alignItems': 'center',
-              'minHeight': 400,
-              'background': 'linear-gradient(50deg, rgba(48,205,194,1) 0%, rgba(0,92,122,1) 100%)',
+              minHeight: 400,
 
               '.MuiTypography-body1': {
                 maxWidth: 800,
                 margin: '0 auto',
                 padding: 40,
                 border: '1px solid #fff',
-                color: '#fff',
-                fontSize: '1.125rem'
+                color: '#fff'
               }
             },
             gridContainer: {
-              display: 'flex',
               justifyContent: 'center',
-              alignItems: 'center',
-              width: '100%',
-              maxWidth: 1280,
-              margin: '0 auto',
-              textAlign: 'center'
             },
             gridItem: {
-              padding: 40
+              maxWidth: 800,
+              padding: 40,
+              textAlign: 'center'
             }
           }
         }
@@ -512,15 +504,6 @@ Module08.args = {
   ...splitPanelMock,
   background: null,
   spacing: 4,
-  styles: {
-    root: {
-      backgroundColor: '#005c7b'
-    },
-    gridContainer: {
-      maxWidth: 1280,
-      flexDirection: 'column'
-    }
-  },
   // variant: 'column',
   contents: [
     {
@@ -531,7 +514,7 @@ Module08.args = {
           data: {},
           content: [
             {
-              nodeType: 'heading-4',
+              nodeType: 'heading-2',
               data: {},
               content: [
                 {
@@ -595,6 +578,15 @@ Module08.args = {
       }
     }
   ],
+  styles: {
+    root: {
+      backgroundColor: '#005c7b'
+    },
+    gridContainer: {
+      maxWidth: 1280,
+      flexDirection: 'column'
+    }
+  },
   theme: [
     mockTheme,
     {
@@ -602,17 +594,13 @@ Module08.args = {
         Section: {
           styleOverrides: {
             root: {
-              // TODO: Unifiy typography global overrides
-              '.MuiTypography-h4': {
-                color: '#fff',
-                fontSize: '2.125rem',
-                fontWeight: 'bold'
+              '.MuiTypography-h2': {
+                color: '#fff'
               },
 
               '.MuiTypography-body1': {
                 maxWidth: 800,
-                color: '#fff',
-                fontSize: '1.125rem'
+                color: '#fff'
               }
             }
           }

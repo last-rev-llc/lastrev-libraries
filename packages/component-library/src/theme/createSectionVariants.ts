@@ -44,27 +44,12 @@ export const singlePanelVariant = (theme: Theme) => ({
     variant: 'single-panel'
   },
   style: {
-    'display': 'flex',
-    'justifyContent': 'center',
-    'alignItems': 'center',
-    'textAlign': 'center',
     '& > [class*="Section-gridContainer"]': {
+      justifyContent: 'center',
+      alignItems: 'center',
+      textAlign: 'center',
       '& > [class*="Section-gridItem"]': {}
-    },
-    '.MuiTypography-h4': {
-      fontSize: 32
     }
-    // maxWidth: 400,
-    // minWidth: 400,
-
-    // '& img': {
-    //   opacity: 1,
-    //   transition: 'opacity ease .15s'
-    // },
-
-    // '& .MuiTypography-h4': {
-    //   fontSize: 32,
-    // },
   }
 });
 
@@ -73,11 +58,9 @@ export const splitPanelVariant = (theme: Theme) => ({
     variant: 'split-panel'
   },
   style: {
-    '.MuiTypography-h4': {
-      fontSize: 32
-    },
     '& > [class*="Section-gridContainer"]': {
-      'maxWidth': 1280,
+      alignItems: 'center',
+
       '& > [class*="Section-gridItem"]': {
         '& > img': {
           width: '100%',
@@ -108,7 +91,6 @@ export const highlightVariant = (theme: Theme) => ({
       fontSize: '1.5rem'
     },
     '& > [class*="Section-gridContainer"]': {
-      'display': 'flex',
       'justifyContent': 'center',
       'alignItems': 'center',
       'width': '100%',
@@ -159,13 +141,12 @@ export const gradientBackgroundVariant = (theme: Theme) => ({
     variant: 'gradient-background'
   },
   style: {
-    'background': 'linear-gradient(50deg, rgba(48,205,194,1) 0%, rgba(0,92,122,1) 100%)',
-    'color': 'white',
-    // TODO: Unifiy typography global overrides
-    '.MuiTypography-h4': {
-      fontSize: 32
-    },
+    background: 'linear-gradient(50deg, rgba(48,205,194,1) 0%, rgba(0,92,122,1) 100%)',
+    color: 'white',
     '& > [class*="Section-gridContainer"]': {
+      alignItems: 'center',
+      maxWidth: 1280,
+
       '& > [class*="Section-gridItem"]': {}
     }
   }

@@ -46,9 +46,9 @@ const theme = createAppTheme(
         variants: createSectionVariants(baseTheme),
         styleOverrides: {
           root: {
-            display: 'flex',
-            alignItems: 'center',
-            padding: baseTheme.spacing(5)
+            // display: 'flex',
+            // alignItems: 'center',
+            // padding: baseTheme.spacing(5)
           },
           gridContainer: {
             // alignItems: 'center'
@@ -64,7 +64,7 @@ const theme = createAppTheme(
           }
         },
         defaultProps: {
-          spacing: 4
+          spacing: baseTheme.spacing(4)
         }
       },
       MuiCard: {
@@ -99,10 +99,18 @@ const theme = createAppTheme(
       },
       MuiTypography: {
         styleOverrides: {
+          h2: {
+            paddingBottom: 20,
+            fontSize: 32,
+            fontWeight: 'bold'
+          },
           h4: {
             paddingBottom: 20,
             fontSize: 22,
             fontWeight: 'bold'
+          },
+          body1: {
+            fontSize: '1.125rem'
           }
         }
       },
