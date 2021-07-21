@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.6
+
+### Patch Changes
+
+- 72044a3: Updated sschema gen to pass an array for theme
+- Updated dependencies [72044a3]
+  - @last-rev/graphql-schema-gen@0.1.4
+
 ## 0.1.5
 
 ### Patch Changes
