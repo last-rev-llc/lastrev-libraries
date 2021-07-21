@@ -57,7 +57,6 @@ export default {
     {
       ...cardMock,
       variant: 'standard',
-      media: null,
       title: lorem.sentence(),
       subtitle: null,
       body: lorem.sentence(),
@@ -67,7 +66,6 @@ export default {
     {
       ...cardMock,
       variant: 'standard-round',
-      media: null,
       title: lorem.sentence(),
       subtitle: null,
       body: lorem.sentence(),

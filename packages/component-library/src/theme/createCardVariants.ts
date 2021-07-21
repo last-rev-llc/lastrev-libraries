@@ -44,9 +44,7 @@ export const avatarCardVariant = (theme: Theme) => ({
     flexWrap: 'wrap',
     justifyContent: 'flex-start',
     maxWidth: 540,
-    // maxWidth: 320,
     minWidth: 320,
-    // maxHeight: 240,
     padding: 20,
 
     // Image wrap
@@ -68,16 +66,8 @@ export const avatarCardVariant = (theme: Theme) => ({
       textAlign: 'left',
     },
 
-    '& .MuiTypography-h4': {
-      fontSize: 24,
-      color: 'black'
-    },
-
-    '& .MuiTypography-h5': {
-      paddingBottom: 12,
-      fontSize: 18,
-      color: 'black'
-    }
+    '& .MuiTypography-h4': {},
+    '& .MuiTypography-h5': {}
   }
 });
 
@@ -89,7 +79,6 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
     justifyContent: 'center',
     width: 300,
     height: 300,
-    // maxWidth: 300,
     minWidth: 300,
     padding: 20,
 
@@ -121,7 +110,7 @@ export const squareCardVariant = (theme: Theme) => ({
         boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main}`,
       },
 
-      '& .MuiTypography-h4': {
+      '& .MuiTypography-h3': {
         color: 'black'
       },
     },
@@ -135,7 +124,8 @@ export const squareCardVariant = (theme: Theme) => ({
       backgroundColor: theme.palette.secondary.main,
     },
 
-    '& .MuiTypography-h4': {
+    '& .MuiTypography-h3': {
+      paddingBottom: 0,
       color: 'white'
     },
 
@@ -149,6 +139,7 @@ export const standardCardVariant = (theme: Theme) => ({
   },
   style: {
     flexDirection: 'column',
+    justifyContent: 'flex-start',
     maxWidth: 260,
     minWidth: 260,
     maxHeight: 340,
@@ -161,10 +152,17 @@ export const standardCardVariant = (theme: Theme) => ({
       transition: 'background-color ease .15s',
     },
 
-    '& .MuiTypography-h4': {
-      paddingBottom: 20,
+    '& .MuiBox-root': {
+      textAlign: 'center'
     },
 
+    '& img': {
+      maxWidth: 160,
+      height: 'auto',
+      margin: '20px auto'
+    },
+
+    '& .MuiTypography-h4': {},
     '& .MuiTypography-h5': {}
   }
 });
@@ -175,6 +173,7 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
   },
   style: {
     flexDirection: 'column',
+    justifyContent: 'flex-start',
     maxWidth: 260,
     minWidth: 260,
     maxHeight: 340,
@@ -189,10 +188,17 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
       transition: 'background-color ease .15s',
     },
 
-    '& .MuiTypography-h4': {
-      paddingBottom: 20,
+    '& .MuiBox-root': {
+      textAlign: 'center'
     },
 
+    '& img': {
+      maxWidth: 160,
+      height: 'auto',
+      margin: '20px auto'
+    },
+
+    '& .MuiTypography-h4': {},
     '& .MuiTypography-h5': {}
   }
 });

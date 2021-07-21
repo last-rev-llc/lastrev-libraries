@@ -222,12 +222,12 @@ Module04.args = {
             root: {
               padding: mockTheme.spacing(5),
 
-              RichText: {
-                root: {
-                  maxWidth: '80%',
-                  backgroundColor: 'pink'
-                }
-              },
+              // RichText: {
+              //   root: {
+              //     maxWidth: '80%',
+              //     backgroundColor: 'pink'
+              //   }
+              // },
 
               // TODO: move this styles to RichText when rendering lists
               ol: {
@@ -264,9 +264,6 @@ Module05.args = {
   variant: 'gradient-background',
   spacing: 4,
   styles: {
-    root: {
-      background: 'linear-gradient(50deg, rgba(48,205,194,1) 0%, rgba(0,92,122,1) 100%)'
-    },
     // TODO: Figure out a better way to expose section container maxWidths like Container comp
     gridContainer: {
       maxWidth: 1280
@@ -503,7 +500,7 @@ export const Module08 = Template.bind({});
 Module08.args = {
   ...splitPanelMock,
   background: null,
-  spacing: 4,
+  // spacing: 4,
   // variant: 'column',
   contents: [
     {
@@ -583,8 +580,9 @@ Module08.args = {
       backgroundColor: '#005c7b'
     },
     gridContainer: {
+      flexDirection: 'column',
       maxWidth: 1280,
-      flexDirection: 'column'
+      padding: '40px 10vw',
     }
   },
   theme: [
@@ -599,9 +597,11 @@ Module08.args = {
               },
 
               '.MuiTypography-body1': {
-                maxWidth: 800,
                 color: '#fff'
               }
+            },
+            gridItem: {
+              width: '100%'
             }
           }
         }

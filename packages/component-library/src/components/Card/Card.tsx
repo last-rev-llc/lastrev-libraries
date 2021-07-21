@@ -10,7 +10,7 @@ import {
   Typography
 } from '@material-ui/core';
 import ErrorBoundary from '../ErrorBoundary';
-import Image from '../Image';
+import Media from '../Media';
 import { ImageProps } from '../Image/Image.types';
 import { LinkProps } from '../Link/Link.types';
 // import { useTheme } from '@material-ui/core/styles';
@@ -38,18 +38,18 @@ export const Card = ({ media, title, subtitle, body, actions, variant }: CardPro
           //   {...image}
           // />
           <Box>
-            <Image {...media} />
+            <Media {...media} />
           </Box>
         ) : null}
         {title || subtitle || body ? (
           <CardContent>
             {title ? (
-              <Typography variant="h4" component="h3">
+              <Typography variant="h3" component="h3">
                 {title}
               </Typography>
             ) : null}
             {subtitle ? (
-              <Typography variant="h5" component="h4">
+              <Typography variant="h4" component="h4">
                 {subtitle}
               </Typography>
             ) : null}

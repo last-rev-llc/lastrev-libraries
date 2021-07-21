@@ -8,15 +8,16 @@ export interface MediaProps {
   file: {
     url: string;
   };
+  alt: string;
 }
 
 export interface MediaOverrides {}
-const Media = ({ file }: MediaProps) => {
+const Media = ({ file, alt }: MediaProps) => {
   console.log('Media: ', file);
 
   return (
     <ErrorBoundary>
-      <Root src={file.url} />
+      <Root src={file.url} alt={alt} />
     </ErrorBoundary>
   );
 };

@@ -147,7 +147,7 @@ export const gradientBackgroundVariant = (theme: Theme) => ({
       alignItems: 'center',
       maxWidth: 1280,
 
-      '& > [class*="Section-gridItem"]': {}
+      // '& > [class*="Section-gridItem"]': {}
     }
   }
 });

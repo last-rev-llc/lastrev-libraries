@@ -83,7 +83,11 @@ const theme = createAppTheme(
             // Image wrap
             '& .MuiBox-root': {
               width: '100%',
-              height: '100%'
+              height: '100%',
+            },
+            '& img': {
+              width: '100%',
+              height: '100%',
             }
           }
         }
@@ -104,13 +108,20 @@ const theme = createAppTheme(
             fontSize: 32,
             fontWeight: 'bold'
           },
+          h3: {
+            paddingBottom: 20,
+            fontSize: 20,
+            fontWeight: 'bold'
+          },
           h4: {
             paddingBottom: 20,
-            fontSize: 22,
-            fontWeight: 'bold'
+            fontSize: 18,
           },
           body1: {
             fontSize: '1.125rem'
+          },
+          body2: {
+            fontSize: '0.875rem'
           }
         }
       },
