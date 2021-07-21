@@ -1,5 +1,11 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.1.3
+
+### Patch Changes
+
+- ccc1937: Changed the FS structure to support atomic files for lookups and contentTypes
+
 ## 0.1.2
 
 ### Patch Changes

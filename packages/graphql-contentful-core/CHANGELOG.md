@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.4
+
+### Patch Changes
+
+- ccc1937: Changed the FS structure to support atomic files for lookups and contentTypes
+- Updated dependencies [ccc1937]
+  - @last-rev/contentful-fs-loader@0.1.3
+
 ## 0.1.3
 
 ### Patch Changes
