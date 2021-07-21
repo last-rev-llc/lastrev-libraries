@@ -16,6 +16,7 @@
     "@last-rev/rollup-config": "^0.0.4",
     "@types/cross-spawn": "^6.0.2",
     "@types/tar": "^4.0.4",
+    "contentful": "^8.4.2",
     "tslib": "^2.3.0"
   },
   "keywords": [],

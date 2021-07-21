@@ -72,8 +72,21 @@ const run = async ({ configFile }: { configFile: string }) => {
   let extensionsDir;
   let port = 5000;
   let host;
+  let contentfulSpaceId;
+  let contentfulHost;
+  let contentfulEnv;
   try {
-    ({ cms, contentDir, extensions, extensionsDir, port = 5000, host } = require(configFile));
+    ({
+      cms,
+      contentDir,
+      extensions,
+      extensionsDir,
+      port = 5000,
+      host,
+      contentfulSpaceId = process.env.CONTENTFUL_SPACE_ID,
+      contentfulEnv: process.env.CONTENTFUL_ENV,
+      contentfulHost = process.env.CONTENTFUL_HOST
+    } = require(configFile));
   } catch (e) {
     console.error(`unable to load config: ${configFile}: ${e.message}`);
     process.exit();
@@ -100,7 +113,11 @@ const run = async ({ configFile }: { configFile: string }) => {
   const server = await getServer({
     extensions,
     contentDir,
-    cms
+    cms,
+    spaceId: contentfulSpaceId,
+    environment: contentfulEnv || 'master',
+    isPreview: contentfulHost === 'preview.contentful.com',
+    loaderType: 'fs'
   });
   const { url } = await server.listen({ port, host });
   console.log(`Server ready at ${url}. `);

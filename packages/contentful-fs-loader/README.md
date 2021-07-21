@@ -19,28 +19,12 @@ dir
             ├── entries
             |   ├── {entryId}.json
             |   └── ...
-            ├── content_type_slug_lookup.json
-            ├── entry_ids_by_content_type_lookup.json
-            └── content_types.json
-```
-
-The `content_type_slug_lookup.json` should be a JSON file with key value mappings of `${contentTypeId}:${slug}` to content id:
-
-```json
-{
-  "pageGeneral:home": "8cvbh39fn12333",
-  "pageGeneral:about": "00v83bnnju3r999g",
-  "pageRecipe:burger": "00gjh3000fjf877f"
-}
-```
-
-The `entry_ids_by_content_type_lookup.json` should be a JSON file with key value mappings of `contentTypeId` to content id:
-
-```json
-{
-  "pageGeneral": ["8cvbh39fn12333", "gbv983nf89hdffg"],
-  "pageRecipe": ["00gjh3000fjf877f", "vv92bnrff7823gf"]
-}
+            ├── entry_ids_by_content_type
+            |   ├── {entryId}
+            |   └── ...
+            └── content_types
+                ├── {contentTypeId}.json
+                └── ...
 ```
 
 # Usage
@@ -53,7 +37,6 @@ async function () {
     entryLoader,
     assetLoader,
     entriesByContentTypeLoader,
-    fetchAllPages,
     fetchAllContentTypes
   } = await createLoaders(
     './graphql/content' // root directory
