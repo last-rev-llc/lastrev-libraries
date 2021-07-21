@@ -1,0 +1,6 @@
+[build]
+  publish = "lrns-web/out"
+  command = "./install-aws.sh && yarn build:prod"
+
+[[plugins]]
+package = "/packages/content-fs-cache-netlify-plugin"

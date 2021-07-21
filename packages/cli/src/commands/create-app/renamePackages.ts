@@ -12,7 +12,8 @@ const renamePackages = async (root: string, name: string): Promise<void> => {
         join(root, 'packages/*/package.json'),
         join(root, 'packages/**/*.ts'),
         join(root, 'packages/**/*.tsx'),
-        join(root, 'packages/**/*.js')
+        join(root, 'packages/**/*.js'),
+        join(root, 'netlify.toml')
       ],
       from: /lrns\-/g,
       to: `${name}-`
