@@ -1,5 +1,14 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.5
+
+### Patch Changes
+
+- a09b949: Removed env vars from gql server, requiring all to be passed in
+- Updated dependencies [a09b949]
+  - @last-rev/contentful-fs-loader@0.1.4
+  - @last-rev/contentful-s3-loader@0.1.1
+
 ## 0.1.4
 
 ### Patch Changes
