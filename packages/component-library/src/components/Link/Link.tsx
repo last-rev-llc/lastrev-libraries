@@ -1,29 +1,4 @@
-// import React from 'react';
-// import { Link as MuiLink } from '@material-ui/core';
-// import ErrorBoundary from '../ErrorBoundary';
-// import { LinkProps } from './Link.types';
-
-// export const Link = ({
-//   href,
-//   children,
-//   ...props
-// }: LinkProps) => {
-//   return (
-//     <ErrorBoundary>
-//       <MuiLink
-//         href={href}
-//         {...props}
-//       >
-//         {children}
-//         Link
-//       </MuiLink>
-//     </ErrorBoundary>
-//   );
-// };
-
-// export default Link;
-
-// Next:
+// Next/link:
 // https://github.com/mui-org/material-ui/blob/next/examples/nextjs-with-typescript/src/Link.tsx
 
 /* eslint-disable jsx-a11y/anchor-has-content */
@@ -86,7 +61,7 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
   const router = useRouter();
   const pathname = typeof href === 'string' ? href : href.pathname;
   const className = clsx(classNameProps, {
-    [activeClassName]: router.pathname === pathname && activeClassName
+    [activeClassName]: router?.pathname === pathname && activeClassName
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);

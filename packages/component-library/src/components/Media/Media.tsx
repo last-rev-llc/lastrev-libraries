@@ -13,7 +13,7 @@ export interface MediaProps {
 
 export interface MediaOverrides {}
 const Media = ({ file, alt }: MediaProps) => {
-  console.log('Media: ', file);
+  // console.log('Media: ', file);
 
   return (
     <ErrorBoundary>

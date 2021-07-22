@@ -101,6 +101,13 @@ const theme = createAppTheme(
           }
         }
       },
+      MuiCardActions: {
+        styleOverrides: {
+          root: {
+            fontSize: 18
+          }
+        }
+      },
       MuiTypography: {
         styleOverrides: {
           h2: {
@@ -125,21 +132,11 @@ const theme = createAppTheme(
           }
         }
       },
-      MuiCardActions: {
-        styleOverrides: {
-          root: {
-            fontSize: 18
-          }
-        }
-      },
       MuiLink: {
         styleOverrides: {
           root: {
-            padding: '10px 20px',
             cursor: 'pointer',
-            backgroundColor: baseTheme.palette.primary.main,
             color: 'black',
-            textDecoration: 'none'
           }
         }
       }

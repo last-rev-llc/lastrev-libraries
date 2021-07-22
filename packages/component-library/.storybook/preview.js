@@ -9,7 +9,7 @@ import './styles.css';
 import * as components from '../src';
 
 const StorybookWrapper = (storyFn) => {
-  console.log('StoryBook', theme);
+  // console.log('StoryBook', theme);
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>

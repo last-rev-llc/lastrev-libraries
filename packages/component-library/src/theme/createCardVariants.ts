@@ -32,6 +32,10 @@ export const mediaCardVariant = (theme: Theme) => ({
       textAlign: 'center',
       transform: 'translate(-50%, -50%)'
     },
+
+    '& .MuiCardActions-root': {
+      display: 'none'
+    }
   }
 });
 
@@ -90,6 +94,10 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
     '& .MuiCardContent-root': {
       display: 'none',
     },
+
+    '& .MuiCardActions-root': {
+      display: 'none'
+    }
   }
 });
 
@@ -135,6 +143,9 @@ export const squareCardVariant = (theme: Theme) => ({
     '& .MuiTypography-body2': {
       display: 'none'
     },
+    '& .MuiCardActions-root': {
+      display: 'none'
+    }
   }
 });
 
@@ -144,10 +155,8 @@ export const standardCardVariant = (theme: Theme) => ({
   },
   style: {
     justifyContent: 'flex-start',
-    maxWidth: 260,
-    minWidth: 260,
-    maxHeight: 340,
-    minHeight: 340,
+    width: 300, // DEMO ONLY
+    paddingBottom: 15,
     backgroundColor: 'white',
     transition: 'background-color ease .15s',
 
@@ -166,8 +175,11 @@ export const standardCardVariant = (theme: Theme) => ({
       margin: '20px auto'
     },
 
-    '& .MuiTypography-h4': {},
-    '& .MuiTypography-h5': {}
+    '& .MuiLink-root': {
+      padding: '10px 20px',
+      backgroundColor: theme.palette.primary.main,
+      textDecoration: 'none'
+    }
   }
 });
 
@@ -177,10 +189,8 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
   },
   style: {
     justifyContent: 'flex-start',
-    maxWidth: 260,
-    minWidth: 260,
-    maxHeight: 340,
-    minHeight: 340,
+    width: 300, // DEMO ONLY
+    paddingBottom: 15,
     border: `2px solid ${theme.palette.secondary.main}`,
     borderRadius: 20,
     transition: 'background-color ease .15s',
@@ -201,8 +211,12 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
       margin: '20px auto'
     },
 
-    '& .MuiTypography-h4': {},
-    '& .MuiTypography-h5': {}
+    '& .MuiLink-root': {
+      padding: '10px 20px',
+      backgroundColor: theme.palette.secondary.main,
+      color: 'white',
+      textDecoration: 'none'
+    }
   }
 });
 
