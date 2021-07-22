@@ -172,6 +172,27 @@ export default {
               data: {}
             }
           ]
+        },
+        {
+          nodeType: 'hyperlink',
+          data: {
+            uri: 'https://url.org',
+            target: {
+              sys: {
+                id: '12345',
+                type: 'Link',
+                linkType: 'Entry'
+              }
+            }
+          },
+          content: [
+            {
+              nodeType: 'text',
+              value: 'Heyo',
+              marks: [],
+              data: {}
+            }
+          ]
         }
       ]
     }

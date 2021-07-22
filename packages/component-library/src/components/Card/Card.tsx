@@ -28,7 +28,7 @@ export interface CardProps extends MuiCardProps {
 export interface CardOverrides {}
 
 export const Card = ({ media, title, subtitle, body, actions, variant }: CardProps) => {
-  console.log('card', { media, title, subtitle, body, actions, variant });
+  // console.log('card', { media, title, subtitle, body, actions, variant });
   return (
     <ErrorBoundary>
       <CardRoot variant={variant}>

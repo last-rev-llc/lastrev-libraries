@@ -35,7 +35,16 @@ Module01.args = {
       minHeight: 400,
       '.MuiTypography-h2': {
         color: '#005c7b'
-      }
+      },
+
+      // Note: This would be an option in CMS, ie. button-primary
+      '.MuiLink-root': {
+        display: 'inline-block',
+        marginTop: 4,
+        padding: '10px 20px',
+        backgroundColor: '#fee501',
+        textDecoration: 'none'
+      },
     },
     gridContainer: {
       maxWidth: 1280
@@ -50,7 +59,16 @@ Module02.args = {
     root: {
       '.MuiTypography-h2': {
         color: '#005c7b'
-      }
+      },
+
+      // Note: This would be an option in CMS, ie. button-primary
+      '.MuiLink-root': {
+        display: 'inline-block',
+        marginTop: 4,
+        padding: '10px 20px',
+        backgroundColor: '#fee501',
+        textDecoration: 'none'
+      },
     },
     gridContainer: {
       maxWidth: 1280

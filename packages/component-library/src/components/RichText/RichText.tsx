@@ -4,9 +4,10 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import styled from '@material-ui/system/styled';
 import Typography from '@material-ui/core/Typography';
-import { BLOCKS } from '@contentful/rich-text-types';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
+import Link from '../Link';
 
 // export const RichTextPropTypes = {
 //   // eslint-disable-next-line react/forbid-prop-types
@@ -45,31 +46,31 @@ interface Props {
 
 const options = {
   renderNode: {
-    // [INLINES.HYPERLINK]: (node) => {
-    //   const { data, content } = node;
-    //   if (data.uri.includes('youtube.com/embed')) {
-    //     return (
-    //       <iframe
-    //         title="Embedded"
-    //         width="560"
-    //         height="315"
-    //         src={data.uri}
-    //         allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; autoplay"
-    //         frameBorder="0"
-    //         allowFullScreen
-    //       />
-    //     );
-    //   }
-
-    //   return (
-    //     <ElementLink
-    //       href={data.uri}
-    //       target={!data?.uri.startsWith('/') && !data?.uri.includes('impossiblefoods.com') ? '_blank' : false}
-    //       className={styles.link}>
-    //       {content[0].value}
-    //     </ElementLink>
-    //   );
-    // },
+    [INLINES.HYPERLINK]: (_: any, children: any) => {
+      // const { data, content } = node;
+      // if (data.uri.includes('youtube.com/embed')) {
+      //   return (
+      //     <iframe
+      //       title="Embedded"
+      //       width="560"
+      //       height="315"
+      //       src={data.uri}
+      //       allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; autoplay"
+      //       frameBorder="0"
+      //       allowFullScreen
+      //     />
+      //   );
+      // }
+      return (
+        <Link
+          href={_.data.uri}
+          // target={!data?.uri.startsWith('/') && !data?.uri.includes('strong365.com') ? '_blank' : false}
+          // className={styles.link}
+        >
+          {children}
+        </Link>
+      );
+    },
     // [BLOCKS.EMBEDDED_ASSET]: (node) => {
     //   const { data = {} } = node;
     //   const { target = {} } = data;
@@ -106,7 +107,7 @@ const options = {
     //   const { data = {} } = node;
     //   const { target = {} } = data;
     //   const { _contentTypeId: contentTypeId } = target;
-    //   if (contentTypeId === 'elementLink') return <ElementLink {...target} {...sidekicker('Embedded Entry')} />;
+    //   if (contentTypeId === 'Link') return <Link {...target} {...sidekicker('Embedded Entry')} />;
     //   return null;
     // },
     [BLOCKS.PARAGRAPH]: (_: any, children: any) => {
