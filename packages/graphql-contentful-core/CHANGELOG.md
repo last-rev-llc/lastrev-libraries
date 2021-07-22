@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.7
+
+### Patch Changes
+
+- 94b5414: Fixed gql handler, and issues with s3 loader
+- Updated dependencies [94b5414]
+  - @last-rev/contentful-s3-loader@0.1.2
+
 ## 0.1.6
 
 ### Patch Changes
