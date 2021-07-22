@@ -5,7 +5,7 @@ export const typeDefs = gql`
     id: String
     sidekickLookup: JSON
     animation: JSON
-    theme: Theme
+    theme: [Theme]
     link: Link
     children: [NavigationItem!]
   }

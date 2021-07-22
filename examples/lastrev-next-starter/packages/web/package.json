@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export && yarn build:post",
-    "build:post": "rm -rf out/404 && mv out/en-US/index.html out/index.html && mv -v out/en-US/* out/",
+    "build:post": "rm -rf out/404 && cp out/en-US/index.html out/index.html && cp -R out/en-US/* out/",
     "lint": "next lint",
     "serve": "serve out"
   },
@@ -23,7 +23,6 @@
     "table": "^6.7.1"
   },
   "devDependencies": {
-    "@netlify/functions": "^0.7.2",
     "eslint": "^7.29.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-next": "^11.0.1",

@@ -1,9 +1,14 @@
 [build]
-  publish = "lrns-web/out"
+  publish = "packages/web/out"
   command = "./install-aws.sh && yarn build:prod"
+
+[dev]
+  command = "yarn dev"
+
 
 [[plugins]]
 package = "/packages/content-fs-cache-netlify-plugin"
 
 [functions]
   directory = "packages/functions"
+  external_node_modules = ["express"]
