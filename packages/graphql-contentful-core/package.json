@@ -1,7 +1,7 @@
 {
   "name": "@last-rev/graphql-contentful-core",
   "private": false,
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "@apollo/federation": "^0.20.7",
     "@graphql-tools/merge": "^6.2.14",
     "@last-rev/contentful-fs-loader": "^0.1.4",
-    "@last-rev/contentful-s3-loader": "^0.1.1",
+    "@last-rev/contentful-s3-loader": "^0.1.2",
     "@last-rev/graphql-schema-gen": "^0.1.4",
     "@last-rev/testing-library": "^0.1.2",
     "apollo-graphql": "^0.9.3",
