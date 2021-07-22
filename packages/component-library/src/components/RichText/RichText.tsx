@@ -34,7 +34,7 @@ import Link from '../Link';
 // });
 // const containsHTML = (children: any) => children?.some((child: any) => child.includes && child?.includes('<'));
 
-interface Props {
+export interface RichTextProps {
   id: string;
   styles?: {
     root?: SystemCssProperties;
@@ -171,7 +171,7 @@ const options = {
   }
 };
 
-function RichText({ body, styles }: Props) {
+function RichText({ body, styles }: RichTextProps) {
   // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
   console.log('Text', { body });
   return <Root sx={styles?.root}>{documentToReactComponents(body?.document, options)}</Root>;

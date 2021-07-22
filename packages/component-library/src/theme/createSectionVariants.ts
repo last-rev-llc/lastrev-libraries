@@ -1,44 +1,5 @@
 import { Theme } from '@material-ui/core/styles';
 
-export const heroSectionVariant = (theme: Theme) => ({
-  props: {
-    variant: 'hero'
-  },
-  style: {
-    // 'backgroundColor': theme.palette.primary.main,
-    'padding': theme.spacing(10),
-    // '& .MuiGrid-container .MuiGrid-container': {
-    //   backgroundColor: 'red',
-    //   flexDirection: 'column'
-    // }
-    '& [class*="Media-root"]': {
-      height: '100%',
-      display: 'block',
-      margin: 'auto'
-    },
-    '& .MuiTypography-h1': {
-      fontSize: '44px'
-    },
-    '& .MuiTypography-h2': {
-      fontSize: '44px'
-    },
-    '& .MuiTypography-body1': {
-      fontSize: '24px'
-    }
-  }
-});
-
-export const columnSectionVariant = () => ({
-  props: {
-    variant: 'column'
-  },
-  style: {
-    '& .MuiGrid-container': {
-      flexDirection: 'column'
-    }
-  }
-});
-
 export const singlePanelVariant = (theme: Theme) => ({
   props: {
     variant: 'single-panel'
@@ -150,8 +111,6 @@ export const gradientBackgroundVariant = (theme: Theme) => ({
 const variants = [
   singlePanelVariant,
   splitPanelVariant,
-  heroSectionVariant,
-  columnSectionVariant,
   highlightVariant,
   gradientBackgroundVariant
 ];

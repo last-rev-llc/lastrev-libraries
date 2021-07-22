@@ -1,7 +1,8 @@
 import createCardVariants from './createCardVariants';
+import createHeroVariants from './createHeroVariants';
 import createSectionVariants from './createSectionVariants';
 import createAppTheme from './createTheme';
-import { red } from '@material-ui/core/colors';
+import { red, grey } from '@material-ui/core/colors';
 
 export const baseTheme = createAppTheme({
   spacing: 8,
@@ -41,6 +42,27 @@ const theme = createAppTheme(
     components: {
       Card: {
         variants: createCardVariants(baseTheme)
+      },
+      Hero: {
+        variants: createHeroVariants(baseTheme),
+        styleOverrides: {
+          root: {
+            padding: baseTheme.spacing(5),
+
+            '& .MuiGrid-container': {
+              alignItems: 'center',
+            },
+            h1: {
+              color: 'grey',
+            },
+            h2: {
+              color: baseTheme.palette.secondary.main
+            },
+            img: {
+              width: '100%',
+            }
+          },
+        }
       },
       Section: {
         variants: createSectionVariants(baseTheme),
@@ -110,6 +132,11 @@ const theme = createAppTheme(
       },
       MuiTypography: {
         styleOverrides: {
+          h1: {
+            paddingBottom: 10,
+            fontSize: 40,
+            fontWeight: 'bold'
+          },
           h2: {
             paddingBottom: 20,
             fontSize: 32,

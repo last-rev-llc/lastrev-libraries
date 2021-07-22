@@ -20,7 +20,6 @@ interface Media {
 }
 
 export interface SectionProps {
-  // variant?: any;
   contents: Array<{ __typename: string; id: string }>;
   background?: Media;
   variant?: string;
@@ -36,8 +35,6 @@ export interface SectionProps {
 export interface SectionOverrides {}
 
 const Section = ({ contents, styles, spacing, background, variant }: SectionProps) => {
-  console.log('variant: ', variant);
-
   return (
     <ErrorBoundary>
       <Root sx={styles?.root} variant={variant}>
