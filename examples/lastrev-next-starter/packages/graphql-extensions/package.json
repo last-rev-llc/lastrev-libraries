@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
-    "@last-rev/graphql-contentful-core": "^0.1.4",
+    "@last-rev/graphql-contentful-core": "^0.1.6",
     "@last-rev/rollup-config": "^0.0.4",
     "graphql": "^15.5.1",
     "graphql-tag": "^2.12.4",

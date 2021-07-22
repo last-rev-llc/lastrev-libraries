@@ -66,13 +66,17 @@ const createLoaders = (
     let command = new ListObjectsV2Command({ Bucket: bucket, Prefix });
     let response = await client.send(command);
 
-    out.push(...(response.Contents || []).filter((r) => !!r.Key).map((r) => (r.Key as string).replace(Prefix, '')));
+    out.push(
+      ...(response.Contents || []).filter((r) => !!r.Key).map((r) => (r.Key as string).replace(`${Prefix}/`, ''))
+    );
 
     while (response.IsTruncated) {
       command = new ListObjectsV2Command({ Bucket: bucket, Prefix, ContinuationToken: response.NextContinuationToken });
       response = await client.send(command);
 
-      out.push(...(response.Contents || []).filter((r) => !!r.Key).map((r) => (r.Key as string).replace(Prefix, '')));
+      out.push(
+        ...(response.Contents || []).filter((r) => !!r.Key).map((r) => (r.Key as string).replace(`${Prefix}/`, ''))
+      );
     }
 
     return out;
