@@ -3,8 +3,6 @@ import merge from 'lodash/merge';
 import { ThemeProvider } from '@material-ui/core';
 import Box from '@material-ui/core/Box';
 import Section from './Section';
-// import ContentModule from '../ContentModule';
-import mockContent from './Section.mock';
 import { singlePanelMock, splitPanelMock } from './Section.mock';
 import mockTheme from '../../theme/mock.theme';
 
@@ -28,9 +26,6 @@ const Template = (args: JSX.IntrinsicAttributes) => (
     <Section {...args} />
   </ThemeProvider>
 );
-
-export const AllCards = Template.bind({});
-AllCards.args = { ...mockContent };
 
 export const Module01 = Template.bind({});
 Module01.args = {
@@ -265,9 +260,9 @@ Module05.args = {
   spacing: 4,
   styles: {
     // TODO: Figure out a better way to expose section container maxWidths like Container comp
-    gridContainer: {
-      maxWidth: 1280
-    }
+    // gridContainer: {
+    //   maxWidth: 1280
+    // }
   },
   contents: [
     {

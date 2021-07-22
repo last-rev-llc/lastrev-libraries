@@ -64,10 +64,7 @@ export const avatarCardVariant = (theme: Theme) => ({
 
     '& .MuiCardContent-root': {
       textAlign: 'left',
-    },
-
-    '& .MuiTypography-h4': {},
-    '& .MuiTypography-h5': {}
+    }
   }
 });
 
@@ -90,9 +87,9 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
       objectFit: 'cover'
     },
 
-    '& .MuiCardContent-root': {},
-    '& .MuiTypography-h4': {},
-    '& .MuiTypography-h5': {}
+    '& .MuiCardContent-root': {
+      display: 'none',
+    },
   }
 });
 
@@ -112,7 +109,7 @@ export const squareCardVariant = (theme: Theme) => ({
 
       '& .MuiTypography-h3': {
         color: 'black'
-      },
+      }
     },
 
     '& .MuiCardContent-root': {
@@ -129,7 +126,15 @@ export const squareCardVariant = (theme: Theme) => ({
       color: 'white'
     },
 
-    '& .MuiTypography-h5': {}
+    '& .MuiBox-root': {
+      display: 'none'
+    },
+    '& .MuiTypography-h4': {
+      display: 'none'
+    },
+    '& .MuiTypography-body2': {
+      display: 'none'
+    },
   }
 });
 
@@ -138,7 +143,6 @@ export const standardCardVariant = (theme: Theme) => ({
     variant: 'standard'
   },
   style: {
-    flexDirection: 'column',
     justifyContent: 'flex-start',
     maxWidth: 260,
     minWidth: 260,
@@ -172,7 +176,6 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
     variant: 'standard-round'
   },
   style: {
-    flexDirection: 'column',
     justifyContent: 'flex-start',
     maxWidth: 260,
     minWidth: 260,

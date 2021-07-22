@@ -51,7 +51,7 @@ const theme = createAppTheme(
             // padding: baseTheme.spacing(5)
           },
           gridContainer: {
-            // alignItems: 'center'
+            alignItems: 'center'
           },
           gridItem: {
             // TODO: Review if this makes sense as a default

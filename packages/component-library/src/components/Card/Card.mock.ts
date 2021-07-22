@@ -5,6 +5,7 @@ import mockLink from '../Link/Link.mock';
 
 export default {
   __typename: 'Card',
+  variant: 'standard',
   media: {
     __typename: 'Media',
     file: {

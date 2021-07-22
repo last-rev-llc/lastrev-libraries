@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core';
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
-import { ImageProps } from '../Image/Image.types';
+import { MediaProps } from '../Media/Media.types';
 import { LinkProps } from '../Link/Link.types';
 // import { useTheme } from '@material-ui/core/styles';
 import styled from '@material-ui/system/styled';
@@ -20,7 +20,7 @@ export interface CardProps extends MuiCardProps {
   variant?: any;
   title?: string;
   subtitle?: string;
-  media?: ImageProps;
+  media?: MediaProps;
   body?: string;
   actions?: LinkProps[];
 }

@@ -46,7 +46,6 @@ export const singlePanelVariant = (theme: Theme) => ({
   style: {
     '& > [class*="Section-gridContainer"]': {
       justifyContent: 'center',
-      alignItems: 'center',
       textAlign: 'center',
       '& > [class*="Section-gridItem"]': {}
     }
@@ -59,8 +58,6 @@ export const splitPanelVariant = (theme: Theme) => ({
   },
   style: {
     '& > [class*="Section-gridContainer"]': {
-      alignItems: 'center',
-
       '& > [class*="Section-gridItem"]': {
         '& > img': {
           width: '100%',
@@ -91,25 +88,24 @@ export const highlightVariant = (theme: Theme) => ({
       fontSize: '1.5rem'
     },
     '& > [class*="Section-gridContainer"]': {
+      'position': 'relative',
       'justifyContent': 'center',
-      'alignItems': 'center',
       'width': '100%',
       'maxWidth': 800,
-      'textAlign': 'center',
-      'position': 'relative',
       'height': '100%',
       'padding': 0,
+      'textAlign': 'center',
 
       '&:after': {
         content: '""',
-        backgroundColor: '#bdefeb',
-        height: '100%',
         position: 'absolute',
         top: 20,
-        bottom: 0,
-        width: 'calc(100% + 40px)',
-        zIndex: -1,
         left: -20,
+        bottom: 0,
+        zIndex: -1,
+        width: 'calc(100% + 40px)',
+        height: '100%',
+        backgroundColor: '#bdefeb',
         transform: 'skew(-10deg)'
       },
       '& > [class*="Section-gridItem"]': {
@@ -144,7 +140,6 @@ export const gradientBackgroundVariant = (theme: Theme) => ({
     background: 'linear-gradient(50deg, rgba(48,205,194,1) 0%, rgba(0,92,122,1) 100%)',
     color: 'white',
     '& > [class*="Section-gridContainer"]': {
-      alignItems: 'center',
       maxWidth: 1280,
 
       // '& > [class*="Section-gridItem"]': {}
