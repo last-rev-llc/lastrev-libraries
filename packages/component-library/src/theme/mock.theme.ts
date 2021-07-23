@@ -1,5 +1,6 @@
 import createCardVariants from './createCardVariants';
 import createHeroVariants from './createHeroVariants';
+import createLinkVariants from './createLinkVariants';
 import createTextVariants from './createTextVariants';
 import createSectionVariants from './createSectionVariants';
 import createCollectionVariants from './createCollectionVariants';
@@ -49,7 +50,10 @@ const theme = createAppTheme(
       fontSize: 16
     },
     components: {
-      //LRCL
+      // LRCL
+      Link: {
+        variants: createLinkVariants(baseTheme)
+      },
       Text: {
         variants: createTextVariants(baseTheme)
       },

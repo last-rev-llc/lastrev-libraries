@@ -33,9 +33,10 @@ Module01.args = {
   styles: {
     root: {
       'minHeight': 400,
-      '.MuiTypography-h2': {
-        color: '#005c7b'
-      },
+
+      // '.MuiTypography-h2': {
+      //   color: '#005c7b'
+      // },
 
       // Note: This would be an option in CMS, ie. button-primary
       '.MuiLink-root': {
@@ -48,6 +49,9 @@ Module01.args = {
     },
     gridContainer: {
       maxWidth: 1280
+    },
+    gridItem: {
+      textAlign: 'center',
     }
   }
 };
@@ -240,8 +244,6 @@ Module04.args = {
       }
     ]
   },
-  // variant: 'gradient-background',
-  variant: 'split-panel',
   theme: [
     mockTheme,
     {
@@ -257,6 +259,10 @@ Module04.args = {
               //     backgroundColor: 'pink'
               //   }
               // },
+
+              h2: {
+                color: 'white'
+              },
 
               // TODO: move this styles to RichText when rendering lists
               ol: {

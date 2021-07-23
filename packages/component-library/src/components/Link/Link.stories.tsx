@@ -12,10 +12,30 @@ export default {
     )
   ],
   argTypes: {
-    variant: { name: 'Variant' },
-    // bgcolor: { name: 'Background Color' },
+    variant: {
+      name: 'Variant',
+      control: {
+        type: 'select',
+        options: ['link', 'button-contained', 'button-outlined', 'button-text']
+      },
+      table: {
+        defaultValue: { summary: 'link' }
+      }
+    },
+    text: { name: 'Text' },
+    href: { name: 'Href' },
+    bgcolor: {
+      name: 'Background Color',
+      control: {
+        type: 'select',
+        options: ['yellow', 'orange', 'green']
+      },
+      table: {
+        defaultValue: { summary: 'yellow' }
+      }
+    },
     // variantMapping: { name: 'Variant Mapping' },
-    ref: { table: { disable: true } }
+    // ref: { table: { disable: true } }
   }
 };
 

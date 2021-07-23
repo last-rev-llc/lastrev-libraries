@@ -2,6 +2,7 @@
 import { CardProps, CardOverrides } from './../components/Card';
 import { CollectionProps } from './../components/Collection';
 import { HeroProps } from './../components/Hero';
+import { LinkProps } from './../components/Link';
 import { SectionProps } from './../components/Section';
 import mockTheme from './mock.theme';
 
@@ -36,6 +37,7 @@ declare module '@material-ui/core/styles/components' {
     Card: CardProps;
     Collection: CollectionProps;
     Hero: HeroProps;
+    Link: LinkProps;
     Text: {};
   }
   interface ComponentElementOverrides {
@@ -68,6 +70,9 @@ declare module '@material-ui/core/styles/components' {
     Hero?: {
       root?: {};
     };
+    Link?: {
+      root?: {};
+    };
     Text?: {
       root?: {};
       sectionWrap?: {};
@@ -82,6 +87,7 @@ declare module '@material-ui/core/styles/components' {
     Card?: {};
     Collection?: {};
     Hero?: {};
+    Link?: {};
     Text?: {};
   }
   interface Components {
@@ -108,6 +114,12 @@ declare module '@material-ui/core/styles/components' {
       // overrides?: ComponentElementOverrides['Hero'];
       styleOverrides?: ComponentsOverrides['Hero'];
       variants?: ComponentsVariants['Hero'];
+    };
+    Link?: {
+      defaultProps?: ComponentsProps['Link'];
+      // overrides?: ComponentElementOverrides['Hero'];
+      styleOverrides?: ComponentsOverrides['Link'];
+      variants?: ComponentsVariants['Link'];
     };
     Text?: {
       defaultProps?: ComponentsProps['Text'];

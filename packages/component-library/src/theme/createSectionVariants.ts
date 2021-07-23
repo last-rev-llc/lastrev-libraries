@@ -118,7 +118,10 @@ export const gradientBackgroundVariant = () => ({
       maxWidth: 1280
 
       // '& > [class*="Section-gridItem"]': {}
-    }
+    },
+    '.MuiTypography-h2': {
+      color: 'white'
+    },
   }
 });
 

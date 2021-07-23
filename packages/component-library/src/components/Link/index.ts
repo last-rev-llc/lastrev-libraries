@@ -1,1 +1,1 @@
-export { default } from './Link';
+export { default, LinkProps } from './Link';
