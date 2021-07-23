@@ -39,6 +39,7 @@ declare module '@material-ui/core/styles/components' {
     Hero: HeroProps;
     Link: LinkProps;
     Text: {};
+    Header: {};
   }
   interface ComponentElementOverrides {
     Section: {
@@ -51,6 +52,9 @@ declare module '@material-ui/core/styles/components' {
     };
     Card: CardOverrides;
     Text?: {
+      root?: {};
+    };
+    Collection?: {
       root?: {};
     };
   }
@@ -67,12 +71,17 @@ declare module '@material-ui/core/styles/components' {
     Collection?: {
       root?: {};
     };
+    Header?: {
+      root?: {};
+      contentContainer?: {};
+    };
     Hero?: {
       root?: {};
     };
     Link?: {
       root?: {};
     };
+
     Text?: {
       root?: {};
       sectionWrap?: {};
@@ -85,10 +94,11 @@ declare module '@material-ui/core/styles/components' {
   interface ComponentsVariants {
     Section?: {};
     Card?: {};
-    Collection?: {};
     Hero?: {};
     Link?: {};
+    Header?: {};
     Text?: {};
+    Collection?: {};
   }
   interface Components {
     Section?: {
@@ -103,12 +113,6 @@ declare module '@material-ui/core/styles/components' {
       styleOverrides?: ComponentsOverrides['Card'];
       variants?: ComponentsVariants['Card'];
     };
-    Collection?: {
-      defaultProps?: ComponentsProps['Collection'];
-      // overrides?: ComponentElementOverrides['Collection'];
-      styleOverrides?: ComponentsOverrides['Collection'];
-      variants?: ComponentsVariants['Collection'];
-    };
     Hero?: {
       defaultProps?: ComponentsProps['Hero'];
       // overrides?: ComponentElementOverrides['Hero'];
@@ -121,11 +125,23 @@ declare module '@material-ui/core/styles/components' {
       styleOverrides?: ComponentsOverrides['Link'];
       variants?: ComponentsVariants['Link'];
     };
+    Header?: {
+      defaultProps?: ComponentsProps['Header'];
+      // overrides?: ComponentElementOverrides['Header'];
+      styleOverrides?: ComponentsOverrides['Header'];
+      variants?: ComponentsVariants['Header'];
+    };
     Text?: {
       defaultProps?: ComponentsProps['Text'];
       overrides?: ComponentElementOverrides['Text'];
       styleOverrides?: ComponentsOverrides['Text'];
       variants?: ComponentsVariants['Text'];
+    };
+    Collection?: {
+      defaultProps?: ComponentsProps['Collection'];
+      overrides?: ComponentElementOverrides['Collection'];
+      styleOverrides?: ComponentsOverrides['Collection'];
+      variants?: ComponentsVariants['Collection'];
     };
   }
 }

@@ -54,6 +54,20 @@ const theme = createAppTheme(
       Link: {
         variants: createLinkVariants(baseTheme)
       },
+      Header: {
+        styleOverrides: {
+          contentContainer: {
+            height: 100,
+            padding: baseTheme.spacing(3),
+            [baseTheme.breakpoints.up('sm')]: {
+              paddingLeft: baseTheme.spacing(10),
+              paddingRight: baseTheme.spacing(10)
+            },
+            paddingLeft: baseTheme.spacing(3),
+            paddingRight: baseTheme.spacing(3)
+          }
+        }
+      },
       Text: {
         variants: createTextVariants(baseTheme)
       },
@@ -64,16 +78,16 @@ const theme = createAppTheme(
         variants: createCollectionVariants(baseTheme),
         styleOverrides: {
           root: {
-            maxWidth: 1280,
-            margin: '0 auto',
-            padding: baseTheme.spacing(4, 0),
+            'maxWidth': 1280,
+            'margin': '0 auto',
+            'padding': baseTheme.spacing(4, 0),
             '[class*="Section-gridItem"]': {
               display: 'flex',
               justifyContent: 'center',
               flexBasis: '33.333333%',
-              marginBottom: baseTheme.spacing(4),
+              marginBottom: baseTheme.spacing(4)
             }
-          },
+          }
         }
       },
       Hero: {
@@ -115,7 +129,17 @@ const theme = createAppTheme(
         }
       },
 
-      // MUI
+      //MUI
+      MuiAppBar: {
+        defaultProps: {
+          elevation: 0
+        },
+        styleOverrides: {
+          root: {
+            backgroundColor: baseTheme.palette.background.default
+          }
+        }
+      },
       MuiContainer: {
         defaultProps: {
           maxWidth: 'xl'
@@ -182,14 +206,14 @@ const theme = createAppTheme(
       MuiCardActions: {
         styleOverrides: {
           root: {
-            padding: 0,
-            paddingTop: baseTheme.spacing(2),
-            fontSize: 18,
+            'padding': 0,
+            'paddingTop': baseTheme.spacing(2),
+            'fontSize': 18,
 
             '& .MuiLink-root': {
-              margin: '0 auto',
+              margin: '0 auto'
             }
-          },
+          }
         }
       },
       MuiTypography: {

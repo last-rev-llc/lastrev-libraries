@@ -23,14 +23,14 @@ export interface MediaProps {
 }
 
 export interface MediaOverrides {}
-const Media = ({ file, title, desktop, tablet, mobile }: MediaProps) => {
+const Media = ({ file, title, desktop, tablet, mobile, ...rest }: MediaProps) => {
   // console.log('Media: ', file);
   // TODO: Add support for video
   const image = file ?? desktop?.file ?? tablet?.file ?? mobile?.file;
   const alt = title ?? desktop?.title ?? tablet?.title ?? mobile?.title;
   return (
     <ErrorBoundary>
-      <Root src={image?.url} alt={alt} />
+      <Root src={image?.url} alt={alt} {...rest} />
     </ErrorBoundary>
   );
 };

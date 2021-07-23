@@ -47,7 +47,6 @@ const Section = ({
   variant
 }: SectionProps) => {
   const theme = useTheme();
-  console.log('Section', { contents, styles, backgroundColor, contentWidth, contentSpacing, variant });
   const content = (
     <GridContainer
       container
