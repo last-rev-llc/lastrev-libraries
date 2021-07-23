@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import { chain, filter, identity, map } from 'lodash';
+import { filter, identity, map } from 'lodash';
 import { GetObjectCommand, ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
 import { CredentialsProvider } from './CredentialsProvider';
