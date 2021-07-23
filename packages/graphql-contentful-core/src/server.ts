@@ -3,11 +3,18 @@ import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 import { ServerProps } from './types';
 import prepareServer from './prepareServer';
+import logger from 'loglevel';
+import Timer from '@last-rev/timer';
 
 export const getServer = async (props: ServerProps) => {
+  logger.setLevel(props.logLevel);
+
+  console.log('loglevel', props.logLevel);
+
+  const timer = new Timer('Graphql server initialized');
   const { resolvers, typeDefs, loaders, defaultLocale, pathToIdMapping } = await prepareServer(props);
 
-  return new ApolloServer({
+  const server = new ApolloServer({
     schema: buildFederatedSchema([{ resolvers, typeDefs }]),
     introspection: true,
     debug: true,
@@ -23,4 +30,7 @@ export const getServer = async (props: ServerProps) => {
       };
     }
   });
+
+  logger.debug(timer.end());
+  return server;
 };

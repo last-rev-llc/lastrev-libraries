@@ -63,6 +63,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     isProduction && clean(dir),
     // multi(),
     replace({
+      'preventAssignment': true,
       'process.env.NODE_ENV': JSON.stringify(isProduction ? `production` : `development`)
     }),
     postcss({

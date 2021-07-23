@@ -3,6 +3,7 @@ import { Asset, ContentType, Entry } from 'contentful';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
 import { GraphQLResolverMap } from 'apollo-graphql';
 import DataLoader from 'dataloader';
+import { LogLevelDesc } from 'loglevel';
 
 export type TypeMapper = {
   [fieldName: string]: string | Function;
@@ -78,6 +79,7 @@ export type BaseServerProps = {
   isPreview: boolean;
   spaceId: string;
   accessToken: string;
+  logLevel: LogLevelDesc;
 };
 
 export type FsServerProps = BaseServerProps & {
@@ -89,6 +91,10 @@ export type S3ServerProps = BaseServerProps & {
   apiUrl: string;
   apiKey: string;
   loaderType: 's3';
+};
+
+export type CmsServerProps = BaseServerProps & {
+  loaderType: 'cms';
 };
 
 export type ServerProps = FsServerProps | S3ServerProps;
