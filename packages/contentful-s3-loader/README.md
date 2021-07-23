@@ -5,7 +5,7 @@ This library exports a single default function which creates a set of data loade
 # Usage
 
 ```Javascript
-import createLoaders from '@last-rev/contentful-fs-loader';
+import createLoaders from '@last-rev/contentful-s3-loader';
 
 async function () {
   const {

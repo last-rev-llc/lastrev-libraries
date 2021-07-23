@@ -1,11 +1,11 @@
 # Overview
 
-This library exports a single default function which creates a set of data loaders and fetchers for loading contentful structured content from a last-rev configured s3 bucket.
+This library exports a single default function which creates a set of data loaders and fetchers for loading contentful structured content from contentful's CDN.
 
 # Usage
 
 ```Javascript
-import createLoaders from '@last-rev/contentful-fs-loader';
+import createLoaders from '@last-rev/contentful-cms-loader';
 
 async function () {
   const {
