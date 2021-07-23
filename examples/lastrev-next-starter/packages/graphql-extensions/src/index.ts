@@ -3,7 +3,7 @@ import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { Source, DocumentNode, GraphQLSchema } from 'graphql';
 
 import * as Card from './Card';
-import * as CardCollection from './CardCollection';
+import * as Collection from './Collection';
 import * as Categories from './Categories';
 import * as GlobalSettings from './GlobalSettings';
 import * as Hero from './Hero';
@@ -24,7 +24,7 @@ export type GraphQlExtension = {
 
 const extensions: GraphQlExtension[] = [
   Card,
-  CardCollection,
+  Collection,
   Categories,
   GlobalSettings,
   Hero,

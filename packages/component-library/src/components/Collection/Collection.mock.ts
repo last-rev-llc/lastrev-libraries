@@ -35,6 +35,6 @@ export default {
       ]
     }
   },
-  actions: [{ ...mockLink, children: 'Hero CTA' }],
+  actions: [{ ...mockLink, text: 'Hero CTA' }],
   theme: [mockTheme]
 };

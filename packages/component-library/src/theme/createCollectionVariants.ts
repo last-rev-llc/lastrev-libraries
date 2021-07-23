@@ -124,7 +124,7 @@ export const gradientBackgroundVariant = () => ({
 
 export const collectionRowVariant = () => ({
   props: {
-    variant: 'collection-triple'
+    variant: 'collection-three-per-row'
   },
   style: {
     'color': 'white',

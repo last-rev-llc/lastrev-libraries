@@ -1,8 +1,10 @@
 import createCardVariants from './createCardVariants';
 import createHeroVariants from './createHeroVariants';
+import createTextVariants from './createTextVariants';
 import createSectionVariants from './createSectionVariants';
+import createCollectionVariants from './createCollectionVariants';
 import createAppTheme from './createTheme';
-import { red, grey } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 
 export const baseTheme = createAppTheme({
   spacing: 8,
@@ -16,22 +18,26 @@ export const baseTheme = createAppTheme({
     }
   },
   palette: {
-    primary: {
+    'primary': {
       main: '#fee501'
     },
-    secondary: {
+    'secondary': {
       main: '#005C7A'
     },
-    tertiary: {
+    'tertiary': {
       main: '#bdefeb'
     },
-    quartiary: {
+    'quartiary': {
       main: '#005c7a'
     },
-    error: {
+    'error': {
       main: red.A400
     },
-    background: {
+    'gradient-primary': {
+      main: 'linear-gradient(50deg, rgba(48,205,194,1) 0%, rgba(0,92,122,1) 100%)',
+      contrastText: 'white'
+    },
+    'background': {
       default: '#fFFF'
     }
   }
@@ -39,29 +45,31 @@ export const baseTheme = createAppTheme({
 
 const theme = createAppTheme(
   {
+    typography: {
+      fontSize: 16
+    },
     components: {
+      //LRCL
+      Text: {
+        variants: createTextVariants(baseTheme)
+      },
       Card: {
         variants: createCardVariants(baseTheme)
+      },
+      Collection: {
+        variants: createCollectionVariants(baseTheme)
       },
       Hero: {
         variants: createHeroVariants(baseTheme),
         styleOverrides: {
           root: {
-            padding: baseTheme.spacing(5),
-
             '& .MuiGrid-container': {
-              alignItems: 'center',
+              alignItems: 'center'
             },
-            h1: {
-              color: 'grey',
-            },
-            h2: {
-              color: baseTheme.palette.secondary.main
-            },
-            img: {
-              width: '100%',
+            'img': {
+              width: '100%'
             }
-          },
+          }
         }
       },
       Section: {
@@ -78,15 +86,46 @@ const theme = createAppTheme(
           gridItem: {
             // TODO: Review if this makes sense as a default
             '& > img': {
-              width: '100%',
-              height: 'auto',
+              width: 'auto',
+              height: '100%',
               display: 'block',
               margin: 'auto'
             }
           }
         },
         defaultProps: {
-          spacing: baseTheme.spacing(4)
+          contentSpacing: 10
+        }
+      },
+
+      //MUI
+      MuiContainer: {
+        defaultProps: {
+          maxWidth: 'xl'
+        },
+        styleOverrides: {
+          root: {
+            [baseTheme.breakpoints.up('sm')]: {
+              paddingLeft: baseTheme.spacing(10),
+              paddingRight: baseTheme.spacing(10)
+            },
+            paddingLeft: baseTheme.spacing(3),
+            paddingRight: baseTheme.spacing(3)
+          }
+        }
+      },
+      MuiButton: {
+        defaultProps: {
+          disableElevation: true
+        },
+        styleOverrides: {
+          root: {
+            padding: baseTheme.spacing(2)
+          },
+          outlinedPrimary: {
+            color: baseTheme.palette.text.primary,
+            borderColor: baseTheme.palette.quartiary.main
+          }
         }
       },
       MuiCard: {
@@ -105,11 +144,11 @@ const theme = createAppTheme(
             // Image wrap
             '& .MuiBox-root': {
               width: '100%',
-              height: '100%',
+              height: '100%'
             },
             '& img': {
               width: '100%',
-              height: '100%',
+              height: '100%'
             }
           }
         }
@@ -133,6 +172,7 @@ const theme = createAppTheme(
       MuiTypography: {
         styleOverrides: {
           h1: {
+            color: 'grey',
             paddingBottom: 10,
             fontSize: 40,
             fontWeight: 'bold'
@@ -140,16 +180,22 @@ const theme = createAppTheme(
           h2: {
             paddingBottom: 20,
             fontSize: 32,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            color: baseTheme.palette.secondary.main
           },
           h3: {
             paddingBottom: 20,
-            fontSize: 20,
-            fontWeight: 'bold'
+            fontSize: 32,
+            fontWeight: 'bold',
+            color: baseTheme.palette.secondary.main
           },
           h4: {
             paddingBottom: 20,
-            fontSize: 18,
+            fontSize: 20
+          },
+          h5: {
+            paddingBottom: 20,
+            fontSize: 18
           },
           body1: {
             fontSize: '1.125rem'
@@ -163,7 +209,7 @@ const theme = createAppTheme(
         styleOverrides: {
           root: {
             cursor: 'pointer',
-            color: 'black',
+            color: 'black'
           }
         }
       }

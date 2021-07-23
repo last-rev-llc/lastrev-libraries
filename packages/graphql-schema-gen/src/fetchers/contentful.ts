@@ -35,7 +35,8 @@ const reservedForContent: Record<string, string> = {
   sidekickLookup: 'JSON',
   id: 'String',
   theme: '[Theme]',
-  animation: 'JSON'
+  animation: 'JSON',
+  variant: 'String'
 };
 
 const reservedForPages: Record<string, string> = {

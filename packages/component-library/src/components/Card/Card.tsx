@@ -17,6 +17,7 @@ import { LinkProps } from '../Link/Link.types';
 import styled from '@material-ui/system/styled';
 
 export interface CardProps extends MuiCardProps {
+  __typename: string;
   variant?: any;
   title?: string;
   subtitle?: string;

@@ -5,9 +5,9 @@ export const mediaCardVariant = (theme: Theme) => ({
     variant: 'media'
   },
   style: {
-    position: 'relative',
-    maxWidth: 400,
-    minWidth: 400,
+    'position': 'relative',
+    'maxWidth': 400,
+    'minWidth': 400,
 
     '& img': {
       opacity: 1,
@@ -15,12 +15,12 @@ export const mediaCardVariant = (theme: Theme) => ({
     },
 
     '&:hover': {
-      boxShadow: `0 0 0 2px ${theme.palette.primary.main}`,
+      'boxShadow': `0 0 0 2px ${theme.palette.primary.main}`,
 
       '& img': {
         opacity: 0.7,
         transition: 'opacity ease .1s'
-      },
+      }
     },
 
     '& .MuiCardContent-root': {
@@ -44,17 +44,17 @@ export const avatarCardVariant = (theme: Theme) => ({
     variant: 'avatar'
   },
   style: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'flex-start',
-    maxWidth: 540,
-    minWidth: 320,
-    padding: 20,
+    'flexDirection': 'row',
+    'flexWrap': 'wrap',
+    'justifyContent': 'flex-start',
+    'maxWidth': 540,
+    'minWidth': 320,
+    'padding': 20,
 
     // Image wrap
     '& .MuiBox-root': {
       width: 'auto',
-      height: 'auto',
+      height: 'auto'
     },
 
     '& img': {
@@ -67,7 +67,7 @@ export const avatarCardVariant = (theme: Theme) => ({
     },
 
     '& .MuiCardContent-root': {
-      textAlign: 'left',
+      textAlign: 'left'
     }
   }
 });
@@ -77,11 +77,11 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
     variant: 'avatar-large'
   },
   style: {
-    justifyContent: 'center',
-    width: 300,
-    height: 300,
-    minWidth: 300,
-    padding: 20,
+    'justifyContent': 'center',
+    'width': 300,
+    'height': 300,
+    'minWidth': 300,
+    'padding': 20,
 
     '& img': {
       width: '100%',
@@ -92,7 +92,7 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
     },
 
     '& .MuiCardContent-root': {
-      display: 'none',
+      display: 'none'
     },
 
     '& .MuiCardActions-root': {
@@ -106,13 +106,13 @@ export const squareCardVariant = (theme: Theme) => ({
     variant: 'square'
   },
   style: {
-    width: 300,
-    height: 300,
+    'width': 300,
+    'height': 300,
 
     '&:hover': {
       '& .MuiCardContent-root': {
         backgroundColor: theme.palette.tertiary.main,
-        boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main}`,
+        boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main}`
       },
 
       '& .MuiTypography-h3': {
@@ -126,7 +126,7 @@ export const squareCardVariant = (theme: Theme) => ({
       alignItems: 'center',
       height: '100%',
       padding: '0 30px !important',
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.secondary.main
     },
 
     '& .MuiTypography-h3': {
@@ -154,15 +154,15 @@ export const standardCardVariant = (theme: Theme) => ({
     variant: 'standard'
   },
   style: {
-    justifyContent: 'flex-start',
-    width: 300, // DEMO ONLY
-    paddingBottom: 15,
-    backgroundColor: 'white',
-    transition: 'background-color ease .15s',
+    'justifyContent': 'flex-start',
+    'width': 300, // DEMO ONLY
+    'paddingBottom': 15,
+    'backgroundColor': 'white',
+    'transition': 'background-color ease .15s',
 
     '&:hover': {
       backgroundColor: theme.palette.tertiary.main,
-      transition: 'background-color ease .15s',
+      transition: 'background-color ease .15s'
     },
 
     '& .MuiBox-root': {
@@ -185,20 +185,20 @@ export const standardCardVariant = (theme: Theme) => ({
 
 export const standardRoundedCardVariant = (theme: Theme) => ({
   props: {
-    variant: 'standard-round'
+    variant: 'standard-rounded'
   },
   style: {
-    justifyContent: 'flex-start',
-    width: 300, // DEMO ONLY
-    paddingBottom: 15,
-    border: `2px solid ${theme.palette.secondary.main}`,
-    borderRadius: 20,
-    transition: 'background-color ease .15s',
+    'justifyContent': 'flex-start',
+    'width': 300, // DEMO ONLY
+    'paddingBottom': 15,
+    'border': `2px solid ${theme.palette.secondary.main}`,
+    'borderRadius': 20,
+    'transition': 'background-color ease .15s',
 
     '&:hover': {
       backgroundColor: theme.palette.tertiary.main,
       borderColor: theme.palette.primary.main,
-      transition: 'background-color ease .15s',
+      transition: 'background-color ease .15s'
     },
 
     '& .MuiBox-root': {
@@ -226,7 +226,7 @@ const variants = [
   avatarLargeCardVariant,
   squareCardVariant,
   standardCardVariant,
-  standardRoundedCardVariant,
+  standardRoundedCardVariant
 ];
 
 const createCardVariants = (theme: Theme) => {

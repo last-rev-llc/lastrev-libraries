@@ -7,32 +7,35 @@ import mockTheme from './mock.theme';
 declare module '@material-ui/core/styles' {
   // eslint-disable-next-line
   interface Palette {
-    tertiary: Palette['primary'];
-    quartiary: Palette['secondary'];
+    'tertiary': Palette['primary'];
+    'quartiary': Palette['secondary'];
+    'gradient-primary': Palette['secondary'];
   }
   interface PaletteOptions {
-    tertiary: PaletteOptions['primary'];
-    quartiary: PaletteOptions['secondary'];
+    'tertiary': PaletteOptions['primary'];
+    'quartiary': PaletteOptions['secondary'];
+    'gradient-primary': PaletteOptions['secondary'];
   }
-  interface Theme {
-    appDrawer: {
-      width: React.CSSProperties['width'];
-    };
-  }
-  // eslint-disable-next-line
-  interface ThemeOptions {
-    appDrawer?: {
-      width: React.CSSProperties['width'];
-    };
-  }
+  // interface Theme {
+  //   appDrawer?: {
+  //     width: React.CSSProperties['width'];
+  //   };
+  // }
+  // // eslint-disable-next-line
+  // interface ThemeOptions {
+  //   appDrawer?: {
+  //     width: React.CSSProperties['width'];
+  //   };
+  // }
 }
 
 declare module '@material-ui/core/styles/components' {
   interface ComponentsProps {
     Section: SectionProps;
+    Text: SectionProps;
     Card: CardProps;
     Hero: HeroProps;
-    RichText: {};
+    Text: {};
   }
   interface ComponentElementOverrides {
     Section: {
@@ -44,13 +47,8 @@ declare module '@material-ui/core/styles/components' {
       backgroundImage?: {};
     };
     Card: CardOverrides;
-    RichText?: {
+    Text?: {
       root?: {};
-      sectionWrap?: {};
-      imageWrap?: {};
-      gridItem?: {};
-      gridContainer?: {};
-      backgroundImage?: {};
     };
   }
   interface ComponentsOverrides {
@@ -66,7 +64,7 @@ declare module '@material-ui/core/styles/components' {
     Hero?: {
       root?: {};
     };
-    RichText?: {
+    Text?: {
       root?: {};
       sectionWrap?: {};
       imageWrap?: {};
@@ -79,7 +77,7 @@ declare module '@material-ui/core/styles/components' {
     Section?: {};
     Card?: {};
     Hero?: {};
-    RichText?: {};
+    Text?: {};
   }
   interface Components {
     Section?: {
@@ -100,11 +98,11 @@ declare module '@material-ui/core/styles/components' {
       styleOverrides?: ComponentsOverrides['Hero'];
       variants?: ComponentsVariants['Hero'];
     };
-    RichText?: {
-      defaultProps?: ComponentsProps['RichText'];
-      overrides?: ComponentElementOverrides['RichText'];
-      styleOverrides?: ComponentsOverrides['RichText'];
-      variants?: ComponentsVariants['RichText'];
+    Text?: {
+      defaultProps?: ComponentsProps['Text'];
+      overrides?: ComponentElementOverrides['Text'];
+      styleOverrides?: ComponentsOverrides['Text'];
+      variants?: ComponentsVariants['Text'];
     };
   }
 }

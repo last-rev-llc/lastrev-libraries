@@ -1,5 +1,5 @@
 import mockTheme from '../../theme/mock.theme';
-import richTextMock from '../RichText/RichText.mock';
+import richTextMock from '../Text/Text.mock';
 
 export const singlePanelMock = {
   __typename: 'Section',

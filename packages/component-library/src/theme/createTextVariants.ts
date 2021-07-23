@@ -17,28 +17,24 @@ export const defaultVariant = (theme: Theme) => ({
   }
 });
 
-export const gradientBackgroundVariant = () => ({
+export const blackBoldVariant = () => ({
   props: {
-    variant: 'gradient-background'
+    variant: 'black-bold'
   },
   style: {
-    background: 'linear-gradient(50deg, rgba(48,205,194,1) 0%, rgba(0,92,122,1) 100%)',
     h1: {
       color: 'white'
     },
     h2: {
       color: 'white'
-    },
-    p: {
-      color: 'white'
     }
   }
 });
 
-const variants = [defaultVariant, gradientBackgroundVariant];
+const variants = [defaultVariant, blackBoldVariant];
 
-const createHeroVariants = (theme: Theme) => {
+const createTextVariants = (theme: Theme) => {
   return variants.map((creator) => creator(theme));
 };
 
-export default createHeroVariants;
+export default createTextVariants;

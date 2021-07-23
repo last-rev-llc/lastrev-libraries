@@ -4,20 +4,33 @@ import styled from '@material-ui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 
-export interface MediaProps {
+interface Asset {
   file: {
     url: string;
   };
-  alt: string;
+  title?: string;
+  description?: string;
+}
+export interface MediaProps {
+  file?: {
+    url: string;
+  };
+  title?: string;
+  description?: string;
+  desktop?: Asset;
+  tablet?: Asset;
+  mobile?: Asset;
 }
 
 export interface MediaOverrides {}
-const Media = ({ file, alt }: MediaProps) => {
+const Media = ({ file, title, desktop, tablet, mobile }: MediaProps) => {
   // console.log('Media: ', file);
-
+  // TODO: Add support for video
+  const image = file ?? desktop?.file ?? tablet?.file ?? mobile?.file;
+  const alt = title ?? desktop?.title ?? tablet?.title ?? mobile?.title;
   return (
     <ErrorBoundary>
-      <Root src={file.url} alt={alt} />
+      <Root src={image?.url} alt={alt} />
     </ErrorBoundary>
   );
 };

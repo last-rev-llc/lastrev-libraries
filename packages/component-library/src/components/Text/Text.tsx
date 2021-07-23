@@ -34,14 +34,17 @@ import Link from '../Link';
 // });
 // const containsHTML = (children: any) => children?.some((child: any) => child.includes && child?.includes('<'));
 
-export interface RichTextProps {
-  id: string;
+export interface RichText {
+  document: any;
+}
+export interface TextProps {
+  id?: string;
   styles?: {
     root?: SystemCssProperties;
   };
-  body: {
-    document: any;
-  };
+  body: RichText;
+  variant?: string;
+  align?: 'left' | 'center' | 'right' | undefined;
 }
 
 const options = {
@@ -171,21 +174,25 @@ const options = {
   }
 };
 
-function RichText({ body, styles }: RichTextProps) {
+function Text({ body, align = 'left', styles, variant }: TextProps) {
   // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
   console.log('Text', { body });
-  return <Root sx={styles?.root}>{documentToReactComponents(body?.document, options)}</Root>;
+  return (
+    <Root variant={variant} sx={{ ...styles?.root, textAlign: align }}>
+      {documentToReactComponents(body?.document, options)}
+    </Root>
+  );
 }
 
 // RichText.propTypes = RichTextPropTypes;
-RichText.defaultProps = {};
+// RichText.defaultProps = {};
 
 const Root = styled(Box, {
-  name: 'RichText',
+  name: 'Text',
   slot: 'Root',
   overridesResolver: (_, styles) => ({
     ...styles.root
   })
 })<{ variant?: string }>(() => ({}));
 
-export default RichText;
+export default Text;

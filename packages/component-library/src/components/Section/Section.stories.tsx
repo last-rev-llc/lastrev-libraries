@@ -32,7 +32,7 @@ Module01.args = {
   ...singlePanelMock,
   styles: {
     root: {
-      minHeight: 400,
+      'minHeight': 400,
       '.MuiTypography-h2': {
         color: '#005c7b'
       },
@@ -44,11 +44,11 @@ Module01.args = {
         padding: '10px 20px',
         backgroundColor: '#fee501',
         textDecoration: 'none'
-      },
+      }
     },
     gridContainer: {
       maxWidth: 1280
-    },
+    }
   }
 };
 
@@ -68,12 +68,12 @@ Module02.args = {
         padding: '10px 20px',
         backgroundColor: '#fee501',
         textDecoration: 'none'
-      },
+      }
     },
     gridContainer: {
       maxWidth: 1280
     }
-  },
+  }
 };
 
 export const Module03 = Template.bind({});
@@ -225,7 +225,23 @@ Module04.args = {
       }
     }
   ],
-  variant: 'gradient-background',
+  styles: {
+    root: {
+      background: 'linear-gradient(50deg, rgba(48,205,194,1) 0%, rgba(0,92,122,1) 100%)',
+      color: 'white'
+    },
+    gridContainer: {
+      spacing: 4,
+      maxWidth: 'xl'
+    },
+    gridItem: [
+      {
+        xs: 6
+      }
+    ]
+  },
+  // variant: 'gradient-background',
+  variant: 'split-panel',
   theme: [
     mockTheme,
     {
@@ -251,9 +267,9 @@ Module04.args = {
               },
 
               li: {
-                counterIncrement: 'num',
-                display: 'flex',
-                marginBottom: 14,
+                'counterIncrement': 'num',
+                'display': 'flex',
+                'marginBottom': 14,
                 '&::before': {
                   content: 'counter(num)',
                   marginRight: 14,
@@ -338,7 +354,7 @@ Module05.args = {
         Section: {
           styleOverrides: {
             root: {
-              padding: mockTheme.spacing(5),
+              'padding': mockTheme.spacing(5),
 
               // TODO: Unifiy typography global overrides
               '.MuiTypography-h2': {
@@ -410,14 +426,14 @@ Module06.args = {
         Section: {
           styleOverrides: {
             root: {
-              minHeight: 200,
+              'minHeight': 200,
               '.MuiTypography-body1': {
                 margin: '0 auto'
               }
             },
             gridContainer: {
               justifyContent: 'center',
-              backgroundColor: '#bdefeb',
+              backgroundColor: '#bdefeb'
             },
             gridItem: {
               maxWidth: 800,
@@ -484,7 +500,7 @@ Module07.args = {
         Section: {
           styleOverrides: {
             root: {
-              minHeight: 400,
+              'minHeight': 400,
 
               '.MuiTypography-body1': {
                 maxWidth: 800,
@@ -495,7 +511,7 @@ Module07.args = {
               }
             },
             gridContainer: {
-              justifyContent: 'center',
+              justifyContent: 'center'
             },
             gridItem: {
               maxWidth: 800,
@@ -595,7 +611,7 @@ Module08.args = {
     gridContainer: {
       flexDirection: 'column',
       maxWidth: 1280,
-      padding: '40px 10vw',
+      padding: '40px 10vw'
     }
   },
   theme: [

@@ -1,10 +1,10 @@
 import { Entry } from 'contentful';
-import every from 'lodash/every';
 import isArray from 'lodash/isArray';
 import { GraphQLResolveInfo } from 'graphql';
 import getFieldDataFetcher from '../utils/getFieldDataFetcher';
 import { ApolloContext } from '../types';
 import capitalizeFirst from '../utils/capitalizeFirst';
+import map from 'lodash/map';
 
 export type Resolver<TSource, TContext> = (
   content: TSource,
@@ -19,14 +19,16 @@ const fieldResolver: FieldResolver = (displayType: string) => async (content, ar
   const { fieldName: field } = info;
   const { loaders, mappers, typeMappings } = ctx;
 
-  const typeName =
-    content && content.sys && content.sys.contentType
-      ? capitalizeFirst(typeMappings[content.sys.contentType.sys.id] ?? content.sys.contentType.sys.id)
-      : displayType;
+  const contentType = capitalizeFirst(
+    content && content.sys && content.sys.contentType && content.sys.contentType.sys
+      ? content.sys.contentType.sys.id
+      : ''
+  );
+  const typeName = contentType ? capitalizeFirst(typeMappings[contentType] ?? contentType) : displayType;
 
   const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
 
-  const { fieldValue } = await fieldDataFetcher(content, args, ctx, info);
+  let { fieldValue } = await fieldDataFetcher(content, args, ctx, info);
 
   //Check if the field is a reference then resolve it
   if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Entry') {
@@ -36,12 +38,25 @@ const fieldResolver: FieldResolver = (displayType: string) => async (content, ar
     return loaders.assetLoader.load(fieldValue.sys.id);
   }
   //Check if the field is an reference array then resolve all of them
-  if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys.id && x.sys.linkType == 'Entry')) {
-    return loaders.entryLoader.loadMany(fieldValue.map((x: any) => x.sys.id));
+  // if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys && !!x.sys.id && x.sys.linkType == 'Entry')) {
+  //   return loaders.entryLoader.loadMany(fieldValue.map((x: any) => x.sys.id));
+  // }
+  // if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys && !!x.sys.id && x.sys.linkType == 'Asset')) {
+  //   return loaders.assetLoader.loadMany(fieldValue.map((x: any) => x.sys.id));
+  // }
+
+  // Expand links
+  if (isArray(fieldValue)) {
+    fieldValue = map(fieldValue, (x) => {
+      if (!!x.sys && !!x.sys.id && x.sys.linkType == 'Entry') return loaders.entryLoader.load(x.sys.id);
+      return x;
+    });
+    fieldValue = map(fieldValue, (x) => {
+      if (!!x.sys && !!x.sys.id && x.sys.linkType == 'Asset') return loaders.assetLoader.load(x.sys.id);
+      return x;
+    });
   }
-  if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys.id && x.sys.linkType == 'Asset')) {
-    return loaders.assetLoader.loadMany(fieldValue.map((x: any) => x.sys.id));
-  }
+  // console.log('ResolveField', { displayType, content, field, typeName, contentType, fieldValue });
   // console.timeEnd(`FieldResolver:${displayType}->${field}`);
   return fieldValue;
 };
