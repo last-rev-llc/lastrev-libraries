@@ -1,5 +1,11 @@
 # @last-rev/graphql-schema-gen
 
+## 0.1.5
+
+### Patch Changes
+
+- 63176af: Added logging and timers, added a new cms data loader
+
 ## 0.1.4
 
 ### Patch Changes
