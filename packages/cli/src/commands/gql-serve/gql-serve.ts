@@ -72,9 +72,11 @@ const run = async ({ configFile }: { configFile: string }) => {
   let contentfulAccessToken;
   let contentfulHost;
   let contentfulEnv;
+  let loaderType;
+  let logLevel;
   try {
     ({
-      cms,
+      cms = 'Contentful',
       contentDir,
       extensions,
       extensionsDir,
@@ -83,7 +85,9 @@ const run = async ({ configFile }: { configFile: string }) => {
       contentfulAccessToken,
       contentfulSpaceId,
       contentfulEnv,
-      contentfulHost
+      contentfulHost,
+      loaderType = 'fs',
+      logLevel = 'warn'
     } = require(configFile));
   } catch (e) {
     console.error(`unable to load config: ${configFile}: ${e.message}`);
@@ -116,7 +120,8 @@ const run = async ({ configFile }: { configFile: string }) => {
     accessToken: contentfulAccessToken,
     environment: contentfulEnv || 'master',
     isPreview: contentfulHost === 'preview.contentful.com',
-    loaderType: 'fs'
+    loaderType,
+    logLevel
   });
   const { url } = await server.listen({ port, host });
   console.log(`Server ready at ${url}. `);

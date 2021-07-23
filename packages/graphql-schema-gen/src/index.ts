@@ -1,13 +1,16 @@
 import { GenerateSchemaParams } from './types';
 import fetch from './fetchers';
 import { DocumentNode } from 'graphql';
+import logger from 'loglevel';
 
 export default async ({
-  source,
+  source = 'Contentful',
   typeMappings,
   connectionParams,
-  contentTypes
+  contentTypes,
+  logLevel = 'warn'
 }: GenerateSchemaParams): Promise<DocumentNode> => {
-  console.log(`generating schema from ${source}...`);
+  logger.setLevel(logLevel);
+  logger.info(`generating schema from ${source}...`);
   return await fetch(source, typeMappings, connectionParams, contentTypes);
 };

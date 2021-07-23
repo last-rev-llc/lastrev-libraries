@@ -3,6 +3,8 @@ import { Entry, Asset, ContentType } from 'contentful';
 import { readJSON, readdir } from 'fs-extra';
 import { chain, filter, identity, isNull } from 'lodash';
 import { join } from 'path';
+import logger from 'loglevel';
+import Timer from '@last-rev/timer';
 
 export type PageKey = {
   slug: string;
@@ -26,7 +28,8 @@ const createLoaders = (
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<string, T | null> => {
     return async (ids): Promise<(T | null)[]> => {
-      return Promise.all(
+      const timer = new Timer(`Fetched ${dirname} from file system`);
+      const out = Promise.all(
         ids.map((id) =>
           (async () => {
             try {
@@ -37,12 +40,15 @@ const createLoaders = (
           })()
         )
       );
+      logger.debug(timer.end());
+      return out;
     };
   };
 
   const getBatchEntryIdsByContentTypeFetcher = (): DataLoader.BatchLoadFn<string, string[]> => {
     return async (contentTypeIds) => {
-      return Promise.all(
+      const timer = new Timer(`Fetched entry IDs by contentType from file system`);
+      const out = Promise.all(
         contentTypeIds.map((contentTypeId) =>
           (async () => {
             try {
@@ -54,6 +60,8 @@ const createLoaders = (
           })()
         )
       );
+      logger.debug(timer.end());
+      return out;
     };
   };
 
@@ -84,9 +92,10 @@ const createLoaders = (
   );
   const fetchAllContentTypes = async () => {
     try {
+      const timer = new Timer('Fetched all content types from file system');
       const dir = join(rootDir, spaceId, env, previewOrProd, 'content_types');
       const contentTypeFilenames = await readdir(dir);
-      return Promise.all(
+      const out = Promise.all(
         contentTypeFilenames.map(async (filename) => {
           try {
             return readJSON(join(dir, filename));
@@ -95,6 +104,8 @@ const createLoaders = (
           }
         })
       );
+      logger.debug(timer.end());
+      return out;
     } catch (err) {
       console.error('Unable to fetch content types using FS loader:', err.message, env);
       return [];

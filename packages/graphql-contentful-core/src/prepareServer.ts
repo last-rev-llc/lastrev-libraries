@@ -2,6 +2,7 @@ import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import generateSchema from '@last-rev/graphql-schema-gen';
 import createFsLoaders from '@last-rev/contentful-fs-loader';
 import createS3Loaders from '@last-rev/contentful-s3-loader';
+import createCmsLoaders from '@last-rev/contentful-cms-loader';
 import { find, get, map } from 'lodash';
 import { resolve } from 'path';
 import { createClient } from 'contentful';
@@ -9,10 +10,14 @@ import { createClient } from 'contentful';
 import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
 import generatePathToIdMapping from './utils/generatePathToIdMapping';
-import { FsServerProps, ServerProps } from './types';
+import { FsServerProps, S3ServerProps, ServerProps } from './types';
 
 function isFsServer(props: ServerProps): props is FsServerProps {
   return props.loaderType === 'fs';
+}
+
+function isS3Server(props: ServerProps): props is S3ServerProps {
+  return props.loaderType === 's3';
 }
 
 const getLocales = async (space: string, environment: string, accessToken: string, isPreview: boolean) => {
@@ -29,10 +34,10 @@ const getLocales = async (space: string, environment: string, accessToken: strin
 const prepare = async (props: ServerProps) => {
   const { environment, isPreview, cms, extensions, spaceId, accessToken } = props;
   let loaders;
-  if (!isFsServer(props)) {
+  if (isS3Server(props)) {
     const { apiUrl, apiKey } = props;
     loaders = createS3Loaders(apiUrl, apiKey, environment, isPreview);
-  } else {
+  } else if (isFsServer(props)) {
     const { contentDir } = props;
     loaders = createFsLoaders(
       resolve(process.cwd(), contentDir),
@@ -40,6 +45,8 @@ const prepare = async (props: ServerProps) => {
       environment,
       isPreview ? 'preview' : 'production'
     );
+  } else {
+    loaders = createCmsLoaders(accessToken, spaceId, environment, isPreview);
   }
 
   if (!loaders) {
@@ -49,7 +56,8 @@ const prepare = async (props: ServerProps) => {
   const baseTypeDefs = await generateSchema({
     source: cms,
     typeMappings: extensions?.typeMappings || {},
-    contentTypes: await loaders.fetchAllContentTypes()
+    contentTypes: await loaders.fetchAllContentTypes(),
+    logLevel: props.logLevel
   });
 
   const [contentTypes, locales] = await Promise.all([

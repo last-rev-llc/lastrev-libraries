@@ -1,9 +1,11 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import { chain, filter, identity } from 'lodash';
+import { filter, identity, map } from 'lodash';
 import { GetObjectCommand, ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
 import { CredentialsProvider } from './CredentialsProvider';
+import logger from 'loglevel';
+import Timer from '@last-rev/timer';
 
 export type PageKey = {
   slug: string;
@@ -86,7 +88,8 @@ const createLoaders = (
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<string, T | null> => {
     return async (ids): Promise<(T | null)[]> => {
-      return Promise.all(
+      const timer = new Timer(`Fetched ${dirname} from S3`);
+      const out = Promise.all(
         ids.map((id) =>
           (async () => {
             try {
@@ -97,6 +100,8 @@ const createLoaders = (
           })()
         )
       );
+      logger.debug(timer.end());
+      return out;
     };
   };
 
@@ -121,17 +126,18 @@ const createLoaders = (
     idsLoader: DataLoader<string, (string | null)[]>
   ): DataLoader.BatchLoadFn<string, Entry<any>[]> => {
     return async (keys) => {
+      const timer = new Timer(`Fetched entries by content type from S3`);
       const idsArrays = await idsLoader.loadMany(keys);
-      return Promise.all(
-        chain(idsArrays)
-          .map((ids) =>
-            (async () => {
-              const entries = await eLoader.loadMany(filter(ids, (id) => id !== null));
-              return filter(entries, identity) as Entry<any>[];
-            })()
-          )
-          .value()
+      const out = Promise.all(
+        map(idsArrays, (ids) =>
+          (async () => {
+            const entries = await eLoader.loadMany(filter(ids, (id) => id !== null));
+            return filter(entries, identity) as Entry<any>[];
+          })()
+        )
       );
+      logger.debug(timer.end());
+      return out;
     };
   };
   const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'));
@@ -142,8 +148,9 @@ const createLoaders = (
   );
   const fetchAllContentTypes = async () => {
     try {
+      const timer = new Timer('Fetched all content types from S3');
       const contentTypeFilenames = await listDirectory('content_types');
-      return Promise.all(
+      const out = Promise.all(
         contentTypeFilenames.map(async (filename) => {
           try {
             return getObject(`content_types/${filename}`);
@@ -152,6 +159,8 @@ const createLoaders = (
           }
         })
       );
+      logger.debug(timer.end());
+      return out;
     } catch (err) {
       console.error('Unable to fetch content types using S3 loader:', err.message);
       return [];
