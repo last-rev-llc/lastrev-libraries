@@ -1,5 +1,13 @@
 # @last-rev/cli
 
+## 0.1.11
+
+### Patch Changes
+
+- 63176af: Added logging and timers, added a new cms data loader
+- Updated dependencies [63176af]
+  - @last-rev/graphql-contentful-core@0.1.8
+
 ## 0.1.10
 
 ### Patch Changes

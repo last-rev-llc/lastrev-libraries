@@ -1,5 +1,15 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.8
+
+### Patch Changes
+
+- 63176af: Added logging and timers, added a new cms data loader
+- Updated dependencies [63176af]
+  - @last-rev/contentful-fs-loader@0.1.5
+  - @last-rev/contentful-s3-loader@0.1.3
+  - @last-rev/graphql-schema-gen@0.1.5
+
 ## 0.1.7
 
 ### Patch Changes

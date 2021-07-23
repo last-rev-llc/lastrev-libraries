@@ -1,5 +1,11 @@
 # @last-rev/rollup-config
 
+## 0.0.5
+
+### Patch Changes
+
+- 63176af: Added logging and timers, added a new cms data loader
+
 ## 0.0.4
 
 ### Patch Changes
