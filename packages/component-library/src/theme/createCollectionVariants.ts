@@ -130,6 +130,10 @@ export const collectionRowVariant = () => ({
     'color': 'white',
     '& > [class*="Section-gridContainer"]': {
       maxWidth: 1280
+    },
+    '& > [class*="Section-gridItem"]': {
+      display: 'flex',
+      justifyContent: 'center'
     }
   }
 });

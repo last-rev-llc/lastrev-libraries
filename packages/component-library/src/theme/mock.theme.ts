@@ -57,7 +57,16 @@ const theme = createAppTheme(
         variants: createCardVariants(baseTheme)
       },
       Collection: {
-        variants: createCollectionVariants(baseTheme)
+        variants: createCollectionVariants(baseTheme),
+        styleOverrides: {
+          root: {
+            padding: baseTheme.spacing(4),
+            '[class*="Section-gridItem"]': {
+              display: 'flex',
+              justifyContent: 'center'
+            }
+          },
+        }
       },
       Hero: {
         variants: createHeroVariants(baseTheme),

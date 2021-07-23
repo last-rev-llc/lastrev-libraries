@@ -67,7 +67,7 @@ export default {
     },
     {
       ...cardMock,
-      variant: 'standard-rounded',
+      variant: 'standard-round',
       image: null,
       title: lorem.sentence(),
       subtitle: null,

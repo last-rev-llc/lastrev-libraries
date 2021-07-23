@@ -33,6 +33,10 @@ export const mediaCardVariant = (theme: Theme) => ({
       transform: 'translate(-50%, -50%)'
     },
 
+    '& .MuiTypography-h3': {
+      color: 'black'
+    },
+
     '& .MuiCardActions-root': {
       display: 'none'
     }
@@ -68,7 +72,11 @@ export const avatarCardVariant = (theme: Theme) => ({
 
     '& .MuiCardContent-root': {
       textAlign: 'left'
-    }
+    },
+
+    '& .MuiTypography-h3': {
+      color: 'black'
+    },
   }
 });
 
@@ -185,7 +193,7 @@ export const standardCardVariant = (theme: Theme) => ({
 
 export const standardRoundedCardVariant = (theme: Theme) => ({
   props: {
-    variant: 'standard-rounded'
+    variant: 'standard-round'
   },
   style: {
     'justifyContent': 'flex-start',

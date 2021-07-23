@@ -32,7 +32,7 @@ export const Collection = ({ items, contentWidth, background, variant, itemsVari
               contents={itemsWithVariant}
               background={background}
               variant={`collection-${variant}`}
-              styles={{ root: { pY: 2 } }}
+              styles={{ root: { py: 2 } }}
             />
           </ContentContainer>
         )}
