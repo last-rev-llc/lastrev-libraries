@@ -1,14 +1,13 @@
-import { chain, flatten, find, get, has, map } from 'lodash';
+import { chain, flatten, map } from 'lodash';
 import { resolve, join } from 'path';
-import { ensureDir, writeFile } from 'fs-extra';
-import { Asset, Entry, createClient, ContentfulClientApi } from 'contentful';
+import { ensureDir, writeFile, createFile } from 'fs-extra';
+import { Asset, Entry, createClient, ContentfulClientApi, ContentType } from 'contentful';
 import ora from 'ora';
 
 const ENTRIES_DIRNAME = 'entries';
 const ASSETS_DIRNAME = 'assets';
-const CONTENT_TYPES_FILENAME = 'content_types.json';
-const SLUG_LOOKUP_FILENAME = 'content_type_slug_lookup.json';
-const CONTENT_TYPE_ENTRIES_FILENAME = 'entry_ids_by_content_type_lookup.json';
+const CONTENT_TYPES_DIRNAME = 'content_types';
+const CONTENT_TYPE_ENTRIES_DIRNAME = 'entry_ids_by_content_type';
 
 const delay = (m: number) => new Promise((r) => setTimeout(r, m));
 
@@ -16,41 +15,24 @@ export type SlugToIdLookup = {
   [contentTypeIdSlug: string]: string;
 };
 
-export type contentTypeIdToContentIdsLookup = {
+export type ContentTypeIdToContentIdsLookup = {
   [contentTypeId: string]: string[];
-};
-
-const getSlugToIdLookup = (
-  entries: Entry<{ slug?: { [locale: string]: string } }>[],
-  defaultLocale: string
-): SlugToIdLookup => {
-  return chain(entries)
-    .filter((entry) => has(entry, 'fields.slug'))
-    .keyBy((entry) => {
-      const {
-        sys: {
-          contentType: {
-            sys: { id: contentTypeId }
-          }
-        },
-        fields: { slug }
-      } = entry as Entry<{ slug: { [locale: string]: string } }>;
-      return `${contentTypeId}:${slug[defaultLocale]}`;
-    })
-    .mapValues('sys.id')
-    .value();
 };
 
 const getEntriesByContentTypeLookup = (
   entries: Entry<{ slug?: { [locale: string]: string } }>[]
-): contentTypeIdToContentIdsLookup => {
+): ContentTypeIdToContentIdsLookup => {
   return chain(entries)
     .groupBy('sys.contentType.sys.id')
     .mapValues((entries) => map(entries, 'sys.id'))
     .value();
 };
 
-const writeEntriesOrAssets = async (items: (Entry<any> | Asset)[], root: string, dirname: string): Promise<void> => {
+const writeContentfulItems = async (
+  items: (Entry<any> | Asset | ContentType)[],
+  root: string,
+  dirname: string
+): Promise<void> => {
   const dir = join(root, dirname);
   await ensureDir(dir);
   await Promise.all(
@@ -66,9 +48,27 @@ const writeEntriesOrAssets = async (items: (Entry<any> | Asset)[], root: string,
   );
 };
 
-const writeSingleFile = async (json: any, root: string, filename: string): Promise<void> => {
-  await ensureDir(root);
-  await writeFile(join(root, filename), JSON.stringify(json));
+const writeEntriesByContentTypeFiles = async (lookup: ContentTypeIdToContentIdsLookup, root: string): Promise<void> => {
+  const dir = join(root, CONTENT_TYPE_ENTRIES_DIRNAME);
+  await ensureDir(dir);
+
+  await Promise.all(
+    Object.keys(lookup).map((contentTypeId) =>
+      (async () => {
+        const innerDir = join(dir, contentTypeId);
+        await ensureDir(innerDir);
+        const contentIds = lookup[contentTypeId];
+        await Promise.all(
+          contentIds.map((contentId) =>
+            (async () => {
+              const innerDir = join(dir, contentTypeId);
+              await createFile(join(innerDir, contentId));
+            })()
+          )
+        );
+      })()
+    )
+  );
 };
 
 export type SyncProps = {
@@ -128,16 +128,7 @@ const sync = async ({
     host
   });
 
-  const [{ items: contentTypes }, { items: locales }] = await Promise.all([
-    client.getContentTypes(),
-    client.getLocales()
-  ]);
-
-  const defaultLocale = get(
-    find(locales, (locale) => locale.default),
-    'code',
-    'en-US'
-  );
+  const { items: contentTypes } = await client.getContentTypes();
 
   let startTime = Date.now();
   spinner = ora('fetching entries').start();
@@ -165,7 +156,6 @@ const sync = async ({
   spinner.succeed(`fetching assets: ${Date.now() - startTime}ms`);
   // console.timeEnd('finished fetching assets');
 
-  const slugToIdLookup = getSlugToIdLookup(entries, defaultLocale);
   const entryIdsByContentTypeLookup = getEntriesByContentTypeLookup(entries);
 
   const root = join(resolve(process.cwd(), rootDir), space, environment, previewOrProd);
@@ -173,11 +163,10 @@ const sync = async ({
   spinner = ora('writing files');
   // console.time('finished writing files');
   await Promise.all([
-    writeEntriesOrAssets(entries, root, ENTRIES_DIRNAME),
-    writeEntriesOrAssets(assets, root, ASSETS_DIRNAME),
-    writeSingleFile(contentTypes, root, CONTENT_TYPES_FILENAME),
-    writeSingleFile(slugToIdLookup, root, SLUG_LOOKUP_FILENAME),
-    writeSingleFile(entryIdsByContentTypeLookup, root, CONTENT_TYPE_ENTRIES_FILENAME)
+    writeContentfulItems(entries, root, ENTRIES_DIRNAME),
+    writeContentfulItems(assets, root, ASSETS_DIRNAME),
+    writeContentfulItems(contentTypes, root, CONTENT_TYPES_DIRNAME),
+    writeEntriesByContentTypeFiles(entryIdsByContentTypeLookup, root)
   ]);
   spinner.succeed(`writing files: ${Date.now() - startTime}ms`);
   // console.timeEnd('finished writing files');

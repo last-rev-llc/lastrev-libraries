@@ -1,5 +1,44 @@
 # @last-rev/cli
 
+## 0.1.11
+
+### Patch Changes
+
+- 63176af: Added logging and timers, added a new cms data loader
+- Updated dependencies [63176af]
+  - @last-rev/graphql-contentful-core@0.1.8
+
+## 0.1.10
+
+### Patch Changes
+
+- 94b5414: Fixed gql handler, and issues with s3 loader
+- Updated dependencies [94b5414]
+  - @last-rev/graphql-contentful-core@0.1.7
+
+## 0.1.9
+
+### Patch Changes
+
+- 7861125: Bumped version of graphql-contentful-core
+
+## 0.1.8
+
+### Patch Changes
+
+- a09b949: Removed env vars from gql server, requiring all to be passed in
+- Updated dependencies [a09b949]
+  - @last-rev/graphql-contentful-core@0.1.5
+
+## 0.1.7
+
+### Patch Changes
+
+- ccc1937: Changed the FS structure to support atomic files for lookups and contentTypes
+- Updated dependencies [ccc1937]
+  - @last-rev/contentful-sync-to-fs@0.1.3
+  - @last-rev/graphql-contentful-core@0.1.4
+
 ## 0.1.6
 
 ### Patch Changes

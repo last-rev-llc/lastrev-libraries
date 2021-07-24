@@ -12,15 +12,18 @@
   },
   "scripts": {
     "build": "lerna run build --scope lrns-web --include-dependencies --loglevel info",
-    "build:prod": "pm2 start \"yarn gql:start\" --name gql-server && wait-on -c wait-on-config.js && yarn build; status=$?; pm2 delete gql-server; exit $status",
-    "clean": "lerna exec 'rm -rf node_modules/ dist/'; rm -rf node_modules/; yarn install",
+    "build:prod": "yarn build:extensions && pm2 start \"yarn gql:start\" --name gql-server && wait-on -c wait-on-config.js && yarn build; status=$?; pm2 delete gql-server; exit $status",
+    "build:extensions": "lerna run build --scope lrns-graphql-extensions --include-dependencies --loglevel info",
+    "clean": "lerna exec 'rm -rf dist/'",
     "deps:check": "manypkg check",
     "deps:fix": "manypkg fix",
     "dev": "lerna run dev --parallel --scope lrns-web --include-dependencies --loglevel silly",
-    "gql:dev": "lerna run dev --scope lrns-graphql-runner --include-dependencies",
+    "gql:dev": "lerna run dev --parallel  --scope lrns-graphql-runner --include-dependencies",
     "gql:start": "lerna run start --scope lrns-graphql-runner --include-dependencies",
+    "nuclear": "lerna exec 'rm -rf node_modules/ dist/'; rm -rf node_modules/; yarn install",
     "postinstall": "patch-package",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
+    "propagate:env": "node scripts/propagateEnv.js",
     "serve": "yarn workspace lrns-web serve",
     "start": "run-s build serve",
     "storybook": "lerna run storybook",
@@ -84,10 +87,13 @@
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "fs-extra": "^10.0.0",
     "husky": "^4.2.5",
     "lerna": "^3.22.1",
     "lerna-changelog": "^0.8.3",
     "lint-staged": "^10.2.11",
+    "netlify": "^7.0.1",
+    "netlify-cli": "^5.2.0",
     "npm-delay": "^1.0.4",
     "npm-run-all": "^4.1.5",
     "patch-package": "^6.4.7",
@@ -103,5 +109,8 @@
     "tslib": "^2.3.0",
     "typescript": "4.3.4",
     "wait-on": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.12"
   }
 }

@@ -1,0 +1,31 @@
+{
+  "name": "@last-rev/contentful-cms-loader",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "run-s clean build:prod",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@last-rev/rollup-config": "^0.0.5",
+    "@last-rev/testing-library": "^0.1.2",
+    "@types/node": "^14.14.35",
+    "contentful": "^8.1.7"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@last-rev/timer": "^0.1.0",
+    "dataloader": "^2.0.0",
+    "lodash": "^4.17.21",
+    "loglevel": "^1.7.1",
+    "tslib": "^2.3.0"
+  }
+}

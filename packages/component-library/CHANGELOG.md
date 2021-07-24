@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [63176af]
+  - @last-rev/rollup-config@0.0.5
+
 ## 0.1.2
 
 ### Patch Changes

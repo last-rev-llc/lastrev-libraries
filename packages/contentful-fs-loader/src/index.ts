@@ -1,8 +1,10 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import { readJSON } from 'fs-extra';
-import { chain, filter, get, identity, pickBy, values } from 'lodash';
+import { readJSON, readdir } from 'fs-extra';
+import { chain, filter, identity, isNull } from 'lodash';
 import { join } from 'path';
+import logger from 'loglevel';
+import Timer from '@last-rev/timer';
 
 export type PageKey = {
   slug: string;
@@ -13,39 +15,21 @@ export type ContentfulFsLoaders = {
   entryLoader: DataLoader<string, Entry<any> | null>;
   assetLoader: DataLoader<string, Asset | null>;
   entriesByContentTypeLoader: DataLoader<string, Entry<any>[]>;
-  fetchAllPages: () => Promise<(Entry<any> | null)[]>;
   fetchAllContentTypes: () => Promise<ContentType[]>;
 };
 
-const createLoaders = async (
+const createLoaders = (
   rootDir: string,
   spaceId: string,
   env: string,
   previewOrProd: 'preview' | 'production'
-): Promise<ContentfulFsLoaders> => {
-  let slugContentTypeToIdLookup: Record<string, string>;
-  try {
-    slugContentTypeToIdLookup = await readJSON(
-      join(rootDir, spaceId, env, previewOrProd, 'content_type_slug_lookup.json')
-    );
-  } catch (e) {
-    throw Error('No content type slug lookup found!');
-  }
-
-  let contentTypeToIdsLookup: Record<string, string[]>;
-  try {
-    contentTypeToIdsLookup = await readJSON(
-      join(rootDir, spaceId, env, previewOrProd, 'entry_ids_by_content_type_lookup.json')
-    );
-  } catch (e) {
-    throw Error('No content type to entry ids lookup found!');
-  }
-
+): ContentfulFsLoaders => {
   const getBatchItemFetcher = <T extends Entry<any> | Asset>(
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<string, T | null> => {
     return async (ids): Promise<(T | null)[]> => {
-      return Promise.all(
+      const timer = new Timer(`Fetched ${dirname} from file system`);
+      const out = Promise.all(
         ids.map((id) =>
           (async () => {
             try {
@@ -56,23 +40,42 @@ const createLoaders = async (
           })()
         )
       );
+      logger.debug(timer.end());
+      return out;
+    };
+  };
+
+  const getBatchEntryIdsByContentTypeFetcher = (): DataLoader.BatchLoadFn<string, string[]> => {
+    return async (contentTypeIds) => {
+      const timer = new Timer(`Fetched entry IDs by contentType from file system`);
+      const out = Promise.all(
+        contentTypeIds.map((contentTypeId) =>
+          (async () => {
+            try {
+              const dir = join(rootDir, spaceId, env, previewOrProd, 'entry_ids_by_content_type', contentTypeId);
+              return await readdir(dir);
+            } catch (err) {
+              return [];
+            }
+          })()
+        )
+      );
+      logger.debug(timer.end());
+      return out;
     };
   };
 
   const getBatchEntriesByContentTypeFetcher = (
-    loader: DataLoader<string, Entry<any> | null>
+    eLoader: DataLoader<string, Entry<any> | null>,
+    idsLoader: DataLoader<string, (string | null)[]>
   ): DataLoader.BatchLoadFn<string, Entry<any>[]> => {
     return async (keys) => {
-      const filteredMapping = pickBy(contentTypeToIdsLookup, (_, key) => {
-        return keys.indexOf(key) > -1;
-      });
-
+      const idsArrays = await idsLoader.loadMany(keys);
       return Promise.all(
-        chain(keys)
-          .map((k) => get(filteredMapping, k, []))
+        chain(idsArrays)
           .map((ids) =>
             (async () => {
-              const entries = await loader.loadMany(ids);
+              const entries = await eLoader.loadMany(filter(ids, (id) => !isNull(id)));
               return filter(entries, identity) as Entry<any>[];
             })()
           )
@@ -81,27 +84,30 @@ const createLoaders = async (
     };
   };
 
-  const getAllPagesFetcher = (loader: DataLoader<string, Entry<any> | null>) => {
-    return async () => {
-      return await Promise.all(
-        values(slugContentTypeToIdLookup).map((id) =>
-          (async () => {
-            return await loader.load(id);
-          })()
-        )
-      );
-    };
-  };
-
   const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'));
   const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'));
-  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(entryLoader));
-  const fetchAllPages = getAllPagesFetcher(entryLoader);
+  const entryIdsByContentTypeLoader = new DataLoader(getBatchEntryIdsByContentTypeFetcher());
+  const entriesByContentTypeLoader = new DataLoader(
+    getBatchEntriesByContentTypeFetcher(entryLoader, entryIdsByContentTypeLoader)
+  );
   const fetchAllContentTypes = async () => {
     try {
-      return await readJSON(join(rootDir, spaceId, env, previewOrProd, 'content_types.json'));
+      const timer = new Timer('Fetched all content types from file system');
+      const dir = join(rootDir, spaceId, env, previewOrProd, 'content_types');
+      const contentTypeFilenames = await readdir(dir);
+      const out = Promise.all(
+        contentTypeFilenames.map(async (filename) => {
+          try {
+            return readJSON(join(dir, filename));
+          } catch (err) {
+            return null;
+          }
+        })
+      );
+      logger.debug(timer.end());
+      return out;
     } catch (err) {
-      console.error('Unable to fetch content types:', err.message);
+      console.error('Unable to fetch content types using FS loader:', err.message, env);
       return [];
     }
   };
@@ -110,7 +116,6 @@ const createLoaders = async (
     entryLoader,
     assetLoader,
     entriesByContentTypeLoader,
-    fetchAllPages,
     fetchAllContentTypes
   };
 };

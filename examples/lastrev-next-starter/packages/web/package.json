@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export && yarn build:post",
-    "build:post": "rm -rf out/404 && mv out/en-US/index.html out/index.html && mv -v out/en-US/* out/",
+    "build:post": "rm -rf out/404 && cp out/en-US/index.html out/index.html && cp -R out/en-US/* out/",
     "lint": "next lint",
     "serve": "serve out"
   },

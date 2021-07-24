@@ -65,6 +65,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     // multi(),
     peerDepsExternal(),
     replace({
+      'preventAssignment': true,
       'process.env.NODE_ENV': JSON.stringify(isProduction ? `production` : `development`)
     }),
     postcss({
