@@ -22,7 +22,7 @@ export const ButtonOutlinedVariant = (theme: Theme) => ({
   }
 });
 
-export const ButtonTextVariant = (theme: Theme) => ({
+export const ButtonTextVariant = (_: Theme) => ({
   props: {
     variant: 'button-text'
   },
@@ -33,7 +33,7 @@ export const ButtonTextVariant = (theme: Theme) => ({
   }
 });
 
-export const LinkVariant = (theme: Theme) => ({
+export const LinkVariant = (_: Theme) => ({
   props: {
     variant: 'link'
   },

@@ -12,7 +12,7 @@ import {
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
-import { LinkProps } from '../Link/Link.types';
+import { LinkProps } from '../Link';
 // import { useTheme } from '@material-ui/core/styles';
 import styled from '@material-ui/system/styled';
 
@@ -29,7 +29,6 @@ export interface CardProps extends MuiCardProps {
 export interface CardOverrides {}
 
 export const Card = ({ media, title, subtitle, body, actions, variant }: CardProps) => {
-  // console.log('card', { media, title, subtitle, body, actions, variant });
   return (
     <ErrorBoundary>
       <CardRoot variant={variant}>
@@ -63,12 +62,11 @@ export const Card = ({ media, title, subtitle, body, actions, variant }: CardPro
         ) : null}
         {actions?.length ? (
           <CardActions>
-            <Link
-            // href={href}
-            // {...linkProps}
-            >
-              Link text
-            </Link>
+            {actions?.map(link => (
+              <Link {...link}>
+                {link.text}
+              </Link>
+            ))}
           </CardActions>
         ) : null}
       </CardRoot>

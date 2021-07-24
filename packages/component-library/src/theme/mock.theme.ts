@@ -111,7 +111,7 @@ const theme = createAppTheme(
         }
       },
 
-      //MUI
+      // MUI
       MuiContainer: {
         defaultProps: {
           maxWidth: 'xl'

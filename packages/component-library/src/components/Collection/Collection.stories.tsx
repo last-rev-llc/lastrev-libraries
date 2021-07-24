@@ -19,12 +19,11 @@ export default {
         options: [
           'collection-three-per-row',
           'gradient-background',
-          'tertiary-gradient-background'
         ]
       },
-      // table: {
-      //   defaultValue: { summary: 'standard' }
-      // }
+      table: {
+        defaultValue: { summary: 'collection-three-per-row' }
+      }
     },
     itemsVariant: {
       name: 'Items Variant',
@@ -32,11 +31,14 @@ export default {
         type: 'select',
         options: ['standard', 'standard-round', 'media', 'avatar', 'avatar-large', 'square']
       },
-      // table: {
-      //   defaultValue: { summary: 'standard' }
-      // }
+      table: {
+        defaultValue: { summary: 'standard' }
+      }
     },
-    // title: { name: 'Title' },
+    items: { name: 'Items' },
+    background: { name: 'Background' },
+    contentWidth: { name: 'Content Width' },
+    theme: { name: 'Theme' },
   }
 };
 
