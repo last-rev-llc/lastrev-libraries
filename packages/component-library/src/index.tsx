@@ -4,7 +4,6 @@ export { default as Image } from './components/Image';
 export { default as Link } from './components/Link';
 export { default as Header } from './components/Header';
 export { default as Hero } from './components/Hero';
-export { default as MailchimpForm } from './components/MailchimpForm';
 export { default as Media } from './components/Media';
 export { default as Section } from './components/Section';
 export { default as Card } from './components/Card';

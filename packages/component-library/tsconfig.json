@@ -15,6 +15,5 @@
     "strictNullChecks": true
   },
   "include": ["src/**/*"],
-  "typeRoots": ["src/types/**/*", "node_modules/@types"],
-  "exclude": ["node_modules", "src/types", "build", "src/**/*.stories.tsx", "src/**/*.test.tsx"]
+  "exclude": ["node_modules", "build", "src/**/*.stories.tsx", "src/**/*.test.tsx"]
 }

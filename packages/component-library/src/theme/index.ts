@@ -2,7 +2,6 @@
 import { CardProps, CardOverrides } from './../components/Card';
 import { CollectionProps } from './../components/Collection';
 import { HeroProps } from './../components/Hero';
-import { MailchimpFormProps } from './../components/MailchimpForm';
 import { LinkProps } from './../components/Link';
 import { SectionProps } from './../components/Section';
 import mockTheme from './mock.theme';
@@ -38,7 +37,6 @@ declare module '@material-ui/core/styles/components' {
     Card: CardProps;
     Collection: CollectionProps;
     Hero: HeroProps;
-    MailchimpForm: MailchimpFormProps;
     Link: LinkProps;
     Text: {};
     Header: {};
@@ -80,9 +78,6 @@ declare module '@material-ui/core/styles/components' {
     Hero?: {
       root?: {};
     };
-    MailchimpForm?: {
-      root?: {};
-    };
     Link?: {
       root?: {};
     };
@@ -100,7 +95,6 @@ declare module '@material-ui/core/styles/components' {
     Section?: {};
     Card?: {};
     Hero?: {};
-    MailchimpForm?: {};
     Link?: {};
     Header?: {};
     Text?: {};
@@ -124,12 +118,6 @@ declare module '@material-ui/core/styles/components' {
       // overrides?: ComponentElementOverrides['Hero'];
       styleOverrides?: ComponentsOverrides['Hero'];
       variants?: ComponentsVariants['Hero'];
-    };
-    MailchimpForm?: {
-      defaultProps?: ComponentsProps['MailchimpForm'];
-      // overrides?: ComponentElementOverrides['MailchimpForm'];
-      styleOverrides?: ComponentsOverrides['MailchimpForm'];
-      variants?: ComponentsVariants['MailchimpForm'];
     };
     Link?: {
       defaultProps?: ComponentsProps['Link'];
