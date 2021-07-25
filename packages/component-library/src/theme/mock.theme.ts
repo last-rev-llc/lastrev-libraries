@@ -1,5 +1,6 @@
 import createCardVariants from './createCardVariants';
 import createHeroVariants from './createHeroVariants';
+import createMailchimpFormVariants from './createMailchimpFormVariants';
 import createLinkVariants from './createLinkVariants';
 import createTextVariants from './createTextVariants';
 import createSectionVariants from './createSectionVariants';
@@ -92,6 +93,19 @@ const theme = createAppTheme(
       },
       Hero: {
         variants: createHeroVariants(baseTheme),
+        styleOverrides: {
+          root: {
+            '& .MuiGrid-container': {
+              alignItems: 'center'
+            },
+            'img': {
+              width: '100%'
+            }
+          }
+        }
+      },
+      MailchimpForm: {
+        variants: createMailchimpFormVariants(baseTheme),
         styleOverrides: {
           root: {
             '& .MuiGrid-container': {

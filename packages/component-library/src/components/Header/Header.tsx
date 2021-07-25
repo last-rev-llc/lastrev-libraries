@@ -8,7 +8,7 @@ import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
 // import Text, { RichText } from '../Text';
 // import { RichTextProps } from '../RichText';
-import { Breakpoint } from '@material-ui/core';
+// import { Breakpoint } from '@material-ui/core';
 import { CollectionProps } from '../Collection';
 import ContentModule from '../ContentModule';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
@@ -17,12 +17,12 @@ export interface HeaderProps {
   variant?: 'elevation' | 'outlined' | undefined;
   logo?: MediaProps;
   logoUrl?: string;
-  contentWidth?: false | Breakpoint | undefined;
+  // contentWidth?: false | Breakpoint | undefined;
   navigationItems?: CollectionProps[];
-  theme: any;
+  // theme: any;
 }
 
-export const Header = ({ variant, logo, logoUrl, contentWidth, navigationItems, theme }: HeaderProps) => {
+export const Header = ({ variant, logo, logoUrl, navigationItems }: HeaderProps) => {
   // console.log('Header', {
   //   logo,
   //   logoUrl,
