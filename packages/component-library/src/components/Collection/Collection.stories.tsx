@@ -17,8 +17,10 @@ export default {
       control: {
         type: 'select',
         options: [
+          'collection-one-per-row',
+          'collection-two-per-row',
           'collection-three-per-row',
-          'gradient-background',
+          'collection-tiles',
         ]
       },
       table: {

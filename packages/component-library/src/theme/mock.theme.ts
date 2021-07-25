@@ -64,10 +64,14 @@ const theme = createAppTheme(
         variants: createCollectionVariants(baseTheme),
         styleOverrides: {
           root: {
-            padding: baseTheme.spacing(4),
+            maxWidth: 1280,
+            margin: '0 auto',
+            padding: baseTheme.spacing(4, 0),
             '[class*="Section-gridItem"]': {
               display: 'flex',
-              justifyContent: 'center'
+              justifyContent: 'center',
+              flexBasis: '33.333333%',
+              marginBottom: baseTheme.spacing(4),
             }
           },
         }
@@ -178,8 +182,14 @@ const theme = createAppTheme(
       MuiCardActions: {
         styleOverrides: {
           root: {
-            fontSize: 18
-          }
+            padding: 0,
+            paddingTop: baseTheme.spacing(2),
+            fontSize: 18,
+
+            '& .MuiLink-root': {
+              margin: '0 auto',
+            }
+          },
         }
       },
       MuiTypography: {

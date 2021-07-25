@@ -26,8 +26,7 @@ export default {
     title: { name: 'Title' },
     subtitle: { name: 'Subtitle' },
     body: { name: 'Body' },
-    ctas: { name: 'CTAs' },
-    ref: { table: { disable: true } },
+    actions: { name: 'Actions' },
     __typename: { table: { disable: true } }
   }
 };

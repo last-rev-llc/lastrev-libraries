@@ -41,7 +41,7 @@ export const Card = ({ media, title, subtitle, body, actions, variant }: CardPro
             <Media {...media} />
           </Box>
         ) : null}
-        {title || subtitle || body ? (
+        {title || subtitle || body || actions ? (
           <CardContent>
             {title ? (
               <Typography variant="h3" component="h3">
@@ -58,16 +58,16 @@ export const Card = ({ media, title, subtitle, body, actions, variant }: CardPro
                 {body}
               </Typography>
             ) : null}
+            {actions?.length ? (
+              <CardActions>
+                {actions?.map(link => (
+                  <Link {...link}>
+                    {link.text}
+                  </Link>
+                ))}
+              </CardActions>
+            ) : null}
           </CardContent>
-        ) : null}
-        {actions?.length ? (
-          <CardActions>
-            {actions?.map(link => (
-              <Link {...link}>
-                {link.text}
-              </Link>
-            ))}
-          </CardActions>
         ) : null}
       </CardRoot>
     </ErrorBoundary>

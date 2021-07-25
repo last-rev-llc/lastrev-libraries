@@ -48,10 +48,10 @@ export const avatarCardVariant = (theme: Theme) => ({
     variant: 'avatar'
   },
   style: {
-    'flexDirection': 'row',
-    'flexWrap': 'wrap',
     'justifyContent': 'flex-start',
-    'maxWidth': 540,
+    'flexDirection': 'row',
+    // 'flexWrap': 'wrap',
+    'maxWidth': 768,
     'minWidth': 320,
     'padding': 20,
 
@@ -71,7 +71,11 @@ export const avatarCardVariant = (theme: Theme) => ({
     },
 
     '& .MuiCardContent-root': {
-      textAlign: 'left'
+      textAlign: 'left',
+
+      '& .MuiLink-root': {
+        margin: 0,
+      }
     },
 
     '& .MuiTypography-h3': {
@@ -114,8 +118,9 @@ export const squareCardVariant = (theme: Theme) => ({
     variant: 'square'
   },
   style: {
-    'width': 300,
-    'height': 300,
+    width: '100%',
+    height: '100%',
+    maxWidth: 768,
 
     '&:hover': {
       '& .MuiCardContent-root': {
@@ -133,8 +138,14 @@ export const squareCardVariant = (theme: Theme) => ({
       justifyContent: 'center',
       alignItems: 'center',
       height: '100%',
-      padding: '0 30px !important',
-      backgroundColor: theme.palette.secondary.main
+      padding: 0,
+      backgroundColor: theme.palette.secondary.main,
+
+      '&:after': {
+        content: '""',
+        display: 'block',
+        paddingBottom: '100%',
+      },
     },
 
     '& .MuiTypography-h3': {

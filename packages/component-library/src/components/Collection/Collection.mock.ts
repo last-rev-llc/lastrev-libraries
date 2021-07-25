@@ -6,6 +6,7 @@ export default {
   items: [
     { ...mockCard },
     { ...mockCard },
+    { ...mockCard },
     { ...mockCard }
   ],
   itemsVariant: 'standard-round',

@@ -1,39 +1,64 @@
 import { Theme } from '@material-ui/core/styles';
 
-export const gradientBackgroundVariant = (_: Theme) => ({
+export const collectionOnePerRowVariant = (_: Theme) => ({
   props: {
-    variant: 'gradient-background'
+    variant: 'collection-one-per-row'
   },
   style: {
-    'background': 'linear-gradient(50deg, rgba(48,205,194,1) 0%, rgba(0,92,122,1) 100%)',
-    'color': 'white',
-    '& > [class*="Section-gridContainer"]': {
-      maxWidth: 1280
-
-      // '& > [class*="Section-gridItem"]': {}
-    }
+    '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
+      '& > [class*="Section-gridItem"]': {
+        flex: '0 0 100%'
+      }
+    },
   }
 });
 
-export const collectionRowVariant = (_: Theme) => ({
+export const collectionTwoPerRowVariant = (_: Theme) => ({
+  props: {
+    variant: 'collection-two-per-row'
+  },
+  style: {
+    '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
+      '& > [class*="Section-gridItem"]': {
+        flex: '0 0 50%',
+        maxWidth: 1296 / 2,
+      }
+    },
+  }
+});
+
+export const collectionThreePerRowVariant = (_: Theme) => ({
   props: {
     variant: 'collection-three-per-row'
   },
   style: {
-    'color': 'white',
-    '& > [class*="Section-gridContainer"]': {
-      maxWidth: 1280
+    '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
+      '& > [class*="Section-gridItem"]': {
+        maxWidth: 1296 / 3,
+      }
     },
-    '& > [class*="Section-gridItem"]': {
-      display: 'flex',
-      justifyContent: 'center'
-    }
+  }
+});
+
+export const collectionTilesVariant = (theme: Theme) => ({
+  props: {
+    variant: 'collection-tiles'
+  },
+  style: {
+    '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
+      '& > [class*="Section-gridItem"]': {
+        maxWidth: 1296 / 3,
+        marginBottom: 0,
+      }
+    },
   }
 });
 
 const variants = [
-  gradientBackgroundVariant,
-  collectionRowVariant
+  collectionOnePerRowVariant,
+  collectionTwoPerRowVariant,
+  collectionThreePerRowVariant,
+  collectionTilesVariant,
 ];
 
 const createSectionVariants = (theme: Theme) => {
