@@ -40,7 +40,7 @@ export const collectionThreePerRowVariant = (_: Theme) => ({
   }
 });
 
-export const collectionTilesVariant = (theme: Theme) => ({
+export const collectionTilesVariant = (_: Theme) => ({
   props: {
     variant: 'collection-tiles'
   },
