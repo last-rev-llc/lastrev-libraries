@@ -1,18 +1,21 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import PropTypes from 'prop-types';
 // import { FilterXSS } from 'xss';
+import Box from '@material-ui/core/Box';
+import styled from '@material-ui/system/styled';
 import Typography from '@material-ui/core/Typography';
-import { BLOCKS } from '@contentful/rich-text-types';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
+import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
+import Link from '../Link';
 
-export const RichTextPropTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  document: PropTypes.object.isRequired,
-  _id: PropTypes.string,
-  _contentTypeId: PropTypes.string,
-  internalTitle: PropTypes.string
-};
+// export const RichTextPropTypes = {
+//   // eslint-disable-next-line react/forbid-prop-types
+//   body: PropTypes.object.isRequired,
+//   _id: PropTypes.string,
+//   _contentTypeId: PropTypes.string,
+//   internalTitle: PropTypes.string
+// };
 
 // const bodyXSS = new FilterXSS({
 //   whiteList: { div: ['id', 'style'] },
@@ -31,37 +34,46 @@ export const RichTextPropTypes = {
 // });
 // const containsHTML = (children: any) => children?.some((child: any) => child.includes && child?.includes('<'));
 
-interface Props {
+export interface RichText {
   document: any;
+}
+export interface TextProps {
+  id?: string;
+  styles?: {
+    root?: SystemCssProperties;
+  };
+  body: RichText;
+  variant?: string;
+  align?: 'left' | 'center' | 'right' | undefined;
 }
 
 const options = {
   renderNode: {
-    // [INLINES.HYPERLINK]: (node) => {
-    //   const { data, content } = node;
-    //   if (data.uri.includes('youtube.com/embed')) {
-    //     return (
-    //       <iframe
-    //         title="Embedded"
-    //         width="560"
-    //         height="315"
-    //         src={data.uri}
-    //         allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; autoplay"
-    //         frameBorder="0"
-    //         allowFullScreen
-    //       />
-    //     );
-    //   }
-
-    //   return (
-    //     <ElementLink
-    //       href={data.uri}
-    //       target={!data?.uri.startsWith('/') && !data?.uri.includes('impossiblefoods.com') ? '_blank' : false}
-    //       className={styles.link}>
-    //       {content[0].value}
-    //     </ElementLink>
-    //   );
-    // },
+    [INLINES.HYPERLINK]: (_: any, children: any) => {
+      // const { data, content } = node;
+      // if (data.uri.includes('youtube.com/embed')) {
+      //   return (
+      //     <iframe
+      //       title="Embedded"
+      //       width="560"
+      //       height="315"
+      //       src={data.uri}
+      //       allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; autoplay"
+      //       frameBorder="0"
+      //       allowFullScreen
+      //     />
+      //   );
+      // }
+      return (
+        <Link
+          href={_.data.uri}
+          // target={!data?.uri.startsWith('/') && !data?.uri.includes('strong365.com') ? '_blank' : false}
+          // className={styles.link}
+        >
+          {children}
+        </Link>
+      );
+    },
     // [BLOCKS.EMBEDDED_ASSET]: (node) => {
     //   const { data = {} } = node;
     //   const { target = {} } = data;
@@ -98,7 +110,7 @@ const options = {
     //   const { data = {} } = node;
     //   const { target = {} } = data;
     //   const { _contentTypeId: contentTypeId } = target;
-    //   if (contentTypeId === 'elementLink') return <ElementLink {...target} {...sidekicker('Embedded Entry')} />;
+    //   if (contentTypeId === 'Link') return <Link {...target} {...sidekicker('Embedded Entry')} />;
     //   return null;
     // },
     [BLOCKS.PARAGRAPH]: (_: any, children: any) => {
@@ -111,35 +123,76 @@ const options = {
       //     />
       //   );
       // }
-      return <Typography variant="body1">{children}</Typography>;
+      return (
+        <>
+          <Typography variant="body1">{children}</Typography>
+        </>
+      );
     },
     [BLOCKS.HEADING_1]: (_: any, children: any) => {
-      return <Typography variant="h1">{children}</Typography>;
+      return (
+        <>
+          <Typography variant="h1">{children}</Typography>
+        </>
+      );
     },
     [BLOCKS.HEADING_2]: (_: any, children: any) => {
-      return <Typography variant="h2">{children}</Typography>;
+      return (
+        <>
+          <Typography variant="h2">{children}</Typography>
+        </>
+      );
     },
     [BLOCKS.HEADING_3]: (_: any, children: any) => {
-      return <Typography variant="h3">{children}</Typography>;
+      return (
+        <>
+          <Typography variant="h3">{children}</Typography>
+        </>
+      );
     },
     [BLOCKS.HEADING_4]: (_: any, children: any) => {
-      return <Typography variant="h4">{children}</Typography>;
+      return (
+        <>
+          <Typography variant="h4">{children}</Typography>
+        </>
+      );
     },
     [BLOCKS.HEADING_5]: (_: any, children: any) => {
-      return <Typography variant="h5">{children}</Typography>;
+      return (
+        <>
+          <Typography variant="h5">{children}</Typography>
+        </>
+      );
     },
     [BLOCKS.HEADING_6]: (_: any, children: any) => {
-      return <Typography variant="h6">{children}</Typography>;
+      return (
+        <>
+          <Typography variant="h6">{children}</Typography>
+        </>
+      );
     }
   }
 };
-function RichText({ document }: Props) {
-  // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
 
-  return <>{documentToReactComponents(document, options)}</>;
+function Text({ body, align = 'left', styles, variant }: TextProps) {
+  // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
+  console.log('Text', { body });
+  return (
+    <Root variant={variant} sx={{ ...styles?.root, textAlign: align }}>
+      {documentToReactComponents(body?.document, options)}
+    </Root>
+  );
 }
 
-RichText.propTypes = RichTextPropTypes;
-RichText.defaultProps = {};
+// RichText.propTypes = RichTextPropTypes;
+// RichText.defaultProps = {};
 
-export default RichText;
+const Root = styled(Box, {
+  name: 'Text',
+  slot: 'Root',
+  overridesResolver: (_, styles) => ({
+    ...styles.root
+  })
+})<{ variant?: string }>(() => ({}));
+
+export default Text;

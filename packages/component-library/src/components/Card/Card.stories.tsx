@@ -8,16 +8,26 @@ export default {
   component: Card,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box m={5}>{storyFn()}</Box>
+      <Box p={5} style={{ backgroundColor: '#eee' }}>{storyFn()}</Box>
     )
   ],
   argTypes: {
-    image: { name: 'Image' },
+    variant: {
+      name: 'Variant',
+      control: {
+        type: 'select',
+        options: ['standard', 'standard-round', 'media', 'avatar', 'avatar-large', 'square']
+      },
+      table: {
+        defaultValue: { summary: 'standard' }
+      }
+    },
+    media: { name: 'Media' },
     title: { name: 'Title' },
     subtitle: { name: 'Subtitle' },
     body: { name: 'Body' },
-    ctas: { name: 'CTAs' },
-    ref: { table: { disable: true } }
+    actions: { name: 'Actions' },
+    __typename: { table: { disable: true } }
   }
 };
 

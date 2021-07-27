@@ -3,7 +3,10 @@ import get from 'lodash/get';
 import { ApolloContext } from '../types';
 
 const getLocalizedField = <T>(fields: Entry<T>['fields'], field: string, ctx: ApolloContext) => {
-  return get(fields, `${field}['${ctx.locale}']`, get(fields, [field, ctx.defaultLocale]));
+  const noLocaleValue = get(fields, field);
+  const defaultLocaleValue = get(fields, [field, ctx.defaultLocale]);
+  const localeValue = get(fields, [field, ctx.locale ?? ctx.defaultLocale]);
+  return localeValue ?? defaultLocaleValue ?? noLocaleValue;
 };
 
 export default getLocalizedField;

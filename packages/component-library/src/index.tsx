@@ -1,6 +1,13 @@
 export { default as ContentModule } from './components/ContentModule';
+export { default as Text } from './components/Text';
 export { default as Image } from './components/Image';
+export { default as Link } from './components/Link';
+export { default as Header } from './components/Header';
+export { default as Hero } from './components/Hero';
+export { default as Media } from './components/Media';
 export { default as Section } from './components/Section';
 export { default as Card } from './components/Card';
+export { default as Collection } from './components/Collection';
 export { ContentModuleProvider } from './components/ContentModule/ContentModuleContext';
+export { default as mockTheme } from './theme/mock.theme';
 export { default as createTheme } from './theme/createTheme';

@@ -5,46 +5,50 @@ import {
   CardActions,
   CardContent,
   // CardMedia,
-  Link,
+  Box,
   Typography
 } from '@material-ui/core';
 import ErrorBoundary from '../ErrorBoundary';
-import Image from '../Image';
-import { ImageProps } from '../Image/Image.types';
-import { LinkProps } from '../Link/Link.types';
+import Media from '../Media';
+import { MediaProps } from '../Media/Media.types';
+import Link, { LinkProps } from '../Link';
 // import { useTheme } from '@material-ui/core/styles';
+import styled from '@material-ui/system/styled';
 
-interface CardProps extends MuiCardProps {
-  image: ImageProps;
+export interface CardProps extends MuiCardProps {
+  __typename: string;
+  variant?: any;
   title?: string;
   subtitle?: string;
+  media?: MediaProps;
   body?: string;
-  ctas?: LinkProps[];
+  actions?: LinkProps[];
 }
 
-export const Card = ({ image, title, subtitle, body, ctas }: CardProps) => {
-  // const theme = useTheme();
-  // console.log('Card: theme', {theme});
+export interface CardOverrides {}
 
+export const Card = ({ media, title, subtitle, body, actions, variant }: CardProps) => {
   return (
     <ErrorBoundary>
-      <MuiCard>
-        {image ? (
+      <CardRoot variant={variant}>
+        {media ? (
           // <CardMedia
           //   component={Image}
           //   {...image}
           // />
-          <Image {...image} />
+          <Box>
+            <Media {...media} />
+          </Box>
         ) : null}
-        {title || subtitle || body ? (
+        {title || subtitle || body || actions ? (
           <CardContent>
             {title ? (
-              <Typography variant="h4" component="h3">
+              <Typography variant="h3" component="h3">
                 {title}
               </Typography>
             ) : null}
             {subtitle ? (
-              <Typography variant="h5" component="h4">
+              <Typography variant="h4" component="h4">
                 {subtitle}
               </Typography>
             ) : null}
@@ -53,21 +57,26 @@ export const Card = ({ image, title, subtitle, body, ctas }: CardProps) => {
                 {body}
               </Typography>
             ) : null}
+            {actions?.length ? (
+              <CardActions>
+                {actions?.map((link) => (
+                  <Link {...link} />
+                ))}
+              </CardActions>
+            ) : null}
           </CardContent>
         ) : null}
-        {ctas?.length ? (
-          <CardActions>
-            <Link
-            // href={href}
-            // {...linkProps}
-            >
-              Link text
-            </Link>
-          </CardActions>
-        ) : null}
-      </MuiCard>
+      </CardRoot>
     </ErrorBoundary>
   );
 };
+
+const CardRoot = styled(MuiCard, {
+  name: 'Card',
+  slot: 'Root',
+  overridesResolver: (_, styles) => ({
+    ...styles.root
+  })
+})<MuiCardProps & {}>(() => ({}));
 
 export default Card;

@@ -27,7 +27,7 @@ const baseDefs = gql`
   }
 
   type RichText {
-    raw: JSON
+    document: JSON
     parsed: String
   }
 

@@ -56,13 +56,15 @@ const createResolvers = ({
       }
     },
     Media: fieldsResolver('Media', ['file', 'title', 'description'], mappers),
-    RichText: fieldsResolver('RichText', ['raw', 'parsed'], mappers),
+    RichText: fieldsResolver('RichText', ['body', 'parsed'], mappers),
     Theme: fieldsResolver('Theme', ['variant'], mappers),
 
     // Content type resolver
     Content: {
       __resolveType: (content: any) => {
-        const contentTypeId = content.sys.contentType.sys.id;
+        // console.log('ResolveType', content);
+        if (content.sys && (content.sys.linkType == 'Asset' || content.sys.type === 'Asset')) return 'Media';
+        const contentTypeId = content.__typename ? content.__typename : content.sys.contentType.sys.id;
         return capitalizeFirst(typeMappings[contentTypeId] ? typeMappings[contentTypeId] : contentTypeId);
       }
     },

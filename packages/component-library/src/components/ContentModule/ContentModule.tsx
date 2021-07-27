@@ -9,31 +9,34 @@ import omitBy from 'lodash/omitBy';
 import isNull from 'lodash/isNull';
 import { Theme } from '@material-ui/core/styles/createTheme';
 
-const getMUITheme = (theme?: Array<Theme>) => {
+const getMUITheme = ({ theme }: { theme?: Array<Theme>; variant?: string }) => {
+  // TODO inject custom theme depending on variant ?
   if (Array.isArray(theme)) {
     const merged: ThemeOptions = omitBy(merge({}, ...theme), isNull);
-    console.log('ThemeMerged', merged);
+    // console.log('ThemeMerged', merged);
     return createTheme(merged);
   }
   return null;
 };
 
-const getProviders = ({ theme }: { theme?: Array<Theme> }) => {
-  console.log('getProviders', theme);
+const getProviders = ({ theme, variant }: { theme?: Array<Theme>; variant?: string }) => {
+  // console.log('getProviders', theme);
   const providers = [];
-  const muiTheme = getMUITheme(theme);
+  const muiTheme = getMUITheme({ theme, variant });
   if (muiTheme) {
     providers.push(<MuiThemeProvider theme={muiTheme} />);
   }
   return providers.filter((x) => !!x);
 };
 interface Props {
-  __typename: string;
+  __typename?: string;
   variant?: string;
   theme?: Array<Theme>;
 }
+
 function ContentModule({ __typename, ...fields }: Props) {
   const contentMapping = useContentModuleContext();
+  if (!__typename) return null;
   const contentType =
     fields?.variant && contentMapping[`${__typename}${fields?.variant}`]
       ? `${__typename}${fields?.variant}`

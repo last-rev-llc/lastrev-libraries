@@ -42,13 +42,10 @@ export const PageQuery = gql`
 
   fragment CardCollectionFragment on CardCollection {
     ...ContentFragment
-    layout
-    cardStyle
-    cards {
+    variant
+    itemsVariant
+    items {
       ...CardFragment
-    }
-    featuredText {
-      raw
     }
   }
 
