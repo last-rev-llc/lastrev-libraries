@@ -210,6 +210,10 @@ const theme = createAppTheme(
             'paddingTop': baseTheme.spacing(2),
             'fontSize': 18,
 
+            // Both can be Card CTAs
+            '& .MuiButton-root': {
+              margin: '0 auto',
+            },
             '& .MuiLink-root': {
               margin: '0 auto'
             }
