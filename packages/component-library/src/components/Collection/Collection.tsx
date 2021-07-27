@@ -7,6 +7,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import { MediaProps } from '../Media';
 import { CardProps } from '../Card';
 import Section from '../Section';
+// import sidekickInit from "../../utils/sidekickUtility";
 
 export interface CollectionProps {
   items?: CardProps[];
@@ -17,13 +18,18 @@ export interface CollectionProps {
   contentWidth?: false | Breakpoint | undefined;
 }
 
-export const Collection = ({ items, contentWidth, background, variant, itemsVariant }: CollectionProps) => {
+
+
+export const Collection = ({ items, contentWidth, background, variant = 'three-per-row', itemsVariant }: CollectionProps) => {
   console.log('Collection', { items, contentWidth, background, variant });
   if (!items?.length) return null;
+  // const { sidekicker } = sidekickInit(props);
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
-      <Root variant={variant}>
+      <Root variant={variant}
+        // {...sidekicker('Collection')}
+      >
         {!contentWidth ? (
           <Section contents={itemsWithVariant} background={background} variant={`collection-${variant}`} />
         ) : (

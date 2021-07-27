@@ -2914,6 +2914,13 @@
   resolved "https://registry.yarnpkg.com/@josephg/resolvable/-/resolvable-1.0.1.tgz#69bc4db754d79e1a2f17a650d3466e038d94a5eb"
   integrity sha512-CtzORUwWTTOTqfVtHaKRJ0I1kNQd1bpn3sUh8I3nJDVY+5/M/Oe1DnEWzPQvqq/xPIIkzzzIP7mfCoAjFRvDhg==
 
+"@last-rev/contentful-sidekick-util@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-sidekick-util/-/contentful-sidekick-util-0.0.2.tgz#97d0960b450f07fff2a09d224841a31033c23c46"
+  integrity sha512-AFOrzDBDqD4y/N/5tABoM2dtT44AqSD9Aoa8G8U6r+S3YWJ0U6vDu5afiVs3eyGdR9YfCMqVnxkjXg9h/7YrVA==
+  dependencies:
+    lodash "^4.17.20"
+
 "@lerna/add@3.21.0":
   version "3.21.0"
   resolved "https://registry.yarnpkg.com/@lerna/add/-/add-3.21.0.tgz#27007bde71cc7b0a2969ab3c2f0ae41578b4577b"
