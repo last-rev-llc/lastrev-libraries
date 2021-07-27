@@ -22,7 +22,7 @@ export interface HeaderProps {
   theme: any;
 }
 
-export const Header = ({ variant, logo, logoUrl, contentWidth, navigationItems, theme }: HeaderProps) => {
+export const Header = ({ variant, logo, logoUrl, navigationItems }: HeaderProps) => {
   // console.log('Header', {
   //   logo,
   //   logoUrl,
