@@ -5,14 +5,13 @@ import {
   CardActions,
   CardContent,
   // CardMedia,
-  Link,
   Box,
   Typography
 } from '@material-ui/core';
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
-import { LinkProps } from '../Link';
+import Link, { LinkProps } from '../Link';
 // import { useTheme } from '@material-ui/core/styles';
 import styled from '@material-ui/system/styled';
 
@@ -60,10 +59,8 @@ export const Card = ({ media, title, subtitle, body, actions, variant }: CardPro
             ) : null}
             {actions?.length ? (
               <CardActions>
-                {actions?.map(link => (
-                  <Link {...link}>
-                    {link.text}
-                  </Link>
+                {actions?.map((link) => (
+                  <Link {...link} />
                 ))}
               </CardActions>
             ) : null}
