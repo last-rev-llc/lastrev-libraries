@@ -7,6 +7,7 @@ export { default as Media } from './components/Media';
 export { default as Section } from './components/Section';
 export { default as Card } from './components/Card';
 export { default as Collection } from './components/Collection';
+export { default as CollectionCarrousel } from './components/CollectionCarrousel';
 export { ContentModuleProvider } from './components/ContentModule/ContentModuleContext';
 export { default as mockTheme } from './theme/mock.theme';
 export { default as createTheme } from './theme/createTheme';
