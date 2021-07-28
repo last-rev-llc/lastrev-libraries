@@ -176,7 +176,7 @@ const options = {
 
 function Text({ body, align = 'left', styles, variant }: TextProps) {
   // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
-  console.log('Text', { body });
+  // console.log('Text', { body });
   return (
     <Root variant={variant} sx={{ ...styles?.root, textAlign: align }}>
       {documentToReactComponents(body?.document, options)}

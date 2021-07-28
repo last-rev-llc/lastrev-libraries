@@ -38,8 +38,8 @@ function ContentModule({ __typename, ...fields }: Props) {
   const contentMapping = useContentModuleContext();
   if (!__typename) return null;
   const contentType =
-    fields?.variant && contentMapping[`${__typename}${fields?.variant}`]
-      ? `${__typename}${fields?.variant}`
+    fields?.variant && contentMapping[`${__typename}:${fields?.variant}`]
+      ? `${__typename}:${fields?.variant}`
       : __typename;
   const Main = React.useMemo(() => contentMapping[contentType], [contentType, __typename, fields?.variant]);
   const providers = React.useMemo(() => getProviders(fields), [fields]);

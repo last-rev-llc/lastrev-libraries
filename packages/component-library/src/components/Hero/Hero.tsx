@@ -24,16 +24,16 @@ export interface HeroProps {
 
 export const Hero = ({
   variant,
-  background,
+  // background,
   contentWidth,
   title,
   subtitle,
   body,
   actions,
-  image,
-  theme
-}: HeroProps) => {
-  console.log('Hero', { variant, background, contentWidth, title, subtitle, body, actions, image, theme });
+  image
+}: // theme
+HeroProps) => {
+  // console.log('Hero', { variant, background, contentWidth, title, subtitle, body, actions, image, theme });
 
   return (
     <ErrorBoundary>

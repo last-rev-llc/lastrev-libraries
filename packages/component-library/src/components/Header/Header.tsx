@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, AppBar, Toolbar, Link } from '@material-ui/core';
+import { AppBar, Box, Toolbar, Link } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 // import Link from '../Link';
@@ -41,17 +41,16 @@ export const Header = ({ variant, logo, logoUrl, navigationItems }: HeaderProps)
         <Root variant={variant} elevation={trigger ? 4 : 0}>
           <ContentContainer>
             {logo ? (
-              <Link href={logoUrl}>
+              <Link href={logoUrl} sx={{ height: '100%' }}>
                 <Logo {...logo} />
               </Link>
             ) : null}
-            <Grid container spacing={5} sx={{ justifyContent: 'flex-end' }}>
-              {navigationItems?.map((collection) => (
-                <Grid item xs>
-                  <ContentModule {...collection} />
-                </Grid>
-              ))}
-            </Grid>
+            {navigationItems?.map((collection) => (
+              <>
+                <Box sx={{ flexGrow: 1 }} />
+                <ContentModule {...collection} variant={'navigation-bar'} />
+              </>
+            ))}
           </ContentContainer>
         </Root>
         <ContentContainer />

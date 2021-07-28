@@ -86,7 +86,7 @@ const Section = ({
 };
 
 const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; theme: Theme }) => {
-  console.log('RootStyles', { backgroundColor, theme });
+  // console.log('RootStyles', { backgroundColor, theme });
   if (backgroundColor?.includes('gradient') && theme.palette[backgroundColor]) {
     return { background: theme.palette[backgroundColor]?.main, color: `${backgroundColor}.contrastText` };
   } else if (backgroundColor && theme.palette[backgroundColor]) {
