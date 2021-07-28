@@ -25,7 +25,7 @@ export const Collection = ({
   variant = 'three-per-row',
   itemsVariant
 }: CollectionProps) => {
-  console.log('Collection', { items, contentWidth, background, variant });
+  // console.log('Collection', { items, contentWidth, background, variant });
   if (!items?.length) return null;
   // const { sidekicker } = sidekickInit(props);
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
