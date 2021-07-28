@@ -11,7 +11,6 @@ export const defaultVariant = (theme: Theme) => ({
       marginTop: 4,
       padding: '10px 20px',
       backgroundColor: theme.palette.primary.main,
-
       textDecoration: 'none'
     }
   }

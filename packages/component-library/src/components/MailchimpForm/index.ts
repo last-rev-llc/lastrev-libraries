@@ -1,0 +1,1 @@
+export { default, MailchimpFormProps } from './MailchimpForm';
