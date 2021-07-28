@@ -47,7 +47,7 @@ export default {
           content: [
             {
               nodeType: 'text',
-              value: "You have successfully subscribed!",
+              value: 'You have successfully subscribed!',
               marks: [],
               data: {}
             }
@@ -56,7 +56,7 @@ export default {
       ]
     }
   },
-  
-  actions: [{ ...mockLink, children: 'MailchimpForm CTA' }],
+
+  actions: [{ text: 'Join now', variant: 'button-contained' }],
   theme: [mockTheme]
 };

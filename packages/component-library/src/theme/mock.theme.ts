@@ -1,6 +1,5 @@
 import createCardVariants from './createCardVariants';
 import createHeroVariants from './createHeroVariants';
-import createMailchimpFormVariants from './createMailchimpFormVariants';
 import createLinkVariants from './createLinkVariants';
 import createTextVariants from './createTextVariants';
 import createSectionVariants from './createSectionVariants';
@@ -10,6 +9,9 @@ import { red } from '@material-ui/core/colors';
 
 export const baseTheme = createAppTheme({
   spacing: 8,
+  shape: {
+    borderRadius: 0
+  },
   breakpoints: {
     values: {
       xs: 0,
@@ -104,19 +106,6 @@ const theme = createAppTheme(
           }
         }
       },
-      MailchimpForm: {
-        variants: createMailchimpFormVariants(baseTheme),
-        styleOverrides: {
-          root: {
-            '& .MuiGrid-container': {
-              alignItems: 'center'
-            },
-            'img': {
-              width: '100%'
-            }
-          }
-        }
-      },
       Section: {
         variants: createSectionVariants(baseTheme),
         styleOverrides: {
@@ -133,8 +122,8 @@ const theme = createAppTheme(
             '& > img': {
               width: 'auto',
               height: '100%',
-              display: 'block',
-              margin: 'auto'
+              display: 'block'
+              // margin: 'auto'
             }
           }
         },
@@ -144,6 +133,42 @@ const theme = createAppTheme(
       },
 
       //MUI
+      MuiTypography: {
+        styleOverrides: {
+          h1: {
+            color: 'grey',
+            paddingBottom: 10,
+            fontSize: 40,
+            fontWeight: 'bold'
+          },
+          h2: {
+            paddingBottom: 20,
+            fontSize: 32,
+            fontWeight: 'bold',
+            color: baseTheme.palette.secondary.main
+          },
+          h3: {
+            paddingBottom: 20,
+            fontSize: 32,
+            fontWeight: 'bold',
+            color: baseTheme.palette.secondary.main
+          },
+          h4: {
+            paddingBottom: 20,
+            fontSize: 20
+          },
+          h5: {
+            paddingBottom: 20,
+            fontSize: 18
+          },
+          body1: {
+            fontSize: '1.125rem'
+          },
+          body2: {
+            fontSize: '0.875rem'
+          }
+        }
+      },
       MuiAppBar: {
         defaultProps: {
           elevation: 0
@@ -169,13 +194,18 @@ const theme = createAppTheme(
           }
         }
       },
+      MuiTextField: {
+        defaultProps: {
+          color: 'secondary'
+        }
+      },
       MuiButton: {
         defaultProps: {
           disableElevation: true
         },
         styleOverrides: {
           root: {
-            padding: baseTheme.spacing(2)
+            padding: baseTheme.spacing(2, 3)
           },
           outlinedPrimary: {
             color: baseTheme.palette.text.primary,
@@ -231,42 +261,6 @@ const theme = createAppTheme(
             '& .MuiLink-root': {
               margin: '0 auto'
             }
-          }
-        }
-      },
-      MuiTypography: {
-        styleOverrides: {
-          h1: {
-            color: 'grey',
-            paddingBottom: 10,
-            fontSize: 40,
-            fontWeight: 'bold'
-          },
-          h2: {
-            paddingBottom: 20,
-            fontSize: 32,
-            fontWeight: 'bold',
-            color: baseTheme.palette.secondary.main
-          },
-          h3: {
-            paddingBottom: 20,
-            fontSize: 32,
-            fontWeight: 'bold',
-            color: baseTheme.palette.secondary.main
-          },
-          h4: {
-            paddingBottom: 20,
-            fontSize: 20
-          },
-          h5: {
-            paddingBottom: 20,
-            fontSize: 18
-          },
-          body1: {
-            fontSize: '1.125rem'
-          },
-          body2: {
-            fontSize: '0.875rem'
           }
         }
       },
