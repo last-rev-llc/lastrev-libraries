@@ -65,7 +65,7 @@ export type LinkProps = {
 
 // A styled version of the Next.js Link component:
 // https://nextjs.org/docs/#with-link
-const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props, ref) {
+const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   const {
     activeClassName = 'active',
     as: linkAs,
@@ -87,7 +87,7 @@ const Link = React.forwardRef<HTMLAnchorElement, LinkProps>(function Link(props,
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
-  console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
+  // console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
 
   if (isExternal) {
     if (noLinkStyle) {

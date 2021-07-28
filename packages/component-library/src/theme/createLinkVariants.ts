@@ -43,12 +43,7 @@ export const LinkVariant = (_: Theme) => ({
   }
 });
 
-const variants = [
-  ButtonContainedVariant,
-  ButtonOutlinedVariant,
-  ButtonTextVariant,
-  LinkVariant,
-];
+const variants = [ButtonContainedVariant, ButtonOutlinedVariant, ButtonTextVariant, LinkVariant];
 
 const createLinkVariants = (theme: Theme) => {
   return variants.map((creator) => creator(theme));

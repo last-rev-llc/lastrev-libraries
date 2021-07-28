@@ -146,6 +146,10 @@ export const squareCardVariant = (theme: Theme) => ({
         display: 'block',
         paddingBottom: '100%',
       },
+
+      '&:last-child': {
+        paddingBottom: 0,
+      },
     },
 
     '& .MuiTypography-h3': {

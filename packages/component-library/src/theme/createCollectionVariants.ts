@@ -9,7 +9,7 @@ export const collectionOnePerRowVariant = (_: Theme) => ({
       '& > [class*="Section-gridItem"]': {
         flex: '0 0 100%'
       }
-    },
+    }
   }
 });
 
@@ -21,9 +21,9 @@ export const collectionTwoPerRowVariant = (_: Theme) => ({
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
       '& > [class*="Section-gridItem"]': {
         flex: '0 0 50%',
-        maxWidth: 1296 / 2,
+        maxWidth: 1296 / 2
       }
-    },
+    }
   }
 });
 
@@ -34,9 +34,9 @@ export const collectionThreePerRowVariant = (_: Theme) => ({
   style: {
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
       '& > [class*="Section-gridItem"]': {
-        maxWidth: 1296 / 3,
+        maxWidth: 1296 / 3
       }
-    },
+    }
   }
 });
 
@@ -48,9 +48,9 @@ export const collectionTilesVariant = (_: Theme) => ({
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
       '& > [class*="Section-gridItem"]': {
         maxWidth: 1296 / 3,
-        marginBottom: 0,
+        marginBottom: 0
       }
-    },
+    }
   }
 });
 
@@ -58,7 +58,7 @@ const variants = [
   collectionOnePerRowVariant,
   collectionTwoPerRowVariant,
   collectionThreePerRowVariant,
-  collectionTilesVariant,
+  collectionTilesVariant
 ];
 
 const createSectionVariants = (theme: Theme) => {
