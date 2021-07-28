@@ -1,5 +1,5 @@
 {
-  "name": "my-utils",
+  "name": "lrns-utils",
   "version": "0.1.0",
   "main": "dist/index.js",
   "files": [
@@ -26,7 +26,7 @@
   "peerDependencies": {},
   "dependencies": {},
   "devDependencies": {
-    "@last-rev/rollup-config": "^0.0.4"
+    "@last-rev/rollup-config": "^0.0.5"
   },
   "husky": {
     "hooks": {

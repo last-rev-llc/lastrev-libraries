@@ -18,7 +18,7 @@
     "deps:check": "manypkg check",
     "deps:fix": "manypkg fix",
     "dev": "lerna run dev --parallel --scope lrns-web --include-dependencies --loglevel silly",
-    "gql:dev": "lerna run dev --parallel  --scope lrns-graphql-runner --include-dependencies",
+    "gql:dev": "lerna run dev --parallel --scope lrns-graphql-runner --include-dependencies --loglevel silly",
     "gql:start": "lerna run start --scope lrns-graphql-runner --include-dependencies",
     "nuclear": "lerna exec 'rm -rf node_modules/ dist/'; rm -rf node_modules/; yarn install",
     "postinstall": "patch-package",

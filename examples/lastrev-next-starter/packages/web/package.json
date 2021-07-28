@@ -16,6 +16,7 @@
     "graphql": "^15.5.1",
     "graphql-request": "^3.4.0",
     "lrns-graphql-sdk": "^0.1.0",
+    "lrns-utils": "^0.1.0",
     "next": "11.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

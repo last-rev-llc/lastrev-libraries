@@ -2,7 +2,9 @@ import { chain, flatten, map } from 'lodash';
 import { resolve, join } from 'path';
 import { ensureDir, writeFile, createFile } from 'fs-extra';
 import { Asset, Entry, createClient, ContentfulClientApi, ContentType } from 'contentful';
+import Timer from '@last-rev/timer';
 import ora from 'ora';
+import logger from 'loglevel';
 
 const ENTRIES_DIRNAME = 'entries';
 const ASSETS_DIRNAME = 'assets';
@@ -73,10 +75,11 @@ const writeEntriesByContentTypeFiles = async (lookup: ContentTypeIdToContentIdsL
 
 export type SyncProps = {
   rootDir: string;
-  accessToken: string;
+  contentDeliveryToken: string;
+  contentPreviewToken: string;
   space: string;
   environment?: string;
-  host?: string;
+  preview?: boolean;
 };
 
 const validateArg = (arg: any, argname: string) => {
@@ -108,24 +111,24 @@ const syncAllAssets = async (client: ContentfulClientApi): Promise<Asset[]> => {
 
 const sync = async ({
   rootDir,
-  accessToken,
+  contentDeliveryToken,
+  contentPreviewToken,
   space,
   environment = 'master',
-  host = 'cdn.contentful.com'
+  preview
 }: SyncProps) => {
-  console.time('Total elapsed time');
+  const timer = new Timer('Total elapsed time');
   let spinner;
   validateArg(rootDir, 'rootDir');
-  validateArg(accessToken, 'accessToken');
+  validateArg(contentDeliveryToken, 'contentDeliveryToken');
+  validateArg(contentPreviewToken, 'contentPreviewToken');
   validateArg(space, 'space');
 
-  const previewOrProd = host.startsWith('preview') ? 'preview' : 'production';
-
   const client = createClient({
-    accessToken,
+    accessToken: preview ? contentPreviewToken : contentDeliveryToken,
     space,
     environment,
-    host
+    host: preview ? `preview.contentful.com` : `cdn.contentful.com`
   });
 
   const { items: contentTypes } = await client.getContentTypes();
@@ -158,7 +161,7 @@ const sync = async ({
 
   const entryIdsByContentTypeLookup = getEntriesByContentTypeLookup(entries);
 
-  const root = join(resolve(process.cwd(), rootDir), space, environment, previewOrProd);
+  const root = join(resolve(process.cwd(), rootDir), space, environment, preview ? 'preview' : 'production');
   startTime = Date.now();
   spinner = ora('writing files');
   // console.time('finished writing files');
@@ -169,8 +172,7 @@ const sync = async ({
     writeEntriesByContentTypeFiles(entryIdsByContentTypeLookup, root)
   ]);
   spinner.succeed(`writing files: ${Date.now() - startTime}ms`);
-  // console.timeEnd('finished writing files');
-  console.timeEnd('Total elapsed time');
+  logger.debug(timer.end());
 };
 
 export default sync;

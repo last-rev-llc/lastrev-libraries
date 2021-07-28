@@ -111,8 +111,8 @@ export const PageQuery = gql`
     }
   }
 
-  query Page($path: String!, $locale: String) {
-    page(path: $path, locale: $locale) {
+  query Page($path: String!, $locale: String, $preview: Boolean) {
+    page(path: $path, locale: $locale, preview: $preview) {
       ... on Page {
         ...ContentFragment
         title
