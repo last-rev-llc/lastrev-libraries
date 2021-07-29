@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
-import { Button } from '@material-ui/core';
+import Button, { ButtonProps as MuiButtonProps } from '@material-ui/core/Button';
 
 interface NextLinkComposedProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
@@ -16,6 +16,7 @@ interface NextLinkComposedProps
   linkAs?: NextLinkProps['as'];
   href?: NextLinkProps['href'];
   text?: string;
+  variant?: String;
 }
 
 export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps>(function NextLinkComposed(
@@ -60,8 +61,11 @@ export type LinkProps = {
   href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
   variant?: String;
+  onClick?: any;
+  type?: string;
 } & Omit<NextLinkComposedProps, 'to' | 'linkAs' | 'href'> &
-  Omit<MuiLinkProps, 'href'>;
+  Omit<MuiLinkProps, 'href'> &
+  Omit<MuiButtonProps, 'href' | 'variant'>;
 
 // A styled version of the Next.js Link component:
 // https://nextjs.org/docs/#with-link
@@ -113,12 +117,22 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     );
   }
 
+  if (variant?.includes('button-') && href !== '#') {
+    const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
+    return (
+      <NextLink href={href} as={linkAs} {...other}>
+        <Button variant={buttonVariant} type={other.type}>
+          {text || children}
+        </Button>
+      </NextLink>
+    );
+  }
   if (variant?.includes('button-')) {
     const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
     return (
-      <NextLink href={href} as={linkAs}>
-        <Button variant={buttonVariant}>{text || children}</Button>
-      </NextLink>
+      <Button variant={buttonVariant} onClick={other.onClick} type={other.type}>
+        {text || children}
+      </Button>
     );
   }
   return (
