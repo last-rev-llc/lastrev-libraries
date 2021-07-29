@@ -1,11 +1,11 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import CollectionCarrousel from './CollectionCarrousel';
-import CollectionCarrouselMock from './CollectionCarrousel.mock';
+import CollectionCarousel from './CollectionCarousel';
+import CollectionCarouselMock from './CollectionCarousel.mock';
 
 export default {
-  title: '1. Primitives / MUI / CollectionCarrousel',
-  component: CollectionCarrousel,
+  title: '1. Primitives / MUI / CollectionCarousel',
+  component: CollectionCarousel,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
       <Box m={5}>{storyFn()}</Box>
@@ -17,11 +17,11 @@ export default {
       control: {
         type: 'select',
         options: [
-          'CollectionCarrousel-large',
+          'CollectionCarousel-large',
         ]
       },
       table: {
-        defaultValue: { summary: 'CollectionCarrousel-large' }
+        defaultValue: { summary: 'CollectionCarousel-large' }
       }
     },
     itemsVariant: {
@@ -41,6 +41,6 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <CollectionCarrousel theme {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <CollectionCarousel theme {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...CollectionCarrouselMock };
+Default.args = { ...CollectionCarouselMock };

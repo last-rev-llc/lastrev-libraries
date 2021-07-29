@@ -5,7 +5,9 @@ export default {
   variant: 'carrousel-large',
   items: [
      { ...mockCard },
-    //  { ...mockCard }
+      { ...mockCard },
+      { ...mockCard },
+      { ...mockCard }
   ],
   itemsVariant: 'standard-round',
   theme: [mockTheme]

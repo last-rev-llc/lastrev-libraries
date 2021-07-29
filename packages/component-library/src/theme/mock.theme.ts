@@ -4,10 +4,9 @@ import createLinkVariants from './createLinkVariants';
 import createTextVariants from './createTextVariants';
 import createSectionVariants from './createSectionVariants';
 import createCollectionVariants from './createCollectionVariants';
-import createCollectionCarrouselVariants from './createCollectionCarrouselVariants';
+import createCollectionCarouselVariants from './createCollectionCarouselVariants';
 import createAppTheme from './createTheme';
 import { red } from '@material-ui/core/colors';
-import CollectionCarrousel from '../components/Collection/Collection';
 
 export const baseTheme = createAppTheme({
   spacing: 8,
@@ -92,34 +91,13 @@ const theme = createAppTheme(
           }
         }
       },
-      CollectionCarrousel: {
-        variants: createCollectionCarrouselVariants(baseTheme),
+      CollectionCarousel: {
+        variants: createCollectionCarouselVariants(baseTheme),
         styleOverrides: {
           root: {
             'maxWidth': 1280,
             'margin': '0 auto',
-            padding: baseTheme.spacing(4, 0),
-            '[class*="Section-gridItem"]': {
-              display: 'flex',
-              justifyContent: 'center',
-              flexBasis: '33.333333%',
-              marginBottom: baseTheme.spacing(4),
-            },
-            '& .MuiStepper-root': {
-              justifyContent: 'center'
-            },
-            '& .MuiStepConnector-root': {
-              flex: 0
-            },
-            '& .MuiStepConnector-line': {
-              display: 'none'
-            },
-            '& .MuiStepIcon-text': {
-              display: 'none'
-            },
-            '& .MuiSvgIcon-root': {
-              width: 15
-            }
+            padding: baseTheme.spacing(4, 0)
           },
         }
       },
