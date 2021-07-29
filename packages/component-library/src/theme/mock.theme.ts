@@ -92,14 +92,7 @@ const theme = createAppTheme(
         }
       },
       CollectionCarousel: {
-        variants: createCollectionCarouselVariants(baseTheme),
-        styleOverrides: {
-          root: {
-            'maxWidth': 1280,
-            'margin': '0 auto',
-            padding: baseTheme.spacing(4, 0)
-          },
-        }
+        variants: createCollectionCarouselVariants(baseTheme)
       },
       Hero: {
         variants: createHeroVariants(baseTheme),
@@ -223,7 +216,7 @@ const theme = createAppTheme(
 
             // Both can be Card CTAs
             '& .MuiButton-root': {
-              margin: '0 auto',
+              margin: '0 auto'
             },
             '& .MuiLink-root': {
               margin: '0 auto'

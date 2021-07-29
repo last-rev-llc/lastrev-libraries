@@ -53,7 +53,7 @@ export const Card = ({ media, title, subtitle, body, actions, variant }: CardPro
               </Typography>
             ) : null}
             {body ? (
-              <Typography variant="body2" component="p">
+              <Typography variant="body1" component="p">
                 {body}
               </Typography>
             ) : null}

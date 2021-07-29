@@ -16,28 +16,35 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: [
-          'CollectionCarousel-large',
-        ]
+        options: ['carousel-large']
       },
       table: {
-        defaultValue: { summary: 'CollectionCarousel-large' }
+        defaultValue: { summary: 'carousel-large' }
       }
     },
     itemsVariant: {
       name: 'Items Variant',
       control: {
         type: 'select',
-        options: ['standard', 'standard-round', 'media', 'avatar', 'avatar-large', 'square']
+        options: [
+          'standard',
+          'standard-round',
+          'media',
+          'media-and-text',
+          'avatar-and-text',
+          'avatar',
+          'avatar-large',
+          'square'
+        ]
       },
       table: {
-        defaultValue: { summary: 'standard' }
+        defaultValue: { summary: 'media-and-text' }
       }
     },
     items: { name: 'Items' },
     background: { name: 'Background' },
     contentWidth: { name: 'Content Width' },
-    theme: { name: 'Theme' },
+    theme: { name: 'Theme' }
   }
 };
 

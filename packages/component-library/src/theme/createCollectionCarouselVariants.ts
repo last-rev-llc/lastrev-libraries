@@ -1,18 +1,18 @@
 import { Theme } from '@material-ui/core/styles';
-import theme from './mock.theme';
 
-export const largeCollectionCarousel = (_: Theme) => ({
+export const largeCollectionCarousel = (theme: Theme) => ({
   props: {
-    variant: 'carrousel-large'
+    variant: 'carousel-large'
   },
   style: {
-    'height': 650,
-  }  
+    height: 650,
+    background: theme.palette.secondary.main,
+    display: 'flex',
+    justifyContent: 'center'
+  }
 });
 
-const variants = [
-  largeCollectionCarousel
-];
+const variants = [largeCollectionCarousel];
 
 const createSectionVariants = (theme: Theme) => {
   return variants.map((creator) => creator(theme));

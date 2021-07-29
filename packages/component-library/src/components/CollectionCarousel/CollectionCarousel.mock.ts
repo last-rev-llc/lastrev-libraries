@@ -2,13 +2,13 @@ import mockCard from '../Card/Card.mock';
 import mockTheme from '../../theme/mock.theme';
 
 export default {
-  variant: 'carrousel-large',
+  variant: 'carousel-large',
   items: [
-     { ...mockCard },
-      { ...mockCard },
-      { ...mockCard },
-      { ...mockCard }
+    { ...mockCard, variant: 'media-and-text', title: 'Card one title' },
+    { ...mockCard, variant: 'avatar-and-text', title: 'Card two title' },
+    { ...mockCard, variant: 'media-and-text', title: 'Card three title' },
+    { ...mockCard, variant: 'avatar-and-text', title: 'Card four title' }
   ],
-  itemsVariant: 'standard-round',
+  itemsVariant: 'media-and-text',
   theme: [mockTheme]
 };

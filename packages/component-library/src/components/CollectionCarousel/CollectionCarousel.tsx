@@ -9,9 +9,9 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import 'swiper/components/navigation/navigation.min.css';
 import 'swiper/components/pagination/pagination.min.css';
-import SwiperCore, { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/core';
+import SwiperCore, { Navigation, Pagination } from 'swiper/core';
 import ContentModule from '../ContentModule';
-SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard]);
+SwiperCore.use([Navigation, Pagination]);
 
 export interface CollectionCarouselProps {
   items?: CardProps[];
@@ -29,14 +29,14 @@ export const CollectionCarousel = ({
   variant,
   itemsVariant
 }: CollectionCarouselProps) => {
-  console.log('CollectionCarousel', { items, contentWidth, background, variant });
+  //console.log('CollectionCarousel', { items, contentWidth, background, variant });
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
       <Root variant={variant}>
         <ContentContainer maxWidth={contentWidth}>
-          <CarouselContainer cssMode navigation pagination={{ clickable: true }} mousewheel keyboard loop>
+          <CarouselContainer cssMode navigation pagination={{ clickable: true }} loop>
             {items.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <CarouselItem>
@@ -65,7 +65,9 @@ const ContentContainer = styled(Container, {
   overridesResolver: (_, styles) => ({
     ...styles.contentContainer
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>(() => ({
+  display: 'flex'
+}));
 
 const CarouselContainer = styled(Swiper, {
   name: 'CollectionCarousel',
@@ -76,7 +78,6 @@ const CarouselContainer = styled(Swiper, {
 })<{ variant?: string }>(({ theme }) => ({
   '--swiper-navigation-size': 20,
   '& .swiper-button-prev': {
-    height: 40,
     color: theme.palette.primary.main
   },
   '& .swiper-button-next': {
@@ -89,8 +90,8 @@ const CarouselContainer = styled(Swiper, {
     margin: '0 10px'
   },
   '& .swiper-pagination-bullet': {
-    width: 14,
-    height: 14
+    width: 10,
+    height: 10
   }
 }));
 
