@@ -1,16 +1,16 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { Container, Box } from '@material-ui/core';
 import { Breakpoint } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import { MediaProps } from '../Media';
-import Card, { CardProps } from '../Card';
+import { CardProps } from '../Card';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import 'swiper/components/navigation/navigation.min.css';
 import 'swiper/components/pagination/pagination.min.css';
-import 'swiper/components/pagination/pagination.min.css';
 import SwiperCore, { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/core';
+import ContentModule from '../ContentModule';
 SwiperCore.use([Navigation, Pagination, Mousewheel, Keyboard]);
 
 export interface CollectionCarouselProps {
@@ -31,24 +31,16 @@ export const CollectionCarousel = ({
 }: CollectionCarouselProps) => {
   console.log('CollectionCarousel', { items, contentWidth, background, variant });
   if (!items?.length) return null;
-
-  Pagination;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
       <Root variant={variant}>
         <ContentContainer maxWidth={contentWidth}>
-          <CarouselContainer
-            cssMode
-            navigation
-            pagination={{ clickable: true }}
-            mousewheel
-            keyboard
-            loop>
+          <CarouselContainer cssMode navigation pagination={{ clickable: true }} mousewheel keyboard loop>
             {items.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <CarouselItem>
-                  <Card {...item} />
+                  <ContentModule {...item} />
                 </CarouselItem>
               </SwiperSlide>
             ))}
@@ -80,9 +72,11 @@ const CarouselContainer = styled(Swiper, {
   slot: 'CarouselContainer',
   overridesResolver: (_, styles) => ({
     ...styles.carouselContainer
-  })})<{ variant?: string }>(({ theme }) => ({
-  'height': '100vh',
+  })
+})<{ variant?: string }>(({ theme }) => ({
+  '--swiper-navigation-size': 20,
   '& .swiper-button-prev': {
+    height: 40,
     color: theme.palette.primary.main
   },
   '& .swiper-button-next': {
@@ -91,17 +85,12 @@ const CarouselContainer = styled(Swiper, {
   '& .swiper-pagination-bullet-active': {
     backgroundColor: theme.palette.primary.main
   },
-  //review this:
-  "& .swiper-container-horizontal": {
-    "& .swiper-pagination-bullets": {
-      "& .swiper-pagination-bullet": {
-        margin: "0px 10px"
-      }
-    }
+  '& > .swiper-pagination-bullets span.swiper-pagination-bullet': {
+    margin: '0 10px'
   },
-  "& .swiper-pagination-bullet": {
+  '& .swiper-pagination-bullet': {
     width: 14,
-    height: 14,
+    height: 14
   }
 }));
 
@@ -112,8 +101,10 @@ const CarouselItem = styled(Box, {
     ...styles.carouselItem
   })
 })<{ variant?: string }>(() => ({
-  display: "flex",
-  justifyContent: "center"
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%'
 }));
 
 export default CollectionCarousel;
