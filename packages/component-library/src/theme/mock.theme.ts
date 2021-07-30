@@ -4,6 +4,7 @@ import createLinkVariants from './createLinkVariants';
 import createTextVariants from './createTextVariants';
 import createSectionVariants from './createSectionVariants';
 import createCollectionVariants from './createCollectionVariants';
+import createCollectionCarouselVariants from './createCollectionCarouselVariants';
 import createAppTheme from './createTheme';
 import { red } from '@material-ui/core/colors';
 
@@ -92,6 +93,9 @@ const theme = createAppTheme(
             }
           }
         }
+      },
+      CollectionCarousel: {
+        variants: createCollectionCarouselVariants(baseTheme)
       },
       Hero: {
         variants: createHeroVariants(baseTheme),

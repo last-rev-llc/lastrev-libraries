@@ -1,7 +1,8 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import Collection from './Collection';
-import collectionMock from './Collection.mock';
+import Collection from '../Collection';
+import collectionMock from '../Collection/Collection.mock';
+
 
 export default {
   title: '1. Primitives / MUI / Collection',

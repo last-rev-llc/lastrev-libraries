@@ -8,7 +8,9 @@ export default {
   component: Card,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box p={5} style={{ backgroundColor: '#eee' }}>{storyFn()}</Box>
+      <Box p={5} style={{ backgroundColor: '#eee' }}>
+        {storyFn()}
+      </Box>
     )
   ],
   argTypes: {
@@ -16,7 +18,16 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['standard', 'standard-round', 'media', 'avatar', 'avatar-large', 'square']
+        options: [
+          'standard',
+          'standard-round',
+          'media',
+          'media-and-text',
+          'avatar-and-text',
+          'avatar',
+          'avatar-large',
+          'square'
+        ]
       },
       table: {
         defaultValue: { summary: 'standard' }

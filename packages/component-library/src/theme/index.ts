@@ -155,6 +155,12 @@ declare module '@material-ui/core/styles/components' {
       styleOverrides?: ComponentsOverrides['Collection'];
       variants?: ComponentsVariants['Collection'];
     };
+    CollectionCarousel?: {
+      defaultProps?: ComponentsProps['Collection'];
+      overrides?: ComponentElementOverrides['Collection'];
+      styleOverrides?: ComponentsOverrides['Collection'];
+      variants?: ComponentsVariants['Collection'];
+    };
   }
 }
 
