@@ -22,14 +22,7 @@ export interface CollectionCarouselProps {
   contentWidth?: false | Breakpoint | undefined;
 }
 
-export const CollectionCarousel = ({
-  items,
-  contentWidth,
-  background,
-  variant,
-  itemsVariant
-}: CollectionCarouselProps) => {
-  //console.log('CollectionCarousel', { items, contentWidth, background, variant });
+export const CollectionCarousel = ({ items, contentWidth, variant, itemsVariant }: CollectionCarouselProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
@@ -37,7 +30,7 @@ export const CollectionCarousel = ({
       <Root variant={variant}>
         <ContentContainer maxWidth={contentWidth}>
           <CarouselContainer cssMode navigation pagination={{ clickable: true }} loop>
-            {items.map((item, idx) => (
+            {itemsWithVariant.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <CarouselItem>
                   <ContentModule {...item} />
@@ -57,7 +50,10 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => ({
     ...styles.root
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>(() => ({
+  display: 'flex',
+  justifyContent: 'center'
+}));
 
 const ContentContainer = styled(Container, {
   name: 'CollectionCarousel',
@@ -65,7 +61,9 @@ const ContentContainer = styled(Container, {
   overridesResolver: (_, styles) => ({
     ...styles.contentContainer
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>(() => ({
+  display: 'flex'
+}));
 
 const CarouselContainer = styled(Swiper, {
   name: 'CollectionCarousel',
@@ -73,7 +71,8 @@ const CarouselContainer = styled(Swiper, {
   overridesResolver: (_, styles) => ({
     ...styles.carouselContainer
   })
-})<{ variant?: string }>(() => ({
+})<{ variant?: string }>(({ theme }) => ({
+  '--swiper-theme-color': theme.palette.primary.main,
   '--swiper-navigation-size': 40,
   '& > .swiper-pagination-bullets span.swiper-pagination-bullet': {
     margin: '0 10px'
@@ -81,6 +80,11 @@ const CarouselContainer = styled(Swiper, {
   '& .swiper-pagination-bullet': {
     width: 10,
     height: 10
+  },
+  '& .swiper-button-prev, .swiper-button-next': {
+    [theme.breakpoints.down('md')]: {
+      display: 'none'
+    }
   }
 }));
 
@@ -90,6 +94,11 @@ const CarouselItem = styled(Box, {
   overridesResolver: (_, styles) => ({
     ...styles.carouselItem
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>(() => ({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100%'
+}));
 
 export default CollectionCarousel;

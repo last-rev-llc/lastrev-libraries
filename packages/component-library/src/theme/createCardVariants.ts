@@ -48,14 +48,12 @@ export const mediaAndTextCardVariant = (theme: Theme) => ({
     variant: 'media-and-text'
   },
   style: {
-    'maxWidth': 1000,
-    'minWidth': 900,
+    'width': '100%',
     'display': 'flex',
     'flexDirection': 'row',
     'background': theme.palette.secondary.main,
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
-      minWidth: '100%',
       padding: theme.spacing(2)
     },
     '& .MuiBox-root': {
@@ -70,9 +68,6 @@ export const mediaAndTextCardVariant = (theme: Theme) => ({
       textAlign: 'left',
       color: 'white'
     },
-    '& .MuiTypography-h3': {
-      textAlign: 'left'
-    },
     '& .MuiCardActions-root': {
       display: 'none'
     }
@@ -84,13 +79,11 @@ export const avatarAndTextCardVariant = (theme: Theme) => ({
     variant: 'avatar-and-text'
   },
   style: {
-    'maxWidth': 1000,
-    'minWidth': 900,
+    'width': '100%',
     'display': 'flex',
     'flexDirection': 'row',
     [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      minWidth: '100%'
+      flexDirection: 'column'
     },
     'background': theme.palette.secondary.main,
     '& .MuiBox-root': {
