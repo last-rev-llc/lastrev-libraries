@@ -20,13 +20,19 @@ export type TypeMappings = {
   [contentfulType: string]: string;
 };
 
+export type PathData =
+  | {
+      id: string;
+      blockedLocales: string[];
+    }
+  | string;
+
 export type PathToIdMapping = {
-  [path: string]:
-    | {
-        id: string;
-        blockedLocales: string[];
-      }
-    | string;
+  [path: string]: PathData;
+};
+
+export type SitePathMapping = {
+  [site: string]: PathToIdMapping;
 };
 
 export type ItemKey = {
@@ -67,7 +73,9 @@ export type ContentfulPathsGenerator = (
   resolvedItem: Entry<any>,
   loaders: ContentfulLoaders,
   defaultLocale: string,
-  locales: string[]
+  locales: string[],
+  preview?: boolean,
+  site?: string
 ) => Promise<PathToIdMapping>;
 
 export type ContentfulPathsConfig = string | ContentfulPathsGenerator;

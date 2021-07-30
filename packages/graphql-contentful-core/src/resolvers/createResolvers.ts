@@ -29,14 +29,14 @@ const createResolvers = ({
       me: () => {},
       page: async (
         _: any,
-        { path, locale, preview = false }: { path?: string; locale?: string; preview?: boolean },
+        { path, locale, preview = false, site }: { path?: string; locale?: string; preview?: boolean; site?: string },
         ctx: ApolloContext
       ) => {
         if (!path) throw new Error('MissingArgumentPath');
         ctx.locale = locale || ctx.defaultLocale;
         ctx.preview = preview;
         const { pathToIdLookup } = ctx;
-        const idOrObj = await pathToIdLookup.lookup(path, !!preview);
+        const idOrObj = await pathToIdLookup.lookup(path, !!preview, site);
         if (!idOrObj) {
           return null;
         }
@@ -48,13 +48,13 @@ const createResolvers = ({
       },
       paths: async (
         _: any,
-        { locales, preview = false }: { locales?: string[]; preview?: boolean },
+        { locales, preview = false, site }: { locales?: string[]; preview?: boolean; site?: string },
         ctx: ApolloContext
       ) => {
         if (!locales) throw new Error('MissingArgumentLocales');
         ctx.preview = preview;
         const { pathToIdLookup } = ctx;
-        return await pathToIdLookup.generatePathParams(locales, preview);
+        return await pathToIdLookup.generatePathParams(locales, preview, site);
       },
       content: async (
         _: any,

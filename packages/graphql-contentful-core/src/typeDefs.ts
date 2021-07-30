@@ -47,8 +47,8 @@ const baseDefs = gql`
   }
 
   type Query {
-    page(path: String!, locale: String, preview: Boolean): Content
-    paths(locales: [String!], preview: Boolean): [PagePathParams!]
+    page(path: String!, locale: String, preview: Boolean, site: String): Content
+    paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
     content(id: String!, locale: String, preview: Boolean): Content
   }
 

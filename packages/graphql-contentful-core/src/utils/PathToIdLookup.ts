@@ -1,6 +1,16 @@
 import { compact, isString, reduce, get, has, isFunction, merge, transform } from 'lodash';
 import { join } from 'path';
-import { ContentfulLoaders, PagePathsParam, ContentfulPathsConfigs, PathToIdMapping, TypeMappings } from 'types';
+import {
+  ContentfulLoaders,
+  PagePathsParam,
+  ContentfulPathsConfigs,
+  PathToIdMapping,
+  TypeMappings,
+  SitePathMapping,
+  PathData
+} from 'types';
+
+const DEFAULT_SITE_KEY = '__lr_default';
 
 const generatePathToIdMapping = async (
   pathsConfigs: ContentfulPathsConfigs,
@@ -8,7 +18,8 @@ const generatePathToIdMapping = async (
   defaultLocale: string,
   locales: string[],
   typeMappings: TypeMappings = {},
-  preview: boolean
+  preview: boolean,
+  site?: string
 ): Promise<PathToIdMapping> => {
   const pathToIdMapping: PathToIdMapping = {};
 
@@ -43,7 +54,7 @@ const generatePathToIdMapping = async (
       );
     } else if (isFunction(config)) {
       for (const page of pages) {
-        merge(pathToIdMapping, await config(page, loaders, defaultLocale, locales));
+        merge(pathToIdMapping, await config(page, loaders, defaultLocale, locales, preview, site));
       }
     }
   }
@@ -52,8 +63,8 @@ const generatePathToIdMapping = async (
 };
 
 export default class PathToIdLookup {
-  private _previewMapping: PathToIdMapping | null = null;
-  private _prodMapping: PathToIdMapping | null = null;
+  private _previewMapping: SitePathMapping = {};
+  private _prodMapping: SitePathMapping = {};
   private pathsConfigs: ContentfulPathsConfigs;
   private loaders: ContentfulLoaders;
   private defaultLocale: string;
@@ -74,20 +85,24 @@ export default class PathToIdLookup {
     this.typeMappings = typeMappings;
   }
 
-  private async _loadMapping(preview: boolean): Promise<void> {
-    this[preview ? '_previewMapping' : '_prodMapping'] = await generatePathToIdMapping(
+  private async _loadMapping(preview: boolean, site?: string): Promise<void> {
+    const mapping = this[preview ? '_previewMapping' : '_prodMapping'];
+
+    mapping[site || DEFAULT_SITE_KEY] = await generatePathToIdMapping(
       this.pathsConfigs,
       this.loaders,
       this.defaultLocale,
       this.locales,
       this.typeMappings,
-      preview
+      preview,
+      site
     );
   }
 
   async lookup(
     path: string,
-    preview = false
+    preview = false,
+    site?: string
   ): Promise<
     | string
     | {
@@ -95,20 +110,33 @@ export default class PathToIdLookup {
         blockedLocales: string[];
       }
   > {
-    const field = preview ? '_previewMapping' : '_prodMapping';
-    if (!this[field]) {
-      await this._loadMapping(preview);
+    if (this.needsLoaded(preview, site)) {
+      await this._loadMapping(preview, site);
     }
-    return (this[field] as PathToIdMapping)[path];
+    return this.getPathData(preview, site, path);
   }
 
-  async generatePathParams(locales: string[], preview: boolean): Promise<PagePathsParam[]> {
-    const field = preview ? '_previewMapping' : '_prodMapping';
-    if (!this[field]) {
-      await this._loadMapping(preview);
+  needsLoaded(preview: boolean, site: string = DEFAULT_SITE_KEY): boolean {
+    return !has(this, [preview ? '_previewMapping' : '_prodMapping', site || DEFAULT_SITE_KEY]);
+  }
+
+  getMapping(preview: boolean, site: string = DEFAULT_SITE_KEY): PathToIdMapping {
+    return get(this, [preview ? '_previewMapping' : '_prodMapping', site || DEFAULT_SITE_KEY]);
+  }
+
+  getPathData(preview: boolean, site: string = DEFAULT_SITE_KEY, path: string): PathData {
+    return this.getMapping(preview, site)[path];
+  }
+
+  async generatePathParams(locales: string[], preview: boolean, site?: string): Promise<PagePathsParam[]> {
+    if (this.needsLoaded(preview, site)) {
+      await this._loadMapping(preview, site);
     }
+
+    const mapping = this.getMapping(preview, site);
+
     return reduce(
-      this[field] as PathToIdMapping,
+      mapping,
       (accum, idOrObj, path) => {
         accum.push(
           ...compact(
