@@ -73,7 +73,8 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       plugins: [autoprefixer()],
       inject: true,
       sourceMap: true, // defult false
-      extract: path.resolve('dist/styles.css')
+      extract: path.resolve('dist/styles.css'),
+      extensions: ['.css']
     }),
     Object.keys(moduleAlias || {}).length > 0 &&
       alias({

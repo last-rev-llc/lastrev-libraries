@@ -6,12 +6,11 @@ import ErrorBoundary from '../ErrorBoundary';
 import { MediaProps } from '../Media';
 import { CardProps } from '../Card';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper-bundle.css';
-import 'swiper/components/navigation/navigation.min.css';
-import 'swiper/components/pagination/pagination.min.css';
 import SwiperCore, { Navigation, Pagination } from 'swiper/core';
 import ContentModule from '../ContentModule';
 SwiperCore.use([Navigation, Pagination]);
+
+import './CollectionCarousel.bundle.scss';
 
 export interface CollectionCarouselProps {
   items?: CardProps[];
