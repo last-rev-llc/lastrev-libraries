@@ -28,7 +28,7 @@ export const NavigationBar = ({ items, variant }: NavigationBarProps) => {
       >
         <Grid container spacing={4} sx={{ alignItems: 'center' }}>
           {items?.map((item) => (
-            <Grid item>
+            <Grid item key={item.id}>
               <ContentModule {...item} />
             </Grid>
           ))}
