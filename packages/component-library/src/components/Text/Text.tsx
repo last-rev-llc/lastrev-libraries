@@ -7,7 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
+import keyBy from 'lodash/fp/keyBy';
 import Link from '../Link';
+import ContentModule from '../ContentModule';
 
 // export const RichTextPropTypes = {
 //   // eslint-disable-next-line react/forbid-prop-types
@@ -33,10 +35,11 @@ import Link from '../Link';
 //   // },
 // });
 // const containsHTML = (children: any) => children?.some((child: any) => child.includes && child?.includes('<'));
-
-export interface RichText {
-  document: any;
+interface Content {
+  __typename: string;
+  id: string;
 }
+
 export interface TextProps {
   id?: string;
   styles?: {
@@ -47,139 +50,102 @@ export interface TextProps {
   align?: 'left' | 'center' | 'right' | undefined;
 }
 
-const options = {
-  renderNode: {
-    [INLINES.HYPERLINK]: (_: any, children: any) => {
-      // const { data, content } = node;
-      // if (data.uri.includes('youtube.com/embed')) {
-      //   return (
-      //     <iframe
-      //       title="Embedded"
-      //       width="560"
-      //       height="315"
-      //       src={data.uri}
-      //       allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; autoplay"
-      //       frameBorder="0"
-      //       allowFullScreen
-      //     />
-      //   );
-      // }
-      return (
-        <Link
-          href={_.data.uri}
-          // target={!data?.uri.startsWith('/') && !data?.uri.includes('strong365.com') ? '_blank' : false}
-          // className={styles.link}
-        >
-          {children}
-        </Link>
-      );
-    },
-    // [BLOCKS.EMBEDDED_ASSET]: (node) => {
-    //   const { data = {} } = node;
-    //   const { target = {} } = data;
-    //   if (target.url)
-    //     return (
-    //       <div className="mx-auto text-center">
-    //         <Image image={target} {...sidekicker('Embedded Asset')} />
-    //       </div>
-    //     );
-    //   return null;
-    // },
-    // [BLOCKS.EMBEDDED_ENTRY]: (node) => {
-    //   const { data = {} } = node;
-    //   const { target = {} } = data;
-    //   const { _contentTypeId: contentTypeId } = target;
-    //   if (contentTypeId === 'moduleIntegration') return <ModuleIntegration {...target} />;
-    //   const cardProps = getCardProps({ card: target, lang });
-    //   const card = {
-    //     ...cardProps,
-    //     variant: 'Info'
-    //   };
-    //   if (card)
-    //     return (
-    //       <div
-    //         className="row col-12 col-md-7 col-lg-6 col-xl-5 p-0 pb-4 pr-md-5 py-md-4 float-md-left mx-auto mx-md-0"
-    //         style={{ clear: 'both' }}
-    //         {...sidekicker('Embedded Entry')}>
-    //         <Card {...card} />
-    //       </div>
-    //     );
-    //   return null;
-    // },
-    // [INLINES.EMBEDDED_ENTRY]: (node) => {
-    //   const { data = {} } = node;
-    //   const { target = {} } = data;
-    //   const { _contentTypeId: contentTypeId } = target;
-    //   if (contentTypeId === 'Link') return <Link {...target} {...sidekicker('Embedded Entry')} />;
-    //   return null;
-    // },
-    [BLOCKS.PARAGRAPH]: (_: any, children: any) => {
-      // if (containsHTML(children)) {
-      //   return (
-      //     <div
-      //       // We're passing the text through xss which should clean it up for us
-      //       // eslint-disable-next-line react/no-danger
-      //       dangerouslySetInnerHTML={{ __html: bodyXSS.process(children) }}
-      //     />
-      //   );
-      // }
-      return (
-        <>
-          <Typography variant="body1">{children}</Typography>
-        </>
-      );
-    },
-    [BLOCKS.HEADING_1]: (_: any, children: any) => {
-      return (
-        <>
-          <Typography variant="h1">{children}</Typography>
-        </>
-      );
-    },
-    [BLOCKS.HEADING_2]: (_: any, children: any) => {
-      return (
-        <>
-          <Typography variant="h2">{children}</Typography>
-        </>
-      );
-    },
-    [BLOCKS.HEADING_3]: (_: any, children: any) => {
-      return (
-        <>
-          <Typography variant="h3">{children}</Typography>
-        </>
-      );
-    },
-    [BLOCKS.HEADING_4]: (_: any, children: any) => {
-      return (
-        <>
-          <Typography variant="h4">{children}</Typography>
-        </>
-      );
-    },
-    [BLOCKS.HEADING_5]: (_: any, children: any) => {
-      return (
-        <>
-          <Typography variant="h5">{children}</Typography>
-        </>
-      );
-    },
-    [BLOCKS.HEADING_6]: (_: any, children: any) => {
-      return (
-        <>
-          <Typography variant="h6">{children}</Typography>
-        </>
-      );
+interface TextLinks {
+  entries: Array<Content>;
+  assets: Array<Content>;
+}
+export interface RichText {
+  json: any;
+  links: TextLinks;
+}
+
+const renderText =
+  ({
+    variant
+  }: {
+    variant:
+      | 'button'
+      | 'caption'
+      | 'h1'
+      | 'h2'
+      | 'h3'
+      | 'h4'
+      | 'h5'
+      | 'h6'
+      | 'inherit'
+      | 'overline'
+      | 'body1'
+      | 'subtitle1'
+      | 'subtitle2'
+      | 'body2'
+      | undefined;
+  }) =>
+  (_: any, children: any) => {
+    console.log('Render', { children, variant });
+    if (children?.length == 1 && children[0] === '') {
+      return <br />;
     }
-  }
+    return (
+      <>
+        <Typography variant={variant}>{children}</Typography>
+      </>
+    );
+  };
+
+const renderOptions = ({ links }: { links: TextLinks }) => {
+  const entries = keyBy('id', links.entries);
+  // const assets = keyBy('id', links.assets);
+
+  return {
+    renderNode: {
+      [INLINES.HYPERLINK]: (_: any, children: any) => {
+        return (
+          <Link
+            href={_.data.uri}
+            // target={!data?.uri.startsWith('/') && !data?.uri.includes('strong365.com') ? '_blank' : false}
+            // className={styles.link}
+          >
+            {children}
+          </Link>
+        );
+      },
+      // [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
+      //   const id: string = node?.data?.target?.sys?.id;
+      //   const entry = assets[id];
+      //   return <Media {...entry} />;
+      // },
+      [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
+        const id: string = node?.data?.target?.sys?.id;
+        const entry = entries[id];
+        return (
+          <Box sx={{ py: 2 }}>
+            <ContentModule {...entry} />
+          </Box>
+        );
+      },
+      [INLINES.EMBEDDED_ENTRY]: (node: any) => {
+        const id: string = node?.data?.target?.sys?.id;
+        const entry = entries[id];
+        console.log('Embed', node, id, entry);
+        return <ContentModule {...entry} />;
+      },
+      [BLOCKS.PARAGRAPH]: renderText({ variant: 'body1' }),
+      [BLOCKS.HEADING_1]: renderText({ variant: 'h1' }),
+      [BLOCKS.HEADING_2]: renderText({ variant: 'h2' }),
+      [BLOCKS.HEADING_3]: renderText({ variant: 'h3' }),
+      [BLOCKS.HEADING_4]: renderText({ variant: 'h4' }),
+      [BLOCKS.HEADING_5]: renderText({ variant: 'h5' }),
+      [BLOCKS.HEADING_6]: renderText({ variant: 'h6' })
+    }
+  };
 };
 
 function Text({ body, align = 'left', styles, variant }: TextProps) {
   // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
-  // console.log('Text', { body });
+  console.log('Text', { body });
   return (
     <Root variant={variant} sx={{ ...styles?.root, textAlign: align }}>
-      {documentToReactComponents(body?.document, options)}
+      {documentToReactComponents(body?.json, renderOptions({ links: body?.links }))}
     </Root>
   );
 }

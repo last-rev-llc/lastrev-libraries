@@ -1,3 +1,4 @@
+export { default as NavigationItem } from './components/NavigationItem';
 export { default as ContentModule } from './components/ContentModule';
 export { default as Text } from './components/Text';
 export { default as Image } from './components/Image';

@@ -30,10 +30,13 @@ export const baseTheme = createAppTheme({
       main: '#005C7A'
     },
     'tertiary': {
-      main: '#bdefeb'
+      main: '#30CEC2'
     },
     'quartiary': {
-      main: '#005c7a'
+      main: '#BDEFEB'
+    },
+    'pink': {
+      main: '#d960ef'
     },
     'error': {
       main: red.A400
@@ -152,10 +155,13 @@ const theme = createAppTheme(
             color: baseTheme.palette.secondary.main
           },
           h3: {
-            paddingBottom: 20,
-            fontSize: 32,
-            fontWeight: 'bold',
-            color: baseTheme.palette.secondary.main
+            'paddingBottom': 20,
+            'fontSize': 32,
+            'fontWeight': 'bold',
+            'color': baseTheme.palette.secondary.main,
+            '& u': {
+              textDecorationColor: baseTheme.palette.tertiary.main
+            }
           },
           h4: {
             paddingBottom: 20,
@@ -204,11 +210,31 @@ const theme = createAppTheme(
         }
       },
       MuiButton: {
+        variants: [
+          {
+            props: {
+              variant: 'text'
+            },
+            style: {
+              textTransform: 'none'
+            }
+          },
+          {
+            props: {
+              variant: 'text',
+              color: 'primary'
+            },
+            style: {
+              color: baseTheme.palette.secondary.main
+            }
+          }
+        ],
         defaultProps: {
           disableElevation: true
         },
         styleOverrides: {
           root: {
+            fontWeight: 'bold',
             padding: baseTheme.spacing(2, 3)
           },
           outlinedPrimary: {

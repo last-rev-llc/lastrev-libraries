@@ -292,9 +292,12 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
     'transition': 'background-color ease .15s',
 
     '&:hover': {
-      backgroundColor: theme.palette.tertiary.main,
-      borderColor: theme.palette.primary.main,
-      transition: 'background-color ease .15s'
+      'backgroundColor': theme.palette.tertiary.main,
+      'borderColor': theme.palette.primary.main,
+      'transition': 'background-color ease .15s',
+      '& .MuiButton-root': {
+        color: theme.palette.pink.main
+      }
     },
 
     '& .MuiBox-root': {
