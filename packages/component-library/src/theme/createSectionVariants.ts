@@ -23,8 +23,8 @@ export const splitPanelVariant = () => ({
         '& > img': {
           width: '100%',
           height: 'auto',
-          display: 'block',
-          margin: 'auto'
+          display: 'block'
+          // margin: 'auto'
         }
       }
     }
@@ -37,6 +37,11 @@ export const highlightVariant = (theme: Theme) => ({
   },
   style: {
     // TODO: Unifiy typography global overrides
+    '.MuiTypography-h4': {
+      color: '#005c7b',
+      fontSize: '1.5rem',
+      fontWeight: 'bold'
+    },
     '.MuiTypography-h5': {
       color: '#005c7b',
       fontSize: '1.5rem',
@@ -47,6 +52,9 @@ export const highlightVariant = (theme: Theme) => ({
       maxWidth: 800,
       color: '#005c7b',
       fontSize: '1.5rem'
+    },
+    '& b': {
+      color: theme.palette.pink.main
     },
     '& > [class*="Section-gridContainer"]': {
       'position': 'relative',
@@ -121,7 +129,7 @@ export const gradientBackgroundVariant = () => ({
     },
     '.MuiTypography-h2': {
       color: 'white'
-    },
+    }
   }
 });
 

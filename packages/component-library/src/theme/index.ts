@@ -12,11 +12,13 @@ declare module '@material-ui/core/styles' {
   interface Palette {
     'tertiary': Palette['primary'];
     'quartiary': Palette['secondary'];
+    'pink': Palette['secondary'];
     'gradient-primary': Palette['secondary'];
   }
   interface PaletteOptions {
     'tertiary': PaletteOptions['primary'];
     'quartiary': PaletteOptions['secondary'];
+    'pink': PaletteOptions['secondary'];
     'gradient-primary': PaletteOptions['secondary'];
   }
   // interface Theme {

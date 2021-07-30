@@ -56,7 +56,7 @@ const createResolvers = ({
       }
     },
     Media: fieldsResolver('Media', ['file', 'title', 'description'], mappers),
-    RichText: fieldsResolver('RichText', ['body', 'parsed'], mappers),
+    RichText: fieldsResolver('RichText', ['json', 'parsed'], mappers),
     Theme: fieldsResolver('Theme', ['variant'], mappers),
 
     // Content type resolver

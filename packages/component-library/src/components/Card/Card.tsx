@@ -20,14 +20,15 @@ export interface CardProps extends MuiCardProps {
   variant?: any;
   title?: string;
   subtitle?: string;
-  media?: MediaProps;
+  media?: MediaProps | MediaProps[];
   body?: string;
+  cardBody?: string;
   actions?: LinkProps[];
 }
 
 export interface CardOverrides {}
 
-export const Card = ({ media, title, subtitle, body, actions, variant }: CardProps) => {
+export const Card = ({ media, title, subtitle, body, cardBody, actions, variant }: CardProps) => {
   return (
     <ErrorBoundary>
       <CardRoot variant={variant}>
@@ -37,7 +38,7 @@ export const Card = ({ media, title, subtitle, body, actions, variant }: CardPro
           //   {...image}
           // />
           <Box>
-            <Media {...media} />
+            <Media {...(Array.isArray(media) ? media[0] : media)} />
           </Box>
         ) : null}
         {title || subtitle || body || actions ? (
@@ -52,9 +53,9 @@ export const Card = ({ media, title, subtitle, body, actions, variant }: CardPro
                 {subtitle}
               </Typography>
             ) : null}
-            {body ? (
-              <Typography variant="body1" component="p">
-                {body}
+            {body ?? cardBody ? (
+              <Typography variant="body2" component="p">
+                {body ?? cardBody}
               </Typography>
             ) : null}
             {actions?.length ? (
