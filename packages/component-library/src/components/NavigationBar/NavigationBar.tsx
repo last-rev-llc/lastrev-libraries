@@ -4,22 +4,22 @@ import { Box, Grid } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import { LinkProps } from '../Link/Link';
-// import { MediaProps } from '../Media';
-// import { CardProps } from '../Card';
+
 import ContentModule from '../ContentModule';
 // import sidekickInit from "../../utils/sidekickUtility";
 
 export interface NavigationBarProps {
   items?: LinkProps[];
   variant?: string;
+  itemsVariant?: string;
   theme: any;
 }
 
-export const NavigationBar = ({ items, variant }: NavigationBarProps) => {
+export const NavigationBar = ({ items, variant, itemsVariant }: NavigationBarProps) => {
   console.log('NavigationBar', { items, variant });
   if (!items?.length) return null;
   // const { sidekicker } = sidekickInit(props);
-  // const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
+  const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
       <Root
@@ -27,24 +27,12 @@ export const NavigationBar = ({ items, variant }: NavigationBarProps) => {
         // {...sidekicker('NavigationBar')}
       >
         <Grid container spacing={4} sx={{ alignItems: 'center' }}>
-          {items?.map((item) => (
+          {itemsWithVariant?.map((item) => (
             <Grid item key={item.id}>
               <ContentModule {...item} />
             </Grid>
           ))}
         </Grid>
-        {/* {!contentWidth ? (
-          <Section contents={itemsWithVariant} background={background} variant={`NavigationBar-${variant}`} />
-        ) : (
-          <ContentContainer maxWidth={contentWidth}>
-            <Section
-              contents={itemsWithVariant}
-              background={background}
-              variant={`NavigationBar-${variant}`}
-              styles={{ root: { py: 2 } }}
-            />
-          </ContentContainer>
-        )} */}
       </Root>
     </ErrorBoundary>
   );
