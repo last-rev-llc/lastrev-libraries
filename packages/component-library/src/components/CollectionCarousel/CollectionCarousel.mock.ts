@@ -12,3 +12,15 @@ export default {
   itemsVariant: 'media-and-text',
   theme: [mockTheme]
 };
+
+export const smallCarouselMock = {
+  variant: 'carousel-small',
+  items: [
+    { ...mockCard, variant: 'media', title: 'Card one title' },
+    { ...mockCard, variant: 'media', title: 'Card two title' },
+    { ...mockCard, variant: 'media', title: 'Card three title' },
+    { ...mockCard, variant: 'media', title: 'Card four title' }
+  ],
+  itemsVariant: 'media',
+  theme: [mockTheme]
+};

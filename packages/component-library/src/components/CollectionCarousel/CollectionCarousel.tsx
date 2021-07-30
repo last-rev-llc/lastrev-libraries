@@ -29,7 +29,12 @@ export const CollectionCarousel = ({ items, contentWidth, variant, itemsVariant 
     <ErrorBoundary>
       <Root variant={variant}>
         <ContentContainer maxWidth={contentWidth}>
-          <CarouselContainer cssMode navigation pagination={{ clickable: true }} loop>
+          <CarouselContainer
+            cssMode={variant === 'carousel-large'}
+            slidesPerView={'auto'}
+            navigation
+            pagination={{ clickable: true }}
+            loop>
             {itemsWithVariant.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <CarouselItem>
@@ -73,7 +78,6 @@ const CarouselContainer = styled(Swiper, {
   })
 })<{ variant?: string }>(({ theme }) => ({
   '--swiper-theme-color': theme.palette.primary.main,
-  '--swiper-navigation-size': 40,
   '& > .swiper-pagination-bullets span.swiper-pagination-bullet': {
     margin: '0 10px'
   },

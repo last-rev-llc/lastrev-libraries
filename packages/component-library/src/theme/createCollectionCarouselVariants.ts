@@ -5,12 +5,25 @@ export const largeCollectionCarousel = (theme: Theme) => ({
     variant: 'carousel-large'
   },
   style: {
-    height: 650,
-    background: theme.palette.secondary.main
+    'height': 650,
+    'background': theme.palette.secondary.main,
+    '--swiper-navigation-size': 40
   }
 });
 
-const variants = [largeCollectionCarousel];
+export const smallCollectionCarousel = () => ({
+  props: {
+    variant: 'carousel-small'
+  },
+  style: {
+    'height': 300,
+    '& .swiper-slide': {
+      width: 'auto'
+    }
+  }
+});
+
+const variants = [largeCollectionCarousel, smallCollectionCarousel];
 
 const createSectionVariants = (theme: Theme) => {
   return variants.map((creator) => creator(theme));
