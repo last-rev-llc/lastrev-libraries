@@ -7,16 +7,16 @@ import { CredentialsProvider } from './CredentialsProvider';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 
-export type PageKey = {
-  slug: string;
-  contentTypeId: string;
+export type ItemKey = {
+  id: string;
+  preview?: boolean;
 };
 
 export type ContentfulS3Loaders = {
-  entryLoader: DataLoader<string, Entry<any> | null>;
-  assetLoader: DataLoader<string, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<string, Entry<any>[]>;
-  fetchAllContentTypes: () => Promise<ContentType[]>;
+  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
+  assetLoader: DataLoader<ItemKey, Asset | null>;
+  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
+  fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
 };
 
 // Apparently the stream parameter should be of type Readable|ReadableStream|Blob
@@ -30,22 +30,21 @@ async function streamToString(stream: Readable): Promise<string> {
   });
 }
 
-const createLoaders = (
-  apiUrl: string,
-  apiKey: string,
-  environment: string,
-  isPreview: boolean
-): ContentfulS3Loaders => {
-  const credentialsProvider = new CredentialsProvider(apiKey, apiUrl, environment, isPreview);
+const createLoaders = (apiUrl: string, apiKey: string, environment: string): ContentfulS3Loaders => {
+  const previewCredentialsProvider = new CredentialsProvider(apiKey, apiUrl, environment, true);
+  const prodCredentialsProvider = new CredentialsProvider(apiKey, apiUrl, environment, false);
 
-  const getObject = async (path: string) => {
-    const { accessKeyId, secretAccessKey, sessionToken, bucket, spaceId } = await credentialsProvider.load();
+  const getObject = async (path: string, preview: boolean) => {
+    const { accessKeyId, secretAccessKey, sessionToken, bucket, spaceId } = await (preview
+      ? previewCredentialsProvider
+      : prodCredentialsProvider
+    ).load();
 
     const client = new S3Client({
       credentialDefaultProvider: () => async () => ({ accessKeyId, secretAccessKey, sessionToken })
     });
 
-    const Key = `${spaceId}/${environment}/${isPreview ? 'preview' : 'production'}/${path}`;
+    const Key = `${spaceId}/${environment}/${preview ? 'preview' : 'production'}/${path}`;
 
     const command = new GetObjectCommand({ Bucket: bucket, Key });
 
@@ -54,14 +53,17 @@ const createLoaders = (
     return response?.Body ? JSON.parse(await streamToString(response.Body as Readable)) : null;
   };
 
-  const listDirectory = async (path: string) => {
-    const { accessKeyId, secretAccessKey, sessionToken, bucket, spaceId } = await credentialsProvider.load();
+  const listDirectory = async (path: string, preview: boolean) => {
+    const { accessKeyId, secretAccessKey, sessionToken, bucket, spaceId } = await (preview
+      ? previewCredentialsProvider
+      : prodCredentialsProvider
+    ).load();
 
     const client = new S3Client({
       credentialDefaultProvider: () => async () => ({ accessKeyId, secretAccessKey, sessionToken })
     });
 
-    const Prefix = `${spaceId}/${environment}/${isPreview ? 'preview' : 'production'}/${path}`;
+    const Prefix = `${spaceId}/${environment}/${preview ? 'preview' : 'production'}/${path}`;
 
     const out = [];
 
@@ -86,14 +88,15 @@ const createLoaders = (
 
   const getBatchItemFetcher = <T extends Entry<any> | Asset>(
     dirname: 'entries' | 'assets'
-  ): DataLoader.BatchLoadFn<string, T | null> => {
-    return async (ids): Promise<(T | null)[]> => {
+  ): DataLoader.BatchLoadFn<ItemKey, T | null> => {
+    return async (keys): Promise<(T | null)[]> => {
       const timer = new Timer(`Fetched ${dirname} from S3`);
       const out = Promise.all(
-        ids.map((id) =>
+        keys.map((key) =>
           (async () => {
             try {
-              return await getObject(`${dirname}/${id}.json`);
+              const { id, preview } = key;
+              return await getObject(`${dirname}/${id}.json`, !!preview);
             } catch (err) {
               return null;
             }
@@ -105,13 +108,14 @@ const createLoaders = (
     };
   };
 
-  const getBatchEntryIdsByContentTypeFetcher = (): DataLoader.BatchLoadFn<string, string[]> => {
-    return async (contentTypeIds) => {
+  const getBatchEntryIdsByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, string[]> => {
+    return async (keys) => {
       return Promise.all(
-        contentTypeIds.map((contentTypeId) =>
+        keys.map((key) =>
           (async () => {
             try {
-              return await listDirectory(`entry_ids_by_content_type/${contentTypeId}`);
+              const { id, preview } = key;
+              return await listDirectory(`entry_ids_by_content_type/${id}`, !!preview);
             } catch (err) {
               return [];
             }
@@ -122,9 +126,9 @@ const createLoaders = (
   };
 
   const getBatchEntriesByContentTypeFetcher = (
-    eLoader: DataLoader<string, Entry<any> | null>,
-    idsLoader: DataLoader<string, (string | null)[]>
-  ): DataLoader.BatchLoadFn<string, Entry<any>[]> => {
+    eLoader: DataLoader<ItemKey, Entry<any> | null>,
+    idsLoader: DataLoader<ItemKey, (string | null)[]>
+  ): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
     return async (keys) => {
       const timer = new Timer(`Fetched entries by content type from S3`);
       const idsArrays = await idsLoader.loadMany(keys);
@@ -146,14 +150,14 @@ const createLoaders = (
   const entriesByContentTypeLoader = new DataLoader(
     getBatchEntriesByContentTypeFetcher(entryLoader, entryIdsByContentTypeLoader)
   );
-  const fetchAllContentTypes = async () => {
+  const fetchAllContentTypes = async (preview: boolean) => {
     try {
       const timer = new Timer('Fetched all content types from S3');
-      const contentTypeFilenames = await listDirectory('content_types');
+      const contentTypeFilenames = await listDirectory('content_types', !!preview);
       const out = Promise.all(
         contentTypeFilenames.map(async (filename) => {
           try {
-            return getObject(`content_types/${filename}`);
+            return getObject(`content_types/${filename}`, preview);
           } catch (err) {
             return null;
           }

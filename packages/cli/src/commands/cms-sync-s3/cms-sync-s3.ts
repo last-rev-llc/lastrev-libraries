@@ -53,8 +53,8 @@ program
   )
   .option(
     '-p --preview',
-    'Sync preview content?, defaults to env variable LAST_REV_SYNC_PREVIEW or false',
-    !!process.env.LAST_REV_SYNC_PREVIEW
+    'Sync preview content?, defaults to env variable CONTENTFUL_USE_PREVIEW or false',
+    !!process.env.CONTENTFUL_USE_PREVIEW
   )
   .option(
     '-e --contentful-env <contentful environement>',

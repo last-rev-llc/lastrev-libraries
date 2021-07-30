@@ -10,7 +10,8 @@ module.exports = {
   reactStrictMode: true,
   env: {
     CONTENTFUL_SETTINGS_ID: process.env.CONTENTFUL_SETTINGS_ID,
-    GRAPHQL_SERVER_URL: process.env.GRAPHQL_SERVER_URL
+    GRAPHQL_SERVER_URL: process.env.GRAPHQL_SERVER_URL,
+    CONTENTFUL_USE_PREVIEW: process.env.CONTENTFUL_USE_PREVIEW
   },
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if

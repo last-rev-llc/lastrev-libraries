@@ -26,8 +26,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@last-rev/timer": "^0.1.0",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",
+    "loglevel": "^1.7.1",
     "ora": "^5.4.1",
     "tslib": "^2.3.0"
   }

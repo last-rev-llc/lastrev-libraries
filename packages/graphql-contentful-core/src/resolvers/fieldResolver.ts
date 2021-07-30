@@ -17,7 +17,8 @@ type FieldResolver = <T>(displayType: string) => Resolver<Entry<T>, ApolloContex
 
 const fieldResolver: FieldResolver = (displayType: string) => async (content, args, ctx, info) => {
   const { fieldName: field } = info;
-  const { loaders, mappers, typeMappings } = ctx;
+  console.log('resolving field', field);
+  const { loaders, mappers, typeMappings, preview = false } = ctx;
 
   const contentType = capitalizeFirst(
     content && content.sys && content.sys.contentType && content.sys.contentType.sys
@@ -30,12 +31,14 @@ const fieldResolver: FieldResolver = (displayType: string) => async (content, ar
 
   let { fieldValue } = await fieldDataFetcher(content, args, ctx, info);
 
+  console.log('fieldValue', fieldValue);
+
   //Check if the field is a reference then resolve it
   if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Entry') {
-    return loaders.entryLoader.load(fieldValue.sys.id);
+    return loaders.entryLoader.load({ id: fieldValue.sys.id, preview });
   }
   if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Asset') {
-    return loaders.assetLoader.load(fieldValue.sys.id);
+    return loaders.assetLoader.load({ id: fieldValue.sys.id, preview });
   }
   //Check if the field is an reference array then resolve all of them
   // if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys && !!x.sys.id && x.sys.linkType == 'Entry')) {
@@ -48,11 +51,13 @@ const fieldResolver: FieldResolver = (displayType: string) => async (content, ar
   // Expand links
   if (isArray(fieldValue)) {
     fieldValue = map(fieldValue, (x) => {
-      if (!!x.sys && !!x.sys.id && x.sys.linkType == 'Entry') return loaders.entryLoader.load(x.sys.id);
+      if (!!x.sys && !!x.sys.id && x.sys.linkType == 'Entry')
+        return loaders.entryLoader.load({ id: x.sys.id, preview });
       return x;
     });
     fieldValue = map(fieldValue, (x) => {
-      if (!!x.sys && !!x.sys.id && x.sys.linkType == 'Asset') return loaders.assetLoader.load(x.sys.id);
+      if (!!x.sys && !!x.sys.id && x.sys.linkType == 'Asset')
+        return loaders.assetLoader.load({ id: x.sys.id, preview });
       return x;
     });
   }

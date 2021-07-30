@@ -12,7 +12,7 @@ export const getServer = async (props: ServerProps) => {
   console.log('loglevel', props.logLevel);
 
   const timer = new Timer('Graphql server initialized');
-  const { resolvers, typeDefs, loaders, defaultLocale, pathToIdMapping } = await prepareServer(props);
+  const { resolvers, typeDefs, loaders, defaultLocale, pathToIdLookup } = await prepareServer(props);
 
   const server = new ApolloServer({
     schema: buildFederatedSchema([{ resolvers, typeDefs }]),
@@ -25,8 +25,9 @@ export const getServer = async (props: ServerProps) => {
         loaders,
         mappers: props.extensions?.mappers || {},
         defaultLocale,
+        pathToIdLookup,
         typeMappings: props.extensions?.typeMappings || {},
-        pathToIdMapping
+        pathsConfigs: props.extensions?.pathsConfigs || {}
       };
     }
   });

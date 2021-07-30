@@ -69,8 +69,8 @@ const run = async ({ configFile }: { configFile: string }) => {
   let port = 5000;
   let host;
   let contentfulSpaceId;
-  let contentfulAccessToken;
-  let contentfulHost;
+  let contentDeliveryToken;
+  let contentPreviewToken;
   let contentfulEnv;
   let loaderType;
   let logLevel;
@@ -82,10 +82,10 @@ const run = async ({ configFile }: { configFile: string }) => {
       extensionsDir,
       port = 5000,
       host,
-      contentfulAccessToken,
+      contentDeliveryToken,
+      contentPreviewToken,
       contentfulSpaceId,
       contentfulEnv,
-      contentfulHost,
       loaderType = 'fs',
       logLevel = 'warn'
     } = require(configFile));
@@ -117,9 +117,9 @@ const run = async ({ configFile }: { configFile: string }) => {
     contentDir,
     cms,
     spaceId: contentfulSpaceId,
-    accessToken: contentfulAccessToken,
+    contentDeliveryToken,
+    contentPreviewToken,
     environment: contentfulEnv || 'master',
-    isPreview: contentfulHost === 'preview.contentful.com',
     loaderType,
     logLevel
   });

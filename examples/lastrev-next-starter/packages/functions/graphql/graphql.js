@@ -12,23 +12,27 @@ const testForEnvVar = (name) => {
   return envVar;
 };
 
-const apiUrl = testForEnvVar('LAST_REV_API_URL');
-const apiKey = testForEnvVar('LAST_REV_API_KEY');
+// const apiUrl = testForEnvVar('LAST_REV_API_URL'); // s3
+// const apiKey = testForEnvVar('LAST_REV_API_KEY'); // s3
 const spaceId = testForEnvVar('CONTENTFUL_SPACE_ID');
-const accessToken = testForEnvVar('CONTENTFUL_ACCESSTOKEN');
+const deliveryToken = testForEnvVar('CONTENTFUL_DELIVERY_TOKEN');
+const previewToken = testForEnvVar('CONTENTFUL_PREVIEW_TOKEN');
 const environment = testForEnvVar('CONTENTFUL_ENV');
 
 module.exports.handler = async (event, context, cb) => {
+  const { queryStringParameters } = event;
+
   const handle = createHandler({
     cms: 'Contentful',
-    environment,
+    environment: queryStringParameters.env || environment,
     spaceId,
-    accessToken,
+    deliveryToken,
+    previewToken,
     extensions,
-    apiUrl,
-    apiKey,
-    isPreview: true,
-    loaderType: 's3'
+    // apiUrl, // s3
+    // apiKey, // s3
+    loaderType: 'cms',
+    logLevel: process.env.LOG_LEVEL
   });
 
   return handle({ ...event, requestContext: { elb: true } }, context, cb);

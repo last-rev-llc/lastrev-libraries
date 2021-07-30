@@ -4,6 +4,7 @@ import { GraphQLSchema, Source, DocumentNode } from 'graphql';
 import { GraphQLResolverMap } from 'apollo-graphql';
 import DataLoader from 'dataloader';
 import { LogLevelDesc } from 'loglevel';
+import PathToIdLookup from 'utils/PathToIdLookup';
 
 export type TypeMapper = {
   [fieldName: string]: string | Function;
@@ -19,29 +20,46 @@ export type TypeMappings = {
   [contentfulType: string]: string;
 };
 
+export type PathData =
+  | {
+      id: string;
+      blockedLocales: string[];
+    }
+  | string;
+
 export type PathToIdMapping = {
-  [path: string]:
-    | {
-        id: string;
-        blockedLocales: string[];
-      }
-    | string;
+  [path: string]: PathData;
+};
+
+export type SitePathMapping = {
+  [site: string]: PathToIdMapping;
+};
+
+export type ItemKey = {
+  id: string;
+  preview: boolean;
+};
+
+export type PageKey = {
+  path: string;
+  preview: boolean;
 };
 
 export type ContentfulLoaders = {
-  entryLoader: DataLoader<string, Entry<any> | null>;
-  assetLoader: DataLoader<string, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<string, Entry<any>[]>;
-  fetchAllContentTypes: () => Promise<ContentType[]>;
+  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
+  assetLoader: DataLoader<ItemKey, Asset | null>;
+  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
+  fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
 };
 
 export type ApolloContext = Context<{
   loaders: ContentfulLoaders;
   mappers: Mappers;
   defaultLocale: string;
-  locale?: string;
   typeMappings: TypeMappings;
-  pathToIdMapping: PathToIdMapping;
+  pathToIdLookup: PathToIdLookup;
+  locale?: string;
+  preview?: boolean;
 }>;
 
 export type PagePathsParam = {
@@ -55,7 +73,9 @@ export type ContentfulPathsGenerator = (
   resolvedItem: Entry<any>,
   loaders: ContentfulLoaders,
   defaultLocale: string,
-  locales: string[]
+  locales: string[],
+  preview?: boolean,
+  site?: string
 ) => Promise<PathToIdMapping>;
 
 export type ContentfulPathsConfig = string | ContentfulPathsGenerator;
@@ -76,9 +96,9 @@ export type BaseServerProps = {
   cms: 'Contentful';
   extensions?: Extensions;
   environment: string;
-  isPreview: boolean;
   spaceId: string;
-  accessToken: string;
+  contentDeliveryToken: string;
+  contentPreviewToken: string;
   logLevel: LogLevelDesc;
 };
 
