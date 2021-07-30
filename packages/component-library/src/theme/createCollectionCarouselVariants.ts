@@ -5,10 +5,20 @@ export const largeCollectionCarousel = (theme: Theme) => ({
     variant: 'carousel-large'
   },
   style: {
-    height: 650,
-    background: theme.palette.secondary.main,
-    display: 'flex',
-    justifyContent: 'center'
+    'height': 650,
+    'background': theme.palette.secondary.main,
+    '--swiper-theme-color': theme.palette.primary.main,
+    'display': 'flex',
+    'justifyContent': 'center',
+    '& .MuiContainer-root': {
+      display: 'flex'
+    },
+    '& .MuiBox-root': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      height: '100%'
+    }
   }
 });
 

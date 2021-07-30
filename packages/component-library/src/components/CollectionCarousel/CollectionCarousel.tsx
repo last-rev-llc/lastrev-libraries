@@ -65,9 +65,7 @@ const ContentContainer = styled(Container, {
   overridesResolver: (_, styles) => ({
     ...styles.contentContainer
   })
-})<{ variant?: string }>(() => ({
-  display: 'flex'
-}));
+})<{ variant?: string }>(() => ({}));
 
 const CarouselContainer = styled(Swiper, {
   name: 'CollectionCarousel',
@@ -75,17 +73,8 @@ const CarouselContainer = styled(Swiper, {
   overridesResolver: (_, styles) => ({
     ...styles.carouselContainer
   })
-})<{ variant?: string }>(({ theme }) => ({
-  '--swiper-navigation-size': 20,
-  '& .swiper-button-prev': {
-    color: theme.palette.primary.main
-  },
-  '& .swiper-button-next': {
-    color: theme.palette.primary.main
-  },
-  '& .swiper-pagination-bullet-active': {
-    backgroundColor: theme.palette.primary.main
-  },
+})<{ variant?: string }>(() => ({
+  '--swiper-navigation-size': 40,
   '& > .swiper-pagination-bullets span.swiper-pagination-bullet': {
     margin: '0 10px'
   },
@@ -101,11 +90,6 @@ const CarouselItem = styled(Box, {
   overridesResolver: (_, styles) => ({
     ...styles.carouselItem
   })
-})<{ variant?: string }>(() => ({
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  height: '100%'
-}));
+})<{ variant?: string }>(() => ({}));
 
 export default CollectionCarousel;
