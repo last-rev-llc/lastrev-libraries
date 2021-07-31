@@ -10,8 +10,6 @@ import SwiperCore, { Navigation, Pagination } from 'swiper/core';
 import ContentModule from '../ContentModule';
 SwiperCore.use([Navigation, Pagination]);
 
-import './CollectionCarousel.bundle.scss';
-
 export interface CollectionCarouselProps {
   items?: CardProps[];
   background?: MediaProps;

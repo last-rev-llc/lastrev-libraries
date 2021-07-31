@@ -69,7 +69,10 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       'process.env.NODE_ENV': JSON.stringify(isProduction ? `production` : `development`)
     }),
     postcss({
-      modules: true,
+      modules: {
+        globalModulePaths: [/src\/styles/],
+        exportGlobals: true
+      },
       plugins: [autoprefixer()],
       inject: true,
       sourceMap: true, // defult false
