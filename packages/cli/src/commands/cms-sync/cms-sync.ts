@@ -6,6 +6,12 @@ import sync from '@last-rev/contentful-sync-to-fs';
 
 import program from 'commander';
 
+const parseBooleanEnvVar = (value: string = '') => {
+  // values parsed as true: true, 1, yes, y, => ignore caps
+  const val = value.toString().toLowerCase();
+  return /^(true|1|yes|y)$/.test(val);
+};
+
 const run = async ({
   contentDir,
   cms,
@@ -58,7 +64,7 @@ program
   .option(
     '-p, --preview',
     'Should sync preview content?, defaults to CONTENTFUL_USE_PREVIEW',
-    process.env.CONTENTFUL_USE_PREVIEW
+    parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW)
   )
   .option(
     '--contentful-env <contentful environement>',
