@@ -6,7 +6,7 @@ import createSectionVariants from './createSectionVariants';
 import createCollectionVariants from './createCollectionVariants';
 import createCollectionCarouselVariants from './createCollectionCarouselVariants';
 import createAppTheme from './createTheme';
-import { red } from '@material-ui/core/colors';
+import { red, grey } from '@material-ui/core/colors';
 
 export const baseTheme = createAppTheme({
   spacing: 8,
@@ -24,7 +24,7 @@ export const baseTheme = createAppTheme({
   },
   palette: {
     'primary': {
-      main: '#fee501'
+      main: '#fee501',
     },
     'secondary': {
       main: '#005C7A'
@@ -107,6 +107,25 @@ const theme = createAppTheme(
             '& .MuiGrid-container': {
               alignItems: 'center'
             },
+            '& .MuiGrid-item': {
+              width: '100%'
+            },
+
+            // TODO: add more line spacing if <u> exists
+            '& .MuiTypography-h1': {
+              u: {
+                textUnderlinePosition: 'under',
+                textDecorationThickness: 4,
+                textDecorationColor: '#30CEC2',
+              }
+            },
+            '& .MuiTypography-h2': {
+              u: {
+                textUnderlinePosition: 'under',
+                textDecorationThickness: 4,
+                textDecorationColor: '#30CEC2',
+              }
+            },
             'img': {
               width: '100%'
             }
@@ -143,7 +162,6 @@ const theme = createAppTheme(
       MuiTypography: {
         styleOverrides: {
           h1: {
-            color: 'grey',
             paddingBottom: 10,
             fontSize: 40,
             fontWeight: 'bold'
@@ -152,7 +170,6 @@ const theme = createAppTheme(
             paddingBottom: 20,
             fontSize: 32,
             fontWeight: 'bold',
-            color: baseTheme.palette.secondary.main
           },
           h3: {
             'paddingBottom': 20,

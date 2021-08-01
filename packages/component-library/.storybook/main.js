@@ -11,6 +11,7 @@ module.exports = {
               exportGlobals: true
             }
           }
+        }
       }
     },
     '@storybook/addon-essentials',

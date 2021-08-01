@@ -4,7 +4,7 @@ import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 // import '@storybook/addon-console';
 import theme from '../src/theme';
-import '../src/styles.scss';
+// import '../src/styles.scss';
 
 import * as components from '../src';
 
