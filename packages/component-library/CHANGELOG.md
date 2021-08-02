@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.5
+
+### Patch Changes
+
+- d082f35: added build script to component lib
+
 ## 0.1.4
 
 ### Patch Changes
