@@ -5,9 +5,9 @@ export default {
   variant: 'carousel-large',
   items: [
     { ...mockCard, variant: 'media-and-text', title: 'Card one title' },
-    { ...mockCard, variant: 'avatar-and-text', title: 'Card two title' },
+    { ...mockCard, variant: 'media-and-text', title: 'Card two title' },
     { ...mockCard, variant: 'media-and-text', title: 'Card three title' },
-    { ...mockCard, variant: 'avatar-and-text', title: 'Card four title' }
+    { ...mockCard, variant: 'media-and-text', title: 'Card four title' }
   ],
   itemsVariant: 'media-and-text',
   theme: [mockTheme]
@@ -16,11 +16,11 @@ export default {
 export const smallCarouselMock = {
   variant: 'carousel-small',
   items: [
-    { ...mockCard, variant: 'media', title: 'Card one title' },
-    { ...mockCard, variant: 'media', title: 'Card two title' },
-    { ...mockCard, variant: 'media', title: 'Card three title' },
-    { ...mockCard, variant: 'media', title: 'Card four title' }
+    { ...mockCard, variant: 'media-hover', title: 'Card one title' },
+    { ...mockCard, variant: 'media-hover', title: 'Card two title' },
+    { ...mockCard, variant: 'media-hover', title: 'Card three title' },
+    { ...mockCard, variant: 'media-hover', title: 'Card four title' }
   ],
-  itemsVariant: 'media',
+  itemsVariant: 'media-hover',
   theme: [mockTheme]
 };

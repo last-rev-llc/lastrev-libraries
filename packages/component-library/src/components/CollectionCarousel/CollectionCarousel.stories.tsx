@@ -26,16 +26,7 @@ export default {
       name: 'Items Variant',
       control: {
         type: 'select',
-        options: [
-          'standard',
-          'standard-round',
-          'media',
-          'media-and-text',
-          'avatar-and-text',
-          'avatar',
-          'avatar-large',
-          'square'
-        ]
+        options: ['standard', 'standard-round', 'media', 'media-and-text', 'avatar', 'avatar-large', 'square']
       },
       table: {
         defaultValue: { summary: 'media-and-text' }

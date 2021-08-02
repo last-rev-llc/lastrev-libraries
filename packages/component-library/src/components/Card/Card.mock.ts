@@ -6,12 +6,16 @@ import mockLink from '../Link/Link.mock';
 export default {
   __typename: 'Card',
   variant: 'standard',
+  textAlign: 'center',
+  colorTitle: 'secondary',
+  colorSubtitle: 'textPrimary',
+  colorBody: 'textPrimary',
   media: {
     __typename: 'Media',
     file: {
       url: 'https://material-ui.com/static/images/cards/contemplative-reptile.jpg'
     },
-    alt: 'Contemplative Lizard',
+    alt: 'Contemplative Lizard'
   },
   title: capitalize(lorem.word()),
   subtitle: capitalize(lorem.words(3)),

@@ -22,8 +22,8 @@ export default {
           'standard',
           'standard-round',
           'media',
+          'media-hover',
           'media-and-text',
-          'avatar-and-text',
           'avatar',
           'avatar-large',
           'square'
@@ -31,6 +31,34 @@ export default {
       },
       table: {
         defaultValue: { summary: 'standard' }
+      }
+    },
+    textAlign: {
+      name: 'Text Align',
+      control: {
+        type: 'select',
+        options: ['left', 'center', 'right']
+      }
+    },
+    colorTitle: {
+      name: 'Color for Title',
+      control: {
+        type: 'select',
+        options: ['initial', 'inherit', 'primary', 'secondary', 'textPrimary', 'textSecondary', 'error']
+      }
+    },
+    colorSubtitle: {
+      name: 'Color for SubTitle',
+      control: {
+        type: 'select',
+        options: ['initial', 'inherit', 'primary', 'secondary', 'textPrimary', 'textSecondary', 'error']
+      }
+    },
+    colorBody: {
+      name: 'Color for SubTitle',
+      control: {
+        type: 'select',
+        options: ['initial', 'inherit', 'primary', 'secondary', 'textPrimary', 'textSecondary', 'error']
       }
     },
     media: { name: 'Media' },

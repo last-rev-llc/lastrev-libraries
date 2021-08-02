@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Card as MuiCard,
   CardProps as MuiCardProps,
@@ -23,11 +23,26 @@ export interface CardProps extends MuiCardProps {
   media?: MediaProps;
   body?: string;
   actions?: LinkProps[];
+  textAlign?: string;
+  colorTitle?: string;
+  colorSubtitle?: string;
+  colorBody?: string;
 }
 
 export interface CardOverrides {}
 
-export const Card = ({ media, title, subtitle, body, actions, variant }: CardProps) => {
+export const Card = ({
+  media,
+  title,
+  subtitle,
+  body,
+  actions,
+  variant,
+  textAlign,
+  colorTitle,
+  colorSubtitle,
+  colorBody
+}: CardProps) => {
   return (
     <ErrorBoundary>
       <CardRoot variant={variant}>
@@ -36,34 +51,38 @@ export const Card = ({ media, title, subtitle, body, actions, variant }: CardPro
           //   component={Image}
           //   {...image}
           // />
-          <Box>
+          <Box display="flex" justifyContent="center">
             <Media {...media} />
           </Box>
         ) : null}
         {title || subtitle || body || actions ? (
           <CardContent>
-            {title ? (
-              <Typography variant="h3" component="h3">
-                {title}
-              </Typography>
-            ) : null}
-            {subtitle ? (
-              <Typography variant="h4" component="h4">
-                {subtitle}
-              </Typography>
-            ) : null}
-            {body ? (
-              <Typography variant="body1" component="p">
-                {body}
-              </Typography>
-            ) : null}
-            {actions?.length ? (
-              <CardActions>
-                {actions?.map((link) => (
-                  <Link {...link} />
-                ))}
-              </CardActions>
-            ) : null}
+            <Box textAlign={textAlign}>
+              {title ? (
+                <Typography variant="h3" color={colorTitle} component="h3">
+                  {title}
+                </Typography>
+              ) : null}
+              {subtitle ? (
+                <Typography variant="h4" color={colorSubtitle} component="h4">
+                  {subtitle}
+                </Typography>
+              ) : null}
+              {body ? (
+                <Typography variant="body1" color={colorBody} component="p">
+                  {body}
+                </Typography>
+              ) : null}
+              {actions?.length ? (
+                <CardActions>
+                  <Box justify={textAlign}>
+                    {actions?.map((link) => (
+                      <Link {...link} />
+                    ))}
+                  </Box>
+                </CardActions>
+              ) : null}
+            </Box>
           </CardContent>
         ) : null}
       </CardRoot>

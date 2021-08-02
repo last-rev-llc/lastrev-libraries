@@ -1,4 +1,5 @@
 import { Theme } from '@material-ui/core/styles';
+import theme from '../../dist/theme/mock.theme.esm';
 
 export const largeCollectionCarousel = (theme: Theme) => ({
   props: {
@@ -11,14 +12,17 @@ export const largeCollectionCarousel = (theme: Theme) => ({
   }
 });
 
-export const smallCollectionCarousel = () => ({
+export const smallCollectionCarousel = (theme: Theme) => ({
   props: {
     variant: 'carousel-small'
   },
   style: {
     'height': 300,
     '& .swiper-slide': {
-      width: 'auto'
+      width: 'auto',
+      [theme.breakpoints.down('md')]: {
+        width: '100%'
+      }
     }
   }
 });
