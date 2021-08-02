@@ -24,7 +24,7 @@ export const baseTheme = createAppTheme({
   },
   palette: {
     'primary': {
-      main: '#fee501',
+      main: '#fee501'
     },
     'secondary': {
       main: '#005C7A'
@@ -116,14 +116,14 @@ const theme = createAppTheme(
               u: {
                 textUnderlinePosition: 'under',
                 textDecorationThickness: 4,
-                textDecorationColor: '#30CEC2',
+                textDecorationColor: '#30CEC2'
               }
             },
             '& .MuiTypography-h2': {
               u: {
                 textUnderlinePosition: 'under',
                 textDecorationThickness: 4,
-                textDecorationColor: '#30CEC2',
+                textDecorationColor: '#30CEC2'
               }
             },
             'img': {
@@ -169,7 +169,7 @@ const theme = createAppTheme(
           h2: {
             paddingBottom: 20,
             fontSize: 32,
-            fontWeight: 'bold',
+            fontWeight: 'bold'
           },
           h3: {
             'paddingBottom': 20,

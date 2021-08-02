@@ -1,5 +1,15 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.9
+
+### Patch Changes
+
+- 6e8e402: Moved preview boolean into graphql queries
+- Updated dependencies [6e8e402]
+  - @last-rev/contentful-cms-loader@0.1.1
+  - @last-rev/contentful-fs-loader@0.1.6
+  - @last-rev/contentful-s3-loader@0.1.4
+
 ## 0.1.8
 
 ### Patch Changes

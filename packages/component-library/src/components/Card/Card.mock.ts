@@ -11,7 +11,7 @@ export default {
     file: {
       url: 'https://material-ui.com/static/images/cards/contemplative-reptile.jpg'
     },
-    alt: 'Contemplative Lizard',
+    alt: 'Contemplative Lizard'
   },
   title: capitalize(lorem.word()),
   subtitle: capitalize(lorem.words(3)),

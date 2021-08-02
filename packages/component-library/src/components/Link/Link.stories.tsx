@@ -33,7 +33,7 @@ export default {
       table: {
         defaultValue: { summary: 'yellow' }
       }
-    },
+    }
     // variantMapping: { name: 'Variant Mapping' },
     // ref: { table: { disable: true } }
   }
