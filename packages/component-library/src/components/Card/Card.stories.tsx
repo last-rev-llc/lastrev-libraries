@@ -48,14 +48,14 @@ export default {
       }
     },
     colorSubtitle: {
-      name: 'Color for SubTitle',
+      name: 'Color for Subtitle',
       control: {
         type: 'select',
         options: ['initial', 'inherit', 'primary', 'secondary', 'textPrimary', 'textSecondary', 'error']
       }
     },
     colorBody: {
-      name: 'Color for SubTitle',
+      name: 'Color for Body',
       control: {
         type: 'select',
         options: ['initial', 'inherit', 'primary', 'secondary', 'textPrimary', 'textSecondary', 'error']

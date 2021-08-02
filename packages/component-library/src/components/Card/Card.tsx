@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   Card as MuiCard,
   CardProps as MuiCardProps,
   CardActions,
   CardContent,
-  // CardMedia,
   Box,
   Typography
 } from '@material-ui/core';
@@ -12,7 +11,6 @@ import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
 import Link, { LinkProps } from '../Link';
-// import { useTheme } from '@material-ui/core/styles';
 import styled from '@material-ui/system/styled';
 
 export interface CardProps extends MuiCardProps {
@@ -47,10 +45,6 @@ export const Card = ({
     <ErrorBoundary>
       <CardRoot variant={variant}>
         {media ? (
-          // <CardMedia
-          //   component={Image}
-          //   {...image}
-          // />
           <Box display="flex" justifyContent="center">
             <Media {...media} />
           </Box>
