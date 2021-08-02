@@ -74,9 +74,9 @@ const renderText =
       | 'h6'
       | 'inherit'
       | 'overline'
-      | 'body1'
       | 'subtitle1'
       | 'subtitle2'
+      | 'body1'
       | 'body2'
       | undefined;
   }) =>
@@ -93,6 +93,7 @@ const renderText =
   };
 
 const renderOptions = ({ links }: { links: TextLinks }) => {
+  console.log('Text: links', links);
   const entries = keyBy('id', links?.entries);
   // const assets = keyBy('id', links.assets);
 
@@ -130,6 +131,7 @@ const renderOptions = ({ links }: { links: TextLinks }) => {
         return <ContentModule {...entry} />;
       },
       [BLOCKS.PARAGRAPH]: renderText({ variant: 'body1' }),
+      [BLOCKS.PARAGRAPH]: renderText({ variant: 'body2' }),
       [BLOCKS.HEADING_1]: renderText({ variant: 'h1' }),
       [BLOCKS.HEADING_2]: renderText({ variant: 'h2' }),
       [BLOCKS.HEADING_3]: renderText({ variant: 'h3' }),
