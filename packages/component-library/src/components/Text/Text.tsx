@@ -93,7 +93,7 @@ const renderText =
   };
 
 const renderOptions = ({ links }: { links: TextLinks }) => {
-  const entries = keyBy('id', links.entries);
+  const entries = keyBy('id', links?.entries);
   // const assets = keyBy('id', links.assets);
 
   return {
