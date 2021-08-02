@@ -5,6 +5,7 @@ import mockTheme from '../../theme/mock.theme';
 
 export default {
   variant: 'default',
+  // contentWidth: 'xl',
   title: capitalize(lorem.words(3)),
   subtitle: lorem.sentence(),
   image: {
@@ -12,7 +13,7 @@ export default {
     file: {
       url: 'https://images.ctfassets.net/m1b67l45sk9z/1BOSe14Ig8b1nEpEe76UZJ/b88c975ad512e365e27b7c4d8c708467/StarPlant.svg'
     },
-    alt: 'Contemplative Lizard'
+    alt: lorem.words(2)
   },
   body: {
     __typename: 'Text',
@@ -56,7 +57,6 @@ export default {
       ]
     }
   },
-
   actions: [{ text: 'Join now', variant: 'button-contained' }],
   theme: [mockTheme]
 };

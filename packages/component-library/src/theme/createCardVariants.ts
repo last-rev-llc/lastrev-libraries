@@ -74,6 +74,54 @@ export const mediaAndTextCardVariant = (theme: Theme) => ({
   }
 });
 
+export const avatarCardVariant = (theme: Theme) => ({
+  props: {
+    variant: 'avatar'
+  },
+  style: {
+    'justifyContent': 'flex-start',
+    'flexDirection': 'row',
+    // 'flexWrap': 'wrap',
+    'maxWidth': 768,
+    'minWidth': 320,
+    'padding': 20,
+
+    // Image wrap
+    '& .MuiBox-root': {
+      width: 'auto',
+      height: 'auto'
+    },
+
+    '& img': {
+      width: 150,
+      height: 150,
+      margin: 20,
+      borderRadius: '50%',
+      border: `2px solid ${theme.palette.primary.main}`,
+      objectFit: 'cover'
+    },
+
+    '& .MuiCardContent-root': {
+      textAlign: 'left',
+    },
+
+    '& .MuiCardActions-root': {
+
+      '& .MuiButton-root': {
+        margin: 0
+      },
+
+      '& .MuiLink-root': {
+        margin: 0
+      }
+    },
+
+    '& .MuiTypography-h3': {
+      color: 'black'
+    }
+  }
+});
+
 export const avatarAndTextCardVariant = (theme: Theme) => ({
   props: {
     variant: 'avatar-and-text'
@@ -112,47 +160,6 @@ export const avatarAndTextCardVariant = (theme: Theme) => ({
     },
     '& .MuiCardActions-root': {
       display: 'none'
-    }
-  }
-});
-
-export const avatarCardVariant = (theme: Theme) => ({
-  props: {
-    variant: 'avatar'
-  },
-  style: {
-    'justifyContent': 'flex-start',
-    'flexDirection': 'row',
-    // 'flexWrap': 'wrap',
-    'maxWidth': 768,
-    'minWidth': 320,
-    'padding': 20,
-
-    // Image wrap
-    '& .MuiBox-root': {
-      width: 'auto',
-      height: 'auto'
-    },
-
-    '& img': {
-      width: 150,
-      height: 150,
-      margin: 20,
-      borderRadius: '50%',
-      border: `2px solid ${theme.palette.primary.main}`,
-      objectFit: 'cover'
-    },
-
-    '& .MuiCardContent-root': {
-      'textAlign': 'left',
-
-      '& .MuiLink-root': {
-        margin: 0
-      }
-    },
-
-    '& .MuiTypography-h3': {
-      color: 'black'
     }
   }
 });
@@ -197,7 +204,7 @@ export const squareCardVariant = (theme: Theme) => ({
 
     '&:hover': {
       '& .MuiCardContent-root': {
-        backgroundColor: theme.palette.tertiary.main,
+        backgroundColor: theme.palette.quartiary.main,
         boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main}`
       },
 
@@ -257,7 +264,7 @@ export const standardCardVariant = (theme: Theme) => ({
     'transition': 'background-color ease .15s',
 
     '&:hover': {
-      backgroundColor: theme.palette.tertiary.main,
+      backgroundColor: theme.palette.quartiary.main,
       transition: 'background-color ease .15s'
     },
 
@@ -292,7 +299,7 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
     'transition': 'background-color ease .15s',
 
     '&:hover': {
-      'backgroundColor': theme.palette.tertiary.main,
+      'backgroundColor': theme.palette.quartiary.main,
       'borderColor': theme.palette.primary.main,
       'transition': 'background-color ease .15s',
       '& .MuiButton-root': {
@@ -320,11 +327,11 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
 });
 
 const variants = [
-  avatarAndTextCardVariant,
   mediaCardVariant,
   mediaAndTextCardVariant,
   avatarCardVariant,
   avatarLargeCardVariant,
+  avatarAndTextCardVariant,
   squareCardVariant,
   standardCardVariant,
   standardRoundedCardVariant
