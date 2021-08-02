@@ -16,7 +16,7 @@ export default {
   },
   body: {
     __typename: 'Text',
-    document: {
+    json: {
       nodeType: 'document',
       data: {},
       content: [

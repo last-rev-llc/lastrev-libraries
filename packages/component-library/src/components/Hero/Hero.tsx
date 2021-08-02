@@ -39,22 +39,25 @@ HeroProps) => {
     <ErrorBoundary>
       <Root variant={variant}>
         <ContentContainer maxWidth={contentWidth}>
-          <Grid container spacing={5}
+          <Grid
+            container
+            spacing={5}
             sx={{
               maxWidth: image ? 'xl' : 'lg',
-              margin: !image ? '0 auto' : undefined,
-            }}
-          >
+              margin: !image ? '0 auto' : undefined
+            }}>
             {title || subtitle || body || actions ? (
-              <Grid container direction="column"
-                spacing={2} item xs={12} sm={image ? 6 : 12}
-                sx={{ textAlign: !image ? 'center' : undefined }}
-                >
+              <Grid
+                container
+                direction="column"
+                spacing={2}
+                item
+                xs={12}
+                sm={image ? 6 : 12}
+                sx={{ textAlign: !image ? 'center' : undefined }}>
                 <Grid item>
                   {title ? (
-                    <Typography variant="h1" component="h1"
-                      sx={{ color: !subtitle ? '#005C7A' : undefined }}
-                    >
+                    <Typography variant="h1" component="h1" sx={{ color: !subtitle ? '#005C7A' : undefined }}>
                       {title}
                     </Typography>
                   ) : null}
@@ -62,16 +65,14 @@ HeroProps) => {
                     <Typography
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
-                      sx={{ color: !title ? '#005C7A' : undefined }}
-                    >
+                      sx={{ color: !title ? '#005C7A' : undefined }}>
                       {subtitle}
                     </Typography>
                   ) : null}
                 </Grid>
                 {body ? (
                   <Grid item>
-                    {/* <Text body={body} /> */}
-                    Text component
+                    <Text body={body} />
                   </Grid>
                 ) : null}
                 {actions ? (
