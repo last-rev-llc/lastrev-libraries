@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.4
+
+### Patch Changes
+
+- d4e0047: Releasing latest components
+
 ## 0.1.3
 
 ### Patch Changes
