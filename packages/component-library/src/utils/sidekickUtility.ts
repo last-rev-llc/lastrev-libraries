@@ -1,13 +1,6 @@
-import sidekick from "@last-rev/contentful-sidekick-util";
+import sidekick from '@last-rev/contentful-sidekick-util';
 
-export default function sidekickUtility({
-  sys,
-  _id,
-  _contentTypeId,
-  id,
-  contentTypeId,
-  __typename,
-}) {
+export default function sidekickUtility({ sys, _id, _contentTypeId, id, contentTypeId, __typename }) {
   return {
     sidekick,
     sidekicker: (displayText, fieldId, fieldContentTypeId) =>
@@ -16,6 +9,6 @@ export default function sidekickUtility({
         null,
         fieldContentTypeId || __typename || _contentTypeId || contentTypeId,
         displayText
-      ),
+      )
   };
 }

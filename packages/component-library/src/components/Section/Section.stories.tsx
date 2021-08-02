@@ -51,7 +51,7 @@ Module01.args = {
       maxWidth: 1280
     },
     gridItem: {
-      textAlign: 'center',
+      textAlign: 'center'
     }
   }
 };

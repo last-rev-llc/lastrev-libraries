@@ -11,15 +11,8 @@ beforeAll(async () => {
 
 const { variant, size, color, text, className } = mockContent;
 
-const renderComponent = () => render(
-  <Button
-    variant={variant}
-    size={size}
-    color={color}
-    text={text}
-    className={className}
-  />
-);
+const renderComponent = () =>
+  render(<Button variant={variant} size={size} color={color} text={text} className={className} />);
 
 describe('<Button />', () => {
   test('Button renders correctly', () => {

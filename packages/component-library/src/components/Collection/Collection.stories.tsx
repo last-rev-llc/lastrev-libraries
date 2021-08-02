@@ -16,12 +16,7 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: [
-          'collection-one-per-row',
-          'collection-two-per-row',
-          'collection-three-per-row',
-          'collection-tiles',
-        ]
+        options: ['collection-one-per-row', 'collection-two-per-row', 'collection-three-per-row', 'collection-tiles']
       },
       table: {
         defaultValue: { summary: 'collection-three-per-row' }
@@ -40,7 +35,7 @@ export default {
     items: { name: 'Items' },
     background: { name: 'Background' },
     contentWidth: { name: 'Content Width' },
-    theme: { name: 'Theme' },
+    theme: { name: 'Theme' }
   }
 };
 

@@ -8,12 +8,14 @@ export default {
   component: Carousel,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box p={5} style={{ backgroundColor: '#eee' }}>{storyFn()}</Box>
+      <Box p={5} style={{ backgroundColor: '#eee' }}>
+        {storyFn()}
+      </Box>
     )
   ],
   argTypes: {
     variant: {
-      name: 'Variant',
+      name: 'Variant'
       // control: {
       //   type: 'select',
       //   options: ['standard', 'standard-round', 'media', 'avatar', 'avatar-large', 'square']

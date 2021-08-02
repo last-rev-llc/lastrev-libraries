@@ -15,7 +15,9 @@ export const Button = ({
 }: ButtonProps) => {
   return (
     <ErrorBoundary>
-      <MuiButton {...props} data-testid={testId}>{text}</MuiButton>
+      <MuiButton {...props} data-testid={testId}>
+        {text}
+      </MuiButton>
     </ErrorBoundary>
   );
 };

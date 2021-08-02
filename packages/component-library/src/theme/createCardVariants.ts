@@ -102,11 +102,10 @@ export const avatarCardVariant = (theme: Theme) => ({
     },
 
     '& .MuiCardContent-root': {
-      textAlign: 'left',
+      textAlign: 'left'
     },
 
     '& .MuiCardActions-root': {
-
       '& .MuiButton-root': {
         margin: 0
       },

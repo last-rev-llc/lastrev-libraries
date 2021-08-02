@@ -1,5 +1,11 @@
 # @last-rev/contentful-fs-loader
 
+## 0.1.6
+
+### Patch Changes
+
+- 6e8e402: Moved preview boolean into graphql queries
+
 ## 0.1.5
 
 ### Patch Changes

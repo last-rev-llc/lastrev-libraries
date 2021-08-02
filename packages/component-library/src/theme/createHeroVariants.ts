@@ -5,10 +5,10 @@ export const defaultVariant = (theme: Theme) => ({
     variant: 'default'
   },
   style: {
-    h1: {
+    'h1': {
       color: theme.palette.grey.A700
     },
-    h2: {
+    'h2': {
       color: theme.palette.secondary.main
     },
 

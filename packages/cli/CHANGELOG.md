@@ -1,5 +1,14 @@
 # @last-rev/cli
 
+## 0.1.12
+
+### Patch Changes
+
+- 6e8e402: Moved preview boolean into graphql queries
+- Updated dependencies [6e8e402]
+  - @last-rev/contentful-sync-to-fs@0.1.4
+  - @last-rev/graphql-contentful-core@0.1.9
+
 ## 0.1.11
 
 ### Patch Changes

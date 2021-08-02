@@ -7,9 +7,7 @@ export default {
   title: '1. Primitives / MUI / MailchimpForm',
   component: MailchimpForm,
   decorators: [
-    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box>{storyFn()}</Box>
-    )
+    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => <Box>{storyFn()}</Box>
   ],
   argTypes: {
     variant: {
@@ -26,7 +24,7 @@ export default {
     subtitle: { name: 'Subtitle' },
     body: { name: 'Body' },
     image: { name: 'Image' },
-    actions: { name: 'Actions' },
+    actions: { name: 'Actions' }
   }
 };
 
