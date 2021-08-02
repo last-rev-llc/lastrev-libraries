@@ -229,13 +229,13 @@ export const squareCardVariant = (theme: Theme) => ({
       color: 'white'
     },
 
-    '& .MuiBox-root': {
+    '& img': {
       display: 'none'
     },
     '& .MuiTypography-h4': {
       display: 'none'
     },
-    '& .MuiTypography-body2': {
+    '& .MuiTypography-body1': {
       display: 'none'
     },
     '& .MuiCardActions-root': {
