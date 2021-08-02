@@ -196,7 +196,7 @@ export const squareCardVariant = (theme: Theme) => ({
 
     '&:hover': {
       '& .MuiCardContent-root': {
-        backgroundColor: theme.palette.tertiary.main,
+        backgroundColor: theme.palette.quartiary.main,
         boxShadow: `inset 0 0 0 2px ${theme.palette.primary.main}`
       },
 
@@ -256,7 +256,7 @@ export const standardCardVariant = (theme: Theme) => ({
     'transition': 'background-color ease .15s',
 
     '&:hover': {
-      backgroundColor: theme.palette.tertiary.main,
+      backgroundColor: theme.palette.quartiary.main,
       transition: 'background-color ease .15s'
     },
     // '& .MuiBox-root': {
@@ -289,9 +289,12 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
     'transition': 'background-color ease .15s',
 
     '&:hover': {
-      backgroundColor: theme.palette.tertiary.main,
-      borderColor: theme.palette.primary.main,
-      transition: 'background-color ease .15s'
+      'backgroundColor': theme.palette.quartiary.main,
+      'borderColor': theme.palette.primary.main,
+      'transition': 'background-color ease .15s',
+      '& .MuiButton-root': {
+        color: theme.palette.pink.main
+      }
     },
 
     '& img': {

@@ -4,16 +4,20 @@ import ErrorBoundary from '../ErrorBoundary';
 
 interface ButtonProps extends MuiButtonProps {
   text?: string;
+  testId?: string;
 }
 
 export const Button = ({
   text,
+  testId,
   // children,
   ...props
 }: ButtonProps) => {
   return (
     <ErrorBoundary>
-      <MuiButton {...props}>{text}</MuiButton>
+      <MuiButton {...props} data-testid={testId}>
+        {text}
+      </MuiButton>
     </ErrorBoundary>
   );
 };

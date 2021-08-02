@@ -1,6 +1,19 @@
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
+    {
+      name: '@storybook/preset-scss',
+      options: {
+        sassLoaderOptions: {
+          sassOptions: {
+            modules: {
+              globalModulePaths: [/src\/styles/],
+              exportGlobals: true
+            }
+          }
+        }
+      }
+    },
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
     '@storybook/addon-links',

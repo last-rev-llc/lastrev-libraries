@@ -39,32 +39,51 @@ HeroProps) => {
     <ErrorBoundary>
       <Root variant={variant}>
         <ContentContainer maxWidth={contentWidth}>
-          <Grid container spacing={5} sx={{ maxWidth: 'xl' }}>
-            <Grid container spacing={2} item xs={12} sm={6}>
-              <Grid item>
-                {title ? (
-                  <Typography variant="h1" component="h1">
-                    {title}
-                  </Typography>
-                ) : null}
-                {subtitle ? (
-                  <Typography variant="h2" component="h2">
-                    {subtitle}
-                  </Typography>
-                ) : null}
-              </Grid>
-
-              {body ? (
+          <Grid
+            container
+            spacing={5}
+            sx={{
+              maxWidth: image ? 'xl' : 'lg',
+              margin: !image ? '0 auto' : undefined
+            }}>
+            {title || subtitle || body || actions ? (
+              <Grid
+                container
+                direction="column"
+                spacing={2}
+                item
+                xs={12}
+                sm={image ? 6 : 12}
+                sx={{ textAlign: !image ? 'center' : undefined }}>
                 <Grid item>
-                  <Text body={body} />
+                  {title ? (
+                    <Typography variant="h1" component="h1" sx={{ color: !subtitle ? '#005C7A' : undefined }}>
+                      {title}
+                    </Typography>
+                  ) : null}
+                  {subtitle ? (
+                    <Typography
+                      variant={!title ? 'h1' : 'h2'}
+                      component={!title ? 'h1' : 'h2'}
+                      sx={{ color: !title ? '#005C7A' : undefined }}>
+                      {subtitle}
+                    </Typography>
+                  ) : null}
                 </Grid>
-              ) : null}
-              <Grid item>
-                {actions?.map((link) => (
-                  <Link {...link} />
-                ))}
+                {body ? (
+                  <Grid item>
+                    <Text body={body} />
+                  </Grid>
+                ) : null}
+                {actions ? (
+                  <Grid item pt={3}>
+                    {actions?.map((link) => (
+                      <Link {...link} />
+                    ))}
+                  </Grid>
+                ) : null}
               </Grid>
-            </Grid>
+            ) : null}
             {image ? (
               <Grid item xs={12} sm={6}>
                 {Array.isArray(image) ? <Media {...image[0]} /> : <Media {...image} />}
@@ -100,11 +119,13 @@ const Root = styled(Box, {
 //     ...styles.gridItem
 //   })
 // })(() => ({}));
+
 const ContentContainer = styled(Container, {
   name: 'Section',
   slot: 'ContentContainer',
   overridesResolver: (_, styles) => ({
-    ...styles.contentContainer
+    ...styles.contentContainer,
+    padding: 40
   })
 })<{ variant?: string }>(() => ({}));
 export default Hero;

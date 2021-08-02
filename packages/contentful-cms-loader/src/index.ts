@@ -1,51 +1,85 @@
 import DataLoader from 'dataloader';
-import { Entry, Asset, ContentType, createClient } from 'contentful';
-import { find, map } from 'lodash';
+import { Entry, Asset, ContentType, createClient, ContentfulClientApi } from 'contentful';
+import { find, map, partition } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 
+export type ItemKey = {
+  id: string;
+  preview?: boolean;
+};
+
 export type ContentfulCmsLoaders = {
-  entryLoader: DataLoader<string, Entry<any> | null>;
-  assetLoader: DataLoader<string, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<string, Entry<any>[]>;
-  fetchAllContentTypes: () => Promise<ContentType[]>;
+  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
+  assetLoader: DataLoader<ItemKey, Asset | null>;
+  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
+  fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
 };
 
 const createLoaders = (
-  accessToken: string,
+  deliveryToken: string,
+  previewToken: string,
   space: string,
-  environment: string,
-  isPreview: boolean
+  environment: string
 ): ContentfulCmsLoaders => {
-  const client = createClient({
-    accessToken,
+  const prodClient = createClient({
+    accessToken: deliveryToken,
     space,
     environment,
-    host: `${isPreview ? 'preview' : 'cdn'}.contentful.com`
+    host: 'cdn.contentful.com'
   });
+
+  const previewClient = createClient({
+    accessToken: previewToken,
+    space,
+    environment,
+    host: 'preview.contentful.com'
+  });
+
+  const fetchBatchItems = async (ids: string[], command: 'getEntries' | 'getAssets', client: ContentfulClientApi) => {
+    const query = { 'sys.id[in]': ids.join(','), 'include': 0, 'locale': '*' };
+    return (await client[command]<any>(query)).items;
+  };
 
   const getBatchItemFetcher = <T extends Entry<any> | Asset>(
     dirname: 'entries' | 'assets'
-  ): DataLoader.BatchLoadFn<string, T | null> => {
-    return async (ids): Promise<(T | null)[]> => {
+  ): DataLoader.BatchLoadFn<ItemKey, T | null> => {
+    return async (keys): Promise<(T | null)[]> => {
       const timer = new Timer(`Fetched ${dirname} from CMS`);
-      const query = { 'sys.id[in]': ids.join(','), 'include': 0, 'locale': '*' };
+      const [previewKeys, prodKeys] = partition(keys, (k) => k.preview);
       const command = dirname === 'entries' ? 'getEntries' : 'getAssets';
-      const result = await client[command]<any>(query);
-      logger.debug(timer.end());
+      const [previewItems, prodItems] = await Promise.all([
+        fetchBatchItems(map(previewKeys, 'id'), command, previewClient),
+        fetchBatchItems(map(prodKeys, 'id'), command, prodClient)
+      ]);
+
       // need to return items in same order as list of ids, replacing items not found with null values
-      return ids.map((id) => find(result.items, (item) => (item as Entry<any> | Asset).sys.id === id) || null) as T[];
+      const items = keys.map(({ id, preview }) => {
+        return (
+          find(previewItems, (item) => {
+            return preview && (item as Entry<any> | Asset).sys.id === id;
+          }) ||
+          find(prodItems, (item) => {
+            return !preview && (item as Entry<any> | Asset).sys.id === id;
+          }) ||
+          null
+        );
+      }) as T[];
+
+      logger.debug(timer.end());
+      return items;
     };
   };
 
-  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<string, Entry<any>[]> => {
-    return async (contentTypeIds) => {
+  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
+    return async (keys) => {
       const timer = new Timer(`Fetched entries by contentType from CMS`);
       const out = await Promise.all(
-        map(contentTypeIds, (contentTypeId) =>
+        map(keys, (key) =>
           (async () => {
-            const result = await client.getEntries({
-              content_type: contentTypeId,
+            const { preview, id } = key;
+            const result = await (preview ? previewClient : prodClient).getEntries({
+              content_type: id,
               include: 0,
               locale: '*'
             });
@@ -61,10 +95,10 @@ const createLoaders = (
   const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'));
   const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'));
   const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher());
-  const fetchAllContentTypes = async () => {
+  const fetchAllContentTypes = async (preview: boolean) => {
     try {
       const timer = new Timer('Fetched all content types from CMS');
-      const result = await client.getContentTypes();
+      const result = await (preview ? previewClient : prodClient).getContentTypes();
       logger.debug(timer.end());
       return result.items;
     } catch (err) {

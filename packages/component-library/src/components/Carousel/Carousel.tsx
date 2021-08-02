@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  Box,
-  Button,
-  Grid,
-  MobileStepper,
-  Typography
-} from '@material-ui/core';
+import { Box, Button, Grid, MobileStepper, Typography } from '@material-ui/core';
 import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import styled from '@material-ui/system/styled';
@@ -44,19 +38,19 @@ export const Carousel = ({ variant, title, body, items, itemsVariant, theme }: C
             {title}
           </Typography>
         ) : null}
-        {body ? (
-          <Text body={body} />
-        ) : null}
+        {body ? <Text body={body} /> : null}
         <Grid container spacing={2} alignItems="center">
           {items?.map((item, idx) => {
             return (
-              <Grid item style={{
-                display: activeStep === idx ? 'block' : 'none',
-                margin: '0 auto'
-              }}>
+              <Grid
+                item
+                style={{
+                  display: activeStep === idx ? 'block' : 'none',
+                  margin: '0 auto'
+                }}>
                 <Card {...item} />
               </Grid>
-            )
+            );
           })}
         </Grid>
         <MobileStepper
@@ -89,7 +83,7 @@ const CarouselRoot = styled(Box, {
     ...styles.root
   })
 })<{ variant?: string }>(() => ({
-  textAlign: 'center',
+  textAlign: 'center'
 }));
 
 export default Carousel;

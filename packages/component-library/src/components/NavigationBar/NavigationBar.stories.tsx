@@ -1,12 +1,11 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import Collection from '../Collection';
-import collectionMock from '../Collection/Collection.mock';
-
+import NavigationBar from './NavigationBar';
+import NavigationBarMock from './NavigationBar.mock';
 
 export default {
-  title: '1. Primitives / MUI / Collection',
-  component: Collection,
+  title: '1. Primitives / MUI / NavigationBar',
+  component: NavigationBar,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
       <Box m={5}>{storyFn()}</Box>
@@ -18,14 +17,14 @@ export default {
       control: {
         type: 'select',
         options: [
-          'collection-one-per-row',
-          'collection-two-per-row',
-          'collection-three-per-row',
-          'collection-tiles',
+          'NavigationBar-one-per-row',
+          'NavigationBar-two-per-row',
+          'NavigationBar-three-per-row',
+          'NavigationBar-tiles'
         ]
       },
       table: {
-        defaultValue: { summary: 'collection-three-per-row' }
+        defaultValue: { summary: 'NavigationBar-three-per-row' }
       }
     },
     itemsVariant: {
@@ -41,10 +40,10 @@ export default {
     items: { name: 'Items' },
     background: { name: 'Background' },
     contentWidth: { name: 'Content Width' },
-    theme: { name: 'Theme' },
+    theme: { name: 'Theme' }
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Collection {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <NavigationBar {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...collectionMock };
+Default.args = { ...NavigationBarMock };

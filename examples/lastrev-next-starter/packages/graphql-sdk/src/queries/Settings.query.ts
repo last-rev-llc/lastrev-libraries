@@ -57,8 +57,8 @@ export const ContentQuery = gql`
     }
   }
 
-  query Settings($id: String!, $locale: String) {
-    content(id: $id, locale: $locale) {
+  query Settings($id: String!, $locale: String, $preview: Boolean) {
+    content(id: $id, locale: $locale, preview: $preview) {
       ... on GlobalSettings {
         ...ContentFragment
         logo {

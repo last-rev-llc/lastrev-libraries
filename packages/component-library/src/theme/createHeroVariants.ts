@@ -5,13 +5,19 @@ export const defaultVariant = (theme: Theme) => ({
     variant: 'default'
   },
   style: {
+    'h1': {
+      color: theme.palette.grey.A700
+    },
+    'h2': {
+      color: theme.palette.secondary.main
+    },
+
     // DEMO ONLY
     '& .MuiLink-root': {
       display: 'inline-block',
       marginTop: 4,
       padding: '10px 20px',
       backgroundColor: theme.palette.primary.main,
-
       textDecoration: 'none'
     }
   }

@@ -5,9 +5,14 @@ const baseDefs = gql`
   scalar JSON
 
   type File {
+    id: String
     url: String
     fileName: String
     extension: String
+    title: String
+    width: String
+    height: String
+    description: String
   }
 
   extend type Media implements Content {
@@ -27,8 +32,14 @@ const baseDefs = gql`
   }
 
   type RichText {
-    document: JSON
-    parsed: String
+    id: String
+    json: JSON
+    links: RichTextLinks
+  }
+
+  type RichTextLinks {
+    entries: [Content]
+    assets: [Media]
   }
 
   type Theme {
@@ -36,9 +47,9 @@ const baseDefs = gql`
   }
 
   type Query {
-    page(path: String!, locale: String): Content
-    paths(locales: [String!]): [PagePathParams!]
-    content(id: String!, locale: String): Content
+    page(path: String!, locale: String, preview: Boolean, site: String): Content
+    paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
+    content(id: String!, locale: String, preview: Boolean): Content
   }
 
   type PagePathParam {

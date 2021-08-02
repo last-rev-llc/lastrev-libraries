@@ -225,6 +225,9 @@ const FormImage = styled(Media, {
     top: theme.spacing(3),
     maxWidth: '25%',
     height: 'auto'
+  },
+  [theme.breakpoints.down('sm')]: {
+    display: 'none'
   }
 }));
 
@@ -235,17 +238,28 @@ const FormContainer = styled(Grid, {
     ...styles.formContainer
   })
 })<{ variant?: string }>(({ theme }) => ({
-  position: 'relative',
-  borderRadius: 20,
-  backgroundColor: theme.palette.tertiary.main,
-  border: `2px solid ${theme.palette.secondary.main}`,
-  paddingTop: theme.spacing(3),
-  paddingBottom: theme.spacing(4),
-  marginTop: theme.spacing(3),
+  'position': 'relative',
+  'borderRadius': 20,
+  'backgroundColor': theme.palette.quartiary.main,
+  'border': '1px solid grey',
+  'paddingTop': theme.spacing(3),
+  'paddingBottom': theme.spacing(4),
+  'marginTop': theme.spacing(3),
 
   [theme.breakpoints.down('sm')]: {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(3)
+  },
+
+  '& .MuiInputBase-input': {
+    backgroundColor: 'white',
+    border: `1px solid ${theme.palette.secondary.main}`
+  },
+  '& label.Mui-focused': {
+    padding: '1px 4px',
+    backgroundColor: 'white',
+    border: `2px solid ${theme.palette.secondary.main}`,
+    transform: 'translate(12px, -18px) scale(0.75)'
   }
 }));
 

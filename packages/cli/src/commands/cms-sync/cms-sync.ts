@@ -6,19 +6,27 @@ import sync from '@last-rev/contentful-sync-to-fs';
 
 import program from 'commander';
 
+const parseBooleanEnvVar = (value: string = '') => {
+  // values parsed as true: true, 1, yes, y, => ignore caps
+  const val = value.toString().toLowerCase();
+  return /^(true|1|yes|y)$/.test(val);
+};
+
 const run = async ({
   contentDir,
   cms,
-  contentfulAccessToken,
+  contentDeliveryToken,
+  contentPreviewToken,
   contentfulSpaceId,
-  contentfulHost,
+  preview,
   contentfulEnv
 }: {
   contentDir: string;
   cms: string;
-  contentfulAccessToken: string;
+  contentDeliveryToken: string;
+  contentPreviewToken: string;
   contentfulSpaceId: string;
-  contentfulHost?: string;
+  preview?: boolean;
   contentfulEnv?: string;
 }) => {
   // for now, only supporting contentful
@@ -27,9 +35,10 @@ const run = async ({
   }
   await sync({
     rootDir: contentDir,
-    accessToken: contentfulAccessToken,
+    contentDeliveryToken,
+    contentPreviewToken,
     space: contentfulSpaceId,
-    host: contentfulHost,
+    preview,
     environment: contentfulEnv
   });
 };
@@ -38,9 +47,14 @@ program
   .requiredOption('-d, --contentDir <content directory>', 'Directory in which to write synced files')
   .requiredOption('-c, --cms <string>', 'CMS to sync ', 'Contentful')
   .requiredOption(
-    '--contentful-access-token <access token>',
-    'Contentful Access Token, defaults to env variable CONTENTFUL_ACCESSTOKEN ',
-    process.env.CONTENTFUL_ACCESSTOKEN
+    '--content-delivery-token <content delivery token>',
+    'Contentful Content Delivery Access Token, defaults to env variable CONTENTFUL_DELIVERY_TOKEN ',
+    process.env.CONTENTFUL_DELIVERY_TOKEN
+  )
+  .requiredOption(
+    '--content-preview-token <content preview token>',
+    'Contentful Content Preview Access Token, defaults to env variable CONTENTFUL_PREVIEW_TOKEN ',
+    process.env.CONTENTFUL_PREVIEW_TOKEN
   )
   .requiredOption(
     '--contentful-space-id <space id>',
@@ -48,9 +62,9 @@ program
     process.env.CONTENTFUL_SPACE_ID
   )
   .option(
-    '--contentful-host <contentful host>',
-    'Contentful host, defaults to env variable CONTENTFUL_HOST',
-    process.env.CONTENTFUL_HOST
+    '-p, --preview',
+    'Should sync preview content?, defaults to CONTENTFUL_USE_PREVIEW',
+    parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW)
   )
   .option(
     '--contentful-env <contentful environement>',
@@ -59,9 +73,12 @@ program
   )
   .parse(process.argv);
 
-const { contentDir, cms, contentfulAccessToken, contentfulSpaceId, contentfulHost, contentfulEnv } = program.opts();
+const { contentDir, cms, contentDeliveryToken, contentPreviewToken, contentfulSpaceId, preview, contentfulEnv } =
+  program.opts();
 
-run({ contentDir, cms, contentfulAccessToken, contentfulSpaceId, contentfulHost, contentfulEnv }).catch((err) => {
-  console.error(err);
-  process.exit();
-});
+run({ contentDir, cms, contentDeliveryToken, contentPreviewToken, contentfulSpaceId, preview, contentfulEnv }).catch(
+  (err) => {
+    console.error(err);
+    process.exit();
+  }
+);

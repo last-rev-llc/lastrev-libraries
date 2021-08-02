@@ -1,11 +1,11 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import Link from './Link';
-import mockContent from './Link.mock';
+import NavigationItem from './NavigationItem';
+import mockContent from './NavigationItem.mock';
 
 export default {
-  title: '1. Primitives / MUI / Link',
-  component: Link,
+  title: '1. Primitives / MUI / NavigationItem',
+  component: NavigationItem,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
       <Box m={5}>{storyFn()}</Box>
@@ -16,10 +16,10 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['link', 'button-contained', 'button-outlined', 'button-text']
+        options: ['NavigationItem', 'button-contained', 'button-outlined', 'button-text']
       },
       table: {
-        defaultValue: { summary: 'link' }
+        defaultValue: { summary: 'NavigationItem' }
       }
     },
     text: { name: 'Text' },
@@ -39,6 +39,6 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Link {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <NavigationItem {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mockContent };

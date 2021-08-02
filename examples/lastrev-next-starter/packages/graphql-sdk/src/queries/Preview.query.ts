@@ -6,7 +6,7 @@ export const PageQuery = gql`
   ${ContentFragment}
 
   query Preview($id: String!, $locale: String) {
-    content(id: $id, locale: $locale) {
+    content(id: $id, locale: $locale, preview: true) {
       ...ContentFragment
       ... on IndexPage {
         pageTitle

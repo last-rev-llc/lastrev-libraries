@@ -10,13 +10,13 @@ export default {
   image: {
     __typename: 'Media',
     file: {
-      url: 'https://material-ui.com/static/images/cards/contemplative-reptile.jpg'
+      url: 'https://images.ctfassets.net/m1b67l45sk9z/4jtNAOSr68TdEVcsuuEPoh/1443dafc62dc2d264fbca495f0f20c09/Exampleimage.png'
     },
-    alt: 'Contemplative Lizard'
+    alt: 'Not Alone'
   },
   body: {
     __typename: 'Text',
-    document: {
+    json: {
       nodeType: 'document',
       data: {},
       content: [

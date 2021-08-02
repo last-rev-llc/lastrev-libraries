@@ -3,7 +3,7 @@ import { capitalize } from 'lodash';
 
 export const complexMock = {
   __typename: 'Text',
-  body: {
+  json: {
     document: {
       data: {},
       content: [
@@ -144,7 +144,7 @@ export const complexMock = {
 
 export default {
   __typename: 'Text',
-  body: {
+  json: {
     document: {
       nodeType: 'document',
       data: {},

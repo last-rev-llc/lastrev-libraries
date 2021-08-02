@@ -28,10 +28,10 @@ export default {
     }
   },
   items: [
-    { ...mockCard, variant: 'media', title: 'Card one title'},
-    { ...mockCard, variant: 'media', title: 'Card two title'},
-    { ...mockCard, variant: 'media', title: 'Card three title'},
-    { ...mockCard, variant: 'media', title: 'Card four title'},
+    { ...mockCard, variant: 'media', title: 'Card one title' },
+    { ...mockCard, variant: 'media', title: 'Card two title' },
+    { ...mockCard, variant: 'media', title: 'Card three title' },
+    { ...mockCard, variant: 'media', title: 'Card four title' }
   ],
   itemsVariant: 'standard-round',
   theme: [mockTheme]

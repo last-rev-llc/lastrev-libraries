@@ -18,8 +18,9 @@ export interface CardProps extends MuiCardProps {
   variant?: any;
   title?: string;
   subtitle?: string;
-  media?: MediaProps;
+  media?: MediaProps | MediaProps[];
   body?: string;
+  cardBody?: string;
   actions?: LinkProps[];
   textAlign?: string;
   colorTitle?: string;
@@ -37,6 +38,7 @@ export const Card = ({
   actions,
   variant,
   textAlign,
+  cardBody,
   colorTitle,
   colorSubtitle,
   colorBody
@@ -45,8 +47,12 @@ export const Card = ({
     <ErrorBoundary>
       <CardRoot variant={variant}>
         {media ? (
+          // <CardMedia
+          //   component={Image}
+          //   {...image}
+          // />
           <Box display="flex" justifyContent="center">
-            <Media {...media} />
+            <Media {...(Array.isArray(media) ? media[0] : media)} />
           </Box>
         ) : null}
         {title || subtitle || body || actions ? (
@@ -62,9 +68,9 @@ export const Card = ({
                   {subtitle}
                 </Typography>
               ) : null}
-              {body ? (
-                <Typography variant="body1" color={colorBody} component="p">
-                  {body}
+              {body ?? cardBody ? (
+                <Typography variant="body2" color={colorBody} component="p">
+                  {body ?? cardBody}
                 </Typography>
               ) : null}
               {actions?.length ? (

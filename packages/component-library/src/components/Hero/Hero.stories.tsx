@@ -26,10 +26,13 @@ export default {
     subtitle: { name: 'Subtitle' },
     body: { name: 'Body' },
     image: { name: 'Image' },
-    actions: { name: 'Actions' },
+    actions: { name: 'Actions' }
   }
 };
 
 const Template = (args: JSX.IntrinsicAttributes) => <Hero {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...heroMock };
+
+export const DefaultTwo = Template.bind({});
+DefaultTwo.args = { ...heroMock, image: null };

@@ -1,5 +1,11 @@
 # @last-rev/contentful-s3-loader
 
+## 0.1.4
+
+### Patch Changes
+
+- 6e8e402: Moved preview boolean into graphql queries
+
 ## 0.1.3
 
 ### Patch Changes

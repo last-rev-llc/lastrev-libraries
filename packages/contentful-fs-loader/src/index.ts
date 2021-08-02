@@ -1,39 +1,39 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
 import { readJSON, readdir } from 'fs-extra';
-import { chain, filter, identity, isNull } from 'lodash';
+import { filter, identity, isNull } from 'lodash';
 import { join } from 'path';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 
-export type PageKey = {
-  slug: string;
-  contentTypeId: string;
+export type ItemKey = {
+  id: string;
+  preview?: boolean;
 };
 
 export type ContentfulFsLoaders = {
-  entryLoader: DataLoader<string, Entry<any> | null>;
-  assetLoader: DataLoader<string, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<string, Entry<any>[]>;
-  fetchAllContentTypes: () => Promise<ContentType[]>;
+  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
+  assetLoader: DataLoader<ItemKey, Asset | null>;
+  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
+  fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
 };
 
-const createLoaders = (
-  rootDir: string,
-  spaceId: string,
-  env: string,
-  previewOrProd: 'preview' | 'production'
-): ContentfulFsLoaders => {
+const createLoaders = (rootDir: string, spaceId: string, env: string): ContentfulFsLoaders => {
+  const getUri = (...args: string[]) => {
+    return join(rootDir, spaceId, env, ...args);
+  };
+
   const getBatchItemFetcher = <T extends Entry<any> | Asset>(
     dirname: 'entries' | 'assets'
-  ): DataLoader.BatchLoadFn<string, T | null> => {
-    return async (ids): Promise<(T | null)[]> => {
+  ): DataLoader.BatchLoadFn<ItemKey, T | null> => {
+    return async (keys): Promise<(T | null)[]> => {
       const timer = new Timer(`Fetched ${dirname} from file system`);
       const out = Promise.all(
-        ids.map((id) =>
+        keys.map((key) =>
           (async () => {
+            const { id, preview } = key;
             try {
-              return await readJSON(join(rootDir, spaceId, env, previewOrProd, dirname, `${id}.json`));
+              return await readJSON(getUri(preview ? 'preview' : 'production', dirname, `${id}.json`));
             } catch (err) {
               return null;
             }
@@ -45,14 +45,15 @@ const createLoaders = (
     };
   };
 
-  const getBatchEntryIdsByContentTypeFetcher = (): DataLoader.BatchLoadFn<string, string[]> => {
-    return async (contentTypeIds) => {
+  const getBatchEntryIdsByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, string[]> => {
+    return async (keys) => {
       const timer = new Timer(`Fetched entry IDs by contentType from file system`);
       const out = Promise.all(
-        contentTypeIds.map((contentTypeId) =>
+        keys.map((key) =>
           (async () => {
             try {
-              const dir = join(rootDir, spaceId, env, previewOrProd, 'entry_ids_by_content_type', contentTypeId);
+              const { id, preview } = key;
+              const dir = getUri(preview ? 'preview' : 'production', 'entry_ids_by_content_type', id);
               return await readdir(dir);
             } catch (err) {
               return [];
@@ -66,20 +67,23 @@ const createLoaders = (
   };
 
   const getBatchEntriesByContentTypeFetcher = (
-    eLoader: DataLoader<string, Entry<any> | null>,
-    idsLoader: DataLoader<string, (string | null)[]>
-  ): DataLoader.BatchLoadFn<string, Entry<any>[]> => {
+    eLoader: DataLoader<ItemKey, Entry<any> | null>,
+    idsLoader: DataLoader<ItemKey, (string | null)[]>
+  ): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
     return async (keys) => {
       const idsArrays = await idsLoader.loadMany(keys);
+
+      const keysArray: ItemKey[][] = idsArrays.map((ids, index) =>
+        isNull(ids) ? [] : (ids as string[]).map((id) => ({ id, preview: keys[index].preview }))
+      );
+
       return Promise.all(
-        chain(idsArrays)
-          .map((ids) =>
-            (async () => {
-              const entries = await eLoader.loadMany(filter(ids, (id) => !isNull(id)));
-              return filter(entries, identity) as Entry<any>[];
-            })()
-          )
-          .value()
+        keysArray.map((entryKeys) =>
+          (async () => {
+            const entries = await eLoader.loadMany(entryKeys);
+            return filter(entries, identity) as Entry<any>[];
+          })()
+        )
       );
     };
   };
@@ -90,10 +94,10 @@ const createLoaders = (
   const entriesByContentTypeLoader = new DataLoader(
     getBatchEntriesByContentTypeFetcher(entryLoader, entryIdsByContentTypeLoader)
   );
-  const fetchAllContentTypes = async () => {
+  const fetchAllContentTypes = async (preview: boolean) => {
     try {
       const timer = new Timer('Fetched all content types from file system');
-      const dir = join(rootDir, spaceId, env, previewOrProd, 'content_types');
+      const dir = getUri(preview ? 'preview' : 'production', 'content_types');
       const contentTypeFilenames = await readdir(dir);
       const out = Promise.all(
         contentTypeFilenames.map(async (filename) => {

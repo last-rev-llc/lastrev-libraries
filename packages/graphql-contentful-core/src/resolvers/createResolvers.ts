@@ -7,7 +7,6 @@ import { ApolloContext, Mappers, TypeMappings } from '../types';
 import fieldResolver from './fieldResolver';
 import capitalizeFirst from '../utils/capitalizeFirst';
 import { merge, mapValues, isString } from 'lodash';
-import generatePathParams from '../utils/generatePathParams';
 
 export const fieldsResolver = (type: string, fields: string[], mappers: Mappers) =>
   fields.reduce((accum: any, field: string) => {
@@ -28,10 +27,16 @@ const createResolvers = ({
   merge(getContentResolvers({ contentTypes, mappers, typeMappings }), {
     Query: {
       me: () => {},
-      page: async (_: any, { path, locale }: { path?: string; locale?: string }, ctx: ApolloContext) => {
+      page: async (
+        _: any,
+        { path, locale, preview = false, site }: { path?: string; locale?: string; preview?: boolean; site?: string },
+        ctx: ApolloContext
+      ) => {
         if (!path) throw new Error('MissingArgumentPath');
         ctx.locale = locale || ctx.defaultLocale;
-        const idOrObj = ctx.pathToIdMapping[path];
+        ctx.preview = preview;
+        const { pathToIdLookup } = ctx;
+        const idOrObj = await pathToIdLookup.lookup(path, !!preview, site);
         if (!idOrObj) {
           return null;
         }
@@ -39,24 +44,32 @@ const createResolvers = ({
         if (!id || blockedLocales.indexOf(ctx.locale) > -1) {
           return null;
         }
-        return {
-          ...(await ctx.loaders.entryLoader.load(id)),
-          lr__path__: path
-        };
+        return ctx.loaders.entryLoader.load({ id, preview });
       },
-      paths: async (_: any, { locales }: { locales?: string[] }, ctx: ApolloContext) => {
+      paths: async (
+        _: any,
+        { locales, preview = false, site }: { locales?: string[]; preview?: boolean; site?: string },
+        ctx: ApolloContext
+      ) => {
         if (!locales) throw new Error('MissingArgumentLocales');
-        return generatePathParams(ctx.pathToIdMapping, locales);
+        ctx.preview = preview;
+        const { pathToIdLookup } = ctx;
+        return await pathToIdLookup.generatePathParams(locales, preview, site);
       },
-      content: async (_: any, { id, locale }: { id?: string; locale?: string }, ctx: ApolloContext) => {
+      content: async (
+        _: any,
+        { id, locale, preview = false }: { id?: string; locale?: string; preview?: boolean },
+        ctx: ApolloContext
+      ) => {
         if (!id) throw new Error('MissingArgumentId');
+        ctx.preview = preview;
         ctx.locale = locale || ctx.defaultLocale;
         // not locale specific. fieldsResolver handles that
-        return ctx.loaders.entryLoader.load(id);
+        return ctx.loaders.entryLoader.load({ id, preview });
       }
     },
     Media: fieldsResolver('Media', ['file', 'title', 'description'], mappers),
-    RichText: fieldsResolver('RichText', ['body', 'parsed'], mappers),
+    RichText: fieldsResolver('RichText', ['json', 'parsed'], mappers),
     Theme: fieldsResolver('Theme', ['variant'], mappers),
 
     // Content type resolver
