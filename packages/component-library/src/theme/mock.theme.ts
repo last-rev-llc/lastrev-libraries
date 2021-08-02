@@ -6,7 +6,7 @@ import createSectionVariants from './createSectionVariants';
 import createCollectionVariants from './createCollectionVariants';
 import createCollectionCarouselVariants from './createCollectionCarouselVariants';
 import createAppTheme from './createTheme';
-import { red, grey } from '@material-ui/core/colors';
+import { red } from '@material-ui/core/colors';
 
 export const baseTheme = createAppTheme({
   spacing: 8,
