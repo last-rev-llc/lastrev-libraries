@@ -14,7 +14,7 @@ import ContentModule from '../ContentModule';
 import { Breakpoint } from '@material-ui/core';
 import { MediaProps } from '../Media';
 // import Image from '../Image';
-
+import sidekick from '../../utils/sidekick';
 // interface Image {
 //   src: string;
 // }
@@ -33,6 +33,7 @@ export interface SectionProps {
     gridContainer?: SystemCssProperties & { spacing: any };
     gridItem?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
   };
+  sidekickLookup?: any;
 }
 
 export interface SectionOverrides {}
@@ -44,7 +45,8 @@ const Section = ({
   contentWidth,
   contentDirection,
   contentSpacing,
-  variant
+  variant,
+  sidekickLookup
 }: SectionProps) => {
   const theme = useTheme();
   const content = (
@@ -74,6 +76,7 @@ const Section = ({
   return (
     <ErrorBoundary>
       <Root
+        {...sidekick(sidekickLookup)}
         sx={{
           ...styles?.root,
           ...rootStyles({ backgroundColor, theme })

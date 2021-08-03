@@ -12,7 +12,7 @@ import { MediaProps } from '../Media/Media.types';
 import { CollectionProps } from '../Collection';
 import ContentModule from '../ContentModule';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
-
+import sidekick from '../../utils/sidekick';
 export interface HeaderProps {
   variant?: 'elevation' | 'outlined' | undefined;
   logo?: MediaProps;
@@ -20,9 +20,10 @@ export interface HeaderProps {
   // contentWidth?: false | Breakpoint | undefined;
   navigationItems?: CollectionProps[];
   // theme: any;
+  sidekickLookup: any;
 }
 
-export const Header = ({ variant, logo, logoUrl, navigationItems }: HeaderProps) => {
+export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup }: HeaderProps) => {
   // console.log('Header', {
   //   logo,
   //   logoUrl,
@@ -38,7 +39,7 @@ export const Header = ({ variant, logo, logoUrl, navigationItems }: HeaderProps)
   return (
     <ErrorBoundary>
       <>
-        <Root variant={variant} elevation={trigger ? 4 : 0}>
+        <Root {...sidekick(sidekickLookup)} variant={variant} elevation={trigger ? 4 : 0}>
           <ContentContainer>
             {logo ? (
               <Link href={logoUrl} sx={{ height: '100%' }}>
@@ -62,6 +63,7 @@ export const Header = ({ variant, logo, logoUrl, navigationItems }: HeaderProps)
 const Root = styled(AppBar, {
   name: 'Header',
   slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => ({
     ...styles.root
   })

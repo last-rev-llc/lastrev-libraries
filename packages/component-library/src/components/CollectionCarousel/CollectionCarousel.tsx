@@ -8,6 +8,7 @@ import { CardProps } from '../Card';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination } from 'swiper/core';
 import ContentModule from '../ContentModule';
+import sidekick from '../../utils/sidekick';
 SwiperCore.use([Navigation, Pagination]);
 
 export interface CollectionCarouselProps {
@@ -18,6 +19,7 @@ export interface CollectionCarouselProps {
   theme: any;
   contentWidth?: false | Breakpoint | undefined;
   slidesPerView?: number;
+  sidekickLookup: string;
 }
 
 export const CollectionCarousel = ({
@@ -25,7 +27,8 @@ export const CollectionCarousel = ({
   contentWidth,
   variant,
   itemsVariant,
-  slidesPerView
+  slidesPerView,
+  sidekickLookup
 }: CollectionCarouselProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
@@ -37,7 +40,7 @@ export const CollectionCarousel = ({
   }
   return (
     <ErrorBoundary>
-      <Root variant={variant}>
+      <Root {...sidekick(sidekickLookup)} variant={variant}>
         <ContentContainer maxWidth={contentWidth}>
           <CarouselContainer
             cssMode={variant === 'carousel-large'}
@@ -62,6 +65,7 @@ export const CollectionCarousel = ({
 const Root = styled(Box, {
   name: 'CollectionCarousel',
   slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => ({
     ...styles.root
   })
