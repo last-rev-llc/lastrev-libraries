@@ -79,6 +79,7 @@ export const Carousel = ({ variant, title, body, items, itemsVariant, theme }: C
 const CarouselRoot = styled(Box, {
   name: 'Carousel',
   slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => ({
     ...styles.root
   })

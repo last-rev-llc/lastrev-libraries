@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
 import Button, { ButtonProps as MuiButtonProps } from '@material-ui/core/Button';
+import sidekick from '../../utils/sidekick';
 
 interface NextLinkComposedProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
@@ -16,7 +17,6 @@ interface NextLinkComposedProps
   linkAs?: NextLinkProps['as'];
   href?: NextLinkProps['href'];
   text?: string;
-  variant?: String;
 }
 
 export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps>(function NextLinkComposed(
@@ -60,11 +60,12 @@ export type LinkProps = {
   as?: NextLinkProps['as'];
   href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
-  variant?: String;
+  variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
   onClick?: any;
   type?: string;
+  sidekickLookup?: any;
 } & Omit<NextLinkComposedProps, 'to' | 'linkAs' | 'href'> &
-  Omit<MuiLinkProps, 'href'> &
+  Omit<MuiLinkProps, 'href' | 'variant'> &
   Omit<MuiButtonProps, 'href' | 'variant'>;
 
 // A styled version of the Next.js Link component:
@@ -80,6 +81,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     text,
     children,
     variant,
+    sidekickLookup,
     ...other
   } = props;
 
@@ -92,18 +94,18 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
   // console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
-
+  const extra = { ...other, ...sidekick(sidekickLookup) };
   if (isExternal) {
     if (noLinkStyle) {
       return (
-        <a className={className} href={href as string} ref={ref as any} {...other}>
+        <a className={className} href={href as string} ref={ref as any} {...extra}>
           {text || children}
         </a>
       );
     }
 
     return (
-      <MuiLink className={className} href={href as string} ref={ref} {...other}>
+      <MuiLink className={className} href={href as string} ref={ref} {...extra}>
         {text || children}
       </MuiLink>
     );
@@ -111,7 +113,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
 
   if (noLinkStyle) {
     return (
-      <NextLinkComposed className={className} ref={ref as any} to={href} {...other}>
+      <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
         {text || children}
       </NextLinkComposed>
     );
@@ -120,8 +122,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (variant?.includes('button-') && href !== '#') {
     const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
     return (
-      <NextLink href={href} as={linkAs} {...other}>
-        <Button variant={buttonVariant} type={other.type}>
+      <NextLink href={href} as={linkAs}>
+        <Button variant={buttonVariant} type={other.type} {...extra}>
           {text || children}
         </Button>
       </NextLink>
@@ -130,13 +132,13 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (variant?.includes('button-')) {
     const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
     return (
-      <Button variant={buttonVariant} onClick={other.onClick} type={other.type}>
+      <Button variant={buttonVariant} onClick={other.onClick} type={other.type} {...extra}>
         {text || children}
       </Button>
     );
   }
   return (
-    <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...other}>
+    <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra}>
       {text || children}
     </MuiLink>
   );
