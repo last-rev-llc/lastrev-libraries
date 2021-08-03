@@ -16,7 +16,7 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['carousel-large']
+        options: ['carousel-large', 'carousel-small']
       },
       table: {
         defaultValue: { summary: 'carousel-large' }
@@ -26,7 +26,16 @@ export default {
       name: 'Items Variant',
       control: {
         type: 'select',
-        options: ['standard', 'standard-round', 'media', 'media-and-text', 'avatar', 'avatar-large', 'square']
+        options: [
+          'standard',
+          'standard-round',
+          'media',
+          'media-hover',
+          'media-and-text',
+          'avatar',
+          'avatar-large',
+          'square'
+        ]
       },
       table: {
         defaultValue: { summary: 'media-and-text' }

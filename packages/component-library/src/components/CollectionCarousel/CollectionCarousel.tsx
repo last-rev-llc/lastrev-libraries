@@ -47,6 +47,7 @@ export const CollectionCarousel = ({
             slidesPerView={slidesPerView}
             navigation
             pagination={{ clickable: true }}
+            spaceBetween={0}
             loop>
             {itemsWithVariant.map((item, idx) => (
               <SwiperSlide key={idx}>
