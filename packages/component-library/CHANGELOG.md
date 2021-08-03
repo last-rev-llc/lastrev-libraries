@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.6
+
+### Patch Changes
+
+- f051263: Added sidekick integration
+
 ## 0.1.5
 
 ### Patch Changes

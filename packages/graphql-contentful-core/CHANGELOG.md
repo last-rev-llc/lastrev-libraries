@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.10
+
+### Patch Changes
+
+- a208efb: Added a util to get default field value
+
 ## 0.1.9
 
 ### Patch Changes
