@@ -60,7 +60,7 @@ export type LinkProps = {
   as?: NextLinkProps['as'];
   href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
-  variant?: 'button-contained' | 'button-text' | 'text' | any;
+  variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
   onClick?: any;
   type?: string;
   sidekickLookup?: any;
