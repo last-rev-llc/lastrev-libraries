@@ -36,7 +36,14 @@ export const sideKickLookupResolver =
           };
         });
       }
-      return lookup;
+      return {
+        ...lookup,
+        contentId: content?.sys?.id,
+        contentTypeId: content?.sys?.contentType?.sys?.id
+      };
     }
-    return {};
+    return {
+      contentId: content?.sys?.id,
+      contentTypeId: content?.sys?.contentType?.sys?.id
+    };
   };
