@@ -22,27 +22,11 @@ export interface CardProps extends MuiCardProps {
   body?: string;
   cardBody?: string;
   actions?: LinkProps[];
-  textAlign?: string;
-  colorTitle?: string;
-  colorSubtitle?: string;
-  colorBody?: string;
 }
 
 export interface CardOverrides {}
 
-export const Card = ({
-  media,
-  title,
-  subtitle,
-  body,
-  actions,
-  variant,
-  textAlign,
-  cardBody,
-  colorTitle,
-  colorSubtitle,
-  colorBody
-}: CardProps) => {
+export const Card = ({ media, title, subtitle, body, actions, variant, cardBody }: CardProps) => {
   return (
     <ErrorBoundary>
       <CardRoot variant={variant}>
@@ -57,29 +41,27 @@ export const Card = ({
         ) : null}
         {title || subtitle || body || actions ? (
           <CardContent>
-            <Box textAlign={textAlign}>
+            <Box>
               {title ? (
-                <Typography variant="h3" color={colorTitle} component="h3">
+                <Typography variant="h3" component="h3">
                   {title}
                 </Typography>
               ) : null}
               {subtitle ? (
-                <Typography variant="h4" color={colorSubtitle} component="h4">
+                <Typography variant="h4" component="h4">
                   {subtitle}
                 </Typography>
               ) : null}
               {body ?? cardBody ? (
-                <Typography variant="body2" color={colorBody} component="p">
+                <Typography variant="body2" component="p">
                   {body ?? cardBody}
                 </Typography>
               ) : null}
               {actions?.length ? (
                 <CardActions>
-                  <Box justify={textAlign}>
-                    {actions?.map((link) => (
-                      <Link {...link} />
-                    ))}
-                  </Box>
+                  {actions?.map((link) => (
+                    <Link {...link} />
+                  ))}
                 </CardActions>
               ) : null}
             </Box>

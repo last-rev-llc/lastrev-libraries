@@ -5,10 +5,6 @@ import mockLink from '../Link/Link.mock';
 export default {
   __typename: 'Card',
   variant: 'standard',
-  textAlign: 'center',
-  colorTitle: 'secondary',
-  colorSubtitle: 'textPrimary',
-  colorBody: 'textPrimary',
   media: {
     __typename: 'Media',
     file: {

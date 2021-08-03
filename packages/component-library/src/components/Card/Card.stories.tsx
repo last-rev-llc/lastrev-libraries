@@ -33,34 +33,6 @@ export default {
         defaultValue: { summary: 'standard' }
       }
     },
-    textAlign: {
-      name: 'Text Align',
-      control: {
-        type: 'select',
-        options: ['left', 'center', 'right']
-      }
-    },
-    colorTitle: {
-      name: 'Color for Title',
-      control: {
-        type: 'select',
-        options: ['initial', 'inherit', 'primary', 'secondary', 'textPrimary', 'textSecondary', 'error']
-      }
-    },
-    colorSubtitle: {
-      name: 'Color for Subtitle',
-      control: {
-        type: 'select',
-        options: ['initial', 'inherit', 'primary', 'secondary', 'textPrimary', 'textSecondary', 'error']
-      }
-    },
-    colorBody: {
-      name: 'Color for Body',
-      control: {
-        type: 'select',
-        options: ['initial', 'inherit', 'primary', 'secondary', 'textPrimary', 'textSecondary', 'error']
-      }
-    },
     media: { name: 'Media' },
     title: { name: 'Title' },
     subtitle: { name: 'Subtitle' },

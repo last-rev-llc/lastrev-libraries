@@ -17,18 +17,31 @@ export interface CollectionCarouselProps {
   itemsVariant?: string;
   theme: any;
   contentWidth?: false | Breakpoint | undefined;
+  slidesPerView?: number;
 }
 
-export const CollectionCarousel = ({ items, contentWidth, variant, itemsVariant }: CollectionCarouselProps) => {
+export const CollectionCarousel = ({
+  items,
+  contentWidth,
+  variant,
+  itemsVariant,
+  slidesPerView
+}: CollectionCarouselProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
+  if (variant === 'carousel-small') {
+    slidesPerView = 4;
+  }
+  if (variant === 'carousel-large') {
+    slidesPerView = 1;
+  }
   return (
     <ErrorBoundary>
       <Root variant={variant}>
         <ContentContainer maxWidth={contentWidth}>
           <CarouselContainer
             cssMode={variant === 'carousel-large'}
-            slidesPerView={'auto'}
+            slidesPerView={slidesPerView}
             navigation
             pagination={{ clickable: true }}
             loop>
@@ -99,7 +112,8 @@ const CarouselItem = styled(Box, {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  height: '100%'
+  height: '100%',
+  width: '100%'
 }));
 
 export default CollectionCarousel;
