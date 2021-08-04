@@ -6,19 +6,18 @@
     "dist"
   ],
   "scripts": {
-    "dev": "yarn gql:dev",
-    "gql:start": "last-rev gql-serve -c config.js",
-    "gql:dev": "nodemon -x \"last-rev gql-serve -c config\" -w config.js -w cms-sync -w  ../graphql-extensions/dist",
+    "dev": "run-s sync:cms gql:dev",
+    "gql:start": "last-rev gql-serve -c config",
+    "gql:dev": "nodemon -x \"last-rev gql-serve -c config\" -w config.js -w cms-sync -w ../graphql-extensions/dist",
     "start": "run-s sync:cms gql:start",
-    "sync:cms:s3": "last-rev cms-sync-s3 -d cms-sync",
     "sync:cms": "last-rev cms-sync -d cms-sync"
   },
   "peerDependencies": {},
   "dependencies": {
-    "@last-rev/cli": "^0.1.10",
+    "@last-rev/cli": "^0.1.12",
     "dotenv": "^10.0.0",
-    "lrns-graphql-extensions": "^0.1.0",
-    "npm-run-all": "^4.1.5"
+    "npm-run-all": "^4.1.5",
+    "lrns-graphql-extensions": "^0.1.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

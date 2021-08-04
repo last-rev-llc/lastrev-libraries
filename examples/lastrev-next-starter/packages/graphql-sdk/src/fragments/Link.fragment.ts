@@ -4,7 +4,7 @@ export const LinkFragment = gql`
   fragment LinkFragment on Link {
     ...ContentFragment
     text
-    url
-    target
+    # url
+    # target
   }
 `;

@@ -15,8 +15,8 @@ const testForEnvVar = (name) => {
 // const apiUrl = testForEnvVar('LAST_REV_API_URL'); // s3
 // const apiKey = testForEnvVar('LAST_REV_API_KEY'); // s3
 const spaceId = testForEnvVar('CONTENTFUL_SPACE_ID');
-const deliveryToken = testForEnvVar('CONTENTFUL_DELIVERY_TOKEN');
-const previewToken = testForEnvVar('CONTENTFUL_PREVIEW_TOKEN');
+const contentDeliveryToken = testForEnvVar('CONTENTFUL_DELIVERY_TOKEN');
+const contentPreviewToken = testForEnvVar('CONTENTFUL_PREVIEW_TOKEN');
 const environment = testForEnvVar('CONTENTFUL_ENV');
 
 module.exports.handler = async (event, context, cb) => {
@@ -26,8 +26,8 @@ module.exports.handler = async (event, context, cb) => {
     cms: 'Contentful',
     environment: queryStringParameters.env || environment,
     spaceId,
-    deliveryToken,
-    previewToken,
+    contentDeliveryToken,
+    contentPreviewToken,
     extensions,
     // apiUrl, // s3
     // apiKey, // s3

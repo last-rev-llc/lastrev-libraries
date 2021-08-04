@@ -1,11 +1,9 @@
 import gql from 'graphql-tag';
 
-export const typeMappings = {
-  promoCard: 'card'
-};
+export const typeMappings = {};
 
 export const typeDefs = gql`
   extend type Card {
-    cta: Link
+    actions: [Link]
   }
 `;
