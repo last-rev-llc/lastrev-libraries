@@ -51,10 +51,7 @@ export const mediaHoverCardVariant = (theme: Theme) => ({
   style: {
     //to do: check typografy sizes when mobile
     'position': 'relative',
-    'maxWidth': 400,
-    [theme.breakpoints.down('md')]: {
-      width: '100%'
-    },
+    'width': '100%',
     '& img': {
       width: '100%', //when its width is 100% the carousel looks much smaller, but when adding a size (for example: 300px), looks much better, maybe we could like this to decided by the creator of a content
       [theme.breakpoints.down('md')]: {

@@ -11,14 +11,20 @@ export const largeCollectionCarousel = (theme: Theme) => ({
   }
 });
 
-export const smallCollectionCarousel = () => ({
+export const smallCollectionCarousel = (theme: Theme) => ({
   props: {
     variant: 'carousel-small'
   },
   style: {
-    'height': 300,
+    'maxHeight': 300,
     '& .swiper-slide': {
       width: '100%'
+    },
+    '& .swiper-container': {
+      paddingBottom: theme.spacing(6)
+    },
+    '& .swiper-button-prev .swiper-button-next': {
+      top: '38%'
     }
   }
 });
