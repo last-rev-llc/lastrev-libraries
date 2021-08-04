@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-// import { FilterXSS } from 'xss';
 import Box from '@material-ui/core/Box';
 import styled from '@material-ui/system/styled';
 import Typography from '@material-ui/core/Typography';
@@ -11,30 +10,7 @@ import keyBy from 'lodash/fp/keyBy';
 import Link from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
-// export const RichTextPropTypes = {
-//   // eslint-disable-next-line react/forbid-prop-types
-//   body: PropTypes.object.isRequired,
-//   _id: PropTypes.string,
-//   _contentTypeId: PropTypes.string,
-//   internalTitle: PropTypes.string
-// };
 
-// const bodyXSS = new FilterXSS({
-//   whiteList: { div: ['id', 'style'] },
-//   css: false
-//   // TODO figure out why css-filter doesnt work
-//   // css: {
-//   //   // whitelist: {
-//   //   //   'scroll-margin-top': true,
-//   //   //   'scrollMarginTop': true
-//   //   // },
-//   //   onAttr: (name,value,options) => {
-//   //     console.log("Validate", {name,value, options})
-//   //     return true;
-//   //   }
-//   // },
-// });
-// const containsHTML = (children: any) => children?.some((child: any) => child.includes && child?.includes('<'));
 interface Content {
   __typename: string;
   id: string;
@@ -47,6 +23,7 @@ export interface TextProps {
   };
   body: RichText;
   sidekickLookup?: any;
+  color?: string;
   variant?: string;
   align?: 'left' | 'center' | 'right' | undefined;
 }
@@ -61,26 +38,46 @@ export interface RichText {
 }
 
 const renderText =
-  ({
-    variant
-  }: {
-    variant:
-      | 'button'
-      | 'caption'
-      | 'h1'
-      | 'h2'
-      | 'h3'
-      | 'h4'
-      | 'h5'
-      | 'h6'
-      | 'inherit'
-      | 'overline'
-      | 'subtitle1'
-      | 'subtitle2'
-      | 'body1'
-      | 'body2'
-      | undefined;
-  }) =>
+  (
+    {
+      variant
+    }: {
+      variant:
+        | 'button'
+        | 'caption'
+        | 'h1'
+        | 'h2'
+        | 'h3'
+        | 'h4'
+        | 'h5'
+        | 'h6'
+        | 'inherit'
+        | 'overline'
+        | 'subtitle1'
+        | 'subtitle2'
+        | 'body1'
+        | 'body2'
+        | undefined;
+    },
+    {
+      color
+    }: {
+      color:
+        | 'inherit'
+        | 'initial'
+        | 'primary'
+        | 'secondary'
+        | 'tertiary'
+        | 'quartiary'
+        | 'pink'
+        | 'white'
+        | 'error'
+        | 'gradient-primary'
+        | 'textPrimary'
+        | 'textSecondary'
+        | undefined;
+    }
+  ) =>
   (_: any, children: any) => {
     console.log('Render', { children, variant });
     if (children?.length == 1 && children[0] === '') {
@@ -88,7 +85,9 @@ const renderText =
     }
     return (
       <>
-        <Typography variant={variant}>{children}</Typography>
+        <Typography variant={variant} color={color}>
+          {children}
+        </Typography>
       </>
     );
   };
