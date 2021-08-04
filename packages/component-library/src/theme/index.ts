@@ -13,12 +13,14 @@ declare module '@material-ui/core/styles' {
     'tertiary': Palette['primary'];
     'quartiary': Palette['secondary'];
     'pink': Palette['secondary'];
+    'white': Palette['secondary']; //dont know why secondary tho
     'gradient-primary': Palette['secondary'];
   }
   interface PaletteOptions {
     'tertiary': PaletteOptions['primary'];
     'quartiary': PaletteOptions['secondary'];
     'pink': PaletteOptions['secondary'];
+    'white': Palette['secondary'];
     'gradient-primary': PaletteOptions['secondary'];
   }
   // interface Theme {

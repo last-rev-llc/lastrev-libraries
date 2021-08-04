@@ -16,21 +16,7 @@ export const defaultVariant = (theme: Theme) => ({
   }
 });
 
-export const blackBoldVariant = () => ({
-  props: {
-    variant: 'black-bold'
-  },
-  style: {
-    h1: {
-      color: 'white'
-    },
-    h2: {
-      color: 'white'
-    }
-  }
-});
-
-const variants = [defaultVariant, blackBoldVariant];
+const variants = [defaultVariant];
 
 const createTextVariants = (theme: Theme) => {
   return variants.map((creator) => creator(theme));

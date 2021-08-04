@@ -38,6 +38,10 @@ export const baseTheme = createAppTheme({
     'pink': {
       main: '#d960ef'
     },
+    'white': {
+      //this is throwing an error even tho its been added to index: " Type '{ main: string; }' is missing the following properties from type 'PaletteColor': light, dark, contrastTextts(2739)"
+      main: '#000'
+    },
     'error': {
       main: red.A400
     },
@@ -175,10 +179,10 @@ const theme = createAppTheme(
             'paddingBottom': 20,
             'fontSize': 32,
             'fontWeight': 'bold',
-            'color': baseTheme.palette.secondary.main,
             '& u': {
               textDecorationColor: baseTheme.palette.tertiary.main
-            }
+            } //i think this shouldnt go here
+            //and we should decide sizes for all types now, before its too late. :o
           },
           h4: {
             paddingBottom: 20,
