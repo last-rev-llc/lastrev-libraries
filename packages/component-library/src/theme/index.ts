@@ -163,6 +163,12 @@ declare module '@material-ui/core/styles/components' {
       styleOverrides?: ComponentsOverrides['Collection'];
       variants?: ComponentsVariants['Collection'];
     };
+    CollectionAccordion?: {
+      defaultProps?: ComponentsProps['Collection'];
+      overrides?: ComponentElementOverrides['Collection'];
+      styleOverrides?: ComponentsOverrides['Collection'];
+      variants?: ComponentsVariants['Collection'];
+    };
   }
 }
 
