@@ -1,6 +1,5 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
-// import mockImage from '../Image/Image.mock';
 import mockLink from '../Link/Link.mock';
 
 export default {

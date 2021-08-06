@@ -7,13 +7,13 @@ export const mediaCardVariant = (theme: Theme) => ({
   style: {
     'position': 'relative',
     'maxWidth': 400,
-    'minWidth': 400,
-
+    [theme.breakpoints.down('md')]: {
+      width: '100%'
+    },
     '& img': {
       opacity: 1,
       transition: 'opacity ease .15s'
     },
-
     '&:hover': {
       'boxShadow': `0 0 0 2px ${theme.palette.primary.main}`,
 
@@ -22,14 +22,15 @@ export const mediaCardVariant = (theme: Theme) => ({
         transition: 'opacity ease .1s'
       }
     },
-
+    '& .img': {
+      width: '100%'
+    },
     '& .MuiCardContent-root': {
       position: 'absolute',
       top: '50%',
       left: '50%',
       zIndex: 1,
       padding: '0 !important',
-      textAlign: 'center',
       transform: 'translate(-50%, -50%)'
     },
 
@@ -37,6 +38,48 @@ export const mediaCardVariant = (theme: Theme) => ({
       color: 'black'
     },
 
+    '& .MuiCardActions-root': {
+      display: 'none'
+    }
+  }
+});
+
+export const mediaHoverCardVariant = (theme: Theme) => ({
+  props: {
+    variant: 'media-hover'
+  },
+  style: {
+    //to do: check typografy sizes when mobile
+    'position': 'relative',
+    'width': '100%',
+    '& img': {
+      width: '100%', //when its width is 100% the carousel looks much smaller, but when adding a size (for example: 300px), looks much better, maybe we could like this to decided by the creator of a content
+      [theme.breakpoints.down('md')]: {
+        width: '100%'
+      }
+    },
+    '&:hover': {
+      'boxShadow': `0 0 0 2px ${theme.palette.primary.main}`,
+      '& img': {
+        opacity: 0.7,
+        transition: 'opacity ease .1s'
+      },
+      '& .MuiCardContent-root': {
+        display: 'block'
+      }
+    },
+    '& .MuiCardContent-root': {
+      display: 'none',
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      zIndex: 1,
+      padding: '0 !important',
+      transform: 'translate(-50%, -50%)'
+    },
+    '& .MuiTypography-h3': {
+      color: 'black'
+    },
     '& .MuiCardActions-root': {
       display: 'none'
     }
@@ -60,12 +103,9 @@ export const mediaAndTextCardVariant = (theme: Theme) => ({
       padding: theme.spacing(5),
       [theme.breakpoints.down('md')]: {
         padding: theme.spacing(1)
-      },
-      display: 'flex',
-      justifyContent: 'center'
+      }
     },
     '& .MuiTypography-root': {
-      textAlign: 'left',
       color: 'white'
     },
     '& .MuiCardActions-root': {
@@ -79,86 +119,36 @@ export const avatarCardVariant = (theme: Theme) => ({
     variant: 'avatar'
   },
   style: {
+    'display': 'flex',
     'justifyContent': 'flex-start',
     'flexDirection': 'row',
-    // 'flexWrap': 'wrap',
-    'maxWidth': 768,
+    'maxWidth': 768, //we should make this as a default size
     'minWidth': 320,
     'padding': 20,
-
-    // Image wrap
-    '& .MuiBox-root': {
-      width: 'auto',
-      height: 'auto'
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      maxWidth: '100%'
     },
-
     '& img': {
       width: 150,
       height: 150,
-      margin: 20,
       borderRadius: '50%',
       border: `2px solid ${theme.palette.primary.main}`,
       objectFit: 'cover'
     },
-
-    '& .MuiCardContent-root': {
-      textAlign: 'left'
-    },
-
     '& .MuiCardActions-root': {
-      '& .MuiButton-root': {
-        margin: 0
-      },
-
+      display: 'flex'
+    },
+    '& .MuiCardActions-root .MuiButton-root': {
+      margin: 'inherit'
+    },
+    '& .MuiCardContent-root': {
       '& .MuiLink-root': {
         margin: 0
       }
     },
-
     '& .MuiTypography-h3': {
       color: 'black'
-    }
-  }
-});
-
-export const avatarAndTextCardVariant = (theme: Theme) => ({
-  props: {
-    variant: 'avatar-and-text'
-  },
-  style: {
-    'width': '100%',
-    'display': 'flex',
-    'flexDirection': 'row',
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column'
-    },
-    'background': theme.palette.secondary.main,
-    '& .MuiBox-root': {
-      padding: theme.spacing(2),
-      display: 'flex',
-      justifyContent: 'center',
-      [theme.breakpoints.down('md')]: {
-        justifyContent: 'flex-start'
-      }
-    },
-    '& .MuiTypography-root': {
-      textAlign: 'left',
-      color: 'white'
-    },
-    '& img': {
-      width: 200,
-      height: 200,
-      margin: 20,
-      [theme.breakpoints.down('md')]: {
-        width: 150,
-        height: 150
-      },
-      borderRadius: '50%',
-      border: `2px solid ${theme.palette.primary.main}`,
-      objectFit: 'cover'
-    },
-    '& .MuiCardActions-root': {
-      display: 'none'
     }
   }
 });
@@ -173,7 +163,6 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
     'height': 300,
     'minWidth': 300,
     'padding': 20,
-
     '& img': {
       width: '100%',
       height: '100%',
@@ -192,6 +181,7 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
   }
 });
 
+//to do: not rendering text, check why
 export const squareCardVariant = (theme: Theme) => ({
   props: {
     variant: 'square'
@@ -236,13 +226,13 @@ export const squareCardVariant = (theme: Theme) => ({
       color: 'white'
     },
 
-    '& .MuiBox-root': {
+    '& img': {
       display: 'none'
     },
     '& .MuiTypography-h4': {
       display: 'none'
     },
-    '& .MuiTypography-body2': {
+    '& .MuiTypography-body1': {
       display: 'none'
     },
     '& .MuiCardActions-root': {
@@ -266,11 +256,9 @@ export const standardCardVariant = (theme: Theme) => ({
       backgroundColor: theme.palette.quartiary.main,
       transition: 'background-color ease .15s'
     },
-
-    '& .MuiBox-root': {
-      textAlign: 'center'
-    },
-
+    // '& .MuiBox-root': {
+    //   textAlign: 'center'
+    // },
     '& img': {
       maxWidth: 160,
       height: 'auto',
@@ -306,10 +294,6 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
       }
     },
 
-    '& .MuiBox-root': {
-      textAlign: 'center'
-    },
-
     '& img': {
       maxWidth: 160,
       height: 'auto',
@@ -330,10 +314,10 @@ const variants = [
   mediaAndTextCardVariant,
   avatarCardVariant,
   avatarLargeCardVariant,
-  avatarAndTextCardVariant,
   squareCardVariant,
   standardCardVariant,
-  standardRoundedCardVariant
+  standardRoundedCardVariant,
+  mediaHoverCardVariant
 ];
 
 const createCardVariants = (theme: Theme) => {

@@ -18,6 +18,7 @@ export interface CollectionCarouselProps {
   itemsVariant?: string;
   theme: any;
   contentWidth?: false | Breakpoint | undefined;
+  slidesPerView?: number;
   sidekickLookup: string;
 }
 
@@ -26,15 +27,28 @@ export const CollectionCarousel = ({
   contentWidth,
   variant,
   itemsVariant,
+  slidesPerView,
   sidekickLookup
 }: CollectionCarouselProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
+  if (variant === 'carousel-small') {
+    slidesPerView = 4;
+  }
+  if (variant === 'carousel-large') {
+    slidesPerView = 1;
+  }
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant}>
         <ContentContainer maxWidth={contentWidth}>
-          <CarouselContainer cssMode navigation pagination={{ clickable: true }} loop>
+          <CarouselContainer
+            cssMode={variant === 'carousel-large'}
+            slidesPerView={slidesPerView}
+            navigation
+            pagination={{ clickable: true }}
+            spaceBetween={0}
+            loop>
             {itemsWithVariant.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <CarouselItem>
@@ -79,7 +93,6 @@ const CarouselContainer = styled(Swiper, {
   })
 })<{ variant?: string }>(({ theme }) => ({
   '--swiper-theme-color': theme.palette.primary.main,
-  '--swiper-navigation-size': 40,
   '& > .swiper-pagination-bullets span.swiper-pagination-bullet': {
     margin: '0 10px'
   },
@@ -104,7 +117,8 @@ const CarouselItem = styled(Box, {
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  height: '100%'
+  height: '100%',
+  width: '100%'
 }));
 
 export default CollectionCarousel;

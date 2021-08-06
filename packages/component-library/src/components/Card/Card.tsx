@@ -4,7 +4,6 @@ import {
   CardProps as MuiCardProps,
   CardActions,
   CardContent,
-  // CardMedia,
   Box,
   Typography
 } from '@material-ui/core';
@@ -12,7 +11,6 @@ import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
 import Link, { LinkProps } from '../Link';
-// import { useTheme } from '@material-ui/core/styles';
 import styled from '@material-ui/system/styled';
 import sidekick from '../../utils/sidekick';
 
@@ -39,7 +37,7 @@ export const Card = ({ media, title, subtitle, body, cardBody, actions, variant,
           //   component={Image}
           //   {...image}
           // />
-          <Box>
+          <Box display="flex" justifyContent="center">
             <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} />
           </Box>
         ) : null}
