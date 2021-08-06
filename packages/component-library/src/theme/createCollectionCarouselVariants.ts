@@ -23,8 +23,8 @@ export const smallCollectionCarousel = (theme: Theme) => ({
     '& .swiper-container': {
       paddingBottom: theme.spacing(6)
     },
-    '& .swiper-button-prev .swiper-button-next': {
-      top: '38%'
+    '& .swiper-button-prev , .swiper-button-next': {
+      marginTop: theme.spacing(-5)
     }
   }
 });
