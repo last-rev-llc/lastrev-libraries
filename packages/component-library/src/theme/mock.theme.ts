@@ -36,7 +36,8 @@ export const baseTheme = createAppTheme({
       main: '#BDEFEB'
     },
     'pink': {
-      main: '#d960ef'
+      main: '#d960ef',
+      light: '#f6caff'
     },
     'error': {
       main: red.A400
