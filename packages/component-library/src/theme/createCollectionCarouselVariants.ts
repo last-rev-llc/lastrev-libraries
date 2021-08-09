@@ -5,12 +5,31 @@ export const largeCollectionCarousel = (theme: Theme) => ({
     variant: 'carousel-large'
   },
   style: {
-    height: 650,
-    background: theme.palette.secondary.main
+    'height': 650,
+    'background': theme.palette.secondary.main,
+    '--swiper-navigation-size': 40
   }
 });
 
-const variants = [largeCollectionCarousel];
+export const smallCollectionCarousel = (theme: Theme) => ({
+  props: {
+    variant: 'carousel-small'
+  },
+  style: {
+    'maxHeight': 300,
+    '& .swiper-slide': {
+      width: '100%'
+    },
+    '& .swiper-container': {
+      paddingBottom: theme.spacing(6)
+    },
+    '& .swiper-button-prev , .swiper-button-next': {
+      marginTop: theme.spacing(-5)
+    }
+  }
+});
+
+const variants = [largeCollectionCarousel, smallCollectionCarousel];
 
 const createSectionVariants = (theme: Theme) => {
   return variants.map((creator) => creator(theme));

@@ -1,21 +1,22 @@
-import { Mappers, getLocalizedField, ApolloContext, getFieldDataFetcher } from '@last-rev/graphql-contentful-core';
+import { Mappers, getLocalizedField, ApolloContext } from '@last-rev/graphql-contentful-core';
 import gql from 'graphql-tag';
 
-const linkUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
-  const { loaders } = ctx;
+const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
+  // const { loaders } = ctx;
   //TODO document this use case for adapting theme fields without updating content model
   //TODO document migrating old fields to new component standards
-  const url = getLocalizedField(link, 'url', ctx);
-  if (url) return url;
+  const manualUrl = getLocalizedField(link.fields, 'manualUrl', ctx);
+  if (manualUrl) return manualUrl ?? '#';
 
-  const pageAnchor = getLocalizedField(link, 'pageAnchor', ctx);
-  if (pageAnchor) return pageAnchor;
+  // const pageAnchor = getLocalizedField(link, 'pageAnchor', ctx);
+  // if (pageAnchor) return pageAnchor;
 
-  const contentRef = getLocalizedField(link, 'content', ctx);
-  if (contentRef) {
-    const content = await loaders.entryLoader.load(contentRef.sys.id);
-    return content && getLocalizedField(content?.fields, 'slug', ctx);
-  }
+  // const contentRef = getLocalizedField(link, 'content', ctx);
+  // if (contentRef) {
+  //   const content = await loaders.entryLoader.load(contentRef.sys.id);
+  //   return content && getLocalizedField(content?.fields, 'slug', ctx);
+  // }
+  return '#';
 };
 
 export const mappers: Mappers = {
@@ -24,20 +25,7 @@ export const mappers: Mappers = {
   // This allows to use existant links and reduce the amount of nesting
   Link: {
     Link: {
-      url: linkUrlResolver,
-      theme: async (link: any, args: any, ctx: any, info: any) => {
-        //TODO document this use case for adapting theme fields without updating content model
-        //TODO document migrating old fields to new component standards
-        // This logic used to be in the ElementCTA component
-        const dataFetcher = getFieldDataFetcher('Link', 'Link', 'modal', ctx.mappers);
-        const { fieldValue: modal } = await dataFetcher(link, args, ctx, info);
-        if (modal) {
-          return { variant: 'button' };
-        }
-        return {
-          variant: 'link'
-        };
-      }
+      href: hrefUrlResolver
     },
     NavigationItem: {
       link: (x: any) => ({ ...x, fieldName: 'link' }),
@@ -48,7 +36,7 @@ export const mappers: Mappers = {
 
 export const typeDefs = gql`
   extend type Link {
-    connectLinkTo: [Page]
-    modal: Modal
+    href: String!
+    # modal: Modal
   }
 `;

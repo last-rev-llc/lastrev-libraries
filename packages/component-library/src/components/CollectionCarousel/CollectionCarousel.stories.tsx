@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import CollectionCarousel from './CollectionCarousel';
-import CollectionCarouselMock from './CollectionCarousel.mock';
+import CollectionCarouselMock, { smallCarouselMock } from './CollectionCarousel.mock';
 
 export default {
   title: '1. Primitives / MUI / CollectionCarousel',
@@ -16,7 +16,7 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['carousel-large']
+        options: ['carousel-large', 'carousel-small']
       },
       table: {
         defaultValue: { summary: 'carousel-large' }
@@ -30,8 +30,8 @@ export default {
           'standard',
           'standard-round',
           'media',
+          'media-hover',
           'media-and-text',
-          'avatar-and-text',
           'avatar',
           'avatar-large',
           'square'
@@ -48,6 +48,10 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <CollectionCarousel theme {...args} />;
-export const Default = Template.bind({});
+const TemplateLarge = (args: JSX.IntrinsicAttributes) => <CollectionCarousel theme {...args} />;
+export const Default = TemplateLarge.bind({});
 Default.args = { ...CollectionCarouselMock };
+
+const TemplateSmall = (args: JSX.IntrinsicAttributes) => <CollectionCarousel theme {...args} />;
+export const DefaultSmall = TemplateSmall.bind({});
+DefaultSmall.args = { ...smallCarouselMock };

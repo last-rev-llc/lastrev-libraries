@@ -3,7 +3,7 @@ import { Menu, MenuItem } from '@material-ui/core';
 import ErrorBoundary from '../ErrorBoundary';
 import Link, { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
-
+import sidekick from '../../utils/sidekick';
 // type NavigationItem = LinkProps | NavigationItemProps;
 
 // export type NavigationItemProps = {
@@ -11,9 +11,10 @@ import ContentModule from '../ContentModule';
 // } & LinkProps;
 export interface NavigationItemProps extends LinkProps {
   subNavigation: [LinkProps];
+  sidekickLookup?: any;
 }
 
-export const NavigationItem = ({ subNavigation, ...props }: NavigationItemProps) => {
+export const NavigationItem = ({ subNavigation, sidekickLookup, ...props }: NavigationItemProps) => {
   const linkRef = React.useRef(null);
   const [open, setOpen] = React.useState<boolean>(false);
   const handleClose = () => setOpen(false);
@@ -37,7 +38,8 @@ export const NavigationItem = ({ subNavigation, ...props }: NavigationItemProps)
             onClose={handleClose}
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-            MenuListProps={{ onMouseLeave: handleClose }}>
+            disableScrollLock
+            MenuListProps={{ onMouseLeave: handleClose, ...sidekick(sidekickLookup.subNavigation) }}>
             {
               subNavigation?.map((item) => (
                 <MenuItem key={item.id}>

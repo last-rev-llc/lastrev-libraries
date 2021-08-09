@@ -10,7 +10,7 @@ import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
 import keyBy from 'lodash/fp/keyBy';
 import Link from '../Link';
 import ContentModule from '../ContentModule';
-
+import sidekick from '../../utils/sidekick';
 // export const RichTextPropTypes = {
 //   // eslint-disable-next-line react/forbid-prop-types
 //   body: PropTypes.object.isRequired,
@@ -46,6 +46,7 @@ export interface TextProps {
     root?: SystemCssProperties;
   };
   body: RichText;
+  sidekickLookup?: any;
   variant?: string;
   align?: 'left' | 'center' | 'right' | undefined;
 }
@@ -77,7 +78,6 @@ const renderText =
       | 'subtitle1'
       | 'subtitle2'
       | 'body1'
-      | 'body2'
       | undefined;
   }) =>
   (_: any, children: any) => {
@@ -131,7 +131,6 @@ const renderOptions = ({ links }: { links: TextLinks }) => {
         return <ContentModule {...entry} />;
       },
       [BLOCKS.PARAGRAPH]: renderText({ variant: 'body1' }),
-      [BLOCKS.PARAGRAPH]: renderText({ variant: 'body2' }),
       [BLOCKS.HEADING_1]: renderText({ variant: 'h1' }),
       [BLOCKS.HEADING_2]: renderText({ variant: 'h2' }),
       [BLOCKS.HEADING_3]: renderText({ variant: 'h3' }),
@@ -142,11 +141,11 @@ const renderOptions = ({ links }: { links: TextLinks }) => {
   };
 };
 
-function Text({ body, align = 'left', styles, variant }: TextProps) {
+function Text({ body, align = 'left', styles, variant, sidekickLookup }: TextProps) {
   // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
-  console.log('Text', { body });
+  // console.log('Text', { body });
   return (
-    <Root variant={variant} sx={{ ...styles?.root, textAlign: align }}>
+    <Root {...sidekick(sidekickLookup)} variant={variant} sx={{ textAlign: align, ...styles?.root }}>
       {documentToReactComponents(body?.json, renderOptions({ links: body?.links }))}
     </Root>
   );
@@ -158,6 +157,7 @@ function Text({ body, align = 'left', styles, variant }: TextProps) {
 const Root = styled(Box, {
   name: 'Text',
   slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => ({
     ...styles.root
   })

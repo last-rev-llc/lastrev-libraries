@@ -1,9 +1,12 @@
 // import { ApolloContext, getLocalizedField } from '@last-rev/graphql-contentful-core';
 import gql from 'graphql-tag';
+import { camelCase, toUpper } from 'lodash';
 
+const pascalCase = (str: string) => camelCase(str).replace(/^(.)/, toUpper);
 export const typeDefs = gql`
+  union CollectionItem = Card | Link | NavigationItem
   extend type Collection {
-    items: [Card]
+    items: [CollectionItem]
   }
 `;
 
@@ -18,24 +21,30 @@ export const typeDefs = gql`
 export const mappers = {
   Collection: {
     Collection: {
-      // cards: async (collection: any, _args: any, ctx: ApolloContext) => {
-      //   const cardsFilter: string = getLocalizedField(collection.fields, 'cardsFilter', ctx);
-      //   if (cardsFilter && filterToContentTypeMap[cardsFilter]) {
-      //     // this is just example, this does not really exist
-      //     const { loaders } = ctx;
-      //     const cards: any = await loaders.entriesByContentTypeLoader.load(filterToContentTypeMap[cardsFilter]);
-      //     cards.__fieldname__ = 'cardsFilter';
-      //     return cards;
-      //   }
+      // items: async (collection: any, _args: any, ctx: ApolloContext) => {
       //   try {
-      //     const cards = await getLocalizedField(collection.fields, 'staticContent', ctx);
-      //     cards.__fieldName__ = 'staticContent';
-      //     return cards;
+      //     const items = await getLocalizedField(collection.fields, 'items', ctx);
+      //     return items;
       //   } catch (error) {
       //     console.log('error', error);
       //   }
       //   return [];
       // }
+    }
+  }
+};
+
+// TODO: include the collection variant for resolving the Collection Item type
+const ITEM_MAPPING: { [key: string]: string } = {
+  Page: 'Link'
+};
+
+export const resolvers = {
+  CollectionItem: {
+    __resolveType: (item: any) => {
+      return (
+        ITEM_MAPPING[pascalCase(item?.sys?.contentType?.sys?.id) ?? ''] ?? pascalCase(item?.sys?.contentType?.sys?.id)
+      );
     }
   }
 };

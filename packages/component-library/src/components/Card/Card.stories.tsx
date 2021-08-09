@@ -22,8 +22,8 @@ export default {
           'standard',
           'standard-round',
           'media',
+          'media-hover',
           'media-and-text',
-          'avatar-and-text',
           'avatar',
           'avatar-large',
           'square'

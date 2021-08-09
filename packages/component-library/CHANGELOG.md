@@ -1,5 +1,17 @@
 # @last-rev/component-library
 
+## 0.1.6
+
+### Patch Changes
+
+- f051263: Added sidekick integration
+
+## 0.1.5
+
+### Patch Changes
+
+- d082f35: added build script to component lib
+
 ## 0.1.4
 
 ### Patch Changes

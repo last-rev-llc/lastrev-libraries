@@ -6,16 +6,16 @@ import ErrorBoundary from '../ErrorBoundary';
 import { LinkProps } from '../Link/Link';
 
 import ContentModule from '../ContentModule';
-// import sidekickInit from "../../utils/sidekickUtility";
-
+import sidekick from '../../utils/sidekick';
 export interface NavigationBarProps {
   items?: LinkProps[];
   variant?: string;
   itemsVariant?: string;
   theme: any;
+  sidekickLookup: string;
 }
 
-export const NavigationBar = ({ items, variant, itemsVariant }: NavigationBarProps) => {
+export const NavigationBar = ({ items, variant, itemsVariant, sidekickLookup }: NavigationBarProps) => {
   console.log('NavigationBar', { items, variant });
   if (!items?.length) return null;
   // const { sidekicker } = sidekickInit(props);
@@ -23,6 +23,7 @@ export const NavigationBar = ({ items, variant, itemsVariant }: NavigationBarPro
   return (
     <ErrorBoundary>
       <Root
+        {...sidekick(sidekickLookup)}
         variant={variant}
         // {...sidekicker('NavigationBar')}
       >
@@ -41,6 +42,7 @@ export const NavigationBar = ({ items, variant, itemsVariant }: NavigationBarPro
 const Root = styled(Box, {
   name: 'NavigationBar',
   slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => ({
     height: '100%',
     ...styles.root

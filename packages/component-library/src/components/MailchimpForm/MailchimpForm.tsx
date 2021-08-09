@@ -8,10 +8,12 @@ import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
 import Text, { RichText } from '../Text';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
-
+import snakeCase from 'lodash/snakeCase';
+import sidekick from '../../utils/sidekick';
 const url = '//strong365.us3.list-manage.com/subscribe/post?u=d86f5abb669bd78efab8bbf17&id=a842d73410';
 
 export interface MailchimpFormProps {
+  internalTitle?: string;
   title?: string;
   subtitle?: string;
   body?: RichText;
@@ -22,6 +24,7 @@ export interface MailchimpFormProps {
   contentWidth?: false | Breakpoint | undefined;
   variant?: any;
   theme: any;
+  sidekickLookup: any;
 }
 
 interface FormFields {
@@ -35,12 +38,14 @@ type StatusTypes = 'sending' | 'error' | 'success' | undefined | null;
 type SubscribeType = (data: FormFields) => void;
 
 interface CustomFormProps {
+  internalTitle?: string;
   status?: StatusTypes;
   message?: String | Error | null;
   subscribe: SubscribeType;
   actions?: any[];
   successMessage?: RichText;
   image?: MediaProps | MediaProps[];
+  sidekickLookup: any;
 }
 interface SubscribeFormData {
   EMAIL: string;
@@ -48,12 +53,21 @@ interface SubscribeFormData {
   LNAME?: string;
 }
 
-const CustomForm = ({ status, message: rawMessage, subscribe, actions, successMessage, image }: CustomFormProps) => {
+const CustomForm = ({
+  status,
+  message: rawMessage,
+  subscribe,
+  actions,
+  successMessage,
+  image,
+  internalTitle,
+  sidekickLookup
+}: CustomFormProps) => {
   const { handleSubmit, control } = useForm<SubscribeFormData>();
   const message = typeof rawMessage === 'string' ? rawMessage.split('. ')[0] : '';
   const loading = status === 'sending';
   return (
-    <form onSubmit={handleSubmit(subscribe)} style={{ width: '100%' }}>
+    <form id={`form_${snakeCase(internalTitle)}`} onSubmit={handleSubmit(subscribe)} style={{ width: '100%' }}>
       <FormContainer container>
         <Grid sx={{ px: 5, opacity: status === 'success' ? 0 : 1 }} container item xs={12} sm={8}>
           {/* {status === 'error' ? <Box>Error {message}</Box> : null} */}
@@ -65,7 +79,7 @@ const CustomForm = ({ status, message: rawMessage, subscribe, actions, successMe
               <TextField
                 id="mce-FNAME"
                 name="FNAME"
-                variant="outlined"
+                variant="filled"
                 fullWidth
                 margin="normal"
                 disabled={loading}
@@ -85,7 +99,7 @@ const CustomForm = ({ status, message: rawMessage, subscribe, actions, successMe
               <TextField
                 id="mce-LNAME"
                 name="LNAME"
-                variant="outlined"
+                variant="filled"
                 fullWidth
                 margin="normal"
                 disabled={loading}
@@ -110,7 +124,7 @@ const CustomForm = ({ status, message: rawMessage, subscribe, actions, successMe
                 fullWidth
                 margin="normal"
                 disabled={loading}
-                variant="outlined"
+                variant="filled"
                 label="Email Address"
                 value={value}
                 onChange={onChange}
@@ -123,11 +137,15 @@ const CustomForm = ({ status, message: rawMessage, subscribe, actions, successMe
         <SubmitContainer container item xs={12} sm={4} sx={{ px: 5, zIndex: 1, opacity: status === 'success' ? 0 : 1 }}>
           <FormControl>
             {actions?.map((link) => (
-              <Link {...link} type="submit" disabled={loading} />
+              <Link key={link.id} {...link} type="submit" disabled={loading} />
             ))}
           </FormControl>
         </SubmitContainer>
-        {Array.isArray(image) ? <FormImage {...image[0]} /> : <FormImage {...image} />}
+        {Array.isArray(image) ? (
+          <FormImage {...sidekick(sidekickLookup?.image)} {...image[0]} />
+        ) : (
+          <FormImage {...sidekick(sidekickLookup?.image)} {...image} />
+        )}
         <Grid
           container
           sx={{
@@ -147,6 +165,7 @@ const CustomForm = ({ status, message: rawMessage, subscribe, actions, successMe
 };
 
 export const MailchimpForm = ({
+  internalTitle,
   variant,
   contentWidth = 'lg',
   title,
@@ -154,16 +173,25 @@ export const MailchimpForm = ({
   body,
   successMessage,
   actions,
-  image
+  image,
+  sidekickLookup
 }: MailchimpFormProps) => (
   <ErrorBoundary>
-    <Root variant={variant}>
+    <Root {...sidekick(sidekickLookup)} variant={variant}>
       <ContentContainer maxWidth={contentWidth}>
         <Grid container>
           <Grid item xs={9} sm={7}>
-            {title ? <Typography variant="h3">{title}</Typography> : null}
-            {subtitle ? <Typography variant="h4">{subtitle}</Typography> : null}
-            {body ? <Text body={body} /> : null}
+            {title ? (
+              <Typography {...sidekick(sidekickLookup?.title)} variant="h3">
+                {title}
+              </Typography>
+            ) : null}
+            {subtitle ? (
+              <Typography {...sidekick(sidekickLookup?.subtitle)} variant="h4">
+                {subtitle}
+              </Typography>
+            ) : null}
+            {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} /> : null}
           </Grid>
 
           <Grid container item sx={{ position: 'relative' }}>
@@ -171,12 +199,14 @@ export const MailchimpForm = ({
               url={url}
               render={({ subscribe, status, message }) => (
                 <CustomForm
+                  internalTitle={internalTitle}
                   status={status}
                   message={message}
                   subscribe={subscribe}
                   actions={actions}
                   successMessage={successMessage}
                   image={image}
+                  sidekickLookup={sidekickLookup}
                 />
               )}
             />
@@ -190,6 +220,7 @@ export const MailchimpForm = ({
 const Root = styled(Box, {
   name: 'MailchimpForm',
   slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => ({
     ...styles.root
   })

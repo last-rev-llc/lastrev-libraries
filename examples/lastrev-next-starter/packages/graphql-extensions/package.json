@@ -17,14 +17,15 @@
   },
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
-    "@last-rev/graphql-contentful-core": "^0.1.8",
-    "@last-rev/rollup-config": "^0.0.5",
+    "@last-rev/graphql-contentful-core": "0.1.10",
+    "@last-rev/rollup-config": "^0.0.4",
     "graphql": "^15.5.1",
     "graphql-tag": "^2.12.4",
     "lodash": "^4.17.21",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.171"
+    "@types/lodash": "^4.14.170",
+    "contentful": "^8.4.2"
   }
 }
