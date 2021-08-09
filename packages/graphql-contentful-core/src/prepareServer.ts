@@ -91,14 +91,28 @@ const prepare = async (props: ServerProps) => {
     map(locales, 'code'),
     extensions?.typeMappings || {}
   );
+  const contentful = {
+    prod: createClient({
+      accessToken: contentDeliveryToken,
+      space: spaceId,
+      environment,
+      host: 'cdn.contentful.com'
+    }),
+    preview: createClient({
+      accessToken: contentPreviewToken,
+      space: spaceId,
+      environment,
+      host: 'preview.contentful.com'
+    })
+  };
 
   return {
     resolvers,
     typeDefs,
     loaders,
     defaultLocale,
-    pathToIdLookup
+    pathToIdLookup,
+    contentful
   };
 };
-
 export default prepare;
