@@ -8,7 +8,7 @@ export default {
   component: Card,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box p={5} style={{ backgroundColor: '#eee' }}>
+      <Box p={2} style={{ backgroundColor: '#eee' }}>
         {storyFn()}
       </Box>
     )
