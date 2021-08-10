@@ -308,16 +308,6 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
   }
 });
 
-export const accordionStandard = () => ({
-  props: {
-    variant: 'accordion-standard'
-  },
-  style: {
-    margin: 350
-    //this variant seems to not work, dont know why
-  }
-});
-
 const variants = [
   mediaCardVariant,
   mediaAndTextCardVariant,
@@ -326,8 +316,7 @@ const variants = [
   squareCardVariant,
   standardCardVariant,
   standardRoundedCardVariant,
-  mediaHoverCardVariant,
-  accordionStandard
+  mediaHoverCardVariant
 ];
 
 const createCardVariants = (theme: Theme) => {

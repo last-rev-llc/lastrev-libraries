@@ -11,7 +11,7 @@ export interface CollectionAccordionProps {
   itemsVariant?: string;
   theme: any;
   sidekickLookup: string;
-  spacing: number;
+  itemSpacing: number;
 }
 
 export const CollectionAccordion = ({
@@ -19,13 +19,13 @@ export const CollectionAccordion = ({
   variant,
   itemsVariant,
   sidekickLookup,
-  spacing
+  itemSpacing
 }: CollectionAccordionProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
-      <Root container spacing={spacing} {...sidekick(sidekickLookup)} variant={variant}>
+      <Root container spacing={itemSpacing} {...sidekick(sidekickLookup)} variant={variant}>
         {itemsWithVariant.map((item, idx) => (
           <AccordionItem item key={idx}>
             <Accordion {...item} />

@@ -2,8 +2,9 @@ import mockAccordion from '../Accordion/Accordion.mock';
 import mockTheme from '../../theme/mock.theme';
 
 export default {
-  variant: 'collection-accordion',
-  spacing: 2,
+  __typename: 'Collection',
+  variant: 'accordion',
+  itemSpacing: 2,
   items: [
     {
       ...mockAccordion,

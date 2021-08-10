@@ -5,7 +5,6 @@ import createTextVariants from './createTextVariants';
 import createSectionVariants from './createSectionVariants';
 import createCollectionVariants from './createCollectionVariants';
 import createCollectionCarouselVariants from './createCollectionCarouselVariants';
-import createCollectionAccordionVariants from './createCollectionAccordionVariants';
 import createAppTheme from './createTheme';
 import { red } from '@material-ui/core/colors';
 
@@ -103,7 +102,28 @@ const theme = createAppTheme(
         variants: createCollectionCarouselVariants(baseTheme)
       },
       CollectionAccordion: {
-        variants: createCollectionAccordionVariants(baseTheme)
+        //variants: createCollectionAccordionVariants(baseTheme),
+        styleOverrides: {
+          root: {
+            '& .MuiPaper-accordion-standard': {
+              background: baseTheme.palette.secondary.main
+            },
+            '& .MuiTypography-h4': {
+              paddingBottom: 0,
+              color: 'white',
+              fontWeight: 'normal'
+            },
+            '& .MuiTypography-p': {
+              color: baseTheme.palette.primary.main
+            },
+            '& .MuiCollapse-wrapper': {
+              background: 'white'
+            },
+            '& .MuiSvgIcon-root': {
+              color: 'white'
+            }
+          }
+        }
       },
       Hero: {
         variants: createHeroVariants(baseTheme),
