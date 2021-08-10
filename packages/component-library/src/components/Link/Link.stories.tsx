@@ -24,6 +24,16 @@ export default {
     },
     text: { name: 'Text' },
     href: { name: 'Href' },
+    icon: {
+      name: 'Icon',
+      control: {
+        type: 'select',
+        options: ['Instagram', 'Facebook', 'Twitter', 'YouTube']
+      },
+      table: {
+        defaultValue: { summary: 'Instagram' }
+      }
+    },
     bgcolor: {
       name: 'Background Color',
       control: {

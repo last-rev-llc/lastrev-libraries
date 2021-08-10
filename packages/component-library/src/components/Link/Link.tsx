@@ -6,6 +6,7 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import IconButton from '@material-ui/core/IconButton';
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
 import Button, { ButtonProps as MuiButtonProps } from '@material-ui/core/Button';
 import sidekick from '../../utils/sidekick';
@@ -61,6 +62,7 @@ export type LinkProps = {
   href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
   variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
+  icon: string;
   onClick?: any;
   type?: string;
   sidekickLookup?: any;
@@ -81,6 +83,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     text,
     children,
     variant,
+    icon,
     sidekickLookup,
     ...other
   } = props;
@@ -98,7 +101,10 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (isExternal) {
     if (noLinkStyle) {
       return (
-        <a className={className} href={href as string} ref={ref as any} {...extra}>
+        <a className={className}
+          href={href as string}
+          ref={ref as any}
+          {...extra}>
           {text || children}
         </a>
       );
@@ -111,6 +117,16 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     );
   }
 
+  if (!text && icon) {
+    return (
+      <IconButton aria-label="delete"
+
+      >
+        <DeleteIcon />
+      </IconButton>
+    );
+  }
+
   if (noLinkStyle) {
     return (
       <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
@@ -119,18 +135,17 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     );
   }
 
-  if (variant?.includes('button-') && href !== '#') {
-    const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
-    return (
-      <NextLink href={href} as={linkAs}>
-        <Button variant={buttonVariant} type={other.type} {...extra}>
-          {text || children}
-        </Button>
-      </NextLink>
-    );
-  }
   if (variant?.includes('button-')) {
     const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
+    if (href !== '#') {
+      return (
+        <NextLink href={href} as={linkAs}>
+          <Button variant={buttonVariant} type={other.type} {...extra}>
+            {text || children}
+          </Button>
+        </NextLink>
+      );
+    }
     return (
       <Button variant={buttonVariant} onClick={other.onClick} type={other.type} {...extra}>
         {text || children}
