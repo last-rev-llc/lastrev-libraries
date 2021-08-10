@@ -309,6 +309,29 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
   }
 });
 
+export const accordionStandard = (theme: Theme) => ({
+  props: {
+    variant: 'accordion-standard'
+  },
+  style: {
+    'background': theme.palette.secondary.main,
+    '& .MuiTypography-h4': {
+      paddingBottom: 0,
+      color: 'white',
+      fontWeight: 'normal'
+    },
+    '& .MuiTypography-p': {
+      color: theme.palette.primary.main
+    },
+    '& .MuiCollapse-wrapper': {
+      background: 'white'
+    },
+    '& .MuiSvgIcon-root': {
+      color: 'white'
+    }
+  }
+});
+
 const variants = [
   mediaCardVariant,
   mediaAndTextCardVariant,
@@ -317,7 +340,8 @@ const variants = [
   squareCardVariant,
   standardCardVariant,
   standardRoundedCardVariant,
-  mediaHoverCardVariant
+  mediaHoverCardVariant,
+  accordionStandard
 ];
 
 const createCardVariants = (theme: Theme) => {

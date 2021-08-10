@@ -121,6 +121,12 @@ declare module '@material-ui/core/styles/components' {
       styleOverrides?: ComponentsOverrides['Card'];
       variants?: ComponentsVariants['Card'];
     };
+    Accordion?: {
+      defaultProps?: ComponentsProps['Card'];
+      overrides?: ComponentElementOverrides['Card'];
+      styleOverrides?: ComponentsOverrides['Card'];
+      variants?: ComponentsVariants['Card'];
+    };
     Hero?: {
       defaultProps?: ComponentsProps['Hero'];
       // overrides?: ComponentElementOverrides['Hero'];

@@ -2,10 +2,12 @@ import { Theme } from '@material-ui/core/styles';
 
 export const standardCollectionAccordion = (theme: Theme) => ({
   props: {
-    variant: 'accordion-standard'
+    variant: 'collection-accordion'
   },
   style: {
-    'background': theme.palette.secondary.main,
+    '& .MuiPaper-accordion-standard': {
+      background: theme.palette.secondary.main
+    },
     '& .MuiTypography-h4': {
       paddingBottom: 0,
       color: 'white',

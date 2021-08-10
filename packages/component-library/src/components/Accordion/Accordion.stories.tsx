@@ -1,11 +1,11 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import CollectionAccordion from './CollectionAccordion';
-import mockContent from './CollectionAccordion.mock';
+import Accordion from './Accordion';
+import mockContent from './Accordion.mock';
 
 export default {
-  title: '1. Primitives / MUI / CollectionAccordion',
-  component: CollectionAccordion,
+  title: '1. Primitives / MUI / Accordion',
+  component: Accordion,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
       <Box p={2} style={{ backgroundColor: '#eee' }}>
@@ -18,7 +18,7 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['collection-accordion']
+        options: ['accordion-standard']
       }
     },
     title: { name: 'Title' },
@@ -27,6 +27,6 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <CollectionAccordion {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <Accordion {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mockContent };
