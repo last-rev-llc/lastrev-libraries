@@ -52,8 +52,6 @@ export const collectionTilesVariant = (_: Theme) => ({
     'height': '100%',
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
       '& > [class*="Section-gridItem"]': {
-        //padding: theme.spacing(1),
-        padding: 5,
         margin: 0
       }
     }
