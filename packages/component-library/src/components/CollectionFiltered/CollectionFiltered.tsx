@@ -39,7 +39,7 @@ export interface CollectionFilteredProps {
   variant?: string;
   itemsVariant?: string;
   theme: any;
-  contentWidth?: false | Breakpoint | undefined;
+  itemsWidth?: false | Breakpoint | undefined;
   sidekickLookup: string;
 }
 export interface UseDynamicItemsInterface {
@@ -82,15 +82,13 @@ const useDynamicItems = ({
   return { items, options, loading, error };
 };
 
-const useQueryState = (defaultValue: any) => {
+const useQueryState = (defaultValue: any): [any, any] => {
   const router = useRouter();
-  const [state, setState] = React.useState(router?.query || defaultValue);
-  React.useEffect(() => {
-    handleSetState(defaultValue);
-  }, [defaultValue]);
+  const { slug, ...query } = router.query;
+  const [state, setState] = React.useState({ ...defaultValue, ...query });
   const handleSetState = (newState: any) => {
-    router.push({ pathname: router.pathname, query: newState }, undefined, { shallow: true });
     setState(newState);
+    router.push({ pathname: router.pathname, query: newState }, undefined, { shallow: true });
   };
   return [state, handleSetState];
 };
@@ -102,14 +100,14 @@ export const CollectionFiltered = ({
   onClearFilter,
   fetchItems,
   settings,
-  contentWidth,
+  itemsWidth,
   variant,
   itemsVariant,
   sidekickLookup
 }: CollectionFilteredProps) => {
   const { filters } = settings || {};
   // const [filter, setFilter] = React.useState(defaultFilter);
-  const [filter, setFilter] = useQueryState({});
+  const [filter, setFilter] = useQueryState(defaultFilter);
 
   const { items, options, loading, error } = useDynamicItems({
     items: defaultItems,
@@ -125,14 +123,14 @@ export const CollectionFiltered = ({
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant}>
-        <ContentContainer maxWidth={contentWidth}>
+        <ContentContainer maxWidth={itemsWidth}>
           <Grid container spacing={4} sx={{ flexDirection: 'column' }}>
             <Grid item container sx={{ justifyContent: 'flex-end' }}>
               <CollectionFilters id={id} filters={filters} options={options} setFilter={setFilter} filter={filter} />
               <Grid item>
                 <Button
                   onClick={() => {
-                    setFilter(defaultFilter);
+                    setFilter({});
                     if (onClearFilter) onClearFilter();
                   }}>
                   Clear
@@ -142,8 +140,10 @@ export const CollectionFiltered = ({
 
             {itemsWithVariant?.length ? (
               <>
-                <Typography variant="h4">Showing results for: {JSON.stringify(filter)}</Typography>
                 <Grid item container>
+                  <Grid item xs={12}>
+                    <Typography variant="h4">Showing results for: {JSON.stringify(filter)}</Typography>
+                  </Grid>
                   {itemsWithVariant?.map((item) => (
                     <Grid key={item.id} item xs={4}>
                       <ContentModule {...item} />

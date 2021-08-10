@@ -27,10 +27,12 @@ export const baseTheme = createAppTheme({
       main: '#fee501'
     },
     'secondary': {
-      main: '#005C7A'
+      main: '#005C7A',
+      contrastText: 'white'
     },
     'tertiary': {
-      main: '#30CEC2'
+      main: '#30CEC2',
+      contrastText: 'white'
     },
     'quartiary': {
       main: '#BDEFEB'
@@ -70,9 +72,7 @@ const theme = createAppTheme(
             [baseTheme.breakpoints.up('sm')]: {
               paddingLeft: baseTheme.spacing(10),
               paddingRight: baseTheme.spacing(10)
-            },
-            paddingLeft: baseTheme.spacing(3),
-            paddingRight: baseTheme.spacing(3)
+            }
           }
         }
       },
@@ -135,22 +135,34 @@ const theme = createAppTheme(
       },
       Section: {
         variants: createSectionVariants(baseTheme),
+
         styleOverrides: {
-          root: {
+          'root': {
             // display: 'flex',
             // alignItems: 'center',
             // padding: baseTheme.spacing(5)
           },
-          gridContainer: {
+          'gridContainer': {
             alignItems: 'center'
           },
-          gridItem: {
+          'gridItem': {
             // TODO: Review if this makes sense as a default
             '& > img': {
               width: 'auto',
               height: '100%',
               display: 'block'
               // margin: 'auto'
+            }
+          },
+          'background_gradient-primary': {
+            'background': 'red',
+            '& *': { color: 'white' }
+          },
+          'contentContainer': {
+            padding: baseTheme.spacing(3),
+            [baseTheme.breakpoints.up('sm')]: {
+              paddingLeft: baseTheme.spacing(10),
+              paddingRight: baseTheme.spacing(10)
             }
           }
         },
@@ -213,12 +225,20 @@ const theme = createAppTheme(
         },
         styleOverrides: {
           root: {
-            [baseTheme.breakpoints.up('sm')]: {
-              paddingLeft: baseTheme.spacing(10),
-              paddingRight: baseTheme.spacing(10)
-            },
-            paddingLeft: baseTheme.spacing(3),
-            paddingRight: baseTheme.spacing(3)
+            // [baseTheme.breakpoints.down('sm')]: {
+            //   'paddingLeft': baseTheme.spacing(3),
+            //   'paddingRight': baseTheme.spacing(3),
+            //   '& .MuiContainer-disableGutters': {
+            //     paddingLeft: 0,
+            //     paddingRight: 0
+            //   }
+            // },
+            'paddingLeft': baseTheme.spacing(10),
+            'paddingRight': baseTheme.spacing(10),
+            '& .MuiContainer-disableGutters': {
+              paddingLeft: 0,
+              paddingRight: 0
+            }
           }
         }
       },
@@ -257,7 +277,8 @@ const theme = createAppTheme(
           },
           outlinedPrimary: {
             color: baseTheme.palette.text.primary,
-            borderColor: baseTheme.palette.quartiary.main
+            borderColor: baseTheme.palette.secondary.main,
+            borderRadius: baseTheme.spacing(2)
           }
         }
       },

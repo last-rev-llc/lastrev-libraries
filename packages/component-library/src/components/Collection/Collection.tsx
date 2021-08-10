@@ -10,24 +10,27 @@ import Section from '../Section';
 import sidekick from '../../utils/sidekick';
 
 export interface CollectionProps {
+  id: string;
   items?: CardProps[];
   background?: MediaProps;
   variant?: string;
   itemsVariant?: string;
+  itemsSpacing?: number;
+  itemsWidth?: false | Breakpoint | undefined;
   theme: any;
-  contentWidth?: false | Breakpoint | undefined;
   sidekickLookup: any;
 }
 
 export const Collection = ({
   items,
-  contentWidth,
+  itemsWidth,
   background,
   variant = 'three-per-row',
   itemsVariant,
+  itemsSpacing,
   sidekickLookup
 }: CollectionProps) => {
-  // console.log('Collection', { items, contentWidth, background, variant });
+  // console.log('Collection', { items, itemsWidth, background, variant });
   if (!items?.length) return null;
   // const { sidekicker } = sidekickInit(props);
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
@@ -38,14 +41,22 @@ export const Collection = ({
         variant={variant}
         // {...sidekicker('Collection')}
       >
-        {!contentWidth ? (
-          <Section contents={itemsWithVariant} background={background} variant={`collection-${variant}`} />
+        {!itemsWidth ? (
+          <Section
+            contents={itemsWithVariant}
+            background={background}
+            variant={variant}
+            contentWidth={itemsWidth}
+            contentSpacing={itemsSpacing}
+          />
         ) : (
-          <ContentContainer maxWidth={contentWidth}>
+          <ContentContainer maxWidth={itemsWidth}>
             <Section
               contents={itemsWithVariant}
               background={background}
-              variant={`collection-${variant}`}
+              variant={variant}
+              contentWidth={itemsWidth}
+              contentSpacing={itemsSpacing}
               styles={{ root: { py: 2 } }}
             />
           </ContentContainer>
