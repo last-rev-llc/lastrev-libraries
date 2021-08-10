@@ -21,15 +21,13 @@ export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionPro
     <ErrorBoundary>
       <AccordionRoot {...sidekick(sidekickLookup)} variant={variant}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h4" color="secondary" component="h4">
+          <Typography variant="h4" color="secondary">
             {title}
           </Typography>
         </AccordionSummary>
         {body ? (
           <AccordionDetails>
-            <Typography variant="body1" component="p">
-              {body}
-            </Typography>
+            <Typography variant="body1">{body}</Typography>
           </AccordionDetails>
         ) : null}
       </AccordionRoot>
