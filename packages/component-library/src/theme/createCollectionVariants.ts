@@ -45,10 +45,16 @@ export const collectionTilesVariant = (_: Theme) => ({
     variant: 'collection-tiles'
   },
   style: {
+    'display': 'flex',
+    'flexWrap': 'wrap',
+    'justifyContent': 'space-around',
+    'width': '100%',
+    'height': '100%',
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
       '& > [class*="Section-gridItem"]': {
-        maxWidth: 1296 / 3,
-        marginBottom: 0
+        //padding: theme.spacing(1),
+        padding: 5,
+        margin: 0
       }
     }
   }
