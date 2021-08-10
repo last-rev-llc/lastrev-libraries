@@ -181,7 +181,6 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
   }
 });
 
-//to do: not rendering text, check why
 export const squareCardVariant = (theme: Theme) => ({
   props: {
     variant: 'square'
@@ -309,26 +308,13 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
   }
 });
 
-export const accordionStandard = (theme: Theme) => ({
+export const accordionStandard = () => ({
   props: {
     variant: 'accordion-standard'
   },
   style: {
-    'background': theme.palette.secondary.main,
-    '& .MuiTypography-h4': {
-      paddingBottom: 0,
-      color: 'white',
-      fontWeight: 'normal'
-    },
-    '& .MuiTypography-p': {
-      color: theme.palette.primary.main
-    },
-    '& .MuiCollapse-wrapper': {
-      background: 'white'
-    },
-    '& .MuiSvgIcon-root': {
-      color: 'white'
-    }
+    margin: 350
+    //this variant seems to not work, dont know why
   }
 });
 
