@@ -40,7 +40,7 @@ export interface CollectionFilteredProps {
   itemsVariant?: string;
   theme: any;
   itemsWidth?: false | Breakpoint | undefined;
-  sidekickLookup: string;
+  sidekickLookup?: string;
 }
 export interface UseDynamicItemsInterface {
   items?: CardProps[];

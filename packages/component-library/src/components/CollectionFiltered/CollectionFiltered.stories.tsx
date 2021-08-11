@@ -1,11 +1,11 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import CollectionCarousel from './CollectionCarousel';
-import CollectionCarouselMock from './CollectionCarousel.mock';
+import CollectionFiltered from './CollectionFiltered';
+import CollectionFilteredMock from './CollectionFiltered.mock';
 
 export default {
-  title: '1. Primitives / MUI / CollectionCarousel',
-  component: CollectionCarousel,
+  title: '1. Primitives / MUI / CollectionFiltered',
+  component: CollectionFiltered,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
       <Box m={5}>{storyFn()}</Box>
@@ -48,6 +48,6 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <CollectionCarousel theme {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <CollectionFiltered theme {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...CollectionCarouselMock };
+Default.args = { ...CollectionFilteredMock };
