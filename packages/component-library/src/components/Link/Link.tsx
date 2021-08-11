@@ -6,6 +6,7 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
 import Button, { ButtonProps as MuiButtonProps } from '@material-ui/core/Button';
@@ -96,8 +97,37 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
-  // console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
+  console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
   const extra = { ...other, ...sidekick(sidekickLookup) };
+
+  const brandIcons = [
+    'google',
+    'twitter',
+    'facebook',
+    'github',
+    'linkedin',
+    'pinterest',
+    'instagram',
+    'youtube'
+  ];
+
+  if (!text && icon) {
+    return (
+      <IconButton
+        aria-label={icon}
+        // component={Link}
+        // href={href}
+        // ref={ref}
+        // type={other.type}
+        // {...extra}
+      >
+        <Icon
+          className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`}
+        />
+      </IconButton>
+    );
+  }
+
   if (isExternal) {
     if (noLinkStyle) {
       return (
@@ -114,16 +144,6 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       <MuiLink className={className} href={href as string} ref={ref} {...extra}>
         {text || children}
       </MuiLink>
-    );
-  }
-
-  if (!text && icon) {
-    return (
-      <IconButton aria-label="delete"
-
-      >
-        <DeleteIcon />
-      </IconButton>
     );
   }
 

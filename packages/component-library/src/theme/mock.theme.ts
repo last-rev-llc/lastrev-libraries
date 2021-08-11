@@ -196,6 +196,13 @@ const theme = createAppTheme(
       },
 
       //MUI
+      MuiIcon: {
+        styleOverrides: {
+          root: {
+            overflow: 'visible'
+          }
+        }
+      },
       MuiTypography: {
         styleOverrides: {
           h1: {

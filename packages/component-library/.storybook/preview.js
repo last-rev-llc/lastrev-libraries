@@ -9,11 +9,11 @@ import '../src/styles.scss';
 import * as components from '../src';
 
 const StorybookWrapper = (storyFn) => {
-  // console.log('StoryBook', theme);
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <components.ContentModuleProvider contentMapping={components}>
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
           <CssBaseline />
           {storyFn()}
         </components.ContentModuleProvider>
