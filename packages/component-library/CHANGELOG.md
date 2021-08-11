@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.9
+
+### Patch Changes
+
+- a75e277: Hotfix
+
 ## 0.1.8
 
 ### Patch Changes
