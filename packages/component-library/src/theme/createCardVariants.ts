@@ -181,7 +181,6 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
   }
 });
 
-//to do: not rendering text, check why
 export const squareCardVariant = (theme: Theme) => ({
   props: {
     variant: 'square'
@@ -204,17 +203,13 @@ export const squareCardVariant = (theme: Theme) => ({
 
     '& .MuiCardContent-root': {
       'display': 'flex',
+      'flexDirection': 'column',
       'justifyContent': 'center',
       'alignItems': 'center',
       'height': '100%',
-      'padding': 0,
+      'padding': '0 16px',
       'backgroundColor': theme.palette.secondary.main,
-
-      '&:after': {
-        content: '""',
-        display: 'block',
-        paddingBottom: '100%'
-      },
+      'aspectRatio': '1',
 
       '&:last-child': {
         paddingBottom: 0

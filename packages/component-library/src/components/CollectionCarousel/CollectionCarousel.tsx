@@ -16,16 +16,16 @@ export interface CollectionCarouselProps {
   background?: MediaProps;
   variant?: string;
   itemsVariant?: string;
+  itemsWidth?: false | Breakpoint | undefined;
   theme: any;
-  contentWidth?: false | Breakpoint | undefined;
   slidesPerView?: number;
   sidekickLookup: string;
 }
 
 export const CollectionCarousel = ({
   items,
-  contentWidth,
   variant,
+  itemsWidth,
   itemsVariant,
   slidesPerView,
   sidekickLookup
@@ -41,7 +41,7 @@ export const CollectionCarousel = ({
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant}>
-        <ContentContainer maxWidth={contentWidth}>
+        <ContentContainer maxWidth={itemsWidth} disableGutters>
           <CarouselContainer
             cssMode={variant === 'carousel-large'}
             slidesPerView={slidesPerView}

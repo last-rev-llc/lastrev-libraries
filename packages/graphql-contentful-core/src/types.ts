@@ -1,5 +1,5 @@
 import { Context } from 'apollo-server-core';
-import { Asset, ContentType, Entry } from 'contentful';
+import { Asset, ContentfulClientApi, ContentType, Entry } from 'contentful';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
 import { GraphQLResolverMap } from 'apollo-graphql';
 import DataLoader from 'dataloader';
@@ -60,6 +60,10 @@ export type ApolloContext = Context<{
   pathToIdLookup: PathToIdLookup;
   locale?: string;
   preview?: boolean;
+  contentful: {
+    prod: ContentfulClientApi;
+    preview: ContentfulClientApi;
+  };
 }>;
 
 export type PagePathsParam = {

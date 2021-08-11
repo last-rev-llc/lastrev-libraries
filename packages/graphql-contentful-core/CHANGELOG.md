@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.11
+
+### Patch Changes
+
+- 493fa21: Add Contetful client to server context
+
 ## 0.1.10
 
 ### Patch Changes

@@ -1,5 +1,25 @@
 # @last-rev/component-library
 
+## 0.1.9
+
+### Patch Changes
+
+- a75e277: Hotfix
+
+## 0.1.8
+
+### Patch Changes
+
+- 69f28a0: Hotfix
+- 69f28a0: Hotfix router is null on SSG
+
+## 0.1.7
+
+### Patch Changes
+
+- ad475cf: Releases CollectionCarousel, new features for Card
+- 2c155d1: Add CollectionFiltered, fix Tiles collection
+
 ## 0.1.6
 
 ### Patch Changes

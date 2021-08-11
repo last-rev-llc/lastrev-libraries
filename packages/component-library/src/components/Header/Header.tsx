@@ -42,15 +42,15 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
         <Root {...sidekick(sidekickLookup)} variant={variant} elevation={trigger ? 4 : 0}>
           <ContentContainer>
             {logo ? (
-              <Link href={logoUrl} sx={{ height: '100%' }}>
+              <Link href={logoUrl} sx={{ height: '100%' }} {...sidekick(sidekickLookup?.logo)}>
                 <Logo {...logo} />
               </Link>
             ) : null}
             {navigationItems?.map((collection) => (
-              <>
+              <React.Fragment key={collection.id}>
                 <Box sx={{ flexGrow: 1 }} />
                 <ContentModule {...collection} variant={'navigation-bar'} />
-              </>
+              </React.Fragment>
             ))}
           </ContentContainer>
         </Root>

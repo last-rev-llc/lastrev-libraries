@@ -1,11 +1,11 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import Card from './Card';
-import mockContent from './Card.mock';
+import CollectionAccordion from './CollectionAccordion';
+import mockContent from './CollectionAccordion.mock';
 
 export default {
-  title: '1. Primitives / MUI / Card',
-  component: Card,
+  title: '1. Primitives / MUI / CollectionAccordion',
+  component: CollectionAccordion,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
       <Box p={2} style={{ backgroundColor: '#eee' }}>
@@ -18,30 +18,15 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: [
-          'standard',
-          'standard-round',
-          'media',
-          'media-hover',
-          'media-and-text',
-          'avatar',
-          'avatar-large',
-          'square'
-        ]
-      },
-      table: {
-        defaultValue: { summary: 'standard' }
+        options: ['collection-accordion']
       }
     },
-    media: { name: 'Media' },
     title: { name: 'Title' },
-    subtitle: { name: 'Subtitle' },
     body: { name: 'Body' },
-    actions: { name: 'Actions' },
     __typename: { table: { disable: true } }
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Card {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <CollectionAccordion {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mockContent };

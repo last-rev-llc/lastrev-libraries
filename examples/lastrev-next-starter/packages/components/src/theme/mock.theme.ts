@@ -212,7 +212,7 @@ const theme = createAppTheme(
 
             // Both can be Card CTAs
             '& .MuiButton-root': {
-              margin: '0 auto',
+              margin: '0 auto'
             },
             '& .MuiLink-root': {
               margin: '0 auto'

@@ -47,12 +47,14 @@ declare module '@material-ui/core/styles/components' {
   }
   interface ComponentElementOverrides {
     Section: {
-      root?: {};
-      sectionWrap?: {};
-      imageWrap?: {};
-      gridItem?: {};
-      gridContainer?: {};
-      backgroundImage?: {};
+      'root'?: {};
+      'sectionWrap'?: {};
+      'imageWrap'?: {};
+      'gridItem'?: {};
+      'gridContainer'?: {};
+      'contentContainer'?: {};
+      'backgroundImage'?: {};
+      'background_gradient-primary'?: {};
     };
     Card: CardOverrides;
     Text?: {
@@ -63,14 +65,7 @@ declare module '@material-ui/core/styles/components' {
     };
   }
   interface ComponentsOverrides {
-    Section?: {
-      root?: {};
-      sectionWrap?: {};
-      imageWrap?: {};
-      gridItem?: {};
-      gridContainer?: {};
-      backgroundImage?: {};
-    };
+    Section?: ComponentElementOverrides['Section'];
     Card: CardOverrides;
     Collection?: {
       root?: {};
@@ -121,6 +116,12 @@ declare module '@material-ui/core/styles/components' {
       styleOverrides?: ComponentsOverrides['Card'];
       variants?: ComponentsVariants['Card'];
     };
+    Accordion?: {
+      defaultProps?: ComponentsProps['Card'];
+      overrides?: ComponentElementOverrides['Card'];
+      styleOverrides?: ComponentsOverrides['Card'];
+      variants?: ComponentsVariants['Card'];
+    };
     Hero?: {
       defaultProps?: ComponentsProps['Hero'];
       // overrides?: ComponentElementOverrides['Hero'];
@@ -158,6 +159,12 @@ declare module '@material-ui/core/styles/components' {
       variants?: ComponentsVariants['Collection'];
     };
     CollectionCarousel?: {
+      defaultProps?: ComponentsProps['Collection'];
+      overrides?: ComponentElementOverrides['Collection'];
+      styleOverrides?: ComponentsOverrides['Collection'];
+      variants?: ComponentsVariants['Collection'];
+    };
+    CollectionAccordion?: {
       defaultProps?: ComponentsProps['Collection'];
       overrides?: ComponentElementOverrides['Collection'];
       styleOverrides?: ComponentsOverrides['Collection'];

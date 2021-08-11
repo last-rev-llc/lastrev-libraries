@@ -38,6 +38,11 @@ export interface SectionProps {
 
 export interface SectionOverrides {}
 
+const VARIANTS_GRID_ITEM: Record<string, any> = {
+  'one-per-row': { xs: 12 },
+  'two-per-row': { xs: 6 },
+  'three-per-row': { xs: 6, sm: 4 }
+};
 const Section = ({
   contents,
   styles,
@@ -49,11 +54,13 @@ const Section = ({
   sidekickLookup
 }: SectionProps) => {
   const theme = useTheme();
+  const gridItemStyle = variant && VARIANTS_GRID_ITEM[variant] ? VARIANTS_GRID_ITEM[variant] : {};
   const content = (
     <GridContainer
       container
       sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-      spacing={contentSpacing ?? 2}
+      {...(contentSpacing && { spacing: contentSpacing })}
+
       // spacing={contentSpacing?.toString() ?? 2}
     >
       {contents?.map((content, idx) => {
@@ -62,9 +69,9 @@ const Section = ({
           <GridItem
             item
             key={content?.id}
-            xs={itemStyle?.xs ?? true}
-            md={itemStyle?.md}
-            sm={itemStyle?.sm}
+            xs={itemStyle?.xs ?? gridItemStyle?.xs ?? true}
+            md={itemStyle?.md ?? gridItemStyle?.md}
+            sm={itemStyle?.sm ?? gridItemStyle?.sm}
             sx={itemStyle}>
             <ContentModule {...content} />
           </GridItem>
@@ -89,11 +96,33 @@ const Section = ({
 };
 
 const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; theme: Theme }) => {
-  // console.log('RootStyles', { backgroundColor, theme });
   if (backgroundColor?.includes('gradient') && theme.palette[backgroundColor]) {
-    return { background: theme.palette[backgroundColor]?.main, color: `${backgroundColor}.contrastText` };
-  } else if (backgroundColor && theme.palette[backgroundColor]) {
-    return { bgcolor: `${backgroundColor}.main`, color: `${backgroundColor}.contrastText` };
+    return {
+      'background': theme.palette[backgroundColor]?.main,
+      'color': `${backgroundColor}.contrastText`,
+      // TODO find out a better way to override text color
+      '& *, p, h1, h2, h3, h4, h5, h6, a': {
+        color: `${backgroundColor}.contrastText`
+      }
+    };
+  }
+  const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
+  const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
+  console.log('RootStyles', { backgroundColor, parsedBGColor, paletteColor });
+  if (backgroundColor && get(theme.palette, parsedBGColor)) {
+    console.log('Contrast', {
+      backgroundColor,
+      parsedBGColor,
+      paletteColor,
+      bgcolor: parsedBGColor,
+      color: `${paletteColor}.contrastText`
+    });
+    return {
+      'bgcolor': parsedBGColor,
+      '& *, p, h1, h2, h3, h4, h5, h6, a': {
+        color: `${paletteColor}.contrastText`
+      }
+    };
   }
   return {};
 };
