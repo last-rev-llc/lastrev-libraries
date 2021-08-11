@@ -101,6 +101,30 @@ const theme = createAppTheme(
       CollectionCarousel: {
         variants: createCollectionCarouselVariants(baseTheme)
       },
+      CollectionAccordion: {
+        //variants: createCollectionAccordionVariants(baseTheme),
+        styleOverrides: {
+          root: {
+            '& .MuiPaper-accordion-standard': {
+              background: baseTheme.palette.secondary.main
+            },
+            '& .MuiTypography-h4': {
+              paddingBottom: 0,
+              color: 'white',
+              fontWeight: 'normal'
+            },
+            '& .MuiTypography-p': {
+              color: baseTheme.palette.primary.main
+            },
+            '& .MuiCollapse-wrapper': {
+              background: 'white'
+            },
+            '& .MuiSvgIcon-root': {
+              color: 'white'
+            }
+          }
+        }
+      },
       Hero: {
         variants: createHeroVariants(baseTheme),
         styleOverrides: {

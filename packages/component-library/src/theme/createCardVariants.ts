@@ -181,7 +181,6 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
   }
 });
 
-//to do: not rendering text, check why
 export const squareCardVariant = (theme: Theme) => ({
   props: {
     variant: 'square'
