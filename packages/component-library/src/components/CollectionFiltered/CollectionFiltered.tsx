@@ -84,7 +84,7 @@ const useDynamicItems = ({
 
 const useQueryState = (defaultValue: any): [any, any] => {
   const router = useRouter();
-  const { slug, ...query } = router.query;
+  const { slug, ...query } = router?.query;
   const [state, setState] = React.useState({ ...defaultValue, ...query });
   const handleSetState = (newState: any) => {
     setState(newState);
