@@ -8,7 +8,7 @@ export default {
   component: Collection,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box m={5}>{storyFn()}</Box>
+      <Box m={2}>{storyFn()}</Box>
     )
   ],
   argTypes: {
