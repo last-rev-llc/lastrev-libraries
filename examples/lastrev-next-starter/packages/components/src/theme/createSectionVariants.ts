@@ -121,7 +121,7 @@ export const gradientBackgroundVariant = () => ({
     },
     '.MuiTypography-h2': {
       color: 'white'
-    },
+    }
   }
 });
 
