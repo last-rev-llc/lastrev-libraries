@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.1.8
+
+### Patch Changes
+
+- 69f28a0: Hotfix
+- 69f28a0: Hotfix router is null on SSG
+
 ## 0.1.7
 
 ### Patch Changes
