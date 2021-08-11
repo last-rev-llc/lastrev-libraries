@@ -10,7 +10,7 @@ import sidekick from '../../utils/sidekick';
 //   subNavigation: [NavigationItem];
 // } & LinkProps;
 export interface NavigationItemProps extends LinkProps {
-  subNavigation: [LinkProps];
+  subNavigation?: [LinkProps];
   sidekickLookup?: any;
 }
 
@@ -24,6 +24,7 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, ...props }: Navi
       <>
         <Link
           {...props}
+          {...sidekick(sidekickLookup)}
           onClick={() => setOpen(true)}
           onMouseOver={() => setOpen(true)}
           aria-owns={linkRef?.current ? props.id : undefined}
@@ -39,16 +40,12 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, ...props }: Navi
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
             disableScrollLock
-            MenuListProps={{ onMouseLeave: handleClose, ...sidekick(sidekickLookup.subNavigation) }}>
-            {
-              subNavigation?.map((item) => (
-                <MenuItem key={item.id}>
-                  <ContentModule {...item} />
-                </MenuItem>
-              ))
-              // <MenuItem key={item.id} onClick={handleClose}>
-              // </MenuItem>
-            }
+            MenuListProps={{ onMouseLeave: handleClose, ...sidekick(sidekickLookup?.subNavigation) }}>
+            {subNavigation?.map((item) => (
+              <MenuItem key={item.id}>
+                <ContentModule {...item} variant={'link'} />
+              </MenuItem>
+            ))}
           </Menu>
         ) : null}
       </>

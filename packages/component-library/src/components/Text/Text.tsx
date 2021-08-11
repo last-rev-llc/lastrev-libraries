@@ -45,6 +45,7 @@ export interface TextProps {
   styles?: {
     root?: SystemCssProperties;
   };
+  sx?: SystemCssProperties;
   body: RichText;
   sidekickLookup?: any;
   variant?: string;
@@ -128,7 +129,11 @@ const renderOptions = ({ links }: { links: TextLinks }) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
         console.log('Embed', node, id, entry);
-        return <ContentModule {...entry} />;
+        return (
+          <Box sx={{ display: 'inline', px: 2 }}>
+            <ContentModule {...entry} />
+          </Box>
+        );
       },
       [BLOCKS.PARAGRAPH]: renderText({ variant: 'body1' }),
       [BLOCKS.HEADING_1]: renderText({ variant: 'h1' }),
@@ -141,11 +146,11 @@ const renderOptions = ({ links }: { links: TextLinks }) => {
   };
 };
 
-function Text({ body, align = 'left', styles, variant, sidekickLookup }: TextProps) {
+function Text({ body, align = 'left', styles, variant, sidekickLookup, sx }: TextProps) {
   // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
   // console.log('Text', { body });
   return (
-    <Root {...sidekick(sidekickLookup)} variant={variant} sx={{ textAlign: align, ...styles?.root }}>
+    <Root {...sidekick(sidekickLookup)} variant={variant} sx={{ textAlign: align, ...sx, ...styles?.root }}>
       {documentToReactComponents(body?.json, renderOptions({ links: body?.links }))}
     </Root>
   );

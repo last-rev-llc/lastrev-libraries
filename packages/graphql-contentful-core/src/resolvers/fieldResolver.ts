@@ -17,7 +17,6 @@ type FieldResolver = <T>(displayType: string) => Resolver<Entry<T>, ApolloContex
 
 const fieldResolver: FieldResolver = (displayType: string) => async (content, args, ctx, info) => {
   const { fieldName: field } = info;
-  console.log('resolving field', field);
   const { loaders, mappers, typeMappings, preview = false } = ctx;
 
   const contentType = capitalizeFirst(
@@ -25,13 +24,21 @@ const fieldResolver: FieldResolver = (displayType: string) => async (content, ar
       ? content.sys.contentType.sys.id
       : ''
   );
+  // console.log('resolving field', {
+  //   content,
+  //   displayType,
+  //   field,
+  //   sys: content?.sys,
+  //   contentType,
+  //   typeMapping: typeMappings[contentType]
+  // });
   const typeName = contentType ? capitalizeFirst(typeMappings[contentType] ?? contentType) : displayType;
 
   const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
 
   let { fieldValue } = await fieldDataFetcher(content, args, ctx, info);
 
-  console.log('fieldValue', fieldValue);
+  // console.log('fieldValue', fieldValue);
 
   //Check if the field is a reference then resolve it
   if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Entry') {

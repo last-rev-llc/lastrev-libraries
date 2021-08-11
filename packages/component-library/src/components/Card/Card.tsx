@@ -59,9 +59,9 @@ export const Card = ({ media, title, subtitle, body, cardBody, actions, variant,
               </Typography>
             ) : null}
             {actions?.length ? (
-              <CardActions>
+              <CardActions {...sidekick(sidekickLookup?.actions)}>
                 {actions?.map((link) => (
-                  <Link {...link} />
+                  <Link key={link.id} {...link} />
                 ))}
               </CardActions>
             ) : null}

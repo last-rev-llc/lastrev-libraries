@@ -47,12 +47,14 @@ declare module '@material-ui/core/styles/components' {
   }
   interface ComponentElementOverrides {
     Section: {
-      root?: {};
-      sectionWrap?: {};
-      imageWrap?: {};
-      gridItem?: {};
-      gridContainer?: {};
-      backgroundImage?: {};
+      'root'?: {};
+      'sectionWrap'?: {};
+      'imageWrap'?: {};
+      'gridItem'?: {};
+      'gridContainer'?: {};
+      'contentContainer'?: {};
+      'backgroundImage'?: {};
+      'background_gradient-primary'?: {};
     };
     Card: CardOverrides;
     Text?: {
@@ -63,14 +65,7 @@ declare module '@material-ui/core/styles/components' {
     };
   }
   interface ComponentsOverrides {
-    Section?: {
-      root?: {};
-      sectionWrap?: {};
-      imageWrap?: {};
-      gridItem?: {};
-      gridContainer?: {};
-      backgroundImage?: {};
-    };
+    Section?: ComponentElementOverrides['Section'];
     Card: CardOverrides;
     Collection?: {
       root?: {};

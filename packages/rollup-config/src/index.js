@@ -63,7 +63,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
   const defaultPlugins = [
     isProduction && clean(dir),
     // multi(),
-    peerDepsExternal(),
+    isProduction && peerDepsExternal(),
     replace({
       'preventAssignment': true,
       'process.env.NODE_ENV': JSON.stringify(isProduction ? `production` : `development`)
