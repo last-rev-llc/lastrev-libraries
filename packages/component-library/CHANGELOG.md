@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.1.7
+
+### Patch Changes
+
+- ad475cf: Releases CollectionCarousel, new features for Card
+- 2c155d1: Add CollectionFiltered, fix Tiles collection
+
 ## 0.1.6
 
 ### Patch Changes

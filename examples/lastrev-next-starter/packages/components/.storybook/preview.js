@@ -31,10 +31,7 @@ addParameters({
     isToolshown: true,
     storySort: {
       method: 'alphabetical',
-      order: [
-        'Intro',
-        'Modules'
-      ]
+      order: ['Intro', 'Modules']
     }
   },
   backgrounds: {
