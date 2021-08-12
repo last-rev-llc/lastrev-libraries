@@ -1,7 +1,6 @@
 import { Context } from 'apollo-server-core';
 import { Entry, ContentfulClientApi } from 'contentful';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
-import { GraphQLResolverMap } from 'apollo-graphql';
 import { LogLevelDesc } from 'loglevel';
 import PathToIdLookup from './utils/PathToIdLookup';
 import { ContentfulLoaders } from '@last-rev/types';
@@ -73,7 +72,7 @@ export type ContentfulPathsConfigs = {
 
 export type Extensions = {
   typeDefs: string | DocumentNode | Source | GraphQLSchema;
-  resolvers: GraphQLResolverMap<any>;
+  resolvers: Record<string, any>;
   mappers: Mappers;
   typeMappings: { [contentfulType: string]: string };
   pathsConfigs: ContentfulPathsConfigs;

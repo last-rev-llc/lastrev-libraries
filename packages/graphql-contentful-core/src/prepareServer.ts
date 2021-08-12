@@ -101,7 +101,7 @@ const prepare = async (props: ServerProps) => {
   });
 
   const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, extensions?.typeDefs || '']);
-  const resolvers = mergeResolvers([defaultResolvers, extensions?.resolvers || {}]);
+  const resolvers: Record<string, any> = mergeResolvers([defaultResolvers, extensions?.resolvers || {}]);
 
   const pathToIdLookup = new PathToIdLookup(
     extensions?.pathsConfigs || {},
