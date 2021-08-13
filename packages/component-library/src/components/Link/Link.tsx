@@ -11,6 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
 import Button, { ButtonProps as MuiButtonProps } from '@material-ui/core/Button';
 import sidekick from '../../utils/sidekick';
+// TODO: Button components aren't hyperlinking
 
 interface NextLinkComposedProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
@@ -80,7 +81,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     className: classNameProps,
     href = '#',
     noLinkStyle,
-    role, // Link don't have roles.
+    role, // Links don't have roles.
     text,
     children,
     variant,
@@ -111,7 +112,41 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     'youtube'
   ];
 
+  /** Link with Icon only
+   * - Classes reference FontAwesome stylesheet linked in .storybook/preview
+   * - Include that css file in head of any given project to render
+   */
   if (!text && icon) {
+    if (isExternal) {
+      return (
+        <a className={className}
+          href={href as string}
+          ref={ref as any}
+          target="_blank"
+          rel="noopener noreferrer"
+          {...extra}>
+          <IconButton aria-label={text}>
+            <Icon
+              className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`}
+            />
+          </IconButton>
+        </a>
+      );
+    }
+    if (href !== '#') {
+      return (
+        <NextLink href={href} as={linkAs}>
+          <IconButton aria-label={icon}
+            type={other.type}
+            {...extra}
+          >
+            <Icon
+              className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`}
+            />
+          </IconButton>
+        </NextLink>
+      );
+    }
     return (
       <IconButton
         aria-label={icon}
