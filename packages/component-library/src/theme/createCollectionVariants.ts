@@ -69,7 +69,7 @@ export const collectionThreePerRowRoundedWraper = (theme: Theme) => ({
     'width': '100%',
     'height': '100%',
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
-      'border': `2px solid ${theme.palette.secondary.main}`,
+      'border': `2px solid ${'#595959'}`,
       'borderRadius': 40,
       'backgroundColor': theme.palette.quartiary.main,
       'transition': 'background-color ease .15s',
@@ -88,7 +88,10 @@ export const collectionThreePerRowRoundedWraper = (theme: Theme) => ({
       display: 'none'
     },
     '& .MuiTypography-root': {
-      color: theme.palette.secondary.dark
+      color: '#595959'
+    },
+    '& .MuiButton-root': {
+      color: '#595959'
     }
   }
 });
