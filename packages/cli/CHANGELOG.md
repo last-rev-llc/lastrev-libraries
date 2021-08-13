@@ -1,5 +1,15 @@
 # @last-rev/cli
 
+## 0.1.13
+
+### Patch Changes
+
+- 7b9d6a1: Added Redis Cache loader, and cleaned up dependencies
+- Updated dependencies [7b9d6a1]
+  - @last-rev/contentful-s3-sync@0.1.2
+  - @last-rev/contentful-sync-to-fs@0.1.5
+  - @last-rev/graphql-contentful-core@0.1.12
+
 ## 0.1.12
 
 ### Patch Changes
