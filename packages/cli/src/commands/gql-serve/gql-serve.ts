@@ -74,6 +74,8 @@ const run = async ({ configFile }: { configFile: string }) => {
   let contentfulEnv;
   let loaderType;
   let logLevel;
+  let useCache;
+  let redisConfig;
   try {
     ({
       cms = 'Contentful',
@@ -87,7 +89,9 @@ const run = async ({ configFile }: { configFile: string }) => {
       contentfulSpaceId,
       contentfulEnv,
       loaderType = 'fs',
-      logLevel = 'warn'
+      logLevel = 'warn',
+      useCache = false,
+      redisConfig
     } = require(configFile));
   } catch (e) {
     console.error(`unable to load config: ${configFile}: ${e.message}`);
@@ -121,7 +125,9 @@ const run = async ({ configFile }: { configFile: string }) => {
     contentPreviewToken,
     environment: contentfulEnv || 'master',
     loaderType,
-    logLevel
+    logLevel,
+    useCache,
+    redisConfig
   });
   const { url } = await server.listen({ port, host });
   console.log(`Server ready at ${url}. `);

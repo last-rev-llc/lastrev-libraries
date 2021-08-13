@@ -1,14 +1,14 @@
 import { compact, isString, reduce, get, has, isFunction, merge, transform } from 'lodash';
 import { join } from 'path';
 import {
-  ContentfulLoaders,
   PagePathsParam,
   ContentfulPathsConfigs,
   PathToIdMapping,
   TypeMappings,
   SitePathMapping,
   PathData
-} from 'types';
+} from '../types';
+import { ContentfulLoaders } from '@last-rev/types';
 
 const DEFAULT_SITE_KEY = '__lr_default';
 

@@ -15,8 +15,8 @@
   "devDependencies": {
     "@last-rev/rollup-config": "^0.0.5",
     "@last-rev/testing-library": "^0.1.2",
-    "@types/node": "^14.14.35",
-    "contentful": "^8.1.7"
+    "@last-rev/types": "^0.1.0",
+    "contentful": "^8.4.2"
   },
   "keywords": [],
   "author": "",

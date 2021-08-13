@@ -1,24 +1,13 @@
 import DataLoader from 'dataloader';
-import { Entry, Asset, ContentType } from 'contentful';
+import { Entry, Asset } from 'contentful';
 import { readJSON, readdir } from 'fs-extra';
 import { filter, identity, isNull } from 'lodash';
 import { join } from 'path';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
+import { ItemKey, ContentfulLoaders } from '@last-rev/types';
 
-export type ItemKey = {
-  id: string;
-  preview?: boolean;
-};
-
-export type ContentfulFsLoaders = {
-  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
-  assetLoader: DataLoader<ItemKey, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
-  fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
-};
-
-const createLoaders = (rootDir: string, spaceId: string, env: string): ContentfulFsLoaders => {
+const createLoaders = (rootDir: string, spaceId: string, env: string): ContentfulLoaders => {
   const getUri = (...args: string[]) => {
     return join(rootDir, spaceId, env, ...args);
   };
