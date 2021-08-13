@@ -26,7 +26,8 @@ export default {
           'media-and-text',
           'avatar',
           'avatar-large',
-          'square'
+          'square',
+          'standard-blog'
         ]
       },
       table: {
