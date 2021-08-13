@@ -7,41 +7,45 @@ import {
   Box,
   Typography
 } from '@material-ui/core';
+import styled from '@material-ui/system/styled';
+import Skeleton from '@material-ui/core/Skeleton';
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
 import Link, { LinkProps } from '../Link';
-import styled from '@material-ui/system/styled';
+import Text, { RichText } from '../Text';
 import sidekick from '../../utils/sidekick';
 
 export interface CardProps extends MuiCardProps {
   __typename: string;
+  loading?: boolean;
   variant?: any;
   title?: string;
   subtitle?: string;
   media?: MediaProps | MediaProps[];
-  body?: string;
-  cardBody?: string;
+  body?: RichText;
   actions?: LinkProps[];
   sidekickLookup: any;
 }
 
 export interface CardOverrides {}
 
-export const Card = ({ media, title, subtitle, body, cardBody, actions, variant, sidekickLookup }: CardProps) => {
+export const Card = ({ media, title, subtitle, body, actions, variant, loading, sidekickLookup }: CardProps) => {
   return (
     <ErrorBoundary>
       <Root variant={variant} {...sidekick(sidekickLookup)}>
-        {media ? (
-          // <CardMedia
-          //   component={Image}
-          //   {...image}
-          // />
+        {media || loading ? (
           <Box display="flex" justifyContent="center">
-            <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} />
+            {loading ? (
+              <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} />
+            ) : (
+              <Skeleton>
+                <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} />
+              </Skeleton>
+            )}
           </Box>
         ) : null}
-        {title || subtitle || body || actions ? (
+        {!loading && (title || subtitle || body || actions) ? (
           <CardContent>
             {title ? (
               <Typography {...sidekick(sidekickLookup?.title)} variant="h3" component="h3">
@@ -53,11 +57,7 @@ export const Card = ({ media, title, subtitle, body, cardBody, actions, variant,
                 {subtitle}
               </Typography>
             ) : null}
-            {body ?? cardBody ? (
-              <Typography {...sidekick(sidekickLookup?.body)} variant="body2" component="p">
-                {body ?? cardBody}
-              </Typography>
-            ) : null}
+            {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} /> : null}
             {actions?.length ? (
               <CardActions {...sidekick(sidekickLookup?.actions)}>
                 {actions?.map((link) => (
@@ -66,7 +66,22 @@ export const Card = ({ media, title, subtitle, body, cardBody, actions, variant,
               </CardActions>
             ) : null}
           </CardContent>
-        ) : null}
+        ) : (
+          <CardContent>
+            <Typography variant="h3" component="h3">
+              <Skeleton width="100%" />
+            </Typography>
+            <Typography variant="h4" component="h4">
+              <Skeleton width="100%" />
+              <br />
+              <Skeleton width="100%" />
+            </Typography>
+            <Skeleton>{body ? <Text sidekickLookup={sidekickLookup?.body} body={body} /> : null}</Skeleton>
+            <CardActions>
+              <Skeleton width={50} />
+            </CardActions>
+          </CardContent>
+        )}
       </Root>
     </ErrorBoundary>
   );

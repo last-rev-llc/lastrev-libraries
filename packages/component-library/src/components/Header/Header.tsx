@@ -2,13 +2,8 @@ import React from 'react';
 import { AppBar, Box, Toolbar, Link } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
-// import Link from '../Link';
 import Media from '../Media';
-// import { LinkProps } from '../Link/Link';
 import { MediaProps } from '../Media/Media.types';
-// import Text, { RichText } from '../Text';
-// import { RichTextProps } from '../RichText';
-// import { Breakpoint } from '@material-ui/core';
 import { CollectionProps } from '../Collection';
 import ContentModule from '../ContentModule';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
@@ -17,20 +12,11 @@ export interface HeaderProps {
   variant?: 'elevation' | 'outlined' | undefined;
   logo?: MediaProps;
   logoUrl?: string;
-  // contentWidth?: false | Breakpoint | undefined;
   navigationItems?: CollectionProps[];
-  // theme: any;
   sidekickLookup: any;
 }
 
 export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup }: HeaderProps) => {
-  // console.log('Header', {
-  //   logo,
-  //   logoUrl,
-  //   navigationItems,
-  //   contentWidth,
-  //   theme
-  // });
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0
