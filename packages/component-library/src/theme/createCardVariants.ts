@@ -320,22 +320,36 @@ export const standardBlogCardVariant = (theme: Theme) => ({
       }
     },
     '& .MuiCardActions-root': {
-      background: theme.palette.secondary.main,
+      justifyContent: 'center',
       width: 'calc(100% + 40px)',
-      marginLeft: '-20px',
-      marginTop: 20
+      margin: '24px 24px 0 -20px',
+      padding: theme.spacing(3, 0),
+      background: theme.palette.secondary.main,
+      '& .MuiButton-root': {
+        'margin': theme.spacing(0, 0.5)
+      }
     },
     '& .MuiButton-root': {
-      'textTransform': 'capitalize',
+      'position': 'relative',
+      'margin': theme.spacing(0, 0.5),
+      'padding': theme.spacing(1),
       'background': 'transparent',
-      'width': '100%',
       'color': 'white',
+      'lineHeight': '1.2',
+      'textTransform': 'capitalize',
+      '&:hover': {
+        color: theme.palette.primary.main
+      },
       '&:not(:last-child)': {
         '&:after': {
-          content: '"|"',
-          display: 'inline-block',
-          marginLeft: 8,
-          marginRight: 8
+          content: '""',
+          position: 'absolute',
+          top: '50%',
+          right: -4,
+          width: 1,
+          height: 'calc(100% - 16px)',
+          backgroundColor: 'white',
+          transform: 'translateY(-50%)',
         }
       }
     },
@@ -359,7 +373,6 @@ export const standardBlogCardVariant = (theme: Theme) => ({
         backgroundRepeat: 'no-repeat'
       }
     },
-
     '& .MuiLink-root': {
       color: 'white'
     }
