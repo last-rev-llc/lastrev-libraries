@@ -4,7 +4,7 @@ import mockLink from '../Link/Link.mock';
 
 export default {
   __typename: 'Card',
-  variant: 'standard',
+  variant: 'standard-blog',
   media: {
     __typename: 'Media',
     file: {
@@ -15,5 +15,5 @@ export default {
   title: capitalize(lorem.word()),
   subtitle: capitalize(lorem.words(3)),
   body: lorem.sentence(),
-  actions: [{ ...mockLink }]
+  actions: [{ ...mockLink }, { ...mockLink }]
 };

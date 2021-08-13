@@ -311,33 +311,33 @@ export const standardBlogCardVariant = (theme: Theme) => ({
   style: {
     'justifyContent': 'flex-start',
     'width': 300,
-    'paddingBottom': 15,
     'transition': 'background-color ease .15s',
-    '&:hover': {
-      '& .MuiButton-root': {
-        background: theme.palette.secondary.light
-      },
-      '& .MuiBox-root': {
-        '&:after': {
-          backgroundImage:
-            'url(https://images.ctfassets.net/m1b67l45sk9z/3Nlnptaf7IbXINILtRKdYP/49d09fcf78364912f0180c559a3468e9/Group_82.png)',
-          backgroundSize: '38%',
-          backgroundPosition: 'center',
-          backgroundPositionX: '55%',
-          backgroundRepeat: 'no-repeat'
-        }
+
+    '& .MuiCardContent-root': {
+      'marginTop': 20,
+      '&:last-child': {
+        paddingBottom: 0
       }
     },
-    '& .MuiCardContent-root': {
+    '& .MuiCardActions-root': {
+      background: theme.palette.secondary.main,
+      width: 'calc(100% + 40px)',
+      marginLeft: '-20px',
       marginTop: 20
     },
     '& .MuiButton-root': {
-      transform: ' scale(1.5)',
-      width: '100%',
-      bottom: '-27px',
-      fontSize: '9px',
-      background: theme.palette.secondary.main,
-      color: 'white'
+      'textTransform': 'capitalize',
+      'background': 'transparent',
+      'width': '100%',
+      'color': 'white',
+      '&:not(:last-child)': {
+        '&:after': {
+          content: '"|"',
+          display: 'inline-block',
+          marginLeft: 8,
+          marginRight: 8
+        }
+      }
     },
     '& .MuiBox-root': {
       'position': 'relative',
@@ -361,10 +361,7 @@ export const standardBlogCardVariant = (theme: Theme) => ({
     },
 
     '& .MuiLink-root': {
-      padding: '10px 20px',
-      backgroundColor: theme.palette.secondary.main,
-      color: 'white',
-      textDecoration: 'none'
+      color: 'white'
     }
   }
 });
