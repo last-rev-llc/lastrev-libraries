@@ -88,7 +88,8 @@ export const collectionThreePerRowRoundedWraper = (theme: Theme) => ({
       display: 'none'
     },
     '& .MuiTypography-root': {
-      color: '#595959'
+      color: '#595959',
+      fontSize: 20
     },
     '& .MuiButton-root': {
       color: '#595959'
