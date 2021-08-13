@@ -69,12 +69,12 @@ export const Card = ({ media, title, subtitle, body, actions, variant, loading, 
         ) : (
           <CardContent>
             <Typography variant="h3" component="h3">
-              <Skeleton>This is the card</Skeleton>
+              <Skeleton width="100%" />
             </Typography>
             <Typography variant="h4" component="h4">
-              <Skeleton width={100} />
+              <Skeleton width="100%" />
               <br />
-              <Skeleton width={100} />
+              <Skeleton width="100%" />
             </Typography>
             <Skeleton>{body ? <Text sidekickLookup={sidekickLookup?.body} body={body} /> : null}</Skeleton>
             <CardActions>
