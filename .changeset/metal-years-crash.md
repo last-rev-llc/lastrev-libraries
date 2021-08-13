@@ -3,3 +3,4 @@
 ---
 
 CollectionFiltered, Card, Text updates
+Add LinkIcon
