@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-sync-to-fs",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -26,7 +26,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/timer": "^0.1.0",
+    "@last-rev/timer": "^0.1.1",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",
     "loglevel": "^1.7.1",

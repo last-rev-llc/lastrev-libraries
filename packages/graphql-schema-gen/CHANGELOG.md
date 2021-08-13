@@ -1,5 +1,11 @@
 # @last-rev/graphql-schema-gen
 
+## 0.1.6
+
+### Patch Changes
+
+- 7b9d6a1: Added Redis Cache loader, and cleaned up dependencies
+
 ## 0.1.5
 
 ### Patch Changes

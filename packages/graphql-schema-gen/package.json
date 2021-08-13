@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/graphql-schema-gen",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "devDependencies": {
     "@last-rev/rollup-config": "^0.0.5",
     "@last-rev/testing-library": "^0.1.2",
-    "@last-rev/timer": "^0.1.0",
+    "@last-rev/timer": "^0.1.1",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.4",
     "typescript": "4.3.4"

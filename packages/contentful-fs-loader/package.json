@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-fs-loader",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "devDependencies": {
     "@last-rev/rollup-config": "^0.0.5",
     "@last-rev/testing-library": "^0.1.2",
-    "@last-rev/types": "^0.1.0",
+    "@last-rev/types": "^0.1.1",
     "@types/fs-extra": "^9.0.11",
     "@types/node": "^14.14.35",
     "contentful": "^8.4.2",
@@ -25,7 +25,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/timer": "^0.1.0",
+    "@last-rev/timer": "^0.1.1",
     "dataloader": "^2.0.0",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",
