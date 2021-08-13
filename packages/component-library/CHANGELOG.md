@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.1.11
+
+### Patch Changes
+
+- 06d0438: CollectionFiltered, Card, Text updates
+  Add LinkIcon
+
 ## 0.1.10
 
 ### Patch Changes

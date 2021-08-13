@@ -322,13 +322,13 @@ export const standardBlogCardVariant = (theme: Theme) => ({
       }
     },
     '& .MuiCardActions-root': {
-      justifyContent: 'center',
-      width: 'calc(100% + 40px)',
-      margin: '24px 24px 0 -20px',
-      padding: theme.spacing(3, 0),
-      background: theme.palette.secondary.main,
+      'justifyContent': 'center',
+      'width': 'calc(100% + 40px)',
+      'margin': '24px 24px 0 -20px',
+      'padding': theme.spacing(3, 0),
+      'background': theme.palette.secondary.main,
       '& .MuiButton-root': {
-        'margin': theme.spacing(0, 0.5)
+        margin: theme.spacing(0, 0.5)
       }
     },
     '& .MuiButton-root': {
@@ -351,7 +351,7 @@ export const standardBlogCardVariant = (theme: Theme) => ({
           width: 1,
           height: 'calc(100% - 16px)',
           backgroundColor: 'white',
-          transform: 'translateY(-50%)',
+          transform: 'translateY(-50%)'
         }
       }
     },
