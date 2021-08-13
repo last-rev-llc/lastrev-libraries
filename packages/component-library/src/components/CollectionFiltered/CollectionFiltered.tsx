@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Container, Box, MenuItem, TextField, Button, Typography } from '@material-ui/core';
+
 import { Breakpoint } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
@@ -7,7 +8,7 @@ import { MediaProps } from '../Media';
 import { CardProps } from '../Card';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
-import { isEmpty } from 'lodash';
+import { isEmpty, range } from 'lodash';
 import { useRouter } from 'next/router';
 
 interface Settings {
@@ -138,7 +139,7 @@ export const CollectionFiltered = ({
               </Grid>
             </Grid>
 
-            {itemsWithVariant?.length ? (
+            {itemsWithVariant?.length && !loading ? (
               <>
                 <Grid item container>
                   <Grid item xs={12}>
@@ -156,7 +157,20 @@ export const CollectionFiltered = ({
               <Grid item>No results for filter {JSON.stringify(filter)}</Grid>
             ) : null}
             {!itemsWithVariant?.length && error ? <Grid item>Error searching for your terms, try again</Grid> : null}
-            {!itemsWithVariant?.length && loading ? <Grid item>Loading...</Grid> : null}
+            {loading ? (
+              <>
+                <Grid item container>
+                  <Grid item xs={12}>
+                    <Typography variant="h4">Showing results for: {JSON.stringify(filter)}</Typography>
+                  </Grid>
+                  {range(9).map((_: any, idx: number) => (
+                    <Grid key={`item_loading_${idx}`} item xs={4}>
+                      <ContentModule __typename={'Card'} variant={itemsVariant} loading />
+                    </Grid>
+                  ))}
+                </Grid>
+              </>
+            ) : null}
           </Grid>
         </ContentContainer>
       </Root>
@@ -215,6 +229,7 @@ const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: Col
                   margin="normal"
                   label={label || id}
                   value={filter[id] ?? ''}
+                  SelectProps={{ MenuProps: { disableScrollLock: true } }}
                   onChange={handleChange(id)}>
                   {options
                     ? options[id]?.map(({ label, value }) => (

@@ -1,27 +1,16 @@
 import DataLoader from 'dataloader';
-import { Entry, Asset, ContentType, createClient, ContentfulClientApi } from 'contentful';
+import { Entry, Asset, createClient, ContentfulClientApi } from 'contentful';
 import { find, map, partition } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
-
-export type ItemKey = {
-  id: string;
-  preview?: boolean;
-};
-
-export type ContentfulCmsLoaders = {
-  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
-  assetLoader: DataLoader<ItemKey, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
-  fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
-};
+import { ItemKey, ContentfulLoaders } from '@last-rev/types';
 
 const createLoaders = (
   deliveryToken: string,
   previewToken: string,
   space: string,
   environment: string
-): ContentfulCmsLoaders => {
+): ContentfulLoaders => {
   const prodClient = createClient({
     accessToken: deliveryToken,
     space,

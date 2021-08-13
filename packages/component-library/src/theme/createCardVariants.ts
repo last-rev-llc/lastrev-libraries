@@ -159,9 +159,9 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
   },
   style: {
     'justifyContent': 'center',
-    'width': 300,
+    'width': '100%',
+    'minWidth': 200,
     'height': 300,
-    'minWidth': 300,
     'padding': 20,
     '& img': {
       width: '100%',
@@ -242,7 +242,8 @@ export const standardCardVariant = (theme: Theme) => ({
   },
   style: {
     'justifyContent': 'flex-start',
-    'width': 300, // DEMO ONLY
+    'width': '100%',
+    'minWidth': 200,
     'paddingBottom': 15,
     'backgroundColor': 'white',
     'transition': 'background-color ease .15s',
@@ -274,7 +275,8 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
   },
   style: {
     'justifyContent': 'flex-start',
-    'width': 300, // DEMO ONLY
+    'width': '100%',
+    'minWidth': 200, // // DEMO ONLY
     'paddingBottom': 15,
     'border': `2px solid ${theme.palette.secondary.main}`,
     'borderRadius': 20,
@@ -285,7 +287,7 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
       'borderColor': theme.palette.primary.main,
       'transition': 'background-color ease .15s',
       '& .MuiButton-root': {
-        color: theme.palette.pink.main
+        color: theme.palette.secondary.main
       }
     },
 

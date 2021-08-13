@@ -1,10 +1,9 @@
 import { Context } from 'apollo-server-core';
-import { Asset, ContentfulClientApi, ContentType, Entry } from 'contentful';
+import { Entry, ContentfulClientApi } from 'contentful';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
-import { GraphQLResolverMap } from 'apollo-graphql';
-import DataLoader from 'dataloader';
 import { LogLevelDesc } from 'loglevel';
-import PathToIdLookup from 'utils/PathToIdLookup';
+import PathToIdLookup from './utils/PathToIdLookup';
+import { ContentfulLoaders } from '@last-rev/types';
 
 export type TypeMapper = {
   [fieldName: string]: string | Function;
@@ -33,23 +32,6 @@ export type PathToIdMapping = {
 
 export type SitePathMapping = {
   [site: string]: PathToIdMapping;
-};
-
-export type ItemKey = {
-  id: string;
-  preview: boolean;
-};
-
-export type PageKey = {
-  path: string;
-  preview: boolean;
-};
-
-export type ContentfulLoaders = {
-  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
-  assetLoader: DataLoader<ItemKey, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
-  fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
 };
 
 export type ApolloContext = Context<{
@@ -90,7 +72,7 @@ export type ContentfulPathsConfigs = {
 
 export type Extensions = {
   typeDefs: string | DocumentNode | Source | GraphQLSchema;
-  resolvers: GraphQLResolverMap<any>;
+  resolvers: Record<string, any>;
   mappers: Mappers;
   typeMappings: { [contentfulType: string]: string };
   pathsConfigs: ContentfulPathsConfigs;
@@ -104,6 +86,12 @@ export type BaseServerProps = {
   contentDeliveryToken: string;
   contentPreviewToken: string;
   logLevel: LogLevelDesc;
+  useCache?: boolean;
+  redisConfig?: {
+    host: string;
+    port: number;
+    password: string;
+  };
 };
 
 export type FsServerProps = BaseServerProps & {

@@ -1,23 +1,12 @@
 import DataLoader from 'dataloader';
-import { Entry, Asset, ContentType } from 'contentful';
+import { Entry, Asset } from 'contentful';
 import { filter, identity, map } from 'lodash';
 import { GetObjectCommand, ListObjectsV2Command, S3Client } from '@aws-sdk/client-s3';
 import { Readable } from 'stream';
 import { CredentialsProvider } from './CredentialsProvider';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
-
-export type ItemKey = {
-  id: string;
-  preview?: boolean;
-};
-
-export type ContentfulS3Loaders = {
-  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
-  assetLoader: DataLoader<ItemKey, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
-  fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
-};
+import { ItemKey, ContentfulLoaders } from '@last-rev/types';
 
 // Apparently the stream parameter should be of type Readable|ReadableStream|Blob
 // The latter 2 don't seem to exist anywhere.
@@ -30,7 +19,7 @@ async function streamToString(stream: Readable): Promise<string> {
   });
 }
 
-const createLoaders = (apiUrl: string, apiKey: string, environment: string): ContentfulS3Loaders => {
+const createLoaders = (apiUrl: string, apiKey: string, environment: string): ContentfulLoaders => {
   const previewCredentialsProvider = new CredentialsProvider(apiKey, apiUrl, environment, true);
   const prodCredentialsProvider = new CredentialsProvider(apiKey, apiUrl, environment, false);
 

@@ -1,6 +1,7 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
 import mockLink from '../Link/Link.mock';
+import { paragraphMock } from '../Text/Text.mock';
 
 export default {
   __typename: 'Card',
@@ -14,6 +15,6 @@ export default {
   },
   title: capitalize(lorem.word()),
   subtitle: capitalize(lorem.words(3)),
-  body: lorem.sentence(),
-  actions: [{ ...mockLink }, { ...mockLink }]
+  body: paragraphMock,
+  actions: [{ ...mockLink }]
 };

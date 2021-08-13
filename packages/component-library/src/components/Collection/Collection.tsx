@@ -17,6 +17,7 @@ export interface CollectionProps {
   itemsVariant?: string;
   itemsSpacing?: number;
   itemsWidth?: false | Breakpoint | undefined;
+  styles?: any;
   theme: any;
   sidekickLookup: any;
 }
@@ -28,7 +29,8 @@ export const Collection = ({
   variant = 'three-per-row',
   itemsVariant,
   itemsSpacing,
-  sidekickLookup
+  sidekickLookup,
+  styles
 }: CollectionProps) => {
   // console.log('Collection', { items, itemsWidth, background, variant });
   if (!items?.length) return null;
@@ -48,6 +50,7 @@ export const Collection = ({
             variant={variant}
             contentWidth={itemsWidth}
             contentSpacing={itemsSpacing}
+            styles={styles}
           />
         ) : (
           <ContentContainer maxWidth={itemsWidth}>
@@ -57,7 +60,7 @@ export const Collection = ({
               variant={variant}
               contentWidth={itemsWidth}
               contentSpacing={itemsSpacing}
-              styles={{ root: { py: 2 } }}
+              styles={styles}
             />
           </ContentContainer>
         )}

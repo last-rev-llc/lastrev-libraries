@@ -31,7 +31,8 @@ export interface SectionProps {
   styles?: {
     root?: SystemCssProperties;
     gridContainer?: SystemCssProperties & { spacing: any };
-    gridItem?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
+    gridItem?: SystemCssProperties & { xs: any; sm: any; md: any };
+    gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
   };
   sidekickLookup?: any;
 }
@@ -59,20 +60,23 @@ const Section = ({
     <GridContainer
       container
       sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-      {...(contentSpacing && { spacing: contentSpacing })}
-
-      // spacing={contentSpacing?.toString() ?? 2}
-    >
+      {...(contentSpacing && { spacing: contentSpacing })}>
       {contents?.map((content, idx) => {
-        const itemStyle = get(styles?.gridItem, idx);
+        const itemStyle = get(styles?.gridItems, idx);
         return (
           <GridItem
             item
-            key={content?.id}
-            xs={itemStyle?.xs ?? gridItemStyle?.xs ?? true}
-            md={itemStyle?.md ?? gridItemStyle?.md}
-            sm={itemStyle?.sm ?? gridItemStyle?.sm}
-            sx={itemStyle}>
+            {...(contentDirection === 'column'
+              ? { width: '100%' }
+              : {
+                  xs: itemStyle?.xs ?? gridItemStyle?.xs ?? true,
+                  md: itemStyle?.md ?? gridItemStyle?.md ?? false,
+                  sm: itemStyle?.sm ?? gridItemStyle?.sm ?? false
+                })}
+            sx={{
+              ...styles?.gridItem,
+              ...itemStyle
+            }}>
             <ContentModule {...content} />
           </GridItem>
         );
@@ -108,15 +112,8 @@ const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; them
   }
   const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
   const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
-  console.log('RootStyles', { backgroundColor, parsedBGColor, paletteColor });
+
   if (backgroundColor && get(theme.palette, parsedBGColor)) {
-    console.log('Contrast', {
-      backgroundColor,
-      parsedBGColor,
-      paletteColor,
-      bgcolor: parsedBGColor,
-      color: `${paletteColor}.contrastText`
-    });
     return {
       'bgcolor': parsedBGColor,
       '& *, p, h1, h2, h3, h4, h5, h6, a': {

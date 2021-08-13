@@ -1,0 +1,13 @@
+{
+  "name": "@last-rev/types",
+  "version": "0.1.1",
+  "description": "",
+  "main": "index.d.ts",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "contentful": "^8.4.2",
+    "dataloader": "^2.0.0"
+  }
+}
