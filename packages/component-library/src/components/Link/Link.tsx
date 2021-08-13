@@ -6,9 +6,12 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import Icon from '@material-ui/core/Icon';
+import IconButton from '@material-ui/core/IconButton';
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
 import Button, { ButtonProps as MuiButtonProps } from '@material-ui/core/Button';
 import sidekick from '../../utils/sidekick';
+// TODO: Button components aren't hyperlinking
 
 interface NextLinkComposedProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
@@ -61,6 +64,7 @@ export type LinkProps = {
   href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
   variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
+  icon: string;
   onClick?: any;
   type?: string;
   sidekickLookup?: any;
@@ -77,10 +81,11 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     className: classNameProps,
     href = '#',
     noLinkStyle,
-    role, // Link don't have roles.
+    role, // Links don't have roles.
     text,
     children,
     variant,
+    icon,
     sidekickLookup,
     ...other
   } = props;
@@ -93,12 +98,78 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
-  // console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
+  console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
   const extra = { ...other, ...sidekick(sidekickLookup) };
+
+  const brandIcons = [
+    'google',
+    'twitter',
+    'facebook',
+    'github',
+    'linkedin',
+    'pinterest',
+    'instagram',
+    'youtube'
+  ];
+
+  /** Link with Icon only
+   * - Classes reference FontAwesome stylesheet linked in .storybook/preview
+   * - Include that css file in head of any given project to render
+   */
+  if (!text && icon) {
+    if (isExternal) {
+      return (
+        <a className={className}
+          href={href as string}
+          ref={ref as any}
+          target="_blank"
+          rel="noopener noreferrer"
+          {...extra}>
+          <IconButton aria-label={text}>
+            <Icon
+              className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`}
+            />
+          </IconButton>
+        </a>
+      );
+    }
+    if (href !== '#') {
+      return (
+        <NextLink href={href} as={linkAs}>
+          <IconButton aria-label={icon}
+            type={other.type}
+            {...extra}
+          >
+            <Icon
+              className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`}
+            />
+          </IconButton>
+        </NextLink>
+      );
+    }
+    return (
+      <IconButton
+        aria-label={icon}
+        // component={Link}
+        // href={href}
+        // ref={ref}
+        // type={other.type}
+        // {...extra}
+      >
+        <Icon
+          className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`}
+        />
+      </IconButton>
+    );
+  }
+
   if (isExternal) {
     if (noLinkStyle) {
       return (
-        <a className={className} href={href as string} ref={ref as any} {...extra}>
+        <a className={className}
+          href={href as string}
+          ref={ref as any}
+          {...extra}>
           {text || children}
         </a>
       );
@@ -119,18 +190,17 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     );
   }
 
-  if (variant?.includes('button-') && href !== '#') {
-    const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
-    return (
-      <NextLink href={href} as={linkAs}>
-        <Button variant={buttonVariant} type={other.type} {...extra}>
-          {text || children}
-        </Button>
-      </NextLink>
-    );
-  }
   if (variant?.includes('button-')) {
     const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
+    if (href !== '#') {
+      return (
+        <NextLink href={href} as={linkAs}>
+          <Button variant={buttonVariant} type={other.type} {...extra}>
+            {text || children}
+          </Button>
+        </NextLink>
+      );
+    }
     return (
       <Button variant={buttonVariant} onClick={other.onClick} type={other.type} {...extra}>
         {text || children}
