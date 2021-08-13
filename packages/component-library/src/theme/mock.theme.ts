@@ -24,14 +24,19 @@ export const baseTheme = createAppTheme({
   },
   palette: {
     'primary': {
-      main: '#fee501'
+      main: '#fee501',
+      light: '#ffff55',
+      dark: '#c6b300'
     },
     'secondary': {
       main: '#005C7A',
+      light: '#4689a9',
+      dark: '#00334e',
       contrastText: 'white'
     },
     'tertiary': {
       main: '#30CEC2',
+      light: '#72fff5',
       contrastText: 'white'
     },
     'quartiary': {
