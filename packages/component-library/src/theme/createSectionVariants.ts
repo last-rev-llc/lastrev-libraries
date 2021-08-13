@@ -22,7 +22,7 @@ export const splitPanelVariant = () => ({
       '& > [class*="Section-gridItem"]': {
         '& > img': {
           width: '100%',
-          height: 'auto',
+          height: '100%',
           display: 'block'
           // margin: 'auto'
         }
@@ -54,7 +54,7 @@ export const highlightVariant = (theme: Theme) => ({
       fontSize: '1.5rem'
     },
     '& b': {
-      color: theme.palette.pink.main
+      color: theme.palette.secondary.main
     },
     '& > [class*="Section-gridContainer"]': {
       'position': 'relative',
