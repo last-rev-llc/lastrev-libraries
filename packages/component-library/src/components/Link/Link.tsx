@@ -101,16 +101,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
   const extra = { ...other, ...sidekick(sidekickLookup) };
 
-  const brandIcons = [
-    'google',
-    'twitter',
-    'facebook',
-    'github',
-    'linkedin',
-    'pinterest',
-    'instagram',
-    'youtube'
-  ];
+  const brandIcons = ['google', 'twitter', 'facebook', 'github', 'linkedin', 'pinterest', 'instagram', 'youtube'];
 
   /** Link with Icon only
    * - Classes reference FontAwesome stylesheet linked in .storybook/preview
@@ -119,16 +110,15 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (!text && icon) {
     if (isExternal) {
       return (
-        <a className={className}
+        <a
+          className={className}
           href={href as string}
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
           {...extra}>
           <IconButton aria-label={text}>
-            <Icon
-              className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`}
-            />
+            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`} />
           </IconButton>
         </a>
       );
@@ -136,13 +126,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     if (href !== '#') {
       return (
         <NextLink href={href} as={linkAs}>
-          <IconButton aria-label={icon}
-            type={other.type}
-            {...extra}
-          >
-            <Icon
-              className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`}
-            />
+          <IconButton aria-label={icon} type={other.type} {...extra}>
+            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`} />
           </IconButton>
         </NextLink>
       );
@@ -156,9 +141,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         // type={other.type}
         // {...extra}
       >
-        <Icon
-          className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`}
-        />
+        <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`} />
       </IconButton>
     );
   }
@@ -166,10 +149,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (isExternal) {
     if (noLinkStyle) {
       return (
-        <a className={className}
-          href={href as string}
-          ref={ref as any}
-          {...extra}>
+        <a className={className} href={href as string} ref={ref as any} {...extra}>
           {text || children}
         </a>
       );

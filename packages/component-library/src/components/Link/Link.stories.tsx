@@ -8,7 +8,9 @@ export default {
   component: Link,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box p={4} style={{ backgroundColor: '#f5f5f5' }}>{storyFn()}</Box>
+      <Box p={4} style={{ backgroundColor: '#f5f5f5' }}>
+        {storyFn()}
+      </Box>
     )
   ],
   argTypes: {
