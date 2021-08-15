@@ -3,13 +3,15 @@ import generateSchema from '@last-rev/graphql-schema-gen';
 import createFsLoaders from '@last-rev/contentful-fs-loader';
 import createS3Loaders from '@last-rev/contentful-s3-loader';
 import createCmsLoaders from '@last-rev/contentful-cms-loader';
+import createRedisLoaders from '@last-rev/contentful-redis-loader';
 import { find, get, map } from 'lodash';
 import { resolve } from 'path';
 import { createClient } from 'contentful';
 
 import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
-import { ContentfulLoaders, FsServerProps, S3ServerProps, ServerProps } from './types';
+import { FsServerProps, S3ServerProps, ServerProps } from './types';
+import { ContentfulLoaders } from '@last-rev/types';
 import PathToIdLookup from './utils/PathToIdLookup';
 
 function isFsServer(props: ServerProps): props is FsServerProps {
@@ -41,8 +43,10 @@ const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
 };
 
 const prepare = async (props: ServerProps) => {
-  const { environment, cms, extensions, spaceId, contentDeliveryToken, contentPreviewToken } = props;
+  const { environment, cms, extensions, spaceId, contentDeliveryToken, contentPreviewToken, useCache, redisConfig } =
+    props;
   let loaders;
+
   if (isS3Server(props)) {
     const { apiUrl, apiKey } = props;
     loaders = createS3Loaders(apiUrl, apiKey, environment);
@@ -55,6 +59,21 @@ const prepare = async (props: ServerProps) => {
 
   if (!loaders) {
     throw new Error('No loaders found');
+  }
+
+  if (useCache) {
+    if (!redisConfig) {
+      throw Error(`Cannot use cache without a redis config`);
+    }
+    loaders = createRedisLoaders(
+      spaceId,
+      environment,
+      loaders,
+      redisConfig.host,
+      redisConfig.port,
+      redisConfig.password,
+      {}
+    );
   }
 
   const [contentTypes, locales] = await Promise.all([
@@ -82,7 +101,7 @@ const prepare = async (props: ServerProps) => {
   });
 
   const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, extensions?.typeDefs || '']);
-  const resolvers = mergeResolvers([defaultResolvers, extensions?.resolvers || {}]);
+  const resolvers: Record<string, any> = mergeResolvers([defaultResolvers, extensions?.resolvers || {}]);
 
   const pathToIdLookup = new PathToIdLookup(
     extensions?.pathsConfigs || {},

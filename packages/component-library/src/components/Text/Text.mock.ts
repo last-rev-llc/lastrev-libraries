@@ -142,6 +142,30 @@ export const complexMock = {
   }
 };
 
+export const paragraphMock = {
+  __typename: 'Text',
+  json: {
+    document: {
+      nodeType: 'document',
+      data: {},
+      content: [
+        {
+          nodeType: 'paragraph',
+          data: {},
+          content: [
+            {
+              nodeType: 'text',
+              value: lorem.sentences(2),
+              marks: [],
+              data: {}
+            }
+          ]
+        }
+      ]
+    }
+  }
+};
+
 export default {
   __typename: 'Text',
   json: {

@@ -3,17 +3,17 @@ import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 // import '@storybook/addon-console';
-import theme from '../src/theme';
+import theme from '../src/theme/mock.theme';
 import '../src/styles.scss';
 
 import * as components from '../src';
 
 const StorybookWrapper = (storyFn) => {
-  // console.log('StoryBook', theme);
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <components.ContentModuleProvider contentMapping={components}>
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
           <CssBaseline />
           {storyFn()}
         </components.ContentModuleProvider>

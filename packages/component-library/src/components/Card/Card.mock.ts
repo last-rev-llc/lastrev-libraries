@@ -1,10 +1,11 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
 import mockLink from '../Link/Link.mock';
+import { paragraphMock } from '../Text/Text.mock';
 
 export default {
   __typename: 'Card',
-  variant: 'standard',
+  variant: 'standard-blog',
   media: {
     __typename: 'Media',
     file: {
@@ -14,6 +15,6 @@ export default {
   },
   title: capitalize(lorem.word()),
   subtitle: capitalize(lorem.words(3)),
-  body: lorem.sentence(),
+  body: paragraphMock,
   actions: [{ ...mockLink }]
 };

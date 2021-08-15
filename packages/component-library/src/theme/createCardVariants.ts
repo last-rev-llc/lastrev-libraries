@@ -159,9 +159,9 @@ export const avatarLargeCardVariant = (theme: Theme) => ({
   },
   style: {
     'justifyContent': 'center',
-    'width': 300,
+    'width': '100%',
+    'minWidth': 200,
     'height': 300,
-    'minWidth': 300,
     'padding': 20,
     '& img': {
       width: '100%',
@@ -242,7 +242,8 @@ export const standardCardVariant = (theme: Theme) => ({
   },
   style: {
     'justifyContent': 'flex-start',
-    'width': 300, // DEMO ONLY
+    'width': '100%',
+    'minWidth': 200,
     'paddingBottom': 15,
     'backgroundColor': 'white',
     'transition': 'background-color ease .15s',
@@ -274,7 +275,8 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
   },
   style: {
     'justifyContent': 'flex-start',
-    'width': 300, // DEMO ONLY
+    'width': '100%',
+    'minWidth': 200, // // DEMO ONLY
     'paddingBottom': 15,
     'border': `2px solid ${theme.palette.secondary.main}`,
     'borderRadius': 20,
@@ -285,7 +287,7 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
       'borderColor': theme.palette.primary.main,
       'transition': 'background-color ease .15s',
       '& .MuiButton-root': {
-        color: theme.palette.pink.main
+        color: theme.palette.secondary.main
       }
     },
 
@@ -304,6 +306,81 @@ export const standardRoundedCardVariant = (theme: Theme) => ({
   }
 });
 
+export const standardBlogCardVariant = (theme: Theme) => ({
+  props: {
+    variant: 'standard-blog'
+  },
+  style: {
+    'justifyContent': 'flex-start',
+    'width': 300,
+    'transition': 'background-color ease .15s',
+
+    '& .MuiCardContent-root': {
+      'marginTop': 20,
+      '&:last-child': {
+        paddingBottom: 0
+      }
+    },
+    '& .MuiCardActions-root': {
+      'justifyContent': 'center',
+      'width': 'calc(100% + 40px)',
+      'margin': '24px 24px 0 -20px',
+      'padding': theme.spacing(3, 0),
+      'background': theme.palette.secondary.main,
+      '& .MuiButton-root': {
+        margin: theme.spacing(0, 0.5)
+      }
+    },
+    '& .MuiButton-root': {
+      'position': 'relative',
+      'margin': theme.spacing(0, 0.5),
+      'padding': theme.spacing(1),
+      'background': 'transparent',
+      'color': 'white',
+      'lineHeight': '1.2',
+      'textTransform': 'capitalize',
+      '&:hover': {
+        color: theme.palette.primary.main
+      },
+      '&:not(:last-child)': {
+        '&:after': {
+          content: '""',
+          position: 'absolute',
+          top: '50%',
+          right: -4,
+          width: 1,
+          height: 'calc(100% - 16px)',
+          backgroundColor: 'white',
+          transform: 'translateY(-50%)'
+        }
+      }
+    },
+    '& .MuiBox-root': {
+      'position': 'relative',
+      '&:after': {
+        content: '">"',
+        display: 'block',
+        background: theme.palette.primary.main,
+        position: 'absolute',
+        bottom: 0,
+        borderRadius: '50%',
+        transform: 'translateY(50%)',
+        width: 50,
+        height: 50,
+        backgroundImage:
+          'url(https://images.ctfassets.net/m1b67l45sk9z/4sfx7QKlGRwRRWEOyWIrOD/d465ba9acc0754cb6b745cb8333e6fa0/Group_81.png)',
+        backgroundSize: '38%',
+        backgroundPosition: 'center',
+        backgroundPositionX: '55%',
+        backgroundRepeat: 'no-repeat'
+      }
+    },
+    '& .MuiLink-root': {
+      color: 'white'
+    }
+  }
+});
+
 const variants = [
   mediaCardVariant,
   mediaAndTextCardVariant,
@@ -312,7 +389,8 @@ const variants = [
   squareCardVariant,
   standardCardVariant,
   standardRoundedCardVariant,
-  mediaHoverCardVariant
+  mediaHoverCardVariant,
+  standardBlogCardVariant
 ];
 
 const createCardVariants = (theme: Theme) => {

@@ -37,6 +37,7 @@ export const baseTheme = createAppTheme({
     'tertiary': {
       main: '#30CEC2',
       light: '#72fff5',
+      dark: '#009c92',
       contrastText: 'white'
     },
     'quartiary': {
@@ -201,6 +202,13 @@ const theme = createAppTheme(
       },
 
       //MUI
+      MuiIcon: {
+        styleOverrides: {
+          root: {
+            overflow: 'visible'
+          }
+        }
+      },
       MuiTypography: {
         styleOverrides: {
           h1: {

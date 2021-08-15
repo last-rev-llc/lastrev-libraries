@@ -8,7 +8,9 @@ export default {
   component: Link,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box m={5}>{storyFn()}</Box>
+      <Box p={4} style={{ backgroundColor: '#f5f5f5' }}>
+        {storyFn()}
+      </Box>
     )
   ],
   argTypes: {
@@ -24,6 +26,16 @@ export default {
     },
     text: { name: 'Text' },
     href: { name: 'Href' },
+    icon: {
+      name: 'Icon',
+      control: {
+        type: 'select',
+        options: ['Instagram', 'Facebook', 'Twitter', 'YouTube']
+      },
+      table: {
+        defaultValue: { summary: 'Instagram' }
+      }
+    },
     bgcolor: {
       name: 'Background Color',
       control: {

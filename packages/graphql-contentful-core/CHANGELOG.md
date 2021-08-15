@@ -1,5 +1,19 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.12
+
+### Patch Changes
+
+- 7b9d6a1: Added Redis Cache loader, and cleaned up dependencies
+- Updated dependencies [7b9d6a1]
+  - @last-rev/contentful-cms-loader@0.1.2
+  - @last-rev/contentful-fs-loader@0.1.7
+  - @last-rev/contentful-redis-loader@0.1.1
+  - @last-rev/contentful-s3-loader@0.1.5
+  - @last-rev/graphql-schema-gen@0.1.6
+  - @last-rev/timer@0.1.1
+  - @last-rev/types@0.1.1
+
 ## 0.1.11
 
 ### Patch Changes

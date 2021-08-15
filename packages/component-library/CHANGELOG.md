@@ -1,5 +1,18 @@
 # @last-rev/component-library
 
+## 0.1.11
+
+### Patch Changes
+
+- 06d0438: CollectionFiltered, Card, Text updates
+  Add LinkIcon
+
+## 0.1.10
+
+### Patch Changes
+
+- 7b9d6a1: Added Redis Cache loader, and cleaned up dependencies
+
 ## 0.1.9
 
 ### Patch Changes

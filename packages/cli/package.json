@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/cli",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "",
   "bin": {
     "last-rev": "bin/last-rev"
@@ -16,7 +16,6 @@
     "@last-rev/rollup-config": "^0.0.5",
     "@types/cross-spawn": "^6.0.2",
     "@types/tar": "^4.0.4",
-    "contentful": "^8.4.2",
     "tslib": "^2.3.0"
   },
   "keywords": [],
@@ -24,9 +23,9 @@
   "license": "ISC",
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
-    "@last-rev/contentful-s3-sync": "^0.1.1",
-    "@last-rev/contentful-sync-to-fs": "^0.1.4",
-    "@last-rev/graphql-contentful-core": "^0.1.11",
+    "@last-rev/contentful-s3-sync": "^0.1.2",
+    "@last-rev/contentful-sync-to-fs": "^0.1.5",
+    "@last-rev/graphql-contentful-core": "^0.1.12",
     "@last-rev/testing-library": "^0.1.2",
     "@octokit/rest": "^18.6.2",
     "@types/inquirer": "^7.3.2",

@@ -1,6 +1,6 @@
 {
-  "name": "@last-rev/contentful-fs-loader",
-  "version": "0.1.7",
+  "name": "@last-rev/contentful-redis-loader",
+  "version": "0.1.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -16,8 +16,7 @@
     "@last-rev/rollup-config": "^0.0.5",
     "@last-rev/testing-library": "^0.1.2",
     "@last-rev/types": "^0.1.1",
-    "@types/fs-extra": "^9.0.11",
-    "@types/node": "^14.14.35",
+    "@types/ioredis": "^4.26.7",
     "contentful": "^8.4.2",
     "jest": "^26.6.3"
   },
@@ -27,7 +26,7 @@
   "dependencies": {
     "@last-rev/timer": "^0.1.1",
     "dataloader": "^2.0.0",
-    "fs-extra": "^10.0.0",
+    "ioredis": "^4.27.7",
     "lodash": "^4.17.21",
     "loglevel": "^1.7.1",
     "tslib": "^2.3.0"

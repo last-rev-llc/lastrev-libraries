@@ -30,8 +30,9 @@ const getProviders = ({ theme, variant }: { theme?: Array<Theme>; variant?: stri
 };
 interface Props {
   __typename?: string;
-  variant?: string;
   theme?: Array<Theme>;
+  variant?: string;
+  loading?: boolean;
 }
 
 function ContentModule({ __typename, ...fields }: Props) {

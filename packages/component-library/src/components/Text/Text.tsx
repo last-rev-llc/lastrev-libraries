@@ -1,13 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 // import { FilterXSS } from 'xss';
-import Box from '@material-ui/core/Box';
-import styled from '@material-ui/system/styled';
-import Typography from '@material-ui/core/Typography';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
+import Box from '@material-ui/core/Box';
+import styled from '@material-ui/system/styled';
+import Typography from '@material-ui/core/Typography';
 import keyBy from 'lodash/fp/keyBy';
+import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
@@ -82,7 +83,7 @@ const renderText =
       | undefined;
   }) =>
   (_: any, children: any) => {
-    console.log('Render', { children, variant });
+    // console.log('Render', { children, variant });
     if (children?.length == 1 && children[0] === '') {
       return <br />;
     }
@@ -142,17 +143,22 @@ const renderOptions = ({ links }: { links: TextLinks }) => {
       [BLOCKS.HEADING_4]: renderText({ variant: 'h4' }),
       [BLOCKS.HEADING_5]: renderText({ variant: 'h5' }),
       [BLOCKS.HEADING_6]: renderText({ variant: 'h6' })
+      // [BLOCKS.UL_LIST]: (node, children) => {
+      //   return <div className={styles.unorderedList}>{children}</div>;
+      // },
     }
   };
 };
 
-function Text({ body, align = 'left', styles, variant, sidekickLookup, sx }: TextProps) {
+function Text({ body, align, styles, variant, sidekickLookup, sx }: TextProps) {
   // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
   // console.log('Text', { body });
   return (
-    <Root {...sidekick(sidekickLookup)} variant={variant} sx={{ textAlign: align, ...sx, ...styles?.root }}>
-      {documentToReactComponents(body?.json, renderOptions({ links: body?.links }))}
-    </Root>
+    <ErrorBoundary>
+      <Root {...sidekick(sidekickLookup)} variant={variant} sx={{ textAlign: align, ...sx, ...styles?.root }}>
+        {documentToReactComponents(body?.json, renderOptions({ links: body?.links }))}
+      </Root>
+    </ErrorBoundary>
   );
 }
 
