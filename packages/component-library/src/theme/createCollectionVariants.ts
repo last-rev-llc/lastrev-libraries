@@ -58,7 +58,7 @@ export const collectionTilesVariant = (_: Theme) => ({
   }
 });
 
-export const collectionThreePerRowRoundedWraper = (theme: Theme) => ({
+export const collectionThreePerRowRoundedWrapper = (theme: Theme) => ({
   props: {
     variant: 'collection-three-per-row-rounded-wrapper'
   },
@@ -69,7 +69,7 @@ export const collectionThreePerRowRoundedWraper = (theme: Theme) => ({
     'width': '100%',
     'height': '100%',
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
-      'border': `2px solid ${'#595959'}`,
+      'border': '2px solid #595959',
       'borderRadius': 40,
       'backgroundColor': theme.palette.quartiary.main,
       'transition': 'background-color ease .15s',
@@ -102,7 +102,7 @@ const variants = [
   collectionTwoPerRowVariant,
   collectionThreePerRowVariant,
   collectionTilesVariant,
-  collectionThreePerRowRoundedWraper
+  collectionThreePerRowRoundedWrapper
 ];
 
 const createSectionVariants = (theme: Theme) => {
