@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.13
+
+### Patch Changes
+
+- 3cf22ef: Add three per row rounded Collection variant
+
 ## 0.1.12
 
 ### Patch Changes
