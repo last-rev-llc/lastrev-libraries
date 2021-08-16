@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.12
+
+### Patch Changes
+
+- f3ab8f9: Hotfix Card loading state
+
 ## 0.1.11
 
 ### Patch Changes
