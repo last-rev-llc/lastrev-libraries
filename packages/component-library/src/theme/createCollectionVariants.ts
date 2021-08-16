@@ -58,11 +58,51 @@ export const collectionTilesVariant = (_: Theme) => ({
   }
 });
 
+export const collectionThreePerRowRoundedWrapper = (theme: Theme) => ({
+  props: {
+    variant: 'collection-three-per-row-rounded-wrapper'
+  },
+  style: {
+    'display': 'flex',
+    'flexWrap': 'wrap',
+    'justifyContent': 'space-evenly',
+    'width': '100%',
+    'height': '100%',
+    '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
+      'border': '2px solid #595959',
+      'borderRadius': 40,
+      'backgroundColor': theme.palette.quartiary.main,
+      'transition': 'background-color ease .15s',
+      '& > [class*="Section-gridItem"]': {
+        margin: 0
+      }
+    },
+    '& .MuiPaper-root': {
+      'background': 'transparent',
+      'padding': theme.spacing(2),
+      '&:hover': {
+        backgroundColor: 'transparent'
+      }
+    },
+    '& img': {
+      display: 'none'
+    },
+    '& .MuiTypography-root': {
+      color: '#595959',
+      fontSize: 20
+    },
+    '& .MuiButton-root': {
+      color: '#595959'
+    }
+  }
+});
+
 const variants = [
   collectionOnePerRowVariant,
   collectionTwoPerRowVariant,
   collectionThreePerRowVariant,
-  collectionTilesVariant
+  collectionTilesVariant,
+  collectionThreePerRowRoundedWrapper
 ];
 
 const createSectionVariants = (theme: Theme) => {
