@@ -33,7 +33,7 @@ export interface CardOverrides {}
 export const Card = ({ media, title, subtitle, body, actions, variant, loading, sidekickLookup }: CardProps) => {
   return (
     <ErrorBoundary>
-      <Root variant={variant} {...sidekick(sidekickLookup)}>
+      <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)}>
         {media || loading ? (
           <Box display="flex" justifyContent="center">
             {loading ? (
@@ -48,16 +48,17 @@ export const Card = ({ media, title, subtitle, body, actions, variant, loading, 
         {!loading && (title || subtitle || body || actions) ? (
           <CardContent>
             {title ? (
-              <Typography {...sidekick(sidekickLookup?.title)} variant="h3" component="h3">
+              <Typography {...sidekick(sidekickLookup?.title)} variant="h3" component="h3" data-testid="Card-title">
                 {title}
               </Typography>
             ) : null}
             {subtitle ? (
-              <Typography {...sidekick(sidekickLookup?.subtitle)} variant="h4" component="h4">
+              <Typography {...sidekick(sidekickLookup?.subtitle)} variant="h4" component="h4" data-testid="Card-subtitle">
                 {subtitle}
               </Typography>
             ) : null}
-            {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} /> : null}
+            {/* {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} /> : null} */}
+            TEXT
             {actions?.length ? (
               <CardActions {...sidekick(sidekickLookup?.actions)}>
                 {actions?.map((link) => (

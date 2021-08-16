@@ -136,6 +136,10 @@ export const avatarCardVariant = (theme: Theme) => ({
       border: `2px solid ${theme.palette.primary.main}`,
       objectFit: 'cover'
     },
+    '& .MuiSkeleton-root': {
+      borderRadius: '50%',
+      transform: 'none'
+    },
     '& .MuiCardActions-root': {
       display: 'flex'
     },
@@ -143,6 +147,7 @@ export const avatarCardVariant = (theme: Theme) => ({
       margin: 'inherit'
     },
     '& .MuiCardContent-root': {
+      textAlign: 'left',
       '& .MuiLink-root': {
         margin: 0
       }
