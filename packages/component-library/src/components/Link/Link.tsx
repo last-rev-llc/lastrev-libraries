@@ -64,7 +64,7 @@ export type LinkProps = {
   href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
   variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
-  icon: string;
+  icon?: string;
   onClick?: any;
   type?: string;
   sidekickLookup?: any;

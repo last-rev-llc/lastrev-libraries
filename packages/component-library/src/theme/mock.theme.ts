@@ -43,10 +43,6 @@ export const baseTheme = createAppTheme({
     'quartiary': {
       main: '#BDEFEB'
     },
-    'pink': {
-      main: '#d960ef',
-      light: '#f6caff'
-    },
     'error': {
       main: red.A400
     },
