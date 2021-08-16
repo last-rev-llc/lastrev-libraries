@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-// import { FilterXSS } from 'xss';
+import { FilterXSS } from 'xss';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
@@ -11,31 +11,9 @@ import keyBy from 'lodash/fp/keyBy';
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
 import ContentModule from '../ContentModule';
+import Media, { MediaProps } from '../Media';
 import sidekick from '../../utils/sidekick';
-// export const RichTextPropTypes = {
-//   // eslint-disable-next-line react/forbid-prop-types
-//   body: PropTypes.object.isRequired,
-//   _id: PropTypes.string,
-//   _contentTypeId: PropTypes.string,
-//   internalTitle: PropTypes.string
-// };
 
-// const bodyXSS = new FilterXSS({
-//   whiteList: { div: ['id', 'style'] },
-//   css: false
-//   // TODO figure out why css-filter doesnt work
-//   // css: {
-//   //   // whitelist: {
-//   //   //   'scroll-margin-top': true,
-//   //   //   'scrollMarginTop': true
-//   //   // },
-//   //   onAttr: (name,value,options) => {
-//   //     console.log("Validate", {name,value, options})
-//   //     return true;
-//   //   }
-//   // },
-// });
-// const containsHTML = (children: any) => children?.some((child: any) => child.includes && child?.includes('<'));
 interface Content {
   __typename: string;
   id: string;
@@ -55,12 +33,20 @@ export interface TextProps {
 
 interface TextLinks {
   entries: Array<Content>;
-  assets: Array<Content>;
+  assets: Array<MediaProps>;
 }
 export interface RichText {
   json: any;
   links: TextLinks;
 }
+const bodyXSS = new FilterXSS({
+  whiteList: { div: ['id', 'style'] },
+  css: false
+});
+
+const isHTML = (x: any) => x.includes && x?.includes('<');
+const isCmp = (child: any): any => !!child.type && typeof child?.type !== 'string';
+const containsHTML = (children: any) => children?.some((child: any) => isHTML(child) || isCmp(child));
 
 const renderText =
   ({
@@ -83,9 +69,25 @@ const renderText =
       | undefined;
   }) =>
   (_: any, children: any) => {
-    // console.log('Render', { children, variant });
     if (children?.length == 1 && children[0] === '') {
       return <br />;
+    }
+    if (containsHTML(children)) {
+      return children.map((child: any) => {
+        if (isHTML(child)) {
+          return (
+            <div
+              // We're passing the text through xss which should clean it up for us
+              // eslint-disable-next-line react/no-danger
+              dangerouslySetInnerHTML={{ __html: bodyXSS.process(children) }}
+            />
+          );
+        }
+        if (isCmp(child)) {
+          return child;
+        }
+        return child;
+      });
     }
     return (
       <>
@@ -95,28 +97,19 @@ const renderText =
   };
 
 const renderOptions = ({ links }: { links: TextLinks }) => {
-  console.log('Text: links', links);
   const entries = keyBy('id', links?.entries ?? []);
-  // const assets = keyBy('id', links.assets);
+  const assets = keyBy('id', links?.assets ?? []);
 
   return {
     renderNode: {
       [INLINES.HYPERLINK]: (_: any, children: any) => {
-        return (
-          <Link
-            href={_.data.uri}
-            // target={!data?.uri.startsWith('/') && !data?.uri.includes('strong365.com') ? '_blank' : false}
-            // className={styles.link}
-          >
-            {children}
-          </Link>
-        );
+        return <Link href={_.data.uri}>{children}</Link>;
       },
-      // [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
-      //   const id: string = node?.data?.target?.sys?.id;
-      //   const entry = assets[id];
-      //   return <Media {...entry} />;
-      // },
+      [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
+        const id: string = node?.data?.target?.sys?.id;
+        const entry = assets[id];
+        return <Media {...entry} />;
+      },
       [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
@@ -129,7 +122,6 @@ const renderOptions = ({ links }: { links: TextLinks }) => {
       [INLINES.EMBEDDED_ENTRY]: (node: any) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
-        console.log('Embed', node, id, entry);
         return (
           <Box sx={{ display: 'inline', px: 2 }}>
             <ContentModule {...entry} />
@@ -151,8 +143,6 @@ const renderOptions = ({ links }: { links: TextLinks }) => {
 };
 
 function Text({ body, align, styles, variant, sidekickLookup, sx }: TextProps) {
-  // const { sidekicker } = sidekickInit({ _id, _contentTypeId, internalTitle });
-  // console.log('Text', { body });
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} sx={{ textAlign: align, ...sx, ...styles?.root }}>
@@ -161,9 +151,6 @@ function Text({ body, align, styles, variant, sidekickLookup, sx }: TextProps) {
     </ErrorBoundary>
   );
 }
-
-// RichText.propTypes = RichTextPropTypes;
-// RichText.defaultProps = {};
 
 const Root = styled(Box, {
   name: 'Text',

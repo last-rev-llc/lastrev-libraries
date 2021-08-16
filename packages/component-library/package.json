@@ -21,8 +21,6 @@
     "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/rollup-config": "^0.0.5",
     "@last-rev/testing-library": "0.1.2",
-    "@material-ui/core": "^5.0.0-beta.0",
-    "@material-ui/icons": "^5.0.0-alpha.37",
     "@sentry/react": "^6.7.1",
     "lodash": "^4.17.21",
     "react-context-composer": "^0.0.4",
@@ -30,7 +28,9 @@
     "react-lazyload": "^3.2.0",
     "react-mailchimp-subscribe": "^2.1.3",
     "swiper": "^6.8.0",
-    "xss": "^1.0.9"
+    "xss": "^1.0.9",
+    "@material-ui/core": "^5.0.0-beta.0",
+    "@material-ui/icons": "^5.0.0-alpha.37"
   },
   "peerDependencies": {
     "next": "^11.0.1",

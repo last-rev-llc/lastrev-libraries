@@ -244,13 +244,13 @@ const FormImage = styled(Media, {
     ...styles.formImage
   })
 })<{ variant?: string }>(({ theme }) => ({
-  'position': 'absolute',
-  'height': '125%',
-  'maxWidth': '50%',
-  'bottom': theme.spacing(3),
-  'right': theme.spacing(3),
-  'zIndex': 0,
-  'object-fit': 'fill',
+  position: 'absolute',
+  height: '125%',
+  maxWidth: '50%',
+  bottom: theme.spacing(3),
+  right: theme.spacing(3),
+  zIndex: 0,
+  objectFit: 'fill',
   [theme.breakpoints.down('md')]: {
     bottom: 'initial',
     top: theme.spacing(3),

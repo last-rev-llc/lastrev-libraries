@@ -66,6 +66,7 @@ const Section = ({
         return (
           <GridItem
             item
+            key={content.id}
             {...(contentDirection === 'column'
               ? { width: '100%' }
               : {
