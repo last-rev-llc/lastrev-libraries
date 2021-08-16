@@ -36,7 +36,7 @@ export const Card = ({ media, title, subtitle, body, actions, variant, loading, 
       <Root variant={variant} {...sidekick(sidekickLookup)}>
         {media || loading ? (
           <Box display="flex" justifyContent="center">
-            {loading ? (
+            {!loading ? (
               <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} />
             ) : (
               <Skeleton>
@@ -66,7 +66,8 @@ export const Card = ({ media, title, subtitle, body, actions, variant, loading, 
               </CardActions>
             ) : null}
           </CardContent>
-        ) : (
+        ) : null}
+        {loading ? (
           <CardContent>
             <Typography variant="h3" component="h3">
               <Skeleton width="100%" />
@@ -81,7 +82,7 @@ export const Card = ({ media, title, subtitle, body, actions, variant, loading, 
               <Skeleton width={50} />
             </CardActions>
           </CardContent>
-        )}
+        ) : null}
       </Root>
     </ErrorBoundary>
   );
