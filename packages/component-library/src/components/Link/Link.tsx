@@ -107,7 +107,12 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
    * - Classes reference FontAwesome stylesheet linked in .storybook/preview
    * - Include that css file in head of any given project to render
    */
-  if (!text && icon) {
+  // TODOs:
+  // - 1. Create variant `icon only`?
+  // --> ((variant === 'icon-only' || !variant) && icon)
+  // - 2. Create Link with Icon version
+  // --> https://next.material-ui.com/components/buttons/#buttons-with-icons-and-label
+  if (!variant && icon) {
     if (isExternal) {
       return (
         <a
