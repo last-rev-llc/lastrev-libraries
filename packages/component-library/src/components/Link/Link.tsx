@@ -165,7 +165,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (noLinkStyle) {
     return (
       <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
-        {text || children}
+        {children || text}
       </NextLinkComposed>
     );
   }
