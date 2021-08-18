@@ -324,6 +324,7 @@ const theme = createAppTheme(
             'alignItems': 'center',
             'width': 'auto',
             'height': 'auto',
+            'maxWidth': baseTheme.breakpoints.values.md,
             'borderRadius': 0,
             'boxShadow': 'none',
             'fontSize': 0,
