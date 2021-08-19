@@ -29,6 +29,7 @@ export interface TextProps {
   sidekickLookup?: any;
   variant?: string;
   align?: 'left' | 'center' | 'right' | undefined;
+  renderNode?: any;
 }
 
 interface TextLinks {
@@ -96,7 +97,7 @@ const renderText =
     );
   };
 
-const renderOptions = ({ links }: { links: TextLinks }) => {
+const renderOptions = ({ links, renderNode }: { links: TextLinks; renderNode?: any }) => {
   const entries = keyBy('id', links?.entries ?? []);
   const assets = keyBy('id', links?.assets ?? []);
 
@@ -134,19 +135,17 @@ const renderOptions = ({ links }: { links: TextLinks }) => {
       [BLOCKS.HEADING_3]: renderText({ variant: 'h3' }),
       [BLOCKS.HEADING_4]: renderText({ variant: 'h4' }),
       [BLOCKS.HEADING_5]: renderText({ variant: 'h5' }),
-      [BLOCKS.HEADING_6]: renderText({ variant: 'h6' })
-      // [BLOCKS.UL_LIST]: (node, children) => {
-      //   return <div className={styles.unorderedList}>{children}</div>;
-      // },
+      [BLOCKS.HEADING_6]: renderText({ variant: 'h6' }),
+      ...renderNode
     }
   };
 };
 
-function Text({ body, align, styles, variant, sidekickLookup, sx }: TextProps) {
+function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode }: TextProps) {
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} sx={{ textAlign: align, ...sx, ...styles?.root }}>
-        {documentToReactComponents(body?.json, renderOptions({ links: body?.links }))}
+        {documentToReactComponents(body?.json, renderOptions({ links: body?.links, renderNode }))}
       </Root>
     </ErrorBoundary>
   );

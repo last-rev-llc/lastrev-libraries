@@ -144,23 +144,25 @@ export const complexMock = {
 
 export const paragraphMock = {
   __typename: 'Text',
-  json: {
-    nodeType: 'document',
-    data: {},
-    content: [
-      {
-        nodeType: 'paragraph',
-        data: {},
-        content: [
-          {
-            nodeType: 'text',
-            value: lorem.sentences(2),
-            marks: [],
-            data: {}
-          }
-        ]
-      }
-    ]
+  body: {
+    json: {
+      nodeType: 'document',
+      data: {},
+      content: [
+        {
+          nodeType: 'paragraph',
+          data: {},
+          content: [
+            {
+              nodeType: 'text',
+              value: lorem.sentences(2),
+              marks: [],
+              data: {}
+            }
+          ]
+        }
+      ]
+    }
   }
 };
 

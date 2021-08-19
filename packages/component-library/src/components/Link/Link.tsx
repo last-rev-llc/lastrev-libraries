@@ -107,12 +107,14 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
    * - Classes reference FontAwesome stylesheet linked in .storybook/preview
    * - Include that css file in head of any given project to render
    */
-  // TODOs:
-  // - 1. Create variant `icon only`?
-  // --> ((variant === 'icon-only' || !variant) && icon)
-  // - 2. Create Link with Icon version
+  // NOTES:
+  // - 1. ** Custom for Strong365 using FontAwesome **
+  // -->  ** Is it possible to extend in that repo? **
+  // - 2. Better to use SVG
+  // --> https://material-ui.com/components/icons/#font-vs-svg-which-approach-to-use
+  // - 3. TODOs: Create Link with Icon version
   // --> https://next.material-ui.com/components/buttons/#buttons-with-icons-and-label
-  if (!variant && icon) {
+  if (icon && !text) {
     if (isExternal) {
       return (
         <a
@@ -122,8 +124,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           target="_blank"
           rel="noopener noreferrer"
           {...extra}>
-          <IconButton aria-label={text}>
-            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`} />
+          <IconButton aria-label={icon}>
+            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
           </IconButton>
         </a>
       );
@@ -132,7 +134,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       return (
         <NextLink href={href} as={linkAs}>
           <IconButton aria-label={icon} type={other.type} {...extra}>
-            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`} />
+            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
           </IconButton>
         </NextLink>
       );

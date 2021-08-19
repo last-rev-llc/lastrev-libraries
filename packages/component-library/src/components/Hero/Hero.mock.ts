@@ -21,14 +21,44 @@ export default {
       data: {},
       content: [
         {
-          nodeType: 'paragraph',
+          nodeType: 'ordered-list',
           data: {},
           content: [
             {
-              nodeType: 'text',
-              value: lorem.sentences(2),
-              marks: [],
-              data: {}
+              data: {},
+              content: [
+                {
+                  data: {},
+                  content: [
+                    {
+                      data: {},
+                      marks: [],
+                      value: 'Item One',
+                      nodeType: 'text'
+                    }
+                  ],
+                  nodeType: 'paragraph'
+                }
+              ],
+              nodeType: 'list-item'
+            },
+            {
+              data: {},
+              content: [
+                {
+                  data: {},
+                  content: [
+                    {
+                      data: {},
+                      marks: [],
+                      value: 'Item One',
+                      nodeType: 'text'
+                    }
+                  ],
+                  nodeType: 'paragraph'
+                }
+              ],
+              nodeType: 'list-item'
             }
           ]
         }
