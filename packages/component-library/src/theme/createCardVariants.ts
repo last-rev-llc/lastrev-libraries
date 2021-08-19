@@ -118,11 +118,11 @@ export const avatarCardVariant = (theme: Theme) => ({
     variant: 'avatar'
   },
   style: {
-    display: 'flex',
-    justifyContent: 'flex-start',
-    flexDirection: 'row',
-    minWidth: 320,
-    padding: theme.spacing(0, 3, 6),
+    'display': 'flex',
+    'justifyContent': 'flex-start',
+    'flexDirection': 'row',
+    'minWidth': 320,
+    'padding': theme.spacing(0, 3, 6),
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
       maxWidth: '100%'
@@ -139,8 +139,8 @@ export const avatarCardVariant = (theme: Theme) => ({
       display: 'flex'
     },
     '& .MuiCardContent-root': {
-      padding: theme.spacing(6, 4, 0),
-      textAlign: 'left',
+      'padding': theme.spacing(6, 4, 0),
+      'textAlign': 'left',
       '&:last-child': {
         paddingBottom: 0
       },
