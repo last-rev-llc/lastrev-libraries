@@ -5,6 +5,7 @@ export const complexMock = {
   __typename: 'Text',
   body: {
     json: {
+      nodeType: 'document',
       data: {},
       content: [
         {
@@ -136,8 +137,7 @@ export const complexMock = {
           ],
           nodeType: 'paragraph'
         }
-      ],
-      nodeType: 'document'
+      ]
     }
   }
 };
