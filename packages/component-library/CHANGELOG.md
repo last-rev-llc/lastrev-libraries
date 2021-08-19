@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.14
+
+### Patch Changes
+
+- 6b9043d: Release
+
 ## 0.1.13
 
 ### Patch Changes
