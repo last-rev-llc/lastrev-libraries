@@ -9,13 +9,15 @@ beforeAll(async () => {
   await preloadAll();
 });
 
-const { variant, title, subtitle } = mockContent;
+const { variant, title, subtitle, body, actions } = mockContent;
 
 const renderComponent = () =>
   render(<Card
     variant={variant}
     title={title}
     subtitle={subtitle}
+    body={body}
+    actions={actions}
   />);
 
 describe('<Card />', () => {
@@ -29,13 +31,8 @@ describe('<Card />', () => {
     expect(getByTestId('Card-title')).toHaveTextContent(title);
   });
 
-  // test('Card to have class', () => {
-  //   const { getByTestId } = renderComponent();
-  //   expect(getByTestId('Card')).toHaveClass(className);
-  // });
-
-  // test('Card to have text content', () => {
-  //   const { getByTestId } = renderComponent();
-  //   expect(getByTestId('Card-text')).toHaveTextContent(text);
-  // });
+  test('Card renders subtitle properly', () => {
+    const { getByTestId } = renderComponent();
+    expect(getByTestId('Card-subtitle')).toHaveTextContent(subtitle);
+  });
 });
