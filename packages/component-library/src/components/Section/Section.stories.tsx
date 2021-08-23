@@ -92,7 +92,7 @@ Module03.args = {
         }
       },
       body: {
-        document: {
+        json: {
           nodeType: 'document',
           data: {},
           content: [
@@ -130,7 +130,7 @@ Module04.args = {
     {
       __typename: 'Text',
       body: {
-        document: {
+        json: {
           nodeType: 'document',
           data: {},
           content: [
@@ -277,7 +277,7 @@ Module04.args = {
                 'display': 'flex',
                 'marginBottom': 14,
                 '&::before': {
-                  content: 'counter(num)',
+                  content: 'counter(num) "."',
                   marginRight: 14,
                   color: '#bdefeb',
                   fontSize: '2rem',
@@ -319,7 +319,7 @@ Module05.args = {
         }
       },
       body: {
-        document: {
+        json: {
           nodeType: 'document',
           data: {},
           content: [
@@ -388,7 +388,7 @@ Module06.args = {
     {
       __typename: 'Text',
       body: {
-        document: {
+        json: {
           nodeType: 'document',
           data: {},
           content: [
@@ -462,7 +462,7 @@ Module07.args = {
     {
       __typename: 'Text',
       body: {
-        document: {
+        json: {
           nodeType: 'document',
           data: {},
           content: [
@@ -541,7 +541,7 @@ Module08.args = {
     {
       __typename: 'Text',
       body: {
-        document: {
+        json: {
           nodeType: 'document',
           data: {},
           content: [
@@ -577,7 +577,7 @@ Module08.args = {
     {
       __typename: 'Text',
       body: {
-        document: {
+        json: {
           nodeType: 'document',
           data: {},
           content: [
@@ -654,7 +654,7 @@ Module09.args = {
     {
       __typename: 'Text',
       body: {
-        document: {
+        json: {
           nodeType: 'document',
           data: {},
           content: [

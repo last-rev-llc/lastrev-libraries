@@ -1,5 +1,23 @@
 # @last-rev/component-library
 
+## 0.1.14
+
+### Patch Changes
+
+- 6b9043d: Release
+
+## 0.1.13
+
+### Patch Changes
+
+- 3cf22ef: Add three per row rounded Collection variant
+
+## 0.1.12
+
+### Patch Changes
+
+- f3ab8f9: Hotfix Card loading state
+
 ## 0.1.11
 
 ### Patch Changes

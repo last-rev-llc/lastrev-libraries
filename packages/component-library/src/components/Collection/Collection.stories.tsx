@@ -16,7 +16,13 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['collection-one-per-row', 'collection-two-per-row', 'collection-three-per-row', 'collection-tiles']
+        options: [
+          'collection-one-per-row',
+          'collection-two-per-row',
+          'collection-three-per-row',
+          'collection-tiles',
+          'collection-three-per-row-rounded-wrapper'
+        ]
       },
       table: {
         defaultValue: { summary: 'collection-three-per-row' }

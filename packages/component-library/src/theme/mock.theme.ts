@@ -25,27 +25,23 @@ export const baseTheme = createAppTheme({
   palette: {
     'primary': {
       main: '#fee501',
-      light: 'ffff55',
-      dark: 'c6b300'
+      light: '#ffff55',
+      dark: '#c6b300'
     },
     'secondary': {
       main: '#005C7A',
       light: '#4689a9',
-      dark: '00334e',
+      dark: '#00334e',
       contrastText: 'white'
     },
     'tertiary': {
       main: '#30CEC2',
-      light: '72fff5',
-      dark: '009c92',
+      light: '#72fff5',
+      dark: '#009c92',
       contrastText: 'white'
     },
     'quartiary': {
       main: '#BDEFEB'
-    },
-    'pink': {
-      main: '#d960ef',
-      light: '#f6caff'
     },
     'error': {
       main: red.A400
@@ -328,6 +324,7 @@ const theme = createAppTheme(
             'alignItems': 'center',
             'width': 'auto',
             'height': 'auto',
+            'maxWidth': baseTheme.breakpoints.values.md,
             'borderRadius': 0,
             'boxShadow': 'none',
             'fontSize': 0,

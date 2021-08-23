@@ -87,7 +87,7 @@ HeroProps) => {
                 {actions ? (
                   <Grid item pt={3} {...sidekick(sidekickLookup?.actions)}>
                     {actions?.map((link) => (
-                      <Link {...link} />
+                      <Link key={link.id} {...link} />
                     ))}
                   </Grid>
                 ) : null}

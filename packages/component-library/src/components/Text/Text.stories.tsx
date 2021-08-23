@@ -1,5 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
+import PlayCircleFilledRoundedIcon from '@material-ui/icons/PlayCircleFilledRounded';
+import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import Text from './Text';
 import mockContent, { complexMock } from './Text.mock';
 
@@ -20,4 +22,19 @@ Plaintext.args = { ...mockContent };
 
 const Template2 = (args: JSX.IntrinsicAttributes) => <Text {...args} />;
 export const Formatted = Template2.bind({});
-Formatted.args = { ...complexMock };
+Formatted.args = {
+  ...complexMock,
+  renderNode: {
+    [BLOCKS.UL_LIST]: (_: any, children: any) => {
+      return children.map((child: any) => (
+        <Box component="li" display="flex" alignItems="center">
+          <PlayCircleFilledRoundedIcon color="secondary" sx={{ marginRight: 1 }} fontSize="small" />
+          {child}
+        </Box>
+      ));
+    },
+    [BLOCKS.LIST_ITEM]: (_: any, children: any) => {
+      return children;
+    }
+  }
+};

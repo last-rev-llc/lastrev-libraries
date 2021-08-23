@@ -1,6 +1,5 @@
 import React from 'react';
 import { Box, Grid } from '@material-ui/core';
-// import { Breakpoint } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import { LinkProps } from '../Link/Link';
@@ -16,17 +15,11 @@ export interface NavigationBarProps {
 }
 
 export const NavigationBar = ({ items, variant, itemsVariant, sidekickLookup }: NavigationBarProps) => {
-  console.log('NavigationBar', { items, variant });
   if (!items?.length) return null;
-  // const { sidekicker } = sidekickInit(props);
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
-      <Root
-        {...sidekick(sidekickLookup)}
-        variant={variant}
-        // {...sidekicker('NavigationBar')}
-      >
+      <Root {...sidekick(sidekickLookup)} variant={variant}>
         <Grid container spacing={4} sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
             <Grid item key={item.id}>
@@ -48,13 +41,5 @@ const Root = styled(Box, {
     ...styles.root
   })
 })<{ variant?: string }>(() => ({}));
-
-// const ContentContainer = styled(Container, {
-//   name: 'NavigationBar',
-//   slot: 'ContentContainer',
-//   overridesResolver: (_, styles) => ({
-//     ...styles.contentContainer
-//   })
-// })<{ variant?: string }>(() => ({}));
 
 export default NavigationBar;

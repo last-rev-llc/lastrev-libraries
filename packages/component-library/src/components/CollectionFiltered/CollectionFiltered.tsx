@@ -66,7 +66,7 @@ const useDynamicItems = ({
         setLoading(true);
         try {
           const result = await fetchItems({ filter, limit, offset });
-          console.log('CollectionFiltered', { result });
+          // console.log('CollectionFiltered', { result });
           setItems(result?.items);
           setOptions(result?.options);
         } catch (error) {
@@ -117,7 +117,7 @@ export const CollectionFiltered = ({
     filter
   });
   const itemsWithVariant = items?.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
-  console.log('Collection', { filters, filter });
+  // console.log('Collection', { filters, filter });
   // React.useEffect(() => {
   //   setFilter(defaultFilter);
   // }, [defaultFilter]);
@@ -191,11 +191,11 @@ interface FilterFormData {
 
 const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: CollectionFiltersProps) => {
   const handleChange = (id: string) => (event: any) => {
-    console.log('HandleChange', { id, value: event.target.value });
+    // console.log('HandleChange', { id, value: event.target.value });
     setFilter({ ...filter, [id]: event.target.value });
   };
 
-  console.log('Filter', { filter });
+  // console.log('Filter', { filter });
   return (
     <form id={`collection_${id}_filters`} style={{ width: '100%' }}>
       <Grid container sx={{ justifyContent: 'flex-end' }} spacing={2}>
@@ -231,6 +231,9 @@ const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: Col
                   value={filter[id] ?? ''}
                   SelectProps={{ MenuProps: { disableScrollLock: true } }}
                   onChange={handleChange(id)}>
+                  <MenuItem value={-1} disabled>
+                    Select a filter
+                  </MenuItem>
                   {options
                     ? options[id]?.map(({ label, value }) => (
                         <MenuItem key={label} value={value ?? ''}>

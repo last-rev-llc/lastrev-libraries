@@ -18,7 +18,7 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['link', 'button-contained', 'button-outlined', 'button-text']
+        options: ['link', 'button-contained', 'button-outlined', 'button-text', '']
       },
       table: {
         defaultValue: { summary: 'link' }
@@ -30,7 +30,7 @@ export default {
       name: 'Icon',
       control: {
         type: 'select',
-        options: ['Instagram', 'Facebook', 'Twitter', 'YouTube']
+        options: ['instagram', 'facebook', 'twitter', 'youtube', 'chevron-right', 'caret-right']
       },
       table: {
         defaultValue: { summary: 'Instagram' }

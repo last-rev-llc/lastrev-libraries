@@ -64,7 +64,7 @@ export type LinkProps = {
   href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
   variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
-  icon: string;
+  icon?: string;
   onClick?: any;
   type?: string;
   sidekickLookup?: any;
@@ -98,7 +98,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
-  console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
+  // console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
   const extra = { ...other, ...sidekick(sidekickLookup) };
 
   const brandIcons = ['google', 'twitter', 'facebook', 'github', 'linkedin', 'pinterest', 'instagram', 'youtube'];
@@ -107,7 +107,14 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
    * - Classes reference FontAwesome stylesheet linked in .storybook/preview
    * - Include that css file in head of any given project to render
    */
-  if (!text && icon) {
+  // NOTES:
+  // - 1. ** Custom for Strong365 using FontAwesome **
+  // -->  ** Is it possible to extend in that repo? **
+  // - 2. Better to use SVG
+  // --> https://material-ui.com/components/icons/#font-vs-svg-which-approach-to-use
+  // - 3. TODOs: Create Link with Icon version
+  // --> https://next.material-ui.com/components/buttons/#buttons-with-icons-and-label
+  if (icon && !text) {
     if (isExternal) {
       return (
         <a
@@ -117,8 +124,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           target="_blank"
           rel="noopener noreferrer"
           {...extra}>
-          <IconButton aria-label={text}>
-            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`} />
+          <IconButton aria-label={icon}>
+            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
           </IconButton>
         </a>
       );
@@ -127,7 +134,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       return (
         <NextLink href={href} as={linkAs}>
           <IconButton aria-label={icon} type={other.type} {...extra}>
-            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`} />
+            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
           </IconButton>
         </NextLink>
       );
@@ -165,7 +172,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (noLinkStyle) {
     return (
       <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
-        {text || children}
+        {children || text}
       </NextLinkComposed>
     );
   }

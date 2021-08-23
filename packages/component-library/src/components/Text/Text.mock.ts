@@ -3,8 +3,9 @@ import { capitalize } from 'lodash';
 
 export const complexMock = {
   __typename: 'Text',
-  json: {
-    document: {
+  body: {
+    json: {
+      nodeType: 'document',
       data: {},
       content: [
         {
@@ -136,16 +137,15 @@ export const complexMock = {
           ],
           nodeType: 'paragraph'
         }
-      ],
-      nodeType: 'document'
+      ]
     }
   }
 };
 
 export const paragraphMock = {
   __typename: 'Text',
-  json: {
-    document: {
+  body: {
+    json: {
       nodeType: 'document',
       data: {},
       content: [
@@ -168,8 +168,8 @@ export const paragraphMock = {
 
 export default {
   __typename: 'Text',
-  json: {
-    document: {
+  body: {
+    json: {
       nodeType: 'document',
       data: {},
       content: [
