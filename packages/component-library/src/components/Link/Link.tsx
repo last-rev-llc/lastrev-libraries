@@ -72,6 +72,14 @@ export type LinkProps = {
   Omit<MuiLinkProps, 'href' | 'variant'> &
   Omit<MuiButtonProps, 'href' | 'variant'>;
 
+// Icon component using FontAwesome
+const getIcon = (icon: string) => {
+  const brandIcons = ['google', 'twitter', 'facebook', 'github', 'linkedin', 'pinterest', 'instagram', 'youtube'];
+  return (
+    <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
+  )
+};
+
 // A styled version of the Next.js Link component:
 // https://nextjs.org/docs/#with-link
 const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
@@ -98,10 +106,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
-  // console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
   const extra = { ...other, ...sidekick(sidekickLookup) };
-
-  const brandIcons = ['google', 'twitter', 'facebook', 'github', 'linkedin', 'pinterest', 'instagram', 'youtube'];
 
   /** Link with Icon only
    * - Classes reference FontAwesome stylesheet linked in .storybook/preview
@@ -112,7 +117,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   // -->  ** Is it possible to extend in that repo? **
   // - 2. Better to use SVG
   // --> https://material-ui.com/components/icons/#font-vs-svg-which-approach-to-use
-  // - 3. TODOs: Create Link with Icon version
+  // - 3. TODOs: Enable Icon position left or right of text
   // --> https://next.material-ui.com/components/buttons/#buttons-with-icons-and-label
   if (icon && !text) {
     if (isExternal) {
@@ -125,7 +130,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           rel="noopener noreferrer"
           {...extra}>
           <IconButton aria-label={icon}>
-            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
+            {getIcon(icon)}
           </IconButton>
         </a>
       );
@@ -134,7 +139,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       return (
         <NextLink href={href} as={linkAs}>
           <IconButton aria-label={icon} type={other.type} {...extra}>
-            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
+            {getIcon(icon)}
           </IconButton>
         </NextLink>
       );
@@ -148,7 +153,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         // type={other.type}
         // {...extra}
       >
-        <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`} />
+        {getIcon(icon)}
       </IconButton>
     );
   }
@@ -158,6 +163,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       return (
         <a className={className} href={href as string} ref={ref as any} {...extra}>
           {text || children}
+          {icon && getIcon(icon)}
         </a>
       );
     }
@@ -165,6 +171,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     return (
       <MuiLink className={className} href={href as string} ref={ref} {...extra}>
         {text || children}
+        {icon && getIcon(icon)}
       </MuiLink>
     );
   }
@@ -173,6 +180,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     return (
       <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
         {children || text}
+        {icon && getIcon(icon)}
       </NextLinkComposed>
     );
   }
@@ -184,6 +192,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         <NextLink href={href} as={linkAs}>
           <Button variant={buttonVariant} type={other.type} {...extra}>
             {text || children}
+            {icon && getIcon(icon)}
           </Button>
         </NextLink>
       );
@@ -191,12 +200,14 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     return (
       <Button variant={buttonVariant} onClick={other.onClick} type={other.type} {...extra}>
         {text || children}
+        {icon && getIcon(icon)}
       </Button>
     );
   }
   return (
     <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra}>
       {text || children}
+      {icon && getIcon(icon)}
     </MuiLink>
   );
 });

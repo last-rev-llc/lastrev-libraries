@@ -36,18 +36,17 @@ export default {
         defaultValue: { summary: 'Instagram' }
       }
     },
-    bgcolor: {
-      name: 'Background Color',
+    type: {
+      name: 'Type',
       control: {
-        type: 'select',
-        options: ['yellow', 'orange', 'green']
+        type: 'inline-radio',
+        options: ['button', 'submit', 'reset']
       },
       table: {
-        defaultValue: { summary: 'yellow' }
+        defaultValue: { summary: 'button' }
       }
-    }
-    // variantMapping: { name: 'Variant Mapping' },
-    // ref: { table: { disable: true } }
+    },
+    __typename: { table: { disable: true } }
   }
 };
 
