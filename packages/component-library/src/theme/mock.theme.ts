@@ -368,11 +368,7 @@ const theme = createAppTheme(
         styleOverrides: {
           root: {
             fontWeight: 'bold',
-            padding: baseTheme.spacing(2, 3),
-            '& .MuiIcon-root': {
-              marginLeft: 4,
-              lineHeight: '0.9'
-            }
+            padding: baseTheme.spacing(2, 3)
           },
           outlinedPrimary: {
             color: baseTheme.palette.text.primary,

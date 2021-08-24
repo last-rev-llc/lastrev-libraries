@@ -6,6 +6,8 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import styled from '@material-ui/system/styled';
+import Box from '@material-ui/core/Box';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
@@ -65,6 +67,7 @@ export type LinkProps = {
   noLinkStyle?: boolean;
   variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
   icon?: string;
+  iconPosition?: string;
   onClick?: any;
   type?: string;
   sidekickLookup?: any;
@@ -94,6 +97,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     children,
     variant,
     icon,
+    iconPosition,
     sidekickLookup,
     ...other
   } = props;
@@ -117,8 +121,6 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   // -->  ** Is it possible to extend in that repo? **
   // - 2. Better to use SVG
   // --> https://material-ui.com/components/icons/#font-vs-svg-which-approach-to-use
-  // - 3. TODOs: Enable Icon position left or right of text
-  // --> https://next.material-ui.com/components/buttons/#buttons-with-icons-and-label
   if (icon && !text) {
     if (isExternal) {
       return (
@@ -162,16 +164,28 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     if (noLinkStyle) {
       return (
         <a className={className} href={href as string} ref={ref as any} {...extra}>
-          {text || children}
-          {icon && getIcon(icon)}
+          <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+            <span>
+              {text || children}
+            </span>
+            <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+              {icon && getIcon(icon)}
+            </Box>
+          </ContentWrapper>
         </a>
       );
     }
 
     return (
       <MuiLink className={className} href={href as string} ref={ref} {...extra}>
-        {text || children}
-        {icon && getIcon(icon)}
+        <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+          <span>
+            {text || children}
+          </span>
+          <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+            {icon && getIcon(icon)}
+          </Box>
+        </ContentWrapper>
       </MuiLink>
     );
   }
@@ -179,8 +193,14 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (noLinkStyle) {
     return (
       <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
-        {children || text}
-        {icon && getIcon(icon)}
+        <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+          <span>
+            {children || text}
+          </span>
+          <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+            {icon && getIcon(icon)}
+          </Box>
+        </ContentWrapper>
       </NextLinkComposed>
     );
   }
@@ -191,25 +211,52 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       return (
         <NextLink href={href} as={linkAs}>
           <Button variant={buttonVariant} type={other.type} {...extra}>
-            {text || children}
-            {icon && getIcon(icon)}
+            <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+              <span>
+                {text || children}
+              </span>
+              <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+                {icon && getIcon(icon)}
+              </Box>
+            </ContentWrapper>
           </Button>
         </NextLink>
       );
     }
     return (
       <Button variant={buttonVariant} onClick={other.onClick} type={other.type} {...extra}>
-        {text || children}
-        {icon && getIcon(icon)}
+        <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+          <span>
+            {text || children}
+          </span>
+          <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+            {icon && getIcon(icon)}
+          </Box>
+        </ContentWrapper>
       </Button>
     );
   }
   return (
     <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra}>
-      {text || children}
-      {icon && getIcon(icon)}
+      <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+        <span>
+          {text || children}
+        </span>
+        <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+          {icon && getIcon(icon)}
+        </Box>
+      </ContentWrapper>
     </MuiLink>
   );
 });
+
+const ContentWrapper = styled(Box, {
+  name: 'Box',
+  slot: 'Content',
+})<{}>(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  height: 24,
+}));
 
 export default Link;

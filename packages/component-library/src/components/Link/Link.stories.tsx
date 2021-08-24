@@ -36,6 +36,16 @@ export default {
         defaultValue: { summary: 'Instagram' }
       }
     },
+    iconPosition: {
+      name: 'Icon Position',
+      control: {
+        type: 'inline-radio',
+        options: ['Left', 'Right']
+      },
+      table: {
+        defaultValue: { summary: 'Right' }
+      }
+    },
     type: {
       name: 'Type',
       control: {
