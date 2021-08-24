@@ -5,15 +5,15 @@ import Container from '@material-ui/core/Container';
 import ContentModule from '../ContentModule';
 import capitalize from 'lodash/capitalize';
 
-const spaceId = process.env.SPACE_ID;
 interface ContentPreviewProps {
   loading?: boolean;
   content?: any;
   environment: string;
+  spaceId: string;
   locale: string;
 }
-const ContentPreview = ({ loading, content, environment, locale = 'en-US' }: ContentPreviewProps) => {
-  console.log('ContentPreview', { content, environment, locale });
+
+const ContentPreview = ({ loading, content, environment, spaceId, locale = 'en-US' }: ContentPreviewProps) => {
   return (
     <>
       {loading ? <ContentModule {...content} /> : null}
@@ -51,4 +51,5 @@ const ContentPreview = ({ loading, content, environment, locale = 'en-US' }: Con
     </>
   );
 };
+
 export default ContentPreview;
