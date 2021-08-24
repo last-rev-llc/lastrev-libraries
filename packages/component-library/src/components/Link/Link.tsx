@@ -168,9 +168,11 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
             <span>
               {text || children}
             </span>
-            <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-              {icon && getIcon(icon)}
-            </Box>
+            {icon && (
+              <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+                {icon && getIcon(icon)}
+              </Box>
+            )}
           </ContentWrapper>
         </a>
       );
@@ -182,9 +184,11 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           <span>
             {text || children}
           </span>
-          <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-            {icon && getIcon(icon)}
-          </Box>
+          {icon && (
+            <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+              {icon && getIcon(icon)}
+            </Box>
+          )}
         </ContentWrapper>
       </MuiLink>
     );
@@ -197,9 +201,11 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           <span>
             {children || text}
           </span>
-          <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-            {icon && getIcon(icon)}
-          </Box>
+          {icon && (
+            <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+              {icon && getIcon(icon)}
+            </Box>
+          )}
         </ContentWrapper>
       </NextLinkComposed>
     );
@@ -215,9 +221,11 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
               <span>
                 {text || children}
               </span>
-              <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-                {icon && getIcon(icon)}
-              </Box>
+              {icon && (
+                <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+                  {icon && getIcon(icon)}
+                </Box>
+              )}
             </ContentWrapper>
           </Button>
         </NextLink>
@@ -229,9 +237,11 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           <span>
             {text || children}
           </span>
-          <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-            {icon && getIcon(icon)}
-          </Box>
+          {icon && (
+            <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+              {icon && getIcon(icon)}
+            </Box>
+          )}
         </ContentWrapper>
       </Button>
     );
@@ -242,9 +252,11 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         <span>
           {text || children}
         </span>
-        <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-          {icon && getIcon(icon)}
-        </Box>
+        {icon && (
+          <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+            {icon && getIcon(icon)}
+          </Box>
+        )}
       </ContentWrapper>
     </MuiLink>
   );
@@ -254,9 +266,9 @@ const ContentWrapper = styled(Box, {
   name: 'Box',
   slot: 'Content',
 })<{}>(() => ({
-  display: 'flex',
+  display: 'inline-flex',
   alignItems: 'center',
-  height: 24,
+  // height: 24,
 }));
 
 export default Link;
