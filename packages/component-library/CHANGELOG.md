@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.15
+
+### Patch Changes
+
+- 176d8db: Added ContentPreview component
+
 ## 0.1.14
 
 ### Patch Changes
