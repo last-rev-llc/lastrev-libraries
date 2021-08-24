@@ -39,12 +39,13 @@ export const Hero = ({
 HeroProps) => {
   return (
     <ErrorBoundary>
-      <Root variant={variant} {...sidekick(sidekickLookup)}
+      <Root
+        variant={variant}
+        {...sidekick(sidekickLookup)}
         sx={{
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined
-        }}
-      >
+        }}>
         <ContentContainer maxWidth={contentWidth}>
           <Grid
             container
@@ -53,7 +54,6 @@ HeroProps) => {
               maxWidth: image ? 'xl' : 'lg',
               margin: !image ? '0 auto' : undefined
             }}>
-
             {background ? (
               <Box
                 sx={{
@@ -62,9 +62,8 @@ HeroProps) => {
                   top: 0,
                   left: 0,
                   width: '100%',
-                  height: '100%',
-                }}
-              >
+                  height: '100%'
+                }}>
                 <Media {...background} {...sidekick(sidekickLookup?.background)} />
               </Box>
             ) : null}
@@ -77,7 +76,7 @@ HeroProps) => {
                 xs={12}
                 sm={image ? 6 : 12}
                 sx={{
-                  textAlign: !image ? 'center' : undefined,
+                  'textAlign': !image ? 'center' : undefined,
                   '& ul': {
                     display: !image ? 'inline-block' : undefined,
                     padding: !image ? 0 : undefined
@@ -149,7 +148,7 @@ const ContentContainer = styled(Container, {
     ...styles.contentContainer
   })
 })<{ variant?: string }>(({ theme }) => ({
-  padding: theme.spacing(5),
+  padding: theme.spacing(5)
 }));
 
 export default Hero;
