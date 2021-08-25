@@ -18,7 +18,7 @@ export interface HeroProps {
   body?: RichText;
   actions?: any[];
   image?: MediaProps | MediaProps[];
-  background?: any;
+  background?: MediaProps;
   contentWidth?: false | Breakpoint | undefined;
   variant?: any;
   theme: any;
@@ -27,7 +27,7 @@ export interface HeroProps {
 
 export const Hero = ({
   variant,
-  // background,
+  background,
   contentWidth,
   title,
   subtitle,
@@ -37,11 +37,15 @@ export const Hero = ({
   sidekickLookup
 }: // theme
 HeroProps) => {
-  // console.log('Hero', { variant, background, contentWidth, title, subtitle, body, actions, image, theme });
-
   return (
     <ErrorBoundary>
-      <Root variant={variant} {...sidekick(sidekickLookup)}>
+      <Root
+        variant={variant}
+        {...sidekick(sidekickLookup)}
+        sx={{
+          position: background ? 'relative' : undefined,
+          overflow: background ? 'hidden' : undefined
+        }}>
         <ContentContainer maxWidth={contentWidth}>
           <Grid
             container
@@ -50,6 +54,19 @@ HeroProps) => {
               maxWidth: image ? 'xl' : 'lg',
               margin: !image ? '0 auto' : undefined
             }}>
+            {background ? (
+              <Box
+                sx={{
+                  position: 'absolute',
+                  zIndex: -1,
+                  top: 0,
+                  left: 0,
+                  width: '100%',
+                  height: '100%'
+                }}>
+                <Media {...background} {...sidekick(sidekickLookup?.background)} />
+              </Box>
+            ) : null}
             {title || subtitle || body || actions ? (
               <Grid
                 container
@@ -58,7 +75,17 @@ HeroProps) => {
                 item
                 xs={12}
                 sm={image ? 6 : 12}
-                sx={{ textAlign: !image ? 'center' : undefined }}>
+                sx={{
+                  'textAlign': !image ? 'center' : undefined,
+                  '& ul': {
+                    display: !image ? 'inline-block' : undefined,
+                    padding: !image ? 0 : undefined
+                  },
+                  '& ol': {
+                    display: !image ? 'inline-block' : undefined,
+                    padding: !image ? 0 : undefined
+                  }
+                }}>
                 <Grid item>
                   {title ? (
                     <Typography
@@ -114,28 +141,14 @@ const Root = styled(Box, {
   })
 })<{ variant?: string }>(() => ({}));
 
-// const GridContainer = styled(Grid, {
-//   name: 'Hero',
-//   slot: 'GridContainer',
-//   overridesResolver: (_, styles) => ({
-//     ...styles.gridContainer
-//   })
-// })(() => ({}));
-
-// const GridItem = styled(Grid, {
-//   name: 'Hero',
-//   slot: 'GridItem',
-//   overridesResolver: (_, styles) => ({
-//     ...styles.gridItem
-//   })
-// })(() => ({}));
-
 const ContentContainer = styled(Container, {
   name: 'Section',
   slot: 'ContentContainer',
   overridesResolver: (_, styles) => ({
-    ...styles.contentContainer,
-    padding: 40
+    ...styles.contentContainer
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>(({ theme }) => ({
+  padding: theme.spacing(5)
+}));
+
 export default Hero;

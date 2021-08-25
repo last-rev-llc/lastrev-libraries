@@ -26,6 +26,7 @@ export default {
     subtitle: { name: 'Subtitle' },
     body: { name: 'Body' },
     image: { name: 'Image' },
+    background: { name: 'Background' },
     actions: { name: 'Actions' }
   }
 };

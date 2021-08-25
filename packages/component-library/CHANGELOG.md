@@ -1,5 +1,17 @@
 # @last-rev/component-library
 
+## 0.1.16
+
+### Patch Changes
+
+- 64cde4b: Add media embed
+
+## 0.1.15
+
+### Patch Changes
+
+- 176d8db: Added ContentPreview component
+
 ## 0.1.14
 
 ### Patch Changes

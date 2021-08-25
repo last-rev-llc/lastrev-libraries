@@ -1,6 +1,8 @@
 import './styles.scss';
-export { default as NavigationItem } from './components/NavigationItem';
+export { ContentModuleProvider } from './components/ContentModule/ContentModuleContext';
 export { default as ContentModule } from './components/ContentModule';
+export { default as ContentPreview } from './components/ContentPreview';
+export { default as NavigationItem } from './components/NavigationItem';
 export { default as Text } from './components/Text';
 export { default as Image } from './components/Image';
 export { default as Link } from './components/Link';
@@ -15,6 +17,5 @@ export { default as CollectionCarousel } from './components/CollectionCarousel';
 export { default as CollectionFiltered } from './components/CollectionFiltered';
 export { default as CollectionAccordion } from './components/CollectionAccordion';
 export { default as NavigationBar } from './components/NavigationBar';
-export { ContentModuleProvider } from './components/ContentModule/ContentModuleContext';
 export { default as mockTheme } from './theme/mock.theme';
 export { default as createTheme } from './theme/createTheme';
