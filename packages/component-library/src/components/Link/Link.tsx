@@ -68,6 +68,7 @@ export type LinkProps = {
   variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
   icon?: string;
   iconPosition?: string;
+  children?: any;
   onClick?: any;
   type?: string;
   sidekickLookup?: any;
@@ -80,6 +81,21 @@ const getIcon = (icon: string) => {
   const brandIcons = ['google', 'twitter', 'facebook', 'github', 'linkedin', 'pinterest', 'instagram', 'youtube'];
   return (
     <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
+  )
+};
+
+const getButtonContent = (text: string | undefined, children: any, iconPosition: string | undefined, icon: any) => {
+  return (
+    <ButtonWrap sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+      <span>
+        {text || children}
+      </span>
+      {icon && (
+        <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
+          {icon && getIcon(icon)}
+        </Box>
+      )}
+    </ButtonWrap>
   )
 };
 
@@ -164,32 +180,14 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     if (noLinkStyle) {
       return (
         <a className={className} href={href as string} ref={ref as any} {...extra}>
-          <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
-            <span>
-              {text || children}
-            </span>
-            {icon && (
-              <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-                {icon && getIcon(icon)}
-              </Box>
-            )}
-          </ContentWrapper>
+          {getButtonContent(text, children, iconPosition, icon)}
         </a>
       );
     }
 
     return (
       <MuiLink className={className} href={href as string} ref={ref} {...extra}>
-        <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
-          <span>
-            {text || children}
-          </span>
-          {icon && (
-            <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-              {icon && getIcon(icon)}
-            </Box>
-          )}
-        </ContentWrapper>
+        {getButtonContent(text, children, iconPosition, icon)}
       </MuiLink>
     );
   }
@@ -197,7 +195,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (noLinkStyle) {
     return (
       <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
-        <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+        <ButtonWrap sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
           <span>
             {children || text}
           </span>
@@ -206,7 +204,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
               {icon && getIcon(icon)}
             </Box>
           )}
-        </ContentWrapper>
+        </ButtonWrap>
       </NextLinkComposed>
     );
   }
@@ -216,59 +214,37 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     if (href !== '#') {
       return (
         <NextLink href={href} as={linkAs}>
-          <Button variant={buttonVariant} type={other.type} {...extra}>
-            <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
-              <span>
-                {text || children}
-              </span>
-              {icon && (
-                <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-                  {icon && getIcon(icon)}
-                </Box>
-              )}
-            </ContentWrapper>
+          <Button variant={buttonVariant} type={other.type} {...extra}
+            startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
+            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
+          >
+            {text || children}
           </Button>
         </NextLink>
       );
     }
     return (
-      <Button variant={buttonVariant} onClick={other.onClick} type={other.type} {...extra}>
-        <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
-          <span>
-            {text || children}
-          </span>
-          {icon && (
-            <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-              {icon && getIcon(icon)}
-            </Box>
-          )}
-        </ContentWrapper>
+      <Button variant={buttonVariant} onClick={other.onClick} type={other.type} {...extra}
+        startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
+        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
+      >
+        {text || children}
       </Button>
     );
   }
   return (
     <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra}>
-      <ContentWrapper sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
-        <span>
-          {text || children}
-        </span>
-        {icon && (
-          <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-            {icon && getIcon(icon)}
-          </Box>
-        )}
-      </ContentWrapper>
+      {getButtonContent(text, children, iconPosition, icon)}
     </MuiLink>
   );
 });
 
-const ContentWrapper = styled(Box, {
+const ButtonWrap = styled(Box, {
   name: 'Box',
   slot: 'Content',
 })<{}>(() => ({
   display: 'inline-flex',
   alignItems: 'center',
-  // height: 24,
 }));
 
 export default Link;

@@ -5,6 +5,6 @@ export default {
   variant: 'button-contained',
   href: lorem.word(),
   text: lorem.words(2),
-  icon: 'instagram',
+  icon: 'chevron-right',
   iconPosition: 'Right'
 };

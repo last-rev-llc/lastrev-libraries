@@ -30,7 +30,7 @@ export default {
       name: 'Icon',
       control: {
         type: 'select',
-        options: ['instagram', 'facebook', 'twitter', 'youtube', 'chevron-right', 'caret-right']
+        options: ['instagram', 'facebook', 'twitter', 'youtube', 'chevron-right', 'caret-right', '']
       },
       table: {
         defaultValue: { summary: 'Instagram' }
