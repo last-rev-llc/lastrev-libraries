@@ -31,9 +31,9 @@ export default {
           'standard-round',
           'media',
           'media-and-text',
-          'avatar-and-text',
-          'avatar',
-          'avatar-large',
+          'profile-and-text',
+          'profile',
+          'profile-large',
           'square'
         ]
       },

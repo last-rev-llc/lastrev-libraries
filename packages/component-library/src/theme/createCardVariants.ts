@@ -113,9 +113,9 @@ export const mediaAndTextCardVariant = (theme: Theme) => ({
   }
 });
 
-export const avatarCardVariant = (theme: Theme) => ({
+export const profileCardVariant = (theme: Theme) => ({
   props: {
-    variant: 'avatar'
+    variant: 'profile'
   },
   style: {
     'display': 'flex',
@@ -157,9 +157,9 @@ export const avatarCardVariant = (theme: Theme) => ({
   }
 });
 
-export const avatarLargeCardVariant = (theme: Theme) => ({
+export const profileLargeCardVariant = (theme: Theme) => ({
   props: {
-    variant: 'avatar-large'
+    variant: 'profile-large'
   },
   style: {
     'justifyContent': 'center',
@@ -389,8 +389,8 @@ export const standardBlogCardVariant = (theme: Theme) => ({
 const variants = [
   mediaCardVariant,
   mediaAndTextCardVariant,
-  avatarCardVariant,
-  avatarLargeCardVariant,
+  profileCardVariant,
+  profileLargeCardVariant,
   squareCardVariant,
   standardCardVariant,
   standardRoundedCardVariant,
