@@ -5,21 +5,34 @@ export const defaultVariant = (theme: Theme) => ({
     variant: 'default'
   },
   style: {
-    'h1': {
+    h1: {
       color: theme.palette.grey.A700
     },
-    'h2': {
+    h2: {
       color: theme.palette.secondary.main
     },
 
-    // DEMO ONLY
-    '& .MuiLink-root': {
-      display: 'inline-block',
-      marginTop: 4,
-      padding: '10px 20px',
-      backgroundColor: theme.palette.primary.main,
-      textDecoration: 'none'
-    }
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(4, 0)
+    },
+  }
+});
+
+export const centeredVariant = (theme: Theme) => ({
+  props: {
+    variant: 'centered'
+  },
+  style: {
+    h1: {
+      color: theme.palette.grey.A700
+    },
+    h2: {
+      color: theme.palette.secondary.main
+    },
+
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(4, 0)
+    },
   }
 });
 
@@ -41,7 +54,11 @@ export const gradientBackgroundVariant = () => ({
   }
 });
 
-const variants = [defaultVariant, gradientBackgroundVariant];
+const variants = [
+  defaultVariant,
+  centeredVariant,
+  gradientBackgroundVariant
+];
 
 const createHeroVariants = (theme: Theme) => {
   return variants.map((creator) => creator(theme));

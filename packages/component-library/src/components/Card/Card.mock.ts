@@ -10,7 +10,7 @@ export default {
   media: {
     __typename: 'Media',
     file: {
-      url: 'https://material-ui.com/static/images/cards/contemplative-reptile.jpg'
+      url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
     },
     alt: 'Contemplative Lizard'
   },
