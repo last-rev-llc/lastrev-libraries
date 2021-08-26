@@ -161,7 +161,6 @@ const theme = createAppTheme(
       },
       Section: {
         variants: createSectionVariants(baseTheme),
-
         styleOverrides: {
           'root': {
             // display: 'flex',
@@ -280,41 +279,6 @@ const theme = createAppTheme(
           color: 'secondary'
         }
       },
-      MuiButton: {
-        variants: [
-          {
-            props: {
-              variant: 'text'
-            },
-            style: {
-              textTransform: 'none'
-            }
-          },
-          {
-            props: {
-              variant: 'text',
-              color: 'primary'
-            },
-            style: {
-              color: baseTheme.palette.secondary.main
-            }
-          }
-        ],
-        defaultProps: {
-          disableElevation: true
-        },
-        styleOverrides: {
-          root: {
-            fontWeight: 'bold',
-            padding: baseTheme.spacing(2, 3)
-          },
-          outlinedPrimary: {
-            color: baseTheme.palette.text.primary,
-            borderColor: baseTheme.palette.secondary.main,
-            borderRadius: baseTheme.spacing(2)
-          }
-        }
-      },
       MuiCard: {
         styleOverrides: {
           root: {
@@ -371,7 +335,51 @@ const theme = createAppTheme(
         styleOverrides: {
           root: {
             cursor: 'pointer',
-            color: 'black'
+            color: 'black',
+            '& .MuiIcon-root': {
+              verticalAlign: 'middle'
+            }
+          },
+        }
+      },
+      MuiButton: {
+        variants: [
+          {
+            props: {
+              variant: 'text'
+            },
+            style: {
+              textTransform: 'none'
+            }
+          },
+          {
+            props: {
+              variant: 'text',
+              color: 'primary'
+            },
+            style: {
+              color: baseTheme.palette.secondary.main
+            }
+          }
+        ],
+        defaultProps: {
+          disableElevation: true
+        },
+        styleOverrides: {
+          root: {
+            fontWeight: 'bold',
+            padding: baseTheme.spacing(2, 3),
+            '& .MuiButton-startIcon': {
+              display: 'inline',
+            },
+            '& .MuiButton-endIcon': {
+              display: 'inline',
+            }
+          },
+          outlinedPrimary: {
+            color: baseTheme.palette.text.primary,
+            borderColor: baseTheme.palette.secondary.main,
+            borderRadius: baseTheme.spacing(2)
           }
         }
       }
