@@ -6,7 +6,7 @@ import { paragraphMock } from '../Text/Text.mock';
 export default {
   __typename: 'Card',
   // variant: 'standard-blog',
-  variant: 'avatar',
+  variant: 'profile',
   media: {
     __typename: 'Media',
     file: {
