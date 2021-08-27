@@ -23,7 +23,7 @@ export const NavigationBar = ({ items, variant, itemsVariant, sidekickLookup }: 
         <Grid container spacing={4} sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
             <Grid item key={item.id} sx={{ height: '100%' }}>
-              <ContentModule {...item} />
+              <ContentModule {...item} activeClassName="MuiLink-selected" />
             </Grid>
           ))}
         </Grid>
