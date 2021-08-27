@@ -132,6 +132,7 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => ({
     ...styles.root,
+    width: '100%',
     display: 'flex',
     justifyContent: 'center'
   })

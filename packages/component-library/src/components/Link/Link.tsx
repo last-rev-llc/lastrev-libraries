@@ -79,24 +79,18 @@ export type LinkProps = {
 // Icon component using FontAwesome
 const getIcon = (icon: string) => {
   const brandIcons = ['google', 'twitter', 'facebook', 'github', 'linkedin', 'pinterest', 'instagram', 'youtube'];
-  return (
-    <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
-  )
+  return <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />;
 };
 
 const getButtonContent = (text: string | undefined, children: any, iconPosition: string | undefined, icon: any) => {
   return (
     <ButtonWrap sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
-      <span>
-        {text || children}
-      </span>
+      <span>{text || children}</span>
       {icon && (
-        <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-          {icon && getIcon(icon)}
-        </Box>
+        <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>{icon && getIcon(icon)}</Box>
       )}
     </ButtonWrap>
-  )
+  );
 };
 
 // A styled version of the Next.js Link component:
@@ -147,9 +141,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           target="_blank"
           rel="noopener noreferrer"
           {...extra}>
-          <IconButton aria-label={icon}>
-            {getIcon(icon)}
-          </IconButton>
+          <IconButton aria-label={icon}>{getIcon(icon)}</IconButton>
         </a>
       );
     }
@@ -192,19 +184,22 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     );
   }
 
-  if (noLinkStyle) {
+  if (noLinkStyle && icon) {
     return (
       <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
         <ButtonWrap sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
-          <span>
-            {children || text}
-          </span>
+          <span>{children || text}</span>
           {icon && (
-            <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>
-              {icon && getIcon(icon)}
-            </Box>
+            <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>{icon && getIcon(icon)}</Box>
           )}
         </ButtonWrap>
+      </NextLinkComposed>
+    );
+  }
+  if (noLinkStyle) {
+    return (
+      <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
+        {children || text}
       </NextLinkComposed>
     );
   }
@@ -214,20 +209,25 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     if (href !== '#') {
       return (
         <NextLink href={href} as={linkAs}>
-          <Button variant={buttonVariant} type={other.type} {...extra}
+          <Button
+            variant={buttonVariant}
+            type={other.type}
+            {...extra}
             startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-          >
+            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
             {text || children}
           </Button>
         </NextLink>
       );
     }
     return (
-      <Button variant={buttonVariant} onClick={other.onClick} type={other.type} {...extra}
+      <Button
+        variant={buttonVariant}
+        onClick={other.onClick}
+        type={other.type}
+        {...extra}
         startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-      >
+        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
         {text || children}
       </Button>
     );
@@ -241,10 +241,10 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
 
 const ButtonWrap = styled(Box, {
   name: 'Box',
-  slot: 'Content',
+  slot: 'Content'
 })<{}>(() => ({
   display: 'inline-flex',
-  alignItems: 'center',
+  alignItems: 'center'
 }));
 
 export default Link;

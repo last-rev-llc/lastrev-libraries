@@ -1,9 +1,10 @@
 import React from 'react';
-import { Grid, Container, Box, MenuItem, TextField, Button, Typography } from '@material-ui/core';
+import { Skeleton, Grid, Container, Box, MenuItem, TextField, Button, Typography } from '@material-ui/core';
 
 import { Breakpoint } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
+import Section from '../Section';
 import { MediaProps } from '../Media';
 import { CardProps } from '../Card';
 import ContentModule from '../ContentModule';
@@ -26,7 +27,7 @@ interface Option {
   value: string;
 }
 interface Options {
-  [key: string]: Option[];
+  [key: string]: Array<Option>;
 }
 export interface CollectionFilteredProps {
   id: string;
@@ -39,6 +40,7 @@ export interface CollectionFilteredProps {
   background?: MediaProps;
   variant?: string;
   itemsVariant?: string;
+  itemsSpacing?: number;
   theme: any;
   itemsWidth?: false | Breakpoint | undefined;
   sidekickLookup?: string;
@@ -104,11 +106,23 @@ export const CollectionFiltered = ({
   itemsWidth,
   variant,
   itemsVariant,
+  itemsSpacing,
   sidekickLookup
 }: CollectionFilteredProps) => {
   const { filters } = settings || {};
   // const [filter, setFilter] = React.useState(defaultFilter);
-  const [filter, setFilter] = useQueryState(defaultFilter);
+  const [filterQuery, setFilter] = useQueryState(defaultFilter);
+  const filter = React.useMemo<FilterFormData>(() => {
+    if (!filters) return {};
+    // Filter the filterQuery to only include the keys that are in the options
+    return filters?.reduce(
+      (acc, { id }) => ({
+        ...acc,
+        [id]: filterQuery[id]
+      }),
+      {}
+    );
+  }, [filterQuery, filters]);
 
   const { items, options, loading, error } = useDynamicItems({
     items: defaultItems,
@@ -117,51 +131,70 @@ export const CollectionFiltered = ({
     filter
   });
   const itemsWithVariant = items?.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
-  // console.log('Collection', { filters, filter });
-  // React.useEffect(() => {
-  //   setFilter(defaultFilter);
-  // }, [defaultFilter]);
+
+  const parseValue = ({ filterId, value }: { filterId: string; value: string }) => {
+    return options && options[filterId]
+      ? options[filterId]?.find((option) => option.value === value || value?.includes(option.value))?.label
+      : value;
+  };
+
+  const parsedFilters = filters
+    ?.map(({ id }) => (filter[id] ? parseValue({ filterId: id, value: filter[id] }) : null))
+    .filter((x) => !!x)
+    .join(', ');
+
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant}>
         <ContentContainer maxWidth={itemsWidth}>
           <Grid container spacing={4} sx={{ flexDirection: 'column' }}>
             <Grid item container sx={{ justifyContent: 'flex-end' }}>
-              <CollectionFilters id={id} filters={filters} options={options} setFilter={setFilter} filter={filter} />
-              <Grid item>
-                <Button
-                  onClick={() => {
-                    setFilter({});
-                    if (onClearFilter) onClearFilter();
-                  }}>
-                  Clear
-                </Button>
-              </Grid>
+              <CollectionFilters
+                id={id}
+                filters={filters}
+                options={options}
+                setFilter={setFilter}
+                filter={filter}
+                onClearFilter={onClearFilter}
+              />
             </Grid>
 
             {itemsWithVariant?.length && !loading ? (
               <>
                 <Grid item container>
                   <Grid item xs={12}>
-                    <Typography variant="h4">Showing results for: {JSON.stringify(filter)}</Typography>
+                    <Typography variant="h4">
+                      {parsedFilters ? `Showing results for: ${parsedFilters}` : 'Showing results for: All'}
+                    </Typography>
                   </Grid>
-                  {itemsWithVariant?.map((item) => (
-                    <Grid key={item.id} item xs={4}>
-                      <ContentModule {...item} />
-                    </Grid>
-                  ))}
+                  <Section
+                    contents={itemsWithVariant}
+                    // background={background}
+                    variant={'three-per-row'}
+                    contentSpacing={itemsSpacing}
+                  />
                 </Grid>
               </>
             ) : null}
             {!itemsWithVariant?.length && !isEmpty(filter) && !loading ? (
-              <Grid item>No results for filter {JSON.stringify(filter)}</Grid>
+              <Grid item>
+                <Typography variant="h4">
+                  No results for filter: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
+                </Typography>
+              </Grid>
             ) : null}
-            {!itemsWithVariant?.length && error ? <Grid item>Error searching for your terms, try again</Grid> : null}
+            {!itemsWithVariant?.length && error ? (
+              <Grid item>
+                <Typography variant="h4">Error searching for: {parsedFilters}, try again!</Typography>
+              </Grid>
+            ) : null}
             {loading ? (
               <>
                 <Grid item container>
                   <Grid item xs={12}>
-                    <Typography variant="h4">Showing results for: {JSON.stringify(filter)}</Typography>
+                    <Typography variant="h4">
+                      Showing results for: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
+                    </Typography>
                   </Grid>
                   {range(9).map((_: any, idx: number) => (
                     <Grid key={`item_loading_${idx}`} item xs={4}>
@@ -184,21 +217,20 @@ interface CollectionFiltersProps {
   filter?: FilterFormData;
   filters?: FilterSetting[];
   setFilter: any;
+  onClearFilter: any;
 }
 interface FilterFormData {
   [key: string]: any;
 }
 
-const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: CollectionFiltersProps) => {
+const CollectionFilters = ({ id, options, filters, filter = {}, setFilter, onClearFilter }: CollectionFiltersProps) => {
   const handleChange = (id: string) => (event: any) => {
-    // console.log('HandleChange', { id, value: event.target.value });
     setFilter({ ...filter, [id]: event.target.value });
   };
 
-  // console.log('Filter', { filter });
   return (
-    <form id={`collection_${id}_filters`} style={{ width: '100%' }}>
-      <Grid container sx={{ justifyContent: 'flex-end' }} spacing={2}>
+    <CollectionFiltersRoot id={`collection_${id}_filters`} container style={{ justifyContent: 'flex-end' }}>
+      <Grid item container sx={{ justifyContent: 'flex-end' }} spacing={2}>
         {filters?.map(({ id, label, type }) => {
           if (!id) return null;
           let input;
@@ -208,7 +240,6 @@ const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: Col
                 <TextField
                   id={id}
                   name={id}
-                  variant="outlined"
                   fullWidth
                   margin="normal"
                   label={label || id}
@@ -224,7 +255,6 @@ const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: Col
                   select
                   id={id}
                   name={id}
-                  variant="outlined"
                   fullWidth
                   margin="normal"
                   label={label || id}
@@ -255,7 +285,16 @@ const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: Col
           return null;
         })}
       </Grid>
-    </form>
+      <Grid item>
+        <Button
+          onClick={() => {
+            setFilter({});
+            if (onClearFilter) onClearFilter();
+          }}>
+          Clear
+        </Button>
+      </Grid>
+    </CollectionFiltersRoot>
   );
 };
 
@@ -270,6 +309,15 @@ const Root = styled(Box, {
   display: 'flex',
   justifyContent: 'center'
 }));
+
+const CollectionFiltersRoot = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'FiltersRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => ({
+    ...styles.root
+  })
+})<{ variant?: string }>(() => ({}));
 
 const ContentContainer = styled(Container, {
   name: 'CollectionFiltered',
