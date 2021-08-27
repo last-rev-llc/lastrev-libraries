@@ -30,24 +30,33 @@ export default {
       name: 'Icon',
       control: {
         type: 'select',
-        options: ['instagram', 'facebook', 'twitter', 'youtube', 'chevron-right', 'caret-right']
+        options: ['instagram', 'facebook', 'twitter', 'youtube', 'chevron-right', 'caret-right', '']
       },
       table: {
         defaultValue: { summary: 'Instagram' }
       }
     },
-    bgcolor: {
-      name: 'Background Color',
+    iconPosition: {
+      name: 'Icon Position',
       control: {
-        type: 'select',
-        options: ['yellow', 'orange', 'green']
+        type: 'inline-radio',
+        options: ['Left', 'Right']
       },
       table: {
-        defaultValue: { summary: 'yellow' }
+        defaultValue: { summary: 'Right' }
       }
-    }
-    // variantMapping: { name: 'Variant Mapping' },
-    // ref: { table: { disable: true } }
+    },
+    type: {
+      name: 'Type',
+      control: {
+        type: 'inline-radio',
+        options: ['button', 'submit', 'reset']
+      },
+      table: {
+        defaultValue: { summary: 'button' }
+      }
+    },
+    __typename: { table: { disable: true } }
   }
 };
 
