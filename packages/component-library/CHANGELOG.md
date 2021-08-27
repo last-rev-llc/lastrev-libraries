@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.18
+
+### Patch Changes
+
+- 2bdaaf3: Add NavigationBar link activeClassName
+
 ## 0.1.17
 
 ### Patch Changes
