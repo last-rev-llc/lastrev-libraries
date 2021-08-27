@@ -116,7 +116,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   const pathname = href ?? '';
   // const pathname = typeof href === 'string' ? href : href.pathname;
   const className = clsx(classNameProps, {
-    [activeClassName]: router?.pathname === pathname && activeClassName
+    [activeClassName]: (router?.asPath === pathname || router?.asPath === `${pathname}/`) && activeClassName
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
@@ -148,7 +148,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     if (href !== '#') {
       return (
         <NextLink href={href} as={linkAs}>
-          <IconButton aria-label={icon} type={other.type} {...extra}>
+          <IconButton aria-label={icon} type={other.type} {...extra} className={className}>
             {getIcon(icon)}
           </IconButton>
         </NextLink>
@@ -210,6 +210,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       return (
         <NextLink href={href} as={linkAs}>
           <Button
+            className={className}
             variant={buttonVariant}
             type={other.type}
             {...extra}
@@ -222,6 +223,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     }
     return (
       <Button
+        className={className}
         variant={buttonVariant}
         onClick={other.onClick}
         type={other.type}
