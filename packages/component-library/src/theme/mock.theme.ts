@@ -334,12 +334,12 @@ const theme = createAppTheme(
       MuiLink: {
         styleOverrides: {
           root: {
-            cursor: 'pointer',
-            color: 'black',
+            'cursor': 'pointer',
+            'color': 'black',
             '& .MuiIcon-root': {
               verticalAlign: 'middle'
             }
-          },
+          }
         }
       },
       MuiButton: {
@@ -367,13 +367,13 @@ const theme = createAppTheme(
         },
         styleOverrides: {
           root: {
-            fontWeight: 'bold',
-            padding: baseTheme.spacing(2, 3),
+            'fontWeight': 'bold',
+            'padding': baseTheme.spacing(2, 3),
             '& .MuiButton-startIcon': {
-              display: 'inline',
+              display: 'inline'
             },
             '& .MuiButton-endIcon': {
-              display: 'inline',
+              display: 'inline'
             }
           },
           outlinedPrimary: {

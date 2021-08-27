@@ -1,5 +1,13 @@
 # @last-rev/component-library
 
+## 0.1.17
+
+### Patch Changes
+
+- 8d5dea9: Update CollectionFiltered
+- 8d5dea9: Added parsing to CollectionFiltered filters
+- 285da00: updated richtext for accordion
+
 ## 0.1.16
 
 ### Patch Changes
