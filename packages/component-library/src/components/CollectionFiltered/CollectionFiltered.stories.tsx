@@ -31,7 +31,6 @@ export default {
           'standard-round',
           'media',
           'media-and-text',
-          'profile-and-text',
           'profile',
           'profile-large',
           'square'
