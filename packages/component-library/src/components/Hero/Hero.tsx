@@ -58,20 +58,10 @@ HeroProps) => {
         sx={{
           ...rootStyles({ backgroundColor, theme, background }),
           position: background ? 'relative' : undefined,
-          overflow: background ? 'hidden' : undefined,
-          '& .MuiButton-containedPrimary': {
-            color: 'black'
-          }
+          overflow: background ? 'hidden' : undefined
         }}>
         <ContentContainer maxWidth={contentWidth}>
-          <Grid
-            container
-            spacing={5}
-            sx={{
-              maxWidth: variant !== 'centered' ? 'xl' : 'lg',
-              margin: variant === 'centered' ? '0 auto' : undefined,
-              justifyContent: variant === 'centered' ? 'center' : undefined
-            }}>
+          <Grid container spacing={5}>
             {background ? (
               <Box
                 sx={{
@@ -90,26 +80,13 @@ HeroProps) => {
                 container
                 direction="column"
                 spacing={2}
-                item
-                xs={12}
-                sm={variant !== 'centered' ? 6 : 12}
-                sx={{
-                  'textAlign': variant === 'centered' ? 'center' : undefined,
-                  '& ul': {
-                    display: variant === 'centered' ? 'inline-block' : undefined,
-                    padding: variant === 'centered' ? 0 : undefined
-                  },
-                  '& ol': {
-                    display: variant === 'centered' ? 'inline-block' : undefined,
-                    padding: variant === 'centered' ? 0 : undefined
-                  }
-                }}>
+                xs={12}>
                 <Grid item>
                   {title ? (
                     <Typography
                       variant="h1"
                       component="h1"
-                      sx={{ color: !subtitle ? '#005C7A' : undefined }}
+                      sx={{ color: !subtitle ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
@@ -118,7 +95,7 @@ HeroProps) => {
                     <Typography
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
-                      sx={{ color: !title ? '#005C7A' : undefined }}
+                      sx={{ color: !title ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>

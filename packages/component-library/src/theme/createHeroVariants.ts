@@ -5,16 +5,47 @@ export const defaultVariant = (theme: Theme) => ({
     variant: 'default'
   },
   style: {
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(4, 0)
+    },
     h1: {
       color: theme.palette.grey.A700
     },
     h2: {
       color: theme.palette.secondary.main
     },
-
-    [theme.breakpoints.down('lg')]: {
-      padding: theme.spacing(4, 0)
+    '& [class*="contentContainer"] > .MuiGrid-container > .MuiGrid-root': {
+      [theme.breakpoints.down('lg')]: {
+        '& .MuiGrid-root': {
+          textAlign: 'center',
+        },
+        '& ul': {
+          display: 'inline-block',
+          padding: 0
+        },
+        '& ol': {
+          display: 'inline-block',
+          padding: 0
+        },
+      },
+      [theme.breakpoints.up('lg')]: {
+        maxWidth: '50%'
+      },
     },
+    [theme.breakpoints.down('lg')]: {
+      '& > .MuiContainer-root > .MuiGrid-container': {
+        maxWidth: theme.breakpoints.values.lg,
+        margin: '0 auto',
+        justifyContent: 'center',
+        flexDirection: 'column',
+      },
+    },
+    '& .MuiButton-containedPrimary': {
+      color: theme.palette.primary.contrastText,
+      '& .MuiIcon-root': {
+        color: theme.palette.primary.contrastText
+      }
+    }
   }
 });
 
@@ -23,16 +54,38 @@ export const centeredVariant = (theme: Theme) => ({
     variant: 'centered'
   },
   style: {
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(4, 0)
+    },
+    '& > .MuiContainer-root > .MuiGrid-container': {
+      maxWidth: theme.breakpoints.values.lg,
+      margin: '0 auto',
+      justifyContent: 'center',
+      flexDirection: 'column',
+    },
+    '& .MuiGrid-root': {
+      textAlign: 'center',
+    },
     h1: {
       color: theme.palette.grey.A700
     },
     h2: {
       color: theme.palette.secondary.main
     },
-
-    [theme.breakpoints.down('lg')]: {
-      padding: theme.spacing(4, 0)
+    '& ul': {
+      display: 'inline-block',
+      padding: 0
     },
+    '& ol': {
+      display: 'inline-block',
+      padding: 0
+    },
+    '& .MuiButton-containedPrimary': {
+      color: theme.palette.primary.contrastText,
+      '& .MuiIcon-root': {
+        color: theme.palette.primary.contrastText
+      }
+    }
   }
 });
 
