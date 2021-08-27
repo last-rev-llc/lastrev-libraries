@@ -133,7 +133,7 @@ const rootStyles = ({ backgroundColor, theme, background }: { backgroundColor?: 
       backgroundColor: 'transparent',
       color: 'white',
       // TODO find out a better way to override text color
-      '& *, p, h1, h2, h3, h4, h5, h6, a': {
+      '& p, h1, h2, h3, h4, h5, h6, a': {
         color: 'white'
       }
     };
@@ -146,7 +146,7 @@ const rootStyles = ({ backgroundColor, theme, background }: { backgroundColor?: 
       backgroundColor,
       color: 'white',
       // TODO find out a better way to override text color
-      '& *, p, h1, h2, h3, h4, h5, h6, a': {
+      '& p, h1, h2, h3, h4, h5, h6, a': {
         color: 'white'
       }
     };
@@ -156,7 +156,7 @@ const rootStyles = ({ backgroundColor, theme, background }: { backgroundColor?: 
       'background': theme.palette[backgroundColor]?.main,
       'color': `${backgroundColor}.contrastText`,
       // TODO find out a better way to override text color
-      '& *, p, h1, h2, h3, h4, h5, h6, a': {
+      '& p, h1, h2, h3, h4, h5, h6, a': {
         color: `${backgroundColor}.contrastText`
       }
     };
@@ -167,7 +167,7 @@ const rootStyles = ({ backgroundColor, theme, background }: { backgroundColor?: 
   if (backgroundColor && get(theme.palette, parsedBGColor)) {
     return {
       'bgcolor': parsedBGColor,
-      '& *, p, h1, h2, h3, h4, h5, h6, a': {
+      '& p, h1, h2, h3, h4, h5, h6, a': {
         color: `${paletteColor}.contrastText`
       }
     };
