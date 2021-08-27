@@ -41,8 +41,9 @@ export interface SectionOverrides {}
 
 const VARIANTS_GRID_ITEM: Record<string, any> = {
   'one-per-row': { xs: 12 },
-  'two-per-row': { xs: 6 },
-  'three-per-row': { xs: 6, sm: 4 }
+  'two-per-row': { xs: 12, sm: 6 },
+  'three-per-row': { xs: 12, sm: 6, md: 4 },
+  'default': { xs: 12, sm: true }
 };
 const Section = ({
   contents,
@@ -132,6 +133,7 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => ({
     ...styles.root,
+    width: '100%',
     display: 'flex',
     justifyContent: 'center'
   })
