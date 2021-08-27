@@ -6,14 +6,15 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@material-ui/system/styled';
 import sidekick from '../../utils/sidekick';
+import Text, { RichText } from '../Text';
 
 export interface AccordionProps extends MuiAccordionProps {
   __typename: string;
   internalTitle: string;
   variant?: any;
   title?: string;
-  body?: string;
-  sidekickLookup: string;
+  body?: RichText;
+  sidekickLookup: any;
 }
 
 export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionProps) => {
@@ -27,7 +28,7 @@ export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionPro
         </AccordionSummary>
         {body ? (
           <AccordionDetails>
-            <Typography variant="body1">{body}</Typography>
+            <Text sidekickLookup={sidekickLookup?.body} body={body} />
           </AccordionDetails>
         ) : null}
       </AccordionRoot>

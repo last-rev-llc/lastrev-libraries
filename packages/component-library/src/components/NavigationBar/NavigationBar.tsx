@@ -22,7 +22,7 @@ export const NavigationBar = ({ items, variant, itemsVariant, sidekickLookup }: 
       <Root {...sidekick(sidekickLookup)} variant={variant}>
         <Grid container spacing={4} sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
-            <Grid item key={item.id}>
+            <Grid item key={item.id} sx={{ height: '100%' }}>
               <ContentModule {...item} />
             </Grid>
           ))}
