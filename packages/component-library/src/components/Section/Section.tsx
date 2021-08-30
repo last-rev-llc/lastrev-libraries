@@ -71,9 +71,9 @@ const Section = ({
             {...(contentDirection === 'column'
               ? { width: '100%' }
               : {
-                  xs: itemStyle?.xs ?? gridItemStyle?.xs ?? true,
-                  md: itemStyle?.md ?? gridItemStyle?.md ?? false,
-                  sm: itemStyle?.sm ?? gridItemStyle?.sm ?? false
+                  xs: gridItemStyle?.xs ?? itemStyle?.xs ?? true,
+                  md: gridItemStyle?.md ?? itemStyle?.md ?? false,
+                  sm: gridItemStyle?.sm ?? itemStyle?.sm ?? false
                 })}
             sx={{
               ...styles?.gridItem,
