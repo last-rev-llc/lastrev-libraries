@@ -26,7 +26,8 @@ export const baseTheme = createAppTheme({
     'primary': {
       main: '#fee501',
       light: '#ffff55',
-      dark: '#c6b300'
+      dark: '#c6b300',
+      contrastText: 'black'
     },
     'secondary': {
       main: '#005C7A',
@@ -154,7 +155,9 @@ const theme = createAppTheme(
               }
             },
             'img': {
-              width: '100%'
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
             }
           }
         }

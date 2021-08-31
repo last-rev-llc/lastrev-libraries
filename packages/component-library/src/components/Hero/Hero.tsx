@@ -1,6 +1,10 @@
 import React from 'react';
 import { Container, Box, Grid, Typography } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
+import useTheme from '@material-ui/system/useTheme';
+import { Theme } from '@material-ui/system/createTheme';
+import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
+import get from 'lodash/get';
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
 import Media from '../Media';
@@ -19,15 +23,23 @@ export interface HeroProps {
   actions?: any[];
   image?: MediaProps | MediaProps[];
   background?: MediaProps;
+  backgroundColor?: string;
   contentWidth?: false | Breakpoint | undefined;
   variant?: any;
   theme: any;
+  styles?: {
+    root?: SystemCssProperties;
+    gridContainer?: SystemCssProperties & { spacing: any };
+    gridItem?: SystemCssProperties & { xs: any; sm: any; md: any };
+    gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
+  };
   sidekickLookup?: any;
 }
 
 export const Hero = ({
   variant,
   background,
+  backgroundColor,
   contentWidth,
   title,
   subtitle,
@@ -37,23 +49,19 @@ export const Hero = ({
   sidekickLookup
 }: // theme
 HeroProps) => {
+  const theme = useTheme();
   return (
     <ErrorBoundary>
       <Root
         variant={variant}
         {...sidekick(sidekickLookup)}
         sx={{
+          ...rootStyles({ backgroundColor, theme, background }),
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined
         }}>
         <ContentContainer maxWidth={contentWidth}>
-          <Grid
-            container
-            spacing={5}
-            sx={{
-              maxWidth: image ? 'xl' : 'lg',
-              margin: !image ? '0 auto' : undefined
-            }}>
+          <Grid container spacing={5}>
             {background ? (
               <Box
                 sx={{
@@ -72,26 +80,13 @@ HeroProps) => {
                 container
                 direction="column"
                 spacing={2}
-                item
-                xs={12}
-                sm={image ? 6 : 12}
-                sx={{
-                  'textAlign': !image ? 'center' : undefined,
-                  '& ul': {
-                    display: !image ? 'inline-block' : undefined,
-                    padding: !image ? 0 : undefined
-                  },
-                  '& ol': {
-                    display: !image ? 'inline-block' : undefined,
-                    padding: !image ? 0 : undefined
-                  }
-                }}>
+                xs={12}>
                 <Grid item>
                   {title ? (
                     <Typography
                       variant="h1"
                       component="h1"
-                      sx={{ color: !subtitle ? '#005C7A' : undefined }}
+                      sx={{ color: !subtitle ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
@@ -100,7 +95,7 @@ HeroProps) => {
                     <Typography
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
-                      sx={{ color: !title ? '#005C7A' : undefined }}
+                      sx={{ color: !title ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>
@@ -130,6 +125,54 @@ HeroProps) => {
       </Root>
     </ErrorBoundary>
   );
+};
+
+const rootStyles = ({ backgroundColor, theme, background }: { backgroundColor?: string; theme: Theme, background?: MediaProps }) => {
+  if (!!background) {
+    return {
+      backgroundColor: 'transparent',
+      color: 'white',
+      // TODO find out a better way to override text color
+      '& p, h1, h2, h3, h4, h5, h6, a': {
+        color: 'white'
+      }
+    };
+  }
+  if (backgroundColor === 'white') {
+    return { backgroundColor };
+  }
+  if (backgroundColor === 'black') {
+    return {
+      backgroundColor,
+      color: 'white',
+      // TODO find out a better way to override text color
+      '& p, h1, h2, h3, h4, h5, h6, a': {
+        color: 'white'
+      }
+    };
+  }
+  if (backgroundColor?.includes('gradient') && theme.palette[backgroundColor]) {
+    return {
+      'background': theme.palette[backgroundColor]?.main,
+      'color': `${backgroundColor}.contrastText`,
+      // TODO find out a better way to override text color
+      '& p, h1, h2, h3, h4, h5, h6, a': {
+        color: `${backgroundColor}.contrastText`
+      }
+    };
+  }
+  const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
+  const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
+
+  if (backgroundColor && get(theme.palette, parsedBGColor)) {
+    return {
+      'bgcolor': parsedBGColor,
+      '& p, h1, h2, h3, h4, h5, h6, a': {
+        color: `${paletteColor}.contrastText`
+      }
+    };
+  }
+  return {};
 };
 
 const Root = styled(Box, {

@@ -65,13 +65,8 @@ export default {
       ]
     }
   },
-  actions: [{ ...mockLink, children: 'Hero CTA' }],
-  background: {
-    __typename: 'Media',
-    file: {
-      url: 'https://images.ctfassets.net/m1b67l45sk9z/3xZl0HdVUo5tp8JGpYzxja/9a575f50554687f82f33015b4eb8c049/People_Spreading_Good_Vibes.png'
-    },
-    alt: 'Flowers'
-  },
+  actions: [{ ...mockLink, text: 'Hero CTA' }],
+  background: null,
+  backgroundColor: 'white',
   theme: [mockTheme]
 };
