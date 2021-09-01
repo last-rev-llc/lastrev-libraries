@@ -10,9 +10,10 @@ import { CardProps } from '../Card';
 import sidekick from '../../utils/sidekick';
 import { isEmpty, range } from 'lodash';
 import { useRouter } from 'next/router';
-
+import useSWRInfinite from 'swr/infinite';
 interface Settings {
   filters: FilterSetting[];
+  limit?: number;
 }
 
 interface FilterSetting {
@@ -43,6 +44,7 @@ export interface CollectionFilteredProps {
   theme: any;
   itemsWidth?: false | Breakpoint | undefined;
   sidekickLookup?: string;
+  loadMoreText?: string;
 }
 export interface UseDynamicItemsInterface {
   items?: CardProps[];
@@ -50,39 +52,6 @@ export interface UseDynamicItemsInterface {
   fetchItems?: (filter: any) => Promise<{ items?: CardProps[]; options?: Options } | null>;
   filter: any;
 }
-const useDynamicItems = ({
-  items: defaultItems,
-  options: defaultOptions,
-  fetchItems,
-  filter
-}: UseDynamicItemsInterface) => {
-  const [items, setItems] = React.useState(defaultItems);
-  const [options, setOptions] = React.useState(defaultOptions);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(true);
-  let limit: number, offset: number; // TODO: Add support for infinite scroll
-  React.useEffect(() => {
-    if (fetchItems) {
-      const fetch = async () => {
-        setLoading(true);
-        try {
-          const result = await fetchItems({ filter, limit, offset });
-          // console.log('CollectionFiltered', { result });
-          setItems(result?.items);
-          setOptions(result?.options);
-        } catch (error) {
-          console.log('Error', error);
-          setError(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetch();
-    }
-  }, [fetchItems, filter, setItems, setOptions]);
-
-  return { items, options, loading, error };
-};
 
 const useQueryState = (defaultValue: any): [any, any] => {
   const router = useRouter();
@@ -90,6 +59,7 @@ const useQueryState = (defaultValue: any): [any, any] => {
   const [state, setState] = React.useState({ ...defaultValue, ...query });
   const handleSetState = (newState: any) => {
     setState(newState);
+    // TODO: Re-enable pushing state to query when issues with Router.push are resolved
     // router.push({ pathname: router.pathname, query: { ...query, slug, ...newState } }, undefined, { shallow: true });
   };
   return [state, handleSetState];
@@ -106,10 +76,10 @@ export const CollectionFiltered = ({
   variant,
   itemsVariant,
   itemsSpacing,
-  sidekickLookup
+  sidekickLookup,
+  loadMoreText
 }: CollectionFilteredProps) => {
-  const { filters } = settings || {};
-  // const [filter, setFilter] = React.useState(defaultFilter);
+  const { filters, limit = 9 } = settings || {};
   const [filterQuery, setFilter] = useQueryState(defaultFilter);
   const filter = React.useMemo<FilterFormData>(() => {
     if (!filters) return {};
@@ -123,12 +93,32 @@ export const CollectionFiltered = ({
     );
   }, [filterQuery, filters]);
 
-  let { items, options, loading, error } = useDynamicItems({
-    items: defaultItems,
-    options: defaultOptions,
-    fetchItems,
-    filter
-  });
+  const getKey = (pageIndex: number, previousPageData: any) => {
+    if (previousPageData && previousPageData?.items && !previousPageData?.items.length) return null; // reached the end
+    if (pageIndex === 0) return [`collectionFiltered_${id}`, JSON.stringify(filter), 0]; // SWR key
+    return [`collectionFiltered_${id}`, JSON.stringify(filter), pageIndex * limit]; // SWR key
+  };
+
+  const {
+    data,
+    error,
+    size,
+    setSize,
+    isValidating: loading
+  } = useSWRInfinite(
+    getKey,
+    (_key: string, _filterKey: string, offset: number) => (fetchItems ? fetchItems({ filter, limit, offset }) : null),
+    {
+      revalidateOnFocus: false
+    }
+  );
+  const options = data?.length ? data[0]?.options : defaultOptions;
+  const items = data?.reduce((accum: CardProps[], page: any) => [...accum, ...page?.items], []) ?? defaultItems;
+  const isLoadingInitialData = !data && !error;
+  const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined');
+  const isEmptyData = data?.[0]?.items?.length === 0;
+  const isReachingEnd = isEmptyData || (data && (data?.[data?.length - 1]?.items?.length ?? limit) < limit);
+
   const itemsWithVariant = items?.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
 
   const parseValue = ({ filterId, value }: { filterId: string; value: string }) => {
@@ -146,7 +136,7 @@ export const CollectionFiltered = ({
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant}>
         <ContentContainer maxWidth={itemsWidth}>
-          <Grid container spacing={itemsSpacing} sx={{ flexDirection: 'column' }}>
+          <Grid container spacing={itemsSpacing} sx={{ flexDirection: 'column', alignItems: 'center' }}>
             <Grid item container sx={{ justifyContent: 'flex-end' }}>
               <CollectionFilters
                 id={id}
@@ -189,7 +179,7 @@ export const CollectionFiltered = ({
             {loading ? (
               <>
                 <Grid item container>
-                  {!itemsVariant?.length ? (
+                  {!isLoadingMore ? (
                     <Grid item xs={12}>
                       <Typography variant="h4">
                         Showing results for: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
@@ -197,7 +187,7 @@ export const CollectionFiltered = ({
                     </Grid>
                   ) : null}
                   <Section
-                    contents={range(9).map((_: any, idx: number) => ({
+                    contents={range(limit).map((_: any, idx: number) => ({
                       __typename: 'Card',
                       id: `${idx}`,
                       variant: itemsVariant,
@@ -209,9 +199,13 @@ export const CollectionFiltered = ({
                 </Grid>
               </>
             ) : null}
-            <Grid item>
-              <Button variant="contained">LOAD MORE</Button>
-            </Grid>
+            {!isReachingEnd ? (
+              <Grid item sx={{ padding: 2 }}>
+                <Button variant="contained" onClick={() => setSize(size + 1)}>
+                  {loadMoreText ?? 'LOAD MORE'}
+                </Button>
+              </Grid>
+            ) : null}
           </Grid>
         </ContentContainer>
       </Root>
