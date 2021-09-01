@@ -8,16 +8,16 @@ export const defaultVariant = (theme: Theme) => ({
     [theme.breakpoints.down('lg')]: {
       padding: theme.spacing(4, 0)
     },
-    h1: {
+    'h1': {
       color: theme.palette.grey.A700
     },
-    h2: {
+    'h2': {
       color: theme.palette.secondary.main
     },
     '& [class*="contentContainer"] > .MuiGrid-container > .MuiGrid-root': {
       [theme.breakpoints.down('lg')]: {
         '& .MuiGrid-root': {
-          textAlign: 'center',
+          textAlign: 'center'
         },
         '& ul': {
           display: 'inline-block',
@@ -26,22 +26,22 @@ export const defaultVariant = (theme: Theme) => ({
         '& ol': {
           display: 'inline-block',
           padding: 0
-        },
+        }
       },
       [theme.breakpoints.up('lg')]: {
         maxWidth: '50%'
-      },
+      }
     },
     [theme.breakpoints.down('lg')]: {
       '& > .MuiContainer-root > .MuiGrid-container': {
         maxWidth: theme.breakpoints.values.lg,
         margin: '0 auto',
         justifyContent: 'center',
-        flexDirection: 'column',
-      },
+        flexDirection: 'column'
+      }
     },
     '& .MuiButton-containedPrimary': {
-      color: theme.palette.primary.contrastText,
+      'color': theme.palette.primary.contrastText,
       '& .MuiIcon-root': {
         color: theme.palette.primary.contrastText
       }
@@ -61,15 +61,15 @@ export const centeredVariant = (theme: Theme) => ({
       maxWidth: theme.breakpoints.values.lg,
       margin: '0 auto',
       justifyContent: 'center',
-      flexDirection: 'column',
+      flexDirection: 'column'
     },
     '& .MuiGrid-root': {
-      textAlign: 'center',
+      textAlign: 'center'
     },
-    h1: {
+    'h1': {
       color: theme.palette.grey.A700
     },
-    h2: {
+    'h2': {
       color: theme.palette.secondary.main
     },
     '& ul': {
@@ -83,7 +83,7 @@ export const centeredVariant = (theme: Theme) => ({
       textAlign: 'left'
     },
     '& .MuiButton-containedPrimary': {
-      color: theme.palette.primary.contrastText,
+      'color': theme.palette.primary.contrastText,
       '& .MuiIcon-root': {
         color: theme.palette.primary.contrastText
       }
@@ -109,11 +109,7 @@ export const gradientBackgroundVariant = () => ({
   }
 });
 
-const variants = [
-  defaultVariant,
-  centeredVariant,
-  gradientBackgroundVariant
-];
+const variants = [defaultVariant, centeredVariant, gradientBackgroundVariant];
 
 const createHeroVariants = (theme: Theme) => {
   return variants.map((creator) => creator(theme));

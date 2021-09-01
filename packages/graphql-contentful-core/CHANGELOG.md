@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.13
+
+### Patch Changes
+
+- 1f24152: CollectionFiltered and Media improvements
+
 ## 0.1.12
 
 ### Patch Changes

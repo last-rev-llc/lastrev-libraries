@@ -48,7 +48,8 @@ export const Default = Template.bind({});
 Default.args = { ...heroMock };
 
 export const BackgroundImage = Template.bind({});
-BackgroundImage.args = { ...heroMock,
+BackgroundImage.args = {
+  ...heroMock,
   backgroundColor: null,
   background: {
     __typename: 'Media',
@@ -56,5 +57,5 @@ BackgroundImage.args = { ...heroMock,
       url: 'https://i.picsum.photos/id/327/2800/800.jpg?hmac=lqhEpkLvfvBfoZSxszEf8pOTbitkmHpJmZsoQYcrWkI'
     },
     alt: 'Flowers'
-  },
+  }
 };

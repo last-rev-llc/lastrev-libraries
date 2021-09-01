@@ -123,7 +123,7 @@ export const profileColumnCardVariant = (theme: Theme) => ({
     'flexDirection': 'column',
     'minWidth': 320,
     'padding': theme.spacing(0, 3, 6),
-    maxWidth: '100%',
+    'maxWidth': '100%',
     '& img': {
       width: 280,
       height: 280,
@@ -139,7 +139,7 @@ export const profileColumnCardVariant = (theme: Theme) => ({
       'padding': theme.spacing(6, 4, 0),
       '&:last-child': {
         paddingBottom: 0
-      },
+      }
     },
     '& .MuiTypography-h3': {
       color: 'black'
