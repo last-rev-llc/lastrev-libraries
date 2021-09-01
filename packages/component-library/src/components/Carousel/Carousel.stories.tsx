@@ -18,7 +18,7 @@ export default {
       name: 'Variant'
       // control: {
       //   type: 'select',
-      //   options: ['standard', 'standard-round', 'media', 'profile', 'profile-large', 'square']
+      //   options: ['standard', 'standard-round', 'media', 'profile-column', 'profile-row', 'profile-image', 'square']
       // },
       // table: {
       //   defaultValue: { summary: 'standard' }

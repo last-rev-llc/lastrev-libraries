@@ -5,14 +5,13 @@ import { paragraphMock } from '../Text/Text.mock';
 
 export default {
   __typename: 'Card',
-  // variant: 'standard-blog',
-  variant: 'profile',
+  variant: 'profile-row',
   media: {
     __typename: 'Media',
     file: {
       url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
     },
-    alt: 'Contemplative Lizard'
+    alt: capitalize(lorem.words(2))
   },
   title: capitalize(lorem.word()),
   subtitle: capitalize(lorem.words(3)),

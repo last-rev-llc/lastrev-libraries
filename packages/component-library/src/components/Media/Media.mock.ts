@@ -29,7 +29,7 @@ export default {
     },
     {
       ...cardMock,
-      variant: 'profile',
+      variant: 'profile-column',
       title: name.findName(),
       subtitle: name.jobTitle(),
       body: lorem.sentence(),
@@ -38,7 +38,16 @@ export default {
     },
     {
       ...cardMock,
-      variant: 'profile-large',
+      variant: 'profile-row',
+      title: name.findName(),
+      subtitle: name.jobTitle(),
+      body: lorem.sentence(),
+      ctas: null,
+      theme: [mockTheme]
+    },
+    {
+      ...cardMock,
+      variant: 'profile-image',
       title: null,
       subtitle: null,
       body: null,
