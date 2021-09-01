@@ -25,6 +25,7 @@ export interface HeroProps {
   background?: MediaProps;
   backgroundColor?: string;
   contentWidth?: false | Breakpoint | undefined;
+  contentHeight?: 'sm' | 'md' | 'lg';
   variant?: any;
   theme: any;
   styles?: {
@@ -41,6 +42,7 @@ export const Hero = ({
   background,
   backgroundColor,
   contentWidth,
+  contentHeight = 'md',
   title,
   subtitle,
   body,
@@ -54,6 +56,7 @@ HeroProps) => {
     <ErrorBoundary>
       <Root
         variant={variant}
+        contentHeight={contentHeight}
         {...sidekick(sidekickLookup)}
         sx={{
           ...rootStyles({ backgroundColor, theme, background }),
@@ -183,6 +186,13 @@ const rootStyles = ({
   return {};
 };
 
+const CONTENT_HEIGHT: { [key: string]: string } = {
+  sm: '25vh',
+  md: '50vh',
+  lg: '75vh',
+  xl: '100vh'
+};
+
 const Root = styled(Box, {
   name: 'Hero',
   slot: 'Root',
@@ -190,7 +200,9 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => ({
     ...styles.root
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string; contentHeight: string }>(({ contentHeight }) => ({
+  height: CONTENT_HEIGHT[contentHeight] ?? 'auto'
+}));
 
 const ContentContainer = styled(Container, {
   name: 'Section',
