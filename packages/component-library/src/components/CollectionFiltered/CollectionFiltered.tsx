@@ -180,7 +180,7 @@ export const CollectionFiltered = ({
             {loading ? (
               <>
                 <Grid item container>
-                  {!isLoadingMore && !itemsWithVariant?.length ? (
+                  {isLoadingMore && (itemsWithVariant?.length ?? 0) < limit ? (
                     <Grid item xs={12}>
                       <Typography variant="h4">
                         Showing results for: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
