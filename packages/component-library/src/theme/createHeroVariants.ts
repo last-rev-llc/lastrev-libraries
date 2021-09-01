@@ -74,11 +74,13 @@ export const centeredVariant = (theme: Theme) => ({
     },
     '& ul': {
       display: 'inline-block',
-      padding: 0
+      padding: 0,
+      textAlign: 'left'
     },
     '& ol': {
       display: 'inline-block',
-      padding: 0
+      padding: 0,
+      textAlign: 'left'
     },
     '& .MuiButton-containedPrimary': {
       color: theme.palette.primary.contrastText,

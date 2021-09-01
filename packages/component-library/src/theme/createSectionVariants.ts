@@ -38,23 +38,35 @@ export const highlightVariant = (theme: Theme) => ({
   style: {
     // TODO: Unifiy typography global overrides
     '.MuiTypography-h4': {
-      color: '#005c7b',
+      color: theme.palette.secondary.main,
       fontSize: '1.5rem',
       fontWeight: 'bold'
     },
     '.MuiTypography-h5': {
-      color: '#005c7b',
+      color: theme.palette.secondary.main,
       fontSize: '1.5rem',
       fontWeight: 'bold'
     },
 
     '.MuiTypography-body1': {
       maxWidth: 800,
-      color: '#005c7b',
+      color: theme.palette.secondary.main,
       fontSize: '1.5rem'
     },
     '& b': {
       color: theme.palette.secondary.main
+    },
+    '& ul': {
+      display: 'inline-block',
+      padding: 0,
+      fontSize: '1.5rem',
+      textAlign: 'left'
+    },
+    '& ol': {
+      display: 'inline-block',
+      padding: 0,
+      fontSize: '1.5rem',
+      textAlign: 'left'
     },
     '& > [class*="Section-gridContainer"]': {
       'position': 'relative',
