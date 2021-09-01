@@ -56,7 +56,7 @@ export const highlightVariant = (theme: Theme) => ({
     '& b': {
       color: theme.palette.secondary.main
     },
-    '& > [class*="Section-gridContainer"]': {
+    '& > div > [class*="Section-gridContainer"]': {
       'position': 'relative',
       'justifyContent': 'center',
       'width': '100%',

@@ -72,15 +72,15 @@ HeroProps) => {
                   width: '100%',
                   height: '100%'
                 }}>
-                <Media {...background} {...sidekick(sidekickLookup?.background)} />
+                <Media
+                  {...background}
+                  {...sidekick(sidekickLookup?.background)}
+                  sx={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                />
               </Box>
             ) : null}
             {title || subtitle || body || actions ? (
-              <Grid
-                container
-                direction="column"
-                spacing={2}
-                xs={12}>
+              <Grid container direction="column" spacing={2} xs={12}>
                 <Grid item>
                   {title ? (
                     <Typography
@@ -127,11 +127,19 @@ HeroProps) => {
   );
 };
 
-const rootStyles = ({ backgroundColor, theme, background }: { backgroundColor?: string; theme: Theme, background?: MediaProps }) => {
+const rootStyles = ({
+  backgroundColor,
+  theme,
+  background
+}: {
+  backgroundColor?: string;
+  theme: Theme;
+  background?: MediaProps;
+}) => {
   if (!!background) {
     return {
-      backgroundColor: 'transparent',
-      color: 'white',
+      'backgroundColor': 'transparent',
+      'color': 'white',
       // TODO find out a better way to override text color
       '& p, h1, h2, h3, h4, h5, h6, a': {
         color: 'white'
@@ -144,7 +152,7 @@ const rootStyles = ({ backgroundColor, theme, background }: { backgroundColor?: 
   if (backgroundColor === 'black') {
     return {
       backgroundColor,
-      color: 'white',
+      'color': 'white',
       // TODO find out a better way to override text color
       '& p, h1, h2, h3, h4, h5, h6, a': {
         color: 'white'
@@ -191,7 +199,8 @@ const ContentContainer = styled(Container, {
     ...styles.contentContainer
   })
 })<{ variant?: string }>(({ theme }) => ({
-  padding: theme.spacing(5)
+  padding: theme.spacing(5),
+  height: '100%'
 }));
 
 export default Hero;

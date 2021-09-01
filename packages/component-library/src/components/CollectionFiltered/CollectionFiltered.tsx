@@ -93,6 +93,7 @@ export const CollectionFiltered = ({
     );
   }, [filterQuery, filters]);
 
+  // The key includes a stable version of the filter object for shallow comparison
   const getKey = (pageIndex: number, previousPageData: any) => {
     if (previousPageData && previousPageData?.items && !previousPageData?.items.length) return null; // reached the end
     if (pageIndex === 0) return [`collectionFiltered_${id}`, JSON.stringify(filter), 0]; // SWR key
@@ -179,7 +180,7 @@ export const CollectionFiltered = ({
             {loading ? (
               <>
                 <Grid item container>
-                  {!isLoadingMore ? (
+                  {!isLoadingMore && !itemsWithVariant?.length ? (
                     <Grid item xs={12}>
                       <Typography variant="h4">
                         Showing results for: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
