@@ -7,7 +7,6 @@ import ErrorBoundary from '../ErrorBoundary';
 import Section from '../Section';
 import { MediaProps } from '../Media';
 import { CardProps } from '../Card';
-import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
 import { isEmpty, range } from 'lodash';
 import { useRouter } from 'next/router';
@@ -60,7 +59,7 @@ const useDynamicItems = ({
   const [items, setItems] = React.useState(defaultItems);
   const [options, setOptions] = React.useState(defaultOptions);
   const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
+  const [error, setError] = React.useState(true);
   let limit: number, offset: number; // TODO: Add support for infinite scroll
   React.useEffect(() => {
     if (fetchItems) {
@@ -91,7 +90,7 @@ const useQueryState = (defaultValue: any): [any, any] => {
   const [state, setState] = React.useState({ ...defaultValue, ...query });
   const handleSetState = (newState: any) => {
     setState(newState);
-    router.push({ pathname: router.pathname, query: newState }, undefined, { shallow: true });
+    // router.push({ pathname: router.pathname, query: { ...query, slug, ...newState } }, undefined, { shallow: true });
   };
   return [state, handleSetState];
 };
@@ -124,7 +123,7 @@ export const CollectionFiltered = ({
     );
   }, [filterQuery, filters]);
 
-  const { items, options, loading, error } = useDynamicItems({
+  let { items, options, loading, error } = useDynamicItems({
     items: defaultItems,
     options: defaultOptions,
     fetchItems,
@@ -147,7 +146,7 @@ export const CollectionFiltered = ({
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant}>
         <ContentContainer maxWidth={itemsWidth}>
-          <Grid container spacing={4} sx={{ flexDirection: 'column' }}>
+          <Grid container spacing={itemsSpacing} sx={{ flexDirection: 'column' }}>
             <Grid item container sx={{ justifyContent: 'flex-end' }}>
               <CollectionFilters
                 id={id}
@@ -158,8 +157,19 @@ export const CollectionFiltered = ({
                 onClearFilter={onClearFilter}
               />
             </Grid>
-
-            {itemsWithVariant?.length && !loading ? (
+            {!itemsWithVariant?.length && !isEmpty(filter) && !loading ? (
+              <Grid item>
+                <Typography variant="h4">
+                  No results for filter: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
+                </Typography>
+              </Grid>
+            ) : null}
+            {!itemsWithVariant?.length && error ? (
+              <Grid item>
+                <Typography variant="h4">Error searching for: {parsedFilters}, try again!</Typography>
+              </Grid>
+            ) : null}
+            {itemsWithVariant?.length ? (
               <>
                 <Grid item container>
                   <Grid item xs={12}>
@@ -176,34 +186,32 @@ export const CollectionFiltered = ({
                 </Grid>
               </>
             ) : null}
-            {!itemsWithVariant?.length && !isEmpty(filter) && !loading ? (
-              <Grid item>
-                <Typography variant="h4">
-                  No results for filter: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
-                </Typography>
-              </Grid>
-            ) : null}
-            {!itemsWithVariant?.length && error ? (
-              <Grid item>
-                <Typography variant="h4">Error searching for: {parsedFilters}, try again!</Typography>
-              </Grid>
-            ) : null}
             {loading ? (
               <>
                 <Grid item container>
-                  <Grid item xs={12}>
-                    <Typography variant="h4">
-                      Showing results for: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
-                    </Typography>
-                  </Grid>
-                  {range(9).map((_: any, idx: number) => (
-                    <Grid key={`item_loading_${idx}`} item xs={4}>
-                      <ContentModule __typename={'Card'} variant={itemsVariant} loading />
+                  {!itemsVariant?.length ? (
+                    <Grid item xs={12}>
+                      <Typography variant="h4">
+                        Showing results for: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
+                      </Typography>
                     </Grid>
-                  ))}
+                  ) : null}
+                  <Section
+                    contents={range(9).map((_: any, idx: number) => ({
+                      __typename: 'Card',
+                      id: `${idx}`,
+                      variant: itemsVariant,
+                      loading: true
+                    }))}
+                    variant={'three-per-row'}
+                    contentSpacing={itemsSpacing}
+                  />
                 </Grid>
               </>
             ) : null}
+            <Grid item>
+              <Button variant="contained">LOAD MORE</Button>
+            </Grid>
           </Grid>
         </ContentContainer>
       </Root>
