@@ -22,6 +22,7 @@ export interface MediaProps {
   tablet?: Asset;
   mobile?: Asset;
   sidekickLookup?: string;
+  sx?: any;
 }
 
 export interface MediaOverrides {}

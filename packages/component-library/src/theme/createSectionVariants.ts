@@ -50,6 +50,7 @@ export const highlightVariant = (theme: Theme) => ({
     '& b': {
       color: theme.palette.secondary.main
     },
+
     '& ul': {
       display: 'inline-block',
       padding: 0,
@@ -63,7 +64,7 @@ export const highlightVariant = (theme: Theme) => ({
       color: theme.palette.secondary.main,
       textAlign: 'left'
     },
-    '& > [class*="Section-gridContainer"]': {
+    '& > div > [class*="Section-gridContainer"]': {
       position: 'relative',
       justifyContent: 'center',
       width: 'calc(100% - 100px)',
@@ -94,7 +95,6 @@ export const highlightVariant = (theme: Theme) => ({
           transform: 'skew(-10deg)'
         }
       },
-
       '&:after': {
         content: '""',
         position: 'absolute',

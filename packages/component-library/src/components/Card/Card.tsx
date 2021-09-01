@@ -38,7 +38,7 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
       <ConditionalWrapper
         condition={!!link}
         wrapper={(children: any) => (
-          <Link noLinkStyle {...link}>
+          <Link noLinkStyle {...link} sidekickLookup={{}}>
             {children}
           </Link>
         )}>
