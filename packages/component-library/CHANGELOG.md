@@ -1,5 +1,14 @@
 # @last-rev/component-library
 
+## 0.1.19
+
+### Patch Changes
+
+- 1f24152: Update CollectionFiltered to use swr, YAY for easy data fetching (:
+- 2331953: added variant config to collection carousel feature
+- 1f24152: CollectionFiltered and Media improvements
+- 33f76c4: Hero revisions based on content rather than bg color
+
 ## 0.1.18
 
 ### Patch Changes

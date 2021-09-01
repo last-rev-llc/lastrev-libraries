@@ -65,14 +65,14 @@ export const highlightVariant = (theme: Theme) => ({
       textAlign: 'left'
     },
     '& > div > [class*="Section-gridContainer"]': {
-      position: 'relative',
-      justifyContent: 'center',
-      width: 'calc(100% - 100px)',
-      maxWidth: 800,
-      height: '100%',
-      margin: '0 auto',
-      padding: 0,
-      textAlign: 'center',
+      'position': 'relative',
+      'justifyContent': 'center',
+      'width': 'calc(100% - 100px)',
+      'maxWidth': 800,
+      'height': '100%',
+      'margin': '0 auto',
+      'padding': 0,
+      'textAlign': 'center',
 
       [theme.breakpoints.down('lg')]: {
         '& [class*="MuiTypography"]': {
@@ -83,11 +83,11 @@ export const highlightVariant = (theme: Theme) => ({
         },
         '& ol': {
           fontSize: '1rem'
-        },
+        }
       },
 
       [theme.breakpoints.up('lg')]: {
-        width: '100%',
+        'width': '100%',
         '&:after': {
           transform: 'skew(-10deg)'
         },
@@ -108,11 +108,11 @@ export const highlightVariant = (theme: Theme) => ({
         transform: 'skew(-5deg)'
       },
       '& > [class*="Section-gridItem"]': {
-        position: 'relative',
-        zIndex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        padding: 40,
+        'position': 'relative',
+        'zIndex': 1,
+        'display': 'flex',
+        'flexDirection': 'column',
+        'padding': 40,
 
         '&:after': {
           content: '""',
