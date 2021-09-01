@@ -131,7 +131,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   // -->  ** Is it possible to extend in that repo? **
   // - 2. Better to use SVG
   // --> https://material-ui.com/components/icons/#font-vs-svg-which-approach-to-use
-  if (icon && !text) {
+  if (!noLinkStyle && icon && !text) {
     if (isExternal) {
       return (
         <a

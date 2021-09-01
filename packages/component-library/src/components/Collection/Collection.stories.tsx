@@ -32,7 +32,7 @@ export default {
       name: 'Items Variant',
       control: {
         type: 'select',
-        options: ['standard', 'standard-round', 'media', 'profile', 'profile-large', 'square', 'standard-blog']
+        options: ['standard', 'standard-round', 'media', 'profile-column', 'profile-row', 'profile-image', 'square', 'standard-blog']
       },
       table: {
         defaultValue: { summary: 'standard' }
