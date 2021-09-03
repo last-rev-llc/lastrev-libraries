@@ -16,7 +16,7 @@ function FallbackComponent() {
 // TODO only show dialog on staging
 export const ErrorBoundary = ({ children }: Props) => {
   return (
-    <Sentry.ErrorBoundary fallback={FallbackComponent} showDialog={false}>
+    <Sentry.ErrorBoundary fallback={FallbackComponent} showDialog={process.env.NODE_ENV !== 'production'}>
       {children}
     </Sentry.ErrorBoundary>
   );
