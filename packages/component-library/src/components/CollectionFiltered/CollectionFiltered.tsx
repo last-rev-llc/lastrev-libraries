@@ -95,7 +95,7 @@ export const CollectionFiltered = ({
 
   // The key includes a stable version of the filter object for shallow comparison
   const getKey = (pageIndex: number, previousPageData: any) => {
-    if (previousPageData && previousPageData?.items && !previousPageData?.items.length) return null; // reached the end
+    if (previousPageData && previousPageData?.items && !previousPageData?.items?.length) return null; // reached the end
     if (pageIndex === 0) return [`collectionFiltered_${id}`, JSON.stringify(filter), 0]; // SWR key
     return [`collectionFiltered_${id}`, JSON.stringify(filter), pageIndex * limit]; // SWR key
   };
@@ -105,7 +105,8 @@ export const CollectionFiltered = ({
     error,
     size,
     setSize,
-    isValidating: loading
+    isValidating: loading,
+    mutate: refetch
   } = useSWRInfinite(
     getKey,
     (_key: string, _filterKey: string, offset: number) => (fetchItems ? fetchItems({ filter, limit, offset }) : null),
@@ -121,7 +122,6 @@ export const CollectionFiltered = ({
   const isReachingEnd = isEmptyData || (data && (data?.[data?.length - 1]?.items?.length ?? limit) < limit);
 
   const itemsWithVariant = items?.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
-
   const parseValue = ({ filterId, value }: { filterId: string; value: string }) => {
     return options && options[filterId]
       ? options[filterId]?.find((option) => option.value === value || value?.includes(option.value))?.label
@@ -158,6 +158,9 @@ export const CollectionFiltered = ({
             {!itemsWithVariant?.length && error ? (
               <Grid item>
                 <Typography variant="h4">Error searching for: {parsedFilters}, try again!</Typography>
+                <Button variant="contained" onClick={() => refetch()}>
+                  {'TRY AGAIN'}
+                </Button>
               </Grid>
             ) : null}
             {itemsWithVariant?.length ? (
