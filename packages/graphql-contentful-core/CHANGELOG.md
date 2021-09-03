@@ -1,5 +1,12 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.14
+
+### Patch Changes
+
+- 77e9a39: Add better error hanlding and retry for CollectionFiltered
+  Add contentful clients to gql serverless handler
+
 ## 0.1.13
 
 ### Patch Changes
