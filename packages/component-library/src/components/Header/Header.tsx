@@ -51,7 +51,7 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
               </React.Fragment>
             ))}
             <Hidden implementation="css" smUp>
-              <IconButton edge="end" color="inherit" aria-label="menu" onClick={() => setMenuVisible(!menuVisible)}>
+              <IconButton edge="end" color="secondary" aria-label="menu" onClick={() => setMenuVisible(!menuVisible)}>
                 {menuVisible ? <CloseIcon /> : <MenuIcon />}
               </IconButton>
             </Hidden>

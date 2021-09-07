@@ -61,7 +61,7 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
 
 const visibleStyles = (open: boolean) => `
   max-height: ${open ? 300 : 0}px;
-  box-shadow: ${open ? 'inset 0 0 16px -8px rgb(0 0 0 / 30%)' : 'box-shadow: inset 0 0 0 0 rgb(0 0 0 / 0%)'};
+  box-shadow: ${open ? 'inset 0 0 16px -8px rgb(0 0 0 / 30%)' : 'inset 0 0 0 0 rgb(0 0 0 / 0%)'};
 `;
 
 const Root = styled(Box, {
@@ -78,12 +78,12 @@ const Root = styled(Box, {
     }
     @media (min-width: ${theme.breakpoints.values.sm}px) {  
       [class$=NavigationItem-menuRoot] {
-        ${visibleStyles(false)}
+        max-height: 0px;
       }
       &:hover {
         background: rgba(0,0,0,0.05);
         [class$=NavigationItem-menuRoot] {
-          ${visibleStyles(true)}
+          max-height: 300px;
         }
       }
    }
@@ -111,6 +111,11 @@ const MenuRoot = styled(Paper, {
       right: 0;
       .MuiMenuItem-root {
         padding: 0;
+        display:block;
+        width: 100%;
+        * {
+          width: 100%;
+        }
       }
     }
 
