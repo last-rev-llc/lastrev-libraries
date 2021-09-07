@@ -120,7 +120,7 @@ const theme = createAppTheme(
               color: baseTheme.palette.primary.main
             },
             '& .MuiCollapse-wrapper': {
-              background: 'white'
+              background: baseTheme.palette.background.paper
             },
             '& .MuiSvgIcon-root': {
               color: 'white'
