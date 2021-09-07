@@ -9,4 +9,5 @@ $ yarn storybook
 ```
 
 ## View deployment
+
 🔗 [Netlify](https://lr-components.netlify.app)

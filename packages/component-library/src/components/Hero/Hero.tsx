@@ -81,8 +81,7 @@ HeroProps) => {
           </Box>
         ) : null}
         <ContentContainer maxWidth={contentWidth}>
-          <Grid container rowSpacing={5}
-            columnSpacing={variant === 'centered' ? 0 : 5}>
+          <Grid container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
               <Grid container direction="column" spacing={2} xs={12}>
                 <Grid item>
@@ -220,14 +219,13 @@ const ContentContainer = styled(Container, {
       top: '50%',
       left: '50%',
       transform: 'translate(-50%, -50%)'
-    },
+    }
   },
   [theme.breakpoints.up('md')]: {
     display: 'flex',
     justifyContent: 'center',
     alignContent: 'center'
   }
-
 }));
 
 export default Hero;
