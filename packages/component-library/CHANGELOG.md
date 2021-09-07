@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.21
+
+### Patch Changes
+
+- c844c16: Rework Header & NavigationBar for better UX
+
 ## 0.1.20
 
 ### Patch Changes
