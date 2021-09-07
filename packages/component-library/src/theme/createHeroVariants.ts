@@ -58,10 +58,19 @@ export const centeredVariant = (theme: Theme) => ({
       padding: theme.spacing(4, 0)
     },
     '& > .MuiContainer-root > .MuiGrid-container': {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      flexDirection: 'column',
+      justifyContent: 'center',
       maxWidth: theme.breakpoints.values.lg,
       margin: '0 auto',
-      justifyContent: 'center',
-      flexDirection: 'column'
+      transform: 'translate(-50%, -50%)',
+      [theme.breakpoints.down('sm')]: {
+        '& div:nth-child(2)': {
+          maxWidth: '80%'
+        }
+      }
     },
     '& .MuiGrid-root': {
       textAlign: 'center'

@@ -25,7 +25,7 @@ export interface HeroProps {
   background?: MediaProps;
   backgroundColor?: string;
   contentWidth?: false | Breakpoint | undefined;
-  contentHeight?: 'sm' | 'md' | 'lg';
+  contentHeight?: 'sm' | 'md' | 'lg' | 'xl';
   variant?: any;
   theme: any;
   styles?: {
@@ -42,7 +42,7 @@ export const Hero = ({
   background,
   backgroundColor,
   contentWidth,
-  contentHeight = 'md',
+  contentHeight = 'lg',
   title,
   subtitle,
   body,
@@ -63,25 +63,26 @@ HeroProps) => {
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined
         }}>
+        {background ? (
+          <Box
+            sx={{
+              position: 'absolute',
+              zIndex: -1,
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%'
+            }}>
+            <Media
+              {...background}
+              {...sidekick(sidekickLookup?.background)}
+              sx={{ objectFit: 'cover', width: '100%', height: '100%' }}
+            />
+          </Box>
+        ) : null}
         <ContentContainer maxWidth={contentWidth}>
-          <Grid container spacing={5}>
-            {background ? (
-              <Box
-                sx={{
-                  position: 'absolute',
-                  zIndex: -1,
-                  top: 0,
-                  left: 0,
-                  width: '100%',
-                  height: '100%'
-                }}>
-                <Media
-                  {...background}
-                  {...sidekick(sidekickLookup?.background)}
-                  sx={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                />
-              </Box>
-            ) : null}
+          <Grid container rowSpacing={5}
+            columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
               <Grid container direction="column" spacing={2} xs={12}>
                 <Grid item>
@@ -212,7 +213,21 @@ const ContentContainer = styled(Container, {
   })
 })<{ variant?: string }>(({ theme }) => ({
   padding: theme.spacing(5),
-  height: '100%'
+  height: '100%',
+  [theme.breakpoints.down('lg')]: {
+    '& > div': {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+    },
+  },
+  [theme.breakpoints.up('md')]: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center'
+  }
+
 }));
 
 export default Hero;

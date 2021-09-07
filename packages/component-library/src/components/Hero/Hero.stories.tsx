@@ -1,5 +1,4 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
 import Hero from './Hero';
 import heroMock from './Hero.mock';
 
@@ -7,9 +6,7 @@ export default {
   title: '1. Primitives / MUI / Hero',
   component: Hero,
   decorators: [
-    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box m={5}>{storyFn()}</Box>
-    )
+    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => storyFn()
   ],
   argTypes: {
     variant: {
@@ -35,6 +32,26 @@ export default {
       },
       table: {
         defaultValue: { summary: 'none' }
+      }
+    },
+    contentHeight: {
+      name: 'Content Height',
+      control: {
+        type: 'inline-radio',
+        options: ['sm', 'md', 'lg', 'xl']
+      },
+      table: {
+        defaultValue: { summary: 'md' }
+      }
+    },
+    contentWidth: {
+      name: 'Content Width',
+      control: {
+        type: 'inline-radio',
+        options: ['xs', 'sm', 'md', 'lg', 'xl']
+      },
+      table: {
+        defaultValue: { summary: 'xl' }
       }
     },
     actions: { name: 'Actions' },
