@@ -52,7 +52,8 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
       scroll={scroll}
       shallow={shallow}
       passHref={passHref}
-      locale={locale}>
+      locale={locale}
+      {...other}>
       <a ref={ref} {...other}>
         {text || children}
       </a>
@@ -97,7 +98,7 @@ const getButtonContent = (text: string | undefined, children: any, iconPosition:
 // https://nextjs.org/docs/#with-link
 const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   const {
-    activeClassName = 'active',
+    activeClassName = 'MuiLink-selected',
     as: linkAs,
     className: classNameProps,
     href = '#',
@@ -157,6 +158,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     return (
       <IconButton
         aria-label={icon}
+        onClick={other.onClick}
         // component={Link}
         // href={href}
         // ref={ref}
