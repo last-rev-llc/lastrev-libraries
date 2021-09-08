@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.22
+
+### Patch Changes
+
+- 0fdd5a6: Fix navigation item
+
 ## 0.1.21
 
 ### Patch Changes
