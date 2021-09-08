@@ -1,0 +1,38 @@
+{
+  "name": "@last-rev/contentful-fragment-gen",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "run-s clean build:prod",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@last-rev/rollup-config": "^0.0.5",
+    "@last-rev/testing-library": "^0.1.2",
+    "jest": "^26.6.3",
+    "rollup-plugin-copy": "^3.4.0",
+    "ts-jest": "^26.5.4",
+    "typescript": "4.3.4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@last-rev/timer": "^0.1.1",
+    "contentful": "^8.4.2",
+    "file-matcher": "^1.3.0",
+    "fs-extra": "^10.0.0",
+    "graphql": "^15.5.1",
+    "graphql-tag": "^2.12.4",
+    "handlebars": "^4.7.7",
+    "lodash": "^4.17.21",
+    "loglevel": "^1.7.1",
+    "tslib": "^2.3.0"
+  }
+}

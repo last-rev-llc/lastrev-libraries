@@ -1,0 +1,17 @@
+import gql from 'graphql-tag';
+{{#each data}}
+import {{@key}} from '../fragments/{{this.contentType}}/{{@key}}';
+{{/each}}
+
+export const PageQuery = gql`
+  {{#each data}}
+  ${ {{ @key }} }
+  {{/each}}
+  query Page($path: String!, $locale: String, $preview: Boolean, $site: String) {
+    page(path: $path, locale: $locale, preview: $preview, site: $site) {
+      {{#each data}}
+      ...{{@key}}
+      {{/each}}
+    }
+  }
+`;
