@@ -5,6 +5,15 @@ import cardMock from '../Card/Card.mock';
 import imageMock from '../Image/Image.mock';
 import richTextMock from '../Text/Text.mock';
 
+export const mediaMock = {
+  __typename: 'Media',
+  file: {
+    url: 'https://images.ctfassets.net/imglmb3xms7o/6nmKqleRuQCjYEl6YdyqJB/083bb61de3f0aac739f5c01073fafa63/cmp.png?h=180&r=180'
+  },
+  title: lorem.sentence(),
+  description: lorem.sentence()
+}
+
 export default {
   __typename: 'Section',
   contents: [

@@ -22,11 +22,6 @@ describe('<Button />', () => {
 
   test('Button to have text content', () => {
     const { getByTestId } = renderComponent();
-    expect(getByTestId('Button-text')).toHaveTextContent(text);
+    expect(getByTestId('Button')).toHaveTextContent(text);
   });
-
-  // test('Button to have class', () => {
-  //   const { getByTestId } = renderComponent();
-  //   expect(getByTestId('Button')).toHaveClass(className);
-  // });
 });

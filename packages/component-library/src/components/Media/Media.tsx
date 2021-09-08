@@ -31,7 +31,7 @@ const Media = ({ file, title, desktop, tablet, mobile, sidekickLookup, ...rest }
   const alt = title ?? desktop?.title ?? tablet?.title ?? mobile?.title;
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} src={image?.url} alt={alt} {...rest} />
+      <Root {...sidekick(sidekickLookup)} src={image?.url} alt={alt} {...rest} data-testid="Media" />
     </ErrorBoundary>
   );
 };
