@@ -66,7 +66,7 @@ const createLoaders = (
     });
 
     if (cacheMissIds.length) {
-      logger.debug(`cache misses: ${cacheMissIds.length}. Fetching from fallback`);
+      logger.debug(`${dirname} cache misses: ${cacheMissIds.length}. Fetching from fallback`);
       timer = new Timer(`set ${cacheMissIds.length} ${dirname} in redis`);
       const sourceResults = await fallbackLoader.loadMany(cacheMissIds);
 

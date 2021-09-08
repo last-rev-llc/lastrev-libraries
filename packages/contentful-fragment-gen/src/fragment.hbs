@@ -1,0 +1,52 @@
+import gql from 'graphql-tag';
+{{#each standardImports}}
+import {{ this }} from '../{{this}}';
+{{/each}}
+{{#each importedFragments}}
+import {{ @key }} from '../{{this.contentType}}/{{@key}}';
+{{/each}}
+
+const {{ fragmentName }} = gql`
+  {{#each standardImports}}
+  ${ {{ this }} }
+  {{/each}}
+  {{#each importedFragments}}
+  ${ {{ @key }} }
+  {{/each}}
+  fragment {{fragmentName}} on {{capitalizeFirst contentType }} {
+    id
+    __typename
+    sidekickLookup
+    animation
+    theme {
+      variant
+    }
+    {{#each simpleValueFields}}
+    {{this}}
+    {{/each}}
+    {{#each assetFields}}
+    {{this}} {
+      ...MediaFragment
+    }
+    {{/each}}
+    {{#each richTextFields}}
+    {{this}} {
+      ...RichTextFragment
+    }
+    {{/each}}
+    {{#each locationFields}}
+    {{this}} {
+      ...LocationFragment
+    }
+    {{/each}}
+    {{#each referenceFields}}
+    {{@key}} {
+      {{#each this}}
+      ...{{this}}
+      {{/each}}
+    }
+    {{/each}}
+  }
+`;
+
+export default {{ fragmentName }};
