@@ -45,9 +45,9 @@ const bodyXSS = new FilterXSS({
   css: false
 });
 
-const isHTML = (x: any) => x.includes && x?.includes('<');
-const isCmp = (child: any): any => !!child.type && typeof child?.type !== 'string';
-const containsHTML = (children: any) => children?.some((child: any) => isHTML(child) || isCmp(child));
+const isHTML = (x?: any) => x?.includes && x?.includes('<');
+const isCmp = (child?: any): any => !!child?.type && typeof child?.type !== 'string';
+const containsHTML = (children?: any) => children?.some((child: any) => isHTML(child) || isCmp(child));
 
 const renderText =
   ({

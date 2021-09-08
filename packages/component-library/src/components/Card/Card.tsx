@@ -2,9 +2,9 @@ import React from 'react';
 import {
   Card as MuiCard,
   CardProps as MuiCardProps,
+  CardMedia,
   CardActions,
   CardContent,
-  Box,
   Typography
 } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
@@ -38,13 +38,13 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
       <ConditionalWrapper
         condition={!!link}
         wrapper={(children: any) => (
-          <Link noLinkStyle {...link}>
+          <Link noLinkStyle {...link} sidekickLookup={{}}>
             {children}
           </Link>
         )}>
         <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)}>
           {media || loading ? (
-            <Box display="flex" justifyContent="center">
+            <CardMedia sx={{ display: 'flex', justifyContent: 'center' }}>
               {!loading ? (
                 <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} />
               ) : (
@@ -52,7 +52,7 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
                   <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} />
                 </Skeleton>
               )}
-            </Box>
+            </CardMedia>
           ) : null}
           {!loading && (title || subtitle || body || actions) ? (
             <CardContent>

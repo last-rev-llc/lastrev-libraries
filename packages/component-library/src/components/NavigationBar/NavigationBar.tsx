@@ -12,18 +12,19 @@ export interface NavigationBarProps {
   itemsVariant?: string;
   theme: any;
   sidekickLookup: string;
+  onRequestClose?: any;
 }
 
-export const NavigationBar = ({ items, variant, itemsVariant, sidekickLookup }: NavigationBarProps) => {
+export const NavigationBar = ({ items, variant, itemsVariant, onRequestClose, sidekickLookup }: NavigationBarProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant}>
-        <Grid container spacing={4} sx={{ alignItems: 'center' }}>
+        <Grid container sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
-            <Grid item key={item.id}>
-              <ContentModule {...item} />
+            <Grid item key={item.id} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>
+              <ContentModule {...item} onRequestClose={onRequestClose} />
             </Grid>
           ))}
         </Grid>
@@ -37,9 +38,39 @@ const Root = styled(Box, {
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => ({
-    height: '100%',
     ...styles.root
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>`
+  ${({ theme }) => `
+    @media (min-width: ${theme.breakpoints.values.md}px) {
+      height: 100%;
+      > .MuiGrid-container {
+        height: 100%;
+        border-top: 1px solid ${theme.palette.divider};
+        > .MuiGrid-item {
+          height: 100%;
+          display:flex;
+          justify-content: center;
+          align-items: center;
+        }
+      }
+      [class$='MuiLink-root'] {
+        display: flex;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        padding:  ${theme.spacing(3)};
+      }
+      [class$='MuiButton-root'] {
+        margin-left: ${theme.spacing(3)};
+      }
+      [class$='NavigationItem-root'] {
+        height: 100%;
+        
+      }
+    }
+  `}
+`;
 
 export default NavigationBar;

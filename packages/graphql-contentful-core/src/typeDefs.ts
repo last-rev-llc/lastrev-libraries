@@ -4,7 +4,7 @@ const baseDefs = gql`
   scalar Date
   scalar JSON
 
-  type File {
+  type Asset {
     id: String
     url: String
     fileName: String
@@ -23,7 +23,7 @@ const baseDefs = gql`
     animation: JSON
     title: String
     description: String
-    file: File
+    file: Asset
   }
 
   type Location {

@@ -6,6 +6,8 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import styled from '@material-ui/system/styled';
+import Box from '@material-ui/core/Box';
 import Icon from '@material-ui/core/Icon';
 import IconButton from '@material-ui/core/IconButton';
 import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
@@ -50,7 +52,8 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
       scroll={scroll}
       shallow={shallow}
       passHref={passHref}
-      locale={locale}>
+      locale={locale}
+      {...other}>
       <a ref={ref} {...other}>
         {text || children}
       </a>
@@ -65,6 +68,8 @@ export type LinkProps = {
   noLinkStyle?: boolean;
   variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
   icon?: string;
+  iconPosition?: string;
+  children?: any;
   onClick?: any;
   type?: string;
   sidekickLookup?: any;
@@ -72,11 +77,28 @@ export type LinkProps = {
   Omit<MuiLinkProps, 'href' | 'variant'> &
   Omit<MuiButtonProps, 'href' | 'variant'>;
 
+// Icon component using FontAwesome
+const getIcon = (icon: string) => {
+  const brandIcons = ['google', 'twitter', 'facebook', 'github', 'linkedin', 'pinterest', 'instagram', 'youtube'];
+  return <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />;
+};
+
+const getButtonContent = (text: string | undefined, children: any, iconPosition: string | undefined, icon: any) => {
+  return (
+    <ButtonWrap sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+      <span>{text || children}</span>
+      {icon && (
+        <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>{icon && getIcon(icon)}</Box>
+      )}
+    </ButtonWrap>
+  );
+};
+
 // A styled version of the Next.js Link component:
 // https://nextjs.org/docs/#with-link
 const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   const {
-    activeClassName = 'active',
+    activeClassName = 'MuiLink-selected',
     as: linkAs,
     className: classNameProps,
     href = '#',
@@ -86,6 +108,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     children,
     variant,
     icon,
+    iconPosition,
     sidekickLookup,
     ...other
   } = props;
@@ -94,14 +117,11 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   const pathname = href ?? '';
   // const pathname = typeof href === 'string' ? href : href.pathname;
   const className = clsx(classNameProps, {
-    [activeClassName]: router?.pathname === pathname && activeClassName
+    [activeClassName]: (router?.asPath === pathname || router?.asPath === `${pathname}/`) && activeClassName
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
-  // console.log('link', { variant, href, text, children, isExternal, noLinkStyle });
   const extra = { ...other, ...sidekick(sidekickLookup) };
-
-  const brandIcons = ['google', 'twitter', 'facebook', 'github', 'linkedin', 'pinterest', 'instagram', 'youtube'];
 
   /** Link with Icon only
    * - Classes reference FontAwesome stylesheet linked in .storybook/preview
@@ -112,9 +132,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   // -->  ** Is it possible to extend in that repo? **
   // - 2. Better to use SVG
   // --> https://material-ui.com/components/icons/#font-vs-svg-which-approach-to-use
-  // - 3. TODOs: Create Link with Icon version
-  // --> https://next.material-ui.com/components/buttons/#buttons-with-icons-and-label
-  if (icon && !text) {
+  if (!noLinkStyle && icon && !text) {
     if (isExternal) {
       return (
         <a
@@ -124,17 +142,15 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           target="_blank"
           rel="noopener noreferrer"
           {...extra}>
-          <IconButton aria-label={icon}>
-            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
-          </IconButton>
+          <IconButton aria-label={icon}>{getIcon(icon)}</IconButton>
         </a>
       );
     }
     if (href !== '#') {
       return (
         <NextLink href={href} as={linkAs}>
-          <IconButton aria-label={icon} type={other.type} {...extra}>
-            <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />
+          <IconButton aria-label={icon} type={other.type} {...extra} className={className}>
+            {getIcon(icon)}
           </IconButton>
         </NextLink>
       );
@@ -142,13 +158,14 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     return (
       <IconButton
         aria-label={icon}
+        onClick={other.onClick}
         // component={Link}
         // href={href}
         // ref={ref}
         // type={other.type}
         // {...extra}
       >
-        <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : ''} fa-${icon.toLowerCase()}`} />
+        {getIcon(icon)}
       </IconButton>
     );
   }
@@ -157,18 +174,30 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     if (noLinkStyle) {
       return (
         <a className={className} href={href as string} ref={ref as any} {...extra}>
-          {text || children}
+          {getButtonContent(text, children, iconPosition, icon)}
         </a>
       );
     }
 
     return (
       <MuiLink className={className} href={href as string} ref={ref} {...extra}>
-        {text || children}
+        {getButtonContent(text, children, iconPosition, icon)}
       </MuiLink>
     );
   }
 
+  if (noLinkStyle && icon) {
+    return (
+      <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
+        <ButtonWrap sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+          <span>{children || text}</span>
+          {icon && (
+            <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>{icon && getIcon(icon)}</Box>
+          )}
+        </ButtonWrap>
+      </NextLinkComposed>
+    );
+  }
   if (noLinkStyle) {
     return (
       <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
@@ -182,23 +211,44 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     if (href !== '#') {
       return (
         <NextLink href={href} as={linkAs}>
-          <Button variant={buttonVariant} type={other.type} {...extra}>
+          <Button
+            className={className}
+            variant={buttonVariant}
+            type={other.type}
+            {...extra}
+            startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
+            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
             {text || children}
           </Button>
         </NextLink>
       );
     }
     return (
-      <Button variant={buttonVariant} onClick={other.onClick} type={other.type} {...extra}>
+      <Button
+        className={className}
+        variant={buttonVariant}
+        onClick={other.onClick}
+        type={other.type}
+        {...extra}
+        startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
+        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
         {text || children}
       </Button>
     );
   }
   return (
     <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra}>
-      {text || children}
+      {getButtonContent(text, children, iconPosition, icon)}
     </MuiLink>
   );
 });
+
+const ButtonWrap = styled(Box, {
+  name: 'Box',
+  slot: 'Content'
+})<{}>(() => ({
+  display: 'inline-flex',
+  alignItems: 'center'
+}));
 
 export default Link;

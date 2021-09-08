@@ -14,11 +14,10 @@ SwiperCore.use([Navigation, Pagination]);
 export interface CollectionCarouselProps {
   items?: CardProps[];
   background?: MediaProps;
-  variant?: string;
+  variant: string;
   itemsVariant?: string;
   itemsWidth?: false | Breakpoint | undefined;
   theme: any;
-  slidesPerView?: number;
   sidekickLookup: string;
 }
 
@@ -27,28 +26,34 @@ export const CollectionCarousel = ({
   variant,
   itemsWidth,
   itemsVariant,
-  slidesPerView,
   sidekickLookup
 }: CollectionCarouselProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
-  if (variant === 'carousel-small') {
-    slidesPerView = 4;
-  }
-  if (variant === 'carousel-large') {
-    slidesPerView = 1;
-  }
+
+  const CAROUSEL_CONFIG: { [key: string]: any } = {
+    'carousel-small': {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      breakpoints: {
+        //windows larger than...
+        640: {
+          slidesPerView: 4
+        }
+      }
+    },
+    'carousel-large': {
+      slidesPerView: 1,
+      spaceBetween: 0,
+      cssMode: true
+    }
+  };
+
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant}>
         <ContentContainer maxWidth={itemsWidth} disableGutters>
-          <CarouselContainer
-            cssMode={variant === 'carousel-large'}
-            slidesPerView={slidesPerView}
-            navigation
-            pagination={{ clickable: true }}
-            spaceBetween={0}
-            loop>
+          <CarouselContainer navigation pagination={{ clickable: true }} {...CAROUSEL_CONFIG[variant]} loop>
             {itemsWithVariant.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <CarouselItem>

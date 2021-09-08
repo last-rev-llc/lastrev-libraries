@@ -32,8 +32,9 @@ export default {
           'media',
           'media-hover',
           'media-and-text',
-          'avatar',
-          'avatar-large',
+          'profile-column',
+          'profile-row',
+          'profile-image',
           'square'
         ]
       },

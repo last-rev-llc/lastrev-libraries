@@ -1,5 +1,53 @@
 # @last-rev/component-library
 
+## 0.1.21
+
+### Patch Changes
+
+- c844c16: Rework Header & NavigationBar for better UX
+
+## 0.1.20
+
+### Patch Changes
+
+- 77e9a39: Add better error hanlding and retry for CollectionFiltered
+  Add contentful clients to gql serverless handler
+
+## 0.1.19
+
+### Patch Changes
+
+- 1f24152: Update CollectionFiltered to use swr, YAY for easy data fetching (:
+- 2331953: added variant config to collection carousel feature
+- 1f24152: CollectionFiltered and Media improvements
+- 33f76c4: Hero revisions based on content rather than bg color
+
+## 0.1.18
+
+### Patch Changes
+
+- 2bdaaf3: Add NavigationBar link activeClassName
+
+## 0.1.17
+
+### Patch Changes
+
+- 8d5dea9: Update CollectionFiltered
+- 8d5dea9: Added parsing to CollectionFiltered filters
+- 285da00: updated richtext for accordion
+
+## 0.1.16
+
+### Patch Changes
+
+- 64cde4b: Add media embed
+
+## 0.1.15
+
+### Patch Changes
+
+- 176d8db: Added ContentPreview component
+
 ## 0.1.14
 
 ### Patch Changes

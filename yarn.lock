@@ -5687,7 +5687,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^17.0.0", "@types/react@^17.0.11":
+"@types/react@*", "@types/react@^17.0.11":
   version "17.0.18"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.18.tgz#4109cbbd901be9582e5e39e3d77acd7b66bb7fbe"
   integrity sha512-YTLgu7oS5zvSqq49X5Iue5oAbVGhgPc5Au29SJC4VeE17V6gASoOxVkUDy9pXFMRFxCWCD9fLeweNFizo3UzOg==
@@ -9310,6 +9310,11 @@ deprecation@^2.0.0, deprecation@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/deprecation/-/deprecation-2.3.1.tgz#6368cbdb40abf3373b525ac87e4a260c3a700919"
   integrity sha512-xmHIy4F3scKVwMsQ4WnVaS8bHOx0DmVwRywosKhaILI0ywMDWPtBSku2HNxRvF7jtwDRsoEwYQSfbxj8b7RlJQ==
+
+dequal@2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/dequal/-/dequal-2.0.2.tgz#85ca22025e3a87e65ef75a7a437b35284a7e319d"
+  integrity sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==
 
 des.js@^1.0.0:
   version "1.0.1"
@@ -13746,11 +13751,6 @@ locate-path@^6.0.0:
   dependencies:
     p-locate "^5.0.0"
 
-lodash-es@^4.17.19:
-  version "4.17.21"
-  resolved "https://registry.yarnpkg.com/lodash-es/-/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
-  integrity sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==
-
 lodash._reinterpolate@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/lodash._reinterpolate/-/lodash._reinterpolate-3.0.0.tgz#0ccf2d89166af03b3663c796538b75ac6e114d9d"
@@ -13871,7 +13871,12 @@ lodash.xorby@^4.7.0:
   resolved "https://registry.yarnpkg.com/lodash.xorby/-/lodash.xorby-4.7.0.tgz#9c19a6f9f063a6eb53dd03c1b6871799801463d7"
   integrity sha1-nBmm+fBjputT3QPBtocXmYAUY9c=
 
-lodash@4.17.15, lodash@4.x, lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.7.0, lodash@~4.17.10:
+lodash@4.17.15:
+  version "4.17.15"
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
+
+lodash@4.x, lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.12, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21, lodash@^4.17.4, lodash@^4.2.1, lodash@^4.7.0, lodash@~4.17.10:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -18962,6 +18967,13 @@ swiper@^6.8.0:
   dependencies:
     dom7 "^3.0.0"
     ssr-window "^3.0.0"
+
+swr@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/swr/-/swr-1.0.0.tgz#d047933714d8bd16ae35af67d81149f4ae700a4d"
+  integrity sha512-v55Dr+vxIFiUyGxC5W4uN5falxHxYdbpb/R3bO+bSG+svbC9bUWmupy4NM/2pER7X8OvgwJWu0AiSoGy0ND9ew==
+  dependencies:
+    dequal "2.0.2"
 
 symbol-observable@^1.0.4:
   version "1.2.0"

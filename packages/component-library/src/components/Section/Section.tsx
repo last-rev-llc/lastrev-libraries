@@ -41,8 +41,9 @@ export interface SectionOverrides {}
 
 const VARIANTS_GRID_ITEM: Record<string, any> = {
   'one-per-row': { xs: 12 },
-  'two-per-row': { xs: 6 },
-  'three-per-row': { xs: 6, sm: 4 }
+  'two-per-row': { xs: 12, sm: 6 },
+  'three-per-row': { xs: 12, sm: 6, md: 4 },
+  'default': { xs: 12, sm: true }
 };
 const Section = ({
   contents,
@@ -70,9 +71,9 @@ const Section = ({
             {...(contentDirection === 'column'
               ? { width: '100%' }
               : {
-                  xs: itemStyle?.xs ?? gridItemStyle?.xs ?? true,
-                  md: itemStyle?.md ?? gridItemStyle?.md ?? false,
-                  sm: itemStyle?.sm ?? gridItemStyle?.sm ?? false
+                  xs: gridItemStyle?.xs ?? itemStyle?.xs ?? true,
+                  md: gridItemStyle?.md ?? itemStyle?.md ?? false,
+                  sm: gridItemStyle?.sm ?? itemStyle?.sm ?? false
                 })}
             sx={{
               ...styles?.gridItem,
@@ -106,7 +107,7 @@ const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; them
       'background': theme.palette[backgroundColor]?.main,
       'color': `${backgroundColor}.contrastText`,
       // TODO find out a better way to override text color
-      '& *, p, h1, h2, h3, h4, h5, h6, a': {
+      '& p, h1, h2, h3, h4, h5, h6, a': {
         color: `${backgroundColor}.contrastText`
       }
     };
@@ -117,7 +118,7 @@ const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; them
   if (backgroundColor && get(theme.palette, parsedBGColor)) {
     return {
       'bgcolor': parsedBGColor,
-      '& *, p, h1, h2, h3, h4, h5, h6, a': {
+      '& p, h1, h2, h3, h4, h5, h6, a': {
         color: `${paletteColor}.contrastText`
       }
     };
@@ -132,6 +133,7 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => ({
     ...styles.root,
+    width: '100%',
     display: 'flex',
     justifyContent: 'center'
   })

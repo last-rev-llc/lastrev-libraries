@@ -5,20 +5,97 @@ export const defaultVariant = (theme: Theme) => ({
     variant: 'default'
   },
   style: {
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(4, 0)
+    },
     'h1': {
       color: theme.palette.grey.A700
     },
     'h2': {
       color: theme.palette.secondary.main
     },
+    '& [class*="contentContainer"] > .MuiGrid-container > .MuiGrid-root': {
+      [theme.breakpoints.down('lg')]: {
+        '& .MuiGrid-root': {
+          textAlign: 'center'
+        },
+        '& ul': {
+          display: 'inline-block',
+          padding: 0
+        },
+        '& ol': {
+          display: 'inline-block',
+          padding: 0
+        }
+      },
+      [theme.breakpoints.up('lg')]: {
+        maxWidth: '50%'
+      }
+    },
+    [theme.breakpoints.down('lg')]: {
+      '& > .MuiContainer-root > .MuiGrid-container': {
+        maxWidth: theme.breakpoints.values.lg,
+        margin: '0 auto',
+        justifyContent: 'center',
+        flexDirection: 'column'
+      }
+    },
+    '& .MuiButton-containedPrimary': {
+      'color': theme.palette.primary.contrastText,
+      '& .MuiIcon-root': {
+        color: theme.palette.primary.contrastText
+      }
+    }
+  }
+});
 
-    // DEMO ONLY
-    '& .MuiLink-root': {
+export const centeredVariant = (theme: Theme) => ({
+  props: {
+    variant: 'centered'
+  },
+  style: {
+    [theme.breakpoints.down('lg')]: {
+      padding: theme.spacing(4, 0)
+    },
+    '& > .MuiContainer-root > .MuiGrid-container': {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      maxWidth: theme.breakpoints.values.lg,
+      margin: '0 auto',
+      transform: 'translate(-50%, -50%)',
+      [theme.breakpoints.down('sm')]: {
+        '& div:nth-child(2)': {
+          maxWidth: '80%'
+        }
+      }
+    },
+    '& .MuiGrid-root': {
+      textAlign: 'center'
+    },
+    'h1': {
+      color: theme.palette.grey.A700
+    },
+    'h2': {
+      color: theme.palette.secondary.main
+    },
+    '& ul': {
       display: 'inline-block',
-      marginTop: 4,
-      padding: '10px 20px',
-      backgroundColor: theme.palette.primary.main,
-      textDecoration: 'none'
+      padding: 0,
+      textAlign: 'left'
+    },
+    '& ol': {
+      display: 'inline-block',
+      padding: 0,
+      textAlign: 'left'
+    },
+    '& .MuiButton-containedPrimary': {
+      'color': theme.palette.primary.contrastText,
+      '& .MuiIcon-root': {
+        color: theme.palette.primary.contrastText
+      }
     }
   }
 });
@@ -41,7 +118,7 @@ export const gradientBackgroundVariant = () => ({
   }
 });
 
-const variants = [defaultVariant, gradientBackgroundVariant];
+const variants = [defaultVariant, centeredVariant, gradientBackgroundVariant];
 
 const createHeroVariants = (theme: Theme) => {
   return variants.map((creator) => creator(theme));

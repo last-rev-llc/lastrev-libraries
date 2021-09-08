@@ -33,6 +33,7 @@ interface Props {
   theme?: Array<Theme>;
   variant?: string;
   loading?: boolean;
+  [key: string]: any;
 }
 
 function ContentModule({ __typename, ...fields }: Props) {

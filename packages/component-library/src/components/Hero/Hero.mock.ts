@@ -4,13 +4,13 @@ import mockLink from '../Link/Link.mock';
 import mockTheme from '../../theme/mock.theme';
 
 export default {
-  variant: 'default',
+  variant: 'centered',
   title: capitalize(lorem.words(3)),
   subtitle: lorem.sentence(),
   image: {
     __typename: 'Media',
     file: {
-      url: 'https://images.ctfassets.net/m1b67l45sk9z/4jtNAOSr68TdEVcsuuEPoh/1443dafc62dc2d264fbca495f0f20c09/Exampleimage.png'
+      url: 'https://images.ctfassets.net/m1b67l45sk9z/4Oj0gAEf0wFiPfg0R3QHqG/b1f835f3e380670cd6484e486c9816b1/it-gets-better.png?h=800'
     },
     alt: 'Not Alone'
   },
@@ -65,6 +65,10 @@ export default {
       ]
     }
   },
-  actions: [{ ...mockLink, children: 'Hero CTA' }],
+  actions: [{ ...mockLink, text: 'Hero CTA' }],
+  background: null,
+  backgroundColor: 'white',
+  contentHeight: 'xl',
+  contentWidth: 'xl',
   theme: [mockTheme]
 };

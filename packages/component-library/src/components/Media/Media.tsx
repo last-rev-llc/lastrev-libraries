@@ -15,20 +15,29 @@ export interface MediaProps {
   file?: {
     url: string;
   };
+  variant?: string;
   title?: string;
   description?: string;
   desktop?: Asset;
   tablet?: Asset;
   mobile?: Asset;
   sidekickLookup?: string;
+  sx?: any;
 }
 
 export interface MediaOverrides {}
-const Media = ({ file, title, desktop, tablet, mobile, sidekickLookup, ...rest }: MediaProps) => {
+const Media = ({ variant, file, title, desktop, tablet, mobile, sidekickLookup, ...rest }: MediaProps) => {
   // console.log('Media: ', file);
   // TODO: Add support for video
   const image = file ?? desktop?.file ?? tablet?.file ?? mobile?.file;
   const alt = title ?? desktop?.title ?? tablet?.title ?? mobile?.title;
+  if (variant === 'embed') {
+    return (
+      <ErrorBoundary>
+        <EmbedRoot {...sidekick(sidekickLookup)} src={image?.url} {...rest} sx={{ width: '100%', height: '100%' }} />
+      </ErrorBoundary>
+    );
+  }
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} src={image?.url} alt={alt} {...rest} data-testid="Media" />
@@ -41,6 +50,15 @@ const Media = ({ file, title, desktop, tablet, mobile, sidekickLookup, ...rest }
 const Root = styled(Image, {
   name: 'Media',
   slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => ({
+    ...styles.root
+  })
+})<{ variant?: string }>(() => ({}));
+
+const EmbedRoot = styled('iframe', {
+  name: 'Media',
+  slot: 'EmbedRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => ({
     ...styles.root

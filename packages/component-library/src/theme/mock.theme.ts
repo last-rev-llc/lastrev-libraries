@@ -26,7 +26,8 @@ export const baseTheme = createAppTheme({
     'primary': {
       main: '#fee501',
       light: '#ffff55',
-      dark: '#c6b300'
+      dark: '#c6b300',
+      contrastText: 'black'
     },
     'secondary': {
       main: '#005C7A',
@@ -119,7 +120,7 @@ const theme = createAppTheme(
               color: baseTheme.palette.primary.main
             },
             '& .MuiCollapse-wrapper': {
-              background: 'white'
+              background: baseTheme.palette.background.paper
             },
             '& .MuiSvgIcon-root': {
               color: 'white'
@@ -154,14 +155,15 @@ const theme = createAppTheme(
               }
             },
             'img': {
-              width: '100%'
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover'
             }
           }
         }
       },
       Section: {
         variants: createSectionVariants(baseTheme),
-
         styleOverrides: {
           'root': {
             // display: 'flex',
@@ -280,41 +282,6 @@ const theme = createAppTheme(
           color: 'secondary'
         }
       },
-      MuiButton: {
-        variants: [
-          {
-            props: {
-              variant: 'text'
-            },
-            style: {
-              textTransform: 'none'
-            }
-          },
-          {
-            props: {
-              variant: 'text',
-              color: 'primary'
-            },
-            style: {
-              color: baseTheme.palette.secondary.main
-            }
-          }
-        ],
-        defaultProps: {
-          disableElevation: true
-        },
-        styleOverrides: {
-          root: {
-            fontWeight: 'bold',
-            padding: baseTheme.spacing(2, 3)
-          },
-          outlinedPrimary: {
-            color: baseTheme.palette.text.primary,
-            borderColor: baseTheme.palette.secondary.main,
-            borderRadius: baseTheme.spacing(2)
-          }
-        }
-      },
       MuiCard: {
         styleOverrides: {
           root: {
@@ -370,8 +337,52 @@ const theme = createAppTheme(
       MuiLink: {
         styleOverrides: {
           root: {
-            cursor: 'pointer',
-            color: 'black'
+            'cursor': 'pointer',
+            'color': 'black',
+            '& .MuiIcon-root': {
+              verticalAlign: 'middle'
+            }
+          }
+        }
+      },
+      MuiButton: {
+        variants: [
+          {
+            props: {
+              variant: 'text'
+            },
+            style: {
+              textTransform: 'none'
+            }
+          },
+          {
+            props: {
+              variant: 'text',
+              color: 'primary'
+            },
+            style: {
+              color: baseTheme.palette.secondary.main
+            }
+          }
+        ],
+        defaultProps: {
+          disableElevation: true
+        },
+        styleOverrides: {
+          root: {
+            'fontWeight': 'bold',
+            'padding': baseTheme.spacing(2, 3),
+            '& .MuiButton-startIcon': {
+              display: 'inline'
+            },
+            '& .MuiButton-endIcon': {
+              display: 'inline'
+            }
+          },
+          outlinedPrimary: {
+            color: baseTheme.palette.text.primary,
+            borderColor: baseTheme.palette.secondary.main,
+            borderRadius: baseTheme.spacing(2)
           }
         }
       }

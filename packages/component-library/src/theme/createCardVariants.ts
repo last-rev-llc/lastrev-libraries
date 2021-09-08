@@ -113,9 +113,43 @@ export const mediaAndTextCardVariant = (theme: Theme) => ({
   }
 });
 
-export const avatarCardVariant = (theme: Theme) => ({
+export const profileColumnCardVariant = (theme: Theme) => ({
   props: {
-    variant: 'avatar'
+    variant: 'profile-column'
+  },
+  style: {
+    'display': 'flex',
+    'justifyContent': 'center',
+    'flexDirection': 'column',
+    'minWidth': 320,
+    'padding': theme.spacing(0, 3, 6),
+    'maxWidth': '100%',
+    '& img': {
+      width: 280,
+      height: 280,
+      marginTop: theme.spacing(6),
+      borderRadius: '50%',
+      border: `2px solid ${theme.palette.primary.main}`,
+      objectFit: 'cover'
+    },
+    '& .MuiCardActions-root': {
+      display: 'flex'
+    },
+    '& .MuiCardContent-root': {
+      'padding': theme.spacing(6, 4, 0),
+      '&:last-child': {
+        paddingBottom: 0
+      }
+    },
+    '& .MuiTypography-h3': {
+      color: 'black'
+    }
+  }
+});
+
+export const profileRowCardVariant = (theme: Theme) => ({
+  props: {
+    variant: 'profile-row'
   },
   style: {
     'display': 'flex',
@@ -161,23 +195,22 @@ export const avatarCardVariant = (theme: Theme) => ({
   }
 });
 
-export const avatarLargeCardVariant = (theme: Theme) => ({
+export const profileImageCardVariant = (theme: Theme) => ({
   props: {
-    variant: 'avatar-large'
+    variant: 'profile-image'
   },
   style: {
     'justifyContent': 'center',
     'width': '100%',
     'minWidth': 200,
-    'height': 300,
     'padding': 20,
     '& img': {
       width: '100%',
-      maxWidth: 260,
       height: '100%',
       borderRadius: '50%',
       border: `2px solid ${theme.palette.primary.main}`,
-      objectFit: 'cover'
+      objectFit: 'cover',
+      aspectRatio: '1'
     },
 
     '& .MuiCardContent-root': {
@@ -391,15 +424,16 @@ export const standardBlogCardVariant = (theme: Theme) => ({
 });
 
 const variants = [
-  mediaCardVariant,
-  mediaAndTextCardVariant,
-  avatarCardVariant,
-  avatarLargeCardVariant,
-  squareCardVariant,
   standardCardVariant,
   standardRoundedCardVariant,
+  standardBlogCardVariant,
+  mediaCardVariant,
   mediaHoverCardVariant,
-  standardBlogCardVariant
+  mediaAndTextCardVariant,
+  profileColumnCardVariant,
+  profileRowCardVariant,
+  profileImageCardVariant,
+  squareCardVariant
 ];
 
 const createCardVariants = (theme: Theme) => {

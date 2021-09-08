@@ -12,11 +12,12 @@ interface Props {
 function FallbackComponent() {
   return <div>An error has occured</div>;
 }
+type Env = 'development' | 'production' | 'staging' | 'test' | string | undefined;
+const NODE_ENV: Env = process.env.NODE_ENV;
 
-// TODO only show dialog on staging
 export const ErrorBoundary = ({ children }: Props) => {
   return (
-    <Sentry.ErrorBoundary fallback={FallbackComponent} showDialog={false}>
+    <Sentry.ErrorBoundary fallback={FallbackComponent} showDialog={NODE_ENV !== 'production'}>
       {children}
     </Sentry.ErrorBoundary>
   );

@@ -15,7 +15,7 @@ export const sideKickLookupResolver =
     if (content.sys && content.sys.contentType) {
       if (mappers[typeName] && mappers[typeName][displayType]) {
         await Promise.all(
-          Object.keys(mappers[typeName][displayType]).map(async (field: string) => {
+          Object.keys(mappers[typeName][displayType])?.map(async (field: string) => {
             const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
 
             const { fieldName } = await fieldDataFetcher(content, args, ctx, info);

@@ -1,18 +1,19 @@
 import React from 'react';
-import { Grid, Container, Box, MenuItem, TextField, Button, Typography } from '@material-ui/core';
+import { Skeleton, Grid, Container, Box, MenuItem, TextField, Button, Typography } from '@material-ui/core';
 
 import { Breakpoint } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
+import Section from '../Section';
 import { MediaProps } from '../Media';
 import { CardProps } from '../Card';
-import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
 import { isEmpty, range } from 'lodash';
 import { useRouter } from 'next/router';
-
+import useSWRInfinite from 'swr/infinite';
 interface Settings {
   filters: FilterSetting[];
+  limit?: number;
 }
 
 interface FilterSetting {
@@ -26,7 +27,7 @@ interface Option {
   value: string;
 }
 interface Options {
-  [key: string]: Option[];
+  [key: string]: Array<Option>;
 }
 export interface CollectionFilteredProps {
   id: string;
@@ -39,9 +40,11 @@ export interface CollectionFilteredProps {
   background?: MediaProps;
   variant?: string;
   itemsVariant?: string;
+  itemsSpacing?: number;
   theme: any;
   itemsWidth?: false | Breakpoint | undefined;
   sidekickLookup?: string;
+  loadMoreText?: string;
 }
 export interface UseDynamicItemsInterface {
   items?: CardProps[];
@@ -49,39 +52,6 @@ export interface UseDynamicItemsInterface {
   fetchItems?: (filter: any) => Promise<{ items?: CardProps[]; options?: Options } | null>;
   filter: any;
 }
-const useDynamicItems = ({
-  items: defaultItems,
-  options: defaultOptions,
-  fetchItems,
-  filter
-}: UseDynamicItemsInterface) => {
-  const [items, setItems] = React.useState(defaultItems);
-  const [options, setOptions] = React.useState(defaultOptions);
-  const [loading, setLoading] = React.useState(false);
-  const [error, setError] = React.useState(null);
-  let limit: number, offset: number; // TODO: Add support for infinite scroll
-  React.useEffect(() => {
-    if (fetchItems) {
-      const fetch = async () => {
-        setLoading(true);
-        try {
-          const result = await fetchItems({ filter, limit, offset });
-          // console.log('CollectionFiltered', { result });
-          setItems(result?.items);
-          setOptions(result?.options);
-        } catch (error) {
-          console.log('Error', error);
-          setError(error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetch();
-    }
-  }, [fetchItems, filter, setItems, setOptions]);
-
-  return { items, options, loading, error };
-};
 
 const useQueryState = (defaultValue: any): [any, any] => {
   const router = useRouter();
@@ -89,7 +59,8 @@ const useQueryState = (defaultValue: any): [any, any] => {
   const [state, setState] = React.useState({ ...defaultValue, ...query });
   const handleSetState = (newState: any) => {
     setState(newState);
-    router.push({ pathname: router.pathname, query: newState }, undefined, { shallow: true });
+    // TODO: Re-enable pushing state to query when issues with Router.push are resolved
+    // router.push({ pathname: router.pathname, query: { ...query, slug, ...newState } }, undefined, { shallow: true });
   };
   return [state, handleSetState];
 };
@@ -104,72 +75,140 @@ export const CollectionFiltered = ({
   itemsWidth,
   variant,
   itemsVariant,
-  sidekickLookup
+  itemsSpacing,
+  sidekickLookup,
+  loadMoreText
 }: CollectionFilteredProps) => {
-  const { filters } = settings || {};
-  // const [filter, setFilter] = React.useState(defaultFilter);
-  const [filter, setFilter] = useQueryState(defaultFilter);
+  const { filters, limit = 9 } = settings || {};
+  const [filterQuery, setFilter] = useQueryState(defaultFilter);
+  const filter = React.useMemo<FilterFormData>(() => {
+    if (!filters) return {};
+    // Filter the filterQuery to only include the keys that are in the options
+    return filters?.reduce(
+      (acc, { id }) => ({
+        ...acc,
+        [id]: filterQuery[id]
+      }),
+      {}
+    );
+  }, [filterQuery, filters]);
 
-  const { items, options, loading, error } = useDynamicItems({
-    items: defaultItems,
-    options: defaultOptions,
-    fetchItems,
-    filter
-  });
+  // The key includes a stable version of the filter object for shallow comparison
+  const getKey = (pageIndex: number, previousPageData: any) => {
+    if (previousPageData && previousPageData?.items && !previousPageData?.items?.length) return null; // reached the end
+    if (pageIndex === 0) return [`collectionFiltered_${id}`, JSON.stringify(filter), 0]; // SWR key
+    return [`collectionFiltered_${id}`, JSON.stringify(filter), pageIndex * limit]; // SWR key
+  };
+
+  const {
+    data,
+    error,
+    size,
+    setSize,
+    isValidating: loading,
+    mutate: refetch
+  } = useSWRInfinite(
+    getKey,
+    (_key: string, _filterKey: string, offset: number) => (fetchItems ? fetchItems({ filter, limit, offset }) : null),
+    {
+      revalidateOnFocus: false
+    }
+  );
+  const options = data?.length ? data[0]?.options : defaultOptions;
+  const items = data?.reduce((accum: CardProps[], page: any) => [...accum, ...page?.items], []) ?? defaultItems;
+  const isLoadingInitialData = !data && !error;
+  const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined');
+  const isEmptyData = data?.[0]?.items?.length === 0;
+  const isReachingEnd = isEmptyData || (data && (data?.[data?.length - 1]?.items?.length ?? limit) < limit);
+
   const itemsWithVariant = items?.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
-  // console.log('Collection', { filters, filter });
-  // React.useEffect(() => {
-  //   setFilter(defaultFilter);
-  // }, [defaultFilter]);
+  const parseValue = ({ filterId, value }: { filterId: string; value: string }) => {
+    return options && options[filterId]
+      ? options[filterId]?.find((option) => option.value === value || value?.includes(option.value))?.label
+      : value;
+  };
+
+  const parsedFilters = filters
+    ?.map(({ id }) => (filter[id] ? parseValue({ filterId: id, value: filter[id] }) : null))
+    .filter((x) => !!x)
+    .join(', ');
+
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant}>
         <ContentContainer maxWidth={itemsWidth}>
-          <Grid container spacing={4} sx={{ flexDirection: 'column' }}>
+          <Grid container spacing={itemsSpacing} sx={{ flexDirection: 'column', alignItems: 'center' }}>
             <Grid item container sx={{ justifyContent: 'flex-end' }}>
-              <CollectionFilters id={id} filters={filters} options={options} setFilter={setFilter} filter={filter} />
+              <CollectionFilters
+                id={id}
+                filters={filters}
+                options={options}
+                setFilter={setFilter}
+                filter={filter}
+                onClearFilter={onClearFilter}
+              />
+            </Grid>
+            {!itemsWithVariant?.length && !isEmpty(filter) && !loading ? (
               <Grid item>
-                <Button
-                  onClick={() => {
-                    setFilter({});
-                    if (onClearFilter) onClearFilter();
-                  }}>
-                  Clear
+                <Typography variant="h4">
+                  No results for filter: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
+                </Typography>
+              </Grid>
+            ) : null}
+            {!itemsWithVariant?.length && error ? (
+              <Grid item>
+                <Typography variant="h4">Error searching for: {parsedFilters}, try again!</Typography>
+                <Button variant="contained" onClick={() => refetch()}>
+                  {'TRY AGAIN'}
                 </Button>
               </Grid>
-            </Grid>
-
-            {itemsWithVariant?.length && !loading ? (
+            ) : null}
+            {itemsWithVariant?.length ? (
               <>
                 <Grid item container>
                   <Grid item xs={12}>
-                    <Typography variant="h4">Showing results for: {JSON.stringify(filter)}</Typography>
+                    <Typography variant="h4">
+                      {parsedFilters ? `Showing results for: ${parsedFilters}` : 'Showing results for: All'}
+                    </Typography>
                   </Grid>
-                  {itemsWithVariant?.map((item) => (
-                    <Grid key={item.id} item xs={4}>
-                      <ContentModule {...item} />
-                    </Grid>
-                  ))}
+                  <Section
+                    contents={itemsWithVariant}
+                    // background={background}
+                    variant={'three-per-row'}
+                    contentSpacing={itemsSpacing}
+                  />
                 </Grid>
               </>
             ) : null}
-            {!itemsWithVariant?.length && !isEmpty(filter) && !loading ? (
-              <Grid item>No results for filter {JSON.stringify(filter)}</Grid>
-            ) : null}
-            {!itemsWithVariant?.length && error ? <Grid item>Error searching for your terms, try again</Grid> : null}
             {loading ? (
               <>
                 <Grid item container>
-                  <Grid item xs={12}>
-                    <Typography variant="h4">Showing results for: {JSON.stringify(filter)}</Typography>
-                  </Grid>
-                  {range(9).map((_: any, idx: number) => (
-                    <Grid key={`item_loading_${idx}`} item xs={4}>
-                      <ContentModule __typename={'Card'} variant={itemsVariant} loading />
+                  {isLoadingMore && (itemsWithVariant?.length ?? 0) < limit ? (
+                    <Grid item xs={12}>
+                      <Typography variant="h4">
+                        Showing results for: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
+                      </Typography>
                     </Grid>
-                  ))}
+                  ) : null}
+                  <Section
+                    contents={range(limit).map((_: any, idx: number) => ({
+                      __typename: 'Card',
+                      id: `${idx}`,
+                      variant: itemsVariant,
+                      loading: true
+                    }))}
+                    variant={'three-per-row'}
+                    contentSpacing={itemsSpacing}
+                  />
                 </Grid>
               </>
+            ) : null}
+            {!isReachingEnd ? (
+              <Grid item sx={{ padding: 2 }}>
+                <Button variant="contained" onClick={() => setSize(size + 1)}>
+                  {loadMoreText ?? 'LOAD MORE'}
+                </Button>
+              </Grid>
             ) : null}
           </Grid>
         </ContentContainer>
@@ -184,21 +223,20 @@ interface CollectionFiltersProps {
   filter?: FilterFormData;
   filters?: FilterSetting[];
   setFilter: any;
+  onClearFilter: any;
 }
 interface FilterFormData {
   [key: string]: any;
 }
 
-const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: CollectionFiltersProps) => {
+const CollectionFilters = ({ id, options, filters, filter = {}, setFilter, onClearFilter }: CollectionFiltersProps) => {
   const handleChange = (id: string) => (event: any) => {
-    // console.log('HandleChange', { id, value: event.target.value });
     setFilter({ ...filter, [id]: event.target.value });
   };
 
-  // console.log('Filter', { filter });
   return (
-    <form id={`collection_${id}_filters`} style={{ width: '100%' }}>
-      <Grid container sx={{ justifyContent: 'flex-end' }} spacing={2}>
+    <CollectionFiltersRoot id={`collection_${id}_filters`} container style={{ justifyContent: 'flex-end' }}>
+      <Grid item container sx={{ justifyContent: 'flex-end' }} spacing={2}>
         {filters?.map(({ id, label, type }) => {
           if (!id) return null;
           let input;
@@ -208,7 +246,6 @@ const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: Col
                 <TextField
                   id={id}
                   name={id}
-                  variant="outlined"
                   fullWidth
                   margin="normal"
                   label={label || id}
@@ -224,7 +261,6 @@ const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: Col
                   select
                   id={id}
                   name={id}
-                  variant="outlined"
                   fullWidth
                   margin="normal"
                   label={label || id}
@@ -255,7 +291,16 @@ const CollectionFilters = ({ id, options, filters, filter = {}, setFilter }: Col
           return null;
         })}
       </Grid>
-    </form>
+      <Grid item>
+        <Button
+          onClick={() => {
+            setFilter({});
+            if (onClearFilter) onClearFilter();
+          }}>
+          Clear
+        </Button>
+      </Grid>
+    </CollectionFiltersRoot>
   );
 };
 
@@ -270,6 +315,15 @@ const Root = styled(Box, {
   display: 'flex',
   justifyContent: 'center'
 }));
+
+const CollectionFiltersRoot = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'FiltersRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => ({
+    ...styles.root
+  })
+})<{ variant?: string }>(() => ({}));
 
 const ContentContainer = styled(Container, {
   name: 'CollectionFiltered',

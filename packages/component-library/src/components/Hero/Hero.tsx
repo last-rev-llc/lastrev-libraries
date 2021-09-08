@@ -1,6 +1,10 @@
 import React from 'react';
 import { Container, Box, Grid, Typography } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
+import useTheme from '@material-ui/system/useTheme';
+import { Theme } from '@material-ui/system/createTheme';
+import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
+import get from 'lodash/get';
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
 import Media from '../Media';
@@ -18,17 +22,27 @@ export interface HeroProps {
   body?: RichText;
   actions?: any[];
   image?: MediaProps | MediaProps[];
-  background?: any;
+  background?: MediaProps;
+  backgroundColor?: string;
   contentWidth?: false | Breakpoint | undefined;
+  contentHeight?: 'sm' | 'md' | 'lg' | 'xl';
   variant?: any;
   theme: any;
+  styles?: {
+    root?: SystemCssProperties;
+    gridContainer?: SystemCssProperties & { spacing: any };
+    gridItem?: SystemCssProperties & { xs: any; sm: any; md: any };
+    gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
+  };
   sidekickLookup?: any;
 }
 
 export const Hero = ({
   variant,
-  // background,
+  background,
+  backgroundColor,
   contentWidth,
+  contentHeight = 'lg',
   title,
   subtitle,
   body,
@@ -37,34 +51,45 @@ export const Hero = ({
   sidekickLookup
 }: // theme
 HeroProps) => {
-  // console.log('Hero', { variant, background, contentWidth, title, subtitle, body, actions, image, theme });
-
+  const theme = useTheme();
   return (
     <ErrorBoundary>
-      <Root variant={variant} {...sidekick(sidekickLookup)}>
-        <ContentContainer maxWidth={contentWidth}>
-          <Grid
-            container
-            spacing={5}
+      <Root
+        variant={variant}
+        contentHeight={contentHeight}
+        {...sidekick(sidekickLookup)}
+        sx={{
+          ...rootStyles({ backgroundColor, theme, background }),
+          position: background ? 'relative' : undefined,
+          overflow: background ? 'hidden' : undefined
+        }}>
+        {background ? (
+          <Box
             sx={{
-              maxWidth: image ? 'xl' : 'lg',
-              margin: !image ? '0 auto' : undefined
+              position: 'absolute',
+              zIndex: -1,
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%'
             }}>
+            <Media
+              {...background}
+              {...sidekick(sidekickLookup?.background)}
+              sx={{ objectFit: 'cover', width: '100%', height: '100%' }}
+            />
+          </Box>
+        ) : null}
+        <ContentContainer maxWidth={contentWidth}>
+          <Grid container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
-              <Grid
-                container
-                direction="column"
-                spacing={2}
-                item
-                xs={12}
-                sm={image ? 6 : 12}
-                sx={{ textAlign: !image ? 'center' : undefined }}>
+              <Grid container direction="column" spacing={2} xs={12}>
                 <Grid item>
                   {title ? (
                     <Typography
                       variant="h1"
                       component="h1"
-                      sx={{ color: !subtitle ? '#005C7A' : undefined }}
+                      sx={{ color: !subtitle ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
@@ -73,7 +98,7 @@ HeroProps) => {
                     <Typography
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
-                      sx={{ color: !title ? '#005C7A' : undefined }}
+                      sx={{ color: !title ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>
@@ -105,6 +130,69 @@ HeroProps) => {
   );
 };
 
+const rootStyles = ({
+  backgroundColor,
+  theme,
+  background
+}: {
+  backgroundColor?: string;
+  theme: Theme;
+  background?: MediaProps;
+}) => {
+  if (!!background) {
+    return {
+      'backgroundColor': 'transparent',
+      'color': 'white',
+      // TODO find out a better way to override text color
+      '& p, h1, h2, h3, h4, h5, h6, a': {
+        color: 'white'
+      }
+    };
+  }
+  if (backgroundColor === 'white') {
+    return { backgroundColor };
+  }
+  if (backgroundColor === 'black') {
+    return {
+      backgroundColor,
+      'color': 'white',
+      // TODO find out a better way to override text color
+      '& p, h1, h2, h3, h4, h5, h6, a': {
+        color: 'white'
+      }
+    };
+  }
+  if (backgroundColor?.includes('gradient') && theme.palette[backgroundColor]) {
+    return {
+      'background': theme.palette[backgroundColor]?.main,
+      'color': `${backgroundColor}.contrastText`,
+      // TODO find out a better way to override text color
+      '& p, h1, h2, h3, h4, h5, h6, a': {
+        color: `${backgroundColor}.contrastText`
+      }
+    };
+  }
+  const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
+  const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
+
+  if (backgroundColor && get(theme.palette, parsedBGColor)) {
+    return {
+      'bgcolor': parsedBGColor,
+      '& p, h1, h2, h3, h4, h5, h6, a': {
+        color: `${paletteColor}.contrastText`
+      }
+    };
+  }
+  return {};
+};
+
+const CONTENT_HEIGHT: { [key: string]: string } = {
+  sm: '25vh',
+  md: '50vh',
+  lg: '75vh',
+  xl: '100vh'
+};
+
 const Root = styled(Box, {
   name: 'Hero',
   slot: 'Root',
@@ -112,30 +200,32 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => ({
     ...styles.root
   })
-})<{ variant?: string }>(() => ({}));
-
-// const GridContainer = styled(Grid, {
-//   name: 'Hero',
-//   slot: 'GridContainer',
-//   overridesResolver: (_, styles) => ({
-//     ...styles.gridContainer
-//   })
-// })(() => ({}));
-
-// const GridItem = styled(Grid, {
-//   name: 'Hero',
-//   slot: 'GridItem',
-//   overridesResolver: (_, styles) => ({
-//     ...styles.gridItem
-//   })
-// })(() => ({}));
+})<{ variant?: string; contentHeight: string }>(({ contentHeight }) => ({
+  height: CONTENT_HEIGHT[contentHeight] ?? 'auto'
+}));
 
 const ContentContainer = styled(Container, {
   name: 'Section',
   slot: 'ContentContainer',
   overridesResolver: (_, styles) => ({
-    ...styles.contentContainer,
-    padding: 40
+    ...styles.contentContainer
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>(({ theme }) => ({
+  padding: theme.spacing(5),
+  height: '100%',
+  [theme.breakpoints.down('lg')]: {
+    '& > div': {
+      position: 'absolute',
+      top: '50%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)'
+    }
+  },
+  [theme.breakpoints.up('md')]: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignContent: 'center'
+  }
+}));
+
 export default Hero;

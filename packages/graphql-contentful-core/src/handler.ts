@@ -9,7 +9,7 @@ export const createHandler = (props: ServerProps) => {
   logger.setLevel(props.logLevel);
   return async (event: any, context: any, cb: any) => {
     const timer = new Timer('Graphql handler created');
-    const { resolvers, typeDefs, loaders, defaultLocale, pathToIdLookup } = await prepareServer(props);
+    const { resolvers, typeDefs, contentful, loaders, defaultLocale, pathToIdLookup } = await prepareServer(props);
 
     const server = new ApolloServer({
       schema: buildFederatedSchema([{ resolvers, typeDefs }]),
@@ -18,6 +18,7 @@ export const createHandler = (props: ServerProps) => {
       context: () => {
         return {
           loaders,
+          contentful,
           mappers: props.extensions?.mappers || {},
           defaultLocale,
           pathToIdLookup,
