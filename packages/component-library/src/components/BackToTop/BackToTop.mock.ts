@@ -1,10 +1,9 @@
-import { lorem } from 'faker';
-
-export default {
-  variant: 'contained',
-  size: 'large',
-  color: 'primary',
-  text: lorem.word(),
-  className: lorem.word(),
-  testId: 'Button'
+const mockContent = () => {
+  return {
+    size: 'large',
+    color: 'primary',
+    disabled: true
+  };
 };
+
+export default mockContent;
