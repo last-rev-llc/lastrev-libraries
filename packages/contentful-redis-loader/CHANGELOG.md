@@ -1,5 +1,12 @@
 # @last-rev/contentful-redis-loader
 
+## 0.1.2
+
+### Patch Changes
+
+- 3089d86: Added Fragement Generator to CLI
+- 13c1d55: updated to use hash for content_types
+
 ## 0.1.1
 
 ### Patch Changes
