@@ -19,3 +19,4 @@ export { default as CollectionAccordion } from './components/CollectionAccordion
 export { default as NavigationBar } from './components/NavigationBar';
 export { default as mockTheme } from './theme/mock.theme';
 export { default as createTheme } from './theme/createTheme';
+export { default as BackToTop } from './components/BackToTop';
