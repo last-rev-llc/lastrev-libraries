@@ -201,16 +201,17 @@ const Root = styled(Box, {
     ...styles.root
   })
 })<{ variant?: string; contentHeight: string }>(({ contentHeight }) => ({
-  height: CONTENT_HEIGHT[contentHeight] ?? 'auto'
+  minHeight: CONTENT_HEIGHT[contentHeight] ?? 'auto'
 }));
 
 const ContentContainer = styled(Container, {
-  name: 'Section',
+  name: 'Hero',
   slot: 'ContentContainer',
   overridesResolver: (_, styles) => ({
     ...styles.contentContainer
   })
 })<{ variant?: string }>(({ theme }) => ({
+  position: 'relative',
   padding: theme.spacing(5),
   height: '100%',
   [theme.breakpoints.down('lg')]: {

@@ -8,6 +8,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import Link, { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
+import { useMediaQuery, useTheme } from '@material-ui/core';
 // type NavigationItem = LinkProps | NavigationItemProps;
 
 // export type NavigationItemProps = {
@@ -21,15 +22,16 @@ export interface NavigationItemProps extends LinkProps {
 
 export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, ...props }: NavigationItemProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
-  // const handleClose = () => setOpen(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const handleClick = (evt: any) => {
-    // Currently the first item is always itself
-    if (subNavigation?.length && subNavigation?.length > 1) {
+    if (isMobile) {
+      console.log('');
       evt.preventDefault();
       evt.stopPropagation();
       setOpen(!open);
     } else {
-      // Follow navigation and close menu
       if (onRequestClose) onRequestClose();
     }
   };
