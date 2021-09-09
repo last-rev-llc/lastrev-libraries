@@ -35,10 +35,12 @@
     "apollo-server": "^2.25.0",
     "apollo-server-core": "^2.19.1",
     "apollo-server-lambda": "^3.0.1",
+    "apollo-server-micro": "^3.3.0",
     "contentful": "^8.4.2",
     "graphql": "^15.5.1",
     "graphql-type-json": "^0.3.2",
     "lodash": "^4.17.21",
-    "loglevel": "^1.7.1"
+    "loglevel": "^1.7.1",
+    "micro": "^9.3.4"
   }
 }
