@@ -13,7 +13,7 @@ export default {
     },
     alt: capitalize(lorem.words(2))
   },
-  title: capitalize(lorem.word()),
+  title: capitalize(lorem.words(2)),
   subtitle: capitalize(lorem.words(3)),
   body: paragraphMock,
   actions: [{ ...mockLink }]

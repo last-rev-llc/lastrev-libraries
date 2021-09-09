@@ -19,9 +19,23 @@ export const collectionTwoPerRowVariant = (_: Theme) => ({
   },
   style: {
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridAutoRows: '1fr',
+      gridGap: '15px',
       '& > [class*="Section-gridItem"]': {
         flex: '0 0 50%',
-        maxWidth: 1296 / 2
+        maxWidth: 1296 / 2,
+        height: '100%',
+        '& [class*="MuiCardContent-root"]': {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          height: '100%'
+        },
+        '& [class*="MuiCardActions-root"]': {
+          marginTop: 'auto'
+        }
       }
     }
   }
@@ -33,8 +47,22 @@ export const collectionThreePerRowVariant = (_: Theme) => ({
   },
   style: {
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gridAutoRows: '1fr',
+      gridGap: '15px',
       '& > [class*="Section-gridItem"]': {
-        maxWidth: 1296 / 3
+        maxWidth: 1296 / 3,
+        height: '100%',
+        '& [class*="MuiCardContent-root"]': {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          height: '100%'
+        },
+        '& [class*="MuiCardActions-root"]': {
+          marginTop: 'auto'
+        }
       }
     }
   }
@@ -51,7 +79,12 @@ export const collectionTilesVariant = (_: Theme) => ({
     'width': '100%',
     'height': '100%',
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gridAutoRows: '1fr',
+      gridGap: '15px',
       '& > [class*="Section-gridItem"]': {
+        height: '100%',
         margin: 0
       }
     }
@@ -69,12 +102,28 @@ export const collectionThreePerRowRoundedWrapper = (theme: Theme) => ({
     'width': '100%',
     'height': '100%',
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gridAutoRows: '1fr',
+      gridGap: theme.spacing(3),
+      'padding': theme.spacing(3),
       'border': '2px solid #595959',
       'borderRadius': 40,
       'backgroundColor': theme.palette.quartiary.main,
       'transition': 'background-color ease .15s',
       '& > [class*="Section-gridItem"]': {
-        margin: 0
+        height: '100%',
+        padding: 0,
+        margin: 0,
+        '& [class*="MuiCardContent-root"]': {
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'flex-end',
+          height: '100%'
+        },
+        '& [class*="MuiCardActions-root"]': {
+          marginTop: 'auto'
+        }
       }
     },
     '& .MuiPaper-root': {

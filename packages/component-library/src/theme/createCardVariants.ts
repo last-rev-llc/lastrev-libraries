@@ -173,6 +173,7 @@ export const profileRowCardVariant = (theme: Theme) => ({
       display: 'flex'
     },
     '& .MuiCardContent-root': {
+      height: 'auto !important',
       'padding': theme.spacing(6, 4, 0),
       'textAlign': 'left',
       '&:last-child': {
@@ -241,7 +242,7 @@ export const squareCardVariant = (theme: Theme) => ({
     '& .MuiCardContent-root': {
       'display': 'flex',
       'flexDirection': 'column',
-      'justifyContent': 'center',
+      'justifyContent': 'center !important',
       'alignItems': 'center',
       'height': '100%',
       'padding': '0 16px',
@@ -262,6 +263,9 @@ export const squareCardVariant = (theme: Theme) => ({
       display: 'none'
     },
     '& .MuiTypography-h4': {
+      display: 'none'
+    },
+    '& .MuiBox-root': {
       display: 'none'
     },
     '& .MuiTypography-body1': {
@@ -350,6 +354,7 @@ export const standardBlogCardVariant = (theme: Theme) => ({
   },
   style: {
     'justifyContent': 'flex-start',
+    width: '100%',
     'transition': 'background-color ease .15s',
 
     '& .MuiCardContent-root': {
