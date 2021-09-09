@@ -169,6 +169,10 @@ export const profileRowCardVariant = (theme: Theme) => ({
       border: `2px solid ${theme.palette.primary.main}`,
       objectFit: 'cover'
     },
+    '& .MuiSkeleton-root': {
+      borderRadius: '50%',
+      transform: 'none'
+    },
     '& .MuiCardActions-root': {
       display: 'flex'
     },

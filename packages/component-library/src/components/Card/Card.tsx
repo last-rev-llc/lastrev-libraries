@@ -42,14 +42,14 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
             {children}
           </Link>
         )}>
-        <Root variant={variant} {...sidekick(sidekickLookup)}>
+        <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)}>
           {media || loading ? (
             <CardMedia sx={{ display: 'flex', justifyContent: 'center' }}>
               {!loading ? (
-                <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} />
+                <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} testId="Card-media" />
               ) : (
                 <Skeleton>
-                  <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} />
+                  <Media {...sidekick(sidekickLookup?.media)} {...(Array.isArray(media) ? media[0] : media)} testId="Card-media" />
                 </Skeleton>
               )}
             </CardMedia>
@@ -57,18 +57,18 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
           {!loading && (title || subtitle || body || actions) ? (
             <CardContent>
               {title ? (
-                <Typography {...sidekick(sidekickLookup?.title)} variant="h3" component="h3">
+                <Typography {...sidekick(sidekickLookup?.title)} variant="h3" component="h3" data-testid="Card-title">
                   {title}
                 </Typography>
               ) : null}
               {subtitle ? (
-                <Typography {...sidekick(sidekickLookup?.subtitle)} variant="h4" component="h4">
+                <Typography {...sidekick(sidekickLookup?.subtitle)} variant="h4" component="h4" data-testid="Card-subtitle">
                   {subtitle}
                 </Typography>
               ) : null}
-              {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} /> : null}
+              {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="Card-body" /> : null}
               {actions?.length ? (
-                <CardActions {...sidekick(sidekickLookup?.actions)}>
+                <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions">
                   {actions?.map((link) => (
                     <Link key={link.id} {...link} />
                   ))}
@@ -86,7 +86,7 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
                 <br />
                 <Skeleton width="100%" />
               </Typography>
-              <Skeleton>{body ? <Text sidekickLookup={sidekickLookup?.body} body={body} /> : null}</Skeleton>
+              <Skeleton>{body ? <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="Card-body" /> : null}</Skeleton>
               <CardActions>
                 <Skeleton width={50} />
               </CardActions>

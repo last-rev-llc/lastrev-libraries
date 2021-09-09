@@ -6,26 +6,23 @@ export default {
   __typename: 'Carousel',
   variant: 'standard',
   title: 'Carousel title',
-  body: {
-    __typename: 'Text',
-    document: {
-      nodeType: 'document',
-      data: {},
-      content: [
-        {
-          nodeType: 'paragraph',
-          data: {},
-          content: [
-            {
-              nodeType: 'text',
-              value: lorem.sentences(2),
-              marks: [],
-              data: {}
-            }
-          ]
-        }
-      ]
-    }
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        nodeType: 'paragraph',
+        data: {},
+        content: [
+          {
+            nodeType: 'text',
+            value: lorem.sentences(2),
+            marks: [],
+            data: {}
+          }
+        ]
+      }
+    ]
   },
   items: [
     { ...mockCard, variant: 'media', title: 'Card one title' },
@@ -34,5 +31,9 @@ export default {
     { ...mockCard, variant: 'media', title: 'Card four title' }
   ],
   itemsVariant: 'standard-round',
-  theme: [mockTheme]
+  theme: [mockTheme],
+  links: {
+    entries: [],
+    assets: []
+  }
 };

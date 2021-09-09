@@ -40,10 +40,12 @@ export default {
     subtitle: { name: 'Subtitle' },
     body: { name: 'Body' },
     actions: { name: 'Actions' },
-    __typename: { table: { disable: true } }
+    __typename: { table: { disable: true } },
+    ref: { table: { disable: true } },
+    sidekickLookup: { table: { disable: true } }
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Card {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <Card __typename={''} sidekickLookup={undefined} {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mockContent };

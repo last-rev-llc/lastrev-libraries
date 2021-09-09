@@ -11,7 +11,9 @@
     "dev": "cross-env NODE_ENV=development rollup -cw",
     "build": "cross-env NODE_ENV=production rollup -c",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.0.0",

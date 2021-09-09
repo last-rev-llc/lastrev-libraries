@@ -8,7 +8,7 @@ export default {
   component: Collection,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box m={2}>{storyFn()}</Box>
+      <Box mx={2}>{storyFn()}</Box>
     )
   ],
   argTypes: {
@@ -50,10 +50,11 @@ export default {
     items: { name: 'Items' },
     background: { name: 'Background' },
     contentWidth: { name: 'Content Width' },
-    theme: { name: 'Theme' }
+    theme: { name: 'Theme' },
+    sidekickLookup: { table: { disable: true } }
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Collection {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <Collection id={''} theme={undefined} sidekickLookup={undefined} {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...collectionMock };

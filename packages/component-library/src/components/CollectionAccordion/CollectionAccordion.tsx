@@ -25,7 +25,7 @@ export const CollectionAccordion = ({
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
-      <Root container spacing={itemSpacing} {...sidekick(sidekickLookup)} variant={variant}>
+      <Root container spacing={itemSpacing} {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionAccordion">
         {itemsWithVariant.map((item, idx) => (
           <AccordionItem item key={idx}>
             <Accordion {...item} />

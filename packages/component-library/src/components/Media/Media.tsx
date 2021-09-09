@@ -23,10 +23,11 @@ export interface MediaProps {
   mobile?: Asset;
   sidekickLookup?: string;
   sx?: any;
+  testId?: string;
 }
 
 export interface MediaOverrides {}
-const Media = ({ variant, file, title, desktop, tablet, mobile, sidekickLookup, ...rest }: MediaProps) => {
+const Media = ({ variant, file, title, desktop, tablet, mobile, testId, sidekickLookup, ...rest }: MediaProps) => {
   // console.log('Media: ', file);
   // TODO: Add support for video
   const image = file ?? desktop?.file ?? tablet?.file ?? mobile?.file;
@@ -40,7 +41,7 @@ const Media = ({ variant, file, title, desktop, tablet, mobile, sidekickLookup, 
   }
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} src={image?.url} alt={alt} {...rest} />
+      <Root {...sidekick(sidekickLookup)} src={image?.url} alt={alt} {...rest} data-testid={testId || 'Media'} />
     </ErrorBoundary>
   );
 };

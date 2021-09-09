@@ -24,11 +24,15 @@ export default {
       //   defaultValue: { summary: 'standard' }
       // }
     },
-    // media: { name: 'Media' },
+    title: { name: 'Title' },
+    body: { name: 'Body' },
+    items: { name: 'Items'},
+    itemsVariant: { name: 'Items Variant'},
+    theme: { name: 'Theme' },
     __typename: { table: { disable: true } }
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Carousel {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <Carousel __typename={''} title={''} theme={undefined} {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mockContent };

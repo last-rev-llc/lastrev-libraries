@@ -51,7 +51,8 @@ export const CollectionCarousel = ({
 
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} variant={variant}>
+      <Root {...sidekick(sidekickLookup)} variant={variant}
+        data-testid="CollectionCarousel">
         <ContentContainer maxWidth={itemsWidth} disableGutters>
           <CarouselContainer navigation pagination={{ clickable: true }} {...CAROUSEL_CONFIG[variant]} loop>
             {itemsWithVariant.map((item, idx) => (

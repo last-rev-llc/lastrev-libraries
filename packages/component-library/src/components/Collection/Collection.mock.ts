@@ -6,5 +6,6 @@ export default {
   variant: 'collection-three-per-row',
   items: [{ ...mockCard }, { ...mockCard }, { ...mockCard }, { ...mockCard }, { ...mockCard }],
   itemsVariant: 'standard-round',
+  // itemsWidth: 'xl',
   theme: [mockTheme]
 };

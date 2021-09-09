@@ -1,6 +1,6 @@
 export interface MediaProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   file: any;
-  alt: string;
+  // alt: string;
   className?: string;
   columns?: number;
   lazy?: boolean;

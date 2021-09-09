@@ -13,7 +13,30 @@ export default {
       <Box m={5}>{storyFn()}</Box>
     )
   ],
-  argTypes: {}
+  argTypes: {
+    variant: { name: 'Variant' },
+    align: {
+      name: 'Align',
+      control: {
+        type: 'inline-radio',
+        options: [
+          'left',
+          'right',
+          'center'
+        ]
+      },
+      table: {
+        defaultValue: { summary: 'left' }
+      }
+    },
+    body: { name: 'Body' },
+    __typename: { table: { disable: true } },
+    id: { table: { disable: true } },
+    styles: { table: { disable: true } },
+    sx: { table: { disable: true } },
+    renderNode: { table: { disable: true } },
+    sidekickLookup: { table: { disable: true } }
+  }
 };
 
 const Template1 = (args: JSX.IntrinsicAttributes) => <Text {...args} />;
