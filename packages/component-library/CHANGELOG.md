@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.23
+
+### Patch Changes
+
+- 5336e17: Fix Hero height and Navigation mobile interaction
+
 ## 0.1.22
 
 ### Patch Changes
