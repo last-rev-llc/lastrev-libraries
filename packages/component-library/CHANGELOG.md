@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.24
+
+### Patch Changes
+
+- 05ceb54: created back to top button
+
 ## 0.1.23
 
 ### Patch Changes
