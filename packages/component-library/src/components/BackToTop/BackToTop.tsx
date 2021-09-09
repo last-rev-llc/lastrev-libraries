@@ -31,6 +31,10 @@ const Root = styled(Fab, {
   overridesResolver: (_, styles) => ({
     ...styles.root
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>`
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+`;
 
 export default BackToTop;
