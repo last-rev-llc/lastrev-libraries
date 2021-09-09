@@ -58,19 +58,16 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Hero {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <Hero id={''} __typename={''} theme={undefined} {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...heroMock };
+Default.args = { ...heroMock,
+  background: undefined
+};
 
 export const BackgroundImage = Template.bind({});
 BackgroundImage.args = {
   ...heroMock,
   backgroundColor: null,
-  background: {
-    __typename: 'Media',
-    file: {
-      url: 'https://i.picsum.photos/id/327/2800/800.jpg?hmac=lqhEpkLvfvBfoZSxszEf8pOTbitkmHpJmZsoQYcrWkI'
-    },
-    alt: 'Flowers'
-  }
+  contentHeight: 'xl',
+  contentWidth: 'xl'
 };

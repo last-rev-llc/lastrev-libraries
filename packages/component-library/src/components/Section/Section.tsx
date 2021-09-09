@@ -24,6 +24,7 @@ export interface SectionProps {
   background?: MediaProps;
   backgroundColor?: string;
   variant?: string;
+  testId?: string;
   contentWidth?: false | Breakpoint | undefined;
   contentDirection?: 'row' | 'column' | undefined;
   contentSpacing?: number;
@@ -53,6 +54,7 @@ const Section = ({
   contentDirection,
   contentSpacing,
   variant,
+  testId,
   sidekickLookup
 }: SectionProps) => {
   const theme = useTheme();
@@ -90,6 +92,7 @@ const Section = ({
     <ErrorBoundary>
       <Root
         {...sidekick(sidekickLookup)}
+        data-testid={testId}
         sx={{
           ...styles?.root,
           ...rootStyles({ backgroundColor, theme })

@@ -32,13 +32,13 @@ export const Carousel = ({ variant, title, body, items, itemsVariant, theme }: C
 
   return (
     <ErrorBoundary>
-      <CarouselRoot variant={variant}>
+      <CarouselRoot variant={variant} data-testid="Carousel">
         {title ? (
-          <Typography variant="h3" component="h3">
+          <Typography variant="h3" component="h3" data-testid="Carousel-title">
             {title}
           </Typography>
         ) : null}
-        {body ? <Text body={body} /> : null}
+        {body ? <Text body={body} data-testid="Carousel-body" /> : null}
         <Grid container spacing={2} alignItems="center">
           {items?.map((item, idx) => {
             return (

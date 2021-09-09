@@ -20,15 +20,15 @@ export interface AccordionProps extends MuiAccordionProps {
 export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionProps) => {
   return (
     <ErrorBoundary>
-      <AccordionRoot {...sidekick(sidekickLookup)} variant={variant}>
+      <AccordionRoot {...sidekick(sidekickLookup)} variant={variant} data-testid="Accordion">
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h4" color="secondary">
+          <Typography variant="h4" color="secondary" data-testid="Accordion-title">
             {title}
           </Typography>
         </AccordionSummary>
         {body ? (
           <AccordionDetails>
-            <Text sidekickLookup={sidekickLookup?.body} body={body} />
+            <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="Accordion-body" />
           </AccordionDetails>
         ) : null}
       </AccordionRoot>

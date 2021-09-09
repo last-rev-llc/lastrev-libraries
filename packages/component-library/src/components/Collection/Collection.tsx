@@ -32,7 +32,6 @@ export const Collection = ({
   sidekickLookup,
   styles
 }: CollectionProps) => {
-  // console.log('Collection', { items, itemsWidth, background, variant });
   if (!items?.length) return null;
   // const { sidekicker } = sidekickInit(props);
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
@@ -41,10 +40,11 @@ export const Collection = ({
       <Root
         {...sidekick(sidekickLookup)}
         variant={variant}
-        // {...sidekicker('Collection')}
+        data-testid="Collection"
       >
         {!itemsWidth ? (
           <Section
+            testId="Collection-itemsWithVariant-without-itemsWidth"
             contents={itemsWithVariant}
             background={background}
             variant={variant}
@@ -55,6 +55,7 @@ export const Collection = ({
         ) : (
           <ContentContainer maxWidth={itemsWidth}>
             <Section
+              testId="Collection-itemsWithVariant-with-itemsWidth"
               contents={itemsWithVariant}
               background={background}
               variant={variant}

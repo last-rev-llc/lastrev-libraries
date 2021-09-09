@@ -38,7 +38,8 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
 
   return (
     <ErrorBoundary>
-      <Root sx={{ position: 'relative' }} open={open}>
+      <Root sx={{ position: 'relative' }} open={open}
+        data-testid="NavigationItem">
         <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
         {subNavigation?.length ? (
           <MenuRoot>
@@ -74,9 +75,9 @@ const Root = styled(Box, {
 })<{ variant?: string; open: boolean }>`
   ${({ open, theme }) => `
     [class$=NavigationItem-menuRoot] {
-      ${visibleStyles(open)}   
+      ${visibleStyles(open)}
     }
-    @media (min-width: ${theme.breakpoints.values.sm}px) {  
+    @media (min-width: ${theme.breakpoints.values.sm}px) {
       [class$=NavigationItem-menuRoot] {
         max-height: 0px;
       }
@@ -105,7 +106,7 @@ const MenuRoot = styled(Paper, {
     transition: 0.3s ease-in-out;
 
     // Desktop
-    @media (min-width: ${theme.breakpoints.values.sm}px) {  
+    @media (min-width: ${theme.breakpoints.values.sm}px) {
       position: absolute;
       top: 100%;
       right: 0;
@@ -120,7 +121,7 @@ const MenuRoot = styled(Paper, {
     }
 
     // Mobile
-    @media (max-width: ${theme.breakpoints.values.sm}px) {  
+    @media (max-width: ${theme.breakpoints.values.sm}px) {
       width: 100%;
       && { // Needed to override Paper styles
        box-shadow: inset 0 0 16px -8px rgb(0 0 0 / 30%)

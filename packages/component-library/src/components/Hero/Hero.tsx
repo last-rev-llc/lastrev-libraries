@@ -11,7 +11,6 @@ import Media from '../Media';
 // import { LinkProps } from '../Link/Link';
 import { MediaProps } from '../Media/Media.types';
 import Text, { RichText } from '../Text';
-// import { RichTextProps } from '../RichText';
 import { Breakpoint } from '@material-ui/core';
 import sidekick from '../../utils/sidekick';
 export interface HeroProps {
@@ -55,6 +54,7 @@ HeroProps) => {
   return (
     <ErrorBoundary>
       <Root
+        data-testid="Hero"
         variant={variant}
         contentHeight={contentHeight}
         {...sidekick(sidekickLookup)}
@@ -74,6 +74,7 @@ HeroProps) => {
               height: '100%'
             }}>
             <Media
+              testId="Hero-background"
               {...background}
               {...sidekick(sidekickLookup?.background)}
               sx={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -87,6 +88,7 @@ HeroProps) => {
                 <Grid item>
                   {title ? (
                     <Typography
+                      data-testid="Hero-title"
                       variant="h1"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
@@ -96,6 +98,7 @@ HeroProps) => {
                   ) : null}
                   {subtitle ? (
                     <Typography
+                      data-testid="Hero-subtitle"
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
                       sx={{ color: !title ? 'secondary.main' : undefined }}
@@ -106,7 +109,7 @@ HeroProps) => {
                 </Grid>
                 {body ? (
                   <Grid item {...sidekick(sidekickLookup?.body)}>
-                    <Text body={body} />
+                    <Text body={body} data-testid="Hero-body" />
                   </Grid>
                 ) : null}
                 {actions ? (
@@ -120,7 +123,7 @@ HeroProps) => {
             ) : null}
             {image ? (
               <Grid item xs={12} sm={6}>
-                <Media {...(Array.isArray(image) ? image[0] : image)} {...sidekick(sidekickLookup?.image)} />
+                <Media {...(Array.isArray(image) ? image[0] : image)} {...sidekick(sidekickLookup?.image)} testId="Hero-image" />
               </Grid>
             ) : null}
           </Grid>

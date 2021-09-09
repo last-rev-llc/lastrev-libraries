@@ -1,4 +1,4 @@
-import { lorem } from 'faker';
+// import { lorem } from 'faker';
 
 export default {
   __typename: 'NavigationItem',

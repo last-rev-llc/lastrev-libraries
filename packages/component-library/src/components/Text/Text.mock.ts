@@ -142,6 +142,31 @@ export const complexMock = {
   }
 };
 
+export const richTextMock = {
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        nodeType: 'paragraph',
+        data: {},
+        content: [
+          {
+            nodeType: 'text',
+            value: lorem.sentences(2),
+            marks: [],
+            data: {}
+          }
+        ]
+      }
+    ]
+  },
+  links: {
+    entries: [],
+    assets: []
+  }
+}
+
 export const paragraphMock = {
   __typename: 'Text',
   body: {
@@ -162,6 +187,10 @@ export const paragraphMock = {
           ]
         }
       ]
+    },
+    links: {
+      entries: [],
+      assets: []
     }
   }
 };
