@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.1.14
+
+### Patch Changes
+
+- 3089d86: Added Fragement Generator to CLI
+
 ## 0.1.13
 
 ### Patch Changes

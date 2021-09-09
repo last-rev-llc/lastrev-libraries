@@ -3,29 +3,36 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
 import styled from '@material-ui/system/styled';
+
 import ErrorBoundary from '../ErrorBoundary';
 import Link, { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
+import { useMediaQuery, useTheme } from '@material-ui/core';
 // type NavigationItem = LinkProps | NavigationItemProps;
 
 // export type NavigationItemProps = {
 //   subNavigation: [NavigationItem];
 // } & LinkProps;
 export interface NavigationItemProps extends LinkProps {
-  subNavigation?: [LinkProps];
+  subNavigation?: Array<LinkProps>;
   sidekickLookup?: any;
   onRequestClose?: any;
 }
 
 export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, ...props }: NavigationItemProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
-  // const handleClose = () => setOpen(false);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
   const handleClick = (evt: any) => {
-    if (subNavigation?.length) {
+    if (isMobile) {
+      console.log('');
       evt.preventDefault();
       evt.stopPropagation();
       setOpen(!open);
+    } else {
+      if (onRequestClose) onRequestClose();
     }
   };
   const handleSubnavClick = () => {
@@ -74,8 +81,10 @@ const Root = styled(Box, {
   })
 })<{ variant?: string; open: boolean }>`
   ${({ open, theme }) => `
-    [class$=NavigationItem-menuRoot] {
-      ${visibleStyles(open)}
+    @media (max-width: ${theme.breakpoints.values.sm}px) {
+      [class$=NavigationItem-menuRoot] {
+        ${visibleStyles(open)}
+      }
     }
     @media (min-width: ${theme.breakpoints.values.sm}px) {
       [class$=NavigationItem-menuRoot] {
@@ -104,11 +113,12 @@ const MenuRoot = styled(Paper, {
     flex-direction: column;
     overflow: hidden;
     transition: 0.3s ease-in-out;
+    background: rgb(242 242 242);
 
     // Desktop
     @media (min-width: ${theme.breakpoints.values.sm}px) {
+      box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 10px -10px 0px rgb(0 0 0 / 12%);
       position: absolute;
-      top: 100%;
       right: 0;
       .MuiMenuItem-root {
         padding: 0;

@@ -17,4 +17,7 @@ program
   .command('init-s3-sync', 'Initialize the S3 cache and create the contentful webhook for it', {
     executableFile: resolve(__dirname, '../dist/init-s3-sync.js')
   })
+  .command('gen-fragments', 'Generates the graphql fragments and page query from existing content JSON files', {
+    executableFile: resolve(__dirname, '../dist/gen-fragments.js')
+  })
   .parse(process.argv);

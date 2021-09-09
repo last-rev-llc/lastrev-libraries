@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import { compact, dropWhile, each, isEmpty, isError, isNull, isString, map, some, zipObject } from 'lodash';
+import { compact, dropWhile, each, isEmpty, isError, isNull, isString, map, some, values, zipObject } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
@@ -37,11 +37,11 @@ const createLoaders = (
     keyPrefix: `${spaceId}:${env}:`
   });
 
-  client.del(`${spaceId}:*`);
-
   const getKey = (itemKey: ItemKey, dir: string) => {
     return [itemKey.preview ? 'preview' : 'production', dir, itemKey.id].join(':');
   };
+
+  // client.flushall();
 
   const fetchAndSet = async <T>(
     keys: readonly ItemKey[],
@@ -66,7 +66,7 @@ const createLoaders = (
     });
 
     if (cacheMissIds.length) {
-      logger.debug(`cache misses: ${cacheMissIds.length}. Fetching from fallback`);
+      logger.debug(`${dirname} cache misses: ${cacheMissIds.length}. Fetching from fallback`);
       timer = new Timer(`set ${cacheMissIds.length} ${dirname} in redis`);
       const sourceResults = await fallbackLoader.loadMany(cacheMissIds);
 
@@ -189,21 +189,19 @@ const createLoaders = (
     try {
       let timer = new Timer('Fetched all content types from redis');
 
-      const key = `${preview ? 'preview' : 'production'}:content_types:*`;
-      const results: (ContentType | null)[] = map(await client.hgetall(key), parse);
+      const key = `${preview ? 'preview' : 'production'}:content_types`;
+      const results: (ContentType | null)[] = map(values(await client.hgetall(key)), parse);
 
       logger.debug(timer.end());
 
       if (isEmpty(results) || some(results, (result) => isNull(result))) {
         timer = new Timer('Set all content types in redis');
         const contentTypes = await fallbackLoaders.fetchAllContentTypes(preview);
-        const redisKeys = map(contentTypes, (contentType) =>
-          getKey({ preview, id: contentType.sys.id }, 'content_types')
-        );
-        const zipped = zipObject(redisKeys, map(contentTypes, stringify));
+        const contentTypeIds = map(contentTypes, 'sys.id');
+        const zipped = zipObject(contentTypeIds, map(contentTypes, stringify));
 
         // don't block
-        client.mset(zipped).then(() => logger.debug(timer.end()));
+        client.hset(key, zipped).then(() => logger.debug(timer.end()));
         return contentTypes;
       }
       return results as ContentType[];
