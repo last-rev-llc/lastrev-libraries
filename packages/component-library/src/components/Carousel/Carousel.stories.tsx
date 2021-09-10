@@ -26,8 +26,8 @@ export default {
     },
     title: { name: 'Title' },
     body: { name: 'Body' },
-    items: { name: 'Items'},
-    itemsVariant: { name: 'Items Variant'},
+    items: { name: 'Items' },
+    itemsVariant: { name: 'Items Variant' },
     theme: { name: 'Theme' },
     __typename: { table: { disable: true } }
   }

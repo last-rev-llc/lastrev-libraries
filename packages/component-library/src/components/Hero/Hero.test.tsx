@@ -9,8 +9,7 @@ import mockContent from './Hero.mock';
 //   await preloadAll();
 // });
 
-const renderComponent = () =>
-  render(<Hero id={''} __typename={''} {...mockContent}  />);
+const renderComponent = () => render(<Hero id={''} __typename={''} {...mockContent} />);
 
 describe('<Hero />', () => {
   test('Hero renders correctly', () => {

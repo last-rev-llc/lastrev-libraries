@@ -8,18 +8,21 @@ export default {
   component: Media,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box m={5}
+      <Box
+        m={5}
         sx={{
-          width: 180,
-          height: 180,
-          padding: 5,
-          backgroundColor: '#369',
+          'width': 180,
+          'height': 180,
+          'padding': 5,
+          'backgroundColor': '#369',
           '& img': {
             width: '100%',
-            height: '100%',
+            height: '100%'
           }
         }}
-      >{storyFn()}</Box>
+      >
+        {storyFn()}
+      </Box>
     )
   ],
   argTypes: {

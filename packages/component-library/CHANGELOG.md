@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.25
+
+### Patch Changes
+
+- edbdcb9: Fix Text Typography warping
+
 ## 0.1.24
 
 ### Patch Changes

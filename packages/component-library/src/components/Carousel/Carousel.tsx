@@ -47,7 +47,8 @@ export const Carousel = ({ variant, title, body, items, itemsVariant, theme }: C
                 style={{
                   display: activeStep === idx ? 'block' : 'none',
                   margin: '0 auto'
-                }}>
+                }}
+              >
                 <Card {...item} />
               </Grid>
             );

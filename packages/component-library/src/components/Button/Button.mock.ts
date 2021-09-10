@@ -5,5 +5,5 @@ export default {
   size: 'large',
   color: 'primary',
   text: lorem.word(),
-  className: lorem.word(),
+  className: lorem.word()
 };

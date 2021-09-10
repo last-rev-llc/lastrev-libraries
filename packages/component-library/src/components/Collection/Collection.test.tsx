@@ -9,9 +9,7 @@ import mockContent from './Collection.mock';
 //   await preloadAll();
 // });
 
-const renderComponent = () => render(
-  <Collection id={''} sidekickLookup={undefined} {...mockContent} />
-);
+const renderComponent = () => render(<Collection id={''} sidekickLookup={undefined} {...mockContent} />);
 
 describe('<Collection />', () => {
   test('Collection renders correctly', () => {

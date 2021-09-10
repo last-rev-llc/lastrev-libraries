@@ -9,9 +9,7 @@ import mockContent from './CollectionAccordion.mock';
 //   await preloadAll();
 // });
 
-const renderComponent = () => render(
-  <CollectionAccordion sidekickLookup={''} {...mockContent} />
-);
+const renderComponent = () => render(<CollectionAccordion sidekickLookup={''} {...mockContent} />);
 
 describe('<CollectionAccordion />', () => {
   test('CollectionAccordion renders correctly', () => {

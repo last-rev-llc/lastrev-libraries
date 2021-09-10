@@ -27,13 +27,15 @@ const ContentPreview = ({ loading, content, environment, spaceId, locale = 'en-U
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
-          }}>
+          }}
+        >
           <Typography variant="subtitle1">
             No content found
             <br />
             <Link
               target="_blank"
-              href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${content?.id}?locale=${locale}`}>
+              href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${content?.id}?locale=${locale}`}
+            >
               {`Edit ${capitalize(content?.__typename)}#${content?.id} in Contentful`}
             </Link>
           </Typography>
@@ -43,7 +45,8 @@ const ContentPreview = ({ loading, content, environment, spaceId, locale = 'en-U
       <div style={{ position: 'fixed', bottom: 16, right: 16 }}>
         <Link
           target="_blank"
-          href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${content?.id}?locale=${locale}`}>
+          href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${content?.id}?locale=${locale}`}
+        >
           {`${capitalize(content?.__typename)}#${content?.id} in Contentful`}
         </Link>
         <br />

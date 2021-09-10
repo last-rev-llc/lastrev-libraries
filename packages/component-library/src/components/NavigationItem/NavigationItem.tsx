@@ -45,8 +45,7 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
 
   return (
     <ErrorBoundary>
-      <Root sx={{ position: 'relative' }} open={open}
-        data-testid="NavigationItem">
+      <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem">
         <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
         {subNavigation?.length ? (
           <MenuRoot>

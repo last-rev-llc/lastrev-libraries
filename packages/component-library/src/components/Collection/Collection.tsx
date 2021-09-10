@@ -37,11 +37,7 @@ export const Collection = ({
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
-      <Root
-        {...sidekick(sidekickLookup)}
-        variant={variant}
-        data-testid="Collection"
-      >
+      <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="Collection">
         {!itemsWidth ? (
           <Section
             testId="Collection-itemsWithVariant-without-itemsWidth"

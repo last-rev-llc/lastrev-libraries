@@ -11,8 +11,7 @@ import mockContent from './Button.mock';
 
 const { text } = mockContent;
 
-const renderComponent = () =>
-  render(<Button text={text} />);
+const renderComponent = () => render(<Button text={text} />);
 
 describe('<Button />', () => {
   test('Button renders correctly', () => {
