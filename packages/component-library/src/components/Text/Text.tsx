@@ -74,22 +74,27 @@ const renderText =
       return <br />;
     }
     if (containsHTML(children)) {
-      return children.map((child: any) => {
-        if (isHTML(child)) {
-          return (
-            <div
-              // We're passing the text through xss which should clean it up for us
-              // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={{ __html: bodyXSS.process(children) }}
-            />
-          );
-        }
-        if (isCmp(child)) {
-          return child;
-        }
-        return child;
-      });
+      return (
+        <Typography variant={variant}>
+          {children.map((child: any) => {
+            if (isHTML(child)) {
+              return (
+                <div
+                  // We're passing the text through xss which should clean it up for us
+                  // eslint-disable-next-line react/no-danger
+                  dangerouslySetInnerHTML={{ __html: bodyXSS.process(children) }}
+                />
+              );
+            }
+            if (isCmp(child)) {
+              return child;
+            }
+            return child;
+          })}
+        </Typography>
+      );
     }
+
     return (
       <>
         <Typography variant={variant}>{children}</Typography>
