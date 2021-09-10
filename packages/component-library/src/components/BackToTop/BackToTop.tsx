@@ -7,8 +7,8 @@ import sidekick from '../../utils/sidekick';
 
 export interface BackToTopProps {
   FabProps?: FabProps;
-  theme: any;
-  sidekickLookup: any;
+  theme?: any;
+  sidekickLookup?: any;
 }
 
 export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
