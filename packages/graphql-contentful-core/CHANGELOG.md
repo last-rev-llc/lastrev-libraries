@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.15
+
+### Patch Changes
+
+- 0fa1d0d: Added vercel graphql handler
+
 ## 0.1.14
 
 ### Patch Changes

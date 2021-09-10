@@ -9,10 +9,7 @@ import mockContent from './Card.mock';
 //   await preloadAll();
 // });
 
-const renderComponent = () =>
-  render(<Card
-    {...mockContent}
-  />);
+const renderComponent = () => render(<Card {...mockContent} />);
 
 describe('<Card />', () => {
   test('Card renders correctly', () => {

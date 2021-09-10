@@ -55,6 +55,8 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Collection id={''} theme={undefined} sidekickLookup={undefined} {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => (
+  <Collection id={''} theme={undefined} sidekickLookup={undefined} {...args} />
+);
 export const Default = Template.bind({});
 Default.args = { ...collectionMock };

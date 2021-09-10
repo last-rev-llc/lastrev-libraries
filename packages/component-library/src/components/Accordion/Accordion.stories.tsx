@@ -30,13 +30,8 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) =>
-  <Accordion
-    __typename={''}
-    internalTitle={''}
-    sidekickLookup={undefined}
-    children={''}
-    {...args}
-  />;
+const Template = (args: JSX.IntrinsicAttributes) => (
+  <Accordion __typename={''} internalTitle={''} sidekickLookup={undefined} children={''} {...args} />
+);
 export const Default = Template.bind({});
 Default.args = { ...mockContent };

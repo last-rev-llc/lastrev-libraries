@@ -19,11 +19,7 @@ export default {
       name: 'Align',
       control: {
         type: 'inline-radio',
-        options: [
-          'left',
-          'right',
-          'center'
-        ]
+        options: ['left', 'right', 'center']
       },
       table: {
         defaultValue: { summary: 'left' }

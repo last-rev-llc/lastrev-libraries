@@ -9,10 +9,7 @@ import mockContent from './Accordion.mock';
 //   await preloadAll();
 // });
 
-const renderComponent = () =>
-  render(<Accordion
-    {...mockContent}
-  />);
+const renderComponent = () => render(<Accordion {...mockContent} />);
 
 describe('<Accordion />', () => {
   test('Accordion renders correctly', () => {

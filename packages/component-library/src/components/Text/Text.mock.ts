@@ -165,7 +165,7 @@ export const richTextMock = {
     entries: [],
     assets: []
   }
-}
+};
 
 export const paragraphMock = {
   __typename: 'Text',

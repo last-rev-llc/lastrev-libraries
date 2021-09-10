@@ -20,8 +20,7 @@ export const NavigationBar = ({ items, variant, itemsVariant, onRequestClose, si
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} variant={variant}
-        data-testid="NavigationBar">
+      <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="NavigationBar">
         <Grid container sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
             <Grid item key={item.id} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>

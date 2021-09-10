@@ -12,7 +12,7 @@ export const mediaMock = {
   },
   title: lorem.sentence(),
   description: lorem.sentence()
-}
+};
 
 export default {
   __typename: 'Section',

@@ -8,7 +8,8 @@ export default {
   variant: 'centered',
   title: capitalize(lorem.words(3)),
   subtitle: lorem.sentence(),
-  image: { ...mediaMock,
+  image: {
+    ...mediaMock,
     file: {
       url: 'https://images.ctfassets.net/m1b67l45sk9z/4Oj0gAEf0wFiPfg0R3QHqG/b1f835f3e380670cd6484e486c9816b1/it-gets-better.png?h=800'
     }
@@ -69,7 +70,8 @@ export default {
     }
   },
   actions: [{ ...mockLink, text: 'Hero CTA' }],
-  background: { ...mediaMock,
+  background: {
+    ...mediaMock,
     file: {
       url: 'https://i.picsum.photos/id/327/2800/800.jpg?hmac=lqhEpkLvfvBfoZSxszEf8pOTbitkmHpJmZsoQYcrWkI'
     }
