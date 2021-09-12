@@ -1,4 +1,5 @@
 import './styles.scss';
+export { SEO } from './components/SEO/SEO';
 export { ContentModuleProvider } from './components/ContentModule/ContentModuleContext';
 export { default as ContentModule } from './components/ContentModule';
 export { default as ContentPreview } from './components/ContentPreview';
