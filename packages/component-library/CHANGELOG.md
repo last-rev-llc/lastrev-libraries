@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.26
+
+### Patch Changes
+
+- 4cd44f6: HOTFIX: Make BackToTop props optional
+
 ## 0.1.25
 
 ### Patch Changes
