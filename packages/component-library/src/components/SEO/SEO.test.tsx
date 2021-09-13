@@ -85,8 +85,8 @@ describe('GetSEO returns correct object', () => {
   test('should return Settings SEO Title', () => {
     const seo = getSEO(mockSettings);
     const tag = seo.find((o) => o.name === 'title');
-    expect(tag.name).toStrictEqual(mockSettings.title.name);
-    expect(tag.content).toStrictEqual(mockSettings.title.value);
+    expect(tag?.name).toStrictEqual(mockSettings.title.name);
+    expect(tag?.content).toStrictEqual(mockSettings.title.value);
   });
   test('should return Page SEO', () => {
     const seo = getSEO(mockPage, mockSettings);
@@ -95,14 +95,14 @@ describe('GetSEO returns correct object', () => {
   test('should return Page SEO Title', () => {
     const seo = getSEO(mockPage, mockSettings);
     const tag = seo.find((o) => o.name === 'title');
-    expect(tag.name).toStrictEqual(mockPage.title.name);
-    expect(tag.content).toStrictEqual(mockPage.title.value);
+    expect(tag?.name).toStrictEqual(mockPage.title.name);
+    expect(tag?.content).toStrictEqual(mockPage.title.value);
   });
   test('should return Page SEO Keywords', () => {
     const seo = getSEO(mockPage, mockSettings);
     const tag = seo.find((o) => o.name === 'keywords');
-    expect(tag.name).toStrictEqual(mockPage.keywords.name);
-    expect(tag.content).toStrictEqual(mockPage.keywords.value);
+    expect(tag?.name).toStrictEqual(mockPage.keywords.name);
+    expect(tag?.content).toStrictEqual(mockPage.keywords.value);
   });
   test('should return Recipe SEO', () => {
     const seo = getSEO(mockRecipe, mockPage, mockSettings);
@@ -111,7 +111,7 @@ describe('GetSEO returns correct object', () => {
   test('should return Recipe SEO Title', () => {
     const seo = getSEO(mockRecipe, mockPage, mockSettings);
     const tag = seo.find((o) => o.name === 'title');
-    expect(tag.name).toStrictEqual(mockRecipe.title.name);
-    expect(tag.content).toStrictEqual(mockRecipe.title.value);
+    expect(tag?.name).toStrictEqual(mockRecipe.title.name);
+    expect(tag?.content).toStrictEqual(mockRecipe.title.value);
   });
 });
