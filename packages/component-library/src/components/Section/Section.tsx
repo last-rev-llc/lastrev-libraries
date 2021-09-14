@@ -64,7 +64,8 @@ const Section = ({
     <GridContainer
       container
       sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-      {...(contentSpacing && { spacing: contentSpacing })}>
+      {...(contentSpacing && { spacing: contentSpacing })}
+    >
       {contents?.map((content, idx) => {
         const itemStyle = get(styles?.gridItems, idx);
         return (
@@ -81,7 +82,8 @@ const Section = ({
             sx={{
               ...styles?.gridItem,
               ...itemStyle
-            }}>
+            }}
+          >
             <ContentModule {...content} />
           </GridItem>
         );
@@ -98,7 +100,8 @@ const Section = ({
           ...styles?.root,
           ...rootStyles({ backgroundColor, theme })
         }}
-        variant={variant}>
+        variant={variant}
+      >
         {background ? <BackgroundMedia {...background} /> : null}
         {!contentWidth ? content : <ContentContainer maxWidth={contentWidth}>{content}</ContentContainer>}
       </Root>
