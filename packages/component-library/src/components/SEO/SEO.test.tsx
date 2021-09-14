@@ -18,8 +18,7 @@ const mockSettings = {
     name: 'og:image',
     value: {
       id: '5VwseUvM96DL4TCKH42IM6',
-      url:
-        'https://images.ctfassets.net/9o4l1mrd1tci/5VwseUvM96DL4TCKH42IM6/d05b9b4773e44de340dc50051c8b5bf2/Screen_Shot_2019-08-30_at_1.10.13_PM.png',
+      url: 'https://images.ctfassets.net/9o4l1mrd1tci/5VwseUvM96DL4TCKH42IM6/d05b9b4773e44de340dc50051c8b5bf2/Screen_Shot_2019-08-30_at_1.10.13_PM.png',
       title: 'My Facebook Image'
     }
   },
@@ -36,8 +35,7 @@ const mockSettings = {
     name: 'twitter:image',
     value: {
       id: '2OjCqPfrMWmUxlCHOT4ovc',
-      url:
-        'https://images.ctfassets.net/9o4l1mrd1tci/2OjCqPfrMWmUxlCHOT4ovc/e61c74e8219f0b1e8dd0c9d10b4c426b/Screen_Shot_2020-01-23_at_8.09.12_AM.png',
+      url: 'https://images.ctfassets.net/9o4l1mrd1tci/2OjCqPfrMWmUxlCHOT4ovc/e61c74e8219f0b1e8dd0c9d10b4c426b/Screen_Shot_2020-01-23_at_8.09.12_AM.png',
       title: 'Screen Shot 2020-01-23 at 8.09.12 AM'
     }
   }
