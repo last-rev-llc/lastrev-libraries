@@ -13,7 +13,7 @@ export default {
       url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
     }
   },
-  title: capitalize(lorem.word()),
+  title: capitalize(lorem.words(2)),
   subtitle: capitalize(lorem.words(3)),
   body: richTextMock,
   actions: [{ ...mockLink }],
