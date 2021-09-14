@@ -6,13 +6,11 @@ interface SEOProps {
   seo?: any;
 }
 
-export const SEO = ({
-  seo = {}
-}: SEOProps) => {
+export const SEO = ({ seo = {} }: SEOProps) => {
   const metatags = getSEO(seo);
   return (
     <ErrorBoundary>
-      {metatags.map(tag => (
+      {metatags.map((tag) => (
         <meta key={tag.name || tag.property} {...tag} />
       ))}
     </ErrorBoundary>
