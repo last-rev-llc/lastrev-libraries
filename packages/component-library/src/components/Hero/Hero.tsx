@@ -83,7 +83,7 @@ HeroProps) => {
             />
           </Box>
         ) : null}
-        <ContentContainer maxWidth={contentWidth}>
+        <ContentContainer maxWidth={contentWidth} disableGutters>
           <Grid container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
               <Grid container direction="column" spacing={2} xs={12}>
@@ -222,17 +222,8 @@ const ContentContainer = styled(Container, {
     ...styles.contentContainer
   })
 })<{ variant?: string }>(({ theme }) => ({
-  position: 'relative',
-  padding: theme.spacing(5),
+  alignSelf: 'center',
   height: '100%',
-  [theme.breakpoints.down('lg')]: {
-    '& > div': {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      transform: 'translate(-50%, -50%)'
-    }
-  },
   [theme.breakpoints.up('md')]: {
     display: 'flex',
     justifyContent: 'center',

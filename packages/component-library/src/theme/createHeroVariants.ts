@@ -32,14 +32,6 @@ export const defaultVariant = (theme: Theme) => ({
         maxWidth: '50%'
       }
     },
-    [theme.breakpoints.down('lg')]: {
-      '& > .MuiContainer-root > .MuiGrid-container': {
-        maxWidth: theme.breakpoints.values.lg,
-        margin: '0 auto',
-        justifyContent: 'center',
-        flexDirection: 'column'
-      }
-    },
     '& .MuiButton-containedPrimary': {
       'color': theme.palette.primary.contrastText,
       '& .MuiIcon-root': {
@@ -58,14 +50,11 @@ export const centeredVariant = (theme: Theme) => ({
       padding: theme.spacing(4, 0)
     },
     '& > .MuiContainer-root > .MuiGrid-container': {
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
       flexDirection: 'column',
       justifyContent: 'center',
+      flexWrap: 'nowrap',
       maxWidth: theme.breakpoints.values.lg,
       margin: '0 auto',
-      transform: 'translate(-50%, -50%)',
       [theme.breakpoints.down('sm')]: {
         '& div:nth-child(2)': {
           maxWidth: '80%'
