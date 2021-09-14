@@ -37,8 +37,8 @@ interface Props {
 }
 
 function ContentModule({ __typename, ...fields }: Props) {
-  const contentMapping = useContentModuleContext();
   if (!__typename) return null;
+  const contentMapping = useContentModuleContext();
   const contentType =
     fields?.variant && contentMapping[`${__typename}:${fields?.variant}`]
       ? `${__typename}:${fields?.variant}`

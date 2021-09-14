@@ -8,12 +8,12 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
 import get from 'lodash/get';
-// import BackgroundImage from '../BackgroundImage';
+// import BackgroundMedia from '../BackgroundMedia';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import { Breakpoint } from '@material-ui/core';
 import { MediaProps } from '../Media';
-// import Image from '../Image';
+import Media from '../Media';
 import sidekick from '../../utils/sidekick';
 // interface Image {
 //   src: string;
@@ -49,6 +49,7 @@ const VARIANTS_GRID_ITEM: Record<string, any> = {
 const Section = ({
   contents,
   styles,
+  background,
   backgroundColor,
   contentWidth,
   contentDirection,
@@ -63,8 +64,7 @@ const Section = ({
     <GridContainer
       container
       sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-      {...(contentSpacing && { spacing: contentSpacing })}
-    >
+      {...(contentSpacing && { spacing: contentSpacing })}>
       {contents?.map((content, idx) => {
         const itemStyle = get(styles?.gridItems, idx);
         return (
@@ -81,8 +81,7 @@ const Section = ({
             sx={{
               ...styles?.gridItem,
               ...itemStyle
-            }}
-          >
+            }}>
             <ContentModule {...content} />
           </GridItem>
         );
@@ -99,8 +98,8 @@ const Section = ({
           ...styles?.root,
           ...rootStyles({ backgroundColor, theme })
         }}
-        variant={variant}
-      >
+        variant={variant}>
+        {background ? <BackgroundMedia {...background} /> : null}
         {!contentWidth ? content : <ContentContainer maxWidth={contentWidth}>{content}</ContentContainer>}
       </Root>
     </ErrorBoundary>
@@ -151,14 +150,26 @@ const ContentContainer = styled(Container, {
   overridesResolver: (_, styles) => ({
     ...styles.contentContainer
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>(() => ({
+  zIndex: 1
+}));
 
-// const Background = styled(BackgroundImage, {
-//   name:"Section",
-//   slot: "BackgroundImage",
-// })(() => ({
-//   position: 'relative'
-// }));
+const BackgroundMedia = styled(Media, {
+  name: 'Section',
+  slot: 'BackgroundMedia',
+  overridesResolver: (_, styles) => ({
+    ...styles.backgroundImage
+  })
+})(() => ({
+  zIndex: 0,
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '100%',
+  height: '100%',
+  display: 'block',
+  objectFit: 'cover'
+}));
 
 const GridContainer = styled(Grid, {
   name: 'Section',
