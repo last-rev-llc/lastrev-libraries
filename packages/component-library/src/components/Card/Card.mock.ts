@@ -1,6 +1,6 @@
 import mockLink from '../Link/Link.mock';
 import { mediaMock } from '../Media/Media.mock';
-import { richTextMock } from '../Text/Text.mock';
+import { staticRichTextMock } from '../Text/Text.mock';
 
 export default {
   __typename: 'Card',
@@ -13,7 +13,7 @@ export default {
   },
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',
-  body: richTextMock,
-  actions: [{ ...mockLink }],
+  body: staticRichTextMock,
+  actions: [{ ...mockLink, text: 'Card link' }],
   sidekickLookup: {}
 };
