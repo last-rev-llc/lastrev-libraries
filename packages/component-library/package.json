@@ -13,8 +13,8 @@
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
     "cypress:open": "percy exec -- cypress open-ct",
-    "cypress:run": "percy exec -- cypress run-ct",
-    "test": "run-s jest cypress:run",
+    "test": "jest",
+    "test:e2e": "percy exec -- cypress run-ct",
     "test:watch": "jest --watch"
   },
   "dependencies": {

@@ -19,8 +19,9 @@
     "release": "yarn build && changeset publish",
     "start": "lerna run start",
     "storybook": "lerna run storybook",
-    "test": "lerna run test -- --passWithNoTests",
     "test:watch": "lerna run test:watch -- --passWithNoTests",
+    "test": "run-s test:e2e test:unit",
+    "test:unit": "lerna run test -- --passWithNoTests",
     "test:e2e": "lerna run test:e2e",
     "version-packages": "changeset version && yarn prettier"
   },
