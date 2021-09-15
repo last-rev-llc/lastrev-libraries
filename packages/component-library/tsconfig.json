@@ -12,10 +12,11 @@
     "esModuleInterop": true,
     "noImplicitAny": true,
     "noImplicitThis": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "types": ["@testing-library/jest-dom", "jest", "node", "cypress", "@percy/cypress"]
   },
-  "types": ["cypress", "@percy/cypress"],
+
   "include": ["src/**/*"],
   "typeRoots": ["src/types/**/*", "node_modules/@types"],
-  "exclude": ["node_modules", "src/types", "build", "src/**/*.stories.tsx", "src/**/*.test.tsx"]
+  "exclude": ["node_modules", "src/types", "build", "src/**/*.stories.tsx", "src/**/*.spec.tsx", "src/**/*.test.tsx"]
 }
