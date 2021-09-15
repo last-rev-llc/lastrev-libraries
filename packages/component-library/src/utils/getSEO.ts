@@ -6,7 +6,7 @@ interface Option {
 }
 
 interface Options {
-  [key: string]: Option
+  [key: string]: Option;
 }
 
 interface Tag {
@@ -21,7 +21,8 @@ const getOptions = (args: any[]) => args.reduce((a: any, b: any) => ({ ...b, ...
 
 const isOGSimple = (option: Option) => option.name.startsWith('og:') && typeof option.value === 'string';
 
-const isOGComplex = (option: Option) => option.name.startsWith('og:') && typeof option.value !== 'string' && option.value.url;
+const isOGComplex = (option: Option) =>
+  option.name.startsWith('og:') && typeof option.value !== 'string' && option.value.url;
 
 const isTwitter = (option: Option) => option.name.startsWith('twitter:') && typeof option.value === 'string';
 
@@ -30,15 +31,15 @@ const isTwitterComplex = (option: Option) =>
 
 const isComplex = (option: Option) => typeof option.value !== 'string' && option.value.url;
 
-const getTags = (options: Options ) =>
+const getTags = (options: Options) =>
   Object.keys(options).reduce((acc: Array<Tag>, key) => {
     const value = options[key].value;
-    if(typeof value === 'string'){
-      if (isOGSimple(options[key])) acc.push({ property: options[key].name, content: value  });
+    if (typeof value === 'string') {
+      if (isOGSimple(options[key])) acc.push({ property: options[key].name, content: value });
       else if (isTwitter(options[key])) acc.push({ name: options[key].name, content: value });
       else acc.push({ name: options[key].name, content: value });
     } else {
-       if (isOGComplex(options[key])) acc.push({ property: options[key].name, content: value.url });
+      if (isOGComplex(options[key])) acc.push({ property: options[key].name, content: value.url });
       else if (isTwitterComplex(options[key])) acc.push({ name: options[key].name, content: value.url });
       else if (isComplex(options[key])) acc.push({ name: options[key].name, content: value.url });
     }

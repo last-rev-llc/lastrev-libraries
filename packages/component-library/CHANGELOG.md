@@ -1,5 +1,23 @@
 # @last-rev/component-library
 
+## 0.1.28
+
+### Patch Changes
+
+- 36a2d68: Add Section background media
+
+## 0.1.27
+
+### Patch Changes
+
+- 56babbf: Add SEO component
+
+## 0.1.26
+
+### Patch Changes
+
+- 4cd44f6: HOTFIX: Make BackToTop props optional
+
 ## 0.1.25
 
 ### Patch Changes

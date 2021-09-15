@@ -132,11 +132,15 @@ const theme = createAppTheme(
         variants: createHeroVariants(baseTheme),
         styleOverrides: {
           root: {
+            'display': 'flex',
             '& .MuiGrid-container': {
               alignItems: 'center'
             },
             '& .MuiGrid-item': {
-              width: '100%'
+              width: '100%',
+              [baseTheme.breakpoints.down('lg')]: {
+                margin: '20px auto'
+              }
             },
 
             // TODO: add more line spacing if <u> exists

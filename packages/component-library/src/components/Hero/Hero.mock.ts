@@ -77,5 +77,7 @@ export default {
     }
   },
   backgroundColor: 'white',
+  // contentHeight: 'xl',
+  // contentWidth: 'xl',
   theme: [mockTheme]
 };
