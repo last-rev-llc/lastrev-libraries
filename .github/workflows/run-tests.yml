@@ -37,7 +37,7 @@ jobs:
         run: "yarn test:unit"
 
       - name: Run the e2e tests
-        run: "yarn test:e2e"
+        run: "PERCY_TOKEN=801782b197acf641630bbfb1095a66ab12d64fa14a6cd0a0624ad33bc0d9e59c yarn test:e2e"
 
       - name: Build modules
         run: yarn build
