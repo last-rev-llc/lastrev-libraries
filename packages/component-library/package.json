@@ -14,6 +14,7 @@
     "build-storybook": "build-storybook",
     "cypress:open": "percy exec -- cypress open-ct",
     "cypress:run": "percy exec -- cypress run-ct",
+    "test": "run-s jest cypress:run",
     "test:watch": "jest --watch"
   },
   "dependencies": {
