@@ -146,10 +146,14 @@ const renderOptions = ({ links, renderNode }: { links: TextLinks; renderNode?: a
   };
 };
 
-function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode }: TextProps) {
+function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ...props }: TextProps) {
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} variant={variant} sx={{ textAlign: align, ...sx, ...styles?.root }}>
+      <Root
+        {...sidekick(sidekickLookup)}
+        variant={variant}
+        sx={{ textAlign: align, ...sx, ...styles?.root }}
+        {...props}>
         {documentToReactComponents(body?.json, renderOptions({ links: body?.links, renderNode }))}
       </Root>
     </ErrorBoundary>
