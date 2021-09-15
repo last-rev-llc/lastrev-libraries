@@ -14,7 +14,8 @@
     "build-storybook": "build-storybook",
     "cypress:open": "percy exec -- cypress open-ct",
     "test": "jest",
-    "test:e2e": "cross-env NODE_ENV=test  percy exec --  cypress run-ct",
+    "percy:storybook": "percy storybook ./storybook-static",
+    "test:e2e": "cross-env NODE_ENV=test percy exec --  cypress run-ct",
     "test:watch": "jest --watch"
   },
   "dependencies": {
@@ -50,6 +51,7 @@
     "@cypress/webpack-dev-server": "^1.6.0",
     "@percy/cli": "^1.0.0-beta.68",
     "@percy/cypress": "^3.1.1",
+    "@percy/storybook": "^4.0.3",
     "@storybook/addon-a11y": "^6.3.6",
     "@storybook/addon-actions": "^6.3.6",
     "@storybook/addon-docs": "^6.3.6",
