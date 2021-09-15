@@ -20,7 +20,7 @@
     "start": "lerna run start",
     "storybook": "lerna run storybook",
     "test:watch": "lerna run test:watch -- --passWithNoTests",
-    "test": "run-s test:e2e test:unit",
+    "test": "run-s test:unit test:e2e",
     "test:unit": "lerna run test -- --passWithNoTests",
     "test:e2e": "lerna run test:e2e",
     "version-packages": "changeset version && yarn prettier"

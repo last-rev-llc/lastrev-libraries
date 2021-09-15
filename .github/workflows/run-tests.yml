@@ -33,8 +33,11 @@ jobs:
       - name: Install project dependencies
         run: yarn --prefer-offline
 
-      - name: Run the tests
-        run: yarn test
+      - name: Run the unit tests
+        run: "yarn test:unit"
+
+      - name: Run the e2e tests
+        run: "yarn test:e2e"
 
       - name: Build modules
         run: yarn build
