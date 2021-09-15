@@ -5,5 +5,10 @@ module.exports = {
     '@babel/plugin-transform-runtime',
     '@babel/plugin-proposal-nullish-coalescing-operator'
   ],
-  exclude: /node_modules/
+  exclude: /node_modules/,
+  env: {
+    test: {
+      plugins: ['istanbul']
+    }
+  }
 };

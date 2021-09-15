@@ -14,7 +14,7 @@
     "build-storybook": "build-storybook",
     "cypress:open": "percy exec -- cypress open-ct",
     "test": "jest",
-    "test:e2e": "percy exec -- cypress run-ct",
+    "test:e2e": "cross-env NODE_ENV=test  percy exec --  cypress run-ct",
     "test:watch": "jest --watch"
   },
   "dependencies": {
@@ -45,6 +45,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.14.5",
+    "@cypress/code-coverage": "^3.9.11",
     "@cypress/react": "^5.10.0",
     "@cypress/webpack-dev-server": "^1.6.0",
     "@percy/cli": "^1.0.0-beta.68",
@@ -67,6 +68,7 @@
     "@types/react-dom": "^17.0.7",
     "@types/react-lazyload": "^3.1.0",
     "@types/react-mailchimp-subscribe": "^2.1.1",
+    "babel-plugin-istanbul": "^6.0.0",
     "css-loader": "^5.2.0",
     "cypress": "^8.4.0",
     "faker": "^5.5.3",
