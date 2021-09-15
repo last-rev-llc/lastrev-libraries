@@ -1,6 +1,6 @@
 [build]
   ignore = "git diff --quiet HEAD^ HEAD ."
-  command = "yarn cypress run && yarn build-storybook"
+  command = "yarn cypress:run && yarn build-storybook"
   publish = "storybook-static"
 
 [build.environment]
