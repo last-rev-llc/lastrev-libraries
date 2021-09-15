@@ -14,6 +14,7 @@
     "noImplicitThis": true,
     "strictNullChecks": true
   },
+  "types": ["cypress", "@percy/cypress"],
   "include": ["src/**/*"],
   "typeRoots": ["src/types/**/*", "node_modules/@types"],
   "exclude": ["node_modules", "src/types", "build", "src/**/*.stories.tsx", "src/**/*.test.tsx"]
