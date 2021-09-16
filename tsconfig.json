@@ -39,7 +39,7 @@
       "@starter/*": ["packages/*/src"]
     },
     "typeRoots": ["node_modules/@types"],
-    "types": ["jest", "node"],
+    "types": ["@testing-library/jest-dom", "jest", "node", "cypress", "@percy/cypress"],
 
     /* Advanced Options */
     "resolveJsonModule": true,

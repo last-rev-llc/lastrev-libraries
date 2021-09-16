@@ -167,6 +167,31 @@ export const richTextMock = {
   }
 };
 
+export const staticRichTextMock = {
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        nodeType: 'paragraph',
+        data: {},
+        content: [
+          {
+            nodeType: 'text',
+            value: 'This a paragraph of static text',
+            marks: [],
+            data: {}
+          }
+        ]
+      }
+    ]
+  },
+  links: {
+    entries: [],
+    assets: []
+  }
+};
+
 export const paragraphMock = {
   __typename: 'Text',
   body: {

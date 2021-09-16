@@ -140,7 +140,7 @@ const theme = createAppTheme(
               width: '100%',
               [baseTheme.breakpoints.down('lg')]: {
                 margin: '20px auto'
-              },
+              }
             },
 
             // TODO: add more line spacing if <u> exists

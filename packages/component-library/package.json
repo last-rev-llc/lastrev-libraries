@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/component-library",
-  "version": "0.1.26",
+  "version": "0.1.28",
   "description": "Last Rev Component Library",
   "main": "dist/index.js",
   "files": [
@@ -12,7 +12,10 @@
     "build": "cross-env NODE_ENV=production rollup -c",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
+    "cypress:open": "percy exec -- cypress open-ct",
     "test": "jest",
+    "percy:storybook": "percy storybook ./storybook-static",
+    "test:e2e": "cross-env NODE_ENV=test percy exec --  cypress run-ct",
     "test:watch": "jest --watch"
   },
   "dependencies": {
@@ -42,6 +45,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.14.5",
+    "@cypress/code-coverage": "^3.9.11",
+    "@cypress/react": "^5.10.0",
+    "@cypress/webpack-dev-server": "^1.6.0",
+    "@percy/cli": "^1.0.0-beta.68",
+    "@percy/cypress": "^3.1.1",
+    "@percy/storybook": "^4.0.3",
     "@storybook/addon-a11y": "^6.3.6",
     "@storybook/addon-actions": "^6.3.6",
     "@storybook/addon-docs": "^6.3.6",
@@ -60,7 +70,9 @@
     "@types/react-dom": "^17.0.7",
     "@types/react-lazyload": "^3.1.0",
     "@types/react-mailchimp-subscribe": "^2.1.1",
+    "babel-plugin-istanbul": "^6.0.0",
     "css-loader": "^5.2.0",
+    "cypress": "^8.4.0",
     "faker": "^5.5.3",
     "jest-next-dynamic": "^1.0.1",
     "next": "^11.0.1",
@@ -69,6 +81,6 @@
     "react-dom": "^17.0.2",
     "sass": "^1.37.0",
     "sass-loader": "^10",
-    "style-loader": "^2.0.0"
+    "webpack-dev-server": "^4.2.1"
   }
 }

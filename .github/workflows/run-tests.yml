@@ -1,6 +1,6 @@
 name: Run tests
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   test:
@@ -33,8 +33,12 @@ jobs:
       - name: Install project dependencies
         run: yarn --prefer-offline
 
-      - name: Build modules
-        run: yarn build
+      - name: Run the unit tests
+        run: "yarn test:unit"
 
-      - name: Run the tests
-        run: yarn test
+      - name: Run the e2e tests
+        run: "PERCY_TOKEN=801782b197acf641630bbfb1095a66ab12d64fa14a6cd0a0624ad33bc0d9e59c yarn test:e2e"
+
+      - name: Build modules
+        if: github.event.pull_request
+        run: yarn build
