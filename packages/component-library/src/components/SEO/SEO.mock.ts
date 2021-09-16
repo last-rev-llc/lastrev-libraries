@@ -1,19 +1,21 @@
+import { lorem } from 'faker';
+
 export default {
   title: {
     name: 'title',
-    value: 'About Us'
+    value: lorem.sentence(),
   },
   keywords: {
     name: 'keywords',
-    value: 'test keywords'
+    value: `${lorem.word()}, ${lorem.word()}, ${lorem.word()}`
   },
   canonical: {
     name: 'canonical',
-    value: 'https://strong365.org/about-us'
+    value: `https://${lorem.word()}.com/${lorem.word()}`
   },
   description: {
     name: 'description',
-    value: 'About Us description lorem ipsum'
+    value: lorem.sentence()
   },
   robots: {
     name: 'robots',
