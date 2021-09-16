@@ -5,7 +5,7 @@ import { mediaMock } from '../Media/Media.mock';
 import mockTheme from '../../theme/mock.theme';
 
 export default {
-  variant: 'centered',
+  variant: 'default',
   title: capitalize(lorem.words(3)),
   subtitle: lorem.sentence(),
   image: {

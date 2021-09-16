@@ -132,7 +132,7 @@ const theme = createAppTheme(
         variants: createHeroVariants(baseTheme),
         styleOverrides: {
           root: {
-            'display': 'flex',
+            display: 'flex',
             '& .MuiGrid-container': {
               alignItems: 'center'
             },
