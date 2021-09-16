@@ -86,31 +86,33 @@ HeroProps) => {
         <ContentContainer maxWidth={contentWidth} disableGutters>
           <Grid container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
-              <Grid container direction="column" spacing={2} xs={12}>
-                <Grid item>
-                  {title ? (
-                    <Typography
-                      data-testid="Hero-title"
-                      variant="h1"
-                      component="h1"
-                      sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.title)}
-                    >
-                      {title}
-                    </Typography>
-                  ) : null}
-                  {subtitle ? (
-                    <Typography
-                      data-testid="Hero-subtitle"
-                      variant={!title ? 'h1' : 'h2'}
-                      component={!title ? 'h1' : 'h2'}
-                      sx={{ color: !title ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.subtitle)}
-                    >
-                      {subtitle}
-                    </Typography>
-                  ) : null}
-                </Grid>
+              <Grid item container direction="column" spacing={2} xs={12}>
+                {title || subtitle ? (
+                  <Grid item>
+                    {title ? (
+                      <Typography
+                        data-testid="Hero-title"
+                        variant="h1"
+                        component="h1"
+                        sx={{ color: !subtitle ? 'secondary.main' : undefined }}
+                        {...sidekick(sidekickLookup?.title)}
+                      >
+                        {title}
+                      </Typography>
+                    ) : null}
+                    {subtitle ? (
+                      <Typography
+                        data-testid="Hero-subtitle"
+                        variant={!title ? 'h1' : 'h2'}
+                        component={!title ? 'h1' : 'h2'}
+                        sx={{ color: !title ? 'secondary.main' : undefined }}
+                        {...sidekick(sidekickLookup?.subtitle)}
+                      >
+                        {subtitle}
+                      </Typography>
+                    ) : null}
+                  </Grid>
+                ) : null}
                 {body ? (
                   <Grid item {...sidekick(sidekickLookup?.body)}>
                     <Text body={body} data-testid="Hero-body" />
