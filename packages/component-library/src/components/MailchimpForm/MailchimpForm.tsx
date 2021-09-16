@@ -156,8 +156,7 @@ const CustomForm = ({
             height: '100%',
             opacity: status === 'success' ? 1 : 0,
             pointerEvents: status === 'success' ? 'initial' : 'none'
-          }}
-        >
+          }}>
           {successMessage ? <Text body={successMessage} /> : <Box>Success</Box>}
         </Grid>
       </FormContainer>
@@ -235,7 +234,8 @@ const ContentContainer = styled(Container, {
   })
 })<{ variant?: string }>(({ theme }) => ({
   position: 'relative',
-  padding: theme.spacing(10, 0)
+  paddingTop: theme.spacing(8),
+  paddingBottom: theme.spacing(8)
 }));
 
 const FormImage = styled(Media, {
