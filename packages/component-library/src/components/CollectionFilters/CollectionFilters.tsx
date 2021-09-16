@@ -99,7 +99,6 @@ const CollectionFilters = ({
                   multiple={multiple}
                   value={filter[id]}
                   onChange={(_event, newValue) => {
-                    console.log("Change filter", newValue);
                     if(!newValue) {
                       setFilter({ ...filter, [id]: undefined });
                     }else{
