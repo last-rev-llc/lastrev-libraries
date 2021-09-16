@@ -56,7 +56,8 @@ const Section = ({
   contentSpacing,
   variant,
   testId,
-  sidekickLookup
+  sidekickLookup,
+  ...props
 }: SectionProps) => {
   const theme = useTheme();
   const gridItemStyle = variant && VARIANTS_GRID_ITEM[variant] ? VARIANTS_GRID_ITEM[variant] : {};
@@ -101,6 +102,7 @@ const Section = ({
           ...rootStyles({ backgroundColor, theme })
         }}
         variant={variant}
+        {...props}
       >
         {background ? <BackgroundMedia {...background} /> : null}
         {!contentWidth ? content : <ContentContainer maxWidth={contentWidth}>{content}</ContentContainer>}
