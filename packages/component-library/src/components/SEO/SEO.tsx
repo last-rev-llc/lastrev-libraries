@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorBoundary from '../ErrorBoundary';
+import Head from 'next/head';
 import getSEO from '../../utils/getSEO';
 
 interface SEOProps {
@@ -9,11 +9,11 @@ interface SEOProps {
 export const SEO = ({ seo = {} }: SEOProps) => {
   const metatags = getSEO(seo);
   return (
-    <ErrorBoundary>
+    <Head>
       {metatags.map((tag) => (
         <meta key={tag.name || tag.property} {...tag} />
       ))}
-    </ErrorBoundary>
+    </Head>
   );
 };
 
