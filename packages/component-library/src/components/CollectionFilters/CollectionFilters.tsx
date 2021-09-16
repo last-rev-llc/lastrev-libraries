@@ -40,14 +40,15 @@ const CollectionFilters = ({
   filters,
   filter = {},
   setFilter,
-  onClearFilter
+  onClearFilter,
+  ...props
 }: CollectionFiltersProps) => {
   const handleChange = (id: string) => (event: any) => {
     setFilter({ ...filter, [id]: event.target.value });
   };
 
   return (
-    <CollectionFiltersRoot id={`collection_${id}_filters`} container style={{ justifyContent: 'flex-end' }}>
+    <CollectionFiltersRoot id={`collection_${id}_filters`} container style={{ justifyContent: 'flex-end' }} {...props}>
       <Grid item container sx={{ justifyContent: 'flex-end' }} spacing={2}>
         {filters?.map(({ id, label, type, multiple }) => {
           if (!id) return null;

@@ -123,9 +123,12 @@ export default class PathToIdLookup {
   getMapping(preview: boolean, site: string = DEFAULT_SITE_KEY): PathToIdMapping {
     return get(this, [preview ? '_previewMapping' : '_prodMapping', site || DEFAULT_SITE_KEY]);
   }
-
+  normalizePath(path: string): string {
+    // Ensure the path doesn't ends with slash
+    return path[path.length - 1] === '/' ? path.slice(0, -1) : path;
+  }
   getPathData(preview: boolean, site: string = DEFAULT_SITE_KEY, path: string): PathData {
-    return this.getMapping(preview, site)[path];
+    return this.getMapping(preview, site)[this.normalizePath(path)];
   }
 
   async generatePathParams(locales: string[], preview: boolean, site?: string): Promise<PagePathsParam[]> {
