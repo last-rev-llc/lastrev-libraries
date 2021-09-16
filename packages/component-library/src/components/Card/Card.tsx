@@ -80,7 +80,7 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
               ) : null}
               {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="Card-body" /> : null}
               {actions?.length ? (
-                <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions" sx={{ display: 'none' }}>
+                <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions" >
                   {actions?.map((link) => (
                     <Link key={link.id} {...link} />
                   ))}
