@@ -33,12 +33,12 @@ export interface TextProps {
 }
 
 interface TextLinks {
-  entries: Array<Content>;
-  assets: Array<MediaProps>;
+  entries?: Array<Content>;
+  assets?: Array<MediaProps>;
 }
 export interface RichText {
   json: any;
-  links: TextLinks;
+  links?: TextLinks;
 }
 const bodyXSS = new FilterXSS({
   whiteList: { div: ['id', 'style'] },
@@ -102,7 +102,7 @@ const renderText =
     );
   };
 
-const renderOptions = ({ links, renderNode }: { links: TextLinks; renderNode?: any }) => {
+const renderOptions = ({ links, renderNode }: { links?: TextLinks; renderNode?: any }) => {
   const entries = keyBy('id', links?.entries ?? []);
   const assets = keyBy('id', links?.assets ?? []);
 

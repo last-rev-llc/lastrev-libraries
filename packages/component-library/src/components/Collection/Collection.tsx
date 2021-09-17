@@ -2,9 +2,12 @@ import React from 'react';
 import { Container, Box } from '@material-ui/core';
 import { Breakpoint } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
+import omit from 'lodash/omit';
 import ErrorBoundary from '../ErrorBoundary';
+import Text from '../Text';
 // import { LinkProps } from '../Link/Link';
 import { MediaProps } from '../Media';
+import { TextProps } from '../Text';
 import { CardProps } from '../Card';
 import Section from '../Section';
 import sidekick from '../../utils/sidekick';
@@ -14,12 +17,13 @@ export interface CollectionProps {
   items?: CardProps[];
   background?: MediaProps;
   variant?: string;
+  introText?: TextProps;
   itemsVariant?: string;
   itemsSpacing?: number;
   itemsWidth?: false | Breakpoint | undefined;
   styles?: any;
-  theme: any;
-  sidekickLookup: any;
+  theme?: any;
+  sidekickLookup?: any;
 }
 
 export const Collection = ({
@@ -30,14 +34,19 @@ export const Collection = ({
   itemsVariant,
   itemsSpacing,
   sidekickLookup,
-  styles
+  introText,
+  styles,
+  ...props
 }: CollectionProps) => {
   if (!items?.length) return null;
   // const { sidekicker } = sidekickInit(props);
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="Collection">
+      <Root variant={variant} data-testid="Collection" {...omit(props, 'theme')}  {...sidekick(sidekickLookup)}>
+        {introText && (
+          <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
+        )}
         {!itemsWidth ? (
           <Section
             testId="Collection-itemsWithVariant-without-itemsWidth"
@@ -73,7 +82,7 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => ({
     ...styles.root
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>``;
 
 const ContentContainer = styled(Container, {
   name: 'Collection',
@@ -81,6 +90,14 @@ const ContentContainer = styled(Container, {
   overridesResolver: (_, styles) => ({
     ...styles.contentContainer
   })
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>``;
+
+const IntroText = styled(Text, {
+  name: 'Collection',
+  slot: 'IntroText',
+  overridesResolver: (_, styles) => ({
+    ...styles.introText
+  })
+})<{ variant?: string }>``;
 
 export default Collection;

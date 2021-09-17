@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
 import get from 'lodash/get';
+import omit from 'lodash/omit';
 // import BackgroundMedia from '../BackgroundMedia';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
@@ -36,6 +37,7 @@ export interface SectionProps {
     gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
   };
   sidekickLookup?: any;
+  theme?: [Theme];
 }
 
 export interface SectionOverrides {}
@@ -56,7 +58,8 @@ const Section = ({
   contentSpacing,
   variant,
   testId,
-  sidekickLookup
+  sidekickLookup,
+  ...props
 }: SectionProps) => {
   const theme = useTheme();
   const gridItemStyle = variant && VARIANTS_GRID_ITEM[variant] ? VARIANTS_GRID_ITEM[variant] : {};
@@ -90,7 +93,7 @@ const Section = ({
       })}
     </GridContainer>
   );
-
+console.log("Props", props);
   return (
     <ErrorBoundary>
       <Root
@@ -101,6 +104,8 @@ const Section = ({
           ...rootStyles({ backgroundColor, theme })
         }}
         variant={variant}
+        // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
+        {...omit(props, 'theme')}
       >
         {background ? <BackgroundMedia {...background} /> : null}
         {!contentWidth ? content : <ContentContainer maxWidth={contentWidth}>{content}</ContentContainer>}

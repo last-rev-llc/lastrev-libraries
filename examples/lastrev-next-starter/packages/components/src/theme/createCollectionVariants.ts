@@ -29,7 +29,7 @@ export const collectionTwoPerRowVariant = (_: Theme) => ({
 
 export const collectionThreePerRowVariant = (_: Theme) => ({
   props: {
-    variant: 'collection-three-per-row'
+    variant: 'three-per-row'
   },
   style: {
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {

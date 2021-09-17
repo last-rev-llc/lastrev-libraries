@@ -17,3 +17,7 @@ lerna-debug.log
 
 # misc
 .DS_Store
+
+#cypress ignore
+**/.nyc_output
+
