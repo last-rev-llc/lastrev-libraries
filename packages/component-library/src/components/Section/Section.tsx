@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
 import get from 'lodash/get';
+import omit from 'lodash/omit';
 // import BackgroundMedia from '../BackgroundMedia';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
@@ -57,6 +58,7 @@ const Section = ({
   variant,
   testId,
   sidekickLookup,
+  theme:ATheme, 
   ...props
 }: SectionProps) => {
   const theme = useTheme();
@@ -91,7 +93,7 @@ const Section = ({
       })}
     </GridContainer>
   );
-
+console.log("Props", props);
   return (
     <ErrorBoundary>
       <Root
@@ -102,7 +104,7 @@ const Section = ({
           ...rootStyles({ backgroundColor, theme })
         }}
         variant={variant}
-        {...props}
+        {...omit(props, 'theme')}
       >
         {background ? <BackgroundMedia {...background} /> : null}
         {!contentWidth ? content : <ContentContainer maxWidth={contentWidth}>{content}</ContentContainer>}

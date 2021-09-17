@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Box } from '@material-ui/core';
 import { Breakpoint } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
+import omit from 'lodash/omit';
 import ErrorBoundary from '../ErrorBoundary';
 import Text from '../Text';
 // import { LinkProps } from '../Link/Link';
@@ -42,7 +43,7 @@ export const Collection = ({
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
-      <Root variant={variant} data-testid="Collection" {...props}  {...sidekick(sidekickLookup)}>
+      <Root variant={variant} data-testid="Collection" {...omit(props, 'theme')}  {...sidekick(sidekickLookup)}>
         {introText && (
           <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
         )}

@@ -19,13 +19,13 @@ export default {
         options: [
           'collection-one-per-row',
           'collection-two-per-row',
-          'collection-three-per-row',
+          'three-per-row',
           'collection-tiles',
-          'collection-three-per-row-rounded-wrapper'
+          'three-per-row-rounded-wrapper'
         ]
       },
       table: {
-        defaultValue: { summary: 'collection-three-per-row' }
+        defaultValue: { summary: 'three-per-row' }
       }
     },
     itemsVariant: {

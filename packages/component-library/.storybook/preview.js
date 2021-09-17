@@ -4,6 +4,9 @@ import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 // import '@storybook/addon-console';
 import theme from '../src/theme/mock.theme';
+import faker from 'faker';
+faker.seed(123);
+
 import '../src/styles.scss';
 
 import * as components from '../src';
