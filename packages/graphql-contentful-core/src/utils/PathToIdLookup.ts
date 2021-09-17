@@ -125,7 +125,7 @@ export default class PathToIdLookup {
   }
   normalizePath(path: string): string {
     // Ensure the path doesn't ends with slash
-    return path[path.length - 1] === '/' ? path.slice(0, -1) : path;
+    return path[path.length - 1] === '/' && path?.length > 1 ? path.slice(0, -1) : path;
   }
   getPathData(preview: boolean, site: string = DEFAULT_SITE_KEY, path: string): PathData {
     return this.getMapping(preview, site)[this.normalizePath(path)];
