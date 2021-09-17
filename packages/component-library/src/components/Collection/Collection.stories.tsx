@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import Collection from './Collection';
-import collectionMock from './Collection.mock';
+import collectionMock, {collectionWithIntroText} from './Collection.mock';
 
 export default {
   title: '1. Primitives / MUI / Collection',
@@ -60,3 +60,8 @@ const Template = (args: JSX.IntrinsicAttributes) => (
 );
 export const Default = Template.bind({});
 Default.args = { ...collectionMock };
+
+export const WithIntroTExt = Template.bind({});
+WithIntroTExt.args = {
+  ...collectionWithIntroText,
+};
