@@ -1,5 +1,12 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.16
+
+### Patch Changes
+
+- e123c06: Added createRichText util for contentful-core
+- ec03eeb: Add Autocomplete filter to Collection
+
 ## 0.1.15
 
 ### Patch Changes

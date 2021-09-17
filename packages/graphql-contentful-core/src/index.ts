@@ -8,4 +8,12 @@ import getDefaultFieldValue from './utils/getDefaultFieldValue';
 
 export * from './types';
 
-export { getServer, getLocalizedField, getFieldDataFetcher, createHandler, getDefaultFieldValue, createVercelHandler, createRichText };
+export {
+  getServer,
+  getLocalizedField,
+  getFieldDataFetcher,
+  createHandler,
+  getDefaultFieldValue,
+  createVercelHandler,
+  createRichText
+};

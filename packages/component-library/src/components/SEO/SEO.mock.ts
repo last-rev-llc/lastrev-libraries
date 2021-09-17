@@ -3,7 +3,7 @@ import { lorem } from 'faker';
 export default {
   title: {
     name: 'title',
-    value: lorem.sentence(),
+    value: lorem.sentence()
   },
   keywords: {
     name: 'keywords',

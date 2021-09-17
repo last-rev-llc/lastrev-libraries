@@ -43,7 +43,7 @@ export const Collection = ({
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
-      <Root variant={variant} data-testid="Collection" {...omit(props, 'theme')}  {...sidekick(sidekickLookup)}>
+      <Root variant={variant} data-testid="Collection" {...omit(props, 'theme')} {...sidekick(sidekickLookup)}>
         {introText && (
           <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
         )}

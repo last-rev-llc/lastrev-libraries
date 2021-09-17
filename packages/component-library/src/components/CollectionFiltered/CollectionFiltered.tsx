@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skeleton, Grid, Container, Box,  Button, Typography } from '@material-ui/core';
+import { Skeleton, Grid, Container, Box, Button, Typography } from '@material-ui/core';
 
 import { Breakpoint } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
@@ -138,13 +138,11 @@ export const CollectionFiltered = ({
   }, [data]);
 
   const parseValue = ({ filterId, value }: { filterId: string; value: string }) => {
-    if(Array.isArray(value)){
-      return value.map((v) => (allOptions[filterId]?.find((option) => option.value === v)?.label))?.join(', ');
-    }else{
-      const option = allOptions[filterId]?.find((option) => option.value === value)
-      return allOptions && allOptions[filterId]
-      ? option?.label
-      : value;
+    if (Array.isArray(value)) {
+      return value.map((v) => allOptions[filterId]?.find((option) => option.value === v)?.label)?.join(', ');
+    } else {
+      const option = allOptions[filterId]?.find((option) => option.value === value);
+      return allOptions && allOptions[filterId] ? option?.label : value;
     }
   };
 
@@ -237,7 +235,6 @@ export const CollectionFiltered = ({
     </ErrorBoundary>
   );
 };
-
 
 const Root = styled(Box, {
   name: 'CollectionFiltered',

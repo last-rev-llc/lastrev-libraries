@@ -1,4 +1,4 @@
- const createRichText = (text: string) => ({
+const createRichText = (text: string) => ({
   nodeType: 'document',
   data: {},
   content: [
