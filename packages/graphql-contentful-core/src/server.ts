@@ -1,36 +1,31 @@
 import { ApolloServer } from 'apollo-server';
-import { buildFederatedSchema } from '@apollo/federation';
 import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
-import { ServerProps } from './types';
-import prepareServer from './prepareServer';
+import buildSchema from './buildSchema';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
+import { createLoaders, prepareContext } from '@last-rev/graphql-contentful-helpers';
+import createPathReaders from 'createPathReaders';
+import LastRevAppConfig from '@last-rev/app-config';
 
-export const getServer = async (props: ServerProps) => {
-  logger.setLevel(props.logLevel);
-
-  console.log('loglevel', props.logLevel);
+export const getServer = async (config: LastRevAppConfig) => {
+  logger.setLevel(config.logLevel);
 
   const timer = new Timer('Graphql server initialized');
-  const { resolvers, typeDefs, loaders, defaultLocale, pathToIdLookup, contentful } = await prepareServer(props);
+
+  const loaders = createLoaders(config);
+  const pathReaders = createPathReaders(config);
+
+  const [context, schema] = await Promise.all([
+    prepareContext(config, loaders),
+    buildSchema(config, loaders, pathReaders)
+  ]);
 
   const server = new ApolloServer({
-    schema: buildFederatedSchema([{ resolvers, typeDefs }]),
+    schema,
     introspection: true,
     debug: true,
     plugins: [ApolloServerPluginInlineTrace()],
-
-    context: () => {
-      return {
-        contentful,
-        loaders,
-        mappers: props.extensions?.mappers || {},
-        defaultLocale,
-        pathToIdLookup,
-        typeMappings: props.extensions?.typeMappings || {},
-        pathsConfigs: props.extensions?.pathsConfigs || {}
-      };
-    }
+    context: () => context
   });
 
   logger.debug(timer.end());

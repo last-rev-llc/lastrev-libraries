@@ -7,7 +7,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "apollo-server-core": "^2.19.1",
     "contentful": "^8.4.2",
-    "dataloader": "^2.0.0"
+    "dataloader": "^2.0.0",
+    "graphql": "^15.5.1"
   }
 }

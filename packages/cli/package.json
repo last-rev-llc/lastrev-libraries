@@ -14,6 +14,7 @@
   },
   "devDependencies": {
     "@last-rev/rollup-config": "^0.0.5",
+    "@last-rev/types": "^0.1.1",
     "@types/cross-spawn": "^6.0.2",
     "@types/tar": "^4.0.4",
     "tslib": "^2.3.0"
@@ -22,6 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@last-rev/app-config": "^0.1.0",
     "@graphql-tools/merge": "^6.2.14",
     "@last-rev/contentful-fragment-gen": "^0.1.0",
     "@last-rev/contentful-s3-sync": "^0.1.2",

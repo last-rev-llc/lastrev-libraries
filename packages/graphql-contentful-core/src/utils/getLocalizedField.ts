@@ -1,6 +1,6 @@
 import { Entry } from 'contentful';
 import get from 'lodash/get';
-import { ApolloContext } from '../types';
+import { ApolloContext } from '@last-rev/types';
 
 const getLocalizedField = <T>(fields: Entry<T>['fields'], field: string, ctx: ApolloContext) => {
   const noLocaleValue = get(fields, field);

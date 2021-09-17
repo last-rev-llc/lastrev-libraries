@@ -5,6 +5,7 @@ import { Asset, Entry, createClient, ContentfulClientApi, ContentType } from 'co
 import Timer from '@last-rev/timer';
 import ora from 'ora';
 import logger from 'loglevel';
+import LastRevAppConfig from '@last-rev/app-config';
 
 const ENTRIES_DIRNAME = 'entries';
 const ASSETS_DIRNAME = 'assets';
@@ -73,15 +74,6 @@ const writeEntriesByContentTypeFiles = async (lookup: ContentTypeIdToContentIdsL
   );
 };
 
-export type SyncProps = {
-  rootDir: string;
-  contentDeliveryToken: string;
-  contentPreviewToken: string;
-  space: string;
-  environment?: string;
-  preview?: boolean;
-};
-
 const validateArg = (arg: any, argname: string) => {
   if (!arg) throw Error(`Missing required argument: ${argname}`);
 };
@@ -109,26 +101,22 @@ const syncAllAssets = async (client: ContentfulClientApi): Promise<Asset[]> => {
   ).assets;
 };
 
-const sync = async ({
-  rootDir,
-  contentDeliveryToken,
-  contentPreviewToken,
-  space,
-  environment = 'master',
-  preview
-}: SyncProps) => {
+const sync = async (config: LastRevAppConfig) => {
   const timer = new Timer('Total elapsed time');
   let spinner;
-  validateArg(rootDir, 'rootDir');
-  validateArg(contentDeliveryToken, 'contentDeliveryToken');
-  validateArg(contentPreviewToken, 'contentPreviewToken');
-  validateArg(space, 'space');
+
+  validateArg(config.fs.contentDir, 'fs.contentDir');
+  validateArg(config.contentful.contentDeliveryToken, 'contentful.contentDeliveryToken');
+  validateArg(config.contentful.contentPreviewToken, 'contentful.contentPreviewToken');
+  validateArg(config.contentful.spaceId, 'contentful.spaceId');
 
   const client = createClient({
-    accessToken: preview ? contentPreviewToken : contentDeliveryToken,
-    space,
-    environment,
-    host: preview ? `preview.contentful.com` : `cdn.contentful.com`
+    accessToken: config.contentful.usePreview
+      ? config.contentful.contentPreviewToken
+      : config.contentful.contentDeliveryToken,
+    space: config.contentful.spaceId,
+    environment: config.contentful.env,
+    host: config.contentful.usePreview ? `preview.contentful.com` : `cdn.contentful.com`
   });
 
   const { items: contentTypes } = await client.getContentTypes();
@@ -161,7 +149,12 @@ const sync = async ({
 
   const entryIdsByContentTypeLookup = getEntriesByContentTypeLookup(entries);
 
-  const root = join(resolve(process.cwd(), rootDir), space, environment, preview ? 'preview' : 'production');
+  const root = join(
+    resolve(process.cwd(), config.fs.contentDir),
+    config.contentful.spaceId,
+    config.contentful.env,
+    config.contentful.usePreview ? 'preview' : 'production'
+  );
   startTime = Date.now();
   spinner = ora('writing files');
   // console.time('finished writing files');

@@ -4,24 +4,20 @@ import { find, map, partition } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import { ItemKey, ContentfulLoaders } from '@last-rev/types';
+import LastRevAppConfig from '@last-rev/app-config';
 
-const createLoaders = (
-  deliveryToken: string,
-  previewToken: string,
-  space: string,
-  environment: string
-): ContentfulLoaders => {
+const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
   const prodClient = createClient({
-    accessToken: deliveryToken,
-    space,
-    environment,
+    accessToken: config.contentful.contentDeliveryToken,
+    space: config.contentful.spaceId,
+    environment: config.contentful.env,
     host: 'cdn.contentful.com'
   });
 
   const previewClient = createClient({
-    accessToken: previewToken,
-    space,
-    environment,
+    accessToken: config.contentful.contentPreviewToken,
+    space: config.contentful.spaceId,
+    environment: config.contentful.env,
     host: 'preview.contentful.com'
   });
 
@@ -90,7 +86,7 @@ const createLoaders = (
       const result = await (preview ? previewClient : prodClient).getContentTypes();
       logger.debug(timer.end());
       return result.items;
-    } catch (err) {
+    } catch (err: any) {
       console.error('Unable to fetch content types using cms loader:', err.message);
       return [];
     }

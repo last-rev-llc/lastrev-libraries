@@ -6,10 +6,11 @@ import { join } from 'path';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import { ItemKey, ContentfulLoaders } from '@last-rev/types';
+import LastRevAppConfig from '@last-rev/app-config';
 
-const createLoaders = (rootDir: string, spaceId: string, env: string): ContentfulLoaders => {
+const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
   const getUri = (...args: string[]) => {
-    return join(rootDir, spaceId, env, ...args);
+    return join(config.fs.contentDir, config.contentful.spaceId, config.contentful.env, ...args);
   };
 
   const getBatchItemFetcher = <T extends Entry<any> | Asset>(
@@ -99,8 +100,8 @@ const createLoaders = (rootDir: string, spaceId: string, env: string): Contentfu
       );
       logger.debug(timer.end());
       return out;
-    } catch (err) {
-      console.error('Unable to fetch content types using FS loader:', err.message, env);
+    } catch (err: any) {
+      console.error('Unable to fetch content types using FS loader:', err.message, config.contentful.env);
       return [];
     }
   };

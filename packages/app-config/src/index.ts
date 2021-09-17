@@ -1,0 +1,119 @@
+import { LastRevAppConfigArgs, LastRevAppConfiguration } from './types';
+import { merge } from 'lodash';
+
+const defaultConfig: LastRevAppConfigArgs = {
+  cms: 'Contentful',
+  strategy: 'fs',
+  contentful: {
+    env: 'master',
+    usePreview: false
+  },
+  logLevel: 'warn',
+  graphql: {
+    port: 5000,
+    host: 'localhost'
+  }
+};
+
+export default class LastRevAppConfig implements LastRevAppConfiguration {
+  config: LastRevAppConfigArgs;
+
+  constructor(config: LastRevAppConfigArgs) {
+    this.config = merge({}, config, defaultConfig);
+    this.validateCmsVars();
+    this.validateStrategy();
+  }
+
+  validateCmsVars() {
+    if (this.config.cms === 'Contentful') {
+      if (!this.config.contentful?.spaceId) {
+        throw new Error('Contentful CMS: contentful.spaceId is required.');
+      }
+      if (!this.config.contentful?.contentDeliveryToken) {
+        throw new Error('Contentful CMS: contentful.contentDeliveryToken is required.');
+      }
+      if (!this.config.contentful?.contentPreviewToken) {
+        throw new Error('Contentful CMS: contentful.contentPreviewToken is required.');
+      }
+      if (!this.config.contentful?.env) {
+        throw new Error('Contentful CMS: contentful.environment is required.');
+      }
+    } else {
+      throw new Error(`Invalid CMS: ${this.config.cms}`);
+    }
+  }
+
+  validateStrategy() {
+    if (this.config.strategy === 'fs') {
+      if (!this.config.fs?.contentDir) {
+        throw new Error(`FS strategy: fs.contentDir is required`);
+      }
+    } else if (this.config.strategy === 'redis') {
+      if (!this.config.redis?.host) {
+        throw new Error(`Redis strategy: redis.host is required`);
+      }
+      if (!this.config.redis?.port) {
+        throw new Error(`Redis strategy: redis.port is required`);
+      }
+    } else {
+      throw new Error(`Invalid strategy: ${this.config.strategy}`);
+    }
+  }
+
+  get contentful() {
+    return {
+      spaceId: this.config.contentful?.spaceId!,
+      contentDeliveryToken: this.config.contentful?.contentDeliveryToken!,
+      contentPreviewToken: this.config.contentful?.contentPreviewToken!,
+      env: this.config.contentful?.env!,
+      usePreview: !!this.config.contentful?.usePreview
+    };
+  }
+
+  get logLevel() {
+    return this.config.logLevel || 'warn';
+  }
+
+  get cms() {
+    return this.config.cms;
+  }
+
+  get strategy() {
+    return this.config.strategy;
+  }
+
+  get fs() {
+    return {
+      contentDir: this.config.fs?.contentDir!
+    };
+  }
+
+  get redis() {
+    return {
+      host: this.config.redis?.host!,
+      port: this.config.redis?.port!,
+      password: this.config.redis?.password,
+      tls: this.config.redis?.tls,
+      db: this.config.redis?.db
+    };
+  }
+
+  get extensions() {
+    return (
+      this.config.extensions || {
+        typeDefs: '',
+        resolvers: {},
+        mappers: {},
+        typeMappings: {},
+        pathsConfigs: {}
+      }
+    );
+  }
+
+  get graphql() {
+    return {
+      port: this.config.graphql?.port!,
+      host: this.config.graphql?.host!
+    };
+  }
+}

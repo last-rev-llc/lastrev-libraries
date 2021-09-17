@@ -5,6 +5,7 @@ import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
 import { ItemKey, ContentfulLoaders } from '@last-rev/types';
+import LastRevAppConfig from '@last-rev/app-config';
 
 const parse = (r: string | Error | null): any => {
   if (isString(r) && r.length) {
@@ -20,22 +21,8 @@ const stringify = (r: any) => {
   return '';
 };
 
-const createLoaders = (
-  spaceId: string,
-  env: string,
-  fallbackLoaders: ContentfulLoaders,
-  host: string,
-  port: number,
-  password?: string,
-  tls?: any
-): ContentfulLoaders => {
-  const client = new Redis({
-    port,
-    host,
-    tls,
-    password,
-    keyPrefix: `${spaceId}:${env}:`
-  });
+const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoaders): ContentfulLoaders => {
+  const client = new Redis(config.redis);
 
   const getKey = (itemKey: ItemKey, dir: string) => {
     return [itemKey.preview ? 'preview' : 'production', dir, itemKey.id].join(':');
@@ -205,7 +192,7 @@ const createLoaders = (
         return contentTypes;
       }
       return results as ContentType[];
-    } catch (err) {
+    } catch (err: any) {
       logger.error('Unable to fetch content types using redis loader:', err.message);
       return [];
     }

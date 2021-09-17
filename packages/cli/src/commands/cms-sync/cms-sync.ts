@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 import sync from '@last-rev/contentful-sync-to-fs';
+import LastRevAppConfig from '@last-rev/app-config';
 
 import program from 'commander';
 
@@ -12,35 +13,8 @@ const parseBooleanEnvVar = (value: string = '') => {
   return /^(true|1|yes|y)$/.test(val);
 };
 
-const run = async ({
-  contentDir,
-  cms,
-  contentDeliveryToken,
-  contentPreviewToken,
-  contentfulSpaceId,
-  preview,
-  contentfulEnv
-}: {
-  contentDir: string;
-  cms: string;
-  contentDeliveryToken: string;
-  contentPreviewToken: string;
-  contentfulSpaceId: string;
-  preview?: boolean;
-  contentfulEnv?: string;
-}) => {
-  // for now, only supporting contentful
-  if (cms != 'Contentful') {
-    throw Error(`Unsupported CMS: ${cms}`);
-  }
-  await sync({
-    rootDir: contentDir,
-    contentDeliveryToken,
-    contentPreviewToken,
-    space: contentfulSpaceId,
-    preview,
-    environment: contentfulEnv
-  });
+const run = async (config: LastRevAppConfig) => {
+  await sync(config);
 };
 
 program
@@ -76,9 +50,22 @@ program
 const { contentDir, cms, contentDeliveryToken, contentPreviewToken, contentfulSpaceId, preview, contentfulEnv } =
   program.opts();
 
-run({ contentDir, cms, contentDeliveryToken, contentPreviewToken, contentfulSpaceId, preview, contentfulEnv }).catch(
-  (err) => {
-    console.error(err);
-    process.exit();
+const config = new LastRevAppConfig({
+  cms,
+  strategy: 'fs',
+  fs: {
+    contentDir
+  },
+  contentful: {
+    spaceId: contentfulSpaceId,
+    contentDeliveryToken,
+    contentPreviewToken,
+    usePreview: preview,
+    env: contentfulEnv
   }
-);
+});
+
+run(config).catch((err) => {
+  console.error(err);
+  process.exit();
+});

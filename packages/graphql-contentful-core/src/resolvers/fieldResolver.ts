@@ -2,7 +2,7 @@ import { Entry } from 'contentful';
 import isArray from 'lodash/isArray';
 import { GraphQLResolveInfo } from 'graphql';
 import getFieldDataFetcher from '../utils/getFieldDataFetcher';
-import { ApolloContext } from '../types';
+import { ApolloContext } from '@last-rev/types';
 import capitalizeFirst from '../utils/capitalizeFirst';
 import map from 'lodash/map';
 

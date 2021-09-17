@@ -1,0 +1,46 @@
+import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
+import generateSchema from '@last-rev/graphql-schema-gen';
+import lastRevTypeDefs from './typeDefs';
+import createResolvers from './resolvers/createResolvers';
+import { ContentfulLoaders } from '@last-rev/types';
+import { PathReaders } from 'types';
+import { GraphQLSchema } from 'graphql';
+import { buildFederatedSchema } from '@apollo/federation';
+import LastRevAppConfig from '../../app-config/dist';
+
+const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
+  // may not have production content, if none there, use preview
+  const contentTypes = await loaders.fetchAllContentTypes(false);
+  if (!contentTypes || !contentTypes.length) {
+    return loaders.fetchAllContentTypes(true);
+  }
+  return contentTypes;
+};
+
+const buildSchema = async (
+  config: LastRevAppConfig,
+  loaders: ContentfulLoaders,
+  pathReaders: PathReaders
+): Promise<GraphQLSchema> => {
+  const contentTypes = await fetchAllContentTypes(loaders);
+
+  const baseTypeDefs = await generateSchema({
+    source: 'Contentful',
+    typeMappings: config.extensions.typeMappings,
+    contentTypes,
+    logLevel: config.logLevel
+  });
+
+  const defaultResolvers = createResolvers({
+    pathReaders,
+    contentTypes,
+    mappers: config.extensions.mappers,
+    typeMappings: config.extensions.typeMappings
+  });
+
+  const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, config.extensions.typeDefs]);
+  const resolvers: Record<string, any> = mergeResolvers([defaultResolvers, config.extensions.resolvers]);
+
+  return buildFederatedSchema([{ resolvers, typeDefs }]);
+};
+export default buildSchema;

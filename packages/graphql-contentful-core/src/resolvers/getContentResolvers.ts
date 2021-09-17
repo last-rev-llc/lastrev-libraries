@@ -2,7 +2,7 @@ import { sideKickLookupResolver } from './sideKickLookupResolver';
 import { ContentType } from 'contentful';
 
 import { fieldsResolver } from './createResolvers';
-import { Mappers, TypeMappings } from '../types';
+import { Mappers, TypeMappings } from '@last-rev/types';
 import capitalizeFirst from '../utils/capitalizeFirst';
 
 const getContentResolvers = ({
