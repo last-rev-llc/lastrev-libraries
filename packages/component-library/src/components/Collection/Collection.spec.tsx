@@ -1,7 +1,7 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
 import Collection from './Collection';
-import mockContent, {collectionWithIntroText} from './Collection.mock';
+import mockContent, { collectionWithIntroText } from './Collection.mock';
 
 describe('Collection', () => {
   it('renders a Collection', () => {
@@ -17,5 +17,4 @@ describe('Collection', () => {
     cy.get('[data-testid=Collection-introText]').should('not.exist');
     cy.percySnapshot();
   });
-
 });

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Autocomplete, Grid, Chip, MenuItem, TextField, Button } from '@material-ui/core';
+import { Autocomplete, Grid, Chip, MenuItem, TextField, Button } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
 
 interface FilterSetting {
@@ -17,8 +17,6 @@ interface Option {
 interface Options {
   [key: string]: Array<Option>;
 }
-
-
 
 export interface CollectionFiltersProps {
   id: string;
@@ -78,7 +76,8 @@ const CollectionFilters = ({
                   label={label || id}
                   value={filter[id] ?? ''}
                   SelectProps={{ MenuProps: { disableScrollLock: true } }}
-                  onChange={handleChange(id)}>
+                  onChange={handleChange(id)}
+                >
                   <MenuItem value={-1} disabled>
                     Select a {label?.toLocaleLowerCase()}
                   </MenuItem>
@@ -99,30 +98,30 @@ const CollectionFilters = ({
                   multiple={multiple}
                   value={filter[id]}
                   onChange={(_event, newValue) => {
-                    if(!newValue) {
+                    if (!newValue) {
                       setFilter({ ...filter, [id]: undefined });
-                    }else{
-                      setFilter(multiple ? { ...filter, [id]: newValue?.map((x:Option) => x.label) } : { ...filter, [id]: newValue.value });
+                    } else {
+                      setFilter(
+                        multiple
+                          ? { ...filter, [id]: newValue?.map((x: Option) => x.label) }
+                          : { ...filter, [id]: newValue.value }
+                      );
                     }
                   }}
                   options={allOptions && allOptions[id]?.length ? allOptions[id] : []}
                   getOptionLabel={(option) => option.label}
                   renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => (
-                      <Chip
-                        label={option.label}
-                        {...getTagProps({ index })}
-                      />
-                    ))
+                    tagValue.map((option, index) => <Chip label={option.label} {...getTagProps({ index })} />)
                   }
                   renderInput={(params) => (
-                    <TextField {...params} 
-                      placeholder={`Select a ${label}`} 
+                    <TextField
+                      {...params}
+                      placeholder={`Select a ${label}`}
                       label={label || id}
                       name={id}
                       fullWidth
                       margin="normal"
-                      value={filter[id] ?? ''}  
+                      value={filter[id] ?? ''}
                     />
                   )}
                 />
@@ -144,7 +143,8 @@ const CollectionFilters = ({
           onClick={() => {
             setFilter({});
             if (onClearFilter) onClearFilter();
-          }}>
+          }}
+        >
           Clear
         </Button>
       </Grid>

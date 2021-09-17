@@ -1,5 +1,14 @@
 # @last-rev/component-library
 
+## 0.1.29
+
+### Patch Changes
+
+- 0ac2e33: Add SEO component
+- e123c06: LRFA-343
+- 753a368: fixed padding for mailchimp form
+- ec03eeb: Add Autocomplete filter to Collection
+
 ## 0.1.28
 
 ### Patch Changes

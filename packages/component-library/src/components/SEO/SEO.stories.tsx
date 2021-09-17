@@ -13,9 +13,9 @@ export default {
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
       <Table
         sx={{
-          width: 600,
-          margin: 8,
-          backgroundColor: '#fafafa',
+          'width': 600,
+          'margin': 8,
+          'backgroundColor': '#fafafa',
           '& th': {
             fontWeight: 'bold'
           }

@@ -17,8 +17,8 @@ const components = {
   Text,
   Link,
   Media,
-  Card,
-}
+  Card
+};
 
 const mount = (component, options) =>
   ogMount(
@@ -35,4 +35,3 @@ const mount = (component, options) =>
   );
 
 export default mount;
- 
