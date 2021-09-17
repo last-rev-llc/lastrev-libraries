@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.17
+
+### Patch Changes
+
+- d91a413: Hotfix: Fix pathlookup
+
 ## 0.1.16
 
 ### Patch Changes
