@@ -1,10 +1,10 @@
 import { lorem } from 'faker';
 import mockCard from '../Card/Card.mock';
-import { staticRichTextMock } from '../Text/Text.mock';
+import { complexMock } from '../Text/Text.mock';
 import mockTheme from '../../theme/mock.theme';
 
 export default {
-  id: 1,
+  id: '1',
   __typename: 'Collection',
   sidekickLookup: {},
   itemsSpacing: 2,
@@ -12,6 +12,6 @@ export default {
   items: [{ ...mockCard }, { ...mockCard, title: lorem.sentence() }, { ...mockCard }, { ...mockCard }],
   itemsVariant: 'standard-round',
   // itemsWidth: 'xl',
-  introText: staticRichTextMock,
+  introText: complexMock,
   theme: [mockTheme]
 };

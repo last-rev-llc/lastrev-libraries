@@ -37,6 +37,7 @@ export interface SectionProps {
     gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
   };
   sidekickLookup?: any;
+  theme?: [Theme];
 }
 
 export interface SectionOverrides {}
@@ -58,7 +59,6 @@ const Section = ({
   variant,
   testId,
   sidekickLookup,
-  theme:ATheme, 
   ...props
 }: SectionProps) => {
   const theme = useTheme();
@@ -104,6 +104,7 @@ console.log("Props", props);
           ...rootStyles({ backgroundColor, theme })
         }}
         variant={variant}
+        // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
         {...omit(props, 'theme')}
       >
         {background ? <BackgroundMedia {...background} /> : null}
