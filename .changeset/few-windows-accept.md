@@ -1,5 +1,5 @@
 ---
-'@last-rev/component-library': major
+'@last-rev/component-library': patch
 ---
 
 Add SEO component
