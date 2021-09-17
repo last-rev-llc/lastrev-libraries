@@ -1,5 +1,5 @@
 import React from 'react';
-import { Skeleton, Grid, Container, Box, MenuItem, TextField, Button, Typography } from '@material-ui/core';
+import { Skeleton, Grid, Container, Box,  Button, Typography } from '@material-ui/core';
 
 import { Breakpoint } from '@material-ui/core';
 import styled from '@material-ui/system/styled';
@@ -7,6 +7,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import Section from '../Section';
 import { MediaProps } from '../Media';
 import { CardProps } from '../Card';
+import CollectionFilters from '../CollectionFilters';
 import sidekick from '../../utils/sidekick';
 import { isEmpty, range } from 'lodash';
 import { useRouter } from 'next/router';
@@ -29,13 +30,16 @@ interface Option {
 interface Options {
   [key: string]: Array<Option>;
 }
+interface FilterFormData {
+  [key: string]: any;
+}
 export interface CollectionFilteredProps {
   id: string;
   items?: CardProps[];
   settings?: Settings;
   options?: Options;
   filter?: FilterFormData;
-  fetchItems?: (filter: any) => Promise<{ items?: CardProps[]; options?: Options } | null>;
+  fetchItems?: (filter: any) => Promise<{ items?: CardProps[]; options?: Options; allOptions?: Options } | null>;
   onClearFilter?: () => void;
   background?: MediaProps;
   variant?: string;
@@ -49,7 +53,7 @@ export interface CollectionFilteredProps {
 export interface UseDynamicItemsInterface {
   items?: CardProps[];
   options?: Options;
-  fetchItems?: (filter: any) => Promise<{ items?: CardProps[]; options?: Options } | null>;
+  fetchItems?: (filter: any) => Promise<{ items?: CardProps[]; options?: Options; allOptions?: Options } | null>;
   filter: any;
 }
 
@@ -122,10 +126,26 @@ export const CollectionFiltered = ({
   const isReachingEnd = isEmptyData || (data && (data?.[data?.length - 1]?.items?.length ?? limit) < limit);
 
   const itemsWithVariant = items?.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
+  const [allOptions, setAllOptions] = React.useState<Options>({});
+
+  React.useEffect(() => {
+    if (data && data?.length && data[0]?.allOptions) {
+      const newAllOptions = data[0]?.allOptions;
+      if (JSON.stringify(allOptions) !== JSON.stringify(newAllOptions)) {
+        setAllOptions(newAllOptions);
+      }
+    }
+  }, [data]);
+
   const parseValue = ({ filterId, value }: { filterId: string; value: string }) => {
-    return options && options[filterId]
-      ? options[filterId]?.find((option) => option.value === value || value?.includes(option.value))?.label
+    if(Array.isArray(value)){
+      return value.map((v) => (allOptions[filterId]?.find((option) => option.value === v)?.label))?.join(', ');
+    }else{
+      const option = allOptions[filterId]?.find((option) => option.value === value)
+      return allOptions && allOptions[filterId]
+      ? option?.label
       : value;
+    }
   };
 
   const parsedFilters = filters
@@ -142,6 +162,7 @@ export const CollectionFiltered = ({
               <CollectionFilters
                 id={id}
                 filters={filters}
+                allOptions={allOptions}
                 options={options}
                 setFilter={setFilter}
                 filter={filter}
@@ -217,94 +238,6 @@ export const CollectionFiltered = ({
   );
 };
 
-interface CollectionFiltersProps {
-  id: string;
-  options?: Options;
-  filter?: FilterFormData;
-  filters?: FilterSetting[];
-  setFilter: any;
-  onClearFilter: any;
-}
-interface FilterFormData {
-  [key: string]: any;
-}
-
-const CollectionFilters = ({ id, options, filters, filter = {}, setFilter, onClearFilter }: CollectionFiltersProps) => {
-  const handleChange = (id: string) => (event: any) => {
-    setFilter({ ...filter, [id]: event.target.value });
-  };
-
-  return (
-    <CollectionFiltersRoot id={`collection_${id}_filters`} container style={{ justifyContent: 'flex-end' }}>
-      <Grid item container sx={{ justifyContent: 'flex-end' }} spacing={2}>
-        {filters?.map(({ id, label, type }) => {
-          if (!id) return null;
-          let input;
-          switch (type) {
-            case 'text':
-              input = (
-                <TextField
-                  id={id}
-                  name={id}
-                  fullWidth
-                  margin="normal"
-                  label={label || id}
-                  value={filter[id] ?? ''}
-                  onChange={handleChange(id)}
-                />
-              );
-              break;
-            case 'select':
-              // if (options && options[id]?.length) {
-              input = (
-                <TextField
-                  select
-                  id={id}
-                  name={id}
-                  fullWidth
-                  margin="normal"
-                  label={label || id}
-                  value={filter[id] ?? ''}
-                  SelectProps={{ MenuProps: { disableScrollLock: true } }}
-                  onChange={handleChange(id)}
-                >
-                  <MenuItem value={-1} disabled>
-                    Select a filter
-                  </MenuItem>
-                  {options
-                    ? options[id]?.map(({ label, value }) => (
-                        <MenuItem key={label} value={value ?? ''}>
-                          {label}
-                        </MenuItem>
-                      ))
-                    : null}
-                </TextField>
-              );
-              break;
-            // }
-          }
-          if (input)
-            return (
-              <Grid key={id} item xs>
-                {input}
-              </Grid>
-            );
-          return null;
-        })}
-      </Grid>
-      <Grid item>
-        <Button
-          onClick={() => {
-            setFilter({});
-            if (onClearFilter) onClearFilter();
-          }}
-        >
-          Clear
-        </Button>
-      </Grid>
-    </CollectionFiltersRoot>
-  );
-};
 
 const Root = styled(Box, {
   name: 'CollectionFiltered',
@@ -317,15 +250,6 @@ const Root = styled(Box, {
   display: 'flex',
   justifyContent: 'center'
 }));
-
-const CollectionFiltersRoot = styled(Grid, {
-  name: 'CollectionFiltered',
-  slot: 'FiltersRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
-})<{ variant?: string }>(() => ({}));
 
 const ContentContainer = styled(Container, {
   name: 'CollectionFiltered',
