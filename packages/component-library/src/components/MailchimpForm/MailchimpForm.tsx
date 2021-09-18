@@ -235,7 +235,8 @@ const ContentContainer = styled(Container, {
   })
 })<{ variant?: string }>(({ theme }) => ({
   position: 'relative',
-  padding: theme.spacing(10, 0)
+  paddingTop: theme.spacing(8),
+  paddingBottom: theme.spacing(8)
 }));
 
 const FormImage = styled(Media, {

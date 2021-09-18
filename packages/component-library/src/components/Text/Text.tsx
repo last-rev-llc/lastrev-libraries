@@ -33,12 +33,12 @@ export interface TextProps {
 }
 
 interface TextLinks {
-  entries: Array<Content>;
-  assets: Array<MediaProps>;
+  entries?: Array<Content>;
+  assets?: Array<MediaProps>;
 }
 export interface RichText {
   json: any;
-  links: TextLinks;
+  links?: TextLinks;
 }
 const bodyXSS = new FilterXSS({
   whiteList: { div: ['id', 'style'] },
@@ -102,7 +102,7 @@ const renderText =
     );
   };
 
-const renderOptions = ({ links, renderNode }: { links: TextLinks; renderNode?: any }) => {
+const renderOptions = ({ links, renderNode }: { links?: TextLinks; renderNode?: any }) => {
   const entries = keyBy('id', links?.entries ?? []);
   const assets = keyBy('id', links?.assets ?? []);
 
@@ -153,7 +153,8 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ..
         {...sidekick(sidekickLookup)}
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
-        {...props}>
+        {...props}
+      >
         {documentToReactComponents(body?.json, renderOptions({ links: body?.links, renderNode }))}
       </Root>
     </ErrorBoundary>

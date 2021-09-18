@@ -1,1 +1,2 @@
-export { default, SectionProps, SectionOverrides } from './Section';
+export { default } from './Section';
+export type { SectionProps, SectionOverrides } from './Section';

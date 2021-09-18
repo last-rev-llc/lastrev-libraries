@@ -41,7 +41,8 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
           <Link noLinkStyle {...link} sidekickLookup={{}}>
             {children}
           </Link>
-        )}>
+        )}
+      >
         <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)}>
           {media || loading ? (
             <CardMedia sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -74,13 +75,14 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
                   {...sidekick(sidekickLookup?.subtitle)}
                   variant="h4"
                   component="h4"
-                  data-testid="Card-subtitle">
+                  data-testid="Card-subtitle"
+                >
                   {subtitle}
                 </Typography>
               ) : null}
               {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="Card-body" /> : null}
               {actions?.length ? (
-                <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions" sx={{ display: 'none' }}>
+                <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions">
                   {actions?.map((link) => (
                     <Link key={link.id} {...link} />
                   ))}

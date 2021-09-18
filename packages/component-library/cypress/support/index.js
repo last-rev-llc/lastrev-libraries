@@ -18,5 +18,7 @@ import './commands';
 import '@percy/cypress';
 
 import '@cypress/code-coverage/support';
-// Alternatively you can use CommonJS syntax:
+
+import faker from 'faker'; // Alternatively you can use CommonJS syntax:
 // require('./commands')
+faker.seed(123);
