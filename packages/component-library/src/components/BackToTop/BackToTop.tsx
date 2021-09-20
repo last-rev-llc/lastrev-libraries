@@ -16,7 +16,10 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
   const handleClick = () => {
     window.scrollTo({ top: 0, left: 0 });
   };
-  const trigger = useScrollTrigger();
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 500
+  });
 
   return (
     <ErrorBoundary>
