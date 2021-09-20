@@ -222,20 +222,20 @@ const theme = createAppTheme(
       MuiTypography: {
         styleOverrides: {
           h1: {
-            paddingBottom: 10,
+            paddingBottom: baseTheme.spacing(2),
             fontSize: 40,
             fontWeight: 'bold'
           },
           h2: {
-            paddingBottom: 20,
+            paddingBottom: baseTheme.spacing(2),
             fontSize: 32,
             fontWeight: 'bold'
           },
           h3: {
-            'paddingBottom': 20,
-            'fontSize': 32,
-            'fontWeight': 'bold',
-            'color': baseTheme.palette.secondary.main,
+            paddingBottom: baseTheme.spacing(3),
+            fontSize: 32,
+            fontWeight: 'bold',
+            color: baseTheme.palette.secondary.main,
             '& u': {
               textDecorationColor: baseTheme.palette.tertiary.main
             }

@@ -112,12 +112,10 @@ HeroProps) => {
                       </Typography>
                     ) : null}
                     {body ? (
-                      <Box {...sidekick(sidekickLookup?.body)}>
-                        <Text body={body} data-testid="Hero-body" />
-                      </Box>
+                      <Text body={body} data-testid="Hero-body" {...sidekick(sidekickLookup?.body)} />
                     ) : null}
                     {actions ? (
-                      <Box pt={3} {...sidekick(sidekickLookup?.actions)}>
+                      <Box pt={title || subtitle || body ? 3 : undefined} {...sidekick(sidekickLookup?.actions)}>
                         {actions?.map((link) => (
                           <Link key={link.id} {...link} />
                         ))}
