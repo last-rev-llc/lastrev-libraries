@@ -1,1 +1,2 @@
-export { default, CollectionAccordionProps } from './CollectionAccordion';
+export { default } from './CollectionAccordion';
+export type { CollectionAccordionProps } from './CollectionAccordion';
