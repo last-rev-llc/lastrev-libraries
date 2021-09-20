@@ -247,13 +247,13 @@ const FormImage = styled(Media, {
   right: theme.spacing(3),
   zIndex: 0,
   objectFit: 'fill',
-  [theme.breakpoints.down('xl')]: {
+  [theme.breakpoints.down('lg')]: {
     bottom: 'initial',
     top: theme.spacing(3),
     maxWidth: '25%',
     height: 'auto'
   },
-  [theme.breakpoints.down('xl')]: {
+  [theme.breakpoints.down('md')]: {
     display: 'none'
   }
 }));
@@ -271,7 +271,7 @@ const FormContainer = styled(Grid, {
   'paddingBottom': theme.spacing(4),
   'marginTop': theme.spacing(3),
 
-  [theme.breakpoints.down('xl')]: {
+  [theme.breakpoints.down('md')]: {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(3)
   },
@@ -293,7 +293,7 @@ const SubmitContainer = styled(Grid, {
   slot: 'SubmitContainer',
   overridesResolver: (_, styles) => [styles.submitContainer]
 })<{ variant?: string }>(({ theme }) => ({
-  [theme.breakpoints.down('xl')]: {
+  [theme.breakpoints.down('md')]: {
     'paddingTop': theme.spacing(3),
     '& .MuiFormControl-root': {
       width: '100%',

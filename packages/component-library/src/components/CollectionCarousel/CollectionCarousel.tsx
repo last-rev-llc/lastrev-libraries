@@ -104,7 +104,7 @@ const CarouselContainer = styled(Swiper, {
     height: 10
   },
   '& .swiper-button-prev, .swiper-button-next': {
-    [theme.breakpoints.down('xl')]: {
+    [theme.breakpoints.down('lg')]: {
       display: 'none'
     }
   }
