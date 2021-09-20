@@ -3,10 +3,10 @@ import React from 'react';
 import { FilterXSS } from 'xss';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
-import Box from '@material-ui/core/Box';
-import styled from '@material-ui/system/styled';
-import Typography from '@material-ui/core/Typography';
+import { SystemCssProperties } from '@mui/system/styleFunctionSx';
+import Box from '@mui/material/Box';
+import styled from '@mui/system/styled';
+import Typography from '@mui/material/Typography';
 import keyBy from 'lodash/fp/keyBy';
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
@@ -165,9 +165,7 @@ const Root = styled(Box, {
   name: 'Text',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({}));
 
 export default Text;

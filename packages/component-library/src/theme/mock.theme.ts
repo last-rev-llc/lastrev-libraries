@@ -6,7 +6,7 @@ import createSectionVariants from './createSectionVariants';
 import createCollectionVariants from './createCollectionVariants';
 import createCollectionCarouselVariants from './createCollectionCarouselVariants';
 import createAppTheme from './createTheme';
-import { red } from '@material-ui/core/colors';
+import { red } from '@mui/material/colors';
 
 export const baseTheme = createAppTheme({
   spacing: 8,
@@ -138,7 +138,7 @@ const theme = createAppTheme(
             },
             '& .MuiGrid-item': {
               width: '100%',
-              [baseTheme.breakpoints.down('lg')]: {
+              [baseTheme.breakpoints.down('xl')]: {
                 margin: '20px auto'
               }
             },

@@ -1,18 +1,18 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import styled from '@material-ui/system/styled';
-import useTheme from '@material-ui/system/useTheme';
-import { Theme } from '@material-ui/system/createTheme';
-// import { Theme } from '@material-ui/core';
-import Grid from '@material-ui/core/Grid';
-import Container from '@material-ui/core/Container';
-import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
+import Box from '@mui/material/Box';
+import styled from '@mui/system/styled';
+import useTheme from '@mui/system/useTheme';
+import { Theme } from '@mui/system/createTheme';
+// import { Theme } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
+import { SystemCssProperties } from '@mui/system/styleFunctionSx';
 import get from 'lodash/get';
 import omit from 'lodash/omit';
 // import BackgroundMedia from '../BackgroundMedia';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import { Breakpoint } from '@material-ui/core';
+import { Breakpoint } from '@mui/material';
 import { MediaProps } from '../Media';
 import Media from '../Media';
 import sidekick from '../../utils/sidekick';
@@ -144,20 +144,15 @@ const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; them
 const Root = styled(Box, {
   name: 'Section',
   slot: 'Root',
-  overridesResolver: (_, styles) => ({
-    ...styles.root,
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center'
-  })
-})<{ variant?: string }>(() => ({}));
+  overridesResolver: (_, styles) => [styles.root]
+})<{ variant?: string }>(() => ({  width: '100%',
+display: 'flex',
+justifyContent: 'center'}));
 
 const ContentContainer = styled(Container, {
   name: 'Section',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.contentContainer
-  })
+  overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(() => ({
   zIndex: 1
 }));
@@ -165,9 +160,7 @@ const ContentContainer = styled(Container, {
 const BackgroundMedia = styled(Media, {
   name: 'Section',
   slot: 'BackgroundMedia',
-  overridesResolver: (_, styles) => ({
-    ...styles.backgroundImage
-  })
+  overridesResolver: (_, styles) => [styles.backgroundImage]
 })(() => ({
   zIndex: 0,
   position: 'absolute',
@@ -182,17 +175,13 @@ const BackgroundMedia = styled(Media, {
 const GridContainer = styled(Grid, {
   name: 'Section',
   slot: 'GridContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.gridContainer
-  })
+  overridesResolver: (_, styles) => [styles.gridContainer]
 })(() => ({}));
 
 const GridItem = styled(Grid, {
   name: 'Section',
   slot: 'GridItem',
-  overridesResolver: (_, styles) => ({
-    ...styles.gridItem
-  })
+  overridesResolver: (_, styles) => [styles.gridItem]
 })(() => ({}));
 
 export default Section;

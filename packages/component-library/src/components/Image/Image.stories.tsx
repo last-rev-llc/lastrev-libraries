@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 import Image from './Image';
 import mockContent from './Image.mock';
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Fab, { FabProps } from '@material-ui/core/Fab';
-import { styled } from '@material-ui/core';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Fab, { FabProps } from '@mui/material/Fab';
+import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import sidekick from '../../utils/sidekick';
 
@@ -18,7 +18,7 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
 
   return (
     <ErrorBoundary>
-      <Root {...FabProps} onClick={handleClick} data-testid="BackToTop" {...sidekick(sidekickLookup)}>
+      <Root {...(FabProps as any)} onClick={handleClick} data-testid="BackToTop" {...sidekick(sidekickLookup)}>
         <KeyboardArrowUpIcon />
       </Root>
     </ErrorBoundary>
@@ -28,10 +28,8 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
 const Root = styled(Fab, {
   name: 'BackToTop',
   slot: 'Root',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
-})<{ variant?: string }>`
+  overridesResolver: (_, styles) => [styles.root]
+})<FabProps>`
   position: fixed;
   bottom: 16px;
   right: 16px;

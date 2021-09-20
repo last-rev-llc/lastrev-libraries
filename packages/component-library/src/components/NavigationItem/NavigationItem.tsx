@@ -1,14 +1,14 @@
 import React from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
-import Paper from '@material-ui/core/Paper';
-import Box from '@material-ui/core/Box';
-import styled from '@material-ui/system/styled';
+import MenuItem from '@mui/material/MenuItem';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import styled from '@mui/system/styled';
 
 import ErrorBoundary from '../ErrorBoundary';
 import Link, { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
-import { useMediaQuery, useTheme } from '@material-ui/core';
+import { useMediaQuery, useTheme } from '@mui/material';
 // type NavigationItem = LinkProps | NavigationItemProps;
 
 // export type NavigationItemProps = {
@@ -23,7 +23,7 @@ export interface NavigationItemProps extends LinkProps {
 export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, ...props }: NavigationItemProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
 
   const handleClick = (evt: any) => {
     if (isMobile) {
@@ -75,9 +75,7 @@ const Root = styled(Box, {
   name: 'NavigationItem',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.MenuRoot
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; open: boolean }>`
   ${({ open, theme }) => `
     @media (max-width: ${theme.breakpoints.values.sm}px) {
@@ -103,9 +101,7 @@ const MenuRoot = styled(Paper, {
   name: 'NavigationItem',
   slot: 'MenuRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.MenuRoot
-  })
+  overridesResolver: (_, styles) => [styles.menuRoot]
 })<{ variant?: string }>`
   ${({ theme }) => `
     display: flex;
