@@ -1,6 +1,6 @@
 import { addDecorator, addParameters } from '@storybook/react';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 // import '@storybook/addon-console';
 import theme from '../src/theme/mock.theme';
