@@ -5,7 +5,7 @@ export const defaultVariant = (theme: Theme) => ({
     variant: 'default'
   },
   style: {
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('md')]: {
       padding: theme.spacing(4, 0)
     },
     'h1': {
@@ -15,7 +15,10 @@ export const defaultVariant = (theme: Theme) => ({
       color: theme.palette.secondary.main
     },
     '& [class*="contentContainer"] > .MuiGrid-container > .MuiGrid-root': {
-      [theme.breakpoints.down('lg')]: {
+      [theme.breakpoints.down('md')]: {
+        '& .MuiGrid-root': {
+          textAlign: 'center'
+        },
         '& ul': {
           display: 'inline-block',
           padding: 0
@@ -25,12 +28,7 @@ export const defaultVariant = (theme: Theme) => ({
           padding: 0
         }
       },
-      [theme.breakpoints.down('md')]: {
-        '& .MuiGrid-root': {
-          textAlign: 'center'
-        }
-      },
-      [theme.breakpoints.up('lg')]: {
+      [theme.breakpoints.up('md')]: {
         maxWidth: '50%'
       }
     },

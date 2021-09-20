@@ -145,6 +145,10 @@ const theme = createAppTheme(
 
             // TODO: add more line spacing if <u> exists
             '& .MuiTypography-h1': {
+              [baseTheme.breakpoints.down('lg')]: {
+                fontSize: 36,
+                lineHeight: '1.25'
+              },
               u: {
                 textUnderlinePosition: 'under',
                 textDecorationThickness: 4,
@@ -152,6 +156,10 @@ const theme = createAppTheme(
               }
             },
             '& .MuiTypography-h2': {
+              [baseTheme.breakpoints.down('lg')]: {
+                fontSize: 28,
+                lineHeight: '1.3'
+              },
               u: {
                 textUnderlinePosition: 'under',
                 textDecorationThickness: 4,

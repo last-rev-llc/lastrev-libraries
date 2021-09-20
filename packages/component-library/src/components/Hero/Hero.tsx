@@ -111,18 +111,18 @@ HeroProps) => {
                         {subtitle}
                       </Typography>
                     ) : null}
-                  </Grid>
-                ) : null}
-                {body ? (
-                  <Grid item {...sidekick(sidekickLookup?.body)}>
-                    <Text body={body} data-testid="Hero-body" />
-                  </Grid>
-                ) : null}
-                {actions ? (
-                  <Grid item pt={3} {...sidekick(sidekickLookup?.actions)}>
-                    {actions?.map((link) => (
-                      <Link key={link.id} {...link} />
-                    ))}
+                    {body ? (
+                      <Box {...sidekick(sidekickLookup?.body)}>
+                        <Text body={body} data-testid="Hero-body" />
+                      </Box>
+                    ) : null}
+                    {actions ? (
+                      <Box pt={3} {...sidekick(sidekickLookup?.actions)}>
+                        {actions?.map((link) => (
+                          <Link key={link.id} {...link} />
+                        ))}
+                      </Box>
+                    ) : null}
                   </Grid>
                 ) : null}
               </Grid>
