@@ -86,7 +86,7 @@ HeroProps) => {
         <ContentContainer maxWidth={contentWidth} disableGutters>
           <Grid container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
-              <Grid item container direction="column" spacing={2} xs={12}>
+              <Grid item container direction="column" spacing={2} xs={12} md={6}>
                 {title || subtitle ? (
                   <Grid item>
                     {title ? (
@@ -128,7 +128,7 @@ HeroProps) => {
               </Grid>
             ) : null}
             {image ? (
-              <Grid item xs={12} sm={6}>
+              <Grid item container spacing={2} xs={12} md={6}>
                 <Media
                   {...(Array.isArray(image) ? image[0] : image)}
                   {...sidekick(sidekickLookup?.image)}

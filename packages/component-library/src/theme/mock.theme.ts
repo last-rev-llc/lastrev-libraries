@@ -148,14 +148,14 @@ const theme = createAppTheme(
               u: {
                 textUnderlinePosition: 'under',
                 textDecorationThickness: 4,
-                textDecorationColor: '#30CEC2'
+                textDecorationColor: baseTheme.palette.tertiary.main
               }
             },
             '& .MuiTypography-h2': {
               u: {
                 textUnderlinePosition: 'under',
                 textDecorationThickness: 4,
-                textDecorationColor: '#30CEC2'
+                textDecorationColor: baseTheme.palette.tertiary.main
               }
             },
             'img': {

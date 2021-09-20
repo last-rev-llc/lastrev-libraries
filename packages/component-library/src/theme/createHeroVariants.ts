@@ -16,9 +16,6 @@ export const defaultVariant = (theme: Theme) => ({
     },
     '& [class*="contentContainer"] > .MuiGrid-container > .MuiGrid-root': {
       [theme.breakpoints.down('lg')]: {
-        '& .MuiGrid-root': {
-          textAlign: 'center'
-        },
         '& ul': {
           display: 'inline-block',
           padding: 0
@@ -26,6 +23,11 @@ export const defaultVariant = (theme: Theme) => ({
         '& ol': {
           display: 'inline-block',
           padding: 0
+        }
+      },
+      [theme.breakpoints.down('md')]: {
+        '& .MuiGrid-root': {
+          textAlign: 'center'
         }
       },
       [theme.breakpoints.up('lg')]: {
