@@ -224,12 +224,18 @@ const theme = createAppTheme(
           h1: {
             paddingBottom: baseTheme.spacing(2),
             fontSize: 40,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            [baseTheme.breakpoints.up('lg')]: {
+              paddingBottom: baseTheme.spacing(3)
+            }
           },
           h2: {
             paddingBottom: baseTheme.spacing(2),
             fontSize: 32,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            [baseTheme.breakpoints.up('lg')]: {
+              paddingBottom: baseTheme.spacing(3)
+            }
           },
           h3: {
             paddingBottom: baseTheme.spacing(3),
@@ -249,7 +255,10 @@ const theme = createAppTheme(
             fontSize: 18
           },
           body1: {
-            fontSize: '1.125rem'
+            fontSize: '1rem',
+            [baseTheme.breakpoints.up('lg')]: {
+              fontSize: '1.125rem'
+            }
           },
           body2: {
             fontSize: '0.875rem'
