@@ -1,7 +1,6 @@
 import React from 'react';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Fab, { FabProps } from '@material-ui/core/Fab';
-import Box from '@material-ui/core/Box';
 import { styled } from '@material-ui/core';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import ErrorBoundary from '../ErrorBoundary';
@@ -21,11 +20,9 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
 
   return (
     <ErrorBoundary>
-      <Box display={trigger ? 'none' : 'flex'}>
-        <Root {...FabProps} onClick={handleClick} data-testid="BackToTop" {...sidekick(sidekickLookup)}>
-          <KeyboardArrowUpIcon />
-        </Root>
-      </Box>
+      <Root visible={trigger} {...FabProps} onClick={handleClick} data-testid="BackToTop" {...sidekick(sidekickLookup)}>
+        <KeyboardArrowUpIcon />
+      </Root>
     </ErrorBoundary>
   );
 };
@@ -36,10 +33,14 @@ const Root = styled(Fab, {
   overridesResolver: (_, styles) => ({
     ...styles.root
   })
-})<{ variant?: string }>`
+})<{ variant?: string; visible?: boolean }>`
   position: fixed;
   bottom: 16px;
   right: 16px;
+  transition: 0.3s ease-in-out;
+  ${({ visible }) => `
+  transform: translateY(${visible ? 0 : 100}px);
+  `};
 `;
 
 export default BackToTop;
