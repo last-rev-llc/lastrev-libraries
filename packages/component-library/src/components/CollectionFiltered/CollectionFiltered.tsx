@@ -249,9 +249,7 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'CollectionFiltered',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) => [
-    styles.contentContainer
-  ]
+  overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(() => ({
   display: 'flex'
 }));

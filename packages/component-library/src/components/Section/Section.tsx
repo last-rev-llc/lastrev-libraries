@@ -145,9 +145,7 @@ const Root = styled(Box, {
   name: 'Section',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>(() => ({  width: '100%',
-display: 'flex',
-justifyContent: 'center'}));
+})<{ variant?: string }>(() => ({ width: '100%', display: 'flex', justifyContent: 'center' }));
 
 const ContentContainer = styled(Container, {
   name: 'Section',
