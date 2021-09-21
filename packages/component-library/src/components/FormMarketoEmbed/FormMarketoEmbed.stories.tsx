@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
 import FormMarketoEmbed, { FormMarketoEmbedProps } from './FormMarketoEmbed';
-// import mailchimpFormMock from './MailchimpForm.mock';
+import formMarketoEmbedMock from './FormMarketoEmbed.mock';
 
 export default {
   title: '2. Modules / FormMarketoEmbed',
@@ -30,4 +30,4 @@ export default {
 
 const Template = (args: FormMarketoEmbedProps) => <FormMarketoEmbed {...args} />;
 export const Default = Template.bind({});
-Default.args = {};
+Default.args = { ...formMarketoEmbedMock };
