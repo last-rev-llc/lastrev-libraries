@@ -1,4 +1,4 @@
-import { createTheme, ThemeOptions } from '@material-ui/core/styles';
+import { createTheme, ThemeOptions } from '@mui/material/styles';
 // import createAppTheme from './createTheme';
 import { CardProps, CardOverrides } from './../components/Card';
 import { CollectionProps } from './../components/Collection';
@@ -6,7 +6,7 @@ import { HeroProps } from './../components/Hero';
 import { MailchimpFormProps } from './../components/MailchimpForm';
 import { LinkProps } from './../components/Link';
 import { SectionProps } from './../components/Section';
-import { PaletteOptions, Palette } from '@material-ui/core/styles';
+import { PaletteOptions, Palette } from '@mui/material/styles';
 
 interface CustomPalette {
   'tertiary': Palette['primary'];
@@ -18,7 +18,7 @@ interface CustomPaletteOptions {
   'quartiary': PaletteOptions['primary'];
   'gradient-primary'?: PaletteOptions['primary'];
 }
-declare module '@material-ui/core/styles' {
+declare module '@mui/material/styles' {
   // eslint-disable-next-line
 
   interface Palette extends CustomPalette {
@@ -38,7 +38,7 @@ declare module '@material-ui/core/styles' {
   }
 }
 
-declare module '@material-ui/core/styles/components' {
+declare module '@mui/material/styles/components' {
   interface ComponentsProps {
     Section: SectionProps;
     Card: CardProps;

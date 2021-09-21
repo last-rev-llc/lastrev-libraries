@@ -1,8 +1,9 @@
 import React from 'react';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import Fab, { FabProps } from '@material-ui/core/Fab';
-import { styled } from '@material-ui/core';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Fab, { FabProps } from '@mui/material/Fab';
+import styled from '@mui/system/styled';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
 import ErrorBoundary from '../ErrorBoundary';
 import sidekick from '../../utils/sidekick';
 
@@ -23,7 +24,7 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
 
   return (
     <ErrorBoundary>
-      <Root visible={trigger} {...FabProps} onClick={handleClick} data-testid="BackToTop" {...sidekick(sidekickLookup)}>
+      <Root visible={trigger} {...(FabProps as any)} onClick={handleClick} data-testid="BackToTop" {...sidekick(sidekickLookup)}>
         <KeyboardArrowUpIcon />
       </Root>
     </ErrorBoundary>
@@ -33,9 +34,7 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
 const Root = styled(Fab, {
   name: 'BackToTop',
   slot: 'Root',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; visible?: boolean }>`
   position: fixed;
   bottom: 16px;

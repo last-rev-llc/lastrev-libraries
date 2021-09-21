@@ -1,10 +1,10 @@
 import React from 'react';
-import { Accordion as MuiAccordion, AccordionProps as MuiAccordionProps, Typography } from '@material-ui/core';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Accordion as MuiAccordion, AccordionProps as MuiAccordionProps, Typography } from '@mui/material';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ErrorBoundary from '../ErrorBoundary';
-import styled from '@material-ui/system/styled';
+import styled from '@mui/system/styled';
 import sidekick from '../../utils/sidekick';
 import Text, { RichText } from '../Text';
 
@@ -39,9 +39,7 @@ export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionPro
 const AccordionRoot = styled(MuiAccordion, {
   name: 'Accordion',
   slot: 'Root',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<MuiAccordionProps & {}>(() => ({}));
 
 export default Accordion;

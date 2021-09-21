@@ -1,20 +1,20 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
-import Toolbar from '@material-ui/core/Toolbar';
-import Link from '@material-ui/core/Link';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import CloseIcon from '@material-ui/icons/Close';
-import Hidden from '@material-ui/core/Hidden';
-import styled from '@material-ui/system/styled';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Link from '@mui/material/Link';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import Hidden from '@mui/material/Hidden';
+import styled from '@mui/system/styled';
 
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
 import { CollectionProps } from '../Collection';
 import ContentModule from '../ContentModule';
-import useScrollTrigger from '@material-ui/core/useScrollTrigger';
+import useScrollTrigger from '@mui/material/useScrollTrigger';
 import sidekick from '../../utils/sidekick';
 export interface HeaderProps {
   variant?: 'elevation' | 'outlined' | undefined;
@@ -51,7 +51,12 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
               </React.Fragment>
             ))}
             <Hidden implementation="css" smUp>
-              <IconButton edge="end" color="secondary" aria-label="menu" onClick={() => setMenuVisible(!menuVisible)}>
+              <IconButton
+                edge="end"
+                color="secondary"
+                aria-label="menu"
+                onClick={() => setMenuVisible(!menuVisible)}
+                size="large">
                 {menuVisible ? <CloseIcon /> : <MenuIcon />}
               </IconButton>
             </Hidden>
@@ -67,9 +72,7 @@ const Root = styled(AppBar, {
   name: 'Header',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'menuVisible',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; menuVisible: boolean }>`
   ${({ theme, menuVisible }) => `
     &::before {
@@ -124,19 +127,16 @@ const Root = styled(AppBar, {
 const Logo = styled(Media, {
   name: 'Header',
   slot: 'Logo',
-  overridesResolver: (_, styles) => ({
-    ...styles.logo,
-    height: '100%',
-    width: 'auto'
-  })
-})<{ variant?: string }>(() => ({}));
+  overridesResolver: (_, styles) => [styles.logo]
+})<{ variant?: string }>(() => ({
+  height: '100%',
+  width: 'auto'
+}));
 
 const ContentContainer = styled(Toolbar, {
   name: 'Header',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.contentContainer
-  })
+  overridesResolver: (_, styles) =>[ styles.contentContainer]
 })<{ variant?: string }>`
   height: 100%;
 `;

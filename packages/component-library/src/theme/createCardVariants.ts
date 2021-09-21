@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
 
 export const mediaCardVariant = (theme: Theme) => ({
   props: {
@@ -6,7 +6,7 @@ export const mediaCardVariant = (theme: Theme) => ({
   },
   style: {
     'position': 'relative',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       width: '100%'
     },
     '& img': {
@@ -53,7 +53,7 @@ export const mediaHoverCardVariant = (theme: Theme) => ({
     'width': '100%',
     '& img': {
       width: '100%', //when its width is 100% the carousel looks much smaller, but when adding a size (for example: 300px), looks much better, maybe we could like this to decided by the creator of a content
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('lg')]: {
         width: '100%'
       }
     },
@@ -94,13 +94,13 @@ export const mediaAndTextCardVariant = (theme: Theme) => ({
     'display': 'flex',
     'flexDirection': 'row',
     'background': theme.palette.secondary.main,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       flexDirection: 'column',
       padding: theme.spacing(2)
     },
     '& .MuiBox-root': {
       padding: theme.spacing(5),
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('lg')]: {
         padding: theme.spacing(1)
       }
     },
@@ -157,7 +157,7 @@ export const profileRowCardVariant = (theme: Theme) => ({
     'flexDirection': 'row',
     'minWidth': 320,
     'padding': theme.spacing(0, 3, 6),
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       flexDirection: 'column',
       maxWidth: '100%'
     },

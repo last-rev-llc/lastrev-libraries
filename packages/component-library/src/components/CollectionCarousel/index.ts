@@ -1,1 +1,2 @@
-export { default, CollectionCarouselProps } from './CollectionCarousel';
+export { default } from './CollectionCarousel';
+export type { CollectionCarouselProps } from './CollectionCarousel';

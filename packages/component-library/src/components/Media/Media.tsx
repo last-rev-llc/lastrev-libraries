@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@material-ui/system/styled';
+import styled from '@mui/system/styled';
 // import BackgroundMedia from '../BackgroundMedia';
 import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
@@ -52,18 +52,14 @@ const Root = styled(Image, {
   name: 'Media',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({}));
 
 const EmbedRoot = styled('iframe', {
   name: 'Media',
   slot: 'EmbedRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({}));
 
 export default Media;

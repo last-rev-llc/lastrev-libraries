@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 import NavigationBar from './NavigationBar';
 import NavigationBarMock from './NavigationBar.mock';
 

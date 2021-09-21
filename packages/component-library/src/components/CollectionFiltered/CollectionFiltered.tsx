@@ -1,8 +1,8 @@
 import React from 'react';
-import { Skeleton, Grid, Container, Box, Button, Typography } from '@material-ui/core';
+import { Skeleton, Grid, Container, Box, Button, Typography } from '@mui/material';
 
-import { Breakpoint } from '@material-ui/core';
-import styled from '@material-ui/system/styled';
+import { Breakpoint } from '@mui/material';
+import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import Section from '../Section';
 import { MediaProps } from '../Media';
@@ -240,9 +240,7 @@ const Root = styled(Box, {
   name: 'CollectionFiltered',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({
   display: 'flex',
   justifyContent: 'center'
@@ -251,9 +249,9 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'CollectionFiltered',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.contentContainer
-  })
+  overridesResolver: (_, styles) => [
+    styles.contentContainer
+  ]
 })<{ variant?: string }>(() => ({
   display: 'flex'
 }));
