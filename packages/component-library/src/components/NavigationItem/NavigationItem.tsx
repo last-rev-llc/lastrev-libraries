@@ -23,7 +23,7 @@ export interface NavigationItemProps extends LinkProps {
 export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, ...props }: NavigationItemProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xl'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClick = (evt: any) => {
     if (isMobile) {

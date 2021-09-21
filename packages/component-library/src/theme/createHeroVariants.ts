@@ -55,7 +55,7 @@ export const centeredVariant = (theme: Theme) => ({
       flexWrap: 'nowrap',
       maxWidth: theme.breakpoints.values.lg,
       margin: '0 auto',
-      [theme.breakpoints.down('xl')]: {
+      [theme.breakpoints.down('md')]: {
         '& div:nth-child(2)': {
           maxWidth: '80%'
         }
