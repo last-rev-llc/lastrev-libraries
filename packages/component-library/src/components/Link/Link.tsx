@@ -180,14 +180,26 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (isExternal) {
     if (noLinkStyle) {
       return (
-        <a className={className} href={href as string} ref={ref as any} {...extra}>
+        <a
+          className={className}
+          href={href as string}
+          ref={ref as any}
+          target="_blank"
+          rel="noopener noreferrer"
+          {...extra}>
           {getButtonContent(text, children, iconPosition, icon)}
         </a>
       );
     }
 
     return (
-      <MuiLink className={className} href={href as string} ref={ref} {...extra}>
+      <MuiLink
+        className={className}
+        href={href as string}
+        ref={ref}
+        target="_blank"
+        rel="noopener noreferrer"
+        {...extra}>
         {getButtonContent(text, children, iconPosition, icon)}
       </MuiLink>
     );
