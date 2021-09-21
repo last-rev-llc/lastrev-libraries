@@ -67,6 +67,7 @@ export type ApolloContext = Context<{
   locales: string[];
   preview?: boolean;
   contentful: ContentfulClients;
+  pathReaders?: PathReaders;
 }>;
 
 export type TypeMapper = {
@@ -84,4 +85,41 @@ export type PagePathsParam = {
     slug: string[];
     locale: string;
   };
+};
+
+export interface iPathNode {
+  data?: PathData;
+  key: string;
+  parent?: iPathNode;
+  children: Map<string, iPathNode>;
+  hasChildren: () => boolean;
+}
+
+export type PathNodeVisitor = (node: iPathNode) => void;
+export interface iPathTree {
+  // root: iPathNode;
+  // locateNodeByPath: Map<string, iPathNode>;
+  // locateNodesById: Map<string, iPathNode[]>;
+  appendNewNode: (data: PathData) => void;
+  getNodesById: (contentId: string) => iPathNode[];
+  getNodeByPath: (path: string) => iPathNode | undefined;
+  serialize: () => PathDataMap;
+  rebuildFromSerialized: (serializedTree: PathDataMap) => void;
+  bfs: (visitor: PathNodeVisitor) => void;
+  filter: (predicate: (node: iPathNode) => boolean) => iPathTree;
+  getPathDataArray: () => PathData[];
+}
+export interface iPathReader {
+  getTree: (site?: string) => Promise<iPathTree | undefined>;
+  load: (site?: string) => Promise<void>;
+  getPathsByContentId: (contentId: string, locale?: string, site?: string) => Promise<string[]>;
+  getAllPaths: (locales: string[], site?: string) => Promise<PagePathsParam[]>;
+  getNodeByPath(path: string, site?: string): Promise<iPathNode | undefined>;
+  getFilteredTree: (filter?: (node: iPathNode) => boolean, site?: string) => Promise<iPathTree>;
+  getSitemap: (locales: string[], defaultLocale: string, site?: string) => Promise<string[]>;
+}
+
+export type PathReaders = {
+  preview: iPathReader;
+  prod: iPathReader;
 };

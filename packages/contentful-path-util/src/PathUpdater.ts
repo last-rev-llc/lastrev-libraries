@@ -4,7 +4,7 @@ import { ApolloContext, TypeMappings, ContentfulPathsConfigs } from '@last-rev/t
 import PathTree from './PathTree';
 import { DEFAULT_SITE_KEY } from './constants';
 import { createPathStore, PathStore } from './PathStore';
-import LastRevAppConfig from 'packages/app-config/dist';
+import LastRevAppConfig from '@last-rev/app-config';
 
 type PathUpdaterProps = {
   pathsConfigs: ContentfulPathsConfigs;
@@ -58,38 +58,40 @@ export default class PathUpdater {
     const loaders = this.context.loaders;
     const preview = this.preview;
     const site = this.site;
+
     const tree = new PathTree();
 
-    for (const contentTypeId of Object.keys(this.pathsConfigs)) {
-      const config = this.pathsConfigs[contentTypeId];
-      const typeKey = get(this.reverseTypeMappings, contentTypeId, contentTypeId);
+    await Promise.all(
+      map(this.pathsConfigs, async (config, contentTypeId) => {
+        const typeKey = get(this.reverseTypeMappings, contentTypeId, contentTypeId);
 
-      let pages = await this.context.loaders.entriesByContentTypeLoader.load({ id: typeKey, preview: this.preview });
+        let pages = await this.context.loaders.entriesByContentTypeLoader.load({ id: typeKey, preview: this.preview });
 
-      pages = pages.filter((entry) => has(entry, 'fields.slug'));
+        pages = pages.filter((entry) => has(entry, 'fields.slug'));
 
-      if (isString(config)) {
-        each(pages, (page) => {
-          const slug = get(page, ['fields', 'slug', defaultLocale]);
-          if (!slug) return;
-          const fullPath = join(config, slug);
-          const contentId = page.sys.id;
-          const excludedLocales: string[] = [];
-          tree.appendNewNode({ fullPath, contentId, excludedLocales, isPrimary: true });
-        });
-      } else if (isFunction(config)) {
-        await Promise.all(
-          map(pages, (page) =>
-            (async () => {
-              const pathToIdMapping = await config(page, loaders, defaultLocale, locales, preview, site);
-              each(pathToIdMapping, (pathData) => {
-                tree.appendNewNode(pathData);
-              });
-            })()
-          )
-        );
-      }
-    }
+        if (isString(config)) {
+          each(pages, (page) => {
+            const slug = get(page, ['fields', 'slug', defaultLocale]);
+            if (!slug) return;
+            const fullPath = join(config, slug);
+            const contentId = page.sys.id;
+            const excludedLocales: string[] = [];
+            tree.appendNewNode({ fullPath, contentId, excludedLocales, isPrimary: true });
+          });
+        } else if (isFunction(config)) {
+          await Promise.all(
+            map(pages, (page) =>
+              (async () => {
+                const pathToIdMapping = await config(page, loaders, defaultLocale, locales, preview, site);
+                each(pathToIdMapping, (pathData) => {
+                  tree.appendNewNode(pathData);
+                });
+              })()
+            )
+          );
+        }
+      })
+    );
 
     this.tree = tree;
   }
@@ -101,24 +103,23 @@ type UpdatePathsProps = {
   updateForProd: boolean;
   context: ApolloContext;
   sites?: string[];
-  pathsConfigs: ContentfulPathsConfigs;
 };
 
-export const updateAllPaths = async ({
-  config,
-  updateForPreview,
-  updateForProd,
-  context,
-  sites,
-  pathsConfigs
-}: UpdatePathsProps) => {
+export const updateAllPaths = async ({ config, updateForPreview, updateForProd, context }: UpdatePathsProps) => {
   let promises = [];
   if (updateForPreview) {
     const pathStore = createPathStore(config);
     promises.push(
       Promise.all(
-        map(sites || [DEFAULT_SITE_KEY], (site) =>
-          updatePathsForSite({ pathStore, updateForPreview, updateForProd, site, pathsConfigs, context })
+        map(config.sites || [DEFAULT_SITE_KEY], (site) =>
+          updatePathsForSite({
+            pathStore,
+            updateForPreview,
+            updateForProd,
+            site,
+            pathsConfigs: config.extensions.pathsConfigs,
+            context
+          })
         )
       )
     );
@@ -128,8 +129,15 @@ export const updateAllPaths = async ({
 
     promises.push(
       Promise.all(
-        map(sites || [DEFAULT_SITE_KEY], (site) =>
-          updatePathsForSite({ pathStore, updateForPreview, updateForProd, site, pathsConfigs, context })
+        map(config.sites || [DEFAULT_SITE_KEY], (site) =>
+          updatePathsForSite({
+            pathStore,
+            updateForPreview,
+            updateForProd,
+            site,
+            pathsConfigs: config.extensions.pathsConfigs,
+            context
+          })
         )
       )
     );

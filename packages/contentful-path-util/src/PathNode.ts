@@ -1,6 +1,6 @@
-import { PathData } from '@last-rev/types';
+import { iPathNode, PathData } from '@last-rev/types';
 
-export class PathNode {
+export class PathNode implements iPathNode {
   data?: PathData;
   key: string;
   parent?: PathNode;

@@ -7,7 +7,6 @@ import fieldResolver from './fieldResolver';
 import capitalizeFirst from '../utils/capitalizeFirst';
 import { merge, mapValues } from 'lodash';
 import { ApolloContext, Mappers, TypeMappings } from '@last-rev/types';
-import { PathReaders } from 'types';
 
 export const fieldsResolver = (type: string, fields: string[], mappers: Mappers) =>
   fields.reduce((accum: any, field: string) => {
@@ -19,13 +18,11 @@ export const fieldsResolver = (type: string, fields: string[], mappers: Mappers)
 const createResolvers = ({
   contentTypes,
   mappers = {},
-  typeMappings = {},
-  pathReaders
+  typeMappings = {}
 }: {
   contentTypes: ContentType[];
   mappers?: Mappers;
   typeMappings?: TypeMappings;
-  pathReaders: PathReaders;
 }) =>
   merge(getContentResolvers({ contentTypes, mappers, typeMappings }), {
     Query: {
@@ -39,7 +36,9 @@ const createResolvers = ({
         ctx.locale = locale || ctx.defaultLocale;
         ctx.preview = preview;
 
-        const pathReader = pathReaders[preview ? 'preview' : 'prod'];
+        if (!ctx.pathReaders) return null;
+
+        const pathReader = ctx.pathReaders[preview ? 'preview' : 'prod'];
 
         const node = await pathReader.getNodeByPath(path, site);
         if (!node || !node.data) return null;
@@ -55,8 +54,9 @@ const createResolvers = ({
       ) => {
         if (!locales) throw new Error('MissingArgumentLocales');
         ctx.preview = preview;
+        if (!ctx.pathReaders) return null;
 
-        const pathReader = pathReaders[preview ? 'preview' : 'prod'];
+        const pathReader = ctx.pathReaders[preview ? 'preview' : 'prod'];
 
         return await pathReader.getAllPaths(locales, site);
       },

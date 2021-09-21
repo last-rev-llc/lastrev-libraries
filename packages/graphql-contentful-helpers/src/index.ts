@@ -1,4 +1,4 @@
 import createLoaders from './createLoaders';
-import prepareContext from './prepareContext';
+import createContext from './createContext';
 
-export { createLoaders, prepareContext };
+export { createLoaders, createContext };

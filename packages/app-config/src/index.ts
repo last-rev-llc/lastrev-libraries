@@ -12,14 +12,17 @@ const defaultConfig: LastRevAppConfigArgs = {
   graphql: {
     port: 5000,
     host: 'localhost'
-  }
+  },
+  sites: []
 };
 
 export default class LastRevAppConfig implements LastRevAppConfiguration {
   config: LastRevAppConfigArgs;
 
   constructor(config: LastRevAppConfigArgs) {
-    this.config = merge({}, config, defaultConfig);
+    console.log(config.sites, defaultConfig.sites);
+    this.config = merge({}, defaultConfig, config);
+    console.log(config.sites, defaultConfig.sites, this.config.sites);
     this.validateCmsVars();
     this.validateStrategy();
   }
@@ -60,6 +63,10 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
     }
   }
 
+  clone(newConfig: LastRevAppConfigArgs) {
+    return new LastRevAppConfig(merge({}, this.config, newConfig));
+  }
+
   get contentful() {
     return {
       spaceId: this.config.contentful?.spaceId!,
@@ -75,11 +82,11 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
   }
 
   get cms() {
-    return this.config.cms;
+    return this.config.cms!;
   }
 
   get strategy() {
-    return this.config.strategy;
+    return this.config.strategy!;
   }
 
   get fs() {
@@ -115,5 +122,9 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       port: this.config.graphql?.port!,
       host: this.config.graphql?.host!
     };
+  }
+
+  get sites() {
+    return this.config.sites!;
   }
 }

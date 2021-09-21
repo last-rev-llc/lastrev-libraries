@@ -3,9 +3,9 @@ import PathTree from './PathTree';
 import { PathNode } from './PathNode';
 import { PathStore } from './PathStore';
 import { DEFAULT_SITE_KEY } from './constants';
-import { PagePathsParam } from 'packages/types';
+import { iPathReader, PagePathsParam } from 'packages/types';
 
-export default class PathReader {
+export default class PathReader implements iPathReader {
   trees: { [site: string]: PathTree } = {};
   pathStore: PathStore;
 
@@ -13,7 +13,12 @@ export default class PathReader {
     this.pathStore = pathStore;
   }
 
-  async load(site: string): Promise<void> {
+  async getTree(site: string = DEFAULT_SITE_KEY): Promise<PathTree | undefined> {
+    await this.ensureLoaded(site);
+    return this.trees[site];
+  }
+
+  async load(site: string = DEFAULT_SITE_KEY): Promise<void> {
     const tree = (this.trees[site] = new PathTree());
     const serialized = await this.pathStore.load(site);
     tree.rebuildFromSerialized(serialized);
@@ -61,7 +66,7 @@ export default class PathReader {
     return this.trees[site]!.getNodeByPath(path);
   }
 
-  async getTree(filter?: (node: PathNode) => boolean, site: string = DEFAULT_SITE_KEY): Promise<PathTree> {
+  async getFilteredTree(filter?: (node: PathNode) => boolean, site: string = DEFAULT_SITE_KEY): Promise<PathTree> {
     await this.ensureLoaded(site);
     return filter ? this.trees[site]!.filter(filter) : this.trees[site]!;
   }

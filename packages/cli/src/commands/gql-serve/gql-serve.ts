@@ -6,17 +6,12 @@ import LastRevAppConfig from '@last-rev/app-config';
 
 const run = async (configFile: string) => {
   let config;
+
   try {
-    // load as package
-    config = require(configFile) as LastRevAppConfig;
+    config = require(resolve(process.cwd(), configFile)) as LastRevAppConfig;
   } catch (e: any) {
-    try {
-      // load as file
-      config = require(resolve(process.cwd(), configFile)) as LastRevAppConfig;
-    } catch (e: any) {
-      console.error(`unable to load config: ${configFile}: ${e.message}`);
-      process.exit();
-    }
+    console.error(`unable to load config: ${configFile}: ${e.message}`);
+    process.exit();
   }
 
   const server = await getServer(config);
@@ -24,12 +19,7 @@ const run = async (configFile: string) => {
   console.log(`Server ready at ${url}. `);
 };
 
-program
-  .requiredOption(
-    '-c --config <config file or package>',
-    'Name of a config package (default export), or alternatively, a path to a js file'
-  )
-  .parse(process.argv);
+program.requiredOption('-c --config <config file>', 'Path to a js file').parse(process.argv);
 
 const { config } = program.opts();
 

@@ -1,6 +1,6 @@
 import { PathData, PathDataMap } from 'packages/types';
 import { join } from 'path';
-import { readFile, writeFile } from 'fs-extra';
+import { ensureDir, readFile, writeFile } from 'fs-extra';
 import logger from 'loglevel';
 import Redis from 'ioredis';
 import { mapValues } from 'lodash';
@@ -15,29 +15,32 @@ export class FsPathStore implements PathStore {
   basePath: string;
 
   constructor(config: LastRevAppConfig) {
+    console.log('here', config.fs);
     this.basePath = join(
       config.fs.contentDir,
       config.contentful.spaceId,
       config.contentful.env,
-      config.contentful.usePreview ? 'preview' : 'production'
+      config.contentful.usePreview ? 'preview' : 'production',
+      'path_data'
     );
   }
 
   getFilePath(site: string) {
-    return join(this.basePath, 'path_data', `${site}.json`);
+    return join(this.basePath, `${site}.json`);
   }
 
-  load = async () => {
+  load = async (site: string) => {
     try {
-      const data = await readFile(this.basePath, 'utf8');
+      const data = await readFile(this.getFilePath(site), 'utf8');
       return JSON.parse(data);
     } catch (e) {
-      logger.info(`No path data found at ${this.basePath}`);
+      logger.info(`No path data found at ${this.getFilePath(site)}`);
       return {};
     }
   };
 
   save = async (pathDataMap: PathDataMap, site: string) => {
+    await ensureDir(this.basePath);
     await writeFile(this.getFilePath(site), JSON.stringify(pathDataMap));
   };
 }
@@ -73,7 +76,7 @@ export class RedisPathStore implements PathStore {
     const key = this.getKey(site);
     await this.client
       .multi()
-      .hdel(key)
+      .del(key)
       .hmset(
         key,
         mapValues(pathDataMap, (p) => JSON.stringify(p))

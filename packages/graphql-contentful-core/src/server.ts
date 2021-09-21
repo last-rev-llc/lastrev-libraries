@@ -3,8 +3,8 @@ import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
 import buildSchema from './buildSchema';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
-import { createLoaders, prepareContext } from '@last-rev/graphql-contentful-helpers';
-import createPathReaders from 'createPathReaders';
+import { createLoaders, createContext } from '@last-rev/graphql-contentful-helpers';
+import createPathReaders from './createPathReaders';
 import LastRevAppConfig from '@last-rev/app-config';
 
 export const getServer = async (config: LastRevAppConfig) => {
@@ -16,8 +16,8 @@ export const getServer = async (config: LastRevAppConfig) => {
   const pathReaders = createPathReaders(config);
 
   const [context, schema] = await Promise.all([
-    prepareContext(config, loaders),
-    buildSchema(config, loaders, pathReaders)
+    createContext(config, loaders, pathReaders),
+    buildSchema(config, loaders)
   ]);
 
   const server = new ApolloServer({

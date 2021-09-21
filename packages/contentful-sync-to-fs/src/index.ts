@@ -1,11 +1,13 @@
 import { chain, flatten, map } from 'lodash';
-import { resolve, join } from 'path';
+import { join } from 'path';
 import { ensureDir, writeFile, createFile } from 'fs-extra';
 import { Asset, Entry, createClient, ContentfulClientApi, ContentType } from 'contentful';
 import Timer from '@last-rev/timer';
 import ora from 'ora';
 import logger from 'loglevel';
 import LastRevAppConfig from '@last-rev/app-config';
+import { updateAllPaths } from '@last-rev/contentful-path-util';
+import { createContext, createLoaders } from '@last-rev/graphql-contentful-helpers';
 
 const ENTRIES_DIRNAME = 'entries';
 const ASSETS_DIRNAME = 'assets';
@@ -101,7 +103,8 @@ const syncAllAssets = async (client: ContentfulClientApi): Promise<Asset[]> => {
   ).assets;
 };
 
-const sync = async (config: LastRevAppConfig) => {
+const sync = async (config: LastRevAppConfig, sites?: string[]) => {
+  console.log('config', config);
   const timer = new Timer('Total elapsed time');
   let spinner;
 
@@ -150,13 +153,14 @@ const sync = async (config: LastRevAppConfig) => {
   const entryIdsByContentTypeLookup = getEntriesByContentTypeLookup(entries);
 
   const root = join(
-    resolve(process.cwd(), config.fs.contentDir),
+    config.fs.contentDir,
     config.contentful.spaceId,
     config.contentful.env,
     config.contentful.usePreview ? 'preview' : 'production'
   );
+
   startTime = Date.now();
-  spinner = ora('writing files');
+  spinner = ora('writing content files').start();
   // console.time('finished writing files');
   await Promise.all([
     writeContentfulItems(entries, root, ENTRIES_DIRNAME),
@@ -164,7 +168,20 @@ const sync = async (config: LastRevAppConfig) => {
     writeContentfulItems(contentTypes, root, CONTENT_TYPES_DIRNAME),
     writeEntriesByContentTypeFiles(entryIdsByContentTypeLookup, root)
   ]);
-  spinner.succeed(`writing files: ${Date.now() - startTime}ms`);
+  spinner.succeed(`writing content files: ${Date.now() - startTime}ms`);
+
+  startTime = Date.now();
+  spinner = ora('writing paths tree').start();
+
+  await updateAllPaths({
+    config,
+    updateForPreview: !!config.contentful.usePreview,
+    updateForProd: !config.contentful.usePreview,
+    context: await createContext(config, createLoaders(config)),
+    sites
+  });
+  spinner.succeed(`writing paths tree: ${Date.now() - startTime}ms`);
+
   logger.debug(timer.end());
 };
 

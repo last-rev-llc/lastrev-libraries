@@ -1,6 +1,6 @@
 import { find, get, map } from 'lodash';
 import { createClient } from 'contentful';
-import { ApolloContext, ContentfulLoaders } from '@last-rev/types';
+import { ApolloContext, ContentfulLoaders, PathReaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 
 const getLocales = async (space: string, environment: string, accessToken: string) => {
@@ -14,7 +14,11 @@ const getLocales = async (space: string, environment: string, accessToken: strin
   return locales.items;
 };
 
-const prepare = async (config: LastRevAppConfig, loaders: ContentfulLoaders): Promise<ApolloContext> => {
+const createContext = async (
+  config: LastRevAppConfig,
+  loaders: ContentfulLoaders,
+  pathReaders?: PathReaders
+): Promise<ApolloContext> => {
   const locales = await getLocales(
     config.contentful.spaceId,
     config.contentful.env,
@@ -48,8 +52,9 @@ const prepare = async (config: LastRevAppConfig, loaders: ContentfulLoaders): Pr
     loaders,
     mappers: config.extensions.mappers,
     defaultLocale,
+    pathReaders,
     typeMappings: config.extensions.typeMappings
   };
 };
 
-export default prepare;
+export default createContext;

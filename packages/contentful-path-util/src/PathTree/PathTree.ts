@@ -1,9 +1,9 @@
 import { each } from 'lodash';
-import { PathData, PathDataMap } from '@last-rev/types';
+import { iPathTree, PathData, PathDataMap } from '@last-rev/types';
 import { PathNode } from '../PathNode';
 import { PathNodeVisitor } from '../types';
 
-export default class PathTree {
+export default class PathTree implements iPathTree {
   root: PathNode = new PathNode('');
   locateNodeByPath: Map<string, PathNode> = new Map();
   locateNodesById: Map<string, PathNode[]> = new Map();

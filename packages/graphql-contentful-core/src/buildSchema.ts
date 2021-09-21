@@ -3,7 +3,6 @@ import generateSchema from '@last-rev/graphql-schema-gen';
 import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
 import { ContentfulLoaders } from '@last-rev/types';
-import { PathReaders } from 'types';
 import { GraphQLSchema } from 'graphql';
 import { buildFederatedSchema } from '@apollo/federation';
 import LastRevAppConfig from '../../app-config/dist';
@@ -17,11 +16,7 @@ const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
   return contentTypes;
 };
 
-const buildSchema = async (
-  config: LastRevAppConfig,
-  loaders: ContentfulLoaders,
-  pathReaders: PathReaders
-): Promise<GraphQLSchema> => {
+const buildSchema = async (config: LastRevAppConfig, loaders: ContentfulLoaders): Promise<GraphQLSchema> => {
   const contentTypes = await fetchAllContentTypes(loaders);
 
   const baseTypeDefs = await generateSchema({
@@ -32,7 +27,6 @@ const buildSchema = async (
   });
 
   const defaultResolvers = createResolvers({
-    pathReaders,
     contentTypes,
     mappers: config.extensions.mappers,
     typeMappings: config.extensions.typeMappings

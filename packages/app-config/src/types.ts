@@ -27,20 +27,21 @@ export interface LastRevAppConfiguration {
     port: number;
     host: string;
   };
+  sites: string[];
 }
 
 export type LastRevAppConfigArgs = {
-  cms: 'Contentful';
-  strategy: 'fs' | 'redis';
+  cms?: 'Contentful';
+  strategy?: 'fs' | 'redis';
   redis?: {
-    host: string;
-    port: number;
+    host?: string;
+    port?: number;
     password?: string;
     tls?: any;
     db?: number;
   };
   fs?: {
-    contentDir: string;
+    contentDir?: string;
   };
   contentful?: {
     contentDeliveryToken?: string;
@@ -55,4 +56,5 @@ export type LastRevAppConfigArgs = {
     port?: number;
     host?: string;
   };
+  sites?: string[];
 };
