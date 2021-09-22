@@ -1,1 +1,2 @@
-export { default, NavigationBarProps } from './NavigationBar';
+export { default } from './NavigationBar';
+export type { NavigationBarProps } from './NavigationBar';

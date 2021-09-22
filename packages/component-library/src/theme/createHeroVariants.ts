@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
 
 export const defaultVariant = (theme: Theme) => ({
   props: {
@@ -46,7 +46,7 @@ export const centeredVariant = (theme: Theme) => ({
     variant: 'centered'
   },
   style: {
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       padding: theme.spacing(4, 0)
     },
     '& > .MuiContainer-root > .MuiGrid-container': {
@@ -55,7 +55,7 @@ export const centeredVariant = (theme: Theme) => ({
       flexWrap: 'nowrap',
       maxWidth: theme.breakpoints.values.lg,
       margin: '0 auto',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         '& div:nth-child(2)': {
           maxWidth: '80%'
         }

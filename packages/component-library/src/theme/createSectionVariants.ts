@@ -1,4 +1,4 @@
-import { Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
 
 export const singlePanelVariant = () => ({
   props: {
@@ -74,7 +74,7 @@ export const highlightVariant = (theme: Theme) => ({
       'padding': 0,
       'textAlign': 'center',
 
-      [theme.breakpoints.down('lg')]: {
+      [theme.breakpoints.down('xl')]: {
         '& [class*="MuiTypography"]': {
           fontSize: '1rem'
         },

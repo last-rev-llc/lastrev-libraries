@@ -25,7 +25,7 @@ module.exports = {
     config.resolve.alias = {
       ...config.resolve.alias,
       'react': path.resolve(__dirname, '../../node_modules', 'react'),
-      '@material-ui': path.resolve(__dirname, '../../node_modules/@material-ui')
+      '@mui': path.resolve(__dirname, '../../node_modules/@mui')
     };
     return config;
   }

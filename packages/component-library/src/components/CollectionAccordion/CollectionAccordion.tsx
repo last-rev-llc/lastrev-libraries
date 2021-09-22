@@ -1,7 +1,7 @@
 import React from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary';
-import styled from '@material-ui/system/styled';
+import styled from '@mui/system/styled';
 import sidekick from '../../utils/sidekick';
 import Accordion, { AccordionProps } from '../Accordion';
 
@@ -46,17 +46,15 @@ const Root = styled(Grid, {
   name: 'CollectionAccordion',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({}));
 
 const AccordionItem = styled(Grid, {
   name: 'CollectionAccordion',
   slot: 'AccordionItem',
-  overridesResolver: (_, styles) => ({
-    ...styles.accordionItem
-  })
+  overridesResolver: (_, styles) => [
+    styles.accordionItem
+  ]
 })<{ variant?: string }>(() => ({}));
 
 export default CollectionAccordion;

@@ -1,6 +1,6 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
-import PlayCircleFilledRoundedIcon from '@material-ui/icons/PlayCircleFilledRounded';
+import Box from '@mui/material/Box';
+import PlayCircleFilledRoundedIcon from '@mui/icons-material/PlayCircleFilledRounded';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import Text from './Text';
 import mockContent, { complexMock } from './Text.mock';

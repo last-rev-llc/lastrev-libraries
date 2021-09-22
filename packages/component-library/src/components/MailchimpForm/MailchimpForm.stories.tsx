@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
+import Box from '@mui/material/Box';
 import MailchimpForm from './MailchimpForm';
 import mailchimpFormMock from './MailchimpForm.mock';
 
