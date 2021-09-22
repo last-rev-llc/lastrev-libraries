@@ -126,7 +126,7 @@ HeroProps) => {
               </Grid>
             ) : null}
             {image ? (
-              <Grid item container spacing={2} xs={12} md={6}>
+              <Grid item xs={12} md={6}>
                 <Media
                   {...(Array.isArray(image) ? image[0] : image)}
                   {...sidekick(sidekickLookup?.image)}
