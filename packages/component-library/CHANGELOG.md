@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.0
+
+### Minor Changes
+
+- 0c91ca6: Add FormMarketoEmbed component
+
 ## 0.1.31
 
 ### Patch Changes
