@@ -7,7 +7,11 @@ export default {
   title: '2. Modules / FormMarketoEmbed',
   component: FormMarketoEmbed,
   decorators: [
-    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => <Box>{storyFn()}</Box>
+    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
+      <Box p={2} bgcolor="secondary.main">
+        {storyFn()}
+      </Box>
+    )
   ],
   argTypes: {
     variant: {
