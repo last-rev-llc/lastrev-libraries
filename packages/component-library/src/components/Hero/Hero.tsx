@@ -111,9 +111,7 @@ HeroProps) => {
                         {subtitle}
                       </Typography>
                     ) : null}
-                    {body ? (
-                      <Text body={body} data-testid="Hero-body" {...sidekick(sidekickLookup?.body)} />
-                    ) : null}
+                    {body ? <Text body={body} data-testid="Hero-body" {...sidekick(sidekickLookup?.body)} /> : null}
                     {actions ? (
                       <Box pt={title || subtitle || body ? 3 : undefined} {...sidekick(sidekickLookup?.actions)}>
                         {actions?.map((link) => (

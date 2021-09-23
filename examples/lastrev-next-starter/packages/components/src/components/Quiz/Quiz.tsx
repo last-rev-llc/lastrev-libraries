@@ -93,7 +93,8 @@ export const Step = ({ step }: BoxProps) => {
                 sx={{
                   columns: fld.options.length > 3 ? 2 : 1,
                   marginBottom: 3
-                }}>
+                }}
+              >
                 {fld.options?.map((opt, idx) => (
                   <ListItemButton
                     key={`${fld.id}-${idx}`}
@@ -105,7 +106,8 @@ export const Step = ({ step }: BoxProps) => {
                       marginBottom: 2,
                       border: '2px solid #30CEC2',
                       borderRadius: 2
-                    }}>
+                    }}
+                  >
                     <ListItemText primary={opt.label} />
                   </ListItemButton>
                 ))}
@@ -132,7 +134,8 @@ export const Quiz = ({ sidekickLookup, title, intro, image, outro, settings }: Q
               position: 'relative',
               margin: '0 auto',
               transform: 'translateX(-40px)'
-            }}>
+            }}
+          >
             <Grid item xs={12} sm={8} sx={{ paddingBottom: 8 }}>
               {title ? (
                 <Typography {...sidekick(sidekickLookup?.title)} variant="h2" component="h2" align="right">
@@ -154,7 +157,8 @@ export const Quiz = ({ sidekickLookup, title, intro, image, outro, settings }: Q
                   left: 40,
                   width: '100%',
                   height: '100%'
-                }}>
+                }}
+              >
                 <Media {...image} {...sidekick(sidekickLookup?.image)} />
               </Grid>
             ) : null}
@@ -170,7 +174,8 @@ export const Quiz = ({ sidekickLookup, title, intro, image, outro, settings }: Q
                 backgroundColor: '#bdefeb',
                 borderRadius: 20,
                 color: '#444'
-              }}>
+              }}
+            >
               <CarouselContainer
                 {...sidekick(sidekickLookup?.settings)}
                 cssMode
@@ -178,7 +183,8 @@ export const Quiz = ({ sidekickLookup, title, intro, image, outro, settings }: Q
                 pagination={{ clickable: true }}
                 mousewheel
                 keyboard
-                loop>
+                loop
+              >
                 {settings?.steps.map((step, idx) => (
                   <SwiperSlide key={idx}>
                     <CarouselItem>
@@ -199,7 +205,8 @@ export const Quiz = ({ sidekickLookup, title, intro, image, outro, settings }: Q
                 m: '60px auto 0',
                 border: '1px solid white',
                 textAlign: 'center'
-              }}>
+              }}
+            >
               <Text sidekickLookup={sidekickLookup?.outro} body={outro} align="center" />
             </Box>
           ) : null}
