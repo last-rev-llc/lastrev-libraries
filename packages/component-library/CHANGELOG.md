@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.3
+
+### Patch Changes
+
+- b415b05: Fix MUI Selectors
+
 ## 0.2.2
 
 ### Patch Changes

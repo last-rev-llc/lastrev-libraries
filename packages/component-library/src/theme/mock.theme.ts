@@ -132,7 +132,7 @@ const theme = createAppTheme(
         variants: createHeroVariants(baseTheme),
         styleOverrides: {
           root: {
-            display: 'flex',
+            'display': 'flex',
             '& .MuiGrid-container': {
               alignItems: 'center'
             },
@@ -238,10 +238,10 @@ const theme = createAppTheme(
             }
           },
           h3: {
-            paddingBottom: baseTheme.spacing(3),
-            fontSize: 32,
-            fontWeight: 'bold',
-            color: baseTheme.palette.secondary.main,
+            'paddingBottom': baseTheme.spacing(3),
+            'fontSize': 32,
+            'fontWeight': 'bold',
+            'color': baseTheme.palette.secondary.main,
             '& u': {
               textDecorationColor: baseTheme.palette.tertiary.main
             }
