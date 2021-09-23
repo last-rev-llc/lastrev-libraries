@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.2
+
+### Patch Changes
+
+- 4286082: Normalize path in PathReader getNodeByPath
+
 ## 0.1.1
 
 ### Patch Changes
