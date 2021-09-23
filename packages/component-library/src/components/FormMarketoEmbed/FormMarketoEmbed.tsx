@@ -1,7 +1,7 @@
 import React from 'react';
 import Script from 'next/script';
-import { Box } from '@material-ui/core';
-import styled from '@material-ui/system/styled';
+import { Box } from '@mui/material';
+import { styled } from '@mui/material/styles';
 
 declare global {
   interface Window {
@@ -55,16 +55,12 @@ const Root = styled(Box, {
   name: 'FormMarketoEmbed',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => styles.root
 })<{ variant?: string }>(() => ({}));
 
 const Form = styled('form', {
   name: 'FormMarketoEmbed',
   slot: 'Form',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.form
-  })
+  overridesResolver: (_, styles) => styles.form
 })<{ variant?: string }>(() => ({}));
