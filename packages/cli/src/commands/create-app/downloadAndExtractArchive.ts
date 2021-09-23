@@ -4,6 +4,7 @@ import { promisify } from 'util';
 import got from 'got';
 import tar from 'tar';
 import ora from 'ora';
+import { URL } from 'url';
 
 const pipeline = promisify(Stream.pipeline);
 
@@ -23,16 +24,18 @@ const downloadAndExtractArchive = async ({ octokit, root, example }: DAEAProps):
     });
 
     const regex = new RegExp(`^[^/]*/examples/${example}/.*`);
+    console.log('result.url', result.url);
     await pipeline(
-      got.stream(result.url),
+      got.stream(new URL(result.url)),
       tar.extract({
         cwd: root,
         strip: 3,
         filter: (path: string) => regex.test(path)
       })
     );
-  } catch (e) {
+  } catch (e: any) {
     spinner.fail();
+    console.log(e.stack);
     throw e;
   }
   spinner.succeed();
