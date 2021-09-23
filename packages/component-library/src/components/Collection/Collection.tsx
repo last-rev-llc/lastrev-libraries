@@ -85,17 +85,13 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'Collection',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) => [
-    styles.contentContainer
-  ]
+  overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>``;
 
 const IntroText = styled(Text, {
   name: 'Collection',
   slot: 'IntroText',
-  overridesResolver: (_, styles) => [
-    styles.introText
-  ]
+  overridesResolver: (_, styles) => [styles.introText]
 })<{ variant?: string }>``;
 
 export default Collection;

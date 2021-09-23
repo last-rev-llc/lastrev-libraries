@@ -81,9 +81,7 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'CollectionCarousel',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) => [
-    styles.contentContainer
-  ]
+  overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(() => ({
   display: 'flex'
 }));
@@ -91,9 +89,7 @@ const ContentContainer = styled(Container, {
 const CarouselContainer = styled(Swiper, {
   name: 'CollectionCarousel',
   slot: 'CarouselContainer',
-  overridesResolver: (_, styles) => [
-    styles.carouselContainer
-  ]
+  overridesResolver: (_, styles) => [styles.carouselContainer]
 })<{ variant?: string }>(({ theme }) => ({
   '--swiper-theme-color': theme.palette.primary.main,
   '& > .swiper-pagination-bullets span.swiper-pagination-bullet': {
@@ -113,9 +109,7 @@ const CarouselContainer = styled(Swiper, {
 const CarouselItem = styled(Box, {
   name: 'CollectionCarousel',
   slot: 'CarouselItem',
-  overridesResolver: (_, styles) => [
-    styles.carouselItem
-  ]
+  overridesResolver: (_, styles) => [styles.carouselItem]
 })<{ variant?: string }>(() => ({
   display: 'flex',
   justifyContent: 'center',

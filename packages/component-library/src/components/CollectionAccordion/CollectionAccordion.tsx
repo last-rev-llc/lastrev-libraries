@@ -52,9 +52,7 @@ const Root = styled(Grid, {
 const AccordionItem = styled(Grid, {
   name: 'CollectionAccordion',
   slot: 'AccordionItem',
-  overridesResolver: (_, styles) => [
-    styles.accordionItem
-  ]
+  overridesResolver: (_, styles) => [styles.accordionItem]
 })<{ variant?: string }>(() => ({}));
 
 export default CollectionAccordion;
