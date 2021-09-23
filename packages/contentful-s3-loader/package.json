@@ -24,7 +24,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.22.0",
+    "@aws-sdk/client-s3": "^3.30.0",
     "@last-rev/timer": "^0.1.1",
     "axios": "^0.21.1",
     "dataloader": "^2.0.0",
