@@ -52,7 +52,7 @@ const Root = styled(Box, {
           align-items: center;
         }
       }
-      [class$='MuiLink-root'] {
+      .MuiLink-root {
         display: flex;
         height: 100%;
         width: 100%;
@@ -60,7 +60,7 @@ const Root = styled(Box, {
         justify-content: center;
         padding:  ${theme.spacing(3)};
       }
-      [class$='MuiButton-root'] {
+      .MuiButton-root {
         margin-left: ${theme.spacing(3)};
       }
       [class$='NavigationItem-root'] {

@@ -75,7 +75,7 @@ export const highlightVariant = (theme: Theme) => ({
       'textAlign': 'center',
 
       [theme.breakpoints.down('xl')]: {
-        '& [class*="MuiTypography"]': {
+        '& .MuiTypography': {
           fontSize: '1rem'
         },
         '& ul': {
