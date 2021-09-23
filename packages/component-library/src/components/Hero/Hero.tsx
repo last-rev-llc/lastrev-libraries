@@ -86,7 +86,7 @@ HeroProps) => {
         <ContentContainer maxWidth={contentWidth} disableGutters>
           <Grid container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
-              <Grid item container direction="column" spacing={2} xs={12}>
+              <Grid item container direction="column" spacing={2} xs={12} md={6}>
                 {title || subtitle ? (
                   <Grid item>
                     {title ? (
@@ -111,24 +111,22 @@ HeroProps) => {
                         {subtitle}
                       </Typography>
                     ) : null}
-                  </Grid>
-                ) : null}
-                {body ? (
-                  <Grid item {...sidekick(sidekickLookup?.body)}>
-                    <Text body={body} data-testid="Hero-body" />
-                  </Grid>
-                ) : null}
-                {actions ? (
-                  <Grid item pt={3} {...sidekick(sidekickLookup?.actions)}>
-                    {actions?.map((link) => (
-                      <Link key={link.id} {...link} />
-                    ))}
+                    {body ? (
+                      <Text body={body} data-testid="Hero-body" {...sidekick(sidekickLookup?.body)} />
+                    ) : null}
+                    {actions ? (
+                      <Box pt={title || subtitle || body ? 3 : undefined} {...sidekick(sidekickLookup?.actions)}>
+                        {actions?.map((link) => (
+                          <Link key={link.id} {...link} />
+                        ))}
+                      </Box>
+                    ) : null}
                   </Grid>
                 ) : null}
               </Grid>
             ) : null}
             {image ? (
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} md={6}>
                 <Media
                   {...(Array.isArray(image) ? image[0] : image)}
                   {...sidekick(sidekickLookup?.image)}

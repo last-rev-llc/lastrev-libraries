@@ -132,7 +132,7 @@ const theme = createAppTheme(
         variants: createHeroVariants(baseTheme),
         styleOverrides: {
           root: {
-            'display': 'flex',
+            display: 'flex',
             '& .MuiGrid-container': {
               alignItems: 'center'
             },
@@ -145,17 +145,25 @@ const theme = createAppTheme(
 
             // TODO: add more line spacing if <u> exists
             '& .MuiTypography-h1': {
+              [baseTheme.breakpoints.down('lg')]: {
+                fontSize: 36,
+                lineHeight: '1.25'
+              },
               u: {
                 textUnderlinePosition: 'under',
                 textDecorationThickness: 4,
-                textDecorationColor: '#30CEC2'
+                textDecorationColor: baseTheme.palette.tertiary.main
               }
             },
             '& .MuiTypography-h2': {
+              [baseTheme.breakpoints.down('lg')]: {
+                fontSize: 28,
+                lineHeight: '1.3'
+              },
               u: {
                 textUnderlinePosition: 'under',
                 textDecorationThickness: 4,
-                textDecorationColor: '#30CEC2'
+                textDecorationColor: baseTheme.palette.tertiary.main
               }
             },
             'img': {
@@ -214,20 +222,26 @@ const theme = createAppTheme(
       MuiTypography: {
         styleOverrides: {
           h1: {
-            paddingBottom: 10,
+            paddingBottom: baseTheme.spacing(2),
             fontSize: 40,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            [baseTheme.breakpoints.up('lg')]: {
+              paddingBottom: baseTheme.spacing(3)
+            }
           },
           h2: {
-            paddingBottom: 20,
+            paddingBottom: baseTheme.spacing(2),
             fontSize: 32,
-            fontWeight: 'bold'
+            fontWeight: 'bold',
+            [baseTheme.breakpoints.up('lg')]: {
+              paddingBottom: baseTheme.spacing(3)
+            }
           },
           h3: {
-            'paddingBottom': 20,
-            'fontSize': 32,
-            'fontWeight': 'bold',
-            'color': baseTheme.palette.secondary.main,
+            paddingBottom: baseTheme.spacing(3),
+            fontSize: 32,
+            fontWeight: 'bold',
+            color: baseTheme.palette.secondary.main,
             '& u': {
               textDecorationColor: baseTheme.palette.tertiary.main
             }
@@ -241,7 +255,10 @@ const theme = createAppTheme(
             fontSize: 18
           },
           body1: {
-            fontSize: '1.125rem'
+            fontSize: '1rem',
+            [baseTheme.breakpoints.up('lg')]: {
+              fontSize: '1.125rem'
+            }
           },
           body2: {
             fontSize: '0.875rem'
