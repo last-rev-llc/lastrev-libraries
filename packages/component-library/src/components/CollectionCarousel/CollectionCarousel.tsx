@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Box } from '@material-ui/core';
-import { Breakpoint } from '@material-ui/core';
-import styled from '@material-ui/system/styled';
+import { Container, Box } from '@mui/material';
+import { Breakpoint } from '@mui/material';
+import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import { MediaProps } from '../Media';
 import { CardProps } from '../Card';
@@ -72,9 +72,7 @@ const Root = styled(Box, {
   name: 'CollectionCarousel',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({
   display: 'flex',
   justifyContent: 'center'
@@ -83,9 +81,7 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'CollectionCarousel',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.contentContainer
-  })
+  overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(() => ({
   display: 'flex'
 }));
@@ -93,9 +89,7 @@ const ContentContainer = styled(Container, {
 const CarouselContainer = styled(Swiper, {
   name: 'CollectionCarousel',
   slot: 'CarouselContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.carouselContainer
-  })
+  overridesResolver: (_, styles) => [styles.carouselContainer]
 })<{ variant?: string }>(({ theme }) => ({
   '--swiper-theme-color': theme.palette.primary.main,
   '& > .swiper-pagination-bullets span.swiper-pagination-bullet': {
@@ -106,7 +100,7 @@ const CarouselContainer = styled(Swiper, {
     height: 10
   },
   '& .swiper-button-prev, .swiper-button-next': {
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       display: 'none'
     }
   }
@@ -115,9 +109,7 @@ const CarouselContainer = styled(Swiper, {
 const CarouselItem = styled(Box, {
   name: 'CollectionCarousel',
   slot: 'CarouselItem',
-  overridesResolver: (_, styles) => ({
-    ...styles.carouselItem
-  })
+  overridesResolver: (_, styles) => [styles.carouselItem]
 })<{ variant?: string }>(() => ({
   display: 'flex',
   justifyContent: 'center',

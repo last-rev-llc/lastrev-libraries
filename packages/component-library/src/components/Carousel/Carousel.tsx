@@ -1,8 +1,8 @@
 import React from 'react';
-import { Box, Button, Grid, MobileStepper, Typography } from '@material-ui/core';
-import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import styled from '@material-ui/system/styled';
+import { Box, Button, Grid, MobileStepper, Typography } from '@mui/material';
+import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import Card, { CardProps } from '../Card';
 import Text, { RichText } from '../Text';
@@ -81,9 +81,7 @@ const CarouselRoot = styled(Box, {
   name: 'Carousel',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({
   textAlign: 'center'
 }));

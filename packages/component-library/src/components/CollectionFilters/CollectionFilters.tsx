@@ -1,6 +1,6 @@
 import React from 'react';
-import { Autocomplete, Grid, Chip, MenuItem, TextField, Button } from '@material-ui/core';
-import styled from '@material-ui/system/styled';
+import { Autocomplete, Grid, Chip, MenuItem, TextField, Button } from '@mui/material';
+import styled from '@mui/system/styled';
 
 interface FilterSetting {
   id: string;
@@ -156,9 +156,7 @@ const CollectionFiltersRoot = styled(Grid, {
   name: 'CollectionFiltered',
   slot: 'FiltersRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({}));
 
 export default CollectionFilters;

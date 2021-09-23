@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/component-library",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "Last Rev Component Library",
   "main": "dist/index.js",
   "files": [
@@ -14,20 +14,18 @@
     "build-storybook": "build-storybook",
     "cypress:open": "percy exec -- cypress open-ct",
     "test": "jest",
-    "percy:storybook": "percy storybook ./storybook-static",
+    "percy:storybook": "percy storybook ./storybook-static || true",
     "test:e2e": "cross-env NODE_ENV=test percy exec --  cypress run-ct",
     "test:watch": "jest --watch"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.0.0",
     "@contentful/rich-text-types": "^15.0.0",
-    "@emotion/react": "^11.4.0",
+    "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/rollup-config": "^0.0.5",
     "@last-rev/testing-library": "0.1.2",
-    "@material-ui/core": "^5.0.0-beta.0",
-    "@material-ui/icons": "^5.0.0-alpha.37",
     "@sentry/react": "^6.7.1",
     "lodash": "^4.17.21",
     "react-context-composer": "^0.0.4",
@@ -41,7 +39,11 @@
   "peerDependencies": {
     "next": "^11.0.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "@mui/icons-material": "^5.0.0-rc.1",
+    "@mui/material": "^5.0.0-rc.1",
+    "@mui/styles": "^5.0.0-rc.1",
+    "@mui/system": "^5.0.0-rc.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
@@ -81,6 +83,10 @@
     "react-dom": "^17.0.2",
     "sass": "^1.37.0",
     "sass-loader": "^10",
-    "webpack-dev-server": "^4.2.1"
+    "webpack-dev-server": "^4.2.1",
+    "@mui/icons-material": "^5.0.0-rc.1",
+    "@mui/material": "^5.0.0-rc.1",
+    "@mui/styles": "^5.0.0-rc.1",
+    "@mui/system": "^5.0.0-rc.1"
   }
 }

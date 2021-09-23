@@ -1,9 +1,9 @@
 import React from 'react';
-import { Container, Box, Grid, Typography } from '@material-ui/core';
-import styled from '@material-ui/system/styled';
-import useTheme from '@material-ui/system/useTheme';
-import { Theme } from '@material-ui/system/createTheme';
-import { SystemCssProperties } from '@material-ui/system/styleFunctionSx';
+import { Container, Box, Grid, Typography } from '@mui/material';
+import styled from '@mui/system/styled';
+import useTheme from '@mui/system/useTheme';
+import { Theme } from '@mui/system/createTheme';
+import { SystemCssProperties } from '@mui/system/styleFunctionSx';
 import get from 'lodash/get';
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
@@ -11,7 +11,7 @@ import Media from '../Media';
 // import { LinkProps } from '../Link/Link';
 import { MediaProps } from '../Media/Media.types';
 import Text, { RichText } from '../Text';
-import { Breakpoint } from '@material-ui/core';
+import { Breakpoint } from '@mui/material';
 import sidekick from '../../utils/sidekick';
 export interface HeroProps {
   id: string;
@@ -210,9 +210,7 @@ const Root = styled(Box, {
   name: 'Hero',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; contentHeight: string }>(({ contentHeight }) => ({
   minHeight: CONTENT_HEIGHT[contentHeight] ?? 'auto'
 }));
@@ -220,9 +218,7 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'Hero',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.contentContainer
-  })
+  overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(({ theme }) => ({
   alignSelf: 'center',
   height: '100%',

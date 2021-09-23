@@ -6,12 +6,12 @@ import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
-import styled from '@material-ui/system/styled';
-import Box from '@material-ui/core/Box';
-import Icon from '@material-ui/core/Icon';
-import IconButton from '@material-ui/core/IconButton';
-import MuiLink, { LinkProps as MuiLinkProps } from '@material-ui/core/Link';
-import Button, { ButtonProps as MuiButtonProps } from '@material-ui/core/Button';
+import styled from '@mui/system/styled';
+import Box from '@mui/material/Box';
+import Icon from '@mui/material/Icon';
+import IconButton from '@mui/material/IconButton';
+import MuiLink, { LinkProps as MuiLinkProps } from '@mui/material/Link';
+import Button, { ButtonProps as MuiButtonProps } from '@mui/material/Button';
 import sidekick from '../../utils/sidekick';
 // TODO: Button components aren't hyperlinking
 
@@ -144,14 +144,16 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           rel="noopener noreferrer"
           {...extra}
         >
-          <IconButton aria-label={icon}>{getIcon(icon)}</IconButton>
+          <IconButton aria-label={icon} size="large">
+            {getIcon(icon)}
+          </IconButton>
         </a>
       );
     }
     if (href !== '#') {
       return (
         <NextLink href={href} as={linkAs}>
-          <IconButton aria-label={icon} type={other.type} {...extra} className={className}>
+          <IconButton aria-label={icon} type={other.type} {...extra} className={className} size="large">
             {getIcon(icon)}
           </IconButton>
         </NextLink>
@@ -160,12 +162,13 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     return (
       <IconButton
         aria-label={icon}
-        onClick={other.onClick}
         // component={Link}
         // href={href}
         // ref={ref}
         // type={other.type}
         // {...extra}
+        onClick={other.onClick}
+        size="large"
       >
         {getIcon(icon)}
       </IconButton>
@@ -175,14 +178,28 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (isExternal) {
     if (noLinkStyle) {
       return (
-        <a className={className} href={href as string} ref={ref as any} {...extra}>
+        <a
+          className={className}
+          href={href as string}
+          ref={ref as any}
+          target="_blank"
+          rel="noopener noreferrer"
+          {...extra}
+        >
           {getButtonContent(text, children, iconPosition, icon)}
         </a>
       );
     }
 
     return (
-      <MuiLink className={className} href={href as string} ref={ref} {...extra}>
+      <MuiLink
+        className={className}
+        href={href as string}
+        ref={ref}
+        target="_blank"
+        rel="noopener noreferrer"
+        {...extra}
+      >
         {getButtonContent(text, children, iconPosition, icon)}
       </MuiLink>
     );

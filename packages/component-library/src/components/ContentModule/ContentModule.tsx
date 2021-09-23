@@ -1,13 +1,21 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import { ThemeOptions } from '@material-ui/core';
-import { createTheme, ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
+import { createTheme, ThemeProvider as MuiThemeProvider, Theme, ThemeOptions } from '@mui/material/styles';
 import ContextComposer from 'react-context-composer';
 import { useContentModuleContext } from './ContentModuleContext';
 import merge from 'lodash/merge';
 import omitBy from 'lodash/omitBy';
 import isNull from 'lodash/isNull';
-import { Theme } from '@material-ui/core/styles/createTheme';
+
+// declare module '@mui/styles/defaultTheme' {
+//   // eslint-disable-next-line @typescript-eslint/no-empty-interface
+//   interface DefaultTheme extends Theme {}
+// }
+
+// declare module '@mui/styles/defaultTheme' {
+//   // eslint-disable-next-line @typescript-eslint/no-empty-interface
+//   interface DefaultTheme extends Theme {}
+// }
 
 const getMUITheme = ({ theme }: { theme?: Array<Theme>; variant?: string }) => {
   // TODO inject custom theme depending on variant ?

@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Box } from '@material-ui/core';
-import { Breakpoint } from '@material-ui/core';
-import styled from '@material-ui/system/styled';
+import { Container, Box } from '@mui/material';
+import { Breakpoint } from '@mui/material';
+import styled from '@mui/system/styled';
 import omit from 'lodash/omit';
 import ErrorBoundary from '../ErrorBoundary';
 import Text from '../Text';
@@ -79,25 +79,19 @@ const Root = styled(Box, {
   name: 'Collection',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 
 const ContentContainer = styled(Container, {
   name: 'Collection',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.contentContainer
-  })
+  overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>``;
 
 const IntroText = styled(Text, {
   name: 'Collection',
   slot: 'IntroText',
-  overridesResolver: (_, styles) => ({
-    ...styles.introText
-  })
+  overridesResolver: (_, styles) => [styles.introText]
 })<{ variant?: string }>``;
 
 export default Collection;

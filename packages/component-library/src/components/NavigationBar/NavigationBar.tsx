@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box, Grid } from '@material-ui/core';
-import styled from '@material-ui/system/styled';
+import { Box, Grid } from '@mui/material';
+import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import { LinkProps } from '../Link/Link';
 
@@ -37,9 +37,7 @@ const Root = styled(Box, {
   name: 'NavigationBar',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>`
   ${({ theme }) => `
     @media (min-width: ${theme.breakpoints.values.md}px) {

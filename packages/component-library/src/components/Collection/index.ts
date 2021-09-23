@@ -1,1 +1,2 @@
-export { default, CollectionProps } from './Collection';
+export { default } from './Collection';
+export type { CollectionProps } from './Collection';

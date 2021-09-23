@@ -1,7 +1,7 @@
 import React from 'react';
-import { Container, Box, Grid, Typography, Breakpoint, FormControl, TextField } from '@material-ui/core';
+import { Container, Box, Grid, Typography, Breakpoint, FormControl, TextField } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
-import styled from '@material-ui/system/styled';
+import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
 import Media from '../Media';
@@ -222,17 +222,13 @@ const Root = styled(Box, {
   name: 'MailchimpForm',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({}));
 
 const ContentContainer = styled(Container, {
   name: 'Form',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.contentContainer
-  })
+  overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(({ theme }) => ({
   position: 'relative',
   paddingTop: theme.spacing(8),
@@ -242,9 +238,7 @@ const ContentContainer = styled(Container, {
 const FormImage = styled(Media, {
   name: 'Form',
   slot: 'Image',
-  overridesResolver: (_, styles) => ({
-    ...styles.formImage
-  })
+  overridesResolver: (_, styles) => [styles.formImage]
 })<{ variant?: string }>(({ theme }) => ({
   position: 'absolute',
   height: '125%',
@@ -253,13 +247,13 @@ const FormImage = styled(Media, {
   right: theme.spacing(3),
   zIndex: 0,
   objectFit: 'fill',
-  [theme.breakpoints.down('md')]: {
+  [theme.breakpoints.down('lg')]: {
     bottom: 'initial',
     top: theme.spacing(3),
     maxWidth: '25%',
     height: 'auto'
   },
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
     display: 'none'
   }
 }));
@@ -267,9 +261,7 @@ const FormImage = styled(Media, {
 const FormContainer = styled(Grid, {
   name: 'Form',
   slot: 'FormContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.formContainer
-  })
+  overridesResolver: (_, styles) => [styles.formContainer]
 })<{ variant?: string }>(({ theme }) => ({
   'position': 'relative',
   'borderRadius': 20,
@@ -279,7 +271,7 @@ const FormContainer = styled(Grid, {
   'paddingBottom': theme.spacing(4),
   'marginTop': theme.spacing(3),
 
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(3)
   },
@@ -299,11 +291,9 @@ const FormContainer = styled(Grid, {
 const SubmitContainer = styled(Grid, {
   name: 'Form',
   slot: 'SubmitContainer',
-  overridesResolver: (_, styles) => ({
-    ...styles.submitContainer
-  })
+  overridesResolver: (_, styles) => [styles.submitContainer]
 })<{ variant?: string }>(({ theme }) => ({
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
     'paddingTop': theme.spacing(3),
     '& .MuiFormControl-root': {
       width: '100%',

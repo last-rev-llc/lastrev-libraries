@@ -1,10 +1,25 @@
 import React from 'react';
 import merge from 'lodash/merge';
-import { ThemeProvider } from '@material-ui/core';
-import Box from '@material-ui/core/Box';
+import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
+import Box from '@mui/material/Box';
 import Section from './Section';
 import { singlePanelMock, splitPanelMock } from './Section.mock';
 import mockTheme from '../../theme/mock.theme';
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
 
 export default {
   title: '2. Modules / Section',
@@ -22,9 +37,11 @@ export default {
 };
 
 const Template = (args: JSX.IntrinsicAttributes) => (
-  <ThemeProvider theme={merge({}, ...args.theme)}>
-    <Section {...args} />
-  </ThemeProvider>
+  <StyledEngineProvider injectFirst>
+    <ThemeProvider theme={merge({}, ...args.theme)}>
+      <Section {...args} />
+    </ThemeProvider>
+  </StyledEngineProvider>
 );
 
 export const Module01 = Template.bind({});

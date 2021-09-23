@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount as ogMount } from '@cypress/react';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 
 import theme from '../src/theme/mock.theme';
 

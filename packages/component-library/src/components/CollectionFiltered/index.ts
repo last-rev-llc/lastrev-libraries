@@ -1,1 +1,2 @@
-export { default, CollectionFilteredProps } from './CollectionFiltered';
+export { default } from './CollectionFiltered';
+export type { CollectionFilteredProps } from './CollectionFiltered';

@@ -6,9 +6,9 @@ import {
   CardActions,
   CardContent,
   Typography
-} from '@material-ui/core';
-import styled from '@material-ui/system/styled';
-import Skeleton from '@material-ui/core/Skeleton';
+} from '@mui/material';
+import styled from '@mui/system/styled';
+import Skeleton from '@mui/material/Skeleton';
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
@@ -118,9 +118,7 @@ const Root = styled(MuiCard, {
   name: 'Card',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => ({
-    ...styles.root
-  })
+  overridesResolver: (_, styles) => [styles.root]
 })<MuiCardProps & {}>(() => ({}));
 
 export default Card;
