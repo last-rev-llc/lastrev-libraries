@@ -23,7 +23,7 @@
     "lrns-components": "0.0.1",
     "lrns-graphql-sdk": "^0.1.0",
     "lrns-utils": "^0.1.0",
-    "next": "11.0.0",
+    "next": "11.1.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "serve": "^12.0.0",
