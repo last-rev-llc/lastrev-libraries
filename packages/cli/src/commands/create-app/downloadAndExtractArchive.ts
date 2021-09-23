@@ -24,7 +24,7 @@ const downloadAndExtractArchive = async ({ octokit, root, example }: DAEAProps):
     });
 
     const regex = new RegExp(`^[^/]*/examples/${example}/.*`);
-    console.log('result.url', result.url);
+
     await pipeline(
       got.stream(new URL(result.url)),
       tar.extract({
@@ -35,7 +35,6 @@ const downloadAndExtractArchive = async ({ octokit, root, example }: DAEAProps):
     );
   } catch (e: any) {
     spinner.fail();
-    console.log(e.stack);
     throw e;
   }
   spinner.succeed();
