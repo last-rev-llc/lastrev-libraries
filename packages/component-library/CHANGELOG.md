@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.1.31
+
+### Patch Changes
+
+- 95e5bd0: HOTFIX: AWS dependency breaking styles
+
 ## 0.1.30
 
 ### Patch Changes

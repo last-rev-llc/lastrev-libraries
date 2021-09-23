@@ -1,5 +1,11 @@
 # @last-rev/contentful-s3-loader
 
+## 0.1.6
+
+### Patch Changes
+
+- 95e5bd0: HOTFIX: AWS dependency breaking styles
+
 ## 0.1.5
 
 ### Patch Changes
