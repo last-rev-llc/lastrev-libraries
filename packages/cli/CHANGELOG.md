@@ -1,5 +1,13 @@
 # @last-rev/cli
 
+## 0.1.16
+
+### Patch Changes
+
+- f109672: Added Contentful import/export to create-app CLI command
+- Updated dependencies [f109672]
+  - @last-rev/contentful-import-export@0.1.1
+
 ## 0.1.15
 
 ### Patch Changes
