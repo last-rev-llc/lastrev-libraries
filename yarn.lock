@@ -3201,12 +3201,12 @@
   resolved "https://registry.yarnpkg.com/@josephg/resolvable/-/resolvable-1.0.1.tgz#69bc4db754d79e1a2f17a650d3466e038d94a5eb"
   integrity sha512-CtzORUwWTTOTqfVtHaKRJ0I1kNQd1bpn3sUh8I3nJDVY+5/M/Oe1DnEWzPQvqq/xPIIkzzzIP7mfCoAjFRvDhg==
 
-"@last-rev/contentful-s3-loader@^0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-s3-loader/-/contentful-s3-loader-0.1.5.tgz#d7d34541a0f663b4978a298762c48fe8a4badf28"
-  integrity sha512-dqVN89+X8pQqO1e1uDtQMrpRPkPPLOzm/mPNwCxTtLoBR61gpPAzRr/ervz7l7Cd02hJGsywU3YsKmk3viygng==
+"@last-rev/contentful-s3-loader@^0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-s3-loader/-/contentful-s3-loader-0.1.6.tgz#8d5eb0d4e43bf264a57ff9c403559342777edbbb"
+  integrity sha512-aOegmg/tLGIre2lvfl6Tx5e0TbnJqcifsE8h7tq6K1urdzKZdz+mgCOPNIIDxJRRKEzmfpeN3SQvPmAUVxK0yA==
   dependencies:
-    "@aws-sdk/client-s3" "^3.22.0"
+    "@aws-sdk/client-s3" "^3.30.0"
     "@last-rev/timer" "^0.1.1"
     axios "^0.21.1"
     dataloader "^2.0.0"

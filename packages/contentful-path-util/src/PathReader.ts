@@ -61,9 +61,15 @@ export default class PathReader implements iPathReader {
     });
   }
 
+  normalizePath(path: string): string {
+    if (path != '/' && path[path.length - 1] === '/') path = path.slice(0, -1);
+    if (path[0] !== '/' && path != '/') path = '/' + path;
+    return path;
+  }
+
   async getNodeByPath(path: string, site: string = DEFAULT_SITE_KEY): Promise<PathNode | undefined> {
     await this.ensureLoaded(site);
-    return this.trees[site]!.getNodeByPath(path);
+    return this.trees[site]!.getNodeByPath(this.normalizePath(path));
   }
 
   async getFilteredTree(filter?: (node: PathNode) => boolean, site: string = DEFAULT_SITE_KEY): Promise<PathTree> {
