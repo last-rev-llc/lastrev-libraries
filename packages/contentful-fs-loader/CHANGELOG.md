@@ -1,5 +1,11 @@
 # @last-rev/contentful-fs-loader
 
+## 0.1.8
+
+### Patch Changes
+
+- 5ee84d6: Moved App Config to its own package, created contentful-path-util, and created contentful-webhook-handler
+
 ## 0.1.7
 
 ### Patch Changes

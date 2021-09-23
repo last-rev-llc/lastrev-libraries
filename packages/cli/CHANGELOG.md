@@ -1,5 +1,15 @@
 # @last-rev/cli
 
+## 0.1.15
+
+### Patch Changes
+
+- 5ee84d6: Moved App Config to its own package, created contentful-path-util, and created contentful-webhook-handler
+- Updated dependencies [5ee84d6]
+  - @last-rev/app-config@0.1.1
+  - @last-rev/contentful-sync-to-fs@0.1.6
+  - @last-rev/graphql-contentful-core@0.1.19
+
 ## 0.1.14
 
 ### Patch Changes

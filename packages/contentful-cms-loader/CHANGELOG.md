@@ -1,5 +1,11 @@
 # @last-rev/contentful-cms-loader
 
+## 0.1.3
+
+### Patch Changes
+
+- 5ee84d6: Moved App Config to its own package, created contentful-path-util, and created contentful-webhook-handler
+
 ## 0.1.2
 
 ### Patch Changes
