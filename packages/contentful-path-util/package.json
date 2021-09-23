@@ -1,6 +1,6 @@
 {
-  "name": "@last-rev/contentful-s3-loader",
-  "version": "0.1.6",
+  "name": "@last-rev/contentful-path-util",
+  "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -13,21 +13,22 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
+    "@last-rev/app-config": "^0.1.0",
     "@last-rev/rollup-config": "^0.0.5",
     "@last-rev/testing-library": "^0.1.2",
     "@last-rev/types": "^0.1.1",
-    "@types/node": "^14.14.35",
-    "contentful": "^8.4.2",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.4",
+    "typescript": "4.3.4"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.30.0",
     "@last-rev/timer": "^0.1.1",
-    "axios": "^0.21.1",
-    "dataloader": "^2.0.0",
+    "contentful": "^8.4.2",
+    "fs-extra": "^10.0.0",
+    "ioredis": "^4.27.9",
     "lodash": "^4.17.21",
     "loglevel": "^1.7.1",
     "tslib": "^2.3.0"

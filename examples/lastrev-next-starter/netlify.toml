@@ -5,10 +5,6 @@
 [dev]
   command = "yarn dev"
 
-## only useful with s3 sync:
-# [[plugins]]
-# package = "/packages/content-fs-cache-netlify-plugin"
-
 [functions]
   directory = "packages/functions"
   external_node_modules = ["express"]

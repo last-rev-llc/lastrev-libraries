@@ -3,10 +3,10 @@ import { Kind } from 'graphql/language';
 import { ContentType } from 'contentful';
 import GraphQLJSON from 'graphql-type-json';
 import getContentResolvers from './getContentResolvers';
-import { ApolloContext, Mappers, TypeMappings } from '../types';
 import fieldResolver from './fieldResolver';
 import capitalizeFirst from '../utils/capitalizeFirst';
-import { merge, mapValues, isString } from 'lodash';
+import { merge, mapValues } from 'lodash';
+import { ApolloContext, Mappers, TypeMappings } from '@last-rev/types';
 
 export const fieldsResolver = (type: string, fields: string[], mappers: Mappers) =>
   fields.reduce((accum: any, field: string) => {
@@ -35,15 +35,16 @@ const createResolvers = ({
         if (!path) throw new Error('MissingArgumentPath');
         ctx.locale = locale || ctx.defaultLocale;
         ctx.preview = preview;
-        const { pathToIdLookup } = ctx;
-        const idOrObj = await pathToIdLookup.lookup(path, !!preview, site);
-        if (!idOrObj) {
-          return null;
-        }
-        const { id, blockedLocales } = isString(idOrObj) ? { id: idOrObj, blockedLocales: [] } : idOrObj;
-        if (!id || blockedLocales.indexOf(ctx.locale) > -1) {
-          return null;
-        }
+
+        if (!ctx.pathReaders) return null;
+
+        const pathReader = ctx.pathReaders[preview ? 'preview' : 'prod'];
+
+        const node = await pathReader.getNodeByPath(path, site);
+        if (!node || !node.data) return null;
+
+        const id = node.data.contentId;
+
         return ctx.loaders.entryLoader.load({ id, preview });
       },
       paths: async (
@@ -53,8 +54,11 @@ const createResolvers = ({
       ) => {
         if (!locales) throw new Error('MissingArgumentLocales');
         ctx.preview = preview;
-        const { pathToIdLookup } = ctx;
-        return await pathToIdLookup.generatePathParams(locales, preview, site);
+        if (!ctx.pathReaders) return null;
+
+        const pathReader = ctx.pathReaders[preview ? 'preview' : 'prod'];
+
+        return await pathReader.getAllPaths(locales, site);
       },
       content: async (
         _: any,
