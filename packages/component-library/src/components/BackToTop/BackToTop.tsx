@@ -24,7 +24,13 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
 
   return (
     <ErrorBoundary>
-      <Root visible={trigger} {...(FabProps as any)} onClick={handleClick} data-testid="BackToTop" {...sidekick(sidekickLookup)}>
+      <Root
+        visible={trigger}
+        {...(FabProps as any)}
+        onClick={handleClick}
+        data-testid="BackToTop"
+        {...sidekick(sidekickLookup)}
+      >
         <KeyboardArrowUpIcon />
       </Root>
     </ErrorBoundary>
@@ -34,6 +40,7 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
 const Root = styled(Fab, {
   name: 'BackToTop',
   slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'visible',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; visible?: boolean }>`
   position: fixed;

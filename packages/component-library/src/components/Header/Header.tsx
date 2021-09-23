@@ -56,7 +56,8 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
                 color="secondary"
                 aria-label="menu"
                 onClick={() => setMenuVisible(!menuVisible)}
-                size="large">
+                size="large"
+              >
                 {menuVisible ? <CloseIcon /> : <MenuIcon />}
               </IconButton>
             </Hidden>
@@ -136,7 +137,7 @@ const Logo = styled(Media, {
 const ContentContainer = styled(Toolbar, {
   name: 'Header',
   slot: 'ContentContainer',
-  overridesResolver: (_, styles) =>[ styles.contentContainer]
+  overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>`
   height: 100%;
 `;

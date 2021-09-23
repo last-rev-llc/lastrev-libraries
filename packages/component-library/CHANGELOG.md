@@ -1,5 +1,19 @@
 # @last-rev/component-library
 
+## 0.1.31
+
+### Patch Changes
+
+- 95e5bd0: HOTFIX: AWS dependency breaking styles
+
+## 0.1.30
+
+### Patch Changes
+
+- 76b69d2: Upgrade MUI to V5 RC
+- 457432d: 'updated back to top button to hide when scrolling down'
+- 1d3c078: Added ErrorBoundary to component library export
+
 ## 0.1.29
 
 ### Patch Changes

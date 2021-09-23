@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.18
+
+### Patch Changes
+
+- 95e5bd0: HOTFIX: AWS dependency breaking styles
+- Updated dependencies [95e5bd0]
+  - @last-rev/contentful-s3-loader@0.1.6
+
 ## 0.1.17
 
 ### Patch Changes

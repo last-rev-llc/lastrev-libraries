@@ -6,6 +6,7 @@ import { HeroProps } from './../components/Hero';
 import { MailchimpFormProps } from './../components/MailchimpForm';
 import { LinkProps } from './../components/Link';
 import { SectionProps } from './../components/Section';
+import { FormMarketoEmbedProps } from './../components/FormMarketoEmbed';
 import { PaletteOptions, Palette } from '@mui/material/styles';
 
 interface CustomPalette {
@@ -48,6 +49,7 @@ declare module '@mui/material/styles/components' {
     Link: LinkProps;
     Text: {};
     Header: {};
+    FormMarketoEmbed: FormMarketoEmbedProps;
   }
   interface ComponentElementOverrides {
     Section: {
@@ -66,6 +68,10 @@ declare module '@mui/material/styles/components' {
     };
     Collection?: {
       root?: {};
+    };
+    FormMarketoEmbed?: {
+      root?: {};
+      form?: {};
     };
   }
   interface ComponentsOverrides {
@@ -96,6 +102,10 @@ declare module '@mui/material/styles/components' {
       gridContainer?: {};
       backgroundImage?: {};
     };
+    FormMarketoEmbed?: {
+      root?: {};
+      form?: {};
+    };
   }
   interface ComponentsVariants {
     Section?: {};
@@ -106,6 +116,7 @@ declare module '@mui/material/styles/components' {
     Header?: {};
     Text?: {};
     Collection?: {};
+    FormMarketoEmbed?: {};
   }
   interface Components {
     Section?: {
@@ -173,6 +184,12 @@ declare module '@mui/material/styles/components' {
       overrides?: ComponentElementOverrides['Collection'];
       styleOverrides?: ComponentsOverrides['Collection'];
       variants?: ComponentsVariants['Collection'];
+    };
+    FormMarketoEmbed?: {
+      defaultProps?: ComponentsProps['FormMarketoEmbed'];
+      overrides?: ComponentElementOverrides['FormMarketoEmbed'];
+      styleOverrides?: ComponentsOverrides['FormMarketoEmbed'];
+      variants?: ComponentsVariants['FormMarketoEmbed'];
     };
   }
 }

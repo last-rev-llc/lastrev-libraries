@@ -144,19 +144,16 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           rel="noopener noreferrer"
           {...extra}
         >
-          <IconButton aria-label={icon} size="large">{getIcon(icon)}</IconButton>
+          <IconButton aria-label={icon} size="large">
+            {getIcon(icon)}
+          </IconButton>
         </a>
       );
     }
     if (href !== '#') {
       return (
         <NextLink href={href} as={linkAs}>
-          <IconButton
-            aria-label={icon}
-            type={other.type}
-            {...extra}
-            className={className}
-            size="large">
+          <IconButton aria-label={icon} type={other.type} {...extra} className={className} size="large">
             {getIcon(icon)}
           </IconButton>
         </NextLink>
@@ -171,7 +168,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         // type={other.type}
         // {...extra}
         onClick={other.onClick}
-        size="large">
+        size="large"
+      >
         {getIcon(icon)}
       </IconButton>
     );
@@ -186,7 +184,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}>
+          {...extra}
+        >
           {getButtonContent(text, children, iconPosition, icon)}
         </a>
       );
@@ -199,7 +198,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         ref={ref}
         target="_blank"
         rel="noopener noreferrer"
-        {...extra}>
+        {...extra}
+      >
         {getButtonContent(text, children, iconPosition, icon)}
       </MuiLink>
     );
