@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.20
+
+### Patch Changes
+
+- 2ae4f84: Remove s3-loader dependency
+
 ## 0.1.19
 
 ### Patch Changes
