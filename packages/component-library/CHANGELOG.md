@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.1
+
+### Patch Changes
+
+- 6667ee4: Added MUI patch to include component name in classes in Production
+
 ## 0.2.0
 
 ### Minor Changes
