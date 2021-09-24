@@ -1,5 +1,14 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.21
+
+### Patch Changes
+
+- 647fc84: Update fs-loader and redis-loader dependencies
+- Updated dependencies [647fc84]
+  - @last-rev/contentful-fs-loader@0.1.9
+  - @last-rev/contentful-redis-loader@0.1.4
+
 ## 0.1.20
 
 ### Patch Changes
