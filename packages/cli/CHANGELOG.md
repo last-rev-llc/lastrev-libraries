@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.1.17
+
+### Patch Changes
+
+- ea75fa3: Update cli contentful-core dependency
+
 ## 0.1.16
 
 ### Patch Changes
