@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.1.3
+
+### Patch Changes
+
+- 1d0dbe0: Update dependencies
+
 ## 0.1.2
 
 ### Patch Changes
