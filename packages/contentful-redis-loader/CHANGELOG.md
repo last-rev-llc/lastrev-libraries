@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.1.5
+
+### Patch Changes
+
+- 3d28069: Disable sidekickLookupResolver for mapper functions, Fix redis loader issues
+
 ## 0.1.4
 
 ### Patch Changes
