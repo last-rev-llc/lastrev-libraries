@@ -7,7 +7,7 @@ import { createContext, createLoaders } from '@last-rev/graphql-contentful-helpe
 export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
   const client = new Redis({
     ...config.redis,
-    keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}`
+    keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
   });
 
   return {
