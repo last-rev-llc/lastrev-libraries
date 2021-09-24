@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import { compact, dropWhile, each, isEmpty, isError, isNull, isString, map, some, values, zipObject } from 'lodash';
+import { compact, dropWhile, each, isEmpty, isError, isNil, isString, map, some, values, zipObject } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
@@ -15,14 +15,17 @@ const parse = (r: string | Error | null): any => {
 };
 
 const stringify = (r: any) => {
-  if (!isNull(r) && !isError(r)) {
+  if (!isNil(r) && !isError(r)) {
     return JSON.stringify(r);
   }
   return '';
 };
 
 const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoaders): ContentfulLoaders => {
-  const client = new Redis(config.redis);
+  const client = new Redis({
+    ...config.redis,
+    keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}`
+  });
 
   const getKey = (itemKey: ItemKey, dir: string) => {
     return [itemKey.preview ? 'preview' : 'production', dir, itemKey.id].join(':');
@@ -47,7 +50,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     const cacheMissIds: ItemKey[] = [];
 
     each(results, (result, index) => {
-      if (isNull(result)) {
+      if (isNil(result)) {
         cacheMissIds.push(keys[index]);
       }
     });
@@ -66,7 +69,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       client.mset(toSet).then(() => logger.debug(timer.end()));
 
       each(keys, (key, index) => {
-        if (isNull(results[index])) {
+        if (isNil(results[index])) {
           const cacheMissIndex = cacheMissIds.indexOf(key);
           if (cacheMissIndex !== -1) {
             results[index] = sourceResults[cacheMissIndex];
@@ -157,7 +160,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       );
 
       each(entryResults, (entry) => {
-        if (isNull(entry)) return;
+        if (isNil(entry)) return;
         const contentType = entry.sys.contentType.sys.id;
         out[contentType] = out[contentType] || [];
         out[contentType].push(entry);
@@ -181,7 +184,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
       logger.debug(timer.end());
 
-      if (isEmpty(results) || some(results, (result) => isNull(result))) {
+      if (isEmpty(results) || some(results, (result) => isNil(result))) {
         timer = new Timer('Set all content types in redis');
         const contentTypes = await fallbackLoaders.fetchAllContentTypes(preview);
         const contentTypeIds = map(contentTypes, 'sys.id');

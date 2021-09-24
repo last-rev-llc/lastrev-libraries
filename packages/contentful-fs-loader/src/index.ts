@@ -1,7 +1,7 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset } from 'contentful';
 import { readJSON, readdir } from 'fs-extra';
-import { filter, identity, isNull } from 'lodash';
+import { filter, identity, isNil } from 'lodash';
 import { join } from 'path';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
@@ -64,7 +64,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
       const idsArrays = await idsLoader.loadMany(keys);
 
       const keysArray: ItemKey[][] = idsArrays.map((ids, index) =>
-        isNull(ids) ? [] : (ids as string[]).map((id) => ({ id, preview: keys[index].preview }))
+        isNil(ids) ? [] : (ids as string[]).map((id) => ({ id, preview: keys[index].preview }))
       );
 
       return Promise.all(
