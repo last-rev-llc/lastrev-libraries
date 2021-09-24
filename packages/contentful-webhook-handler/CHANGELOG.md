@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.1.3
+
+### Patch Changes
+
+- 99a1ce7: Fix missing : in webhook handler
+
 ## 0.1.2
 
 ### Patch Changes
