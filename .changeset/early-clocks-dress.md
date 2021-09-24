@@ -1,5 +1,4 @@
 ---
-'@last-rev/cli': patch
 '@last-rev/contentful-redis-loader': patch
 '@last-rev/graphql-contentful-core': patch
 '@last-rev/graphql-contentful-helpers': patch
