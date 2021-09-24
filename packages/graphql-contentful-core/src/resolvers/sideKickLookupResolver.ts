@@ -1,7 +1,7 @@
 import get from 'lodash/get';
 
 import { TypeMappings } from '@last-rev/types';
-import getFieldDataFetcher from '../utils/getFieldDataFetcher';
+// import getFieldDataFetcher from '../utils/getFieldDataFetcher';
 import capitalizeFirst from '../utils/capitalizeFirst';
 
 export const sideKickLookupResolver =
@@ -16,15 +16,25 @@ export const sideKickLookupResolver =
       if (mappers[typeName] && mappers[typeName][displayType]) {
         await Promise.all(
           Object.keys(mappers[typeName][displayType])?.map(async (field: string) => {
-            const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
+            const mapper = mappers[typeName][displayType][field];
 
-            const { fieldName } = await fieldDataFetcher(content, args, ctx, info);
-
-            lookup[field] = {
-              contentId: content.sys.id,
-              contentTypeId: get(content, 'sys.contentType.sys.id'),
-              fieldName
-            };
+            if (typeof mapper === 'function') {
+              // TODO: Implement fieldName lookup for function mappers
+              //   const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
+              // const { fieldName } = await fieldDataFetcher(content, args, ctx, info);
+              // lookup[field] = {
+              //   contentId: content.sys.id,
+              //   contentTypeId: get(content, 'sys.contentType.sys.id'),
+              //   fieldName
+              // };
+            }
+            if (typeof mapper === 'string') {
+              lookup[field] = {
+                contentId: content.sys.id,
+                contentTypeId: get(content, 'sys.contentType.sys.id'),
+                fieldName: mapper
+              };
+            }
           })
         );
       } else {
