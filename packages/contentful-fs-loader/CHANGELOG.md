@@ -1,5 +1,11 @@
 # @last-rev/contentful-fs-loader
 
+## 0.1.9
+
+### Patch Changes
+
+- 647fc84: Fix redis-loader
+
 ## 0.1.8
 
 ### Patch Changes

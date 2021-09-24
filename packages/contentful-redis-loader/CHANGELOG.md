@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.1.4
+
+### Patch Changes
+
+- 647fc84: Fix redis-loader
+
 ## 0.1.3
 
 ### Patch Changes
