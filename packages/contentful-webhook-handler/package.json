@@ -23,7 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@last-rev/contentful-path-util": "^0.1.1",
-    "@last-rev/graphql-contentful-helpers": "^0.1.1",
+    "@last-rev/graphql-contentful-helpers": "^0.1.2",
     "contentful": "^9.0.0",
     "ioredis": "^4.27.9",
     "lodash": "^4.17.21"
