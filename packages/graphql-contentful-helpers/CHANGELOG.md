@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.1.2
+
+### Patch Changes
+
+- 3d28069: Disable sidekickLookupResolver for mapper functions, Fix redis loader issues
+- Updated dependencies [3d28069]
+  - @last-rev/contentful-redis-loader@0.1.5
+
 ## 0.1.1
 
 ### Patch Changes
