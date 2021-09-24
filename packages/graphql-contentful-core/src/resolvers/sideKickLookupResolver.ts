@@ -5,7 +5,7 @@ import { TypeMappings } from '@last-rev/types';
 import capitalizeFirst from '../utils/capitalizeFirst';
 
 export const sideKickLookupResolver =
-  (displayType: string, typeMappings: TypeMappings) => async (content: any, args: any, ctx: any, info: any) => {
+  (displayType: string, typeMappings: TypeMappings) => async (content: any, _args: any, ctx: any, _info: any) => {
     const { mappers } = ctx;
     const typeName = capitalizeFirst(
       typeMappings[content?.sys?.contentType?.sys?.id] ?? content?.sys?.contentType?.sys?.id
