@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import { compact, dropWhile, each, isEmpty, isError, isNil, isString, map, some, values, zipObject } from 'lodash';
+import { compact, filter, negate, each, isEmpty, isError, isNil, isString, map, some, values, zipObject } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
@@ -24,7 +24,7 @@ const stringify = (r: any) => {
 const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoaders): ContentfulLoaders => {
   const client = new Redis({
     ...config.redis,
-    keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}`
+    keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
   });
 
   const getKey = (itemKey: ItemKey, dir: string) => {
@@ -122,7 +122,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     if (cacheMissIds.length) {
       const sourceResults = await fallbackLoaders.entriesByContentTypeLoader.loadMany(cacheMissIds);
 
-      const filtered = dropWhile(sourceResults, isError);
+      const filtered = filter(sourceResults, negate(isError));
 
       timer = new Timer(`Set ${filtered.length} entries in redis`);
 
