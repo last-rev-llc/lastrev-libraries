@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.5
+
+### Patch Changes
+
+- d739b9d: added z-index to back to top button, so it does not disappear with other components when mobile
+
 ## 0.2.4
 
 ### Patch Changes
