@@ -62,8 +62,7 @@ HeroProps) => {
           ...rootStyles({ backgroundColor, theme, background }),
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined
-        }}
-      >
+        }}>
         {background ? (
           <Box
             sx={{
@@ -73,8 +72,7 @@ HeroProps) => {
               left: 0,
               width: '100%',
               height: '100%'
-            }}
-          >
+            }}>
             <Media
               testId="Hero-background"
               {...background}
@@ -87,40 +85,36 @@ HeroProps) => {
           <Grid container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
               <Grid item container direction="column" spacing={2} xs={12} md={6}>
-                {title || subtitle ? (
-                  <Grid item>
-                    {title ? (
-                      <Typography
-                        data-testid="Hero-title"
-                        variant="h1"
-                        component="h1"
-                        sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                        {...sidekick(sidekickLookup?.title)}
-                      >
-                        {title}
-                      </Typography>
-                    ) : null}
-                    {subtitle ? (
-                      <Typography
-                        data-testid="Hero-subtitle"
-                        variant={!title ? 'h1' : 'h2'}
-                        component={!title ? 'h1' : 'h2'}
-                        sx={{ color: !title ? 'secondary.main' : undefined }}
-                        {...sidekick(sidekickLookup?.subtitle)}
-                      >
-                        {subtitle}
-                      </Typography>
-                    ) : null}
-                    {body ? <Text body={body} data-testid="Hero-body" {...sidekick(sidekickLookup?.body)} /> : null}
-                    {actions ? (
-                      <Box pt={title || subtitle || body ? 3 : undefined} {...sidekick(sidekickLookup?.actions)}>
-                        {actions?.map((link) => (
-                          <Link key={link.id} {...link} />
-                        ))}
-                      </Box>
-                    ) : null}
-                  </Grid>
-                ) : null}
+                <Grid item>
+                  {title ? (
+                    <Typography
+                      data-testid="Hero-title"
+                      variant="h1"
+                      component="h1"
+                      sx={{ color: !subtitle ? 'secondary.main' : undefined }}
+                      {...sidekick(sidekickLookup?.title)}>
+                      {title}
+                    </Typography>
+                  ) : null}
+                  {subtitle ? (
+                    <Typography
+                      data-testid="Hero-subtitle"
+                      variant={!title ? 'h1' : 'h2'}
+                      component={!title ? 'h1' : 'h2'}
+                      sx={{ color: !title ? 'secondary.main' : undefined }}
+                      {...sidekick(sidekickLookup?.subtitle)}>
+                      {subtitle}
+                    </Typography>
+                  ) : null}
+                  {body ? <Text body={body} data-testid="Hero-body" {...sidekick(sidekickLookup?.body)} /> : null}
+                  {actions ? (
+                    <Box pt={title || subtitle || body ? 3 : undefined} {...sidekick(sidekickLookup?.actions)}>
+                      {actions?.map((link) => (
+                        <Link key={link.id} {...link} />
+                      ))}
+                    </Box>
+                  ) : null}
+                </Grid>
               </Grid>
             ) : null}
             {image ? (
