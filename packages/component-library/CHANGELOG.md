@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.4
+
+### Patch Changes
+
+- 95613f7: removed conditional to Hero where it needed a title or subtitle to render them or the richtext, this made most of the strong-365 heros break
+
 ## 0.2.3
 
 ### Patch Changes
