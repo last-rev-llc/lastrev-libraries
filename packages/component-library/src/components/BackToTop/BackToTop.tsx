@@ -29,8 +29,7 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
         {...(FabProps as any)}
         onClick={handleClick}
         data-testid="BackToTop"
-        {...sidekick(sidekickLookup)}
-      >
+        {...sidekick(sidekickLookup)}>
         <KeyboardArrowUpIcon />
       </Root>
     </ErrorBoundary>
@@ -47,6 +46,7 @@ const Root = styled(Fab, {
   bottom: 16px;
   right: 16px;
   transition: 0.3s ease-in-out;
+  z-index: 2;
   ${({ visible }) => `
   transform: translateY(${visible ? 0 : 100}px);
   `};
