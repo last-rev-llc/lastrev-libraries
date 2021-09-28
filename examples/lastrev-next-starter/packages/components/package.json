@@ -1,7 +1,7 @@
 {
   "name": "@lrns/components",
-  "version": "0.0.3",
-  "description": "Strong 365 Components",
+  "version": "0.0.1",
+  "description": "Components",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -10,8 +10,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup -cw",
     "build": "cross-env NODE_ENV=production rollup -c",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^15.0.0",

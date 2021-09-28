@@ -1,6 +1,22 @@
+const path = require('path');
+const toPath = (_path) => path.join(process.cwd(), _path);
+
 module.exports = {
   stories: ['../src/**/*.stories.mdx', '../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
+    {
+      name: '@storybook/preset-scss',
+      options: {
+        sassLoaderOptions: {
+          sassOptions: {
+            modules: {
+              globalModulePaths: [/src\/styles/],
+              exportGlobals: true
+            }
+          }
+        }
+      }
+    },
     '@storybook/addon-essentials',
     '@storybook/addon-a11y',
     '@storybook/addon-links',
@@ -14,11 +30,9 @@ module.exports = {
         ...config.resolve,
         alias: {
           ...config.resolve.alias,
-          // "@emotion/core": toPath("node_modules/@emotion/react"),
-          // "emotion-theming": toPath("node_modules/@emotion/react"),
-          '@emotion/core': require.resolve('@emotion/react'),
-          'emotion-theming': require.resolve('@emotion/react'),
-          '@emotion/styled': require.resolve('@emotion/styled')
+          '@emotion/css': toPath('../../node_modules/@emotion/css'),
+          '@emotion/core': toPath('../../node_modules/@emotion/react'),
+          'emotion-theming': toPath('../../node_modules/@emotion/react')
         }
       }
     };
