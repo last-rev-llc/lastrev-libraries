@@ -9,7 +9,7 @@ const PageGeneral = ({ header, hero, contents, footer, disableBackToTop }: Page 
       {header ? <ContentModule {...(header as any)} /> : null}
       {hero ? <ContentModule {...(hero as any)} /> : null}
       {contents?.map((content: any) => (
-        <ContentModule key={content?.id} {...(content as any)} />
+        <ContentModule key={content?.id} {...content} component="section" />
       ))}
       {!disableBackToTop ? <BackToTop /> : null}
       {footer ? <ContentModule {...(footer as any)} /> : null}

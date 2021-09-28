@@ -5,31 +5,31 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export && yarn build:post",
-    "build:post": "rm -rf out/404 && cp out/en-US/index.html out/index.html && cp -R out/en-US/* out/ && node scripts/archiveSite.js",
+    "build:post": "rm -rf out/404 && cp out/en-US/index.html out/index.html && cp -R out/en-US/* out/",
     "lint": "next lint",
-    "serve:site": "serve out"
+    "serve": "serve out"
   },
   "peerDependencies": {},
   "dependencies": {
     "@emotion/cache": "^11.4.0",
-    "@emotion/react": "^11.4.1",
     "@emotion/server": "^11.4.0",
+    "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@last-rev/component-library": "^0.2.5",
     "@mui/icons-material": "^5.0.0",
     "@mui/material": "^5.0.0",
-    "@lrns/components": "0.0.3",
     "@types/react": "^17.0.11",
-    "archiver": "^5.3.0",
     "babel-eslint": "^10.1.0",
     "dotenv": "^10.0.0",
     "graphql": "^15.5.1",
     "graphql-request": "^3.4.0",
+    "@lrns/components": "0.0.1",
+    "@lrns/graphql-sdk": "^0.1.0",
+    "@lrns/utils": "^0.1.0",
     "next": "^11.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "serve": "^12.0.0",
-    "@lrns/utils": "^0.1.0",
     "table": "^6.7.1"
   },
   "devDependencies": {
