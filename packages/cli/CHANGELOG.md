@@ -1,5 +1,23 @@
 # @last-rev/cli
 
+## 0.1.21
+
+### Patch Changes
+
+- 1d83119: Fixed TS error
+
+## 0.1.20
+
+### Patch Changes
+
+- cbf6717: 'Fixed a TS error'
+
+## 0.1.19
+
+### Patch Changes
+
+- 8268b79: Replaced "got" module with https native module to fix dependency bug, added some netlify functionality
+
 ## 0.1.18
 
 ### Patch Changes
