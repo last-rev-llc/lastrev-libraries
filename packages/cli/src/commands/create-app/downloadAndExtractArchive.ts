@@ -1,23 +1,18 @@
-import { Octokit } from '@octokit/rest';
-import { Stream } from 'stream';
-import { promisify } from 'util';
-import got from 'got';
 import tar from 'tar';
 import ora from 'ora';
-import { URL } from 'url';
-
-const pipeline = promisify(Stream.pipeline);
+import https from 'https';
+import GithubApiWrapper from './apiWrappers/GithubApiWrapper';
 
 type DAEAProps = {
-  octokit: Octokit;
+  githubApiWrapper: GithubApiWrapper;
   root: string;
   example: string;
 };
 
-const downloadAndExtractArchive = async ({ octokit, root, example }: DAEAProps): Promise<void> => {
+const downloadAndExtractArchive = async ({ githubApiWrapper, root, example }: DAEAProps): Promise<void> => {
   const spinner = ora('Downloading and extracting archive').start();
   try {
-    const result = await octokit.rest.repos.downloadTarballArchive({
+    const result = await githubApiWrapper.octokit.rest.repos.downloadTarballArchive({
       owner: 'last-rev-llc',
       repo: 'lastrev-libraries',
       ref: 'main'
@@ -25,14 +20,21 @@ const downloadAndExtractArchive = async ({ octokit, root, example }: DAEAProps):
 
     const regex = new RegExp(`^[^/]*/examples/${example}/.*`);
 
-    await pipeline(
-      got.stream(new URL(result.url)),
-      tar.extract({
-        cwd: root,
-        strip: 3,
-        filter: (path: string) => regex.test(path)
-      })
-    );
+    await new Promise((resolve, reject) => {
+      https.get(result.url, (res) => {
+        res.on('end', resolve);
+
+        res.on('error', reject);
+
+        res.pipe(
+          tar.extract({
+            cwd: root,
+            strip: 3,
+            filter: (path: string) => regex.test(path)
+          })
+        );
+      });
+    });
   } catch (e: any) {
     spinner.fail();
     throw e;
