@@ -1,20 +1,20 @@
 import spawn from 'cross-spawn';
-import LastRevConfig, { CREATE_APP_ACTION } from './LastRevConfig';
+import LastRevConfig, { VAL_SHOULD_INSTALL_DEPENDENCIES, VAL_RESOLVED_APP_ROOT } from './LastRevConfig';
 
 const installDependencies = async (config: LastRevConfig): Promise<void> => {
-  await config.askAndUpdate(CREATE_APP_ACTION, 'installDependencies', {
+  await config.askAndUpdate(VAL_SHOULD_INSTALL_DEPENDENCIES, {
     type: 'confirm',
-    name: 'proceed',
+    name: VAL_SHOULD_INSTALL_DEPENDENCIES,
     message: 'Would you like to install dependencies? (This will take a while...)',
     default: true
   });
 
-  if (!config.getStateValue(CREATE_APP_ACTION, 'installDependencies')) {
+  if (!config.getStateValue(VAL_SHOULD_INSTALL_DEPENDENCIES)) {
     return;
   }
 
   return new Promise((resolve, reject) => {
-    const args = ['install', '--cwd', config.getStateValue(CREATE_APP_ACTION, 'appRoot')];
+    const args = ['install', '--cwd', config.getStateValue(VAL_RESOLVED_APP_ROOT)];
     const command = 'yarnpkg';
 
     const child = spawn(command, args, {

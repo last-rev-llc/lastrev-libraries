@@ -1,5 +1,5 @@
 import { map } from 'lodash';
-import LastRevConfig, { DETERMINE_ACTIONS_ACTION } from './LastRevConfig';
+import LastRevConfig, { VAL_SELECTED_ACTIONS } from './LastRevConfig';
 
 export const possibleActions = {
   createApp: 'Create an app from a starter template',
@@ -8,15 +8,14 @@ export const possibleActions = {
 };
 
 const determineActions = async (config: LastRevConfig): Promise<void> => {
-  await config.askAndUpdate(DETERMINE_ACTIONS_ACTION, 'selectedActions', {
+  await config.askAndUpdate(VAL_SELECTED_ACTIONS, {
     type: 'checkbox',
-    name: 'selectedActions',
+    name: VAL_SELECTED_ACTIONS,
     message: 'Which actions would you like to perform?',
-    choices: map(possibleActions, (action, key) => ({
+    choices: map(possibleActions, (action) => ({
       name: action,
       value: action,
-      checked: true,
-      disabled: key === 'setupNetlify'
+      checked: true
     }))
   });
 };

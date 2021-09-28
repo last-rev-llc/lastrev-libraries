@@ -4,53 +4,65 @@ import Configstore from 'configstore';
 import { isNil } from 'lodash';
 import { DistinctQuestion, prompt } from 'inquirer';
 
+import { version } from '../../../package.json';
+
 const OSBasedPaths = envPaths('last-rev', { suffix: '' });
 
-export const DETERMINE_ACTIONS_ACTION = 'determineActions';
+export const VAL_SELECTED_ACTIONS = 'selectedActions';
+export const VAL_RESOLVED_APP_ROOT = 'resolvedAppRoot';
+export const VAL_EXAMPLE_NAME = 'exampleName';
+export const VAL_PARENT_DIR = 'parentDir';
+export const VAL_PROJECT_NAME = 'projectName';
+export const VAL_SHOULD_CREATE_GITHUB_REPO = 'shouldCreateGithubRepo';
+export const VAL_GITHUB_REPO_NAME = 'githubRepoName';
+export const VAL_GITHUB_REPO_DESCRIPTION = 'githubRepoDescription';
+export const VAL_GITHUB_REPO_ORG = 'githubRepoOrg';
+export const VAL_GITHUB_REPO_PRIVACY = 'githubRepoPrivacy';
+export const VAL_GITHUB_REPO_HOMEPAGE = 'githubRepoHomepage';
+export const VAL_GITHUB_REPO_URL = 'githubRepoUrl';
+export const VAL_GITHUB_REPO = 'githubRepo';
+export const VAL_CONTENTFUL_EXPORT_SPACE_ID = 'contentfulExportSpaceId';
+export const VAL_CONTENTFUL_EXPORT_ENV_ID = 'contentfulExportEnvId';
+export const VAL_CONTENTFUL_IMPORT_SPACE_ID = 'contentfulImportSpaceId';
+export const VAL_CONTENTFUL_IMPORT_ENV_ID = 'contentfulImportEnvId';
+export const VAL_CONTENTFUL_MIGRATE_CMS_TYPES = 'contentfulMigrateCmsTypes';
+export const VAL_NETLIFY_SITE_NAME = 'netlifySiteName';
+export const VAL_NETLIFY_ACCOUNT_SLUG = 'netlifyAccountSlug';
+export const VAL_NETLIFY_SITE = 'netlifySite';
+export const VAL_NETLIFY_DEPLOY_KEY = 'netlifyDeployKey';
+export const VAL_SHOULD_FETCH_GITHUB_REPO = 'shouldFetchGithubRepo';
+export const VAL_SHOULD_INSTALL_DEPENDENCIES = 'shouldInstallDependencies';
 
-export const CREATE_APP_ACTION = 'createApp';
-export const CA_CREATE_APP_SUB_ACTION = 'createApp';
-export const CA_CREATE_REPO_SUB_ACTION = 'createRepo';
-export const CA_INIT_GIT_SUB_ACTION = 'initGit';
-
-export const MIGRATE_CONTENT_ACTION = 'migrateContent';
-
-export const SETUP_NETLIFY_ACTION = 'setupNetlify';
-export const SN_PICK_ACCOUNT_SUB_ACTION = 'pickAccount';
-export const SN_CREATE_SITE_SUB_ACTION = 'createSite';
-export const SN_ADD_GITHUB_REPO_SUB_ACTION = 'addGithubRepo';
-export const SN_CREATE_DEPLOY_KEY_SUB_ACTION = 'createDeployKey';
-export const SN_ADD_DEPLOY_HOOK_SUB_ACTION = 'addDeployHook';
-export const SN_ADD_NOTIFICATION_HOOK_SUB_ACTION = 'addNotificationHook';
-
-type CliStateItem = {
-  values: Record<string, any>;
-  completedActions: [];
-  shouldPerform: boolean;
-  hasPerformed: boolean;
-};
+export const ACTION_DETERMINE_ACTIONS = 'determineActions';
+export const ACTION_EXTRACT_ARCHIVE = 'extractArchive';
+export const ACTION_CREATE_APP = 'createApp';
+export const ACTION_CREATE_PROJECT_ROOT_DIR = 'createProjectRootDir';
+export const ACTION_CREATE_GITHUB_REPO = 'createGithubRepo';
+export const ACTION_GIT_INIT = 'gitInit';
+export const ACTION_PUSH_REPO_TO_GITHUB = 'pushRepoToGithub';
+export const ACTION_UPDATE_GITHUB_BRANCH_PROTECTION_RULES = 'updateGithubBranchProtectionRules';
+export const ACTION_NETLIFY_ADD_DEPLOY_KEY = 'netlifyAddDeployKey';
+export const ACTION_CONTENTFUL_MIGRATION = 'contentfulMigration';
+export const ACTION_PICK_NETLIFY_ACCOUNT = 'pickNetlifyAccount';
+export const ACTION_CREATE_NETLIFY_SITE = 'createNetlifySite';
+export const ACTION_NETLIFY_ADD_DEPLOY_HOOK = 'netlifyAddDeployHook';
+export const ACTION_NETLIFY_ADD_NOTIFICATION_HOOKS = 'netlifyAddNotificationHook';
+export const ACTION_ADD_GITHUB_REPO_TO_NETLIFY = 'addGithubRepoToNetlify';
 
 type CliState = {
-  createApp: CliStateItem;
-  migrateContent: CliStateItem;
-  setupNetlify: CliStateItem;
-  determineActions: CliStateItem;
+  messages: string[];
+  completedActions: Record<string, boolean>;
   inProgress: boolean;
-};
-
-const emptyStateItem: CliStateItem = {
-  values: {},
-  completedActions: [],
-  shouldPerform: true,
-  hasPerformed: false
+  values: Record<string, any>;
+  version: string;
 };
 
 const emptyState: CliState = {
-  createApp: emptyStateItem,
-  migrateContent: emptyStateItem,
-  setupNetlify: emptyStateItem,
-  determineActions: emptyStateItem,
-  inProgress: false
+  messages: [],
+  values: {},
+  completedActions: {},
+  inProgress: false,
+  version
 };
 
 const defaults = {
@@ -77,7 +89,6 @@ export default class LastRevConfig {
 
   constructor() {
     const configPath = join(OSBasedPaths.config, 'config.json');
-    console.log('configPath', configPath);
     this._config = new Configstore('', defaults, { configPath });
     if (!this.inProgress()) {
       this.clearState();
@@ -96,53 +107,20 @@ export default class LastRevConfig {
     return this._config.set(key, value);
   }
 
-  getStateRootKey(): string {
-    return 'cli.state';
+  getStateValue(key: string): any {
+    return this.get(`${stateRootKey}.values.${key}`);
   }
 
-  getStateValueKey(action: string, valKey: string): string {
-    return `${stateRootKey}.${action}.values.${valKey}`;
-  }
-
-  getStateActionsKey(action: string): string {
-    return `${stateRootKey}.${action}.action`;
-  }
-
-  getStateHasPerformedKey(action: string): string {
-    return `${stateRootKey}.${action}.hasPerformed`;
-  }
-
-  getStateShouldPerformKey(action: string): string {
-    return `${stateRootKey}.${action}.shouldPerform`;
-  }
-
-  getStateValue(action: string, key: string): any {
-    return this.get(this.getStateValueKey(action, key));
-  }
-
-  updateStateValue(action: string, key: string, value: any): void {
-    this.set(this.getStateValueKey(action, key), value);
+  updateStateValue(key: string, value: any): void {
+    this.set(`${stateRootKey}.values.${key}`, value);
   }
 
   completeAction(action: string): void {
-    this.set(this.getStateHasPerformedKey(action), true);
-  }
-
-  completeSubAction(action: string, subAction: string): void {
-    const subActions = this.get(`${this.getStateActionsKey(action)}.completedActions`) || [];
-    subActions.push(subAction);
-    this.set(`${this.getStateActionsKey(action)}.completedActions`, subActions);
+    this.set(`${stateRootKey}.completedActions.${action}`, true);
   }
 
   hasCompletedAction(action: string): boolean {
-    const shouldPerform = this.get(this.getStateShouldPerformKey(action));
-    const hasPerformed = this.get(this.getStateHasPerformedKey(action));
-    return hasPerformed || !shouldPerform;
-  }
-
-  hasCompletedSubAction(action: string, subAction: string): boolean {
-    const completedActions = this.get(`${this.getStateActionsKey(action)}.completedActions`) || [];
-    return completedActions.includes(subAction);
+    return !!this.get(`${stateRootKey}.completedActions.${action}`);
   }
 
   clearState(): void {
@@ -150,16 +128,25 @@ export default class LastRevConfig {
   }
 
   inProgress(): boolean {
-    return !!this.get(`${stateRootKey}.inProgress`);
+    // We can't trust a previous version of the state to have the everything we need, so we check that versions match.
+    return this.get(`${stateRootKey}.version`) === version && !!this.get(`${stateRootKey}.inProgress`);
   }
 
-  async askAndUpdate(action: string, valKey: string, question: DistinctQuestion<any>): Promise<void> {
-    if (isNil(this.getStateValue(action, valKey))) {
+  getStateMessages(): string[] {
+    return this.get(`${stateRootKey}.messages`);
+  }
+
+  setStateMessages(messages: string[]): void {
+    this.set(`${stateRootKey}.messages`, messages);
+  }
+
+  async askAndUpdate(valKey: string, question: DistinctQuestion<any>): Promise<void> {
+    if (isNil(this.getStateValue(valKey))) {
       const answers = await prompt({
         ...question,
         name: valKey
       });
-      this.updateStateValue(action, valKey, answers[valKey]);
+      this.updateStateValue(valKey, answers[valKey]);
     }
   }
 }
