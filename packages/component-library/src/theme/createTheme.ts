@@ -13,6 +13,7 @@ interface CustomPalette {
   'tertiary': Palette['primary'];
   'quartiary': Palette['primary'];
   'gradient-primary'?: Palette['primary'];
+  'schemes'?: any['primary'];
 }
 interface CustomPaletteOptions {
   'tertiary': PaletteOptions['primary'];
