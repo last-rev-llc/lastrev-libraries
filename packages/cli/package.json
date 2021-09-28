@@ -15,16 +15,19 @@
   "devDependencies": {
     "@last-rev/rollup-config": "^0.0.5",
     "@last-rev/types": "^0.1.2",
+    "@types/configstore": "^5.0.1",
     "@types/cross-spawn": "^6.0.2",
+    "@types/parse-github-url": "^1.0.0",
     "@types/tar": "^4.0.4",
+    "@types/uuid": "^8.3.1",
     "tslib": "^2.3.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/app-config": "^0.1.1",
     "@graphql-tools/merge": "^6.2.14",
+    "@last-rev/app-config": "^0.1.1",
     "@last-rev/contentful-fragment-gen": "^0.1.0",
     "@last-rev/contentful-import-export": "^0.1.1",
     "@last-rev/contentful-s3-sync": "^0.1.2",
@@ -36,18 +39,24 @@
     "axios": "^0.21.1",
     "chalk": "^4.1.1",
     "commander": "^7.1.0",
+    "configstore": "^5.0.1",
     "contentful-management": "^7.39.1",
     "cross-spawn": "^7.0.3",
     "dotenv": "^10.0.0",
+    "env-paths": "2.2.1",
     "express": "^4.17.1",
     "fs-extra": "^10.0.0",
     "got": "^11.8.2",
     "graphql": "^15.5.1",
     "inquirer": "^8.1.1",
     "lodash": "^4.17.21",
+    "netlify": "^8.0.1",
     "open": "^8.2.1",
     "ora": "^5.4.1",
+    "parse-github-url": "^1.0.2",
     "replace-in-file": "^6.2.0",
-    "tar": "^6.1.0"
+    "simple-git": "^2.45.1",
+    "tar": "^6.1.0",
+    "uuid": "^8.3.2"
   }
 }

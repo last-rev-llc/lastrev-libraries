@@ -1,27 +1,24 @@
-import { prompt } from 'inquirer';
-import { SelectedActions } from './types';
 import { map } from 'lodash';
+import LastRevConfig, { DETERMINE_ACTIONS_ACTION } from './LastRevConfig';
 
-const possibleActions = ['Create an app from a starter template', 'Migrate content and models from a CMS space'];
+export const possibleActions = {
+  createApp: 'Create an app from a starter template',
+  migrateContent: 'Migrate content and models from a CMS space',
+  setupNetlify: 'Setup a Netlify Site'
+};
 
-const determineActions = async (): Promise<SelectedActions> => {
-  const { actions } = await prompt([
-    {
-      type: 'checkbox',
-      name: 'actions',
-      message: 'Which actions would you like to perform?',
-      choices: map(possibleActions, (action) => ({
-        name: action,
-        value: action,
-        checked: true
-      }))
-    }
-  ]);
-
-  return {
-    createApp: actions.includes('Create an app from a starter template'),
-    migrateContent: actions.includes('Migrate content and models from a CMS space')
-  };
+const determineActions = async (config: LastRevConfig): Promise<void> => {
+  await config.askAndUpdate(DETERMINE_ACTIONS_ACTION, 'selectedActions', {
+    type: 'checkbox',
+    name: 'selectedActions',
+    message: 'Which actions would you like to perform?',
+    choices: map(possibleActions, (action, key) => ({
+      name: action,
+      value: action,
+      checked: true,
+      disabled: key === 'setupNetlify'
+    }))
+  });
 };
 
 export default determineActions;
