@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.1.20
+
+### Patch Changes
+
+- cbf6717: 'Fixed a TS error'
+
 ## 0.1.19
 
 ### Patch Changes
