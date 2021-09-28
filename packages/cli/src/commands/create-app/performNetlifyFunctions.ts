@@ -212,7 +212,11 @@ const addGithubRepo = async (
 
     try {
       const { data } = await githubApiWrapper.octokit.repos.get({
+<<<<<<< HEAD
         owner: repoOwner,
+=======
+        owner: repoOwner!,
+>>>>>>> jm/LRFA-361-netlify-setup
         repo: repoName
       });
       config.updateStateValue(CREATE_APP_ACTION, 'githubRepo', data);
