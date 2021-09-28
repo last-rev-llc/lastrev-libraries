@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.1.21
+
+### Patch Changes
+
+- 1d83119: Fixed TS error
+
 ## 0.1.20
 
 ### Patch Changes
