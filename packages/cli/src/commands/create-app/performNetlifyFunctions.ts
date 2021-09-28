@@ -213,7 +213,7 @@ const addGithubRepo = async (
     try {
       const { data } = await githubApiWrapper.octokit.repos.get({
         owner: repoOwner!,
-        repo: repoName
+        repo: repoName!
       });
       config.updateStateValue(CREATE_APP_ACTION, 'githubRepo', data);
     } catch (error: any) {
