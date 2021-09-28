@@ -4,12 +4,7 @@ export const typeMappings = {};
 
 export const mappers = {
   Section: {
-    Section: {
-      // contents: (content: any) => {
-      //   console.log('Section', content);
-      //   return content?.contents;
-      // }
-    }
+    Section: {}
   }
 };
 

@@ -1,3 +1,3 @@
-export { default as Quiz } from './components/Quiz';
-export { default as mockTheme } from './theme/mock.theme';
-export { default as createTheme } from './theme/createTheme';
+export { default as CollectionFiltered } from './components/CollectionFiltered';
+export { default as theme } from './theme';
+// export { default as createTheme } from './theme/createTheme';

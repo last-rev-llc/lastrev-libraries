@@ -1,6 +1,6 @@
-import { ApolloContext } from '@last-rev/graphql-contentful-core';
+import { ApolloContext, Mappers } from '@last-rev/types';
 
-export const mappers = {
+export const mappers: Mappers = {
   RichText: {
     RichText: {
       json: async (raw: any) => raw,

@@ -5,7 +5,8 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 // import theme from '@last-rev/component-library';
 // import '@storybook/addon-console';
 import theme from '../src/theme';
-import './styles.css';
+import '@last-rev/component-library/dist/styles.css';
+import '../../web/styles/globals.css';
 
 // import * as components from '../src';
 
@@ -31,7 +32,10 @@ addParameters({
     isToolshown: true,
     storySort: {
       method: 'alphabetical',
-      order: ['Intro', 'Modules']
+      order: [
+        'Intro',
+        'Modules'
+      ]
     }
   },
   backgrounds: {

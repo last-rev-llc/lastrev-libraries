@@ -1,42 +1,111 @@
-// import { ApolloContext, getLocalizedField } from '@last-rev/graphql-contentful-core';
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import { ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
 import { camelCase, toUpper } from 'lodash';
 
+import { collectOptions } from './utils/collectOptions';
+import { queryContentful } from './utils/queryContentful';
+
 const pascalCase = (str: string) => camelCase(str).replace(/^(.)/, toUpper);
+
 export const typeDefs = gql`
-  union CollectionItem = Card | Link | NavigationItem
   extend type Collection {
     items: [CollectionItem]
+    itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
   }
+
+  type CollectionOptions {
+    tags: [Option]
+    topics: [Option]
+  }
+  type Option {
+    label: String
+    value: String
+  }
+  type ConnectionPageInfo {
+    options: CollectionOptions
+    allOptions: CollectionOptions
+    total: Int
+  }
+
+  type CollectionItemConnection {
+    pageInfo: ConnectionPageInfo
+    items: [CollectionItem]
+  }
+
+  input CollectionFilterInput {
+    topics: [String]
+    tags: [String]
+    body: String
+  }
+
+  union CollectionItem = Card | Link | NavigationItem
 `;
 
-// export const typeMappings = {
-//   sectionContentCards: 'Collection'
-// };
+interface ItemsConnectionArgs {
+  limit?: number;
+  offset?: number;
+  filter?: any;
+}
 
-// const filterToContentTypeMap: Record<string, string> = {
-//   'All Blog Posts': 'blogPost'
-// };
+interface CollectionSettings {
+  contentType: string;
+  filters: Array<{
+    id: string;
+    key: string;
+  }>;
+}
 
-export const mappers = {
+export const mappers: any = {
   Collection: {
     Collection: {
-      // items: async (collection: any, _args: any, ctx: ApolloContext) => {
-      //   try {
-      //     const items = await getLocalizedField(collection.fields, 'items', ctx);
-      //     return items;
-      //   } catch (error) {
-      //     console.log('error', error);
-      //   }
-      //   return [];
-      // }
+      itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
+        let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
+        try {
+          const { contentType, filters } =
+            (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
+          // Get all possible items from Contentful
+          // Need all to generate the possible options for all items. Not just the current page.
+          if (contentType) {
+            items = await queryContentful({ contentType, filters, filter, ctx });
+            console.log('ID', JSON.stringify({ collection, contentType }));
+            const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
+              id: contentType,
+              preview: !!ctx.preview
+            });
+            // const options = await collectOptions({ filters, items, ctx });
+            const options = {};
+            const allOptions = await collectOptions({ filters, items: allItems, ctx });
+
+            // Paginate results
+            if (offset || limit) {
+              items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
+            }
+
+            return {
+              pageInfo: {
+                options,
+                allOptions
+              },
+              items: await ctx.loaders.entryLoader.loadMany(
+                items?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+              )
+            };
+          }
+        } catch (error) {
+          console.log('error', error);
+        }
+
+        return items;
+      }
     }
   }
 };
 
-// TODO: include the collection variant for resolving the Collection Item type
+// TODO: support variant for resolving the CollectionItem type
 const ITEM_MAPPING: { [key: string]: string } = {
-  Page: 'Link'
+  Page: 'Link',
+  Blog: 'Card'
 };
 
 export const resolvers = {

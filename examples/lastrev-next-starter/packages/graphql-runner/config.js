@@ -1,12 +1,35 @@
 require('dotenv').config();
-const extensions = require('lrns-graphql-extensions');
 
-module.exports = {
-  extensions,
-  contentPreviewToken: process.env.CONTENTFUL_PREVIEW_TOKEN,
-  contentDeliveryToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
-  contentfulSpaceId: process.env.CONTENTFUL_SPACE_ID,
-  contentfulEnv: process.env.CONTENTFUL_ENV,
-  contentDir: './cms-sync',
-  logLevel: process.env.LOG_LEVEL || 'info'
+const extensions = require('@lrns/graphql-extensions');
+const { resolve } = require('path');
+const LastRevAppConfig = require('@last-rev/app-config');
+
+const parseBooleanEnvVar = (value = '') => {
+  // values parsed as true: true, 1, yes, y, => ignore caps
+  const val = value.toString().toLowerCase();
+  return /^(true|1|yes|y)$/.test(val);
 };
+
+const config = new LastRevAppConfig({
+  cms: 'Contentful',
+  strategy: 'redis',
+  sites: [process.env.SITE],
+  extensions,
+  contentful: {
+    contentPreviewToken: process.env.CONTENTFUL_PREVIEW_TOKEN,
+    contentDeliveryToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
+    spaceId: process.env.CONTENTFUL_SPACE_ID,
+    env: process.env.CONTENTFUL_ENV,
+    usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW)
+  },
+  redis: {
+    port: process.env.REDIS_PORT,
+    host: process.env.REDIS_HOST,
+    password: process.env.REDIS_PASSWORD,
+    tls: {}
+  },
+  fs: { contentDir: resolve(__dirname, './cms-sync') },
+  logLevel: 'debug'
+});
+
+module.exports = config;

@@ -1,28 +1,21 @@
-import { Mappers, getLocalizedField, ApolloContext } from '@last-rev/graphql-contentful-core';
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import { Mappers, ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
 
 const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
-  // const { loaders } = ctx;
-  //TODO document this use case for adapting theme fields without updating content model
-  //TODO document migrating old fields to new component standards
+  const href = getLocalizedField(link.fields, 'href', ctx);
   const manualUrl = getLocalizedField(link.fields, 'manualUrl', ctx);
-  if (manualUrl) return manualUrl ?? '#';
+  if (href || manualUrl) return href ?? manualUrl;
 
-  // const pageAnchor = getLocalizedField(link, 'pageAnchor', ctx);
-  // if (pageAnchor) return pageAnchor;
-
-  // const contentRef = getLocalizedField(link, 'content', ctx);
-  // if (contentRef) {
-  //   const content = await loaders.entryLoader.load(contentRef.sys.id);
-  //   return content && getLocalizedField(content?.fields, 'slug', ctx);
-  // }
+  const contentRef = getLocalizedField(link.fields, 'linkedContent', ctx);
+  if (contentRef) {
+    const content = await ctx.loaders.entryLoader.load({ id: contentRef.sys.id, preview: !!ctx.preview });
+    return content && getLocalizedField(content?.fields, 'slug', ctx);
+  }
   return '#';
 };
 
 export const mappers: Mappers = {
-  // The Header navigation expects NavigationItem that have a link and a children collection
-  // Here we setup a mapper for displaying a link as a NavigationItem
-  // This allows to use existant links and reduce the amount of nesting
   Link: {
     Link: {
       href: hrefUrlResolver
@@ -37,6 +30,5 @@ export const mappers: Mappers = {
 export const typeDefs = gql`
   extend type Link {
     href: String!
-    # modal: Modal
   }
 `;
