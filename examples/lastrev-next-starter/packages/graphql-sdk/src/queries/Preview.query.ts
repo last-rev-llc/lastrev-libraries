@@ -19,12 +19,12 @@ export const Preview_Query = gql`
       ...Preview_NavigationItemFragment
       ...Preview_TopicContentFragment
       ...Preview_BlogContentFragment
-      ...Preview_ArticleContentFragment
       ...Preview_ModuleIntegrationFragment
     }
   }
 
   fragment Preview_PageContentFragment on Page {
+    seo
     sidekickLookup
     header {
       __typename
@@ -48,13 +48,11 @@ export const Preview_Query = gql`
       ...Preview_TextFragment
       ...Preview_CardFragment
       ...Preview_CollectionFragment
-      ...Preview_QuizFragment
     }
-
-    seo
   }
 
   fragment Preview_TopicContentFragment on Topic {
+    seo
     title
     slug
     sidekickLookup
@@ -80,10 +78,7 @@ export const Preview_Query = gql`
       ...Preview_TextFragment
       ...Preview_CardFragment
       ...Preview_CollectionFragment
-      ...Preview_QuizFragment
     }
-
-    seo
   }
 
   fragment Preview_BlogContentFragment on Blog {
@@ -95,6 +90,7 @@ export const Preview_Query = gql`
     quote
     tags
     sidekickLookup
+    seo
     footer {
       ...Preview_SectionFragment
     }
@@ -122,35 +118,10 @@ export const Preview_Query = gql`
     contents {
       ...Preview_BaseContentFragment
       ...Preview_SectionFragment
-      # ...Preview_ArtDirectedMediaFragment
+      ...Preview_MediaFragment
       ...Preview_TextFragment
       ...Preview_CardFragment
       ...Preview_CollectionFragment
-      ...Preview_QuizFragment
-    }
-    seo
-  }
-
-  fragment Preview_ArticleContentFragment on Article {
-    __typename
-    id
-    slug
-    title
-    footer {
-      ...Preview_SectionFragment
-    }
-    header {
-      __typename
-      ...Preview_HeaderFragment
-      navigationItems {
-        ...Preview_CollectionFragment
-      }
-    }
-    featuredMedia {
-      ...Preview_MediaFragment
-    }
-    body {
-      ...RichText_RichTextFragment
     }
     seo
   }
@@ -285,7 +256,7 @@ export const Preview_Query = gql`
       ...Preview_CollectionFragment
     }
     ... on ModuleIntegration {
-      ...Page_ModuleIntegrationFragment
+      ...Preview_ModuleIntegrationFragment
     }
   }
 
@@ -384,20 +355,7 @@ export const Preview_Query = gql`
     __typename
     sidekickLookup
   }
-  fragment Preview_QuizFragment on Quiz {
-    ...Preview_BaseContentFragment
-    title
-    intro {
-      ...RichText_RichTextFragment
-    }
-    outro {
-      ...RichText_RichTextFragment
-    }
-    image {
-      ...Preview_MediaFragment
-    }
-    settings
-  }
+
   fragment Preview_ModuleIntegrationFragment on ModuleIntegration {
     variant
     settings

@@ -11,7 +11,7 @@
     "clean": "rimraf dist",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
-    "dev": "concurrently \"NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
+    "dev": "concurrently \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint",
     "test": "jest",

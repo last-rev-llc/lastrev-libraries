@@ -26,23 +26,25 @@ export const PageQuery = gql`
           items {
             ...CollectionItemsBaseContentFragment
             ...CollectionItemsCardFragment
-            ...CollectionItemsPageLinkFragment
+            ...CollectionItemsLinkFragment
             ...CollectionItemsNavigationItemFragment
           }
         }
       }
     }
   }
+
   fragment CollectionItems_OptionsFragment on CollectionOptions {
-    topics {
-      label
-      value
-    }
-    tags {
-      label
-      value
-    }
+    __typename
+    # Collection options that get exposed to the UI
+    # These are the same as the options in the Collection extension
+    # i.e
+    # topics {
+    #   label
+    #   value
+    # }
   }
+
   fragment CollectionItemsBaseContentFragment on Content {
     id
     __typename
@@ -69,7 +71,7 @@ export const PageQuery = gql`
       ...CollectionItemsCardRichTextFragment
     }
     actions {
-      ...CollectionItemsPageLinkFragment
+      ...CollectionItemsLinkFragment
     }
     link {
       ...CollectionItemsLinkFragment
@@ -81,19 +83,10 @@ export const PageQuery = gql`
       entries {
         __typename
         id
-        ...CollectionItemsArtDirectedMediaFragment
         ...CollectionItemsLinkFragment
       }
       assets {
-        id
-        __typename
-        file {
-          url
-        }
-        # title
-        # width
-        # height
-        # description
+        ...CollectionItemsMediaFragment
       }
     }
   }
@@ -104,17 +97,20 @@ export const PageQuery = gql`
     href
     variant
   }
-  fragment CollectionItemsArtDirectedMediaFragment on Media {
+  fragment CollectionItemsMediaFragment on Media {
     ...CollectionItemsBaseContentFragment
-    # desktop {
-    #   title
-    #   file {
-    #     url
-    #   }
-    # }
+    id
+    __typename
+    title
+    variant
+    file {
+      url
+      extension
+      fileName
+    }
   }
 
-  fragment CollectionItemsPageLinkFragment on Link {
+  fragment CollectionItemsLinkFragment on Link {
     ...CollectionItemsBaseContentFragment
     text
     href
