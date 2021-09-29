@@ -2,18 +2,20 @@ import { compact, map, merge } from 'lodash';
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { Source, DocumentNode, GraphQLSchema } from 'graphql';
 
-import * as Card from './Card';
-import * as Collection from './Collection';
-import * as Header from './Header';
-import * as Blog from './Blog';
-import * as Hero from './Hero';
-import * as Link from './Link';
-import * as NavigationItem from './NavigationItem';
-import * as Page from './Page';
-import * as Section from './Section';
-import * as Media from './Media';
-import * as Quote from './Quote';
-import * as RichText from './RichText';
+import {
+  Card,
+  Collection,
+  Header,
+  Blog,
+  Hero,
+  Link,
+  NavigationItem,
+  Page,
+  Section,
+  Media,
+  Quote,
+  RichText
+} from '@last-rev/graphql-contentful-extensions';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;

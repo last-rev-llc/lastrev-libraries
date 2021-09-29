@@ -1,6 +1,6 @@
 {
-  "name": "@lrns/graphql-extensions",
-  "version": "0.1.0",
+  "name": "@last-rev/graphql-contentful-extensions",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -19,7 +19,6 @@
     "@graphql-tools/merge": "^6.2.14",
     "@last-rev/graphql-contentful-core": "^0.1.23",
     "@last-rev/rollup-config": "^0.0.4",
-    "@last-rev/graphql-contentful-extensions": "^0.0.1",
     "@last-rev/types": "^0.1.1",
     "contentful": "^8.4.2",
     "graphql": "^15.5.1",
