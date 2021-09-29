@@ -5,5 +5,8 @@ export const typeDefs = gql`
     actions: [Link]
     # Uncomment if using Media reference
     # image: [Media]
+
+    # Comment this fields if added in Contentful
+    contentHeight: String
   }
 `;

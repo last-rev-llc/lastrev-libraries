@@ -141,5 +141,9 @@ export const typeDefs = gql`
     # Uncomment next line if using Media references instead
     # featuredMedia: [Media]
     contents: [Content]
+
+    # Comment this fields if added in Contentful
+    author: String
+    tags: [String]
   }
 `;

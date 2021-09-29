@@ -20,7 +20,8 @@ const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
 export const mappers: Mappers = {
   NavigationItem: {
     NavigationItem: {
-      href: hrefUrlResolver
+      href: hrefUrlResolver,
+      image: 'media'
     }
   }
 };
@@ -30,6 +31,7 @@ export const typeDefs = gql`
   extend type NavigationItem {
     href: String!
     subNavigation: [SubnavigationItem]
+    image: Media
   }
 `;
 

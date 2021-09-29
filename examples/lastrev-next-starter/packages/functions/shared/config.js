@@ -25,7 +25,7 @@ const env = testForEnvVar('CONTENTFUL_ENV');
 const config = new LastRevAppConfig({
   cms: 'Contentful',
   strategy: 'redis',
-  sites: ['STRONG_365', 'NY_WELL'],
+  sites: [process.env.SITE],
   extensions,
   contentful: {
     contentPreviewToken,

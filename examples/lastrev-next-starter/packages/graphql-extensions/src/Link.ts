@@ -30,5 +30,7 @@ export const mappers: Mappers = {
 export const typeDefs = gql`
   extend type Link {
     href: String!
+    icon: String
+    iconPosition: String
   }
 `;

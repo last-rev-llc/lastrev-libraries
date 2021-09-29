@@ -28,6 +28,7 @@
     "react-lazyload": "^3.2.0",
     "@lrns/graphql-sdk": "^0.1.0",
     "swiper": "^6.8.0",
+    "@lrns/utils": "^0.1.0",
     "xss": "^1.0.9"
   },
   "peerDependencies": {

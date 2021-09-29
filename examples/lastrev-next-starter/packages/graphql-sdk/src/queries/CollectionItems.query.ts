@@ -51,14 +51,6 @@ export const PageQuery = gql`
     sidekickLookup
   }
 
-  fragment CollectionItemsMediaFragment on Media {
-    # ...BaseContentFragment
-    title
-    variant
-    file {
-      url
-    }
-  }
   fragment CollectionItemsCardFragment on Card {
     ...CollectionItemsBaseContentFragment
     variant
@@ -83,6 +75,7 @@ export const PageQuery = gql`
       entries {
         __typename
         id
+        ...CollectionItemsMediaFragment
         ...CollectionItemsLinkFragment
       }
       assets {
@@ -91,12 +84,6 @@ export const PageQuery = gql`
     }
   }
 
-  fragment CollectionItemsLinkFragment on Link {
-    ...CollectionItemsBaseContentFragment
-    text
-    href
-    variant
-  }
   fragment CollectionItemsMediaFragment on Media {
     ...CollectionItemsBaseContentFragment
     id

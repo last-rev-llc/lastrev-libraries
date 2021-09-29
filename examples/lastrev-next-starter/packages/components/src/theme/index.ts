@@ -72,12 +72,6 @@ const theme = createTheme(
             '& .MuiLink-root': {
               'textDecoration': 'none',
               '&.MuiLink-selected': { color: baseTheme.palette.secondary.main, fontWeight: 'bold' }
-            },
-            // Hide the first menu item on desktop
-            [baseTheme.breakpoints.up('sm')]: {
-              '& [class$=NavigationItem-menuRoot] > .MuiMenuItem-root:first-child': {
-                display: 'none'
-              }
             }
           }
         }

@@ -111,28 +111,6 @@ export const PageQuery = gql`
     seo
   }
 
-  fragment Page_ArticleContentFragment on Article {
-    seo
-    slug
-    title
-    footer {
-      ...Page_SectionFragment
-    }
-    header {
-      __typename
-      ...Page_HeaderFragment
-      navigationItems {
-        ...Page_CollectionFragment
-      }
-    }
-    featuredMedia {
-      ...Page_MediaFragment
-    }
-    body {
-      ...RichText_RichTextFragment
-    }
-  }
-
   fragment Page_LinkFragment on Link {
     ...Page_BaseContentFragment
     text
@@ -309,8 +287,8 @@ export const PageQuery = gql`
     text
     href
     summary
-    media {
-      ...MediaFragment
+    image {
+      ...Page_MediaFragment
     }
   }
 
