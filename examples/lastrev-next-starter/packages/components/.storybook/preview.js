@@ -26,18 +26,15 @@ const contentMapping = {
   'Collection:filtered': CollectionFiltered,
   Card,
   'Quote': Card,
-  'NavigationItem': NavigationItem,
-  'NavigationItem:group': NavigationItemGroup,
-  'NavigationItem:link': NavigationItemLink,
+  NavigationItem,
   Text,
   Media,
   Link,
-  Hero,
-  'LanguageSelector': LanguageSelector,
-  'Footer': Footer
+  Hero
 };
 
 const StorybookWrapper = (storyFn) => {
+  // console.log('StoryBook', theme);
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -53,6 +50,7 @@ const StorybookWrapper = (storyFn) => {
 addDecorator(StorybookWrapper);
 
 addParameters({
+  // controls: { expanded: true },,
   layout: 'fullscreen',
   options: {
     isToolshown: true,

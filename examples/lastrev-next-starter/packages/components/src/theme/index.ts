@@ -71,7 +71,7 @@ const theme = createTheme(
           root: {
             '& .MuiLink-root': {
               'textDecoration': 'none',
-              '&.MuiLink-selected': { color: baseTheme.palette.secondary.main, fontWeight: 'bold' }
+              '&.MuiLink-selected': { fontWeight: 'bold' }
             }
           }
         }
