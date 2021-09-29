@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
+import { Box } from '@mui/material';
 import Hero, { HeroProps } from '@last-rev/component-library/dist/components/Hero/Hero';
 import heroMock, { productMock, solutionMock, backgroundMock } from './Hero.mock';
 

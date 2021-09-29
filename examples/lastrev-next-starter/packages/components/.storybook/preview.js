@@ -1,6 +1,7 @@
 import { addDecorator, addParameters } from '@storybook/react';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { StyledEngineProvider } from '@mui/material/styles';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import Card from '@last-rev/component-library/dist/components/Card/Card';
@@ -37,7 +38,6 @@ const contentMapping = {
 };
 
 const StorybookWrapper = (storyFn) => {
-  // console.log('StoryBook', theme);
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -53,7 +53,6 @@ const StorybookWrapper = (storyFn) => {
 addDecorator(StorybookWrapper);
 
 addParameters({
-  // controls: { expanded: true },,
   layout: 'fullscreen',
   options: {
     isToolshown: true,

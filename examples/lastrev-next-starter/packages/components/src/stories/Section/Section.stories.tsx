@@ -1,6 +1,7 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
+import { Box } from '@mui/material';
 import Section, { SectionProps } from '@last-rev/component-library/dist/components/Section/Section';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
 import {
   mediaWithTextSectionMock,
   mediaWithComplexTextSectionMock,
@@ -26,7 +27,7 @@ export default {
   }
 };
 
-const Template = (args: SectionProps) => <Section {...args} />;
+const Template = (args: any) => <ContentModule {...args} />;
 
 export const Media = Template.bind({});
 Media.args = { ...mediaWithTextSectionMock };

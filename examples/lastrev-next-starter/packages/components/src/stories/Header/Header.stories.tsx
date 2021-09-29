@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
+import { Box } from '@mui/material';
 import Header, { HeaderProps } from '@last-rev/component-library/dist/components/Header/Header';
 import mockContent from './Header.mock';
 

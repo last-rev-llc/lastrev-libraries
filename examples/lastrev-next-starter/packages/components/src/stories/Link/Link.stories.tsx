@@ -1,5 +1,5 @@
 import React from 'react';
-import Box from '@material-ui/core/Box';
+import { Box } from '@mui/material';
 import Link from '@last-rev/component-library/dist/components/Link/Link';
 import mockContent from './Link.mock';
 
