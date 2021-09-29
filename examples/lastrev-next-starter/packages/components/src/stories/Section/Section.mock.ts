@@ -267,7 +267,7 @@ export const featuredMock = {
                 {
                   nodeType: 'text',
                   value:
-                    'Sensor Tower’s powerful Usage Intelligence product models mobile app retention, demographics, and engagement across all markets. Get clear and concise data on mobile user behavior, and how apps retain audiences over time.',
+                    'LRNS’s powerful Usage Intelligence product models mobile app retention, demographics, and engagement across all markets. Get clear and concise data on mobile user behavior, and how apps retain audiences over time.',
                   marks: [],
                   data: {}
                 }

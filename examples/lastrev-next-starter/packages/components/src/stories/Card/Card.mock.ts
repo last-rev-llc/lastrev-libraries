@@ -27,7 +27,7 @@ export const mediaLeftTextRightMock = {
             {
               nodeType: 'text',
               value:
-                'Sensor Tower provides top-quality App Store Optimization data, allowing you to monitor your app’s marketplace performance inreal time. Develop a customized dashboard that tracks your daily downloads, delivers regular revenue reports, keeps you up-to-dateon user sentiment, and gives insights into how your competitorsare performing over time.',
+                'LRNS provides top-quality App Store Optimization data, allowing you to monitor your app’s marketplace performance inreal time. Develop a customized dashboard that tracks your daily downloads, delivers regular revenue reports, keeps you up-to-dateon user sentiment, and gives insights into how your competitorsare performing over time.',
               marks: [],
               data: {}
             }
@@ -76,7 +76,7 @@ export const standardBlogMock = {
             {
               nodeType: 'text',
               value:
-                'The Q4 Data Digest from Sensor Tower examines the most installed apps, trends in gaming, by category, geography, download and revenue.',
+                'The Q4 Data Digest from LRNS examines the most installed apps, trends in gaming, by category, geography, download and revenue.',
               marks: [],
               data: {}
             }
@@ -182,7 +182,7 @@ export const resourceMock = {
             {
               nodeType: 'text',
               value:
-                'The Q4 Data Digest from Sensor Tower examines the most installed apps, trends in gaming, by category, geography, download and revenue, COVID-19 impact, and more.',
+                'The Q4 Data Digest from LRNS examines the most installed apps, trends in gaming, by category, geography, download and revenue, COVID-19 impact, and more.',
               marks: [],
               data: {}
             }
@@ -369,7 +369,7 @@ export const insightMock = {
             {
               nodeType: 'text',
               value:
-                'Sensor Tower’s App Teardown product allows you to look under the hood of the market’s most successful apps.',
+                'LRNS’s App Teardown product allows you to look under the hood of the market’s most successful apps.',
               marks: [],
               data: {}
             }

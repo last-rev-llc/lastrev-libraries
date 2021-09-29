@@ -18,7 +18,7 @@ export const homepageMock = {
           content: [
             {
               nodeType: 'text',
-              value: 'Sensor Tower equips you with the ',
+              value: 'LRNS equips you with the ',
               marks: [],
               data: {}
             },
