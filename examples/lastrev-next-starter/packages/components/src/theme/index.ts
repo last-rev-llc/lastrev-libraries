@@ -58,7 +58,6 @@ const theme = createTheme(
         styleOverrides: {
           contentContainer: {
             height: 100,
-            // padding: baseTheme.spacing(3),
             [baseTheme.breakpoints.up('sm')]: {
               paddingLeft: baseTheme.spacing(10),
               paddingRight: baseTheme.spacing(10)

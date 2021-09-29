@@ -17,8 +17,6 @@ import CollectionFiltered from '../src/components/CollectionFiltered';
 import theme from '../src/theme';
 import './styles.css';
 
-// import * as components from '../src';
-
 const contentMapping = {
   Header,
   Section,
@@ -34,7 +32,6 @@ const contentMapping = {
 };
 
 const StorybookWrapper = (storyFn) => {
-  // console.log('StoryBook', theme);
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
@@ -50,7 +47,6 @@ const StorybookWrapper = (storyFn) => {
 addDecorator(StorybookWrapper);
 
 addParameters({
-  // controls: { expanded: true },,
   layout: 'fullscreen',
   options: {
     isToolshown: true,
