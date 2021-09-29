@@ -27,7 +27,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@last-rev/types": "^0.1.1",
+    "@last-rev/types": "^0.1.2",
     "@types/lodash": "^4.14.170",
     "contentful": "^8.4.2"
   }

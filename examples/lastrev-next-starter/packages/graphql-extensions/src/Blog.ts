@@ -1,33 +1,12 @@
 import gql from 'graphql-tag';
-import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import { getLocalizedField, createRichText } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
 import kebabCase from 'lodash/kebabCase';
 import { createPath } from './Page';
 import { getThumbnailURL } from './Media';
 
-// TODO: Move to env variables
-const BLOGS_SITE_ID = '4KptbiI1F7S3d6R37fRh1z';
-
-// TODO: Move this to utils
-// TODO: Extract and document createRichText
-const createRichText = (text: string) => ({
-  nodeType: 'document',
-  data: {},
-  content: [
-    {
-      nodeType: 'paragraph',
-      data: {},
-      content: [
-        {
-          nodeType: 'text',
-          value: text,
-          data: {},
-          marks: []
-        }
-      ]
-    }
-  ]
-});
+// Controls which site the Blogs gets it's global config from
+const BLOGS_SITE_ID = process.env.BLOGS_SITE_ID ?? process.env.SITE_ID;
 // TODO: Extract and document createType
 const createType = (type: string, content: any) => ({
   sys: { id: content?.id, contentType: { sys: { id: type } } },
@@ -41,7 +20,6 @@ const createType = (type: string, content: any) => ({
     {}
   )
 });
-
 const getSlug = (topic: any, ctx: ApolloContext) => {
   const title = getLocalizedField(topic.fields, 'title', ctx);
   const slug = getLocalizedField(topic.fields, 'slug', ctx);
@@ -55,7 +33,6 @@ const blogGlobalContentsResolver = async (page: any, _args: any, ctx: ApolloCont
   const siteblogGlobalContents: any = getLocalizedField(site?.fields, 'blogGlobalContents', ctx);
   return siteblogGlobalContents;
 };
-
 export const mappers: any = {
   Blog: {
     Blog: {
@@ -70,9 +47,9 @@ export const mappers: any = {
     Card: {
       body: async (blog: any, _args: any, ctx: ApolloContext) => {
         // TODO: Maybe abstract this two steps into one i.e mapFieldToType
-        const quote: any = getLocalizedField(blog.fields, 'quote', ctx);
-        const cardBody = createRichText(quote);
-        (cardBody as any).__fieldName__ = 'quote';
+        const summary: any = getLocalizedField(blog.fields, 'summary', ctx);
+        const cardBody = createRichText(summary);
+        (cardBody as any).__fieldName__ = 'summary';
         return cardBody;
       },
       media: async (blog: any, _args: any, ctx: ApolloContext) => {
@@ -130,10 +107,8 @@ export const mappers: any = {
           }
         ];
       },
-      // media: 'featuredMedia',
-      variant: () => 'standard-blog',
+      variant: () => 'default-blog',
       link: async (blog: any) => blog,
-      // actions: 'topics', // TODO: Test if this would work (as long as there's a mapping from Topic to Link)
       actions: async (blog: any, _args: any, ctx: ApolloContext) => {
         // Get all topics from this blog and convert them into links
         const topicsLinks: any = getLocalizedField(blog.fields, 'topics', ctx);
@@ -163,7 +138,8 @@ export const typeDefs = gql`
   extend type Blog {
     relatedLinks: [Link]
     topics: [Topic]
-    featuredMedia: [Media]
+    # Uncomment next line if using Media references instead
+    # featuredMedia: [Media]
     contents: [Content]
   }
 `;

@@ -2,11 +2,8 @@ import { compact, map, merge } from 'lodash';
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { Source, DocumentNode, GraphQLSchema } from 'graphql';
 
-import * as Media from './Media';
 import * as Card from './Card';
 import * as Collection from './Collection';
-// import * as Categories from './Categories';
-// import * as GlobalSettings from './GlobalSettings';
 import * as Header from './Header';
 import * as Blog from './Blog';
 import * as Hero from './Hero';
@@ -14,9 +11,9 @@ import * as Link from './Link';
 import * as NavigationItem from './NavigationItem';
 import * as Page from './Page';
 import * as Section from './Section';
-// import * as Quote from './Quote';
+import * as Media from './Media';
+import * as Quote from './Quote';
 import * as RichText from './RichText';
-// import * as SplitColumn from './SplitColumn';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -27,11 +24,8 @@ export type GraphQlExtension = {
 };
 
 const extensions: GraphQlExtension[] = [
-  Media,
   Card,
   Collection,
-  // Categories,
-  // GlobalSettings,
   Blog,
   Hero,
   Header,
@@ -39,9 +33,9 @@ const extensions: GraphQlExtension[] = [
   NavigationItem,
   Page,
   Section,
-  // Quote,
+  Quote,
+  Media,
   RichText
-  // SplitColumn
 ];
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));

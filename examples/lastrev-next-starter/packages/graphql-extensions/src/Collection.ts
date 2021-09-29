@@ -11,6 +11,7 @@ const pascalCase = (str: string) => camelCase(str).replace(/^(.)/, toUpper);
 export const typeDefs = gql`
   extend type Collection {
     items: [CollectionItem]
+    introText: Text
     itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
   }
 
@@ -39,7 +40,7 @@ export const typeDefs = gql`
     body: String
   }
 
-  union CollectionItem = Card | Link | NavigationItem
+  union CollectionItem = Card | Link | NavigationItem | Media
 `;
 
 interface ItemsConnectionArgs {
@@ -105,7 +106,8 @@ export const mappers: any = {
 // TODO: support variant for resolving the CollectionItem type
 const ITEM_MAPPING: { [key: string]: string } = {
   Page: 'Link',
-  Blog: 'Card'
+  Blog: 'Card',
+  Media: 'Card'
 };
 
 export const resolvers = {

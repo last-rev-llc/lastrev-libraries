@@ -1,19 +1,29 @@
 import gql from 'graphql-tag';
-
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
 export const typeMappings = {};
-
 const mediaFieldResolver = async ({ fields, field, assetField, ctx }: any) => {
   // TODO: Make getting a localized resolved link a single function
   const title: any = getLocalizedField(fields, assetField, ctx);
   if (title) return title;
   const assetRef: any = getLocalizedField(fields, field, ctx);
-
   if (!assetRef) return null;
   const asset = await ctx.loaders.assetLoader.load({ id: assetRef?.sys?.id, preview: !!ctx.preview });
   const assetTitle: any = getLocalizedField(asset?.fields, assetField, ctx);
   return assetTitle;
+};
+
+const resolveFile = async (media: any, _args: any, ctx: ApolloContext) => {
+  let file: any = media?.file;
+  const assetFile = await mediaFieldResolver({ fields: media?.fields, field: 'asset', assetField: 'file', ctx });
+  if (assetFile) {
+    file = assetFile;
+  }
+  const assetURL: any = getLocalizedField(media?.fields, 'assetURL', ctx);
+  if (assetURL) {
+    file = { url: getVideoEmbedUrl(assetURL) ?? assetURL };
+  }
+  return file;
 };
 
 export const mappers = {
@@ -28,7 +38,6 @@ export const mappers = {
           if (getVideoEmbedUrl(assetURL)) {
             return 'embed';
           }
-
           if (assetURL?.split('.')[assetURL?.split('.').length - 1] === 'mp4') {
             return 'video';
           }
@@ -45,20 +54,14 @@ export const mappers = {
         });
         return title ?? assetTitle;
       },
-      file: async (media: any, _args: any, ctx: ApolloContext) => {
-        let file: any = media?.file;
-
-        const assetFile = await mediaFieldResolver({ fields: media?.fields, field: 'asset', assetField: 'file', ctx });
-        if (assetFile) {
-          file = assetFile;
-        }
-
-        const assetURL: any = getLocalizedField(media?.fields, 'assetURL', ctx);
-        if (assetURL) {
-          file = { url: getVideoEmbedUrl(assetURL) ?? assetURL };
-        }
-        return file;
-      }
+      file: resolveFile
+    },
+    Card: {
+      media: async (media: any, args: any, ctx: ApolloContext) => {
+        const file: any = resolveFile(media, args, ctx);
+        return [file];
+      },
+      variant: () => 'media'
     }
   }
 };
@@ -93,7 +96,6 @@ const getVideoEmbedUrl = (assetURL: string) => {
   }
   return null;
 };
-
 export const getThumbnailURL = (assetURL: string) => {
   if (typeof assetURL !== 'string') {
     return null;
@@ -124,11 +126,9 @@ export const getThumbnailURL = (assetURL: string) => {
   }
   return null;
 };
-
 export const typeDefs = gql`
   extend type Media {
     variant: String
   }
 `;
-
 // A function to remove the opacity of an image
