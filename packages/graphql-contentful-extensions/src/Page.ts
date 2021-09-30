@@ -37,6 +37,42 @@ const blogsLandingSlug = async (loaders: ContentfulLoaders, defaultLocale: strin
       return getDefaultFieldValue(blogsLanding, 'slug', defaultLocale);
     }
   }
+  return 'blogs';
+};
+
+const createType = (type: string, content: any) => ({
+  sys: { id: content?.id, contentType: { sys: { id: type } } },
+  fields: Object.keys(content).reduce(
+    (accum, key) => ({
+      ...accum,
+      [key]: {
+        'en-US': content[key]
+      }
+    }),
+    {}
+  )
+});
+
+const pageContentsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
+  // Get the PAge contents
+  const contentsRef = getLocalizedField(page.fields, 'contents', ctx);
+  // Load the Page contents
+  const contents = await ctx.loaders.entryLoader.loadMany(
+    contentsRef.map((content: any) => ({ id: content?.sys.id, preview: !!ctx.preview }))
+  );
+  // Map the Page contents (if not a Section wrap it)
+  return contents?.map((content: any) => {
+    const variant = getLocalizedField(content.fields, 'variant', ctx);
+    const contentType = content?.sys?.contentType?.sys?.id;
+    return contentType === 'section'
+      ? content
+      : createType('Section', {
+          contents: [content],
+          variant: `${contentType}_${variant ?? 'default'}_section-wrapper`,
+          contentWidth: 'xl',
+          contentSpacing: 4
+        });
+  });
 };
 
 export const mappers = {
@@ -47,7 +83,8 @@ export const mappers = {
     },
     Page: {
       header: headerResolver,
-      footer: footerResolver
+      footer: footerResolver,
+      contents: pageContentsResolver
     }
   },
   Blog: {
@@ -56,8 +93,8 @@ export const mappers = {
       footer: footerResolver
     }
   },
-  Topic: {
-    Topic: {
+  CategoryBlog: {
+    CategoryBlog: {
       header: headerResolver,
       footer: footerResolver,
       contents: async (_: any, _args: any, ctx: ApolloContext) => {
@@ -84,7 +121,7 @@ export const typeDefs = gql`
     footer: Content
   }
 
-  extend type Topic {
+  extend type CategoryBlog {
     header: Header
     footer: Content
     contents: [Content]
@@ -128,10 +165,10 @@ const validateSite = async (_args: {
 // TODO: Move this function to utilities
 export const createPath = (...slug: string[]) => {
   let path = slug
-    .map((segment) => segment.trim())
+    .map((segment) => segment?.trim())
     .join('/')
     .replace(/\/\//g, '/');
-
+  console.log('CreatePath', { slug, path });
   if (path.startsWith('http://')) {
     return path.replace('http://', 'https://');
   }
@@ -164,6 +201,7 @@ const blog: ContentfulPathsGenerator = async (blogItem, loaders, defaultLocale, 
   const slug = getDefaultFieldValue(blogItem, 'slug', defaultLocale);
   const blogLandingSlug = await blogsLandingSlug(loaders, defaultLocale, preview);
   const fullPath = createPath(blogLandingSlug, slug);
+  console.log('Blog', { slug, blogLandingSlug, fullPath });
   return {
     [fullPath]: {
       fullPath,
@@ -174,17 +212,17 @@ const blog: ContentfulPathsGenerator = async (blogItem, loaders, defaultLocale, 
   };
 };
 
-const topic: ContentfulPathsGenerator = async (topicItem, loaders, defaultLocale, _locales, preview) => {
-  const slug = getDefaultFieldValue(topicItem, 'slug', defaultLocale);
+const categoryBlog: ContentfulPathsGenerator = async (categoryBlogItem, loaders, defaultLocale, _locales, preview) => {
+  const slug = getDefaultFieldValue(categoryBlogItem, 'slug', defaultLocale);
   const blogLandingSlug = await blogsLandingSlug(loaders, defaultLocale, preview);
 
-  // Here you can change the base path of the Blog topics
+  // Here you can change the base path of the Blog categoryBlogs
   const fullPath = createPath(blogLandingSlug, slug);
   return {
     [fullPath]: {
       fullPath,
       isPrimary: true,
-      contentId: topicItem.sys.id,
+      contentId: categoryBlogItem.sys.id,
       excludedLocales: []
     }
   };
@@ -193,5 +231,5 @@ const topic: ContentfulPathsGenerator = async (topicItem, loaders, defaultLocale
 export const pathsConfigs = {
   page,
   blog,
-  topic
+  categoryBlog
 };

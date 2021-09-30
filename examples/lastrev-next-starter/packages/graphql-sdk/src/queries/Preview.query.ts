@@ -17,7 +17,7 @@ export const Preview_Query = gql`
       ...Preview_CardFragment
       ...Preview_LinkFragment
       ...Preview_NavigationItemFragment
-      ...Preview_TopicContentFragment
+      ...Preview_CategoryBlogContentFragment
       ...Preview_BlogContentFragment
       ...Preview_ModuleIntegrationFragment
     }
@@ -51,7 +51,7 @@ export const Preview_Query = gql`
     }
   }
 
-  fragment Preview_TopicContentFragment on Topic {
+  fragment Preview_CategoryBlogContentFragment on CategoryBlog {
     seo
     title
     slug
@@ -86,8 +86,9 @@ export const Preview_Query = gql`
     id
     slug
     title
-    author
-    quote
+    author {
+      ...Preview_PersonFragment
+    }
     tags
     sidekickLookup
     seo
@@ -107,7 +108,7 @@ export const Preview_Query = gql`
     body {
       ...RichText_RichTextFragment
     }
-    topics {
+    categories {
       id
       slug
       title
@@ -359,5 +360,13 @@ export const Preview_Query = gql`
   fragment Preview_ModuleIntegrationFragment on ModuleIntegration {
     variant
     settings
+  }
+
+  fragment Preview_PersonFragment on Person {
+    name
+    jobTitle
+    image {
+      ...Preview_MediaFragment
+    }
   }
 `;

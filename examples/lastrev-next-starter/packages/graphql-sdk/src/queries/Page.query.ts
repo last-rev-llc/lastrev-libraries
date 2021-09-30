@@ -10,7 +10,7 @@ export const PageQuery = gql`
       id
       ...Page_BaseContentFragment
       ...Page_PageContentFragment
-      ...Page_TopicContentFragment
+      ...Page_CategoryBlogContentFragment
       ...Page_PageBlogContentFragment
     }
   }
@@ -41,7 +41,7 @@ export const PageQuery = gql`
       ...Page_ContentFragment
     }
   }
-  fragment Page_TopicContentFragment on Topic {
+  fragment Page_CategoryBlogContentFragment on CategoryBlog {
     title
     slug
     header {
@@ -78,8 +78,9 @@ export const PageQuery = gql`
   fragment Page_PageBlogContentFragment on Blog {
     title
     slug
-    author
-    quote
+    author {
+      ...Page_PersonFragment
+    }
     tags
     footer {
       ...Page_SectionFragment
@@ -97,7 +98,7 @@ export const PageQuery = gql`
     body {
       ...RichText_RichTextFragment
     }
-    topics {
+    categories {
       id
       slug
       title
@@ -323,5 +324,13 @@ export const PageQuery = gql`
   fragment Page_ModuleIntegrationFragment on ModuleIntegration {
     variant
     settings
+  }
+
+  fragment Page_PersonFragment on Person {
+    name
+    jobTitle
+    image {
+      ...Page_MediaFragment
+    }
   }
 `;

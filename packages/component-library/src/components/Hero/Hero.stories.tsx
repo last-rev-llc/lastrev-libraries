@@ -26,7 +26,7 @@ export default {
       name: 'Background Color',
       control: {
         type: 'inline-radio',
-        options: ['none', 'black', 'white', 'primary', 'secondary', 'tertiary', 'quartiary', 'gradient-primary']
+        options: ['none', 'black', 'white', 'primary', 'secondary']
       },
       table: {
         defaultValue: { summary: 'none' }

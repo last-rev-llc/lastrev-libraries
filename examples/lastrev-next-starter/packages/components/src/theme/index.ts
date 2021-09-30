@@ -1,9 +1,10 @@
 // @ts-nocheck
-import createCardVariants from './createCardVariants';
-
 import createTheme from '@last-rev/component-library/dist/theme/createTheme';
+
 import { red } from '@mui/material/colors';
 import { PaletteColor, PaletteOptions } from '@mui/material/styles';
+import createCardVariants from './createCardVariants';
+import createTextVariants from './createTextVariants';
 
 declare module '@last-rev/component-library/dist/theme/createTheme' {
   interface CustomPalette {
@@ -76,12 +77,13 @@ const theme = createTheme(
         }
       },
       Text: {
+        variants: createTextVariants(baseTheme),
         styleOverrides: {
           root: {}
         }
       },
       Card: {
-        variants: createCardVariants(),
+        variants: createCardVariants(baseTheme),
         styleOverrides: {
           root: {}
         }

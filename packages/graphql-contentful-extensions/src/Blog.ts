@@ -20,9 +20,9 @@ const createType = (type: string, content: any) => ({
     {}
   )
 });
-const getSlug = (topic: any, ctx: ApolloContext) => {
-  const title = getLocalizedField(topic.fields, 'title', ctx);
-  const slug = getLocalizedField(topic.fields, 'slug', ctx);
+const getSlug = (item: any, ctx: ApolloContext) => {
+  const title = getLocalizedField(item.fields, 'title', ctx);
+  const slug = getLocalizedField(item.fields, 'slug', ctx);
   return slug ?? kebabCase(title);
 };
 
@@ -110,23 +110,23 @@ export const mappers: any = {
       variant: () => 'default-blog',
       link: async (blog: any) => blog,
       actions: async (blog: any, _args: any, ctx: ApolloContext) => {
-        // Get all topics from this blog and convert them into links
-        const topicsLinks: any = getLocalizedField(blog.fields, 'topics', ctx);
-        if (topicsLinks) {
-          const topics = await ctx.loaders.entryLoader.loadMany(
-            topicsLinks?.map((topic: any) => ({ id: topic?.sys?.id, preview: !!ctx.preview }))
+        // Get all categoryBlogs from this blog and convert them into links
+        const categoriesLinks: any = getLocalizedField(blog.fields, 'categories', ctx);
+        if (categoriesLinks) {
+          const categories = await ctx.loaders.entryLoader.loadMany(
+            categoriesLinks?.map((categoryBlog: any) => ({ id: categoryBlog?.sys?.id, preview: !!ctx.preview }))
           );
 
-          const actions = topics?.map((topic: any) =>
-            !!topic
+          const actions = categories?.map((categoryBlog: any) =>
+            !!categoryBlog
               ? createType('Link', {
-                  id: topic?.sys?.id,
-                  text: getLocalizedField(topic.fields, 'title', ctx),
-                  href: `/blogs/${getSlug(topic, ctx)}`
+                  id: categoryBlog?.sys?.id,
+                  text: getLocalizedField(categoryBlog.fields, 'title', ctx),
+                  href: `/blogs/${getSlug(categoryBlog, ctx)}`
                 })
               : null
           ) as any; // any used to allow adding __fieldName__
-          actions.__fieldName__ = 'topics';
+          actions.__fieldName__ = 'categories';
           return actions;
         }
       }
@@ -137,13 +137,10 @@ export const mappers: any = {
 export const typeDefs = gql`
   extend type Blog {
     relatedLinks: [Link]
-    topics: [Topic]
+    categories: [CategoryBlog]
+    author: Person
+    contents: [Content]
     # Uncomment next line if using Media references instead
     # featuredMedia: [Media]
-    contents: [Content]
-
-    # Comment this fields if added in Contentful
-    author: String
-    tags: [String]
   }
 `;
