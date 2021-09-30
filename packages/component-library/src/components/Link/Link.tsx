@@ -53,8 +53,7 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
       shallow={shallow}
       passHref={passHref}
       locale={locale}
-      {...other}
-    >
+      {...other}>
       <a ref={ref} {...other}>
         {text || children}
       </a>
@@ -142,8 +141,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}
-        >
+          {...extra}>
           <IconButton aria-label={icon} size="large">
             {getIcon(icon)}
           </IconButton>
@@ -168,10 +166,40 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         // type={other.type}
         // {...extra}
         onClick={other.onClick}
-        size="large"
-      >
+        size="large">
         {getIcon(icon)}
       </IconButton>
+    );
+  }
+
+  if (variant?.includes('button-')) {
+    const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
+    if (href !== '#') {
+      return (
+        <NextLink href={href} as={linkAs} {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : null)}>
+          <Button
+            className={className}
+            variant={buttonVariant}
+            type={other.type}
+            {...extra}
+            startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
+            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
+            {text || children}
+          </Button>
+        </NextLink>
+      );
+    }
+    return (
+      <Button
+        className={className}
+        variant={buttonVariant}
+        onClick={other.onClick}
+        type={other.type}
+        {...extra}
+        startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
+        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
+        {text || children}
+      </Button>
     );
   }
 
@@ -184,8 +212,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}
-        >
+          {...extra}>
           {getButtonContent(text, children, iconPosition, icon)}
         </a>
       );
@@ -198,8 +225,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         ref={ref}
         target="_blank"
         rel="noopener noreferrer"
-        {...extra}
-      >
+        {...extra}>
         {getButtonContent(text, children, iconPosition, icon)}
       </MuiLink>
     );
@@ -225,38 +251,6 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     );
   }
 
-  if (variant?.includes('button-')) {
-    const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
-    if (href !== '#') {
-      return (
-        <NextLink href={href} as={linkAs}>
-          <Button
-            className={className}
-            variant={buttonVariant}
-            type={other.type}
-            {...extra}
-            startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-          >
-            {text || children}
-          </Button>
-        </NextLink>
-      );
-    }
-    return (
-      <Button
-        className={className}
-        variant={buttonVariant}
-        onClick={other.onClick}
-        type={other.type}
-        {...extra}
-        startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-      >
-        {text || children}
-      </Button>
-    );
-  }
   return (
     <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra}>
       {getButtonContent(text, children, iconPosition, icon)}
