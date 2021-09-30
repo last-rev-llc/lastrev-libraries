@@ -1,37 +1,34 @@
-import { Theme } from '@material-ui/core/styles';
+import { Theme } from '@mui/material/styles';
 
-export const defaultVariant = (theme: Theme) => ({
+export const blogVariant = (theme: Theme) => ({
   props: {
-    variant: 'default'
+    variant: 'blog'
   },
   style: {
-    // DEMO ONLY
-    '& .MuiLink-root': {
-      display: 'inline-block',
-      marginTop: 4,
-      padding: '10px 20px',
-      backgroundColor: theme.palette.primary.main,
-
-      textDecoration: 'none'
-    }
-  }
-});
-
-export const blackBoldVariant = () => ({
-  props: {
-    variant: 'black-bold'
-  },
-  style: {
-    h1: {
-      color: 'white'
+    '& [class$=Media-root]': {
+      width: '100%',
+      padding: theme.spacing(10, 5),
+      transform: 'scale(1.1)'
     },
-    h2: {
-      color: 'white'
+    '.MuiTypography-h1': {
+      color: theme.palette.secondary.main
+    },
+    '.MuiTypography-h2': {
+      color: theme.palette.secondary.main
+    },
+    '.MuiTypography-h3': {
+      color: theme.palette.secondary.main
+    },
+    '.MuiTypography-h4': {
+      color: theme.palette.secondary.main
+    },
+    '.MuiTypography-body1': {
+      paddingBottom: '1.5rem'
     }
   }
 });
 
-const variants = [defaultVariant, blackBoldVariant];
+const variants = [blogVariant];
 
 const createTextVariants = (theme: Theme) => {
   return variants.map((creator) => creator(theme));

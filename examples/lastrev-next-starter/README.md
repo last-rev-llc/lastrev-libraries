@@ -1,4 +1,10 @@
 # Usage
+1. Copy .env.template as .env and complete with your environment variables
+2. Run: `yarn`
+3. Then: `yarn dev`.
+   For building new components, just run:
+   `yarn storybook` (you don't need to use this repo yet)
+   
 
 ## Starting the graphql server
 
@@ -14,7 +20,7 @@ yarn gql:dev
 
 ## Building the app
 
-First, make sure that the [graphql server has been started](#starting-the-graphql-server).
+First, make sure that the [graphql server has been started](#starting-the-graphql-server-in-dev-mode).
 
 ```bash
 yarn build
@@ -32,14 +38,6 @@ yarn start
 
 ## Starting the app in dev mode
 
-First, make sure that the [graphql server has been started in dev mode](#starting-the-graphql-server-in-dev-mode).
-
 ```bash
 yarn dev
 ```
-
-# Still to figure out:
-
-- Ability to extend the apollo context
-- Utility to merge extensions in graphql-contentful-core
-- Generate locale data prior to build/dev for web project (i18n & translations)

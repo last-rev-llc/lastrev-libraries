@@ -6,5 +6,5 @@
   command = "yarn dev"
 
 [functions]
-  directory = "packages/functions"
+  directory = "packages/functions/src"
   external_node_modules = ["express"]

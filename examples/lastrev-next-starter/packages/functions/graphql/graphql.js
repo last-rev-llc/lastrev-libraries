@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const { createHandler } = require('@last-rev/graphql-contentful-core');
 
-const extensions = require('lrns-graphql-extensions');
+const extensions = require('@lrns/graphql-extensions');
 
 const testForEnvVar = (name) => {
   const envVar = process.env[name];

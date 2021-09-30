@@ -1,92 +1,213 @@
 import gql from 'graphql-tag';
+import RichTextFragment from '../fragments/RichText.fragment';
 
+// TODO: Split fragments into separate files
 export const PageQuery = gql`
+  ${RichTextFragment}
+
   query Page($path: String!, $locale: String, $preview: Boolean, $site: String) {
     page(path: $path, locale: $locale, preview: $preview, site: $site) {
       id
-      ...BaseContentFragment
-      ...PageContentFragment
+      ...Page_BaseContentFragment
+      ...Page_PageContentFragment
+      ...Page_CategoryBlogContentFragment
+      ...Page_PageBlogContentFragment
     }
   }
-
-  fragment PageContentFragment on Page {
+  fragment Page_BaseContentFragment on Content {
+    id
+    __typename
+    sidekickLookup
+  }
+  fragment Page_PageContentFragment on Page {
+    seo
+    slug
     header {
       __typename
-      ...HeaderFragment
+      ...Page_HeaderFragment
       navigationItems {
-        ...CollectionFragment
+        ...Page_CollectionFragment
       }
+    }
+    footer {
+      ...Page_SectionFragment
     }
 
     hero {
-      ...HeroFragment
+      ...Page_HeroFragment
     }
 
     contents {
-      ...BaseContentFragment
-      ...SectionFragment
-      ...ArtDirectedMediaFragment
-      ...TextFragment
-      ...CardFragment
-      ...CollectionFragment
-      ...MailchimpFormFragment
-      ...QuizFragment
+      ...Page_ContentFragment
     }
   }
+  fragment Page_CategoryBlogContentFragment on CategoryBlog {
+    title
+    slug
+    header {
+      __typename
+      ...Page_HeaderFragment
+      navigationItems {
+        ...Page_CollectionFragment
+      }
+    }
+    footer {
+      ...Page_SectionFragment
+    }
 
-  fragment HeaderFragment on Header {
-    ...BaseContentFragment
+    hero {
+      ...Page_HeroFragment
+    }
+
+    contents {
+      ...Page_ContentFragment
+    }
+
+    seo
+  }
+  fragment Page_ContentFragment on Content {
+    ...Page_BaseContentFragment
+    ...Page_SectionFragment
+    ...Page_MediaFragment
+    ...RichText_TextFragment
+    ...Page_CardFragment
+    ...Page_CollectionFragment
+    ...Page_QuoteFragment
+  }
+
+  fragment Page_PageBlogContentFragment on Blog {
+    title
+    slug
+    author {
+      ...Page_PersonFragment
+    }
+    tags
+    footer {
+      ...Page_SectionFragment
+    }
+    header {
+      __typename
+      ...Page_HeaderFragment
+      navigationItems {
+        ...Page_CollectionFragment
+      }
+    }
+    featuredMedia {
+      ...Page_MediaFragment
+    }
+    body {
+      ...RichText_RichTextFragment
+    }
+    categories {
+      id
+      slug
+      title
+    }
+    relatedLinks {
+      ...Page_LinkFragment
+    }
+    contents {
+      ...Page_ContentFragment
+    }
+    seo
+  }
+
+  fragment Page_LinkFragment on Link {
+    ...Page_BaseContentFragment
+    text
+    href
+    variant
+    icon
+    iconPosition
+  }
+  fragment Page_HeaderFragment on Header {
+    ...Page_BaseContentFragment
     logo {
-      ...MediaFragment
+      ...Page_MediaFragment
     }
     logoUrl
     navigationItems {
       id
     }
+    variant
   }
 
-  fragment HeroFragment on Hero {
-    ...BaseContentFragment
-    # theme
+  fragment Page_HeroFragment on Hero {
+    ...Page_BaseContentFragment
     variant
     internalTitle
     title
     subtitle
+    backgroundColor
+    contentWidth
+    contentHeight
+    background {
+      ...Page_MediaFragment
+    }
     body {
-      ...RichTextFragment
+      ...RichText_RichTextFragment
     }
     image {
-      file {
-        url
-      }
+      ...Page_MediaFragment
     }
     actions {
-      ...PageLinkFragment
+      ...Page_LinkFragment
     }
   }
 
-  fragment MailchimpFormFragment on MailchimpForm {
-    ...BaseContentFragment
-    # theme
+  fragment Page_CollectionFragment on Collection {
+    ...Page_BaseContentFragment
     variant
-    internalTitle
-    title
-    subtitle
-    body {
-      ...RichTextFragment
+    itemsVariant
+    itemsWidth
+    itemsSpacing
+    theme {
+      id
+      components
+      typography
     }
-    image {
-      file {
-        url
+    settings
+    introText {
+      ...Page_BaseContentFragment
+      body {
+        ...Page_BaseRichTextFragment
       }
+      align
+      variant
     }
-    actions {
-      ...PageLinkFragment
+    items {
+      ...Page_CardFragment
+      ...Page_LinkFragment
+      ...Page_NavigationItemFragment
+      ...Page_MediaFragment
+    }
+  }
+  # This will go 3 levels deep recursive
+
+  fragment Page_SectionFragment on Section {
+    ...Page_BaseSectionFragment
+    contents {
+      ...Page_ContentSectionFragment
+      ... on Section {
+        ...Page_BaseSectionFragment
+        contents {
+          ...Page_ContentSectionFragment
+          ... on Section {
+            ...Page_BaseSectionFragment
+            contents {
+              ...Page_ContentSectionFragment
+              ... on Section {
+                ...Page_BaseSectionFragment
+              }
+            }
+          }
+        }
+      }
     }
   }
 
-  fragment BaseSectionFragment on Section {
-    ...BaseContentFragment
+  fragment Page_BaseSectionFragment on Section {
+    ...Page_BaseContentFragment
     variant
     styles
     # Style fields
@@ -100,184 +221,116 @@ export const PageQuery = gql`
       typography
     }
     background {
-      ...ArtDirectedMediaFragment
-    }
-  }
-  fragment CollectionFragment on Collection {
-    ...BaseContentFragment
-    variant
-    itemsVariant
-    theme {
-      id
-      components
-      typography
-    }
-    items {
-      ...CardFragment
-      ...PageLinkFragment
-      ...NavigationItemFragment
+      ...Page_MediaFragment
     }
   }
 
-  # This will go 3 levels deep recursive
-  fragment SectionFragment on Section {
-    contents {
-      ...ContentSectionFragment
-      ... on Section {
-        contents {
-          ...ContentSectionFragment
-          ... on Section {
-            contents {
-              ...ContentSectionFragment
-            }
-          }
-        }
-      }
-    }
-    ...BaseSectionFragment
+  # This fragment is almost identical to the Page_PageFragment but skips Section
+  # Page_SectionFragment recursion is handled in Page_SectionFragment
+  fragment Page_ContentSectionFragment on Content {
+    ...Page_BaseContentFragment
+    ...Page_BaseSectionFragment
+    ...RichText_TextFragment
+    ...Page_CardFragment
+    ...Page_MediaFragment
+    ...Page_LinkFragment
+    ...Page_CollectionFragment
+    ...Page_ModuleIntegrationFragment
   }
 
-  # This fragment is almost identical to the PageFragment but skips Section
-  # SectionFragment recursion is handled in SectionFragment
-  fragment ContentSectionFragment on Content {
-    ...BaseContentFragment
-    theme {
-      id
-      components
-      typography
-    }
-    ... on Section {
-      ...BaseSectionFragment
-    }
-    ...ArtDirectedMediaFragment
-    ... on Text {
-      ...TextFragment
-    }
-    ... on Card {
-      ...CardFragment
-    }
-    ... on Media {
-      file {
-        url
-      }
-    }
-    ... on Link {
-      ...PageLinkFragment
-    }
-    ... on Collection {
-      ...CollectionFragment
-    }
-  }
-
-  fragment MediaFragment on Media {
-    # ...BaseContentFragment
+  fragment Page_MediaFragment on Media {
+    ...Page_BaseContentFragment
     title
+    variant
     file {
       url
-    }
-  }
-  fragment ArtDirectedMediaFragment on Media {
-    # ...BaseContentFragment
-    desktop {
-      title
-      file {
-        url
-      }
+      extension
+      fileName
     }
   }
 
-  fragment TextFragment on Text {
-    ...BaseContentFragment
-    variant
-    align
-    body {
-      ...RichTextFragment
-    }
-    # body {
-    #   raw
-    # }
-  }
-  fragment RichTextFragment on RichText {
+  fragment Page_BaseRichTextFragment on RichText {
     json
     links {
       entries {
         __typename
         id
-        ...BaseSectionFragment
-        ...ArtDirectedMediaFragment
-        ...CardFragment
-        ...CollectionFragment
-        ...PageLinkFragment
+        ...Page_MediaFragment
+        ...Page_LinkFragment
       }
       assets {
-        id
-        __typename
-        # url
-        # title
-        # width
-        # height
-        # description
+        ...Page_MediaFragment
       }
     }
   }
-  fragment CardFragment on Card {
-    ...BaseContentFragment
+  fragment Page_CardFragment on Card {
+    ...Page_BaseContentFragment
     variant
     media {
-      title
-      id
-      file {
-        url
-      }
+      ...Page_MediaFragment
     }
     title
     subtitle
-    cardBody: body
+    body {
+      ...Page_BaseRichTextFragment
+    }
     actions {
-      ...PageLinkFragment
+      ...Page_LinkFragment
+    }
+    link {
+      ...Page_LinkFragment
     }
   }
 
-  fragment PageLinkFragment on Link {
-    ...BaseContentFragment
+  fragment Page_BaseNavigationItemFragment on NavigationItem {
+    ...Page_BaseContentFragment
+    variant
     text
     href
-    variant
+    summary
+    image {
+      ...Page_MediaFragment
+    }
   }
 
-  fragment NavigationItemFragment on NavigationItem {
-    ...BaseContentFragment
-    text
-    href
-    variant
+  fragment Page_NavigationItemFragment on NavigationItem {
+    ...Page_BaseNavigationItemFragment
     subNavigation {
-      ...BaseContentFragment
-      ... on Link {
-        id
-        __typename
-        text
-        href
-        variant
+      ...Page_LinkFragment
+      ... on NavigationItem {
+        ...Page_BaseNavigationItemFragment
+        subNavigation {
+          ...Page_LinkFragment
+          ... on NavigationItem {
+            ...Page_BaseNavigationItemFragment
+          }
+        }
       }
     }
   }
-  fragment BaseContentFragment on Content {
-    id
-    __typename
-    sidekickLookup
-  }
-  fragment QuizFragment on Quiz {
-    ...BaseContentFragment
+
+  fragment Page_QuoteFragment on Quote {
+    ...Page_BaseContentFragment
+    variant
+    media {
+      ...Page_MediaFragment
+    }
     title
-    intro {
-      ...RichTextFragment
+    body {
+      ...Page_BaseRichTextFragment
     }
-    outro {
-      ...RichTextFragment
-    }
-    image {
-      ...MediaFragment
-    }
+  }
+
+  fragment Page_ModuleIntegrationFragment on ModuleIntegration {
+    variant
     settings
+  }
+
+  fragment Page_PersonFragment on Person {
+    name
+    jobTitle
+    image {
+      ...Page_MediaFragment
+    }
   }
 `;
