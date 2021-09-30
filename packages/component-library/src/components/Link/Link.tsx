@@ -53,7 +53,8 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
       shallow={shallow}
       passHref={passHref}
       locale={locale}
-      {...other}>
+      {...other}
+    >
       <a ref={ref} {...other}>
         {text || children}
       </a>
@@ -141,7 +142,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}>
+          {...extra}
+        >
           <IconButton aria-label={icon} size="large">
             {getIcon(icon)}
           </IconButton>
@@ -166,7 +168,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         // type={other.type}
         // {...extra}
         onClick={other.onClick}
-        size="large">
+        size="large"
+      >
         {getIcon(icon)}
       </IconButton>
     );
@@ -183,7 +186,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
             type={other.type}
             {...extra}
             startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
+            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
+          >
             {text || children}
           </Button>
         </NextLink>
@@ -197,7 +201,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         type={other.type}
         {...extra}
         startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
+        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
+      >
         {text || children}
       </Button>
     );
@@ -212,7 +217,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}>
+          {...extra}
+        >
           {getButtonContent(text, children, iconPosition, icon)}
         </a>
       );
@@ -225,7 +231,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         ref={ref}
         target="_blank"
         rel="noopener noreferrer"
-        {...extra}>
+        {...extra}
+      >
         {getButtonContent(text, children, iconPosition, icon)}
       </MuiLink>
     );
