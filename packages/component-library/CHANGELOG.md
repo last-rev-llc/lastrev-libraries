@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.6
+
+### Patch Changes
+
+- 3d381a6: Fix Link button variant not working
+
 ## 0.2.5
 
 ### Patch Changes
