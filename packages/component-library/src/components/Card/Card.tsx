@@ -79,14 +79,14 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
                 </Typography>
               ) : null}
               {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="Card-body" /> : null}
+              {actions?.length ? (
+                <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions">
+                  {actions?.map((link) => (
+                    <Link key={link.id} {...link} />
+                  ))}
+                </CardActions>
+              ) : null}
             </CardContent>
-          ) : null}
-          {actions?.length ? (
-            <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions">
-              {actions?.map((link) => (
-                <Link key={link.id} {...link} />
-              ))}
-            </CardActions>
           ) : null}
           {loading ? (
             <CardContent>
