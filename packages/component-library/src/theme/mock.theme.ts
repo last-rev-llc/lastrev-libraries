@@ -318,7 +318,7 @@ const theme = createAppTheme(
             'fontSize': 0,
 
             // Image wrap
-            '& .MuiBox-root': {
+            '& .MuiCardMedia-root': {
               width: '100%',
               height: '100%'
             },
