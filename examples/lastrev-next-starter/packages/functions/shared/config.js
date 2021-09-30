@@ -3,7 +3,6 @@ require('dotenv').config();
 const LastRevAppConfig = require('@last-rev/app-config');
 const extensions = require('@lrns/graphql-extensions');
 
-
 const testForEnvVar = (name) => {
   const envVar = process.env[name];
   if (!envVar) {
