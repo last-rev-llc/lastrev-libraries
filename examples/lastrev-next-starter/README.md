@@ -1,10 +1,10 @@
 # Usage
+
 1. Copy .env.template as .env and complete with your environment variables
 2. Run: `yarn`
 3. Then: `yarn dev`.
    For building new components, just run:
    `yarn storybook` (you don't need to use this repo yet)
-   
 
 ## Starting the graphql server
 

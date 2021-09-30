@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.7
+
+### Patch Changes
+
+- 2b1e79e: Update extensions and component library defaults
+
 ## 0.2.6
 
 ### Patch Changes
