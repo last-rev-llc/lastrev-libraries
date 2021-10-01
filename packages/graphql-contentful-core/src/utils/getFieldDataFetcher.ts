@@ -28,7 +28,7 @@ const getFieldDataFetcher = <T>(typeName: string, displayType: string, field: st
     if (content.fields) {
       return { fieldValue: getLocalizedField(content.fields, field, ctx), fieldName: field };
     }
-    return {};
+    return { fieldValue: getLocalizedField(content, field, ctx), fieldName: field };
   };
 };
 
