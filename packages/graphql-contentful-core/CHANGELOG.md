@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.24
+
+### Patch Changes
+
+- 55dfa02: fix default field resolution
+
 ## 0.1.23
 
 ### Patch Changes
