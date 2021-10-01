@@ -6,7 +6,11 @@ const getLocalizedField = <T>(fields: Entry<T>['fields'], field: string, ctx: Ap
   const noLocaleValue = get(fields, field);
   const defaultLocaleValue = get(fields, [field, ctx.defaultLocale]);
   const localeValue = get(fields, [field, ctx.locale ?? ctx.defaultLocale]);
-  return localeValue ?? defaultLocaleValue ?? noLocaleValue;
+  if (localeValue || defaultLocaleValue) return localeValue ?? defaultLocaleValue;
+  if (noLocaleValue && !noLocaleValue[ctx.defaultLocale]) {
+    return noLocaleValue;
+  }
+  return null;
 };
 
 export default getLocalizedField;
