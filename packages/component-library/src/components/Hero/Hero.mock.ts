@@ -76,7 +76,7 @@ export default {
       url: 'https://i.picsum.photos/id/327/2800/800.jpg?hmac=lqhEpkLvfvBfoZSxszEf8pOTbitkmHpJmZsoQYcrWkI'
     }
   },
-  backgroundColor: 'white',
+  backgroundColor: 'primary.main',
   // contentHeight: 'xl',
   // contentWidth: 'xl',
   theme: [mockTheme]

@@ -69,7 +69,7 @@ HeroProps) => {
           <Box
             sx={{
               position: 'absolute',
-              zIndex: -1,
+              zIndex: !backgroundColor ? -1 : 0,
               top: 0,
               left: 0,
               width: '100%',
@@ -149,12 +149,7 @@ const rootStyles = ({
 }) => {
   if (!!background) {
     return {
-      'backgroundColor': 'transparent',
-      'color': 'white',
-      // TODO find out a better way to override text color
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: 'white'
-      }
+      backgroundColor: backgroundColor && backgroundColor !== 'none' ? backgroundColor : 'transparent',
     };
   }
   if (backgroundColor === 'white') {
@@ -163,7 +158,7 @@ const rootStyles = ({
   if (backgroundColor === 'black') {
     return {
       backgroundColor,
-      'color': 'white',
+      color: 'white',
       // TODO find out a better way to override text color
       '& p, h1, h2, h3, h4, h5, h6, a': {
         color: 'white'
@@ -172,8 +167,8 @@ const rootStyles = ({
   }
   if (backgroundColor?.includes('gradient') && theme.palette[backgroundColor]) {
     return {
-      'background': theme.palette[backgroundColor]?.main,
-      'color': `${backgroundColor}.contrastText`,
+      background: theme.palette[backgroundColor]?.main,
+      color: `${backgroundColor}.contrastText`,
       // TODO find out a better way to override text color
       '& p, h1, h2, h3, h4, h5, h6, a': {
         color: `${backgroundColor}.contrastText`
@@ -185,7 +180,7 @@ const rootStyles = ({
 
   if (backgroundColor && get(theme.palette, parsedBGColor)) {
     return {
-      'bgcolor': parsedBGColor,
+      bgcolor: parsedBGColor,
       '& p, h1, h2, h3, h4, h5, h6, a': {
         color: `${paletteColor}.contrastText`
       }
@@ -218,6 +213,7 @@ const ContentContainer = styled(Container, {
   slot: 'ContentContainer',
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(({ theme }) => ({
+  zIndex: 1,
   alignSelf: 'center',
   height: '100%',
   [theme.breakpoints.up('md')]: {

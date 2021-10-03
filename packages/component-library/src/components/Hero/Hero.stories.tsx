@@ -26,7 +26,7 @@ export default {
       name: 'Background Color',
       control: {
         type: 'inline-radio',
-        options: ['none', 'black', 'white', 'primary', 'secondary']
+        options: ['none', 'black', 'white', 'primary.main', 'secondary.main']
       },
       table: {
         defaultValue: { summary: 'none' }
@@ -66,6 +66,18 @@ export const BackgroundImage = Template.bind({});
 BackgroundImage.args = {
   ...heroMock,
   backgroundColor: null,
+  contentHeight: 'xl',
+  contentWidth: 'xl'
+};
+
+export const BackgroundImageAndColor = Template.bind({});
+BackgroundImageAndColor.args = {
+  ...heroMock,
+  background: {
+    file: {
+      url: 'https://images.ctfassets.net/vfkpgemp7ek3/1uBX6BxmxTXz760K9Y9cYl/cf0fc433a15ab96e81507d3eef801a4f/product_transparent-background.png'
+    }
+  },
   contentHeight: 'xl',
   contentWidth: 'xl'
 };
