@@ -1,17 +1,23 @@
 import copyEnvironment from '@last-rev/contentful-import-export';
 import { find } from 'lodash';
 import ContentfulApiWrapper from './apiWrappers/ContentfulApiWrapper';
-import LastRevConfig, { MIGRATE_CONTENT_ACTION } from './LastRevConfig';
+import LastRevConfig, {
+  VAL_CONTENTFUL_EXPORT_SPACE_ID,
+  VAL_CONTENTFUL_EXPORT_ENV_ID,
+  VAL_CONTENTFUL_IMPORT_SPACE_ID,
+  VAL_CONTENTFUL_IMPORT_ENV_ID,
+  VAL_CONTENTFUL_MIGRATE_CMS_TYPES,
+  ACTION_CONTENTFUL_MIGRATION
+} from './LastRevConfig';
 
 const performCmsFunctions = async (config: LastRevConfig, contentfulApiWrapper: ContentfulApiWrapper) => {
-  await contentfulApiWrapper.ensureLoggedIn();
+  if (config.hasCompletedAction(ACTION_CONTENTFUL_MIGRATION)) {
+    return;
+  }
+  const spaces = await contentfulApiWrapper.getSpaces();
 
-  const client = contentfulApiWrapper.client;
-
-  const { items: spaces } = await client.getSpaces();
-
-  await config.askAndUpdate(MIGRATE_CONTENT_ACTION, 'exportSpaceId', {
-    name: 'exportSpaceId',
+  await config.askAndUpdate(VAL_CONTENTFUL_EXPORT_SPACE_ID, {
+    name: VAL_CONTENTFUL_EXPORT_SPACE_ID,
     message: 'Please select which space to export from.',
     type: 'list',
     choices: spaces.map((space) => ({
@@ -20,12 +26,12 @@ const performCmsFunctions = async (config: LastRevConfig, contentfulApiWrapper: 
     }))
   });
 
-  await config.askAndUpdate(MIGRATE_CONTENT_ACTION, 'exportEnvId', {
-    name: 'exportEnvId',
+  await config.askAndUpdate(VAL_CONTENTFUL_EXPORT_ENV_ID, {
+    name: VAL_CONTENTFUL_EXPORT_ENV_ID,
     message: 'Please select which environment to export from.',
     type: 'list',
     choices: async () => {
-      const exportSpaceId = config.getStateValue(MIGRATE_CONTENT_ACTION, 'exportSpaceId');
+      const exportSpaceId = config.getStateValue(VAL_CONTENTFUL_EXPORT_SPACE_ID);
       const space = find(spaces, { sys: { id: exportSpaceId } });
       const { items: envs } = await space!.getEnvironments();
 
@@ -36,8 +42,8 @@ const performCmsFunctions = async (config: LastRevConfig, contentfulApiWrapper: 
     }
   });
 
-  await config.askAndUpdate(MIGRATE_CONTENT_ACTION, 'importSpaceId', {
-    name: 'importSpaceId',
+  await config.askAndUpdate(VAL_CONTENTFUL_IMPORT_SPACE_ID, {
+    name: VAL_CONTENTFUL_IMPORT_SPACE_ID,
     message: 'Please select which space to import to.',
     type: 'list',
     choices: spaces.map((space) => ({
@@ -46,12 +52,12 @@ const performCmsFunctions = async (config: LastRevConfig, contentfulApiWrapper: 
     }))
   });
 
-  await config.askAndUpdate(MIGRATE_CONTENT_ACTION, 'importEnvId', {
+  await config.askAndUpdate(VAL_CONTENTFUL_IMPORT_ENV_ID, {
     name: 'importEnvId',
     message: 'Please select which environment to import to.',
     type: 'list',
     choices: async () => {
-      const importSpaceId = config.getStateValue(MIGRATE_CONTENT_ACTION, 'importSpaceId');
+      const importSpaceId = config.getStateValue(VAL_CONTENTFUL_IMPORT_SPACE_ID);
       const space = find(spaces, { sys: { id: importSpaceId } });
       const { items: envs } = await space!.getEnvironments();
 
@@ -62,8 +68,8 @@ const performCmsFunctions = async (config: LastRevConfig, contentfulApiWrapper: 
     }
   });
 
-  await config.askAndUpdate(MIGRATE_CONTENT_ACTION, 'cmsTypes', {
-    name: 'cmsTypes',
+  await config.askAndUpdate(VAL_CONTENTFUL_MIGRATE_CMS_TYPES, {
+    name: VAL_CONTENTFUL_MIGRATE_CMS_TYPES,
     message: 'Please select which types to import.',
     type: 'checkbox',
     choices: [
@@ -90,17 +96,17 @@ const performCmsFunctions = async (config: LastRevConfig, contentfulApiWrapper: 
     }
   });
 
-  const cmsTypes = config.getStateValue(MIGRATE_CONTENT_ACTION, 'cmsTypes');
+  const cmsTypes = config.getStateValue(VAL_CONTENTFUL_MIGRATE_CMS_TYPES);
 
   await copyEnvironment({
     exportParams: {
-      spaceId: config.getStateValue(MIGRATE_CONTENT_ACTION, 'exportSpaceId'),
-      environmentId: config.getStateValue(MIGRATE_CONTENT_ACTION, 'exportEnvId'),
+      spaceId: config.getStateValue(VAL_CONTENTFUL_EXPORT_SPACE_ID),
+      environmentId: config.getStateValue(VAL_CONTENTFUL_EXPORT_ENV_ID),
       managementToken: contentfulApiWrapper.getToken()!
     },
     importParams: {
-      spaceId: config.getStateValue(MIGRATE_CONTENT_ACTION, 'importSpaceId'),
-      environmentId: config.getStateValue(MIGRATE_CONTENT_ACTION, 'importEnvId'),
+      spaceId: config.getStateValue(VAL_CONTENTFUL_IMPORT_SPACE_ID),
+      environmentId: config.getStateValue(VAL_CONTENTFUL_IMPORT_ENV_ID),
       managementToken: contentfulApiWrapper.getToken()!
     },
     skipContentTypes: cmsTypes.indexOf('contentTypes') === -1,
@@ -108,7 +114,7 @@ const performCmsFunctions = async (config: LastRevConfig, contentfulApiWrapper: 
     skipAssets: cmsTypes.indexOf('assets') === -1
   });
 
-  config.completeAction(MIGRATE_CONTENT_ACTION);
+  config.completeAction(ACTION_CONTENTFUL_MIGRATION);
 };
 
 export default performCmsFunctions;

@@ -26,7 +26,7 @@ export default abstract class BaseApiWrapper {
 
   abstract resetApi(): void;
 
-  public async ensureLoggedIn(): Promise<void> {
+  protected async ensureLoggedIn(): Promise<void> {
     if (this.getToken() && this.shouldCheckForLogin) {
       this.shouldCheckForLogin = false;
       const { proceed } = await prompt([

@@ -1,5 +1,8 @@
 import { prompt } from 'inquirer';
 import LastRevConfig from './LastRevConfig';
+import Messager from './Messager';
+
+const messager = Messager.getInstance();
 
 const continueIfInProgress = async (config: LastRevConfig): Promise<void> => {
   if (config.inProgress()) {
@@ -13,7 +16,8 @@ const continueIfInProgress = async (config: LastRevConfig): Promise<void> => {
     ]);
     if (!continueProgress) {
       config.clearState();
-      console.log('Clearing state and starting fresh...');
+      messager.log('Clearing state and starting fresh...');
+      config.startProgress();
     }
   } else {
     config.clearState();

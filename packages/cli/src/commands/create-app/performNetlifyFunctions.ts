@@ -1,78 +1,59 @@
 import NetlifyApiWrapper from './apiWrappers/NetlifyApiWrapper';
-import chalk from 'chalk';
 import GithubApiWrapper from './apiWrappers/GithubApiWrapper';
-import { join } from 'path';
 import parseGithubUrl from 'parse-github-url';
 import LastRevConfig, {
-  CREATE_APP_ACTION,
-  SETUP_NETLIFY_ACTION,
-  SN_ADD_DEPLOY_HOOK_SUB_ACTION,
-  SN_ADD_GITHUB_REPO_SUB_ACTION,
-  SN_ADD_NOTIFICATION_HOOK_SUB_ACTION,
-  SN_CREATE_DEPLOY_KEY_SUB_ACTION,
-  SN_CREATE_SITE_SUB_ACTION,
-  SN_PICK_ACCOUNT_SUB_ACTION
+  VAL_NETLIFY_ACCOUNT_SLUG,
+  VAL_NETLIFY_SITE_NAME,
+  VAL_GITHUB_REPO,
+  VAL_SHOULD_FETCH_GITHUB_REPO,
+  VAL_GITHUB_REPO_URL,
+  ACTION_PICK_NETLIFY_ACCOUNT,
+  ACTION_CREATE_NETLIFY_SITE,
+  ACTION_NETLIFY_ADD_DEPLOY_KEY,
+  ACTION_NETLIFY_ADD_DEPLOY_HOOK,
+  ACTION_NETLIFY_ADD_NOTIFICATION_HOOKS,
+  ACTION_ADD_GITHUB_REPO_TO_NETLIFY
 } from './LastRevConfig';
+import ora from 'ora';
 
 const pickAccount = async (config: LastRevConfig, netlifyApiWrapper: NetlifyApiWrapper): Promise<void> => {
-  if (config.hasCompletedSubAction(SETUP_NETLIFY_ACTION, SN_PICK_ACCOUNT_SUB_ACTION)) {
+  if (config.hasCompletedAction(ACTION_PICK_NETLIFY_ACCOUNT)) {
     return;
   }
-  const accounts = await netlifyApiWrapper.api.listAccountsForUser();
+  const accounts = await netlifyApiWrapper.listAccountsForUser();
 
-  await config.askAndUpdate(SETUP_NETLIFY_ACTION, 'accountSlug', {
+  await config.askAndUpdate(VAL_NETLIFY_ACCOUNT_SLUG, {
     type: 'list',
-    name: 'accountSlug',
+    name: VAL_NETLIFY_ACCOUNT_SLUG,
     message: 'Team:',
     choices: accounts.map((account) => ({
       value: account.slug,
       name: account.name
     }))
   });
+
+  config.completeAction(ACTION_PICK_NETLIFY_ACCOUNT);
 };
 
 const createNetlifySite = async (config: LastRevConfig, netlifyApiWrapper: NetlifyApiWrapper): Promise<any> => {
-  if (config.hasCompletedSubAction(SETUP_NETLIFY_ACTION, SN_CREATE_SITE_SUB_ACTION)) {
+  if (config.hasCompletedAction(ACTION_CREATE_NETLIFY_SITE)) {
     return;
   }
-  await config.askAndUpdate(SETUP_NETLIFY_ACTION, 'siteName', {
+
+  await config.askAndUpdate(VAL_NETLIFY_SITE_NAME, {
     type: 'input',
-    name: 'siteName',
+    name: VAL_NETLIFY_SITE_NAME,
     message: 'Site name (optional):',
     filter: (val) => (val === '' ? undefined : val),
     validate: (input) => /^[a-zA-Z\d-]+$/.test(input) || 'Only alphanumeric characters and hyphens are allowed'
   });
 
-  try {
-    const site = await netlifyApiWrapper.api.createSiteInTeam({
-      accountSlug: config.getStateValue(SETUP_NETLIFY_ACTION, 'accountSlug'),
-      body: {
-        name: config.getStateValue(SETUP_NETLIFY_ACTION, 'siteName')
-      }
-    });
-    config.updateStateValue(SETUP_NETLIFY_ACTION, 'site', site);
-
-    console.log(chalk.greenBright.bold.underline(`Netlify Site Created`));
-
-    console.log('Admin URL', site.admin_url);
-    console.log('URL', site.ssl_url || site.url);
-    console.log('Site ID', site.id);
-
-    config.completeSubAction(SETUP_NETLIFY_ACTION, SN_CREATE_SITE_SUB_ACTION);
-  } catch (error: any) {
-    if (error.status === 422) {
-      console.log(
-        `${config.getStateValue(
-          SETUP_NETLIFY_ACTION,
-          'siteName'
-        )}.netlify.app already exists. Please try a different slug.`
-      );
-      config.updateStateValue(SETUP_NETLIFY_ACTION, 'siteName', undefined);
-      return await createNetlifySite(config, netlifyApiWrapper);
-    } else {
-      throw Error(`Netlify createSiteInTeam error: ${error.status}: ${error.message}`);
-    }
+  const { shouldRerun } = await netlifyApiWrapper.createSiteInTeam();
+  if (shouldRerun) {
+    await createNetlifySite(config, netlifyApiWrapper);
+    return;
   }
+  config.completeAction(ACTION_CREATE_NETLIFY_SITE);
 };
 
 const addDeployKey = async (
@@ -80,97 +61,39 @@ const addDeployKey = async (
   githubApiWrapper: GithubApiWrapper,
   netlifyApiWrapper: NetlifyApiWrapper
 ) => {
-  if (config.hasCompletedSubAction(SETUP_NETLIFY_ACTION, SN_CREATE_DEPLOY_KEY_SUB_ACTION)) {
+  if (config.hasCompletedAction(ACTION_NETLIFY_ADD_DEPLOY_KEY)) {
     return;
   }
-  const githubRepo = config.getStateValue(CREATE_APP_ACTION, 'githubRepo');
-  console.log('Adding deploy key to repository...');
-  const key = await netlifyApiWrapper.api.createDeployKey();
-  try {
-    await githubApiWrapper.octokit.repos.createDeployKey({
-      title: 'Netlify Deploy Key',
-      key: key.public_key,
-      owner: githubRepo.owner.login,
-      repo: githubRepo.name,
-      read_only: true
-    });
-
-    console.log('Deploy key added!');
-
-    config.updateStateValue(SETUP_NETLIFY_ACTION, 'deployKey', key);
-    config.completeSubAction(SETUP_NETLIFY_ACTION, SN_CREATE_DEPLOY_KEY_SUB_ACTION);
-  } catch (error: any) {
-    let message = `Failed adding GitHub deploy key: error.message`;
-    if (error.status === 404) {
-      throw Error(
-        `${message}. Does the repository ${githubRepo.owner.login} exist and do ${githubRepo.name} has the correct permissions to set up deploy keys?`
-      );
-    }
-    throw Error(message);
-  }
+  await netlifyApiWrapper.createDeployKey();
+  await githubApiWrapper.createDeployKey();
+  config.completeAction(ACTION_NETLIFY_ADD_DEPLOY_KEY);
 };
 
-const addDeployHook = async (config: LastRevConfig, githubApiWrapper: GithubApiWrapper, deployHook: any) => {
-  try {
-    if (config.hasCompletedSubAction(SETUP_NETLIFY_ACTION, SN_ADD_DEPLOY_HOOK_SUB_ACTION)) {
-      return;
-    }
-    const githubRepo = config.getStateValue(CREATE_APP_ACTION, 'githubRepo');
-    await githubApiWrapper.octokit.repos.createWebhook({
-      owner: githubRepo.owner.login,
-      repo: githubRepo.name,
-      name: 'web',
-      config: {
-        url: deployHook,
-        content_type: 'json'
-      },
-      events: ['push', 'pull_request', 'delete'],
-      active: true
-    });
-    config.completeSubAction(SETUP_NETLIFY_ACTION, SN_ADD_DEPLOY_HOOK_SUB_ACTION);
-  } catch (error: any) {
-    if (!error.message.includes('Hook already exists on this repository')) {
-      let message = `Failed creating repo hook: ${error.message}`;
-      if (error.status === 404) {
-        message = `${message}. Do the repository and owner have the correct permissions to set up hooks?`;
-      }
-      throw Error(message);
-    }
-  }
-};
-
-const addNotificationHooks = async (
-  config: LastRevConfig,
-  netlifyApiWrapper: NetlifyApiWrapper,
-  siteId: string,
-  token: string
-) => {
-  if (config.hasCompletedSubAction(SETUP_NETLIFY_ACTION, SN_ADD_NOTIFICATION_HOOK_SUB_ACTION)) {
+const addDeployHook = async (config: LastRevConfig, githubApiWrapper: GithubApiWrapper) => {
+  if (config.hasCompletedAction(ACTION_NETLIFY_ADD_DEPLOY_HOOK)) {
     return;
   }
-  try {
-    console.log(`Creating Netlify GitHub Notification Hooks...`);
+  await githubApiWrapper.createWebhook();
+  config.completeAction(ACTION_NETLIFY_ADD_DEPLOY_HOOK);
+};
 
+const addNotificationHooks = async (config: LastRevConfig, netlifyApiWrapper: NetlifyApiWrapper, token: string) => {
+  const spinner = ora('Adding Netlify notification hooks').start();
+  if (config.hasCompletedAction(ACTION_NETLIFY_ADD_NOTIFICATION_HOOKS)) {
+    return;
+  }
+
+  try {
     await Promise.all(
-      ['deploy_created', 'deploy_failed', 'deploy_building'].map(async (event) => {
-        await netlifyApiWrapper.api.createHookBySiteId({
-          site_id: siteId,
-          body: {
-            type: 'github_commit_status',
-            event,
-            data: {
-              access_token: token
-            }
-          }
-        });
-      })
+      ['deploy_created', 'deploy_failed', 'deploy_building'].map(
+        async (event) => await netlifyApiWrapper.createHookBySiteId(event, token)
+      )
     );
-
-    console.log(`Netlify Notification Hooks configured!`);
-    config.completeSubAction(SETUP_NETLIFY_ACTION, SN_ADD_NOTIFICATION_HOOK_SUB_ACTION);
-  } catch (error: any) {
-    const message = `Failed creating Netlify Notification Hooks: ${error.message}`;
-    throw Error(message);
+    spinner.succeed();
+    config.completeAction(ACTION_NETLIFY_ADD_NOTIFICATION_HOOKS);
+  } catch (err) {
+    spinner.fail();
+    throw err;
   }
 };
 
@@ -179,92 +102,44 @@ const addGithubRepo = async (
   githubApiWrapper: GithubApiWrapper,
   netlifyApiWrapper: NetlifyApiWrapper
 ): Promise<void> => {
-  if (config.hasCompletedSubAction(SETUP_NETLIFY_ACTION, SN_ADD_GITHUB_REPO_SUB_ACTION)) {
+  if (config.hasCompletedAction(ACTION_ADD_GITHUB_REPO_TO_NETLIFY)) {
     return;
   }
 
-  const githubRepository = config.getStateValue(CREATE_APP_ACTION, 'githubRepo');
+  const githubRepository = config.getStateValue(VAL_GITHUB_REPO);
 
   if (!githubRepository) {
-    await config.askAndUpdate(SETUP_NETLIFY_ACTION, 'shouldEnterGithubUrl', {
+    await config.askAndUpdate(VAL_SHOULD_FETCH_GITHUB_REPO, {
       type: 'confirm',
-      name: 'shouldEnterGithubUrl',
+      name: VAL_SHOULD_FETCH_GITHUB_REPO,
       message:
         'It looks like you did not create a remote repo in a previous step. Would you likle to proceed by entering a github URL? If not, github linking will be skipped.',
       default: true
     });
 
-    if (!config.getStateValue(SETUP_NETLIFY_ACTION, 'shouldEnterGithubUrl')) {
-      config.completeSubAction(SETUP_NETLIFY_ACTION, SN_ADD_GITHUB_REPO_SUB_ACTION);
+    if (!config.getStateValue(VAL_SHOULD_FETCH_GITHUB_REPO)) {
+      config.completeAction(ACTION_ADD_GITHUB_REPO_TO_NETLIFY);
       return;
     }
 
-    await config.askAndUpdate(SETUP_NETLIFY_ACTION, 'githubRepoUrl', {
+    await config.askAndUpdate(VAL_GITHUB_REPO_URL, {
       type: 'input',
-      name: 'githubRepoUrl',
+      name: VAL_GITHUB_REPO_URL,
       message: 'Please enter an existing GitHub repository URL:',
       validate: (input) => /^https:\/\/github.com\/[^/]+\/[^/]+$/.test(input) || 'Invalid URL'
     });
 
-    const { owner: repoOwner, name: repoName } = parseGithubUrl(
-      config.getStateValue(SETUP_NETLIFY_ACTION, 'githubRepoUrl')
-    )!;
+    const { owner: repoOwner, name: repoName } = parseGithubUrl(config.getStateValue(VAL_GITHUB_REPO_URL))!;
 
-    try {
-      const { data } = await githubApiWrapper.octokit.repos.get({
-        owner: repoOwner!,
-        repo: repoName!
-      });
-      config.updateStateValue(CREATE_APP_ACTION, 'githubRepo', data);
-    } catch (error: any) {
-      let message = `Failed retrieving GitHub repository information: ${error.message}`;
-      if (error.status === 404) {
-        message = `${message}. Does the repository ${repoName} exist and accessible by ${repoOwner}`;
-      }
-      throw Error(message);
-    }
+    await githubApiWrapper.loadGithubRepo(repoOwner!, repoName!);
   }
 
   await addDeployKey(config, githubApiWrapper, netlifyApiWrapper);
+  await netlifyApiWrapper.updateSiteWithRepo();
+  await addDeployHook(config, githubApiWrapper);
+  await addNotificationHooks(config, netlifyApiWrapper, githubApiWrapper.getToken()!);
 
-  const githubRepo = config.getStateValue(CREATE_APP_ACTION, 'githubRepo');
-  const deployKey = config.getStateValue(SETUP_NETLIFY_ACTION, 'deployKey');
-  const appRoot = config.getStateValue(CREATE_APP_ACTION, 'appRoot');
-  const site = config.getStateValue(SETUP_NETLIFY_ACTION, 'site');
-
-  console.log('githubRepo', githubRepo);
-
-  try {
-    const repo = {
-      id: githubRepo.id,
-      provider: 'github',
-      repo_path: githubRepo.full_name,
-      repo_branch: githubRepo.default_branch,
-      allowed_branches: [githubRepo.default_branch],
-      deploy_key_id: deployKey.id,
-      base: appRoot,
-      dir: appRoot,
-      functions_dir: join(appRoot, 'packages', 'functions', 'src')
-    };
-
-    const siteId = site.id;
-
-    const updatedSite = await netlifyApiWrapper.api.updateSite({
-      siteId: siteId,
-      body: {
-        repo
-      }
-    });
-
-    console.log(`site ${site.name} updated with Repo ${githubRepo.name}`);
-
-    await addDeployHook(config, githubApiWrapper, updatedSite.deploy_hook);
-    await addNotificationHooks(config, netlifyApiWrapper, siteId, githubApiWrapper.getToken()!);
-    config.completeSubAction(SETUP_NETLIFY_ACTION, SN_ADD_GITHUB_REPO_SUB_ACTION);
-  } catch (error: any) {
-    const message = `Failed adding GitHub repository to netlify site: ${error.message}`;
-    throw Error(message);
-  }
+  config.completeAction(ACTION_ADD_GITHUB_REPO_TO_NETLIFY);
 };
 
 const performNetlifyFunctions = async (
@@ -272,12 +147,9 @@ const performNetlifyFunctions = async (
   netlifyApiWrapper: NetlifyApiWrapper,
   githubApiWrapper: GithubApiWrapper
 ) => {
-  await netlifyApiWrapper.ensureLoggedIn();
-
   await pickAccount(config, netlifyApiWrapper);
   await createNetlifySite(config, netlifyApiWrapper);
   await addGithubRepo(config, githubApiWrapper, netlifyApiWrapper);
-  config.completeAction(SETUP_NETLIFY_ACTION);
 };
 
 export default performNetlifyFunctions;
