@@ -1,55 +1,145 @@
 import gql from 'graphql-tag';
-
-export const PageQuery = gql`
+import RichTextFragment from '../fragments/RichText.fragment';
+export const Preview_Query = gql`
+  ${RichTextFragment}
   query Preview($id: String!, $locale: String) {
     content(id: $id, locale: $locale, preview: true) {
       id
       __typename
-      ...PreviewPageContentFragment
-      ...PreviewHeaderFragment
-      ...PreviewHeroFragment
-      ...PreviewMailchimpFormFragment
-      ...PreviewBaseSectionFragment
-      ...PreviewCollectionFragment
-      ...PreviewSectionFragment
-      ...PreviewMediaFragment
-      ...PreviewTextFragment
-      ...PreviewCardFragment
-      ...PreviewPageLinkFragment
-      ...PreviewNavigationItemFragment
+      ...Preview_PageContentFragment
+      ...Preview_HeaderFragment
+      ...Preview_HeroFragment
+      ...Preview_BaseSectionFragment
+      ...Preview_CollectionFragment
+      ...Preview_SectionFragment
+      ...Preview_MediaFragment
+      ...Preview_TextFragment
+      ...Preview_CardFragment
+      ...Preview_LinkFragment
+      ...Preview_NavigationItemFragment
+      ...Preview_CategoryBlogContentFragment
+      ...Preview_BlogContentFragment
+      ...Preview_ModuleIntegrationFragment
     }
   }
 
-  fragment PreviewPageContentFragment on Page {
-    id
+  fragment Preview_PageContentFragment on Page {
+    seo
+    sidekickLookup
     header {
       __typename
-      ...PreviewHeaderFragment
+      ...Preview_HeaderFragment
       navigationItems {
-        ...PreviewCollectionFragment
+        ...Preview_CollectionFragment
       }
+    }
+    footer {
+      ...Preview_SectionFragment
     }
 
     hero {
-      ...PreviewHeroFragment
+      ...Preview_HeroFragment
     }
 
     contents {
-      id
-      __typename
-
-      ...PreviewSectionFragment
-      ...PreviewArtDirectedMediaFragment
-      ...PreviewTextFragment
-      ...PreviewCardFragment
-      ...PreviewCollectionFragment
-      ...PreviewMailchimpFormFragment
+      ...Preview_BaseContentFragment
+      ...Preview_SectionFragment
+      # ...Preview_ArtDirectedMediaFragment
+      ...Preview_TextFragment
+      ...Preview_CardFragment
+      ...Preview_CollectionFragment
     }
   }
 
-  fragment PreviewHeaderFragment on Header {
+  fragment Preview_CategoryBlogContentFragment on CategoryBlog {
+    seo
+    title
+    slug
+    sidekickLookup
+    header {
+      __typename
+      ...Preview_HeaderFragment
+      navigationItems {
+        ...Preview_CollectionFragment
+      }
+    }
+    footer {
+      ...Preview_SectionFragment
+    }
+
+    hero {
+      ...Preview_HeroFragment
+    }
+
+    contents {
+      ...Preview_BaseContentFragment
+      ...Preview_SectionFragment
+      #     ...Preview_ArtDirectedMediaFragment
+      ...Preview_TextFragment
+      ...Preview_CardFragment
+      ...Preview_CollectionFragment
+    }
+  }
+
+  fragment Preview_BlogContentFragment on Blog {
+    __typename
+    id
+    slug
+    title
+    author {
+      ...Preview_PersonFragment
+    }
+    tags
+    sidekickLookup
+    seo
+    footer {
+      ...Preview_SectionFragment
+    }
+    header {
+      __typename
+      ...Preview_HeaderFragment
+      navigationItems {
+        ...Preview_CollectionFragment
+      }
+    }
+    featuredMedia {
+      ...Preview_MediaFragment
+    }
+    body {
+      ...RichText_RichTextFragment
+    }
+    categories {
+      id
+      slug
+      title
+    }
+    relatedLinks {
+      ...Preview_LinkFragment
+    }
+    contents {
+      ...Preview_BaseContentFragment
+      ...Preview_SectionFragment
+      ...Preview_MediaFragment
+      ...Preview_TextFragment
+      ...Preview_CardFragment
+      ...Preview_CollectionFragment
+    }
+    seo
+  }
+
+  fragment Preview_LinkFragment on Link {
+    ...Preview_BaseContentFragment
+    text
+    href
+    variant
+    icon
+    iconPosition
+  }
+
+  fragment Preview_HeaderFragment on Header {
+    ...Preview_BaseContentFragment
     logo {
-      ...PreviewMediaFragment
+      ...Preview_MediaFragment
     }
     logoUrl
     navigationItems {
@@ -57,49 +147,29 @@ export const PageQuery = gql`
     }
   }
 
-  fragment PreviewHeroFragment on Hero {
-    id
-    __typename
+  fragment Preview_HeroFragment on Hero {
+    ...Preview_BaseContentFragment
+    backgroundColor
     # theme
+    contentWidth
+    contentHeight
     variant
     internalTitle
     title
     subtitle
     body {
-      ...PreviewRichTextFragment
+      ...RichText_RichTextFragment
     }
     image {
-      file {
-        url
-      }
+      ...Preview_MediaFragment
     }
     actions {
-      ...PreviewPageLinkFragment
+      ...Preview_LinkFragment
     }
   }
 
-  fragment PreviewMailchimpFormFragment on MailchimpForm {
-    id
-    __typename
-    # theme
-    variant
-    internalTitle
-    title
-    subtitle
-    body {
-      ...PreviewRichTextFragment
-    }
-    image {
-      file {
-        url
-      }
-    }
-    actions {
-      ...PreviewPageLinkFragment
-    }
-  }
-
-  fragment PreviewBaseSectionFragment on Section {
+  fragment Preview_BaseSectionFragment on Section {
+    ...Preview_BaseContentFragment
     variant
     styles
     # Style fields
@@ -113,161 +183,165 @@ export const PageQuery = gql`
       typography
     }
     background {
-      ...PreviewArtDirectedMediaFragment
+      ...Preview_MediaFragment
     }
   }
-  fragment PreviewCollectionFragment on Collection {
-    __typename
+  fragment Preview_CollectionFragment on Collection {
+    ...Preview_BaseContentFragment
     variant
     itemsVariant
+    itemsWidth
+    itemsSpacing
     theme {
       id
       components
       typography
     }
+    settings
     items {
-      ...PreviewCardFragment
-      ...PreviewPageLinkFragment
-      ...PreviewNavigationItemFragment
+      ...Preview_CardFragment
+      ...Preview_LinkFragment
+      ...Preview_NavigationItemFragment
     }
   }
 
   # This will go 3 levels deep recursive
-  fragment PreviewSectionFragment on Section {
+  fragment Preview_SectionFragment on Section {
+    ...Preview_BaseSectionFragment
     contents {
-      ...PreviewContentSectionFragment
+      ...Preview_ContentSectionFragment
       ... on Section {
+        ...Preview_BaseSectionFragment
         contents {
-          ...PreviewContentSectionFragment
+          ...Preview_ContentSectionFragment
           ... on Section {
+            ...Preview_BaseSectionFragment
             contents {
-              ...PreviewContentSectionFragment
+              ...Preview_ContentSectionFragment
+              ... on Section {
+                ...Preview_BaseSectionFragment
+              }
             }
           }
         }
       }
     }
-    ...PreviewBaseSectionFragment
   }
 
-  # This fragment Previewis almost identical to the PageFragment but skips Section
-  # SectionFragment recursion is handled in PreviewSectionFragment
-  fragment PreviewContentSectionFragment on Content {
-    id
-    __typename
+  # This fragment is almost identical to the Preview_Fragment but skips Section
+  # Preview_SectionFragment recursion is handled in Preview_SectionFragment
+  fragment Preview_ContentSectionFragment on Content {
+    ...Preview_BaseContentFragment
     theme {
       id
       components
       typography
     }
     ... on Section {
-      ...PreviewBaseSectionFragment
+      ...Preview_BaseSectionFragment
     }
-    ...PreviewArtDirectedMediaFragment
+    # ...Preview_ArtDirectedMediaFragment
     ... on Text {
-      ...PreviewTextFragment
+      ...Preview_TextFragment
     }
     ... on Card {
-      ...PreviewCardFragment
+      ...Preview_CardFragment
     }
     ... on Media {
-      file {
-        url
-      }
+      ...Preview_MediaFragment
     }
     ... on Link {
-      ...PreviewPageLinkFragment
+      ...Preview_LinkFragment
     }
     ... on Collection {
-      ...PreviewCollectionFragment
+      ...Preview_CollectionFragment
+    }
+    ... on ModuleIntegration {
+      ...Preview_ModuleIntegrationFragment
     }
   }
 
-  fragment PreviewMediaFragment on Media {
+  fragment Preview_MediaFragment on Media {
+    # ...Preview_BaseContentFragment
+    id
+    __typename
     title
+    variant
     file {
       url
+      extension
+      fileName
     }
   }
-  fragment PreviewArtDirectedMediaFragment on Media {
-    desktop {
-      title
-      file {
-        url
-      }
-    }
-  }
+  # fragment Preview_ArtDirectedMediaFragment on Media {
+  #   # ...Preview_BaseContentFragment
+  #   desktop {
+  #     title
+  #     file {
+  #       url
+  #     }
+  #   }
+  # }
 
-  fragment PreviewTextFragment on Text {
-    id
+  fragment Preview_TextFragment on Text {
+    ...Preview_BaseContentFragment
     variant
     align
     body {
-      ...PreviewRichTextFragment
+      ...RichText_RichTextFragment
     }
     # body {
     #   raw
     # }
   }
-  fragment PreviewRichTextFragment on RichText {
-    id
-    __typename
+  fragment Preview_CardRichTextFragment on RichText {
     json
     links {
       entries {
         __typename
         id
-        ...PreviewBaseSectionFragment
-        ...PreviewArtDirectedMediaFragment
-        ...PreviewCardFragment
-        ...PreviewCollectionFragment
-        ...PreviewPageLinkFragment
+        # ...Preview_ArtDirectedMediaFragment
+        ...Preview_LinkFragment
       }
       assets {
-        id
-        __typename
-        # url
-        # title
-        # width
-        # height
-        # description
+        ...Preview_MediaFragment
       }
     }
   }
-  fragment PreviewCardFragment on Card {
-    id
-    __typename
+
+  fragment Preview_CardFragment on Card {
+    ...Preview_BaseContentFragment
     variant
     media {
-      title
-      id
-      file {
-        url
-      }
+      ...Preview_MediaFragment
     }
     title
     subtitle
-    cardBody: body
+    body {
+      ...Preview_CardRichTextFragment
+    }
     actions {
-      ...PreviewPageLinkFragment
+      ...Preview_LinkFragment
+    }
+    link {
+      ...Preview_LinkFragment
     }
   }
 
-  fragment PreviewPageLinkFragment on Link {
-    id
-    __typename
-    text
-    href
-    variant
-  }
-
-  fragment PreviewNavigationItemFragment on NavigationItem {
-    id
-    __typename
+  fragment Preview_NavigationItemFragment on NavigationItem {
+    ...Preview_BaseContentFragment
     text
     href
     variant
     subNavigation {
+      ...Preview_BaseContentFragment
+      ... on NavigationItem {
+        id
+        __typename
+        text
+        href
+        variant
+      }
       ... on Link {
         id
         __typename
@@ -275,6 +349,24 @@ export const PageQuery = gql`
         href
         variant
       }
+    }
+  }
+  fragment Preview_BaseContentFragment on Content {
+    id
+    __typename
+    sidekickLookup
+  }
+
+  fragment Preview_ModuleIntegrationFragment on ModuleIntegration {
+    variant
+    settings
+  }
+
+  fragment Preview_PersonFragment on Person {
+    name
+    jobTitle
+    image {
+      ...Preview_MediaFragment
     }
   }
 `;

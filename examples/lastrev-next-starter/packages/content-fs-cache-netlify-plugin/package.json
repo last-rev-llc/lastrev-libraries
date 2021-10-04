@@ -1,5 +1,5 @@
 {
-  "name": "lrns-content-fs-cache-netlify-plugin",
+  "name": "@lrns/content-fs-cache-netlify-plugin",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",

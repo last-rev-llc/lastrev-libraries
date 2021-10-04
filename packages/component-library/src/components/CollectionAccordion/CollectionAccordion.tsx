@@ -53,6 +53,8 @@ const AccordionItem = styled(Grid, {
   name: 'CollectionAccordion',
   slot: 'AccordionItem',
   overridesResolver: (_, styles) => [styles.accordionItem]
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>`
+  width: 100%;
+`;
 
 export default CollectionAccordion;

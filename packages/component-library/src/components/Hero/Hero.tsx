@@ -61,7 +61,8 @@ HeroProps) => {
         sx={{
           ...rootStyles({ backgroundColor, theme, background }),
           position: background ? 'relative' : undefined,
-          overflow: background ? 'hidden' : undefined
+          overflow: background ? 'hidden' : undefined,
+          py: 4
         }}
       >
         {background ? (
@@ -206,7 +207,10 @@ const Root = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; contentHeight: string }>(({ contentHeight }) => ({
-  minHeight: CONTENT_HEIGHT[contentHeight] ?? 'auto'
+  minHeight: CONTENT_HEIGHT[contentHeight] ?? 'auto',
+  display: 'flex',
+  justifyContent: 'center',
+  alignContent: 'center'
 }));
 
 const ContentContainer = styled(Container, {

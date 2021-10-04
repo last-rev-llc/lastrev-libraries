@@ -22,7 +22,7 @@ export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionPro
     <ErrorBoundary>
       <AccordionRoot {...sidekick(sidekickLookup)} variant={variant} data-testid="Accordion">
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h4" color="secondary" data-testid="Accordion-title">
+          <Typography variant="h4" data-testid="Accordion-title">
             {title}
           </Typography>
         </AccordionSummary>

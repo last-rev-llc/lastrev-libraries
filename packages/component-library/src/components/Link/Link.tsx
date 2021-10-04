@@ -175,6 +175,39 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     );
   }
 
+  if (variant?.includes('button-')) {
+    const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
+    if (href !== '#') {
+      return (
+        <NextLink href={href} as={linkAs} {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : null)}>
+          <Button
+            className={className}
+            variant={buttonVariant}
+            type={other.type}
+            {...extra}
+            startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
+            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
+          >
+            {text || children}
+          </Button>
+        </NextLink>
+      );
+    }
+    return (
+      <Button
+        className={className}
+        variant={buttonVariant}
+        onClick={other.onClick}
+        type={other.type}
+        {...extra}
+        startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
+        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
+      >
+        {text || children}
+      </Button>
+    );
+  }
+
   if (isExternal) {
     if (noLinkStyle) {
       return (
@@ -225,38 +258,6 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     );
   }
 
-  if (variant?.includes('button-')) {
-    const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
-    if (href !== '#') {
-      return (
-        <NextLink href={href} as={linkAs}>
-          <Button
-            className={className}
-            variant={buttonVariant}
-            type={other.type}
-            {...extra}
-            startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-          >
-            {text || children}
-          </Button>
-        </NextLink>
-      );
-    }
-    return (
-      <Button
-        className={className}
-        variant={buttonVariant}
-        onClick={other.onClick}
-        type={other.type}
-        {...extra}
-        startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-      >
-        {text || children}
-      </Button>
-    );
-  }
   return (
     <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra}>
       {getButtonContent(text, children, iconPosition, icon)}

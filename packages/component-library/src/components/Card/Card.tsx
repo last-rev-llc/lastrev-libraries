@@ -38,9 +38,9 @@ export const Card = ({ media, title, subtitle, body, link, actions, variant, loa
       <ConditionalWrapper
         condition={!!link}
         wrapper={(children: any) => (
-          <Link noLinkStyle {...link} sidekickLookup={{}}>
+          <CardLink noLinkStyle {...(link as any)} sidekickLookup={{}}>
             {children}
-          </Link>
+          </CardLink>
         )}
       >
         <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)}>
@@ -120,5 +120,14 @@ const Root = styled(MuiCard, {
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
 })<MuiCardProps & {}>(() => ({}));
+
+const CardLink = styled(Link, {
+  name: 'Card',
+  slot: 'CardLink',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.root]
+})<LinkProps & {}>`
+  width: 100%;
+`;
 
 export default Card;

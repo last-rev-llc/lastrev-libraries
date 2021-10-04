@@ -5,7 +5,7 @@ dotenv.config();
 import { Handler } from '@netlify/functions';
 import { getHandler } from '@last-rev/graphql-contentful-core';
 
-import extensions from 'lrns-graphql-extensions';
+import extensions from '@lrns/graphql-extensions';
 
 const handler: Handler = async (event) => {
   const { queryStringParameters } = event;

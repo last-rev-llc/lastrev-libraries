@@ -1,23 +1,44 @@
 import { addDecorator, addParameters } from '@storybook/react';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
-import StyledEngineProvider from '@material-ui/core/StyledEngineProvider';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { StyledEngineProvider } from '@mui/material/styles';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-// import theme from '@last-rev/component-library';
-// import '@storybook/addon-console';
+import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
+import Card from '@last-rev/component-library/dist/components/Card/Card';
+import Header from '@last-rev/component-library/dist/components/Header/Header';
+import Section from '@last-rev/component-library/dist/components/Section/Section';
+import Collection from '@last-rev/component-library/dist/components/Collection/Collection';
+import Link from '@last-rev/component-library/dist/components/Link/Link';
+import Hero from '@last-rev/component-library/dist/components/Hero/Hero';
+import Text from '@last-rev/component-library/dist/components/Text/Text';
+import Media from '@last-rev/component-library/dist/components/Media/Media';
+import NavigationItem from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
+import CollectionFiltered from '../src/components/CollectionFiltered';
 import theme from '../src/theme';
 import './styles.css';
 
-// import * as components from '../src';
+const contentMapping = {
+  Header,
+  Section,
+  Collection,
+  'Collection:filtered': CollectionFiltered,
+  Card,
+  'Quote': Card,
+  NavigationItem,
+  Text,
+  Media,
+  Link,
+  Hero
+};
 
 const StorybookWrapper = (storyFn) => {
-  // console.log('StoryBook', theme);
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {storyFn()}
-        {/* <components.ContentModuleProvider contentMapping={components}>
-        </components.ContentModuleProvider> */}
+        <ContentModuleProvider contentMapping={contentMapping}>
+          <CssBaseline />
+          {storyFn()}
+        </ContentModuleProvider>
       </ThemeProvider>
     </StyledEngineProvider>
   );
@@ -26,7 +47,7 @@ const StorybookWrapper = (storyFn) => {
 addDecorator(StorybookWrapper);
 
 addParameters({
-  // controls: { expanded: true },,
+  layout: 'fullscreen',
   options: {
     isToolshown: true,
     storySort: {
