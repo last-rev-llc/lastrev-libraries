@@ -178,8 +178,25 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (variant?.includes('button-')) {
     const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
     if (href !== '#') {
+      if (isExternal) {
+        return (
+          <a href={href as string} ref={ref as any} target="_blank" rel="noopener noreferrer" {...extra}>
+            <Button
+              className={className}
+              variant={buttonVariant}
+              type={other.type}
+              {...extra}
+              startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
+              endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
+            >
+              {text || children}
+            </Button>
+          </a>
+        );
+      }
+
       return (
-        <NextLink href={href} as={linkAs} {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : null)}>
+        <NextLink href={href} as={linkAs}>
           <Button
             className={className}
             variant={buttonVariant}

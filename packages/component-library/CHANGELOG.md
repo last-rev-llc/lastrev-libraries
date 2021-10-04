@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.8
+
+### Patch Changes
+
+- ad778a0: Fix external button links
+
 ## 0.2.7
 
 ### Patch Changes

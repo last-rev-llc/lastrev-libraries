@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.1.22
+
+### Patch Changes
+
+- a91fe39: Bump the contentful-core dependency
+
 ## 0.1.21
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.3
+
+### Patch Changes
+
+- a91fe39: Bump the contentful-core dependency
+
 ## 0.0.2
 
 ### Patch Changes
