@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.4
+
+### Patch Changes
+
+- 4db4e67: HOTFIX
+
 ## 0.0.3
 
 ### Patch Changes
