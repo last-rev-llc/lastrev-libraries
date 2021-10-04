@@ -28,6 +28,7 @@ const getMUITheme = ({
   contextTheme: Theme;
 }) => {
   const schemePalette = colorScheme && contextTheme?.palette?.schemes ? contextTheme.palette.schemes[colorScheme] : undefined;
+  // console.log('schemePallete', schemePalette, colorScheme);
   // TODO inject custom theme depending on variant ?
   if (Array.isArray(theme)) {
     const merged: ThemeOptions = omitBy(merge({ palette: schemePalette }, ...theme), isNull);
@@ -66,6 +67,9 @@ function ContentModule({ __typename, ...fields }: Props) {
       : __typename;
   const Main = React.useMemo(() => contentMapping[contentType], [contentType, __typename, fields?.variant]);
   const providers = React.useMemo(() => getProviders(fields, contextTheme), [fields, contextTheme]);
+  if (fields.id === 'homepage hero') {
+    console.log('provs', fields.id, providers, contextTheme);
+  }
   if (!Main) {
     // eslint-disable-next-line no-console
     console.info(
