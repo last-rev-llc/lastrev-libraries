@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.25
+
+### Patch Changes
+
+- 3d3cfdc: add support for faulsy values in GetLocalizedField
+
 ## 0.1.24
 
 ### Patch Changes
