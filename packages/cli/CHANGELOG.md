@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.1.24
+
+### Patch Changes
+
+- 7a7465e: Added populating env vars locally and in Netlify
+
 ## 0.1.23
 
 ### Patch Changes
