@@ -1,5 +1,6 @@
 import { prompt } from 'inquirer';
 import open from 'open';
+// import { Space } from 'contentful';
 import { createClient, ClientAPI } from 'contentful-management';
 import BaseApiWrapper from './BaseApiWrapper';
 import LastRevConfig from '../LastRevConfig';
@@ -10,7 +11,7 @@ const REDIRECT_URI = 'https://www.contentful.com/developers/cli-oauth-page/';
 const oAuthURL = `https://be.contentful.com/oauth/authorize?response_type=token&client_id=${APP_ID}&redirect_uri=${REDIRECT_URI}&scope=content_management_manage`;
 
 export default class ContentfulApiWrapper extends BaseApiWrapper {
-  client: ClientAPI;
+  private client: ClientAPI;
 
   constructor(config: LastRevConfig) {
     super(config, 'Contentful');
@@ -40,5 +41,15 @@ export default class ContentfulApiWrapper extends BaseApiWrapper {
     ]);
 
     return token;
+  }
+
+  async getSpaces() {
+    await this.ensureLoggedIn();
+    try {
+      const { items } = await this.client.getSpaces();
+      return items;
+    } catch (err: any) {
+      throw new Error(`Contentful getSpaces error: ${err.message}`);
+    }
   }
 }

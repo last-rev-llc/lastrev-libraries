@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.1.23
+
+### Patch Changes
+
+- dda53bf: Added netlify setup to create-app cli script
+
 ## 0.1.22
 
 ### Patch Changes

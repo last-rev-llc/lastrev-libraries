@@ -7,6 +7,7 @@ import { collectOptions } from './utils/collectOptions';
 import { queryContentful } from './utils/queryContentful';
 
 const pascalCase = (str: string) => camelCase(str).replace(/^(.)/, toUpper);
+const COLLECTION_ITEM_TYPES = ['Card', 'Link', 'Media', 'Section', 'NavigationItem'];
 
 export const typeDefs = gql`
   extend type Collection {
@@ -40,7 +41,7 @@ export const typeDefs = gql`
     body: String
   }
 
-  union CollectionItem = Card | Link | NavigationItem | Media
+  union CollectionItem = ${COLLECTION_ITEM_TYPES.join('| ')}
 `;
 
 interface ItemsConnectionArgs {
@@ -113,9 +114,11 @@ const ITEM_MAPPING: { [key: string]: string } = {
 export const resolvers = {
   CollectionItem: {
     __resolveType: (item: any) => {
-      return (
-        ITEM_MAPPING[pascalCase(item?.sys?.contentType?.sys?.id) ?? ''] ?? pascalCase(item?.sys?.contentType?.sys?.id)
-      );
+      const type =
+        ITEM_MAPPING[pascalCase(item?.sys?.contentType?.sys?.id) ?? ''] ?? pascalCase(item?.sys?.contentType?.sys?.id);
+      if (COLLECTION_ITEM_TYPES.includes(type)) return type;
+
+      return 'Card';
     }
   }
 };
