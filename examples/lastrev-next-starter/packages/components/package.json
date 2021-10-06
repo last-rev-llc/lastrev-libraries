@@ -18,7 +18,7 @@
     "@contentful/rich-text-types": "^15.0.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
-    "@last-rev/component-library": "^0.2.7",
+    "@last-rev/component-library": "^0.2.8",
     "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/rollup-config": "^0.0.5",
     "@last-rev/testing-library": "0.1.2",

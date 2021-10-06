@@ -1,6 +1,6 @@
 [build]
   ignore = "git diff --quiet HEAD^ HEAD ."
-  command = "yarn build-storybook"
+  command = "cd ../../ && yarn build:storybook"
   publish = "storybook-static"
 
 [build.environment]
