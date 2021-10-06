@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.1.4
+
+### Patch Changes
+
+- 3fd9301: fixed a bug in redis webhook
+
 ## 0.1.3
 
 ### Patch Changes
