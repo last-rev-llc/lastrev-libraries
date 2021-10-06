@@ -93,7 +93,6 @@ const Section = ({
       })}
     </GridContainer>
   );
-  console.log('Props', props);
   return (
     <ErrorBoundary>
       <Root
