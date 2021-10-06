@@ -5,7 +5,7 @@ import createResolvers from './resolvers/createResolvers';
 import { ContentfulLoaders } from '@last-rev/types';
 import { GraphQLSchema } from 'graphql';
 import { buildFederatedSchema } from '@apollo/federation';
-import LastRevAppConfig from '../../app-config/dist';
+import LastRevAppConfig from '@last-rev/app-config';
 
 const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
   // may not have production content, if none there, use preview
@@ -23,7 +23,8 @@ const buildSchema = async (config: LastRevAppConfig, loaders: ContentfulLoaders)
     source: 'Contentful',
     typeMappings: config.extensions.typeMappings,
     contentTypes,
-    logLevel: config.logLevel
+    logLevel: config.logLevel,
+    skipReferenceFields: config.skipReferenceFields
   });
 
   const defaultResolvers = createResolvers({

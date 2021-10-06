@@ -52,7 +52,7 @@ const isPage = (type: ContentType) => {
   return some(type.fields, (f) => f.id === 'slug');
 };
 
-const getTypeDefs = (types: ContentType[], reserved: Record<string, string>) => `
+const getTypeDefs = (types: ContentType[], reserved: Record<string, string>, skipReferenceFields: boolean) => `
 ${types.map(
   (contentType) => `
 type ${upperFirst(contentType.sys.id)} implements Content {
@@ -64,6 +64,9 @@ type ${upperFirst(contentType.sys.id)} implements Content {
   ${contentType.fields
     .filter((t) => Object.keys(reserved).indexOf(t.id) === -1)
     .filter((field) => {
+      if (!skipReferenceFields) {
+        return true;
+      }
       const fieldType = getFieldType(field);
       return fieldType != 'Content' && fieldType != '[Content]';
     })
@@ -91,7 +94,11 @@ const mapContentTypeIds = (type: ContentType, typeMappings: Record<string, strin
   };
 };
 
-export const generateContentfulSchema = (typeMappings: Record<string, string>, items: ContentType[]) => {
+export const generateContentfulSchema = (
+  typeMappings: Record<string, string>,
+  items: ContentType[],
+  skipReferenceFields: boolean
+) => {
   const contentTypes = items.map((type) => mapContentTypeIds(type, typeMappings));
   // split out pages from other content types
   const [pages, content] = contentTypes.reduce(([p, c], e) => (isPage(e) ? [[...p, e], c] : [p, [...c, e]]), [
@@ -99,8 +106,8 @@ export const generateContentfulSchema = (typeMappings: Record<string, string>, i
     []
   ] as ContentType[][]);
 
-  const pageTypeDefs = getTypeDefs(pages, reservedForPages);
-  const contentTypeDefs = getTypeDefs(content, reservedForContent);
+  const pageTypeDefs = getTypeDefs(pages, reservedForPages, skipReferenceFields);
+  const contentTypeDefs = getTypeDefs(content, reservedForContent, skipReferenceFields);
 
   return `
   ${contentTypeDefs}
@@ -108,10 +115,14 @@ export const generateContentfulSchema = (typeMappings: Record<string, string>, i
   `;
 };
 
-const contentfulFetcher: Fetcher = async (typeMappings: Record<string, string>, clientParams: CreateClientParams) => {
+const contentfulFetcher: Fetcher = async (
+  typeMappings: Record<string, string>,
+  clientParams: CreateClientParams,
+  skipReferenceFields: boolean
+) => {
   const client = createClient(clientParams);
 
-  return generateContentfulSchema(typeMappings, (await client.getContentTypes()).items);
+  return generateContentfulSchema(typeMappings, (await client.getContentTypes()).items, skipReferenceFields);
 };
 
 export default contentfulFetcher;
