@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.26
+
+### Patch Changes
+
+- aafeb14: Added a new app config setting skipReferenceFields, to allow schema generation to use the default Content interface for those
+- Updated dependencies [aafeb14]
+  - @last-rev/graphql-schema-gen@0.1.7
+
 ## 0.1.25
 
 ### Patch Changes
