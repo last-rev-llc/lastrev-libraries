@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.9
+
+### Patch Changes
+
+- 213e7b6: Add scheme theme merging to ContentModule
+
 ## 0.2.8
 
 ### Patch Changes
