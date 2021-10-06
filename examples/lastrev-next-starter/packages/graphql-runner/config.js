@@ -3,11 +3,17 @@ require('dotenv').config();
 const extensions = require('@lrns/graphql-extensions');
 const { resolve } = require('path');
 const LastRevAppConfig = require('@last-rev/app-config');
-const { parseBooleanEnvVar } = require('@lrns/utils');
+// TODO extract this function into a package that doesnt required the runner
+// const { parseBooleanEnvVar } = require('@lrns/utils');
+const parseBooleanEnvVar = (value = '') => {
+  // values parsed as true: true, 1, yes, y, => ignore caps
+  const val = value.toString().toLowerCase();
+  return /^(true|1|yes|y)$/.test(val);
+};
 
 const config = new LastRevAppConfig({
   cms: 'Contentful',
-  strategy: 'fs',
+  strategy: process.env.GRAPHQL_RUNNER_STRATEGY || 'fs',
   sites: [process.env.SITE],
   extensions,
   contentful: {
