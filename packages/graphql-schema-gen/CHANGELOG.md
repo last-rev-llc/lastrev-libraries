@@ -1,5 +1,11 @@
 # @last-rev/graphql-schema-gen
 
+## 0.1.7
+
+### Patch Changes
+
+- aafeb14: Added a new app config setting skipReferenceFields, to allow schema generation to use the default Content interface for those
+
 ## 0.1.6
 
 ### Patch Changes
