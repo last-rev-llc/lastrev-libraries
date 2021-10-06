@@ -8,9 +8,10 @@ export default async ({
   typeMappings,
   connectionParams,
   contentTypes,
-  logLevel = 'warn'
+  logLevel = 'warn',
+  skipReferenceFields
 }: GenerateSchemaParams): Promise<DocumentNode> => {
   logger.setLevel(logLevel);
   logger.info(`generating schema from ${source}...`);
-  return await fetch(source, typeMappings, connectionParams, contentTypes);
+  return await fetch(source, typeMappings, skipReferenceFields, connectionParams, contentTypes);
 };

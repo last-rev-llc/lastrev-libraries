@@ -1,5 +1,5 @@
 import { LastRevAppConfigArgs, LastRevAppConfiguration } from './types';
-import { merge } from 'lodash';
+import { merge, isNil } from 'lodash';
 
 const defaultConfig: LastRevAppConfigArgs = {
   cms: 'Contentful',
@@ -126,5 +126,10 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
 
   get sites() {
     return this.config.sites!;
+  }
+
+  get skipReferenceFields() {
+    // defaults to true, to allow backwards compatibility
+    return isNil(this.config.skipReferenceFields) ? true : this.config.skipReferenceFields;
   }
 }

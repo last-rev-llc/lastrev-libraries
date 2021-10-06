@@ -28,6 +28,7 @@ export interface LastRevAppConfiguration {
     host: string;
   };
   sites: string[];
+  skipReferenceFields: boolean;
 }
 
 export type LastRevAppConfigArgs = {
@@ -57,4 +58,5 @@ export type LastRevAppConfigArgs = {
     host?: string;
   };
   sites?: string[];
+  skipReferenceFields?: boolean;
 };
