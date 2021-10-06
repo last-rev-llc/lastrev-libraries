@@ -1,6 +1,6 @@
 import { join, resolve } from 'path';
 import { replaceInFile } from 'replace-in-file';
-import { existsSync, ensureDir } from 'fs-extra';
+import { existsSync, ensureDir, writeFile } from 'fs-extra';
 import GithubApiWrapper from './apiWrappers/GithubApiWrapper';
 import simpleGit from 'simple-git';
 import LastRevConfig, {
@@ -21,12 +21,15 @@ import LastRevConfig, {
   ACTION_CREATE_GITHUB_REPO,
   ACTION_GIT_INIT,
   ACTION_PUSH_REPO_TO_GITHUB,
-  ACTION_UPDATE_GITHUB_BRANCH_PROTECTION_RULES
+  ACTION_UPDATE_GITHUB_BRANCH_PROTECTION_RULES,
+  VAL_ENV_VARS,
+  ACTION_WRITE_LOCAL_ENV_FILE
 } from './LastRevConfig';
 import Messager from './Messager';
 import tar from 'tar';
 import ora from 'ora';
 import https from 'https';
+import { map } from 'lodash';
 
 const messager = Messager.getInstance();
 
@@ -274,12 +277,37 @@ const updateBranchProtectionRules = async (
   config.completeAction(ACTION_UPDATE_GITHUB_BRANCH_PROTECTION_RULES);
 };
 
+const writeLocalEnvFile = async (config: LastRevConfig): Promise<void> => {
+  if (config.hasCompletedAction(ACTION_WRITE_LOCAL_ENV_FILE)) {
+    return;
+  }
+  const spinner = ora('Writing local .env file').start();
+  try {
+    const root = config.getStateValue(VAL_RESOLVED_APP_ROOT);
+    const envFilePath = join(root, '.env');
+    const envVars = {
+      ...config.getStateValue(VAL_ENV_VARS),
+      LOG_LEVEL: 'debug',
+      CONTENTFUL_USE_PREVIEW: 'true'
+    };
+    const envLines = map(envVars, (value, key) => `${key}=${value}`);
+    const content = envLines.join('\n');
+    await writeFile(envFilePath, content);
+    spinner.succeed('Wrote local .env file');
+    config.completeAction(ACTION_WRITE_LOCAL_ENV_FILE);
+  } catch (err: any) {
+    spinner.fail();
+    throw Error(`writeLocalEnvFile error: ${err.message}`);
+  }
+};
+
 const performAppCreateFunctions = async (config: LastRevConfig, githubApiWrapper: GithubApiWrapper): Promise<void> => {
   await createApp(config, githubApiWrapper);
   await createGetGithubRepo(config, githubApiWrapper);
   await initGitRepo(config);
   await pushFirstCommitToGithub(config);
   await updateBranchProtectionRules(config, githubApiWrapper);
+  await writeLocalEnvFile(config);
 };
 
 export default performAppCreateFunctions;

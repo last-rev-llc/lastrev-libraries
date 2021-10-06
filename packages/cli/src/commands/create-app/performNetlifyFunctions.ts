@@ -12,7 +12,8 @@ import LastRevConfig, {
   ACTION_NETLIFY_ADD_DEPLOY_KEY,
   ACTION_NETLIFY_ADD_DEPLOY_HOOK,
   ACTION_NETLIFY_ADD_NOTIFICATION_HOOKS,
-  ACTION_ADD_GITHUB_REPO_TO_NETLIFY
+  ACTION_ADD_GITHUB_REPO_TO_NETLIFY,
+  ACTION_UPDATE_NETLIFY_BUILD_ENV
 } from './LastRevConfig';
 import ora from 'ora';
 
@@ -142,6 +143,14 @@ const addGithubRepo = async (
   config.completeAction(ACTION_ADD_GITHUB_REPO_TO_NETLIFY);
 };
 
+const updateNetlifyBuildEnv = async (config: LastRevConfig, netlifyApiWrapper: NetlifyApiWrapper) => {
+  if (config.hasCompletedAction(ACTION_UPDATE_NETLIFY_BUILD_ENV)) {
+    return;
+  }
+  await netlifyApiWrapper.updateSiteWithEnvVars();
+  config.completeAction(ACTION_UPDATE_NETLIFY_BUILD_ENV);
+};
+
 const performNetlifyFunctions = async (
   config: LastRevConfig,
   netlifyApiWrapper: NetlifyApiWrapper,
@@ -150,6 +159,7 @@ const performNetlifyFunctions = async (
   await pickAccount(config, netlifyApiWrapper);
   await createNetlifySite(config, netlifyApiWrapper);
   await addGithubRepo(config, githubApiWrapper, netlifyApiWrapper);
+  await updateNetlifyBuildEnv(config, netlifyApiWrapper);
 };
 
 export default performNetlifyFunctions;
