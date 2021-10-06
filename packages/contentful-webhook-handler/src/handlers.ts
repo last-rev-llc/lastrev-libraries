@@ -20,7 +20,7 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
         await client.sadd(setKey, data.sys.id);
       } else if (command.action === 'delete') {
         await client.del(key);
-        await client.srem(setKey);
+        await client.srem(setKey, data.sys.id);
       }
     },
     asset: async (command) => {

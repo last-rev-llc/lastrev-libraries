@@ -3,7 +3,15 @@ import open from 'open';
 // import { Space } from 'contentful';
 import { createClient, ClientAPI } from 'contentful-management';
 import BaseApiWrapper from './BaseApiWrapper';
-import LastRevConfig from '../LastRevConfig';
+import LastRevConfig, {
+  VAL_CONTENTFUL_DELIVERY_KEY,
+  VAL_CONTENTFUL_PREVIEW_KEY,
+  VAL_CONTENTFUL_SPACE_ID
+} from '../LastRevConfig';
+import { map } from 'lodash';
+import { ApiKey } from 'contentful-management/dist/typings/export-types';
+
+const LASTREV_APIKEY_NAME = 'LastRev API Key';
 
 // TODO: create a contentful oauth app?
 const APP_ID = '9f86a1d54f3d6f85c159468f5919d6e5d27716b3ed68fd01bd534e3dea2df864';
@@ -50,6 +58,31 @@ export default class ContentfulApiWrapper extends BaseApiWrapper {
       return items;
     } catch (err: any) {
       throw new Error(`Contentful getSpaces error: ${err.message}`);
+    }
+  }
+
+  async createApiKeys() {
+    await this.ensureLoggedIn();
+    try {
+      const space = await this.client.getSpace(this.config.getStateValue(VAL_CONTENTFUL_SPACE_ID));
+
+      let apiKey: ApiKey | undefined;
+      const { items: existingKeys } = await space.getApiKeys();
+      apiKey = existingKeys.find((key) => key.name === LASTREV_APIKEY_NAME);
+
+      if (!apiKey) {
+        const { items: envs } = await space.getEnvironments();
+        apiKey = await space.createApiKey({
+          name: 'LastRev API Key',
+          environments: map(envs, 'sys.id')
+        });
+      }
+      this.config.updateStateValue(VAL_CONTENTFUL_DELIVERY_KEY, apiKey.accessToken);
+
+      const previewKey = await space.getPreviewApiKey(apiKey.preview_api_key.sys.id);
+      this.config.updateStateValue(VAL_CONTENTFUL_PREVIEW_KEY, (previewKey as any).accessToken);
+    } catch (err: any) {
+      throw new Error(`Contentful createApiKeys error: ${err.message}`);
     }
   }
 }

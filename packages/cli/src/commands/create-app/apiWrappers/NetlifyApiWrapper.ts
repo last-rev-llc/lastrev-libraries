@@ -7,7 +7,8 @@ import LastRevConfig, {
   VAL_NETLIFY_ACCOUNT_SLUG,
   VAL_NETLIFY_SITE,
   VAL_GITHUB_REPO,
-  VAL_NETLIFY_DEPLOY_KEY
+  VAL_NETLIFY_DEPLOY_KEY,
+  VAL_ENV_VARS
 } from '../LastRevConfig';
 import chalk from 'chalk';
 import Messager from '../Messager';
@@ -164,6 +165,36 @@ export default class NetlifyApiWrapper extends BaseApiWrapper {
       return await this.api.listAccountsForUser();
     } catch (err: any) {
       throw Error(`Netlify listAccountsForUser error: ${err.status}: ${err.message}`);
+    }
+  }
+
+  async updateSiteWithEnvVars(): Promise<void> {
+    await this.ensureLoggedIn();
+
+    const spinner = ora('Updating Netlify build environment variables').start();
+
+    const envVars = this.config.getStateValue(VAL_ENV_VARS);
+
+    try {
+      const siteId = this.config.getStateValue(`${VAL_NETLIFY_SITE}.id`);
+
+      const siteResult = await this.api.updateSite({
+        siteId,
+        body: {
+          build_settings: {
+            env: {
+              ...envVars,
+              LOG_LEVEL: 'info'
+            }
+          }
+        }
+      });
+
+      this.config.updateStateValue(VAL_NETLIFY_SITE, siteResult);
+      spinner.succeed();
+    } catch (err: any) {
+      spinner.fail();
+      throw Error(`Netlify updateSiteWithEnvVars Error: ${err.message}`);
     }
   }
 }

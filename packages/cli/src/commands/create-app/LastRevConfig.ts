@@ -3,8 +3,11 @@ import { join } from 'path';
 import Configstore from 'configstore';
 import { isNil } from 'lodash';
 import { DistinctQuestion, prompt } from 'inquirer';
+import Messager from './Messager';
 
 import { version } from '../../../package.json';
+
+const messager = Messager.getInstance();
 
 const OSBasedPaths = envPaths('last-rev', { suffix: '' });
 
@@ -23,15 +26,22 @@ export const VAL_GITHUB_REPO_URL = 'githubRepoUrl';
 export const VAL_GITHUB_REPO = 'githubRepo';
 export const VAL_CONTENTFUL_EXPORT_SPACE_ID = 'contentfulExportSpaceId';
 export const VAL_CONTENTFUL_EXPORT_ENV_ID = 'contentfulExportEnvId';
-export const VAL_CONTENTFUL_IMPORT_SPACE_ID = 'contentfulImportSpaceId';
-export const VAL_CONTENTFUL_IMPORT_ENV_ID = 'contentfulImportEnvId';
+export const VAL_CONTENTFUL_SPACE_ID = 'contentfulSpaceId';
+export const VAL_CONTENTFUL_ENV_ID = 'contentfulEnvId';
 export const VAL_CONTENTFUL_MIGRATE_CMS_TYPES = 'contentfulMigrateCmsTypes';
+export const VAL_CONTENTFUL_DELIVERY_KEY = 'contentfulDeliveryKey';
+export const VAL_CONTENTFUL_PREVIEW_KEY = 'contentfulPreviewKey';
 export const VAL_NETLIFY_SITE_NAME = 'netlifySiteName';
 export const VAL_NETLIFY_ACCOUNT_SLUG = 'netlifyAccountSlug';
 export const VAL_NETLIFY_SITE = 'netlifySite';
 export const VAL_NETLIFY_DEPLOY_KEY = 'netlifyDeployKey';
 export const VAL_SHOULD_FETCH_GITHUB_REPO = 'shouldFetchGithubRepo';
 export const VAL_SHOULD_INSTALL_DEPENDENCIES = 'shouldInstallDependencies';
+export const VAL_REDIS_HOST = 'redisHost';
+export const VAL_REDIS_PORT = 'redisPort';
+export const VAL_REDIS_PASSWORD = 'redisPassword';
+export const VAL_ENV_VARS = 'envVars';
+export const VAL_CONTENTFUL_PROCEED_WITH_MIGRATION = 'contentfulProceedWithMigration';
 
 export const ACTION_DETERMINE_ACTIONS = 'determineActions';
 export const ACTION_EXTRACT_ARCHIVE = 'extractArchive';
@@ -48,6 +58,8 @@ export const ACTION_CREATE_NETLIFY_SITE = 'createNetlifySite';
 export const ACTION_NETLIFY_ADD_DEPLOY_HOOK = 'netlifyAddDeployHook';
 export const ACTION_NETLIFY_ADD_NOTIFICATION_HOOKS = 'netlifyAddNotificationHook';
 export const ACTION_ADD_GITHUB_REPO_TO_NETLIFY = 'addGithubRepoToNetlify';
+export const ACTION_UPDATE_NETLIFY_BUILD_ENV = 'updateNetlifyBuildEnv';
+export const ACTION_WRITE_LOCAL_ENV_FILE = 'writeLocalEnvFile';
 
 type CliState = {
   messages: string[];
@@ -142,11 +154,13 @@ export default class LastRevConfig {
 
   async askAndUpdate(valKey: string, question: DistinctQuestion<any>): Promise<void> {
     if (isNil(this.getStateValue(valKey))) {
+      messager.log('');
       const answers = await prompt({
         ...question,
         name: valKey
       });
       this.updateStateValue(valKey, answers[valKey]);
+      messager.log('');
     }
   }
 }

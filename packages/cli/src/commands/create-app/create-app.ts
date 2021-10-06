@@ -11,6 +11,7 @@ import { includes } from 'lodash';
 import LastRevConfig, { VAL_SELECTED_ACTIONS, ACTION_DETERMINE_ACTIONS } from './LastRevConfig';
 import continueIfInProgress from './continueIfInProgress';
 import Messager from './Messager';
+import populateEnvVars from './populateEnvVars';
 
 const messager = Messager.getInstance();
 const config = new LastRevConfig();
@@ -29,9 +30,11 @@ const run = async () => {
 
   const selectedActions = config.getStateValue(VAL_SELECTED_ACTIONS);
 
-  if (includes(selectedActions, possibleActions.migrateContent)) {
-    await performCmsFunctions(config, contentfulApiWrapper);
+  if (includes(selectedActions, possibleActions.createApp) || includes(selectedActions, possibleActions.setupNetlify)) {
+    await populateEnvVars(config, contentfulApiWrapper);
   }
+
+  await performCmsFunctions(config, contentfulApiWrapper, selectedActions);
 
   if (includes(selectedActions, possibleActions.createApp)) {
     await performAppCreateFunctions(config, githubApiWrapper);
