@@ -13,6 +13,7 @@ interface CustomPalette {
   'tertiary': Palette['primary'];
   'quartiary': Palette['primary'];
   'gradient-primary'?: Palette['primary'];
+  'schemes'?: any['primary'];
 }
 interface CustomPaletteOptions {
   'tertiary': PaletteOptions['primary'];
@@ -36,6 +37,10 @@ declare module '@mui/material/styles' {
   // eslint-disable-next-line
   interface ThemeOptions {
     palette?: PaletteOptions;
+  }
+  interface Theme {
+    scheme?: string;
+    createSchemeTheme: (scheme: string) => Theme;
   }
 }
 
