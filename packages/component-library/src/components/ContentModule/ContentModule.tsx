@@ -27,19 +27,22 @@ const getMUITheme = ({
   colorScheme?: string;
   contextTheme: Theme;
 }) => {
-  const schemePalette = colorScheme && contextTheme?.palette?.schemes ? contextTheme.palette.schemes[colorScheme] : undefined;
-  // console.log('schemePallete', schemePalette, colorScheme);
-  // TODO inject custom theme depending on variant ?
-  if (Array.isArray(theme)) {
-    const merged: ThemeOptions = omitBy(merge({ palette: schemePalette }, ...theme), isNull);
-    // console.log('ThemeMerged', merged);
+  let schemeTheme;
+  if (colorScheme && contextTheme.createSchemeTheme) {
+    schemeTheme = contextTheme.createSchemeTheme(colorScheme);
+  }
+
+  if (Array.isArray(theme) || schemeTheme) {
+    const merged: ThemeOptions = omitBy(merge({}, schemeTheme, ...(theme || [])), isNull);
     return createTheme(merged);
   }
   return null;
 };
 
-const getProviders = ({ theme, variant, colorScheme }: { theme?: Array<Theme>; variant?: string, colorScheme?: string }, contextTheme: Theme) => {
-  // console.log('getProviders', theme);
+const getProviders = (
+  { theme, variant, colorScheme }: { theme?: Array<Theme>; variant?: string; colorScheme?: string },
+  contextTheme: Theme
+) => {
   const providers = [];
   const muiTheme = getMUITheme({ theme, variant, colorScheme, contextTheme });
   if (muiTheme) {

@@ -38,6 +38,10 @@ declare module '@mui/material/styles' {
   interface ThemeOptions {
     palette?: PaletteOptions;
   }
+  interface Theme {
+    scheme?: string;
+    createSchemeTheme: (scheme: string) => Theme;
+  }
 }
 
 declare module '@mui/material/styles/components' {
