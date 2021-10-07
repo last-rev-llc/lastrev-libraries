@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.10
+
+### Patch Changes
+
+- 44f6705: Update ContentPreview
+
 ## 0.2.9
 
 ### Patch Changes
