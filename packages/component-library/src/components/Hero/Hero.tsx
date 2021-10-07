@@ -63,8 +63,7 @@ HeroProps) => {
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined,
           py: 4
-        }}
-      >
+        }}>
         {background ? (
           <Box
             sx={{
@@ -74,8 +73,7 @@ HeroProps) => {
               left: 0,
               width: '100%',
               height: '100%'
-            }}
-          >
+            }}>
             <Media
               testId="Hero-background"
               {...background}
@@ -95,8 +93,7 @@ HeroProps) => {
                       variant="h1"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.title)}
-                    >
+                      {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
                   ) : null}
@@ -106,8 +103,7 @@ HeroProps) => {
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
                       sx={{ color: !title ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.subtitle)}
-                    >
+                      {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>
                   ) : null}
@@ -207,6 +203,7 @@ const Root = styled(Box, {
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; contentHeight: string }>(({ contentHeight }) => ({
+  width: '100%',
   minHeight: CONTENT_HEIGHT[contentHeight] ?? 'auto',
   display: 'flex',
   justifyContent: 'center',
