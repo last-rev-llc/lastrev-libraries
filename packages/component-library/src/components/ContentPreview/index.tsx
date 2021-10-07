@@ -4,20 +4,30 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import ContentModule from '../ContentModule';
 import capitalize from 'lodash/capitalize';
+import { CircularProgress } from '@mui/material';
 
 interface ContentPreviewProps {
+  id?: string;
   loading?: boolean;
   content?: any;
+  error?: any;
   environment: string;
   spaceId: string;
   locale: string;
 }
 
-const ContentPreview = ({ loading, content, environment, spaceId, locale = 'en-US' }: ContentPreviewProps) => {
+const ContentPreview = ({
+  id,
+  loading,
+  content,
+  error,
+  environment,
+  spaceId,
+  locale = 'en-US'
+}: ContentPreviewProps) => {
   return (
     <>
-      {loading ? <ContentModule {...content} /> : null}
-      {content && !loading ? <ContentModule {...content} /> : null}
+      {content ? <ContentModule {...content} /> : null}
       {!content ? (
         <Container
           maxWidth="lg"
@@ -27,27 +37,41 @@ const ContentPreview = ({ loading, content, environment, spaceId, locale = 'en-U
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
-          }}
-        >
-          <Typography variant="subtitle1">
-            No content found
-            <br />
-            <Link
-              target="_blank"
-              href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${content?.id}?locale=${locale}`}
-            >
-              {`Edit ${capitalize(content?.__typename)}#${content?.id} in Contentful`}
-            </Link>
-          </Typography>
+          }}>
+          {error ? (
+            <Typography>
+              <br />
+              An error happened! Share this error code with your friendly development team:
+              <br />
+              <strong>
+                {error ? error?.response?.errors?.map(({ message }: { message: string }) => message).join('\n') : null}
+              </strong>
+              <br />
+            </Typography>
+          ) : null}
+
+          {loading ? <CircularProgress /> : null}
+
+          {!loading ? (
+            <Typography variant="subtitle1">
+              No content found
+              <br />
+              <Link
+                target="_blank"
+                href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
+                {`Edit ${capitalize(content?.__typename)}#${id} in Contentful`}
+              </Link>
+              <br />
+            </Typography>
+          ) : null}
         </Container>
       ) : null}
 
       <div style={{ position: 'fixed', bottom: 16, right: 16 }}>
         <Link
           target="_blank"
-          href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${content?.id}?locale=${locale}`}
-        >
-          {`${capitalize(content?.__typename)}#${content?.id} in Contentful`}
+          href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
+          {`${capitalize(content?.__typename)}#${id} in Contentful`}
         </Link>
         <br />
       </div>
