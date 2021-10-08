@@ -1,5 +1,13 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.1.5
+
+### Patch Changes
+
+- 76a7655: Fixed some bugs with async logic in path generation and redis loader
+- Updated dependencies [76a7655]
+  - @last-rev/contentful-path-util@0.1.3
+
 ## 0.1.4
 
 ### Patch Changes
