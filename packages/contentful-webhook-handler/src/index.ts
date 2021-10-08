@@ -86,13 +86,11 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Webho
               throw Error(`unsupported type! ${type}`);
           }
         } catch (err) {
-          console.log('webhook...', err);
-          // throw err;
+          console.log('Error handling webhook', err);
+          throw err;
         }
       })
     );
-
-    console.log('eventAction.envs', eventAction.envs);
 
     await handlers.paths(eventAction.envs.includes('preview'), eventAction.envs.includes('production'));
   } catch (err) {
