@@ -26,7 +26,7 @@ const pickAccount = async (config: LastRevConfig, netlifyApiWrapper: NetlifyApiW
   await config.askAndUpdate(VAL_NETLIFY_ACCOUNT_SLUG, {
     type: 'list',
     name: VAL_NETLIFY_ACCOUNT_SLUG,
-    message: 'Team:',
+    message: 'In which Netlify Team do youy want to create this site?',
     choices: accounts.map((account) => ({
       value: account.slug,
       name: account.name
@@ -44,7 +44,7 @@ const createNetlifySite = async (config: LastRevConfig, netlifyApiWrapper: Netli
   await config.askAndUpdate(VAL_NETLIFY_SITE_NAME, {
     type: 'input',
     name: VAL_NETLIFY_SITE_NAME,
-    message: 'Site name (optional):',
+    message: 'Netlify Site name (optional):',
     filter: (val) => (val === '' ? undefined : val),
     validate: (input) => /^[a-zA-Z\d-]+$/.test(input) || 'Only alphanumeric characters and hyphens are allowed'
   });
