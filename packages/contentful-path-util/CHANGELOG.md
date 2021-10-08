@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.3
+
+### Patch Changes
+
+- 76a7655: Fixed some bugs with async logic in path generation and redis loader
+
 ## 0.1.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.1.6
+
+### Patch Changes
+
+- 76a7655: Fixed some bugs with async logic in path generation and redis loader
+
 ## 0.1.5
 
 ### Patch Changes
