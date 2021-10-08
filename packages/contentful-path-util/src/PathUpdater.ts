@@ -49,7 +49,7 @@ export default class PathUpdater {
 
   async save() {
     const serialized = this.tree.serialize();
-    this.pathStore.save(serialized, this.site);
+    await this.pathStore.save(serialized, this.site);
   }
 
   async loadFromContent() {
@@ -80,14 +80,13 @@ export default class PathUpdater {
           });
         } else if (isFunction(config)) {
           await Promise.all(
-            map(pages, (page) =>
-              (async () => {
-                const pathToIdMapping = await config(page, loaders, defaultLocale, locales, preview, site);
-                each(pathToIdMapping, (pathData) => {
-                  tree.appendNewNode(pathData);
-                });
-              })()
-            )
+            map(pages, async (page) => {
+              const pathToIdMapping = await config(page, loaders, defaultLocale, locales, preview, site);
+
+              each(pathToIdMapping, (pathData) => {
+                tree.appendNewNode(pathData);
+              });
+            })
           );
         }
       })
@@ -110,17 +109,15 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
   if (updateForPreview) {
     const pathStore = createPathStore(config);
     promises.push(
-      Promise.all(
-        map(config.sites || [DEFAULT_SITE_KEY], (site) =>
-          updatePathsForSite({
-            pathStore,
-            updateForPreview,
-            updateForProd,
-            site,
-            pathsConfigs: config.extensions.pathsConfigs,
-            context
-          })
-        )
+      ...map(config.sites.length ? config.sites : [DEFAULT_SITE_KEY], (site) =>
+        updatePathsForSite({
+          pathStore,
+          updateForPreview,
+          updateForProd,
+          site,
+          pathsConfigs: config.extensions.pathsConfigs,
+          context
+        })
       )
     );
   }
@@ -128,17 +125,15 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
     const pathStore = createPathStore(config);
 
     promises.push(
-      Promise.all(
-        map(config.sites || [DEFAULT_SITE_KEY], (site) =>
-          updatePathsForSite({
-            pathStore,
-            updateForPreview,
-            updateForProd,
-            site,
-            pathsConfigs: config.extensions.pathsConfigs,
-            context
-          })
-        )
+      ...map(config.sites || [DEFAULT_SITE_KEY], (site) =>
+        updatePathsForSite({
+          pathStore,
+          updateForPreview,
+          updateForProd,
+          site,
+          pathsConfigs: config.extensions.pathsConfigs,
+          context
+        })
       )
     );
   }

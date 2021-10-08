@@ -93,6 +93,8 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
   const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => async (keys) => {
     let timer = new Timer(`Fetched ${keys.length} entry IDs by contentType from redis`);
 
+    if (!keys.length) return [];
+
     const redisKeys = map(
       keys,
       (key) => `${key.preview ? 'preview' : 'production'}:entry_ids_by_content_type:${key.id}`
@@ -140,11 +142,18 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         });
       });
 
-      // don't block
-      const multi = client.multi();
-      multi.mset(msetKeys);
-      each(saddKeys, (v, k) => multi.sadd(k, ...v));
-      multi.exec().then(() => logger.debug(timer.end()));
+      if (saddKeys.length) {
+        // don't block
+        const multi = client.multi();
+        multi.mset(msetKeys);
+        each(saddKeys, (v, k) => multi.sadd(k, ...v));
+        multi
+          .exec()
+          .catch((e: any) => {
+            console.log('error adding', e);
+          })
+          .then(() => logger.debug(timer.end()));
+      }
 
       each(filtered as Entry<any>[][], (entryArray, idx) => {
         const { id: contentType } = cacheMissIds[idx];
@@ -188,10 +197,17 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         timer = new Timer('Set all content types in redis');
         const contentTypes = await fallbackLoaders.fetchAllContentTypes(preview);
         const contentTypeIds = map(contentTypes, 'sys.id');
-        const zipped = zipObject(contentTypeIds, map(contentTypes, stringify));
+        if (contentTypeIds.length) {
+          const zipped = zipObject(contentTypeIds, map(contentTypes, stringify));
 
-        // don't block
-        client.hset(key, zipped).then(() => logger.debug(timer.end()));
+          // don't block
+          client
+            .hset(key, zipped)
+            .catch((e: any) => {
+              console.log('error hsetting', e);
+            })
+            .then(() => logger.debug(timer.end()));
+        }
         return contentTypes;
       }
       return results as ContentType[];
