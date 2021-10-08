@@ -73,7 +73,11 @@ export class RedisPathStore implements PathStore {
   };
 
   save = async (pathDataMap: PathDataMap, site: string) => {
+    if (Object.keys(pathDataMap).length === 0) {
+      return;
+    }
     const key = this.getKey(site);
+
     await this.client
       .multi()
       .del(key)

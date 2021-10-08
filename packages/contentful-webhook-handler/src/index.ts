@@ -9,6 +9,8 @@ type HasEnv = {
     environment: {
       sys: {
         id: string;
+        type: 'Link';
+        linkType: 'Environment';
       };
     };
   };
@@ -35,7 +37,7 @@ const actionMappings: ActionMappings = {
 export type WebhookBody = (Entry<any> | Asset | ContentType) & HasEnv;
 export type WebhookHeaders = Record<string, string>;
 
-const handleWebhook = async (config: LastRevAppConfig, body: WebhookBody, headers: WebhookHeaders) => {
+const handleWebhook = async (config: LastRevAppConfig, body: any, headers: WebhookHeaders) => {
   const handlers = createHandlers(config);
   const topics = headers['x-contentful-topic']?.split('.');
 
@@ -63,23 +65,28 @@ const handleWebhook = async (config: LastRevAppConfig, body: WebhookBody, header
 
   await Promise.all(
     map(eventAction.envs, async (env) => {
-      const command = {
-        isPreview: env === 'preview',
-        action: eventAction.action,
-        data: body
-      };
-      switch (type) {
-        case 'Asset':
-          await handlers.asset(command as ProcessCommand<Asset>);
-          break;
-        case 'Entry':
-          await handlers.entry(command as ProcessCommand<Entry<any>>);
-          break;
-        case 'ContentType':
-          await handlers.contentType(command as ProcessCommand<ContentType>);
-          break;
-        default:
-          throw Error(`unsupported type! ${type}`);
+      try {
+        const command = {
+          isPreview: env === 'preview',
+          action: eventAction.action,
+          data: body
+        };
+        switch (type) {
+          case 'Asset':
+            await handlers.asset(command as ProcessCommand<Asset>);
+            break;
+          case 'Entry':
+            await handlers.entry(command as ProcessCommand<Entry<any>>);
+            break;
+          case 'ContentType':
+            await handlers.contentType(command as ProcessCommand<ContentType>);
+            break;
+          default:
+            throw Error(`unsupported type! ${type}`);
+        }
+      } catch (err) {
+        console.log('Error handling webhook', err);
+        throw err;
       }
     })
   );
