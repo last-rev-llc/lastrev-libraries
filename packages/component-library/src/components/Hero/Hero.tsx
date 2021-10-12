@@ -63,19 +63,17 @@ HeroProps) => {
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined,
           py: 4
-        }}
-      >
+        }}>
         {background ? (
           <Box
             sx={{
               position: 'absolute',
-              zIndex: -1,
+              zIndex: 0,
               top: 0,
               left: 0,
               width: '100%',
               height: '100%'
-            }}
-          >
+            }}>
             <Media
               testId="Hero-background"
               {...background}
@@ -95,8 +93,7 @@ HeroProps) => {
                       variant="h1"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.title)}
-                    >
+                      {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
                   ) : null}
@@ -106,8 +103,7 @@ HeroProps) => {
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
                       sx={{ color: !title ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.subtitle)}
-                    >
+                      {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>
                   ) : null}
@@ -147,16 +143,6 @@ const rootStyles = ({
   theme: Theme;
   background?: MediaProps;
 }) => {
-  if (!!background) {
-    return {
-      'backgroundColor': 'transparent',
-      'color': 'white',
-      // TODO find out a better way to override text color
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: 'white'
-      }
-    };
-  }
   if (backgroundColor === 'white') {
     return { backgroundColor };
   }
@@ -191,6 +177,16 @@ const rootStyles = ({
       }
     };
   }
+  if (!!background) {
+    return {
+      'backgroundColor': 'transparent',
+      'color': 'white',
+      // TODO find out a better way to override text color
+      '& p, h1, h2, h3, h4, h5, h6, a': {
+        color: 'white'
+      }
+    };
+  }
   return {};
 };
 
@@ -219,6 +215,7 @@ const ContentContainer = styled(Container, {
   slot: 'ContentContainer',
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(({ theme }) => ({
+  zIndex: 1,
   alignSelf: 'center',
   height: '100%',
   [theme.breakpoints.up('md')]: {
