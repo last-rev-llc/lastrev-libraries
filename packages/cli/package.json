@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/cli",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "description": "",
   "bin": {
     "last-rev": "bin/last-rev"
@@ -28,7 +28,7 @@
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
     "@last-rev/app-config": "^0.1.2",
-    "@last-rev/contentful-fragment-gen": "^0.1.0",
+    "@last-rev/contentful-fragment-gen": "^0.1.1",
     "@last-rev/contentful-import-export": "^0.1.1",
     "@last-rev/contentful-s3-sync": "^0.1.2",
     "@last-rev/contentful-sync-to-fs": "^0.1.7",

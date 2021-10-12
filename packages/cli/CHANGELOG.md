@@ -1,5 +1,14 @@
 # @last-rev/cli
 
+## 0.1.26
+
+### Patch Changes
+
+- 022b507: Minor text updates to CLI
+- fa9307a: Allow for multiple input directories when generating fragments
+- Updated dependencies [fa9307a]
+  - @last-rev/contentful-fragment-gen@0.1.1
+
 ## 0.1.25
 
 ### Patch Changes

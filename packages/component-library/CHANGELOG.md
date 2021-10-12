@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.11
+
+### Patch Changes
+
+- b5d7754: Fix Hero backgroundColor not showing with a background image
+
 ## 0.2.10
 
 ### Patch Changes
