@@ -3,12 +3,14 @@ import generate from '@last-rev/contentful-fragment-gen';
 import program from 'commander';
 import dotenv from 'dotenv';
 
+import { map } from 'lodash';
+
 dotenv.config(); //
 
 import { resolve } from 'path';
 
 program
-  .requiredOption('-i --input-dir <Input Directory>', 'Path to a directory with contentJson files')
+  .requiredOption('-i --input-dirs <Input Directories...>', 'Path to a directory with contentJson files')
   .requiredOption('-o --output-dir <Output Directory>', 'Path to a directory where generated files will be written')
   .requiredOption(
     '-e --contentful-environment <Contentful Environment>',
@@ -31,11 +33,11 @@ program
   )
   .parse(process.argv);
 
-const { inputDir, outputDir, contentfulEnvironment, contentfulDeliveryToken, contentfulSpaceId, linkContentType } =
+const { inputDirs, outputDir, contentfulEnvironment, contentfulDeliveryToken, contentfulSpaceId, linkContentType } =
   program.opts();
 
 generate({
-  inputDir: resolve(process.cwd(), inputDir),
+  inputDirs: map(inputDirs, (inputDir) => resolve(process.cwd(), inputDir)),
   outputDir: resolve(process.cwd(), outputDir),
   contentfulDeliveryToken,
   contentfulEnvironment,

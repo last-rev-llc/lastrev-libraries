@@ -1,6 +1,6 @@
 import { createClient } from 'contentful';
 import { readFile } from 'fs-extra';
-import { each, every, map, reduce } from 'lodash';
+import { each, every, map, reduce, flatMap } from 'lodash';
 import { join } from 'path';
 import { FileMatcher } from 'file-matcher';
 import generateFragmentData from './generateFragmentData';
@@ -21,7 +21,7 @@ logger.setLevel('info');
 const fileMatcher = new FileMatcher();
 
 type RunProps = {
-  inputDir: string;
+  inputDirs: string[];
   outputDir: string;
   contentfulDeliveryToken: string;
   contentfulSpaceId: string;
@@ -105,7 +105,7 @@ const writeOutput = async (fragmentDataMapping: FragmentDataMapping, outputDir: 
 };
 
 const run = async ({
-  inputDir,
+  inputDirs,
   outputDir,
   contentfulDeliveryToken,
   contentfulSpaceId,
@@ -130,7 +130,7 @@ const run = async ({
     {} as ContentTypeMap
   );
 
-  const inputJsons = await getInputJsons(inputDir);
+  const inputJsons = flatMap(await Promise.all(map(inputDirs, (inputDir) => getInputJsons(inputDir))));
 
   const mergedJsonRepresentationMap = mergeContentTypeJsons(inputJsons, allContentTypes);
 

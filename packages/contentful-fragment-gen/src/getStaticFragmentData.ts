@@ -6,7 +6,7 @@ const getStaticFragmentData = (staticTypes: ContentTypeMap): FragmentDataMapping
   return mapValues(staticTypes, (contentType, contentTypeId) => {
     const out: FragmentData = {
       static: true,
-      root: true,
+      root: false,
       contentType: contentTypeId,
       simpleValueFields: new Set<string>(),
       richTextFields: new Set<string>(),

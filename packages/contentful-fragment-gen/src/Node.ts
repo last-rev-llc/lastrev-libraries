@@ -112,7 +112,7 @@ export default class Node {
   parseAndUpdateFragmentData = (fragmentMapping: FragmentDataMapping) => {
     if (!fragmentMapping[this.getFragmentName()]) {
       fragmentMapping[this.getFragmentName()] = {
-        root: !this.parent || this.static,
+        root: !this.parent,
         static: this.static,
         contentType: this.contentType,
         simpleValueFields: new Set<string>(),
