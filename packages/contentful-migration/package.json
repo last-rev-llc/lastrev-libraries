@@ -1,0 +1,16 @@
+{
+  "name": "contentful-migrations",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "migrate": "node -r dotenv/config index.js"
+  },
+  "dependencies": {
+    "contentful-management": "^7.33.0",
+    "contentful-migration": "^4.5.0",
+    "dotenv": "^10.0.0",
+    "imurmurhash": "^0.1.4",
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {}
+}
