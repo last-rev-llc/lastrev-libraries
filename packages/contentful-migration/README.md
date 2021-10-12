@@ -19,9 +19,9 @@ To make changes to the content models you can:
 1. Go into the new environment in Contentful and make your changes in the UI
 2. Generate a migration file for a specific content model or content type [API docs](https://github.com/contentful/contentful-cli/tree/master/docs/space/generate/migration)
 ```
-contentful space generate migration -e [environment_name] -c [content_model_id] -f migrations/migration-filename.js
+contentful space generate migration -s [space_name] -e [environment_name] -c [content_model_id] -f migrations/migration-filename.js
+Example: contentful space generate migration -s abjv67t9l34s -e master -c link -f migrations/link.js 
 ```
-TODO: We want to be able to do this through a CLI script
 
 **Things to remember**
 * The migration script only generates changes to the fields. If you remove fields you will need to edit the generated script to delete the files
@@ -47,3 +47,13 @@ yarn migrate
 ```
 
 It should then run the migration script on the environment that you specified. If everything runs correctly create a PR.
+
+## TODO
+[] Create a CLI script that uses Contentful CLI Mangement token for env variables
+[] Create backups of spaces on S3 for rollback purposes before migrating on master
+[] Create CLI script that allows you to export one or more content models for updating
+[] Decide on a way to version the scripts for updating conent models
+[] Create ability to update / edit existing content models not just create new ones
+[] Create a JS template generator for quick repeatable content migration
+
+
