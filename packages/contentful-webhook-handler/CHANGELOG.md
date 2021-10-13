@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.1.6
+
+### Patch Changes
+
+- e2368a8: 'Rebuilding entry_ids_by_content_type from contentful each time an entry is updated'
+
 ## 0.1.5
 
 ### Patch Changes
