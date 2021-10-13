@@ -1,8 +1,10 @@
 const mockContent = () => {
   return {
-    size: 'large',
-    color: 'primary',
-    disabled: true
+    FabProps: {
+      size: 'large',
+      color: 'primary',
+      disabled: true
+    }
   };
 };
 
