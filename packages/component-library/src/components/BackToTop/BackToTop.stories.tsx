@@ -6,29 +6,31 @@ export default {
   title: '1. Primitives / MUI / BackToTop',
   component: BackToTop,
   argTypes: {
-    size: {
-      name: 'Size',
-      control: {
-        type: 'inline-radio'
+    FabProps: {
+      size: {
+        name: 'Size',
+        control: {
+          type: 'inline-radio'
+        },
+        table: {
+          defaultValue: { summary: 'large' }
+        }
       },
-      table: {
-        defaultValue: { summary: 'large' }
-      }
-    },
-    color: {
-      name: 'Color',
-      control: {
-        type: 'inline-radio'
+      color: {
+        name: 'Color',
+        control: {
+          type: 'inline-radio'
+        },
+        table: {
+          defaultValue: { summary: 'primary' }
+        }
       },
-      table: {
-        defaultValue: { summary: 'primary' }
-      }
-    },
-    href: { name: 'Href' },
-    ref: { table: { disable: true } }
+      href: { name: 'Href' },
+      ref: { table: { disable: true } }
+    }
   }
 };
 
 const Template = (args: JSX.IntrinsicAttributes) => <BackToTop {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...mockContent };
+Default.args = { ...mockContent() };

@@ -1,4 +1,6 @@
-const mockContent = () => {
+import { BackToTopProps } from './BackToTop'
+
+const mockContent = (): BackToTopProps => {
   return {
     FabProps: {
       size: 'large',
