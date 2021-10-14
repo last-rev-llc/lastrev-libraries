@@ -6,28 +6,26 @@ export default {
   title: '1. Primitives / MUI / BackToTop',
   component: BackToTop,
   argTypes: {
-    FabProps: {
-      size: {
-        name: 'Size',
-        control: {
-          type: 'inline-radio'
-        },
-        table: {
-          defaultValue: { summary: 'large' }
-        }
+    size: {
+      name: 'Size',
+      control: {
+        type: 'inline-radio'
       },
-      color: {
-        name: 'Color',
-        control: {
-          type: 'inline-radio'
-        },
-        table: {
-          defaultValue: { summary: 'primary' }
-        }
+      table: {
+        defaultValue: { summary: 'large' }
+      }
+    },
+    color: {
+      name: 'Color',
+      control: {
+        type: 'inline-radio'
       },
-      href: { name: 'Href' },
-      ref: { table: { disable: true } }
-    }
+      table: {
+        defaultValue: { summary: 'primary' }
+      }
+    },
+    href: { name: 'Href' },
+    ref: { table: { disable: true } }
   }
 };
 
