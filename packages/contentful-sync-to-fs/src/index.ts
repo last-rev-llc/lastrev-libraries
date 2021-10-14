@@ -103,8 +103,23 @@ const syncAllAssets = async (client: ContentfulClientApi): Promise<Asset[]> => {
   ).assets;
 };
 
+const syncAllEntries = async (client: ContentfulClientApi, contentTypes: ContentType[]): Promise<Entry<any>[]> => {
+  return flatten(
+    await Promise.all(
+      contentTypes.map((contentType, index) =>
+        (async () => {
+          const {
+            sys: { id: contentTypeId }
+          } = contentType;
+          await delay(index * 100);
+          return await syncAllEntriesForContentType(client, contentTypeId);
+        })()
+      )
+    )
+  );
+};
+
 const sync = async (config: LastRevAppConfig, sites?: string[]) => {
-  console.log('config', config);
   const timer = new Timer('Total elapsed time');
   let spinner;
 
@@ -125,30 +140,9 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
   const { items: contentTypes } = await client.getContentTypes();
 
   let startTime = Date.now();
-  spinner = ora('fetching entries').start();
-  // console.time('finished fetching entries');
-  const entries = flatten(
-    await Promise.all(
-      contentTypes.map((contentType, index) =>
-        (async () => {
-          const {
-            sys: { id: contentTypeId }
-          } = contentType;
-          await delay(index * 100);
-          return await syncAllEntriesForContentType(client, contentTypeId);
-        })()
-      )
-    )
-  );
-  spinner.succeed(`fetching entries: ${Date.now() - startTime}ms`);
-  // console.timeEnd('finished fetching entries');
-
-  startTime = Date.now();
-  spinner = ora('fetching assets').start();
-  // console.time('finished fetching assets');
-  const assets = await syncAllAssets(client);
-  spinner.succeed(`fetching assets: ${Date.now() - startTime}ms`);
-  // console.timeEnd('finished fetching assets');
+  spinner = ora('fetching entries and assets').start();
+  const [entries, assets] = await Promise.all([syncAllEntries(client, contentTypes), syncAllAssets(client)]);
+  spinner.succeed(`fetching entries and assets: ${Date.now() - startTime}ms`);
 
   const entryIdsByContentTypeLookup = getEntriesByContentTypeLookup(entries);
 
@@ -161,7 +155,6 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
 
   startTime = Date.now();
   spinner = ora('writing content files').start();
-  // console.time('finished writing files');
   await Promise.all([
     writeContentfulItems(entries, root, ENTRIES_DIRNAME),
     writeContentfulItems(assets, root, ASSETS_DIRNAME),
