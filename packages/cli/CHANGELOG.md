@@ -1,5 +1,13 @@
 # @last-rev/cli
 
+## 0.1.27
+
+### Patch Changes
+
+- fa99186: 'Parellelized sync entries and assets in sync-to-fs module'
+- Updated dependencies [fa99186]
+  - @last-rev/contentful-sync-to-fs@0.1.8
+
 ## 0.1.26
 
 ### Patch Changes

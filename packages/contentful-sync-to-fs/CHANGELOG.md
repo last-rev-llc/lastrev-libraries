@@ -1,5 +1,11 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.1.8
+
+### Patch Changes
+
+- fa99186: 'Parellelized sync entries and assets in sync-to-fs module'
+
 ## 0.1.7
 
 ### Patch Changes

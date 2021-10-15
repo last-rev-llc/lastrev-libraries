@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-sync-to-fs",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "",
   "main": "dist/index.js",
   "scripts": {

@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/cli",
-  "version": "0.1.26",
+  "version": "0.1.27",
   "description": "",
   "bin": {
     "last-rev": "bin/last-rev"
@@ -31,7 +31,7 @@
     "@last-rev/contentful-fragment-gen": "^0.1.1",
     "@last-rev/contentful-import-export": "^0.1.1",
     "@last-rev/contentful-s3-sync": "^0.1.2",
-    "@last-rev/contentful-sync-to-fs": "^0.1.7",
+    "@last-rev/contentful-sync-to-fs": "^0.1.8",
     "@last-rev/graphql-contentful-core": "^0.1.26",
     "@last-rev/testing-library": "^0.1.2",
     "@octokit/rest": "^18.6.2",
