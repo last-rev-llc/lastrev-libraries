@@ -16,10 +16,9 @@
   "dependencies": {
     "@last-rev/app-config": "^0.1.0",
     "@last-rev/cli": "^0.1.18",
-    "dotenv": "^10.0.0",
-    "npm-run-all": "^4.1.5",
     "@lrns/graphql-extensions": "^0.1.0",
-    "@lrns/utils": "^0.1.0"
+    "dotenv": "^10.0.0",
+    "npm-run-all": "^4.1.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

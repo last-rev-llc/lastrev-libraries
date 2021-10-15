@@ -112,7 +112,7 @@ export const mappers: any = {
       actions: async (blog: any, _args: any, ctx: ApolloContext) => {
         // Get all categoryBlogs from this blog and convert them into links
         const categoriesLinks: any = getLocalizedField(blog.fields, 'categories', ctx);
-        if (categoriesLinks) {
+        if (categoriesLinks?.length) {
           const categories = await ctx.loaders.entryLoader.loadMany(
             categoriesLinks?.map((categoryBlog: any) => ({ id: categoryBlog?.sys?.id, preview: !!ctx.preview }))
           );

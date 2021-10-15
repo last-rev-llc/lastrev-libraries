@@ -1,6 +1,6 @@
-import { gql } from '@apollo/client';
+import { gql } from 'graphql-tag';
 
-export const PageQuery = gql`
+export const CollectionItemsQuery = gql`
   query CollectionItems(
     $locale: String
     $preview: Boolean

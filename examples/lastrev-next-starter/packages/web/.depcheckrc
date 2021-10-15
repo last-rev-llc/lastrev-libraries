@@ -1,1 +1,2 @@
-ignores: ["eslint", "eslint-*", "babel-eslint", "table"]
+# "@lrns/graphql-extensions", "@lrns/graphql-runner" needed for lerna build order when running "yarn dev"
+ignores: ['@lrns/graphql-extensions', '@lrns/graphql-runner']

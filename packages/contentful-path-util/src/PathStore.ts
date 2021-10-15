@@ -15,7 +15,6 @@ export class FsPathStore implements PathStore {
   basePath: string;
 
   constructor(config: LastRevAppConfig) {
-    console.log('here', config.fs);
     this.basePath = join(
       config.fs.contentDir,
       config.contentful.spaceId,

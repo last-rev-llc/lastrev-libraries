@@ -118,13 +118,14 @@ const renamePackages = async (config: LastRevConfig): Promise<void> => {
       files: [
         join(root, 'package.json'),
         join(root, 'packages/*/package.json'),
+        join(root, 'packages/**/.depcheckrc'),
         join(root, 'packages/**/*.ts'),
         join(root, 'packages/**/*.tsx'),
         join(root, 'packages/**/*.js'),
         join(root, 'netlify.toml')
       ],
-      from: /lrns\-/g,
-      to: `${name}-`
+      from: /@lrns\//g,
+      to: `@${name}/`
     });
   } catch (err) {
     spinner.fail();
