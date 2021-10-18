@@ -57,10 +57,14 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
 };
 
 export default function Page({ pageData }: any) {
-  switch (pageData?.page?.__typename) {
-    case 'Blog':
-      return <PageBlog {...pageData.page} />;
-    default:
-      return <PageGeneral {...pageData.page} />;
+  try {
+    switch (pageData?.page?.__typename) {
+      case 'Blog':
+        return <PageBlog {...pageData.page} />;
+      default:
+        return <PageGeneral {...pageData.page} />;
+    }
+  } catch (err) {
+    console.log('failed here', err, pageData);
   }
 }

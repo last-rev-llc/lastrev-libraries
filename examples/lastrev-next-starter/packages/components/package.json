@@ -14,39 +14,28 @@
     "build-storybook": "build-storybook -s public"
   },
   "dependencies": {
-    "@contentful/rich-text-react-renderer": "^15.0.0",
-    "@contentful/rich-text-types": "^15.0.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@last-rev/component-library": "^0.2.8",
     "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/rollup-config": "^0.0.5",
     "@last-rev/testing-library": "0.1.2",
-    "@mui/icons-material": "^5.0.0",
-    "@mui/material": "^5.0.0",
-    "@mui/styles": "^5.0.0",
-    "@mui/system": "^5.0.0",
-    "@sentry/react": "^6.7.1",
-    "lodash": "^4.17.21",
-    "react-context-composer": "^0.0.4",
-    "react-lazyload": "^3.2.0",
     "@lrns/graphql-sdk": "^0.1.0",
-    "swiper": "^6.8.0",
     "@lrns/utils": "^0.1.0",
+    "@mui/icons-material": "^5.0.1",
+    "@mui/material": "^5.0.1",
+    "@mui/styles": "^5.0.1",
+    "@mui/system": "^5.0.0",
+    "lodash": "^4.17.21",
     "xss": "^1.0.9"
   },
   "peerDependencies": {
     "next": "^11.0.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "@mui/icons-material": "^5.0.1",
-    "@mui/material": "^5.0.1",
-    "@mui/styles": "^5.0.1"
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
-    "@last-rev/rollup-config": "^0.0.5",
-    "@last-rev/testing-library": "0.1.2",
     "@storybook/addon-a11y": "^6.3.6",
     "@storybook/addon-actions": "^6.3.6",
     "@storybook/addon-docs": "^6.3.6",
@@ -60,14 +49,10 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@types/faker": "^5.5.7",
     "@types/react": "^17.0.11",
-    "@types/react-dom": "^17.0.7",
-    "@types/react-lazyload": "^3.1.0",
     "faker": "^5.5.3",
     "next": "^11.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "@mui/icons-material": "^5.0.1",
-    "@mui/material": "^5.0.1",
-    "@mui/styles": "^5.0.1"
+    "rollup": "2.58.0"
   }
 }

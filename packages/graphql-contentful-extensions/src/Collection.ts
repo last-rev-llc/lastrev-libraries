@@ -89,9 +89,11 @@ export const mappers: any = {
                 options,
                 allOptions
               },
-              items: await ctx.loaders.entryLoader.loadMany(
-                items?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-              )
+              items: items?.length
+                ? await ctx.loaders.entryLoader.loadMany(
+                    items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+                  )
+                : null
             };
           }
         } catch (error) {

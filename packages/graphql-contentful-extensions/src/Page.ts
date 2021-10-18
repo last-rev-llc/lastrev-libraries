@@ -57,9 +57,13 @@ const pageContentsResolver = async (page: any, _args: any, ctx: ApolloContext) =
   // Get the PAge contents
   const contentsRef = getLocalizedField(page.fields, 'contents', ctx);
   // Load the Page contents
-  const contents = await ctx.loaders.entryLoader.loadMany(
-    contentsRef.map((content: any) => ({ id: content?.sys.id, preview: !!ctx.preview }))
-  );
+  let contents;
+  if (contentsRef?.length) {
+    contents = await ctx.loaders.entryLoader.loadMany(
+      contentsRef?.map((content: any) => ({ id: content?.sys.id, preview: !!ctx.preview }))
+    );
+  }
+
   // Map the Page contents (if not a Section wrap it)
   return contents?.map((content: any) => {
     const variant = getLocalizedField(content.fields, 'variant', ctx);

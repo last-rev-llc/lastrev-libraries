@@ -12,7 +12,7 @@ import Media from '@last-rev/component-library/dist/components/Media/Media';
 import Text from '@last-rev/component-library/dist/components/Text/Text';
 import { MediaProps } from '@last-rev/component-library/dist/components/Media/Media.types';
 import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
-import { CategoryBlog } from 'packages/graphql-sdk/dist';
+import { CategoryBlog } from '@lrns/graphql-sdk';
 import { ContentModule } from '@last-rev/component-library';
 import sidekick from '../../utils/sidekick';
 
@@ -95,8 +95,7 @@ export const Blog = ({
                   padding: { xs: 2, md: 2, xl: 4 },
                   position: 'sticky',
                   top: 132 // Header height + 32px
-                }}
-              >
+                }}>
                 <List
                   sx={{
                     '& .MuiListItem-root': {
@@ -126,8 +125,7 @@ export const Blog = ({
                         textDecoration: 'underline'
                       }
                     }
-                  }}
-                >
+                  }}>
                   <ListItem>
                     <ListItemText
                       primary="Share"
@@ -141,14 +139,12 @@ export const Blog = ({
                         display: 'flex',
                         flexWrap: 'wrap',
                         padding: '0'
-                      }}
-                    >
+                      }}>
                       <li>
                         <Link
                           href={`https://www.facebook.com/sharer.php?u=${schemaData.url}`}
                           target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                          rel="noopener noreferrer">
                           <FacebookIcon sx={{ marginRight: 2 }} />
                         </Link>
                       </li>
@@ -156,8 +152,7 @@ export const Blog = ({
                         <Link
                           href={`mailto:?subject=Check out this article&body=Check out this article:+${title}+${schemaData.url}`}
                           target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                          rel="noopener noreferrer">
                           <EmailIcon sx={{ marginRight: 2 }} />
                         </Link>
                       </li>
@@ -165,8 +160,7 @@ export const Blog = ({
                         <Link
                           href={`https://twitter.com/share?url=${schemaData.url}&text=Check this article:+${title}`}
                           target="_blank"
-                          rel="noopener noreferrer"
-                        >
+                          rel="noopener noreferrer">
                           <TwitterIcon />
                         </Link>
                       </li>
@@ -185,16 +179,14 @@ export const Blog = ({
                           listStyle: 'none',
                           padding: 0
                         }}
-                        {...sidekick(sidekickLookup?.relatedLinks)}
-                      >
+                        {...sidekick(sidekickLookup?.relatedLinks)}>
                         {relatedLinks?.map((link, i) => (
                           <li
                             key={link?.id}
                             style={{
                               display: 'flex',
                               marginBottom: i !== relatedLinks.length - 1 ? 16 : undefined
-                            }}
-                          >
+                            }}>
                             <ArrowForwardIosIcon
                               sx={{
                                 width: '1.2rem',
@@ -228,16 +220,14 @@ export const Blog = ({
                           flexWrap: 'wrap',
                           padding: '0'
                         }}
-                        {...sidekick(sidekickLookup?.categories)}
-                      >
+                        {...sidekick(sidekickLookup?.categories)}>
                         {categories.map((categoryBlog: CategoryBlog, i: React.Key | null | undefined) => (
                           <li
                             key={i}
                             style={{
                               whiteSpace: 'nowrap',
                               marginRight: i !== categories.length - 1 ? 5 : undefined
-                            }}
-                          >
+                            }}>
                             <Link href={`/blogs/${categoryBlog?.slug}`}>{categoryBlog?.title}</Link>
                             {i !== categories.length - 1 ? ', ' : ''}
                           </li>
@@ -260,13 +250,11 @@ export const Blog = ({
                           flexWrap: 'wrap',
                           padding: '0'
                         }}
-                        {...sidekick(sidekickLookup?.tags)}
-                      >
+                        {...sidekick(sidekickLookup?.tags)}>
                         {tags.map((tag: string, i: React.Key | null | undefined) => (
                           <li
                             key={tag}
-                            style={{ whiteSpace: 'nowrap', marginRight: i !== tags.length - 1 ? 5 : undefined }}
-                          >
+                            style={{ whiteSpace: 'nowrap', marginRight: i !== tags.length - 1 ? 5 : undefined }}>
                             <Link text={tag} href={`/blogs?tags=${tag}`} />
                             {i !== tags.length - 1 ? ', ' : ''}
                           </li>

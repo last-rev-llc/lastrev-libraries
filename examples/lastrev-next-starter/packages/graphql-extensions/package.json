@@ -17,19 +17,14 @@
   },
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
-    "@last-rev/graphql-contentful-core": "^0.1.23",
-    "@last-rev/rollup-config": "^0.0.4",
     "@last-rev/graphql-contentful-extensions": "^0.0.4",
-    "@last-rev/types": "^0.1.1",
-    "contentful": "^8.4.2",
+    "@last-rev/rollup-config": "^0.0.5",
     "graphql": "^15.5.1",
-    "graphql-tag": "^2.12.4",
     "lodash": "^4.17.21",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@last-rev/types": "^0.1.2",
     "@types/lodash": "^4.14.170",
-    "contentful": "^8.4.2"
+    "rollup": "2.58.0"
   }
 }
