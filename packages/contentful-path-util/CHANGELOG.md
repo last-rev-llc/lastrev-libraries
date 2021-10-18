@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.4
+
+### Patch Changes
+
+- 25c153e: 'Fixed some bugs and cleaned up console logs'
+
 ## 0.1.3
 
 ### Patch Changes

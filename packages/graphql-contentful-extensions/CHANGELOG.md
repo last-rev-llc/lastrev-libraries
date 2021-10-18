@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.5
+
+### Patch Changes
+
+- 25c153e: 'Fixed some bugs and cleaned up console logs'
+
 ## 0.0.4
 
 ### Patch Changes
