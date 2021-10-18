@@ -35,6 +35,7 @@ const createResolvers = ({
         if (!path) throw new Error('MissingArgumentPath');
         ctx.locale = locale || ctx.defaultLocale;
         ctx.preview = preview;
+        ctx.path = path;
 
         if (!ctx.pathReaders) return null;
 
