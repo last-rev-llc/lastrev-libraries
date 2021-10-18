@@ -64,6 +64,7 @@ export type ApolloContext = Context<{
   defaultLocale: string;
   typeMappings: TypeMappings;
   locale?: string;
+  path?: string;
   locales: string[];
   preview?: boolean;
   contentful: ContentfulClients;
