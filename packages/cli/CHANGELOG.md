@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.1.28
+
+### Patch Changes
+
+- 5f999f8: Update lastrev cli contentful core dependency
+
 ## 0.1.27
 
 ### Patch Changes
