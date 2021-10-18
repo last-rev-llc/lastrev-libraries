@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.27
+
+### Patch Changes
+
+- aeb2067: Add page path arg to context
+- Updated dependencies [aeb2067]
+  - @last-rev/types@0.1.3
+
 ## 0.1.26
 
 ### Patch Changes
