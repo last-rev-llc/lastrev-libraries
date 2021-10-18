@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.1.3
+
+### Patch Changes
+
+- aeb2067: Add page path arg to context
+
 ## 0.1.2
 
 ### Patch Changes
