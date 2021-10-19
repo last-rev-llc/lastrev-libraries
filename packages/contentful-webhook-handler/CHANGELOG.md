@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.1.7
+
+### Patch Changes
+
+- 8b5534a: 'Deleting asset in webhook if it contains no URL'
+
 ## 0.1.6
 
 ### Patch Changes
