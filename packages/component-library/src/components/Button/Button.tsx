@@ -2,11 +2,11 @@ import React from 'react';
 import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary';
 
-interface ButtonProps extends MuiButtonProps {
+export interface ButtonProps extends MuiButtonProps {
   text?: string;
 }
 
-export const Button = ({
+const Button = ({
   text,
   // children,
   ...props

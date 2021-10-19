@@ -68,4 +68,4 @@ export default {
 
 const Template = (args: JSX.IntrinsicAttributes) => <Button {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...mockContent };
+Default.args = { ...mockContent() };
