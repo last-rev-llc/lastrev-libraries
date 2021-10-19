@@ -5,6 +5,7 @@ import { createClient } from 'contentful';
 import { updateAllPaths } from '@last-rev/contentful-path-util';
 import { createContext, createLoaders } from '@last-rev/graphql-contentful-helpers';
 import { Entry } from 'contentful';
+import { each } from 'lodash';
 
 export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
   const redis = new Redis({
@@ -25,6 +26,23 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
     environment: config.contentful.env,
     host: 'cdn.contentful.com'
   });
+
+  const assetHasUrl = (asset: any): boolean => {
+    const file = asset.fields.file;
+
+    try {
+      // loop through locales. They should all have url
+      each(file, (val) => {
+        if (!val.url) {
+          throw Error();
+        }
+      });
+    } catch (err) {
+      return false;
+    }
+
+    return true;
+  };
 
   const refreshEntriesByContentType = async (contentTypeId: string, isPreview: boolean) => {
     const client = isPreview ? contentfulPreviewClient : contentfulProdClient;
@@ -75,7 +93,12 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       const { data, isPreview } = command;
       const key = `${isPreview ? 'preview' : 'production'}:assets:${data.sys.id}`;
       if (command.action === 'update') {
-        await redis.set(key, JSON.stringify(data));
+        if (assetHasUrl(data)) {
+          await redis.set(key, JSON.stringify(data));
+        } else {
+          // Asset must be deleted because the content was not ready in contentful
+          await redis.del(key);
+        }
       } else if (command.action === 'delete') {
         await redis.del(key);
       }
