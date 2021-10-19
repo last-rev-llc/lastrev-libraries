@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.6
+
+### Patch Changes
+
+- a568799: Add items resolver for automatic collections
+
 ## 0.0.5
 
 ### Patch Changes
