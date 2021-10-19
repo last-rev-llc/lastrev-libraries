@@ -9,7 +9,7 @@ import mockContent from './Button.mock';
 //   await preloadAll();
 // });
 
-const { text } = mockContent;
+const { text } = mockContent();
 
 const renderComponent = () => render(<Button text={text} />);
 
