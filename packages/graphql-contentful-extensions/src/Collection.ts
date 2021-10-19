@@ -52,6 +52,10 @@ interface ItemsConnectionArgs {
 
 interface CollectionSettings {
   contentType: string;
+  limit?: number;
+  offset?: number;
+  filter?: any;
+  order?: string;
   filters: Array<{
     id: string;
     key: string;
@@ -61,6 +65,23 @@ interface CollectionSettings {
 export const mappers: any = {
   Collection: {
     Collection: {
+      items: async (collection: any, _args: any, ctx: ApolloContext) => {
+        let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
+        try {
+          const { contentType, limit, offset, order, filter } =
+            (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
+          if (contentType) {
+            items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
+
+            return ctx.loaders.entryLoader.loadMany(
+              items?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+            );
+          }
+        } catch (error) {
+          console.log('Collection:items:error', error);
+        }
+        return items;
+      },
       itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
         try {
