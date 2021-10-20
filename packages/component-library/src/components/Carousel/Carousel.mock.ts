@@ -1,28 +1,31 @@
 import { lorem } from 'faker';
+import { CarouselProps } from './Carousel';
 import mockCard from '../Card/Card.mock';
 import mockTheme from '../../theme/mock.theme';
 
-export default {
+export default (): CarouselProps => ({
   __typename: 'Carousel',
   variant: 'standard',
   title: 'Carousel title',
-  json: {
-    nodeType: 'document',
-    data: {},
-    content: [
-      {
-        nodeType: 'paragraph',
-        data: {},
-        content: [
-          {
-            nodeType: 'text',
-            value: lorem.sentences(2),
-            marks: [],
-            data: {}
-          }
-        ]
-      }
-    ]
+  body: {
+    json: {
+      nodeType: 'document',
+      data: {},
+      content: [
+        {
+          nodeType: 'paragraph',
+          data: {},
+          content: [
+            {
+              nodeType: 'text',
+              value: lorem.sentences(2),
+              marks: [],
+              data: {}
+            }
+          ]
+        }
+      ]
+    }
   },
   items: [
     { ...mockCard, variant: 'media', title: 'Card one title' },
@@ -32,8 +35,8 @@ export default {
   ],
   itemsVariant: 'standard-round',
   theme: [mockTheme],
-  links: {
-    entries: [],
-    assets: []
-  }
-};
+  // links: {
+  //   entries: [],
+  //   assets: []
+  // }
+});

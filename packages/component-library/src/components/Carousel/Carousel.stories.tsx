@@ -35,4 +35,4 @@ export default {
 
 const Template = (args: JSX.IntrinsicAttributes) => <Carousel __typename={''} title={''} theme={undefined} {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...mockContent };
+Default.args = { ...mockContent() };
