@@ -3,7 +3,6 @@ import mount from '../../../cypress/mount';
 import Carousel, { CarouselProps } from './Carousel';
 import { CardProps } from '../Card';
 import mockContent from './Carousel.mock';
-import { should } from 'chai';
 
 let mockedContent: CarouselProps = { __typename: 'Carousel', title: 'test', theme: {} };
 
