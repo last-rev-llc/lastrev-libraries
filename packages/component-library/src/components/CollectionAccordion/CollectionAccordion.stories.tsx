@@ -27,6 +27,6 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <CollectionAccordion {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <CollectionAccordion theme={undefined} sidekickLookup={undefined} itemSpacing={undefined} {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...mockContent };
+Default.args = { ...mockContent() };

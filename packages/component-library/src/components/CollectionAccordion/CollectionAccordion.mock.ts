@@ -1,8 +1,9 @@
+import { CollectionAccordionProps } from './CollectionAccordion';
 import mockAccordion from '../Accordion/Accordion.mock';
 import mockTheme from '../../theme/mock.theme';
 
-export default {
-  __typename: 'Collection',
+export default (): CollectionAccordionProps => ({
+  sidekickLookup: 'sidekick-lookup',
   variant: 'accordion',
   itemSpacing: 2,
   items: [
@@ -25,4 +26,4 @@ export default {
   ],
   itemsVariant: 'accordion-standard',
   theme: [mockTheme]
-};
+});
