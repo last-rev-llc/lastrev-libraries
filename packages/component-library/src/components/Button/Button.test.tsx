@@ -21,6 +21,6 @@ describe('<Button />', () => {
 
   test('Button to have text content', () => {
     const { getByTestId } = renderComponent();
-    expect(getByTestId('Button')).toHaveTextContent(text);
+    expect(getByTestId('Button')).toHaveTextContent(text || '');
   });
 });
