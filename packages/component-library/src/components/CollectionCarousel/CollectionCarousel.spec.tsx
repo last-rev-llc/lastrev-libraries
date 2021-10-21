@@ -5,7 +5,7 @@ import defaultContent, { smallCarouselMock } from './CollectionCarousel.mock';
 
 let mockedContent: CollectionCarouselProps = { theme: {}, sidekickLookup: '', variant: '' };
 
-const runTestByVariant = (variantContent) => {
+const runTestByVariant = (variantContent: CollectionCarouselProps, expectedLength: Function) => {
   beforeEach(() => {
     mockedContent = { ...variantContent };
   });
@@ -14,7 +14,7 @@ const runTestByVariant = (variantContent) => {
     it('renders a collection carousel', () => {
       mount(<CollectionCarousel {...mockedContent} />);
       cy.get('[data-testid=CollectionCarousel]').should('exist');
-      cy.get('[data-testid=Card').should('have.length', mockedContent.items.length + 2);
+      cy.get('[data-testid=Card]').should('have.length', expectedLength(mockedContent.items.length));
       cy.percySnapshot();
     });
 
@@ -28,24 +28,28 @@ const runTestByVariant = (variantContent) => {
   });
 
   context('functions correctly', () => {
-    // TODO: Write following functional tests
-    // it('renders correct content', () => {
-    //   mount(<CollectionCarousel {...mockedContent} />);
-    //   cy.get('./swiper-pagination-bullet').each((element, index) => {
-    //     if () {
+    it('renders correct content', () => {
+      mount(<CollectionCarousel {...mockedContent} />);
+      cy.get('.swiper-pagination-bullet.swiper-pagination-bullet-active').as('activeBullet');
+      cy.percySnapshot();
 
-    //     }
-    //   });
-    // });
+      cy.get('.swiper-button-next').click();
+      cy.get('@bullet').should('not.have.class', 'swiper-pagination-bullet-active');
+      cy.percySnapshot();
+
+      cy.get('.swiper-button-prev').click();
+      cy.get('@bullet').should('have.class', 'swiper-pagination-bullet-active');
+      cy.percySnapshot();
+    });
   });
 }
 
 describe('CollectionCarousel', () => {
   describe('CollectionCarousel carousel-large variant', () => {
-    runTestByVariant(defaultContent());
+    runTestByVariant(defaultContent(), (length) => length + 2);
   });
 
   describe('CollectionCarousel carousel-small variant', () => {
-    runTestByVariant(smallCarouselMock());
+    runTestByVariant(smallCarouselMock(), (length) => length * 3);
   });
 });

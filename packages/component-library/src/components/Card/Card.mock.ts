@@ -3,7 +3,7 @@ import mockLink from '../Link/Link.mock';
 import { CardProps } from './Card';
 import { staticRichTextMock } from '../Text/Text.mock';
 
-export default (): CardProps => ({
+export default {
   __typename: 'Card',
   media: {
     file: {
@@ -33,4 +33,4 @@ export const cardWithTags: any = {
   tags: [{ ...mockLink(), text: 'Tag 1' }, { ...mockLink(), text: 'Tag 2' }, { text: 'Tag 3 - Not clickable' }],
   actions: [{ ...mockLink(), text: 'Card link' }],
   sidekickLookup: {}
-});
+};
