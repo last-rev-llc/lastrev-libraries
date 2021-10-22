@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.12
+
+### Patch Changes
+
+- 08ef555: Improve Card link wrapping, Fix Collection double container
+
 ## 0.2.11
 
 ### Patch Changes
