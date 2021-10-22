@@ -11,6 +11,7 @@ import { TextProps } from '../Text';
 import { CardProps } from '../Card';
 import Section from '../Section';
 import sidekick from '../../utils/sidekick';
+import ConditionalWrapper from '../ConditionalWrapper';
 
 export interface CollectionProps {
   id: string;
@@ -39,37 +40,29 @@ export const Collection = ({
   ...props
 }: CollectionProps) => {
   if (!items?.length) return null;
-  // const { sidekicker } = sidekickInit(props);
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
       <Root variant={variant} data-testid="Collection" {...omit(props, 'theme')} {...sidekick(sidekickLookup)}>
-        {introText && (
-          <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
-        )}
-        {!itemsWidth ? (
+        <ConditionalWrapper
+          condition={!!itemsWidth}
+          wrapper={(children) => (
+            <ContentContainer data-testid="Collection-contentContainer" maxWidth={itemsWidth}>
+              {children}
+            </ContentContainer>
+          )}>
+          {introText && (
+            <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
+          )}
           <Section
-            testId="Collection-itemsWithVariant-without-itemsWidth"
+            testId="Collection-section"
             contents={itemsWithVariant}
             background={background}
             variant={variant}
-            contentWidth={itemsWidth}
             contentSpacing={itemsSpacing}
             styles={styles}
           />
-        ) : (
-          <ContentContainer maxWidth={itemsWidth}>
-            <Section
-              testId="Collection-itemsWithVariant-with-itemsWidth"
-              contents={itemsWithVariant}
-              background={background}
-              variant={variant}
-              contentWidth={itemsWidth}
-              contentSpacing={itemsSpacing}
-              styles={styles}
-            />
-          </ContentContainer>
-        )}
+        </ConditionalWrapper>
       </Root>
     </ErrorBoundary>
   );
