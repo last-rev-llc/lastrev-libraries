@@ -34,7 +34,7 @@ export default (): CarouselProps => ({
     { ...mockCard, variant: 'media', title: 'Card four title' }
   ],
   itemsVariant: 'standard-round',
-  theme: [mockTheme],
+  theme: [mockTheme]
   // links: {
   //   entries: [],
   //   assets: []
