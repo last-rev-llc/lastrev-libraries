@@ -14,13 +14,12 @@ const checkCarouselButton = (array: Array<CardProps>, primaryButton: string, sec
     if (index !== mockedContent.items.length - 1) {
       cy.get('button').contains(primaryButton).click();
       cy.get('button').contains(secondaryButton).should('be.enabled');
-    }
-    else {
+    } else {
       cy.get('button').contains(primaryButton).should('be.disabled');
       cy.percySnapshot();
     }
   });
-}
+};
 
 beforeEach(() => {
   mockedContent = { ...mockContent() };
@@ -69,7 +68,9 @@ describe('Carousel', () => {
     it('renders correct content', () => {
       mount(<Carousel {...mockedContent} />);
       cy.get('[data-testid=Carousel-title]').should('have.text', mockedContent.title);
-      cy.get('[data-testid=Carousel-body]').contains(mockedContent.body.json.content[0].content[0].value).should('exist');
+      cy.get('[data-testid=Carousel-body]')
+        .contains(mockedContent.body.json.content[0].content[0].value)
+        .should('exist');
       mockedContent.items.forEach((item) => {
         cy.get('[data-testid=Card]').contains(item.title).should('exist');
       });

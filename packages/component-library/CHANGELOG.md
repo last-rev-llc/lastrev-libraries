@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.13
+
+### Patch Changes
+
+- 3d93f8a: HOTFIX: ContentModule without mapping breaking builds
+
 ## 0.2.12
 
 ### Patch Changes
