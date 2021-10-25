@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.2.14
+
+### Patch Changes
+
+- f4da4f0: Add introText to Section
+  Deleagete introText rendering to ContentModule
+
 ## 0.2.13
 
 ### Patch Changes
