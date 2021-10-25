@@ -16,11 +16,14 @@ import { Breakpoint } from '@mui/material';
 import { MediaProps } from '../Media';
 import Media from '../Media';
 import sidekick from '../../utils/sidekick';
+import { TextProps } from '../Text';
+import ConditionalWrapper from '../ConditionalWrapper';
 // interface Image {
 //   src: string;
 // }
 
 export interface SectionProps {
+  introText?: TextProps;
   contents?: Array<{ __typename: string; id?: string }>;
   background?: MediaProps;
   backgroundColor?: string;
@@ -49,6 +52,7 @@ const VARIANTS_GRID_ITEM: Record<string, any> = {
   'default': { xs: 12, sm: true }
 };
 const Section = ({
+  introText,
   contents,
   styles,
   background,
@@ -63,36 +67,7 @@ const Section = ({
 }: SectionProps) => {
   const theme = useTheme();
   const gridItemStyle = variant && VARIANTS_GRID_ITEM[variant] ? VARIANTS_GRID_ITEM[variant] : {};
-  const content = (
-    <GridContainer
-      container
-      sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-      {...(contentSpacing && { spacing: contentSpacing })}
-    >
-      {contents?.map((content, idx) => {
-        const itemStyle = get(styles?.gridItems, idx);
-        return (
-          <GridItem
-            item
-            key={content.id}
-            {...(contentDirection === 'column'
-              ? { width: '100%' }
-              : {
-                  xs: gridItemStyle?.xs ?? itemStyle?.xs ?? true,
-                  md: gridItemStyle?.md ?? itemStyle?.md ?? false,
-                  sm: gridItemStyle?.sm ?? itemStyle?.sm ?? false
-                })}
-            sx={{
-              ...styles?.gridItem,
-              ...itemStyle
-            }}
-          >
-            <ContentModule {...content} />
-          </GridItem>
-        );
-      })}
-    </GridContainer>
-  );
+
   return (
     <ErrorBoundary>
       <Root
@@ -104,10 +79,41 @@ const Section = ({
         }}
         variant={variant}
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
-        {...omit(props, 'theme')}
-      >
+        {...omit(props, 'theme')}>
         {background ? <BackgroundMedia {...background} /> : null}
-        {!contentWidth ? content : <ContentContainer maxWidth={contentWidth}>{content}</ContentContainer>}
+        <ConditionalWrapper
+          condition={!!contentWidth}
+          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}>
+          {introText && (
+            <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Section-introText" />
+          )}
+          <GridContainer
+            container
+            sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
+            {...(contentSpacing && { spacing: contentSpacing })}>
+            {contents?.map((content, idx) => {
+              const itemStyle = get(styles?.gridItems, idx);
+              return (
+                <GridItem
+                  item
+                  key={content.id}
+                  {...(contentDirection === 'column'
+                    ? { width: '100%' }
+                    : {
+                        xs: gridItemStyle?.xs ?? itemStyle?.xs ?? true,
+                        md: gridItemStyle?.md ?? itemStyle?.md ?? false,
+                        sm: gridItemStyle?.sm ?? itemStyle?.sm ?? false
+                      })}
+                  sx={{
+                    ...styles?.gridItem,
+                    ...itemStyle
+                  }}>
+                  <ContentModule {...content} />
+                </GridItem>
+              );
+            })}
+          </GridContainer>
+        </ConditionalWrapper>
       </Root>
     </ErrorBoundary>
   );
@@ -179,6 +185,12 @@ const GridItem = styled(Grid, {
   name: 'Section',
   slot: 'GridItem',
   overridesResolver: (_, styles) => [styles.gridItem]
+})(() => ({}));
+
+const IntroText = styled(ContentModule, {
+  name: 'Section',
+  slot: 'IntroText',
+  overridesResolver: (_, styles) => [styles.introText]
 })(() => ({}));
 
 export default Section;

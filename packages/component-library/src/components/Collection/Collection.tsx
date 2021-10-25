@@ -4,7 +4,7 @@ import { Breakpoint } from '@mui/material';
 import styled from '@mui/system/styled';
 import omit from 'lodash/omit';
 import ErrorBoundary from '../ErrorBoundary';
-import Text from '../Text';
+import ContentModule from '../ContentModule';
 // import { LinkProps } from '../Link/Link';
 import { MediaProps } from '../Media';
 import { TextProps } from '../Text';
@@ -50,8 +50,7 @@ export const Collection = ({
             <ContentContainer data-testid="Collection-contentContainer" maxWidth={itemsWidth}>
               {children}
             </ContentContainer>
-          )}
-        >
+          )}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
           )}
@@ -82,7 +81,7 @@ const ContentContainer = styled(Container, {
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>``;
 
-const IntroText = styled(Text, {
+const IntroText = styled(ContentModule, {
   name: 'Collection',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
