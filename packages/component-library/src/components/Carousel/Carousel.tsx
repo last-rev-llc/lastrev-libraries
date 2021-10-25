@@ -39,7 +39,7 @@ export const Carousel = ({ variant, title, body, items, itemsVariant, theme }: C
           </Typography>
         ) : null}
         {body ? <Text body={body} data-testid="Carousel-body" /> : null}
-        <Grid container spacing={2} alignItems="center">
+        <Grid container spacing={2} alignItems="center" data-testid="Carousel-items">
           {items?.map((item, idx) => {
             return (
               <Grid
