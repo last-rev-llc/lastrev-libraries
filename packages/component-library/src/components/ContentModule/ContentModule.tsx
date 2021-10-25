@@ -70,7 +70,6 @@ function ContentModule({ __typename, ...fields }: Props) {
       : __typename;
   const Main = React.useMemo(() => contentMapping[contentType], [contentType, __typename, fields?.variant]);
   const providers = React.useMemo(() => getProviders(fields, contextTheme), [fields, contextTheme]);
-  Main.displayName = `Content_${contentType}`;
   if (!Main) {
     // eslint-disable-next-line no-console
     console.info(
@@ -79,6 +78,7 @@ function ContentModule({ __typename, ...fields }: Props) {
     return null;
   }
 
+  Main.displayName = `Content_${contentType}`;
   return (
     <ContextComposer contexts={providers}>
       <Main {...fields} />
