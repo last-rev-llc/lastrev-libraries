@@ -26,6 +26,7 @@
   "license": "ISC",
   "dependencies": {
     "@last-rev/timer": "^0.1.1",
+    "aws-sdk": "^2.1012.0",
     "contentful": "^8.4.2",
     "fs-extra": "^10.0.0",
     "ioredis": "^4.27.9",

@@ -1,6 +1,7 @@
 import { PathData, PathDataMap } from 'packages/types';
 import { join } from 'path';
 import { ensureDir, readFile, writeFile } from 'fs-extra';
+import AWS from 'aws-sdk';
 import logger from 'loglevel';
 import Redis from 'ioredis';
 import { mapValues } from 'lodash';
@@ -88,10 +89,75 @@ export class RedisPathStore implements PathStore {
   };
 }
 
+export class DynamoDbPathStore implements PathStore {
+  dynamoDB: AWS.DynamoDB.DocumentClient;
+  tableName: string;
+  pk: string;
+
+  constructor(config: LastRevAppConfig) {
+    AWS.config.update({
+      region: config.dynamodb.region,
+      accessKeyId: config.dynamodb.accessKeyId,
+      secretAccessKey: config.dynamodb.secretAccessKey
+    });
+
+    this.tableName = config.dynamodb.tableName;
+    this.pk = `${config.contentful.spaceId}:${config.contentful.env}:${
+      config.contentful.usePreview ? 'preview' : 'production'
+    }`;
+
+    this.dynamoDB = new AWS.DynamoDB.DocumentClient({
+      region: config.dynamodb.region
+    });
+  }
+
+  sk(site: string) {
+    return `path_data:${site}`;
+  }
+
+  load = async (site: string) => {
+    try {
+      const { Item } = await this.dynamoDB
+        .get({
+          TableName: this.tableName,
+          Key: {
+            pk: this.pk,
+            sk: this.sk(site)
+          },
+          AttributesToGet: ['data']
+        })
+        .promise();
+      return Item?.data as PathDataMap;
+    } catch (e) {
+      logger.info(`No path data found in dynamodb`);
+      return {};
+    }
+  };
+
+  save = async (pathDataMap: PathDataMap, site: string) => {
+    if (Object.keys(pathDataMap).length === 0) {
+      return;
+    }
+    await this.dynamoDB
+      .put({
+        TableName: this.tableName,
+        Item: {
+          pk: this.pk,
+          sk: this.sk(site),
+          data: pathDataMap
+        }
+      })
+      .promise();
+  };
+}
+
 export const createPathStore = (config: LastRevAppConfig) => {
-  if (config.strategy === 'redis') {
-    return new RedisPathStore(config);
-  } else {
-    return new FsPathStore(config);
+  switch (config.strategy) {
+    case 'redis':
+      return new RedisPathStore(config);
+    case 'dynamodb':
+      return new DynamoDbPathStore(config);
+    case 'fs':
+      return new FsPathStore(config);
   }
 };

@@ -58,6 +58,19 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       if (!this.config.redis?.port) {
         throw new Error(`Redis strategy: redis.port is required`);
       }
+    } else if (this.config.strategy === 'dynamodb') {
+      if (!this.config.dynamodb?.region) {
+        throw new Error(`DynamoDB strategy: dynamodb.region is required`);
+      }
+      if (!this.config.dynamodb?.accessKeyId) {
+        throw new Error(`DynamoDB strategy: dynamodb.accessKeyId is required`);
+      }
+      if (!this.config.dynamodb?.secretAccessKey) {
+        throw new Error(`DynamoDB strategy: dynamodb.secretAccessKey is required`);
+      }
+      if (!this.config.dynamodb?.tableName) {
+        throw new Error(`DynamoDB strategy: dynamodb.tableName is required`);
+      }
     } else {
       throw new Error(`Invalid strategy: ${this.config.strategy}`);
     }
@@ -102,6 +115,15 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       password: this.config.redis?.password,
       tls: this.config.redis?.tls,
       db: this.config.redis?.db
+    };
+  }
+
+  get dynamodb() {
+    return {
+      region: this.config.dynamodb?.region!,
+      accessKeyId: this.config.dynamodb?.accessKeyId!,
+      secretAccessKey: this.config.dynamodb?.secretAccessKey!,
+      tableName: this.config.dynamodb?.tableName!
     };
   }
 
