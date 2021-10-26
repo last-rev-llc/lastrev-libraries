@@ -75,7 +75,6 @@ describe('Accordion', () => {
 
       cy.get('[role=button]').click();
       cy.get('[data-testid=Accordion-body]').should('not.be.visible');
-      cy.percySnapshot();
     });
   });
 });
