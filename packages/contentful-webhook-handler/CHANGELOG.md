@@ -1,5 +1,15 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.1.8
+
+### Patch Changes
+
+- 0921992: Update PathUtil and Contentful Webhook handlers to use Dynamodb strategy
+- Updated dependencies [0921992]
+- Updated dependencies [0921992]
+  - @last-rev/contentful-path-util@0.1.5
+  - @last-rev/graphql-contentful-helpers@0.1.4
+
 ## 0.1.7
 
 ### Patch Changes

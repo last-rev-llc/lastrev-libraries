@@ -1,5 +1,15 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.1.4
+
+### Patch Changes
+
+- 0921992: Added Dynamodb loaders to graphwl-contentful-helpers
+- Updated dependencies [0921992]
+- Updated dependencies [0921992]
+  - @last-rev/app-config@0.1.3
+  - @last-rev/types@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes
