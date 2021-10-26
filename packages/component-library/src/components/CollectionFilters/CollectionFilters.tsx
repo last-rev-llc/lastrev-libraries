@@ -73,14 +73,10 @@ const CollectionFilters = ({
                   name={id}
                   fullWidth
                   margin="normal"
-                  label={label || id}
+                  label={`Select a ${label || id}`}
                   value={filter[id] ?? ''}
                   SelectProps={{ MenuProps: { disableScrollLock: true } }}
-                  onChange={handleChange(id)}
-                >
-                  <MenuItem value={-1} disabled>
-                    Select a {label?.toLocaleLowerCase()}
-                  </MenuItem>
+                  onChange={handleChange(id)}>
                   {allOptions
                     ? allOptions[id]?.map(({ label, value }) => (
                         <MenuItem key={label} value={value ?? ''}>
@@ -116,8 +112,7 @@ const CollectionFilters = ({
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      placeholder={`Select a ${label}`}
-                      label={label || id}
+                      label={`Select ${label || id}s`}
                       name={id}
                       fullWidth
                       margin="normal"
@@ -143,8 +138,7 @@ const CollectionFilters = ({
           onClick={() => {
             setFilter({});
             if (onClearFilter) onClearFilter();
-          }}
-        >
+          }}>
           Clear
         </Button>
       </Grid>
