@@ -1,5 +1,12 @@
 # @last-rev/app-config
 
+## 0.1.3
+
+### Patch Changes
+
+- 0921992: Update PathUtil and Contentful Webhook handlers to use Dynamodb strategy
+- 0921992: Updated app-config to allow for dynamodb strategy
+
 ## 0.1.2
 
 ### Patch Changes

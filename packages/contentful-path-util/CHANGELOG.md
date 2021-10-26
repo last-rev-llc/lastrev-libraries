@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.5
+
+### Patch Changes
+
+- 0921992: Update PathUtil and Contentful Webhook handlers to use Dynamodb strategy
+
 ## 0.1.4
 
 ### Patch Changes
