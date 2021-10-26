@@ -50,14 +50,13 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
                 <ContentModule {...collection} variant={'navigation-bar'} onRequestClose={handleClose} />
               </React.Fragment>
             ))}
-            <Hidden implementation="css" smUp>
+            <Hidden implementation="css" lgUp>
               <IconButton
                 edge="end"
                 color="secondary"
                 aria-label="menu"
                 onClick={() => setMenuVisible(!menuVisible)}
-                size="large"
-              >
+                size="large">
                 {menuVisible ? <CloseIcon /> : <MenuIcon />}
               </IconButton>
             </Hidden>
@@ -86,8 +85,20 @@ const Root = styled(AppBar, {
       height: 100%;
       background: ${theme.palette.background.paper};
     }
+    @media (max-width: ${theme.breakpoints.values.xl}px) {
+      .MuiToolbar-root {
+       padding-left: 40px;
+       padding-right: 40px;
+     }
+     .MuiGrid-container {
+       flex-wrap: inherit;
+     }
+     img {
+      max-height: 40px;
+     }
+   }
     
-    @media (max-width: ${theme.breakpoints.values.sm}px) {
+    @media (max-width: ${theme.breakpoints.values.lg}px) {
       [class$='NavigationBar-root'] {
         position: fixed;
         top: ${theme.components?.Header?.height}px;
