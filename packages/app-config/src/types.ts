@@ -1,15 +1,22 @@
 import { Extensions } from '@last-rev/types';
 import { LogLevelDesc } from 'loglevel';
 
+export type LastRevStrategy = 'fs' | 'redis' | 'dynamodb';
 export interface LastRevAppConfiguration {
   cms: 'Contentful';
-  strategy: 'fs' | 'redis';
+  strategy: LastRevStrategy;
   redis: {
     host: string;
     port: number;
     password?: string;
     tls?: any;
     db?: number;
+  };
+  dynamodb: {
+    region: string;
+    accessKeyId: string;
+    secretAccessKey: string;
+    tableName: string;
   };
   fs: {
     contentDir: string;
@@ -33,13 +40,19 @@ export interface LastRevAppConfiguration {
 
 export type LastRevAppConfigArgs = {
   cms?: 'Contentful';
-  strategy?: 'fs' | 'redis';
+  strategy?: LastRevStrategy;
   redis?: {
     host?: string;
     port?: number;
     password?: string;
     tls?: any;
     db?: number;
+  };
+  dynamodb?: {
+    region?: string;
+    accessKeyId?: string;
+    secretAccessKey?: string;
+    tableName?: string;
   };
   fs?: {
     contentDir?: string;

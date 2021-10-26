@@ -98,9 +98,9 @@ export interface iPathNode {
 
 export type PathNodeVisitor = (node: iPathNode) => void;
 export interface iPathTree {
-  // root: iPathNode;
-  // locateNodeByPath: Map<string, iPathNode>;
-  // locateNodesById: Map<string, iPathNode[]>;
+  root: iPathNode;
+  locateNodeByPath: Map<string, iPathNode>;
+  locateNodesById: Map<string, iPathNode[]>;
   appendNewNode: (data: PathData) => void;
   getNodesById: (contentId: string) => iPathNode[];
   getNodeByPath: (path: string) => iPathNode | undefined;
