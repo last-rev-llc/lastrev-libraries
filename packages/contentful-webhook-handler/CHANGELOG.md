@@ -1,5 +1,13 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.1.9
+
+### Patch Changes
+
+- 5715727: Fixed a bug in dynamodb loader, removed AttributesToGet
+- Updated dependencies [5715727]
+  - @last-rev/contentful-path-util@0.1.6
+
 ## 0.1.8
 
 ### Patch Changes
