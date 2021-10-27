@@ -37,7 +37,13 @@ export const CollectionCarousel = ({
       spaceBetween: 0,
       breakpoints: {
         //windows larger than...
-        640: {
+        684: {
+          slidesPerView: 2
+        },
+        768: {
+          slidesPerView: 3
+        },
+        1024: {
           slidesPerView: 4
         }
       }
