@@ -3,12 +3,14 @@ import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import styled from '@mui/system/styled';
+import { useMediaQuery } from '@mui/material';
+import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
 import Link, { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
-import { useMediaQuery, useTheme } from '@mui/material';
+
 // type NavigationItem = LinkProps | NavigationItemProps;
 
 // export type NavigationItemProps = {
@@ -23,7 +25,8 @@ export interface NavigationItemProps extends LinkProps {
 export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, ...props }: NavigationItemProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
+  const isMobile = useMediaQuery(theme.breakpoints.down(menuBreakpoint));
 
   const handleClick = (evt: any) => {
     if (isMobile) {
@@ -45,10 +48,10 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
 
   return (
     <ErrorBoundary>
-      <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem">
+      <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem" menuBreakpoint={menuBreakpoint}>
         <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
         {subNavigation?.length ? (
-          <MenuRoot>
+          <MenuRoot menuBreakpoint={menuBreakpoint}>
             {subNavigation?.map((item) => (
               <MenuItem key={item.id}>
                 <ContentModule
@@ -76,14 +79,14 @@ const Root = styled(Box, {
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string; open: boolean }>`
-  ${({ open, theme }) => `
-    @media (max-width: ${theme.breakpoints.values.sm}px) {
+})<{ variant?: string; open: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
+  ${({ open, theme, menuBreakpoint }) => `
+    @media (max-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
       [class$=NavigationItem-menuRoot] {
         ${visibleStyles(open)}
       }
     }
-    @media (min-width: ${theme.breakpoints.values.sm}px) {
+    @media (min-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
       [class$=NavigationItem-menuRoot] {
         max-height: 0px;
       }
@@ -102,8 +105,8 @@ const MenuRoot = styled(Paper, {
   slot: 'MenuRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.menuRoot]
-})<{ variant?: string }>`
-  ${({ theme }) => `
+})<{ variant?: string; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
+  ${({ theme, menuBreakpoint }) => `
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -111,7 +114,7 @@ const MenuRoot = styled(Paper, {
     background: rgb(242 242 242);
 
     // Desktop
-    @media (min-width: ${theme.breakpoints.values.sm}px) {
+    @media (min-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
       box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 10px -10px 0px rgb(0 0 0 / 12%);
       position: absolute;
       right: 0;
@@ -126,7 +129,7 @@ const MenuRoot = styled(Paper, {
     }
 
     // Mobile
-    @media (max-width: ${theme.breakpoints.values.sm}px) {
+    @media (max-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
       width: 100%;
       && { // Needed to override Paper styles
        box-shadow: inset 0 0 16px -8px rgb(0 0 0 / 30%)
