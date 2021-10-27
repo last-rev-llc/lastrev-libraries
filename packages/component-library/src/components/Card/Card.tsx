@@ -1,11 +1,13 @@
 import React from 'react';
 import {
+  Box,
   Card as MuiCard,
   CardProps as MuiCardProps,
   CardMedia,
   CardActions,
   CardContent,
-  Typography
+  Typography,
+  Chip
 } from '@mui/material';
 import styled from '@mui/system/styled';
 import Skeleton from '@mui/material/Skeleton';
@@ -26,6 +28,7 @@ export interface CardProps extends MuiCardProps {
   body?: RichText;
   link?: LinkProps;
   actions?: LinkProps[];
+  tags?: LinkProps[];
   sidekickLookup: any;
 }
 
@@ -37,6 +40,7 @@ export const Card = ({
   subtitle,
   body,
   link,
+  tags,
   actions,
   variant,
   loading,
@@ -66,6 +70,14 @@ export const Card = ({
             )}
           </CardMedia>
         ) : null}
+        {tags?.length ? (
+          <CardTags>
+            {tags?.map((tag) => (
+              <CardTag {...tag} />
+            ))}
+          </CardTags>
+        ) : null}
+
         {!loading && (title || subtitle || body || actions) ? (
           <CardContent>
             {title ? (
@@ -78,8 +90,7 @@ export const Card = ({
                 {...sidekick(sidekickLookup?.subtitle)}
                 variant="h4"
                 component="h4"
-                data-testid="Card-subtitle"
-              >
+                data-testid="Card-subtitle">
                 {subtitle}
               </Typography>
             ) : null}
@@ -116,6 +127,17 @@ export const Card = ({
   );
 };
 
+const CardTag = ({ href, text }: LinkProps) =>
+  !href || href === '#' ? (
+    <Chip label={text} />
+  ) : (
+    <CardTagRoot href={href}>
+      <Chip label={text} clickable />
+    </CardTagRoot>
+  );
+
+const CardTagRoot = styled(Link, { name: 'Card', slot: 'TagRoot' })``;
+
 const Root = styled(MuiCard, {
   name: 'Card',
   slot: 'Root',
@@ -123,6 +145,17 @@ const Root = styled(MuiCard, {
   overridesResolver: (_, styles) => [styles.root]
 })<MuiCardProps & {}>`
   position: relative;
+`;
+const CardTags = styled(Box, {
+  name: 'Card',
+  slot: 'Tags',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.cardTags]
+})<{}>`
+  width: 100%;
+  display: flex;
+  gap: ${({ theme }) => theme.spacing(1)};
+  padding: ${({ theme }) => theme.spacing(2)};
 `;
 
 const CardLink = styled(Link, {

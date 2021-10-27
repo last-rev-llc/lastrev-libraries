@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Card from './Card';
-import mockContent from './Card.mock';
+import mockContent, { cardWithTags } from './Card.mock';
 
 export default {
   title: '1. Primitives / MUI / Card',
@@ -49,3 +49,6 @@ export default {
 const Template = (args: JSX.IntrinsicAttributes) => <Card __typename={''} sidekickLookup={undefined} {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mockContent };
+
+export const WithTags = Template.bind({});
+WithTags.args = { ...cardWithTags };
