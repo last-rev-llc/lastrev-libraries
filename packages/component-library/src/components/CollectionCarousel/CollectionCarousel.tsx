@@ -40,10 +40,10 @@ export const CollectionCarousel = ({
         684: {
           slidesPerView: 2
         },
-        768: {
+        1024: {
           slidesPerView: 3
         },
-        1024: {
+        1440: {
           slidesPerView: 4
         }
       }
