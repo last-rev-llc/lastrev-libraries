@@ -50,7 +50,8 @@ export const Collection = ({
             <ContentContainer data-testid="Collection-contentContainer" maxWidth={itemsWidth}>
               {children}
             </ContentContainer>
-          )}>
+          )}
+        >
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
           )}
