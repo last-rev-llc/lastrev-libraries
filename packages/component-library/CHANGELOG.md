@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.15
+
+### Patch Changes
+
+- 1bd5970: upgraded responsiveness to collection carousel
+
 ## 0.2.14
 
 ### Patch Changes
