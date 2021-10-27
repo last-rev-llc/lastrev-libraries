@@ -150,7 +150,6 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
             ':pk': pk(key.preview),
             ':type': key.id
           },
-          AttributesToGet: ['data'],
           IndexName: 'pkTypeIndex'
         }
       });
