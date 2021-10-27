@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.7
+
+### Patch Changes
+
+- ddc72f4: Add Media link href resolver
+
 ## 0.0.6
 
 ### Patch Changes
