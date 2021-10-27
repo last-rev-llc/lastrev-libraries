@@ -8,8 +8,9 @@ import mockContent from './Collection.mock';
 // beforeAll(async () => {
 //   await preloadAll();
 // });
+const mockedContent = mockContent();
 
-const renderComponent = () => render(<Collection {...mockContent()} />);
+const renderComponent = () => render(<Collection {...mockedContent} />);
 
 describe('<Collection />', () => {
   test('Collection renders correctly', () => {

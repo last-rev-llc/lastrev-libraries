@@ -50,7 +50,7 @@ export const Card = ({
   return (
     <ErrorBoundary>
       <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)} {...(props as any)}>
-        {!!link ? <CardLink noLinkStyle href={link?.href} /> : null}
+        {!!link ? <CardLink __typename="Link" noLinkStyle href={link?.href} /> : null}
         {media || loading ? (
           <CardMedia sx={{ display: 'flex', justifyContent: 'center' }}>
             {!loading ? (

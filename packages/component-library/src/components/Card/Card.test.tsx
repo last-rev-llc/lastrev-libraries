@@ -24,17 +24,17 @@ describe('<Card />', () => {
 
   test('Card renders title properly', () => {
     const { getByTestId } = renderComponent(mockedContent);
-    expect(getByTestId('Card-title')).toHaveTextContent(mockedContent.title);
+    expect(getByTestId('Card-title')).toHaveTextContent(mockedContent.title || '');
   });
 
   test('Card renders subtitle properly', () => {
     const { getByTestId } = renderComponent(mockedContent);
-    expect(getByTestId('Card-subtitle')).toHaveTextContent(mockedContent.subtitle);
+    expect(getByTestId('Card-subtitle')).toHaveTextContent(mockedContent.subtitle || '');
   });
 
   test('Card renders media properly', () => {
     const { getByTestId } = renderComponent(mockedContent);
-    const media = Array.isArray(mockedContent.media) ? mockedContent[0] : mockedContent.media;
+    const media = Array.isArray(mockedContent.media) ? mockedContent.media[0] : mockedContent.media;
     expect(getByTestId('Card-media')).toHaveAttribute('src', media?.file.url);
     expect(getByTestId('Card-media')).toHaveAttribute('alt', media?.title);
   });
