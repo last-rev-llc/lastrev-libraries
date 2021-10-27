@@ -8,6 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Hidden from '@mui/material/Hidden';
 import styled from '@mui/system/styled';
+import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
@@ -29,6 +30,8 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
     disableHysteresis: true,
     threshold: 0
   });
+  const theme = useTheme();
+  const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
   const [menuVisible, setMenuVisible] = React.useState(false);
   const handleClose = () => {
     console.log('HANDLECLOSE');
@@ -37,7 +40,12 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
   return (
     <ErrorBoundary>
       <>
-        <Root {...sidekick(sidekickLookup)} variant={variant} elevation={trigger ? 4 : 0} menuVisible={menuVisible}>
+        <Root
+          {...sidekick(sidekickLookup)}
+          variant={variant}
+          elevation={trigger ? 4 : 0}
+          menuVisible={menuVisible}
+          menuBreakpoint={menuBreakpoint}>
           <ContentContainer>
             {logo ? (
               <Link href={logoUrl} sx={{ height: '100%', py: 3 }} {...sidekick(sidekickLookup?.logo)}>
@@ -50,7 +58,7 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
                 <ContentModule {...collection} variant={'navigation-bar'} onRequestClose={handleClose} />
               </React.Fragment>
             ))}
-            <Hidden implementation="css" lgUp>
+            <Hidden implementation="css" {...{ [`${menuBreakpoint}Up`]: true }}>
               <IconButton
                 edge="end"
                 color="secondary"
@@ -73,8 +81,8 @@ const Root = styled(AppBar, {
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'menuVisible',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string; menuVisible: boolean }>`
-  ${({ theme, menuVisible }) => `
+})<{ variant?: string; menuVisible: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
+  ${({ theme, menuVisible, menuBreakpoint }) => `
     &::before {
       display: block;
       content: '';
@@ -85,20 +93,8 @@ const Root = styled(AppBar, {
       height: 100%;
       background: ${theme.palette.background.paper};
     }
-    @media (max-width: ${theme.breakpoints.values.xl}px) {
-      .MuiToolbar-root {
-       padding-left: 40px;
-       padding-right: 40px;
-     }
-     .MuiGrid-container {
-       flex-wrap: inherit;
-     }
-     img {
-      max-height: 40px;
-     }
-   }
     
-    @media (max-width: ${theme.breakpoints.values.lg}px) {
+    @media (max-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
       [class$='NavigationBar-root'] {
         position: fixed;
         top: ${theme.components?.Header?.height}px;
