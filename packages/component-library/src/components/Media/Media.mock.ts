@@ -1,8 +1,7 @@
 import { lorem } from 'faker';
+import { MediaProps } from './Media';
 
-export const mediaMock = () => ({
-  id: lorem.word(),
-  __typename: 'Media',
+export const mediaMock = (): MediaProps => ({
   file: {
     url: './flower-large.jpg',
     width: '920',

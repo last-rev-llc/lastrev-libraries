@@ -1,6 +1,7 @@
 import { lorem } from 'faker';
+import { LinkProps } from './Link';
 
-export default () => ({
+export default (): LinkProps => ({
   id: lorem.word(),
   __typename: 'Link',
   variant: 'button-contained',

@@ -48,7 +48,7 @@ export default {
 
 const Template = (args: JSX.IntrinsicAttributes) => <Card __typename={''} sidekickLookup={undefined} {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...mockContent };
+Default.args = { ...mockContent() };
 
 export const WithTags = Template.bind({});
 WithTags.args = { ...cardWithTags };

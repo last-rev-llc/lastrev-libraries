@@ -9,7 +9,7 @@ import mockContent from './Collection.mock';
 //   await preloadAll();
 // });
 
-const renderComponent = () => render(<Collection {...mockContent} />);
+const renderComponent = () => render(<Collection {...mockContent()} />);
 
 describe('<Collection />', () => {
   test('Collection renders correctly', () => {

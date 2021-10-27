@@ -12,7 +12,7 @@ describe('Collection', () => {
   });
 
   it('renders a Collection with no introText', () => {
-    mount(<Collection {...mockContent} introText={undefined} />);
+    mount(<Collection {...mockContent()} introText={undefined} />);
     cy.get('[data-testid=Collection]').should('exist');
     cy.get('[data-testid=Collection-introText]').should('not.exist');
     cy.percySnapshot();

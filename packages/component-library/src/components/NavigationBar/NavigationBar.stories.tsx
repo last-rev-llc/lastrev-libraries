@@ -44,6 +44,6 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <NavigationBar {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <NavigationBar theme={{}} sidekickLookup="" {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...NavigationBarMock };

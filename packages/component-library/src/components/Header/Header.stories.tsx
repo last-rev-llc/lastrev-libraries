@@ -1,6 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Header from './Header';
+import headerMock from './Header.mock';
 
 export default {
   title: '2. Modules / Header',
@@ -12,5 +13,6 @@ export default {
   ]
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Header {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <Header sidekickLookup={{}} {...args} />;
 export const Default = Template.bind({});
+Default.args = { ...headerMock() };

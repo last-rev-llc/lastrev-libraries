@@ -56,10 +56,10 @@ export default {
 };
 
 const Template = (args: JSX.IntrinsicAttributes) => (
-  <Collection id={''} theme={undefined} sidekickLookup={undefined} {...args} />
+  <Collection __typename="Collection" id="" theme={undefined} sidekickLookup={undefined} {...args} />
 );
 export const Default = Template.bind({});
-Default.args = { ...collectionMock };
+Default.args = { ...collectionMock() };
 
 export const WithIntroTExt = Template.bind({});
 WithIntroTExt.args = {
