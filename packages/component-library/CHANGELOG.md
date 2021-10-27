@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.16
+
+### Patch Changes
+
+- 48e0f56: standardize the collection filters
+
 ## 0.2.15
 
 ### Patch Changes
