@@ -168,17 +168,16 @@ const validateSite = async (_args: {
 };
 // TODO: Move this function to utilities
 export const createPath = (...slug: string[]) => {
-  let path = slug
-    .map((segment) => segment?.trim())
-    .join('/')
-    .replace(/\/\//g, '/');
+  let path = slug.map((segment) => segment?.trim()).join('/');
   console.log('CreatePath', { slug, path });
+
   if (path.startsWith('http://')) {
     return path.replace('http://', 'https://');
   }
   if (path.startsWith('https://')) {
     return path;
   }
+  path = path.replace(/\/\//g, '/');
   if (path != '/' && path[0] !== '/') path = '/' + path;
 
   if (path != '/' && path[path.length - 1] === '/') path = path.slice(0, -1);
