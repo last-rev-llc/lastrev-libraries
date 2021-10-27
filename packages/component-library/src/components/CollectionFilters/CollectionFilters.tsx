@@ -112,7 +112,7 @@ const CollectionFilters = ({
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label={`Select ${label || id}s`}
+                      label={`Select ${label || id}`}
                       name={id}
                       fullWidth
                       margin="normal"
