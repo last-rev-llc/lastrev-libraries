@@ -1,6 +1,7 @@
 import React from 'react';
 import { Autocomplete, Grid, Chip, MenuItem, TextField, Button } from '@mui/material';
 import styled from '@mui/system/styled';
+import capitalize from 'lodash/capitalize';
 
 interface FilterSetting {
   id: string;
@@ -73,14 +74,10 @@ const CollectionFilters = ({
                   name={id}
                   fullWidth
                   margin="normal"
-                  label={label || id}
+                  label={`Select a ${label || id}`}
                   value={filter[id] ?? ''}
                   SelectProps={{ MenuProps: { disableScrollLock: true } }}
-                  onChange={handleChange(id)}
-                >
-                  <MenuItem value={-1} disabled>
-                    Select a {label?.toLocaleLowerCase()}
-                  </MenuItem>
+                  onChange={handleChange(id)}>
                   {allOptions
                     ? allOptions[id]?.map(({ label, value }) => (
                         <MenuItem key={label} value={value ?? ''}>
@@ -109,15 +106,16 @@ const CollectionFilters = ({
                     }
                   }}
                   options={allOptions && allOptions[id]?.length ? allOptions[id] : []}
-                  getOptionLabel={(option) => option.label}
+                  getOptionLabel={(option) => capitalize(option.label)}
                   renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => <Chip label={option.label} {...getTagProps({ index })} />)
+                    tagValue.map((option, index) => (
+                      <Chip label={capitalize(option.label)} {...getTagProps({ index })} />
+                    ))
                   }
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      placeholder={`Select a ${label}`}
-                      label={label || id}
+                      label={`Select a ${label || id}`}
                       name={id}
                       fullWidth
                       margin="normal"
@@ -143,8 +141,7 @@ const CollectionFilters = ({
           onClick={() => {
             setFilter({});
             if (onClearFilter) onClearFilter();
-          }}
-        >
+          }}>
           Clear
         </Button>
       </Grid>
