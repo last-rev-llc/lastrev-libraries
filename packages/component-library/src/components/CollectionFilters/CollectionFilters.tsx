@@ -1,7 +1,6 @@
 import React from 'react';
 import { Autocomplete, Grid, Chip, MenuItem, TextField, Button } from '@mui/material';
 import styled from '@mui/system/styled';
-import capitalize from 'lodash/capitalize';
 
 interface FilterSetting {
   id: string;
@@ -106,16 +105,14 @@ const CollectionFilters = ({
                     }
                   }}
                   options={allOptions && allOptions[id]?.length ? allOptions[id] : []}
-                  getOptionLabel={(option) => capitalize(option.label)}
+                  getOptionLabel={(option) => option.label}
                   renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => (
-                      <Chip label={capitalize(option.label)} {...getTagProps({ index })} />
-                    ))
+                    tagValue.map((option, index) => <Chip label={option.label} {...getTagProps({ index })} />)
                   }
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label={`Select a ${label || id}`}
+                      label={`Select ${label || id}s`}
                       name={id}
                       fullWidth
                       margin="normal"
