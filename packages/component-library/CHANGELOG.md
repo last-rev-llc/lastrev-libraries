@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.17
+
+### Patch Changes
+
+- 8ea371d: added menubreakpoint variable to header, navbar and navitem
+
 ## 0.2.16
 
 ### Patch Changes
