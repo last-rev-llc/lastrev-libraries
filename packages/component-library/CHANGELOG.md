@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.18
+
+### Patch Changes
+
+- a62440e: Add Card tags
+
 ## 0.2.17
 
 ### Patch Changes
