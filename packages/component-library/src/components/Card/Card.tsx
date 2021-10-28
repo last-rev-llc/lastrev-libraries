@@ -132,7 +132,7 @@ const CardTag = ({ href, text }: LinkProps) =>
   !href || href === '#' ? (
     <Chip label={text} />
   ) : (
-    <CardTagRoot href={href}>
+    <CardTagRoot __typename="Link" href={href}>
       <Chip label={text} clickable />
     </CardTagRoot>
   );

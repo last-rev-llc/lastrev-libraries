@@ -24,7 +24,8 @@ export const cardWithTags = {
   media: {
     file: {
       url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
-    }
+    },
+    title: lorem.sentence()
   },
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',
