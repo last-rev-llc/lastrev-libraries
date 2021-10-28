@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.20
+
+### Patch Changes
+
+- dc5b0d2: Fix Collection styles
+
 ## 0.2.19
 
 ### Patch Changes
