@@ -5,6 +5,7 @@ import '@testing-library/jest-dom';
 import Hero, { HeroProps } from './Hero';
 import mockContent from './Hero.mock';
 import getFirstOfArray from '../../utils/getFirstOfArray';
+import define from '../../utils/define';
 
 // beforeAll(async () => {
 //   await preloadAll();
@@ -17,7 +18,7 @@ beforeEach(() => {
 });
   
 
-const renderComponent = (content) => render(<Hero id={''} __typename={''} {...content} />);
+const renderComponent = (content: HeroProps) => render(<Hero {...content} />);
 
 describe('<Hero />', () => {
   test('Hero renders correctly', () => {
@@ -32,18 +33,18 @@ describe('<Hero />', () => {
 
   test('Hero renders title properly', () => {
     const { getByTestId } = renderComponent(mockedContent);
-    expect(getByTestId('Hero-title')).toHaveTextContent(mockedContent.title);
+    expect(getByTestId('Hero-title')).toHaveTextContent(define(mockedContent.title));
   });
 
   test('Hero renders subtitle properly', () => {
     const { getByTestId } = renderComponent(mockedContent);
-    expect(getByTestId('Hero-subtitle')).toHaveTextContent(mockedContent.subtitle);
+    expect(getByTestId('Hero-subtitle')).toHaveTextContent(define(mockedContent.subtitle));
   });
 
   test('Hero renders image properly', () => {
     const { getByTestId } = renderComponent(mockedContent);
-    expect(getByTestId('Hero-image')).toHaveAttribute('src', getFirstOfArray(mockedContent.image).file.url);
-    expect(getByTestId('Hero-image')).toHaveAttribute('alt', getFirstOfArray(mockedContent.image).title);
+    expect(getByTestId('Hero-image')).toHaveAttribute('src', define(getFirstOfArray(mockedContent.image)).file.url);
+    expect(getByTestId('Hero-image')).toHaveAttribute('alt', define(getFirstOfArray(mockedContent.image)).title);
   });
 
   test('Hero renders background properly', () => {
