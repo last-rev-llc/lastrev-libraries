@@ -43,15 +43,19 @@ export const Collection = ({
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   return (
     <ErrorBoundary>
-      <Root variant={variant} data-testid="Collection" {...omit(props, 'theme')} {...sidekick(sidekickLookup)}>
+      <Root
+        variant={variant}
+        data-testid="Collection"
+        {...omit(props, 'theme')}
+        {...sidekick(sidekickLookup)}
+        sx={styles.root}>
         <ConditionalWrapper
           condition={!!itemsWidth}
           wrapper={(children) => (
             <ContentContainer data-testid="Collection-contentContainer" maxWidth={itemsWidth}>
               {children}
             </ContentContainer>
-          )}
-        >
+          )}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
           )}
@@ -61,7 +65,7 @@ export const Collection = ({
             background={background}
             variant={variant}
             contentSpacing={itemsSpacing}
-            styles={styles}
+            styles={{ ...styles, root: undefined }}
           />
         </ConditionalWrapper>
       </Root>

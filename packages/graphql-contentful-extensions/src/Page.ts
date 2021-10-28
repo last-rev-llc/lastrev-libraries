@@ -83,7 +83,7 @@ export const mappers = {
   Page: {
     Link: {
       href: 'slug',
-      text: 'internalTitle'
+      text: 'title'
     },
     Page: {
       header: headerResolver,
