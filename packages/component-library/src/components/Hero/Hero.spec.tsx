@@ -2,6 +2,7 @@ import * as React from 'react';
 import mount from '../../../cypress/mount';
 import Hero, { HeroProps } from './Hero';
 import mockContent from './Hero.mock';
+import getFirstOfArray from '../../utils/getFirstOfArray';
 
 let mockedContent: HeroProps = { __typename: 'Hero', id: 'hero', title: 'test', theme: {} };
 
@@ -24,7 +25,7 @@ describe('Hero', () => {
 
       cy.get('[data-testid=Hero-background]').should('exist').and('have.attr', 'src', mockedContent.background.file.url);
       cy.get('[data-testid=Hero-image]').should('exist')
-        .and('have.attr', 'src', (Array.isArray(mockedContent.image) ? mockedContent.image[0] : mockedContent.image).file.url);
+        .and('have.attr', 'src', getFirstOfArray(mockedContent.image).file.url);
 
       cy.contains(mockedContent.actions[0]?.text).should('exist');
       cy.percySnapshot();

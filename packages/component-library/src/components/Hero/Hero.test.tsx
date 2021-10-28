@@ -2,18 +2,26 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 // import preloadAll from 'jest-next-dynamic';
-import Hero from './Hero';
+import Hero, { HeroProps } from './Hero';
 import mockContent from './Hero.mock';
+import getFirstOfArray from '../../utils/getFirstOfArray';
 
 // beforeAll(async () => {
 //   await preloadAll();
 // });
 
-const renderComponent = () => render(<Hero id={''} __typename={''} {...mockContent} />);
+let mockedContent: HeroProps = { id: 'test-hero', __typename: 'Hero', theme: [] };
+
+beforeEach(() => {
+  mockedContent = mockContent();
+});
+  
+
+const renderComponent = (content) => render(<Hero id={''} __typename={''} {...content} />);
 
 describe('<Hero />', () => {
   test('Hero renders correctly', () => {
-    const { getByTestId } = renderComponent();
+    const { getByTestId } = renderComponent(mockedContent);
     expect(getByTestId('Hero')).toBeDefined();
   });
 
@@ -23,24 +31,24 @@ describe('<Hero />', () => {
   });
 
   test('Hero renders title properly', () => {
-    const { getByTestId } = renderComponent();
-    expect(getByTestId('Hero-title')).toHaveTextContent(mockContent.title);
+    const { getByTestId } = renderComponent(mockedContent);
+    expect(getByTestId('Hero-title')).toHaveTextContent(mockedContent.title);
   });
 
   test('Hero renders subtitle properly', () => {
-    const { getByTestId } = renderComponent();
-    expect(getByTestId('Hero-subtitle')).toHaveTextContent(mockContent.subtitle);
+    const { getByTestId } = renderComponent(mockedContent);
+    expect(getByTestId('Hero-subtitle')).toHaveTextContent(mockedContent.subtitle);
   });
 
   test('Hero renders image properly', () => {
-    const { getByTestId } = renderComponent();
-    expect(getByTestId('Hero-image')).toHaveAttribute('src', mockContent.image.file.url);
-    expect(getByTestId('Hero-image')).toHaveAttribute('alt', mockContent.image.title);
+    const { getByTestId } = renderComponent(mockedContent);
+    expect(getByTestId('Hero-image')).toHaveAttribute('src', getFirstOfArray(mockedContent.image).file.url);
+    expect(getByTestId('Hero-image')).toHaveAttribute('alt', getFirstOfArray(mockedContent.image).title);
   });
 
   test('Hero renders background properly', () => {
-    const { getByTestId } = renderComponent();
-    expect(getByTestId('Hero-background')).toHaveAttribute('src', mockContent.background?.file.url);
-    expect(getByTestId('Hero-background')).toHaveAttribute('alt', mockContent.background?.title);
+    const { getByTestId } = renderComponent(mockedContent);
+    expect(getByTestId('Hero-background')).toHaveAttribute('src', mockedContent.background?.file.url);
+    expect(getByTestId('Hero-background')).toHaveAttribute('alt', mockedContent.background?.title);
   });
 });

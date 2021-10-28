@@ -13,6 +13,8 @@ import { MediaProps } from '../Media/Media.types';
 import Text, { RichText } from '../Text';
 import { Breakpoint } from '@mui/material';
 import sidekick from '../../utils/sidekick';
+import getFirstOfArray from '../../utils/getFirstOfArray';
+
 export interface HeroProps {
   id: string;
   __typename: string;
@@ -138,7 +140,7 @@ HeroProps) => {
             {image ? (
               <Grid item xs={12} md={6}>
                 <Media
-                  {...(Array.isArray(image) ? image[0] : image)}
+                  {...getFirstOfArray(image)}
                   {...sidekick(sidekickLookup?.image)}
                   testId="Hero-image"
                   priority
