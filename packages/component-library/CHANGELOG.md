@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.19
+
+### Patch Changes
+
+- 0c0db78: Update Collection to use Styles
+
 ## 0.2.18
 
 ### Patch Changes

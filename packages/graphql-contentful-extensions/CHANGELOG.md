@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.8
+
+### Patch Changes
+
+- 0c0db78: Update Collection to use Styles
+
 ## 0.0.7
 
 ### Patch Changes
