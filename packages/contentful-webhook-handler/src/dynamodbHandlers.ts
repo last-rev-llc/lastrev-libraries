@@ -97,6 +97,8 @@ export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
     const makeRequest = async (skip: number = 0, existing: Entry<any>[] = []): Promise<Entry<any>[]> => {
       const results = await client.getEntries({
         content_type: contentTypeId,
+        locale: '*',
+        include: 0,
         skip,
         limit: 1000
       });
