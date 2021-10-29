@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.1.10
+
+### Patch Changes
+
+- 67c704f: Fixed query in dynamodb webhook handler by adding locales: '\*', include: 0
+
 ## 0.1.9
 
 ### Patch Changes
