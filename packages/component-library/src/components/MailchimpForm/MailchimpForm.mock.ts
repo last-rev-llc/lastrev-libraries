@@ -1,22 +1,22 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
+import { MailchimpFormProps } from './MailchimpForm';
 import mockTheme from '../../theme/mock.theme';
 
-export default {
+export default (): MailchimpFormProps => ({
   variant: 'default',
   // contentWidth: 'xl',
   title: capitalize(lorem.words(3)),
   subtitle: lorem.sentence(),
   image: {
-    __typename: 'Media',
+    // __typename: 'Media',
     file: {
       url: 'https://images.ctfassets.net/m1b67l45sk9z/1BOSe14Ig8b1nEpEe76UZJ/b88c975ad512e365e27b7c4d8c708467/StarPlant.svg'
     },
     alt: lorem.words(2)
   },
   body: {
-    __typename: 'Text',
-    document: {
+    json: {
       nodeType: 'document',
       data: {},
       content: [
@@ -36,8 +36,7 @@ export default {
     }
   },
   successMessage: {
-    __typename: 'Text',
-    document: {
+    json: {
       nodeType: 'document',
       data: {},
       content: [
@@ -57,5 +56,6 @@ export default {
     }
   },
   actions: [{ text: 'Join now', variant: 'button-contained' }],
-  theme: [mockTheme]
-};
+  theme: [mockTheme],
+  sidekickLookup: ''
+});

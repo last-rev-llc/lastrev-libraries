@@ -155,7 +155,7 @@ const CustomForm = ({
             pointerEvents: status === 'success' ? 'initial' : 'none'
           }}
         >
-          {successMessage ? <Text body={successMessage} /> : <Box>Success</Box>}
+          {successMessage ? <Text body={successMessage} data-testid="MailchimpForm-successMessage" /> : <Box>Success</Box>}
         </Grid>
       </FormContainer>
     </form>
@@ -175,21 +175,21 @@ export const MailchimpForm = ({
   sidekickLookup
 }: MailchimpFormProps) => (
   <ErrorBoundary>
-    <Root {...sidekick(sidekickLookup)} variant={variant}>
+    <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="MailchimpForm">
       <ContentContainer maxWidth={contentWidth}>
         <Grid container>
           <Grid item xs={9} sm={7}>
             {title ? (
-              <Typography {...sidekick(sidekickLookup?.title)} variant="h3">
+              <Typography {...sidekick(sidekickLookup?.title)} variant="h3" data-testid="MailchimpForm-title">
                 {title}
               </Typography>
             ) : null}
             {subtitle ? (
-              <Typography {...sidekick(sidekickLookup?.subtitle)} variant="h4">
+              <Typography {...sidekick(sidekickLookup?.subtitle)} variant="h4" data-testid="MailchimpForm-subtitle">
                 {subtitle}
               </Typography>
             ) : null}
-            {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} /> : null}
+            {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="MailchimpForm-body" /> : null}
           </Grid>
 
           <Grid container item sx={{ position: 'relative' }}>

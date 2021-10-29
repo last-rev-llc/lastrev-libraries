@@ -28,6 +28,6 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <MailchimpForm {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <MailchimpForm theme sidekickLookup {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...mailchimpFormMock };
+Default.args = { ...mailchimpFormMock() };
