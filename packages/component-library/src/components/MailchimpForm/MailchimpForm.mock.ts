@@ -9,7 +9,6 @@ export default (): MailchimpFormProps => ({
   title: capitalize(lorem.words(3)),
   subtitle: lorem.sentence(),
   image: {
-    // __typename: 'Media',
     file: {
       url: 'https://images.ctfassets.net/m1b67l45sk9z/1BOSe14Ig8b1nEpEe76UZJ/b88c975ad512e365e27b7c4d8c708467/StarPlant.svg'
     },
