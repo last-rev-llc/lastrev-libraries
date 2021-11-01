@@ -1,7 +1,8 @@
 import mockNavigationItem from '../NavigationItem/NavigationItem.mock';
+import { NavigationBarProps } from './NavigationBar';
 import mockTheme from '../../theme/mock.theme';
 
-export default {
+export default (): NavigationBarProps => ({
   variant: 'collection-three-per-row',
   items: [
     { ...mockNavigationItem() },
@@ -10,5 +11,6 @@ export default {
     { ...mockNavigationItem() }
   ],
   itemsVariant: 'standard-round',
-  theme: [mockTheme]
-};
+  theme: [mockTheme],
+  sidekickLookup: 'sidekick-lookup'
+});
