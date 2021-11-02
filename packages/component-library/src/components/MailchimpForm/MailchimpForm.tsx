@@ -156,8 +156,7 @@ const CustomForm = ({
             height: '100%',
             opacity: status === 'success' ? 1 : 0,
             pointerEvents: status === 'success' ? 'initial' : 'none'
-          }}
-        >
+          }}>
           {successMessage ? <Text body={successMessage} /> : <Box>Success</Box>}
         </Grid>
       </FormContainer>
@@ -241,10 +240,10 @@ const FormImage = styled(Media, {
   overridesResolver: (_, styles) => [styles.formImage]
 })<{ variant?: string }>(({ theme }) => ({
   position: 'absolute',
-  height: '125%',
+  height: '145%',
   maxWidth: '50%',
-  bottom: theme.spacing(3),
-  right: theme.spacing(3),
+  bottom: theme.spacing(2),
+  right: theme.spacing(8),
   zIndex: 0,
   objectFit: 'fill',
   [theme.breakpoints.down('lg')]: {
