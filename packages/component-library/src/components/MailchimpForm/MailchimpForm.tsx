@@ -284,6 +284,9 @@ const FormContainer = styled(Grid, {
     backgroundColor: 'white',
     border: `2px solid ${theme.palette.secondary.main}`,
     transform: 'translate(12px, -18px) scale(0.75)'
+  },
+  '& .MuiInputLabel-root': {
+    fontFamily: 'Montserrat'
   }
 }));
 
