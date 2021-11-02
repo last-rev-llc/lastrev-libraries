@@ -30,6 +30,7 @@
     "lodash": "^4.17.21",
     "react-context-composer": "^0.0.4",
     "react-hook-form": "^7.12.1",
+    "react-inlinesvg": "^2.3.0",
     "react-lazyload": "^3.2.0",
     "react-mailchimp-subscribe": "^2.1.3",
     "swiper": "^6.8.0",
@@ -37,13 +38,13 @@
     "xss": "^1.0.9"
   },
   "peerDependencies": {
-    "next": "^11.0.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "@mui/icons-material": "^5.0.0",
     "@mui/material": "^5.0.0",
     "@mui/styles": "^5.0.0",
-    "@mui/system": "^5.0.0"
+    "@mui/system": "^5.0.0",
+    "next": "^11.0.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.13",
@@ -51,6 +52,10 @@
     "@cypress/code-coverage": "^3.9.11",
     "@cypress/react": "^5.10.0",
     "@cypress/webpack-dev-server": "^1.6.0",
+    "@mui/icons-material": "^5.0.0",
+    "@mui/material": "^5.0.0",
+    "@mui/styles": "^5.0.0",
+    "@mui/system": "^5.0.0",
     "@percy/cli": "^1.0.0-beta.68",
     "@percy/cypress": "^3.1.1",
     "@percy/storybook": "^4.0.3",
@@ -83,10 +88,6 @@
     "react-dom": "^17.0.2",
     "sass": "^1.37.0",
     "sass-loader": "^10",
-    "webpack-dev-server": "^4.2.1",
-    "@mui/icons-material": "^5.0.0",
-    "@mui/material": "^5.0.0",
-    "@mui/styles": "^5.0.0",
-    "@mui/system": "^5.0.0"
+    "webpack-dev-server": "^4.2.1"
   }
 }

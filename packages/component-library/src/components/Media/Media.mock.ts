@@ -1,4 +1,4 @@
-import { lorem, name } from 'faker';
+import { lorem } from 'faker';
 
 export const mediaMock = {
   __typename: 'Media',
@@ -31,6 +31,19 @@ export const responsiveMediaMock = {
     width: '540',
     height: '540'
   },
+  title: lorem.sentence(),
+  description: lorem.sentence()
+};
+
+export const SVGMediaMock = {
+  __typename: 'Media',
+  file: {
+    // url: flowerLarge,
+    url: './logo.svg',
+    width: '1728px',
+    height: '1152px'
+  },
+
   title: lorem.sentence(),
   description: lorem.sentence()
 };
