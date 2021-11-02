@@ -10,8 +10,8 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development rollup -cw",
     "build": "cross-env NODE_ENV=production rollup -c",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
+    "storybook": "start-storybook -p 6006 -s public",
+    "build-storybook": "build-storybook -s public",
     "cypress:open": "percy exec -- cypress open-ct",
     "test": "jest",
     "percy:storybook": "percy storybook ./storybook-static || true",
