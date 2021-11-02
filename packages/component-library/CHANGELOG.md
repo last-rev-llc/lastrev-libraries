@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.21
+
+### Patch Changes
+
+- c18b642: Add Media responsive support
+
 ## 0.2.20
 
 ### Patch Changes
