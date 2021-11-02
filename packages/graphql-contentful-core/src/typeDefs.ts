@@ -50,6 +50,7 @@ const baseDefs = gql`
     page(path: String!, locale: String, preview: Boolean, site: String): Content
     paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
     content(id: String!, locale: String, preview: Boolean): Content
+    sitemap(root: String!, locales: [String!], preview: Boolean, site: String): Sitemap
   }
 
   type PagePathParam {
@@ -66,6 +67,22 @@ const baseDefs = gql`
     theme: [Theme]
     animation: JSON
     sidekickLookup: JSON
+  }
+
+  type SitemapEntry {
+    loc: String
+    lastmod: String
+  }
+
+  type SitemapPage {
+    entries: [SitemapEntry]
+    loc: String
+    lastmod: String
+    filename: String
+  }
+
+  type Sitemap {
+    pages: [SitemapPage]
   }
 `;
 

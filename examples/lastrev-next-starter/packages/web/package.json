@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export && yarn build:post",
-    "build:post": "rm -rf out/404 && cp out/en-US/index.html out/index.html && cp -R out/en-US/* out/",
+    "build:post": "yarn gen:sitemap && rm -rf out/404 && cp out/en-US/index.html out/index.html && cp -R out/en-US/* out/",
+    "gen:sitemap": "node scripts/generate-sitemap.js",
     "lint": "next lint",
     "serve": "serve out"
   },
@@ -16,6 +17,7 @@
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.3.0",
     "@last-rev/component-library": "^0.2.8",
+    "@last-rev/sitemap-generator": "^0.1.0",
     "@lrns/components": "0.0.1",
     "@lrns/graphql-sdk": "^0.1.0",
     "@lrns/utils": "^0.1.0",
