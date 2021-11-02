@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Media from './Media';
-import { mediaMock } from './Media.mock';
+import { mediaMock, responsiveMediaMock, SVGMediaMock } from './Media.mock';
 
 export default {
   title: '1. Primitives / LR / Media',
@@ -11,16 +11,16 @@ export default {
       <Box
         m={5}
         sx={{
-          'width': 180,
-          'height': 180,
+          'width': '100%',
+          'height': 600,
           'padding': 5,
           'backgroundColor': '#369',
-          '& img': {
+          '> *': {
+            objectFit: 'cover',
             width: '100%',
             height: '100%'
           }
-        }}
-      >
+        }}>
         {storyFn()}
       </Box>
     )
@@ -29,9 +29,6 @@ export default {
     file: { name: 'File URL' },
     title: { name: 'Title' },
     description: { name: 'Description' },
-    desktop: { name: 'Desktop' },
-    tablet: { name: 'Tablet' },
-    mobile: { name: 'Mobile' },
     __typename: { table: { disable: true } },
     sidekickLookup: { table: { disable: true } }
   }
@@ -40,3 +37,9 @@ export default {
 const Template = (args: JSX.IntrinsicAttributes) => <Media {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mediaMock };
+
+export const SVG = Template.bind({});
+SVG.args = { ...SVGMediaMock };
+
+export const Responsive = Template.bind({});
+Responsive.args = { ...responsiveMediaMock };

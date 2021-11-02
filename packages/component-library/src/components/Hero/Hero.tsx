@@ -63,8 +63,7 @@ HeroProps) => {
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined,
           py: 4
-        }}
-      >
+        }}>
         {background ? (
           <Box
             sx={{
@@ -74,12 +73,12 @@ HeroProps) => {
               left: 0,
               width: '100%',
               height: '100%'
-            }}
-          >
+            }}>
             <Media
               testId="Hero-background"
               {...background}
               {...sidekick(sidekickLookup?.background)}
+              priority
               sx={{ objectFit: 'cover', width: '100%', height: '100%' }}
             />
           </Box>
@@ -95,8 +94,7 @@ HeroProps) => {
                       variant="h1"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.title)}
-                    >
+                      {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
                   ) : null}
@@ -106,8 +104,7 @@ HeroProps) => {
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
                       sx={{ color: !title ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.subtitle)}
-                    >
+                      {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>
                   ) : null}
@@ -128,6 +125,7 @@ HeroProps) => {
                   {...(Array.isArray(image) ? image[0] : image)}
                   {...sidekick(sidekickLookup?.image)}
                   testId="Hero-image"
+                  priority
                 />
               </Grid>
             ) : null}

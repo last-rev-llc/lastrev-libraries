@@ -22,10 +22,14 @@ interface GetImgSrcTag {
 const getRatio = ({ width, numColumns }: GetRatioParams): number => (width > 768 ? numColumns / 12 : numColumns / 6);
 export const getOptimizedUrl = ({ url, width }: { url: string; width: number }) => {
   let fetchUrl = `${url}`;
-  if (width) {
-    fetchUrl = `${fetchUrl}?width=${Math.round(width)}`;
+  if (width && fetchUrl?.includes('ctfassets')) {
+    fetchUrl = fetchUrl?.includes('?') ? `${fetchUrl}&w=${Math.round(width)}` : `${fetchUrl}?w=${Math.round(width)}`;
+  } else {
+    fetchUrl = fetchUrl?.includes('?')
+      ? `${fetchUrl}&width=${Math.round(width)}`
+      : `${fetchUrl}?width=${Math.round(width)}`;
   }
-  return url;
+  return fetchUrl;
 };
 
 const getImgSrcTag = ({ src, numColumns = 12, returnAttrsType = 'str' }: GetImgSrcParams): GetImgSrcTag | string => {
@@ -57,8 +61,8 @@ const getImgSrcTag = ({ src, numColumns = 12, returnAttrsType = 'str' }: GetImgS
 
   // NOTE: Commented out, but do we need?
   // attrs.src = `${{ url: src, width: sizes[sizes.length - 1], settings }}`;
-  attrs.srcSet = srcSets.join(',');
-  attrs.sizes = `${attrSizes.join(',')}`;
+  attrs.srcSet = srcSets.join(', ');
+  attrs.sizes = `${attrSizes.join(', ')}`;
 
   if (returnAttrsType === 'Obj') return attrs;
   if (returnAttrsType === 'src') return attrs.src;

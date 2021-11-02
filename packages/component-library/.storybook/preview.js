@@ -9,8 +9,21 @@ faker.seed(123);
 
 import '../src/styles.scss';
 
-import * as components from '../src';
+import * as NextHead from 'next/head';
 
+Object.defineProperty(NextHead, 'default', {
+  value: (props) => props.children
+});
+
+import * as NextImage from 'next/image';
+const OriginalNextImage = NextImage.default;
+
+Object.defineProperty(NextImage, 'default', {
+  configurable: true,
+  value: (props) => <OriginalNextImage {...props} unoptimized />
+});
+
+import * as components from '../src';
 const StorybookWrapper = (storyFn) => {
   return (
     <StyledEngineProvider injectFirst>

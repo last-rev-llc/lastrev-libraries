@@ -1,4 +1,5 @@
 import React from 'react';
+import { responsiveMediaMock } from '../Media/Media.mock';
 import Hero from './Hero';
 import heroMock from './Hero.mock';
 
@@ -68,4 +69,13 @@ BackgroundImage.args = {
   backgroundColor: null,
   contentHeight: 'xl',
   contentWidth: 'xl'
+};
+
+export const ResponsiveBackgroundImage = Template.bind({});
+ResponsiveBackgroundImage.args = {
+  ...heroMock,
+  backgroundColor: null,
+  contentHeight: 'xl',
+  contentWidth: 'xl',
+  background: responsiveMediaMock
 };
