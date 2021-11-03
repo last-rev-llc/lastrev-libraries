@@ -1,5 +1,14 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.28
+
+### Patch Changes
+
+- 66416e7: 'Added sitemap generation in graphql layer and a generator script for client use'
+- Updated dependencies [66416e7]
+  - @last-rev/contentful-path-util@0.1.7
+  - @last-rev/types@0.1.5
+
 ## 0.1.27
 
 ### Patch Changes
