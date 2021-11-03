@@ -1,23 +1,65 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
 import NavigationBar, { NavigationBarProps } from './NavigationBar';
-import mockContent from './NavigationBar.mock';
+import NavigationItem, { NavigationItemProps } from '../NavigationItem/NavigationItem';
+import mockContent, { mockWithNavigationItems } from './NavigationBar.mock';
 
 let mockedContent: NavigationBarProps = { theme: {}, sidekickLookup: '' };
+let mockedContentWithNavigationItems: NavigationBarProps = { theme: {}, sidekickLookup: '' };
 
 beforeEach(() => {
   mockedContent = { ...mockContent() };
+  mockedContentWithNavigationItems = { ...mockWithNavigationItems() };
 });
 
 describe('NavigationBar', () => {
   context('renders correctly', () => {
-    it('renders a NavigationBar', () => {
-      mount(<NavigationBar {...mockedContent} />);
-      cy.get('[data-testid=NavigationBar]').should('exist');
-      cy.get('[data-testid=NavigationBar-title]').should('exist');
-      cy.get('[data-testid=NavigationBar-body]').should('exist');
-      cy.get('[data-testid=NavigationBar-items]').should('exist');
-      cy.percySnapshot();
+    describe('items as NavigationItems', () => {
+      it('renders a NavigationBar with correct navigation items and subnav items', () => {
+        const mainNavLinks = mockedContentWithNavigationItems.items.length;
+        const subNavLinks = mockedContentWithNavigationItems.items.map(item => item.subNavigation.length).reduce((previous, current) => previous + current, 0);
+        
+        mount(<NavigationBar {...mockedContentWithNavigationItems} />);
+        cy.get('[data-testid=NavigationBar]').should('exist');
+        cy.get('[data-testid=NavigationItem]').should('have.length', mainNavLinks);
+        cy.get('a').should('have.length', mainNavLinks + subNavLinks);
+        cy.percySnapshot();
+      });
+
+      it('renders a NavigationBar with correct navigation items ', () => {
+        mount(<NavigationBar {...mockedContentWithNavigationItems} />);
+        cy.get('[data-testid=NavigationBar]').should('exist');
+        cy.get('[data-testid=NavigationItem]').should('have.length', mockedContentWithNavigationItems.items.length);
+        cy.percySnapshot();
+      });
     });
+
+    describe('items as Links', () => {
+      it('renders a NavigationBar with correct links', () => {
+        mount(<NavigationBar {...mockedContent} />);
+        cy.get('[data-testid=NavigationBar]').should('exist');
+        cy.get('a').each((a, index) => {
+          cy.wrap(a).should('have.attr', 'href', `/${mockedContent.items[index].href}`)
+            .and('have.text', mockedContent.items[index].text);
+        })
+      });
+    });
+
+    // TODO: Figure out how to test hover/mouseover event
+    // context('functions correctly', () => {
+    //   describe('hover on NavigationItems', () => {
+    //     it('renders a NavigationBar with correct navigation items', () => {
+    //       mount(<NavigationBar {...mockedContentWithNavigationItems} />);
+    //       cy.get('[data-testid=NavigationItem]').each((navItem, index) => {
+    //         const item: NavigationItemProps = { ...mockedContentWithNavigationItems.items[index] };
+    //         cy.get('span').contains(item.subNavigation[0].text).should('not.be.visible');
+    //         // cy.wrap(navItem).trigger('mouseover', { eventConstructor: 'MouseEvent' });
+    //         // cy.wrap(navItem).trigger('mouseenter', { eventConstructor: 'MouseEvent' });
+    //         // cy.wrap(navItem).rightclick();
+    //         cy.get('span').contains(item.subNavigation[0].text).should('be.visible');
+    //       });
+    //     });
+    //   });
+    // });
   });
 });
