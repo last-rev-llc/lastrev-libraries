@@ -7,6 +7,7 @@ import fieldResolver from './fieldResolver';
 import capitalizeFirst from '../utils/capitalizeFirst';
 import { merge, mapValues } from 'lodash';
 import { ApolloContext, Mappers, TypeMappings } from '@last-rev/types';
+import buildSitemapFromEntries from '../utils/buildSitemapFromEntries';
 
 export const fieldsResolver = (type: string, fields: string[], mappers: Mappers) =>
   fields.reduce((accum: any, field: string) => {
@@ -71,6 +72,17 @@ const createResolvers = ({
         ctx.locale = locale || ctx.defaultLocale;
         // not locale specific. fieldsResolver handles that
         return ctx.loaders.entryLoader.load({ id, preview });
+      },
+      sitemap: async (
+        _: any,
+        { root, locales, preview = false, site }: { root: string; locales: string[]; preview?: boolean; site?: string },
+        ctx: ApolloContext
+      ) => {
+        if (!ctx.pathReaders) return null;
+        const pathReader = ctx.pathReaders[preview ? 'preview' : 'prod'];
+        const entries = await pathReader.getSitemap(locales, site);
+        const sitemap = await buildSitemapFromEntries(root, entries, !!preview, ctx);
+        return sitemap;
       }
     },
     Media: fieldsResolver('Media', ['file', 'title', 'description'], mappers),

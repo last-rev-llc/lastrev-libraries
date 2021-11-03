@@ -110,6 +110,12 @@ export interface iPathTree {
   filter: (predicate: (node: iPathNode) => boolean) => iPathTree;
   getPathDataArray: () => PathData[];
 }
+
+export type SitemapPathEntry = {
+  locale: string;
+  contentId: string;
+  path: string;
+};
 export interface iPathReader {
   getTree: (site?: string) => Promise<iPathTree | undefined>;
   load: (site?: string) => Promise<void>;
@@ -117,10 +123,26 @@ export interface iPathReader {
   getAllPaths: (locales: string[], site?: string) => Promise<PagePathsParam[]>;
   getNodeByPath(path: string, site?: string): Promise<iPathNode | undefined>;
   getFilteredTree: (filter?: (node: iPathNode) => boolean, site?: string) => Promise<iPathTree>;
-  getSitemap: (locales: string[], defaultLocale: string, site?: string) => Promise<string[]>;
+  getSitemap: (locales: string[], site?: string) => Promise<SitemapPathEntry[]>;
 }
 
 export type PathReaders = {
   preview: iPathReader;
   prod: iPathReader;
+};
+
+export type SitemapEntry = {
+  loc: string;
+  lastmod: string;
+};
+
+export type SitemapPage = {
+  loc: string;
+  lastmod: string;
+  filename: string;
+  entries: SitemapEntry[];
+};
+
+export type Sitemap = {
+  pages: SitemapPage[];
 };

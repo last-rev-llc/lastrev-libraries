@@ -1,0 +1,12 @@
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{{#each entries}}
+  <url>
+    <loc>{{this.loc}}</loc>
+    <lastmod>{{this.lastmod}}</lastmod>
+    {{!-- <image:image>      
+      <image:loc>https://www.example.com/example-image.jpg</image:loc>
+      <image:title><![CDATA[Example image title]]></image:title>
+    </image:image> --}}
+  </url>
+{{/each}}
+</urlset>

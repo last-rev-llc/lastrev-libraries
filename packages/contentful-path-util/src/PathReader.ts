@@ -3,7 +3,7 @@ import PathTree from './PathTree';
 import { PathNode } from './PathNode';
 import { PathStore } from './PathStore';
 import { DEFAULT_SITE_KEY } from './constants';
-import { iPathReader, PagePathsParam } from 'packages/types';
+import { iPathReader, PagePathsParam, SitemapPathEntry } from 'packages/types';
 
 export default class PathReader implements iPathReader {
   trees: { [site: string]: PathTree } = {};
@@ -77,16 +77,19 @@ export default class PathReader implements iPathReader {
     return filter ? this.trees[site]!.filter(filter) : this.trees[site]!;
   }
 
-  async getSitemap(locales: string[], defaultLocale: string, site: string = DEFAULT_SITE_KEY): Promise<string[]> {
+  async getSitemap(locales: string[], site: string = DEFAULT_SITE_KEY): Promise<SitemapPathEntry[]> {
     await this.ensureLoaded(site);
-    const sitemap: string[] = [];
+    const sitemap: SitemapPathEntry[] = [];
     this.trees[site]!.bfs((node: PathNode) => {
       if (!node.data) return;
       const data = node.data!;
       each(locales, (locale) => {
-        const prefix = locale === defaultLocale ? '' : `/${locale}`;
         if (data.excludedLocales.includes(locale)) return;
-        sitemap.push(`${prefix}${data.fullPath}`);
+        sitemap.push({
+          path: data.fullPath,
+          locale,
+          contentId: data.contentId
+        });
       });
     });
     return sitemap;
