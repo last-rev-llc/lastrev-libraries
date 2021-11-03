@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.22
+
+### Patch Changes
+
+- 3f7917b: Add support for Carousel variant config
+
 ## 0.2.21
 
 ### Patch Changes
