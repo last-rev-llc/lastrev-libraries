@@ -6,10 +6,9 @@ import ErrorBoundary from '../ErrorBoundary';
 import { MediaProps } from '../Media';
 import { CardProps } from '../Card';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination, SwiperOptions } from 'swiper/core';
+import SwiperCore, { Navigation, Pagination } from 'swiper/core';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
-import merge from 'lodash/merge';
 SwiperCore.use([Navigation, Pagination]);
 
 export interface CollectionCarouselProps {
@@ -20,7 +19,7 @@ export interface CollectionCarouselProps {
   itemsWidth?: false | Breakpoint | undefined;
   theme: any;
   sidekickLookup: string;
-  carouselConfig?: { [key: string]: SwiperOptions };
+  CarouselVariantProps?: { [key: string]: Swiper };
 }
 
 export const CollectionCarousel = ({
@@ -28,37 +27,13 @@ export const CollectionCarousel = ({
   variant,
   itemsWidth,
   itemsVariant,
-  carouselConfig = {},
+  CarouselVariantProps = {},
   sidekickLookup
 }: CollectionCarouselProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
 
-  const CAROUSEL_CONFIG: { [key: string]: any } = {
-    'carousel-small': {
-      slidesPerView: 1,
-      spaceBetween: 0,
-      breakpoints: {
-        //windows larger than...
-        684: {
-          slidesPerView: 2
-        },
-        1024: {
-          slidesPerView: 3
-        },
-        1440: {
-          slidesPerView: 4
-        }
-      }
-    },
-    'carousel-large': {
-      slidesPerView: 1,
-      spaceBetween: 0,
-      cssMode: true
-    }
-  };
-
-  const config = merge({}, CAROUSEL_CONFIG[variant], carouselConfig[variant]);
+  const config = CarouselVariantProps[variant];
 
   return (
     <ErrorBoundary>
