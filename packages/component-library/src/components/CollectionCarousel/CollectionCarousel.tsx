@@ -6,9 +6,10 @@ import ErrorBoundary from '../ErrorBoundary';
 import { MediaProps } from '../Media';
 import { CardProps } from '../Card';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+import SwiperCore, { Navigation, Pagination, SwiperOptions } from 'swiper/core';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
+import merge from 'lodash/merge';
 SwiperCore.use([Navigation, Pagination]);
 
 export interface CollectionCarouselProps {
@@ -19,6 +20,7 @@ export interface CollectionCarouselProps {
   itemsWidth?: false | Breakpoint | undefined;
   theme: any;
   sidekickLookup: string;
+  carouselConfig?: { [key: string]: SwiperOptions };
 }
 
 export const CollectionCarousel = ({
@@ -26,6 +28,7 @@ export const CollectionCarousel = ({
   variant,
   itemsWidth,
   itemsVariant,
+  carouselConfig = {},
   sidekickLookup
 }: CollectionCarouselProps) => {
   if (!items?.length) return null;
@@ -55,11 +58,13 @@ export const CollectionCarousel = ({
     }
   };
 
+  const config = merge({}, CAROUSEL_CONFIG[variant], carouselConfig[variant]);
+
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionCarousel">
         <ContentContainer maxWidth={itemsWidth} disableGutters>
-          <CarouselContainer navigation pagination={{ clickable: true }} {...CAROUSEL_CONFIG[variant]} loop>
+          <CarouselContainer navigation pagination={{ clickable: true }} loop {...config}>
             {itemsWithVariant.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <CarouselItem>
