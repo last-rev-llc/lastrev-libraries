@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.7
+
+### Patch Changes
+
+- 66416e7: 'Added sitemap generation in graphql layer and a generator script for client use'
+
 ## 0.1.6
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.1.5
+
+### Patch Changes
+
+- 66416e7: 'Added sitemap generation in graphql layer and a generator script for client use'
+
 ## 0.1.4
 
 ### Patch Changes
