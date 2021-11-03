@@ -1,7 +1,8 @@
+import { SectionProps } from './Section';
 import mockTheme from '../../theme/mock.theme';
 import richTextMock from '../Text/Text.mock';
 
-export const singlePanelMock = {
+export const singlePanelMock = (): SectionProps => ({
   __typename: 'Section',
   variant: 'single-panel',
   styles: {
@@ -11,9 +12,9 @@ export const singlePanelMock = {
   },
   contents: [richTextMock()],
   theme: [mockTheme]
-};
+});
 
-export const splitPanelMock = {
+export const splitPanelMock = (): SectionProps => ({
   __typename: 'Section',
   variant: 'split-panel',
   styles: {
@@ -33,4 +34,4 @@ export const splitPanelMock = {
     }
   ],
   theme: [mockTheme]
-};
+});

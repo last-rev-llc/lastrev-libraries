@@ -46,7 +46,7 @@ const Template = (args: JSX.IntrinsicAttributes) => (
 
 export const Module01 = Template.bind({});
 Module01.args = {
-  ...singlePanelMock,
+  ...singlePanelMock(),
   styles: {
     root: {
       'minHeight': 400,
@@ -75,7 +75,7 @@ Module01.args = {
 
 export const Module02 = Template.bind({});
 Module02.args = {
-  ...splitPanelMock,
+  ...splitPanelMock(),
   styles: {
     root: {
       '.MuiTypography-h2': {
@@ -99,7 +99,7 @@ Module02.args = {
 
 export const Module03 = Template.bind({});
 Module03.args = {
-  ...singlePanelMock,
+  ...singlePanelMock(),
   contents: [
     {
       __typename: 'Text',
@@ -141,7 +141,7 @@ Module03.args = {
 
 export const Module04 = Template.bind({});
 Module04.args = {
-  ...splitPanelMock,
+  ...splitPanelMock(),
   spacing: 4,
   contents: [
     {
@@ -312,7 +312,7 @@ Module04.args = {
 
 export const Module05 = Template.bind({});
 Module05.args = {
-  ...splitPanelMock,
+  ...splitPanelMock(),
   variant: 'gradient-background',
   spacing: 4,
   styles: {
@@ -399,7 +399,7 @@ Module05.args = {
 
 export const Module06 = Template.bind({});
 Module06.args = {
-  ...splitPanelMock,
+  ...splitPanelMock(),
   styles: {},
   contents: [
     {
@@ -472,7 +472,7 @@ Module06.args = {
 
 export const Module07 = Template.bind({});
 Module07.args = {
-  ...splitPanelMock,
+  ...splitPanelMock(),
   variant: 'gradient-background',
   background: null,
   contents: [
@@ -550,7 +550,7 @@ Module07.args = {
 
 export const Module08 = Template.bind({});
 Module08.args = {
-  ...splitPanelMock,
+  ...splitPanelMock(),
   background: null,
   // spacing: 4,
   // variant: 'column',
@@ -664,7 +664,7 @@ Module08.args = {
 
 export const Module09 = Template.bind({});
 Module09.args = {
-  ...splitPanelMock,
+  ...splitPanelMock(),
   variant: 'highlight',
   background: null,
   contents: [

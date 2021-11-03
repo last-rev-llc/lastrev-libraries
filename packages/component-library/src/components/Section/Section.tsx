@@ -23,6 +23,7 @@ import ConditionalWrapper from '../ConditionalWrapper';
 // }
 
 export interface SectionProps {
+  __typename?: string;
   introText?: TextProps;
   contents?: Array<{ __typename?: string; id?: string }>;
   background?: MediaProps;
