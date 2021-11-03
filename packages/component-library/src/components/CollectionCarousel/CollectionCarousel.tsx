@@ -19,6 +19,7 @@ export interface CollectionCarouselProps {
   itemsWidth?: false | Breakpoint | undefined;
   theme: any;
   sidekickLookup: string;
+  CarouselVariantProps?: { [key: string]: Swiper };
 }
 
 export const CollectionCarousel = ({
@@ -26,40 +27,19 @@ export const CollectionCarousel = ({
   variant,
   itemsWidth,
   itemsVariant,
+  CarouselVariantProps = {},
   sidekickLookup
 }: CollectionCarouselProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
 
-  const CAROUSEL_CONFIG: { [key: string]: any } = {
-    'carousel-small': {
-      slidesPerView: 1,
-      spaceBetween: 0,
-      breakpoints: {
-        //windows larger than...
-        684: {
-          slidesPerView: 2
-        },
-        1024: {
-          slidesPerView: 3
-        },
-        1440: {
-          slidesPerView: 4
-        }
-      }
-    },
-    'carousel-large': {
-      slidesPerView: 1,
-      spaceBetween: 0,
-      cssMode: true
-    }
-  };
+  const config = CarouselVariantProps[variant];
 
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionCarousel">
         <ContentContainer maxWidth={itemsWidth} disableGutters>
-          <CarouselContainer navigation pagination={{ clickable: true }} {...CAROUSEL_CONFIG[variant]} loop>
+          <CarouselContainer navigation pagination={{ clickable: true }} loop {...config}>
             {itemsWithVariant.map((item, idx) => (
               <SwiperSlide key={idx}>
                 <CarouselItem>
