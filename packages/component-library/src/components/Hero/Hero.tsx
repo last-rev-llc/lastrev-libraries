@@ -92,7 +92,7 @@ HeroProps) => {
                 <Grid item>
                   {overlineText ? (
                     <Typography
-                      data-testid="Hero-title"
+                      data-testid="Hero-overlineText"
                       variant="overline"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
