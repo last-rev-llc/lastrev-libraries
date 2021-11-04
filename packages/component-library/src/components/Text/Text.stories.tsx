@@ -35,14 +35,14 @@ export default {
   }
 };
 
-const Template1 = (args: JSX.IntrinsicAttributes) => <Text {...args} />;
+const Template1 = (args: JSX.IntrinsicAttributes) => <Text body={undefined} {...args} />;
 export const Plaintext = Template1.bind({});
-Plaintext.args = { ...mockContent };
+Plaintext.args = { ...mockContent() };
 
-const Template2 = (args: JSX.IntrinsicAttributes) => <Text {...args} />;
+const Template2 = (args: JSX.IntrinsicAttributes) => <Text body={undefined} {...args} />;
 export const Formatted = Template2.bind({});
 Formatted.args = {
-  ...complexMock,
+  ...complexMock(),
   renderNode: {
     [BLOCKS.UL_LIST]: (_: any, children: any) => {
       return children.map((child: any) => (

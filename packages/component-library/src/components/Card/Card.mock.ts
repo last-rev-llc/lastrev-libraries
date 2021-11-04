@@ -12,7 +12,7 @@ export default {
   },
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',
-  body: staticRichTextMock,
+  body: staticRichTextMock(),
 
   actions: [{ ...mockLink, text: 'Card link' }],
   sidekickLookup: {}
@@ -27,7 +27,7 @@ export const cardWithTags = {
   },
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',
-  body: staticRichTextMock,
+  body: staticRichTextMock(),
   tags: [{ ...mockLink, text: 'Tag 1' }, { ...mockLink, text: 'Tag 2' }, { text: 'Tag 3 - Not clickable' }],
   actions: [{ ...mockLink, text: 'Card link' }],
   sidekickLookup: {}

@@ -24,6 +24,6 @@ export const collectionWithIntroText = {
   items: [{ ...mockCard }, { ...mockCard, title: lorem.sentence() }, { ...mockCard }, { ...mockCard }],
   itemsVariant: 'standard-round',
   // itemsWidth: 'xl',
-  introText: complexMock,
+  introText: complexMock(),
   theme: [mockTheme]
 };

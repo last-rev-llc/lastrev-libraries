@@ -1,7 +1,60 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
+import { TextProps } from './Text';
 
-export const complexMock = {
+export const valueNode = (type: string = 'text') => ({
+  data: {},
+  marks: [],
+  value: lorem.sentence(),
+  nodeType: type
+});
+
+export const contentNode = (content: any[] = [valueNode()], nodeType: string = 'paragraph') => ({
+  nodeType,
+  data: {},
+  content
+});
+
+export const itemNode = (content: any[] = [contentNode()]) => contentNode(content, 'list-item');
+
+export const listNode = (content: any[] = [itemNode()], nodeType: 'ordered-list' | 'unordered-list' = 'unordered-list') => ({
+  data: {},
+  content,
+  nodeType
+});
+
+export const hyperlinkNode = () => ({
+  data: {
+    target: {
+      sys: {
+        id: "12345",
+        type: "Link",
+        linkType: "Entry"
+      }
+    }
+  },
+  content: [
+    {
+      marks: [],
+      value: "the link text",
+      nodeType: "text"
+    }
+  ],
+  nodeType: "entry-hyperlink"
+});
+
+export const dynamicMock = (content: any[]) => ({
+  __typename: 'Text',
+  body: {
+    json: {
+      nodeType: 'document',
+      data: {},
+      content
+    }
+  }
+});
+
+export const complexMock = (): TextProps => ({
   __typename: 'Text',
   body: {
     json: {
@@ -140,59 +193,9 @@ export const complexMock = {
       ]
     }
   }
-};
+});
 
-export const richTextMock = {
-  json: {
-    nodeType: 'document',
-    data: {},
-    content: [
-      {
-        nodeType: 'paragraph',
-        data: {},
-        content: [
-          {
-            nodeType: 'text',
-            value: lorem.sentences(2),
-            marks: [],
-            data: {}
-          }
-        ]
-      }
-    ]
-  },
-  links: {
-    entries: [],
-    assets: []
-  }
-};
-
-export const staticRichTextMock = {
-  json: {
-    nodeType: 'document',
-    data: {},
-    content: [
-      {
-        nodeType: 'paragraph',
-        data: {},
-        content: [
-          {
-            nodeType: 'text',
-            value: 'This a paragraph of static text',
-            marks: [],
-            data: {}
-          }
-        ]
-      }
-    ]
-  },
-  links: {
-    entries: [],
-    assets: []
-  }
-};
-
-export const paragraphMock = {
+export const richTextMock = (): TextProps => ({
   __typename: 'Text',
   body: {
     json: {
@@ -218,9 +221,64 @@ export const paragraphMock = {
       assets: []
     }
   }
-};
+});
 
-export default {
+export const staticRichTextMock = (): TextProps => ({
+  body: {
+    json: {
+      nodeType: 'document',
+      data: {},
+      content: [
+        {
+          nodeType: 'paragraph',
+          data: {},
+          content: [
+            {
+              nodeType: 'text',
+              value: 'This a paragraph of static text',
+              marks: [],
+              data: {}
+            }
+          ]
+        }
+      ]
+    },
+    links: {
+      entries: [],
+      assets: []
+    }
+  }
+});
+
+export const paragraphMock = (): TextProps => ({
+  __typename: 'Text',
+  body: {
+    json: {
+      nodeType: 'document',
+      data: {},
+      content: [
+        {
+          nodeType: 'paragraph',
+          data: {},
+          content: [
+            {
+              nodeType: 'text',
+              value: lorem.sentences(2),
+              marks: [],
+              data: {}
+            }
+          ]
+        }
+      ]
+    },
+    links: {
+      entries: [],
+      assets: []
+    }
+  }
+});
+
+export default (): TextProps => ({
   __typename: 'Text',
   body: {
     json: {
@@ -275,4 +333,4 @@ export default {
       ]
     }
   }
-};
+});
