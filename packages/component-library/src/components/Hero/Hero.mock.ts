@@ -6,7 +6,7 @@ import mockTheme from '../../theme/mock.theme';
 
 export default {
   variant: 'default',
-  overlineText: capitalize(lorem.words(3)),
+  overline: capitalize(lorem.words(3)),
   title: capitalize(lorem.words(3)),
   subtitle: lorem.sentence(),
   image: {

@@ -16,7 +16,7 @@ import sidekick from '../../utils/sidekick';
 export interface HeroProps {
   id: string;
   __typename: string;
-  overlineText?: string;
+  overline?: string;
   title?: string;
   subtitle?: string;
   body?: RichText;
@@ -43,7 +43,7 @@ export const Hero = ({
   backgroundColor,
   contentWidth,
   contentHeight = 'lg',
-  overlineText,
+  overline,
   title,
   subtitle,
   body,
@@ -90,14 +90,14 @@ HeroProps) => {
             {title || subtitle || body || actions ? (
               <Grid item container direction="column" spacing={2} xs={12} md={6}>
                 <Grid item>
-                  {overlineText ? (
+                  {overline ? (
                     <Typography
-                      data-testid="Hero-overlineText"
+                      data-testid="Hero-overline"
                       variant="overline"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.overlineText)}>
-                      {overlineText}
+                      {...sidekick(sidekickLookup?.overline)}>
+                      {overline}
                     </Typography>
                   ) : null}
                   {title ? (
