@@ -23,12 +23,13 @@ npm install @last-rev/cli
 > If you are using Contentful, create the new space first.
 
 ## Steps
+
 1. Choose the actions you'd like to perform. All options are selected by default.
 2. (Only the first time) Login to Contentful and copy the API key.
 3. Select the Contentful Space and Environment you'd like to use for the NEW site.
 4. Enter in your redis host information, if you don't have this currently, enter in any value for now.
 5. Select the Contentful Space and Environment you'd like to copy from. ( Example: Last Rev Framework Starter )
-6. Choose the Contentful items you'd like to export to the new space. ( Entries, Assets, Content Models ) 
+6. Choose the Contentful items you'd like to export to the new space. ( Entries, Assets, Content Models )
 7. Select the starter that you'd like to base your project off of.
 8. Authorize Github
 9. Choose the local directory you want the repo stored in. Default is current directory.
