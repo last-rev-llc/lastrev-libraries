@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.24
+
+### Patch Changes
+
+- 036b1ca: removed component:h1 to overline
+
 ## 0.2.23
 
 ### Patch Changes
