@@ -94,7 +94,6 @@ HeroProps) => {
                     <Typography
                       data-testid="Hero-overline"
                       variant="overline"
-                      component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.overline)}>
                       {overline}
