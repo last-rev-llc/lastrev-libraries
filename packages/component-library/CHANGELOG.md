@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.23
+
+### Patch Changes
+
+- 2222e2f: added overline text to hero
+
 ## 0.2.22
 
 ### Patch Changes
