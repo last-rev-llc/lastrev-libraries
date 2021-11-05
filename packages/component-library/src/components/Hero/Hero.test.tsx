@@ -17,6 +17,11 @@ describe('<Hero />', () => {
     expect(getByTestId('Hero')).toBeDefined();
   });
 
+  test('Hero renders overline properly', () => {
+    const { getByTestId } = renderComponent();
+    expect(getByTestId('Hero-overline')).toHaveTextContent(mockContent.overline);
+  });
+
   test('Hero renders title properly', () => {
     const { getByTestId } = renderComponent();
     expect(getByTestId('Hero-title')).toHaveTextContent(mockContent.title);

@@ -16,6 +16,7 @@ import sidekick from '../../utils/sidekick';
 export interface HeroProps {
   id: string;
   __typename: string;
+  overline?: string;
   title?: string;
   subtitle?: string;
   body?: RichText;
@@ -42,6 +43,7 @@ export const Hero = ({
   backgroundColor,
   contentWidth,
   contentHeight = 'lg',
+  overline,
   title,
   subtitle,
   body,
@@ -63,8 +65,7 @@ HeroProps) => {
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined,
           py: 4
-        }}
-      >
+        }}>
         {background ? (
           <Box
             sx={{
@@ -74,8 +75,7 @@ HeroProps) => {
               left: 0,
               width: '100%',
               height: '100%'
-            }}
-          >
+            }}>
             <Media
               testId="Hero-background"
               {...background}
@@ -90,14 +90,23 @@ HeroProps) => {
             {title || subtitle || body || actions ? (
               <Grid item container direction="column" spacing={2} xs={12} md={6}>
                 <Grid item>
+                  {overline ? (
+                    <Typography
+                      data-testid="Hero-overline"
+                      variant="overline"
+                      component="h1"
+                      sx={{ color: !subtitle ? 'secondary.main' : undefined }}
+                      {...sidekick(sidekickLookup?.overline)}>
+                      {overline}
+                    </Typography>
+                  ) : null}
                   {title ? (
                     <Typography
                       data-testid="Hero-title"
                       variant="h1"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.title)}
-                    >
+                      {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
                   ) : null}
@@ -107,8 +116,7 @@ HeroProps) => {
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
                       sx={{ color: !title ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.subtitle)}
-                    >
+                      {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>
                   ) : null}
