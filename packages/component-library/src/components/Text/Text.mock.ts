@@ -1,6 +1,6 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
-import { TextProps } from './Text';
+import { TextProps, RichText } from './Text';
 
 export const valueNode = (type: string = 'text') => ({
   data: {},
@@ -63,76 +63,6 @@ export const dynamicMock = (content: any[], entries: any[] = [], assets: any[] =
   },
   
 });
-
-const embeddedMock = () => {
-  return {
-    body: {
-      id: 'embedded-entries',
-      __typename: 'Text',
-      json: {
-        nodeType: 'document',
-        data: {},
-        content: [
-          {
-            nodeType: 'paragraph',
-            content: [
-              {
-                nodeType: 'embedded-entry-inline',
-                content: [],
-                data: { target: { sys: { id: '6RWpWwgg7OlVxXCprgw7un', type: 'Link', linkType: 'Entry' } } }
-              }
-            ],
-            data: {}
-          },
-          {
-            nodeType: 'embedded-entry-block',
-            content: [],
-            data: { target: { sys: { id: '4ir4lbAY9NfnV0eZmBu1rV', type: 'Link', linkType: 'Entry' } } }
-          },
-          {
-            nodeType: 'embedded-asset-block',
-            content: [],
-            data: { target: { sys: { id: '1BOSe14Ig8b1nEpEe76UZJ', type: 'Link', linkType: 'Asset' } } }
-          },
-          {
-            nodeType: 'hyperlink',
-            content: [{ nodeType: 'text', value: 'Test Link', marks: [], data: {} }],
-            data: { uri: 'https://www.example.com' }
-          }
-        ]
-      },
-      links: {
-        entry: [
-          {
-            __typename: 'Link',
-            id: '6RWpWwgg7OlVxXCprgw7un',
-            sidekickLookup: { contentId: '6RWpWwgg7OlVxXCprgw7un', contentTypeId: 'link' },
-            text: 'Ask Us Anything',
-            href: '/about-us',
-            variant: 'link',
-            icon: null,
-            iconPosition: null
-          },
-          { __typename: 'Media', id: '4ir4lbAY9NfnV0eZmBu1rV' }
-        ],
-        assets: [
-          {
-            id: '1BOSe14Ig8b1nEpEe76UZJ',
-            __typename: 'Media',
-            title: 'Star Plant',
-            variant: 'image',
-            file: {
-              url: '//images.ctfassets.net/m1b67l45sk9z/1BOSe14Ig8b1nEpEe76UZJ/b88c975ad512e365e27b7c4d8c708467/StarPlant.svg',
-              extension: null,
-              fileName: 'StarPlant.svg'
-            }
-          }
-        ]
-      }
-    }
-  };
-};
-
 
 export const complexMock = (): TextProps => ({
   __typename: 'Text',
@@ -275,58 +205,53 @@ export const complexMock = (): TextProps => ({
   }
 });
 
-export const richTextMock = (): TextProps => ({
-  __typename: 'Text',
-  body: {
-    json: {
-      nodeType: 'document',
-      data: {},
-      content: [
-        {
-          nodeType: 'paragraph',
-          data: {},
-          content: [
-            {
-              nodeType: 'text',
-              value: lorem.sentences(2),
-              marks: [],
-              data: {}
-            }
-          ]
-        }
-      ]
-    },
-    links: {
-      entries: [],
-      assets: []
-    }
+export const richTextMock = (): RichText => ({
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        nodeType: 'paragraph',
+        data: {},
+        content: [
+          {
+            nodeType: 'text',
+            value: lorem.sentences(2),
+            marks: [],
+            data: {}
+          }
+        ]
+      }
+    ]
+  },
+  links: {
+    entries: [],
+    assets: []
   }
 });
 
-export const staticRichTextMock = (): TextProps => ({
-  body: {
-    json: {
-      nodeType: 'document',
-      data: {},
-      content: [
-        {
-          nodeType: 'paragraph',
-          data: {},
-          content: [
-            {
-              nodeType: 'text',
-              value: 'This a paragraph of static text',
-              marks: [],
-              data: {}
-            }
-          ]
-        }
-      ]
-    },
-    links: {
-      entries: [],
-      assets: []
-    }
+export const staticRichTextMock = (): RichText => ({
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        nodeType: 'paragraph',
+        data: {},
+        content: [
+          {
+            nodeType: 'text',
+            value: 'This a paragraph of static text',
+            marks: [],
+            data: {}
+          }
+        ]
+      }
+    ]
+  },
+  links: {
+    entries: [],
+    assets: []
   }
 });
 
