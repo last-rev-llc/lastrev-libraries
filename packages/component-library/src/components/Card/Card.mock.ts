@@ -5,7 +5,7 @@ import { staticRichTextMock } from '../Text/Text.mock';
 export default {
   __typename: 'Card',
   media: {
-    ...mediaMock,
+    ...mediaMock(),
     file: {
       url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
     }
@@ -14,13 +14,13 @@ export default {
   subtitle: 'And this is the subtitle',
   body: staticRichTextMock(),
 
-  actions: [{ ...mockLink, text: 'Card link' }],
+  actions: [{ ...mockLink(), text: 'Card link' }],
   sidekickLookup: {}
 };
 export const cardWithTags = {
   __typename: 'Card',
   media: {
-    ...mediaMock,
+    ...mediaMock(),
     file: {
       url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
     }
@@ -28,7 +28,7 @@ export const cardWithTags = {
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',
   body: staticRichTextMock(),
-  tags: [{ ...mockLink, text: 'Tag 1' }, { ...mockLink, text: 'Tag 2' }, { text: 'Tag 3 - Not clickable' }],
-  actions: [{ ...mockLink, text: 'Card link' }],
+  tags: [{ ...mockLink(), text: 'Tag 1' }, { ...mockLink(), text: 'Tag 2' }, { text: 'Tag 3 - Not clickable' }],
+  actions: [{ ...mockLink(), text: 'Card link' }],
   sidekickLookup: {}
 };

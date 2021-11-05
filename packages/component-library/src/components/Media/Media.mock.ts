@@ -1,6 +1,7 @@
 import { lorem } from 'faker';
 
-export const mediaMock = {
+export const mediaMock = () => ({
+  id: lorem.word(),
   __typename: 'Media',
   file: {
     url: './flower-large.jpg',
@@ -9,7 +10,7 @@ export const mediaMock = {
   },
   title: lorem.sentence(),
   description: lorem.sentence()
-};
+});
 
 export const responsiveMediaMock = {
   __typename: 'Media',

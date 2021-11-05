@@ -9,11 +9,23 @@ export const valueNode = (type: string = 'text') => ({
   nodeType: type
 });
 
-export const contentNode = (content: any[] = [valueNode()], nodeType: string = 'paragraph') => ({
+export const contentNode = (content: any[] = [valueNode()], nodeType: string = 'paragraph'): any => ({
   nodeType,
   data: {},
   content
 });
+
+const embeddedNode = (nodeType: string, id: string, isEntry: boolean = true) => ({
+  nodeType,
+  content: [],
+  data: { target: { sys: { id, type: 'Link', linkType: isEntry ? 'Entry' : 'Asset' } } }
+});
+
+export const embeddedEntryInlineNode = (id: string) => embeddedNode('embedded-entry-inline', id);
+
+export const embeddedEntryBlockNode = (id: string) => embeddedNode('embedded-entry-block', id);
+
+export const embeddedAssetBlockNode = (id: string) => embeddedNode('embedded-asset-block', id, false);
 
 export const itemNode = (content: any[] = [contentNode()]) => contentNode(content, 'list-item');
 
@@ -23,36 +35,104 @@ export const listNode = (content: any[] = [itemNode()], nodeType: 'ordered-list'
   nodeType
 });
 
-export const hyperlinkNode = () => ({
+export const hyperlinkNode = (text: string, url: string) => ({
+  nodeType: 'hyperlink',
+  content: [{ nodeType: 'text', value: text, marks: [], data: {} }],
+  data: { uri: url }
+});
+
+export const hyperlinkEntryNode = (id: string) => ({
   data: {
-    target: {
-      sys: {
-        id: "12345",
-        type: "Link",
-        linkType: "Entry"
-      }
-    }
+    target: { sys: { id, type: "Link", linkType: "Entry" } }
   },
   content: [
-    {
-      marks: [],
-      value: "the link text",
-      nodeType: "text"
-    }
+    { marks: [], value: lorem.words(2), nodeType: "text" }
   ],
   nodeType: "entry-hyperlink"
 });
 
-export const dynamicMock = (content: any[]) => ({
+export const dynamicMock = (content: any[], entries: any[] = [], assets: any[] = []) => ({
   __typename: 'Text',
   body: {
     json: {
       nodeType: 'document',
       data: {},
       content
-    }
-  }
+    },
+    links: { entries, assets }
+  },
+  
 });
+
+const embeddedMock = () => {
+  return {
+    body: {
+      id: 'embedded-entries',
+      __typename: 'Text',
+      json: {
+        nodeType: 'document',
+        data: {},
+        content: [
+          {
+            nodeType: 'paragraph',
+            content: [
+              {
+                nodeType: 'embedded-entry-inline',
+                content: [],
+                data: { target: { sys: { id: '6RWpWwgg7OlVxXCprgw7un', type: 'Link', linkType: 'Entry' } } }
+              }
+            ],
+            data: {}
+          },
+          {
+            nodeType: 'embedded-entry-block',
+            content: [],
+            data: { target: { sys: { id: '4ir4lbAY9NfnV0eZmBu1rV', type: 'Link', linkType: 'Entry' } } }
+          },
+          {
+            nodeType: 'embedded-asset-block',
+            content: [],
+            data: { target: { sys: { id: '1BOSe14Ig8b1nEpEe76UZJ', type: 'Link', linkType: 'Asset' } } }
+          },
+          {
+            nodeType: 'hyperlink',
+            content: [{ nodeType: 'text', value: 'Test Link', marks: [], data: {} }],
+            data: { uri: 'https://www.example.com' }
+          }
+        ]
+      },
+      links: {
+        entry: [
+          {
+            __typename: 'Link',
+            id: '6RWpWwgg7OlVxXCprgw7un',
+            sidekickLookup: { contentId: '6RWpWwgg7OlVxXCprgw7un', contentTypeId: 'link' },
+            text: 'Ask Us Anything',
+            href: '/about-us',
+            variant: 'link',
+            icon: null,
+            iconPosition: null
+          },
+          { __typename: 'Media', id: '4ir4lbAY9NfnV0eZmBu1rV' }
+        ],
+        assets: [
+          {
+            id: '1BOSe14Ig8b1nEpEe76UZJ',
+            __typename: 'Media',
+            title: 'Star Plant',
+            variant: 'image',
+            file: {
+              url: '//images.ctfassets.net/m1b67l45sk9z/1BOSe14Ig8b1nEpEe76UZJ/b88c975ad512e365e27b7c4d8c708467/StarPlant.svg',
+              extension: null,
+              fileName: 'StarPlant.svg'
+            }
+          }
+        ]
+      }
+    }
+  };
+};
+
 
 export const complexMock = (): TextProps => ({
   __typename: 'Text',

@@ -9,7 +9,7 @@ import { mediaMock } from './Media.mock';
 //   await preloadAll();
 // });
 
-const { file, title } = mediaMock;
+const { file, title } = mediaMock();
 
 const renderComponent = () => render(<Media file={file} title={title} />);
 
