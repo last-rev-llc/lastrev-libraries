@@ -27,7 +27,6 @@ const createResolvers = ({
 }) =>
   merge(getContentResolvers({ contentTypes, mappers, typeMappings }), {
     Query: {
-      me: () => {},
       page: async (
         _: any,
         { path, locale, preview = false, site }: { path?: string; locale?: string; preview?: boolean; site?: string },
@@ -86,7 +85,7 @@ const createResolvers = ({
       }
     },
     Media: fieldsResolver('Media', ['file', 'title', 'description'], mappers),
-    RichText: fieldsResolver('RichText', ['json', 'parsed'], mappers),
+    RichText: fieldsResolver('RichText', ['json'], mappers),
     Theme: fieldsResolver('Theme', ['variant'], mappers),
 
     // Content type resolver

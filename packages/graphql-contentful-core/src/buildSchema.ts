@@ -6,6 +6,7 @@ import { ContentfulLoaders } from '@last-rev/types';
 import { GraphQLSchema } from 'graphql';
 import { buildFederatedSchema } from '@apollo/federation';
 import LastRevAppConfig from '@last-rev/app-config';
+import { addResolversToSchema } from '@graphql-tools/schema';
 
 const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
   // may not have production content, if none there, use preview
@@ -36,6 +37,15 @@ const buildSchema = async (config: LastRevAppConfig, loaders: ContentfulLoaders)
   const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, config.extensions.typeDefs]);
   const resolvers: Record<string, any> = mergeResolvers([defaultResolvers, config.extensions.resolvers]);
 
-  return buildFederatedSchema([{ resolvers, typeDefs }]);
+  const federatedSchema = buildFederatedSchema([{ typeDefs }]);
+
+  return addResolversToSchema({
+    schema: federatedSchema,
+    resolvers,
+    inheritResolversFromInterfaces: true,
+    resolverValidationOptions: {
+      requireResolversToMatchSchema: 'ignore'
+    }
+  });
 };
 export default buildSchema;
