@@ -6,4 +6,5 @@ export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   testId?: string;
   media?: string;
   width?: number;
+  disableInlineSVG?: boolean;
 }
