@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.25
+
+### Patch Changes
+
+- f35d159: Add Media flag to disable inline SVG
+
 ## 0.2.24
 
 ### Patch Changes
