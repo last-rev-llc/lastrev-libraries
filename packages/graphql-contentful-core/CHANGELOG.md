@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.29
+
+### Patch Changes
+
+- 0386fee: Added the ability to add resovlers at the interace level for all content
+
 ## 0.1.28
 
 ### Patch Changes
