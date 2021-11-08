@@ -47,3 +47,16 @@ export const SVGMediaMock = {
   title: lorem.sentence(),
   description: lorem.sentence()
 };
+
+export const ExternalSVGMediaMock = {
+  __typename: 'Media',
+  file: {
+    // url: flowerLarge,
+    url: './logo.svg',
+    width: '1728px',
+    height: '1152px'
+  },
+  disableInlineSVG: true,
+  title: lorem.sentence(),
+  description: lorem.sentence()
+};

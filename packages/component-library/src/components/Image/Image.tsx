@@ -11,12 +11,15 @@ type Env = 'development' | 'production' | 'test' | string | undefined;
 const NODE_ENV: Env = process.env.NODE_ENV;
 
 const Image = React.forwardRef<any, ImageProps>(
-  ({ src, className, media, columns = 12, priority = true, itemProp, testId, ...imageProps }, ref) => {
+  (
+    { src, className, media, columns = 12, priority = true, itemProp, testId, disableInlineSVG, ...imageProps },
+    ref
+  ) => {
     if (!src) return null;
     const isSVG = src?.includes('.svg');
 
     let content;
-    if (isSVG) {
+    if (isSVG && !disableInlineSVG) {
       content = <SVG innerRef={ref} src={src} data-testid={testId} className={className} {...(imageProps as any)} />;
     } else {
       content = (

@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Media from './Media';
-import { mediaMock, responsiveMediaMock, SVGMediaMock } from './Media.mock';
+import { mediaMock, responsiveMediaMock, SVGMediaMock, ExternalSVGMediaMock } from './Media.mock';
 
 export default {
   title: '1. Primitives / LR / Media',
@@ -20,8 +20,7 @@ export default {
             width: '100%',
             height: '100%'
           }
-        }}
-      >
+        }}>
         {storyFn()}
       </Box>
     )
@@ -39,8 +38,11 @@ const Template = (args: JSX.IntrinsicAttributes) => <Media {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mediaMock };
 
+export const InlineSVG = Template.bind({});
+InlineSVG.args = { ...SVGMediaMock };
+
 export const SVG = Template.bind({});
-SVG.args = { ...SVGMediaMock };
+SVG.args = { ...ExternalSVGMediaMock };
 
 export const Responsive = Template.bind({});
 Responsive.args = { ...responsiveMediaMock };
