@@ -19,11 +19,10 @@ const fieldResolver: FieldResolver = (displayType: string) => async (content, ar
   const { fieldName: field } = info;
   const { loaders, mappers, typeMappings, preview = false } = ctx;
 
-  const contentType = capitalizeFirst(
+  const contentType =
     content && content.sys && content.sys.contentType && content.sys.contentType.sys
       ? content.sys.contentType.sys.id
-      : ''
-  );
+      : '';
   // console.log('resolving field', {
   //   content,
   //   displayType,
