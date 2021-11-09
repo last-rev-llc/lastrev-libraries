@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.30
+
+### Patch Changes
+
+- 04b1e14: Bug Fix: removed capitalization of contentType in fieldResolver of graphql-contentful-core
+
 ## 0.1.29
 
 ### Patch Changes
