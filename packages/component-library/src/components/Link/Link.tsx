@@ -63,6 +63,7 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
 });
 
 export type LinkProps = {
+  __typename?: string;
   activeClassName?: string;
   as?: NextLinkProps['as'];
   href?: NextLinkProps['href'];
