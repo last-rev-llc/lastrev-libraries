@@ -4,7 +4,7 @@ export default {
   __typename: 'Accordion',
   variant: 'accordion-standard',
   title: 'Stress and anxiety: What’s the difference?',
-  body: richTextMock,
+  body: richTextMock(),
   internalTitle: 'hola!',
   sidekickLookup: {},
   children: []

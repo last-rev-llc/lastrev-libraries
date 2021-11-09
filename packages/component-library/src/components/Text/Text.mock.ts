@@ -1,7 +1,70 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
+import { TextProps, RichText } from './Text';
 
-export const complexMock = {
+export const valueNode = (type: string = 'text') => ({
+  data: {},
+  marks: [],
+  value: lorem.sentence(),
+  nodeType: type
+});
+
+export const contentNode = (content: any[] = [valueNode()], nodeType: string = 'paragraph'): any => ({
+  nodeType,
+  data: {},
+  content
+});
+
+const embeddedNode = (nodeType: string, id: string, isEntry: boolean = true) => ({
+  nodeType,
+  content: [],
+  data: { target: { sys: { id, type: 'Link', linkType: isEntry ? 'Entry' : 'Asset' } } }
+});
+
+export const embeddedEntryInlineNode = (id: string) => embeddedNode('embedded-entry-inline', id);
+
+export const embeddedEntryBlockNode = (id: string) => embeddedNode('embedded-entry-block', id);
+
+export const embeddedAssetBlockNode = (id: string) => embeddedNode('embedded-asset-block', id, false);
+
+export const itemNode = (content: any[] = [contentNode()]) => contentNode(content, 'list-item');
+
+export const listNode = (content: any[] = [itemNode()], nodeType: 'ordered-list' | 'unordered-list' = 'unordered-list') => ({
+  data: {},
+  content,
+  nodeType
+});
+
+export const hyperlinkNode = (text: string, url: string) => ({
+  nodeType: 'hyperlink',
+  content: [{ nodeType: 'text', value: text, marks: [], data: {} }],
+  data: { uri: url }
+});
+
+export const hyperlinkEntryNode = (id: string) => ({
+  data: {
+    target: { sys: { id, type: "Link", linkType: "Entry" } }
+  },
+  content: [
+    { marks: [], value: lorem.words(2), nodeType: "text" }
+  ],
+  nodeType: "entry-hyperlink"
+});
+
+export const dynamicMock = (content: any[], entries: any[] = [], assets: any[] = []) => ({
+  __typename: 'Text',
+  body: {
+    json: {
+      nodeType: 'document',
+      data: {},
+      content
+    },
+    links: { entries, assets }
+  },
+  
+});
+
+export const complexMock = (): TextProps => ({
   __typename: 'Text',
   body: {
     json: {
@@ -140,9 +203,9 @@ export const complexMock = {
       ]
     }
   }
-};
+});
 
-export const richTextMock = {
+export const richTextMock = (): RichText => ({
   json: {
     nodeType: 'document',
     data: {},
@@ -165,9 +228,9 @@ export const richTextMock = {
     entries: [],
     assets: []
   }
-};
+});
 
-export const staticRichTextMock = {
+export const staticRichTextMock = (): RichText => ({
   json: {
     nodeType: 'document',
     data: {},
@@ -190,9 +253,9 @@ export const staticRichTextMock = {
     entries: [],
     assets: []
   }
-};
+});
 
-export const paragraphMock = {
+export const paragraphMock = (): TextProps => ({
   __typename: 'Text',
   body: {
     json: {
@@ -218,9 +281,9 @@ export const paragraphMock = {
       assets: []
     }
   }
-};
+});
 
-export default {
+export default (): TextProps => ({
   __typename: 'Text',
   body: {
     json: {
@@ -275,4 +338,4 @@ export default {
       ]
     }
   }
-};
+});

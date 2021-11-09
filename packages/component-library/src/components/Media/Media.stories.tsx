@@ -37,7 +37,7 @@ export default {
 
 const Template = (args: JSX.IntrinsicAttributes) => <Media {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...mediaMock };
+Default.args = { ...mediaMock() };
 
 export const InlineSVG = Template.bind({});
 InlineSVG.args = { ...SVGMediaMock };

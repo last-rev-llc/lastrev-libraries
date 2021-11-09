@@ -9,7 +9,7 @@ export const singlePanelMock = {
       spacing: 4
     }
   },
-  contents: [richTextMock],
+  contents: [richTextMock()],
   theme: [mockTheme]
 };
 
@@ -22,7 +22,7 @@ export const splitPanelMock = {
     }
   },
   contents: [
-    richTextMock,
+    richTextMock(),
     {
       __typename: 'Media',
       file: {

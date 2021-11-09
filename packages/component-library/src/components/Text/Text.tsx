@@ -20,6 +20,7 @@ interface Content {
 }
 
 export interface TextProps {
+  __typename?: string;
   id?: string;
   styles?: {
     root?: SystemCssProperties;
@@ -75,7 +76,7 @@ const renderText =
     }
     if (containsHTML(children)) {
       return (
-        <Typography variant={variant}>
+        <Typography variant={variant} data-testid={`Text-${variant}`}>
           {children.map((child: any) => {
             if (isHTML(child)) {
               return (
@@ -97,7 +98,7 @@ const renderText =
 
     return (
       <>
-        <Typography variant={variant}>{children}</Typography>
+        <Typography variant={variant} data-testid={`Text-${variant}`}>{children}</Typography>
       </>
     );
   };
@@ -109,18 +110,18 @@ const renderOptions = ({ links, renderNode }: { links?: TextLinks; renderNode?: 
   return {
     renderNode: {
       [INLINES.HYPERLINK]: (_: any, children: any) => {
-        return <Link href={_.data.uri}>{children}</Link>;
+        return <Link href={_.data.uri} data-testid={`Text-${INLINES.HYPERLINK}`}>{children}</Link>;
       },
       [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = assets[id];
-        return <Media {...entry} />;
+        return <Media {...entry} testId={`Text-${BLOCKS.EMBEDDED_ASSET}`} />;
       },
       [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
         return (
-          <Box sx={{ py: 2 }}>
+          <Box sx={{ py: 2 }} data-testid={`Text-${BLOCKS.EMBEDDED_ENTRY}`}>
             <ContentModule {...entry} />
           </Box>
         );
@@ -129,7 +130,7 @@ const renderOptions = ({ links, renderNode }: { links?: TextLinks; renderNode?: 
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
         return (
-          <Box sx={{ display: 'inline', px: 2 }}>
+          <Box sx={{ display: 'inline', px: 2 }} data-testid={`Text-${INLINES.EMBEDDED_ENTRY}`}>
             <ContentModule {...entry} />
           </Box>
         );
@@ -153,6 +154,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ..
         {...sidekick(sidekickLookup)}
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
+        data-testid="Text-root"
         {...props}
       >
         {documentToReactComponents(body?.json, renderOptions({ links: body?.links, renderNode }))}
