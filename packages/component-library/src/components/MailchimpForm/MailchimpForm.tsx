@@ -10,6 +10,7 @@ import Text, { RichText } from '../Text';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import snakeCase from 'lodash/snakeCase';
 import sidekick from '../../utils/sidekick';
+import getFirstOfArray from '../../utils/getFirstOfArray';
 const url = '//strong365.us3.list-manage.com/subscribe/post?u=d86f5abb669bd78efab8bbf17&id=a842d73410';
 
 export interface MailchimpFormProps {
@@ -141,11 +142,7 @@ const CustomForm = ({
             ))}
           </FormControl>
         </SubmitContainer>
-        {Array.isArray(image) ? (
-          <FormImage {...sidekick(sidekickLookup?.image)} {...image[0]} />
-        ) : (
-          <FormImage {...sidekick(sidekickLookup?.image)} {...image} />
-        )}
+        <FormImage {...sidekick(sidekickLookup?.image)} {...getFirstOfArray(image)} />
         <Grid
           container
           sx={{

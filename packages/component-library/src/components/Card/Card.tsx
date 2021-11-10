@@ -17,6 +17,7 @@ import { MediaProps } from '../Media/Media.types';
 import Link, { LinkProps } from '../Link';
 import Text, { RichText } from '../Text';
 import sidekick from '../../utils/sidekick';
+import getFirstOfArray from '../../utils/getFirstOfArray';
 
 export interface CardProps extends MuiCardProps {
   __typename?: string;
@@ -56,14 +57,14 @@ export const Card = ({
             {!loading ? (
               <Media
                 {...sidekick(sidekickLookup?.media)}
-                {...(Array.isArray(media) ? media[0] : media)}
+                {...getFirstOfArray(media)}
                 testId="Card-media"
               />
             ) : (
               <Skeleton>
                 <Media
                   {...sidekick(sidekickLookup?.media)}
-                  {...(Array.isArray(media) ? media[0] : media)}
+                  {...getFirstOfArray(media)}
                   testId="Card-media"
                 />
               </Skeleton>

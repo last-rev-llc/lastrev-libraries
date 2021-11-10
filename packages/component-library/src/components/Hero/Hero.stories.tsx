@@ -61,11 +61,11 @@ export default {
 
 const Template = (args: JSX.IntrinsicAttributes) => <Hero id={''} __typename={''} theme={undefined} {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...heroMock, background: undefined };
+Default.args = { ...heroMock(), background: undefined };
 
 export const BackgroundImage = Template.bind({});
 BackgroundImage.args = {
-  ...heroMock,
+  ...heroMock(),
   backgroundColor: null,
   contentHeight: 'xl',
   contentWidth: 'xl'
