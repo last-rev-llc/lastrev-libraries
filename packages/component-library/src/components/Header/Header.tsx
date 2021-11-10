@@ -12,7 +12,7 @@ import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
-import { MediaProps } from '../Media/Media.types';
+import { MediaProps } from '../Media';
 import { CollectionProps } from '../Collection';
 import ContentModule from '../ContentModule';
 import useScrollTrigger from '@mui/material/useScrollTrigger';

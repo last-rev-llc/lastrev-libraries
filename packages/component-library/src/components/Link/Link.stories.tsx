@@ -60,6 +60,6 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Link {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <Link __typename='Link' {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mockContent() };

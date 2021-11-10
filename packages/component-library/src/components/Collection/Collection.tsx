@@ -9,19 +9,21 @@ import ContentModule from '../ContentModule';
 import { MediaProps } from '../Media';
 import { TextProps } from '../Text';
 import { CardProps } from '../Card';
+import { NavigationItemProps } from '../NavigationItem';
 import Section from '../Section';
 import sidekick from '../../utils/sidekick';
 import ConditionalWrapper from '../ConditionalWrapper';
 
 export interface CollectionProps {
   id: string;
-  items?: CardProps[];
+  __typename: string;
+  items?: CardProps[] | NavigationItemProps[];
   background?: MediaProps;
   variant?: string;
   introText?: TextProps;
   itemsVariant?: string;
   itemsSpacing?: number;
-  itemsWidth?: false | Breakpoint | undefined;
+  itemsWidth?: false | Breakpoint;
   styles?: any;
   theme?: any;
   sidekickLookup?: any;

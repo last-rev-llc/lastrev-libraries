@@ -1,14 +1,15 @@
+import { lorem } from 'faker';
 import mockLink from '../Link/Link.mock';
-import { mediaMock } from '../Media/Media.mock';
+import { CardProps } from './Card';
 import { staticRichTextMock } from '../Text/Text.mock';
 
-export default {
+export default (): CardProps => ({
   __typename: 'Card',
   media: {
-    ...mediaMock(),
     file: {
       url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
-    }
+    },
+    title: lorem.sentence()
   },
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',
@@ -16,14 +17,15 @@ export default {
 
   actions: [{ ...mockLink(), text: 'Card link' }],
   sidekickLookup: {}
-};
+});
+
 export const cardWithTags = {
   __typename: 'Card',
   media: {
-    ...mediaMock(),
     file: {
       url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
-    }
+    },
+    title: lorem.sentence()
   },
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',

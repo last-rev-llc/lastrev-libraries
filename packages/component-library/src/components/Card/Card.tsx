@@ -19,7 +19,7 @@ import Text, { RichText } from '../Text';
 import sidekick from '../../utils/sidekick';
 
 export interface CardProps extends MuiCardProps {
-  __typename: string;
+  __typename?: string;
   loading?: boolean;
   variant?: any;
   title?: string;
@@ -50,7 +50,7 @@ export const Card = ({
   return (
     <ErrorBoundary>
       <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)} {...(props as any)}>
-        {!!link ? <CardLink noLinkStyle href={link?.href} /> : null}
+        {!!link ? <CardLink __typename="Link" noLinkStyle href={link?.href} /> : null}
         {media || loading ? (
           <CardMedia sx={{ display: 'flex', justifyContent: 'center' }}>
             {!loading ? (
@@ -132,7 +132,7 @@ const CardTag = ({ href, text }: LinkProps) =>
   !href || href === '#' ? (
     <Chip label={text} />
   ) : (
-    <CardTagRoot href={href}>
+    <CardTagRoot __typename="Link" href={href}>
       <Chip label={text} clickable />
     </CardTagRoot>
   );

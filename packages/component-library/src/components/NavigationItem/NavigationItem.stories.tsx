@@ -39,6 +39,6 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <NavigationItem {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <NavigationItem __typename='NavigationItem' {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mockContent() };
