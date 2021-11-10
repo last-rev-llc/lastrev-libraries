@@ -2,7 +2,7 @@ import * as React from 'react';
 import mount from '../../../cypress/mount';
 import Section, { SectionProps } from './Section';
 import { singlePanelMock, splitPanelMock } from './Section.mock';
-import { richTextMock } from '../Text/Text.mock';
+import { paragraphMock } from '../Text/Text.mock';
 import { mediaMock } from '../Media/Media.mock';
 
 let mockedSinglePanel: SectionProps = {};
@@ -34,14 +34,16 @@ describe('Section', () => {
     });
 
     it('renders a section with intro text if provided', () => {
-      mount(<Section {...mockedSplitPanel} introText={richTextMock} />);
-      cy.get('[data-testid=Section-introText]').should('exist').and('have.text', richTextMock.body.json.content[0].content[0].value);
+      const mockedIntroText = paragraphMock();
+      mount(<Section {...mockedSplitPanel} introText={mockedIntroText} />);
+      cy.get('[data-testid=Section-introText]').should('exist').and('have.text', mockedIntroText.body.json.content[0].content[0].value);
       cy.percySnapshot();
     });
 
     it('renders a section with a background image if provided', () => {
-      mount(<Section {...mockedSplitPanel} background={mediaMock} />);
-      cy.get('[data-testid=Media]').should('exist').and('have.attr', 'src', mediaMock.file.url);
+      const mockedMedia = mediaMock();
+      mount(<Section {...mockedSplitPanel} background={mockedMedia} />);
+      cy.get('[data-testid=Media]').should('exist').and('have.attr', 'src', mockedMedia.file.url);
       cy.percySnapshot();
     });
   });
