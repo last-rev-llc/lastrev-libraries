@@ -1,14 +1,14 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
-import Media, { MediaProps, Asset } from './Media';
-import { mediaMock, assetMock } from './Media.mock';
+import Media, { MediaProps, File } from './Media';
+import { mediaMock, fileMock } from './Media.mock';
 
 let mockedContent: MediaProps = {};
-let mockedAsset: Asset = { file: { url: '' } };
+let mockedFile: File = { url: '' };
 
 beforeEach(() => {
   mockedContent = { ...mediaMock() };
-  mockedAsset = { ...assetMock() };
+  mockedFile = { ...fileMock() };
 });
 
 describe('Media', () => {
@@ -27,28 +27,7 @@ describe('Media', () => {
       cy.percySnapshot();
     });
 
-    it('renders desktop if provided and file is not', () => {
-      mount(<Media {...mockedContent} title={undefined} file={undefined} desktop={mockedAsset} />);
-      cy.get('[data-testid=Media]').should('exist')
-        .and('have.attr', 'src', mockedAsset.file.url)
-        .and('have.attr', 'alt', mockedAsset.title);
-    });
-
-    it('renders tablet if provided and file and desktop are not', () => {
-      mount(<Media {...mockedContent} title={undefined} file={undefined} desktop={undefined} tablet={mockedAsset} />);
-      cy.get('[data-testid=Media]').should('exist')
-        .and('have.attr', 'src', mockedAsset.file.url)
-        .and('have.attr', 'alt', mockedAsset.title);
-    });
-
-    it('renders mobile if provided and file, desktop, and tablet are not', () => {
-      mount(<Media {...mockedContent} title={undefined} file={undefined} desktop={undefined} tablet={undefined} mobile={mockedAsset} />);
-      cy.get('[data-testid=Media]').should('exist')
-        .and('have.attr', 'src', mockedAsset.file.url)
-        .and('have.attr', 'alt', mockedAsset.title);
-    });
-
-    it('renders nothing if file, desktop, tablet, and mobile are not provided', () => {
+    it('renders nothing if file is not provided', () => {
       mount(<Media {...mockedContent} file={undefined} />);
       cy.get('[data-testid=Media]').should('not.exist');
       cy.get('iframe').should('not.exist');
