@@ -34,14 +34,14 @@ describe('Image', () => {
       cy.get(`[data-testid=${mockedContent.testId}]`).should('have.attr', 'itemprop', itemProp);
     });
 
-    it('renders an image with lazy loading when lazy is true', () => {
-      mount(<Image {...mockedContent} lazy />);
+    it('renders an image with lazy loading when priority is false', () => {
+      mount(<Image {...mockedContent} priority={false} />);
       cy.get(`[data-testid=${mockedContent.testId}]`).should('have.attr', 'loading', 'lazy');
     });
 
-    it('renders an image without lazy loading when lazy is false', () => {
-      mount(<Image {...mockedContent} />);
-      cy.get(`[data-testid=${mockedContent.testId}]`).should('not.have.attr', 'loading');
+    it('renders an image without lazy loading when priority is true', () => {
+      mount(<Image {...mockedContent} priority />);
+      cy.get(`[data-testid=${mockedContent.testId}]`).should('have.attr', 'loading', 'eager');
     });
   });
 });
