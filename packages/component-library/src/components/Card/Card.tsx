@@ -19,7 +19,7 @@ import Text, { RichText } from '../Text';
 import sidekick from '../../utils/sidekick';
 
 export interface CardProps extends MuiCardProps {
-  __typename: string;
+  __typename?: string;
   loading?: boolean;
   variant?: any;
   title?: string;

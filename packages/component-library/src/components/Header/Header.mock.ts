@@ -8,7 +8,7 @@ collection.items = [navigationItemMock(), navigationItemMock(), navigationItemMo
 
 export default (): HeaderProps => ({
   variant: 'elevation',
-  logo: mediaMock,
+  logo: mediaMock(),
   logoUrl: 'http://www.example.com',
   navigationItems: [collection],
   sidekickLookup: {}
