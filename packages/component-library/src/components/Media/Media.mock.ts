@@ -1,5 +1,5 @@
 import { lorem } from 'faker';
-import { MediaProps } from './Media';
+import { MediaProps, Asset, File } from './Media';
 
 export const mediaMock = (): MediaProps => ({
   file: {
@@ -9,6 +9,20 @@ export const mediaMock = (): MediaProps => ({
   },
   title: lorem.sentence(),
   description: lorem.sentence()
+});
+
+export const assetMock = (): Asset => ({
+  file: {
+    url: `https://testImage-${Date.now().toString()}-${lorem.word()}-${lorem.word()}/cmp.png?h=180&r=180`
+  },
+  title: lorem.sentence(),
+  description: lorem.sentence()
+});
+
+export const fileMock = (): File => ({
+  url: `https://testImage-${Date.now().toString()}-${lorem.word()}-${lorem.word()}/cmp.png?h=180&r=180`,
+  width: '180',
+  height: '180'
 });
 
 export const responsiveMediaMock = {

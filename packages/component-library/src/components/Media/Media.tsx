@@ -6,12 +6,12 @@ import Image from '../Image';
 import ArtDirectedImage from '../ArtDirectedImage';
 import sidekick from '../../utils/sidekick';
 
-interface File {
+export interface File {
   url: string;
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 }
-interface Asset {
+export interface Asset {
   file: File;
   title?: string;
   description?: string;

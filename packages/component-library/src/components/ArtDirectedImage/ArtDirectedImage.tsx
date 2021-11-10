@@ -4,8 +4,8 @@ import { css } from '@emotion/react';
 import Image from '../Image';
 interface File {
   url: string;
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 }
 
 const getImageMedia = (
