@@ -33,7 +33,7 @@ export default {
         options: ['instagram', 'facebook', 'twitter', 'youtube', 'chevron-right', 'caret-right', '']
       },
       table: {
-        defaultValue: { summary: 'Instagram' }
+        defaultValue: { summary: '' }
       }
     },
     iconPosition: {
@@ -53,7 +53,7 @@ export default {
         options: ['button', 'submit', 'reset']
       },
       table: {
-        defaultValue: { summary: 'button' }
+        defaultValue: { summary: '' }
       }
     },
     __typename: { table: { disable: true } }
