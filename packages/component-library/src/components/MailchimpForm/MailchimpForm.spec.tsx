@@ -11,7 +11,7 @@ let mockedContent: MailchimpFormProps = { theme: {}, sidekickLookup: {} };
 
 beforeEach(() => {
   mockedContent = { ...mockContent() };
-  cy.intercept('GET', '/')
+  cy.intercept('GET', '/');
 });
 
 const testOptionalField = (fieldName: 'FNAME' | 'LNAME') => {
@@ -106,7 +106,9 @@ describe('MailchimpForm', () => {
         it('renders a mailchimp form with correct body', () => {
           mount(<MailchimpForm {...mockedContent} />);
           cy.get('[data-testid=MailchimpForm]').should('exist');
-          cy.get('[data-testid=MailchimpForm-body]').should('exist').and('have.text', mockedContent.body.json.content[0].content[0].value);
+          cy.get('[data-testid=MailchimpForm-body]')
+            .should('exist')
+            .and('have.text', mockedContent.body.json.content[0].content[0].value);
           cy.get('form[id^=form_]').should('exist');
         });
 
@@ -139,7 +141,8 @@ describe('MailchimpForm', () => {
           it('renders a mailchimp form with correct success message when provided', () => {
             mount(<MailchimpForm {...mockedContent} />);
             cy.get('[data-testid=MailchimpForm]').should('exist');
-            cy.get('[data-testid=MailchimpForm-successMessage]').should('exist')
+            cy.get('[data-testid=MailchimpForm-successMessage]')
+              .should('exist')
               .and('have.text', mockedContent.successMessage.json.content[0].content[0].value);
             cy.get('form[id^=form_]').should('exist');
           });
@@ -204,7 +207,7 @@ describe('MailchimpForm', () => {
             // show that success message is now visible
             cy.get('[data-testid=MailchimpForm-successMessage]').should('be.visible');
           });
-    
+
           it('does not submit form when email provided is not in correct format', () => {
             mount(<MailchimpForm {...mockedContent} />);
             // Show that success message is not visible yet

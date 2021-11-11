@@ -29,7 +29,10 @@ export const embeddedAssetBlockNode = (id: string) => embeddedNode('embedded-ass
 
 export const itemNode = (content: any[] = [contentNode()]) => contentNode(content, 'list-item');
 
-export const listNode = (content: any[] = [itemNode()], nodeType: 'ordered-list' | 'unordered-list' = 'unordered-list') => ({
+export const listNode = (
+  content: any[] = [itemNode()],
+  nodeType: 'ordered-list' | 'unordered-list' = 'unordered-list'
+) => ({
   data: {},
   content,
   nodeType
@@ -43,12 +46,10 @@ export const hyperlinkNode = (text: string, url: string) => ({
 
 export const hyperlinkEntryNode = (id: string) => ({
   data: {
-    target: { sys: { id, type: "Link", linkType: "Entry" } }
+    target: { sys: { id, type: 'Link', linkType: 'Entry' } }
   },
-  content: [
-    { marks: [], value: lorem.words(2), nodeType: "text" }
-  ],
-  nodeType: "entry-hyperlink"
+  content: [{ marks: [], value: lorem.words(2), nodeType: 'text' }],
+  nodeType: 'entry-hyperlink'
 });
 
 export const dynamicMock = (content: any[], entries: any[] = [], assets: any[] = []) => ({
@@ -60,8 +61,7 @@ export const dynamicMock = (content: any[], entries: any[] = [], assets: any[] =
       content
     },
     links: { entries, assets }
-  },
-  
+  }
 });
 
 export const complexMock = (): TextProps => ({

@@ -9,7 +9,7 @@ const returnEmptyOfType = <inputT>(input: inputT) => {
       break;
   }
   return output;
-}
+};
 
 const define = <inputT>(input: inputT | undefined): inputT => {
   return input || returnEmptyOfType(input);

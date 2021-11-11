@@ -12,7 +12,7 @@ describe('Accordion', () => {
       cy.get('[data-testid=Accordion-body]').should('exist');
       cy.percySnapshot();
     });
-  
+
     it('renders an accordion with no title', () => {
       mount(<Accordion {...mockContent} title={undefined} />);
       cy.get('[data-testid=Accordion]').should('exist');
@@ -21,7 +21,7 @@ describe('Accordion', () => {
       cy.get('[data-testid=Accordion-body]').should('exist');
       cy.percySnapshot();
     });
-  
+
     it('renders an accordion with no body', () => {
       mount(<Accordion {...mockContent} body={undefined} />);
       cy.get('[data-testid=Accordion]').should('exist');
@@ -29,7 +29,7 @@ describe('Accordion', () => {
       cy.get('[data-testid=Accordion-body]').should('not.exist');
       cy.percySnapshot();
     });
-  
+
     it('renders an accordion with no body and no title', () => {
       mount(<Accordion {...mockContent} title={undefined} body={undefined} />);
       cy.get('[data-testid=Accordion]').should('exist');
@@ -39,7 +39,7 @@ describe('Accordion', () => {
       cy.percySnapshot();
     });
   });
-  
+
   context('functions correctly', () => {
     it('accordion opens and collapses', () => {
       mount(<Accordion {...mockContent} />);
@@ -52,7 +52,7 @@ describe('Accordion', () => {
       cy.percySnapshot();
     });
 
-    it('accordion doesn\'t open when there isn\'t a body', () => {
+    it("accordion doesn't open when there isn't a body", () => {
       mount(<Accordion {...mockContent} body={undefined} />);
       cy.get('[data-testid=Accordion-body]').should('not.exist');
       cy.percySnapshot();

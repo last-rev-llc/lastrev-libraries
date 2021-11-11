@@ -4,27 +4,31 @@ import mount from '../../../cypress/mount';
 import Link, { LinkProps } from './Link';
 import mockContent from './Link.mock';
 
-let mockedContent: LinkProps = {  };
-const alignmentTypes: ("right" | "left" | "inherit" | "center" | "justify")[] = ["right", "left", "inherit", "center", "justify"];
-const underlineTypes: ("none" | "hover" | "always")[] = ["none", "hover", "always"];
+let mockedContent: LinkProps = {};
+const alignmentTypes: ('right' | 'left' | 'inherit' | 'center' | 'justify')[] = [
+  'right',
+  'left',
+  'inherit',
+  'center',
+  'justify'
+];
+const underlineTypes: ('none' | 'hover' | 'always')[] = ['none', 'hover', 'always'];
 
 beforeEach(() => {
   mockedContent = { ...mockContent() };
 });
 
 const testAlignTypes = (linkType: 'button' | 'link') => {
-  alignmentTypes.forEach(alignment => {
+  alignmentTypes.forEach((alignment) => {
     it(`renders a ${linkType} with ${alignment} alignment when align is ${alignment}`, () => {
       if (linkType === 'link') {
         mount(<Link {...mockedContent} variant="link" align={alignment} />);
         if (alignment !== 'inherit') {
           cy.get('a').should('have.class', `MuiTypography-align${capitalize(alignment)}`);
-        }
-        else {
+        } else {
           cy.get('a').should('not.have.class', 'MuiTypography-align*');
         }
-      }
-      else {
+      } else {
         mount(<Link {...mockedContent} align={alignment} />);
         cy.get('button').should('have.attr', 'align', alignment);
       }
@@ -33,13 +37,12 @@ const testAlignTypes = (linkType: 'button' | 'link') => {
 };
 
 const testUnderlineTypes = (linkType: 'button' | 'link') => {
-  underlineTypes.forEach(underline => {
+  underlineTypes.forEach((underline) => {
     it(`renders a ${linkType} with ${underline} underline class when underline is ${underline}`, () => {
       if (linkType === 'link') {
         mount(<Link {...mockedContent} variant="link" underline={underline} />);
         cy.get('a').should('have.class', `MuiLink-underline${capitalize(underline)}`);
-      }
-      else {
+      } else {
         mount(<Link {...mockedContent} underline={underline} />);
         cy.get('button').should('have.attr', 'underline', underline);
       }
@@ -52,7 +55,8 @@ describe('Link', () => {
     describe('variant attribute', () => {
       it('renders a basic link when variant is link', () => {
         mount(<Link {...mockedContent} variant="link" />);
-        cy.get('a').should('exist')
+        cy.get('a')
+          .should('exist')
           .and('have.attr', 'href', `/${mockedContent.href}`)
           .and('have.text', mockedContent.text);
         cy.percySnapshot();
@@ -60,32 +64,27 @@ describe('Link', () => {
 
       it('renders a basic link when variant is not provided', () => {
         mount(<Link {...mockedContent} variant="" />);
-        cy.get('a').should('exist')
+        cy.get('a')
+          .should('exist')
           .and('have.attr', 'href', `/${mockedContent.href}`)
           .and('have.text', mockedContent.text);
       });
 
       it('renders a contained button when variant is button-contained', () => {
         mount(<Link {...mockedContent} variant="button-contained" />);
-        cy.get('button').should('exist')
-          .and('have.class', 'MuiButton-contained')
-          .and('have.text', mockedContent.text);
+        cy.get('button').should('exist').and('have.class', 'MuiButton-contained').and('have.text', mockedContent.text);
         cy.percySnapshot();
       });
 
       it('renders an outlined button when variant is button-outlined', () => {
         mount(<Link {...mockedContent} variant="button-outlined" />);
-        cy.get('button').should('exist')
-          .and('have.class', 'MuiButton-outlined')
-          .and('have.text', mockedContent.text);
+        cy.get('button').should('exist').and('have.class', 'MuiButton-outlined').and('have.text', mockedContent.text);
         cy.percySnapshot();
       });
 
       it('renders text as a button when variant is button-text', () => {
         mount(<Link {...mockedContent} variant="button-text" />);
-        cy.get('button').should('exist')
-          .and('have.class', 'MuiButton-text')
-          .and('have.text', mockedContent.text);
+        cy.get('button').should('exist').and('have.class', 'MuiButton-text').and('have.text', mockedContent.text);
         cy.percySnapshot();
       });
     });

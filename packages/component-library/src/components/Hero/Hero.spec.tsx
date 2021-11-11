@@ -6,7 +6,6 @@ import getFirstOfArray from '../../utils/getFirstOfArray';
 
 let mockedContent: HeroProps = { __typename: 'Hero', id: 'hero', title: 'test', theme: {} };
 
-
 beforeEach(() => {
   mockedContent = { ...mockContent() };
 });
@@ -16,15 +15,21 @@ describe('Hero', () => {
     it('renders a hero with correct content', () => {
       mount(<Hero {...mockedContent} />);
       cy.get('[data-testid=Hero]').should('exist');
-      cy.get('[data-testid=Hero-title]').should('exist')
-        .and('have.text', mockedContent.title);
+      cy.get('[data-testid=Hero-title]').should('exist').and('have.text', mockedContent.title);
 
       cy.get('[data-testid=Hero-subtitle]').should('exist').and('have.text', mockedContent.subtitle);
-      cy.get('[data-testid=Hero-body]').should('exist')
-        .and('have.text', mockedContent.body.json.content[0].content.map(c => c.content[0].content[0].value).join(''));
+      cy.get('[data-testid=Hero-body]')
+        .should('exist')
+        .and(
+          'have.text',
+          mockedContent.body.json.content[0].content.map((c) => c.content[0].content[0].value).join('')
+        );
 
-      cy.get('[data-testid=Hero-background]').should('exist').and('have.attr', 'src', mockedContent.background.file.url);
-      cy.get('[data-testid=Hero-image]').should('exist')
+      cy.get('[data-testid=Hero-background]')
+        .should('exist')
+        .and('have.attr', 'src', mockedContent.background.file.url);
+      cy.get('[data-testid=Hero-image]')
+        .should('exist')
         .and('have.attr', 'src', getFirstOfArray(mockedContent.image).file.url);
 
       cy.contains(mockedContent.actions[0]?.text).should('exist');

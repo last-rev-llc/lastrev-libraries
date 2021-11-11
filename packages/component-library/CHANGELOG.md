@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.26
+
+### Patch Changes
+
+- 5b5d8b1: Add missing type for Media
+
 ## 0.2.25
 
 ### Patch Changes
