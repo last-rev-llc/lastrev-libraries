@@ -98,7 +98,9 @@ const renderText =
 
     return (
       <>
-        <Typography variant={variant} data-testid={`Text-${variant}`}>{children}</Typography>
+        <Typography variant={variant} data-testid={`Text-${variant}`}>
+          {children}
+        </Typography>
       </>
     );
   };
@@ -110,7 +112,11 @@ const renderOptions = ({ links, renderNode }: { links?: TextLinks; renderNode?: 
   return {
     renderNode: {
       [INLINES.HYPERLINK]: (_: any, children: any) => {
-        return <Link href={_.data.uri} data-testid={`Text-${INLINES.HYPERLINK}`}>{children}</Link>;
+        return (
+          <Link href={_.data.uri} data-testid={`Text-${INLINES.HYPERLINK}`}>
+            {children}
+          </Link>
+        );
       },
       [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
         const id: string = node?.data?.target?.sys?.id;

@@ -36,7 +36,9 @@ describe('Section', () => {
     it('renders a section with intro text if provided', () => {
       const mockedIntroText = paragraphMock();
       mount(<Section {...mockedSplitPanel} introText={mockedIntroText} />);
-      cy.get('[data-testid=Section-introText]').should('exist').and('have.text', mockedIntroText.body.json.content[0].content[0].value);
+      cy.get('[data-testid=Section-introText]')
+        .should('exist')
+        .and('have.text', mockedIntroText.body.json.content[0].content[0].value);
       cy.percySnapshot();
     });
 

@@ -16,7 +16,6 @@ let mockedContent: HeroProps = { id: 'test-hero', __typename: 'Hero', theme: [] 
 beforeEach(() => {
   mockedContent = mockContent();
 });
-  
 
 const renderComponent = (content: HeroProps) => render(<Hero {...content} />);
 

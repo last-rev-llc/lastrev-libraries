@@ -25,7 +25,7 @@ import ConditionalWrapper from '../ConditionalWrapper';
 export interface SectionProps {
   __typename?: string;
   introText?: TextProps;
-  contents?: Array<{ __typename?: string; id?: string; file?: any; }>;
+  contents?: Array<{ __typename?: string; id?: string; file?: any }>;
   background?: MediaProps;
   backgroundColor?: string;
   variant?: string;

@@ -139,12 +139,7 @@ HeroProps) => {
             ) : null}
             {image ? (
               <Grid item xs={12} md={6}>
-                <Media
-                  {...getFirstOfArray(image)}
-                  {...sidekick(sidekickLookup?.image)}
-                  testId="Hero-image"
-                  priority
-                />
+                <Media {...getFirstOfArray(image)} {...sidekick(sidekickLookup?.image)} testId="Hero-image" priority />
               </Grid>
             ) : null}
           </Grid>

@@ -55,18 +55,10 @@ export const Card = ({
         {media || loading ? (
           <CardMedia sx={{ display: 'flex', justifyContent: 'center' }}>
             {!loading ? (
-              <Media
-                {...sidekick(sidekickLookup?.media)}
-                {...getFirstOfArray(media)}
-                testId="Card-media"
-              />
+              <Media {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
             ) : (
               <Skeleton>
-                <Media
-                  {...sidekick(sidekickLookup?.media)}
-                  {...getFirstOfArray(media)}
-                  testId="Card-media"
-                />
+                <Media {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
               </Skeleton>
             )}
           </CardMedia>

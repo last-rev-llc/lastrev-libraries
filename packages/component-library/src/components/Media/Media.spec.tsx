@@ -15,14 +15,15 @@ describe('Media', () => {
   context('renders correctly', () => {
     it('renders file in a media item when variant is not embed', () => {
       mount(<Media {...mockedContent} />);
-      cy.get('[data-testid=Media]').should('exist')
+      cy.get('[data-testid=Media]')
+        .should('exist')
         .and('have.attr', 'src', mockedContent.file.url)
         .and('have.attr', 'alt', mockedContent.title);
       cy.percySnapshot();
     });
 
     it('renders file in an iframe when variant is embed', () => {
-      mount(<Media {...mockedContent} variant='embed' />);
+      mount(<Media {...mockedContent} variant="embed" />);
       cy.get('iframe').should('exist').and('have.attr', 'src', mockedContent.file.url);
       cy.percySnapshot();
     });

@@ -155,7 +155,11 @@ const CustomForm = ({
             pointerEvents: status === 'success' ? 'initial' : 'none'
           }}
         >
-          {successMessage ? <Text body={successMessage} data-testid="MailchimpForm-successMessage" /> : <Box>Success</Box>}
+          {successMessage ? (
+            <Text body={successMessage} data-testid="MailchimpForm-successMessage" />
+          ) : (
+            <Box>Success</Box>
+          )}
         </Grid>
       </FormContainer>
     </form>
