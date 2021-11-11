@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.27
+
+### Patch Changes
+
+- 5dcade7: HOTFIX: Section cannot read id of undefined
+
 ## 0.2.26
 
 ### Patch Changes
