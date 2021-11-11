@@ -25,7 +25,7 @@ import ConditionalWrapper from '../ConditionalWrapper';
 export interface SectionProps {
   __typename?: string;
   introText?: TextProps;
-  contents?: Array<{ __typename?: string; id?: string; file?: any }>;
+  contents?: Array<{ __typename?: string; id?: string; file?: any } | undefined>;
   background?: MediaProps;
   backgroundColor?: string;
   variant?: string;
@@ -52,6 +52,7 @@ const VARIANTS_GRID_ITEM: Record<string, any> = {
   'three-per-row': { xs: 12, sm: 6, md: 4 },
   'default': { xs: 12, sm: true }
 };
+
 const Section = ({
   introText,
   contents,
@@ -80,23 +81,21 @@ const Section = ({
         }}
         variant={variant}
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
-        {...omit(props, 'theme')}
-      >
+        {...omit(props, 'theme')}>
         {background ? <BackgroundMedia {...background} /> : null}
         <ConditionalWrapper
           condition={!!contentWidth}
-          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}
-        >
+          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Section-introText" />
           )}
           <GridContainer
             container
             sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-            {...(contentSpacing && { spacing: contentSpacing })}
-          >
+            {...(contentSpacing && { spacing: contentSpacing })}>
             {contents?.map((content, idx) => {
               const itemStyle = get(styles?.gridItems, idx);
+              if (!content) return null;
               return (
                 <GridItem
                   item
@@ -111,8 +110,7 @@ const Section = ({
                   sx={{
                     ...styles?.gridItem,
                     ...itemStyle
-                  }}
-                >
+                  }}>
                   <ContentModule {...content} />
                 </GridItem>
               );

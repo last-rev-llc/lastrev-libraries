@@ -81,7 +81,7 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
 const Root = styled(AppBar, {
   name: 'Header',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'menuVisible',
+  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'menuVisible' && prop !== 'menuBreakpoint',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; menuVisible: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
   ${({ theme, menuVisible, menuBreakpoint }) => `
