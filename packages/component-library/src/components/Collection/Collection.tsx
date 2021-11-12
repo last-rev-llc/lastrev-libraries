@@ -16,7 +16,7 @@ import ConditionalWrapper from '../ConditionalWrapper';
 
 export interface CollectionProps {
   id: string;
-  __typename: string;
+  __typename?: string;
   items?: CardProps[] | NavigationItemProps[];
   background?: MediaProps;
   variant?: string;
@@ -50,16 +50,14 @@ export const Collection = ({
         data-testid="Collection"
         {...omit(props, 'theme')}
         {...sidekick(sidekickLookup)}
-        sx={styles?.root}
-      >
+        sx={styles?.root}>
         <ConditionalWrapper
           condition={!!itemsWidth}
           wrapper={(children) => (
             <ContentContainer data-testid="Collection-contentContainer" maxWidth={itemsWidth}>
               {children}
             </ContentContainer>
-          )}
-        >
+          )}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
           )}

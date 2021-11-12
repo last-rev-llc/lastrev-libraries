@@ -8,7 +8,7 @@ import Card, { CardProps } from '../Card';
 import Text, { RichText } from '../Text';
 
 export interface CarouselProps {
-  __typename: string;
+  __typename?: string;
   variant?: any;
   title: string;
   body?: RichText;
@@ -47,8 +47,7 @@ export const Carousel = ({ variant, title, body, items, itemsVariant, theme }: C
                 style={{
                   display: activeStep === idx ? 'block' : 'none',
                   margin: '0 auto'
-                }}
-              >
+                }}>
                 <Card {...item} />
               </Grid>
             );

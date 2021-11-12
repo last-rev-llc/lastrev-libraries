@@ -15,7 +15,7 @@ import Media, { MediaProps } from '../Media';
 import sidekick from '../../utils/sidekick';
 
 interface Content {
-  __typename: string;
+  __typename?: string;
   id: string;
 }
 
@@ -161,8 +161,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ..
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}
-      >
+        {...props}>
         {documentToReactComponents(body?.json, renderOptions({ links: body?.links, renderNode }))}
       </Root>
     </ErrorBoundary>

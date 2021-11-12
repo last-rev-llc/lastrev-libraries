@@ -17,7 +17,7 @@ import getFirstOfArray from '../../utils/getFirstOfArray';
 
 export interface HeroProps {
   id: string;
-  __typename: string;
+  __typename?: string;
   overline?: string;
   title?: string;
   subtitle?: string;
@@ -67,8 +67,7 @@ HeroProps) => {
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined,
           py: 4
-        }}
-      >
+        }}>
         {background ? (
           <Box
             sx={{
@@ -78,8 +77,7 @@ HeroProps) => {
               left: 0,
               width: '100%',
               height: '100%'
-            }}
-          >
+            }}>
             <Media
               testId="Hero-background"
               {...background}
@@ -99,8 +97,7 @@ HeroProps) => {
                       data-testid="Hero-overline"
                       variant="overline"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.overline)}
-                    >
+                      {...sidekick(sidekickLookup?.overline)}>
                       {overline}
                     </Typography>
                   ) : null}
@@ -110,8 +107,7 @@ HeroProps) => {
                       variant="h1"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.title)}
-                    >
+                      {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
                   ) : null}
@@ -121,8 +117,7 @@ HeroProps) => {
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
                       sx={{ color: !title ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.subtitle)}
-                    >
+                      {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>
                   ) : null}
@@ -138,9 +133,9 @@ HeroProps) => {
               </Grid>
             ) : null}
             {image ? (
-              <Grid item xs={12} md={6}>
+              <MediaRoot item xs={12} md={6}>
                 <Media {...getFirstOfArray(image)} {...sidekick(sidekickLookup?.image)} testId="Hero-image" priority />
-              </Grid>
+              </MediaRoot>
             ) : null}
           </Grid>
         </ContentContainer>
@@ -224,6 +219,13 @@ const Root = styled(Box, {
   justifyContent: 'center',
   alignContent: 'center'
 }));
+
+const MediaRoot = styled(Grid, {
+  name: 'Hero',
+  slot: 'MediaRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.mediaRoot]
+})``;
 
 const ContentContainer = styled(Container, {
   name: 'Hero',
