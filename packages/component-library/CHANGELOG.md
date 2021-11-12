@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.28
+
+### Patch Changes
+
+- 9516d32: Make \_\_typename optional and fix Theme merging
+
 ## 0.2.27
 
 ### Patch Changes
