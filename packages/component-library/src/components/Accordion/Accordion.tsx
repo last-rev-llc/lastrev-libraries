@@ -9,7 +9,7 @@ import sidekick from '../../utils/sidekick';
 import Text, { RichText } from '../Text';
 
 export interface AccordionProps extends MuiAccordionProps {
-  __typename: string;
+  __typename?: string;
   internalTitle: string;
   variant?: any;
   title?: string;
