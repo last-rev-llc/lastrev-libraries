@@ -20,9 +20,10 @@ const writeFragmentData = async (
   fragmentName: string,
   fragmentData: FragmentData,
   outputDir: string,
-  fragmentDataMapping: FragmentDataMapping
+  fragmentDataMapping: FragmentDataMapping,
+  typeMappings: Record<string, string>
 ): Promise<void> => {
-  const contentTypeDir = join(outputDir, fragmentData.contentType);
+  const contentTypeDir = join(outputDir, capitalizeFirst(fragmentData.contentType, typeMappings));
 
   await ensureDir(contentTypeDir);
 
@@ -42,7 +43,6 @@ const writeFragmentData = async (
   }
 
   const output = template({
-    capitalizeFirst,
     importedFragments,
     standardImports,
     fragmentName,

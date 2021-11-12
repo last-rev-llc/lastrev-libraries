@@ -5,8 +5,8 @@ import { FragmentData, FragmentDataMapping, MergedJsonRepresentation, MergedJson
 type NonReferenceFieldHandler = (fieldName: string, fieldType: string) => void;
 type ReferenceFieldHandler = (fieldName: string, data: MergedJsonRepresentationMap) => void;
 
-const constructPath = (path: string, fieldname: string, contentType: string) => {
-  return `${path}_${fieldname}_${capitalizeFirst(contentType)}`;
+const constructPath = (path: string, fieldname: string, contentType: string, typeMappings: Record<string, string>) => {
+  return `${path}_${fieldname}_${capitalizeFirst(contentType, typeMappings)}`;
 };
 export default class Node {
   static: boolean = false;
@@ -16,11 +16,13 @@ export default class Node {
   path: string;
   parent?: Node;
   staticTypes: string[] = [];
+  typeMappings: Record<string, string>;
 
   constructor(
     data: MergedJsonRepresentation,
     contentType: string,
     staticTypes: string[],
+    typeMappings: Record<string, string>,
     parent?: Node,
     fieldName?: string
   ) {
@@ -28,6 +30,7 @@ export default class Node {
     this.contentType = contentType;
     this.data = data;
     this.staticTypes = staticTypes;
+    this.typeMappings = typeMappings;
 
     if (this.parent && !fieldName) {
       throw Error('fieldName must be provided when creating a child node');
@@ -38,8 +41,8 @@ export default class Node {
     }
 
     this.path = !!this.parent
-      ? constructPath(parent?.path as string, fieldName as string, this.contentType)
-      : capitalizeFirst(this.contentType);
+      ? constructPath(parent?.path as string, fieldName as string, this.contentType, this.typeMappings)
+      : capitalizeFirst(this.contentType, this.typeMappings);
   }
 
   traverseJson(handleRef: ReferenceFieldHandler, handleNonRef: NonReferenceFieldHandler) {
@@ -51,7 +54,7 @@ export default class Node {
           handleRef(fieldName, fieldRepresentation);
         }
       });
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error traversing JSON', err.message, this);
     }
   }
@@ -60,10 +63,11 @@ export default class Node {
     const children: Node[] = [];
     try {
       const parentNode = this;
+      const typeMappings = this.typeMappings;
 
       this.traverseJson((fieldName, fieldData) => {
         each(fieldData, (fieldValue, contentType) => {
-          children.push(new Node(fieldValue, contentType, this.staticTypes, parentNode, fieldName));
+          children.push(new Node(fieldValue, contentType, this.staticTypes, typeMappings, parentNode, fieldName));
         });
       }, noop);
     } catch (e) {
@@ -77,14 +81,17 @@ export default class Node {
     fragment.referenceFields = fragment.referenceFields || {};
 
     const node = this;
+    const typeMappings = this.typeMappings;
     this.traverseJson(
       (fieldName, fieldData) => {
         if (!fragment.referenceFields[fieldName]) fragment.referenceFields[fieldName] = new Set<string>();
         each(fieldData, (_fieldValue, contentType) => {
           if (node.staticTypes.includes(contentType)) {
-            fragment.referenceFields[fieldName]?.add(`${capitalizeFirst(contentType)}Fragment`);
+            fragment.referenceFields[fieldName]?.add(`${capitalizeFirst(contentType, typeMappings)}Fragment`);
           } else {
-            fragment.referenceFields[fieldName]?.add(`${constructPath(node.path, fieldName, contentType)}Fragment`);
+            fragment.referenceFields[fieldName]?.add(
+              `${constructPath(node.path, fieldName, contentType, typeMappings)}Fragment`
+            );
           }
         });
       },
@@ -128,6 +135,6 @@ export default class Node {
   };
 
   getFragmentName(): string {
-    return `${this.static ? capitalizeFirst(this.contentType) : this.path}Fragment`;
+    return `${this.static ? capitalizeFirst(this.contentType, this.typeMappings) : this.path}Fragment`;
   }
 }

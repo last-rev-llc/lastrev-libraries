@@ -1,5 +1,6 @@
-const capitalizeFirst = (str: string) => {
-  return str.charAt(0).toUpperCase() + str.slice(1);
+const capitalizeFirst = (str: string, typeMappings: Record<string, string>) => {
+  const mappedStr = typeMappings[str] || str;
+  return mappedStr.charAt(0).toUpperCase() + mappedStr.slice(1);
 };
 
 export default capitalizeFirst;
