@@ -1,4 +1,4 @@
-import DataLoader from 'dataloader';
+import DataLoader, { Options } from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
 import { compact, filter, negate, each, isEmpty, isError, isNil, isString, map, some, values, zipObject } from 'lodash';
 import logger from 'loglevel';
@@ -6,6 +6,12 @@ import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
 import { ItemKey, ContentfulLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
+
+const options: Options<ItemKey, any, string> = {
+  cacheKeyFn: (key: ItemKey) => {
+    return key.preview ? `${key.id}-preview` : `${key.id}-prod`;
+  }
+};
 
 const parse = (r: string | Error | null): any => {
   if (isString(r) && r.length) {
@@ -181,9 +187,9 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     return outArray;
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'));
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'));
-  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher());
+  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
+  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
   const fetchAllContentTypes = async (preview: boolean) => {
     try {
       let timer = new Timer('Fetched all content types from redis');

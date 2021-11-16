@@ -1,10 +1,16 @@
-import DataLoader from 'dataloader';
+import DataLoader, { Options } from 'dataloader';
 import { Entry, Asset, createClient, ContentfulClientApi } from 'contentful';
 import { find, map, partition } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import { ItemKey, ContentfulLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
+
+const options: Options<ItemKey, any, string> = {
+  cacheKeyFn: (key: ItemKey) => {
+    return key.preview ? `${key.id}-preview` : `${key.id}-prod`;
+  }
+};
 
 const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
   const prodClient = createClient({
@@ -77,9 +83,9 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
     };
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'));
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'));
-  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher());
+  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
+  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
   const fetchAllContentTypes = async (preview: boolean) => {
     try {
       const timer = new Timer('Fetched all content types from CMS');

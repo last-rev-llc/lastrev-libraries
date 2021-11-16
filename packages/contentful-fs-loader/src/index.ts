@@ -1,4 +1,4 @@
-import DataLoader from 'dataloader';
+import DataLoader, { Options } from 'dataloader';
 import { Entry, Asset } from 'contentful';
 import { readJSON, readdir } from 'fs-extra';
 import { filter, identity, isNil } from 'lodash';
@@ -7,6 +7,12 @@ import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import { ItemKey, ContentfulLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
+
+const options: Options<ItemKey, any, string> = {
+  cacheKeyFn: (key: ItemKey) => {
+    return key.preview ? `${key.id}-preview` : `${key.id}-prod`;
+  }
+};
 
 const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
   const getUri = (...args: string[]) => {
@@ -78,11 +84,12 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
     };
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'));
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'));
-  const entryIdsByContentTypeLoader = new DataLoader(getBatchEntryIdsByContentTypeFetcher());
+  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
+  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+  const entryIdsByContentTypeLoader = new DataLoader(getBatchEntryIdsByContentTypeFetcher(), options);
   const entriesByContentTypeLoader = new DataLoader(
-    getBatchEntriesByContentTypeFetcher(entryLoader, entryIdsByContentTypeLoader)
+    getBatchEntriesByContentTypeFetcher(entryLoader, entryIdsByContentTypeLoader),
+    options
   );
   const fetchAllContentTypes = async (preview: boolean) => {
     try {

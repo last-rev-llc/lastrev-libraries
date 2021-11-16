@@ -1,4 +1,4 @@
-import DataLoader from 'dataloader';
+import DataLoader, { Options } from 'dataloader';
 import { Entry, Asset } from 'contentful';
 import { transform, omitBy, filter, negate, isEmpty, isError, isNil, map, some } from 'lodash';
 import logger from 'loglevel';
@@ -19,6 +19,12 @@ import { zipObject } from 'lodash';
   data: the raw data of the object
 
 */
+
+const options: Options<ItemKey, any, string> = {
+  cacheKeyFn: (key: ItemKey) => {
+    return key.preview ? `${key.id}-preview` : `${key.id}-prod`;
+  }
+};
 
 const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoaders): ContentfulLoaders => {
   AWS.config.update({
@@ -217,9 +223,9 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     return map(keys, (key) => keyedResults[`${key.id}::${key.preview}`] ?? []);
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'));
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'));
-  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher());
+  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
+  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
   const fetchAllContentTypes = async (preview: boolean) => {
     try {
       let timer = new Timer('Fetched all content types from dynamodb');
