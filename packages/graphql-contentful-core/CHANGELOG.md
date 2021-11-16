@@ -1,5 +1,15 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.31
+
+### Patch Changes
+
+- d88df66: Added cacheKeyFn to all loaders to fix caching issues
+- Updated dependencies [d88df66]
+  - @last-rev/contentful-cms-loader@0.1.4
+  - @last-rev/contentful-fs-loader@0.1.10
+  - @last-rev/contentful-redis-loader@0.1.7
+
 ## 0.1.30
 
 ### Patch Changes
