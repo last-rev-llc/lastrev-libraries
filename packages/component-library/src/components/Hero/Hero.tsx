@@ -14,6 +14,7 @@ import Text, { RichText } from '../Text';
 import { Breakpoint } from '@mui/material';
 import sidekick from '../../utils/sidekick';
 import getFirstOfArray from '../../utils/getFirstOfArray';
+import { useThemeProps } from '@mui/system';
 
 export interface HeroProps {
   id: string;
@@ -37,24 +38,27 @@ export interface HeroProps {
     gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
   };
   sidekickLookup?: any;
+  disableGutters?: boolean;
 }
 
-export const Hero = ({
-  variant,
-  background,
-  backgroundColor,
-  contentWidth,
-  contentHeight = 'lg',
-  overline,
-  title,
-  subtitle,
-  body,
-  actions,
-  image,
-  sidekickLookup
-}: // theme
-HeroProps) => {
+export const Hero = (props: HeroProps) => {
   const theme = useTheme();
+  const {
+    variant,
+    background,
+    backgroundColor,
+    contentWidth,
+    contentHeight = 'lg',
+    overline,
+    title,
+    subtitle,
+    body,
+    actions,
+    image,
+    sidekickLookup,
+    disableGutters = true
+  } = useThemeProps({ props, name: 'Hero' });
+
   return (
     <ErrorBoundary>
       <Root
@@ -67,10 +71,9 @@ HeroProps) => {
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined,
           py: 4
-        }}
-      >
+        }}>
         {background ? (
-          <Box
+          <BackgroundRoot
             sx={{
               position: 'absolute',
               zIndex: 0,
@@ -78,8 +81,7 @@ HeroProps) => {
               left: 0,
               width: '100%',
               height: '100%'
-            }}
-          >
+            }}>
             <Media
               testId="Hero-background"
               {...background}
@@ -87,9 +89,9 @@ HeroProps) => {
               priority
               sx={{ objectFit: 'cover', width: '100%', height: '100%' }}
             />
-          </Box>
+          </BackgroundRoot>
         ) : null}
-        <ContentContainer maxWidth={contentWidth} disableGutters>
+        <ContentContainer maxWidth={contentWidth} disableGutters={disableGutters}>
           <Grid container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
               <Grid item container direction="column" spacing={2} xs={12} md={6}>
@@ -99,8 +101,7 @@ HeroProps) => {
                       data-testid="Hero-overline"
                       variant="overline"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.overline)}
-                    >
+                      {...sidekick(sidekickLookup?.overline)}>
                       {overline}
                     </Typography>
                   ) : null}
@@ -110,8 +111,7 @@ HeroProps) => {
                       variant="h1"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.title)}
-                    >
+                      {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
                   ) : null}
@@ -121,18 +121,17 @@ HeroProps) => {
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
                       sx={{ color: !title ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.subtitle)}
-                    >
+                      {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>
                   ) : null}
                   {body ? <Text body={body} data-testid="Hero-body" {...sidekick(sidekickLookup?.body)} /> : null}
                   {actions ? (
-                    <Box pt={title || subtitle || body ? 3 : undefined} {...sidekick(sidekickLookup?.actions)}>
+                    <ActionsRoot pt={title || subtitle || body ? 3 : undefined} {...sidekick(sidekickLookup?.actions)}>
                       {actions?.map((link) => (
                         <Link key={link.id} {...link} />
                       ))}
-                    </Box>
+                    </ActionsRoot>
                   ) : null}
                 </Grid>
               </Grid>
@@ -216,7 +215,10 @@ const Root = styled(Box, {
   name: 'Hero',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.root]
+  overridesResolver: ({ contentHeight }, styles) => [
+    styles.root,
+    styles[`contentHeight${contentHeight?.toUpperCase()}`]
+  ]
 })<{ variant?: string; contentHeight: string }>(({ contentHeight }) => ({
   width: '100%',
   minHeight: CONTENT_HEIGHT[contentHeight] ?? 'auto',
@@ -231,6 +233,22 @@ const MediaRoot = styled(Grid, {
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.mediaRoot]
 })``;
+
+const BackgroundRoot = styled(Box, {
+  name: 'Hero',
+  slot: 'BackgroundRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.backgroundRoot]
+})``;
+
+const ActionsRoot = styled(Box, {
+  name: 'Hero',
+  slot: 'ActionsRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.actionsRoot]
+})`
+  display: flex;
+`;
 
 const ContentContainer = styled(Container, {
   name: 'Hero',
