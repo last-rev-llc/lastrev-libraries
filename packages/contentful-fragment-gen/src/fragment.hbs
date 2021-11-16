@@ -3,7 +3,7 @@ import gql from 'graphql-tag';
 import {{ this }} from '../{{this}}';
 {{/each}}
 {{#each importedFragments}}
-import {{ @key }} from '../{{this.contentType}}/{{@key}}';
+import {{ @key }} from '../{{capitalizeFirst this.contentType}}/{{@key}}';
 {{/each}}
 
 const {{ fragmentName }} = gql`

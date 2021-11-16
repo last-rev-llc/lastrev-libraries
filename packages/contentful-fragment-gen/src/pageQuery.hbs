@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 {{#each data}}
-import {{@key}} from '../fragments/{{this.contentType}}/{{@key}}';
+import {{@key}} from '../fragments/{{capitalizeFirst this.contentType}}/{{@key}}';
 {{/each}}
 
 export const PageQuery = gql`

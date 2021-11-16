@@ -1,7 +1,7 @@
 import { createClient } from 'contentful';
 import { readFile } from 'fs-extra';
 import { each, every, map, reduce, flatMap } from 'lodash';
-import { join } from 'path';
+import { join, resolve } from 'path';
 import { FileMatcher } from 'file-matcher';
 import generateFragmentData from './generateFragmentData';
 import { ContentTypeMap, FragmentDataMapping, MergedJsonRepresentationMap, QueryJson } from './types';
@@ -15,6 +15,7 @@ import extractNonReferenceFields from './extractNonReferenceFields';
 import mergeContentTypeJsons from './mergeContentTypeJsons';
 import buildReferenceTree from './buildReferenceTree';
 import capitalizeFirst from './capitalizeFirst';
+import Handlebars from 'handlebars';
 
 logger.setLevel('info');
 
@@ -27,18 +28,20 @@ type RunProps = {
   contentfulSpaceId: string;
   contentfulEnvironment: string;
   linkContentType?: string;
+  extensions?: string;
 };
 
 const writeAllFragments = async (
   fragmentDataMapping: FragmentDataMapping,
   outputDir: string,
+  typeMappings: Record<string, string>,
   linkContentType?: string
 ): Promise<void> => {
   await Promise.all([
     writeStandardFragments(outputDir),
-    ...(linkContentType ? [writeLinkFragment(outputDir, linkContentType)] : []),
+    ...(linkContentType ? [writeLinkFragment(outputDir, linkContentType, typeMappings)] : []),
     ...map(fragmentDataMapping, (fragmentData, fragmentName) =>
-      writeFragmentData(fragmentName, fragmentData, join(outputDir, 'fragments'), fragmentDataMapping)
+      writeFragmentData(fragmentName, fragmentData, join(outputDir, 'fragments'), fragmentDataMapping, typeMappings)
     )
   ]);
 };
@@ -81,9 +84,13 @@ const getInputJsons = async (inputDir: string): Promise<QueryJson[]> => {
   );
 };
 
-const updateWithLinkFragment = (fragmentDataMapping: FragmentDataMapping, linkContentType?: string) => {
+const updateWithLinkFragment = (
+  fragmentDataMapping: FragmentDataMapping,
+  typeMappings: Record<string, string>,
+  linkContentType?: string
+) => {
   if (!linkContentType) return;
-  fragmentDataMapping[`${capitalizeFirst(linkContentType)}Fragment`] = {
+  fragmentDataMapping[`${capitalizeFirst(linkContentType, typeMappings)}Fragment`] = {
     contentType: linkContentType,
     static: true,
     root: true,
@@ -95,10 +102,14 @@ const updateWithLinkFragment = (fragmentDataMapping: FragmentDataMapping, linkCo
   };
 };
 
-const writeOutput = async (fragmentDataMapping: FragmentDataMapping, outputDir: string) => {
+const writeOutput = async (
+  fragmentDataMapping: FragmentDataMapping,
+  outputDir: string,
+  typeMappings: Record<string, string>
+) => {
   const timer = new Timer('Wrote output files');
   await Promise.all([
-    writeAllFragments(fragmentDataMapping, outputDir),
+    writeAllFragments(fragmentDataMapping, outputDir, typeMappings),
     writePageQuery(fragmentDataMapping, outputDir)
   ]);
   logger.info(timer.end());
@@ -110,8 +121,22 @@ const run = async ({
   contentfulDeliveryToken,
   contentfulSpaceId,
   contentfulEnvironment,
-  linkContentType
+  linkContentType,
+  extensions
 }: RunProps) => {
+  let typeMappings: Record<string, string> = {};
+
+  if (extensions) {
+    try {
+      const loadedExtensions = require(resolve(process.cwd(), extensions));
+      typeMappings = loadedExtensions.typeMappings || {};
+    } catch (error: any) {
+      console.log(`Unable to load extensions from ${extensions}: ${error.message}`);
+    }
+  }
+
+  Handlebars.registerHelper('capitalizeFirst', (str) => capitalizeFirst(str, typeMappings));
+
   const client = createClient({
     space: contentfulSpaceId,
     accessToken: contentfulDeliveryToken,
@@ -136,11 +161,11 @@ const run = async ({
 
   const allStatics = gatherStaticTypes(allContentTypes, mergedJsonRepresentationMap);
 
-  const fragmentDataMapping = generateFragmentData(mergedJsonRepresentationMap, allStatics);
+  const fragmentDataMapping = generateFragmentData(mergedJsonRepresentationMap, allStatics, typeMappings);
 
-  updateWithLinkFragment(fragmentDataMapping, linkContentType);
+  updateWithLinkFragment(fragmentDataMapping, typeMappings, linkContentType);
 
-  await writeOutput(fragmentDataMapping, outputDir);
+  await writeOutput(fragmentDataMapping, outputDir, typeMappings);
 };
 
 /*

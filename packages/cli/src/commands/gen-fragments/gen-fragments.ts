@@ -31,10 +31,21 @@ program
     '-l, --link-content-type <Link Content Type ID>',
     'The ID of the Link or Element Link content type to convert'
   )
+  .option(
+    '-x, --extensions <extensions>',
+    'The optional relative path of the built extensions package touse for typeMappings'
+  )
   .parse(process.argv);
 
-const { inputDirs, outputDir, contentfulEnvironment, contentfulDeliveryToken, contentfulSpaceId, linkContentType } =
-  program.opts();
+const {
+  inputDirs,
+  outputDir,
+  contentfulEnvironment,
+  contentfulDeliveryToken,
+  contentfulSpaceId,
+  linkContentType,
+  extensions
+} = program.opts();
 
 generate({
   inputDirs: map(inputDirs, (inputDir) => resolve(process.cwd(), inputDir)),
@@ -42,7 +53,8 @@ generate({
   contentfulDeliveryToken,
   contentfulEnvironment,
   contentfulSpaceId,
-  linkContentType
+  linkContentType,
+  extensions
 })
   .then(() => process.exit(0))
   .catch((e) => {

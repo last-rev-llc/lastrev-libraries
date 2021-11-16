@@ -25,12 +25,13 @@ const generateFragmentDataDfs = (root: Node, fragmentMapping: FragmentDataMappin
 
 const generateFragmentData = (
   mergedJsonRepresentationMap: MergedJsonRepresentationMap,
-  allStatics: string[]
+  allStatics: string[],
+  typeMappings: Record<string, string>
 ): FragmentDataMapping => {
   const fragmentDataMapping: FragmentDataMapping = {};
   const timer = new Timer('Generated fragment data');
   each(mergedJsonRepresentationMap, (jsonRepresentation, contentTypeId) => {
-    generateFragmentDataDfs(new Node(jsonRepresentation, contentTypeId, allStatics), fragmentDataMapping);
+    generateFragmentDataDfs(new Node(jsonRepresentation, contentTypeId, allStatics, typeMappings), fragmentDataMapping);
   });
   logger.info(timer.end());
   return fragmentDataMapping;
