@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.29
+
+### Patch Changes
+
+- 9287268: Add Theme defaultProps to Media, Section and Hero
+
 ## 0.2.28
 
 ### Patch Changes
