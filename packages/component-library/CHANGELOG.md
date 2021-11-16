@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.30
+
+### Patch Changes
+
+- 6fbf102: Fix color schemes not working
+
 ## 0.2.29
 
 ### Patch Changes
