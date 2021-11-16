@@ -5,6 +5,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 import ArtDirectedImage from '../ArtDirectedImage';
 import sidekick from '../../utils/sidekick';
+import { useThemeProps } from '@mui/system';
 
 export interface File {
   url: string;
@@ -34,7 +35,11 @@ export interface MediaProps {
 }
 
 export interface MediaOverrides {}
-const Media = ({ variant, file, title, fileMobile, fileTablet, testId, sidekickLookup, ...rest }: MediaProps) => {
+const Media = (props: MediaProps) => {
+  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup, ...rest } = useThemeProps({
+    name: 'Media',
+    props
+  });
   // TODO: Add support for video
   const image = file;
   const alt = title;
