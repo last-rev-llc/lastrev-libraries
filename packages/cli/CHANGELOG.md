@@ -1,5 +1,16 @@
 # @last-rev/cli
 
+## 0.1.31
+
+### Patch Changes
+
+- ca5c190: Updated fragment generator to use typeMappings for fragment names
+- d88df66: Added cacheKeyFn to all loaders to fix caching issues
+- Updated dependencies [ca5c190]
+- Updated dependencies [d88df66]
+  - @last-rev/contentful-fragment-gen@0.1.2
+  - @last-rev/graphql-contentful-core@0.1.31
+
 ## 0.1.30
 
 ### Patch Changes

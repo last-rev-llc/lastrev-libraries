@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.1.7
+
+### Patch Changes
+
+- d88df66: Added cacheKeyFn to all loaders to fix caching issues
+
 ## 0.1.6
 
 ### Patch Changes
