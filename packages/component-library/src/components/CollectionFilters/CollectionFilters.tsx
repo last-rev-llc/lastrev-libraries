@@ -1,5 +1,6 @@
 import React from 'react';
-import { Autocomplete, Grid, Chip, MenuItem, TextField, Button } from '@mui/material';
+import { Grid, Chip, MenuItem, TextField, Button } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
 import styled from '@mui/system/styled';
 import capitalize from 'lodash/capitalize';
 
@@ -77,8 +78,7 @@ const CollectionFilters = ({
                   label={`Select a ${label || id}`}
                   value={filter[id] ?? ''}
                   SelectProps={{ MenuProps: { disableScrollLock: true } }}
-                  onChange={handleChange(id)}
-                >
+                  onChange={handleChange(id)}>
                   {allOptions
                     ? allOptions[id]?.map(({ label, value }) => (
                         <MenuItem key={label} value={value ?? ''}>
@@ -93,9 +93,9 @@ const CollectionFilters = ({
               input = (
                 <Autocomplete
                   id={id}
-                  multiple={multiple}
+                  {...({ multiple } as any)}
                   value={filter[id]}
-                  onChange={(_event, newValue) => {
+                  onChange={(_event: any, newValue: any) => {
                     if (!newValue) {
                       setFilter({ ...filter, [id]: undefined });
                     } else {
@@ -107,9 +107,9 @@ const CollectionFilters = ({
                     }
                   }}
                   options={allOptions && allOptions[id]?.length ? allOptions[id] : []}
-                  getOptionLabel={(option) => capitalize(option.label)}
+                  getOptionLabel={(option: any) => capitalize(option.label)}
                   renderTags={(tagValue, getTagProps) =>
-                    tagValue.map((option, index) => (
+                    tagValue.map((option: any, index) => (
                       <Chip label={capitalize(option.label)} {...getTagProps({ index })} />
                     ))
                   }
@@ -142,8 +142,7 @@ const CollectionFilters = ({
           onClick={() => {
             setFilter({});
             if (onClearFilter) onClearFilter();
-          }}
-        >
+          }}>
           Clear
         </Button>
       </Grid>

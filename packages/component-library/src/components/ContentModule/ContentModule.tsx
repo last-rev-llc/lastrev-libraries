@@ -31,9 +31,9 @@ const getMUITheme = ({
   if (colorScheme && contextTheme.createSchemeTheme) {
     schemeTheme = contextTheme.createSchemeTheme(colorScheme);
   }
-
   if (Array.isArray(theme) || schemeTheme) {
     const merged: ThemeOptions = merge({}, contextTheme, ...(theme?.map((t) => omitBy(t, isNull)) || []), schemeTheme);
+
     return createTheme(merged);
   }
   return null;
@@ -69,7 +69,10 @@ function ContentModule({ __typename, theme, ...fields }: Props) {
       ? `${__typename}:${fields?.variant}`
       : __typename;
   const Main = React.useMemo(() => contentMapping[contentType], [contentType, __typename, fields?.variant]);
-  const providers = React.useMemo(() => getProviders({ theme }, contextTheme), [fields, contextTheme]);
+  const providers = React.useMemo(
+    () => getProviders({ theme, colorScheme: fields?.colorScheme }, contextTheme),
+    [fields, contextTheme]
+  );
   if (!Main) {
     // eslint-disable-next-line no-console
     console.info(

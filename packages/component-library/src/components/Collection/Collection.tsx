@@ -47,19 +47,18 @@ export const Collection = ({
     <ErrorBoundary>
       <Root
         variant={variant}
+        itemsVariant={itemsVariant}
         data-testid="Collection"
         {...omit(props, 'theme')}
         {...sidekick(sidekickLookup)}
-        sx={styles?.root}
-      >
+        sx={styles?.root}>
         <ConditionalWrapper
           condition={!!itemsWidth}
           wrapper={(children) => (
             <ContentContainer data-testid="Collection-contentContainer" maxWidth={itemsWidth}>
               {children}
             </ContentContainer>
-          )}
-        >
+          )}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
           )}
@@ -80,9 +79,9 @@ export const Collection = ({
 const Root = styled(Box, {
   name: 'Collection',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'itemsVariant',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>``;
+})<{ variant?: string; itemsVariant?: string }>``;
 
 const ContentContainer = styled(Container, {
   name: 'Collection',
