@@ -57,7 +57,9 @@ const Image = React.forwardRef<any, ImageProps>(
                   rel="preload"
                   href={src}
                   // @ts-ignore
-                  imagesrcset={getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj', q })?.srcSet}
+                  imagesrcset={
+                    getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj', q, unoptimized })?.srcSet
+                  }
                   as="image"
                   media={media}
                 />
