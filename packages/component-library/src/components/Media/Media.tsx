@@ -32,6 +32,8 @@ export interface MediaProps {
   testId?: string;
   priority?: boolean;
   disableInlineSVG?: boolean;
+  q?: number;
+  unoptimized?: boolean;
 }
 
 export interface MediaOverrides {}

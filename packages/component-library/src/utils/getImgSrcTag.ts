@@ -12,6 +12,7 @@ interface GetImgSrcParams {
   numColumns: number;
   returnAttrsType: string;
   q?: number;
+  unoptimized?: boolean;
 }
 
 interface GetImgSrcTag {
@@ -21,8 +22,19 @@ interface GetImgSrcTag {
 }
 
 const getRatio = ({ width, numColumns }: GetRatioParams): number => (width > 768 ? numColumns / 12 : numColumns / 6);
-export const getOptimizedUrl = ({ url, width, q }: { url: string; width: number; q: number }) => {
+export const getOptimizedUrl = ({
+  url,
+  width,
+  q,
+  unoptimized
+}: {
+  url: string;
+  width: number;
+  q: number;
+  unoptimized: boolean;
+}) => {
   let fetchUrl = `${url}`;
+  if (unoptimized) return fetchUrl;
   if (width && fetchUrl?.includes('ctfassets')) {
     fetchUrl = fetchUrl?.includes('?')
       ? `${fetchUrl}&w=${Math.round(width)}&q=${q}`
@@ -39,7 +51,8 @@ const getImgSrcTag = ({
   src,
   numColumns = 12,
   returnAttrsType = 'str',
-  q = 100
+  q = 0,
+  unoptimized = false
 }: GetImgSrcParams): GetImgSrcTag | string => {
   const attrs: GetImgSrcTag = {
     src
@@ -60,7 +73,7 @@ const getImgSrcTag = ({
   // ratio = 1 for full width (12), 0.5 for half width (6)
   const srcSets = map(
     filter(sizes, (fs) => fs <= maxWidth),
-    (s) => `${getOptimizedUrl({ url: src, width: s * getRatio({ width: s, numColumns }), q })} ${s}w`
+    (s) => `${getOptimizedUrl({ url: src, width: s * getRatio({ width: s, numColumns }), q, unoptimized })} ${s}w`
   );
   const attrSizes = map(
     filter(sizes, (fs) => fs <= maxWidth),

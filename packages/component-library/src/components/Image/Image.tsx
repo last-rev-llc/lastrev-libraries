@@ -12,7 +12,19 @@ const NODE_ENV: Env = process.env.NODE_ENV;
 
 const Image = React.forwardRef<any, ImageProps>(
   (
-    { src, className, media, columns = 12, priority = true, itemProp, testId, disableInlineSVG, q, ...imageProps },
+    {
+      src,
+      className,
+      media,
+      columns = 12,
+      priority = true,
+      itemProp,
+      testId,
+      disableInlineSVG,
+      q,
+      unoptimized,
+      ...imageProps
+    },
     ref
   ) => {
     if (!src) return null;
@@ -24,7 +36,7 @@ const Image = React.forwardRef<any, ImageProps>(
     } else {
       content = (
         <img
-          {...getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj', q })}
+          {...getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj', q, unoptimized })}
           ref={ref}
           data-testid={testId}
           className={className}
