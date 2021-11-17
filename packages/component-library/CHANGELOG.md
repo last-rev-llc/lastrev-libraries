@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.32
+
+### Patch Changes
+
+- f8da6bd: Add unoptimized flag to disable image optimizations
+
 ## 0.3.0
 
 ### Minor Changes
