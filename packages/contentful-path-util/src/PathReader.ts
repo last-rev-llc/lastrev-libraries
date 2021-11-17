@@ -4,6 +4,9 @@ import { PathNode } from './PathNode';
 import { PathStore } from './PathStore';
 import { DEFAULT_SITE_KEY } from './constants';
 import { iPathReader, PagePathsParam, SitemapPathEntry } from 'packages/types';
+import AsyncLock from 'async-lock';
+
+const lock = new AsyncLock();
 
 export default class PathReader implements iPathReader {
   trees: { [site: string]: PathTree } = {};
@@ -19,15 +22,18 @@ export default class PathReader implements iPathReader {
   }
 
   async load(site: string = DEFAULT_SITE_KEY): Promise<void> {
-    const tree = (this.trees[site] = new PathTree());
+    const tree = new PathTree();
     const serialized = await this.pathStore.load(site);
     tree.rebuildFromSerialized(serialized);
+    this.trees[site] = tree;
   }
 
   async ensureLoaded(site: string): Promise<void> {
-    if (!this.trees[site]) {
-      await this.load(site);
-    }
+    await lock.acquire(site, async () => {
+      if (!this.trees[site]) {
+        await this.load(site);
+      }
+    });
   }
 
   async getPathsByContentId(contentId: string, locale?: string, site: string = DEFAULT_SITE_KEY): Promise<string[]> {
