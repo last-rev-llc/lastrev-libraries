@@ -12,7 +12,7 @@ const NODE_ENV: Env = process.env.NODE_ENV;
 
 const Image = React.forwardRef<any, ImageProps>(
   (
-    { src, className, media, columns = 12, priority = true, itemProp, testId, disableInlineSVG, ...imageProps },
+    { src, className, media, columns = 12, priority = true, itemProp, testId, disableInlineSVG, q, ...imageProps },
     ref
   ) => {
     if (!src) return null;
@@ -24,7 +24,7 @@ const Image = React.forwardRef<any, ImageProps>(
     } else {
       content = (
         <img
-          {...getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj' })}
+          {...getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj', q })}
           ref={ref}
           data-testid={testId}
           className={className}
@@ -45,7 +45,7 @@ const Image = React.forwardRef<any, ImageProps>(
                   rel="preload"
                   href={src}
                   // @ts-ignore
-                  imagesrcset={getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj' })?.srcSet}
+                  imagesrcset={getImgSrcTag({ src, numColumns: columns, returnAttrsType: 'Obj', q })?.srcSet}
                   as="image"
                   media={media}
                 />
