@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.3.0
+
+### Minor Changes
+
+- 8ff6e58: Add quality param to Image
+
 ## 0.2.30
 
 ### Patch Changes
