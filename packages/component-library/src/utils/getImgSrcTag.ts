@@ -46,7 +46,7 @@ export const getOptimizedUrl = ({
   return fetchUrl;
 };
 
-const getImgSrcTag = ({ src, numColumns = 12, q = 0, unoptimized = false }: GetImgSrcParams): GetImgSrcTag => {
+const getImgSrcTag = ({ src, numColumns = 12, q, unoptimized = false }: GetImgSrcParams): GetImgSrcTag => {
   const attrs: GetImgSrcTag = {
     src
   };
