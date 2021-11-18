@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.2.34
+
+### Patch Changes
+
+- 5454930: Remove q if not set
+- 5454930: Add unoptimized flag to disable image optimizations
+
 ## 0.2.33
 
 ### Patch Changes
