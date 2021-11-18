@@ -10,7 +10,6 @@ interface GetRatioParams {
 interface GetImgSrcParams {
   src: string;
   numColumns: number;
-  returnAttrsType: string;
   q?: number;
   unoptimized?: boolean;
 }
@@ -30,8 +29,8 @@ export const getOptimizedUrl = ({
 }: {
   url: string;
   width: number;
-  q: number;
-  unoptimized: boolean;
+  q?: number;
+  unoptimized?: boolean;
 }) => {
   let fetchUrl = `${url}`;
   if (unoptimized) return fetchUrl;
@@ -47,22 +46,17 @@ export const getOptimizedUrl = ({
   return fetchUrl;
 };
 
-const getImgSrcTag = ({
-  src,
-  numColumns = 12,
-  returnAttrsType = 'str',
-  q = 0,
-  unoptimized = false
-}: GetImgSrcParams): GetImgSrcTag | string => {
+const getImgSrcTag = ({ src, numColumns = 12, q, unoptimized = false }: GetImgSrcParams): GetImgSrcTag => {
   const attrs: GetImgSrcTag = {
     src
   };
 
   if (src.indexOf('.svg') > -1) {
-    if (returnAttrsType === 'Obj') {
-      return attrs;
-    }
-    return `src="${attrs.src}"`;
+    // if (returnAttrsType === 'Obj') {
+    //   return attrs;
+    // }
+    // return `src="${attrs.src}"`;
+    return attrs;
   }
   const absWidth = 3840;
   // TODO: Make CMS-agnostic
@@ -85,9 +79,7 @@ const getImgSrcTag = ({
   attrs.srcSet = srcSets.join(', ');
   attrs.sizes = `${attrSizes.join(', ')}`;
 
-  if (returnAttrsType === 'Obj') return attrs;
-  if (returnAttrsType === 'src') return attrs.src;
-  return `src="${attrs.src}" srcset="${attrs.srcSet}" sizes="${attrs.sizes}"`;
+  return attrs;
 };
 
 export default getImgSrcTag;
