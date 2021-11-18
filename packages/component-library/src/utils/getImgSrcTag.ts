@@ -21,6 +21,7 @@ interface GetImgSrcTag {
 }
 
 const getRatio = ({ width, numColumns }: GetRatioParams): number => (width > 768 ? numColumns / 12 : numColumns / 6);
+
 export const getOptimizedUrl = ({
   url,
   width,
@@ -34,14 +35,14 @@ export const getOptimizedUrl = ({
 }) => {
   let fetchUrl = `${url}`;
   if (unoptimized) return fetchUrl;
+  const options = [];
+  if (q) options.push(`q=${q}`);
   if (width && fetchUrl?.includes('ctfassets')) {
-    fetchUrl = fetchUrl?.includes('?')
-      ? `${fetchUrl}&w=${Math.round(width)}&q=${q}`
-      : `${fetchUrl}?w=${Math.round(width)}&q=${q}`;
+    if (width) options.push(`w=${Math.round(width)}`);
+    fetchUrl = fetchUrl?.includes('?') ? `${fetchUrl}&${options.join('&')}` : `${fetchUrl}?${options.join('&')}`;
   } else {
-    fetchUrl = fetchUrl?.includes('?')
-      ? `${fetchUrl}&width=${Math.round(width)}&q=${q}`
-      : `${fetchUrl}?width=${Math.round(width)}&q=${q}`;
+    if (width) options.push(`width=${Math.round(width)}`);
+    fetchUrl = fetchUrl?.includes('?') ? `${fetchUrl}&${options.join('&')}` : `${fetchUrl}?${options.join('&')}`;
   }
   return fetchUrl;
 };
