@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.2.33
+
+### Patch Changes
+
+- 5ce203a: Add unoptimized flag to preload
+- 5ce203a: Add unoptimized flag to disable image optimizations
+
 ## 0.2.32
 
 ### Patch Changes
