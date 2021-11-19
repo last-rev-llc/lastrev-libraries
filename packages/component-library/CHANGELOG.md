@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.2.35
+
+### Patch Changes
+
+- a13e658: HOTFIX: Fix changing theme scheme would use previous scheme
+
 ## 0.2.34
 
 ### Patch Changes
