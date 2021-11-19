@@ -32,7 +32,12 @@ const getMUITheme = ({
     schemeTheme = contextTheme.createSchemeTheme(colorScheme);
   }
   if (Array.isArray(theme) || schemeTheme) {
-    const merged: ThemeOptions = merge({}, contextTheme, ...(theme?.map((t) => omitBy(t, isNull)) || []), schemeTheme);
+    const merged: ThemeOptions = merge(
+      {},
+      // Prefer schemeTheme over contextTheme to avoid always merging the previous theme
+      schemeTheme ?? contextTheme,
+      ...(theme?.map((t) => omitBy(t, isNull)) || [])
+    );
 
     return createTheme(merged);
   }
