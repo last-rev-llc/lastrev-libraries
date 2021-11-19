@@ -32,7 +32,6 @@ export class FsPathStore implements PathStore {
   async load(site: string) {
     try {
       const data = await readFile(this.getFilePath(site), 'utf8');
-      console.log('returning data now');
       return JSON.parse(data);
     } catch (e) {
       logger.info(`No path data found at ${this.getFilePath(site)}`);
