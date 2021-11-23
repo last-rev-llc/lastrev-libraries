@@ -1,5 +1,13 @@
 # @last-rev/component-library
 
+## 0.2.36
+
+### Patch Changes
+
+- 2205cde: Optimize imports for component library
+- Updated dependencies [2205cde]
+  - @last-rev/rollup-config@0.0.6
+
 ## 0.2.35
 
 ### Patch Changes
