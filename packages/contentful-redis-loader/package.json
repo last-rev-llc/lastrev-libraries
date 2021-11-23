@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "@last-rev/app-config": "^0.1.1",
-    "@last-rev/rollup-config": "^0.0.5",
+    "@last-rev/rollup-config": "^0.0.6",
     "@last-rev/testing-library": "^0.1.2",
     "@last-rev/types": "^0.1.2",
     "@types/ioredis": "^4.26.7",

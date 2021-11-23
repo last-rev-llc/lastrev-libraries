@@ -13,7 +13,7 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@last-rev/rollup-config": "^0.0.5",
+    "@last-rev/rollup-config": "^0.0.6",
     "@last-rev/testing-library": "^0.1.2",
     "contentful": "^9.0.0",
     "contentful-management": "^7.39.1",

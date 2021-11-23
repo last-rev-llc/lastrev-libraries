@@ -1,5 +1,11 @@
 # @last-rev/rollup-config
 
+## 0.0.6
+
+### Patch Changes
+
+- 2205cde: Add babel plugin for MUI imports
+
 ## 0.0.5
 
 ### Patch Changes
