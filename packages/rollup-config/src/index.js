@@ -108,7 +108,25 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       presets: [['@babel/env', { modules: false }], '@babel/preset-react'],
       plugins: [
         '@babel/plugin-proposal-optional-chaining',
-        babelHelpers === 'runtime' ? '@babel/plugin-transform-runtime' : null
+        babelHelpers === 'runtime' ? '@babel/plugin-transform-runtime' : null,
+        [
+          'babel-plugin-import',
+          {
+            libraryName: '@mui/material',
+            libraryDirectory: '',
+            camel2DashComponentName: false
+          },
+          'core'
+        ],
+        [
+          'babel-plugin-import',
+          {
+            libraryName: '@mui/icons-material',
+            libraryDirectory: '',
+            camel2DashComponentName: false
+          },
+          'icons'
+        ]
       ],
       exclude: /node_modules/
     }),

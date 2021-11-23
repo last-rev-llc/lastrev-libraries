@@ -1,5 +1,5 @@
 import React from 'react';
-import * as Sentry from '@sentry/react';
+// import * as Sentry from '@sentry/react';
 
 // export const ErrorBoundaryPropTypes = {
 //   children: PropTypes.node.isRequired
@@ -15,11 +15,42 @@ function FallbackComponent() {
 type Env = 'development' | 'production' | 'staging' | 'test' | string | undefined;
 const NODE_ENV: Env = process.env.NODE_ENV;
 
+type ErrorBoundaryProps = { fallback: any; showDialog?: boolean };
+class BaseErrorBoundary extends React.Component<ErrorBoundaryProps> {
+  state: {
+    hasError: boolean;
+  };
+
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(_error: any) {
+    // Update state so the next render will show the fallback UI.
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: any, errorInfo: any) {
+    // You can also log the error to an error reporting service
+    console.log(error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      // You can render any custom fallback UI
+      return this.props.fallback;
+    }
+
+    return this.props.children;
+  }
+}
+
 export const ErrorBoundary = ({ children }: Props) => {
   return (
-    <Sentry.ErrorBoundary fallback={FallbackComponent} showDialog={NODE_ENV !== 'production'}>
+    <BaseErrorBoundary fallback={<FallbackComponent />} showDialog={NODE_ENV !== 'production'}>
       {children}
-    </Sentry.ErrorBoundary>
+    </BaseErrorBoundary>
   );
 };
 
