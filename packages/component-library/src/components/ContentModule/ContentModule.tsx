@@ -86,7 +86,7 @@ function ContentModule({ __typename, theme, ...fields }: Props) {
     return null;
   }
 
-  Main.displayName = `Content_${contentType}`;
+  Main.displayName = `Content_${contentType}:${fields?.variant}`;
   return (
     <ContextComposer contexts={providers}>
       <Main {...fields} />
