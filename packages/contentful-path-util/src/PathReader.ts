@@ -6,7 +6,9 @@ import { DEFAULT_SITE_KEY } from './constants';
 import { iPathReader, PagePathsParam, SitemapPathEntry } from 'packages/types';
 import AsyncLock from 'async-lock';
 
-const lock = new AsyncLock();
+const lock = new AsyncLock({
+  maxPending: Infinity
+});
 
 export default class PathReader implements iPathReader {
   trees: { [site: string]: PathTree } = {};
