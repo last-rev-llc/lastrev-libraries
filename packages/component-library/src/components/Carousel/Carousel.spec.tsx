@@ -9,14 +9,12 @@ let mockedContent: CarouselProps = { __typename: 'Carousel', title: 'test', them
 const checkCarouselButton = (array: Array<CardProps>, primaryButton: string, secondaryButton: string) => {
   array.forEach((item, index) => {
     cy.get('[data-testid=Card]').contains(item.title).should('be.visible');
-    cy.percySnapshot();
 
     if (index !== mockedContent.items.length - 1) {
       cy.get('button').contains(primaryButton).click();
       cy.get('button').contains(secondaryButton).should('be.enabled');
     } else {
       cy.get('button').contains(primaryButton).should('be.disabled');
-      cy.percySnapshot();
     }
   });
 };
@@ -74,20 +72,18 @@ describe('Carousel', () => {
       mockedContent.items.forEach((item) => {
         cy.get('[data-testid=Card]').contains(item.title).should('exist');
       });
-      cy.percySnapshot();
     });
   });
 
-  // context('functions correctly', () => {
-  //   it('Next and Back buttons work correctly', () => {
-  //     mount(<Carousel {...mockedContent} />);
-  //     cy.get('button').contains('Back').should('be.disabled');
-  //     cy.get('button').contains('Next').should('be.enabled');
-  //     cy.percySnapshot();
+  context('functions correctly', () => {
+    it('Next and Back buttons work correctly', () => {
+      mount(<Carousel {...mockedContent} />);
+      cy.get('button').contains('Back').should('be.disabled');
+      cy.get('button').contains('Next').should('be.enabled');
 
-  //     checkCarouselButton(mockedContent.items, 'Next', 'Back');
+      checkCarouselButton(mockedContent.items, 'Next', 'Back');
 
-  //     checkCarouselButton([...mockedContent.items].reverse(), 'Back', 'Next');
-  //   });
-  // });
+      checkCarouselButton([...mockedContent.items].reverse(), 'Back', 'Next');
+    });
+  });
 });
