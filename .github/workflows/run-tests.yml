@@ -39,6 +39,7 @@ jobs:
 
       - name: Run the e2e tests
         run: "yarn test:e2e"
-
-      - name: Build modules
-        run: yarn build
+        
+      # Disable build because it already happens in Netlify
+      # - name: Build modules
+      #   run: yarn build
