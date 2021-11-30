@@ -1,5 +1,16 @@
 # @last-rev/component-library
 
+## 0.3.0
+
+### Minor Changes
+
+- fe9ee31: Add AnimationContext provider to ContentModule
+
+### Patch Changes
+
+- f269029: Add anti flicker snippet as part of the SEO component
+- 96b8687: Fix Link adding extra Box when no icon is provided
+
 ## 0.2.36
 
 ### Patch Changes
