@@ -41,7 +41,7 @@ interface Props {
 type Ref = HTMLImageElement;
 
 const ArtDirectedImage = React.forwardRef<Ref, Props>(
-  ({ title, description, file, fileMobile, fileTablet, ...props }) => (
+  ({ title, description, file, fileMobile, fileTablet, ...props }, ref) => (
     <>
       {fileMobile?.url ? (
         <>
@@ -70,6 +70,7 @@ const ArtDirectedImage = React.forwardRef<Ref, Props>(
       {file?.url ? (
         <>
           <ResponsiveImage
+            ref={ref}
             src={file?.url}
             columns={12}
             height={file?.height}

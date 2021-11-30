@@ -88,6 +88,7 @@ const getIcon = (icon: string) => {
 };
 
 const getButtonContent = (text: string | undefined, children: any, iconPosition: string | undefined, icon: any) => {
+  if (!icon) return text || children;
   return (
     <ButtonWrap sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
       <span>{text || children}</span>
