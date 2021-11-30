@@ -75,11 +75,13 @@ describe('Carousel', () => {
     });
   });
 
+
   context('functions correctly', () => {
     it('Next and Back buttons work correctly', () => {
       mount(<Carousel {...mockedContent} />);
       cy.get('button').contains('Back').should('be.disabled');
       cy.get('button').contains('Next').should('be.enabled');
+
 
       checkCarouselButton(mockedContent.items, 'Next', 'Back');
 
