@@ -17,9 +17,9 @@ export default class PathTree implements iPathTree {
       if (!node.children.has(currentSegment)) {
         node.children.set(currentSegment, new PathNode(currentSegment));
       }
-      const parentNode = node.children.get(currentSegment)!;
-      node.parent = parentNode;
-      node = parentNode;
+      const currentNode = node.children.get(currentSegment)!;
+      currentNode.parent = node;
+      node = currentNode;
     }
     node.data = data;
 
