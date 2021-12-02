@@ -57,9 +57,10 @@ export const mappers = {
       file: resolveFile
     },
     Card: {
-      media: async (media: any, args: any, ctx: ApolloContext) => {
-        const file: any = resolveFile(media, args, ctx);
-        return [file];
+      media: async (media: any, _args: any, ctx: ApolloContext) => {
+        const featuredMedia: any = getLocalizedField(media.fields, 'asset', ctx);
+        if (featuredMedia) return [featuredMedia];
+        return;
       },
       variant: () => 'media'
     }

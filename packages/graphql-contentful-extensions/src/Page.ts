@@ -177,6 +177,7 @@ export const createPath = (...slug: string[]) => {
   if (path.startsWith('https://')) {
     return path;
   }
+
   path = path.replace(/\/\//g, '/');
   if (path != '/' && path[0] !== '/') path = '/' + path;
 
