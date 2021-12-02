@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.9
+
+### Patch Changes
+
+- d299df4: Update Card media extension
+
 ## 0.0.8
 
 ### Patch Changes
