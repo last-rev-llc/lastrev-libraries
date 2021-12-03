@@ -60,9 +60,9 @@ export default class PathReader implements iPathReader {
         if (data.excludedLocales.includes(locale)) return;
         items.push({
           params: {
-            slug: data.fullPath.replace(/^\//, '').split('/'),
-            locale
-          }
+            slug: data.fullPath.replace(/^\//, '').split('/')
+          },
+          locale
         });
       });
       return items;
