@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.1.6
+
+### Patch Changes
+
+- aa834e5: Updated paths to return the correct format for next.js
+
 ## 0.1.5
 
 ### Patch Changes
