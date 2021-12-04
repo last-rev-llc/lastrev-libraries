@@ -19,7 +19,7 @@ export interface CarouselProps {
 
 export interface CardOverrides {}
 
-export const Carousel = ({ variant, title, body, items, itemsVariant, theme }: CarouselProps) => {
+export const Carousel = ({ variant, title, body, items, theme }: CarouselProps) => {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
@@ -47,15 +47,14 @@ export const Carousel = ({ variant, title, body, items, itemsVariant, theme }: C
                 style={{
                   display: activeStep === idx ? 'block' : 'none',
                   margin: '0 auto'
-                }}
-              >
+                }}>
                 <Card {...item} />
               </Grid>
             );
           })}
         </Grid>
         <MobileStepper
-          steps={items?.length}
+          steps={items?.length ?? 0}
           position="static"
           variant="dots"
           activeStep={activeStep}

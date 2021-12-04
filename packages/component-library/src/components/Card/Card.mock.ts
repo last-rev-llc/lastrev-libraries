@@ -19,7 +19,7 @@ export default (): CardProps => ({
   sidekickLookup: {}
 });
 
-export const cardWithTags = {
+export const cardWithTags: any = {
   __typename: 'Card',
   media: {
     file: {

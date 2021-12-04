@@ -14,6 +14,11 @@ const progress = require(`rollup-plugin-progress`);
 const { terser } = require(`rollup-plugin-terser`);
 const sourcemap = require(`rollup-plugin-sourcemaps`);
 const peerDepsExternal = require('rollup-plugin-peer-deps-external');
+const analyze = require('rollup-plugin-analyzer');
+const { visualizer } = require('rollup-plugin-visualizer');
+const swc = require('rollup-plugin-swc').default;
+const typescriptR = require('@rollup/plugin-typescript');
+
 // const multi = require(`@rollup/plugin-multi-entry`);
 const clean = require(`./plugins/clean`);
 // const size = require(`./plugins/size`);
@@ -96,46 +101,68 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       }
     }),
     json(),
-    typescript({
-      typescript: require(`typescript`),
-      tsconfigOverride,
-      objectHashIgnoreUnknownHack: true,
-      rollupCommonJSResolveHack: true
-    }),
-    babel({
-      babelHelpers: babelHelpers || `bundled`,
-      extensions: EXTENSIONS,
-      presets: [['@babel/env', { modules: false }], '@babel/preset-react'],
-      plugins: [
-        '@babel/plugin-proposal-optional-chaining',
-        babelHelpers === 'runtime' ? '@babel/plugin-transform-runtime' : null,
-        [
-          'babel-plugin-import',
-          {
-            libraryName: '@mui/material',
-            libraryDirectory: '',
-            camel2DashComponentName: false
-          },
-          'core'
-        ],
-        [
-          'babel-plugin-import',
-          {
-            libraryName: '@mui/icons-material',
-            libraryDirectory: '',
-            camel2DashComponentName: false
-          },
-          'icons'
-        ]
-      ],
-      exclude: /node_modules/
-    }),
+    typescriptR(),
+    !isProduction
+      ? // Production uss babel to leverage babel-plugin-import and optimize MUI imports
+        swc({
+          sourceMaps: true,
+          jsc: {
+            parser: {
+              syntax: 'typescript',
+              tsx: true,
+              decorators: true,
+              dynamicImport: true
+            },
+            externalHelpers: true,
+            target: 'es2016'
+          }
+        })
+      : babel({
+          babelHelpers: babelHelpers || `bundled`,
+          extensions: EXTENSIONS,
+          presets: [['@babel/env', { modules: false }], '@babel/preset-react'],
+          plugins: [
+            '@babel/plugin-proposal-optional-chaining',
+            babelHelpers === 'runtime' ? '@babel/plugin-transform-runtime' : null,
+            [
+              'babel-plugin-import',
+              {
+                libraryName: '@mui/material',
+                libraryDirectory: '',
+                camel2DashComponentName: false
+              },
+              'core'
+            ],
+            [
+              'babel-plugin-import',
+              {
+                libraryName: '@mui/icons-material',
+                libraryDirectory: '',
+                camel2DashComponentName: false
+              },
+              'icons'
+            ],
+            [
+              'babel-plugin-import',
+              {
+                libraryName: 'lodash',
+                libraryDirectory: '',
+                camel2DashComponentName: false
+              }
+            ]
+          ],
+          exclude: /node_modules/
+        }),
     sourcemap(),
     isProduction && terser(),
     // size(dir),
     progress({
       clearLine: false
     })
+    // analyze(),
+    // visualizer({
+    // template: 'sunburst'
+    // })
   ];
 
   const outputs = [
@@ -145,6 +172,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       sourcemap: isProduction ? `` : true,
       chunkFileNames: filename ? `${filename}.js` : `[name].js`,
       entryFileNames: filename ? `${filename}.js` : `[name].js`,
+      exports: 'auto',
       ...output
     },
     {
@@ -153,6 +181,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       sourcemap: isProduction ? `` : true,
       chunkFileNames: filename ? `${filename}.esm.js` : `[name].esm.js`,
       entryFileNames: filename ? `${filename}.esm.js` : `[name].esm.js`,
+      exports: 'auto',
       ...output
     }
   ];

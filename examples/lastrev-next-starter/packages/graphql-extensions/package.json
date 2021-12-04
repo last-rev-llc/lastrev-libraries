@@ -18,7 +18,7 @@
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
     "@last-rev/graphql-contentful-extensions": "^0.0.4",
-    "@last-rev/rollup-config": "^0.0.5",
+    "@last-rev/rollup-config": "^0.0.6",
     "graphql": "^15.5.1",
     "lodash": "^4.17.21",
     "tslib": "^2.3.0"
