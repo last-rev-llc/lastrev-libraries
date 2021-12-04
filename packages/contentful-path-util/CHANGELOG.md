@@ -1,5 +1,12 @@
 # @last-rev/contentful-path-util
 
+## 0.1.8
+
+### Patch Changes
+
+- 500ff83: Fixed a bug causing path tree to have inconsistent state across multiple calls made in quick succession
+- aa834e5: Updated paths to return the correct format for next.js
+
 ## 0.1.7
 
 ### Patch Changes

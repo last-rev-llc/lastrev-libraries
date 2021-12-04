@@ -55,11 +55,11 @@ const baseDefs = gql`
 
   type PagePathParam {
     slug: [String!]
-    locale: String
   }
 
   type PagePathParams {
     params: PagePathParam!
+    locale: String
   }
 
   interface Content {

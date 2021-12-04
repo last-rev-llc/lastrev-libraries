@@ -5,6 +5,9 @@ import getFieldDataFetcher from '../utils/getFieldDataFetcher';
 import { ApolloContext } from '@last-rev/types';
 import capitalizeFirst from '../utils/capitalizeFirst';
 import map from 'lodash/map';
+import filter from 'lodash/filter';
+import isNull from 'lodash/isNull';
+import negate from 'lodash/negate';
 
 export type Resolver<TSource, TContext> = (
   content: TSource,
@@ -46,26 +49,23 @@ const fieldResolver: FieldResolver = (displayType: string) => async (content, ar
   if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Asset') {
     return loaders.assetLoader.load({ id: fieldValue.sys.id, preview });
   }
-  //Check if the field is an reference array then resolve all of them
-  // if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys && !!x.sys.id && x.sys.linkType == 'Entry')) {
-  //   return loaders.entryLoader.loadMany(fieldValue.map((x: any) => x.sys.id));
-  // }
-  // if (isArray(fieldValue) && every(fieldValue, (x) => !!x.sys && !!x.sys.id && x.sys.linkType == 'Asset')) {
-  //   return loaders.assetLoader.loadMany(fieldValue.map((x: any) => x.sys.id));
-  // }
 
   // Expand links
-  if (isArray(fieldValue)) {
-    fieldValue = map(fieldValue, (x) => {
-      if (!!x.sys && !!x.sys.id && x.sys.linkType == 'Entry')
-        return loaders.entryLoader.load({ id: x.sys.id, preview });
-      return x;
-    });
-    fieldValue = map(fieldValue, (x) => {
-      if (!!x.sys && !!x.sys.id && x.sys.linkType == 'Asset')
-        return loaders.assetLoader.load({ id: x.sys.id, preview });
-      return x;
-    });
+  if (isArray(fieldValue) && fieldValue.length > 0) {
+    const firstItem = fieldValue[0];
+    // contentful cannot have mixed arrays, so it is okay to make assumptions based on the first item
+    if (firstItem?.sys?.linkType === 'Entry') {
+      return filter(
+        await loaders.entryLoader.loadMany(map(fieldValue, (x) => ({ id: x.sys.id, preview }))),
+        negate(isNull)
+      );
+    }
+    if (firstItem?.sys?.linkType === 'Asset') {
+      return filter(
+        await loaders.assetLoader.loadMany(map(fieldValue, (x) => ({ id: x.sys.id, preview }))),
+        negate(isNull)
+      );
+    }
   }
   // console.log('ResolveField', { displayType, content, field, typeName, contentType, fieldValue });
   // console.timeEnd(`FieldResolver:${displayType}->${field}`);

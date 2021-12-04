@@ -29,7 +29,7 @@ export class FsPathStore implements PathStore {
     return join(this.basePath, `${site}.json`);
   }
 
-  load = async (site: string) => {
+  async load(site: string) {
     try {
       const data = await readFile(this.getFilePath(site), 'utf8');
       return JSON.parse(data);
@@ -37,12 +37,12 @@ export class FsPathStore implements PathStore {
       logger.info(`No path data found at ${this.getFilePath(site)}`);
       return {};
     }
-  };
+  }
 
-  save = async (pathDataMap: PathDataMap, site: string) => {
+  async save(pathDataMap: PathDataMap, site: string) {
     await ensureDir(this.basePath);
     await writeFile(this.getFilePath(site), JSON.stringify(pathDataMap));
-  };
+  }
 }
 
 export class RedisPathStore implements PathStore {

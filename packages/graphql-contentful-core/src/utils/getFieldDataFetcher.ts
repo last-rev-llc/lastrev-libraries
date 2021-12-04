@@ -5,6 +5,7 @@ import getLocalizedField from './getLocalizedField';
 import { Entry } from 'contentful';
 import { GraphQLResolveInfo } from 'graphql';
 import { isString } from 'lodash';
+import { isNil } from 'lodash';
 
 const getFieldDataFetcher = <T>(typeName: string, displayType: string, field: string, mappers?: Mappers) => {
   const mapper = get(mappers, [typeName, displayType], {}) as TypeMapper;
@@ -14,7 +15,7 @@ const getFieldDataFetcher = <T>(typeName: string, displayType: string, field: st
       const fieldMapper = mapper[field];
       if (isFunction(fieldMapper)) {
         const fieldData = await fieldMapper(content, args, ctx, info);
-        if (!fieldData) return {};
+        if (isNil(fieldData)) return {};
         return { fieldValue: fieldData, fieldName: fieldData.__fieldName__ || field };
       } else if (isString(fieldMapper)) {
         return {

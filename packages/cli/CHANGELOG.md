@@ -1,5 +1,17 @@
 # @last-rev/cli
 
+## 0.1.32
+
+### Patch Changes
+
+- 500ff83: Fixed a bug causing path tree to have inconsistent state across multiple calls made in quick succession
+- aa834e5: Updated paths to return the correct format for next.js
+- aa834e5: removed fallback in getLocalizedField since it was allowing an object to be returned instead of its value
+- Updated dependencies [500ff83]
+- Updated dependencies [aa834e5]
+- Updated dependencies [aa834e5]
+  - @last-rev/graphql-contentful-core@0.1.32
+
 ## 0.1.31
 
 ### Patch Changes

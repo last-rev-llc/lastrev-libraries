@@ -84,8 +84,8 @@ export type Mappers = {
 export type PagePathsParam = {
   params: {
     slug: string[];
-    locale: string;
   };
+  locale: string;
 };
 
 export interface iPathNode {
