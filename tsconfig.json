@@ -43,7 +43,9 @@
 
     /* Advanced Options */
     "resolveJsonModule": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+  
+    "skipLibCheck": true
   },
   "include": ["packages/*/src"],
   "exclude": ["node_modules", "**/__tests__/**/*", "**/lib/**/*", "**/build/**/*", "**/dist/**/*", "**/*.spec*"],

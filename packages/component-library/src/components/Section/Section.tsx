@@ -6,7 +6,7 @@ import { Theme } from '@mui/system/createTheme';
 // import { Theme } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import { SystemCssProperties } from '@mui/system/styleFunctionSx';
+// import { SystemCssProperties } from '@mui/system/styleFunctionSx';
 import get from 'lodash/get';
 import omit from 'lodash/omit';
 // import BackgroundMedia from '../BackgroundMedia';
@@ -36,10 +36,10 @@ export interface SectionProps {
   contentSpacing?: number;
   // Enables exposing inner `sx` prop through content
   styles?: {
-    root?: SystemCssProperties;
-    gridContainer?: SystemCssProperties & { spacing: any };
-    gridItem?: SystemCssProperties & { xs: any; sm: any; md: any };
-    gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
+    root?: any;
+    gridContainer?: any & { spacing: any };
+    gridItem?: any & { xs: any; sm: any; md: any };
+    gridItems?: Array<any & { xs: any; sm: any; md: any }>;
   };
   sidekickLookup?: any;
   theme?: [Theme];
@@ -83,21 +83,18 @@ const Section = (inProps: SectionProps) => {
         }}
         variant={variant}
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
-        {...omit(props, 'theme')}
-      >
+        {...omit(props, 'theme')}>
         {background ? <BackgroundMedia {...background} /> : null}
         <ConditionalWrapper
           condition={!!contentWidth}
-          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}
-        >
+          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Section-introText" />
           )}
           <GridContainer
             container
             sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-            {...(contentSpacing && { spacing: contentSpacing })}
-          >
+            {...(contentSpacing && { spacing: contentSpacing })}>
             {contents?.map((content, idx) => {
               const itemStyle = get(styles?.gridItems, idx);
               if (!content) return null;
@@ -115,8 +112,7 @@ const Section = (inProps: SectionProps) => {
                   sx={{
                     ...styles?.gridItem,
                     ...itemStyle
-                  }}
-                >
+                  }}>
                   <ContentModule {...content} />
                 </GridItem>
               );

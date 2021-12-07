@@ -3,7 +3,7 @@ import React from 'react';
 import { FilterXSS } from 'xss';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { SystemCssProperties } from '@mui/system/styleFunctionSx';
+// import { SxProps } from '@mui/system/styleFunctionSx';
 import Box from '@mui/material/Box';
 import styled from '@mui/system/styled';
 import Typography from '@mui/material/Typography';
@@ -23,13 +23,13 @@ export interface TextProps {
   __typename?: string;
   id?: string;
   styles?: {
-    root?: SystemCssProperties;
+    root?: any;
   };
-  sx?: SystemCssProperties;
+  sx?: any;
   body: RichText;
   sidekickLookup?: any;
   variant?: string;
-  align?: 'left' | 'center' | 'right' | undefined;
+  align?: 'left' | 'center' | 'right' | any;
   renderNode?: any;
 }
 
@@ -161,8 +161,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ..
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}
-      >
+        {...props}>
         {documentToReactComponents(body?.json, renderOptions({ links: body?.links, renderNode }))}
       </Root>
     </ErrorBoundary>

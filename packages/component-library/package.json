@@ -26,6 +26,7 @@
     "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/rollup-config": "^0.0.6",
     "@last-rev/testing-library": "0.1.2",
+    "@rollup/plugin-typescript": "^8.3.0",
     "@sentry/react": "^6.7.1",
     "framer-motion": "^4.1.17",
     "lodash": "^4.17.21",
