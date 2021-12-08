@@ -5,8 +5,8 @@ export const PathsQuery = gql`
     paths(locales: $locales, preview: $preview, site: $site) {
       params {
         slug
-        locale
       }
+      locale
     }
   }
 `;
