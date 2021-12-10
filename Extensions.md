@@ -195,3 +195,49 @@ export const pathsConfigs = {
   pageBlog: '/blogs' // this will autmoatically create the path config for each blog with this path: /blogs/{blog.fields.slug['en-US']}
 };
 ```
+
+## Helper functions
+
+The `@last-rev/graphql-contentful-core` package includes a few helper functions that can be used to help with the creation of mappers and resolvers.
+
+### getDefaultFieldValue
+
+The `getDefaultFieldValue` function allows one to get the value of the field for the default locale.
+
+Arguments:
+
+- item (`Entry<any>`) - the content item
+- fieldname (`string`) - the name of the field to get the value of
+- defaultLocale (`string`) or ctx (`ApolloContext`) - you can either pass the default locale directly, or pass in the context object)
+
+```typescript
+const slug = getDefaultFieldValue(item, 'slug', ctx.defaultLocale);
+
+const internalTitle = getDefaultFieldValue(item, 'internalTitle', ctx);
+```
+
+### getLocalizedField
+
+The `getLocalizedField` function allows one to get the value of the field for the current locale, or, if it does not exist, return the default locale field value.
+
+Arguments:
+
+- item (`Entry<any>`) or field (`Entry<any>['fields']`) - the content item or the fields object of the content item
+- fieldname (`string`) - the name of the field to get the value of
+- ctx (`ApolloContext`) - the ApolloContext object)
+
+```typescript
+const slug = getlocalizedField(item, 'slug', ctx);
+```
+
+### createRichText
+
+This function is used to convert a plain text string into a rich text object. This is useful if your component expects a rich text field, but you may be rendering a different content type that only has a string field into that component
+
+Arguments:
+
+- text (`string`) - the text to convert
+
+```typescript
+const richText = createRichText(text);
+```
