@@ -14,7 +14,7 @@ import { MediaProps } from '@last-rev/component-library/dist/components/Media/Me
 import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
 import { CategoryBlog } from '@lrns/graphql-sdk';
 import { ContentModule } from '@last-rev/component-library';
-import sidekick from '../../utils/sidekick';
+import { sidekick } from '../../utils/sidekick';
 
 export interface BlogProps {
   __typename?: string;
