@@ -25,6 +25,12 @@ module.exports = {
     'array-callback-return': 0,
     'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
     'react/jsx-indent': ['error', 2],
-    'semi': ['error', 'always']
+    'semi': ['error', 'always'],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto'
+      }
+    ]
   }
 };

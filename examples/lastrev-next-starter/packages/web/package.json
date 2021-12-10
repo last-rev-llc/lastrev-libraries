@@ -12,30 +12,34 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "@emotion/cache": "^11.4.0",
-    "@emotion/react": "^11.4.1",
+    "@emotion/react": "^11.7.0",
+    "@emotion/styled": "^11.6.0",
     "@emotion/server": "^11.4.0",
-    "@emotion/styled": "^11.3.0",
-    "@last-rev/component-library": "^0.2.8",
+    "@last-rev/component-library": "^0.3.0",
+    "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/sitemap-generator": "^0.1.0",
     "@lrns/components": "0.0.1",
     "@lrns/graphql-sdk": "^0.1.0",
     "@lrns/utils": "^0.1.0",
-    "@material-ui/core": "^4.12.3",
-    "@mui/icons-material": "^5.0.1",
-    "@mui/material": "^5.0.1",
-    "@types/react": "^17.0.11",
+    "@mui/icons-material": "^5.2.1",
+    "@mui/material": "^5.2.3",
+    "@types/react": "^17.0.37",
     "dotenv": "^10.0.0",
     "graphql": "^15.5.1",
     "graphql-request": "^3.6.0",
-    "next": "^11.0.1",
+    "next": "^12.0.7",
+    "next-compose-plugins": "^2.2.1",
+    "next-transpile-modules": "^9.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "serve": "^12.0.0",
-    "swr": "^1.0.1"
+    "swr": "^1.1.0",
+    "@emotion/cache": "^11.4.0"
+    
   },
   "devDependencies": {
     "@lrns/graphql-extensions": "0.1.0",
-    "@lrns/graphql-runner": "0.1.0"
+    "@lrns/graphql-runner": "0.1.0",
+    "@next/bundle-analyzer": "^12.0.7"
   }
 }

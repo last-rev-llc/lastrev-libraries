@@ -1,1 +1,1 @@
-ignores: ["typescript","tslib","prettier-eslint","postinstall-postinstall", "netlify-cli"]
+ignores: ["typescript","tslib","prettier-*","postinstall-postinstall","netlify-cli","cross-env"]

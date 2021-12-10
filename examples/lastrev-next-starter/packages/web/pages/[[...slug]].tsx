@@ -1,8 +1,8 @@
 import React from 'react';
 import { join } from 'path';
+import { client, parseBooleanEnvVar } from '@lrns/utils';
 import PageGeneral from '../src/components/PageGeneral';
 import PageBlog from '../src/components/PageBlog';
-import { client, parseBooleanEnvVar } from '@lrns/utils';
 
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 const site = process.env.SITE;
@@ -20,7 +20,6 @@ export const getStaticPaths = async ({ locales }: PageGetStaticPathsProps) => {
       fallback: false
     };
   } catch (error) {
-    console.log('GetStaticPathsError', error);
     return {
       paths: [],
       fallback: false
@@ -38,10 +37,12 @@ export type PageStaticPropsProps = {
 export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) => {
   try {
     const path = join('/', (params.slug || ['/']).join('/'));
-    const { data: pageData } = await client.Page({ path, locale, preview, site });
-    if (!pageData) {
-      throw new Error('NoPageFound');
-    }
+
+      const { data: pageData } = await client.Page({ path, locale, preview, site });
+      if (!pageData) {
+        throw new Error('NoPageFound');
+      }
+    
     return {
       props: {
         pageData
@@ -67,4 +68,4 @@ export default function Page({ pageData }: any) {
   } catch (err) {
     console.log('failed here', err, pageData);
   }
-}
+};

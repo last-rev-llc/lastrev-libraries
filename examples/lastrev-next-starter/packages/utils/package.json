@@ -25,12 +25,12 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "@lrns/graphql-sdk": "^0.1.0",
-    "graphql-request": "^3.6.0"
+    "graphql-request": "^3.6.0",
+    "@lrns/graphql-sdk": "^0.1.0"
   },
   "devDependencies": {
     "@last-rev/rollup-config": "^0.0.6",
-    "rollup": "2.58.0"
+    "rollup": "^2.60.2"
   },
   "husky": {
     "hooks": {
