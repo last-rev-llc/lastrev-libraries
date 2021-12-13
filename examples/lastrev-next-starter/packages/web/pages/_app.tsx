@@ -90,14 +90,6 @@ interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
 }
 function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: MyAppProps) {
-  React.useEffect(() => {
-    // Remove the server-side injected CSS.
-    const jssStyles = document.querySelector('#jss-server-side');
-    if (jssStyles) {
-      jssStyles.parentElement?.removeChild(jssStyles);
-    }
-  }, []);
-
   return (
     <CacheProvider value={emotionCache}>
       {pageProps.pageData?.page?.seo ? <SEO seo={pageProps.pageData.page.seo} /> : null}

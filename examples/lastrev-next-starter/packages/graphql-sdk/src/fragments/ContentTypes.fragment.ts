@@ -66,6 +66,7 @@ export const ContentTypes_Fragments = gql`
     ...Card_Base
     ...Collection_Base
     ...Quote_Base
+    ...NavigationItem_Base
   }
 
   fragment Text_Base on Text {

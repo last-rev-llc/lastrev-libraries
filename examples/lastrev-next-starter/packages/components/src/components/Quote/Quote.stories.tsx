@@ -1,6 +1,6 @@
 // TODO: Update styles once component is added to component library
 import React from 'react';
-import { Container, Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import Quote, { QuoteProps } from './Quote';
 import { Story, Meta } from '@storybook/react';
 

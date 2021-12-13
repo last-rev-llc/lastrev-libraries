@@ -1,19 +1,25 @@
 import React from 'react';
 import Head from 'next/head';
 import xss from 'xss';
-import { Box, Paper, Container, Grid, Typography, List, ListItem, ListItemText } from '@mui/material';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import styled from '@mui/system/styled';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import EmailIcon from '@mui/icons-material/Email';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import Media from '@last-rev/component-library/dist/components/Media/Media';
+import Media, { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
 import Text from '@last-rev/component-library/dist/components/Text/Text';
-import { MediaProps } from '@last-rev/component-library/dist/components/Media/Media.types';
 import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
 import { CategoryBlog } from '@lrns/graphql-sdk';
-import { ContentModule } from '@last-rev/component-library';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { sidekick } from '../../utils/sidekick';
 
 export interface BlogProps {

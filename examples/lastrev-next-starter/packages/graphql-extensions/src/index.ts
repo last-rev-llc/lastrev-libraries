@@ -21,7 +21,6 @@ import * as Text from './Text';
 import * as Quote from './Quote';
 import * as Person from './Person';
 import * as Header from './Header';
-import * as Footer from './Footer';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -32,13 +31,9 @@ export type GraphQlExtension = {
 };
 
 // @ts-ignore: Unreachable code error
-Media.mappers.Media.Card.media = async (media: any, _args: any, ctx: ApolloContext) => {
-  const featuredMedia: any = getLocalizedField(media.fields, 'asset', ctx);
-  if (featuredMedia) return [featuredMedia];
-};
-
+// Example of how to diasable/override the wrapping of the page contents in a section
 Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloContext) => {
-  // Get the PAge contents
+  // Get the Page contents
   const contentsRef = getLocalizedField(page.fields, 'contents', ctx);
   if (contentsRef?.length) {
     // Load the Page contents
@@ -56,7 +51,6 @@ const extensions: GraphQlExtension[] = [
   Blog,
   Hero,
   Header,
-  Footer,
   Link,
   NavigationItem,
   Page,

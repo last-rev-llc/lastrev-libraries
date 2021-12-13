@@ -4,24 +4,14 @@ import createTextVariants from './variants/createTextVariants';
 import { Mixins } from '@mui/material/styles/createMixins';
 import merge from 'lodash/merge';
 import camelCase from 'lodash/camelCase';
-import { Theme } from '@mui/material/styles';
-
-import { createSchemePalette } from './schemes/utils/paletteColors';
-import { getPaletteAccents } from './schemes/utils/accentColors';
-import colorSchemes from './schemes/colors';
+import { ThemeOptions } from '@mui/material/styles';
+// import { createSchemePalette } from './schemes/utils/paletteColors';
+// import { getPaletteAccents } from './schemes/utils/accentColors';
+// import colorSchemes from './schemes/colors';
 declare module '@mui/material/styles/createMixins' {
   interface Mixins {
-    getSectionBreakpointSpacing: (theme: Theme, options?: any) => CSSProperties;
-    sectionSpacing: (theme: Theme, options?: any) => CSSProperties;
-    section: (theme: Theme, options?: any) => CSSProperties;
-    introTextWrap: (theme: Theme, options?: any) => CSSProperties;
-    containerWrap: (theme: Theme, options?: any) => CSSProperties;
-    getContainerBreakpointSpacing: (theme: Theme, options?: any) => CSSProperties;
-    containerSpacing: (theme: Theme, options?: any) => CSSProperties;
-    responsiveContainerSpacing: (theme: Theme, options?: any) => CSSProperties;
-    getResponsiveInnerContentPadding: (theme: Theme, options?: any) => CSSProperties;
-    getInnerContentPadding: (theme: Theme, options?: any) => CSSProperties;
-    container: (theme: Theme, options?: any) => CSSProperties;
+    // declare any custom mixins here - Example Below
+    // container: (theme: Theme, options?: any) => CSSProperties;
   }
 }
 
@@ -39,7 +29,7 @@ declare module '@mui/material/styles' {
   }
 }
 
-const baseTheme = {
+const baseTheme: ThemeOptions = {
   spacing: 8,
   shape: {
     borderRadius: 0
@@ -55,164 +45,14 @@ const baseTheme = {
     }
   },
   mixins: {
-    getSectionBreakpointSpacing: (
-      theme: Theme,
-      options: { noGutters?: boolean; inner?: boolean; breakpoint?: string } = {}
-    ) => {
-      if (options?.noGutters) return 0;
-
-      switch (options.breakpoint) {
-        case 'xs':
-          return options?.inner ? theme.spacing(2) : theme.spacing(4);
-
-        case 'sm':
-          return options?.inner ? theme.spacing(4) : theme.spacing(8);
-
-        case 'md':
-          return options?.inner ? theme.spacing(4) : theme.spacing(8);
-
-        case 'lg':
-          return options?.inner ? theme.spacing(6) : theme.spacing(10);
-
-        case 'xl':
-          return options?.inner ? theme.spacing(6) : theme.spacing(10);
-
-        default:
-          return options?.inner ? theme.spacing(2) : theme.spacing(4);
-      }
-    },
-
-    // Utility to help avoid unnecessary overrides so the spacing can be used at whatever breakpoint
-    sectionSpacing: (theme: Theme, options: { inverse?: boolean } = {}) => ({
-      ...(options.inverse
-        ? {
-            paddingTop: theme.mixins.getSectionBreakpointSpacing(theme, options),
-            paddingBottom: theme.mixins.getSectionBreakpointSpacing(theme, options)
-          }
-        : {
-            marginTop: theme.mixins.getSectionBreakpointSpacing(theme, options),
-            marginBottom: theme.mixins.getSectionBreakpointSpacing(theme, options)
-          })
-    }),
-
-    section: (theme: Theme, options = {}) => {
-      const sectionBreakpoints: { [key: string]: any } = {};
-      theme?.breakpoints?.keys.map(
-        (breakpoint) =>
-          (sectionBreakpoints[theme.breakpoints.up(breakpoint)] = theme.mixins.sectionSpacing(theme, {
-            breakpoint,
-            ...options
-          }))
-      );
-      return sectionBreakpoints;
-    },
-
-    introTextWrap: (theme: Theme, options = {}) => ({
-      ...theme.mixins.sectionSpacing(theme, { ...options })
-    }),
-
-    containerWrap: (theme: Theme, options: { maxWidth?: string } = {}) => {
-      const maxBreakpintWidth: number = options.maxWidth && (theme.breakpoints.values as any)[options.maxWidth];
-      const maxWidth: string = maxBreakpintWidth ? `${maxBreakpintWidth}px` : '100%';
-
-      const containerWrapStyles: any = {
-        maxWidth,
-        width: '100%',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        boxSizing: 'border-box'
-      };
-
-      return containerWrapStyles;
-    },
-
-    getContainerBreakpointSpacing: (
-      theme: Theme,
-      options: { noGutters?: boolean; inner?: boolean; breakpoint?: string } = {}
-    ) => {
-      if (options?.noGutters) return 0;
-
-      switch (options.breakpoint) {
-        case 'xs':
-          return options?.inner ? theme.spacing(2) : theme.spacing(4);
-
-        case 'sm':
-          return options?.inner ? theme.spacing(4) : theme.spacing(8);
-
-        case 'md':
-          return options?.inner ? theme.spacing(4) : theme.spacing(8);
-
-        case 'lg':
-          return options?.inner ? theme.spacing(8) : theme.spacing(10);
-
-        case 'xl':
-          return options?.inner ? theme.spacing(8) : theme.spacing(10);
-
-        default:
-          return options?.inner ? theme.spacing(2) : theme.spacing(4);
-      }
-    },
-
-    // Utility to help avoid unnecessary overrides so the spacing can be used at whatever breakpoint
-    containerSpacing: (theme: Theme, options: { inverse?: boolean; breakpoint?: string } = { breakpoint: 'sm' }) => ({
-      ...(options.inverse
-        ? {
-            marginLeft: theme.mixins.getContainerBreakpointSpacing(theme, options),
-            marginRight: theme.mixins.getContainerBreakpointSpacing(theme, options)
-          }
-        : {
-            paddingLeft: theme.mixins.getContainerBreakpointSpacing(theme, options),
-            paddingRight: theme.mixins.getContainerBreakpointSpacing(theme, options)
-          })
-    }),
-
-    responsiveContainerSpacing: (theme: Theme, options = {}) => {
-      const containerBreakpoints: { [key: string]: any } = {};
-      theme?.breakpoints?.keys.map(
-        (breakpoint) =>
-          (containerBreakpoints[theme.breakpoints.up(breakpoint)] = theme.mixins.containerSpacing(theme, {
-            breakpoint,
-            ...options
-          }))
-      );
-
-      return containerBreakpoints;
-    },
-
-    // Utility to help avoid unnecessary overrides so the spacing can be used at whatever breakpoint
-    getInnerContentPadding: (
-      theme: Theme,
-      options: { inverse?: boolean; breakpoint?: string } = { breakpoint: 'sm' }
-    ) => ({
-      ...(options.inverse
-        ? {
-            margin: theme.mixins.getContainerBreakpointSpacing(theme, options)
-          }
-        : {
-            padding: theme.mixins.getContainerBreakpointSpacing(theme, options)
-          })
-    }),
-
-    getResponsiveInnerContentPadding: (theme: Theme, options = {}) => {
-      const containerBreakpoints: { [key: string]: any } = {};
-      theme?.breakpoints?.keys.map(
-        (breakpoint) =>
-          (containerBreakpoints[theme.breakpoints.up(breakpoint)] = theme.mixins.getInnerContentPadding(theme, {
-            breakpoint,
-            ...options
-          }))
-      );
-
-      return containerBreakpoints;
-    },
-
-    container: (theme: Theme, options: { noGutters?: boolean; maxWidth?: string } = {}) => ({
-      ...theme.mixins.containerWrap(theme, { maxWidth: options?.maxWidth }),
-
-      ...theme.mixins.responsiveContainerSpacing(theme, { noGutters: options?.noGutters })
-    })
+    // Add any custom mixins here - Example Below
+    // container: (theme: Theme, options: { noGutters?: boolean; maxWidth?: string } = {}) => ({
+    //   ...theme.mixins.containerWrap(theme, { maxWidth: options?.maxWidth }),
+    //   ...theme.mixins.responsiveContainerSpacing(theme, { noGutters: options?.noGutters })
+    // })
   },
   typography: {
+    // Customize add and/or remove as necesary
     body1: {
       fontFamily: 'Open Sans',
       fontWeight: 400,
@@ -266,30 +106,71 @@ const baseTheme = {
       lineHeight: 1.3333,
       fontWeight: 600,
       fontStyle: 'normal'
-    },
-    overline: {
-      fontFamily: 'Open Sans',
-      fontSize: '1rem',
-      color: '#6C7B9B', // TODO Pull from colors grey400
-      lineHeight: 1,
-      fontWeight: 600,
-      fontStyle: 'normal',
-      textTransform: 'unset'
     }
   },
   palette: {
-    ...getPaletteAccents()
+    mode: 'light',
+    primary: {
+      main: '#FFFFFF',
+      light: 'rgb(255, 255, 255)',
+      dark: 'rgb(178, 178, 178)',
+      contrastText: 'rgba(0, 0, 0, 0.87)'
+    },
+    secondary: {
+      main: '#add8e6',
+      light: '#add8e6',
+      dark: 'rgb(121, 151, 161)',
+      contrastText: 'rgba(0, 0, 0, 0.87)'
+    },
+    text: {
+      primary: '#00030B',
+      secondary: '#E5E5E5',
+      disabled: 'rgba(0, 0, 0, 0.38)'
+    },
+    error: {
+      main: '#ff1744',
+      light: 'rgb(255, 69, 105)',
+      dark: 'rgb(178, 16, 47)',
+      contrastText: '#fff'
+    },
+    common: {
+      black: '#00030B',
+      white: '#FFFFFF'
+    },
+    background: {
+      default: '#E5E5E5',
+      paper: 'transparent'
+    },
+    warning: {
+      main: '#ed6c02',
+      light: '#ff9800',
+      dark: '#e65100',
+      contrastText: '#fff'
+    },
+    info: {
+      main: '#0288d1',
+      light: '#03a9f4',
+      dark: '#01579b',
+      contrastText: '#fff'
+    },
+    success: {
+      main: '#2e7d32',
+      light: '#4caf50',
+      dark: '#1b5e20',
+      contrastText: '#fff'
+    }
   }
 };
 
 const createSchemeTheme = (schemeKey?: string) => {
-  const scheme: any = createSchemePalette(colorSchemes[camelCase(schemeKey)]);
-  const baseSchemeTheme = createTheme(merge({ scheme: schemeKey }, baseTheme, scheme));
+  const baseSchemeTheme = createTheme(baseTheme);
 
   const schemeTheme = createTheme(
-    merge({}, baseSchemeTheme, {
+    merge({ scheme: camelCase(schemeKey) }, baseSchemeTheme, {
       createSchemeTheme,
       components: {
+        // Add any default props, styleoverrides, etc. below.
+        // The below can be removed safely on project start, these are just examples
         Header: {
           height: 100,
           mobileMenuBreakpoint: 'md',
