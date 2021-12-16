@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.15.8",
-    "@contentful/rich-text-from-markdown": "^15.6.2",
+    "@contentful/rich-text-from-markdown": "^15.10.0",
     "@graphql-tools/merge": "^6.2.14",
     "@last-rev/graphql-contentful-core": "^0.1.32",
     "@last-rev/graphql-contentful-extensions": "^0.0.9",
@@ -30,7 +30,7 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.177",
-    "rollup": "^2.60.2"
+    "@types/lodash": "^4.14.178",
+    "rollup": "^2.61.1"
   }
 }

@@ -12,7 +12,7 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "@emotion/react": "^11.7.0",
+    "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@emotion/server": "^11.4.0",
     "@last-rev/component-library": "^0.3.0",
@@ -21,8 +21,8 @@
     "@lrns/components": "0.0.1",
     "@lrns/graphql-sdk": "^0.1.0",
     "@lrns/utils": "^0.1.0",
-    "@mui/icons-material": "^5.2.1",
-    "@mui/material": "^5.2.3",
+    "@mui/icons-material": "^5.2.4",
+    "@mui/material": "^5.2.4",
     "@types/react": "^17.0.37",
     "dotenv": "^10.0.0",
     "graphql": "^15.5.1",
@@ -34,7 +34,7 @@
     "react-dom": "^17.0.2",
     "serve": "^12.0.0",
     "swr": "^1.1.0",
-    "@emotion/cache": "^11.4.0"
+    "@emotion/cache": "^11.7.1"
     
   },
   "devDependencies": {

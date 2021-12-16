@@ -139,7 +139,7 @@ const baseTheme: ThemeOptions = {
     },
     background: {
       default: '#E5E5E5',
-      paper: 'transparent'
+      paper: '#E5E5E5'
     },
     warning: {
       main: '#ed6c02',
