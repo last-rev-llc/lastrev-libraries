@@ -1,10 +1,11 @@
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
+import { responsiveFontSizes } from '@mui/material/styles';
+import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
 import createCardVariants from './variants/createCardVariants';
 import createTextVariants from './variants/createTextVariants';
 import { Mixins } from '@mui/material/styles/createMixins';
 import merge from 'lodash/merge';
 import camelCase from 'lodash/camelCase';
-import { ThemeOptions } from '@mui/material/styles';
+// import { ThemeOptions } from '@mui/material/styles';
 // import { createSchemePalette } from './schemes/utils/paletteColors';
 // import { getPaletteAccents } from './schemes/utils/accentColors';
 // import colorSchemes from './schemes/colors';
@@ -29,7 +30,7 @@ declare module '@mui/material/styles' {
   }
 }
 
-const baseTheme: ThemeOptions = {
+const baseTheme = {
   spacing: 8,
   shape: {
     borderRadius: 0
@@ -163,9 +164,9 @@ const baseTheme: ThemeOptions = {
 };
 
 const createSchemeTheme = (schemeKey?: string) => {
-  const baseSchemeTheme = createTheme(baseTheme);
+  const baseSchemeTheme = createAppTheme(baseTheme as any);
 
-  const schemeTheme = createTheme(
+  const schemeTheme = createAppTheme(
     merge({ scheme: camelCase(schemeKey) }, baseSchemeTheme, {
       createSchemeTheme,
       components: {
