@@ -6,7 +6,7 @@ import { Entry } from 'contentful';
 export const typeMappings = {};
 
 // TODO: Move to env variables
-const SITE_ID = process.env.DEFAULT_SITE_ID; || process.env.SITE_ID;
+const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
 const BLOGS_LANDING_ID = process.env.BLOGS_LANDING_ID;
 
 const headerResolver = async (page: any, _args: any, ctx: ApolloContext) => {
