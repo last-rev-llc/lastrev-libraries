@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.1.4
+
+### Patch Changes
+
+- b3c20e0: Update to latest rollup-config
+
 ## 0.1.3
 
 ### Patch Changes

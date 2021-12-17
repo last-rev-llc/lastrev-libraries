@@ -1,5 +1,14 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.1.9
+
+### Patch Changes
+
+- b3c20e0: Update to latest rollup-config
+- Updated dependencies [b3c20e0]
+  - @last-rev/contentful-path-util@0.1.9
+  - @last-rev/timer@0.1.2
+
 ## 0.1.8
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.1.11
+
+### Patch Changes
+
+- b3c20e0: Update to latest rollup-config
+- Updated dependencies [b3c20e0]
+  - @last-rev/contentful-path-util@0.1.9
+
 ## 0.1.10
 
 ### Patch Changes

@@ -6,7 +6,7 @@ import { createPath } from './Page';
 import { getThumbnailURL } from './Media';
 
 // Controls which site the Blogs gets it's global config from
-const BLOGS_SITE_ID = process.env.BLOGS_SITE_ID ?? process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
+const BLOGS_SITE_ID = process.env.BLOGS_SITE_ID ?? (process.env.DEFAULT_SITE_ID || process.env.SITE_ID);
 // TODO: Extract and document createType
 const createType = (type: string, content: any) => ({
   sys: { id: content?.id, contentType: { sys: { id: type } } },

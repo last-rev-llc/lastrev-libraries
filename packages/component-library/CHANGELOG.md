@@ -1,5 +1,14 @@
 # @last-rev/component-library
 
+## 0.3.1
+
+### Patch Changes
+
+- b3c20e0: Update to latest rollup-config
+- Updated dependencies [b3c20e0]
+- Updated dependencies [b3c20e0]
+  - @last-rev/rollup-config@0.1.0
+
 ## 0.3.0
 
 ### Minor Changes
