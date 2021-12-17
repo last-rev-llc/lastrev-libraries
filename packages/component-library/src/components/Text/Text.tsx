@@ -161,7 +161,8 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ..
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}>
+        {...props}
+      >
         {documentToReactComponents(body?.json, renderOptions({ links: body?.links, renderNode }))}
       </Root>
     </ErrorBoundary>

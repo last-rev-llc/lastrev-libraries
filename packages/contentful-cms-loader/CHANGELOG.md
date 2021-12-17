@@ -1,5 +1,13 @@
 # @last-rev/contentful-cms-loader
 
+## 0.1.5
+
+### Patch Changes
+
+- b3c20e0: Update to latest rollup-config
+- Updated dependencies [b3c20e0]
+  - @last-rev/timer@0.1.2
+
 ## 0.1.4
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.10
+
+### Patch Changes
+
+- 441d989: Updated extensions to check for DEFAULT_SITE_ID env var
+- Updated dependencies [b3c20e0]
+- Updated dependencies [b3c20e0]
+  - @last-rev/rollup-config@0.1.0
+
 ## 0.0.9
 
 ### Patch Changes

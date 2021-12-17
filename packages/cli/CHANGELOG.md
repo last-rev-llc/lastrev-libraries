@@ -1,5 +1,16 @@
 # @last-rev/cli
 
+## 0.1.33
+
+### Patch Changes
+
+- b3c20e0: Update to latest rollup-config
+- Updated dependencies [b3c20e0]
+  - @last-rev/app-config@0.1.4
+  - @last-rev/contentful-fragment-gen@0.1.3
+  - @last-rev/contentful-import-export@0.1.2
+  - @last-rev/contentful-sync-to-fs@0.1.9
+
 ## 0.1.32
 
 ### Patch Changes

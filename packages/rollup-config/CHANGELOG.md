@@ -1,5 +1,15 @@
 # @last-rev/rollup-config
 
+## 0.1.0
+
+### Minor Changes
+
+- b3c20e0: Use SWC for development, replace rollup typescript plugin
+
+### Patch Changes
+
+- b3c20e0: Update to latest rollup-config
+
 ## 0.0.6
 
 ### Patch Changes

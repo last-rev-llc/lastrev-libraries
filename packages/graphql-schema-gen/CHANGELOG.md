@@ -1,5 +1,11 @@
 # @last-rev/graphql-schema-gen
 
+## 0.1.8
+
+### Patch Changes
+
+- b3c20e0: Update to latest rollup-config
+
 ## 0.1.7
 
 ### Patch Changes
