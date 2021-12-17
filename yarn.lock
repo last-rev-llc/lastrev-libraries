@@ -2364,10 +2364,10 @@
   dependencies:
     lodash "^4.17.20"
 
-"@last-rev/rollup-config@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@last-rev/rollup-config/-/rollup-config-0.0.4.tgz#b932a139147b323bb50a4968a90d2d805f954a49"
-  integrity sha512-Wy2L6zOzxB9n5MkguBs0R3TKDNrQutu5uXn+zwrFYG8cdtY8RQLNRWlUPXljBxYN82TDaYaNXj0RZrzls8v/Kw==
+"@last-rev/rollup-config@0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@last-rev/rollup-config/-/rollup-config-0.0.6.tgz#93e6a8f95f4917d3e399bbac9f1298537274411a"
+  integrity sha512-USZjrv0BxVchrjbNdX6cpi7ei2hbxcJ49C1RYHFRtkXNtvZzavDaJc4fWXYqUoYhRkgrhiic2OANOcAKgDlx8w==
   dependencies:
     "@rollup/plugin-alias" "^3.1.0"
     "@rollup/plugin-babel" "^5.0.3"
@@ -2375,7 +2375,8 @@
     "@rollup/plugin-json" "^4.0.2"
     "@rollup/plugin-node-resolve" "^7.1.1"
     "@rollup/plugin-replace" "^2.3.1"
-    chalk "^4.1.0"
+    babel-plugin-import "^1.13.3"
+    chalk "^4.1.1"
     figures "3.1.0"
     filesize "^6.0.1"
     fs-extra "^10.0.0"
@@ -2383,6 +2384,7 @@
     lodash "^4.17.21"
     log-update "^3.3.0"
     rollup "^2.6.1"
+    rollup-plugin-peer-deps-external "^2.2.4"
     rollup-plugin-postcss "^2.0.3"
     rollup-plugin-progress "^1.1.1"
     rollup-plugin-sourcemaps "^0.5.0"
