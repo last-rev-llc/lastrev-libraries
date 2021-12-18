@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@last-rev/rollup-config": "^0.1.0",
-    "rollup": "^2.61.1"
+    "rollup": "^2.6.1"
   },
   "husky": {
     "hooks": {
