@@ -16,9 +16,9 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@last-rev/component-library": "^0.3.0",
+    "@last-rev/component-library": "^0.3.1",
     "@last-rev/contentful-sidekick-util": "^0.0.2",
-    "@last-rev/rollup-config": "^0.0.6",
+    "@last-rev/rollup-config": "^0.1.0",
     "@last-rev/testing-library": "0.1.2",
     "@lrns/graphql-sdk": "^0.1.0",
     "@lrns/utils": "^0.1.0",
@@ -34,7 +34,7 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.0",
+    "@babel/core": "^7.16.5",
     "@storybook/addon-a11y": "^6.4.9",
     "@storybook/addon-actions": "^6.4.9",
     "@storybook/addon-docs": "^6.4.9",
