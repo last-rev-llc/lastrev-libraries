@@ -1,4 +1,8 @@
-import { chain, flatten, map } from 'lodash';
+import flow from 'lodash/fp/flow';
+import flatten from 'lodash/flatten';
+import map from 'lodash/map';
+import groupBy from 'lodash/fp/groupBy';
+import mapValues from 'lodash/fp/mapValues';
 import { join } from 'path';
 import { ensureDir, writeFile, createFile } from 'fs-extra';
 import { Asset, Entry, createClient, ContentfulClientApi, ContentType } from 'contentful';
@@ -24,14 +28,10 @@ export type ContentTypeIdToContentIdsLookup = {
   [contentTypeId: string]: string[];
 };
 
-const getEntriesByContentTypeLookup = (
-  entries: Entry<{ slug?: { [locale: string]: string } }>[]
-): ContentTypeIdToContentIdsLookup => {
-  return chain(entries)
-    .groupBy('sys.contentType.sys.id')
-    .mapValues((entries) => map(entries, 'sys.id'))
-    .value();
-};
+const groupByContentTypeAndMapToIds = flow(
+  groupBy('sys.contentType.sys.id'),
+  mapValues((entries) => map(entries, 'sys.id'))
+);
 
 const writeContentfulItems = async (
   items: (Entry<any> | Asset | ContentType)[],
@@ -144,7 +144,7 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
   const [entries, assets] = await Promise.all([syncAllEntries(client, contentTypes), syncAllAssets(client)]);
   spinner.succeed(`fetching entries and assets: ${Date.now() - startTime}ms`);
 
-  const entryIdsByContentTypeLookup = getEntriesByContentTypeLookup(entries);
+  const entryIdsByContentTypeLookup = groupByContentTypeAndMapToIds(entries);
 
   const root = join(
     config.fs.contentDir,

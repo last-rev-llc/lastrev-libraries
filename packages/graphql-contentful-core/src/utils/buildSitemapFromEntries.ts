@@ -1,5 +1,8 @@
 import { ApolloContext, Sitemap, SitemapPage, SitemapPathEntry } from '@last-rev/types';
-import { each, map, chain, maxBy, get } from 'lodash';
+import { each, map, maxBy, get } from 'lodash';
+import flow from 'lodash/fp/flow';
+import filter from 'lodash/fp/filter';
+import groupBy from 'lodash/fp/groupBy';
 import getLocalizedField from './getLocalizedField';
 
 const toSnakeCase = (str: string) => {
@@ -9,6 +12,11 @@ const toSnakeCase = (str: string) => {
 const shouldIndex = (seo: any) => {
   return get(seo, ['robots', 'value'], '').indexOf('noindex') === -1;
 };
+
+const filterByShouldIndexAndGroupByLocaleAndContentType = flow(
+  filter(({ content, seo }: { content: any; seo: any; entry: SitemapPathEntry }) => !!content && shouldIndex(seo)),
+  groupBy((e) => `${e.entry.locale}-${toSnakeCase(e.content!.sys.contentType.sys.id)}`)
+);
 
 const buildSitemapFromEntries = async (
   root: string,
@@ -36,11 +44,7 @@ const buildSitemapFromEntries = async (
     })
   );
 
-  const keyed = chain(fleshedOut)
-    .filter(({ content }) => !!content)
-    .filter(({ seo }) => shouldIndex(seo))
-    .groupBy((e) => `${e.entry.locale}-${toSnakeCase(e.content!.sys.contentType.sys.id)}`)
-    .value();
+  const keyed = filterByShouldIndexAndGroupByLocaleAndContentType(fleshedOut);
 
   const pages: SitemapPage[] = [];
 
