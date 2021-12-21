@@ -20,4 +20,5 @@ lerna-debug.log
 
 #cypress ignore
 **/.nyc_output
-
+**/stats.html
+**/cypress/videos
