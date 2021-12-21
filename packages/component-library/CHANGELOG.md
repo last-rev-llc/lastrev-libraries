@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.3.2
+
+### Patch Changes
+
+- 9bb0c13: Update Card to pass all props to Link
+- fc0ac37: added backgroundColor prop to the Section component
+
 ## 0.3.1
 
 ### Patch Changes
