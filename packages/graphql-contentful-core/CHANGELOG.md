@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.33
+
+### Patch Changes
+
+- 274f803: Switched to use lodash/fp/flow instead of chain
+
 ## 0.1.32
 
 ### Patch Changes
