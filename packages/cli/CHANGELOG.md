@@ -1,5 +1,14 @@
 # @last-rev/cli
 
+## 0.1.34
+
+### Patch Changes
+
+- 274f803: Switched to use lodash/fp/flow instead of chain
+- Updated dependencies [274f803]
+  - @last-rev/contentful-sync-to-fs@0.1.10
+  - @last-rev/graphql-contentful-core@0.1.33
+
 ## 0.1.33
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.1.10
+
+### Patch Changes
+
+- 274f803: Switched to use lodash/fp/flow instead of chain
+
 ## 0.1.9
 
 ### Patch Changes
