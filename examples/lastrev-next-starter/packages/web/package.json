@@ -15,7 +15,7 @@
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@emotion/server": "^11.4.0",
-    "@last-rev/component-library": "^0.3.1",
+    "@last-rev/component-library": "^0.3.2",
     "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/sitemap-generator": "^0.1.1",
     "@lrns/components": "0.0.1",

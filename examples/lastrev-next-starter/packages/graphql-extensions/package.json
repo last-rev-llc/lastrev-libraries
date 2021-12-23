@@ -19,7 +19,7 @@
     "@babel/plugin-transform-runtime": "^7.16.5",
     "@contentful/rich-text-from-markdown": "^15.10.0",
     "@graphql-tools/merge": "^6.2.14",
-    "@last-rev/graphql-contentful-core": "^0.1.32",
+    "@last-rev/graphql-contentful-core": "^0.1.33",
     "@last-rev/graphql-contentful-extensions": "^0.0.10",
     "@last-rev/rollup-config": "^0.1.0",
     "@last-rev/types": "^0.1.6",

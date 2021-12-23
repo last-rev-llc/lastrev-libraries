@@ -2479,18 +2479,18 @@
   dependencies:
     lodash "^4.17.21"
 
-"@last-rev/cli@^0.1.33":
-  version "0.1.33"
-  resolved "https://registry.yarnpkg.com/@last-rev/cli/-/cli-0.1.33.tgz#7625991cdce86872c7f7f3f1659514b27e7e551b"
-  integrity sha512-um1nkl/XlTk7ZdETfjBJZZ4mg4Vu/qXFuNmmDb8GlDG9qHfRK4oDnYQefqYosDHLL6tJx4S8We7PACfCQ9sfPw==
+"@last-rev/cli@^0.1.34":
+  version "0.1.34"
+  resolved "https://registry.yarnpkg.com/@last-rev/cli/-/cli-0.1.34.tgz#e2ae889f2ff08998e740ad8409ae86efebada5f1"
+  integrity sha512-WUTOOcA4dijGV40/CLkD6Q+M8//2gZdLqiToTTAWCNOxnOesG8FwtD2iuQCWAykjM8JQVWuOuGGfyEeAtyRuZg==
   dependencies:
     "@graphql-tools/merge" "^6.2.14"
     "@last-rev/app-config" "^0.1.4"
     "@last-rev/contentful-fragment-gen" "^0.1.3"
     "@last-rev/contentful-import-export" "^0.1.2"
     "@last-rev/contentful-s3-sync" "^0.1.2"
-    "@last-rev/contentful-sync-to-fs" "^0.1.9"
-    "@last-rev/graphql-contentful-core" "^0.1.32"
+    "@last-rev/contentful-sync-to-fs" "^0.1.10"
+    "@last-rev/graphql-contentful-core" "^0.1.33"
     "@last-rev/testing-library" "^0.1.2"
     "@octokit/rest" "^18.6.2"
     "@types/inquirer" "^7.3.2"
@@ -2517,10 +2517,10 @@
     tar "^6.1.0"
     uuid "^8.3.2"
 
-"@last-rev/component-library@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@last-rev/component-library/-/component-library-0.3.1.tgz#304ad1aabe8019b3ff26c809ef21af55df2c28fb"
-  integrity sha512-kCEZfC0/6tejPC/+835dDBDuvtYDqhDV4wH0qhPJMF1c3EwN0C9He1TNXxAmvzyMKsqon052bOiri9IDhxlr0w==
+"@last-rev/component-library@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@last-rev/component-library/-/component-library-0.3.2.tgz#64193c7b700f1c6585f023b58d6519619b35c32c"
+  integrity sha512-sgj6VPtfyN3eObw5ZeJpfHmT2hL6wGb3Ojcyu3es2g6YbUrsIuFW/AqCQJ8BnSy+8I1JBaAFD+NtUxuW0/Iwsg==
   dependencies:
     "@contentful/rich-text-react-renderer" "^15.0.0"
     "@contentful/rich-text-types" "^15.0.0"
@@ -2645,10 +2645,10 @@
   dependencies:
     lodash "^4.17.20"
 
-"@last-rev/contentful-sync-to-fs@^0.1.9":
-  version "0.1.9"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-sync-to-fs/-/contentful-sync-to-fs-0.1.9.tgz#caa80caad3c1d4561e547e58334e85cdb47e95f9"
-  integrity sha512-867PKpA7h1PdnuU+NUJ9V5UjAZ58o+N+bMvkqtkJNOZjTAHdGNPQHkNJ9bwZjDFHOR9zPYlSF5vRJAZ9JqxoRA==
+"@last-rev/contentful-sync-to-fs@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-sync-to-fs/-/contentful-sync-to-fs-0.1.10.tgz#6dccb86604ebe8f2bffab4399a3f250e7925f961"
+  integrity sha512-aTcFZeBM0EWCKa6orlkKS/BmJio2J0F8R6/IjQhGGDDyq9ES1k2ia+2yPzv+uvBPrmf5/K9tSPtChfw3UY3EVA==
   dependencies:
     "@last-rev/contentful-path-util" "^0.1.9"
     "@last-rev/graphql-contentful-helpers" "^0.1.3"
@@ -2659,10 +2659,39 @@
     ora "^5.4.1"
     tslib "^2.3.0"
 
-"@last-rev/graphql-contentful-core@^0.1.27", "@last-rev/graphql-contentful-core@^0.1.32":
+"@last-rev/graphql-contentful-core@^0.1.27":
   version "0.1.32"
   resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-core/-/graphql-contentful-core-0.1.32.tgz#612196dd1e99d3931984ae5b08756d3f104976b9"
   integrity sha512-F0HxiZF3gidC5CB4GpueZDpzC+heW2ndgWOm77BI0FZ4PfYOYqBAsCf9Vm6EeSYg4MENZSJfxg1Y0aZAqwf8dw==
+  dependencies:
+    "@apollo/federation" "^0.20.7"
+    "@graphql-tools/merge" "^6.2.14"
+    "@graphql-tools/schema" "^8.3.1"
+    "@last-rev/contentful-cms-loader" "^0.1.4"
+    "@last-rev/contentful-fs-loader" "^0.1.10"
+    "@last-rev/contentful-path-util" "^0.1.8"
+    "@last-rev/contentful-redis-loader" "^0.1.7"
+    "@last-rev/graphql-contentful-helpers" "^0.1.3"
+    "@last-rev/graphql-schema-gen" "^0.1.7"
+    "@last-rev/testing-library" "^0.1.2"
+    "@last-rev/timer" "^0.1.1"
+    "@last-rev/types" "^0.1.6"
+    apollo-graphql "^0.9.3"
+    apollo-server "^2.25.0"
+    apollo-server-core "^2.19.1"
+    apollo-server-lambda "^3.0.1"
+    apollo-server-micro "^3.3.0"
+    contentful "^8.4.2"
+    graphql "^15.5.1"
+    graphql-type-json "^0.3.2"
+    lodash "^4.17.21"
+    loglevel "^1.7.1"
+    micro "^9.3.4"
+
+"@last-rev/graphql-contentful-core@^0.1.33":
+  version "0.1.33"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-core/-/graphql-contentful-core-0.1.33.tgz#f28f2a12821757de3d8d39ac7ae01f0e4d792ae7"
+  integrity sha512-7HExaAs6kVCQtr6oaZ/ENMbCHkgBBiaJHHOCEctz2MCGj9g+OwsEEwCUQHufE2cJRYbWO9+RbNMovFQQhUSQoA==
   dependencies:
     "@apollo/federation" "^0.20.7"
     "@graphql-tools/merge" "^6.2.14"
