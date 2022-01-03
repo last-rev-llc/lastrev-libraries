@@ -2659,6 +2659,18 @@
     ora "^5.4.1"
     tslib "^2.3.0"
 
+"@last-rev/contentful-webhook-handler@^0.1.3":
+  version "0.1.11"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-webhook-handler/-/contentful-webhook-handler-0.1.11.tgz#0d6ab1e13a651109df5930e2028d9c722f11bb2b"
+  integrity sha512-3fwdFVs1qc7OIoLlKtyF2PLhjv5GMPQ4IxLufQntGxsVnbkonHq/RcPH10ClyWzm8iMV6atLJvGa74nvm1dR1Q==
+  dependencies:
+    "@last-rev/contentful-path-util" "^0.1.9"
+    "@last-rev/graphql-contentful-helpers" "^0.1.4"
+    aws-sdk "^2.1012.0"
+    contentful "^9.0.0"
+    ioredis "^4.27.9"
+    lodash "^4.17.21"
+
 "@last-rev/graphql-contentful-core@^0.1.27":
   version "0.1.32"
   resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-core/-/graphql-contentful-core-0.1.32.tgz#612196dd1e99d3931984ae5b08756d3f104976b9"
@@ -2732,7 +2744,7 @@
     lodash "^4.17.21"
     tslib "^2.3.0"
 
-"@last-rev/graphql-contentful-helpers@^0.1.3":
+"@last-rev/graphql-contentful-helpers@^0.1.3", "@last-rev/graphql-contentful-helpers@^0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-helpers/-/graphql-contentful-helpers-0.1.4.tgz#a37f228866ca2bf348c5af873db4f7ff85649f6c"
   integrity sha512-Qo8ucBXFuPjAkGyT/PuYRg8hR/M5LtwLYNMYMYgp0b0namdPwfUPuOwyDa+pelqUM1PANInOQRu/ESb4VZDl5Q==
