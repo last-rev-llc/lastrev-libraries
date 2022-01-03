@@ -11,10 +11,10 @@
   },
   "scripts": {
     "build": "lerna run build --scope @lrns/web --include-dependencies --ignore @lrns/graphql-extensions --ignore @lrns/graphql-runner --loglevel info",
-    "build:prod": "yarn build:extensions && yarn sync:cms && yarn gql:pm2 && wait-on -c wait-on-config.js && yarn build; status=$?; pm2 delete gql-serve; exit $status",
+    "build:prod": "yarn build:extensions && yarn sync:cms && yarn gql:pm2 && wait-on -c wait-on-config.js && yarn build; status=$?; pm2 kill; exit $status",
     "build:extensions": "lerna run build --scope @lrns/graphql-extensions --include-dependencies --loglevel info",
     "build:components": "lerna run build --scope @lrns/components --include-dependencies --loglevel info",
-    "build:storybook": "yarn build:extensions && yarn sync:cms && yarn gql:pm2 && wait-on -c wait-on-config.js && yarn build:components && lerna run build-storybook; status=$?; pm2 delete gql-serve; exit $status",
+    "build:storybook": "yarn build:extensions && yarn sync:cms && yarn gql:pm2 && wait-on -c wait-on-config.js && yarn build:components && lerna run build-storybook; status=$?; pm2 kill; exit $status",
     "clean": "lerna exec 'rm -rf dist/'",
     "deps:check": "echo \"-- depcheck for root --\"; depcheck . --specials=babel,eslint,prettier,webpack,bin,jest; for d in ./packages/*/ ; do (echo \"-- depcheck for $d --\"; depcheck \"$d\" --specials=babel,eslint,prettier,webpack,bin,jest); done;manypkg check",
     "deps:fix": "manypkg fix",
