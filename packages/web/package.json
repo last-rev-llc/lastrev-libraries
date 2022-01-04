@@ -1,0 +1,45 @@
+{
+  "name": "@lrns/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build && next export && yarn build:post",
+    "build:post": "yarn gen:sitemap && rm -rf out/404 && cp out/en-US/index.html out/index.html && cp -R out/en-US/* out/",
+    "gen:sitemap": "node scripts/generateSitemap.js",
+    "lint": "next lint",
+    "serve": "serve out"
+  },
+  "peerDependencies": {},
+  "dependencies": {
+    "@emotion/react": "^11.7.1",
+    "@emotion/styled": "^11.6.0",
+    "@emotion/server": "^11.4.0",
+    "@last-rev/component-library": "^0.3.2",
+    "@last-rev/contentful-sidekick-util": "^0.0.2",
+    "@last-rev/sitemap-generator": "^0.1.1",
+    "@lrns/components": "0.0.1",
+    "@lrns/graphql-sdk": "^0.1.0",
+    "@lrns/utils": "^0.1.0",
+    "@mui/icons-material": "^5.2.4",
+    "@mui/material": "^5.2.4",
+    "@types/react": "^17.0.37",
+    "dotenv": "^10.0.0",
+    "graphql": "^15.5.1",
+    "graphql-request": "^3.6.0",
+    "next": "^12.0.7",
+    "next-compose-plugins": "^2.2.1",
+    "next-transpile-modules": "^9.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "serve": "^12.0.0",
+    "swr": "^1.1.0",
+    "@emotion/cache": "^11.7.1"
+    
+  },
+  "devDependencies": {
+    "@lrns/graphql-extensions": "0.1.0",
+    "@lrns/graphql-runner": "0.1.0",
+    "@next/bundle-analyzer": "^12.0.7"
+  }
+}

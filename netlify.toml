@@ -1,0 +1,11 @@
+[build]
+  publish = "packages/web/out"
+  command = "yarn build:prod"
+
+[dev]
+  command = "yarn dev"
+
+[functions]
+  directory = "packages/functions/src"
+  external_node_modules = ["express"]
+  node_bundler = "esbuild"
