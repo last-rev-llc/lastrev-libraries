@@ -1,7 +1,18 @@
 require('dotenv').config();
 const path = require('path');
+const withPlugins = require('next-compose-plugins');
+const withTM = require('next-transpile-modules')(['@lrns/components']);
 
-module.exports = {
+// Allow bundle analysis via ANALYZE_BUNDLE env variable
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: !!(process.env.ANALYZE_BUNDLE && process.env.ANALYZE_BUNDLE.toLowerCase() === 'true')
+});
+
+const nextConfig = {
+  /**
+   * @type {import('next').NextConfig}
+   */
+  swcMinify: true,
   i18n: {
     // TODO: generate these and read from that
     locales: ['en-US'],
@@ -13,14 +24,21 @@ module.exports = {
     CONTENTFUL_SETTINGS_ID: process.env.CONTENTFUL_SETTINGS_ID,
     GRAPHQL_SERVER_URL: process.env.GRAPHQL_SERVER_URL,
     CONTENTFUL_USE_PREVIEW: process.env.CONTENTFUL_USE_PREVIEW,
-    SITE: process.env.SITE
+    SITE: process.env.SITE,
+    SITE_SETTINGS: process.env.SITE_SETTINGS,
+    DEFAULT_SITE_ID: process.env.DEFAULT_SITE_ID || rocess.env.SITE_ID,
+    SITE_ID: process.env.DEFAULT_SITE_ID || rocess.env.SITE_ID,
+    CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
+    CONTENTFUL_DELIVERY_TOKEN: process.env.CONTENTFUL_DELIVERY_TOKEN,
+    CONTENTFUL_PREVIEW_TOKEN: process.env.CONTENTFUL_PREVIEW_TOKEN,
+    CONTENTFUL_ENV: process.env.CONTENTFUL_ENV
   },
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
     // your project has ESLint errors.
     ignoreDuringBuilds: true
   },
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+  webpack: (config) => {
     // Important: return the modified config
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -30,3 +48,5 @@ module.exports = {
     return config;
   }
 };
+
+module.exports = withPlugins([[withTM], withBundleAnalyzer], nextConfig);

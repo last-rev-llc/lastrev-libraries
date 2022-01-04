@@ -9,8 +9,10 @@ const run = async () => {
 
   await Promise.all(
     packages.map(async (packageName) => {
-      const newEnv = join(packagesDir, packageName, '.env');
-      await copyFile(envFile, newEnv);
+      if (packageName !== '.DS_Store') {
+        const newEnv = join(packagesDir, packageName, '.env');
+        await copyFile(envFile, newEnv);
+      }
     })
   );
 };

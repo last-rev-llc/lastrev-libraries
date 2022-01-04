@@ -10,7 +10,7 @@
   "bracketSpacing": true,
   "jsxBracketSameLine": true,
   "arrowParens": "always",
-  "endOfLine": "lf",
+  "endOfLine": "auto",
   "overrides": [
     {
       "files": ".prettierrc",

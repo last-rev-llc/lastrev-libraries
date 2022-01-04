@@ -1,11 +1,12 @@
 import { compact, map, merge } from 'lodash';
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { Source, DocumentNode, GraphQLSchema } from 'graphql';
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import { ApolloContext } from '@last-rev/types';
 
 import {
   Card,
   Collection,
-  Header,
   Blog,
   Hero,
   Link,
@@ -13,9 +14,13 @@ import {
   Page,
   Section,
   Media,
-  Quote,
-  RichText
+  RichText,
 } from '@last-rev/graphql-contentful-extensions';
+
+import * as Text from './Text';
+import * as Quote from './Quote';
+import * as Person from './Person';
+import * as Header from './Header';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -23,6 +28,21 @@ export type GraphQlExtension = {
   mappers?: {};
   typeMappings?: {};
   pathsConfigs?: {};
+};
+
+// @ts-ignore: Unreachable code error
+// Example of how to diasable/override the wrapping of the page contents in a section
+Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloContext) => {
+  // Get the Page contents
+  const contentsRef = getLocalizedField(page.fields, 'contents', ctx);
+  if (contentsRef?.length) {
+    // Load the Page contents
+    const contents = await ctx.loaders.entryLoader.loadMany(
+      contentsRef.map((content: any) => ({ id: content?.sys.id, preview: !!ctx.preview }))
+    );
+    return contents;
+  }
+  return [];
 };
 
 const extensions: GraphQlExtension[] = [
@@ -36,8 +56,10 @@ const extensions: GraphQlExtension[] = [
   Page,
   Section,
   Quote,
+  Person,
   Media,
-  RichText
+  RichText,
+  Text,
 ];
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));

@@ -8,10 +8,10 @@ export const defaultCardVariant = (_theme: Theme) => ({
   style: {}
 });
 
-const variants = [defaultCardVariant];
+export const cardVariants = [defaultCardVariant];
 
 const createCardVariants = (theme: Theme) => {
-  return variants.map((creator) => creator(theme));
+  return cardVariants.map((creator) => creator(theme));
 };
 
 export default createCardVariants;
