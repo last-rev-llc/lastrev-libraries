@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const generate = require('@last-rev/sitemap-generator');
 const { resolve } = require('path');
-const { client } = require('@lrns/utils');
+const { client } = require('@ias/utils');
 
 const usePreview = !!process.env.CONTENTFUL_USE_PREVIEW;
 

@@ -1,10 +1,10 @@
 require('dotenv').config();
 
-const extensions = require('@lrns/graphql-extensions');
+const extensions = require('@ias/graphql-extensions');
 const { resolve } = require('path');
 const LastRevAppConfig = require('@last-rev/app-config');
 // TODO extract this function into a package that doesnt required the runner
-// const { parseBooleanEnvVar } = require('@lrns/utils');
+// const { parseBooleanEnvVar } = require('@ias/utils');
 const parseBooleanEnvVar = (value = '') => {
   // values parsed as true: true, 1, yes, y, => ignore caps
   const val = value.toString().toLowerCase();

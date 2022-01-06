@@ -1,5 +1,5 @@
 {
-  "name": "@lrns/functions",
+  "name": "@ias/functions",
   "version": "0.1.0",
   "private": true,
   "scripts": {},
@@ -7,7 +7,7 @@
     "@last-rev/app-config": "^0.1.4",
     "@last-rev/contentful-webhook-handler": "^0.1.3",
     "@last-rev/graphql-contentful-core": "^0.1.33",
-    "@lrns/graphql-extensions": "^0.1.0",
+    "@ias/graphql-extensions": "^0.1.0",
     "dotenv": "^10.0.0"
   },
   "devDependencies": {}

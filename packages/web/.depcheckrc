@@ -1,2 +1,2 @@
-# "@lrns/graphql-extensions", "@lrns/graphql-runner" needed for lerna build order when running "yarn dev"
-ignores: ['@lrns/graphql-extensions', '@lrns/graphql-runner']
+# "@ias/graphql-extensions", "@ias/graphql-runner" needed for lerna build order when running "yarn dev"
+ignores: ['@ias/graphql-extensions', '@ias/graphql-runner']

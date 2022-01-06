@@ -5,7 +5,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import '@last-rev/component-library/dist/styles.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import dynamic from 'next/dynamic';
-import theme from '@lrns/components/src/theme';
+import theme from '@ias/components/src/theme';
 import { createEmotionCache } from '../src/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 
@@ -47,12 +47,12 @@ const BackToTop = dynamic(() => import('@last-rev/component-library/dist/compone
 
 // Custom components
 const CollectionFiltered = dynamic(
-  () => import('@lrns/components/src/components/CollectionFiltered/CollectionFiltered')
+  () => import('@ias/components/src/components/CollectionFiltered/CollectionFiltered')
 );
 
 // Custom components
 const Quote = dynamic(
-  () => import('@lrns/components/src/components/Quote/Quote')
+  () => import('@ias/components/src/components/Quote/Quote')
 );
 
 import Page from '../src/components/PageGeneral';

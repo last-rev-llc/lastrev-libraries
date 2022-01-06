@@ -1,4 +1,4 @@
-import { getSdk } from '@lrns/graphql-sdk';
+import { getSdk } from '@ias/graphql-sdk';
 import { GraphQLClient } from 'graphql-request';
 
 const URL = process.env.NETLIFY

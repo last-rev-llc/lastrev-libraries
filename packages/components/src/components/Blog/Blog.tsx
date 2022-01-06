@@ -18,7 +18,7 @@ import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoun
 import Media, { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
 import Text from '@last-rev/component-library/dist/components/Text/Text';
 import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
-import { CategoryBlog } from '@lrns/graphql-sdk';
+import { CategoryBlog } from '@ias/graphql-sdk';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { sidekick } from '../../utils/sidekick';
 

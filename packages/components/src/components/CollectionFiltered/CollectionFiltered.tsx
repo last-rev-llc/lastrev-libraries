@@ -1,6 +1,6 @@
 import React from 'react';
 import CollectionFiltered from '@last-rev/component-library/dist/components/CollectionFiltered/CollectionFiltered';
-import { client, parseBooleanEnvVar } from '@lrns/utils';
+import { client, parseBooleanEnvVar } from '@ias/utils';
 
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 

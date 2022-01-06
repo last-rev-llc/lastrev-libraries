@@ -1,6 +1,6 @@
 import React from 'react';
 import { join } from 'path';
-import { client, parseBooleanEnvVar } from '@lrns/utils';
+import { client, parseBooleanEnvVar } from '@ias/utils';
 import PageGeneral from '../src/components/PageGeneral';
 import PageBlog from '../src/components/PageBlog';
 

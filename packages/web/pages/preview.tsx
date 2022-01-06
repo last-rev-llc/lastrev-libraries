@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getSdk } from '@lrns/graphql-sdk';
+import { getSdk } from '@ias/graphql-sdk';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/dist/client/router';
 import { ContentPreview } from '@last-rev/component-library';
