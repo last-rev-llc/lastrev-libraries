@@ -31,7 +31,8 @@
     "start": "run-s build serve",
     "storybook": "lerna run storybook",
     "sync:cms": "yarn workspace @ias/graphql-runner sync:cms",
-    "test": "lerna run test -- --passWithNoTests",
+    "test": "run-s test:unit test:e2e",
+    "test:unit": "lerna run test -- --passWithNoTests",
     "test:watch": "lerna run test:watch -- --passWithNoTests",
     "test:e2e": "lerna run test:e2e",
     "version-packages": "changeset version && yarn prettier"

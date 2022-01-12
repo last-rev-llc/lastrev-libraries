@@ -11,7 +11,9 @@
     "dev-no-run": "cross-env NODE_ENV=development rollup -cw",
     "build-no-run": "cross-env NODE_ENV=production rollup -c",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "cypress:open": "cypress open-ct",
+    "test:e2e": "cross-env NODE_ENV=test cypress run-ct"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
@@ -35,6 +37,9 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",
+    "@cypress/code-coverage": "^3.9.11",
+    "@cypress/react": "^5.10.0",
+    "@cypress/webpack-dev-server": "^1.6.0",
     "@storybook/addon-a11y": "^6.4.9",
     "@storybook/addon-actions": "^6.4.9",
     "@storybook/addon-docs": "^6.4.9",
@@ -50,10 +55,12 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@types/faker": "^5.5.9",
     "@types/react": "^17.0.37",
+    "cypress": "^8.4.0",
     "faker": "^5.5.3",
     "next": "^12.0.7",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "rollup": "^2.6.1"
+    "rollup": "^2.6.1",
+    "webpack-dev-server": "^4.2.1"
   }
 }

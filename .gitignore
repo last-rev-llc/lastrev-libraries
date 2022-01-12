@@ -12,3 +12,5 @@ node_modules
 
 lerna-debug.log
 .env
+
+.DS_Store
