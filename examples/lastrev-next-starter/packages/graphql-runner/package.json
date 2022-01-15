@@ -6,11 +6,15 @@
     "dist"
   ],
   "scripts": {
-    "dev": "run-s sync:cms gql:dev",
+    "not:dev": "run-s sync:cms gql:dev",
     "gql:start": "last-rev gql-serve -c config",
     "gql:dev": "nodemon -x \"last-rev gql-serve -c config.js\" -w config.js -w cms-sync -w ../graphql-extensions/dist",
-    "start": "run-s sync:cms gql:start",
-    "sync:cms": "last-rev cms-sync -c config.js"
+    "start": "run-s gql:pm2:kill gql:pm2 gql:healthcheck",
+    "sync:cms": "last-rev cms-sync -c config.js",
+    "gql:pm2": "pm2 start pm2.json ",
+    "gql:healthcheck": "wait-on -c wait-on-config.js",
+    "gql:pm2:kill": "pm2 kill",
+    "logs": "pm2 logs"
   },
   "peerDependencies": {},
   "dependencies": {

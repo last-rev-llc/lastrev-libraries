@@ -5,8 +5,8 @@ const resource = `${(process.env.GRAPHQL_SERVER || 'http://localhost:5000/graphq
 const timeout = process.env.GRAPHQL_SERVER_TIMEOUT ? parseInt(process.env.GRAPHQL_SERVER_TIMEOUT, 10) : 300000;
 
 module.exports = {
-  delay: 5000,
-  interval: 5000,
+  delay: 100,
+  interval: 100,
   verbose: false,
   strictSSL: false,
   followRedirect: false,

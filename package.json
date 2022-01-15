@@ -10,20 +10,52 @@
     ]
   },
   "scripts": {
-    "build": "lerna run --stream build",
+    "build": "turbo run build",
     "clean": "lerna exec 'rm -rf node_modules/ dist/'; rm -rf node_modules/; yarn install",
     "deps:check": "manypkg check",
     "deps:fix": "manypkg fix",
-    "dev": "lerna run --stream --include-dependencies dev",
+    "dev": "turbo run dev",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
     "release": "yarn build && changeset publish",
     "start": "lerna run start",
     "storybook": "lerna run storybook",
-    "test:watch": "lerna run test:watch -- --passWithNoTests",
-    "test": "run-s test:unit test:e2e",
-    "test:unit": "lerna run test -- --passWithNoTests",
-    "test:e2e": "lerna run test:e2e",
+    "test:watch": "turbo run test:watch",
+    "test": "turbo run test:e2e test",
     "version-packages": "changeset version && yarn prettier"
+  },
+  "turbo": {
+    "globalDependencies": [],
+    "pipeline": {
+      "test": {
+        "outputs": []
+      },
+      "test:e2e": {
+        "outputs": []
+      },
+      "test:watch": {
+        "cache": false,
+        "outputs": []
+      },
+      "lint": {
+        "outputs": []
+      },
+      "build": {
+        "dependsOn": [
+          "^build"
+        ],
+        "outputs": [
+          "dist/**",
+          ".next/**",
+          "!.next/cache/**"
+        ]
+      },
+      "dev": {
+        "cache": false,
+        "dependsOn": [
+          "^build"
+        ]
+      }
+    }
   },
   "private": true,
   "resolutions": {
@@ -101,5 +133,8 @@
     "tslib": "^2.3.1",
     "typescript": "4.3.4",
     "wait-on": "^5.3.0"
+  },
+  "devDependencies": {
+    "turbo": "^1.0.28"
   }
 }

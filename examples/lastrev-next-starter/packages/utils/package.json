@@ -13,7 +13,7 @@
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "compile": "tsc -p tsconfig.json",
     "compile:watch": "tsc-watch -p tsconfig.json",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint",

@@ -23,7 +23,7 @@
     "@lrns/graphql-sdk": "^0.1.0",
     "@lrns/utils": "^0.1.0",
     "@mui/icons-material": "^5.2.4",
-    "@mui/material": "^5.2.4",
+    "@mui/material": "^5.2.8",
     "@mui/styles": "^5.2.3",
     "lodash": "^4.17.21",
     "xss": "^1.0.9"

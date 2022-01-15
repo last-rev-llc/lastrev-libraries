@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getSdk } from '@lrns/graphql-sdk';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/dist/client/router';
-import { ContentPreview } from '@last-rev/component-library';
+import ContentPreview from '@last-rev/component-library/dist/components/ContentPreview/ContentPreview';
 import useSWR from 'swr';
 const previewGqlClient = new GraphQLClient(
   `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/.netlify/functions/graphql'}`

@@ -1,6 +1,7 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
-import BackToTop from '@last-rev/component-library/dist/components/BackToTop/BackToTop';
+const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop/BackToTop'));
 import { Page } from '../../../graphql-sdk/dist';
 
 const PageGeneral = ({ header, hero, contents, footer, disableBackToTop }: Page & { __typename: string }) => {

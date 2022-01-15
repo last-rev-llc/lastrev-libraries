@@ -15,6 +15,11 @@ const spaceId = testForEnvVar('CONTENTFUL_SPACE_ID');
 const contentDeliveryToken = testForEnvVar('CONTENTFUL_DELIVERY_TOKEN');
 const contentPreviewToken = testForEnvVar('CONTENTFUL_PREVIEW_TOKEN');
 const env = testForEnvVar('CONTENTFUL_ENV');
+const parseBooleanEnvVar = (value = '') => {
+  // values parsed as true: true, 1, yes, y, => ignore caps
+  const val = value.toString().toLowerCase();
+  return /^(true|1|yes|y)$/.test(val);
+};
 
 const config = new LastRevAppConfig({
   cms: 'Contentful',

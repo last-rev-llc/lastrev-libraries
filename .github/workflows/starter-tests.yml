@@ -1,4 +1,4 @@
-name: Run tests
+name: Run Next Starter Example page tests and build
 
 on: [pull_request]
 
@@ -6,6 +6,10 @@ jobs:
   test:
     if: github.actor != 'dependabot'
     runs-on: ubuntu-latest
+    # Use default to set working-directory for whole job
+    defaults: 
+      run:
+        working-directory: ./examples/lastrev-next-starter
 
     steps:
       - name: Checkout Repo
@@ -31,31 +35,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Turbo Cache
-        id: turbo-cache
-        uses: actions/cache@v2
-        with:
-          path: node_modules/.cache/turbo
-          key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
-          restore-keys: |
-            turbo-${{ github.job }}-${{ github.ref_name }}-
-          
-
       - name: Install project dependencies
         run: yarn --prefer-offline
 
       - name: Run the tests
-        run: "yarn turbo run test test:e2e lint"
-
-      # - name: Report code coverage
-      #   uses: zgosalvez/github-actions-report-lcov@v1
-      #   with:
-      #     coverage-files: ./**/coverage/lcov.*.info
-      #     minimum-coverage: 90
-      #     artifact-name: code-coverage-report
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     working-directory: packages
-      
-      # Disable build because it already happens in Netlify
-      # - name: Build modules
-      #   run: yarn build
+        run: yarn turbo run test lint

@@ -6,15 +6,16 @@
     "dist"
   ],
   "scripts": {
-    "build": "run-s clean codegen build:prod",
+    "build": "run-s clean gql:healthcheck codegen build:prod",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "clean": "rimraf dist",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
-    "dev": "concurrently \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
+    "gql:healthcheck": "wait-on -c wait-on-config.js",
+    "dev": "yarn gql:healthcheck && concurrently \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch"
   },
   "peerDependencies": {
@@ -44,8 +45,7 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.3.7",
-    "@lrns/graphql-extensions": "0.1.0",
-    "@lrns/graphql-runner": "0.1.0",
+    "@lrns/graphql-runner": "^0.1.0",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.2",
