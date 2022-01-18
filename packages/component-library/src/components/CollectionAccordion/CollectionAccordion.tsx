@@ -27,11 +27,10 @@ export const CollectionAccordion = ({
     <ErrorBoundary>
       <Root
         container
-        spacing={itemSpacing}
+        spacing={itemSpacing ?? 0}
         {...sidekick(sidekickLookup)}
         variant={variant}
-        data-testid="CollectionAccordion"
-      >
+        data-testid="CollectionAccordion">
         {itemsWithVariant.map((item, idx) => (
           <AccordionItem item key={idx}>
             <Accordion {...item} />
