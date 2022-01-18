@@ -1,4 +1,4 @@
-import { responsiveFontSizes } from '@mui/material/styles';
+// import { responsiveFontSizes } from '@mui/material/styles';
 import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
 import createCardVariants from './variants/createCardVariants';
 import createTextVariants from './variants/createTextVariants';
@@ -36,7 +36,6 @@ const baseTheme = {
     borderRadius: 0
   },
   breakpoints: {
-    // Add any custom breakpoints here
     values: {
       xs: 0,
       sm: 600,
@@ -53,60 +52,60 @@ const baseTheme = {
     // })
   },
   typography: {
-    // Customize add and/or remove as necesary
-    body1: {
-      fontFamily: 'Open Sans',
-      fontWeight: 400,
-      fontSize: '1.125rem',
-      lineHeight: 1.5
-    },
-    body2: {
-      fontFamily: 'Open Sans',
-      fontWeight: 400,
-      fontSize: '1.125rem',
-      lineHeight: 1.5
-    },
+    fontFamily: 'Inter',
     h1: {
-      fontFamily: 'Open Sans',
-      fontSize: '4rem',
-      lineHeight: 1.25,
-      fontWeight: 400,
-      fontStyle: 'normal'
+      fontFamily: 'Inter',
+      fontSize: '3rem',
+      fontStyle: 'normal',
+      fontWeight: 600,
+      lineHeight: 1.25
     },
     h2: {
-      fontFamily: 'Open Sans',
-      fontSize: '3rem',
-      lineHeight: 1.25,
-      fontWeight: 400,
-      fontStyle: 'normal'
+      fontFamily: 'Inter',
+      fontSize: '2.25rem',
+      fontStyle: 'normal',
+      fontWeight: 600,
+      lineHeight: 1.25
     },
     h3: {
-      fontFamily: 'Open Sans',
-      fontSize: '2rem',
-      lineHeight: 1.375,
-      fontWeight: 400,
-      fontStyle: 'normal'
+      fontFamily: 'Inter',
+      fontSize: '1.75rem',
+      fontStyle: 'normal',
+      fontWeight: 600,
+      lineHeight: 1.5
     },
     h4: {
-      fontFamily: 'Open Sans',
+      fontFamily: 'Inter',
       fontSize: '1.5rem',
-      lineHeight: 1.5,
-      fontWeight: 400,
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      fontWeight: 600,
+      lineHeight: 1.5
     },
     h5: {
-      fontFamily: 'Open Sans',
+      fontFamily: 'Inter',
       fontSize: '1.25rem',
-      lineHeight: 1.2,
-      fontWeight: 400,
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      fontWeight: 600,
+      lineHeight: 1.5
     },
     h6: {
-      fontFamily: 'Open Sans',
+      fontFamily: 'Inter',
       fontSize: '1.125rem',
-      lineHeight: 1.3333,
+      fontStyle: 'normal',
       fontWeight: 600,
-      fontStyle: 'normal'
+      lineHeight: 1.5555
+    },
+    body1: {
+      fontFamily: 'Inter',
+      fontSize: '1.125rem',
+      fontWeight: 400,
+      lineHeight: 1.5555
+    },
+    body2: {
+      fontFamily: 'Inter',
+      fontSize: '1rem',
+      fontWeight: 400,
+      lineHeight: 1.5
     }
   },
   palette: {
@@ -124,9 +123,9 @@ const baseTheme = {
       contrastText: 'rgba(0, 0, 0, 0.87)'
     },
     text: {
-      primary: '#00030B',
-      secondary: '#E5E5E5',
-      disabled: 'rgba(0, 0, 0, 0.38)'
+      primary: '#00324A',
+      secondary: '#000',
+      disabled: '#CCC'
     },
     error: {
       main: '#ff1744',
@@ -139,7 +138,7 @@ const baseTheme = {
       white: '#FFFFFF'
     },
     background: {
-      default: '#E5E5E5',
+      default: '#FFFFFF',
       paper: '#E5E5E5'
     },
     warning: {
@@ -198,7 +197,13 @@ const createSchemeTheme = (schemeKey?: string) => {
         Text: {
           variants: createTextVariants(baseSchemeTheme),
           styleOverrides: {
-            root: {}
+            root: {
+              '& [class*="MuiTypography-body1"]': {
+                marginBottom: baseSchemeTheme.spacing(1),
+                fontSize: 16,
+                lineHeight: 1.5
+              }
+            }
           }
         },
         Card: {
@@ -287,7 +292,8 @@ const createSchemeTheme = (schemeKey?: string) => {
     })
   );
 
-  return responsiveFontSizes(schemeTheme);
+  // return responsiveFontSizes(schemeTheme);
+  return schemeTheme;
 };
 
 const theme = createSchemeTheme();

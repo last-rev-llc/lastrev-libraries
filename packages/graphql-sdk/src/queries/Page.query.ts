@@ -12,6 +12,7 @@ export const PageQuery = gql`
       ...Page_Base
       ...CategoryBlog_Page
       ...Blog_Page
+      ...Article_Base
     }
   }
 `;

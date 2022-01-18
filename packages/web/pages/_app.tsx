@@ -50,9 +50,12 @@ const CollectionFiltered = dynamic(
   () => import('@ias/components/src/components/CollectionFiltered/CollectionFiltered')
 );
 
-// Custom components
 const Quote = dynamic(
   () => import('@ias/components/src/components/Quote/Quote')
+);
+
+const Article = dynamic(
+  () => import('@ias/components/src/components/Article/Article')
 );
 
 import Page from '../src/components/PageGeneral';
@@ -81,6 +84,7 @@ const contentMapping: {
   Hero,
   Page,
   Blog,
+  Article,
   Quote
 };
 

@@ -1,8 +1,8 @@
 import React from 'react';
-import { join } from 'path';
+import { join, sep, posix } from 'path';
 import { client, parseBooleanEnvVar } from '@ias/utils';
 import PageGeneral from '../src/components/PageGeneral';
-import PageBlog from '../src/components/PageBlog';
+import Article from '@ias/components/src/components/Article/Article';
 
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 const site = process.env.SITE;
@@ -36,13 +36,15 @@ export type PageStaticPropsProps = {
 
 export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) => {
   try {
-    const path = join('/', (params.slug || ['/']).join('/'));
+    const path = join('/', (params.slug || ['/']).join('/'))
+      .split(sep)
+      .join(posix.sep);
 
-      const { data: pageData } = await client.Page({ path, locale, preview, site });
-      if (!pageData) {
-        throw new Error('NoPageFound');
-      }
-    
+    const { data: pageData } = await client.Page({ path, locale, preview, site });
+    if (!pageData) {
+      throw new Error('NoPageFound');
+    }
+
     return {
       props: {
         pageData
@@ -60,12 +62,12 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
 export default function Page({ pageData }: any) {
   try {
     switch (pageData?.page?.__typename) {
-      case 'Blog':
-        return <PageBlog {...pageData.page} />;
+      case 'Article':
+        return <Article {...pageData.page} />;
       default:
         return <PageGeneral {...pageData.page} />;
     }
   } catch (err) {
     console.log('failed here', err, pageData);
   }
-};
+}

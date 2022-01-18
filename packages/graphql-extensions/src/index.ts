@@ -21,6 +21,8 @@ import * as Text from './Text';
 import * as Quote from './Quote';
 import * as Person from './Person';
 import * as Header from './Header';
+import * as Article from './Article';
+import * as CategoryArticle from './CategoryArticle';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -60,6 +62,8 @@ const extensions: GraphQlExtension[] = [
   Media,
   RichText,
   Text,
+  Article,
+  CategoryArticle
 ];
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));

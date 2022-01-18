@@ -22,6 +22,7 @@ export const Preview_Query = gql`
       ...Blog_Page
       ...ModuleIntegration_Base
       ...Person_Base
+      ...Article_Base
     }
   }
 `;

@@ -8,8 +8,10 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          {/* Remove if not needed */}
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700&display=swap" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link rel="preconnect" href="https://images.ctfassets.net" />
+          <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
         </Head>
         <body>
           <Main />

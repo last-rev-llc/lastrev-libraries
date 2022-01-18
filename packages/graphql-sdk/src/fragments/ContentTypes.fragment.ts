@@ -57,7 +57,7 @@ export const ContentTypes_Fragments = gql`
 
     seo
   }
-  
+
   fragment Content_Page_Base on Content {
     ...Content_Base
     ...Section_Base
@@ -335,6 +335,28 @@ export const ContentTypes_Fragments = gql`
     jobTitle
     image {
       ...Media_Base
+    }
+  }
+
+  fragment Article_Base on Article {
+    id
+    title
+    slug
+    summary
+    seo
+    pubDate
+    disableBackToTop
+    featuredMedia {
+      ...Media_Base
+    }
+    body {
+      ...RichText_RichTextFragment
+    }
+    categories {
+      ...Link_Base
+    }
+    relatedLinks {
+      ...Link_Base
     }
   }
 `;
