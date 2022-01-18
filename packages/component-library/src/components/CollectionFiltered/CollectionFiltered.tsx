@@ -44,7 +44,7 @@ export interface CollectionFilteredProps {
   background?: MediaProps;
   variant?: string;
   itemsVariant?: string;
-  itemsSpacing?: number;
+  itemsSpacing?: number | null;
   theme: any;
   itemsWidth?: false | Breakpoint | undefined;
   sidekickLookup?: string;
@@ -119,7 +119,7 @@ export const CollectionFiltered = ({
     }
   );
   const options = data?.length ? data[0]?.options : defaultOptions;
-  const items = data?.reduce((accum: CardProps[], page: any) => [...accum, ...page?.items], []) ?? defaultItems;
+  const items = data?.reduce((accum: CardProps[], page: any) => [...accum, ...(page?.items || [])], []) ?? defaultItems;
   const isLoadingInitialData = !data && !error;
   const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined');
   const isEmptyData = data?.[0]?.items?.length === 0;
@@ -155,7 +155,7 @@ export const CollectionFiltered = ({
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant}>
         <ContentContainer maxWidth={itemsWidth}>
-          <Grid container spacing={itemsSpacing} sx={{ flexDirection: 'column', alignItems: 'center' }}>
+          <Grid container spacing={itemsSpacing ?? 0} sx={{ flexDirection: 'column', alignItems: 'center' }}>
             <Grid item container sx={{ justifyContent: 'flex-end' }}>
               <CollectionFilters
                 id={id}
@@ -194,7 +194,7 @@ export const CollectionFiltered = ({
                     contents={itemsWithVariant}
                     // background={background}
                     variant={'three-per-row'}
-                    contentSpacing={itemsSpacing}
+                    contentSpacing={itemsSpacing ?? 0}
                   />
                 </Grid>
               </>
@@ -217,7 +217,7 @@ export const CollectionFiltered = ({
                       loading: true
                     }))}
                     variant={'three-per-row'}
-                    contentSpacing={itemsSpacing}
+                    contentSpacing={itemsSpacing ?? 0}
                   />
                 </Grid>
               </>
