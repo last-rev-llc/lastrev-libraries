@@ -57,7 +57,7 @@ export const ContentTypes_Fragments = gql`
 
     seo
   }
-  
+
   fragment Content_Page_Base on Content {
     ...Content_Base
     ...Section_Base

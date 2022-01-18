@@ -9,7 +9,10 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {/* Remove if not needed */}
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700&display=swap" />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700&display=swap"
+          />
         </Head>
         <body>
           <Main />

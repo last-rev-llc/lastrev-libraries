@@ -34,7 +34,7 @@ export const baseScheme = {
     primaryContrastText: defaultColors.white,
     secondary: defaultColors.deepSkyBlue,
     secondaryLight: '#AB0074',
-    secondaryDark: '#FF0000',//defaultColors.navy,
+    secondaryDark: '#FF0000', //defaultColors.navy,
     secondaryContrastText: defaultColors.navy,
     grey100: '#091635',
     grey200: '#19294F',
@@ -84,12 +84,11 @@ const black = {
     primaryTextColor: defaultColors.white,
     secondary: defaultColors.white,
     secondaryLight: defaultColors.lightBlue,
-    backgroundDefault: defaultColors.black,
+    backgroundDefault: defaultColors.black
   }
 };
 
-
-const colorSchemes: { [key: string]: any; } = {
+const colorSchemes: { [key: string]: any } = {
   white,
   black
 };

@@ -8,12 +8,12 @@ const mockQuoteBase = () => {
     variant: 'one-column',
     quoteImage: {
       __typename: 'Media',
-      file: mockFile({ height: 2160, width: 3840, text: 'Quote Base'}),
+      file: mockFile({ height: 2160, width: 3840, text: 'Quote Base' }),
       alt: 'Quote Base'
     },
     quote: 'Get in touch and learn how our services can help you!',
     authorName: `Adam Harris`,
-    authorTitle: `Co-Founder`,
+    authorTitle: `Co-Founder`
   };
 };
 
@@ -23,10 +23,10 @@ export const mockQuoteOneColumn = () => {
     variant: 'one-column',
     quoteImage: {
       __typename: 'Media',
-      file: mockFile({ height: 2160, width: 3840, text: 'Quote One Column'}),
+      file: mockFile({ height: 2160, width: 3840, text: 'Quote One Column' }),
       alt: 'Quote One Column'
-    },
-  }
+    }
+  };
 };
 
 export const mockQuoteTwoColumn = () => {
@@ -35,8 +35,8 @@ export const mockQuoteTwoColumn = () => {
     variant: 'two-column',
     quoteImage: {
       __typename: 'Media',
-      file: mockFile({ height: 2160, width: 3840, text: 'Quote Two Column'}),
+      file: mockFile({ height: 2160, width: 3840, text: 'Quote Two Column' }),
       alt: 'Quote Two Column'
-    },
-  }
+    }
+  };
 };

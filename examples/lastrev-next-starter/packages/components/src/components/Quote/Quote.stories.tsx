@@ -4,10 +4,7 @@ import Box from '@mui/material/Box';
 import Quote, { QuoteProps } from './Quote';
 import { Story, Meta } from '@storybook/react';
 
-import {
-  mockQuoteOneColumn,
-  mockQuoteTwoColumn
-} from './Quote.mock';
+import { mockQuoteOneColumn, mockQuoteTwoColumn } from './Quote.mock';
 
 type QuoteStory = {
   args?: QuoteProps;
@@ -32,9 +29,7 @@ export default {
   component: Quote,
   decorators: [
     (Story?: any, ctx?: any) => {
-      return (
-        <Story {...ctx.args} />
-      );
+      return <Story {...ctx.args} />;
     }
   ],
   argTypes: {

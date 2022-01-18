@@ -38,11 +38,11 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
   try {
     const path = join('/', (params.slug || ['/']).join('/'));
 
-      const { data: pageData } = await client.Page({ path, locale, preview, site });
-      if (!pageData) {
-        throw new Error('NoPageFound');
-      }
-    
+    const { data: pageData } = await client.Page({ path, locale, preview, site });
+    if (!pageData) {
+      throw new Error('NoPageFound');
+    }
+
     return {
       props: {
         pageData
@@ -68,4 +68,4 @@ export default function Page({ pageData }: any) {
   } catch (err) {
     console.log('failed here', err, pageData);
   }
-};
+}

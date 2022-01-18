@@ -1,5 +1,11 @@
 # @last-rev/rollup-config
 
+## 0.1.1
+
+### Patch Changes
+
+- 4b9997d: rollup bump
+
 ## 0.1.0
 
 ### Minor Changes

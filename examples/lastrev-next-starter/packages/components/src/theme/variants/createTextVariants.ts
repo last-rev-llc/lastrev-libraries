@@ -5,8 +5,8 @@ export const blogVariant = (_theme: Theme) => ({
     variant: 'blog'
   },
   style: {
-     // Add any style overrides here
-     // Example Below
+    // Add any style overrides here
+    // Example Below
     // '& [class$=Media-root]': {
     //   width: '100%',
     //   padding: theme.spacing(10, 5),

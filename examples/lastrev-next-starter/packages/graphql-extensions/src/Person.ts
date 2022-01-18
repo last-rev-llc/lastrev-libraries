@@ -21,13 +21,13 @@ export const mappers: any = {
           actions.push(
             createType('Link', {
               manualUrl: linkedInUrl,
-              icon: 'linkedin',
+              icon: 'linkedin'
             })
           );
         }
         return actions;
       },
-      variant: () => 'person-with-image',
-    },
-  },
+      variant: () => 'person-with-image'
+    }
+  }
 };
