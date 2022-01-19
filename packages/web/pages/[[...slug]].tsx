@@ -1,8 +1,8 @@
 import React from 'react';
 import { join, sep, posix } from 'path';
 import { client, parseBooleanEnvVar } from '@ias/utils';
-import PageGeneral from '../src/components/PageGeneral';
 import Article from '@ias/components/src/components/Article/Article';
+import PageGeneral from '@ias/components/src/components/PageGeneral';
 
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 const site = process.env.SITE;

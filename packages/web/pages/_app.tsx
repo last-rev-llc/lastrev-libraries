@@ -50,16 +50,11 @@ const CollectionFiltered = dynamic(
   () => import('@ias/components/src/components/CollectionFiltered/CollectionFiltered')
 );
 
-const Quote = dynamic(
-  () => import('@ias/components/src/components/Quote/Quote')
-);
+const Quote = dynamic(() => import('@ias/components/src/components/Quote/Quote'));
 
-const Article = dynamic(
-  () => import('@ias/components/src/components/Article/Article')
-);
+const Article = dynamic(() => import('@ias/components/src/components/Article/Article'));
 
-import Page from '../src/components/PageGeneral';
-import Blog from '../src/components/PageBlog';
+const Page = dynamic(() => import('@ias/components/src/components/PageGeneral'));
 
 import '../styles/globals.css';
 
@@ -83,7 +78,6 @@ const contentMapping: {
   NavigationItem,
   Hero,
   Page,
-  Blog,
   Article,
   Quote
 };

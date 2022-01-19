@@ -61,7 +61,14 @@ export const mappers = {
   }
 };
 
-const article: ContentfulPathsGenerator = async (articleItem, _loaders, defaultLocale, _locales, _preview = false, _site) => {
+const article: ContentfulPathsGenerator = async (
+  articleItem,
+  _loaders,
+  defaultLocale,
+  _locales,
+  _preview = false,
+  _site
+) => {
   const slug = getDefaultFieldValue(articleItem, 'slug', defaultLocale);
   const fullPath = createPath('article', slug);
 

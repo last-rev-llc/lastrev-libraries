@@ -24,6 +24,7 @@ import MailchimpForm from '@last-rev/component-library/dist/components/Mailchimp
 import SEO from '@last-rev/component-library/dist/components/SEO/SEO';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import theme from '../src/theme';
+import PageGeneral from '../src/components/PageGeneral/PageGeneral';
 
 const components = {
   Accordion,
@@ -44,7 +45,8 @@ const components = {
   'LeadForm:marketo-default': FormMarketoEmbed,
   Image,
   MailchimpForm,
-  SEO
+  SEO,
+  PageGeneral
 };
 
 const mount = (component, options) =>

@@ -14,7 +14,7 @@ import {
   Page,
   Section,
   Media,
-  RichText,
+  RichText
 } from '@last-rev/graphql-contentful-extensions';
 
 import * as Text from './Text';
@@ -23,6 +23,7 @@ import * as Person from './Person';
 import * as Header from './Header';
 import * as Article from './Article';
 import * as CategoryArticle from './CategoryArticle';
+import * as ModuleIntegration from './ModuleIntegration';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -63,7 +64,8 @@ const extensions: GraphQlExtension[] = [
   RichText,
   Text,
   Article,
-  CategoryArticle
+  CategoryArticle,
+  ModuleIntegration
 ];
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));
