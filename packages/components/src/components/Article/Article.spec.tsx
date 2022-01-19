@@ -1,7 +1,8 @@
 import * as React from 'react';
-import mount from '../../../cypress/mount';
+
 import Article, { ArticleProps } from './Article';
 import { articleMock } from './Article.mock';
+import mount from '../../../cypress/mount';
 
 const parseNode = (node: { nodeType: string; value: any; content: any[]; }) => {
   return node.nodeType === 'text' ? node.value : node.content.map((c: any) => parseNode(c)).join('');
@@ -29,8 +30,7 @@ describe('Article', () => {
       });
 
       cy.get('[data-testid=Article-categories]').should('exist');
-      cy.get('[data-testid=Article-categories] li').should('exist');
-      cy.get('[data-testid=Article-categories] li a').each((link, index) => {
+      cy.get('[data-testid=Article-categories] a').each((link, index) => {
         cy.wrap(link)
           .should('have.attr', 'href', `/${mockedContent.categories[index].href}`)
           .and('have.text', mockedContent.categories[index].text)

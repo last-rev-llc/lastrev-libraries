@@ -287,6 +287,32 @@ const createSchemeTheme = (schemeKey?: string) => {
               }
             }
           }
+        },
+        MuiChip: {
+          styleOverrides: {
+            root: {
+              height: 'auto',
+              // TODO: reference colors from theme once defined
+              backgroundColor: '#D3EBED',
+              borderRadius: '3px',
+              color: baseSchemeTheme.palette.text.primary,
+              fontWeight: 600,
+              textDecoration: 'none',
+              transition: 'background-color 0.15s ease',
+              '&:hover': {
+                // TODO: reference colors from theme once defined
+                backgroundColor: '#C3DCDE',
+                transition: 'background-color 0.18s ease'
+              }
+            },
+            sizeSmall: {
+              padding: baseSchemeTheme.spacing(1, 0)
+            },
+            labelSmall: {
+              fontSize: 12,
+              lineHeight: 1.3333,
+            }
+          }
         }
       }
     })

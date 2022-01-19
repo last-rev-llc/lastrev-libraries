@@ -10,6 +10,8 @@ node_modules
 .nyc_output
 
 **/coverage
+**/cypress/videos
+**/cypress/screenshots
 
 lerna-debug.log
 .env

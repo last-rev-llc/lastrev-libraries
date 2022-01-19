@@ -16,7 +16,6 @@ import NavigationItem from '@last-rev/component-library/dist/components/Navigati
 import CollectionFiltered from '../src/components/CollectionFiltered';
 import Quote from '../src/components/Quote';
 import theme from '../src/theme';
-import './styles.css';
 
 const contentMapping = {
   Header,
@@ -54,7 +53,7 @@ addParameters({
     isToolshown: true,
     storySort: {
       method: 'alphabetical',
-      order: ['Intro', 'Modules']
+      order: ['Intro', 'Modules', 'Pages', 'Elements']
     }
   },
   backgrounds: {

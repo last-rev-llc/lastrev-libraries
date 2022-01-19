@@ -14,6 +14,8 @@ import BackToTop from '@last-rev/component-library/dist/components/BackToTop/Bac
 import { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
 import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
 import Text from '@last-rev/component-library/dist/components/Text/Text';
+
+import CategoryLinks from '../CategoryLinks';
 import { sidekick } from '../../utils/sidekick';
 
 export interface ArticleProps {
@@ -181,49 +183,10 @@ export const Article = ({
                 </Box>
               ) : null}
 
-              {/* TODO: Create ArticleCategories component https://lastrev.atlassian.net/browse/IAS-64 */}
               {categories ? (
-                <List
-                  sx={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    '& .MuiListItem-root': {
-                      display: 'inline-block',
-                      width: 'auto',
-                      marginRight: { xs: 2, xl: 3 },
-                      padding: 0
-                    },
-                    'a': {
-                      padding: 1,
-                      backgroundColor: '#D3EBED',
-                      borderRadius: '3px',
-                      color: 'text.primary',
-                      fontSize: 12,
-                      fontWeight: 600,
-                      lineHeight: 1.3333,
-                      textDecoration: 'none',
-                      transition: 'background-color 0.15s ease',
-                      '&:hover': {
-                        backgroundColor: '#C3DCDE',
-                        transition: 'background-color 0.18s ease'
-                      }
-                    }
-                  }}
-                  {...sidekick(sidekickLookup?.categories)}
-                  data-testid="Article-categories"
-                >
-                  {categories.map((category, i) => (
-                    <ListItem
-                      key={i}
-                      style={{
-                        whiteSpace: 'nowrap',
-                        marginLeft: i !== 0 ? 5 : undefined
-                      }}
-                    >
-                      <Link href={category?.href}>{category?.text}</Link>
-                    </ListItem>
-                  ))}
-                </List>
+                <Box data-testid="Article-categories">
+                  <CategoryLinks links={categories} />
+                </Box>
               ) : null}
             </ArticleWrap>
           </Grid>

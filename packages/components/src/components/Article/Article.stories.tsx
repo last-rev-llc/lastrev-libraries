@@ -1,5 +1,6 @@
 import React from 'react';
 import { Story, Meta } from '@storybook/react';
+
 import Article, { ArticleProps } from './Article';
 import { articleMock } from './Article.mock';
 
@@ -10,7 +11,7 @@ type ArticleStory = {
 const Template: ArticleStory = (args: ArticleProps) => <Article {...args} />;
 
 export default {
-  title: 'Modules / Article',
+  title: 'Pages / Article',
   component: Article,
   decorators: [
     (Story?: any, ctx?: any) => {
