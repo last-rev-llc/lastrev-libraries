@@ -1,5 +1,14 @@
 # @last-rev/component-library
 
+## 0.3.3
+
+### Patch Changes
+
+- 6e0ac23: Fix CollectionFiltered not working with null itemSpacing
+- 4b9997d: rollup bump
+- Updated dependencies [4b9997d]
+  - @last-rev/rollup-config@0.1.1
+
 ## 0.3.2
 
 ### Patch Changes

@@ -51,9 +51,7 @@ const CollectionFiltered = dynamic(
 );
 
 // Custom components
-const Quote = dynamic(
-  () => import('@lrns/components/src/components/Quote/Quote')
-);
+const Quote = dynamic(() => import('@lrns/components/src/components/Quote/Quote'));
 
 import Page from '../src/components/PageGeneral';
 import Blog from '../src/components/PageBlog';

@@ -4,11 +4,11 @@ const createType = (type: string, content: any) => ({
     (accum, key) => ({
       ...accum,
       [key]: {
-        'en-US': content[key],
-      },
+        'en-US': content[key]
+      }
     }),
     {}
-  ),
+  )
 });
 
 export default createType;
