@@ -20,9 +20,10 @@ git clone $GITHUB_REPO $REPO_DIR -q || echo "Failed to clone repo, already exist
 PATCH_FILE="$TEMP_DIR/patch.diff"
 STARTER_FOLDER=$REPO_DIR/examples/lastrev-next-starter
 cd $REPO_DIR
+
+ # Generate commit with squashed changes
 git checkout $SOURCE_COMMIT -q
 git checkout -b tmpqsuash -q
-
 git merge --squash $TARGET_COMMIT -q
 git commit -a -m "Update from $SOURCE_COMMIT to $TARGET_COMMIT" -q
 
@@ -31,9 +32,13 @@ git format-patch $SOURCE_COMMIT --relative --stdout -- $STARTER_FOLDER > $PATCH_
 echo "Generated diff $PATCH_FILE"
 
 echo "Apply the patch to $TARGET_DIRECTORY"
-# Replace @lrns with @<app-name>
 cd $TARGET_DIRECTORY
 
+# Add remote to prevent errors about sha misssings
+git remote add old_repo $GITHUB_REPO  || echo "Remote already exists"
+git fetch old_repo -q
+
+# Apply patch with three way resolution
 git am -3 -p3 --whitespace=fix $PATCH_FILE || FAILED=1
 
 while [ $FAILED -eq 1 ]

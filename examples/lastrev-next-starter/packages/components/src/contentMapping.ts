@@ -39,13 +39,14 @@ const CollectionFiltered = dynamic(
 
 // Custom components
 const Quote = dynamic(() => import('@lrns/components/src/components/Quote/Quote'));
-
-import Page from './components/PageGeneral';
-import Blog from './components/PageBlog';
+const PageGeneral = dynamic(() => import('@lrns/components/src/components/PageGeneral/PageGeneral'));
+const PageBlog = dynamic(() => import('@lrns/components/src/components/PageBlog/PageBlog'));
 
 const contentMapping: {
   [key: string]: any;
 } = {
+  'Page': PageGeneral,
+  'Blog': PageBlog,
   Header,
   Section,
   Collection,
@@ -62,8 +63,6 @@ const contentMapping: {
   Link,
   NavigationItem,
   Hero,
-  Page,
-  Blog,
   Quote
 };
 

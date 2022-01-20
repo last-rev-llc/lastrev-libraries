@@ -67,12 +67,12 @@ export const Blog = ({
         <meta name="content_type" content="blog" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `${xss(JSON.stringify(schemaData))}` }} />
       </Head>
-      <Root {...sidekick(sidekickLookup)} itemScope itemType="https://schema.org/Blog">
+      <Root {...sidekick(sidekickLookup)} itemScope itemType="https://schema.org/Blog" data-testid="Blog">
         <ContentContainer maxWidth={'xl'}>
           <Grid container spacing={5} sx={{ py: { lg: 4 } }}>
             <Grid component="article" item xs={12} sm={8}>
               {title ? (
-                <Typography variant="h2" component="h2" {...sidekick(sidekickLookup?.title)}>
+                <Typography variant="h2" component="h2" {...sidekick(sidekickLookup?.title)} data-testid="Blog-title">
                   {title}
                 </Typography>
               ) : null}

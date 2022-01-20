@@ -1,0 +1,161 @@
+diff --git a/node_modules/@mui/system/createStyled.js b/node_modules/@mui/system/createStyled.js
+index 99d013b..31a0671 100644
+--- a/node_modules/@mui/system/createStyled.js
++++ b/node_modules/@mui/system/createStyled.js
+@@ -24,8 +24,8 @@ var _styleFunctionSx = _interopRequireDefault(require("./styleFunctionSx"));
+ var _propsToClassKey = _interopRequireDefault(require("./propsToClassKey"));
+ 
+ const _excluded = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"],
+-      _excluded2 = ["theme"],
+-      _excluded3 = ["theme"];
++  _excluded2 = ["theme"],
++  _excluded3 = ["theme"];
+ 
+ function isEmpty(obj) {
+   return Object.keys(obj).length === 0;
+@@ -106,16 +106,14 @@ function createStyled(input = {}) {
+       skipSx: inputSkipSx,
+       overridesResolver
+     } = inputOptions,
+-          options = (0, _objectWithoutPropertiesLoose2.default)(inputOptions, _excluded); // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
++      options = (0, _objectWithoutPropertiesLoose2.default)(inputOptions, _excluded); // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
+ 
+     const skipVariantsResolver = inputSkipVariantsResolver !== undefined ? inputSkipVariantsResolver : componentSlot && componentSlot !== 'Root' || false;
+     const skipSx = inputSkipSx || false;
+     let label;
+ 
+-    if (process.env.NODE_ENV !== 'production') {
+-      if (componentName) {
+-        label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+-      }
++    if (componentName) {
++      label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+     }
+ 
+     let shouldForwardPropOption = shouldForwardProp;
+@@ -142,7 +140,7 @@ function createStyled(input = {}) {
+           let {
+             theme: themeInput
+           } = _ref,
+-              other = (0, _objectWithoutPropertiesLoose2.default)(_ref, _excluded2);
++            other = (0, _objectWithoutPropertiesLoose2.default)(_ref, _excluded2);
+           return stylesArg((0, _extends2.default)({
+             theme: isEmpty(themeInput) ? defaultTheme : themeInput
+           }, other));
+@@ -196,7 +194,7 @@ function createStyled(input = {}) {
+           let {
+             theme: themeInput
+           } = _ref2,
+-              other = (0, _objectWithoutPropertiesLoose2.default)(_ref2, _excluded3);
++            other = (0, _objectWithoutPropertiesLoose2.default)(_ref2, _excluded3);
+           return styleArg((0, _extends2.default)({
+             theme: isEmpty(themeInput) ? defaultTheme : themeInput
+           }, other));
+diff --git a/node_modules/@mui/system/esm/createStyled.js b/node_modules/@mui/system/esm/createStyled.js
+index 4af7efe..ae57639 100644
+--- a/node_modules/@mui/system/esm/createStyled.js
++++ b/node_modules/@mui/system/esm/createStyled.js
+@@ -1,8 +1,8 @@
+ import _extends from "@babel/runtime/helpers/esm/extends";
+ import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/esm/objectWithoutPropertiesLoose";
+ const _excluded = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"],
+-      _excluded2 = ["theme"],
+-      _excluded3 = ["theme"];
++  _excluded2 = ["theme"],
++  _excluded3 = ["theme"];
+ import styledEngineStyled from '@mui/styled-engine';
+ import { getDisplayName } from '@mui/utils';
+ import createTheme from './createTheme';
+@@ -86,17 +86,15 @@ export default function createStyled(input = {}) {
+       skipSx: inputSkipSx,
+       overridesResolver
+     } = inputOptions,
+-          options = _objectWithoutPropertiesLoose(inputOptions, _excluded); // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
++      options = _objectWithoutPropertiesLoose(inputOptions, _excluded); // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
+ 
+ 
+     const skipVariantsResolver = inputSkipVariantsResolver !== undefined ? inputSkipVariantsResolver : componentSlot && componentSlot !== 'Root' || false;
+     const skipSx = inputSkipSx || false;
+     let label;
+ 
+-    if (process.env.NODE_ENV !== 'production') {
+-      if (componentName) {
+-        label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+-      }
++    if (componentName) {
++      label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+     }
+ 
+     let shouldForwardPropOption = shouldForwardProp;
+@@ -123,7 +121,7 @@ export default function createStyled(input = {}) {
+           let {
+             theme: themeInput
+           } = _ref,
+-              other = _objectWithoutPropertiesLoose(_ref, _excluded2);
++            other = _objectWithoutPropertiesLoose(_ref, _excluded2);
+ 
+           return stylesArg(_extends({
+             theme: isEmpty(themeInput) ? defaultTheme : themeInput
+@@ -178,7 +176,7 @@ export default function createStyled(input = {}) {
+           let {
+             theme: themeInput
+           } = _ref2,
+-              other = _objectWithoutPropertiesLoose(_ref2, _excluded3);
++            other = _objectWithoutPropertiesLoose(_ref2, _excluded3);
+ 
+           return styleArg(_extends({
+             theme: isEmpty(themeInput) ? defaultTheme : themeInput
+diff --git a/node_modules/@mui/system/modern/createStyled.js b/node_modules/@mui/system/modern/createStyled.js
+index d6523a1..78adf8b 100644
+--- a/node_modules/@mui/system/modern/createStyled.js
++++ b/node_modules/@mui/system/modern/createStyled.js
+@@ -1,8 +1,8 @@
+ import _extends from "@babel/runtime/helpers/esm/extends";
+ import _objectWithoutPropertiesLoose from "@babel/runtime/helpers/esm/objectWithoutPropertiesLoose";
+ const _excluded = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"],
+-      _excluded2 = ["theme"],
+-      _excluded3 = ["theme"];
++  _excluded2 = ["theme"],
++  _excluded3 = ["theme"];
+ import styledEngineStyled from '@mui/styled-engine';
+ import { getDisplayName } from '@mui/utils';
+ import createTheme from './createTheme';
+@@ -84,17 +84,15 @@ export default function createStyled(input = {}) {
+       skipSx: inputSkipSx,
+       overridesResolver
+     } = inputOptions,
+-          options = _objectWithoutPropertiesLoose(inputOptions, _excluded); // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
++      options = _objectWithoutPropertiesLoose(inputOptions, _excluded); // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
+ 
+ 
+     const skipVariantsResolver = inputSkipVariantsResolver !== undefined ? inputSkipVariantsResolver : componentSlot && componentSlot !== 'Root' || false;
+     const skipSx = inputSkipSx || false;
+     let label;
+ 
+-    if (process.env.NODE_ENV !== 'production') {
+-      if (componentName) {
+-        label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+-      }
++    if (componentName) {
++      label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+     }
+ 
+     let shouldForwardPropOption = shouldForwardProp;
+@@ -121,7 +119,7 @@ export default function createStyled(input = {}) {
+           let {
+             theme: themeInput
+           } = _ref,
+-              other = _objectWithoutPropertiesLoose(_ref, _excluded2);
++            other = _objectWithoutPropertiesLoose(_ref, _excluded2);
+ 
+           return stylesArg(_extends({
+             theme: isEmpty(themeInput) ? defaultTheme : themeInput
+@@ -176,7 +174,7 @@ export default function createStyled(input = {}) {
+           let {
+             theme: themeInput
+           } = _ref2,
+-              other = _objectWithoutPropertiesLoose(_ref2, _excluded3);
++            other = _objectWithoutPropertiesLoose(_ref2, _excluded3);
+ 
+           return styleArg(_extends({
+             theme: isEmpty(themeInput) ? defaultTheme : themeInput

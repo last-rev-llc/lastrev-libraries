@@ -1,10 +1,9 @@
 import React from 'react';
 import { join } from 'path';
 import { client, parseBooleanEnvVar } from '@lrns/utils';
-import PageGeneral from '../src/components/PageGeneral';
-import PageBlog from '../src/components/PageBlog';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
-import contentMapping from '../src/contentMapping';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
+import contentMapping from '@lrns/components/src/contentMapping';
 
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 const site = process.env.SITE;
@@ -62,20 +61,9 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
 };
 
 export default function Page({ pageData }: any) {
-  let PageComponent: any;
-  try {
-    switch (pageData?.page?.__typename) {
-      case 'Blog':
-        PageComponent = PageBlog;
-      default:
-        PageComponent = PageGeneral;
-    }
-  } catch (err) {
-    console.log('failed here', err, pageData);
-  }
   return (
     <ContentModuleProvider contentMapping={contentMapping}>
-      <PageComponent {...pageData.page} />
+      <ContentModule {...pageData.page} />
     </ContentModuleProvider>
   );
 }

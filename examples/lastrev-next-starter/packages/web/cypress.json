@@ -1,7 +1,10 @@
 {
   "viewportWidth": 1440,
   "viewportHeight": 900,
-  "baseUrl": "http://localhost:5000",
+  "integrationFolder": "packages/web/cypress/integration",
+  "pluginsFile": "packages/web/cypress/plugins/index.js",
+  "supportFile": "packages/web/cypress/support/index.js",
+  "baseUrl": "http://localhost:3000",
   "retries": {
     "runMode": 2,
     "openMode": 0

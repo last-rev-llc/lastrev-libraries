@@ -54,12 +54,18 @@
         "cache": false
       },
       "test": {
+        "dependsOn": [
+          "^build"
+        ],
         "outputs": []
       },
       "lint": {
         "outputs": []
       },
       "test:e2e": {
+        "dependsOn": [
+          "^build"
+        ],
         "outputs": []
       },
       "test:watch": {
