@@ -292,6 +292,7 @@ const createSchemeTheme = (schemeKey?: string) => {
           styleOverrides: {
             root: {
               height: 'auto',
+              marginBottom: baseSchemeTheme.spacing(1),
               // TODO: reference colors from theme once defined
               backgroundColor: '#D3EBED',
               borderRadius: '3px',
@@ -306,7 +307,7 @@ const createSchemeTheme = (schemeKey?: string) => {
               }
             },
             sizeSmall: {
-              padding: baseSchemeTheme.spacing(1, 0)
+              padding: baseSchemeTheme.spacing(0.5, 0)
             },
             labelSmall: {
               fontSize: 12,

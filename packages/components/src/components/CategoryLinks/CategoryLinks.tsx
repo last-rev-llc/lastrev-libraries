@@ -21,7 +21,7 @@ export const CategoryLinks = ({
       {links ? (
         <LinkGroup
           direction="row"
-          gap={1}
+          gap={2}
           {...sidekick(sidekickLookup?.categories)}
           data-testid="CategoryLinks"
         >

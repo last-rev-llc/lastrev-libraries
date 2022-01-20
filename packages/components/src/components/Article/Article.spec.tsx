@@ -22,8 +22,7 @@ describe('Article', () => {
       cy.get('[data-testid=Article-body] [data-testid=Text-root]').should('exist').and('have.text', parseNode(mockedContent?.body?.json));
 
       cy.get('[data-testid=Article-relatedLinks]').should('exist');
-      cy.get('[data-testid=Article-relatedLinks] li').should('exist');
-      cy.get('[data-testid=Article-relatedLinks] li a').each((link, index) => {
+      cy.get('[data-testid=Article-relatedLinks] a').each((link, index) => {
         cy.wrap(link)
           .should('have.attr', 'href', `/${mockedContent.relatedLinks[index].href}`)
           .and('have.text', mockedContent.relatedLinks[index].text)

@@ -6,8 +6,6 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import { styled } from '@mui/material/styles';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
 import BackToTop from '@last-rev/component-library/dist/components/BackToTop/BackToTop';
@@ -16,6 +14,7 @@ import Link, { LinkProps } from '@last-rev/component-library/dist/components/Lin
 import Text from '@last-rev/component-library/dist/components/Text/Text';
 
 import CategoryLinks from '../CategoryLinks';
+import RelatedLinks from '../RelatedLinks';
 import { sidekick } from '../../utils/sidekick';
 
 export interface ArticleProps {
@@ -109,11 +108,13 @@ export const Article = ({
                       height: 16,
                       margin: '7px 8px 0 0',
                       verticalAlign: 'top',
+                      // TODO: Move all hex colors to theme
                       fill: '#335B6E'
                     }}
                   />
                   <Typography variant="body2" component="time" dateTime={pubDate}
                   sx={{
+                    // TODO: Move all hex colors to theme
                     color: '#335B6E',
                     fontSize: 15,
                     lineHeight: 1.2
@@ -132,54 +133,10 @@ export const Article = ({
                 </Box>
               ) : null}
 
-              {/* TODO: Create ArticleRelatedLinks component https://lastrev.atlassian.net/browse/IAS-50 */}
               {relatedLinks ? (
-                <Box
-                  sx={{
-                    marginBottom: 2,
-                    padding: 3,
-                    // TODO: Move all hex colors to theme
-                    backgroundColor: '#F0F3F4',
-                    border: '1px solid #CCD6DB'
-                  }}>
-                  <Typography variant="h6" component="h6">For more information, see the related articles:</Typography>
-                  <List
-                    sx={{
-                      listStyle: 'disc',
-                      paddingLeft: 3,
-                      '& .MuiListItem-root': {
-                        padding: 0,
-                        '&:not(:last-child)': {
-                          marginBottom: 1,
-                        }
-                      },
-                      'a': {
-                        color: '#1264A3',
-                        fontSize: 16,
-                        lineHeight: 1.5,
-                        textDecoration: 'underline',
-                        '&:hover': {
-                          textDecoration: 'none'
-                        }
-                      }
-                    }}
-                    data-testid="Article-relatedLinks"
-                    {...sidekick(sidekickLookup?.categories)}
-                  >
-                    {relatedLinks.map((link, i) => (
-                      <ListItem key={i}
-                        sx={{
-                          display: 'list-item',
-                          '&::marker': {
-                            color: '#1264A3',
-                            fontSize: '1rem'
-                          }
-                        }}
-                      >
-                        <Link href={link?.href}>{link?.text}</Link>
-                      </ListItem>
-                    ))}
-                  </List>
+                <Box data-testid="Article-relatedLinks">
+                  {/* TODO: Possibly use localization lookup for title */}
+                  <RelatedLinks title="For more information, see the related articles:" links={relatedLinks} />
                 </Box>
               ) : null}
 
@@ -217,9 +174,8 @@ export const Article = ({
 };
 
 const ArticleWrap = styled(Box, {
-  name: 'ArticleWrap',
-  slot: 'root',
-  overridesResolver: (_, styles) => [styles.root]
+  name: 'Article',
+  slot: 'wrap',
 })<{}>(({ theme }) => ({
   padding: theme.spacing(2),
   backgroundColor: theme.palette.background.default,
@@ -230,6 +186,7 @@ const CaseSection = styled(Box, {
   name: 'Article',
   slot: 'CaseSection'
 })<{}>(({ theme }) => ({
+  // TODO: Move all hex colors to theme
   backgroundColor: '#E3F1F2',
   padding: theme.spacing(10, 0),
   textAlign: 'center'
