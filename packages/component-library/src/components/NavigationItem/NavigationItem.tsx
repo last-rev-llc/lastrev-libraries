@@ -27,10 +27,8 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
   const theme = useTheme();
   const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
   const isMobile = useMediaQuery(theme.breakpoints.down(menuBreakpoint));
-
   const handleClick = (evt: any) => {
-    if (isMobile) {
-      console.log('');
+    if (isMobile && subNavigation?.length) {
       evt.preventDefault();
       evt.stopPropagation();
       setOpen(!open);
@@ -39,7 +37,6 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
     }
   };
   const handleSubnavClick = () => {
-    // console.log('handleSubnavClick', { onRequestClose });
     setOpen(false);
     if (onRequestClose) onRequestClose();
   };

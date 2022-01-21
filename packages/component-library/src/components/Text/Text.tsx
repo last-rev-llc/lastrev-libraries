@@ -1,19 +1,20 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { FilterXSS } from 'xss';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import BLOCKS from './BLOCKS';
+import INLINES from './INLINES';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-// import { SxProps } from '@mui/system/styleFunctionSx';
 import Box from '@mui/material/Box';
 import styled from '@mui/system/styled';
 import Typography from '@mui/material/Typography';
-import keyBy from 'lodash/fp/keyBy';
+
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
 import ContentModule from '../ContentModule';
 import Media, { MediaProps } from '../Media';
 import sidekick from '../../utils/sidekick';
 
+const keyBy = (key: string, xs: any[]) => xs.reduce((acc, x) => ({ ...acc, [x[key]]: x }), {});
 interface Content {
   __typename?: string;
   id: string;
@@ -161,8 +162,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ..
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}
-      >
+        {...props}>
         {documentToReactComponents(body?.json, renderOptions({ links: body?.links, renderNode }))}
       </Root>
     </ErrorBoundary>
