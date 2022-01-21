@@ -42,7 +42,6 @@ last-rev create-app
 11. Authorize Netlify and choose where you would like to create the new site.
 12. Choose to install the dependancies to run locally
 
-
 ```text
 Options:
 -e --example <example> Name of the last-rev example to use (default: "lastrev-next-starter")
