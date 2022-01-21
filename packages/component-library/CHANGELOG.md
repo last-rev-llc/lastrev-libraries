@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.3.4
+
+### Patch Changes
+
+- e95af41: Fix: Force NavigationBar to always render NavigationItem for links
+
 ## 0.3.3
 
 ### Patch Changes
