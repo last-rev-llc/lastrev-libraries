@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.3.5
+
+### Patch Changes
+
+- fa10aa3: HOTFIX: Rollback NavigationItem by default, instead pass onClick
+
 ## 0.3.4
 
 ### Patch Changes
