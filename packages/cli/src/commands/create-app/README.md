@@ -20,7 +20,12 @@ At this point, you just need to add a `.env` file with your environment variable
 npm install @last-rev/cli
 ```
 
-> If you are using Contentful, create the new space first.
+> If you are using Contentful, create the new space first and then run the following command.
+
+```sh
+last-rev create-app
+
+```
 
 ## Steps
 
@@ -37,10 +42,6 @@ npm install @last-rev/cli
 11. Authorize Netlify and choose where you would like to create the new site.
 12. Choose to install the dependancies to run locally
 
-```sh
-last-rev create-app
-
-```
 
 ```text
 Options:
