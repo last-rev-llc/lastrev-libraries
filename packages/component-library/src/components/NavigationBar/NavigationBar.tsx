@@ -27,7 +27,7 @@ export const NavigationBar = ({ items, variant, itemsVariant, onRequestClose, si
         <Grid container sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
             <Grid item key={item.id} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>
-              <ContentModule {...item} onRequestClose={onRequestClose} __typename="NavigationItem" />
+              <ContentModule {...item} onClick={onRequestClose} onRequestClose={onRequestClose} />
             </Grid>
           ))}
         </Grid>
