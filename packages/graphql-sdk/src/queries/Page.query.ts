@@ -10,8 +10,6 @@ export const PageQuery = gql`
       id
       ...Content_Base
       ...Page_Base
-      ...CategoryBlog_Page
-      ...Blog_Page
       ...Article_Base
     }
   }

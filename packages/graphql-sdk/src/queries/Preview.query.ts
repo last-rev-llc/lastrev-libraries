@@ -18,8 +18,6 @@ export const Preview_Query = gql`
       ...Text_Base
       ...Card_Base
       ...Link_Base
-      ...CategoryBlog_Page
-      ...Blog_Page
       ...ModuleIntegration_Base
       ...Person_Base
       ...Article_Base

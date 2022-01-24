@@ -7,7 +7,6 @@ import { ApolloContext } from '@last-rev/types';
 import {
   Card,
   Collection,
-  Blog,
   Hero,
   Link,
   NavigationItem,
@@ -51,7 +50,6 @@ Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloConte
 const extensions: GraphQlExtension[] = [
   Card,
   Collection,
-  Blog,
   Hero,
   Header,
   Link,

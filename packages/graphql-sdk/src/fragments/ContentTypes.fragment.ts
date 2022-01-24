@@ -33,31 +33,6 @@ export const ContentTypes_Fragments = gql`
     }
   }
 
-  fragment CategoryBlog_Page on CategoryBlog {
-    title
-    slug
-    header {
-      __typename
-      ...Header_Base
-      navigationItems {
-        ...Collection_Base
-      }
-    }
-    footer {
-      ...Section_Base
-    }
-
-    hero {
-      ...Hero_Base
-    }
-
-    contents {
-      ...Content_Page_Base
-    }
-
-    seo
-  }
-
   fragment Content_Page_Base on Content {
     ...Content_Base
     ...Section_Base
@@ -76,43 +51,6 @@ export const ContentTypes_Fragments = gql`
     body {
       ...RichText_RichTextFragment
     }
-  }
-
-  fragment Blog_Page on Blog {
-    title
-    slug
-    author {
-      ...Person_Base
-    }
-    tags
-    footer {
-      ...Section_Base
-    }
-    header {
-      __typename
-      ...Header_Base
-      navigationItems {
-        ...Collection_Base
-      }
-    }
-    featuredMedia {
-      ...Media_Base
-    }
-    body {
-      ...RichText_RichTextFragment
-    }
-    categories {
-      id
-      slug
-      title
-    }
-    relatedLinks {
-      ...Link_Base
-    }
-    contents {
-      ...Content_Page_Base
-    }
-    seo
   }
 
   fragment Link_Base on Link {
