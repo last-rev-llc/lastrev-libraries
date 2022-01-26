@@ -12,7 +12,7 @@
     "start": "run-s gql:pm2:kill gql:pm2 gql:healthcheck",
     "sync:cms": "last-rev cms-sync -c config.js",
     "gql:pm2": "pm2 start pm2.json ",
-    "gql:healthcheck": "wait-on -c wait-on-config.js",
+    "gql:healthcheck": "wait-on -c wait-on-config.js || echo 'Healthcheck failed'",
     "gql:pm2:kill": "pm2 kill",
     "logs": "pm2 logs"
   },
