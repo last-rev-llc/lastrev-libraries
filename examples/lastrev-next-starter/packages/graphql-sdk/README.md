@@ -1,6 +1,15 @@
+
+# Schema downloading
+
+The GraphQL SDK code generation depends on the `schema.grpahql` file.
+When the GraphQL server is available this file will be automatically downloaded.
+If the GraphQL server is not available, the existing file will be used for code generation.
+
+Always save the changes to your schema.graphql file!
+
 # Expected Environment Variables
 
-- GRAPHQL_SERVER_URL (optional) - URL of the GraphQL server. If not provided, defaults to `http://localhost:5000/graphql`
+- GRAPHQL_SERVER_URL (optional) - URL of the GraphQL server. If not provided, defaults to `http://localhost:5000/graphql`1
 
 # About
 
