@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 /// <reference types="cypress" />
 // ***********************************************************
 // This example plugins/index.js can be used to load plugins
@@ -13,6 +12,9 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+const path = require('path');
+const toPath = (_path) => path.join(process.cwd(), _path);
+
 /**
  * @type {Cypress.PluginConfig}
  */
@@ -20,6 +22,27 @@
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
+  // TODO: Figure out why this code-coverage is failing the tests
   require('@cypress/code-coverage/task')(on, config);
+  if (config.testingType === 'component') {
+    require('@cypress/react/plugins/babel')(on, config, {
+      setWebpackConfig: (webpackConfig) => {
+        webpackConfig.resolve.alias = {
+          ...webpackConfig.resolve.alias,
+          'react': toPath('../../node_modules/react'),
+          '@emotion/core': toPath('../../node_modules/@emotion/react'),
+          'emotion-theming': toPath('../../node_modules/@emotion/react')
+        }
+        webpackConfig.module.rules.push({
+          test: /\.css$/,
+          use: [
+            'style-loader',
+            'css-loader',
+          ]
+        })
+        return webpackConfig
+      }
+    });
+  }
   return config;
 };

@@ -2,7 +2,7 @@
   "name": "lastrev-libraries",
   "version": "0.0.1",
   "main": "index.js",
-  "author": "Jaime Morales",
+  "author": "LastRev",
   "license": "MIT",
   "workspaces": {
     "packages": [

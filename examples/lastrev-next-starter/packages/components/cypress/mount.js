@@ -5,6 +5,7 @@ import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import theme from '../src/theme';
 import contentMapping from '../src/contentMapping';
+import '@last-rev/component-library/dist/styles.css';
 
 const mount = (component, options) =>
   ogMount(
