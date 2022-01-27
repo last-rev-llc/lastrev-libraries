@@ -22,7 +22,6 @@ const toPath = (_path) => path.join(process.cwd(), _path);
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  // TODO: Figure out why this code-coverage is failing the tests
   require('@cypress/code-coverage/task')(on, config);
   if (config.testingType === 'component') {
     require('@cypress/react/plugins/babel')(on, config, {

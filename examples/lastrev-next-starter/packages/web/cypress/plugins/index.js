@@ -22,27 +22,6 @@ const toPath = (_path) => path.join(process.cwd(), _path);
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  // TODO: Figure out why this code-coverage is failing the tests
   require('@cypress/code-coverage/task')(on, config);
-  if (config.testingType === 'component') {
-    require('@cypress/react/plugins/babel')(on, config, {
-      setWebpackConfig: (webpackConfig) => {
-        webpackConfig.resolve.alias = {
-          ...webpackConfig.resolve.alias,
-          'react': toPath('../../node_modules/react'),
-          '@emotion/core': toPath('../../node_modules/@emotion/react'),
-          'emotion-theming': toPath('../../node_modules/@emotion/react')
-        }
-        webpackConfig.module.rules.push({
-          test: /\.css$/,
-          use: [
-            'style-loader',
-            'css-loader',
-          ]
-        })
-        return webpackConfig
-      }
-    });
-  }
   return config;
 };

@@ -2,3 +2,4 @@
 
 // Generic
 // Cypress.Commands.add('selectDropdown', generic.selectDropdown);
+import '@percy/cypress';

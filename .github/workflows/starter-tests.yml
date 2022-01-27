@@ -10,6 +10,8 @@ jobs:
     defaults: 
       run:
         working-directory: ./examples/lastrev-next-starter
+    env:
+      DEBUG: cypress:*
 
     steps:
       - name: Checkout Repo
