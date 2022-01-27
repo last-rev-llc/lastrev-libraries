@@ -2,7 +2,7 @@
 
 # This script ensures cms-sync folder is not ignored during turbo build
 # The fingerprint hash that Turbo uses ignores anything ignored in the .gitignore file
-# We want the cms-sync data to be part of the has for the graphql-runner package
+# We want the cms-sync data to be part of the hash for the graphql-runner package
 # This way when content changes packages depending on graphql-runner will be invalidated
 echo "Removing cms-sync from graphql-runner .gitignore"
 
