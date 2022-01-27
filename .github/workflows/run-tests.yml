@@ -46,6 +46,9 @@ jobs:
 
       - name: Run the tests
         run: "yarn turbo run test test:e2e lint"
+  
+      - name: Stop the GQL server
+        run: "npx pm2 kill"
 
       # - name: Report code coverage
       #   uses: zgosalvez/github-actions-report-lcov@v1
