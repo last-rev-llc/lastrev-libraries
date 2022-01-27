@@ -6,6 +6,8 @@ jobs:
   test:
     if: github.actor != 'dependabot'
     runs-on: ubuntu-latest
+    env:
+      PERCY_TOKEN: ${{ secrets.LRCL_PERCY_TOKEN }}
 
     steps:
       - name: Checkout Repo
