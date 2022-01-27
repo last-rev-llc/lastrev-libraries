@@ -205,6 +205,7 @@ const RichTextFragment = gql`
         ...RichText_LinkFragment
         ...RichText_SectionFragment
         ...RichText_TextFragment
+        ...RichText_MediaFragment
       }
       assets {
         ...RichText_MediaFragment

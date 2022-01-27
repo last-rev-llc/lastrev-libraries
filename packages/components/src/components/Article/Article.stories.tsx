@@ -21,6 +21,16 @@ export default {
     }
   ],
   argTypes: {
+    title: { name: 'Title' },
+    slug: { name: 'Slug' },
+    summary: { name: 'Summary' },
+    seo: { name: 'SEO' },
+    featuredMedia: { name: 'Featured Media' },
+    pubDate: { name: 'Publish Date (Last Modified Date)' },
+    disableBackToTop: { name: 'Disable Back To Top' },
+    body: { name: 'Body' },
+    categories: { name: 'Categories' },
+    relatedLinks: { name: 'Related Links' },
     id: { table: { disable: true } },
     sidekickLookup: { table: { disable: true } },
     __typename: { table: { disable: true } }

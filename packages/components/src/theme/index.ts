@@ -1,6 +1,7 @@
 // import { responsiveFontSizes } from '@mui/material/styles';
 import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
 import createCardVariants from './variants/createCardVariants';
+import createSectionVariants from './variants/createSectionVariants';
 import createTextVariants from './variants/createTextVariants';
 import { Mixins } from '@mui/material/styles/createMixins';
 import merge from 'lodash/merge';
@@ -38,10 +39,10 @@ const baseTheme = {
   breakpoints: {
     values: {
       xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536
+      sm: 320,
+      md: 768,
+      lg: 1024,
+      xl: 1280
     }
   },
   mixins: {
@@ -52,57 +53,50 @@ const baseTheme = {
     // })
   },
   typography: {
-    fontFamily: 'Inter',
+    fontSize: 16,
+    fontFamily: "'Inter', 'sans-serif'",
+    fontStyle: 'normal',
+    fontWeight: {
+      regular: 400,
+      medium: 500,
+      semibold: 600
+    },
     h1: {
-      fontFamily: 'Inter',
       fontSize: '3rem',
-      fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: 1.25
     },
     h2: {
-      fontFamily: 'Inter',
       fontSize: '2.25rem',
-      fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: 1.25
     },
     h3: {
-      fontFamily: 'Inter',
       fontSize: '1.75rem',
-      fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: 1.5
     },
     h4: {
-      fontFamily: 'Inter',
       fontSize: '1.5rem',
-      fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: 1.5
     },
     h5: {
-      fontFamily: 'Inter',
       fontSize: '1.25rem',
-      fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: 1.5
     },
     h6: {
-      fontFamily: 'Inter',
       fontSize: '1.125rem',
-      fontStyle: 'normal',
       fontWeight: 600,
       lineHeight: 1.5555
     },
     body1: {
-      fontFamily: 'Inter',
       fontSize: '1.125rem',
       fontWeight: 400,
       lineHeight: 1.5555
     },
     body2: {
-      fontFamily: 'Inter',
       fontSize: '1rem',
       fontWeight: 400,
       lineHeight: 1.5
@@ -200,8 +194,14 @@ const createSchemeTheme = (schemeKey?: string) => {
             root: {
               '& [class*="MuiTypography-body1"]': {
                 marginBottom: baseSchemeTheme.spacing(1),
-                fontSize: 16,
+                fontSize: '1rem',
                 lineHeight: 1.5
+              },
+              '& li::marker': {
+                fontSize: '1rem'
+              },
+              '& [class*=Media-embedRoot]': {
+                aspectRatio: '16/9'
               }
             }
           }
@@ -253,6 +253,7 @@ const createSchemeTheme = (schemeKey?: string) => {
           }
         },
         Section: {
+          variants: createSectionVariants(baseSchemeTheme),
           styleOverrides: {
             contentContainer: {
               padding: baseSchemeTheme.spacing(3),
@@ -261,6 +262,23 @@ const createSchemeTheme = (schemeKey?: string) => {
               [baseSchemeTheme.breakpoints.down('sm')]: {
                 paddingLeft: baseSchemeTheme.spacing(3),
                 paddingRight: baseSchemeTheme.spacing(3)
+              }
+            }
+          }
+        },
+        // MUI
+        MuiTypography: {
+          styleOverrides: {
+            h1: {
+              [baseSchemeTheme.breakpoints.down('md')]: {
+                fontSize: 36,
+                lineHeight: '45px'
+              }
+            },
+            h2: {
+              [baseSchemeTheme.breakpoints.down('md')]: {
+                fontSize: 30,
+                lineHeight: '42px'
               }
             }
           }
@@ -285,6 +303,13 @@ const createSchemeTheme = (schemeKey?: string) => {
                 paddingLeft: 0,
                 paddingRight: 0
               }
+            }
+          }
+        },
+        MuiLink: {
+          styleOverrides: {
+            root: {
+              color: baseSchemeTheme.palette.text.primary
             }
           }
         },

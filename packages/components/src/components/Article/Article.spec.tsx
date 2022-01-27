@@ -1,4 +1,5 @@
 import * as React from 'react';
+import dayjs from 'dayjs';
 
 import Article, { ArticleProps } from './Article';
 import { articleMock } from './Article.mock';
@@ -14,12 +15,12 @@ describe('Article', () => {
       const mockedContent: ArticleProps = { ...articleMock };
       mount(<Article {...mockedContent} />);
       cy.get('[data-testid=Article]').should('exist');
-      cy.get('[data-testid=Article-title]').should('exist').and('have.text', mockedContent.title);
-      cy.get('[data-testid=Article-summary]').should('exist').and('have.text', mockedContent.summary);
-      cy.get('[data-testid=Article-pubDate]').should('exist').and('have.text', mockedContent.pubDate);
+      cy.get('[data-testid=Article-head] [data-testid=ArticleHead-title]').should('exist').and('have.text', mockedContent.title);
+      cy.get('[data-testid=Article-head] [data-testid=ArticleHead-pubDate]').should('exist').and('have.text', dayjs(mockedContent.pubDate).format('MMM D, YYYY'));
+      cy.get('[data-testid=Article-head] [data-testid=ArticleHead-summary]').should('exist').and('have.text', mockedContent.summary);
 
       cy.get('[data-testid=Article-body]').should('exist');
-      cy.get('[data-testid=Article-body] [data-testid=Text-root]').should('exist').and('have.text', parseNode(mockedContent?.body?.json));
+      cy.get('[data-testid=Article-body] [data-testid=ArticleBody-Text]').should('exist').and('have.text', parseNode(mockedContent?.body?.json));
 
       cy.get('[data-testid=Article-relatedLinks]').should('exist');
       cy.get('[data-testid=Article-relatedLinks] a').each((link, index) => {
@@ -40,9 +41,9 @@ describe('Article', () => {
       const mockedContent: ArticleProps = { ...articleMock };
       mount(<Article slug={mockedContent?.slug} />);
       cy.get('[data-testid=Article]').should('exist');
-      cy.get('[data-testid=Article-title]').should('not.exist');
-      cy.get('[data-testid=Article-summary]').should('not.exist');
-      cy.get('[data-testid=Article-pubDate]').should('not.exist');
+      cy.get('[data-testid=Article-head] [data-testid=ArticleHead-title]').should('not.exist');
+      cy.get('[data-testid=Article-head] [data-testid=ArticleHead-pubDate]').should('not.exist');
+      cy.get('[data-testid=Article-head] [data-testid=ArticleHead-summary]').should('not.exist');
       cy.get('[data-testid=Article-featuredMedia]').should('not.exist');
       cy.get('[data-testid=Article-body] [data-testid=Text-root]').should('not.exist');
       cy.get('[data-testid=Article-relatedLinks]').should('not.exist');

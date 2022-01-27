@@ -1,36 +1,70 @@
 import { Theme } from '@mui/material/styles';
 
-export const blogVariant = (_theme: Theme) => ({
+export const articleVariant = (theme: Theme) => ({
   props: {
-    variant: 'blog'
+    variant: 'article'
   },
   style: {
-     // Add any style overrides here
-     // Example Below
-    // '& [class$=Media-root]': {
-    //   width: '100%',
-    //   padding: theme.spacing(10, 5),
-    //   transform: 'scale(1.1)'
-    // },
-    // '.MuiTypography-h1': {
-    //   color: theme.palette.text.secondary
-    // },
-    // '.MuiTypography-h2': {
-    //   color: theme.palette.text.secondary
-    // },
-    // '.MuiTypography-h3': {
-    //   color: theme.palette.text.secondary
-    // },
-    // '.MuiTypography-h4': {
-    //   color: theme.palette.text.secondary
-    // },
-    // '.MuiTypography-body1': {
-    //   paddingBottom: '1.5rem'
-    // }
+    '& h2:not(:first-of-type)': {
+      paddingTop: theme.spacing(2)
+    },
+
+    '.MuiTypography-h1': {
+      marginBottom: theme.spacing(2),
+      paddingBottom: theme.spacing(1),
+      // TODO: Move all hex colors to theme
+      borderBottom: '1px solid #CCD6DB',
+      fontSize: '1.75rem',
+      lineHeight: 1.5,
+
+      '&:not:(:first-of-type)': {
+        paddingTop: theme.spacing(2)
+      }
+    },
+
+    '.MuiTypography-h2': {
+      marginBottom: theme.spacing(2),
+      paddingBottom: theme.spacing(1),
+      // TODO: Move all hex colors to theme
+      borderBottom: '1px solid #CCD6DB',
+      fontSize: '1.75rem',
+      lineHeight: 1.5,
+
+      '&:not:(:first-of-type)': {
+        paddingTop: theme.spacing(2)
+      }
+    },
+
+    '.MuiTypography-h3': {
+      fontSize: '1.5rem',
+      lineHeight: 1.5
+    },
+
+    '.MuiTypography-h4': {
+      fontSize: '1.25rem',
+      lineHeight: 1.5
+    },
+
+    '.MuiTypography-h5': {
+      fontSize: '1.125rem',
+      lineHeight: 1.5555
+    },
+
+    '.MuiTypography-h6': {
+      fontSize: '1.125rem',
+      lineHeight: 1.5555
+    },
+
+    '& [class$=Media-root]': {
+      width: '100%',
+      padding: theme.spacing(4, 0)
+    },
   }
 });
 
-const textVariants = [blogVariant];
+const textVariants = [
+  articleVariant
+];
 
 const createTextVariants = (theme: Theme) => {
   return textVariants.map((creator) => creator(theme));
