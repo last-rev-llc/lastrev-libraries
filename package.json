@@ -29,10 +29,14 @@
     "globalDependencies": [],
     "pipeline": {
       "test": {
-        "outputs": []
+        "outputs": [
+          "coverage/**"
+        ]
       },
       "test:e2e": {
-        "outputs": []
+        "outputs": [
+          "coverage/**"
+        ]
       },
       "test:watch": {
         "cache": false,
