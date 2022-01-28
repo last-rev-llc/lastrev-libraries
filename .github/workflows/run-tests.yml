@@ -49,8 +49,14 @@ jobs:
       - name: Run the tests
         run: "yarn turbo run test test:e2e lint"
   
-      - name: Stop the GQL server
-        run: "npx pm2 kill"
+      - name: Collect coverage
+        run: "yarn combine:reports"
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: coverage
 
       # - name: Report code coverage
       #   uses: zgosalvez/github-actions-report-lcov@v1

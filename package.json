@@ -21,7 +21,9 @@
     "storybook": "lerna run storybook",
     "test:watch": "turbo run test:watch",
     "test": "turbo run test:e2e test",
-    "version-packages": "changeset version && yarn prettier"
+    "posttest": "yarn combine:reports",
+    "version-packages": "changeset version && yarn prettier",
+    "combine:reports": "node scripts/combineCoverage.js"
   },
   "turbo": {
     "globalDependencies": [],

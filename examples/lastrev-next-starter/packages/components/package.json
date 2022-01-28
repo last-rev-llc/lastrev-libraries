@@ -12,7 +12,7 @@
     "build-no-run": "cross-env NODE_ENV=production rollup -c",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "test": "percy exec -- cypress run-ct"
+    "test": "cross-env NODE_ENV=test percy exec --  cypress run-ct"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",

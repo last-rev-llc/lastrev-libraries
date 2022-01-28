@@ -10,6 +10,7 @@ node_modules
 **/test-scripts
 
 **/coverage
+**/reports
 
 lerna-debug.log
 .env

@@ -30,9 +30,11 @@ type Media implements Content {
   file: Asset
   variant: String
   internalTitle: String
-  asset: Media
-  assetURL: String
   placeholder: Media
+  assetURL: String
+  asset: Media
+  tablet: Media
+  mobile: Media
 }
 type Location {
   lat: String
