@@ -33,17 +33,15 @@ describe('CollectionAccordion', () => {
   context('functions correctly', () => {
     it('accordions open and collapse correctly', () => {
       mount(<CollectionAccordion {...mockedContent} />);
-      cy.get('[data-testid=Accordion]').each((element) => {
+      cy.get('[data-testid=Accordion]').each((element, idx) => {
         cy.get('[data-testid=Accordion-body]').should('not.be.visible');
-        cy.percySnapshot();
 
         cy.wrap(element).click();
         cy.get('[data-testid=Accordion-body]').should('be.visible');
-        cy.percySnapshot();
 
+        if (idx === 0) cy.percySnapshot();
         cy.wrap(element).click();
         cy.get('[data-testid=Accordion-body]').should('not.be.visible');
-        cy.percySnapshot();
       });
     });
   });
