@@ -16,6 +16,7 @@ module.exports = {
   },
   async onPostBuild({ constants, utils }) {
     const cacheDirs = getCacheDirs(constants);
+    console.log('🚀 Caching... 🚀');
     console.log(`Looking for cache dirs: ${cacheDirs.join(', ')}`);
     if (await utils.cache.save(cacheDirs)) {
       console.log('Stored cache to speed up future builds.');

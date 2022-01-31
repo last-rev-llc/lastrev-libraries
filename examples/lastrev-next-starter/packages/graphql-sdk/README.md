@@ -4,7 +4,7 @@ Always save the changes to your schema.graphql file!
 
 # Expected Environment Variables
 
-- GRAPHQL_SERVER_URL (optional) - URL of the GraphQL server. If not provided, defaults to `http://localhost:5000/graphql`1
+- GRAPHQL_SERVER_URL (optional) - URL of the GraphQL server. If not provided, defaults to `http://localhost:5000/graphql`
 
 # About
 
