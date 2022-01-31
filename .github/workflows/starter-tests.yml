@@ -1,6 +1,9 @@
 name: Run Next Starter Example page tests and build
 
-on: [pull_request]
+on: 
+ pull_request:
+  paths:
+   - 'examples/lastrev-next-starter/**'
 
 jobs:
   test:
@@ -41,5 +44,8 @@ jobs:
       - name: Install project dependencies
         run: yarn --prefer-offline
 
-      - name: Run the tests
-        run: yarn turbo run test test:e2e lint
+
+      # TODO - Enable starter e2e Tests
+      # - name: Run the tests
+      #  run: yarn turbo run test lint
+      #   run: yarn turbo run test test:e2e lint
