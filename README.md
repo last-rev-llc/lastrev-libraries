@@ -49,7 +49,7 @@ $ yarn test:watch
 
 This monorepo uses [changesets](https://github.com/atlassian/changesets) to manage versioning and publishing of the different modules and apps. Please read up on changesets and follow the guidelines below:
 
-- When making a change worth noting (something that should show up in changelogs), run `yarn changeset`. This will ask you for the type of bump (patch/minor/major) and which packages it applies to. This is helpful since the person making the change generally knows whether it is a breaking change, a functional change or a simple fix. These changesets are additive,a nd will also take into account dependencies.
+- When making a change worth noting (something that should show up in changelogs), run `yarn changeset`. This will ask you for the type of bump (patch/minor/major) and which packages it applies to. This is helpful since the person making the change generally knows whether it is a breaking change, a functional change or a simple fix. These changesets are additive, and will also take into account dependencies.
 - It is generally a good idea to include a changeset with all pull requests.
 - When a change is merged into `main`, the [release github action](.github/workflows/release.yml) is triggered.
 
