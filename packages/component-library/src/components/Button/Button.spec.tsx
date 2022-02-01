@@ -118,23 +118,14 @@ describe('Button', () => {
       });
     });
 
-    // TODO: Need to figure out why component doesn't mount after testing href click
-    // context('if href is added', () => {
-    //   it('navigates to external and internal urls', () => {
-    //     mockedContent.href = '/';
-    //     mount(<Button {...mockedContent} />);
-    //     cy.get('[data-testid=Button]').click();
-    //     cy.url().should('eq', `${Cypress.config().baseUrl}${mockedContent.href}`);
-    //     cy.percySnapshot();
-    //   });
-
-    //   it('opens external url if http:// is placed in front of href', () => {
-    //     mockedContent.href = 'http://www.example.com';
-    //     mount(<Button {...mockedContent} />);
-    //     cy.get('[data-testid=Button]').click();
-    //     cy.url().should('eq', `${mockedContent.href}/`);
-    //     cy.percySnapshot();
-    //   });
-    // });
+    context('if href is added', () => {
+      it('navigates to internal urls', () => {
+        mockedContent.href = '/';
+        mount(<Button {...mockedContent} />);
+        cy.get('[data-testid=Button]').click();
+        cy.url().should('eq', `${Cypress.config().baseUrl}${mockedContent.href}`);
+        cy.percySnapshot();
+      });
+    });
   });
 });
