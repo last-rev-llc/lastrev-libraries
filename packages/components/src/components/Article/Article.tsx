@@ -14,6 +14,7 @@ import BackToTop from '@last-rev/component-library/dist/components/BackToTop/Bac
 import { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
 import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
 
+import ArticleNav from '../ArticleNav';
 import ArticleHead from '../ArticleHead';
 import ArticleBody from '../ArticleBody';
 import CategoryLinks from '../CategoryLinks';
@@ -31,6 +32,7 @@ export interface ArticleProps {
   featuredMedia?: MediaProps;
   categories?: Array<LinkProps>;
   relatedLinks?: Array<LinkProps>;
+  sideNav?: Array<LinkProps>;
   disableBackToTop?: boolean;
   sidekickLookup?: any;
 }
@@ -44,6 +46,7 @@ export const Article = ({
   body,
   categories,
   relatedLinks,
+  sideNav,
   disableBackToTop,
   sidekickLookup
 }: ArticleProps) => {
@@ -53,10 +56,9 @@ export const Article = ({
     'headline': `${title}`,
     'datePublished': `${pubDate}`,
     'image': featuredMedia ? `${featuredMedia?.file?.url}` : '',
-    'keywords': `${categories?.map(category => category?.text).join(', ')}`,
-    'url': `https://www.integralads.com/${slug}`,
+    'keywords': `${categories?.map((category) => category?.text).join(', ')}`,
+    'url': `https://www.integralads.com/${slug}`
   };
-
   return (
     <ErrorBoundary>
       <Head>
@@ -187,48 +189,10 @@ export const Article = ({
           <Grid item xs={2}
             sx={{ display: { sm: 'none', md: 'flex' }}}
           >
-            {/* TODO: Create Sidenav component https://lastrev.atlassian.net/browse/IAS-49 */}
-            <Box py={1}>
-              <Typography variant="overline" component="p" mb={2}
-                sx={{
-                  fontSize: 12,
-                  fontWeight: 600,
-                  lineHeight: '18px'
-                }}
-              >Contents</Typography>
-
-              <Box component="ul" p={0}
-                data-testid="Sidebar-list"
-                sx={{
-                  listStyle: 'none'
-                }}
-              >
-                {[1,2,3,4].map((link, idx) => (
-                  <Typography component="li" mb={2} pl={1}
-                    key={idx}
-                    data-testid="Sidebar-link"
-                    sx={{
-                      fontSize: 15,
-                      fontWeight: 500,
-                      lineHeight: '18px',
-                      '&:first-of-type': {
-                        borderLeft: '2px solid #FF574A',
-                        fontWeight: 600
-                      },
-                      '&:not(:first-of-type) a': {
-                        // TODO: Move all hex colors to theme (IAS-85)
-                        color: '#4D7080'
-                      },
-                      '& a:hover': {
-                        color: 'text.primary',
-                        textDecoration: 'none'
-                      }
-                    }}
-                  >
-                    <Link>Section title {link}</Link>
-                  </Typography>
-                ))}
-              </Box>
+            <Box>
+              {sideNav ? (
+                <ArticleNav sideNav={sideNav} data-testid="Article-sideNav" />
+              ) : null}
             </Box>
           </Grid>
           <Grid item sm={12} md={10} lg={8}>
@@ -313,7 +277,7 @@ export const Article = ({
 
 const ArticleWrap = styled(Box, {
   name: 'Article',
-  slot: 'wrap',
+  slot: 'wrap'
 })<{}>(({ theme }) => ({
   paddingBottom: theme.spacing(5),
   backgroundColor: theme.palette.background.default,

@@ -1,8 +1,8 @@
 import React from 'react';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import Text from '@last-rev/component-library/dist/components/Text/Text';
 import { RichText } from '@last-rev/component-library/dist/components/Text/Text';
 
+import Text from '../Text';
 import { sidekick } from '../../utils/sidekick';
 
 export interface ArticleBodyProps {

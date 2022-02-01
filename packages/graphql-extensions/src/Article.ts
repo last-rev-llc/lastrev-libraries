@@ -2,6 +2,22 @@ import gql from 'graphql-tag';
 import { ApolloContext } from '@last-rev/types';
 import { getDefaultFieldValue, getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ContentfulPathsGenerator } from '@last-rev/types';
+import * as types from '@contentful/rich-text-types';
+
+import createType from './utils/createType';
+
+interface Heading {
+  [key: string]: number;
+}
+
+const HEADINGS: Heading = {
+  [types.BLOCKS.HEADING_1]: 1,
+  [types.BLOCKS.HEADING_2]: 2,
+  [types.BLOCKS.HEADING_3]: 3,
+  [types.BLOCKS.HEADING_4]: 4,
+  [types.BLOCKS.HEADING_5]: 5,
+  [types.BLOCKS.HEADING_6]: 6
+};
 
 export const typeMappings = {};
 
@@ -41,6 +57,7 @@ export const typeDefs = gql`
     footer: Content
     categories: [Link]
     relatedLinks: [Link]
+    sideNav: [Link]
   }
 `;
 
@@ -48,7 +65,61 @@ export const mappers = {
   Article: {
     Article: {
       header: headerResolver,
-      footer: footerResolver
+      footer: footerResolver,
+      sideNav: async (page: any, _args: any, ctx: ApolloContext) => {
+        const body: any = getLocalizedField(page.fields, 'body', ctx);
+        if (!body || !body.content) return [];
+        const links = [];
+
+        for (let item of body.content) {
+          const headingLevel = HEADINGS[item.nodeType];
+
+          if (!headingLevel || headingLevel !== 2) continue;
+          const value = item.content[0]?.value?.trim() as string;
+          if (!value || value === '') continue;
+
+          const href = value
+            // reference: https://gist.github.com/codeguy/6684588
+            .normalize('NFKD')
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .trim()
+            .replace(/[-\s]+/g, '-');
+
+          links.push(
+            createType('Link', {
+              id: href,
+              // TODO, this is adding a slash to the beginning of the link
+              href: `#${href}`,
+              text: value
+            })
+          );
+        }
+        return links;
+      },
+      body: async (page: any, _args: any, ctx: ApolloContext) => {
+        const body = await getLocalizedField(page?.fields, 'body', ctx);
+        if (!body || !body.content) return;
+
+        for (let item of body.content) {
+          const headingLevel = HEADINGS[item.nodeType];
+
+          if (!headingLevel || headingLevel !== 2) continue;
+          const value = item.content[0]?.value?.trim() as string;
+          if (!value || value === '') continue;
+
+          const href = value
+            // reference: https://gist.github.com/codeguy/6684588
+            .normalize('NFKD')
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .trim()
+            .replace(/[-\s]+/g, '-');
+
+          item.data.id = href;
+        }
+        return body;
+      },
     },
     Link: {
       href: async (item: any, _args: any, ctx: ApolloContext) => {

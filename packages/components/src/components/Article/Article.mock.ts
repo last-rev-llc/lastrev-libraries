@@ -1053,5 +1053,33 @@ export const articleMock = {
       icon: undefined,
       iconPosition: undefined
     }
+  ],
+  sideNav: [
+    {
+      id: "article-header",
+      __typename: "Link",
+      sidekickLookup: {
+        contentId: "article-header",
+        contentTypeId: "Link"
+      },
+      text: "Article header",
+      href: "/#article-header",
+      variant: null,
+      icon: null,
+      iconPosition: null
+    },
+    {
+      id: "two-columns",
+      __typename: "Link",
+      sidekickLookup: {
+        contentId: "two-columns",
+        contentTypeId: "Link"
+      },
+      text: "Two Columns",
+      href: "/#two-columns",
+      variant: null,
+      icon: null,
+      iconPosition: null
+    }
   ]
 };
