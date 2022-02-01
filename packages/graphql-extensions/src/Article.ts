@@ -66,6 +66,8 @@ export const typeDefs = gql`
     footer: Content
     categories: [Link]
     relatedLinks: [Link]
+    breadcrumbs: [Link]
+    breadcrumbsRoot: String
     footerItems: [Content]
     sideNav: [Link]
   }
@@ -77,6 +79,11 @@ export const mappers = {
       header: headerResolver,
       footer: footerResolver,
       footerItems: footerItemsResolver,
+      breadcrumbs: async (item: any, _args: any, ctx: ApolloContext) => {
+        const links: any = await getLocalizedField(item.fields, 'categories', ctx);
+        if (!links) return [];
+        return links;
+      },
       sideNav: async (page: any, _args: any, ctx: ApolloContext) => {
         const body: any = getLocalizedField(page.fields, 'body', ctx);
         if (!body || !body.content) return [];

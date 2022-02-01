@@ -4,8 +4,6 @@ import xss from 'xss';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Stack from '@mui/material/Stack';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { styled } from '@mui/material/styles';
@@ -18,6 +16,7 @@ import ContentModule from '@last-rev/component-library/dist/components/ContentMo
 import ArticleNav from '../ArticleNav';
 import ArticleHead from '../ArticleHead';
 import ArticleBody from '../ArticleBody';
+import Breadcrumbs from '../Breadcrumbs';
 import CategoryLinks from '../CategoryLinks';
 import RelatedLinks from '../RelatedLinks';
 import { sidekick } from '../../utils/sidekick';
@@ -35,6 +34,7 @@ export interface ArticleProps {
   relatedLinks?: Array<LinkProps>;
   sideNav?: Array<LinkProps>;
   disableBackToTop?: boolean;
+  breadcrumbs?: Array<LinkProps>;
   footerItems?: Array<any>;
   sidekickLookup?: any;
 }
@@ -50,6 +50,7 @@ export const Article = ({
   relatedLinks,
   sideNav,
   disableBackToTop,
+  breadcrumbs,
   footerItems,
   sidekickLookup
 }: ArticleProps) => {
@@ -138,54 +139,9 @@ export const Article = ({
         </Container>
       </Box>
 
-      {/* TODO: Create Breadcrumbs component
-        * https://lastrev.atlassian.net/browse/IAS-63 */}
-      <Box p={2}
-        sx={{ display: { sm: 'none', md: 'block' }}}
-      >
-        <Container maxWidth={'xl'}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Breadcrumbs aria-label="breadcrumb" separator="|"
-                sx={{
-                  py: 2,
-                  fontSize: 15,
-                  fontWeight: 500,
-                  lineHeight: '18px',
-                  '& [class*=separator]': {
-                    mx: 3,
-                    fontWeight: 600
-                  },
-                  '& li:not([class*=separator]) a': {
-                    // TODO: Move all hex colors to theme (IAS-85)
-                    color: '#4D7080',
-                    '&:hover': {
-                      color: 'text.primary',
-                      textDecoration: 'none'
-                    }
-                  }
-                }}
-              >
-                <Link href="/"
-                  sx={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
-                  <ChevronLeftIcon sx={{ fill: '#ff574a' }} fontSize="small" />
-                  Help Center
-                </Link>
-                <Link href="/getting-started/">
-                  Advertiser + Agency Solutions
-                </Link>
-                <Link href="/ias-ui/">
-                  Using the IAS UI
-                </Link>
-              </Breadcrumbs>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
+      {breadcrumbs ? (
+        <Breadcrumbs breadcrumbs={breadcrumbs} data-testid="Article-breadcrumbs" />
+      ) : null}
 
       <Container maxWidth={'xl'}>
         <Grid container spacing={2}>
@@ -219,7 +175,7 @@ export const Article = ({
 
               {relatedLinks ? (
                 <Box data-testid="Article-relatedLinks">
-                  {/* TODO: Possibly use localization lookup for title */}
+                  {/* TODO: Use localization lookup for title (IAS-117) */}
                   <RelatedLinks title="For more information, see the related articles:" links={relatedLinks} />
                 </Box>
               ) : null}
