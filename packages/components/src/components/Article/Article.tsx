@@ -13,6 +13,7 @@ import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoun
 import BackToTop from '@last-rev/component-library/dist/components/BackToTop/BackToTop';
 import { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
 import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 
 import ArticleNav from '../ArticleNav';
 import ArticleHead from '../ArticleHead';
@@ -34,6 +35,7 @@ export interface ArticleProps {
   relatedLinks?: Array<LinkProps>;
   sideNav?: Array<LinkProps>;
   disableBackToTop?: boolean;
+  footerItems?: Array<any>;
   sidekickLookup?: any;
 }
 
@@ -48,6 +50,7 @@ export const Article = ({
   relatedLinks,
   sideNav,
   disableBackToTop,
+  footerItems,
   sidekickLookup
 }: ArticleProps) => {
   const schemaData = {
@@ -231,40 +234,15 @@ export const Article = ({
         </Grid>
       </Container>
 
-      {/* TODO: Use Section component
-        * https://lastrev.atlassian.net/browse/IAS-51 */}
-      <CaseSection>
-        <Container maxWidth={'xl'}>
-          <Grid container>
-            <Grid item xs={12}>
-              <Typography variant="h2" component="h2" mb={3}>Headline for create case</Typography>
-              <Typography variant="body1" component="p" mb={3}>Sed varius aliquet bibendum. Sed mi sapien, placerat vel molestie nec, dictum quis tortor.</Typography>
-              <Link href="#" variant="button-contained"
-                sx={{
-                  px: 5,
-                  py: 2,
-                  // TODO: Move all hex colors to theme (IAS-85)
-                  backgroundColor: '#FF685C',
-                  borderRadius: 8,
-                  boxShadow: 'none',
-                  fontSize: 18,
-                  fontWeight: 600,
-                  lineHeight: '28px',
-                  textTransform: 'none',
-                  '&:hover': {
-                    // TODO: Move all hex colors to theme (IAS-85)
-                    backgroundColor: '#DC2D1F',
-                    boxShadow: 'none',
-                    color: '#FFF'
-                  }
-                }}
-              >Create case</Link>
-            </Grid>
-          </Grid>
-        </Container>
-      </CaseSection>
+      {footerItems?.map(item => (
+        <ContentModule
+          key={item?.id}
+          {...item}
+          data-testid={`Article-footerItems-${item.__typename}`}
+          component="section"
+        />
+      ))}
 
-      {/* TODO: Add test for disableBackToTop (missing in LRCL) */}
       {!disableBackToTop ? <BackToTop /> : null}
 
       {/* TODO: Create/add Footer component
@@ -284,16 +262,6 @@ const ArticleWrap = styled(Box, {
   [theme.breakpoints.down('md')]: {
     paddingTop: theme.spacing(5)
   },
-}));
-
-const CaseSection = styled(Box, {
-  name: 'Article',
-  slot: 'CaseSection'
-})<{}>(({ theme }) => ({
-  // TODO: Move all hex colors to theme (IAS-85)
-  backgroundColor: '#E3F1F2',
-  padding: theme.spacing(10, 0),
-  textAlign: 'center'
 }));
 
 export default Article;

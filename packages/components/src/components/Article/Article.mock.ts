@@ -1054,6 +1054,107 @@ export const articleMock = {
       iconPosition: undefined
     }
   ],
+  footerItems: [
+    {
+      id: "37dNhIh1QtBGOIiJeExrYn",
+      __typename: "Section",
+      sidekickLookup: {
+        contentId: "37dNhIh1QtBGOIiJeExrYn",
+        contentTypeId: "section"
+      },
+      variant: "default",
+      styles: null,
+      backgroundColor: "secondary",
+      contentWidth: null,
+      contentDirection: "column",
+      contentSpacing: null,
+      theme: null,
+      background: null,
+      contents: [
+        {
+          id: "3lwf3aRJwllddK1wRA4xuf",
+          __typename: "Text",
+          sidekickLookup: {
+            internalTitle: {
+              contentId: "3lwf3aRJwllddK1wRA4xuf",
+              contentTypeId: "text",
+              fieldName: "internalTitle"
+            },
+            variant: {
+              contentId: "3lwf3aRJwllddK1wRA4xuf",
+              contentTypeId: "text",
+              fieldName: "variant"
+            },
+            body: {
+              contentId: "3lwf3aRJwllddK1wRA4xuf",
+              contentTypeId: "text",
+              fieldName: "body"
+            },
+            align: {
+              contentId: "3lwf3aRJwllddK1wRA4xuf",
+              contentTypeId: "text",
+              fieldName: "align"
+            },
+            contentId: "3lwf3aRJwllddK1wRA4xuf",
+            contentTypeId: "text"
+          },
+          variant: "default",
+          align: "center",
+          body: {
+            id: null,
+            __typename: "RichText",
+            json: {
+              nodeType: "document",
+              data: {},
+              content: [
+                {
+                  nodeType: "heading-2",
+                  content: [
+                    {
+                      nodeType: "text",
+                      value: "Headline for create case",
+                      marks: [],
+                      data: {}
+                    }
+                  ],
+                  data: {}
+                },
+                {
+                  nodeType: "paragraph",
+                  content: [
+                    {
+                      nodeType: "text",
+                      value: "Sed varius aliquet bibendum. Sed mi sapien, placerat vel molestie nec, dictum quis tortor.",
+                      marks: [],
+                      data: {}
+                    }
+                  ],
+                  data: {}
+                }
+              ]
+            },
+            links: {
+              entries: [],
+              assets: []
+            }
+          }
+        },
+        {
+          id: "4hgaDdkfk8DJ3OS7FmzD9N",
+          __typename: "Link",
+          sidekickLookup: {
+            contentId: "4hgaDdkfk8DJ3OS7FmzD9N",
+            contentTypeId: "link"
+          },
+          text: "Create a Case",
+          href: "https://salesforce.com/placeholder",
+          variant: "button-contained",
+          icon: null,
+          iconPosition: "Right"
+        }
+      ]
+    }
+  ],
   sideNav: [
     {
       id: "article-header",

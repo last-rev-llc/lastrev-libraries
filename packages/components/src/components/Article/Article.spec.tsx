@@ -36,6 +36,8 @@ describe('Article', () => {
           .should('have.attr', 'href', `/${mockedContent.categories[index].href}`)
           .and('have.text', mockedContent.categories[index].text)
       });
+
+      cy.get('[data-testid=Article-footerItems-Section]').should('exist');
     });
 
     it('renders an Article with no unrequired fields provided', () => {
@@ -49,6 +51,7 @@ describe('Article', () => {
       cy.get('[data-testid=Article-body] [data-testid=Text-root]').should('not.exist');
       cy.get('[data-testid=Article-relatedLinks]').should('not.exist');
       cy.get('[data-testid=Article-categories]').should('not.exist');
+      cy.get('[data-testid=Article-footerItems-Section]').should('not.exist');
       cy.get('[data-testid=Article-sideNav]').should('not.exist');
     });
 

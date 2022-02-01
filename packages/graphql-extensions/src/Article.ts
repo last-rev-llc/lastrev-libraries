@@ -51,12 +51,22 @@ const footerResolver = async (page: any, _args: any, ctx: ApolloContext) => {
   return footer ?? siteFooter;
 };
 
+const footerItemsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
+  // TODO Improve redirecting to a field inside a referenced field
+  const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
+  const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? SITE_ID, preview: !!ctx.preview });
+  const footerItems: any = getLocalizedField(site?.fields, 'articleDetailFooteritems', ctx);
+
+  return footerItems;
+};
+
 export const typeDefs = gql`
   extend type Article {
     header: Header
     footer: Content
     categories: [Link]
     relatedLinks: [Link]
+    footerItems: [Content]
     sideNav: [Link]
   }
 `;
@@ -66,6 +76,7 @@ export const mappers = {
     Article: {
       header: headerResolver,
       footer: footerResolver,
+      footerItems: footerItemsResolver,
       sideNav: async (page: any, _args: any, ctx: ApolloContext) => {
         const body: any = getLocalizedField(page.fields, 'body', ctx);
         if (!body || !body.content) return [];

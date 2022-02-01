@@ -296,6 +296,9 @@ export const ContentTypes_Fragments = gql`
     relatedLinks {
       ...Link_Base
     }
+    footerItems {
+      ...Section_Base
+    }
     sideNav {
       ...Link_Base
     }

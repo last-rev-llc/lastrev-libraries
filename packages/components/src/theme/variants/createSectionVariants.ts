@@ -1,5 +1,26 @@
 import { Theme } from '@mui/material/styles';
 
+export const defaultCardVariant = (theme: Theme) => ({
+  props: {
+    variant: 'default'
+  },
+  style: {
+    '& > [class*="Section-gridContainer"]': {
+      flexDirection: 'column',
+      padding: theme.spacing(10, 0),
+      textAlign: 'center'
+    },
+    '.MuiTypography-root': {
+      marginBottom: theme.spacing(3)
+    },
+    '[class*=Text-root] .MuiTypography-body1': {
+      marginBottom: theme.spacing(3),
+      fontSize: '1.125rem',
+      lineHeight: 1.5555
+    }
+  }
+});
+
 export const fiftyFiftyVariant = (theme: Theme) => ({
   props: {
     variant: '2 col: fifty-fifty'
@@ -64,6 +85,7 @@ export const statementWithIconVariant = (theme: Theme) => ({
 });
 
 const textVariants = [
+  defaultCardVariant,
   fiftyFiftyVariant,
   twoThirdsVariant,
   statementWithIconVariant
