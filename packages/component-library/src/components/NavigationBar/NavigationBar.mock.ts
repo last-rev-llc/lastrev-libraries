@@ -1,5 +1,6 @@
 import mockNavigationItem from '../NavigationItem/NavigationItem.mock';
 import { NavigationBarProps } from './NavigationBar';
+import mockLink from '../Link/Link.mock';
 import mockTheme from '../../theme/mock.theme';
 
 export const mockWithNavigationItems = (): NavigationBarProps => ({
@@ -13,10 +14,10 @@ export const mockWithNavigationItems = (): NavigationBarProps => ({
 export default (): NavigationBarProps => ({
   variant: 'collection-three-per-row',
   items: [
-    { ...mockNavigationItem() },
-    { ...mockNavigationItem() },
-    { ...mockNavigationItem() },
-    { ...mockNavigationItem() }
+    { ...mockLink() },
+    { ...mockLink() },
+    { ...mockLink() },
+    { ...mockLink() }
   ],
   itemsVariant: 'standard-round',
   theme: [mockTheme],

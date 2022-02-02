@@ -1,4 +1,5 @@
 import * as React from 'react';
+import 'cypress-real-events/support';
 import mount from '../../../cypress/mount';
 import NavigationBar, { NavigationBarProps } from './NavigationBar';
 import NavigationItem, { NavigationItemProps } from '../NavigationItem/NavigationItem';
@@ -45,21 +46,23 @@ describe('NavigationBar', () => {
       });
     });
 
-    // TODO: Figure out how to test hover/mouseover event
-    // context('functions correctly', () => {
-    //   describe('hover on NavigationItems', () => {
-    //     it('renders a NavigationBar with correct navigation items', () => {
-    //       mount(<NavigationBar {...mockedContentWithNavigationItems} />);
-    //       cy.get('[data-testid=NavigationItem]').each((navItem, index) => {
-    //         const item: NavigationItemProps = { ...mockedContentWithNavigationItems.items[index] };
-    //         cy.get('span').contains(item.subNavigation[0].text).should('not.be.visible');
-    //         // cy.wrap(navItem).trigger('mouseover', { eventConstructor: 'MouseEvent' });
-    //         // cy.wrap(navItem).trigger('mouseenter', { eventConstructor: 'MouseEvent' });
-    //         // cy.wrap(navItem).rightclick();
-    //         cy.get('span').contains(item.subNavigation[0].text).should('be.visible');
-    //       });
-    //     });
-    //   });
-    // });
+    context('functions correctly', () => {
+      describe('hover on NavigationItems', () => {
+        it('renders a NavigationBar with correct navigation items', () => {
+          mount(<NavigationBar {...mockedContentWithNavigationItems} />);
+          cy.get('[data-testid=NavigationItem]').each((navItem, index) => {
+            const item: NavigationItemProps = { ...mockedContentWithNavigationItems.items[index] };
+            item.subNavigation.forEach((subNav) => {
+              cy.get('span').contains(subNav.text).should('not.be.visible');
+            });
+            cy.wrap(navItem).realHover();
+            item.subNavigation.forEach((subNav) => {
+              cy.get('span').contains(subNav.text).should('be.visible');
+            });
+            cy.percySnapshot();
+          });
+        });
+      });
+    });
   });
 });
