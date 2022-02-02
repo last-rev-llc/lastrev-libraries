@@ -11,14 +11,14 @@ beforeEach(() => {
 
 describe('BackToTop', () => {
   context('renders correctly', () => {
-    it('renders a back-to-top button (bttb)', () => {
+    it('renders a back-to-top button', () => {
       mount(<BackToTop {...mockContent()} />);
       cy.get('[data-testid=BackToTop]').should('exist');
       cy.percySnapshot();
     });
 
     context('renders different color and size', () => {
-      it('renders a bttb with MuiFab-colorInherit class when FabProps.color is inherit', () => {
+      it('renders a back-to-top button with MuiFab-colorInherit class when FabProps.color is inherit', () => {
         mockedContent.FabProps.color = 'inherit';
         mockedContent.FabProps.size = 'medium';
         mount(<BackToTop {...mockedContent} />);
