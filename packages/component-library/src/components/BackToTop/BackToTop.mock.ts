@@ -4,8 +4,7 @@ const mockContent = (): BackToTopProps => {
   return {
     FabProps: {
       size: 'large',
-      color: 'primary',
-      disabled: true
+      color: 'primary'
     }
   };
 };
