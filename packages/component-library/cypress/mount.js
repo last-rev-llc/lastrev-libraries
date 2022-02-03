@@ -12,14 +12,12 @@ import Text from '../src/components/Text';
 import Link from '../src/components/Link';
 import Media from '../src/components/Media';
 import Card from '../src/components/Card';
-import Carousel from '../src/components/Carousel';
 import Collection from '../src/components/Collection';
 import CollectionCarousel from '../src/components/CollectionCarousel';
 import CollectionAccordion from '../src/components/CollectionAccordion';
 import CollectionFiltered from '../src/components/CollectionFiltered';
 import NavigationBar from '../src/components/NavigationBar';
 import Accordion from '../src/components/Accordion';
-import Button from '../src/components/Button';
 import Section from '../src/components/Section';
 import BackToTop from '../src/components/BackToTop';
 import NavigationItem from '../src/components/NavigationItem';
@@ -35,9 +33,7 @@ const components = {
   Text,
   Link,
   Media,
-  Button,
   Card,
-  Carousel,
   Collection,
   'Collection:carousel': CollectionCarousel,
   'Collection:accordion': CollectionAccordion,
