@@ -6,7 +6,7 @@
     "dist"
   ],
   "scripts": {
-    "not:dev": "run-s sync:cms gql:dev",
+    "dev": "run-s sync:cms gql:dev",
     "gql:start": "last-rev gql-serve -c config",
     "gql:dev": "nodemon -x \"last-rev gql-serve -c config.js\" -w config.js -w cms-sync -w ../graphql-extensions/dist",
     "start": "run-s gql:pm2:kill gql:pm2 gql:healthcheck",

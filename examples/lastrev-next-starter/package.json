@@ -10,7 +10,7 @@
     ]
   },
   "scripts": {
-    "dev": "yarn propagate:env && turbo run dev",
+    "dev": "yarn propagate:env && turbo run dev --parallel",
     "build": "sh ./scripts/build.sh",
     "turbo:sync:cms": "turbo run sync:cms",
     "turbo:build": "turbo run build",
@@ -107,6 +107,25 @@
         ],
         "outputs": []
       },
+      "gql:healthcheck": {
+        "cache": false,
+        "dependsOn": [],
+        "outputs": []
+      },
+      "@lrns/graphql-sdk#dev": {
+        "cache": false,
+        "dependsOn": [
+          "@lrns/graphql-sdk#gql:healthcheck"
+        ],
+        "outputs": []
+      },
+      "@lrns/graphql-runner#dev": {
+        "cache": false,
+        "dependsOn": [
+          "@lrns/graphql-extensions#build"
+        ],
+        "outputs": []
+      },
       "@lrns/graphql-runner#start": {
         "cache": false,
         "dependsOn": [
@@ -180,6 +199,6 @@
   },
   "devDependencies": {
     "eslint-config-next": "^12.0.8",
-    "turbo": "^1.0.28"
+    "turbo": "^1.1.2"
   }
 }
