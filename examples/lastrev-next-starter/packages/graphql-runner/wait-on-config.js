@@ -1,3 +1,4 @@
+require('dotenv').config();
 const resource = `${(process.env.GRAPHQL_SERVER || 'http://localhost:5000/graphql').replace(
   /^http:/,
   'http-get:'
