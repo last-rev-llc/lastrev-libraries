@@ -1,0 +1,114 @@
+{
+  "globalDependencies": [
+    ".env",
+    "**/.env",
+    "./scripts/build.sh"
+  ],
+  "pipeline": {
+    "dev": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false
+    },
+    "storybook": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false
+    },
+    "test": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "test:e2e": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": []
+    },
+    "test:watch": {
+      "cache": false,
+      "outputs": []
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**"
+      ]
+    },
+    "build-storybook": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "storybook-static"
+      ]
+    },
+    "sync:cms": {
+      "cache": false,
+      "dependsOn": [
+        "@lrns/graphql-extensions#build"
+      ]
+    },
+    "start": {
+      "cache": false,
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": []
+    },
+    "gql:healthcheck": {
+      "cache": false,
+      "dependsOn": [],
+      "outputs": []
+    },
+    "@lrns/graphql-sdk#dev": {
+      "cache": false,
+      "dependsOn": [
+        "@lrns/graphql-sdk#gql:healthcheck"
+      ],
+      "outputs": []
+    },
+    "@lrns/graphql-runner#dev": {
+      "cache": false,
+      "dependsOn": [
+        "@lrns/graphql-extensions#build"
+      ],
+      "outputs": []
+    },
+    "@lrns/graphql-runner#start": {
+      "cache": false,
+      "dependsOn": [
+        "@lrns/graphql-extensions#build"
+      ],
+      "outputs": []
+    },
+    "@lrns/graphql-sdk#build": {
+      "dependsOn": [
+        "@lrns/graphql-runner#start",
+        "^build"
+      ],
+      "outputs": [
+        "dist/**"
+      ]
+    },
+    "@lrns/web#build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "out/**",
+        ".next/**"
+      ]
+    }
+  }
+}
