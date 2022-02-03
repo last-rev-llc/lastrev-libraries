@@ -5,7 +5,7 @@
 3. Run: `yarn build:prod`
 4. Then: `yarn dev`.
    For building new components, just run:
-   `yarn storybook` 
+   `yarn storybook`
 
 ## Starting the graphql server
 
@@ -42,4 +42,18 @@ yarn start
 ```bash
 yarn dev
 ```
- 
+
+### Other
+
+#### Adding / editing icons for `<Link />` components
+
+`<Link />` components reference certain icons from [FontAwesome](https://fontawesome.com/).
+
+Rather than reference the entire library, we have a slim version located here:
+`/web/styles/fa-icons.css`
+
+Append new icons as such:
+```
+.fa-arrow-right:before {
+  content: "\f061"; }
+```

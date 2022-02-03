@@ -1,0 +1,41 @@
+/* Used as an alternative to the whole library:
+* https://use.fontawesome.com/releases/v5.12.0/css/all.css
+*/
+
+/*!
+ * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
+ * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+ */
+.fa,
+.fas,
+.fab {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1; }
+
+/* Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+readers do not read off random characters that represent icons */
+
+/* ADD NEW ICONS BELOW */
+
+/* <Link /> icons start */
+.fa-caret-right:before {
+  content: "\f0da"; }
+
+.fa-chevron-right:before {
+  content: "\f054"; }
+/* <Link /> icons end */
+
+/* Social icons */
+.fa-instagram:before{content:"\f16d"}
+.fa-twitter:before{content:"\f099"}
+.fa-google:before{content:"\f1a0"}
+.fa-facebook:before{content:"\f09a"}
+.fa-github:before{content:"\f09b"}
+.fa-linkedin:before{content:"\f08c"}
+.fa-pinterest:before{content:"\f0d2"}
+.fa-youtube:before{content:"\f167"}
