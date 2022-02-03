@@ -123,7 +123,7 @@
           "dist/**"
         ]
       },
-      "@lrns/graphql-web#build": {
+      "@lrns/web#build": {
         "dependsOn": [
           "^build"
         ],
