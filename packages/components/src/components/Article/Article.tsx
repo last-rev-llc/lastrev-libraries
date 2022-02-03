@@ -143,8 +143,8 @@ export const Article = ({
         <Breadcrumbs breadcrumbs={breadcrumbs} data-testid="Article-breadcrumbs" />
       ) : null}
 
-      <Container maxWidth={'xl'}>
-        <Grid container spacing={2}>
+      <Container>
+        <Grid container spacing={{ xs: 2, lg: 4 }}>
           <Grid item xs={2}
             sx={{ display: { sm: 'none', md: 'flex' }}}
           >

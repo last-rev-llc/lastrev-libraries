@@ -1,15 +1,12 @@
-// import { responsiveFontSizes } from '@mui/material/styles';
 import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
-import createCardVariants from './variants/createCardVariants';
-import createSectionVariants from './variants/createSectionVariants';
-import createTextVariants from './variants/createTextVariants';
 import { Mixins } from '@mui/material/styles/createMixins';
 import merge from 'lodash/merge';
 import camelCase from 'lodash/camelCase';
-// import { ThemeOptions } from '@mui/material/styles';
-// import { createSchemePalette } from './schemes/utils/paletteColors';
-// import { getPaletteAccents } from './schemes/utils/accentColors';
-// import colorSchemes from './schemes/colors';
+
+import createCardVariants from './variants/createCardVariants';
+import createSectionVariants from './variants/createSectionVariants';
+import createTextVariants from './variants/createTextVariants';
+
 declare module '@mui/material/styles/createMixins' {
   interface Mixins {
     // declare any custom mixins here - Example Below
@@ -17,17 +14,32 @@ declare module '@mui/material/styles/createMixins' {
   }
 }
 
-declare module '@mui/material/styles' {
-  // eslint-disable-next-line
-  interface Theme {
-    mixins: Mixins;
+declare module '@mui/material/styles/createPalette' {
+  export interface TypeBackground {
+    dark: string;
+    yellow: string;
+    neutralGrey: string,
+    coolGrey: string
+    integralOrange: string
   }
 }
+
 declare module '@mui/material/styles' {
-  // eslint-disable-next-line
   interface Theme {
+    mixins: Mixins;
     scheme?: string;
     createScheme: (scheme: string) => Theme;
+  }
+
+  interface Palette {
+    yellow: Palette['primary'];
+    aqua: Palette['primary'];
+    periwinkle: Palette['primary'];
+    coolGrey: Palette['primary'];
+  }
+
+  interface PaletteColor {
+    lighter?: string;
   }
 }
 
@@ -39,10 +51,10 @@ const baseTheme = {
   breakpoints: {
     values: {
       xs: 0,
-      sm: 320,
-      md: 768,
-      lg: 1024,
-      xl: 1280
+      sm: 768,
+      md: 1024,
+      lg: 1280,
+      xl: 1440
     }
   },
   mixins: {
@@ -105,27 +117,15 @@ const baseTheme = {
   palette: {
     mode: 'light',
     primary: {
-      main: '#FFFFFF',
-      light: 'rgb(255, 255, 255)',
-      dark: 'rgb(178, 178, 178)',
-      contrastText: 'rgba(0, 0, 0, 0.87)'
-    },
-    secondary: {
-      main: '#add8e6',
-      light: '#add8e6',
-      dark: 'rgb(121, 151, 161)',
-      contrastText: 'rgba(0, 0, 0, 0.87)'
+      main: '#FF574A',
+      light: '#FF685C',
+      dark: '#DC2D1F',
+      contrastText: '#FFFFFF'
     },
     text: {
       primary: '#00324A',
-      secondary: '#000',
+      secondary: '#335B6E',
       disabled: '#CCC'
-    },
-    error: {
-      main: '#ff1744',
-      light: 'rgb(255, 69, 105)',
-      dark: 'rgb(178, 16, 47)',
-      contrastText: '#fff'
     },
     common: {
       black: '#00030B',
@@ -133,25 +133,51 @@ const baseTheme = {
     },
     background: {
       default: '#FFFFFF',
-      paper: '#E5E5E5'
+      paper: '#EFF0F1',
+      dark: '#00324A',
+      yellow: '#FFD12B',
+      neutralGrey: '#E0E6E9',
+      coolGrey: '#E3F1F2',
+      integralOrange: '#FF574A'
     },
-    warning: {
-      main: '#ed6c02',
-      light: '#ff9800',
-      dark: '#e65100',
-      contrastText: '#fff'
+    grey: {
+      100: '#00324A',
+      90: '#1A475C',
+      80: '#335B6E',
+      70: '#4D7080',
+      60: '#668492',
+      50: '#8099A5',
+      40: '#99ADB7',
+      30: '#B3C2C9',
+      20: '#CCD6DB',
+      12: '#E0E6E9',
+      9: '#E8EDEF',
+      6: '#F0F3F4',
+      3: '#F7F9FA'
     },
-    info: {
-      main: '#0288d1',
-      light: '#03a9f4',
-      dark: '#01579b',
-      contrastText: '#fff'
+    yellow: {
+      main: '#FFD12B',
+      light: '#FFE173',
+      contrastText: '#00030B',
     },
-    success: {
-      main: '#2e7d32',
-      light: '#4caf50',
-      dark: '#1b5e20',
-      contrastText: '#fff'
+    aqua: {
+      main: '#00D1C0',
+      light: '#36E0D2',
+      dark: '#00B7A9',
+      contrastText: '#00030B'
+    },
+    periwinkle: {
+      main: '#596FFF',
+      light: '#8091FF',
+      lighter: '#ACB7FF',
+      dark: '#4E62E0',
+      contrastText: '#FFFFFF',
+    },
+    coolGrey: {
+      main: '#C3DCDE',
+      light: '#D3EBED',
+      lighter: '#E3F1F2',
+      contrastText: '#00030B'
     }
   }
 };
@@ -163,8 +189,6 @@ const createSchemeTheme = (schemeKey?: string) => {
     merge({ scheme: camelCase(schemeKey) }, baseSchemeTheme, {
       createSchemeTheme,
       components: {
-        // Add any default props, styleoverrides, etc. below.
-        // The below can be removed safely on project start, these are just examples
         Header: {
           height: 100,
           mobileMenuBreakpoint: 'md',
@@ -289,16 +313,17 @@ const createSchemeTheme = (schemeKey?: string) => {
           },
           styleOverrides: {
             root: {
-              [baseSchemeTheme.breakpoints.down('sm')]: {
-                'paddingLeft': baseSchemeTheme.spacing(3),
-                'paddingRight': baseSchemeTheme.spacing(3),
+              padding: baseSchemeTheme.spacing(0, 3),
+
+              [baseSchemeTheme.breakpoints.up('lg')]: {
+                padding: baseSchemeTheme.spacing(0, 6),
+
                 '& .MuiContainer-disableGutters': {
                   paddingLeft: 0,
                   paddingRight: 0
                 }
               },
-              'paddingLeft': baseSchemeTheme.spacing(10),
-              'paddingRight': baseSchemeTheme.spacing(10),
+
               '& .MuiContainer-disableGutters': {
                 paddingLeft: 0,
                 paddingRight: 0
@@ -318,22 +343,23 @@ const createSchemeTheme = (schemeKey?: string) => {
             root: {
               height: 'auto',
               marginBottom: baseSchemeTheme.spacing(1),
-              // TODO: reference colors from theme once defined
-              backgroundColor: '#D3EBED',
+              backgroundColor: baseSchemeTheme.palette.coolGrey.light,
               borderRadius: '3px',
               color: baseSchemeTheme.palette.text.primary,
               fontWeight: 600,
               textDecoration: 'none',
               transition: 'background-color 0.15s ease',
+
               '&:hover': {
-                // TODO: reference colors from theme once defined
-                backgroundColor: '#C3DCDE',
+                backgroundColor: baseSchemeTheme.palette.coolGrey.main,
                 transition: 'background-color 0.18s ease'
               }
             },
+
             sizeSmall: {
               padding: baseSchemeTheme.spacing(0.5, 0)
             },
+
             labelSmall: {
               fontSize: 12,
               lineHeight: 1.3333,
@@ -344,7 +370,6 @@ const createSchemeTheme = (schemeKey?: string) => {
     })
   );
 
-  // return responsiveFontSizes(schemeTheme);
   return schemeTheme;
 };
 
