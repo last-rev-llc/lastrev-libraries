@@ -3,7 +3,7 @@ import mockLink from '../Link/Link.mock';
 import { CardProps } from './Card';
 import { staticRichTextMock } from '../Text/Text.mock';
 
-export default {
+export default (): CardProps => ({
   __typename: 'Card',
   media: {
     file: {
