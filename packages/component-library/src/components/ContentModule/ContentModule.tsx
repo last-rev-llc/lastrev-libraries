@@ -9,16 +9,6 @@ import omitBy from 'lodash/omitBy';
 import isNull from 'lodash/isNull';
 const AnimationContext = dynamic(() => import('./AnimationContext'));
 
-// declare module '@mui/styles/defaultTheme' {
-//   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-//   interface DefaultTheme extends Theme {}
-// }
-
-// declare module '@mui/styles/defaultTheme' {
-//   // eslint-disable-next-line @typescript-eslint/no-empty-interface
-//   interface DefaultTheme extends Theme {}
-// }
-
 const getMUITheme = ({
   theme,
   colorScheme,

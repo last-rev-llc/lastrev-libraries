@@ -266,7 +266,7 @@ const FormContainer = styled(Grid, {
 })<{ variant?: string }>(({ theme }) => ({
   'position': 'relative',
   'borderRadius': 20,
-  'backgroundColor': theme.palette.quartiary.main,
+  'backgroundColor': theme.palette.quartiary?.main,
   'border': '1px solid grey',
   'paddingTop': theme.spacing(3),
   'paddingBottom': theme.spacing(4),

@@ -152,7 +152,7 @@ const theme = createAppTheme(
               u: {
                 textUnderlinePosition: 'under',
                 textDecorationThickness: 4,
-                textDecorationColor: baseTheme.palette.tertiary.main
+                textDecorationColor: baseTheme.palette.tertiary?.main
               }
             },
             '& .MuiTypography-h2': {
@@ -163,7 +163,7 @@ const theme = createAppTheme(
               u: {
                 textUnderlinePosition: 'under',
                 textDecorationThickness: 4,
-                textDecorationColor: baseTheme.palette.tertiary.main
+                textDecorationColor: baseTheme.palette.tertiary?.main
               }
             },
             'img': {
@@ -243,7 +243,7 @@ const theme = createAppTheme(
             'fontWeight': 'bold',
             'color': baseTheme.palette.secondary.main,
             '& u': {
-              textDecorationColor: baseTheme.palette.tertiary.main
+              textDecorationColor: baseTheme.palette.tertiary?.main
             }
           },
           h4: {
