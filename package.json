@@ -23,7 +23,8 @@
     "test": "turbo run test:e2e test",
     "posttest": "yarn combine:reports",
     "version-packages": "changeset version && yarn prettier",
-    "combine:reports": "node scripts/combineCoverage.js"
+    "combine:reports": "node scripts/combineCoverage.js",
+    "prepare": "yarn lerna exec 'yarn install-self-peers'"
   },
   "turbo": {
     "globalDependencies": [],
@@ -133,6 +134,7 @@
     "wait-on": "^5.3.0"
   },
   "devDependencies": {
+    "@team-griffin/install-self-peers": "^1.1.1",
     "turbo": "^1.0.28"
   }
 }
