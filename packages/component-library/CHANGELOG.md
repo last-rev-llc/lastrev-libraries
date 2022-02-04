@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.3.7
+
+### Patch Changes
+
+- cb7d112: HOTFIX: Add sx prop to Link
+
 ## 0.3.6
 
 ### Patch Changes
