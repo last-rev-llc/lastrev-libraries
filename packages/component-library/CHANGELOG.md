@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.3.6
+
+### Patch Changes
+
+- 861bcee: Simplify Link type definition
+
 ## 0.3.5
 
 ### Patch Changes
