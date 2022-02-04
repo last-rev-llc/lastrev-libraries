@@ -14,6 +14,7 @@ import MuiLink from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import sidekick from '../../utils/sidekick';
 import { useThemeProps } from '@mui/system';
+import { SxProps, Theme } from '@mui/material/styles';
 
 // TODO: Button components aren't hyperlinking
 
@@ -61,8 +62,7 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
       shallow={shallow}
       passHref={passHref}
       locale={locale}
-      {...other}
-    >
+      {...other}>
       <a ref={ref} {...other}>
         {text || children}
       </a>
@@ -90,6 +90,7 @@ export type LinkProps = {
   color?: any;
   target?: string;
   rel?: string;
+  sx?: SxProps<Theme>;
 };
 
 // Icon component using FontAwesome
