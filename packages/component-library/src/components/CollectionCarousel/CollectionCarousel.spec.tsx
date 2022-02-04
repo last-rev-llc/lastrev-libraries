@@ -28,7 +28,7 @@ const runTestByVariant = (variantContent: CollectionCarouselProps, expectedLengt
   });
 
   context('functions correctly', () => {
-    it('renders correct content', () => {
+    it('previous and next buttons work correctly', () => {
       mount(<CollectionCarousel {...mockedContent} />);
       cy.get('.swiper-pagination-bullet.swiper-pagination-bullet-active').as('activeBullet');
       cy.percySnapshot();
