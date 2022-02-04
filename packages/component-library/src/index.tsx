@@ -1,3 +1,4 @@
+import './@types/mui';
 import './styles.scss';
 export { ContentModuleProvider } from './components/ContentModule/ContentModuleContext';
 export { default as ErrorBoundary } from './components/ErrorBoundary';

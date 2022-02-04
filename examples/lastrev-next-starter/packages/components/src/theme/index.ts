@@ -1,6 +1,4 @@
-import './theme.augmentation';
-import { responsiveFontSizes, ThemeOptions } from '@mui/material/styles';
-import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
+import { responsiveFontSizes, createTheme, ThemeOptions } from '@mui/material/styles';
 import createCardVariants from './variants/createCardVariants';
 import createTextVariants from './variants/createTextVariants';
 import merge from 'lodash/merge';
@@ -133,9 +131,9 @@ const baseTheme: ThemeOptions = {
 };
 
 const createSchemeTheme = (schemeKey?: string) => {
-  const baseSchemeTheme = createAppTheme(baseTheme);
+  const baseSchemeTheme = createTheme(baseTheme);
 
-  const schemeTheme = createAppTheme(
+  const schemeTheme = createTheme(
     merge({ scheme: camelCase(schemeKey) }, baseSchemeTheme, {
       createSchemeTheme,
       components: {
