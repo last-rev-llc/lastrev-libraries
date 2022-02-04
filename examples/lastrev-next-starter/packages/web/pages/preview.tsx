@@ -5,7 +5,7 @@ import { useRouter } from 'next/dist/client/router';
 import ContentPreview from '@last-rev/component-library/dist/components/ContentPreview/ContentPreview';
 import contentMapping from '@lrns/components/src/contentMapping';
 import useSWR from 'swr';
-import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule';
+import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 
 const previewGqlClient = new GraphQLClient(
   `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/.netlify/functions/graphql'}`
