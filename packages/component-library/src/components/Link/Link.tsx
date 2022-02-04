@@ -62,7 +62,8 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
       shallow={shallow}
       passHref={passHref}
       locale={locale}
-      {...other}>
+      {...other}
+    >
       <a ref={ref} {...other}>
         {text || children}
       </a>
