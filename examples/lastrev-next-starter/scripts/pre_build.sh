@@ -1,4 +1,4 @@
-#!bash
+#!/bin/bash
 
 # This script ensures cms-sync folder is not ignored during turbo build
 # The fingerprint hash that Turbo uses ignores anything ignored in the .gitignore file

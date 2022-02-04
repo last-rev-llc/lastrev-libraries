@@ -1,4 +1,7 @@
+#!/bin/bash
 echo "Doing some cleanup..."
+
+yarn gql:pm2:kill || echo "Failed to kill pm2"
 
 RUNNER_FOLDER=$PWD/packages/graphql-runner
 GITIGNORE=$RUNNER_FOLDER/.gitignore

@@ -1,35 +1,23 @@
 {
-  "globalDependencies": [
-    ".env",
-    "**/.env",
-    "./scripts/build.sh"
-  ],
+  "globalDependencies": [".env", "**/.env"],
   "pipeline": {
     "dev": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": [],
       "cache": false
     },
     "storybook": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "cache": false
     },
     "test": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "lint": {
       "outputs": []
     },
     "test:e2e": {
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "test:watch": {
@@ -37,33 +25,20 @@
       "outputs": []
     },
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "dist/**",
-        ".next/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
     },
     "build-storybook": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "storybook-static"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static"]
     },
     "sync:cms": {
       "cache": false,
-      "dependsOn": [
-        "@lrns/graphql-extensions#build"
-      ]
+      "dependsOn": ["@lrns/graphql-extensions#build"]
     },
     "start": {
       "cache": false,
-      "dependsOn": [
-        "^build"
-      ],
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "gql:healthcheck": {
@@ -73,42 +48,26 @@
     },
     "@lrns/graphql-sdk#dev": {
       "cache": false,
-      "dependsOn": [
-        "@lrns/graphql-sdk#gql:healthcheck"
-      ],
+      "dependsOn": ["@lrns/graphql-sdk#gql:healthcheck"],
       "outputs": []
     },
     "@lrns/graphql-runner#dev": {
       "cache": false,
-      "dependsOn": [
-        "@lrns/graphql-extensions#build"
-      ],
+      "dependsOn": ["@lrns/graphql-extensions#build"],
       "outputs": []
     },
     "@lrns/graphql-runner#start": {
       "cache": false,
-      "dependsOn": [
-        "@lrns/graphql-extensions#build"
-      ],
+      "dependsOn": ["@lrns/graphql-extensions#build"],
       "outputs": []
     },
     "@lrns/graphql-sdk#build": {
-      "dependsOn": [
-        "@lrns/graphql-runner#start",
-        "^build"
-      ],
-      "outputs": [
-        "dist/**"
-      ]
+      "dependsOn": ["@lrns/graphql-runner#start", "^build"],
+      "outputs": ["dist/**"]
     },
     "@lrns/web#build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        "out/**",
-        ".next/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": ["out/**", ".next/**"]
     }
   }
 }

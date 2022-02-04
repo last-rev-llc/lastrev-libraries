@@ -6,13 +6,12 @@
   "license": "MIT",
   "workspaces": {
     "packages": [
-      "packages/*",
-      "../../packages/*"
+      "packages/*"
     ]
   },
   "scripts": {
     "dev": "yarn propagate:env && turbo run dev --parallel",
-    "build": "sh ./scripts/build.sh",
+    "build": "./scripts/build.sh",
     "turbo:sync:cms": "turbo run sync:cms",
     "turbo:build": "turbo run build",
     "build:storybook": "turbo run build-storybook; status=$?; pm2 kill; exit $status",
@@ -56,11 +55,12 @@
     "not IE 11",
     "maintained node versions"
   ],
-  "dependencies": {
+  "devDependencies": {
     "@manypkg/cli": "^0.19.1",
     "cross-env": "^7.0.2",
     "eslint": "^8.4.0",
     "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-next": "^12.0.8",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.11.2",
@@ -82,10 +82,7 @@
     "prettier-eslint": "^13.0.0",
     "tslib": "^2.3.1",
     "typescript": "4.3.4",
-    "wait-on": "^5.3.0"
-  },
-  "devDependencies": {
-    "eslint-config-next": "^12.0.8",
+    "wait-on": "^5.3.0",
     "turbo": "^1.1.2"
   },
   "packageManager": "yarn@1.22.17"

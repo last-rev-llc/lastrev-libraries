@@ -33,8 +33,10 @@ export default function Preview({}: any) {
   return (
     <ContentModuleProvider contentMapping={contentMapping}>
       <ContentPreview
+        id={id}
         loading={isLoadingInitialData}
         content={content}
+        error={error}
         environment={environment as string}
         locale={locale as string}
         spaceId={spaceId as string}
