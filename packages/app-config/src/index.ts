@@ -1,6 +1,20 @@
 import { LastRevAppConfigArgs, LastRevAppConfiguration } from './types';
 import { merge, isNil } from 'lodash';
-import defaultConfig from './defaultConfig';
+
+const defaultConfig: LastRevAppConfigArgs = {
+  cms: 'Contentful',
+  strategy: 'fs',
+  contentful: {
+    env: 'master',
+    usePreview: false
+  },
+  logLevel: 'warn',
+  graphql: {
+    port: 5000,
+    host: 'localhost'
+  },
+  sites: []
+};
 
 export default class LastRevAppConfig implements LastRevAppConfiguration {
   config: LastRevAppConfigArgs;
@@ -23,9 +37,6 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       }
       if (!this.config.contentful?.contentPreviewToken) {
         throw new Error('Contentful CMS: contentful.contentPreviewToken is required.');
-      }
-      if (!this.config.contentful?.env) {
-        throw new Error('Contentful CMS: contentful.environment is required.');
       }
     } else {
       throw new Error(`Invalid CMS: ${this.config.cms}`);

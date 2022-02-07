@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import LastRevAppConfig from './';
 import mockConfig, { redisConfig } from './app-config.mock';
-import defaultConfig from './defaultConfig';
 
 let mockedConfig = mockConfig();
 
@@ -10,6 +9,48 @@ beforeEach(() => {
 });
 
 describe('LastRevAppConfig', () => {
+  describe('returns object with a config property with correct data', () => {
+    test('cms is Contentful when not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.config.cms).toBe('Contentful');
+    });
+
+    test('stategy is fs when not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.config.strategy).toBe('fs');
+    });
+
+    test('logLevel is warn when not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.config.logLevel).toBe('warn');
+    });
+
+    test('graphql has port of 5000 when not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.config.graphql?.port).toBe(5000);
+    });
+
+    test('graphql has host of localhost when not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.config.graphql?.host).toBe('localhost');
+    });
+
+    test('sites is empty array when not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(JSON.stringify(appConfig.config.sites)).toBe(JSON.stringify([]));
+    });
+
+    test('contentful has env of master when not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.config.graphql?.port).toBe(5000);
+    });
+
+    test('contentful has usePreview of false when not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.config.graphql?.host).toBe('localhost');
+    });
+  });
+
   describe('cms errors', () => {
     test('throws error if contentful.spaceId is not provided', () => {
       if (mockedConfig.contentful) {
@@ -31,46 +72,11 @@ describe('LastRevAppConfig', () => {
       }
       expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('Contentful CMS: contentful.contentPreviewToken is required.');
     });
-  
-    test('throws error if contentful.environment is not provided', () => {
-      // setup
-      if (defaultConfig.contentful) {
-        defaultConfig.contentful.env = undefined;
-      }
-      jest.mock('./defaultConfig', () => ({ ...defaultConfig }));
-
-      // test
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('Contentful CMS: contentful.environment is required.');
-
-      // clean up
-      if (defaultConfig.contentful) {
-        defaultConfig.contentful.env = 'master';
-      }
-    });
 
     test('throws error if has incorrect strategy', () => {
-      // setup
       // @ts-ignore
-      defaultConfig.strategy = 'wrong strategy';
-      jest.mock('./defaultConfig', () => ({ ...defaultConfig }));
-
-      // test
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(`Invalid strategy: ${defaultConfig.strategy}`);
-
-      // clean up
-      defaultConfig.strategy = 'fs';
-    });
-
-    test('throws error if strategy is not provided', () => {
-      // setup
-      defaultConfig.strategy = undefined;
-      jest.mock('./defaultConfig', () => ({ ...defaultConfig }));
-
-      // test
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(`Invalid strategy: ${defaultConfig.strategy}`);
-
-      // clean up
-      defaultConfig.strategy = 'fs';
+      mockedConfig.strategy = 'wrong strategy'; 
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(`Invalid strategy: ${mockedConfig.strategy}`);
     });
   
     test('throws error if invalid cms is provided', () => {
