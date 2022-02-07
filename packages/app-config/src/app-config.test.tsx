@@ -226,6 +226,13 @@ describe('LastRevAppConfig', () => {
       expect(appConfig.logLevel).toBe(mockedConfig.logLevel);
     });
 
+    test('logLevel returns warn if not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      // @ts-ignore
+      const noLogLevelConfig = appConfig.clone({ logLevel: null });
+      expect(noLogLevelConfig.logLevel).toBe('warn');
+    });
+
     test('cms returns cms', () => {
       mockedConfig.cms = 'Contentful';
       const appConfig = new LastRevAppConfig(mockedConfig);
