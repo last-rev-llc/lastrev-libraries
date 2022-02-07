@@ -1,20 +1,6 @@
 import { LastRevAppConfigArgs, LastRevAppConfiguration } from './types';
 import { merge, isNil } from 'lodash';
-
-const defaultConfig: LastRevAppConfigArgs = {
-  cms: 'Contentful',
-  strategy: 'fs',
-  contentful: {
-    env: 'master',
-    usePreview: false
-  },
-  logLevel: 'warn',
-  graphql: {
-    port: 5000,
-    host: 'localhost'
-  },
-  sites: []
-};
+import defaultConfig from './defaultConfig';
 
 export default class LastRevAppConfig implements LastRevAppConfiguration {
   config: LastRevAppConfigArgs;
