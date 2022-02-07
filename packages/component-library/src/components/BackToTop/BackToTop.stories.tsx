@@ -31,4 +31,4 @@ export default {
 
 const Template = (args: JSX.IntrinsicAttributes) => <BackToTop {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...mockContent };
+Default.args = { ...mockContent() };
