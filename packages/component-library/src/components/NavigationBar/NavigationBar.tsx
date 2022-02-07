@@ -3,12 +3,13 @@ import { Box, Grid } from '@mui/material';
 import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import { LinkProps } from '../Link/Link';
+import { NavigationItemProps } from '../NavigationItem/NavigationItem';
 import { useTheme } from '@mui/system';
 
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
 export interface NavigationBarProps {
-  items?: LinkProps[];
+  items?: LinkProps[] | NavigationItemProps[];
   variant?: string;
   itemsVariant?: string;
   theme: any;

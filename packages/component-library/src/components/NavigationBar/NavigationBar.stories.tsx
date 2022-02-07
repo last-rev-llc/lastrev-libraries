@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import NavigationBar from './NavigationBar';
-import NavigationBarMock from './NavigationBar.mock';
+import NavigationBarMock, { mockWithNavigationItems } from './NavigationBar.mock';
 
 export default {
   title: '1. Primitives / MUI / NavigationBar',
@@ -46,4 +46,7 @@ export default {
 
 const Template = (args: JSX.IntrinsicAttributes) => <NavigationBar theme={{}} sidekickLookup="" {...args} />;
 export const Default = Template.bind({});
-Default.args = { ...NavigationBarMock };
+Default.args = { ...NavigationBarMock() };
+
+export const WithNavigationItems = Template.bind({});
+WithNavigationItems.args = { ...mockWithNavigationItems() };

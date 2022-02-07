@@ -82,6 +82,7 @@
     "babel-plugin-istanbul": "^6.0.0",
     "css-loader": "^5.2.0",
     "cypress": "^8.4.0",
+    "cypress-real-events": "^1.6.0",
     "faker": "^5.5.3",
     "jest-next-dynamic": "^1.0.1",
     "next": "^11.0.1",
