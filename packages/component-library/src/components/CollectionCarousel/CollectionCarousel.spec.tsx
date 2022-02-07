@@ -31,12 +31,10 @@ const runTestByVariant = (variantContent: CollectionCarouselProps, expectedLengt
     it('previous and next buttons work correctly', () => {
       mount(<CollectionCarousel {...mockedContent} />);
       cy.get('.swiper-pagination-bullet.swiper-pagination-bullet-active').as('activeBullet');
-      cy.percySnapshot();
 
       cy.get('.swiper-button-next').then(button => {
         button.trigger('click');
         cy.get('@activeBullet').should('not.have.class', 'swiper-pagination-bullet-active');
-        cy.percySnapshot();
       });
 
       cy.get('.swiper-button-prev').wait(1000).then(button => {
