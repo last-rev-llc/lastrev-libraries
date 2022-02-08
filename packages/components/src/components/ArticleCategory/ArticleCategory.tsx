@@ -76,6 +76,8 @@ const ArticleCategory = ({
   };
 
   const changeAllSubcategoriesExpand = (expanded: boolean) => () => {
+    if (!subcategories) return;
+
     const newExpandedSubcategories = subcategories.reduce((aggr: any, subcategory: any) => {
       aggr[subcategory.id] = expanded;
       return aggr;
