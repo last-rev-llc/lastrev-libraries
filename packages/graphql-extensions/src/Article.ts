@@ -21,7 +21,6 @@ const HEADINGS: Heading = {
 
 export const typeMappings = {};
 
-// TODO: Move to env variables
 const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
 
 // TODO: Move this function to utilities
@@ -32,23 +31,30 @@ export const createPath = (...slug: string[]) => {
 };
 
 const headerResolver = async (page: any, _args: any, ctx: ApolloContext) => {
+  const header: any = getLocalizedField(page?.fields, 'header', ctx);
+
+  if (header) return header
+  
   // TODO: Make getting a localized resolved link a single function
   const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
   const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? SITE_ID, preview: !!ctx.preview });
   const siteHeader: any = getLocalizedField(site?.fields, 'header', ctx);
 
-  const header: any = getLocalizedField(page?.fields, 'header', ctx);
-  return header ?? siteHeader;
+  return siteHeader;
 };
 
 const footerResolver = async (page: any, _args: any, ctx: ApolloContext) => {
+  const footer: any = getLocalizedField(page?.fields, 'footer', ctx);
+
+  if (footer) return footer
+  
   // TODO Improve redirecting to a field inside a referenced field
   const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
   const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? SITE_ID, preview: !!ctx.preview });
   const siteFooter: any = getLocalizedField(site?.fields, 'footer', ctx);
 
-  const footer: any = getLocalizedField(page?.fields, 'footer', ctx);
-  return footer ?? siteFooter;
+  
+  return siteFooter;
 };
 
 const footerItemsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
@@ -140,6 +146,14 @@ export const mappers = {
       },
     },
     Link: {
+      href: async (item: any, _args: any, ctx: ApolloContext) => {
+        const slug: any = await getLocalizedField(item.fields, 'slug', ctx);
+        const fullPath = createPath('article', slug);
+        return fullPath;
+      },
+      text: 'title'
+    },
+    NavigationItem: {
       href: async (item: any, _args: any, ctx: ApolloContext) => {
         const slug: any = await getLocalizedField(item.fields, 'slug', ctx);
         const fullPath = createPath('article', slug);

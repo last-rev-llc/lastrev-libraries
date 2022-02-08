@@ -5,7 +5,7 @@ import { StyledEngineProvider } from '@mui/material/styles';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import Card from '@last-rev/component-library/dist/components/Card/Card';
-import Header from '@last-rev/component-library/dist/components/Header/Header';
+import Header from '../src/components/Header';
 import Section from '@last-rev/component-library/dist/components/Section/Section';
 import Collection from '@last-rev/component-library/dist/components/Collection/Collection';
 import Link from '@last-rev/component-library/dist/components/Link/Link';
@@ -15,10 +15,12 @@ import Media from '@last-rev/component-library/dist/components/Media/Media';
 import NavigationItem from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
 import CollectionFiltered from '../src/components/CollectionFiltered';
 import Quote from '../src/components/Quote';
+import Footer from '../src/components/Footer';
 import theme from '../src/theme';
 
 const contentMapping = {
   Header,
+  Footer,
   Section,
   Collection,
   'Collection:filtered': CollectionFiltered,

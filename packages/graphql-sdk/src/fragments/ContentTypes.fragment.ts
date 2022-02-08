@@ -16,12 +16,9 @@ export const ContentTypes_Fragments = gql`
     header {
       __typename
       ...Header_Base
-      navigationItems {
-        ...Collection_Base
-      }
     }
     footer {
-      ...Section_Base
+      ...Footer_Base
     }
 
     hero {
@@ -40,8 +37,6 @@ export const ContentTypes_Fragments = gql`
     ...RichText_TextFragment
     ...Card_Base
     ...Collection_Base
-    ...Quote_Base
-    ...NavigationItem_Base
   }
 
   fragment Text_Base on Text {
@@ -68,8 +63,14 @@ export const ContentTypes_Fragments = gql`
       ...Media_Base
     }
     logoUrl
-    navigationItems {
-      id
+    leftNav {
+      ...NavigationItem_Base
+    }
+    rightNav {
+      ...NavigationItem_Base
+    }
+    actions {
+      ...Link_Base
     }
     colorScheme
     variant
@@ -121,7 +122,6 @@ export const ContentTypes_Fragments = gql`
     items {
       ...Card_Base
       ...Link_Base
-      ...NavigationItem_Base
       ...Media_Base
     }
   }
@@ -252,38 +252,25 @@ export const ContentTypes_Fragments = gql`
     }
   }
 
-  fragment Quote_Base on Quote {
-    ...Content_Base
-    variant
-    quote
-    authorName
-    authorTitle
-    image {
-      ...Media_Base
-    }
-  }
-
   fragment ModuleIntegration_Base on ModuleIntegration {
     variant
     settings
   }
 
-  fragment Person_Base on Person {
-    name
-    jobTitle
-    image {
-      ...Media_Base
-    }
-  }
-
   fragment Article_Base on Article {
     id
     title
+    header {
+    ...Header_Base
+    }
     slug
     summary
     seo
     pubDate
     disableBackToTop
+    header {
+      ...Header_Base
+    }
     featuredMedia {
       ...Media_Base
     }
@@ -304,6 +291,22 @@ export const ContentTypes_Fragments = gql`
     }
     sideNav {
       ...Link_Base
+    }
+  }
+
+  fragment Footer_Base on Footer {
+    ...Content_Base
+    media {
+      ...Media_Base
+    }
+    navigationItems {
+      ...NavigationItem_Base
+    }
+    actions {
+      ...Link_Base
+    }
+    disclaimerText {
+      ...RichText_RichTextFragment
     }
   }
 `;

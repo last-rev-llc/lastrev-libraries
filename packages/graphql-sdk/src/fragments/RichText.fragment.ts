@@ -24,7 +24,6 @@ const RichTextFragment = gql`
     items {
       ...RichText_CardFragment
       ...RichText_LinkFragment
-      ...RichText_NavigationItemFragment
     }
   }
 
@@ -249,29 +248,6 @@ const RichTextFragment = gql`
     }
   }
 
-  fragment RichText_NavigationItemFragment on NavigationItem {
-    ...RichText_BaseContentFragment
-    text
-    href
-    variant
-    subNavigation {
-      ...RichText_BaseContentFragment
-      ... on NavigationItem {
-        id
-        __typename
-        text
-        href
-        variant
-      }
-      ... on Link {
-        id
-        __typename
-        text
-        href
-        variant
-      }
-    }
-  }
   fragment RichText_BaseContentFragment on Content {
     id
     __typename

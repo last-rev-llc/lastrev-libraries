@@ -11,6 +11,7 @@ export const Preview_Query = gql`
       sidekickLookup
       ...Page_Base
       ...Header_Base
+      ...Footer_Base
       #...Hero_Base # Conflicts with image array vs single
       ...Section_Base
       ...Collection_Base
@@ -19,7 +20,7 @@ export const Preview_Query = gql`
       ...Card_Base
       ...Link_Base
       ...ModuleIntegration_Base
-      ...Person_Base
+      #...Person_Base
       ...Article_Base
     }
   }

@@ -34,10 +34,10 @@ const Media = dynamic(() => import('@last-rev/component-library/dist/components/
 const Link = dynamic(() => import('@last-rev/component-library/dist/components/Link/Link'));
 
 const NavigationItem = dynamic(
-  () => import('@last-rev/component-library/dist/components/NavigationItem/NavigationItem')
+  () => import('@ias/components/src/components/NavigationItem/NavigationItem')
 );
 
-const Header = dynamic(() => import('@last-rev/component-library/dist/components/Header/Header'));
+const Header = dynamic(() => import('@ias/components/src/components/Header/Header'));
 
 const Hero = dynamic(() => import('@last-rev/component-library/dist/components/Hero/Hero'));
 
@@ -52,9 +52,11 @@ const CollectionFiltered = dynamic(
 
 const Quote = dynamic(() => import('@ias/components/src/components/Quote/Quote'));
 
+const Footer = dynamic(() => import('@ias/components/src/components/Footer/Footer'));
+
 const Article = dynamic(() => import('@ias/components/src/components/Article/Article'));
 
-const Page = dynamic(() => import('@ias/components/src/components/PageGeneral'));
+const PageGeneral = dynamic(() => import('@ias/components/src/components/PageGeneral/PageGeneral'));
 
 import '../styles/globals.css';
 
@@ -62,6 +64,7 @@ const contentMapping: {
   [key: string]: any;
 } = {
   Header,
+  Footer,
   Section,
   Collection,
   'Collection:carousel': CollectionCarousel,
@@ -77,7 +80,7 @@ const contentMapping: {
   Link,
   NavigationItem,
   Hero,
-  Page,
+  Page: PageGeneral,
   Article,
   Quote
 };

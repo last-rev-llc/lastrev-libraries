@@ -27,7 +27,6 @@ export const CollectionItemsQuery = gql`
             ...CollectionItemsBaseContentFragment
             ...CollectionItemsCardFragment
             ...CollectionItemsLinkFragment
-            ...CollectionItemsNavigationItemFragment
           }
         }
       }
@@ -102,21 +101,5 @@ export const CollectionItemsQuery = gql`
     text
     href
     variant
-  }
-
-  fragment CollectionItemsNavigationItemFragment on NavigationItem {
-    ...CollectionItemsBaseContentFragment
-    text
-    href
-    variant
-    subNavigation {
-      ... on Link {
-        id
-        __typename
-        text
-        href
-        variant
-      }
-    }
   }
 `;

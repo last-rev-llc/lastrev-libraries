@@ -36,12 +36,14 @@ export interface ArticleProps {
   disableBackToTop?: boolean;
   breadcrumbs?: Array<LinkProps>;
   footerItems?: Array<any>;
+  header?: any;
   sidekickLookup?: any;
 }
 
 export const Article = ({
   title,
   slug,
+  header,
   featuredMedia,
   pubDate,
   summary,
@@ -70,10 +72,7 @@ export const Article = ({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `${xss(JSON.stringify(schemaData))}` }} />
       </Head>
 
-      {/* TODO: Create/add Header component
-        * https://lastrev.atlassian.net/browse/IAS-74 */}
-      {/* {header ? <ContentModule {...(header as any)} /> : null} */}
-      <Box p={2} sx={{ backgroundColor: '#00324A', textAlign: 'center', color: '#FFF' }}>Header</Box>
+      {header ? <ContentModule {...(header as any)} /> : null}
 
       {/* TODO: Create/add Topic Nav component
         * https://lastrev.atlassian.net/browse/IAS-96 */}

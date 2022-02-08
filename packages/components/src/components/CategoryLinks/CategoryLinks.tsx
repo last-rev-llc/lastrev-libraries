@@ -44,14 +44,16 @@ export const CategoryLinks = ({
 
 const LinkGroup = styled(Stack, {
   name: 'CategoryLinks',
-  slot: 'group'
+  slot: 'Group'
 })<{}>(() => ({
   flexWrap: 'wrap'
 }));
 
 const LinkItem = styled(Chip, {
   name: 'CategoryLinks',
-  slot: 'item'
-})<ChipProps<React.ElementType>>();
+  slot: 'Item'
+})<ChipProps<React.ElementType>>(() => ({
+  
+}));
 
 export default CategoryLinks;

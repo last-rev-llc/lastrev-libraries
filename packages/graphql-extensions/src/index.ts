@@ -18,8 +18,9 @@ import {
 
 import * as Text from './Text';
 import * as Quote from './Quote';
-import * as Person from './Person';
+// import * as Person from './Person';
 import * as Header from './Header';
+import * as Footer from './Footer';
 import * as Article from './Article';
 import * as CategoryArticle from './CategoryArticle';
 import * as ModuleIntegration from './ModuleIntegration';
@@ -52,12 +53,13 @@ const extensions: GraphQlExtension[] = [
   Collection,
   Hero,
   Header,
+  Footer,
   Link,
   NavigationItem,
   Page,
   Section,
   Quote,
-  Person,
+  // Person,
   Media,
   RichText,
   Text,

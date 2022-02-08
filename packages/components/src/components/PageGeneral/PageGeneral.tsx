@@ -16,4 +16,5 @@ const PageGeneral = ({ header, hero, contents, footer, disableBackToTop }: Page 
     </>
   );
 };
+
 export default PageGeneral;

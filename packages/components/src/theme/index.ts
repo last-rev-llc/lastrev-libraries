@@ -18,9 +18,10 @@ declare module '@mui/material/styles/createPalette' {
   export interface TypeBackground {
     dark: string;
     yellow: string;
-    neutralGrey: string,
-    coolGrey: string
-    integralOrange: string
+    neutralGrey: string;
+    coolGrey: string;
+    integralOrange: string;
+    aquaPearl: string;
   }
 }
 
@@ -138,7 +139,8 @@ const baseTheme = {
       yellow: '#FFD12B',
       neutralGrey: '#E0E6E9',
       coolGrey: '#E3F1F2',
-      integralOrange: '#FF574A'
+      integralOrange: '#FF574A',
+      aquaPearl: '#68ABDD'
     },
     grey: {
       100: '#00324A',
@@ -195,10 +197,6 @@ const createSchemeTheme = (schemeKey?: string) => {
           styleOverrides: {
             contentContainer: {
               height: 100,
-              [baseSchemeTheme.breakpoints.up('sm')]: {
-                paddingLeft: baseSchemeTheme.spacing(10),
-                paddingRight: baseSchemeTheme.spacing(10)
-              }
             }
           }
         },
@@ -212,6 +210,7 @@ const createSchemeTheme = (schemeKey?: string) => {
             }
           }
         },
+        
         Text: {
           variants: createTextVariants(baseSchemeTheme),
           styleOverrides: {
@@ -281,12 +280,6 @@ const createSchemeTheme = (schemeKey?: string) => {
           styleOverrides: {
             contentContainer: {
               padding: baseSchemeTheme.spacing(3),
-              paddingLeft: baseSchemeTheme.spacing(10),
-              paddingRight: baseSchemeTheme.spacing(10),
-              [baseSchemeTheme.breakpoints.down('sm')]: {
-                paddingLeft: baseSchemeTheme.spacing(3),
-                paddingRight: baseSchemeTheme.spacing(3)
-              }
             }
           }
         },
