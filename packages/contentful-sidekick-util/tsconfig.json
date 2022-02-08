@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "alwaysStrict": true
+  },
+  "traceResolution": true,
+  "exclude": ["node_modules", "dist", "**/*.test.js"]
+}
