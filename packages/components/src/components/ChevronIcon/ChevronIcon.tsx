@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 
 interface ChevronIconProps {
   open: boolean;
+  right?: boolean;
   className?: string;
 }
 
@@ -14,7 +15,7 @@ const ChevronIcon = ({ className }: ChevronIconProps) => {
   );
 };
 
-export default styled(ChevronIcon)(({ open }: ChevronIconProps) => ({
-  transform: open ? 'rotate(90deg)' : 'none',
+export default styled(ChevronIcon)(({ open, right }: ChevronIconProps) => ({
+  transform: open ? 'rotate(90deg)' : (right ? 'rotate(180deg)' : 'none'),
   transition: 'all .2s ease-out'
 }));

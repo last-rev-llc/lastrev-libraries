@@ -9,7 +9,7 @@ const parseNode = (node: { nodeType: string; value: any; content: any[]; }) => {
   return node.nodeType === 'text' ? node.value : node.content.map((c: any) => parseNode(c)).join('');
 };
 
-describe('Article', () => {
+describe('ArticleCategory', () => {
   context('renders correctly', () => {
     it('renders a Category with articles', () => {
       const mockedContent: ArticleCategoryProps = { ...articleCategoryWithArticlesMock };
