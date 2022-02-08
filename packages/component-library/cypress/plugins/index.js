@@ -26,11 +26,15 @@ module.exports = (on, config) => {
   if (config.testingType === 'component') {
     require('@cypress/react/plugins/babel')(on, config, {
       setWebpackConfig: (webpackConfig) => {
+        webpackConfig.plugins = webpackConfig.plugins ?? [];
+        webpackConfig.plugins.push(new webpack.ProvidePlugin({
+          process: 'process/browser',
+        }));
         webpackConfig.resolve.alias = {
           ...webpackConfig.resolve.alias,
           'react': toPath('../../node_modules/react'),
           '@emotion/core': toPath('../../node_modules/@emotion/react'),
-          'emotion-theming': toPath('../../node_modules/@emotion/react')
+          'emotion-theming': toPath('../../node_modules/@emotion/react'),
         }
         webpackConfig.module.rules.push({
           test: /\.css$/,

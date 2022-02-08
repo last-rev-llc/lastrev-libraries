@@ -12,7 +12,8 @@
     "build-no-run": "cross-env NODE_ENV=production rollup -c",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "test": "cross-env NODE_ENV=test percy exec --  cypress run-ct"
+    "test": "cross-env NODE_ENV=test percy exec --  cypress run-ct",
+    "cypress:open": "cross-env NODE_ENV=test cypress open-ct"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
@@ -35,9 +36,6 @@
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "next": "^12.0.7",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "@babel/core": "^7.16.5",
     "@babel/preset-typescript": "^7.16.7",
     "@cypress/code-coverage": "^3.9.12",
@@ -61,10 +59,16 @@
     "@types/faker": "^5.5.9",
     "@types/react": "^17.0.37",
     "css-loader": "^5.2.0",
-    "cypress": "^8.4.0",
+    "cypress": "^9.4.1",
     "faker": "^5.5.3",
+    "html-webpack-plugin": "5",
+    "next": "^12.0.7",
+    "process": "^0.11.10",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "rollup": "^2.6.1",
     "style-loader": "^2.0.0",
-    "webpack-dev-server": "^4.7.3"
+    "webpack": "5",
+    "webpack-dev-server": "^4.7.4"
   }
 }
