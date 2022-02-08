@@ -1,0 +1,36 @@
+{
+  "globalDependencies": [],
+  "pipeline": {
+    "test": {
+      "outputs": [
+        "coverage/**"
+      ]
+    },
+    "test:e2e": {
+      "outputs": [
+        "coverage/**"
+      ]
+    },
+    "test:watch": {
+      "cache": false,
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**"
+      ]
+    },
+    "dev": {
+      "cache": false,
+      "dependsOn": []
+    }
+  }
+}

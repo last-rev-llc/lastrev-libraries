@@ -9,8 +9,7 @@ node_modules
 **/out
 **/test-scripts
 
-**/coverage
-**/reports
+
 
 lerna-debug.log
 .env
@@ -24,6 +23,8 @@ lerna-debug.log
 **/stats.html
 **/cypress/videos
 **/cypress/screenshots
+**/coverage
+**/reports
 
 .turbo
 # Local Netlify folder
