@@ -54,6 +54,7 @@ export const CollectionFiltered = ({
 
   // The key includes a stable version of the filter object for shallow comparison
   const getKey = (pageIndex: number, previousPageData: any) => {
+    console.log({ pageIndex, previousPageData });
     if (previousPageData && previousPageData?.items && !previousPageData?.items?.length) return null; // reached the end
     if (pageIndex === 0) return [`collectionFiltered_${id}`, JSON.stringify(filter), 0]; // SWR key
     return [`collectionFiltered_${id}`, JSON.stringify(filter), pageIndex * limit]; // SWR key
@@ -108,7 +109,7 @@ export const CollectionFiltered = ({
 
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} variant={variant}>
+      <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionFiltered">
         <ContentContainer maxWidth={itemsWidth}>
           <Grid container spacing={itemsSpacing ?? 0} sx={{ flexDirection: 'column', alignItems: 'center' }}>
             <Grid item container sx={{ justifyContent: 'flex-end' }}>

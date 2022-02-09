@@ -1,16 +1,97 @@
+import faker from 'faker';
 import mockCard from '../Card/Card.mock';
 import mockTheme from '../../theme/mock.theme';
+import { CollectionFilteredProps, Settings, Options, FilterSetting } from './CollectionFiltered';
+import { mediaMock } from '../Media/Media.mock';
 
-export default {
+const items = [
+  { ...mockCard(), variant: 'media-and-text', title: 'Card one title' },
+  { ...mockCard(), variant: 'media-and-text', title: 'Card two title' },
+  { ...mockCard(), variant: 'media-and-text', title: 'Card three title' },
+  { ...mockCard(), variant: 'media-and-text', title: 'Card four title' }
+];
+
+const topicOption = (topic?: string) => ({ label: topic ? topic : faker.lorem.words(3), value: faker.random.alphaNumeric(10) });
+
+const tagOption = (tag: string = faker.lorem.word()) => ({ label: tag, value: tag });
+
+const allOptions = {
+  "topics": [
+    topicOption('Topic One'),
+    topicOption('Topic Two'),
+    topicOption('Topic Three'),
+    topicOption('Topic Four')
+  ],
+  "tags": [
+    tagOption('one'),
+    tagOption('two'),
+    tagOption('three'),
+    tagOption('four')
+  ]
+};
+
+const noOptions = { "topics": null, "tags": null };
+const topicOptions = { "topics": [topicOption('Topic One')], "tags": null };
+const tagsOptions = { "topics": null, "tags": [tagOption('one'), tagOption('three')] };
+const topicAndTagsOptions = { "topics": [topicOption('Topic Two')], "tags": [tagOption('two'), tagOption('four')] };
+
+const defaultFilter = () => ({
+  id: "topics",
+  key: "topics",
+  type: "select",
+  label: "Topic"
+});
+
+const filters = [
+  defaultFilter(),
+  {
+    id: "tags",
+    key: "tags",
+    label: "Tag",
+    multiple: true,
+    type: "autocomplete"
+  },
+  {
+      "id": "body",
+      "key": "query",
+      "type": "text",
+      "label": "Search"
+  }
+] as FilterSetting[];
+
+const settings = (): Settings => ({ filters, limit: 2 });
+
+const collectionFilteredMock = (options: Options = {}): CollectionFilteredProps => ({
   __typename: 'Collection',
   id: 'xyz',
-  variant: 'carousel-large',
-  items: [
-    { ...mockCard(), variant: 'media-and-text', title: 'Card one title' },
-    { ...mockCard(), variant: 'media-and-text', title: 'Card two title' },
-    { ...mockCard(), variant: 'media-and-text', title: 'Card three title' },
-    { ...mockCard(), variant: 'media-and-text', title: 'Card four title' }
-  ],
+  variant: 'filtered',
+  items,
   itemsVariant: 'media-and-text',
+  theme: [mockTheme],
+  settings: settings(),
+  filter: defaultFilter(),
+  options: noOptions,
+  fetchItems: () => Promise.resolve({ items, options, allOptions }),
+  onClearFilter: () => {},
+  background: mediaMock(),
+  itemsSpacing: 2,
+  itemsWidth: 'md',
+  sidekickLookup: 'sidekickLookup',
+  loadMoreText: 'Load More'
+});
+
+export const noOptionalPropsMock = {
+  __typename: 'Collection',
+  id: 'xyz',
+  variant: 'filtered',
   theme: [mockTheme]
+} as CollectionFilteredProps;
+
+export const noOptionsMock = collectionFilteredMock(noOptions);
+export const topicOptionsMock = collectionFilteredMock(topicOptions);
+export const tagsOptionsMock = collectionFilteredMock(tagsOptions);
+export const topicAndTagsOptionsMock = collectionFilteredMock(topicAndTagsOptions);
+
+export default {
+  ...collectionFilteredMock()
 };
