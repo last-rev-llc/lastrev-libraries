@@ -88,4 +88,4 @@ During the update process the following steps are taken:
  - If there are conflicts, the user is prompted to resolve them through the code editor
  - After resolving the conflicts, the project is checked for conflicts again and if successful a commit is created with the changes
 
-*For more details about breaking changes take a look at the  [starter changelog](examples/lastrev-next-starter/CHANGELOG.md)*
+*For more details about migrating and breaking changes take a look at the  [starter changelog](examples/lastrev-next-starter/CHANGELOG.md)*
