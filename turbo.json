@@ -1,4 +1,6 @@
 {
+  "$schema": "https://turborepo.org/schema.json",
+  "baseBranch": "origin/main",
   "globalDependencies": [],
   "pipeline": {
     "test": {
