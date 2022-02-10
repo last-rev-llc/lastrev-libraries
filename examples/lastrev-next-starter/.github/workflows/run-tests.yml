@@ -39,13 +39,13 @@ jobs:
           key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
           restore-keys: |
             turbo-${{ github.job }}-${{ github.ref_name }}-
-
+          
       - name: Install project dependencies
         run: yarn --prefer-offline
 
       - name: Run the tests
         run: "yarn turbo run test test:e2e lint"
-
+  
       - name: Collect coverage
         run: "yarn combine:reports"
 
