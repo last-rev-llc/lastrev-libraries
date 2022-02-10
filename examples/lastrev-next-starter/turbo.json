@@ -1,7 +1,7 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "baseBranch": "origin/main",
-  "globalDependencies": [".env", "**/.env"],
+  "globalDependencies": [".env", "**/.env", "$TURBO_CACHE_KEY"],
   "pipeline": {
     "dev": {
       "dependsOn": [],
