@@ -13,3 +13,5 @@ node_modules
 lerna-debug.log
 .env
 .turbo
+
+**/*sitemap.xml
