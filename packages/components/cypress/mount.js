@@ -25,6 +25,9 @@ import SEO from '@last-rev/component-library/dist/components/SEO/SEO';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import theme from '../src/theme';
 import PageGeneral from '../src/components/PageGeneral/PageGeneral';
+import SearchBox from '../src/components/SearchBox';
+import Autocomplete from '../src/components/Autocomplete';
+import SearchResultItem from '../src/components/SearchResultItem';
 
 const components = {
   Accordion,
@@ -46,7 +49,10 @@ const components = {
   Image,
   MailchimpForm,
   SEO,
-  PageGeneral
+  PageGeneral,
+  SearchBox,
+  Autocomplete,
+  SearchResultItem
 };
 
 const mount = (component, options) =>

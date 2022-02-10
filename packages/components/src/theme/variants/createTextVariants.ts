@@ -12,10 +12,8 @@ export const articleVariant = (theme: Theme) => ({
     '.MuiTypography-h1': {
       marginBottom: theme.spacing(2),
       paddingBottom: theme.spacing(1),
-      // TODO: Move all hex colors to theme
-      borderBottom: '1px solid #CCD6DB',
-      fontSize: '1.75rem',
-      lineHeight: 1.5,
+      borderBottom: `1px solid ${theme.palette.midnight.A20}`,
+      ...theme.typography.h3,
 
       '&:not:(:first-of-type)': {
         paddingTop: theme.spacing(2)
@@ -25,10 +23,8 @@ export const articleVariant = (theme: Theme) => ({
     '.MuiTypography-h2': {
       marginBottom: theme.spacing(2),
       paddingBottom: theme.spacing(1),
-      // TODO: Move all hex colors to theme
-      borderBottom: '1px solid #CCD6DB',
-      fontSize: '1.75rem',
-      lineHeight: 1.5,
+      borderBottom: `1px solid ${theme.palette.midnight.A20}`,
+      ...theme.typography.h3,
 
       '&:not:(:first-of-type)': {
         paddingTop: theme.spacing(2)
@@ -36,23 +32,15 @@ export const articleVariant = (theme: Theme) => ({
     },
 
     '.MuiTypography-h3': {
-      fontSize: '1.5rem',
-      lineHeight: 1.5
+      ...theme.typography.h4
     },
 
     '.MuiTypography-h4': {
-      fontSize: '1.25rem',
-      lineHeight: 1.5
+      ...theme.typography.h5
     },
 
     '.MuiTypography-h5': {
-      fontSize: '1.125rem',
-      lineHeight: 1.5555
-    },
-
-    '.MuiTypography-h6': {
-      fontSize: '1.125rem',
-      lineHeight: 1.5555
+      ...theme.typography.h6
     },
 
     '& [class$=Media-root]': {

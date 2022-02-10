@@ -50,9 +50,8 @@ const Root = styled(Box, {
 })<{}>(({ theme }) => ({
   marginBottom: theme.spacing(5),
   padding: theme.spacing(3),
-  // TODO: Move all hex colors to theme
-  backgroundColor: '#F0F3F4',
-  border: '1px solid #CCD6DB'
+  backgroundColor: theme.palette.midnight.A06,
+  border: `1px solid ${theme.palette.midnight.A20}`
 }));
 
 const LinkItem = styled(Typography, {
@@ -60,19 +59,20 @@ const LinkItem = styled(Typography, {
   slot: 'LinkItem',
 })<TypographyProps<React.ElementType>>(({ theme }) => ({
   '&::marker': {
-    // TODO: Move all hex colors to theme
-    color: '#1264A3',
+    color: theme.palette.background.greenishBlue,
     fontSize: '1rem'
   },
+  
   '&:not(:last-child)': {
     marginBottom: theme.spacing(1)
   },
+  
   '& a': {
-    // TODO: Move all hex colors to theme
-    color: '#1264A3',
+    color: theme.palette.background.greenishBlue,
     fontSize: 16,
     lineHeight: 1.5,
     textDecoration: 'underline',
+   
     '&:hover': {
       textDecoration: 'none'
     }

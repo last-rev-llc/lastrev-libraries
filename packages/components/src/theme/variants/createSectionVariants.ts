@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material/styles';
 
-export const defaultCardVariant = (theme: Theme) => ({
+export const defaultSectionVariant = (theme: Theme) => ({
   props: {
     variant: 'default'
   },
@@ -54,9 +54,8 @@ export const statementWithIconVariant = (theme: Theme) => ({
   style: {
     margin: theme.spacing(1, 0),
     padding: theme.spacing(1.25),
-    // TODO: Move all hex colors to theme
-    backgroundColor: '#F0F3F4',
-    border: '1px solid #CCD6DB',
+    backgroundColor: theme.palette.midnight.A06,
+    border: `1px solid ${theme.palette.midnight.A20}`,
 
     '& [class*=Section-gridContainer]': {
       alignItems: 'center'
@@ -85,7 +84,7 @@ export const statementWithIconVariant = (theme: Theme) => ({
 });
 
 const textVariants = [
-  defaultCardVariant,
+  defaultSectionVariant,
   fiftyFiftyVariant,
   twoThirdsVariant,
   statementWithIconVariant

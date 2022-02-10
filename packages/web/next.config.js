@@ -32,7 +32,9 @@ const nextConfig = {
     CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
     CONTENTFUL_DELIVERY_TOKEN: process.env.CONTENTFUL_DELIVERY_TOKEN,
     CONTENTFUL_PREVIEW_TOKEN: process.env.CONTENTFUL_PREVIEW_TOKEN,
-    CONTENTFUL_ENV: process.env.CONTENTFUL_ENV
+    CONTENTFUL_ENV: process.env.CONTENTFUL_ENV,
+    ALGOLIA_APP_ID: process.env.ALGOLIA_APP_ID,
+    ALGOLIA_SEARCH_API_KEY: process.env.ALGOLIA_SEARCH_API_KEY
   },
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if

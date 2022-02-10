@@ -2,17 +2,17 @@
  * Based on: https://blog.devgenius.io/diy-scrollspy-4f1c270cafaf
  * Example: https://codesandbox.io/s/reverent-surf-nkzzv
 */
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 
 export interface ScrollSpyProps {
   handleScroll?: any;
 }
 
 export const ScrollSpy = ({ handleScroll }: ScrollSpyProps) => {
-  const isInViewPort = (entry: IntersectionObserverEntry, offset = 1) => {
+  const isInViewPort = useCallback((entry: IntersectionObserverEntry, offset = 1) => {
     const rect = entry.boundingClientRect;
     return rect.top - 1 <= 0 + offset && rect.bottom >= 0 + offset;
-  };
+  }, []);
 
   useEffect(() => {
     const scrollables = document.querySelectorAll('[data-scrollspy]');

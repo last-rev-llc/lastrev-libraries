@@ -171,4 +171,158 @@ export const backgroundMock = {
   }
 };
 
+export const heightMediumMock = {
+  id: '6hdImKPtzJI2dn7nhezT1i',
+  __typename: 'Hero',
+  sidekickLookup: {
+    internalTitle: {
+      contentId: '6hdImKPtzJI2dn7nhezT1i',
+      contentTypeId: 'hero',
+      fieldName: 'internalTitle'
+    },
+    variant: {
+      contentId: '6hdImKPtzJI2dn7nhezT1i',
+      contentTypeId: 'hero',
+      fieldName: 'variant'
+    },
+    title: {
+      contentId: '6hdImKPtzJI2dn7nhezT1i',
+      contentTypeId: 'hero',
+      fieldName: 'title'
+    },
+    actions: {
+      contentId: '6hdImKPtzJI2dn7nhezT1i',
+      contentTypeId: 'hero',
+      fieldName: 'actions'
+    },
+    body: {
+      contentId: '6hdImKPtzJI2dn7nhezT1i',
+      contentTypeId: 'hero',
+      fieldName: 'body'
+    },
+    backgroundColor: {
+      contentId: '6hdImKPtzJI2dn7nhezT1i',
+      contentTypeId: 'hero',
+      fieldName: 'backgroundColor'
+    },
+    contentHeight: {
+      contentId: '6hdImKPtzJI2dn7nhezT1i',
+      contentTypeId: 'hero',
+      fieldName: 'contentHeight'
+    },
+    contentId: '6hdImKPtzJI2dn7nhezT1i',
+    contentTypeId: 'hero'
+  },
+  variant: 'Height - Med',
+  internalTitle: 'Homepage: Hero [LAST REV DEMO]',
+  title: 'How can we help you?',
+  subtitle: null,
+  backgroundColor: 'Black',
+  contentWidth: null,
+  contentHeight: 'md',
+  background: null,
+  body: {
+    id: null,
+    __typename: 'RichText',
+    json: {
+      data: {},
+      content: [
+        {
+          data: {},
+          content: [
+            {
+              data: {},
+              marks: [],
+              value: 'Common topics: ',
+              nodeType: 'text'
+            },
+            {
+              data: {
+                uri: 'https://help.integralplatform.com/topic1'
+              },
+              content: [
+                {
+                  data: {},
+                  marks: [],
+                  value: 'topic 1',
+                  nodeType: 'text'
+                }
+              ],
+              nodeType: 'hyperlink'
+            },
+            {
+              data: {},
+              marks: [],
+              value: ', ',
+              nodeType: 'text'
+            },
+            {
+              data: {
+                uri: 'https://help.integralplatform.com/topic2'
+              },
+              content: [
+                {
+                  data: {},
+                  marks: [],
+                  value: 'topic 2',
+                  nodeType: 'text'
+                }
+              ],
+              nodeType: 'hyperlink'
+            },
+            {
+              data: {},
+              marks: [],
+              value: ', ',
+              nodeType: 'text'
+            },
+            {
+              data: {
+                uri: 'https://help.integralplatform.com/topic3'
+              },
+              content: [
+                {
+                  data: {},
+                  marks: [],
+                  value: 'topic 3',
+                  nodeType: 'text'
+                }
+              ],
+              nodeType: 'hyperlink'
+            },
+            {
+              data: {},
+              marks: [],
+              value: '',
+              nodeType: 'text'
+            }
+          ],
+          nodeType: 'paragraph'
+        }
+      ],
+      nodeType: 'document'
+    },
+    links: {
+      entries: [],
+      assets: []
+    }
+  },
+  image: null,
+  actions: [
+    {
+      id: '5V1NAD8P2Cp4AsCMNFomZf',
+      __typename: 'Link',
+      sidekickLookup: {
+        contentId: '5V1NAD8P2Cp4AsCMNFomZf',
+        contentTypeId: 'moduleIntegration'
+      },
+      text: null,
+      href: '#',
+      variant: null,
+      icon: null,
+      iconPosition: null
+    }
+  ]
+};
+
 export default homepageMock;

@@ -12,10 +12,13 @@ import Link from '@last-rev/component-library/dist/components/Link/Link';
 import Hero from '@last-rev/component-library/dist/components/Hero/Hero';
 import Text from '@last-rev/component-library/dist/components/Text/Text';
 import Media from '@last-rev/component-library/dist/components/Media/Media';
-import NavigationItem from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
+import '@algolia/autocomplete-theme-classic';
+import NavigationItem from '../src/components/NavigationItem';
+
 import CollectionFiltered from '../src/components/CollectionFiltered';
 import Quote from '../src/components/Quote';
 import Footer from '../src/components/Footer';
+import ArticleText from '../src/components/Text';
 import theme from '../src/theme';
 
 const contentMapping = {
@@ -29,6 +32,7 @@ const contentMapping = {
   'Quote': Card,
   NavigationItem,
   Text,
+  'Text:article': ArticleText,
   Media,
   Link,
   Hero
@@ -40,6 +44,7 @@ const StorybookWrapper = (storyFn) => {
       <ThemeProvider theme={theme}>
         <ContentModuleProvider contentMapping={contentMapping}>
           <CssBaseline />
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
           {storyFn()}
         </ContentModuleProvider>
       </ThemeProvider>

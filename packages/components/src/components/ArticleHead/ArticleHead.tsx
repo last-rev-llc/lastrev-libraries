@@ -37,18 +37,15 @@ export const ArticleHead = ({
               height: 16,
               margin: '7px 8px 0 0',
               verticalAlign: 'top',
-              // TODO: Move all hex colors to theme
-              fill: '#335B6E'
+              fill: 'midnight.A80'
             }}
           />
-          <Typography variant="body2" component="time" dateTime={pubDate}
-          sx={{
-            // TODO: Move all hex colors to theme
-            color: '#335B6E',
-            fontSize: 15,
-            lineHeight: 1.2
-          }}
-          {...sidekick(sidekickLookup?.pubDate)} data-testid="ArticleHead-pubDate">{dayjs(pubDate).format('MMM D, YYYY')}</Typography>
+          <Typography variant="time" component="time"
+            dateTime={pubDate}
+            {...sidekick(sidekickLookup?.pubDate)} data-testid="ArticleHead-pubDate"
+          >
+            {dayjs(pubDate).format('MMM D, YYYY')}
+          </Typography>
         </>
       ) : null}
 

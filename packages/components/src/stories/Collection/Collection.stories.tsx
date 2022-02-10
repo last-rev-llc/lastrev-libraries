@@ -1,7 +1,14 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import Collection, { CollectionProps } from '@last-rev/component-library/dist/components/Collection/Collection';
-import { mediumIconCenterCollectionMock, logosMock, smallIconLeftCardsMock, insightCardsMock } from './Collection.mock';
+import {
+  mediumIconCenterCollectionMock,
+  logosMock,
+  smallIconLeftCardsMock,
+  insightCardsMock,
+  fourPerRowMock,
+  fourPerRowLinksListMock
+} from './Collection.mock';
 
 const itemVariantProps = {
   'medium-icon-center': {
@@ -35,6 +42,7 @@ export default {
           'collection-one-per-row',
           'collection-two-per-row',
           'collection-three-per-row',
+          'four-per-row',
           'collection-tiles',
           'collection-three-per-row-rounded-wrapper'
         ]
@@ -48,6 +56,8 @@ export default {
       control: {
         type: 'select',
         options: [
+          'default',
+          'links list',
           'standard',
           'standard-round',
           'media',
@@ -82,3 +92,9 @@ SmallIconLeftCards.args = { ...smallIconLeftCardsMock };
 
 export const InsightCards = Template.bind({});
 InsightCards.args = { ...insightCardsMock };
+
+export const fourPerRowCollection = Template.bind({});
+fourPerRowCollection.args = { ...fourPerRowMock };
+
+export const fourPerRowLinksListCollection = Template.bind({});
+fourPerRowLinksListCollection.args = { ...fourPerRowLinksListMock };

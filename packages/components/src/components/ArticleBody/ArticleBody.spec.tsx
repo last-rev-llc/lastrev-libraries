@@ -9,12 +9,12 @@ describe('ArticleBody', () => {
     it('renders an ArticleBody component with all fields provided', () => {
       const mockedContent: ArticleBodyProps = { ...articleBodyMock };
       mount(<ArticleBody {...mockedContent} />);
-      cy.get('[data-testid=ArticleBody-Text]').should('exist');
+      cy.get('[data-testid=ArticleBody]').should('exist');
     });
 
     it('renders an ArticleBody component with no unrequired fields provided', () => {
       mount(<ArticleBody />);
-      cy.get('[data-testid=ArticleBody-Text]').should('not.exist');
+      cy.get('[data-testid=ArticleBody]').should('not.exist');
     });
   });
 });

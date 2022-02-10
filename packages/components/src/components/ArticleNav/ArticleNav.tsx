@@ -30,13 +30,7 @@ export const ArticleNav = ({ sideNav }: ArticleNavProps) => {
           <ScrollSpy handleScroll={onScrollUpdate} />
           <Root data-testid="ArticleNav">
             {/* TODO: Use localization lookup for this overline (IAS-117) */}
-            <Typography variant="overline" component="p" mb={2}
-              sx={{
-                fontSize: 12,
-                fontWeight: 600,
-                lineHeight: '18px'
-              }}
-            >
+            <Typography variant="overline">
               Contents
             </Typography>
 
@@ -76,7 +70,7 @@ const Root = styled(Box, {
 })<{}>(({ theme }) => ({
   position: 'sticky',
   top: 25,
-  padding: theme.spacing(3, 0),
+  padding: theme.spacing(1, 0, 3),
 }));
 
 const NavLink = styled(Typography, {
@@ -88,8 +82,7 @@ const NavLink = styled(Typography, {
   lineHeight: '18px',
 
   '& a': {
-    // TODO: Move all hex colors to theme (IAS-85)
-    color: '#4D7080',
+    color: theme.palette.midnight.A70,
     fontWeight: 500,
 
     '&:hover': {
@@ -99,8 +92,7 @@ const NavLink = styled(Typography, {
   },
 
   '&.active': {
-    // TODO: Move all hex colors to theme (IAS-85)
-    borderLeftColor: '#FF574A',
+    borderLeftColor: theme.palette.background.integralOrange,
 
     '& a': {
       color: theme.palette.text.primary,

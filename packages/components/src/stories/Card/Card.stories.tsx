@@ -1,5 +1,6 @@
 import React from 'react';
-import { Paper, Grid } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
 import Card, { CardProps } from '@last-rev/component-library/dist/components/Card/Card';
 import {
   mediaLeftTextRightMock,
@@ -11,7 +12,9 @@ import {
   quoteMock,
   mediaMock,
   reasonMock,
-  insightMock
+  insightMock,
+  defaultMock,
+  linksListMock
 } from './Card.mock';
 
 const variantProps = {
@@ -94,8 +97,7 @@ export default {
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal, ctx: any) => (
       <Paper
         sx={{ padding: 2, backgroundColor: variantProps[ctx?.args?.variant]?.backgroundColor ?? 'auto' }}
-        variant="outlined"
-      >
+        variant="outlined">
         <Grid container alignItems="center" justifyContent="center">
           <Grid item {...variantProps[ctx?.args?.variant]?.grid}>
             {storyFn()}
@@ -109,7 +111,7 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['resource']
+        options: ['resource', 'default']
       },
       table: {
         defaultValue: { summary: 'resource' }
@@ -155,3 +157,9 @@ Reason.args = { ...reasonMock };
 
 export const Insight = Template.bind({});
 Insight.args = { ...insightMock };
+
+export const Default = Template.bind({});
+Default.args = { ...defaultMock };
+
+export const LinksList = Template.bind({});
+LinksList.args = { ...linksListMock };

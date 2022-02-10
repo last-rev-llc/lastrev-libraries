@@ -1,7 +1,7 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import Hero, { HeroProps } from '@last-rev/component-library/dist/components/Hero/Hero';
-import heroMock, { productMock, solutionMock, backgroundMock } from './Hero.mock';
+import heroMock, { productMock, solutionMock, backgroundMock, heightMediumMock } from './Hero.mock';
 
 export default {
   title: 'Modules / Hero',
@@ -25,7 +25,14 @@ export default {
     body: { name: 'Body' },
     image: { name: 'Image' },
     background: { name: 'Background' },
-    actions: { name: 'Actions' }
+    backgroundColor: { name: 'Background Color' },
+    actions: { name: 'Actions' },
+    contentWidth: { name: 'Content Width' },
+    contentHeight: { name: 'Content Height' },
+    id: { table: { disable: true } },
+    sidekickLookup: { table: { disable: true } },
+    internalTitle: { table: { disable: true } },
+    __typename: { table: { disable: true } }
   }
 };
 
@@ -42,3 +49,6 @@ Solution.args = { ...solutionMock };
 
 export const BackgroundOnly = Template.bind({});
 BackgroundOnly.args = { ...backgroundMock };
+
+export const HeightMedium = Template.bind({});
+HeightMedium.args = { ...heightMediumMock };

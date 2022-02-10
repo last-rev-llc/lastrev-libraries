@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic';
 import theme from '@ias/components/src/theme';
 import { createEmotionCache } from '../src/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import '@algolia/autocomplete-theme-classic';
 
 // LastRev components
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
@@ -59,6 +60,9 @@ const Article = dynamic(() => import('@ias/components/src/components/Article/Art
 const PageGeneral = dynamic(() => import('@ias/components/src/components/PageGeneral/PageGeneral'));
 
 const Table = dynamic(() => import('@ias/components/src/components/Table'));
+const ArticleText = dynamic(() => import('@ias/components/src/components/Text'));
+
+const SearchBox = dynamic(() => import('@ias/components/src/components/SearchBox'));
 
 import '../styles/globals.css';
 
@@ -75,9 +79,11 @@ const contentMapping: {
   'Collection:carousel-large': CollectionCarousel,
   'Collection:carousel-small': CollectionCarousel,
   'Collection:navigation-bar': NavigationBar,
+  'ModuleIntegration:search-box': SearchBox,
   BackToTop,
   Card,
   Text,
+  'Text:article': ArticleText,
   Media,
   Link,
   NavigationItem,
@@ -104,6 +110,7 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
         <ContentModuleProvider contentMapping={contentMapping}>
           <Component {...pageProps} />
         </ContentModuleProvider>

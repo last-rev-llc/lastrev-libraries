@@ -36,8 +36,7 @@ const NavLink = styled(Typography, {
     paddingLeft: theme.spacing(1),
 
     '&.active': {
-      // TODO: Move all hex colors to theme (IAS-85)
-      borderLeftColor: '#FF574A',
+      borderLeftColor: theme.palette.background.integralOrange,
       color: theme.palette.text.primary,
       fontWeight: 600
     }
@@ -53,8 +52,7 @@ const NavLink = styled(Typography, {
   },
 
   '& a': {
-    // TODO: Move all hex colors to theme (IAS-85)
-    color: '#4D7080',
+    color: theme.palette.midnight.A70,
     fontWeight: 500,
 
     '&:hover': {
@@ -86,8 +84,7 @@ const AccordionSummary = styled(MuiAccordionSummary)(({ theme }) => ({
   padding: 0,
   fontSize: 15,
   lineHeight: '18px',
-  // TODO: Move all hex colors to theme (IAS-85)
-  color: '#4D7080',
+  color: theme.palette.midnight.A70,
   fontWeight: 500,
 
   '&.Mui-expanded': {

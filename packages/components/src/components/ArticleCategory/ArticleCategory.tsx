@@ -46,12 +46,12 @@ const AccordionDetails = styled(MuiAccordionDetails)({
   padding: 0
 });
 
-const Button = styled(MuiButton)({
+const Button = styled(MuiButton)(({ theme }) => ({
   textTransform: 'none',
   padding: 0,
-  color: '#DC2D1F',
+  color: theme.palette.primary.dark,
   fontSize: '0.9375rem',
-});
+}));
 
 const OuterWrap = styled(Box)(({ theme }) => ({
   borderBottom: `1px solid ${alpha(theme.palette.text.primary, 0.3)}`,

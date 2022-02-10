@@ -32,7 +32,7 @@ export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot }: BreadcrumbsProps) 
                     }}
                     data-testid="Breadcrumbs-breadcrumbsRoot"
                   >
-                    <ChevronLeftIcon sx={{ fill: '#ff574a' }} fontSize="small" />
+                    <ChevronLeftIcon sx={{ fill: 'background.integralOrange' }} fontSize="small" />
                     {/* TODO: Use localization lookup for title (IAS-117) */}
                     {breadcrumbsRoot || 'Help Center'}
                   </Link>
@@ -64,8 +64,7 @@ const Root = styled(MuiBreadcrumbs, {
   },
 
   '& li:not([class*=separator]) a': {
-    // TODO: Move all hex colors to theme (IAS-85)
-    color: '#4D7080',
+    color: theme.palette.midnight.A70,
 
     '&:hover': {
       color: theme.palette.text.primary,

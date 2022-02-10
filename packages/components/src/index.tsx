@@ -1,4 +1,5 @@
 export { default as CollectionFiltered } from './components/CollectionFiltered';
+export { default as NavigationItem } from './components/NavigationItem';
 export { default as Article } from './components/Article';
 export { default as Quote } from './components/Quote';
 export { default as Table } from './components/Table';
@@ -7,3 +8,4 @@ export { default as Header } from './components/Header';
 export { default as Footer } from './components/Footer';
 export { default as PageGeneral } from './components/PageGeneral';
 export { default as theme } from './theme';
+export { default as SearchBox } from './components/SearchBox';

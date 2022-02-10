@@ -18,6 +18,8 @@ import {
 
 import * as Text from './Text';
 import * as Table from './Table';
+import * as CustomHero from './Hero';
+import * as CustomSection from './Section';
 import * as Quote from './Quote';
 // import * as Person from './Person';
 import * as Header from './Header';
@@ -52,19 +54,21 @@ Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloConte
 const extensions: GraphQlExtension[] = [
   Card,
   Collection,
-  Hero,
   Header,
   Footer,
   Link,
   NavigationItem,
   Page,
   Section,
+  CustomSection,
   Quote,
   // Person,
   Media,
   RichText,
   Text,
   Table,
+  Hero,
+  CustomHero,
   Article,
   CategoryArticle,
   ModuleIntegration

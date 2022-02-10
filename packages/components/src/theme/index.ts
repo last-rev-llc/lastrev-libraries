@@ -1,11 +1,14 @@
 import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
+import createCardVariants from './variants/createCardVariants';
+import createTextVariants from './variants/createTextVariants';
+import createSearchBoxVariants from './variants/createSearchBoxVariants';
 import { Mixins } from '@mui/material/styles/createMixins';
 import merge from 'lodash/merge';
 import camelCase from 'lodash/camelCase';
 
-import createCardVariants from './variants/createCardVariants';
+import createCollectionVariants from './variants/createCollectionVariants';
+import createHeroVariants from './variants/createHeroVariants';
 import createSectionVariants from './variants/createSectionVariants';
-import createTextVariants from './variants/createTextVariants';
 
 declare module '@mui/material/styles/createMixins' {
   interface Mixins {
@@ -22,6 +25,7 @@ declare module '@mui/material/styles/createPalette' {
     coolGrey: string;
     integralOrange: string;
     aquaPearl: string;
+    greenishBlue: string;
   }
 }
 
@@ -59,12 +63,14 @@ declare module '@mui/material/styles' {
 
   interface TypographyVariants {
     body3: React.CSSProperties;
+    time: React.CSSProperties;
   }
 }
 
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     body3: true;
+    time: true;
   }
 }
 
@@ -142,6 +148,16 @@ const baseTheme = {
       fontSize: '0.875rem',
       fontWeight: 400,
       lineHeight: '21px'
+    },
+    overline: {
+      fontSize: 12,
+      fontWeight: 600,
+      lineHeight: '18px'
+    },
+    time: {
+      color: '#335B6E',
+      fontSize: 15,
+      lineHeight: 1.2
     }
   },
   palette: {
@@ -169,10 +185,12 @@ const baseTheme = {
       neutralGrey: '#E0E6E9',
       coolGrey: '#E3F1F2',
       integralOrange: '#FF574A',
-      aquaPearl: '#68ABDD'
+      aquaPearl: '#68ABDD',
+      greenishBlue: '#1264A3'
     },
     midnight: {
       A100: '#00324A',
+      main: '#00324A',
       A90: '#1A475C',
       A80: '#335B6E',
       A70: '#4D7080',
@@ -184,7 +202,8 @@ const baseTheme = {
       A12: '#E0E6E9',
       A09: '#E8EDEF',
       A06: '#F0F3F4',
-      A03: '#F7F9FA'
+      A03: '#F7F9FA',
+      contrastText: '#FFFFFF'
     },
     yellow: {
       main: '#FFD12B',
@@ -222,7 +241,6 @@ const createSchemeTheme = (schemeKey?: string) => {
       components: {
         Header: {
           height: 100,
-          mobileMenuBreakpoint: 'md',
           styleOverrides: {
             contentContainer: {
               height: 100,
@@ -258,33 +276,52 @@ const createSchemeTheme = (schemeKey?: string) => {
             }
           }
         },
+        Hero: {
+          variants: createHeroVariants(baseSchemeTheme),
+        },
         Card: {
           variants: createCardVariants(baseSchemeTheme),
           styleOverrides: {
-            root: {}
+            root: {
+              backgroundColor: baseSchemeTheme.palette.background.default,
+
+              '& [class*="MuiTypography-root"]': {
+                color: baseSchemeTheme.palette.text.primary
+              },
+
+              '& [class*="MuiCardActions-root"] > :not(:first-of-type)': {
+                marginLeft: baseSchemeTheme.spacing(2)
+              }
+            }
           }
         },
         Collection: {
+          variants: createCollectionVariants(baseSchemeTheme),
+          defaultProps: {
+            maxWidth: 'xl'
+          },
           styleOverrides: {
             root: {
-              'maxWidth': 1280,
-              'margin': '0 auto',
               '[class*="Section-gridContainer"]': {
                 'display': 'grid',
                 'gridAutoRows': '1fr',
+
                 '[class*="Box-content"]': {
                   display: 'block'
                 }
               },
+
               '[class*="Section-gridItem"]': {
                 display: 'flex',
                 justifyContent: 'center',
                 flexBasis: '100%',
                 maxWidth: '100%',
                 height: '100%',
+
                 [baseSchemeTheme.breakpoints.up('md')]: {
                   flexBasis: '50%'
                 },
+
                 [baseSchemeTheme.breakpoints.up('lg')]: {
                   flexBasis: '33.333333%'
                 }
@@ -299,16 +336,21 @@ const createSchemeTheme = (schemeKey?: string) => {
         },
         CollectionCarousel: {},
         CollectionAccordion: {},
-        Hero: {
-          styleOverrides: {
-            root: {}
-          }
-        },
         Section: {
           variants: createSectionVariants(baseSchemeTheme),
           styleOverrides: {
+            root: {
+              '& > [class*="Section-backgroundMedia"]': {
+                zIndex: -1
+              },
+            },
+
             contentContainer: {
-              padding: baseSchemeTheme.spacing(3),
+              padding: baseSchemeTheme.spacing(3, 10),
+
+              [baseSchemeTheme.breakpoints.down('sm')]: {
+                padding: baseSchemeTheme.spacing(3)
+              }
             }
           }
         },
@@ -327,6 +369,12 @@ const createSchemeTheme = (schemeKey?: string) => {
                 lineHeight: '42px'
               }
             }
+          }
+        },
+        SearchBox: {
+          variants: createSearchBoxVariants(baseSchemeTheme),
+          styleOverrides: {
+            root: {}
           }
         },
         MuiContainer: {
@@ -366,6 +414,15 @@ const createSchemeTheme = (schemeKey?: string) => {
             }
           }
         },
+        MuiButton: {
+          styleOverrides: {
+            root: {
+              fontSize: 18,
+              fontWeight: 600,
+              lineHeight: '28px'
+            }
+          }
+        },
         MuiChip: {
           styleOverrides: {
             root: {
@@ -390,7 +447,7 @@ const createSchemeTheme = (schemeKey?: string) => {
 
             labelSmall: {
               fontSize: 12,
-              lineHeight: 1.3333,
+              lineHeight: 1.3333
             }
           }
         },

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Box } from '@mui/material';
-import Section, { SectionProps } from '@last-rev/component-library/dist/components/Section/Section';
+import Box from '@mui/material/Box';
+import Section from '@last-rev/component-library/dist/components/Section/Section';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
 import {
   mediaWithTextSectionMock,

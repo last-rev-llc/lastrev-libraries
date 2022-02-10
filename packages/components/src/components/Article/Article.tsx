@@ -38,6 +38,7 @@ export interface ArticleProps {
   breadcrumbs?: Array<LinkProps>;
   footerItems?: Array<any>;
   header?: any;
+  footer?: any;
   sidekickLookup?: any;
 }
 
@@ -45,6 +46,7 @@ export const Article = ({
   title,
   slug,
   header,
+  footer,
   featuredMedia,
   pubDate,
   summary,
@@ -64,7 +66,7 @@ export const Article = ({
     'datePublished': `${pubDate}`,
     'image': featuredMedia ? `${featuredMedia?.file?.url}` : '',
     'keywords': `${categories?.map((category) => category?.text).join(', ')}`,
-    'url': `https://www.integralads.com/${slug}`
+    'url': `${process.env.DOMAIN || 'https://www.integralads.com/'}${slug}`
   };
   return (
     <ErrorBoundary>
@@ -77,7 +79,7 @@ export const Article = ({
 
       {/* TODO: Create/add Topic Nav component
         * https://lastrev.atlassian.net/browse/IAS-96 */}
-      <Box p={2} sx={{ backgroundColor: '#E0E6E9' }}>
+      <Box p={2} sx={{ backgroundColor: 'background.neutralGrey' }}>
         <Container maxWidth={'xl'}>
           <Grid container>
             <Grid item xs={12}>
@@ -87,18 +89,19 @@ export const Article = ({
                     paddingBottom: 0.5,
                     '&:first-of-type': {
                       cursor: 'default',
-                      // TODO: Move all hex colors to theme (IAS-85)
-                      borderBottom: '2px solid #FF574A'
+                      borderBottom: '2px solid',
+                      borderBottomColor: 'background.integralOrange'
                     }
                   },
                   '& a:hover': {
-                    // TODO: Move all hex colors to theme (IAS-85)
-                    color: '#FF574A',
+                    color: 'background.integralOrange',
                     textDecoration: 'none',
                     transition: 'color 0.18s ease'
                   }
                 }}
               >
+                {/* TODO: get dynamically
+                  https://lastrev.atlassian.net/browse/IAS-96 */}
                 {[
                   'Advertiser + Agency Solutions',
                   'Product Guidance',
@@ -123,8 +126,7 @@ export const Article = ({
                       <ChevronLeftIcon
                         fontSize="small"
                         sx={{
-                          // TODO: Move all hex colors to theme (IAS-85)
-                          fill: '#ff574a',
+                          fill: 'background.integralOrange',
                           margin: '-2px 0 0 4px',
                           verticalAlign: 'top',
                           transform: 'rotate(-90deg)'
@@ -201,10 +203,7 @@ export const Article = ({
 
       {!disableBackToTop ? <BackToTop /> : null}
 
-      {/* TODO: Create/add Footer component
-        * https://lastrev.atlassian.net/browse/IAS-59 */}
-      {/* {footer ? <ContentModule {...(footer as any)} /> : null} */}
-      <Box p={2} sx={{ backgroundColor: '#00324A', textAlign: 'center', color: '#FFF' }}>Footer</Box>
+      {footer ? <ContentModule {...(footer as any)} /> : null}
     </ErrorBoundary>
   );
 };
