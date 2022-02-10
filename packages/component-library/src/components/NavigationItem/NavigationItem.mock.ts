@@ -6,9 +6,5 @@ export default (): NavigationItemProps => ({
   __typename: 'NavigationItem',
   href: lorem.word(),
   text: lorem.words(2),
-  subNavigation: [
-    { ...mockLink() },
-    { ...mockLink() },
-    { ...mockLink() }
-  ]
+  subNavigation: [{ ...mockLink() }, { ...mockLink() }, { ...mockLink() }]
 });

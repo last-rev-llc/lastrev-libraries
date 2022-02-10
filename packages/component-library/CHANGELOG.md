@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.3.8
+
+### Patch Changes
+
+- b99497c: Cleanup theme TS typings
+
 ## 0.3.7
 
 ### Patch Changes

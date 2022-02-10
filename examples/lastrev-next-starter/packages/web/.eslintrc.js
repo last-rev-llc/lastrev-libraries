@@ -1,4 +1,4 @@
 module.exports = {
-  "root": true,
-  "extends": "next"
-}
+  root: true,
+  extends: 'next'
+};

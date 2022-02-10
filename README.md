@@ -67,9 +67,10 @@ When changes are merged into main, public modules that have changesets associate
 
 The update script is available to update projects created from the Last Rev Next Starter to the latest version.
 The current script requires the following parameters:
- - `SOURCE_COMMIT`: This is the commit hash of the current version of the project that is being updated (e.g. `v1`).
- - `TARGET_COMMIT`: This is the commit hash of the target version that you want to update to (e.g. `main`).
- - `PROJECT_DIRECTORY`: This is the directory of the project that is being updated. It's the first argument that get's passed to the script.
+
+- `SOURCE_COMMIT`: This is the commit hash of the current version of the project that is being updated (e.g. `v1`).
+- `TARGET_COMMIT`: This is the commit hash of the target version that you want to update to (e.g. `main`).
+- `PROJECT_DIRECTORY`: This is the directory of the project that is being updated. It's the first argument that get's passed to the script.
 
 To run the command you need to update the target and source commits in the `scripts/update.sh` file and run the following command:
 
@@ -83,15 +84,16 @@ The process will update the project to the target version and create a commit wi
 
 ### Solving conflicts when updating
 
-During the update process the following steps are taken: 
- - A diff is created between the source and target commits on the starter project
- - The diff is applied to the project directory
- - The project is checked for conflicts
- - If there are conflicts, the user is prompted to resolve them through the code editor
- - After resolving the conflicts, the project is checked for conflicts again and if successful a commit is created with the changes
+During the update process the following steps are taken:
 
-Even if there are no conflicts the user needs to manually review the changed files to ensure that all changes look good. 
+- A diff is created between the source and target commits on the starter project
+- The diff is applied to the project directory
+- The project is checked for conflicts
+- If there are conflicts, the user is prompted to resolve them through the code editor
+- After resolving the conflicts, the project is checked for conflicts again and if successful a commit is created with the changes
 
->**As a final step remember to search and replace `@lrns/` with `@<app_name>/` globally in the project.**
+Even if there are no conflicts the user needs to manually review the changed files to ensure that all changes look good.
 
-*For more details about migrating and breaking changes take a look at the  [starter changelog](examples/lastrev-next-starter/CHANGELOG.md)*
+> **As a final step remember to search and replace `@lrns/` with `@<app_name>/` globally in the project.**
+
+_For more details about migrating and breaking changes take a look at the [starter changelog](examples/lastrev-next-starter/CHANGELOG.md)_

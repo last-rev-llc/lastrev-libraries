@@ -1,5 +1,3 @@
-
-
 Always save the changes to your schema.graphql file!
 
 # Expected Environment Variables
@@ -11,6 +9,7 @@ Always save the changes to your schema.graphql file!
 This module takes the contents of the `./src` directory and generates Typescript types and an SDK to be used in your app.
 
 # Usage
+
 ## Schema (schema.graphql)
 
 The GraphQL SDK code generation depends on an available Schema located in `schema.graphql` file.
@@ -25,7 +24,6 @@ yarn download:schema
 
 If the GraphQL server is not available, the existing file will be used for code generation.
 It is recommended to commit the changes to the schema, as the SDK will be generated from the latest version available.
-
 
 ## Queries and Mutations
 
