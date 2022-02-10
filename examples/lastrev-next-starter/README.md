@@ -41,3 +41,5 @@ yarn start
 ```bash
 yarn dev
 ```
+
+## Running Cypress tests
