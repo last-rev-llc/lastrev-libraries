@@ -51,7 +51,7 @@ describe('NavigationBar', () => {
 
     context('functions correctly', () => {
       describe('hover on NavigationItems', () => {
-        it('renders a correct sub-navigation items', () => {
+        it('renders with correct sub-navigation items', () => {
           mount(<NavigationBar {...mockedContentWithNavigationItems} />);
           cy.get('[data-testid=NavigationItem]').each((navItem, index) => {
             const item: NavigationItemProps = { ...mockedContentWithNavigationItems.items[index] };
