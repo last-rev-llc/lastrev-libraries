@@ -33,7 +33,7 @@ const nextConfig = {
     CONTENTFUL_DELIVERY_TOKEN: process.env.CONTENTFUL_DELIVERY_TOKEN,
     CONTENTFUL_PREVIEW_TOKEN: process.env.CONTENTFUL_PREVIEW_TOKEN,
     CONTENTFUL_ENV: process.env.CONTENTFUL_ENV,
-    DEPLOY_URL: process.env.DEPLOY_URL,
+    DEPLOY_URL: process.env.DEPLOY_URL
   },
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if

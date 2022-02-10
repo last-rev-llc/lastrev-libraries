@@ -5,7 +5,12 @@ import mockTheme from '../../theme/mock.theme';
 
 export const mockWithNavigationItems = (): NavigationBarProps => ({
   variant: 'NavigationBar-three-per-row',
-  items: [{ ...mockNavigationItem() }, { ...mockNavigationItem() }, { ...mockNavigationItem() }, { ...mockNavigationItem() }],
+  items: [
+    { ...mockNavigationItem() },
+    { ...mockNavigationItem() },
+    { ...mockNavigationItem() },
+    { ...mockNavigationItem() }
+  ],
   itemsVariant: 'standard-round',
   theme: [mockTheme],
   sidekickLookup: 'sidekick-lookup'
@@ -13,12 +18,7 @@ export const mockWithNavigationItems = (): NavigationBarProps => ({
 
 export default (): NavigationBarProps => ({
   variant: 'collection-three-per-row',
-  items: [
-    { ...mockLink() },
-    { ...mockLink() },
-    { ...mockLink() },
-    { ...mockLink() }
-  ],
+  items: [{ ...mockLink() }, { ...mockLink() }, { ...mockLink() }, { ...mockLink() }],
   itemsVariant: 'standard-round',
   theme: [mockTheme],
   sidekickLookup: 'sidekick-lookup'

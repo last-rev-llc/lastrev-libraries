@@ -1,8 +1,6 @@
 const path = require('path');
 
-const getCacheDirs = (constants) => [
-  path.normalize(`${constants.PUBLISH_DIR}/../../../node_modules/.cache`)
-];
+const getCacheDirs = (constants) => [path.normalize(`${constants.PUBLISH_DIR}/../../../node_modules/.cache`)];
 
 module.exports = {
   async onPreBuild({ constants, utils }) {
