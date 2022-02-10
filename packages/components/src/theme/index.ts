@@ -33,6 +33,7 @@ declare module '@mui/material/styles' {
   }
 
   interface Palette {
+    midnight: Palette['primary'];
     yellow: Palette['primary'];
     aqua: Palette['primary'];
     periwinkle: Palette['primary'];
@@ -41,6 +42,29 @@ declare module '@mui/material/styles' {
 
   interface PaletteColor {
     lighter?: string;
+    A100?: string;
+    A90?: string;
+    A80?: string;
+    A70?: string;
+    A60?: string;
+    A50?: string;
+    A40?: string;
+    A30?: string;
+    A20?: string;
+    A12?: string;
+    A09?: string;
+    A06?: string;
+    A03?: string;
+  }
+
+  interface TypographyVariants {
+    body3: React.CSSProperties;
+  }
+}
+
+declare module '@mui/material/Typography' {
+  interface TypographyPropsVariantOverrides {
+    body3: true;
   }
 }
 
@@ -113,6 +137,11 @@ const baseTheme = {
       fontSize: '1rem',
       fontWeight: 400,
       lineHeight: 1.5
+    },
+    body3: {
+      fontSize: '0.875rem',
+      fontWeight: 400,
+      lineHeight: '21px'
     }
   },
   palette: {
@@ -142,20 +171,20 @@ const baseTheme = {
       integralOrange: '#FF574A',
       aquaPearl: '#68ABDD'
     },
-    grey: {
-      100: '#00324A',
-      90: '#1A475C',
-      80: '#335B6E',
-      70: '#4D7080',
-      60: '#668492',
-      50: '#8099A5',
-      40: '#99ADB7',
-      30: '#B3C2C9',
-      20: '#CCD6DB',
-      12: '#E0E6E9',
-      9: '#E8EDEF',
-      6: '#F0F3F4',
-      3: '#F7F9FA'
+    midnight: {
+      A100: '#00324A',
+      A90: '#1A475C',
+      A80: '#335B6E',
+      A70: '#4D7080',
+      A60: '#668492',
+      A50: '#8099A5',
+      A40: '#99ADB7',
+      A30: '#B3C2C9',
+      A20: '#CCD6DB',
+      A12: '#E0E6E9',
+      A09: '#E8EDEF',
+      A06: '#F0F3F4',
+      A03: '#F7F9FA'
     },
     yellow: {
       main: '#FFD12B',
@@ -327,7 +356,13 @@ const createSchemeTheme = (schemeKey?: string) => {
         MuiLink: {
           styleOverrides: {
             root: {
-              color: baseSchemeTheme.palette.text.primary
+              color: baseSchemeTheme.palette.text.primary,
+              textDecoration: 'none',
+              textDecorationColor: 'currentColor',
+
+              '&:hover': {
+                textDecoration: 'underline'
+              }
             }
           }
         },
@@ -356,6 +391,39 @@ const createSchemeTheme = (schemeKey?: string) => {
             labelSmall: {
               fontSize: 12,
               lineHeight: 1.3333,
+            }
+          }
+        },
+        MuiTable: {
+          styleOverrides: {
+            root: {
+              margin: baseSchemeTheme.spacing(2, 0, 4)
+            }
+          }
+        },
+        MuiTableHeader: {
+          styleOverrides: {
+            root: {
+              paddingBottom: 0,
+              borderBottomColor: baseSchemeTheme.palette.midnight.A20,
+              borderBottomWidth: baseSchemeTheme.spacing(0.25)
+            }
+          }
+        },
+        MuiTableCell: {
+          styleOverrides: {
+            root: {
+              padding: baseSchemeTheme.spacing(1),
+              borderBottomColor: baseSchemeTheme.palette.midnight.A20,
+
+              '& [class*="MuiTypography-body1"]': {
+                ...baseSchemeTheme.typography.body3,
+                display: 'inline'
+              },
+
+              '&[class*="MuiTableCell-head"] [class*="MuiTypography-body1"]': {
+                fontWeight: 600
+              }
             }
           }
         }

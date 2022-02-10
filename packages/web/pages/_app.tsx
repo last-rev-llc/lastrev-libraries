@@ -58,6 +58,8 @@ const Article = dynamic(() => import('@ias/components/src/components/Article/Art
 
 const PageGeneral = dynamic(() => import('@ias/components/src/components/PageGeneral/PageGeneral'));
 
+const Table = dynamic(() => import('@ias/components/src/components/Table'));
+
 import '../styles/globals.css';
 
 const contentMapping: {
@@ -82,7 +84,8 @@ const contentMapping: {
   Hero,
   Page: PageGeneral,
   Article,
-  Quote
+  Quote,
+  Table
 };
 
 const clientSideEmotionCache = createEmotionCache();

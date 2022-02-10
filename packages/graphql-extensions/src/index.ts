@@ -17,6 +17,7 @@ import {
 } from '@last-rev/graphql-contentful-extensions';
 
 import * as Text from './Text';
+import * as Table from './Table';
 import * as Quote from './Quote';
 // import * as Person from './Person';
 import * as Header from './Header';
@@ -63,6 +64,7 @@ const extensions: GraphQlExtension[] = [
   Media,
   RichText,
   Text,
+  Table,
   Article,
   CategoryArticle,
   ModuleIntegration

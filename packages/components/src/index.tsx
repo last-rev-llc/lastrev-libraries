@@ -1,6 +1,7 @@
 export { default as CollectionFiltered } from './components/CollectionFiltered';
 export { default as Article } from './components/Article';
 export { default as Quote } from './components/Quote';
+export { default as Table } from './components/Table';
 export { default as Text } from './components/Text';
 export { default as Header } from './components/Header';
 export { default as Footer } from './components/Footer';

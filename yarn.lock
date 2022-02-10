@@ -1370,12 +1370,12 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@contentful/rich-text-from-markdown@^15.10.0":
-  version "15.11.2"
-  resolved "https://registry.yarnpkg.com/@contentful/rich-text-from-markdown/-/rich-text-from-markdown-15.11.2.tgz#853ba941a4507910abc67f00c9ced25c0def0150"
-  integrity sha512-E9MLw+W4M86URVM12foiF0T+NEgGm3yT94mAPTEdcPpRMh2RI+nLlBau8+H4xtopVL6Idb5/ozm130NGHS7cZA==
+"@contentful/rich-text-from-markdown@15.10.0":
+  version "15.10.0"
+  resolved "https://registry.yarnpkg.com/@contentful/rich-text-from-markdown/-/rich-text-from-markdown-15.10.0.tgz#50427785bbaeea5e224e1c3819c5c2f8bff23568"
+  integrity sha512-x6p8UiD6Eo5Jj0J18mcglizHRfdWBkRV9VVHQ2CLtMsvs52gF80up0eP+PTqMYjapzAVaH5UvR//wVRUEy1mfg==
   dependencies:
-    "@contentful/rich-text-types" "^15.11.1"
+    "@contentful/rich-text-types" "^15.10.0"
     lodash "^4.17.11"
     remark-parse "^6.0.3"
     unified "^7.1.0"
@@ -1387,7 +1387,7 @@
   dependencies:
     "@contentful/rich-text-types" "^15.11.1"
 
-"@contentful/rich-text-types@^15.0.0", "@contentful/rich-text-types@^15.11.1":
+"@contentful/rich-text-types@^15.0.0", "@contentful/rich-text-types@^15.10.0", "@contentful/rich-text-types@^15.11.1":
   version "15.11.1"
   resolved "https://registry.yarnpkg.com/@contentful/rich-text-types/-/rich-text-types-15.11.1.tgz#755e3efd5e0ac277d554e6f731ba9fdc1c45f6fe"
   integrity sha512-seO8Nl9cp894v7an6R8isX+HqYwVUesviGULTh/rIj2DCv2tXUU1GCqzSkt84XN6c6nbFYow9+Wzezkxx/IdIA==

@@ -9,6 +9,7 @@ const RichTextFragment = gql`
     icon
     iconPosition
   }
+
   fragment RichText_CollectionFragment on Collection {
     ...RichText_BaseContentFragment
     variant
@@ -68,6 +69,7 @@ const RichTextFragment = gql`
     #   # ...RichText_ArtDirectedMediaFragment
     # }
   }
+
   # This fragment is almost identical to the RichText_Fragment but skips Section
   # RichText_SectionFragment recursion is handled in RichText_SectionFragment
   fragment RichText_ContentSectionFragment on Content {
@@ -146,6 +148,7 @@ const RichTextFragment = gql`
       }
     }
   }
+
   fragment RichText_SectionTextFragment on Text {
     ...RichText_BaseContentFragment
     variant
@@ -155,6 +158,7 @@ const RichTextFragment = gql`
       ...RichText_SectionRichTextFragment
     }
   }
+
   fragment RichText_CardRichTextFragment on RichText {
     json
     links {
@@ -190,6 +194,13 @@ const RichTextFragment = gql`
       }
     }
   }
+
+  fragment RichText_TableFragment on Table {
+    richText {
+      ...RichText_Nested_RichTextFragment
+    }
+  }
+
   fragment RichText_RichTextFragment on RichText {
     id
     __typename
@@ -205,6 +216,7 @@ const RichTextFragment = gql`
         ...RichText_SectionFragment
         ...RichText_TextFragment
         ...RichText_MediaFragment
+        ...RichText_TableFragment
       }
       assets {
         ...RichText_MediaFragment
@@ -229,6 +241,7 @@ const RichTextFragment = gql`
       }
     }
   }
+
   fragment RichText_CardFragment on Card {
     ...RichText_BaseContentFragment
     variant

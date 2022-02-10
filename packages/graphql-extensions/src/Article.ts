@@ -143,7 +143,7 @@ export const mappers = {
           item.data.id = href;
         }
         return body;
-      },
+      }
     },
     Link: {
       href: async (item: any, _args: any, ctx: ApolloContext) => {

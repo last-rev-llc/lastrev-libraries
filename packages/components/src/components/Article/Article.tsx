@@ -12,6 +12,7 @@ import BackToTop from '@last-rev/component-library/dist/components/BackToTop/Bac
 import { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
 import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
+import { RichText } from '@last-rev/component-library/dist/components/Text/Text';
 
 import ArticleNav from '../ArticleNav';
 import ArticleHead from '../ArticleHead';
@@ -28,7 +29,7 @@ export interface ArticleProps {
   slug: string;
   pubDate?: string;
   summary?: string;
-  body?: any;
+  body?: RichText;
   featuredMedia?: MediaProps;
   categories?: Array<LinkProps>;
   relatedLinks?: Array<LinkProps>;
