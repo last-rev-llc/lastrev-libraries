@@ -10,6 +10,7 @@
       "outputs": ["coverage/**"]
     },
     "test:watch": {
+      "dependsOn": ["^build"],
       "cache": false,
       "outputs": []
     },

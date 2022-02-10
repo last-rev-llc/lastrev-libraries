@@ -54,7 +54,7 @@
     "not dead",
     "not IE 11"
   ],
-  "devDependencies": {
+  "dependencies": {
     "@manypkg/cli": "^0.19.1",
     "cross-env": "^7.0.2",
     "eslint": "^8.4.0",

@@ -77,6 +77,8 @@ To run the command you need to update the target and source commits in the `scri
  ./scripts/update.sh <project_directory>
 ```
 
+** `<project_directory`> must be an absolute path to the project directory.**
+
 The process will update the project to the target version and create a commit with all the changes from the project.
 
 ### Solving conflicts when updating
@@ -87,5 +89,9 @@ During the update process the following steps are taken:
  - The project is checked for conflicts
  - If there are conflicts, the user is prompted to resolve them through the code editor
  - After resolving the conflicts, the project is checked for conflicts again and if successful a commit is created with the changes
+
+Even if there are no conflicts the user needs to manually review the changed files to ensure that all changes look good. 
+
+** As a final step remember to replace `@lrns/` with `@<app_name>/` globally in the project.**
 
 *For more details about migrating and breaking changes take a look at the  [starter changelog](examples/lastrev-next-starter/CHANGELOG.md)*

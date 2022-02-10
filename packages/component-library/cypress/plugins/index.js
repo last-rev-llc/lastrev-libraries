@@ -37,10 +37,11 @@ module.exports = (on, config) => {
           'emotion-theming': toPath('../../node_modules/@emotion/react'),
         }
         webpackConfig.module.rules.push({
-          test: /\.css$/,
+          test: /\.(sa|sc|c)ss$/i,
           use: [
             'style-loader',
             'css-loader',
+            "sass-loader"
           ]
         })
         return webpackConfig
