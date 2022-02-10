@@ -9,7 +9,7 @@ node_modules
 **/out
 **/test-scripts
 
-**/coverage
+
 
 lerna-debug.log
 .env
@@ -22,3 +22,10 @@ lerna-debug.log
 **/.nyc_output
 **/stats.html
 **/cypress/videos
+**/cypress/screenshots
+**/coverage
+**/reports
+
+.turbo
+# Local Netlify folder
+.netlify

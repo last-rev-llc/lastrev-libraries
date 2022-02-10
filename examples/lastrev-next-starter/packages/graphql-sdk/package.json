@@ -6,15 +6,19 @@
     "dist"
   ],
   "scripts": {
-    "build": "run-s clean codegen build:prod",
+    "build": "run-s clean download:schema codegen build:prod",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "clean": "rimraf dist",
+    "install:rover": "yarn rover -V || node ../../node_modules/@apollo/rover/install",
+    "download:schema:dev": "yarn install:rover && nodemon -x \"yarn gql:healthcheck && rover graph introspect http://localhost:5000/graphql > schema.graphql || echo 'Failed to download schema'\" -w ../graphql-extensions/dist",
+    "download:schema": "yarn install:rover && yarn gql:healthcheck && rover graph introspect http://localhost:5000/graphql > schema.graphql || echo 'Failed to download schema'",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
-    "dev": "concurrently \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
+    "gql:healthcheck": "wait-on -c wait-on-config.js",
+    "dev": "concurrently \"yarn download:schema:dev\" \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch"
   },
   "peerDependencies": {
@@ -24,7 +28,7 @@
     "@types/react-router-dom": "^5.3.2",
     "graphql": "^15.5.1",
     "nodemon": "^2.0.15",
-    "react": "^17.0.1",
+    "react": "^17.0.2",
     "react-dom": "^17.0.1",
     "react-scripts": "^4.0.1",
     "tsc-watch": "^4.2.9"
@@ -44,17 +48,18 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.3.7",
-    "@lrns/graphql-extensions": "0.1.0",
-    "@lrns/graphql-runner": "0.1.0",
+    "@apollo/rover": "^0.4.1",
+    "@lrns/graphql-runner": "^0.1.0",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.2",
     "graphql": "^15.5.1",
     "nodemon": "^2.0.15",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "react-scripts": "^4.0.1",
     "rollup": "^2.6.1",
-    "tsc-watch": "^4.2.9"
+    "tsc-watch": "^4.2.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.1",
+    "wait-on": "^5.3.0"
   }
 }

@@ -29,6 +29,7 @@ module.exports = {
       test: /\.mjs$/,
       include: /node_modules/
     });
+
     return {
       ...config,
       resolve: {

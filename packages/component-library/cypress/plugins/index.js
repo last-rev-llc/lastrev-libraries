@@ -12,6 +12,9 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 
+const path = require('path');
+const toPath = (_path) => path.join(process.cwd(), _path);
+const webpack = require('webpack');
 /**
  * @type {Cypress.PluginConfig}
  */
@@ -19,10 +22,31 @@
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  // TODO: Figure out why this code-coverage is failing the tests
-  // require('@cypress/code-coverage/task')(on, config);
+  require('@cypress/code-coverage/task')(on, config);
   if (config.testingType === 'component') {
-    require('@cypress/react/plugins/babel')(on, config);
+    require('@cypress/react/plugins/babel')(on, config, {
+      setWebpackConfig: (webpackConfig) => {
+        webpackConfig.plugins = webpackConfig.plugins ?? [];
+        webpackConfig.plugins.push(new webpack.ProvidePlugin({
+          process: 'process/browser',
+        }));
+        webpackConfig.resolve.alias = {
+          ...webpackConfig.resolve.alias,
+          'react': toPath('../../node_modules/react'),
+          '@emotion/core': toPath('../../node_modules/@emotion/react'),
+          'emotion-theming': toPath('../../node_modules/@emotion/react'),
+        }
+        webpackConfig.module.rules.push({
+          test: /\.(sa|sc|c)ss$/i,
+          use: [
+            'style-loader',
+            'css-loader',
+            "sass-loader"
+          ]
+        })
+        return webpackConfig
+      }
+    });
   }
   return config;
 };

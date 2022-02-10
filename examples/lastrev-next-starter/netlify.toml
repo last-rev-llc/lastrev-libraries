@@ -1,6 +1,6 @@
 [build]
-  publish = "packages/web/out"
-  command = "yarn build:prod"
+  publish = "packages/web/.next"
+  command = "yarn build"
 
 [dev]
   command = "yarn dev"
@@ -9,3 +9,17 @@
   directory = "packages/functions/src"
   external_node_modules = ["express"]
   node_bundler = "esbuild"
+
+[[plugins]]
+  package = "./packages/cache-netlify-plugin"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+  
+[[plugins]]
+  package = "netlify-plugin-cypress"
+  [plugins.inputs]
+    record = true 
+    start = "yarn percy exec:start"
+    configFile = "packages/web/cypress.json"

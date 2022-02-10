@@ -1,10 +1,9 @@
-require('dotenv').config();
-
+const path = require('path')
 module.exports = {
   client: {
     service: {
       name: 'graphql',
-      url: process.env.GRAPHQL_SERVER_URL || 'http://localhost:5000/graphql'
+      localSchemaFile: path.resolve(__dirname, './schema.graphql')
     },
     excludes: ['**/generated/**']
   }

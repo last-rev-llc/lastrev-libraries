@@ -7,7 +7,7 @@ const timeout = process.env.GRAPHQL_SERVER_TIMEOUT ? parseInt(process.env.GRAPHQ
 module.exports = {
   delay: 5000,
   interval: 5000,
-  verbose: true,
+  verbose: false,
   strictSSL: false,
   followRedirect: false,
   timeout,

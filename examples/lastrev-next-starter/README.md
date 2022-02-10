@@ -20,7 +20,7 @@ yarn gql:dev
 
 ## Building the app
 
-First, make sure that the [graphql server has been started](#starting-the-graphql-server-in-dev-mode).
+Ensure you have the appropiate environment variables set.
 
 ```bash
 yarn build

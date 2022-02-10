@@ -1,10 +1,9 @@
 module.exports = {
   extends: [
-    'airbnb',
     'plugin:jsx-a11y/recommended',
     'prettier',
-    'prettier/react',
-    'plugin:prettier/recommended' // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array
+    'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array,
+    'plugin:@next/next/recommended'
   ],
   plugins: ['jsx-a11y', 'prettier'],
   env: {

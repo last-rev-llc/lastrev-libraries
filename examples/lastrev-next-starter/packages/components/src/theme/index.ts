@@ -1,36 +1,10 @@
-import { responsiveFontSizes } from '@mui/material/styles';
-import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
+import { responsiveFontSizes, createTheme, ThemeOptions } from '@mui/material/styles';
 import createCardVariants from './variants/createCardVariants';
 import createTextVariants from './variants/createTextVariants';
-import { Mixins } from '@mui/material/styles/createMixins';
 import merge from 'lodash/merge';
 import camelCase from 'lodash/camelCase';
-// import { ThemeOptions } from '@mui/material/styles';
-// import { createSchemePalette } from './schemes/utils/paletteColors';
-// import { getPaletteAccents } from './schemes/utils/accentColors';
-// import colorSchemes from './schemes/colors';
-declare module '@mui/material/styles/createMixins' {
-  interface Mixins {
-    // declare any custom mixins here - Example Below
-    // container: (theme: Theme, options?: any) => CSSProperties;
-  }
-}
 
-declare module '@mui/material/styles' {
-  // eslint-disable-next-line
-  interface Theme {
-    mixins: Mixins;
-  }
-}
-declare module '@mui/material/styles' {
-  // eslint-disable-next-line
-  interface Theme {
-    scheme?: string;
-    createScheme: (scheme: string) => Theme;
-  }
-}
-
-const baseTheme = {
+const baseTheme: ThemeOptions = {
   spacing: 8,
   shape: {
     borderRadius: 0
@@ -44,13 +18,6 @@ const baseTheme = {
       lg: 1200,
       xl: 1536
     }
-  },
-  mixins: {
-    // Add any custom mixins here - Example Below
-    // container: (theme: Theme, options: { noGutters?: boolean; maxWidth?: string } = {}) => ({
-    //   ...theme.mixins.containerWrap(theme, { maxWidth: options?.maxWidth }),
-    //   ...theme.mixins.responsiveContainerSpacing(theme, { noGutters: options?.noGutters })
-    // })
   },
   typography: {
     // Customize add and/or remove as necesary
@@ -164,9 +131,9 @@ const baseTheme = {
 };
 
 const createSchemeTheme = (schemeKey?: string) => {
-  const baseSchemeTheme = createAppTheme(baseTheme as any);
+  const baseSchemeTheme = createTheme(baseTheme);
 
-  const schemeTheme = createAppTheme(
+  const schemeTheme = createTheme(
     merge({ scheme: camelCase(schemeKey) }, baseSchemeTheme, {
       createSchemeTheme,
       components: {
@@ -291,5 +258,4 @@ const createSchemeTheme = (schemeKey?: string) => {
 };
 
 const theme = createSchemeTheme();
-
 export default theme;

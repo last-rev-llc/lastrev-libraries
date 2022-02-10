@@ -9,7 +9,7 @@
     "dev": "cross-env NODE_ENV=development rollup -cw",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "lint": "tslint --project tsconfig.json",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch"
   },
   "devDependencies": {

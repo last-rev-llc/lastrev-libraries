@@ -1,7 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['@lrns/components']);
+const withTM = require('next-transpile-modules')(['@lrns/components', '@last-rev/component-library']);
 
 // Allow bundle analysis via ANALYZE_BUNDLE env variable
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -12,7 +12,8 @@ const nextConfig = {
   /**
    * @type {import('next').NextConfig}
    */
-  swcMinify: true,
+  // Disabled due to error https://github.com/vercel/next.js/issues/30429
+  // swcMinify: true,
   i18n: {
     // TODO: generate these and read from that
     locales: ['en-US'],
@@ -31,7 +32,8 @@ const nextConfig = {
     CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
     CONTENTFUL_DELIVERY_TOKEN: process.env.CONTENTFUL_DELIVERY_TOKEN,
     CONTENTFUL_PREVIEW_TOKEN: process.env.CONTENTFUL_PREVIEW_TOKEN,
-    CONTENTFUL_ENV: process.env.CONTENTFUL_ENV
+    CONTENTFUL_ENV: process.env.CONTENTFUL_ENV,
+    DEPLOY_URL: process.env.DEPLOY_URL,
   },
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if

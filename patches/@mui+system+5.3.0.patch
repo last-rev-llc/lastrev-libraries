@@ -1,0 +1,127 @@
+diff --git a/node_modules/@mui/system/createStyled.js b/node_modules/@mui/system/createStyled.js
+index 99d013b..68197f1 100644
+--- a/node_modules/@mui/system/createStyled.js
++++ b/node_modules/@mui/system/createStyled.js
+@@ -24,8 +24,8 @@ var _styleFunctionSx = _interopRequireDefault(require("./styleFunctionSx"));
+ var _propsToClassKey = _interopRequireDefault(require("./propsToClassKey"));
+ 
+ const _excluded = ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"],
+-      _excluded2 = ["theme"],
+-      _excluded3 = ["theme"];
++  _excluded2 = ["theme"],
++  _excluded3 = ["theme"];
+ 
+ function isEmpty(obj) {
+   return Object.keys(obj).length === 0;
+@@ -106,18 +106,18 @@ function createStyled(input = {}) {
+       skipSx: inputSkipSx,
+       overridesResolver
+     } = inputOptions,
+-          options = (0, _objectWithoutPropertiesLoose2.default)(inputOptions, _excluded); // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
++      options = (0, _objectWithoutPropertiesLoose2.default)(inputOptions, _excluded); // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
+ 
+     const skipVariantsResolver = inputSkipVariantsResolver !== undefined ? inputSkipVariantsResolver : componentSlot && componentSlot !== 'Root' || false;
+     const skipSx = inputSkipSx || false;
+     let label;
+ 
+-    if (process.env.NODE_ENV !== 'production') {
+-      if (componentName) {
+-        label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+-      }
++
++    if (componentName) {
++      label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+     }
+ 
++
+     let shouldForwardPropOption = shouldForwardProp;
+ 
+     if (componentSlot === 'Root') {
+@@ -142,7 +142,7 @@ function createStyled(input = {}) {
+           let {
+             theme: themeInput
+           } = _ref,
+-              other = (0, _objectWithoutPropertiesLoose2.default)(_ref, _excluded2);
++            other = (0, _objectWithoutPropertiesLoose2.default)(_ref, _excluded2);
+           return stylesArg((0, _extends2.default)({
+             theme: isEmpty(themeInput) ? defaultTheme : themeInput
+           }, other));
+@@ -196,7 +196,7 @@ function createStyled(input = {}) {
+           let {
+             theme: themeInput
+           } = _ref2,
+-              other = (0, _objectWithoutPropertiesLoose2.default)(_ref2, _excluded3);
++            other = (0, _objectWithoutPropertiesLoose2.default)(_ref2, _excluded3);
+           return styleArg((0, _extends2.default)({
+             theme: isEmpty(themeInput) ? defaultTheme : themeInput
+           }, other));
+@@ -205,20 +205,20 @@ function createStyled(input = {}) {
+ 
+       const Component = defaultStyledResolver(transformedStyleArg, ...expressionsWithDefaultTheme);
+ 
+-      if (process.env.NODE_ENV !== 'production') {
+-        let displayName;
+ 
+-        if (componentName) {
+-          displayName = `${componentName}${componentSlot || ''}`;
+-        }
++      let displayName;
+ 
+-        if (displayName === undefined) {
+-          displayName = `Styled(${(0, _utils.getDisplayName)(tag)})`;
+-        }
++      if (componentName) {
++        displayName = `${componentName}${componentSlot || ''}`;
++      }
+ 
+-        Component.displayName = displayName;
++      if (displayName === undefined) {
++        displayName = `Styled(${(0, _utils.getDisplayName)(tag)})`;
+       }
+ 
++      Component.displayName = displayName;
++
++
+       return Component;
+     };
+ 
+diff --git a/node_modules/@mui/system/esm/createStyled.js b/node_modules/@mui/system/esm/createStyled.js
+index 4af7efe..afdc48e 100644
+--- a/node_modules/@mui/system/esm/createStyled.js
++++ b/node_modules/@mui/system/esm/createStyled.js
+@@ -93,12 +93,11 @@ export default function createStyled(input = {}) {
+     const skipSx = inputSkipSx || false;
+     let label;
+ 
+-    if (process.env.NODE_ENV !== 'production') {
+-      if (componentName) {
+-        label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+-      }
++    if (componentName) {
++      label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+     }
+ 
++
+     let shouldForwardPropOption = shouldForwardProp;
+ 
+     if (componentSlot === 'Root') {
+diff --git a/node_modules/@mui/system/modern/createStyled.js b/node_modules/@mui/system/modern/createStyled.js
+index d6523a1..b8865f9 100644
+--- a/node_modules/@mui/system/modern/createStyled.js
++++ b/node_modules/@mui/system/modern/createStyled.js
+@@ -91,12 +91,11 @@ export default function createStyled(input = {}) {
+     const skipSx = inputSkipSx || false;
+     let label;
+ 
+-    if (process.env.NODE_ENV !== 'production') {
+-      if (componentName) {
+-        label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+-      }
++    if (componentName) {
++      label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
+     }
+ 
++
+     let shouldForwardPropOption = shouldForwardProp;
+ 
+     if (componentSlot === 'Root') {
