@@ -87,6 +87,7 @@ const Section = (inProps: SectionProps) => {
                     ...styles?.gridItem,
                     ...itemStyle
                   }}
+                  data-testid="Section-ContentItem"
                 >
                   <ContentModule {...content} />
                 </GridItem>

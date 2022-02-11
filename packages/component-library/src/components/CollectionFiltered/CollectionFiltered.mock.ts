@@ -15,7 +15,7 @@ const topicOption = (topic?: string) => ({ label: topic ? topic : faker.lorem.wo
 
 const tagOption = (tag: string = faker.lorem.word()) => ({ label: tag, value: tag });
 
-const allOptions = {
+export const allOptions = {
   "topics": [
     topicOption('Topic One'),
     topicOption('Topic Two'),
@@ -61,7 +61,7 @@ const filters = [
 
 const settings = (): Settings => ({ filters, limit: 2 });
 
-const collectionFilteredMock = (options: Options = {}): CollectionFilteredProps => ({
+export const collectionFilteredMock = (options: Options = {}, fetchItems: CollectionFilteredProps['fetchItems'] = () => Promise.resolve({ items, options, allOptions })): CollectionFilteredProps => ({
   __typename: 'Collection',
   id: 'xyz',
   variant: 'filtered',
@@ -70,8 +70,8 @@ const collectionFilteredMock = (options: Options = {}): CollectionFilteredProps 
   theme: [mockTheme],
   settings: settings(),
   filter: defaultFilter(),
-  options: noOptions,
-  fetchItems: () => Promise.resolve({ items, options, allOptions }),
+  options,
+  fetchItems,
   onClearFilter: () => {},
   background: mediaMock(),
   itemsSpacing: 2,
@@ -82,9 +82,8 @@ const collectionFilteredMock = (options: Options = {}): CollectionFilteredProps 
 
 export const noOptionalPropsMock = {
   __typename: 'Collection',
-  id: 'xyz',
-  variant: 'filtered',
-  theme: [mockTheme]
+  id: 'noOptionalProps',
+  variant: 'filtered'
 } as CollectionFilteredProps;
 
 export const noOptionsMock = collectionFilteredMock(noOptions);
