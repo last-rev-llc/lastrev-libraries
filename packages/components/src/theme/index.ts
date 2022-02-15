@@ -1,7 +1,7 @@
 import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
 import createCardVariants from './variants/createCardVariants';
 import createTextVariants from './variants/createTextVariants';
-import createSearchBoxVariants from './variants/createSearchBoxVariants';
+import createAutocompleteBoxVariants from './variants/createAutocompleteBoxVariants';
 import { Mixins } from '@mui/material/styles/createMixins';
 import merge from 'lodash/merge';
 import camelCase from 'lodash/camelCase';
@@ -257,7 +257,7 @@ const createSchemeTheme = (schemeKey?: string) => {
             }
           }
         },
-        
+
         Text: {
           variants: createTextVariants(baseSchemeTheme),
           styleOverrides: {
@@ -354,6 +354,13 @@ const createSchemeTheme = (schemeKey?: string) => {
             }
           }
         },
+        AutocompleteBox: {
+          variants: createAutocompleteBoxVariants(baseSchemeTheme),
+          styleOverrides: {
+            root: {}
+          }
+        },
+
         // MUI
         MuiTypography: {
           styleOverrides: {
@@ -369,12 +376,6 @@ const createSchemeTheme = (schemeKey?: string) => {
                 lineHeight: '42px'
               }
             }
-          }
-        },
-        SearchBox: {
-          variants: createSearchBoxVariants(baseSchemeTheme),
-          styleOverrides: {
-            root: {}
           }
         },
         MuiContainer: {

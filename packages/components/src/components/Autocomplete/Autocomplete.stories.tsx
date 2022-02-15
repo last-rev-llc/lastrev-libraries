@@ -4,7 +4,7 @@ import Autocomplete, { AutocompleteProps } from './Autocomplete';
 import AutocompleteMock from './Autocomplete.mock';
 
 export default {
-  title: 'Modules / SearchBox / Autocomplete',
+  title: 'Modules / Search / Autocomplete',
   component: Autocomplete,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => <Box>{storyFn()}</Box>

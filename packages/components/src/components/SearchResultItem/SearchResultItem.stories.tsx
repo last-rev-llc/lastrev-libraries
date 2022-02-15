@@ -4,7 +4,7 @@ import SearchResultItem, { SearchResultItemProps } from './SearchResultItem';
 import SearchResultItemMock from './SearchResultItem.mock';
 
 export default {
-  title: 'Modules / SearchBox / SearchResultItem',
+  title: 'Modules / Search / SearchResultItem',
   component: SearchResultItem,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => <Box>{storyFn()}</Box>

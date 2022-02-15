@@ -11,18 +11,21 @@ export const heightMediumHeroVariant = (theme: Theme) => ({
       paddingTop: theme.spacing(1.5),
     },
 
-    '& .MuiGrid-container': {
-      justifyContent: 'center'
-    },
+      // TODO: Create variant for centered content? (homepage)
+      // '& .MuiGrid-container': {
+      //   justifyContent: 'center'
+      // },
 
-    '& .MuiTypography-body1': {
-      ...theme.typography.body2
-    },
+      '& .MuiTypography-body1': {
+        ...theme.typography.body2
+      },
 
-    '& .MuiTypography-root': {
-      textAlign: 'center',
+      '& .MuiTypography-root': {
+      // TODO: Create variant for centered content? (homepage)
+      // textAlign: 'center',
 
       '& .MuiLink-root': {
+        textDecoration: 'underline',
         textDecorationColor: 'currentColor',
 
         '&:hover': {

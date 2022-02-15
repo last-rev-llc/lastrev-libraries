@@ -7,5 +7,6 @@ export { default as Text } from './components/Text';
 export { default as Header } from './components/Header';
 export { default as Footer } from './components/Footer';
 export { default as PageGeneral } from './components/PageGeneral';
-export { default as theme } from './theme';
 export { default as SearchBox } from './components/SearchBox';
+export { default as AutocompleteBox } from './components/AutocompleteBox';
+export { default as theme } from './theme';

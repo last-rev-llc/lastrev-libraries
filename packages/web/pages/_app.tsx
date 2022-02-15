@@ -60,9 +60,12 @@ const Article = dynamic(() => import('@ias/components/src/components/Article/Art
 const PageGeneral = dynamic(() => import('@ias/components/src/components/PageGeneral/PageGeneral'));
 
 const Table = dynamic(() => import('@ias/components/src/components/Table'));
+
 const ArticleText = dynamic(() => import('@ias/components/src/components/Text'));
 
 const SearchBox = dynamic(() => import('@ias/components/src/components/SearchBox'));
+
+const AutocompleteBox = dynamic(() => import('@ias/components/src/components/AutocompleteBox'));
 
 import '../styles/globals.css';
 
@@ -80,6 +83,7 @@ const contentMapping: {
   'Collection:carousel-small': CollectionCarousel,
   'Collection:navigation-bar': NavigationBar,
   'ModuleIntegration:search-box': SearchBox,
+  'ModuleIntegration:autocomplete-search-box': AutocompleteBox,
   BackToTop,
   Card,
   Text,

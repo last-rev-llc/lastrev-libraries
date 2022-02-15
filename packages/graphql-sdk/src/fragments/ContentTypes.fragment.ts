@@ -37,6 +37,7 @@ export const ContentTypes_Fragments = gql`
     ...RichText_TextFragment
     ...Card_Base
     ...Collection_Base
+    ...ModuleIntegration_Base
   }
 
   fragment Text_Base on Text {
