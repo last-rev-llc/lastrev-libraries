@@ -171,6 +171,71 @@ export const backgroundMock = {
   }
 };
 
+export const heightShortMock = {
+  __typename: 'Hero',
+  id: '681xn0qMZPBXe2PY6ziYgj',
+  sidekickLookup: {
+    internalTitle: {
+      contentId: '681xn0qMZPBXe2PY6ziYgj',
+      contentTypeId: 'hero',
+      fieldName: 'internalTitle'
+    },
+    variant: {
+      contentId: '681xn0qMZPBXe2PY6ziYgj',
+      contentTypeId: 'hero',
+      fieldName: 'variant'
+    },
+    title: {
+      contentId: '681xn0qMZPBXe2PY6ziYgj',
+      contentTypeId: 'hero',
+      fieldName: 'title'
+    },
+    subtitle: {
+      contentId: '681xn0qMZPBXe2PY6ziYgj',
+      contentTypeId: 'hero',
+      fieldName: 'subtitle'
+    },
+    contentHeight: {
+      contentId: '681xn0qMZPBXe2PY6ziYgj',
+      contentTypeId: 'hero',
+      fieldName: 'contentHeight'
+    },
+    image: {
+      contentId: '681xn0qMZPBXe2PY6ziYgj',
+      contentTypeId: 'hero',
+      fieldName: 'image'
+    },
+    contentId: '681xn0qMZPBXe2PY6ziYgj',
+    contentTypeId: 'hero'
+  },
+  variant: 'Height - Short',
+  internalTitle: 'Advertiser + Agency Solutions Hero',
+  title: 'Advertiser + Agency Solutions',
+  subtitle: 'Lorem ipsum dolor sit amet, vitae sem maximu consectetur adipiscing elit.',
+  backgroundColor: null,
+  contentWidth: null,
+  contentHeight: 'md',
+  background: null,
+  body: null,
+  image: [
+    {
+      id: '4UPgQvvkfI2YZVe7jT87rY',
+      __typename: 'Media',
+      sidekickLookup: {
+        contentId: '4UPgQvvkfI2YZVe7jT87rY'
+      },
+      title: 'Screen Shot 2021-12-12 at 5.25.48 PM',
+      variant: 'image',
+      file: {
+        url: '//images.ctfassets.net/o1orzsgogjpz/4UPgQvvkfI2YZVe7jT87rY/9c2f196fd3c35942d4f7cf5f0ec602cf/Screen_Shot_2021-12-12_at_5.25.48_PM.png',
+        extension: null,
+        fileName: 'Screen_Shot_2021-12-12_at_5.25.48_PM.png'
+      }
+    }
+  ],
+  actions: null
+};
+
 export const heightMediumMock = {
   id: '6hdImKPtzJI2dn7nhezT1i',
   __typename: 'Hero',

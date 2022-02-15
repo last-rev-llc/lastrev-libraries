@@ -19,3 +19,5 @@ lerna-debug.log
 
 .DS_Store
 .netlify
+
+**/storybook-static

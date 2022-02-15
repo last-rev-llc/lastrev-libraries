@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Hero, { HeroProps } from '@last-rev/component-library/dist/components/Hero/Hero';
-import heroMock, { productMock, solutionMock, backgroundMock, heightMediumMock } from './Hero.mock';
+import heroMock, { productMock, solutionMock, backgroundMock, heightMediumMock, heightShortMock } from './Hero.mock';
 
 export default {
   title: 'Modules / Hero',
@@ -14,7 +14,7 @@ export default {
       name: 'Variant',
       control: {
         type: 'inline-radio',
-        options: ['default', 'gradient-background']
+        options: ['default', 'gradient-background', 'Height - Short']
       },
       table: {
         defaultValue: { summary: 'standard' }
@@ -52,3 +52,6 @@ BackgroundOnly.args = { ...backgroundMock };
 
 export const HeightMedium = Template.bind({});
 HeightMedium.args = { ...heightMediumMock };
+
+export const HeightShort = Template.bind({});
+HeightShort.args = { ...heightShortMock };

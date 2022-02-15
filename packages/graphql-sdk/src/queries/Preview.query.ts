@@ -12,7 +12,7 @@ export const Preview_Query = gql`
       ...Page_Base
       ...Header_Base
       ...Footer_Base
-      #...Hero_Base # Conflicts with image array vs single
+      ...Hero_Base
       ...Section_Base
       ...Collection_Base
       ...Media_Base

@@ -13,7 +13,8 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "cypress:open": "cypress open-ct",
-    "test:e2e": "cross-env NODE_ENV=test cypress run-ct"
+    "test:e2e": "cross-env NODE_ENV=test cypress run-ct",
+    "postinstall": "cd ../../ && yarn postinstall"
   },
   "dependencies": {
     "@algolia/autocomplete-js": "^1.5.1",
