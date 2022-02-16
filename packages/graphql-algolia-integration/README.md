@@ -28,11 +28,11 @@ Configuring the Algolia integration consists of two steps:
 2. In your project's `graphql-extensions` package, import the algolia integration `typeDefs` and merge them with your other typeDefs.
 
 ```typescript
-import * as Algolia from '@last-rev/graphql-algolia-integration';
+import { typeDefs } from '@last-rev/graphql-algolia-integration';
 
 const extensions: GraphQlExtension[] = [
   //... the rest of your extensions
-  Algolia
+  Algolia : { typeDefs }
 ];
 ```
 
