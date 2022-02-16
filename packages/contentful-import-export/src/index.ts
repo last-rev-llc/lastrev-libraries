@@ -1,6 +1,7 @@
 import exportEnvironment from './export';
 import importEnvironment from './import';
 import { CopyEnvironmentParams, ConnectionParams } from './types';
+import logger from 'loglevel';
 
 const getEnvString = (params: ConnectionParams): string => {
   return `${params.spaceId}:${params.environmentId}`;
@@ -26,7 +27,7 @@ const copyEnvironment = async ({
 }: CopyEnvironmentParams): Promise<void> => {
   const exportResults = await exportEnvironment(exportParams, skipEntries, skipAssets, skipContentTypes);
   const { hadErrors } = await importEnvironment(importParams, exportResults, skipEntries, skipAssets, skipContentTypes);
-  console.log(
+  logger.info(
     `Copied ${getItemsCopied(skipEntries, skipAssets)} from ${getEnvString(exportParams)} to ${getEnvString(
       importParams
     )}${hadErrors ? ' with Errors. Please see error log file for details.' : ' with no errors.'}`

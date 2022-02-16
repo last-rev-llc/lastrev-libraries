@@ -46,11 +46,26 @@ const baseDefs = gql`
     variant: String
   }
 
+  type Locales {
+    default: String!
+    available: [String!]!
+  }
+
+  input ContentsFilter {
+    contentTypes: [String]
+    ids: [String]
+    locale: String
+    preview: Boolean
+    displayType: String
+  }
+
   type Query {
     page(path: String!, locale: String, preview: Boolean, site: String): Content
     paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
-    content(id: String!, locale: String, preview: Boolean): Content
+    content(id: String!, locale: String, preview: Boolean, displayType: String): Content
+    contents(filter: ContentsFilter!): [Content]
     sitemap(root: String!, locales: [String!], preview: Boolean, site: String): Sitemap
+    availableLocales: Locales
   }
 
   type PagePathParam {

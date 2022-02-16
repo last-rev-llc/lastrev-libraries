@@ -31,7 +31,7 @@ export const createVercelHandler = (config: LastRevAppConfig, path: string) => {
     await server.start();
 
     const handler = server.createHandler({ path });
-    logger.debug(timer.end());
+    logger.trace(timer.end());
     handler(req, res);
   };
 };

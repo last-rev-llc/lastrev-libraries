@@ -36,7 +36,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
           })()
         )
       );
-      logger.debug(timer.end());
+      logger.trace(timer.end());
       return out;
     };
   };
@@ -57,7 +57,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
           })()
         )
       );
-      logger.debug(timer.end());
+      logger.trace(timer.end());
       return out;
     };
   };
@@ -105,7 +105,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
           }
         })
       );
-      logger.debug(timer.end());
+      logger.trace(timer.end());
       return out;
     } catch (err: any) {
       console.error('Unable to fetch content types using FS loader:', err.message, config.contentful.env);

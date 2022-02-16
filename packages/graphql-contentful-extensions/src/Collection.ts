@@ -5,6 +5,7 @@ import { camelCase, toUpper } from 'lodash';
 
 import { collectOptions } from './utils/collectOptions';
 import { queryContentful } from './utils/queryContentful';
+import logger from 'loglevel';
 
 const pascalCase = (str: string) => camelCase(str).replace(/^(.)/, toUpper);
 const COLLECTION_ITEM_TYPES = ['Card', 'Link', 'Media', 'Section', 'NavigationItem'];
@@ -78,7 +79,7 @@ export const mappers: any = {
             );
           }
         } catch (error) {
-          console.log('Collection:items:error', error);
+          logger.error('Collection:items:error', error);
         }
         return items;
       },
@@ -91,7 +92,6 @@ export const mappers: any = {
           // Need all to generate the possible options for all items. Not just the current page.
           if (contentType) {
             items = await queryContentful({ contentType, filters, filter, ctx });
-            console.log('ID', JSON.stringify({ collection, contentType }));
             const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
               id: contentType,
               preview: !!ctx.preview
@@ -118,7 +118,7 @@ export const mappers: any = {
             };
           }
         } catch (error) {
-          console.log('error', error);
+          logger.error('error', error);
         }
 
         return items;

@@ -113,7 +113,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
               decorators: true,
               dynamicImport: true
             },
-            externalHelpers: true,
+            externalHelpers: false,
             target: 'es2016'
           }
         })

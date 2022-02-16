@@ -1,20 +1,17 @@
 import { GraphQLScalarType } from 'graphql';
 import { Kind } from 'graphql/language';
-import { ContentType } from 'contentful';
+import { ContentType, Entry } from 'contentful';
 import GraphQLJSON from 'graphql-type-json';
 import getContentResolvers from './getContentResolvers';
-import fieldResolver from './fieldResolver';
-import capitalizeFirst from '../utils/capitalizeFirst';
-import { merge, mapValues } from 'lodash';
+import fieldsResolver from './fieldsResolver';
+import getTypeName from '../utils/getTypeName';
+
+import merge from 'lodash/merge';
+import isError from 'lodash/isError';
+
 import { ApolloContext, Mappers, TypeMappings } from '@last-rev/types';
 import buildSitemapFromEntries from '../utils/buildSitemapFromEntries';
-
-export const fieldsResolver = (type: string, fields: string[], mappers: Mappers) =>
-  fields.reduce((accum: any, field: string) => {
-    const additional =
-      mappers && mappers[type] && mappers[type][type] ? mapValues(mappers[type][type], () => fieldResolver(type)) : {};
-    return { ...accum, [field]: fieldResolver(type), ...additional };
-  }, {});
+import logger from 'loglevel';
 
 const createResolvers = ({
   contentTypes,
@@ -63,14 +60,49 @@ const createResolvers = ({
       },
       content: async (
         _: any,
-        { id, locale, preview = false }: { id?: string; locale?: string; preview?: boolean },
+        {
+          id,
+          locale,
+          preview = false,
+          displayType
+        }: { id?: string; locale?: string; preview?: boolean; displayType?: string },
         ctx: ApolloContext
       ) => {
         if (!id) throw new Error('MissingArgumentId');
         ctx.preview = preview;
         ctx.locale = locale || ctx.defaultLocale;
+        ctx.displayType = displayType;
         // not locale specific. fieldsResolver handles that
         return ctx.loaders.entryLoader.load({ id, preview });
+      },
+      contents: async (
+        _: never,
+        {
+          filter: { contentTypes = [], ids = [], locale, preview = false, displayType }
+        }: { filter: { contentTypes: string[]; ids: string[]; locale: string; preview: boolean; displayType: string } },
+        ctx: ApolloContext
+      ) => {
+        if (!contentTypes.length && !ids.length) {
+          logger.error('contents query missing one of contentTypes or ids');
+          return null;
+        }
+        ctx.preview = preview;
+        ctx.locale = locale || ctx.defaultLocale;
+        ctx.displayType = displayType;
+
+        if (ids.length) {
+          return ctx.loaders.entryLoader.loadMany(ids.map((id) => ({ id, preview })));
+        }
+
+        if (contentTypes.length) {
+          const results = (
+            await ctx.loaders.entriesByContentTypeLoader.loadMany(contentTypes.map((type) => ({ id: type, preview })))
+          ).filter((r) => !isError(r)) as unknown as Entry<any>[];
+
+          return results.flat();
+        }
+
+        return null;
       },
       sitemap: async (
         _: any,
@@ -82,19 +114,23 @@ const createResolvers = ({
         const entries = await pathReader.getSitemap(locales, site);
         const sitemap = await buildSitemapFromEntries(root, entries, !!preview, ctx);
         return sitemap;
+      },
+      availableLocales: async (_: never, __: never, ctx: ApolloContext) => {
+        const defaultLocale = ctx.defaultLocale || 'en-US';
+        return { default: defaultLocale, available: ctx.locales || [defaultLocale] };
       }
     },
-    Media: fieldsResolver('Media', ['file', 'title', 'description'], mappers),
-    RichText: fieldsResolver('RichText', ['json'], mappers),
-    Theme: fieldsResolver('Theme', ['variant'], mappers),
+    Media: fieldsResolver('Media', ['file', 'title', 'description']),
+    RichText: fieldsResolver('RichText', ['json']),
+    Theme: fieldsResolver('Theme', ['variant']),
 
     // Content type resolver
     Content: {
-      __resolveType: (content: any) => {
-        // console.log('ResolveType', content);
+      __resolveType: (content: any, ctx: ApolloContext) => {
+        if (ctx.displayType) return ctx.displayType;
         if (content.sys && (content.sys.linkType == 'Asset' || content.sys.type === 'Asset')) return 'Media';
         const contentTypeId = content.__typename ? content.__typename : content.sys.contentType.sys.id;
-        return capitalizeFirst(typeMappings[contentTypeId] ? typeMappings[contentTypeId] : contentTypeId);
+        return getTypeName(contentTypeId, typeMappings);
       }
     },
     // Scalars

@@ -20,9 +20,7 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
   config: LastRevAppConfigArgs;
 
   constructor(config: LastRevAppConfigArgs) {
-    console.log(config.sites, defaultConfig.sites);
     this.config = merge({}, defaultConfig, config);
-    console.log(config.sites, defaultConfig.sites, this.config.sites);
     this.validateCmsVars();
     this.validateStrategy();
   }
@@ -87,6 +85,15 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       contentPreviewToken: this.config.contentful?.contentPreviewToken!,
       env: this.config.contentful?.env!,
       usePreview: !!this.config.contentful?.usePreview
+    };
+  }
+
+  get algolia() {
+    return {
+      applicationId: this.config.algolia?.applicationId!,
+      adminApiKey: this.config.algolia?.adminApiKey!,
+      contentTypeIds: this.config.algolia?.contentTypeIds!,
+      indexDraftContent: !!this.config.algolia?.indexDraftContent
     };
   }
 

@@ -1,58 +1,57 @@
-import get from 'lodash/get';
-
 import { TypeMappings } from '@last-rev/types';
-// import getFieldDataFetcher from '../utils/getFieldDataFetcher';
-import capitalizeFirst from '../utils/capitalizeFirst';
+import getTypeName from '../utils/getTypeName';
+
+type SideKickLookup = {
+  contentId: string;
+  contentTypeId: string;
+  [fieldName: string]: string;
+};
 
 export const sideKickLookupResolver =
-  (displayType: string, typeMappings: TypeMappings) => async (content: any, _args: any, ctx: any, _info: any) => {
+  (displayType: string, typeMappings: TypeMappings) =>
+  async (content: any, _args: any, ctx: any, _info: any): Promise<SideKickLookup | null> => {
+    const contentTypeId = content?.sys?.contentType?.sys?.id;
+
+    if (!contentTypeId) {
+      // not a real content item. return null
+      return null;
+    }
+
     const { mappers } = ctx;
-    const typeName = capitalizeFirst(
-      typeMappings[content?.sys?.contentType?.sys?.id] ?? content?.sys?.contentType?.sys?.id
-    );
-    const lookup: { [key: string]: any } = {};
+    const typeName = getTypeName(content?.sys?.contentType, typeMappings);
+    let lookup: { [key: string]: any } = {};
 
-    if (content.sys && content.sys.contentType) {
-      if (mappers[typeName] && mappers[typeName][displayType]) {
-        await Promise.all(
-          Object.keys(mappers[typeName][displayType])?.map(async (field: string) => {
-            const mapper = mappers[typeName][displayType][field];
+    if (mappers[typeName] && mappers[typeName][displayType]) {
+      // TODO: figure out which fields are being queried for in the query, and map those, even if not in mappers
+      lookup = Object.keys(mappers[typeName][displayType])?.reduce((accum, field) => {
+        const mapper = mappers[typeName][displayType][field];
 
-            if (typeof mapper === 'function') {
-              // TODO: Implement fieldName lookup for function mappers
-              //   const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
-              // const { fieldName } = await fieldDataFetcher(content, args, ctx, info);
-              // lookup[field] = {
-              //   contentId: content.sys.id,
-              //   contentTypeId: get(content, 'sys.contentType.sys.id'),
-              //   fieldName
-              // };
-            }
-            if (typeof mapper === 'string') {
-              lookup[field] = {
-                contentId: content.sys.id,
-                contentTypeId: get(content, 'sys.contentType.sys.id'),
-                fieldName: mapper
-              };
-            }
-          })
-        );
-      } else {
-        Object.keys(get(content, 'fields', {})).forEach((field: string) => {
-          lookup[field] = {
+        if (typeof mapper === 'function') {
+          // TODO: Implement fieldName lookup for function mappers
+        }
+
+        if (typeof mapper === 'string') {
+          accum[field] = {
             contentId: content.sys.id,
-            contentTypeId: get(content, 'sys.contentType.sys.id'),
-            fieldName: field
+            contentTypeId: content?.sys?.contentType?.sys?.id,
+            fieldName: mapper
           };
-        });
-      }
-      return {
-        ...lookup,
-        contentId: content?.sys?.id,
-        contentTypeId: content?.sys?.contentType?.sys?.id
-      };
+        }
+        return accum;
+      }, {} as { [key: string]: any });
+    } else {
+      lookup = Object.keys(content?.fields || {}).reduce((accum, field) => {
+        accum[field] = {
+          contentId: content.sys.id,
+          contentTypeId: content?.sys?.contentType?.sys?.id,
+          fieldName: field
+        };
+
+        return accum;
+      }, {} as { [key: string]: any });
     }
     return {
+      ...lookup,
       contentId: content?.sys?.id,
       contentTypeId: content?.sys?.contentType?.sys?.id
     };

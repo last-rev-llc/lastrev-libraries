@@ -23,6 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@last-rev/contentful-path-util": "^0.1.9",
+    "@last-rev/contentful-webhook-parser": "^0.1.0",
     "@last-rev/graphql-contentful-helpers": "^0.1.4",
     "aws-sdk": "^2.1012.0",
     "contentful": "^9.0.0",

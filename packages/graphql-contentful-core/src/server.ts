@@ -28,6 +28,6 @@ export const getServer = async (config: LastRevAppConfig) => {
     context: () => context
   });
 
-  logger.debug(timer.end());
+  logger.trace(timer.end());
   return server;
 };
