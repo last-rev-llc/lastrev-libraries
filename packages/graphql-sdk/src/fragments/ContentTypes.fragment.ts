@@ -293,6 +293,9 @@ export const ContentTypes_Fragments = gql`
     sideNav {
       ...Link_Base
     }
+		footer {
+      ...Footer_Base
+    }
   }
 
   fragment Footer_Base on Footer {
