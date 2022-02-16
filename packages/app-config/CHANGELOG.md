@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.1.5
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.4
 
 ### Patch Changes

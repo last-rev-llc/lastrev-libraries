@@ -1,5 +1,17 @@
 # @last-rev/cli
 
+## 0.1.35
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+- Updated dependencies [d6ec293]
+  - @last-rev/app-config@0.1.5
+  - @last-rev/contentful-fragment-gen@0.1.4
+  - @last-rev/contentful-import-export@0.1.3
+  - @last-rev/contentful-sync-to-fs@0.1.11
+  - @last-rev/graphql-contentful-core@0.1.34
+
 ## 0.1.34
 
 ### Patch Changes

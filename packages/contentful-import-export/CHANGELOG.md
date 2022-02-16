@@ -1,5 +1,11 @@
 # @last-rev/contentful-import-export
 
+## 0.1.3
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.2
 
 ### Patch Changes

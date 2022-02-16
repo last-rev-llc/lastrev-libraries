@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.1.9
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.8
 
 ### Patch Changes

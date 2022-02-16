@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.1.12
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.11
 
 ### Patch Changes
