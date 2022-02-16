@@ -16,7 +16,6 @@ export const mappers: Mappers = {
           if (content?.length) {
             content.forEach(collectLinks);
           }
-          if (target?.sys?.type === 'Link') console.log(target?.sys, target?.sys?.id, node);
           if (target?.sys?.type === 'Link' && target?.sys?.linkType === 'Entry') {
             entriesLinks.set(target?.sys?.id, target);
           }
@@ -25,7 +24,6 @@ export const mappers: Mappers = {
           }
         };
         collectLinks(raw);
-        console.log({ entriesLinks, assetsLinks });
         const [entries, assets] = await Promise.all([
           ctx.loaders.entryLoader.loadMany(
             Array.from(entriesLinks.keys()).map((id) => ({ id, preview: !!ctx.preview }))

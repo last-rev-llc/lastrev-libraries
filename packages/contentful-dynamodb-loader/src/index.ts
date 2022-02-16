@@ -82,14 +82,14 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       ({ Item }) => Item?.data
     );
 
-    logger.debug(timer.end());
+    logger.trace(timer.end());
 
     let keyedResults = keyBy(results, 'sys.id');
 
     const cacheMissIds: ItemKey[] = filter(keys, (key) => !keyedResults[key.id]);
 
     if (cacheMissIds.length) {
-      logger.debug(`${dirname} cache misses: ${cacheMissIds.length}. Fetching from fallback`);
+      logger.trace(`${dirname} cache misses: ${cacheMissIds.length}. Fetching from fallback`);
       timer = new Timer(`set ${cacheMissIds.length} ${dirname} in dynamodb`);
       const sourceResults = filter(await fallbackLoader.loadMany(cacheMissIds), (r) => {
         return r && !isError(r);
@@ -100,8 +100,8 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         ...keyBy(sourceResults, 'sys.id')
       };
 
-      console.log('cacheMissIds', cacheMissIds);
-      console.log('sourceResults', sourceResults);
+      logger.trace('cacheMissIds', cacheMissIds);
+      logger.trace('sourceResults', sourceResults);
 
       await Promise.all(
         sourceResults.map((result, i) =>
@@ -119,7 +119,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
             // don't block
             .promise()
         )
-      ).then(() => logger.debug(timer.end()));
+      ).then(() => logger.trace(timer.end()));
     }
     return map(keys, (key) => {
       const result = keyedResults[key.id];
@@ -212,7 +212,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
             )
           );
         })
-      ).then(() => logger.debug(timer.end()));
+      ).then(() => logger.trace(timer.end()));
 
       keyedResults = {
         ...keyedResults,
@@ -249,7 +249,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
       const results = map(itemList, 'data');
 
-      logger.debug(timer.end());
+      logger.trace(timer.end());
 
       if (isEmpty(results) || some(results, (result) => isNil(result))) {
         timer = new Timer('Set all content types in dynamodb');
@@ -269,7 +269,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
                 })
                 .promise()
             )
-          ).then(() => logger.debug(timer.end()));
+          ).then(() => logger.trace(timer.end()));
         }
         return contentTypes;
       }

@@ -69,6 +69,7 @@ export type ApolloContext = Context<{
   preview?: boolean;
   contentful: ContentfulClients;
   pathReaders?: PathReaders;
+  displayType?: string;
 }>;
 
 export type TypeMapper = {

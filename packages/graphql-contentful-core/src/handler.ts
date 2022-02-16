@@ -27,7 +27,7 @@ export const createHandler = (config: LastRevAppConfig) => {
     });
 
     const handler = server.createHandler();
-    logger.debug(timer.end());
+    logger.trace(timer.end());
     return handler(event, ctx, cb);
   };
 };

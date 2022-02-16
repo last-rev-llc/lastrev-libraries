@@ -51,7 +51,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
     const results = map(unparsed, parse);
 
-    logger.debug(timer.end());
+    logger.trace(timer.end());
 
     const cacheMissIds: ItemKey[] = [];
 
@@ -72,7 +72,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       );
 
       // don't block
-      client.mset(toSet).then(() => logger.debug(timer.end()));
+      client.mset(toSet).then(() => logger.trace(timer.end()));
 
       each(keys, (key, index) => {
         if (isNil(results[index])) {
@@ -112,7 +112,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
     const multiResults = await multi.exec();
 
-    logger.debug(timer.end());
+    logger.trace(timer.end());
 
     const cacheMissIds: ItemKey[] = [];
     const entryIdsToRequest: ItemKey[] = [];
@@ -156,9 +156,9 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         multi
           .exec()
           .catch((e: any) => {
-            console.log('error adding', e);
+            logger.error('error adding to redis', e);
           })
-          .then(() => logger.debug(timer.end()));
+          .then(() => logger.trace(timer.end()));
       }
 
       each(filtered as Entry<any>[][], (entryArray, idx) => {
@@ -197,7 +197,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       const key = `${preview ? 'preview' : 'production'}:content_types`;
       const results: (ContentType | null)[] = map(values(await client.hgetall(key)), parse);
 
-      logger.debug(timer.end());
+      logger.trace(timer.end());
 
       if (isEmpty(results) || some(results, (result) => isNil(result))) {
         timer = new Timer('Set all content types in redis');
@@ -210,9 +210,9 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
           client
             .hset(key, zipped)
             .catch((e: any) => {
-              console.log('error hsetting', e);
+              logger.error('error hsetting', e);
             })
-            .then(() => logger.debug(timer.end()));
+            .then(() => logger.trace(timer.end()));
         }
         return contentTypes;
       }

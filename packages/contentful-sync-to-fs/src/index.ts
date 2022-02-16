@@ -7,7 +7,6 @@ import { join } from 'path';
 import { ensureDir, writeFile, createFile } from 'fs-extra';
 import { Asset, Entry, createClient, ContentfulClientApi, ContentType } from 'contentful';
 import Timer from '@last-rev/timer';
-import ora from 'ora';
 import logger from 'loglevel';
 import LastRevAppConfig from '@last-rev/app-config';
 import { updateAllPaths } from '@last-rev/contentful-path-util';
@@ -120,8 +119,7 @@ const syncAllEntries = async (client: ContentfulClientApi, contentTypes: Content
 };
 
 const sync = async (config: LastRevAppConfig, sites?: string[]) => {
-  const timer = new Timer('Total elapsed time');
-  let spinner;
+  const totalTimer = new Timer('Total elapsed time');
 
   validateArg(config.fs.contentDir, 'fs.contentDir');
   validateArg(config.contentful.contentDeliveryToken, 'contentful.contentDeliveryToken');
@@ -139,10 +137,9 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
 
   const { items: contentTypes } = await client.getContentTypes();
 
-  let startTime = Date.now();
-  spinner = ora('fetching entries and assets').start();
+  let timer = new Timer(`fetched entries and assets`);
   const [entries, assets] = await Promise.all([syncAllEntries(client, contentTypes), syncAllAssets(client)]);
-  spinner.succeed(`fetching entries and assets: ${Date.now() - startTime}ms`);
+  logger.trace(timer.end());
 
   const entryIdsByContentTypeLookup = groupByContentTypeAndMapToIds(entries);
 
@@ -153,18 +150,16 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
     config.contentful.usePreview ? 'preview' : 'production'
   );
 
-  startTime = Date.now();
-  spinner = ora('writing content files').start();
+  timer = new Timer('wrote content files');
   await Promise.all([
     writeContentfulItems(entries, root, ENTRIES_DIRNAME),
     writeContentfulItems(assets, root, ASSETS_DIRNAME),
     writeContentfulItems(contentTypes, root, CONTENT_TYPES_DIRNAME),
     writeEntriesByContentTypeFiles(entryIdsByContentTypeLookup, root)
   ]);
-  spinner.succeed(`writing content files: ${Date.now() - startTime}ms`);
+  logger.trace(timer.end());
 
-  startTime = Date.now();
-  spinner = ora('writing paths tree').start();
+  timer = new Timer('wrote paths tree');
 
   await updateAllPaths({
     config,
@@ -173,9 +168,9 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
     context: await createContext(config, createLoaders(config)),
     sites
   });
-  spinner.succeed(`writing paths tree: ${Date.now() - startTime}ms`);
+  logger.trace(timer.end());
 
-  logger.debug(timer.end());
+  logger.trace(totalTimer.end());
 };
 
 export default sync;

@@ -28,6 +28,12 @@ export interface LastRevAppConfiguration {
     env: string;
     usePreview: boolean;
   };
+  algolia: {
+    applicationId: string;
+    adminApiKey: string;
+    contentTypeIds: string[];
+    indexDraftContent: boolean;
+  };
   extensions: Extensions;
   logLevel: LogLevelDesc;
   graphql: {
@@ -63,6 +69,12 @@ export type LastRevAppConfigArgs = {
     spaceId?: string;
     env?: string;
     usePreview?: boolean;
+  };
+  algolia?: {
+    applicationId?: string;
+    adminApiKey?: string;
+    contentTypeIds?: string[];
+    indexDraftContent?: boolean;
   };
   extensions?: Extensions;
   logLevel?: LogLevelDesc;

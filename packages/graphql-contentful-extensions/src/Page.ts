@@ -204,7 +204,6 @@ const blog: ContentfulPathsGenerator = async (blogItem, loaders, defaultLocale, 
   const slug = getDefaultFieldValue(blogItem, 'slug', defaultLocale);
   const blogLandingSlug = await blogsLandingSlug(loaders, defaultLocale, preview);
   const fullPath = createPath(blogLandingSlug, slug);
-  console.log('Blog', { slug, blogLandingSlug, fullPath });
   return {
     [fullPath]: {
       fullPath,

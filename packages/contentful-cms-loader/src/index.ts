@@ -57,7 +57,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
         );
       }) as T[];
 
-      logger.debug(timer.end());
+      logger.trace(timer.end());
       return items;
     };
   };
@@ -78,7 +78,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
           })()
         )
       );
-      logger.debug(timer.end());
+      logger.trace(timer.end());
       return out;
     };
   };
@@ -90,7 +90,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
     try {
       const timer = new Timer('Fetched all content types from CMS');
       const result = await (preview ? previewClient : prodClient).getContentTypes();
-      logger.debug(timer.end());
+      logger.trace(timer.end());
       return result.items;
     } catch (err: any) {
       console.error('Unable to fetch content types using cms loader:', err.message);
