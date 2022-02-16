@@ -1,5 +1,11 @@
 # @last-rev/contentful-cms-loader
 
+## 0.1.6
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.5
 
 ### Patch Changes

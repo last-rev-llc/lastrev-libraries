@@ -1,5 +1,11 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.1.11
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.10
 
 ### Patch Changes

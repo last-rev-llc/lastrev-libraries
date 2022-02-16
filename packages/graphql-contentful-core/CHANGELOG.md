@@ -1,5 +1,17 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.34
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+- Updated dependencies [d6ec293]
+  - @last-rev/contentful-cms-loader@0.1.6
+  - @last-rev/contentful-fs-loader@0.1.12
+  - @last-rev/contentful-redis-loader@0.1.9
+  - @last-rev/graphql-schema-gen@0.1.9
+  - @last-rev/types@0.1.7
+
 ## 0.1.33
 
 ### Patch Changes

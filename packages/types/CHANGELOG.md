@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.1.7
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.6
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.11
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+- Updated dependencies [d6ec293]
+  - @last-rev/graphql-contentful-core@0.1.34
+  - @last-rev/rollup-config@0.1.2
+  - @last-rev/types@0.1.7
+
 ## 0.0.10
 
 ### Patch Changes
