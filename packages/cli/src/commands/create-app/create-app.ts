@@ -55,7 +55,7 @@ program.parse(process.argv);
 
 run()
   .then(() => process.exit(0))
-  .catch((err: any) => {
+  .catch((err) => {
     messager.error(`create-app failed with error: ${err.message}`);
     messager.log(
       `Your state has been saved. If you resolve the errors, re-run the command to continue where you left off.`
