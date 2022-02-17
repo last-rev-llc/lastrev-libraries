@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.1.35
+
+### Patch Changes
+
+- db8b0af: 'Fixed fieldResolver to resolve unexpanded links and sidekickLookupResolver to return an object always'
+
 ## 0.1.34
 
 ### Patch Changes
