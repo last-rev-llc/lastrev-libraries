@@ -1,5 +1,7 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import { getAlgoliaResults } from '@algolia/autocomplete-js';
+import { OnSubmitParams } from '@algolia/autocomplete-core';
 import algoliasearch from 'algoliasearch';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -9,10 +11,10 @@ import Autocomplete from '../Autocomplete';
 import SearchResultItem from '../SearchResultItem';
 
 const algoliaOptions = {
-  appId: (process.env.ALGOLIA_APP_ID as string),
-  searchApiKey: (process.env.ALGOLIA_SEARCH_API_KEY as string),
+  appId: process.env.ALGOLIA_APP_ID as string,
+  searchApiKey: process.env.ALGOLIA_SEARCH_API_KEY as string,
   sourceId: 'articles',
-  indexName: 'articles',
+  indexName: 'articles'
 };
 
 const searchClient = algoliasearch(algoliaOptions.appId, algoliaOptions.searchApiKey);
@@ -24,6 +26,7 @@ export interface AutocompleteBoxProps {
 export interface SettingsProps {
   variant?: string;
   placeholder?: string;
+  searchResultsUrl?: string;
 }
 
 export interface templatesItemsProps {
@@ -33,16 +36,34 @@ export interface templatesItemsProps {
 
 export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
   const theme = useTheme();
+  const router = useRouter();
 
-  const { variant, placeholder } = settings as SettingsProps;
+  const { variant, placeholder, searchResultsUrl } = settings as SettingsProps;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
-  {/* TODO: Use localization lookup for "searchPlaceholder" (IAS-117) */}
+  {
+    /* TODO: Use localization lookup for "searchPlaceholder" (IAS-117) */
+  }
   const mobileText = 'Search';
+
+  const handleSubmit = (formData: OnSubmitParams<any>) => {
+    const searchQuery: string = formData.state.query.trim();
+
+    if (searchQuery === '' || !searchResultsUrl) {
+      formData.setQuery('');
+      return;
+    }
+
+    router.push({
+      pathname: searchResultsUrl,
+      query: { query: searchQuery }
+    });
+  };
 
   return (
     <Root variant={variant} data-testid="AutocompleteBox">
       <Autocomplete
+        onSubmit={handleSubmit}
         placeholder={matchesDesktop ? placeholder : mobileText}
         components={{ SearchResultItem }}
         getSources={({ query }: any) => [
@@ -66,7 +87,9 @@ export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
                 );
               },
               noResults() {
-                 {/* TODO: Use localization lookup for "searchNoResultsText" (IAS-117) */}
+                {
+                  /* TODO: Use localization lookup for "searchNoResultsText" (IAS-117) */
+                }
                 return 'No Results';
               }
             }

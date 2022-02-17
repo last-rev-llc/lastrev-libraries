@@ -76,10 +76,11 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(({ theme }) => ({
   '& mark': {
+    // TODO: currently throwing: "TypeError: Cannot read properties of undefined (reading 'light')"
     backgroundColor: theme.palette.yellow.light
   },
   '& .MuiTypography-root': {
-    color: theme.palette.grey["100"]
+    color: theme.palette.grey['100']
   }
 }));
 

@@ -27,6 +27,7 @@ import theme from '../src/theme';
 import PageGeneral from '../src/components/PageGeneral/PageGeneral';
 import SearchBox from '../src/components/SearchBox';
 import Autocomplete from '../src/components/Autocomplete';
+import AutocompleteBox from '../src/components/AutocompleteBox';
 import SearchResultItem from '../src/components/SearchResultItem';
 
 const components = {
@@ -42,6 +43,7 @@ const components = {
   'Collection:filtered': CollectionFiltered,
   'Collection:carousel-large': CollectionCarousel,
   'Collection:carousel-small': CollectionCarousel,
+  'ModuleIntegration:autocomplete-search-box': AutocompleteBox,
   Section,
   BackToTop,
   Hero,
