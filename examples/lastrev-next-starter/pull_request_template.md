@@ -1,12 +1,6 @@
-#### Description
+##### 🔹 Jira Ticket and Short Description
 
-Replace this text with a short description
-
----
-
-##### 🔹 Jira Ticket
-
-[PROJKEY](https://lastrev.atlassian.net/browse/PROJKEY)
+https://lastrev.atlassian.net/browse/PROJKEY
 
 ##### 🔬 How to test
 
