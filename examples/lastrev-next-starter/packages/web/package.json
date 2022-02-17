@@ -6,9 +6,10 @@
     "dev": "next dev",
     "build": "next build && yarn build:post",
     "build:static": "next build && next export && rm -rf out/404 && yarn build:post",
-    "build:post": "yarn gen:sitemap",
+    "build:post": "yarn gen:sitemap && npm run move:redirects",
     "gen:sitemap": "node scripts/generateSitemap.js",
     "lint": "next lint",
+    "move:redirects": "node scripts/moveRedirects",
     "start": "next start",
     "serve": "serve out"
   },
