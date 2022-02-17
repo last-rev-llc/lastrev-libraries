@@ -34,8 +34,7 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
   if (mapper && mapper[field]) {
     const fieldMapper = mapper[field];
     if (isFunction(fieldMapper)) {
-      const returnedValue = await fieldMapper(content, args, ctx, info);
-      return returnedValue == null ? null : returnedValue;
+      fieldValue = await fieldMapper(content, args, ctx, info);
     } else if (isString(fieldMapper)) {
       fieldValue = getLocalizedField(content.fields, fieldMapper as string, ctx);
     } else {
