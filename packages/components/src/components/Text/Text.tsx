@@ -48,13 +48,6 @@ const renderNodeOptions = ({ links }: { links?: any }) => {
       const content = node?.content[0]?.value;
 
       return <ContentModule {...entry} data-testid={`Texts-${INLINES.ENTRY_HYPERLINK}`}>{content}</ContentModule>;
-    },
-    [INLINES.HYPERLINK]: (node: any) => {
-      const id: string = node?.data?.target?.sys?.id;
-      const entry = entries[id];
-      const content = node?.content[0]?.value;
-
-      return <ContentModule {...entry} data-testid={`Texts-${INLINES.HYPERLINK}`}>{content}</ContentModule>;
     }
   };
 };
