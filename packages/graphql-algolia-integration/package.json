@@ -13,7 +13,7 @@
     "test:watch": "jest --watch"
   },
   "bin": {
-    "lr-alolia-updater": "./bin/lr-algolia-updater"
+    "lr-algolia-updater": "./bin/lr-algolia-updater"
   },
   "devDependencies": {
     "@last-rev/app-config": "^0.1.4",
