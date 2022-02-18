@@ -1,5 +1,11 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.2
+
+### Patch Changes
+
+- 9aa6c30: Parsing out the domainUrl from the request
+
 ## 0.1.1
 
 ### Patch Changes
