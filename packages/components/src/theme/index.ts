@@ -360,6 +360,19 @@ const createSchemeTheme = (schemeKey?: string) => {
             root: {}
           }
         },
+        BackToTop: {
+          styleOverrides: {
+            root: {
+              margin: baseSchemeTheme.spacing(0, 4, 4, 0),
+              backgroundColor: baseSchemeTheme.palette.midnight.A09,
+              color: baseSchemeTheme.palette.primary.dark,
+
+              '&:hover': {
+                backgroundColor: baseSchemeTheme.palette.midnight.A12
+              }
+            }
+          }
+        },
 
         // MUI
         MuiTypography: {
