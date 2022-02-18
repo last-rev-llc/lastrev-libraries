@@ -24,12 +24,6 @@ module.exports = {
     '@storybook/addon-storysource'
   ],
   webpackFinal: async (config) => {
-    const plugin = config.plugins.find((plugin) => plugin ? plugin.definitions?.['process.env'] : null);
-    if (plugin) {
-      plugin.definitions['process.env.ALGOLIA_APP_ID'] = JSON.stringify(process.env.ALGOLIA_APP_ID);
-      plugin.definitions['process.env.ALGOLIA_SEARCH_API_KEY'] = JSON.stringify(process.env.ALGOLIA_SEARCH_API_KEY);
-    }
-  
     return {
       ...config,
       resolve: {

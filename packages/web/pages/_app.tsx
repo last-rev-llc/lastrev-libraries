@@ -67,6 +67,8 @@ const SearchBox = dynamic(() => import('@ias/components/src/components/SearchBox
 
 const AutocompleteBox = dynamic(() => import('@ias/components/src/components/AutocompleteBox'));
 
+const CollectionSearchFilters = dynamic(() => import('@ias/components/src/components/CollectionSearchFilters'));
+
 import '../styles/globals.css';
 
 const contentMapping: {
@@ -79,6 +81,7 @@ const contentMapping: {
   'Collection:carousel': CollectionCarousel,
   'Collection:accordion': CollectionAccordion,
   'Collection:filtered': CollectionFiltered,
+  'Collection:Search Filters': CollectionSearchFilters,
   'Collection:carousel-large': CollectionCarousel,
   'Collection:carousel-small': CollectionCarousel,
   'Collection:navigation-bar': NavigationBar,
