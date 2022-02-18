@@ -5,6 +5,9 @@ export const homeVariant = (theme: Theme) => ({
     variant: 'home'
   },
   style: {
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+
     '& .aa-Autocomplete[aria-expanded=true]': {
       '& .aa-Form': {
         borderRadius: `${theme.spacing(3.75)} ${theme.spacing(3.75)} 0 0`
