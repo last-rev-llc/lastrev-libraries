@@ -189,8 +189,8 @@ const baseTheme = {
       greenishBlue: '#1264A3'
     },
     midnight: {
-      A100: '#00324A',
       main: '#00324A',
+      A100: '#00324A',
       A90: '#1A475C',
       A80: '#335B6E',
       A70: '#4D7080',
@@ -481,6 +481,51 @@ const createSchemeTheme = (schemeKey?: string) => {
 
               '&[class*="MuiTableCell-head"] [class*="MuiTypography-body1"]': {
                 fontWeight: 600
+              }
+            }
+          }
+        },
+        MuiPagination: {
+          styleOverrides: {
+            root: {
+              marginTop: baseSchemeTheme.spacing(5)
+            },
+
+            outlined: {
+              '& li:last-child': {
+                borderRight: `1px solid ${baseSchemeTheme.palette.midnight.A12}`
+              },
+
+              '& .MuiPaginationItem-page': {
+                fontSize: 12,
+                fontWeight: 600
+              },
+
+              '& [class*="MuiPaginationItem-root"]': {
+                width: 30,
+                height: 30,
+                minWidth: 30,
+                minHeight: 30,
+                margin: 0,
+                backgroundColor: baseSchemeTheme.palette.common.white,
+                borderColor: baseSchemeTheme.palette.midnight.A12,
+                borderRight: 0,
+
+                '&[class*="Mui-selected"]': {
+                  backgroundColor: baseSchemeTheme.palette.midnight.A03,
+
+                  '&:hover': {
+                    backgroundColor: baseSchemeTheme.palette.midnight.A06,
+                  }
+                },
+
+                '&.Mui-disabled': {
+                  opacity: 1,
+
+                  '& svg': {
+                    opacity: 0.5
+                  }
+                }
               }
             }
           }

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import algoliasearch from 'algoliasearch';
 import { InstantSearch } from 'react-instantsearch-dom';
+import CollectionSearchResults from './CollectionSearchResults';
+import { collectionSearchResultsMock } from './CollectionSearchResults.mock';
 import mount from '../../../cypress/mount';
-import SearchBox, { SearchBoxProps } from './SearchBox';
-import searchBoxMock from './SearchBox.mock';
 
 const algoliaOptions = {
   appId: (process.env.ALGOLIA_APP_ID as string),
@@ -14,18 +14,19 @@ const algoliaOptions = {
 
 const searchClient = algoliasearch(algoliaOptions.appId, algoliaOptions.searchApiKey);
 
-describe('SearchBox', () => {
-  it('renders a SearchBox', () => {
-    const mockedContent: SearchBoxProps = { ...searchBoxMock };;
+describe('CollectionSearchResults', () => {
+  it('renders a CollectionSearchResults', () => {
+    const mockedContent = { ...collectionSearchResultsMock };
     mount(
       <InstantSearch
         searchClient={searchClient}
         indexName={algoliaOptions.indexName}
         searchState={{ query: 'technology' }}
       >
-        <SearchBox {...mockedContent} />
+        <CollectionSearchResults {...mockedContent} />
       </InstantSearch>
     );
-    cy.get('[data-testid=SearchBox]').should('exist');
+    cy.get('[data-testid=CollectionSearchResults]').should('exist');
+    cy.get('[data-testid=CollectionSearchResults-introText]').should('exist');
   });
 });

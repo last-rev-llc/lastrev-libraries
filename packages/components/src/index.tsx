@@ -10,4 +10,5 @@ export { default as PageGeneral } from './components/PageGeneral';
 export { default as SearchBox } from './components/SearchBox';
 export { default as AutocompleteBox } from './components/AutocompleteBox';
 export { default as CollectionSearchFilters } from './components/CollectionSearchFilters';
+export { default as CollectionSearchResults } from './components/CollectionSearchResults';
 export { default as theme } from './theme';
