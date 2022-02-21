@@ -14,8 +14,7 @@ jobs:
       run:
         working-directory: ./examples/lastrev-next-starter
     env:
-      DEBUG: cypress:*
-      PERCY_TOKEN: ${{ secrets.STARTER_PERCY_TOKEN }}
+      NODE_ENV: test
 
     steps:
       - name: Checkout Repo
@@ -41,11 +40,17 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules/.cache/turbo
+          key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.job }}-${{ github.ref_name }}-            
+
       - name: Install project dependencies
         run: yarn --prefer-offline
 
-
-      # TODO - Enable starter e2e Tests
-      # - name: Run the tests
-      #  run: yarn turbo run test lint
-      #   run: yarn turbo run test test:e2e lint
+      - name: Run the tests
+        run: yarn turbo run test test:e2e lint
