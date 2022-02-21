@@ -9,6 +9,8 @@ import camelCase from 'lodash/camelCase';
 import createCollectionVariants from './variants/createCollectionVariants';
 import createHeroVariants from './variants/createHeroVariants';
 import createSectionVariants from './variants/createSectionVariants';
+import { fontSize } from '@mui/system';
+import { baseScheme } from './schemes/colors';
 
 declare module '@mui/material/styles/createMixins' {
   interface Mixins {
@@ -244,6 +246,17 @@ const createSchemeTheme = (schemeKey?: string) => {
           styleOverrides: {
             contentContainer: {
               height: 100,
+            },
+            root: {
+              '& .MuiButton-contained': {
+                padding: baseSchemeTheme.spacing(1.25, 2),
+                fontSize: 15,
+                lineHeight: 1.2,
+
+                [baseSchemeTheme.breakpoints.up('md')]: {
+                  marginLeft: baseSchemeTheme.spacing(1)
+                }
+              }
             }
           }
         },
@@ -257,7 +270,6 @@ const createSchemeTheme = (schemeKey?: string) => {
             }
           }
         },
-
         Text: {
           variants: createTextVariants(baseSchemeTheme),
           styleOverrides: {
@@ -431,9 +443,95 @@ const createSchemeTheme = (schemeKey?: string) => {
         MuiButton: {
           styleOverrides: {
             root: {
+              boxShadow: 'none',
               fontSize: 18,
               fontWeight: 600,
-              lineHeight: '28px'
+              lineHeight: 1.75,
+              textTransform: 'none',
+
+              '&:hover': {
+                boxShadow: 'none'
+              }
+            },
+
+            contained: {
+              padding: baseSchemeTheme.spacing(2, 5),
+              borderRadius: 50,
+              color: baseSchemeTheme.palette.text.primary,
+
+              '&:hover': {
+                color: baseSchemeTheme.palette.common.white
+              }
+            },
+
+            containedPrimary: {
+              backgroundColor: baseSchemeTheme.palette.primary.light,
+
+              '&:hover': {
+                backgroundColor: baseSchemeTheme.palette.primary.dark
+              }
+            },
+
+            containedSecondary: {
+              backgroundColor: baseSchemeTheme.palette.common.white,
+              color: baseSchemeTheme.palette.text.primary,
+
+              '&:hover': {
+                backgroundColor: baseSchemeTheme.palette.midnight.main,
+                color: baseSchemeTheme.palette.common.white
+              }
+            },
+
+            outlined: {
+              padding: baseSchemeTheme.spacing(2, 5),
+              borderRadius: 50,
+
+              '&:hover': {
+                color: baseSchemeTheme.palette.common.white
+              }
+            },
+
+            outlinedPrimary: {
+              borderColor: baseSchemeTheme.palette.primary.light,
+              color: baseSchemeTheme.palette.primary.dark,
+
+              '&:hover': {
+                backgroundColor: baseSchemeTheme.palette.primary.dark,
+                borderColor: baseSchemeTheme.palette.primary.dark
+              }
+            },
+
+            outlinedSecondary: {
+              borderColor: baseSchemeTheme.palette.midnight.main,
+              color: baseSchemeTheme.palette.text.primary,
+
+              '&:hover': {
+                backgroundColor: baseSchemeTheme.palette.midnight.main,
+                borderColor: baseSchemeTheme.palette.midnight.main
+              }
+            },
+
+            text: {
+              padding: 0,
+              fontWeight: 600
+            },
+
+            textPrimary: {
+              color: baseSchemeTheme.palette.primary.dark,
+
+              '&:hover': {
+                backgroundColor: 'transparent',
+                textDecoration: 'underline'
+              }
+            },
+
+            textSecondary: {
+              color: baseSchemeTheme.palette.text.primary,
+
+              '&:hover': {
+                backgroundColor: 'transparent',
+                textDecoration: 'underline'
+              }
             }
           }
         },

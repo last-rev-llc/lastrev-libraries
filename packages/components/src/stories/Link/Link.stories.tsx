@@ -8,7 +8,7 @@ export default {
   component: Link,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box m={5} p={4} bgcolor="gray">
+      <Box m={5} p={4} bgcolor="background.coolGrey">
         {storyFn()}
       </Box>
     )
@@ -18,10 +18,25 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['link', 'button-contained', 'button-outlined', 'button-text', '']
+        options: [
+          'button-contained',
+          'button-outlined',
+          'button-text',
+          ''
+        ]
       },
       table: {
-        defaultValue: { summary: 'link' }
+        defaultValue: { summary: 'button-contained' }
+      }
+    },
+    color: {
+      name: 'Color',
+      control: {
+        type: 'select',
+        options: ['primary', 'secondary']
+      },
+      table: {
+        defaultValue: { summary: 'primary' }
       }
     },
     text: { name: 'Text' },
@@ -62,11 +77,5 @@ export default {
 
 const Template = (args: JSX.IntrinsicAttributes) => <Link {...args} />;
 
-export const ContainedPrimary = Template.bind({});
-ContainedPrimary.args = { ...mockContent };
-export const ContainedSecondary = Template.bind({});
-ContainedSecondary.args = { ...mockContent, color: 'secondary' };
-export const OutlinedPrimary = Template.bind({});
-OutlinedPrimary.args = { ...mockContent, variant: 'button-outlined' };
-export const OutlinedSecondary = Template.bind({});
-OutlinedSecondary.args = { ...mockContent, variant: 'button-outlined', color: 'secondary' };
+export const Default = Template.bind({});
+Default.args = { ...mockContent };
