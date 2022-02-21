@@ -33,19 +33,28 @@ export const defaultCard = (theme: Theme) => ({
       alignItems: 'center',
       flexDirection: 'column',
       justifyContent: 'flex-start',
-      minHeight: theme.spacing(11.5),
-      height: '100%',
+
+      [theme.breakpoints.up('sm')]: {
+        minHeight: theme.spacing(11.5),
+        height: '100%'
+      },
 
       ':last-child': {
         paddingBottom: theme.spacing(2)
       },
 
       '& .MuiTypography-h3': {
-        ...theme.typography.h5
+        ...theme.typography.h5,
+
+        [theme.breakpoints.down('sm')]: {
+          marginBottom: 0
+        }
       },
 
       '& .MuiTypography-body1': {
-        ...theme.typography.body2
+        ...theme.typography.body2,
+        marginBottom: 0,
+        color: theme.palette.midnight.A90
       },
 
       '& .MuiBox-root': {
