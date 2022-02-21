@@ -10,6 +10,8 @@
     ]
   },
   "scripts": {
+    "algolia:update": "lr-algolia-updater https://starter.lastrev.com/.netlify/functions/algolia-background",
+    "algolia:update:local": "lr-algolia-updater http://localhost:8888/.netlify/functions/algolia-background",
     "dev": "yarn propagate:env && turbo run dev --parallel",
     "build": "./scripts/build.sh",
     "turbo:sync:cms": "turbo run sync:cms",

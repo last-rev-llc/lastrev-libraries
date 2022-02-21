@@ -33,6 +33,12 @@ const config = new LastRevAppConfig({
     env,
     usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW)
   },
+  algolia: {
+    applicationId: process.env.ALGOLIA_APPLICATION_ID,
+    adminApiKey: process.env.ALGOLIA_ADMIN_API_KEY,
+    contentTypeIds: ['blog'],
+    indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT)
+  },
   redis: {
     port: process.env.REDIS_PORT,
     host: process.env.REDIS_HOST,
