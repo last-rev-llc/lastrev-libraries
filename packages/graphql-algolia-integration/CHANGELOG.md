@@ -1,5 +1,11 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.3
+
+### Patch Changes
+
+- e305c7e: Removed some console log statements
+
 ## 0.1.2
 
 ### Patch Changes
