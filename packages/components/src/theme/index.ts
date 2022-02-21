@@ -315,8 +315,11 @@ const createSchemeTheme = (schemeKey?: string) => {
           styleOverrides: {
             root: {
               '[class*="Section-gridContainer"]': {
-                'display': 'grid',
-                'gridAutoRows': '1fr',
+                display: 'grid',
+
+                [baseSchemeTheme.breakpoints.up('md')]: {
+                  gridAutoRows: '1fr'
+                },
 
                 '[class*="Box-content"]': {
                   display: 'block'
@@ -336,6 +339,15 @@ const createSchemeTheme = (schemeKey?: string) => {
 
                 [baseSchemeTheme.breakpoints.up('lg')]: {
                   flexBasis: '33.333333%'
+                },
+
+                // For sets of `link list` cards on mobile
+                // -- Doesn't affect other card sets
+                [baseSchemeTheme.breakpoints.down('sm')]: {
+                  '&:first-child > [class*="Card-root"]': {
+                    paddingTop: 0,
+                    borderTop: 0
+                  }
                 }
               }
             }

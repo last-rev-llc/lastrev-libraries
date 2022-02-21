@@ -65,6 +65,11 @@ export const linksListCard = (theme: Theme) => ({
     boxShadow: 'none',
     textAlign: 'left',
 
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: theme.spacing(2),
+      borderTop: `1px solid ${theme.palette.midnight.A20}`
+    },
+
     '& .MuiTypography-root': {
       color: theme.palette.text.primary,
       textDecoration: 'none'
@@ -116,6 +121,15 @@ export const linksListCard = (theme: Theme) => ({
     },
 
     '& .MuiCardContent-root': {
+      paddingLeft: 0,
+      paddingRight: 0,
+
+      [theme.breakpoints.down('sm')]: {
+        '&:last-child': {
+          paddingBottom: theme.spacing(1)
+        }
+      },
+
       [theme.breakpoints.up('md')]: {
         padding: 0
       }
