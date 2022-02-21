@@ -29,7 +29,7 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
 
       const uri = graphQlUrl.startsWith('/') ? `${domainUrl}${graphQlUrl}` : graphQlUrl;
 
-      console.log('uri', uri);
+      logger.debug('requesting from URL:', uri);
 
       const apolloClient = new ApolloClient({
         link: new HttpLink({ uri, fetch }),
@@ -69,17 +69,15 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
       const allErrors = [...queryErrors, ...updateErrors];
 
       if (allErrors.length) {
-        allErrors.map((error) => console.error(error));
+        allErrors.map((error) => logger.error(`Error syncing to Algolia: ${error.message || error}`));
         throw Error('There were some errors while syncing to Algolia. Please check the function logs for details.');
       }
-      console.log('success');
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'text/plain' },
         body: `Success`
       };
     } catch (err: any) {
-      console.log('error');
       logger.error('err', err.message, err.stack);
       return {
         statusCode: 400,
