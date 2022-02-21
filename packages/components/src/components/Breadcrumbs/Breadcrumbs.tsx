@@ -21,7 +21,7 @@ export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot }: BreadcrumbsProps) 
         <Box p={2}
           sx={{ display: { sm: 'none', md: 'block' }}}
         >
-          <Container maxWidth={'xl'}>
+          <Container maxWidth="xl">
             <Grid container>
               <Grid item xs={12}>
                 <Root aria-label="breadcrumb" separator="|" data-testid="Breadcrumbs">
@@ -32,7 +32,7 @@ export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot }: BreadcrumbsProps) 
                     }}
                     data-testid="Breadcrumbs-breadcrumbsRoot"
                   >
-                    <ChevronLeftIcon sx={{ fill: 'background.integralOrange' }} fontSize="small" />
+                    <ChevronLeftIcon fontSize="small" />
                     {/* TODO: Use localization lookup for title (IAS-117) */}
                     {breadcrumbsRoot || 'Help Center'}
                   </Link>
@@ -56,20 +56,32 @@ const Root = styled(MuiBreadcrumbs, {
   padding: theme.spacing(2, 0),
   fontSize: 15,
   fontWeight: 500,
-  lineHeight: '18px',
+  lineHeight: 1.125,
 
   '& [class*=separator]': {
     margin: theme.spacing(0, 3),
+    color: theme.palette.midnight.main,
     fontWeight: 600
   },
 
-  '& li:not([class*=separator]) a': {
+  '& a': {
     color: theme.palette.midnight.A70,
 
     '&:hover': {
       color: theme.palette.text.primary,
       textDecoration: 'none'
+    },
+
+    '& svg': {
+      fill: theme.palette.background.integralOrange
     }
+  },
+
+  '& span': {
+    cursor: 'default',
+    color: theme.palette.midnight.A70,
+    fontSize: 15,
+    fontWeight: 500
   }
 }));
 

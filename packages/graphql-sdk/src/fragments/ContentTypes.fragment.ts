@@ -17,6 +17,11 @@ export const ContentTypes_Fragments = gql`
       __typename
       ...Header_Base
     }
+
+    breadcrumbs {
+      ...Link_Base
+    }
+
     footer {
       ...Footer_Base
     }

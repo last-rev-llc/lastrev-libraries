@@ -16,6 +16,7 @@ import {
   RichText
 } from '@last-rev/graphql-contentful-extensions';
 
+import * as IasPage from './Page';
 import * as Text from './Text';
 import * as Table from './Table';
 import * as CustomHero from './Hero';
@@ -61,6 +62,7 @@ const extensions: GraphQlExtension[] = [
   Page,
   Section,
   CustomSection,
+  IasPage,
   Quote,
   // Person,
   Media,

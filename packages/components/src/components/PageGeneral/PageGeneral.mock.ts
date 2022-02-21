@@ -1022,6 +1022,18 @@ export const pageGeneralMock = () => {
           }
         ]
       }
+    ],
+    disableBackToTop: false,
+    breadcrumbs: [
+      {
+        id: "testBreadcrumbLinkId",
+        __typename: "Link",
+        text: "Search",
+        href: "search-page-test",
+        variant: null,
+        icon: null,
+        iconPosition: null
+      }
     ]
   };
 };

@@ -17,7 +17,8 @@ describe('PageGeneral', () => {
       mockedContent.contents.forEach((content) => {
         cy.get(`[data-testid=${content.__typename}]`).should('exist');
       });
-      cy.get('[data-testid=Back-to-top]').should('not.exist');
+      cy.get('[data-testid=Breadcrumbs]').should('exist');
+      cy.get('[data-testid=BackToTop]').should('exist');
       cy.get('[data-testid=Footer]').should('not.exist');
     });
   });
