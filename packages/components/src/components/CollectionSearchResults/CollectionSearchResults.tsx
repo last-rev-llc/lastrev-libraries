@@ -81,7 +81,7 @@ export const CollectionSearchResults = ({
 }: CollectionProps) => {
   return (
     <ErrorBoundary>
-      <Box data-testid="CollectionSearchResults" {...sidekick(sidekickLookup)}>
+      <Box mb={6} data-testid="CollectionSearchResults" {...sidekick(sidekickLookup)}>
         {introText ? (
           <ContentModule
             {...introText}

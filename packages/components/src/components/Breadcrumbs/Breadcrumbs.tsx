@@ -19,7 +19,7 @@ export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot }: BreadcrumbsProps) 
     <ErrorBoundary>
       {breadcrumbs ? (
         <Box p={2}
-          sx={{ display: { sm: 'none', md: 'block' }}}
+          sx={{ display: { xs: 'none', md: 'block' }}}
         >
           <Container maxWidth="xl">
             <Grid container>

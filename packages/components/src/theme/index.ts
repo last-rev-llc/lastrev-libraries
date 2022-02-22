@@ -9,8 +9,6 @@ import camelCase from 'lodash/camelCase';
 import createCollectionVariants from './variants/createCollectionVariants';
 import createHeroVariants from './variants/createHeroVariants';
 import createSectionVariants from './variants/createSectionVariants';
-import { fontSize } from '@mui/system';
-import { baseScheme } from './schemes/colors';
 
 declare module '@mui/material/styles/createMixins' {
   interface Mixins {
@@ -465,7 +463,7 @@ const createSchemeTheme = (schemeKey?: string) => {
               boxShadow: 'none',
               fontSize: 18,
               fontWeight: 600,
-              lineHeight: 1.75,
+              lineHeight: 1.55,
               textTransform: 'none',
 
               '&:hover': {

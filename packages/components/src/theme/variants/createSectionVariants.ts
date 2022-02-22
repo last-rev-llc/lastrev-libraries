@@ -28,8 +28,12 @@ export const fiftyFiftyVariant = (theme: Theme) => ({
   style: {
     '& [class*=Section-gridContainer]': {
       display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)',
-      gap: theme.spacing(4)
+      gridTemplateColumns: '1fr',
+      gap: theme.spacing(4),
+
+      [theme.breakpoints.up('md')]: {
+        gridTemplateColumns: 'repeat(2, 1fr)',
+      }
     }
   }
 });
@@ -41,8 +45,12 @@ export const twoThirdsVariant = (theme: Theme) => ({
   style: {
     '& [class*=Section-gridContainer]': {
       display: 'grid',
-      gridTemplateColumns: '1fr 2fr',
-      gap: theme.spacing(4)
+      gridTemplateColumns: '1fr',
+      gap: theme.spacing(4),
+
+      [theme.breakpoints.up('md')]: {
+        gridTemplateColumns: '1fr 2fr'
+      }
     }
   }
 });

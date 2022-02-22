@@ -18,7 +18,13 @@ interface FilterItem {
 export const CollectionSearchFilters = ({ introText, sidekickLookup }: CollectionProps) => {
   return (
     <ErrorBoundary>
-      <Box data-testid="CollectionSearchFilters" {...sidekick(sidekickLookup)}>
+      <Box data-testid="CollectionSearchFilters"
+        sx={{
+          '& [class*="Text-root"] b': {
+            fontWeight: 500
+          }
+        }}
+        {...sidekick(sidekickLookup)}>
         {introText ? (
           <ContentModule
             {...introText}
@@ -56,14 +62,15 @@ const Filters = styled(RefinementList, {
   },
   '& .ais-RefinementList-label': {
     ...theme.typography.body3,
-    lineHeight: 1.6
+    lineHeight: 1.1425
   },
   '& .ais-RefinementList-checkbox': {
     width: theme.spacing(2),
     height: theme.spacing(2),
+    marginLeft: 0,
     marginRight: theme.spacing(1),
     accentColor: theme.palette.midnight.A20
-  },
+  }
 }));
 
 export default CollectionSearchFilters;
