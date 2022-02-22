@@ -279,12 +279,19 @@ const createSchemeTheme = (schemeKey?: string) => {
                 fontSize: '1rem',
                 lineHeight: 1.5
               },
+
               '& li::marker': {
                 fontSize: '1rem'
               },
+
               '& [class*=Media-embedRoot]': {
                 aspectRatio: '16/9'
-              }
+              },
+
+              // Removes extra <br> tag being added by Contentful
+              '& > br:last-child': {
+                display: 'none'
+              },
             }
           }
         },
