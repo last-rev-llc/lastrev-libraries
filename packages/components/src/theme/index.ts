@@ -175,7 +175,8 @@ const baseTheme = {
     },
     common: {
       black: '#00030B',
-      white: '#FFFFFF'
+      white: '#FFFFFF',
+      contrastText: '#00324A'
     },
     background: {
       default: '#FFFFFF',
@@ -208,13 +209,13 @@ const baseTheme = {
     yellow: {
       main: '#FFD12B',
       light: '#FFE173',
-      contrastText: '#00030B',
+      contrastText: '#00324A'
     },
     aqua: {
       main: '#00D1C0',
       light: '#36E0D2',
       dark: '#00B7A9',
-      contrastText: '#00030B'
+      contrastText: '#00324A'
     },
     periwinkle: {
       main: '#596FFF',
@@ -227,7 +228,7 @@ const baseTheme = {
       main: '#C3DCDE',
       light: '#D3EBED',
       lighter: '#E3F1F2',
-      contrastText: '#00030B'
+      contrastText: '#00324A'
     }
   }
 };
