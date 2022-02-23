@@ -4,7 +4,7 @@
   "globalDependencies": [".env", "**/.env", "$TURBO_CACHE_KEY"],
   "pipeline": {
     "dev": {
-      "dependsOn": [],
+      "dependsOn": ["^build"],
       "cache": false
     },
     "storybook": {

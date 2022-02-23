@@ -6,6 +6,8 @@ jobs:
   test:
     if: github.actor != 'dependabot'
     runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
 
     steps:
       - name: Checkout Repo
