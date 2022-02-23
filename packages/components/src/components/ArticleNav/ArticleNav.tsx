@@ -30,9 +30,11 @@ export const ArticleNav = ({ sideNav }: ArticleNavProps) => {
           <ScrollSpy handleScroll={onScrollUpdate} />
           <Root data-testid="ArticleNav">
             {/* TODO: Use localization lookup for this overline (IAS-117) */}
-            <Typography variant="overline">
-              Contents
-            </Typography>
+            {sideNav.length > 0 ? (
+              <Typography variant="overline">
+                Contents
+              </Typography>
+            ) : null}
 
             <Box component="ul" p={0}
               data-testid="ArticleNav-list"
