@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  Configure,
-  RefinementList
-} from 'react-instantsearch-dom';
+import { Configure, RefinementList } from 'react-instantsearch-dom';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
@@ -18,7 +15,8 @@ interface FilterItem {
 export const CollectionSearchFilters = ({ introText, sidekickLookup }: CollectionProps) => {
   return (
     <ErrorBoundary>
-      <Box data-testid="CollectionSearchFilters"
+      <Box
+        data-testid="CollectionSearchFilters"
         sx={{
           '& [class*="Text-root"] b': {
             fontWeight: 500
@@ -32,17 +30,19 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup }: Collectio
             data-testid="CollectionSearchFilters-introText"
           />
         ) : null}
-        <Filters attribute="categories"
+        <Filters
+          attribute="categories"
           transformItems={(items: Array<FilterItem>) =>
-            items.map(item => {
-              return ({
-              ...item,
-              label: item.label,
-              count: `(${item.count})`
-            })})
+            items.map((item) => {
+              return {
+                ...item,
+                label: item.label,
+                count: `(${item.count})`
+              };
+            })
           }
         />
-        <Configure hitsPerPage={8} />
+        <Configure hitsPerPage={8} facetingAfterDistinct={true} />
       </Box>
     </ErrorBoundary>
   );
@@ -50,7 +50,7 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup }: Collectio
 
 const Filters = styled(RefinementList, {
   name: 'CollectionSearchFilters',
-  slot: 'RefinementList',
+  slot: 'RefinementList'
 })(({ theme }) => ({
   '& .ais-RefinementList-list': {
     listStyle: 'none',
