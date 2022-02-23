@@ -14,7 +14,8 @@ import Text from '@last-rev/component-library/dist/components/Text/Text';
 import Media from '@last-rev/component-library/dist/components/Media/Media';
 import '@algolia/autocomplete-theme-classic';
 import NavigationItem from '../src/components/NavigationItem';
-
+import SearchBox from '../src/components/SearchBox';
+import AutocompleteBox from '../src/components/AutocompleteBox';
 import CollectionFiltered from '../src/components/CollectionFiltered';
 import Quote from '../src/components/Quote';
 import Footer from '../src/components/Footer';
@@ -35,7 +36,9 @@ const contentMapping = {
   'Text:article': ArticleText,
   Media,
   Link,
-  Hero
+  Hero,
+  'ModuleIntegration:search-box': SearchBox,
+  'ModuleIntegration:autocomplete-search-box': AutocompleteBox
 };
 
 const StorybookWrapper = (storyFn) => {

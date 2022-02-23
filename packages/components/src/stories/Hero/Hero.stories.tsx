@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Hero, { HeroProps } from '@last-rev/component-library/dist/components/Hero/Hero';
-import heroMock, { productMock, solutionMock, backgroundMock, heightMediumMock, heightShortMock } from './Hero.mock';
+import { defaultHeroMock, alignLeftMock, alignCenterMock, heightShortMock, heightMediumMock } from './Hero.mock';
 
 export default {
   title: 'Modules / Hero',
@@ -14,10 +14,20 @@ export default {
       name: 'Variant',
       control: {
         type: 'inline-radio',
-        options: ['default', 'gradient-background', 'Height - Short']
+        options: ['Align - Left', 'Align - Center']
       },
       table: {
-        defaultValue: { summary: 'standard' }
+        defaultValue: { summary: 'Align - Left' }
+      }
+    },
+    contentHeight: {
+      name: 'Content Height',
+      control: {
+        type: 'inline-radio',
+        options: ['sm', 'md', 'lg']
+      },
+      table: {
+        defaultValue: { summary: 'lg' }
       }
     },
     title: { name: 'Title' },
@@ -28,7 +38,6 @@ export default {
     backgroundColor: { name: 'Background Color' },
     actions: { name: 'Actions' },
     contentWidth: { name: 'Content Width' },
-    contentHeight: { name: 'Content Height' },
     id: { table: { disable: true } },
     sidekickLookup: { table: { disable: true } },
     internalTitle: { table: { disable: true } },
@@ -39,16 +48,13 @@ export default {
 const Template = (args: HeroProps) => <Hero {...args} />;
 
 export const Default = Template.bind({});
-Default.args = { ...heroMock };
+Default.args = { ...defaultHeroMock };
 
-export const Product = Template.bind({});
-Product.args = { ...productMock };
+export const AlignLeft = Template.bind({});
+AlignLeft.args = { ...alignLeftMock };
 
-export const Solution = Template.bind({});
-Solution.args = { ...solutionMock };
-
-export const BackgroundOnly = Template.bind({});
-BackgroundOnly.args = { ...backgroundMock };
+export const AlignCenter = Template.bind({});
+AlignCenter.args = { ...alignCenterMock };
 
 export const HeightMedium = Template.bind({});
 HeightMedium.args = { ...heightMediumMock };

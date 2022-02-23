@@ -1,8 +1,39 @@
 import { Theme } from '@mui/material/styles';
 
+// Default, so redundant
+export const alignLeftHeroVariant = (_: Theme) => ({
+  props: {
+    variant: 'Align - Left'
+  },
+  style: {
+      '& .MuiGrid-container': {
+        justifyContent: 'flex-start'
+      },
+
+      '& .MuiTypography-root': {
+      textAlign: 'left'
+    }
+  }
+});
+
+export const alignCenterHeroVariant = (_: Theme) => ({
+  props: {
+    variant: 'Align - Center'
+  },
+  style: {
+      '& .MuiGrid-container': {
+        justifyContent: 'center'
+      },
+
+      '& .MuiTypography-root': {
+      textAlign: 'center'
+    }
+  }
+});
+
 export const heightMediumHeroVariant = (theme: Theme) => ({
   props: {
-    variant: 'Height - Med'
+    contentHeight: 'md'
   },
   style: {
     'minHeight': 'unset',
@@ -11,18 +42,11 @@ export const heightMediumHeroVariant = (theme: Theme) => ({
       paddingTop: theme.spacing(1.5)
     },
 
-      // TODO: Create variant for centered content? (homepage)
-      // '& .MuiGrid-container': {
-      //   justifyContent: 'center'
-      // },
-
       '& .MuiTypography-body1': {
         ...theme.typography.body2
       },
 
       '& .MuiTypography-root': {
-      // TODO: Create variant for centered content? (homepage)
-      // textAlign: 'center',
 
       '& .MuiLink-root': {
         textDecoration: 'underline',
@@ -38,7 +62,7 @@ export const heightMediumHeroVariant = (theme: Theme) => ({
 
 export const heightShortHeroVariant = (theme: Theme) => ({
   props: {
-    variant: 'Height - Short'
+    contentHeight: 'sm'
   },
   style: {
     'background': theme.palette.background.paper,
@@ -92,7 +116,12 @@ export const heightShortHeroVariant = (theme: Theme) => ({
   }
 });
 
-export const heroVariants = [heightMediumHeroVariant, heightShortHeroVariant];
+export const heroVariants = [
+  alignLeftHeroVariant,
+  alignCenterHeroVariant,
+  heightMediumHeroVariant,
+  heightShortHeroVariant
+];
 
 const createHeroVariants = (theme: Theme) => {
   return heroVariants.map((creator) => creator(theme));

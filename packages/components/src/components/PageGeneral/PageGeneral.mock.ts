@@ -52,7 +52,7 @@ export const pageGeneralMock = () => {
         contentId: '6hdImKPtzJI2dn7nhezT1i',
         contentTypeId: 'hero'
       },
-      variant: 'Height - Med',
+      variant: 'Align - Center',
       internalTitle: 'Homepage: Hero [LAST REV DEMO]',
       title: 'How can we help you?',
       subtitle: null,
