@@ -373,14 +373,6 @@ const createSchemeTheme = (schemeKey?: string) => {
               '& > [class*="Section-backgroundMedia"]': {
                 zIndex: -1
               },
-            },
-
-            contentContainer: {
-              padding: baseSchemeTheme.spacing(3, 10),
-
-              [baseSchemeTheme.breakpoints.down('sm')]: {
-                padding: baseSchemeTheme.spacing(3)
-              }
             }
           }
         },
@@ -414,9 +406,18 @@ const createSchemeTheme = (schemeKey?: string) => {
               }
             },
             h2: {
+              [baseSchemeTheme.breakpoints.up('md')]: {
+                marginBottom: baseSchemeTheme.spacing(3)
+              },
+
               [baseSchemeTheme.breakpoints.down('md')]: {
                 fontSize: 30,
                 lineHeight: '42px'
+              }
+            },
+            h3: {
+              [baseSchemeTheme.breakpoints.up('md')]: {
+                marginBottom: baseSchemeTheme.spacing(3)
               }
             }
           }

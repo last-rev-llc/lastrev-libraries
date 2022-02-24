@@ -117,6 +117,7 @@ export const ContentTypes_Fragments = gql`
       typography
     }
     settings
+    styles
     introText {
       ...Content_Base
       body {

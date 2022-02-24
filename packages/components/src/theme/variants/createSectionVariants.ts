@@ -10,13 +10,25 @@ export const defaultSectionVariant = (theme: Theme) => ({
       padding: theme.spacing(10, 0),
       textAlign: 'center'
     },
-    '.MuiTypography-root': {
-      marginBottom: theme.spacing(3)
-    },
+
     '[class*=Text-root] .MuiTypography-body1': {
-      marginBottom: theme.spacing(3),
-      fontSize: '1.125rem',
-      lineHeight: 1.5555
+      ...theme.typography.body1,
+      marginBottom: theme.spacing(3)
+    }
+  }
+});
+
+export const defaultSectionWhiteVariant = (theme: Theme) => ({
+  props: {
+    backgroundColor: 'common.white'
+  },
+  style: {
+    '& [class*=Text-root] h5': {
+      color: theme.palette.midnight,
+
+      'a': {
+        color: theme.palette.primary.dark
+      }
     }
   }
 });
@@ -95,7 +107,8 @@ const textVariants = [
   defaultSectionVariant,
   fiftyFiftyVariant,
   twoThirdsVariant,
-  statementWithIconVariant
+  statementWithIconVariant,
+  defaultSectionWhiteVariant
 ];
 
 const createTextVariants = (theme: Theme) => {

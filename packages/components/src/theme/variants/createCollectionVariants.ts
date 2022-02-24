@@ -5,9 +5,6 @@ export const fourPerRowCollection = (theme: Theme) => ({
     variant: 'four-per-row'
   },
   style: {
-    marginTop: theme.spacing(4),
-    marginBottom: theme.spacing(4),
-
     '[class*="Section-root"] > [class*="Section-gridContainer"]': {
       gridTemplateColumns: 'repeat(1, 1fr)',
 
