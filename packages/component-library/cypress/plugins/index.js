@@ -45,9 +45,7 @@ module.exports = (on, config) => {
         return webpackConfig;
       }
     });
-
   }
-
 
   return config;
 };

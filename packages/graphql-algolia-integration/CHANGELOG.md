@@ -1,5 +1,11 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.4
+
+### Patch Changes
+
+- 577773e: fixed a bug where second attempt to parse domainUrl from event fails in algolia function
+
 ## 0.1.3
 
 ### Patch Changes
