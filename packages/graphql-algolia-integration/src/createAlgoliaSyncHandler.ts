@@ -7,8 +7,7 @@ import groupAlgoliaObjectsByIndex from './groupAlgoliaObjectsByIndex';
 import performAlgoliaQuery from './performAlgoliaQuery';
 import updateAlgoliaIndices from './updateAlgoliaIndices';
 import logger from 'loglevel';
-
-const domainUrlRegex = /^(https?:\/\/[^\/]*)/gim;
+import extractDomainUrlFromEvent from './extractDomainUrlFromEvent';
 
 const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, maxRecords?: number) => {
   const { algolia, logLevel } = config;
@@ -24,8 +23,7 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
         return;
       }
 
-      const domainUrlArr = domainUrlRegex.exec(event.rawUrl);
-      const domainUrl = domainUrlArr && domainUrlArr[1];
+      const domainUrl = extractDomainUrlFromEvent(event);
 
       const uri = graphQlUrl.startsWith('/') ? `${domainUrl}${graphQlUrl}` : graphQlUrl;
 
