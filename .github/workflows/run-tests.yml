@@ -38,4 +38,4 @@ jobs:
         run: "yarn test:unit"
 
       - name: Run the e2e tests
-        run: "yarn test:e2e"
+        run: "yarn test:e2e --scope @ias/components"

@@ -8,7 +8,9 @@
     "build:post": "yarn gen:sitemap && rm -rf out/404 && cp out/en-US/index.html out/index.html && cp -R out/en-US/* out/",
     "gen:sitemap": "node scripts/generateSitemap.js",
     "lint": "next lint",
-    "serve": "serve out"
+    "serve": "serve out",
+    "cypress:open": "cypress open",
+    "test:e2e:web": "cross-env NODE_ENV=test percy exec -- cypress run"
   },
   "peerDependencies": {},
   "dependencies": {
@@ -39,6 +41,10 @@
   "devDependencies": {
     "@ias/graphql-extensions": "0.1.0",
     "@ias/graphql-runner": "0.1.0",
-    "@next/bundle-analyzer": "^12.0.7"
+    "@next/bundle-analyzer": "^12.0.7",
+    "@percy/cli": "^1.0.0-beta.73",
+    "@percy/cypress": "^3.1.1",
+    "cypress": "^9.4.1",
+    "netlify-plugin-cypress": "^2.2.0"
   }
 }

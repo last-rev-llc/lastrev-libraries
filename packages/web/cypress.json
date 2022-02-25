@@ -1,1 +1,9 @@
-{}
+{
+  "viewportWidth": 1440,
+  "viewportHeight": 900,
+  "baseUrl": "http://localhost:3000",
+  "retries": {
+    "runMode": 2,
+    "openMode": 0
+  }
+}

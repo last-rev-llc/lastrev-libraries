@@ -28,7 +28,7 @@
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
     "propagate:env": "node scripts/propagateEnv.js",
     "serve:site": "yarn workspace @ias/web serve",
-    "start": "run-s build serve",
+    "start": "run-s build serve:site",
     "storybook": "lerna run storybook",
     "sync:cms": "yarn workspace @ias/graphql-runner sync:cms",
     "test": "run-s test:unit test:e2e",

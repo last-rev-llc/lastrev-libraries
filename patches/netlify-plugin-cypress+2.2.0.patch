@@ -1,0 +1,136 @@
+diff --git a/node_modules/netlify-plugin-cypress/manifest.yml b/node_modules/netlify-plugin-cypress/manifest.yml
+index adefa25..8b3869f 100644
+--- a/node_modules/netlify-plugin-cypress/manifest.yml
++++ b/node_modules/netlify-plugin-cypress/manifest.yml
+@@ -6,6 +6,9 @@ inputs:
+     description: Run tests against the preview or production deploy
+     default: true
+
++  - name: baseFolder
++    description: Change the base folder from which the Cypress commands are ran
++
+   # Cypress comes with built-in Electron browser
+   # and this NPM package installs Chromium browser
+   - name: browser
+@@ -15,6 +18,9 @@ inputs:
+   - name: configFile
+     description: Path to the Cypress config file to use
+
++  - name: start
++    description: Command to run before testing
++
+   - name: record
+     description: Record test results to Cypress Dashboard
+     default: false
+diff --git a/node_modules/netlify-plugin-cypress/src/onPostBuild.js b/node_modules/netlify-plugin-cypress/src/onPostBuild.js
+index 8a35b9e..9695df9 100644
+--- a/node_modules/netlify-plugin-cypress/src/onPostBuild.js
++++ b/node_modules/netlify-plugin-cypress/src/onPostBuild.js
+@@ -26,6 +26,7 @@ async function postBuild({
+   configFile,
+   errorCallback,
+   summaryCallback,
++  baseFolder
+ }) {
+   const port = 8080
+   let server
+@@ -58,6 +59,7 @@ async function postBuild({
+     tag,
+     browser,
+     configFile,
++    baseFolder,
+   )
+
+   if (closeServer) {
+@@ -135,5 +137,6 @@ module.exports = async ({ inputs, constants, utils }) => {
+     configFile,
+     errorCallback,
+     summaryCallback,
++    baseFolder: inputs.baseFolder
+   })
+ }
+diff --git a/node_modules/netlify-plugin-cypress/src/onSuccess.js b/node_modules/netlify-plugin-cypress/src/onSuccess.js
+index c19e221..6fa7083 100644
+--- a/node_modules/netlify-plugin-cypress/src/onSuccess.js
++++ b/node_modules/netlify-plugin-cypress/src/onSuccess.js
+@@ -6,11 +6,29 @@ const {
+   runCypressTests,
+   processCypressResults,
+   hasRecordKey,
++  startServerMaybe,
++  waitOnMaybe
+ } = require('./utils')
+ const { DEFAULT_BROWSER } = require('./constants')
+
+ module.exports = async ({ utils, inputs, constants }) => {
+   debugVerbose('onSuccess arg %o', { utils, inputs, constants })
++  const {
++    start,
++    waitOn,
++    waitOnTimeout,
++  } = inputs;
++
++  debug('onSuccess:start', { start, waitOn, waitOnTimeout })
++  let closeServer
++
++  if (start) {
++    closeServer = startServerMaybe(utils.run, { start })
++    await waitOnMaybe(utils.build, {
++      'wait-on': waitOn,
++      'wait-on-timeout': waitOnTimeout,
++    })
++  }
+
+   // extract test run parameters
+   const onSuccessInputs = R.omit(['preBuild', 'postBuild'], inputs || {})
+@@ -67,6 +85,7 @@ module.exports = async ({ utils, inputs, constants }) => {
+     tag,
+   })
+
++  const baseFolder = inputs.baseFolder
+   const configFile = onSuccessInputs.configFile
+
+   console.log('testing deployed url %s', deployPrimeUrl)
+@@ -78,6 +97,7 @@ module.exports = async ({ utils, inputs, constants }) => {
+     tag,
+     browser,
+     configFile,
++    baseFolder,
+   )
+   processCypressResults(results, errorCallback, summaryCallback)
+ }
+diff --git a/node_modules/netlify-plugin-cypress/src/utils.js b/node_modules/netlify-plugin-cypress/src/utils.js
+index c4425f7..7fd011a 100644
+--- a/node_modules/netlify-plugin-cypress/src/utils.js
++++ b/node_modules/netlify-plugin-cypress/src/utils.js
+@@ -6,6 +6,7 @@ const fs = require('fs')
+ const { stripIndent } = require('common-tags')
+ const { ping } = require('./ping')
+ const { PLUGIN_NAME } = require('./constants')
++const path = require('path')
+
+ const getBrowserPath = async () => {
+   const browserFetcher = puppeteer.createBrowserFetcher()
+@@ -122,6 +123,7 @@ async function runCypressTests(
+   tag,
+   browser,
+   configFile,
++  baseFolder
+ ) {
+   if (!isValidBrowser(browser)) {
+     throw new Error(`Invalid browser name "${browser}"`)
+@@ -149,8 +151,14 @@ async function runCypressTests(
+     tag,
+     ciBuildId,
+     browser: browserPath,
++    configFile,
++    baseFolder
+   })
+
++  if (baseFolder) {
++    process.chdir(path.resolve(baseFolder))
++  }
++
+   return await cypress.run({
+     config: {
+       baseUrl,
