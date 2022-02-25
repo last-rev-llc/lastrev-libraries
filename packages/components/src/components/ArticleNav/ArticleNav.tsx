@@ -71,7 +71,7 @@ const Root = styled(Box, {
   slot: 'Root',
 })<{}>(({ theme }) => ({
   position: 'sticky',
-  top: 25,
+  top: 140,
   padding: theme.spacing(1, 0, 3),
 }));
 
@@ -81,7 +81,7 @@ const NavLink = styled(Typography, {
 })<TypographyProps<React.ElementType>>(({ theme }) => ({
   borderLeft: '2px solid transparent',
   fontSize: 15,
-  lineHeight: '18px',
+  lineHeight: 1.2,
 
   '& a': {
     color: theme.palette.midnight.A70,
