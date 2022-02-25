@@ -24,7 +24,7 @@ export default {
       name: 'Content Height',
       control: {
         type: 'inline-radio',
-        options: ['sm', 'md', 'lg']
+        options: { 'Small': 'sm', 'Medium': 'md', 'Large': 'lg' }
       },
       table: {
         defaultValue: { summary: 'lg' }

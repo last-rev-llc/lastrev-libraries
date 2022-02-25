@@ -127,21 +127,21 @@ export const defaultHeroMock = {
 export const alignLeftMock = {
   ...defaultHeroMock,
   variant: 'Align - Left',
-  contentHeight: 'md'
+  contentHeight: 'Medium'
 };
 
 export const alignCenterMock = {
   ...defaultHeroMock,
   variant: 'Align - Center',
-  contentHeight: 'md'
+  contentHeight: 'Medium'
 };
 
 export const heightShortMock = {
   ...defaultHeroMock,
-  contentHeight: 'sm'
+  contentHeight: 'Small'
 };
 
 export const heightMediumMock = {
   ...defaultHeroMock,
-  contentHeight: 'md'
+  contentHeight: 'Medium'
 };
