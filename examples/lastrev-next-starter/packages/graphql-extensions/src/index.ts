@@ -3,6 +3,7 @@ import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { Source, DocumentNode, GraphQLSchema } from 'graphql';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
+import { typeDefs as algoliaTypeDefs } from '@last-rev/graphql-algolia-integration';
 
 import {
   Card,
@@ -21,6 +22,7 @@ import * as Text from './Text';
 import * as Quote from './Quote';
 import * as Person from './Person';
 import * as Header from './Header';
+import * as CustomBlog from './Blog';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -46,9 +48,11 @@ Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloConte
 };
 
 const extensions: GraphQlExtension[] = [
+  { typeDefs: algoliaTypeDefs },
   Card,
   Collection,
   Blog,
+  CustomBlog,
   Hero,
   Header,
   Link,

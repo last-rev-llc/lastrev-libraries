@@ -315,6 +315,17 @@ type Page implements Content {
   hero: Hero
   contents: [Content]
 }
+type AlgoliaObject {
+  index: String!
+  data: JSON!
+}
+type AlgoliaRecord implements Content {
+  id: String
+  theme: [Theme]
+  animation: JSON
+  sidekickLookup: JSON
+  algoliaObjects: [AlgoliaObject]
+}
 type CollectionOptions {
   tags: [Option]
   topics: [Option]
