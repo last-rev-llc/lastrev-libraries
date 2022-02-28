@@ -1,9 +1,16 @@
 name: Run Next Starter Example page tests and build
 
 on: 
- pull_request:
-  paths:
-   - 'examples/lastrev-next-starter/**'
+  push:
+    branches:    
+          - 'main'
+    paths:
+      - 'examples/lastrev-next-starter/**'
+  pull_request:
+    branches-ignore:    
+      - 'dependabot/**'
+    paths:
+      - 'examples/lastrev-next-starter/**'  
 
 jobs:
   test:
