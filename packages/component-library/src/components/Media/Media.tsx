@@ -35,9 +35,18 @@ export interface MediaProps {
   q?: number;
   unoptimized?: boolean;
 }
+export interface MediaVideoProps {
+  variant?: string;
+  file?: File;
+  title?: string;
+  sidekickLookup?: string;
+  sx?: any;
+  testId?: string;
+  controls?: boolean;
+}
 
 export interface MediaOverrides {}
-const Media = (inProps: MediaProps) => {
+const Media = (inProps: MediaProps & MediaVideoProps) => {
   const props = useThemeProps({
     name: 'Media',
     props: inProps
@@ -68,8 +77,7 @@ const Media = (inProps: MediaProps) => {
           preload="auto"
           data-testid={testId || 'Media'}
           {...props}
-          sx={{ width: '100%', height: '100%', ...props.sx }}
-        >
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>
