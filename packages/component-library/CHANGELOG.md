@@ -1,5 +1,13 @@
 # @last-rev/component-library
 
+## 0.3.9
+
+### Patch Changes
+
+- f3fe612: Add basic video support for Media content module
+- Updated dependencies [e657cb0]
+  - @last-rev/contentful-sidekick-util@0.1.0
+
 ## 0.3.8
 
 ### Patch Changes
