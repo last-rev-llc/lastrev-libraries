@@ -6,15 +6,15 @@ export type SidekickData = {
 };
 
 export type ContentData = {
-  contentId?: string,
-  fieldName?: string,
-  contentTypeId?: string,
-  displayText?: string
+  contentId?: string;
+  fieldName?: string;
+  contentTypeId?: string;
+  displayText?: string;
 };
 
 export interface SidekickProps {
-  contentData?: string | ContentData,
-  fieldName?: string,
-  contentTypeId?: string,
-  displayText?: string
+  contentData?: string | ContentData;
+  fieldName?: string;
+  contentTypeId?: string;
+  displayText?: string;
 }
