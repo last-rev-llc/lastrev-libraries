@@ -7,6 +7,8 @@ import contentMapping from '@lrns/components/src/contentMapping';
 
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 const site = process.env.SITE;
+const pagesRevalidate = parseInt(process.env.PAGES_REVALIDATE as string, 10);
+const revalidate = !isNaN(pagesRevalidate) ? pagesRevalidate : false;
 
 export type PageGetStaticPathsProps = {
   locales: string[];
@@ -38,17 +40,15 @@ export type PageStaticPropsProps = {
 export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) => {
   try {
     const path = join('/', (params.slug || ['/']).join('/'));
-
     const { data: pageData } = await client.Page({ path, locale, preview, site });
     if (!pageData) {
       throw new Error('NoPageFound');
     }
-
     return {
       props: {
         pageData
       },
-      revalidate: 60
+      revalidate
     };
   } catch (err: any) {
     if (err.name == 'FetchError') {
