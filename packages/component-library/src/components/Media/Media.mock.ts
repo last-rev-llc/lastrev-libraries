@@ -11,6 +11,17 @@ export const mediaMock = (): MediaProps => ({
   description: lorem.sentence()
 });
 
+export const mediaVideoMock = (): MediaProps => ({
+  file: {
+    url: './LastRev.mp4',
+    width: '1280',
+    height: '720'
+  },
+  variant: 'video',
+  title: lorem.sentence(),
+  description: lorem.sentence()
+});
+
 export const assetMock = (): Asset => ({
   file: {
     url: `https://testImage-${Date.now().toString()}-${lorem.word()}-${lorem.word()}/cmp.png?h=180&r=180`

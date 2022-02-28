@@ -55,6 +55,7 @@ const mount = (component, options) =>
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
         <ContentModuleProvider contentMapping={components}>
+          <base href="/public/" />
           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
           <CssBaseline />
           {component}
