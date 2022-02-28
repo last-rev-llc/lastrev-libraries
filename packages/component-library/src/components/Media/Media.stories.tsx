@@ -1,7 +1,7 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Media from './Media';
-import { mediaMock, responsiveMediaMock, SVGMediaMock, ExternalSVGMediaMock } from './Media.mock';
+import { mediaMock, mediaVideoMock, responsiveMediaMock, SVGMediaMock, ExternalSVGMediaMock } from './Media.mock';
 
 export default {
   title: '1. Primitives / LR / Media',
@@ -20,8 +20,7 @@ export default {
             width: '100%',
             height: '100%'
           }
-        }}
-      >
+        }}>
         {storyFn()}
       </Box>
     )
@@ -47,3 +46,6 @@ SVG.args = { ...ExternalSVGMediaMock };
 
 export const Responsive = Template.bind({});
 Responsive.args = { ...responsiveMediaMock };
+
+export const Video = Template.bind({});
+Video.args = { ...mediaVideoMock() };

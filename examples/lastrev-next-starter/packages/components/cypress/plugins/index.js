@@ -48,5 +48,13 @@ module.exports = (on, config) => {
       }
     });
   }
+
+  // Only run video recording in CI
+  // if we have a Cypress project id
+  if (!config.projectId) {
+    config.projectId = process.env.CYPRESS_PROJECT_ID;
+    config.video = !!process.env.CYPRESS_PROJECT_ID;
+  }
+
   return config;
 };

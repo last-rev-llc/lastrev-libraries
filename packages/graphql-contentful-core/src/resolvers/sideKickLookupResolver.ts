@@ -7,14 +7,19 @@ type SideKickLookup = {
   [fieldName: string]: string;
 };
 
+const emptyLookup: SideKickLookup = {
+  contentId: '',
+  contentTypeId: ''
+};
+
 export const sideKickLookupResolver =
   (displayType: string, typeMappings: TypeMappings) =>
-  async (content: any, _args: any, ctx: any, _info: any): Promise<SideKickLookup | null> => {
+  async (content: any, _args: any, ctx: any, _info: any): Promise<SideKickLookup> => {
     const contentTypeId = content?.sys?.contentType?.sys?.id;
 
     if (!contentTypeId) {
       // not a real content item. return null
-      return null;
+      return emptyLookup;
     }
 
     const { mappers } = ctx;

@@ -1,14 +1,16 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
 import Media, { MediaProps, File } from './Media';
-import { mediaMock, fileMock } from './Media.mock';
+import { mediaMock, mediaVideoMock, fileMock } from './Media.mock';
 
 let mockedContent: MediaProps = {};
 let mockedFile: File = { url: '' };
+let mockedVideo: MediaProps = {};
 
 beforeEach(() => {
   mockedContent = { ...mediaMock() };
   mockedFile = { ...fileMock() };
+  mockedVideo = { ...mediaVideoMock() };
 });
 
 describe('Media', () => {
@@ -19,6 +21,26 @@ describe('Media', () => {
         .should('exist')
         .and('have.attr', 'src', mockedContent.file.url)
         .and('have.attr', 'alt', mockedContent.title);
+      cy.percySnapshot();
+    });
+
+    it('renders file in a HTML5 video', () => {
+      mount(<Media {...mockedVideo} />);
+      cy.get('video[data-testid=Media]')
+        .should('exist')
+        .should('have.prop', 'paused', true)
+        .and('have.prop', 'ended', false)
+        .then(($video) => {
+          $video[0].play();
+        });
+      cy.get('video').should(($video) => {
+        expect($video[0].duration).to.be.gt(0);
+      });
+      cy.get('video').get('source').should('have.attr', 'src', mockedVideo.file.url);
+
+      cy.get('video').should('have.prop', 'paused', false).and('have.prop', 'ended', false);
+      cy.get('video', { timeout: 50000 }).and('have.prop', 'ended', true);
+
       cy.percySnapshot();
     });
 

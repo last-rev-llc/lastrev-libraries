@@ -16,10 +16,10 @@
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
-  
-[[plugins]]
-  package = "netlify-plugin-cypress"
-  [plugins.inputs]
-    record = true 
-    start = "yarn percy exec:start"
-    configFile = "packages/web/cypress.json"
+# Enable this plugin to run tests on Netlify
+#[[plugins]]
+#  package = "netlify-plugin-cypress"
+#  [plugins.inputs]
+#    record = true 
+#    start = "yarn percy exec:start"
+#    configFile = "packages/web/cypress.netlify.json"

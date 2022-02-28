@@ -7,6 +7,7 @@ import groupAlgoliaObjectsByIndex from './groupAlgoliaObjectsByIndex';
 import performAlgoliaQuery from './performAlgoliaQuery';
 import updateAlgoliaIndices from './updateAlgoliaIndices';
 import logger from 'loglevel';
+import extractDomainUrlFromEvent from './extractDomainUrlFromEvent';
 
 const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, maxRecords?: number) => {
   const { algolia, logLevel } = config;
@@ -14,13 +15,25 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
   logger.setLevel(logLevel);
 
   const algoliaClient = algoliasearch(algolia.applicationId, algolia.adminApiKey);
-  const apolloClient = new ApolloClient({
-    link: new HttpLink({ uri: graphQlUrl, fetch }),
-    cache: new InMemoryCache()
-  });
 
   return async (event: any) => {
     try {
+      if (!event) {
+        logger.error('no event object passed.');
+        return;
+      }
+
+      const domainUrl = extractDomainUrlFromEvent(event);
+
+      const uri = graphQlUrl.startsWith('/') ? `${domainUrl}${graphQlUrl}` : graphQlUrl;
+
+      logger.debug('requesting from URL:', uri);
+
+      const apolloClient = new ApolloClient({
+        link: new HttpLink({ uri, fetch }),
+        cache: new InMemoryCache()
+      });
+
       const body = event.body ? JSON.parse(event.body) : null;
       const headers = event?.headers;
 
@@ -54,10 +67,9 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
       const allErrors = [...queryErrors, ...updateErrors];
 
       if (allErrors.length) {
-        allErrors.map((error) => console.error(error));
+        allErrors.map((error) => logger.error(`Error syncing to Algolia: ${error.message || error}`));
         throw Error('There were some errors while syncing to Algolia. Please check the function logs for details.');
       }
-
       return {
         statusCode: 200,
         headers: { 'Content-Type': 'text/plain' },

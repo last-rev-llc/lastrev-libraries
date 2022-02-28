@@ -35,34 +35,65 @@ export interface MediaProps {
   q?: number;
   unoptimized?: boolean;
 }
+export interface MediaVideoProps {
+  variant?: string;
+  file?: File;
+  title?: string;
+  sidekickLookup?: string;
+  sx?: any;
+  testId?: string;
+  controls?: boolean;
+}
 
 export interface MediaOverrides {}
-const Media = (props: MediaProps) => {
-  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup, ...rest } = useThemeProps({
+const Media = (inProps: MediaProps & MediaVideoProps) => {
+  const props = useThemeProps({
     name: 'Media',
-    props
+    props: inProps
   });
+  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup } = props;
   // TODO: Add support for video
   const image = file;
   const alt = title;
   if (variant === 'embed') {
     return (
       <ErrorBoundary>
-        <EmbedRoot {...sidekick(sidekickLookup)} src={image?.url} {...rest} sx={{ width: '100%', height: '100%' }} />
+        <EmbedRoot
+          {...sidekick(sidekickLookup)}
+          {...props}
+          src={image?.url}
+          sx={{ width: '100%', height: '100%', ...props.sx }}
+          data-testid={testId || 'Media'}
+        />
       </ErrorBoundary>
     );
   }
 
+  if (variant === 'video') {
+    return (
+      <ErrorBoundary>
+        <VideoRoot
+          {...sidekick(sidekickLookup)}
+          preload="auto"
+          data-testid={testId || 'Media'}
+          {...props}
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
+          <source src={file?.url} />
+          Your browser does not support the video tag.
+        </VideoRoot>
+      </ErrorBoundary>
+    );
+  }
   if (fileTablet || fileMobile) {
     return (
       <ErrorBoundary>
         <ArtDirectedRoot
           {...sidekick(sidekickLookup)}
+          {...props}
           title={title}
           file={file}
           fileTablet={fileTablet}
           fileMobile={fileMobile}
-          {...rest}
           data-testid={testId || 'Media'}
         />
       </ErrorBoundary>
@@ -70,7 +101,7 @@ const Media = (props: MediaProps) => {
   }
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} src={image?.url} alt={alt} {...rest} data-testid={testId || 'Media'} />
+      <Root {...sidekick(sidekickLookup)} {...props} src={image?.url} alt={alt} data-testid={testId || 'Media'} />
     </ErrorBoundary>
   );
 };
@@ -82,20 +113,27 @@ const Root = styled(Image, {
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>``;
 
 const ArtDirectedRoot = styled(ArtDirectedImage, {
   name: 'Media',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>``;
 
 const EmbedRoot = styled('iframe', {
   name: 'Media',
   slot: 'EmbedRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>``;
+
+const VideoRoot = styled('video', {
+  name: 'Media',
+  slot: 'VideoRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.root]
+})<{ variant?: string }>``;
 
 export default Media;

@@ -194,7 +194,9 @@ const GridContainer = styled(Grid, {
   name: 'Section',
   slot: 'GridContainer',
   overridesResolver: (_, styles) => [styles.gridContainer]
-})(() => ({}));
+})(() => ({
+  zIndex: 1
+}));
 
 const GridItem = styled(Grid, {
   name: 'Section',

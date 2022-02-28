@@ -16,7 +16,7 @@ const args = process.argv.slice(2);
 const url = args.length === 1 && args[0];
 
 if (!url) {
-  console.error('You must provide the URL as an argument');
+  logger.error('You must provide the URL as an argument');
   process.exit(1);
 }
 

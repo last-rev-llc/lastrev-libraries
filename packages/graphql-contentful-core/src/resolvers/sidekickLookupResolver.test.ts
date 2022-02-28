@@ -68,6 +68,6 @@ describe('sideKickLookupResolver.ts', () => {
   it('returns an empty object if item is not really content', async () => {
     const resolved = await resolver({ some: 'other object ' }, {}, ctx, {});
 
-    expect(resolved).toBeNull();
+    expect(resolved).toEqual({ contentId: '', contentTypeId: '' });
   });
 });
