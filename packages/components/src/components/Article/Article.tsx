@@ -80,7 +80,7 @@ export const Article = ({
       {/* TODO: Create/add Topic Nav component
         * https://lastrev.atlassian.net/browse/IAS-96 */}
       <Box p={2} sx={{ backgroundColor: 'background.neutralGrey' }}>
-        <Container maxWidth={'xl'}>
+        <Container maxWidth="xl">
           <Grid container>
             <Grid item xs={12}>
               <Stack direction="row" spacing={4} py={2}
@@ -148,7 +148,7 @@ export const Article = ({
       <Container>
         <Grid container spacing={{ xs: 2, lg: 4 }}>
           <Grid item xs={2}
-            sx={{ display: { sm: 'none', md: 'flex' }}}
+            sx={{ display: { xs: 'none', md: 'flex' }}}
           >
             <Box>
               {sideNav ? (
@@ -160,7 +160,7 @@ export const Article = ({
             <ArticleWrap {...sidekick(sidekickLookup)} itemScope itemType="https://schema.org/Article" data-testid="Article">
 
               {title || pubDate || summary ? (
-                <Box data-testid="Article-head" mt={1}>
+                <Box data-testid="Article-head" mt={{ xs: 0, md: 1 }}>
                   <ArticleHead
                     title={title}
                     pubDate={pubDate}
