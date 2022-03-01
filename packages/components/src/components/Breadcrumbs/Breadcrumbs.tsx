@@ -53,7 +53,7 @@ const Root = styled(MuiBreadcrumbs, {
   name: 'Breadcrumbs',
   slot: 'root'
 })<{}>(({ theme }) => ({
-  padding: theme.spacing(2, 0),
+  padding: theme.spacing(1, 0, 2),
   fontSize: 15,
   fontWeight: 500,
   lineHeight: 1.125,

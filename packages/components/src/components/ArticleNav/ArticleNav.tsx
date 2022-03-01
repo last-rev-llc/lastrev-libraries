@@ -72,7 +72,7 @@ const Root = styled(Box, {
 })<{}>(({ theme }) => ({
   position: 'sticky',
   top: 140,
-  padding: theme.spacing(1, 0, 3),
+  paddingBottom: theme.spacing(3)
 }));
 
 const NavLink = styled(Typography, {
