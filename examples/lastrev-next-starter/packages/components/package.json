@@ -13,7 +13,8 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "test": "cross-env NODE_ENV=test percy exec --  cypress run-ct",
-    "cypress:open": "cross-env NODE_ENV=test cypress open-ct"
+    "cypress:open": "cross-env NODE_ENV=test cypress open-ct",
+    "postinstall": "cd ../../ && yarn postinstall"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
