@@ -299,6 +299,19 @@ export const articleMock = {
           nodeType: "paragraph"
         },
         {
+          nodeType: "embedded-entry-block",
+          content: [],
+          data: {
+            target: {
+              sys: {
+                id: "2H7DNx6cJsdfSQlKiwS8vx",
+                type: "Link",
+                linkType: "Entry"
+              }
+            }
+          }
+        },
+        {
           data: {},
           content: [
             {
@@ -986,6 +999,17 @@ export const articleMock = {
         {
           __typename: "Media",
           id: "6RNrkQImTH2iaDJc2dgKIz"
+        },
+        {
+          __typename: "Media",
+          id: "2H7DNx6cJsdfSQlKiwS8vx",
+          title: "Contentful Headless CMS (YouTube Video)",
+          variant: "embed",
+          file: {
+            url: "https://www.youtube.com/embed/bLKkG0_4Xc4",
+            extension: null,
+            fileName: null
+          }
         }
       ],
       assets: []

@@ -284,7 +284,9 @@ const createSchemeTheme = (schemeKey?: string) => {
               },
 
               '& [class*=Media-embedRoot]': {
-                aspectRatio: '16/9'
+                aspectRatio: '16/9',
+                margin: baseSchemeTheme.spacing(4, 0, 5),
+                border: 0
               },
 
               // Removes extra <br> tag being added by Contentful
