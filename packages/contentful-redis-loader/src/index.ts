@@ -1,11 +1,15 @@
 import DataLoader, { Options } from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import { compact, filter, negate, each, isEmpty, isError, isNil, isString, map, some, values, zipObject } from 'lodash';
+import { compact, filter, each, isEmpty, isError, isNil, isString, map, some, values, zipObject } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
 import { ItemKey, ContentfulLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
+
+const isContentfulError = (item: any) => {
+  return item?.sys?.type === 'Error';
+};
 
 const options: Options<ItemKey, any, string> = {
   cacheKeyFn: (key: ItemKey) => {
@@ -21,8 +25,13 @@ const parse = (r: string | Error | null): any => {
 };
 
 const stringify = (r: any) => {
-  if (!isNil(r) && !isError(r)) {
-    return JSON.stringify(r);
+  if (!isNil(r) && !isError(r) && !isContentfulError(r)) {
+    try {
+      return JSON.stringify(r);
+    } catch (err: any) {
+      logger.error(`stringify error`, err.message || err, err.stack, r?.sys?.id);
+      return '';
+    }
   }
   return '';
 };
@@ -47,7 +56,14 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     let timer = new Timer(`Fetched ${keys.length} ${dirname} from redis`);
     const redisKeys = keys.map((key) => getKey(key, dirname));
 
-    const unparsed = await client.mget(...redisKeys);
+    let unparsed: (string | null)[] = [];
+
+    try {
+      unparsed = await client.mget(...redisKeys);
+    } catch (err: any) {
+      logger.error(`Redis Loader: fetchAndSet(), mget()`, err.message || err, err.stack);
+      return [];
+    }
 
     const results = map(unparsed, parse);
 
@@ -72,7 +88,10 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       );
 
       // don't block
-      client.mset(toSet).then(() => logger.trace(timer.end()));
+      client
+        .mset(toSet)
+        .then(() => logger.trace(timer.end()))
+        .catch((err) => logger.error(`Redis Loader: fetchAndSet(), mset()`, err.message || err));
 
       each(keys, (key, index) => {
         if (isNil(results[index])) {
@@ -110,7 +129,14 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
     each(redisKeys, (k) => multi.smembers(k));
 
-    const multiResults = await multi.exec();
+    let multiResults: [Error | null, any][] = [];
+
+    try {
+      multiResults = await multi.exec();
+    } catch (err: any) {
+      logger.error(`Redis Loader: getBatchEntriesByContentTypeFetcher(), multi.exec()`, err.message || err);
+      return [];
+    }
 
     logger.trace(timer.end());
 
@@ -130,7 +156,21 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     if (cacheMissIds.length) {
       const sourceResults = await fallbackLoaders.entriesByContentTypeLoader.loadMany(cacheMissIds);
 
-      const filtered = filter(sourceResults, negate(isError));
+      const filtered = filter(sourceResults, (result, idx) => {
+        const hasError = isError(result) || isContentfulError(result);
+
+        if (hasError) {
+          logger.debug(
+            `Filtering due to error fetching entries by contentType: ${JSON.stringify(
+              result,
+              null,
+              2
+            )}. requested: ${JSON.stringify(cacheMissIds[idx], null, 2)}`
+          );
+          return false;
+        }
+        return true;
+      });
 
       timer = new Timer(`Set ${filtered.length} entries in redis`);
 
@@ -156,7 +196,11 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         multi
           .exec()
           .catch((e: any) => {
-            logger.error('error adding to redis', e);
+            logger.error(
+              `Redis Loader: getBatchEntriesByContentTypeFetcher(), multi.exec(), setting missed cache data`,
+              e.message || e,
+              e.stack
+            );
           })
           .then(() => logger.trace(timer.end()));
       }
