@@ -19,7 +19,7 @@ interface PageGeneralProps extends Omit<Page, '__typename'> {
 const PageGeneral = ({ header, hero, contents, footer, disableBackToTop, breadcrumbs }: PageGeneralProps) => {
   return (
     <>
-      <InstantSearch indexName={indexName} searchClient={searchClient}>
+      <InstantSearch indexName={indexName} searchClient={searchClient} stalledSearchDelay={500}>
         {header ? <ContentModule {...(header as any)} /> : null}
         {hero ? <ContentModule {...(hero as any)} /> : null}
         {breadcrumbs ? <Breadcrumbs breadcrumbs={breadcrumbs} /> : null}

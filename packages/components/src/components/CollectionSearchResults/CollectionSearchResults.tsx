@@ -8,6 +8,7 @@ import {
 import { SearchState, SearchResults } from 'react-instantsearch-core';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 import MuiPagination from '@mui/material/Pagination';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
@@ -22,8 +23,8 @@ interface HitProps {
   categoriesLinks: Array<string>;
 }
 
-// TODO: Search for proper type in Algolia
-function Hit(props: any) {
+// TODO: Find proper TS type in Algolia API
+const Hit = (props: any) => {
   const hit = props.hit as HitProps;
   const categories = hit.categories.map((category: string, idx: number) => ({
     text: category,
@@ -40,11 +41,23 @@ function Hit(props: any) {
       ) : null}
     </>
   );
-}
+};
 
-interface PaginationProps {
-  nbPages?: number;
-}
+const LoadingResults = () => {
+  return (
+    <React.Fragment>
+      <Typography variant="h5" mb={1}>
+        <Skeleton animation="wave" width="80%" />
+      </Typography>
+      <Skeleton animation="wave" height={12} width="92%" />
+      <Skeleton animation="wave" height={12} width="90%" />
+      <Box display="flex" mt={1}>
+        <Skeleton animation="wave" height={28} width={80} sx={{ marginRight: 2 }} />
+        <Skeleton animation="wave" height={28} width={60} />
+      </Box>
+    </React.Fragment>
+  );
+};
 
 const QueryTitle = connectStateResults((props) => {
   const searchState = props.searchState as SearchState;
@@ -57,21 +70,40 @@ const QueryTitle = connectStateResults((props) => {
   );
 });
 
-const StateResults = connectStateResults((props) => {
-  const searchState = props.searchState as SearchState;
-  const searchResults = props.searchResults as SearchResults;
+interface PaginationProps {
+  nbPages?: number;
+}
+
+const Pagination = connectPagination((props: PaginationProps) => {
   return (
-    searchState?.query && searchResults?.nbHits ? (
-      <Typography variant="body2" component="p">
-       {`${searchResults?.nbHits} results for ${searchState?.query}`}
-      </Typography>
+    props.nbPages !== undefined && props.nbPages > 0 ? (
+      <MuiPagination count={props.nbPages} variant="outlined" shape="rounded" />
     ) : null
   );
 });
 
-const Pagination = connectPagination((props: PaginationProps) => {
+const StateResults = connectStateResults((props) => {
+  const searchState = props.searchState as SearchState;
+  const searchResults = props.searchResults as SearchResults;
+  const isSearching = props.searching || props.isSearchStalled;
   return (
-    <MuiPagination count={props.nbPages} variant="outlined" shape="rounded" />
+    <>
+      {searchState?.query && !!searchResults?.nbHits && !isSearching && (
+        <Typography variant="body2" component="p">
+          {`${searchResults?.nbHits} results for ${searchState?.query}`}
+        </Typography>
+      )}
+      {isSearching && <LoadingResults />}
+      {!isSearching && searchResults.nbHits === 0 && (
+        <Typography variant="body2" component="p">
+          No results found
+        </Typography>
+      )}
+      <Box display={!isSearching && searchResults.nbHits !== 0 ? 'block' : 'none'}>
+        <HitList hitComponent={Hit} />
+        <Pagination />
+      </Box>
+    </>
   );
 });
 
@@ -91,8 +123,6 @@ export const CollectionSearchResults = ({
         ) : null}
         <QueryTitle />
         <StateResults />
-        <HitList hitComponent={Hit} />
-        <Pagination />
       </Box>
     </ErrorBoundary>
   );
