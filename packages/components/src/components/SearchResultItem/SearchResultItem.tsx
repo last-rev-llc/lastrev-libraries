@@ -77,10 +77,25 @@ const Root = styled(Box, {
 })<{ variant?: string }>(({ theme }) => ({
   '& mark': {
     // TODO: currently throwing: "TypeError: Cannot read properties of undefined (reading 'light')"
-    backgroundColor: theme.palette.yellow.light
+    // https://lastrev.atlassian.net/browse/IAS-249
+    // backgroundColor: theme.palette.yellow.light
+    backgroundColor: '#FFE173'
   },
+
   '& .MuiTypography-root': {
-    color: theme.palette.grey['100']
+    color: theme.palette.grey['900']
+  },
+
+  '& .MuiChip-root': {
+    // TODO: currently throwing: "TypeError: Cannot read properties of undefined (reading 'light')"
+    // https://lastrev.atlassian.net/browse/IAS-249
+    // backgroundColor: theme.palette.coolGrey.light,
+    backgroundColor: '#D3EBED',
+    color: theme.palette.text.primary,
+
+    '&:hover': {
+      backgroundColor: '#C3DCDE'
+    }
   }
 }));
 
