@@ -276,7 +276,11 @@ const createSchemeTheme = (schemeKey?: string) => {
               '& [class*="MuiTypography-body1"]': {
                 marginBottom: baseSchemeTheme.spacing(1),
                 fontSize: '1rem',
-                lineHeight: 1.5
+                lineHeight: 1.5,
+
+                '& [class*="MuiLink-root"]': {
+                  color: baseSchemeTheme.palette.periwinkle.dark
+                }
               },
 
               '& li::marker': {
