@@ -16,13 +16,12 @@ export const Preview_Query = gql`
       ...Section_Base
       ...Collection_Base
       ...Media_Base
-      ...Text_Base
       ...Card_Base
       ...Link_Base
       ...ModuleIntegration_Base
-      #...Person_Base
-      ...Article_Base
       ...RichText_TableFragment
+      ...Article_Page
+      ...CategoryArticle_Base
     }
   }
 `;

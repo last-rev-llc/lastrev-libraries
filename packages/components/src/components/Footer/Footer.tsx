@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import styled from '@mui/system/styled';
+import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
@@ -30,7 +30,7 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
       <Root {...sidekick(sidekickLookup)} sx={{ paddingTop: 12.5, paddingBottom: 12.5 }}>
         <Container maxWidth="xl">
           <Grid container spacing={{ xs: 6, md: 2 }} sx={{ width: '100%' }}>
-            <Grid item xs={12} md={2} sx={{ order: '1' }} data-testid='Footer-Logo'>
+            <Grid item xs={12} md={2} sx={{ order: '1' }} data-testid="Footer-Logo">
               {media && !!media.length && (
                 <Link
                   href={logoUrl || '/'}
@@ -43,12 +43,11 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
             <Grid item xs={1} sx={{ order: '1', display: { xs: 'none', md: 'block' } }} /> {/* spacer */}
             {navigationItems &&
               navigationItems?.map((navigationItem) => (
-                <Grid item xs={12} md={2} sx={{ order: '3' }} data-testid='Footer-Links-Column'>
+                <Grid item xs={12} md={2} sx={{ order: '3' }} data-testid="Footer-Links-Column" key={navigationItem.id}>
                   <List
                     data-testid="Footer-Navigation"
                     sx={{ width: '100%', display: 'flex', flexDirection: 'row', p: 0 }}>
                     <ListItem
-                      key={navigationItem.id}
                       data-testid="Footer-Navigation-Item"
                       sx={{ display: 'flex', flexDirection: 'column', p: 0 }}>
                       <ContentModule

@@ -8,9 +8,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
-import styled from '@mui/system/styled';
 import Drawer from '@mui/material/Drawer';
-import { alpha } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
 import Media, { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
@@ -221,7 +220,7 @@ const NavItem = styled(ListItem, {
   name: 'Header',
   slot: 'NavItem',
   overridesResolver: (_, styles) => [styles.root]
-})(({ theme }) => ({
+})<{}>(({ theme }) => ({
   'padding': theme.spacing(0, 1),
   'margin': 0,
   'height': '100%',
@@ -235,8 +234,7 @@ const NavItem = styled(ListItem, {
   '.MuiLink-root': {
     padding: theme.spacing(1),
     display: 'block',
-    fontSize: '15px',
-    lineHeight: '18px',
+    ...theme.typography.smallText,
     textDecoration: 'none',
     color: theme.palette.common.white,
     whiteSpace: 'nowrap'

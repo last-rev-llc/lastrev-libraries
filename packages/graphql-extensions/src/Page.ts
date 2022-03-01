@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
-import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
-
+import { getLocalizedField, getDefaultFieldValue } from '@last-rev/graphql-contentful-core';
+import { ApolloContext, ContentfulPathsGenerator } from '@last-rev/types';
+import createPath from './utils/createPath';
 import createType from './utils/createType';
 
 export const typeDefs = gql`
@@ -33,4 +33,23 @@ export const mappers: any = {
       }
     }
   }
+};
+
+const page: ContentfulPathsGenerator = async (pageItem, _loaders, defaultLocale, _locales, _preview = false, _site) => {
+  const slug = getDefaultFieldValue(pageItem, 'slug', defaultLocale);
+  const fullPath = createPath('', slug);
+
+  return {
+    [fullPath]: {
+      fullPath,
+      isPrimary: true,
+      contentId: pageItem?.sys?.id,
+      excludedLocales: [],
+      contentType: pageItem.sys.contentType.sys.id
+    }
+  };
+};
+
+export const pathsConfigs = {
+  page
 };

@@ -25,7 +25,7 @@ export const mappers: Mappers = {
           const richTextMd = await richTextFromMarkdown(tableValue, ((node: MarkdownNode) => {
             // Render <br> tags
             if (node.type === 'html') {
-              return  {
+              return {
                 nodeType: 'paragraph',
                 data: {},
                 content: [
@@ -50,7 +50,7 @@ export const mappers: Mappers = {
           }) as any);
           if (!richTextMd.content[0]) return;
           const [_title, headLimiter] = tableValue.trim().split('\n');
-          if (headLimiter.includes('| ---')) {
+          if (headLimiter && headLimiter.includes('| ---')) {
             const table = richTextMd.content[0];
             if (table.nodeType === 'table') {
               const tableHead: any = table.content[0];

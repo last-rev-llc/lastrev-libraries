@@ -4,13 +4,11 @@ import xss from 'xss';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { styled } from '@mui/material/styles';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
 import BackToTop from '@last-rev/component-library/dist/components/BackToTop/BackToTop';
 import { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
-import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { RichText } from '@last-rev/component-library/dist/components/Text/Text';
 
@@ -21,6 +19,7 @@ import Breadcrumbs from '../Breadcrumbs';
 import CategoryLinks from '../CategoryLinks';
 import RelatedLinks from '../RelatedLinks';
 import { sidekick } from '../../utils/sidekick';
+import TopicNavHorizontal from '../TopicNavHorizontal';
 
 export interface ArticleProps {
   __typename?: string;
@@ -40,6 +39,7 @@ export interface ArticleProps {
   header?: any;
   footer?: any;
   sidekickLookup?: any;
+  topicNavItems?: Array<LinkProps>;
 }
 
 export const Article = ({
@@ -57,6 +57,7 @@ export const Article = ({
   disableBackToTop,
   breadcrumbs,
   footerItems,
+  topicNavItems,
   sidekickLookup
 }: ArticleProps) => {
   const schemaData = {
@@ -77,95 +78,24 @@ export const Article = ({
 
       {header ? <ContentModule {...(header as any)} /> : null}
 
-      {/* TODO: Create/add Topic Nav component
-        * https://lastrev.atlassian.net/browse/IAS-96 */}
-      <Box p={2} sx={{ backgroundColor: 'background.neutralGrey' }}>
-        <Container maxWidth="xl">
-          <Grid container>
-            <Grid item xs={12}>
-              <Stack direction="row" spacing={4} py={2}
-                sx={{
-                  '& a': {
-                    paddingBottom: 0.5,
-                    '&:first-of-type': {
-                      cursor: 'default',
-                      borderBottom: '2px solid',
-                      borderBottomColor: 'background.integralOrange'
-                    }
-                  },
-                  '& a:hover': {
-                    color: 'background.integralOrange',
-                    textDecoration: 'none',
-                    transition: 'color 0.18s ease'
-                  }
-                }}
-              >
-                {/* TODO: get dynamically
-                  https://lastrev.atlassian.net/browse/IAS-96 */}
-                {[
-                  'Advertiser + Agency Solutions',
-                  'Product Guidance',
-                  'Publisher + Platforms Solutions',
-                  'Programmatic Solutions',
-                  'Billing Solutions',
-                  'More'
-                ].map((link, idx) => (
-                  <Link
-                    key={idx}
-                    sx={{
-                      fontSize: 15,
-                      fontWeight: 500,
-                      lineHeight: '18px',
-                      '@media (max-width: 768px)': {
-                        display: idx !== 0 ? 'none' : 'block'
-                      }
-                    }}
-                  >
-                    {link}
-                    {idx === 5 && (
-                      <ChevronLeftIcon
-                        fontSize="small"
-                        sx={{
-                          fill: 'background.integralOrange',
-                          margin: '-2px 0 0 4px',
-                          verticalAlign: 'top',
-                          transform: 'rotate(-90deg)'
-                        }}
-                      />
-                    )}
-                  </Link>
-                ))}
-              </Stack>
-            </Grid>
-          </Grid>
-        </Container>
-      </Box>
+      {topicNavItems && <TopicNavHorizontal navItems={topicNavItems} />}
 
-      {breadcrumbs ? (
-        <Breadcrumbs breadcrumbs={breadcrumbs} data-testid="Article-breadcrumbs" />
-      ) : null}
+      {breadcrumbs ? <Breadcrumbs breadcrumbs={breadcrumbs} data-testid="Article-breadcrumbs" /> : null}
 
       <Container>
         <Grid container spacing={{ xs: 2, lg: 4 }}>
-          <Grid item xs={2}
-            sx={{ display: { xs: 'none', md: 'flex' }}}
-          >
-            <Box>
-              {sideNav ? (
-                <ArticleNav sideNav={sideNav} data-testid="Article-sideNav" />
-              ) : null}
-            </Box>
+          <Grid item xs={2} sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Box>{sideNav ? <ArticleNav sideNav={sideNav} data-testid="Article-sideNav" /> : null}</Box>
           </Grid>
           <Grid item sm={12} md={10} lg={8}>
-            <ArticleWrap {...sidekick(sidekickLookup)} itemScope itemType="https://schema.org/Article" data-testid="Article">
-
+            <ArticleWrap
+              {...sidekick(sidekickLookup)}
+              itemScope
+              itemType="https://schema.org/Article"
+              data-testid="Article">
               {title || pubDate || summary ? (
                 <Box data-testid="Article-head" mt={{ xs: 0, md: 1 }}>
-                  <ArticleHead
-                    title={title}
-                    pubDate={pubDate}
-                    summary={summary}
-                  />
+                  <ArticleHead title={title} pubDate={pubDate} summary={summary} />
                 </Box>
               ) : null}
 
@@ -192,7 +122,7 @@ export const Article = ({
         </Grid>
       </Container>
 
-      {footerItems?.map(item => (
+      {footerItems?.map((item) => (
         <ContentModule
           key={item?.id}
           {...item}
@@ -216,7 +146,7 @@ const ArticleWrap = styled(Box, {
   backgroundColor: theme.palette.background.default,
   [theme.breakpoints.down('md')]: {
     paddingTop: theme.spacing(5)
-  },
+  }
 }));
 
 export default Article;

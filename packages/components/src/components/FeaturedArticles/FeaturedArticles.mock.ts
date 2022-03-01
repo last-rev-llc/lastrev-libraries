@@ -1,115 +1,95 @@
-import { lorem, datatype } from 'faker';
-import { capitalize } from 'lodash';
+import { mediaMock } from '../Media/Media.mock';
 
-import mockLink from '../../stories/Link/Link.mock';
-
-const articlesMock = [
-  {
-    id: datatype.uuid(),
-    media: {
-      __typename: 'Media',
-      file: {
-        url: './MockImage.jpg'
+export const articlesMock = {
+  articles: [
+    {
+      id: '4GEjeEoTyo0xGNVRgmGlRJ',
+      __typename: 'Card',
+      sidekickLookup: {
+        contentId: '4GEjeEoTyo0xGNVRgmGlRJ',
+        contentTypeId: 'article'
       },
-      alt: capitalize(lorem.words(2))
-    },
-    title: 'Lords Mobile Revenue Doubled to $90 Million',
-    body: {
-      __typename: 'Text',
-      json: {
-        nodeType: 'document',
-        data: {},
-        content: [
-          {
-            nodeType: 'paragraph',
-            data: {},
-            content: [
-              {
-                nodeType: 'text',
-                value:
-                  'The Q4 Data Digest from LRNS examines the most installed apps, trends in gaming, by category, geography, download and revenue.',
-                marks: [],
-                data: {}
-              }
-            ]
-          }
-        ]
+      variant: null,
+      media: [mediaMock()],
+      title:
+        'Proprietary Partner Integration Activation - All Partners [sample from site with bullets] [LAST REV DEMO]',
+      subtitle: null,
+      body: {
+        json: {
+          nodeType: 'document',
+          data: {},
+          content: [
+            {
+              nodeType: 'paragraph',
+              data: {},
+              content: [
+                {
+                  nodeType: 'text',
+                  value:
+                    'placeholder text for summary\n[internal note] this article is from https://support.integralads.com/s/article/Social-Intergration',
+                  data: {},
+                  marks: []
+                }
+              ]
+            }
+          ]
+        },
+        links: {
+          entries: [],
+          assets: []
+        }
+      },
+      pubDate: '2021-11-22',
+      actions: null,
+      link: {
+        id: '4GEjeEoTyo0xGNVRgmGlRJ',
+        __typename: 'Link',
+        href: '/article/proprietary-partner-integration-activation-all-partners-sample-from-site-demo'
       }
     },
-    link: { ...mockLink },
-  },
-  {
-    id: datatype.uuid(),
-    variant: 'standard-blog',
-    media: {
-      __typename: 'Media',
-      file: {
-        url: './MockImage.jpg'
+    {
+      id: '6wqLGnTcK9a4Vh5BRmt1wP',
+      __typename: 'Card',
+      sidekickLookup: {
+        contentId: '6wqLGnTcK9a4Vh5BRmt1wP',
+        contentTypeId: 'article'
       },
-      alt: capitalize(lorem.words(2))
-    },
-    title: 'Lords Mobile Revenue Doubled to $90 Million',
-    subtitle: 'app intelligence • march 2021',
-    body: {
-      __typename: 'Text',
-      json: {
-        nodeType: 'document',
-        data: {},
-        content: [
-          {
-            nodeType: 'paragraph',
-            data: {},
-            content: [
-              {
-                nodeType: 'text',
-                value:
-                  'The Q4 Data Digest from LRNS examines the most installed apps, trends in gaming, by category, geography, download and revenue.',
-                marks: [],
-                data: {}
-              }
-            ]
-          }
-        ]
-      }
-    },
-    link: { ...mockLink },
-  },
-  {
-    id: datatype.uuid(),
-    variant: 'standard-blog',
-    media: {
-      __typename: 'Media',
-      file: {
-        url: './MockImage.jpg'
+      variant: null,
+      media: [mediaMock()],
+      title: 'Article with 2 column grid for image and table [LAST REV DEMO] update ',
+      subtitle: null,
+      body: {
+        json: {
+          nodeType: 'document',
+          data: {},
+          content: [
+            {
+              nodeType: 'paragraph',
+              data: {},
+              content: [
+                {
+                  nodeType: 'text',
+                  value:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse auctor ligula a enim convallis, quis feugiat orci posuere. Praesent eu commodo nisl. Vestibulum eget ipsum in nulla sollicitudin lobortis. Donec sollicitudin ante et diam tristique, ac aliquam nibh fermentum.  Lorem',
+                  data: {},
+                  marks: []
+                }
+              ]
+            }
+          ]
+        },
+        links: {
+          entries: [],
+          assets: []
+        }
       },
-      alt: capitalize(lorem.words(2))
-    },
-    title: 'Lords Mobile Revenue Doubled to $90 Million',
-    subtitle: 'app intelligence • march 2021',
-    body: {
-      __typename: 'Text',
-      json: {
-        nodeType: 'document',
-        data: {},
-        content: [
-          {
-            nodeType: 'paragraph',
-            data: {},
-            content: [
-              {
-                nodeType: 'text',
-                value:
-                  'The Q4 Data Digest from LRNS examines the most installed apps, trends in gaming, by category, geography, download and revenue.',
-                marks: [],
-                data: {}
-              }
-            ]
-          }
-        ]
+      pubDate: '2021-12-08',
+      actions: null,
+      link: {
+        id: '6wqLGnTcK9a4Vh5BRmt1wP',
+        __typename: 'Link',
+        href: '/article/article-with-2-column-grid-for-image-and-table-last-rev-demo'
       }
-    },
-    link: { ...mockLink },
-  }
-];
-
-export default articlesMock;
+    }
+  ]
+};

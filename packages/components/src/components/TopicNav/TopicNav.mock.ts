@@ -1,122 +1,392 @@
-export const articleCategoriesMock = [
-  {
-    id: 'category1',
-    name: 'Category With Articles 1',
-    articles: [
-      {
-        id: 'article1',
-        title: 'Lorem Ipsum Dolor',
-        summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, dolor ut porta commodo, orci ipsum viverra odio, a varius massa augue quis dolor. Donec vitae est eget velit auctor pulvinar eget vitae urna. Etiam laoreet ex nec sapien placerat molestie. Fusce mattis sagittis massa sed tempor. Sed tincidunt sagittis mi vel congue. Donec semper fringilla facilisis. Aliquam fermentum orci quis enim molestie, imperdiet varius dui sagittis. Nulla quis est maximus, mollis tortor a, tincidunt leo.',
-        publishDate: new Date()
+export const topicNavMock = {
+  currentCategoryId: '38te5Dq59jRz5WjHv1E9mN',
+  navItems: [
+    {
+      id: '2026577784',
+      __typename: 'NavigationItem',
+      sidekickLookup: {
+        text: {
+          contentId: '2026577784',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'title'
+        },
+        subNavigation: {
+          contentId: '2026577784',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'categoryItems'
+        },
+        contentId: '2026577784',
+        contentTypeId: 'categoryArticle'
       },
-      {
-        id: 'article2',
-        title: 'Class aptent taciti sociosqu',
-        summary: 'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut eu porta velit, et imperdiet enim. Praesent id mattis mi, quis gravida velit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In vel tincidunt elit. Sed euismod quam ac ornare eleifend. Praesent posuere erat ligula, eget laoreet velit lacinia in. Sed quis ex lectus. Phasellus a nunc eget purus elementum tristique. Aenean lobortis, turpis ut tincidunt pulvinar, mi odio scelerisque dui, at pharetra nunc felis vitae erat. Etiam congue tellus ut sem iaculis, ac dictum magna luctus. Donec id massa mauris. Sed blandit, nisi auctor lacinia rhoncus, arcu enim tincidunt risus, et tincidunt odio nisi consequat nisi. Donec eu felis metus.',
-        publishDate: new Date()
-      }
-    ]
-  },
-  {
-    id: 'category2',
-    name: 'Category with Subcategories 1',
-    subcategories: [
-      {
-        id: 'childCategory1',
-        name: 'Child Category 1',
-        articles: [
-          {
-            id: 'article1',
-            title: 'Lorem Ipsum Dolor',
-            summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, dolor ut porta commodo, orci ipsum viverra odio, a varius massa augue quis dolor. Donec vitae est eget velit auctor pulvinar eget vitae urna. Etiam laoreet ex nec sapien placerat molestie. Fusce mattis sagittis massa sed tempor. Sed tincidunt sagittis mi vel congue. Donec semper fringilla facilisis. Aliquam fermentum orci quis enim molestie, imperdiet varius dui sagittis. Nulla quis est maximus, mollis tortor a, tincidunt leo.',
-            publishDate: new Date()
-          },
-          {
-            id: 'article2',
-            title: 'Class aptent taciti sociosqu',
-            summary: 'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut eu porta velit, et imperdiet enim. Praesent id mattis mi, quis gravida velit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In vel tincidunt elit. Sed euismod quam ac ornare eleifend. Praesent posuere erat ligula, eget laoreet velit lacinia in. Sed quis ex lectus. Phasellus a nunc eget purus elementum tristique. Aenean lobortis, turpis ut tincidunt pulvinar, mi odio scelerisque dui, at pharetra nunc felis vitae erat. Etiam congue tellus ut sem iaculis, ac dictum magna luctus. Donec id massa mauris. Sed blandit, nisi auctor lacinia rhoncus, arcu enim tincidunt risus, et tincidunt odio nisi consequat nisi. Donec eu felis metus.',
-            publishDate: new Date()
-          }
-        ]
+      variant: null,
+      text: 'FAQs',
+      href: '/topics/advertiser-agency-solutions/fa-qs',
+      summary: null,
+      image: null,
+      subNavigation: null
+    },
+    {
+      id: '38te5Dq59jRz5WjHv1E9mN',
+      __typename: 'NavigationItem',
+      sidekickLookup: {
+        text: {
+          contentId: '38te5Dq59jRz5WjHv1E9mN',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'title'
+        },
+        subNavigation: {
+          contentId: '38te5Dq59jRz5WjHv1E9mN',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'categoryItems'
+        },
+        contentId: '38te5Dq59jRz5WjHv1E9mN',
+        contentTypeId: 'categoryArticle'
       },
-      {
-        id: 'childCategory2',
-        name: 'Child Category 2',
-        articles: [
-          {
-            id: 'article3',
-            title: 'Vivamus et quam ut',
-            summary: 'Vivamus et quam ut eros tincidunt laoreet. Phasellus justo tortor, congue sit amet nibh iaculis, tristique aliquam risus. Sed tristique ac metus eu facilisis. Duis aliquet tincidunt sem nec aliquam. Aenean fermentum sagittis lorem, vel pellentesque purus mollis vel. Aliquam ornare dolor elementum dui tincidunt rutrum. Nunc laoreet dui id arcu aliquet tempus.',
-            publishDate: new Date()
+      variant: null,
+      text: 'Getting Started',
+      href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-getting-started',
+      summary: null,
+      image: null,
+      subNavigation: [
+        {
+          id: '2709011392',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '2709011392',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '2709011392',
+            contentTypeId: 'categoryArticle'
           },
-          {
-            id: 'article4',
-            title: 'Cras vel elementum felis',
-            summary: 'Cras vel elementum felis. Quisque eu tempus ligula, eu vehicula ex. Pellentesque sed tortor mi. Suspendisse lacinia urna nisi, non dapibus augue sollicitudin a. Nulla accumsan porttitor tellus eget tincidunt. Praesent iaculis erat augue, eu pharetra eros tincidunt sit amet. Duis ut metus nec mauris convallis cursus vel non eros.',
-            publishDate: new Date()
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 'category3',
-    name: 'Category With Articles 2',
-    articles: [
-      {
-        id: 'article5',
-        title: 'Lorem Ipsum Dolor',
-        summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, dolor ut porta commodo, orci ipsum viverra odio, a varius massa augue quis dolor. Donec vitae est eget velit auctor pulvinar eget vitae urna. Etiam laoreet ex nec sapien placerat molestie. Fusce mattis sagittis massa sed tempor. Sed tincidunt sagittis mi vel congue. Donec semper fringilla facilisis. Aliquam fermentum orci quis enim molestie, imperdiet varius dui sagittis. Nulla quis est maximus, mollis tortor a, tincidunt leo.',
-        publishDate: new Date()
+          text: 'Onboarding Guide',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-getting-started/onboarding-guide',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        }
+      ]
+    },
+    {
+      id: '3P6N7eDtw2wva5uqAuNaF4',
+      __typename: 'NavigationItem',
+      sidekickLookup: {
+        text: {
+          contentId: '3P6N7eDtw2wva5uqAuNaF4',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'title'
+        },
+        subNavigation: {
+          contentId: '3P6N7eDtw2wva5uqAuNaF4',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'categoryItems'
+        },
+        contentId: '3P6N7eDtw2wva5uqAuNaF4',
+        contentTypeId: 'categoryArticle'
       },
-      {
-        id: 'article6',
-        title: 'Class aptent taciti sociosqu',
-        summary: 'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut eu porta velit, et imperdiet enim. Praesent id mattis mi, quis gravida velit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In vel tincidunt elit. Sed euismod quam ac ornare eleifend. Praesent posuere erat ligula, eget laoreet velit lacinia in. Sed quis ex lectus. Phasellus a nunc eget purus elementum tristique. Aenean lobortis, turpis ut tincidunt pulvinar, mi odio scelerisque dui, at pharetra nunc felis vitae erat. Etiam congue tellus ut sem iaculis, ac dictum magna luctus. Donec id massa mauris. Sed blandit, nisi auctor lacinia rhoncus, arcu enim tincidunt risus, et tincidunt odio nisi consequat nisi. Donec eu felis metus.',
-        publishDate: new Date()
-      }
-    ]
-  },
-  {
-    id: 'category4',
-    name: 'Category with Subcategories 2',
-    subcategories: [
-      {
-        id: 'childCategory3',
-        name: 'Child Category 3',
-        articles: [
-          {
-            id: 'article1',
-            title: 'Lorem Ipsum Dolor',
-            summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse mattis, dolor ut porta commodo, orci ipsum viverra odio, a varius massa augue quis dolor. Donec vitae est eget velit auctor pulvinar eget vitae urna. Etiam laoreet ex nec sapien placerat molestie. Fusce mattis sagittis massa sed tempor. Sed tincidunt sagittis mi vel congue. Donec semper fringilla facilisis. Aliquam fermentum orci quis enim molestie, imperdiet varius dui sagittis. Nulla quis est maximus, mollis tortor a, tincidunt leo.',
-            publishDate: new Date()
+      variant: null,
+      text: 'How-to Guides for IAS Products',
+      href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-how-to-guides-for-ias-products',
+      summary: null,
+      image: null,
+      subNavigation: [
+        {
+          id: '3995390775',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '3995390775',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '3995390775',
+            contentTypeId: 'categoryArticle'
           },
-          {
-            id: 'article2',
-            title: 'Class aptent taciti sociosqu',
-            summary: 'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut eu porta velit, et imperdiet enim. Praesent id mattis mi, quis gravida velit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In vel tincidunt elit. Sed euismod quam ac ornare eleifend. Praesent posuere erat ligula, eget laoreet velit lacinia in. Sed quis ex lectus. Phasellus a nunc eget purus elementum tristique. Aenean lobortis, turpis ut tincidunt pulvinar, mi odio scelerisque dui, at pharetra nunc felis vitae erat. Etiam congue tellus ut sem iaculis, ac dictum magna luctus. Donec id massa mauris. Sed blandit, nisi auctor lacinia rhoncus, arcu enim tincidunt risus, et tincidunt odio nisi consequat nisi. Donec eu felis metus.',
-            publishDate: new Date()
-          }
-        ]
+          text: 'Campaign Setup and Management',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-how-to-guides-for-ias-products/campaign-setup-and-management',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        },
+        {
+          id: '972642025',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '972642025',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '972642025',
+            contentTypeId: 'categoryArticle'
+          },
+          text: 'DSP Guides',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-how-to-guides-for-ias-products/dsp-guides',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        },
+        {
+          id: '675249427',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '675249427',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '675249427',
+            contentTypeId: 'categoryArticle'
+          },
+          text: 'Evaluating Metrics',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-how-to-guides-for-ias-products/evaluating-metrics',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        },
+        {
+          id: '4013607647',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '4013607647',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '4013607647',
+            contentTypeId: 'categoryArticle'
+          },
+          text: 'Firewall + OM SDK',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-how-to-guides-for-ias-products/firewall-om-sdk',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        },
+        {
+          id: '3319726244',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '3319726244',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '3319726244',
+            contentTypeId: 'categoryArticle'
+          },
+          text: 'Help Center',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-how-to-guides-for-ias-products/help-center',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        },
+        {
+          id: '3916733419',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '3916733419',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '3916733419',
+            contentTypeId: 'categoryArticle'
+          },
+          text: 'Reporting',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-how-to-guides-for-ias-products/reporting',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        },
+        {
+          id: '2700911352',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '2700911352',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '2700911352',
+            contentTypeId: 'categoryArticle'
+          },
+          text: 'Tagging',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-how-to-guides-for-ias-products/tagging',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        },
+        {
+          id: '310559395',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '310559395',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '310559395',
+            contentTypeId: 'categoryArticle'
+          },
+          text: 'Video Tagging',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-how-to-guides-for-ias-products/video-tagging',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        }
+      ]
+    },
+    {
+      id: '6L2FHvdH3jPtbKw4hpSJOE',
+      __typename: 'NavigationItem',
+      sidekickLookup: {
+        text: {
+          contentId: '6L2FHvdH3jPtbKw4hpSJOE',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'title'
+        },
+        subNavigation: {
+          contentId: '6L2FHvdH3jPtbKw4hpSJOE',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'categoryItems'
+        },
+        contentId: '6L2FHvdH3jPtbKw4hpSJOE',
+        contentTypeId: 'categoryArticle'
       },
-      {
-        id: 'childCategory4',
-        name: 'Child Category 4',
-        articles: [
-          {
-            id: 'article3',
-            title: 'Vivamus et quam ut',
-            summary: 'Vivamus et quam ut eros tincidunt laoreet. Phasellus justo tortor, congue sit amet nibh iaculis, tristique aliquam risus. Sed tristique ac metus eu facilisis. Duis aliquet tincidunt sem nec aliquam. Aenean fermentum sagittis lorem, vel pellentesque purus mollis vel. Aliquam ornare dolor elementum dui tincidunt rutrum. Nunc laoreet dui id arcu aliquet tempus.',
-            publishDate: new Date()
+      variant: null,
+      text: 'Proprietary Platforms',
+      href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-integral-signal-help-and-tagging',
+      summary: null,
+      image: null,
+      subNavigation: [
+        {
+          id: '1501797234',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '1501797234',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '1501797234',
+            contentTypeId: 'categoryArticle'
           },
-          {
-            id: 'article4',
-            title: 'Cras vel elementum felis',
-            summary: 'Cras vel elementum felis. Quisque eu tempus ligula, eu vehicula ex. Pellentesque sed tortor mi. Suspendisse lacinia urna nisi, non dapibus augue sollicitudin a. Nulla accumsan porttitor tellus eget tincidunt. Praesent iaculis erat augue, eu pharetra eros tincidunt sit amet. Duis ut metus nec mauris convallis cursus vel non eros.',
-            publishDate: new Date()
-          }
-        ]
-      }
-    ]
-  }
-];
+          text: 'Proprietary Platforms',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-integral-signal-help-and-tagging/proprietary-platforms',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        },
+        {
+          id: '3558290882',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '3558290882',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '3558290882',
+            contentTypeId: 'categoryArticle'
+          },
+          text: 'Tag Manager/Tagging Integrations',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-integral-signal-help-and-tagging/tag-manager-tagging-integrations',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        },
+        {
+          id: '2213865368',
+          __typename: 'Link',
+          sidekickLookup: {
+            text: {
+              contentId: '2213865368',
+              contentTypeId: 'categoryArticle',
+              fieldName: 'title'
+            },
+            contentId: '2213865368',
+            contentTypeId: 'categoryArticle'
+          },
+          text: 'Using the UI',
+          href: '/topics/advertiser-agency-solutions/advertiser-agency-solutions-integral-signal-help-and-tagging/using-the-ui',
+          variant: null,
+          icon: null,
+          iconPosition: null
+        }
+      ]
+    },
+    {
+      id: '2530544681',
+      __typename: 'NavigationItem',
+      sidekickLookup: {
+        text: {
+          contentId: '2530544681',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'title'
+        },
+        subNavigation: {
+          contentId: '2530544681',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'categoryItems'
+        },
+        contentId: '2530544681',
+        contentTypeId: 'categoryArticle'
+      },
+      variant: null,
+      text: 'Metrics Glossary',
+      href: '/topics/advertiser-agency-solutions/metrics-glossary',
+      summary: null,
+      image: null,
+      subNavigation: null
+    },
+    {
+      id: '3204040847',
+      __typename: 'NavigationItem',
+      sidekickLookup: {
+        text: {
+          contentId: '3204040847',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'title'
+        },
+        subNavigation: {
+          contentId: '3204040847',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'categoryItems'
+        },
+        contentId: '3204040847',
+        contentTypeId: 'categoryArticle'
+      },
+      variant: null,
+      text: 'Using the IAS UI',
+      href: '/topics/advertiser-agency-solutions/using-the-ias-ui',
+      summary: null,
+      image: null,
+      subNavigation: null
+    },
+    {
+      id: '1182494416',
+      __typename: 'NavigationItem',
+      sidekickLookup: {
+        text: {
+          contentId: '1182494416',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'title'
+        },
+        subNavigation: {
+          contentId: '1182494416',
+          contentTypeId: 'categoryArticle',
+          fieldName: 'categoryItems'
+        },
+        contentId: '1182494416',
+        contentTypeId: 'categoryArticle'
+      },
+      variant: null,
+      text: 'Video Tutorials',
+      href: '/topics/advertiser-agency-solutions/video-tutorials',
+      summary: null,
+      image: null,
+      subNavigation: null
+    }
+  ]
+};

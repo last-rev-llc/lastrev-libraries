@@ -56,6 +56,7 @@ const Table = dynamic(() => import('@ias/components/src/components/Table'));
 const CustomText = dynamic(() => import('@ias/components/src/components/Text'));
 
 const SearchBox = dynamic(() => import('@ias/components/src/components/SearchBox'));
+const PageTopic = dynamic(() => import('@ias/components/src/components/PageTopic'));
 
 const AutocompleteBox = dynamic(() => import('@ias/components/src/components/AutocompleteBox'));
 
@@ -91,6 +92,8 @@ const contentMapping: {
   NavigationItem,
   Hero,
   Page: PageGeneral,
+  PageTopic,
+  CategoryArticle: PageTopic,
   Article,
   Quote,
   Table

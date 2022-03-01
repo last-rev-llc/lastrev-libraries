@@ -16,6 +16,6 @@ const ChevronIcon = ({ className }: ChevronIconProps) => {
 };
 
 export default styled(ChevronIcon)(({ open, right }: ChevronIconProps) => ({
-  transform: open ? 'rotate(90deg)' : (right ? 'rotate(180deg)' : 'none'),
+  transform: open ? (right ? 'rotate(90deg)' : 'rotate(180deg)') : 'rotate(90deg)',
   transition: 'all .2s ease-out'
 }));

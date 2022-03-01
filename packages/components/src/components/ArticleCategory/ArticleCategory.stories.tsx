@@ -3,7 +3,7 @@ import { Story, Meta } from '@storybook/react';
 import Box from '@mui/material/Box';
 
 import ArticleCategory, { ArticleCategoryProps } from './ArticleCategory';
-import { articleCategoryWithArticlesMock, articleCategoryWithSubcategoriesMock } from './ArticleCategory.mock';
+import { articleCategoryWithArticlesMock, articleCategoryWithSubCategoriesMock } from './ArticleCategory.mock';
 
 type ArticleCategoryStory = {
   args?: ArticleCategoryProps;
@@ -24,14 +24,14 @@ export default {
     }
   ],
   argTypes: {
-    name: { name: 'Name' },
+    title: { name: 'Name' },
     articles: { name: 'Articles' },
-    subcategories: { name: 'Subcategories' },
+    subCategories: { name: 'SubCategories' },
   }
 } as Meta;
 
 export const Articles = Template.bind({});
 Articles.args = { ...articleCategoryWithArticlesMock };
 
-export const Subcategories = Template.bind({});
-Subcategories.args = { ...articleCategoryWithSubcategoriesMock };
+export const SubCategories = Template.bind({});
+SubCategories.args = { ...articleCategoryWithSubCategoriesMock };

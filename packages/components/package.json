@@ -19,6 +19,7 @@
   "dependencies": {
     "@algolia/autocomplete-js": "^1.5.1",
     "@algolia/autocomplete-theme-classic": "^1.5.1",
+    "@contentful/rich-text-plain-text-renderer": "^15.11.1",
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@ias/graphql-sdk": "^0.1.0",

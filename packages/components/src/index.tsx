@@ -7,8 +7,12 @@ export { default as Text } from './components/Text';
 export { default as Header } from './components/Header';
 export { default as Footer } from './components/Footer';
 export { default as PageGeneral } from './components/PageGeneral';
+export { default as PageTopic } from './components/PageTopic';
 export { default as SearchBox } from './components/SearchBox';
 export { default as AutocompleteBox } from './components/AutocompleteBox';
 export { default as CollectionSearchFilters } from './components/CollectionSearchFilters';
 export { default as CollectionSearchResults } from './components/CollectionSearchResults';
+export { default as TopicNav } from './components/TopicNav';
+export { default as TopicNavHorizontal } from './components/TopicNavHorizontal';
+
 export { default as theme } from './theme';

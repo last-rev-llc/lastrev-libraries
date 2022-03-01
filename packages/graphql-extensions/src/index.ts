@@ -8,25 +8,28 @@ import {
   Card,
   Collection,
   Hero,
-  Link,
-  NavigationItem,
+  // Link,
   Page,
+  // NavigationItem,
   Section,
   Media,
   RichText
 } from '@last-rev/graphql-contentful-extensions';
 
 import * as IasPage from './Page';
+import * as IasCard from './Card';
 import * as Text from './Text';
 import * as Table from './Table';
 import * as CustomHero from './Hero';
 import * as CustomSection from './Section';
 import * as Quote from './Quote';
-// import * as Person from './Person';
 import * as Header from './Header';
 import * as Footer from './Footer';
 import * as Article from './Article';
+import * as NavigationItem from './NavigationItem';
+import * as Link from './Link';
 import * as CategoryArticle from './CategoryArticle';
+import * as CategoryArticleLinkHierarchyNode from './CategoryArticleLinkHierarchyNode';
 import * as ModuleIntegration from './ModuleIntegration';
 
 export type GraphQlExtension = {
@@ -63,8 +66,8 @@ const extensions: GraphQlExtension[] = [
   Section,
   CustomSection,
   IasPage,
+  IasCard,
   Quote,
-  // Person,
   Media,
   RichText,
   Text,
@@ -73,6 +76,7 @@ const extensions: GraphQlExtension[] = [
   CustomHero,
   Article,
   CategoryArticle,
+  CategoryArticleLinkHierarchyNode,
   ModuleIntegration
 ];
 

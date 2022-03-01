@@ -2,7 +2,7 @@ import React from 'react';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
-import styled from '@mui/system/styled';
+import { styled } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
 

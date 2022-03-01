@@ -10,7 +10,8 @@ export const PageQuery = gql`
       id
       ...Content_Base
       ...Page_Base
-      ...Article_Base
+      ...Article_Page
+      ...CategoryArticle_Base
     }
   }
 `;

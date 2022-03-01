@@ -3,9 +3,16 @@ import { ApolloContext } from '@last-rev/types';
 import { getDefaultFieldValue, getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ContentfulPathsGenerator } from '@last-rev/types';
 import * as types from '@contentful/rich-text-types';
-
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
+import { createRichText } from '@last-rev/graphql-contentful-core';
+import headerResolver from './resolvers/headerResolver';
+import footerResolver from './resolvers/footerResolver';
+import topicNavHorizontalResolver from './resolvers/topicNavHorizontalResolver';
 import createType from './utils/createType';
+import createPath from './utils/createPath';
+import getPathReader from './utils/getPathReader';
 
+const SITE = process.env.SITE;
 interface Heading {
   [key: string]: number;
 }
@@ -23,43 +30,9 @@ export const typeMappings = {};
 
 const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
 
-// TODO: Move this function to utilities
-export const createPath = (...slug: string[]) => {
-  const path = slug.join('/').replace(/\/\//g, '/');
-  if (path[0] === '/') return path;
-  else return '/' + path;
-};
-
-const headerResolver = async (page: any, _args: any, ctx: ApolloContext) => {
-  const header: any = getLocalizedField(page?.fields, 'header', ctx);
-
-  if (header) return header
-  
-  // TODO: Make getting a localized resolved link a single function
-  const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
-  const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? SITE_ID, preview: !!ctx.preview });
-  const siteHeader: any = getLocalizedField(site?.fields, 'header', ctx);
-
-  return siteHeader;
-};
-
-const footerResolver = async (page: any, _args: any, ctx: ApolloContext) => {
-  const footer: any = getLocalizedField(page?.fields, 'footer', ctx);
-
-  if (footer) return footer
-  
+const footerItemsResolver = async (article: any, _args: any, ctx: ApolloContext) => {
   // TODO Improve redirecting to a field inside a referenced field
-  const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
-  const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? SITE_ID, preview: !!ctx.preview });
-  const siteFooter: any = getLocalizedField(site?.fields, 'footer', ctx);
-
-  
-  return siteFooter;
-};
-
-const footerItemsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
-  // TODO Improve redirecting to a field inside a referenced field
-  const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
+  const siteRef: any = getLocalizedField(article.fields, 'site', ctx);
   const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? SITE_ID, preview: !!ctx.preview });
   const footerItems: any = getLocalizedField(site?.fields, 'articleDetailFooteritems', ctx);
 
@@ -70,14 +43,39 @@ export const typeDefs = gql`
   extend type Article {
     header: Header
     footer: Content
+    topicNavItems: [NavigationItem]
     categories: [Link]
     relatedLinks: [Link]
     breadcrumbs: [Link]
     breadcrumbsRoot: String
     footerItems: [Content]
     sideNav: [Link]
+    pubDate: Date
+    link: Link
   }
 `;
+
+const articleSummaryResolver = async (article: any, _args: any, ctx: ApolloContext) => {
+  const summary = await getLocalizedField(article?.fields, 'summary', ctx);
+
+  if (summary) return createRichText(summary);
+
+  const body = await getLocalizedField(article?.fields, 'body', ctx);
+
+  if (!body || !body.content) return null;
+
+  let firstParagraphContent;
+
+  for (let item of body.content) {
+    if (item.nodeType === types.BLOCKS.PARAGRAPH) {
+      firstParagraphContent = item;
+      break;
+    }
+  }
+
+  // Convert paragraph to text to remove formatting and back into RTF
+  return createRichText(documentToPlainTextString(firstParagraphContent));
+};
 
 export const mappers = {
   Article: {
@@ -85,13 +83,15 @@ export const mappers = {
       header: headerResolver,
       footer: footerResolver,
       footerItems: footerItemsResolver,
+      topicNavItems: topicNavHorizontalResolver,
+      pubDate: 'pubDate',
       breadcrumbs: async (item: any, _args: any, ctx: ApolloContext) => {
         const links: any = await getLocalizedField(item.fields, 'categories', ctx);
         if (!links) return [];
         return links;
       },
-      sideNav: async (page: any, _args: any, ctx: ApolloContext) => {
-        const body: any = getLocalizedField(page.fields, 'body', ctx);
+      sideNav: async (article: any, _args: any, ctx: ApolloContext) => {
+        const body: any = getLocalizedField(article.fields, 'body', ctx);
         if (!body || !body.content) return [];
         const links = [];
 
@@ -121,8 +121,8 @@ export const mappers = {
         }
         return links;
       },
-      body: async (page: any, _args: any, ctx: ApolloContext) => {
-        const body = await getLocalizedField(page?.fields, 'body', ctx);
+      body: async (article: any, _args: any, ctx: ApolloContext) => {
+        const body = await getLocalizedField(article?.fields, 'body', ctx);
         if (!body || !body.content) return;
 
         for (let item of body.content) {
@@ -143,21 +143,29 @@ export const mappers = {
           item.data.id = href;
         }
         return body;
+      },
+      link: async (article: any, _args: any, _ctx: ApolloContext) => {
+        return article;
       }
     },
+    Card: {
+      body: articleSummaryResolver,
+      link: async (article: any, _args: any, _ctx: ApolloContext) => article,
+      pubDate: 'pubDate'
+    },
     Link: {
-      href: async (item: any, _args: any, ctx: ApolloContext) => {
-        const slug: any = await getLocalizedField(item.fields, 'slug', ctx);
-        const fullPath = createPath('article', slug);
-        return fullPath;
+      href: async (article: any, _args: any, ctx: ApolloContext) => {
+        const paths = await getPathReader(ctx)?.getPathsByContentId(article.sys.id, undefined, SITE);
+        if (!paths || !paths.length) return '#';
+        return paths[0];
       },
       text: 'title'
     },
     NavigationItem: {
-      href: async (item: any, _args: any, ctx: ApolloContext) => {
-        const slug: any = await getLocalizedField(item.fields, 'slug', ctx);
-        const fullPath = createPath('article', slug);
-        return fullPath;
+      href: async (article: any, _args: any, ctx: ApolloContext) => {
+        const paths = await getPathReader(ctx)?.getPathsByContentId(article.sys.id, undefined, SITE);
+        if (!paths || !paths.length) return '#';
+        return paths[0];
       },
       text: 'title'
     }
@@ -180,7 +188,8 @@ const article: ContentfulPathsGenerator = async (
       fullPath,
       isPrimary: true,
       contentId: articleItem?.sys?.id,
-      excludedLocales: []
+      excludedLocales: [],
+      contentType: articleItem.sys.contentType.sys.id
     }
   };
 };

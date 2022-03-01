@@ -2,90 +2,198 @@ import React, { useState } from 'react';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
-import Typography, { TypographyProps } from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
 import Link from '@last-rev/component-library/dist/components/Link/Link';
+
+import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
 
 import { ScrollSpy } from '../../utils/scrollSpy';
 import ChevronIcon from '../ChevronIcon';
 
 export interface TopicNavProps {
-  categories?: Array<any>;
+  currentCategoryId: string;
+  navItems?: Array<NavigationItemProps>;
 }
 
+const TopicNav = ({ navItems, currentCategoryId = '' }: TopicNavProps) => {
+  const [active, setActive] = useState(currentCategoryId);
+  const [expandedCategory, setExpandedCategory] = useState<string>('');
+
+  const onScrollUpdate = (entry: { target: any; boundingClientRect: any }, isInViewPort: any) => {
+    const { target, boundingClientRect } = entry;
+
+    const correspondingNavItem = document.querySelector(`[data-scrollspy-id="${target.id}"]`);
+    const parentnavItemId = target.attributes['parent-category-id']?.value; // subNavigation will have this custom attr to point to the parent category
+
+    if (!correspondingNavItem && !parentnavItemId) return;
+
+    if (boundingClientRect.y <= 0 && isInViewPort) {
+      if (parentnavItemId) {
+        setActive(parentnavItemId);
+      } else {
+        setActive(target.id);
+      }
+    }
+  };
+
+  const expandCategory = (navItemId: string) => (_evt: any, expanded: boolean) => {
+    if (expanded) {
+      setExpandedCategory(navItemId);
+      activateTopCategory(navItemId);
+    } else {
+      setExpandedCategory('');
+    }
+  };
+
+  const activateTopCategory = (navItemId: string) => () => {
+    setTimeout(() => {
+      setActive(navItemId);
+    }, 500);
+  };
+
+  return (
+    <ErrorBoundary>
+      <Root data-testid="TopicNav">
+        <ScrollSpy handleScroll={onScrollUpdate} />
+        <List data-testid="TopicNav-list" sx={{ p: 0, listStyle: 'none' }}>
+          {navItems &&
+            navItems.map((navItem, idx) => (
+              <ListItem disablePadding key={`topicNav-${navItem.id}`} sx={{ mb: 2.25 }} data-scrollspy-id={navItem.id}>
+                {navItem.subNavigation ? (
+                  <Accordion
+                    elevation={0}
+                    disableGutters
+                    sx={{ width: '100%' }}
+                    expanded={navItem.id === expandedCategory}
+                    onChange={expandCategory(navItem.id ?? '')}>
+                    <AccordionSummary>
+                      <AccordionTitle
+                        sx={{ display: 'flex', alignItems: 'center', pl: 1, mb: 0 }}
+                        data-scrollspy-id={navItem.id}
+                        data-testid={`TopicNav-categoryAccordion-${navItem.id}`}
+                        className={
+                          navItem.id === active || navItem.subNavigation.map((navItem) => navItem.id).includes(active)
+                            ? 'active'
+                            : ''
+                        }>
+                        <NavLink
+                          {...(navItem as any)}
+                          onClick={(evt: any) => {
+                            evt.stopPropogation;
+                            setActive(navItem.id ?? '');
+                          }}
+                          sx={{ display: 'flex', alignItems: 'center', pl: 1 }}
+                          className={`top-category ${(idx === 0 && !active) || active === navItem.id ? 'active' : ''}`}
+                          data-testid={`TopicNav-categoryLink-${navItem.id}`}
+                        />
+                        <ChevronIcon sx={{ ml: 'auto' }} open={navItem.id === expandedCategory} />
+                      </AccordionTitle>
+                    </AccordionSummary>
+
+                    <AccordionDetails>
+                      <List data-testid="TopicNav-list" sx={{ p: 0, listStyle: 'none' }}>
+                        {navItem.subNavigation.map((subNavItem: any) => (
+                          <ListItem disablePadding sx={{ p: 0, listStyle: 'none', mb: 1.5 }} key={subNavItem.id}>
+                            <NavLink
+                              {...subNavItem}
+                              sx={{ pl: 4, mb: 0, mr: 2, display: 'block' }}
+                              onClick={() => setActive(subNavItem.id ?? '')}
+                              className={subNavItem.id === active ? 'active' : ''}
+                              data-testid={`TopicNav-subCategoryLink-${subNavItem.id}`}
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </AccordionDetails>
+                  </Accordion>
+                ) : (
+                  <NavLink
+                    {...(navItem as any)}
+                    onClick={() => setActive(navItem.id ?? '')}
+                    sx={{ display: 'flex', alignItems: 'center', pl: 2.25 }}
+                    className={`top-category ${(idx === 0 && !active) || active === navItem.id ? 'active' : ''}`}
+                    data-testid={`TopicNav-categoryLink-${navItem.id}`}
+                  />
+                )}
+              </ListItem>
+            ))}
+        </List>
+      </Root>
+    </ErrorBoundary>
+  );
+};
+
 const Root = styled(Box, {
-  name: 'ArticleNav',
+  name: 'TopicNav',
   slot: 'Root',
-})<{}>(({ theme }) => ({
+  overridesResolver: (_, styles) => [styles.root]
+})(({ theme }) => ({
   position: 'sticky',
-  top: 25,
-  padding: theme.spacing(3, 0),
+  top: theme.spacing(19),
+  width: '100%'
 }));
 
-const NavLink = styled(Typography, {
-  name: 'ArticleNav',
-  slot: 'NavLink',
-})<TypographyProps<React.ElementType>>(({ theme }) => ({
-  fontSize: 15,
-  lineHeight: '18px',
-  
-  '& .top-category': {
-    borderLeft: '2px solid transparent',
-    paddingLeft: theme.spacing(1),
+const NavLink = styled(Link, {
+  name: 'TopicNav',
+  slot: 'NavLink'
+})(({ theme }) => ({
+  ...theme.typography.smallText,
+  'fontWeight': 500,
+  'borderLeft': '2px solid transparent',
+  'color': theme.palette.midnight.A70,
 
-    '&.active': {
-      borderLeftColor: theme.palette.background.integralOrange,
-      color: theme.palette.text.primary,
-      fontWeight: 600
-    }
+  '&:hover': {
+    color: theme.palette.midnight.A100,
+    textDecoration: 'none'
   },
 
-  '& .active-subcategory': {
+  '&.active': {
+    borderLeftColor: theme.palette.background.integralOrange,
+    color: theme.palette.midnight.A100,
+    fontWeight: 600
+  }
+}));
+
+const AccordionTitle = styled(Box)(({ theme }) => ({
+  ...theme.typography.smallText,
+  'width': '100%',
+  'borderLeft': '2px solid transparent',
+
+  '&.active': {
     color: theme.palette.text.primary,
     fontWeight: 600
   },
 
-  '& .MuiLink-root': {
-    textDecoration: 'none'
+  '& > div': {
+    width: '100%'
   },
-
-  '& a': {
-    color: theme.palette.midnight.A70,
-    fontWeight: 500,
-
-    '&:hover': {
-      color: theme.palette.text.primary,
-      textDecoration: 'none'
-    }
-  },
-}));
-
-const AccordionTitle = styled(Box)(({ theme }) => ({
-  fontSize: 15,
-  lineHeight: '18px',
 
   '& > svg': {
-    marginLeft: theme.spacing(2)
+    marginLeft: 'auto',
+    minWidth: '10px',
+    minHeight: '16px'
   }
 }));
 
 const Accordion = styled(MuiAccordion)({
-  backgroundColor: 'transparent',
+  'backgroundColor': 'transparent',
 
   '&:before': {
-    display: 'none',
+    display: 'none'
   }
 });
 
 const AccordionSummary = styled(MuiAccordionSummary)(({ theme }) => ({
-  minHeight: 0,
-  padding: 0,
-  fontSize: 15,
-  lineHeight: '18px',
-  color: theme.palette.midnight.A70,
-  fontWeight: 500,
+  ...theme.typography.smallText,
+  'minHeight': 0,
+  'padding': 0,
+  'color': theme.palette.midnight.A70,
+  'fontWeight': 500,
+  'width': '100%',
 
   '&.Mui-expanded': {
     minHeight: 0,
@@ -93,132 +201,16 @@ const AccordionSummary = styled(MuiAccordionSummary)(({ theme }) => ({
   },
 
   '& .MuiAccordionSummary-content': {
-    margin: 0,
+    margin: 0
   }
 }));
 
 const AccordionDetails = styled(MuiAccordionDetails)({
-  padding: 0,
+  'padding': 0,
 
   '& > a:last-child': {
     marginBottom: 0
   }
 });
-
-const TopicNav = ({ categories }: TopicNavProps) => {
-  const [active, setActive] = useState('');
-  const [activeSubcategory, setActiveSubcategory] = useState('');
-  const [expandedCategory, setExpandedCategory] = useState<string>('');
-
-  const onScrollUpdate = (entry: { target: any; boundingClientRect: any; }, isInViewPort: any) => {
-    const { target, boundingClientRect } = entry;
-
-    const correspondingNavItem = document.querySelector(`[data-scrollspy-id="${target.id}"]`);
-    const parentCategoryId = target.attributes['parent-category-id']?.value; // Subcategories will have this custom attr to point to the parent category
-
-    if (!correspondingNavItem && !parentCategoryId) return;
-
-    if (boundingClientRect.y <= 0 && isInViewPort) {
-      if (parentCategoryId) {
-        setActiveSubcategory(target.id);
-        setActive(parentCategoryId);
-      } else {
-        setActive(target.id);
-      }
-    }
-  };
-
-  const expandCategory = (categoryId: string) => () => {
-    setExpandedCategory(categoryId);
-  };
-
-  const clearExpandedCategory = () => {
-    setExpandedCategory('');
-    setActiveSubcategory('');
-  };
-
-  const activateTopCategory = (categoryId: string) => () => {
-    setTimeout(() => {
-      setActive(categoryId);
-    }, 500);
-  };
-
-  const activateSubcategory = (subcategoryId: string) => () => {
-    setActiveSubcategory(subcategoryId);
-  };
-
-  return (
-    <ErrorBoundary>
-      {categories && (
-        <>
-          <ScrollSpy handleScroll={onScrollUpdate} />
-
-          <Root data-testid="TopicNav">
-            <Box component="ul" p={0}
-              data-testid="TopicNav-list"
-              sx={{ listStyle: 'none' }}
-            >
-              {categories.map((category, idx) => (
-                <NavLink
-                  key={category.id}
-                  component="li"
-                  mb={2}
-                  data-scrollspy-id={category.id}
-                  onClick={activateTopCategory(category.id)}
-                >
-                  {category.articles && (
-                    <Link
-                      href={`#${category.id}`}
-                      className={`top-category ${(idx === 0 && !active) || active === category.id ? 'active' : ''}`}
-                      data-testid={`TopicNav-categoryLink-${category.id}`}
-                      onClick={clearExpandedCategory}
-                    >
-                      {category.name}
-                    </Link>
-                  )}
-
-                  {category.subcategories && (
-                    <Accordion
-                      elevation={0}
-                      disableGutters
-                      expanded={category.id === expandedCategory}
-                      onChange={expandCategory(category.id)}
-                    >
-                      <AccordionSummary
-                        className={`top-category ${(idx === 0 && !active) || active === category.id ? 'active' : ''}`}
-                      >
-                        <AccordionTitle display="flex" justifyContent="space-between" alignItems="center" data-testid={`TopicNav-categoryAccordion-${category.id}`}>
-                          {category.name}
-                          <ChevronIcon open={category.id === expandedCategory} right />
-                        </AccordionTitle>
-                      </AccordionSummary>
-
-                      <AccordionDetails>
-                        {category.subcategories.map((subcategory: any) => (
-                          <Link
-                            key={subcategory.id}
-                            href={`#${subcategory.id}`}
-                            mb={2}
-                            pl={3}
-                            display="block"
-                            onClick={activateSubcategory(subcategory.id)}
-                            className={`${activeSubcategory === subcategory.id ? 'active-subcategory' : ''}`}
-                            data-testid={`TopicNav-subcategoryLink-${subcategory.id}`}
-                          >
-                            {subcategory.name}
-                          </Link>
-                        ))}
-                      </AccordionDetails>
-                    </Accordion>
-                  )}
-                </NavLink>
-              ))}
-            </Box>
-          </Root>
-        </>
-      )}
-    </ErrorBoundary>
-  );
-};
 
 export default TopicNav;

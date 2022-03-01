@@ -21,6 +21,9 @@ import Quote from '../src/components/Quote';
 import Footer from '../src/components/Footer';
 import ArticleText from '../src/components/Text';
 import theme from '../src/theme';
+import PageTopic from '../src/components/PageTopic';
+import TopicNav from '../src/components/TopicNav';
+import TopicNavHorizontal from '../src/components/TopicNavHorizontal';
 
 const contentMapping = {
   Header,
@@ -38,7 +41,10 @@ const contentMapping = {
   Link,
   Hero,
   'ModuleIntegration:search-box': SearchBox,
-  'ModuleIntegration:autocomplete-search-box': AutocompleteBox
+  'ModuleIntegration:autocomplete-search-box': AutocompleteBox,
+  PageTopic,
+  TopicNav,
+  TopicNavHorizontal
 };
 
 const StorybookWrapper = (storyFn) => {

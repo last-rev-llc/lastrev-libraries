@@ -1,6 +1,7 @@
 import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
 import createCardVariants from './variants/createCardVariants';
 import createTextVariants from './variants/createTextVariants';
+import { TypographyStyle } from '@mui/material/styles';
 import createAutocompleteBoxVariants from './variants/createAutocompleteBoxVariants';
 import { Mixins } from '@mui/material/styles/createMixins';
 import merge from 'lodash/merge';
@@ -62,8 +63,15 @@ declare module '@mui/material/styles' {
   }
 
   interface TypographyVariants {
-    body3: React.CSSProperties;
-    time: React.CSSProperties;
+    body3: TypographyStyle;
+    time: TypographyStyle;
+    smallText: TypographyStyle;
+  }
+
+  interface TypographyVariantsOptions {
+    body3?: TypographyStyle;
+    time?: TypographyStyle;
+    smallText?: TypographyStyle;
   }
 }
 
@@ -71,6 +79,7 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     body3: true;
     time: true;
+    smallText: true;
   }
 }
 
@@ -154,6 +163,10 @@ const baseTheme = {
       fontWeight: 600,
       lineHeight: '18px'
     },
+    smallText: {
+      fontSize: 15,
+      lineHeight: '18px'
+    },
     time: {
       color: '#335B6E',
       fontSize: 15,
@@ -222,7 +235,7 @@ const baseTheme = {
       light: '#8091FF',
       lighter: '#ACB7FF',
       dark: '#4E62E0',
-      contrastText: '#FFFFFF',
+      contrastText: '#FFFFFF'
     },
     coolGrey: {
       main: '#C3DCDE',
@@ -244,7 +257,7 @@ const createSchemeTheme = (schemeKey?: string) => {
           height: 100,
           styleOverrides: {
             contentContainer: {
-              height: 100,
+              height: 100
             },
             root: {
               '& .MuiButton-contained': {
@@ -274,9 +287,9 @@ const createSchemeTheme = (schemeKey?: string) => {
           styleOverrides: {
             root: {
               '& [class*="MuiTypography-body1"]': {
-                marginBottom: baseSchemeTheme.spacing(1),
-                fontSize: '1rem',
-                lineHeight: 1.5,
+                'marginBottom': baseSchemeTheme.spacing(1),
+                'fontSize': '1rem',
+                'lineHeight': 1.5,
 
                 '& [class*="MuiLink-root"]': {
                   color: baseSchemeTheme.palette.periwinkle.dark
@@ -296,18 +309,18 @@ const createSchemeTheme = (schemeKey?: string) => {
               // Removes extra <br> tag being added by Contentful
               '& > br:last-child': {
                 display: 'none'
-              },
+              }
             }
           }
         },
         Hero: {
-          variants: createHeroVariants(baseSchemeTheme),
+          variants: createHeroVariants(baseSchemeTheme)
         },
         Card: {
           variants: createCardVariants(baseSchemeTheme),
           styleOverrides: {
             root: {
-              backgroundColor: baseSchemeTheme.palette.background.default,
+              'backgroundColor': baseSchemeTheme.palette.background.default,
 
               '& [class*="MuiTypography-root"]': {
                 color: baseSchemeTheme.palette.text.primary
@@ -327,7 +340,7 @@ const createSchemeTheme = (schemeKey?: string) => {
           styleOverrides: {
             root: {
               '[class*="Section-gridContainer"]': {
-                display: 'grid',
+                'display': 'grid',
 
                 [baseSchemeTheme.breakpoints.up('md')]: {
                   gridAutoRows: '1fr'
@@ -378,7 +391,7 @@ const createSchemeTheme = (schemeKey?: string) => {
             root: {
               '& > [class*="Section-backgroundMedia"]': {
                 zIndex: -1
-              },
+              }
             }
           }
         },
@@ -391,9 +404,9 @@ const createSchemeTheme = (schemeKey?: string) => {
         BackToTop: {
           styleOverrides: {
             root: {
-              margin: baseSchemeTheme.spacing(0, 4, 4, 0),
-              backgroundColor: baseSchemeTheme.palette.midnight.A09,
-              color: baseSchemeTheme.palette.primary.dark,
+              'margin': baseSchemeTheme.spacing(0, 4, 4, 0),
+              'backgroundColor': baseSchemeTheme.palette.midnight.A09,
+              'color': baseSchemeTheme.palette.primary.dark,
 
               '&:hover': {
                 backgroundColor: baseSchemeTheme.palette.midnight.A12
@@ -434,10 +447,10 @@ const createSchemeTheme = (schemeKey?: string) => {
           },
           styleOverrides: {
             root: {
-              padding: baseSchemeTheme.spacing(0, 3),
+              'padding': baseSchemeTheme.spacing(0, 3),
 
               [baseSchemeTheme.breakpoints.up('lg')]: {
-                padding: baseSchemeTheme.spacing(0, 6),
+                'padding': baseSchemeTheme.spacing(0, 6),
 
                 '& .MuiContainer-disableGutters': {
                   paddingLeft: 0,
@@ -455,9 +468,9 @@ const createSchemeTheme = (schemeKey?: string) => {
         MuiLink: {
           styleOverrides: {
             root: {
-              color: baseSchemeTheme.palette.text.primary,
-              textDecoration: 'none',
-              textDecorationColor: 'currentColor',
+              'color': baseSchemeTheme.palette.text.primary,
+              'textDecoration': 'none',
+              'textDecorationColor': 'currentColor',
 
               '&:hover': {
                 textDecoration: 'underline'
@@ -468,11 +481,11 @@ const createSchemeTheme = (schemeKey?: string) => {
         MuiButton: {
           styleOverrides: {
             root: {
-              boxShadow: 'none',
-              fontSize: 18,
-              fontWeight: 600,
-              lineHeight: 1.55,
-              textTransform: 'none',
+              'boxShadow': 'none',
+              'fontSize': 18,
+              'fontWeight': 600,
+              'lineHeight': 1.55,
+              'textTransform': 'none',
 
               '&:hover': {
                 boxShadow: 'none'
@@ -480,9 +493,9 @@ const createSchemeTheme = (schemeKey?: string) => {
             },
 
             contained: {
-              padding: baseSchemeTheme.spacing(2, 5),
-              borderRadius: 50,
-              color: baseSchemeTheme.palette.text.primary,
+              'padding': baseSchemeTheme.spacing(2, 5),
+              'borderRadius': 50,
+              'color': baseSchemeTheme.palette.text.primary,
 
               '&:hover': {
                 color: baseSchemeTheme.palette.common.white
@@ -490,7 +503,7 @@ const createSchemeTheme = (schemeKey?: string) => {
             },
 
             containedPrimary: {
-              backgroundColor: baseSchemeTheme.palette.primary.light,
+              'backgroundColor': baseSchemeTheme.palette.primary.light,
 
               '&:hover': {
                 backgroundColor: baseSchemeTheme.palette.primary.dark
@@ -498,8 +511,8 @@ const createSchemeTheme = (schemeKey?: string) => {
             },
 
             containedSecondary: {
-              backgroundColor: baseSchemeTheme.palette.common.white,
-              color: baseSchemeTheme.palette.text.primary,
+              'backgroundColor': baseSchemeTheme.palette.common.white,
+              'color': baseSchemeTheme.palette.text.primary,
 
               '&:hover': {
                 backgroundColor: baseSchemeTheme.palette.midnight.main,
@@ -508,8 +521,8 @@ const createSchemeTheme = (schemeKey?: string) => {
             },
 
             outlined: {
-              padding: baseSchemeTheme.spacing(2, 5),
-              borderRadius: 50,
+              'padding': baseSchemeTheme.spacing(2, 5),
+              'borderRadius': 50,
 
               '&:hover': {
                 color: baseSchemeTheme.palette.common.white
@@ -517,8 +530,8 @@ const createSchemeTheme = (schemeKey?: string) => {
             },
 
             outlinedPrimary: {
-              borderColor: baseSchemeTheme.palette.primary.light,
-              color: baseSchemeTheme.palette.primary.dark,
+              'borderColor': baseSchemeTheme.palette.primary.light,
+              'color': baseSchemeTheme.palette.primary.dark,
 
               '&:hover': {
                 backgroundColor: baseSchemeTheme.palette.primary.dark,
@@ -527,8 +540,8 @@ const createSchemeTheme = (schemeKey?: string) => {
             },
 
             outlinedSecondary: {
-              borderColor: baseSchemeTheme.palette.midnight.main,
-              color: baseSchemeTheme.palette.text.primary,
+              'borderColor': baseSchemeTheme.palette.midnight.main,
+              'color': baseSchemeTheme.palette.text.primary,
 
               '&:hover': {
                 backgroundColor: baseSchemeTheme.palette.midnight.main,
@@ -542,7 +555,7 @@ const createSchemeTheme = (schemeKey?: string) => {
             },
 
             textPrimary: {
-              color: baseSchemeTheme.palette.primary.dark,
+              'color': baseSchemeTheme.palette.primary.dark,
 
               '&:hover': {
                 backgroundColor: 'transparent',
@@ -551,7 +564,7 @@ const createSchemeTheme = (schemeKey?: string) => {
             },
 
             textSecondary: {
-              color: baseSchemeTheme.palette.text.primary,
+              'color': baseSchemeTheme.palette.text.primary,
 
               '&:hover': {
                 backgroundColor: 'transparent',
@@ -563,14 +576,14 @@ const createSchemeTheme = (schemeKey?: string) => {
         MuiChip: {
           styleOverrides: {
             root: {
-              height: 'auto',
-              marginBottom: baseSchemeTheme.spacing(1),
-              backgroundColor: baseSchemeTheme.palette.coolGrey.light,
-              borderRadius: '3px',
-              color: baseSchemeTheme.palette.text.primary,
-              fontWeight: 600,
-              textDecoration: 'none',
-              transition: 'background-color 0.15s ease',
+              'height': 'auto',
+              'marginBottom': baseSchemeTheme.spacing(1),
+              'backgroundColor': baseSchemeTheme.palette.coolGrey.light,
+              'borderRadius': '3px',
+              'color': baseSchemeTheme.palette.text.primary,
+              'fontWeight': 600,
+              'textDecoration': 'none',
+              'transition': 'background-color 0.15s ease',
 
               '&:hover': {
                 backgroundColor: baseSchemeTheme.palette.coolGrey.main,
@@ -607,8 +620,8 @@ const createSchemeTheme = (schemeKey?: string) => {
         MuiTableCell: {
           styleOverrides: {
             root: {
-              padding: baseSchemeTheme.spacing(1),
-              borderBottomColor: baseSchemeTheme.palette.midnight.A20,
+              'padding': baseSchemeTheme.spacing(1),
+              'borderBottomColor': baseSchemeTheme.palette.midnight.A20,
 
               '& [class*="MuiTypography-body1"]': {
                 ...baseSchemeTheme.typography.body3,
@@ -638,25 +651,25 @@ const createSchemeTheme = (schemeKey?: string) => {
               },
 
               '& [class*="MuiPaginationItem-root"]': {
-                width: 30,
-                height: 30,
-                minWidth: 30,
-                minHeight: 30,
-                margin: 0,
-                backgroundColor: baseSchemeTheme.palette.common.white,
-                borderColor: baseSchemeTheme.palette.midnight.A12,
-                borderRight: 0,
+                'width': 30,
+                'height': 30,
+                'minWidth': 30,
+                'minHeight': 30,
+                'margin': 0,
+                'backgroundColor': baseSchemeTheme.palette.common.white,
+                'borderColor': baseSchemeTheme.palette.midnight.A12,
+                'borderRight': 0,
 
                 '&[class*="Mui-selected"]': {
-                  backgroundColor: baseSchemeTheme.palette.midnight.A03,
+                  'backgroundColor': baseSchemeTheme.palette.midnight.A03,
 
                   '&:hover': {
-                    backgroundColor: baseSchemeTheme.palette.midnight.A06,
+                    backgroundColor: baseSchemeTheme.palette.midnight.A06
                   }
                 },
 
                 '&.Mui-disabled': {
-                  opacity: 1,
+                  'opacity': 1,
 
                   '& svg': {
                     opacity: 0.5

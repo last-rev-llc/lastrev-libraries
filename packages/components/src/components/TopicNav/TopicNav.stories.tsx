@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import TopicNav, { TopicNavProps } from './TopicNav';
 import { Story, Meta } from '@storybook/react';
 
-import { articleCategoriesMock } from './TopicNav.mock';
+import { topicNavMock } from './TopicNav.mock';
 
 type ArticleNavStory = {
   args?: TopicNavProps;
@@ -12,7 +12,7 @@ type ArticleNavStory = {
 const Template: ArticleNavStory = (args: TopicNavProps) => <TopicNav {...args} />;
 
 export default {
-  title: 'Elements / TopicNav',
+  title: 'Elements / Topic Nav',
   component: TopicNav,
   decorators: [
     (Story?: any, ctx?: any) => {
@@ -27,5 +27,6 @@ export default {
 
 export const Default = Template.bind({});
 Default.args = {
-  categories: [...articleCategoriesMock]
+  currentCategoryId: { name: "Current Category ID"},
+  navItems: topicNavMock.navItems
 };

@@ -45,15 +45,6 @@ export const ContentTypes_Fragments = gql`
     ...ModuleIntegration_Base
   }
 
-  fragment Text_Base on Text {
-    ...Content_Base
-    variant
-    align
-    body {
-      ...RichText_RichTextFragment
-    }
-  }
-
   fragment Link_Base on Link {
     ...Content_Base
     text
@@ -213,6 +204,7 @@ export const ContentTypes_Fragments = gql`
       }
     }
   }
+
   fragment Card_Base on Card {
     ...Content_Base
     variant
@@ -224,11 +216,16 @@ export const ContentTypes_Fragments = gql`
     body {
       ...RichText_NoEntries
     }
+    pubDate
     actions {
       ...Link_Base
     }
     link {
-      ...Link_Base
+      ... on Link {
+        id
+        __typename
+        href
+      }
     }
   }
 
@@ -264,26 +261,93 @@ export const ContentTypes_Fragments = gql`
     settings
   }
 
-  fragment Article_Base on Article {
-    id
+  fragment CategoryArticle_Link on CategoryArticle {
+    ...Content_Base
     title
-    header {
-    ...Header_Base
-    }
     slug
-    summary
+  }
+
+  fragment CategoryArticle_Nested on CategoryArticle {
+    ...Content_Base
+    title
+    slug
+    articles {
+      ...Card_Base
+      link {
+        ...Link_Base
+      }
+    }
+    link {
+      ...Link_Base
+    }
+  }
+
+  fragment CategoryArticle_Base on CategoryArticle {
+    ...Content_Base
+    title
+    slug
+    categoryHierarchyLinks {
+      ...NavigationItem_Base
+    }
+    link {
+      ...Link_Base
+    }
     seo
-    pubDate
-    disableBackToTop
+    articles {
+      ...Card_Base
+    }
+    topicNavItems {
+      ...NavigationItem_Base
+    }
     header {
       ...Header_Base
     }
+    hero {
+      ...Hero_Base
+    }
+    featuredArticles {
+      ...Card_Base
+    }
+    footer {
+      ...Footer_Base
+    }
+
+    subCategories {
+      ... on CategoryArticle {
+        ...CategoryArticle_Nested
+        subCategories {
+          ... on CategoryArticle {
+            ...CategoryArticle_Nested
+          }
+        }
+      }
+    }
+  }
+
+  fragment Article_Base on Article {
+    id
+    title
+    slug
+    summary
+    pubDate
     featuredMedia {
       ...Media_Base
+    }
+  }
+
+  fragment Article_Page on Article {
+    ...Article_Base
+    header {
+      ...Header_Base
     }
     body {
       ...RichText_RichTextFragment
     }
+    footer {
+      ...Footer_Base
+    }
+    seo
+    disableBackToTop
     categories {
       ...Link_Base
     }
@@ -299,8 +363,11 @@ export const ContentTypes_Fragments = gql`
     sideNav {
       ...Link_Base
     }
-		footer {
+    footer {
       ...Footer_Base
+    }
+    topicNavItems {
+      ...NavigationItem_Base
     }
   }
 
