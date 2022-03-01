@@ -12,10 +12,10 @@ export const tableMock = {
           nodeType: "table",
           content: [
             {
-              nodeType: "table-row",
+              nodeType: "table-header",
               content: [
                 {
-                  nodeType: "table-cell",
+                  nodeType: "table-header-cell",
                   content: [
                     {
                       nodeType: "paragraph",
@@ -33,7 +33,7 @@ export const tableMock = {
                   data: {}
                 },
                 {
-                  nodeType: "table-cell",
+                  nodeType: "table-header-cell",
                   content: [
                     {
                       nodeType: "paragraph",
@@ -125,9 +125,24 @@ export const tableMock = {
                       content: [
                         {
                           nodeType: "text",
-                          value: "this does abc",
+                          value: "an image: ",
                           marks: [],
                           data: {}
+                        },
+                        {
+                          nodeType: "paragraph",
+                          data: {},
+                          content: [
+                            {
+                              nodeType: "markdown-image",
+                              content: [],
+                              data: {
+                                alt: "Screen Shot 2021-12-12 at 5.25.48 PM",
+                                url: "//images.ctfassets.net/o1orzsgogjpz/4UPgQvvkfI2YZVe7jT87rY/9c2f196fd3c35942d4f7cf5f0ec602cf/Screen_Shot_2021-12-12_at_5.25.48_PM.png",
+                                type: "image"
+                              }
+                            }
+                          ]
                         }
                       ]
                     }
