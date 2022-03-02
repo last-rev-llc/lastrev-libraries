@@ -24,7 +24,7 @@
     "@emotion/styled": "^11.6.0",
     "@ias/graphql-sdk": "^0.1.0",
     "@ias/utils": "^0.1.0",
-    "@last-rev/component-library": "^0.3.2",
+    "@last-rev/component-library": "^0.3.9",
     "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/rollup-config": "^0.1.0",
     "@last-rev/testing-library": "0.1.2",

@@ -1,17 +1,18 @@
 import React from 'react';
 import Head from 'next/head';
+import dynamic from 'next/dynamic';
 import type { AppProps } from 'next/app';
 import { ThemeProvider } from '@mui/material/styles';
-import '@last-rev/component-library/dist/styles.css';
 import CssBaseline from '@mui/material/CssBaseline';
-import dynamic from 'next/dynamic';
-import theme from '@ias/components/src/theme';
-import { createEmotionCache } from '../src/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import '@algolia/autocomplete-theme-classic';
+import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
+import '@last-rev/component-library/dist/styles.css';
+import theme from '@ias/components/src/theme';
+import { createEmotionCache } from '../src/createEmotionCache';
 
 // LastRev components
-import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
+
 const SEO = dynamic(() => import('@last-rev/component-library/dist/components/SEO/SEO'));
 
 const Section = dynamic(() => import('@last-rev/component-library/dist/components/Section/Section'));
@@ -26,22 +27,23 @@ const CollectionAccordion = dynamic(() => import('@last-rev/component-library/di
 
 const NavigationBar = dynamic(() => import('@last-rev/component-library/dist/components/NavigationBar/NavigationBar'));
 
-const Media = dynamic(() => import('@last-rev/component-library/dist/components/Media/Media'));
-
-const Link = dynamic(() => import('@last-rev/component-library/dist/components/Link/Link'));
-
-const NavigationItem = dynamic(() => import('@ias/components/src/components/NavigationItem/NavigationItem'));
-
-const Header = dynamic(() => import('@ias/components/src/components/Header/Header'));
-
 const Hero = dynamic(() => import('@last-rev/component-library/dist/components/Hero/Hero'));
 
 const Text = dynamic(() => import('@last-rev/component-library/dist/components/Text/Text'));
 
+const Media = dynamic(() => import('@last-rev/component-library/dist/components/Media/Media'));
+
 const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop/BackToTop'));
 
 // Custom components
+
 const CollectionFiltered = dynamic(() => import('@ias/components/src/components/CollectionFiltered/CollectionFiltered'));
+
+const NavigationItem = dynamic(() => import('@ias/components/src/components/NavigationItem/NavigationItem'));
+
+const Link = dynamic(() => import('@last-rev/component-library/dist/components/Link/Link'));
+
+const Header = dynamic(() => import('@ias/components/src/components/Header/Header'));
 
 const Quote = dynamic(() => import('@ias/components/src/components/Quote/Quote'));
 
@@ -56,6 +58,7 @@ const Table = dynamic(() => import('@ias/components/src/components/Table'));
 const CustomText = dynamic(() => import('@ias/components/src/components/Text'));
 
 const SearchBox = dynamic(() => import('@ias/components/src/components/SearchBox'));
+
 const PageTopic = dynamic(() => import('@ias/components/src/components/PageTopic'));
 
 const AutocompleteBox = dynamic(() => import('@ias/components/src/components/AutocompleteBox'));

@@ -183,6 +183,7 @@ export const ContentTypes_Fragments = gql`
     ...Content_Base
     title
     variant
+    controls
     file {
       url
       extension

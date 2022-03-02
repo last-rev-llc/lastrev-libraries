@@ -108,6 +108,7 @@ const RichTextFragment = gql`
     id
     __typename
     title
+    controls
     variant
     file {
       url

@@ -306,6 +306,12 @@ const createSchemeTheme = (schemeKey?: string) => {
                 border: 0
               },
 
+              '& [class*=Media-videoRoot]': {
+                aspectRatio: '16/9',
+                margin: baseSchemeTheme.spacing(4, 0, 5),
+                border: 0
+              },
+
               // Removes extra <br> tag being added by Contentful
               '& > br:last-child': {
                 display: 'none'

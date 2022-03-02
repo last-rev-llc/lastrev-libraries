@@ -89,6 +89,7 @@ export const CollectionItemsQuery = gql`
     __typename
     title
     variant
+    controls
     file {
       url
       extension
