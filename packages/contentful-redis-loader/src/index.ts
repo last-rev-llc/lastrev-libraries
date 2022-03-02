@@ -156,21 +156,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     if (cacheMissIds.length) {
       const sourceResults = await fallbackLoaders.entriesByContentTypeLoader.loadMany(cacheMissIds);
 
-      const filtered = filter(sourceResults, (result, idx) => {
-        const hasError = isError(result) || isContentfulError(result);
-
-        if (hasError) {
-          logger.debug(
-            `Filtering due to error fetching entries by contentType: ${JSON.stringify(
-              result,
-              null,
-              2
-            )}. requested: ${JSON.stringify(cacheMissIds[idx], null, 2)}`
-          );
-          return false;
-        }
-        return true;
-      });
+      const filtered = filter(sourceResults, (result) => !isError(result));
 
       timer = new Timer(`Set ${filtered.length} entries in redis`);
 
