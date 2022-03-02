@@ -1,4 +1,4 @@
-import { LastRevAppConfigArgs } from "./types";
+import { LastRevAppConfigArgs } from './types';
 
 const redis = () => ({
   host: 'host',
@@ -25,7 +25,7 @@ const contentful = () => ({
   contentPreviewToken: 'contentPreviewToken'
 });
 
-export const redisConfig = (): LastRevAppConfigArgs => ({ 
+export const redisConfig = (): LastRevAppConfigArgs => ({
   redis: { ...redis() }
 });
 

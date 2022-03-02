@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.1.10
+
+### Patch Changes
+
+- dd98970: Fixed an error where invalid contentful queries were leading to failed webhook update
+
 ## 0.1.9
 
 ### Patch Changes

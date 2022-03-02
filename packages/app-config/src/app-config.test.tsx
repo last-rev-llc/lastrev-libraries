@@ -58,27 +58,31 @@ describe('LastRevAppConfig', () => {
       }
       expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('Contentful CMS: contentful.spaceId is required.');
     });
-  
+
     test('throws error if contentful.contentDeliveryToken is not provided', () => {
       if (mockedConfig.contentful) {
         mockedConfig.contentful.contentDeliveryToken = undefined;
       }
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('Contentful CMS: contentful.contentDeliveryToken is required.');
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'Contentful CMS: contentful.contentDeliveryToken is required.'
+      );
     });
-  
+
     test('throws error if contentful.contentPreviewToken is not provided', () => {
       if (mockedConfig.contentful) {
         mockedConfig.contentful.contentPreviewToken = undefined;
       }
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('Contentful CMS: contentful.contentPreviewToken is required.');
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'Contentful CMS: contentful.contentPreviewToken is required.'
+      );
     });
 
     test('throws error if has incorrect strategy', () => {
       // @ts-ignore
-      mockedConfig.strategy = 'wrong strategy'; 
+      mockedConfig.strategy = 'wrong strategy';
       expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(`Invalid strategy: ${mockedConfig.strategy}`);
     });
-  
+
     test('throws error if invalid cms is provided', () => {
       // @ts-ignore
       mockedConfig.cms = 'Not Contentful';
@@ -99,7 +103,7 @@ describe('LastRevAppConfig', () => {
       expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('FS strategy: fs.contentDir is required');
     });
   });
-  
+
   describe('when strategy is redis', () => {
     test('throws error if redis is not provided', () => {
       mockedConfig.strategy = 'redis';
@@ -114,7 +118,7 @@ describe('LastRevAppConfig', () => {
       }
       expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('Redis strategy: redis.host is required');
     });
-  
+
     test('throws error if port is not provided', () => {
       mockedConfig.strategy = 'redis';
       if (mockedConfig.redis) {
@@ -132,13 +136,15 @@ describe('LastRevAppConfig', () => {
       }
       expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('DynamoDB strategy: dynamodb.region is required');
     });
-  
+
     test('throws error if port is not provided', () => {
       mockedConfig.strategy = 'dynamodb';
       if (mockedConfig.dynamodb) {
         mockedConfig.dynamodb.accessKeyId = undefined;
       }
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('DynamoDB strategy: dynamodb.accessKeyId is required');
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'DynamoDB strategy: dynamodb.accessKeyId is required'
+      );
     });
 
     test('throws error if region is not provided', () => {
@@ -146,15 +152,19 @@ describe('LastRevAppConfig', () => {
       if (mockedConfig.dynamodb) {
         mockedConfig.dynamodb.secretAccessKey = undefined;
       }
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('DynamoDB strategy: dynamodb.secretAccessKey is required');
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'DynamoDB strategy: dynamodb.secretAccessKey is required'
+      );
     });
-  
+
     test('throws error if port is not provided', () => {
       mockedConfig.strategy = 'dynamodb';
       if (mockedConfig.dynamodb) {
         mockedConfig.dynamodb.tableName = undefined;
       }
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('DynamoDB strategy: dynamodb.tableName is required');
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'DynamoDB strategy: dynamodb.tableName is required'
+      );
     });
   });
 
@@ -172,13 +182,15 @@ describe('LastRevAppConfig', () => {
       }
       expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('DynamoDB strategy: dynamodb.region is required');
     });
-  
+
     test('throws error if port is not provided', () => {
       mockedConfig.strategy = 'dynamodb';
       if (mockedConfig.dynamodb) {
         mockedConfig.dynamodb.accessKeyId = undefined;
       }
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('DynamoDB strategy: dynamodb.accessKeyId is required');
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'DynamoDB strategy: dynamodb.accessKeyId is required'
+      );
     });
 
     test('throws error if region is not provided', () => {
@@ -186,15 +198,19 @@ describe('LastRevAppConfig', () => {
       if (mockedConfig.dynamodb) {
         mockedConfig.dynamodb.secretAccessKey = undefined;
       }
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('DynamoDB strategy: dynamodb.secretAccessKey is required');
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'DynamoDB strategy: dynamodb.secretAccessKey is required'
+      );
     });
-  
+
     test('throws error if port is not provided', () => {
       mockedConfig.strategy = 'dynamodb';
       if (mockedConfig.dynamodb) {
         mockedConfig.dynamodb.tableName = undefined;
       }
-      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError('DynamoDB strategy: dynamodb.tableName is required');
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'DynamoDB strategy: dynamodb.tableName is required'
+      );
     });
   });
 
