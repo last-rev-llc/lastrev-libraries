@@ -49,10 +49,14 @@ export default {
   }
 };
 
-const TemplateLarge = (args: JSX.IntrinsicAttributes) => <CollectionCarousel theme variant={undefined} sidekickLookup={undefined} {...args} />;
+const TemplateLarge = (args: JSX.IntrinsicAttributes) => (
+  <CollectionCarousel theme variant={undefined} sidekickLookup={undefined} {...args} />
+);
 export const Default = TemplateLarge.bind({});
 Default.args = { ...CollectionCarouselMock() };
 
-const TemplateSmall = (args: JSX.IntrinsicAttributes) => <CollectionCarousel theme variant={undefined} sidekickLookup={undefined} {...args} />;
+const TemplateSmall = (args: JSX.IntrinsicAttributes) => (
+  <CollectionCarousel theme variant={undefined} sidekickLookup={undefined} {...args} />
+);
 export const DefaultSmall = TemplateSmall.bind({});
 DefaultSmall.args = { ...smallCarouselMock() };

@@ -1,5 +1,11 @@
 # @last-rev/contentful-cms-loader
 
+## 0.1.7
+
+### Patch Changes
+
+- dd98970: Fixed an error where invalid contentful queries were leading to failed webhook update
+
 ## 0.1.6
 
 ### Patch Changes
