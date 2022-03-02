@@ -65,7 +65,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
   const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
     return async (keys) => {
       const timer = new Timer(`Fetched entries by contentType from CMS`);
-      const out = await Promise.all(
+      const out = await Promise.allSettled(
         map(keys, (key) =>
           (async () => {
             const { preview, id } = key;
@@ -74,12 +74,23 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
               include: 0,
               locale: '*'
             });
-            return result.items || ([] as Entry<any>[]);
+            return (result.items || []) as Entry<any>[];
           })()
         )
       );
       logger.trace(timer.end());
-      return out;
+
+      return out.map((p, idx) => {
+        if (p.status === 'rejected') {
+          logger.error(
+            `Error in Cms Loader. entriesByContentTypeLoader. Type: ${keys[idx].id}, ${p.reason.message} ${(
+              p.reason.details?.errors || []
+            ).map((e: any) => `${e.name}: ${e.value}`)}`
+          );
+          return [];
+        }
+        return p.value;
+      });
     };
   };
 
@@ -93,7 +104,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
       logger.trace(timer.end());
       return result.items;
     } catch (err: any) {
-      console.error('Unable to fetch content types using cms loader:', err.message);
+      logger.error('Unable to fetch content types using cms loader:', err.message);
       return [];
     }
   };
