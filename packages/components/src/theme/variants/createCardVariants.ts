@@ -10,6 +10,10 @@ export const defaultCard = (theme: Theme) => ({
     boxShadow: 'none',
     textAlign: 'center',
 
+    '& > [class*="Card-cardLink"]': {
+      color: 'transparent'
+    },
+
     '& .MuiCardMedia-root': {
       maxHeight: theme.spacing(13.5),
 
@@ -32,11 +36,10 @@ export const defaultCard = (theme: Theme) => ({
       display: 'flex',
       alignItems: 'center',
       flexDirection: 'column',
-      justifyContent: 'flex-start',
+      justifyContent: 'center',
 
       [theme.breakpoints.up('sm')]: {
-        minHeight: theme.spacing(11.5),
-        height: '100%'
+        minHeight: theme.spacing(11.5)
       },
 
       ':last-child': {
@@ -45,10 +48,7 @@ export const defaultCard = (theme: Theme) => ({
 
       '& .MuiTypography-h3': {
         ...theme.typography.h5,
-
-        [theme.breakpoints.down('sm')]: {
-          marginBottom: 0
-        }
+        marginBottom: 0
       },
 
       '& .MuiTypography-body1': {
