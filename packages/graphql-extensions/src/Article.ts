@@ -5,12 +5,19 @@ import { ContentfulPathsGenerator } from '@last-rev/types';
 import * as types from '@contentful/rich-text-types';
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
 import { createRichText } from '@last-rev/graphql-contentful-core';
+import { constructObjectId } from '@last-rev/graphql-algolia-integration';
+import { BLOCKS } from '@contentful/rich-text-types';
+
 import headerResolver from './resolvers/headerResolver';
 import footerResolver from './resolvers/footerResolver';
 import topicNavHorizontalResolver from './resolvers/topicNavHorizontalResolver';
 import createType from './utils/createType';
 import createPath from './utils/createPath';
 import getPathReader from './utils/getPathReader';
+import parseRichTextField from './utils/parseRichTextField';
+import createPermaLink from './utils/createPermaLink';
+import getCategoriesForArticle from './utils/getCategoriesForArticle';
+import getPathUrl from './utils/getPathUrl';
 
 const SITE = process.env.SITE;
 interface Heading {
@@ -168,6 +175,37 @@ export const mappers = {
         return paths[0];
       },
       text: 'title'
+    },
+    AlgoliaRecord: {
+      algoliaObjects: async (article: any, _args: any, ctx: ApolloContext) => {
+        const path = await getPathUrl(article, ctx);
+        const url = path ? `${process.env.DOMAIN}${path}` : null;
+
+        if (!url) return [];
+
+        const objects = parseRichTextField(getLocalizedField(article.fields, 'body', ctx), {
+          sectionDelimiter: BLOCKS.HEADING_2
+        });
+
+        const title = getLocalizedField(article.fields, 'title', ctx);
+
+        const { categories, categoryLinks } = await getCategoriesForArticle(article, ctx);
+
+        return objects.map(({ section, content }, objectIndex) => ({
+          index: 'articles',
+          data: {
+            objectID: constructObjectId(article, ctx, objectIndex),
+            locale: ctx.locale || ctx.defaultLocale,
+            preview: !!ctx.preview,
+            title,
+            section,
+            content,
+            permalink: `${url}${createPermaLink(section)}`,
+            categories,
+            categoryLinks
+          }
+        }));
+      }
     }
   }
 };

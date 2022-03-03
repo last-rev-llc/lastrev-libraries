@@ -14,15 +14,16 @@
   },
   "peerDependencies": {},
   "dependencies": {
+    "@emotion/cache": "^11.7.1",
     "@emotion/react": "^11.7.1",
-    "@emotion/styled": "^11.6.0",
     "@emotion/server": "^11.4.0",
-    "@last-rev/component-library": "^0.3.2",
-    "@last-rev/contentful-sidekick-util": "^0.0.2",
-    "@last-rev/sitemap-generator": "^0.1.1",
+    "@emotion/styled": "^11.6.0",
     "@ias/components": "0.0.1",
     "@ias/graphql-sdk": "^0.1.0",
     "@ias/utils": "^0.1.0",
+    "@last-rev/component-library": "^0.3.9",
+    "@last-rev/contentful-sidekick-util": "^0.0.2",
+    "@last-rev/sitemap-generator": "^0.1.1",
     "@mui/icons-material": "^5.2.4",
     "@mui/material": "^5.2.4",
     "@types/react": "^17.0.37",
@@ -35,8 +36,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "serve": "^12.0.0",
-    "swr": "^1.1.0",
-    "@emotion/cache": "^11.7.1"
+    "swr": "^1.1.0"
   },
   "devDependencies": {
     "@ias/graphql-extensions": "0.1.0",

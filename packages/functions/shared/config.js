@@ -12,11 +12,11 @@ const testForEnvVar = (name) => {
 };
 
 const parseBooleanEnvVar = (value) => {
+  if (!value) return false;
   // values parsed as true: true, 1, yes, y, => ignore caps
   const val = value.toString().toLowerCase();
   return /^(true|1|yes|y)$/.test(val);
 };
-
 
 const spaceId = testForEnvVar('CONTENTFUL_SPACE_ID');
 const contentDeliveryToken = testForEnvVar('CONTENTFUL_DELIVERY_TOKEN');
@@ -34,6 +34,12 @@ const config = new LastRevAppConfig({
     spaceId,
     env,
     usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW)
+  },
+  algolia: {
+    applicationId: process.env.ALGOLIA_APPLICATION_ID,
+    adminApiKey: process.env.ALGOLIA_ADMIN_API_KEY,
+    contentTypeIds: ['article'],
+    indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT)
   },
   redis: {
     port: process.env.REDIS_PORT,

@@ -2,14 +2,14 @@
   "name": "lastrev-next-starter",
   "version": "0.1.0",
   "main": "index.js",
-  "author": "Jaime Morales",
+  "author": "Last Rev",
   "license": "MIT",
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
+    "algolia:update": "lr-algolia-updater https://ias-kb-site.com/.netlify/functions/algolia-background",
+    "algolia:update:local": "lr-algolia-updater http://localhost:8888/.netlify/functions/algolia-background",
     "build": "lerna run build --scope @ias/web --include-dependencies --ignore @ias/graphql-extensions --ignore @ias/graphql-runner --loglevel info",
     "build:prod": "yarn build:extensions && yarn sync:cms && yarn gql:pm2 && wait-on -c wait-on-config.js && yarn build; status=$?; pm2 kill; exit $status",
     "build:extensions": "lerna run build --scope @ias/graphql-extensions --include-dependencies --loglevel info",
@@ -54,6 +54,7 @@
     "maintained node versions"
   ],
   "dependencies": {
+    "@last-rev/graphql-algolia-integration": "^0.1.4",
     "@manypkg/cli": "^0.19.1",
     "cross-env": "^7.0.2",
     "eslint": "^8.4.0",
