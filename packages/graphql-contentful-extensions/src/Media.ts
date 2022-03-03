@@ -4,13 +4,16 @@ import { ApolloContext } from '@last-rev/types';
 export const typeMappings = {};
 const mediaFieldResolver = async ({ fields, field, assetField, ctx }: any) => {
   // TODO: Make getting a localized resolved link a single function
-  const title: any = getLocalizedField(fields, assetField, ctx);
-  if (title) return title;
+  const value: any = getLocalizedField(fields, assetField, ctx);
+  if (value) return value;
+
   const assetRef: any = getLocalizedField(fields, field, ctx);
   if (!assetRef) return null;
+
   const asset = await ctx.loaders.assetLoader.load({ id: assetRef?.sys?.id, preview: !!ctx.preview });
-  const assetTitle: any = getLocalizedField(asset?.fields, assetField, ctx);
-  return assetTitle;
+  const fieldValue: any = getLocalizedField(asset?.fields, assetField, ctx);
+
+  return fieldValue;
 };
 
 const resolveFile = async (media: any, _args: any, ctx: ApolloContext) => {
@@ -54,7 +57,23 @@ export const mappers = {
         });
         return title ?? assetTitle;
       },
-      file: resolveFile
+      file: resolveFile,
+      fileTablet: async (media: any, _args: any, ctx: ApolloContext) => {
+        let file: any;
+        const assetFile = await mediaFieldResolver({ fields: media?.fields, field: 'tablet', assetField: 'file', ctx });
+        if (assetFile) {
+          file = assetFile;
+        }
+        return file;
+      },
+      fileMobile: async (media: any, _args: any, ctx: ApolloContext) => {
+        let file: any;
+        const assetFile = await mediaFieldResolver({ fields: media?.fields, field: 'mobile', assetField: 'file', ctx });
+        if (assetFile) {
+          file = assetFile;
+        }
+        return file;
+      }
     },
     Card: {
       media: async (media: any, _args: any, ctx: ApolloContext) => {
@@ -127,9 +146,12 @@ export const getThumbnailURL = (assetURL: string) => {
   }
   return null;
 };
+
 export const typeDefs = gql`
   extend type Media {
     variant: String
+    fileTablet: Asset
+    fileMobile: Asset
   }
 `;
 // A function to remove the opacity of an image
