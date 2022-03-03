@@ -252,6 +252,16 @@ export const ContentTypes_Fragments = gql`
       extension
       fileName
     }
+    fileTablet {
+      url
+      extension
+      fileName
+    }
+    fileMobile {
+      url
+      extension
+      fileName
+    }
   }
 
   fragment RichText_NoEntries on RichText {

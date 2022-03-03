@@ -35,6 +35,8 @@ type Media implements Content {
   asset: Media
   tablet: Media
   mobile: Media
+  fileTablet: Asset
+  fileMobile: Asset
 }
 type Location {
   lat: String
@@ -60,12 +62,25 @@ type Theme implements Content {
   components: JSON
   typography: JSON
 }
+type Locales {
+  default: String!
+  available: [String!]!
+}
+input ContentsFilter {
+  contentTypes: [String]
+  ids: [String]
+  locale: String
+  preview: Boolean
+  displayType: String
+}
 type Query {
   _service: _Service!
   page(path: String!, locale: String, preview: Boolean, site: String): Content
   paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
-  content(id: String!, locale: String, preview: Boolean): Content
+  content(id: String!, locale: String, preview: Boolean, displayType: String): Content
+  contents(filter: ContentsFilter!): [Content]
   sitemap(root: String!, locales: [String!], preview: Boolean, site: String): Sitemap
+  availableLocales: Locales
 }
 type _Service {
   "The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied"
