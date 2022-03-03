@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.12
+
+### Patch Changes
+
+- 1d57f99: Add support for Media responsive fields: tablet and mobile
+
 ## 0.0.11
 
 ### Patch Changes
