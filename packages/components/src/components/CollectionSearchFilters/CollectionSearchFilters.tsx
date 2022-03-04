@@ -31,7 +31,7 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup }: Collectio
           />
         ) : null}
         <Filters
-          attribute="categories"
+          attribute="categories.level-1"
           transformItems={(items: Array<FilterItem>) =>
             items.map((item) => {
               return {

@@ -681,6 +681,14 @@ const createSchemeTheme = (schemeKey?: string) => {
                     opacity: 0.5
                   }
                 }
+              },
+
+              '& [class*="MuiPaginationItem-ellipsis"]': {
+                margin: '1px 0',
+                border: `1px solid ${baseSchemeTheme.palette.midnight.A12}`,
+                borderRadius: 0,
+                borderRight: 0,
+                cursor: 'default'
               }
             }
           }

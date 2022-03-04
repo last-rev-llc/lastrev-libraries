@@ -26,7 +26,7 @@ const PageGeneral = ({ header, hero, contents, footer, disableBackToTop, breadcr
         {contents?.map((content: any) => (
           <ContentModule key={content?.id} {...content} data-testid={content.__typename} component="section" />
         ))}
-        {!disableBackToTop ? <BackToTop /> : null}
+        {!disableBackToTop ? <BackToTop FabProps={{ 'aria-label': 'Back To Top' }} /> : null}
         {footer ? <ContentModule {...(footer as any)} /> : null}
       </InstantSearch>
     </>

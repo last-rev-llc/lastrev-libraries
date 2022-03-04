@@ -10,12 +10,17 @@ export interface SearchResultItemProps {
   components?: any;
 }
 
+interface CategoryProps {
+  name: string;
+  href: string;
+}
+
 export interface HitProps {
   title?: string;
   permalink?: any;
   content?: string;
   categories?: string[];
-  categoriesLinks?: string[];
+  categoryLinks: Array<CategoryProps>;
 }
 
 export const SearchResultItem = ({ hit, components }: SearchResultItemProps) => {
@@ -39,30 +44,28 @@ export const SearchResultItem = ({ hit, components }: SearchResultItemProps) => 
           ) : (
             <Skeleton animation="wave" height={100} width="100%" />
           )}
-          {hit?.categories ? (
-            hit?.categories.map((_category, idx) => {
-              return (
-                <Chip
-                  key={idx}
-                  clickable
-                  component="a"
-                  sx={{
-                    marginRight: 1,
-                    marginTop: 1,
-                    borderRadius: '3px',
-                    backgroundColor: 'coolGrey.light.main',
-                    fontWeight: 'bold',
-                    color: 'grey.100'
-                  }}
-                  href={hit?.categoriesLinks && hit.categoriesLinks[idx]}
-                  label={<components.Highlight hit={hit} attribute={['categories', idx]} />}
-                  data-testid={`SearchResultItem-category${idx}`}
-                />
-              );
-            })
-          ) : (
-            <Skeleton animation="wave" height={30} width="10%" />
-          )}
+          {hit?.categoryLinks?.map((category, idx) => {
+            return (
+              <Chip
+                key={category.href}
+                clickable
+                component="a"
+                sx={{
+                  marginRight: 1,
+                  marginTop: 1,
+                  borderRadius: '3px',
+                  backgroundColor: 'coolGrey.light.main',
+                  fontWeight: 'bold',
+                  color: 'grey.100'
+                }}
+                href={category.href}
+                // TODO: Not working but will replace this library very soon
+                // label={<components.Highlight hit={hit} attribute={['categories', 'level-1']} />}
+                label={category.name}
+                data-testid={`SearchResultItem-category${idx}`}
+              />
+            );
+          })}
           <br />
         </Box>
       </a>

@@ -18,18 +18,24 @@ import { CollectionProps } from '@last-rev/component-library/dist/components/Col
 import CategoryLinks from '../CategoryLinks';
 import { sidekick } from '../../utils/sidekick';
 
+interface CategoryProps {
+  name: string;
+  href: string;
+}
+
 interface HitProps {
   categories: Array<string>;
-  categoriesLinks: Array<string>;
+  categoryLinks: Array<CategoryProps>;
 }
 
 // TODO: Find proper TS type in Algolia API
 const Hit = (props: any) => {
   const hit = props.hit as HitProps;
-  const categories = hit.categories.map((category: string, idx: number) => ({
-    text: category,
-    href: hit.categoriesLinks[idx]
+  const categories = hit.categoryLinks.map((category: CategoryProps) => ({
+    text: category.name,
+    href: category.href
   }));
+
   return (
     <>
       <HitTitle component={Highlight} variant="body2" attribute="title" hit={hit} />
