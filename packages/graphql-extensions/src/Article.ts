@@ -179,7 +179,7 @@ export const mappers = {
     AlgoliaRecord: {
       algoliaObjects: async (article: any, _args: any, ctx: ApolloContext) => {
         const path = await getPathUrl(article, ctx);
-        const url = path ? `${process.env.DOMAIN}${path}` : null;
+        const url = path ? path : null;
 
         if (!url) return [];
 
