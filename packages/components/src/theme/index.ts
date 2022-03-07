@@ -64,12 +64,16 @@ declare module '@mui/material/styles' {
 
   interface TypographyVariants {
     body3: TypographyStyle;
+    body2Bold: TypographyStyle;
+    articleDate: TypographyStyle;
     time: TypographyStyle;
     smallText: TypographyStyle;
   }
 
   interface TypographyVariantsOptions {
     body3?: TypographyStyle;
+    body2Bold?: TypographyStyle;
+    articleDate?: TypographyStyle;
     time?: TypographyStyle;
     smallText?: TypographyStyle;
   }
@@ -158,9 +162,20 @@ const baseTheme = {
       fontWeight: 400,
       lineHeight: '21px'
     },
+    body2Bold: {
+      fontSize: '1rem',
+      fontWeight: 600,
+      lineHeight: 1.5
+    },
     overline: {
       fontSize: 12,
       fontWeight: 600,
+      lineHeight: '18px'
+    },
+    articleDate: {
+      color: 'midnight.A80',
+      fontSize: 12,
+      fontWeight: 400,
       lineHeight: '18px'
     },
     smallText: {

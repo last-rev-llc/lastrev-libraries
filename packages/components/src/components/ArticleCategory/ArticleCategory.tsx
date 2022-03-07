@@ -163,9 +163,8 @@ const ArticleCategory = ({
               {article.link && (
                 <ContentModule
                   {...article.link}
-                  variant="h6"
                   sx={{
-                    '&': (theme: Theme) => theme.typography.h6
+                    '&': (theme: Theme) => theme.typography.body2Bold
                   }}
                   mb={1}
                   text={article.title}
@@ -174,6 +173,7 @@ const ArticleCategory = ({
               )}
               {article.body && (
                 <ContentModule
+                  sx={{ color: 'midnight.A80', mt: 1 }}
                   data-testid={`ArticleCategory-${isNested ? 'SubCategory-' : ''}Article-${article.id}-summary`}
                   body={article.body}
                   __typename="Text"
@@ -183,6 +183,9 @@ const ArticleCategory = ({
                 <Typography
                   variant="body2"
                   component="p"
+                  sx={{
+                    '&': (theme: Theme) => theme.typography.articleDate
+                  }}
                   data-testid={`ArticleCategory-${isNested ? 'SubCategory-' : ''}Article-${article.id}-pubdate`}>
                   {dayjs(article.pubDate).format('MMM D, YYYY')}
                 </Typography>
