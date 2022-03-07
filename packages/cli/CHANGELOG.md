@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.2.0
+
+### Minor Changes
+
+- 233c117: 'Added a new Develop command to the CLI, and a new eslint plugin package'
+
 ## 0.1.36
 
 ### Patch Changes
