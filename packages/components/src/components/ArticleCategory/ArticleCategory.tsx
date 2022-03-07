@@ -5,7 +5,7 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import Box from '@mui/material/Box';
 import MuiButton from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
+import Typography, { TypographyProps } from '@mui/material/Typography';
 import { styled, alpha } from '@mui/material/styles';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
@@ -62,6 +62,15 @@ const Button = styled(MuiButton)(({ theme }) => ({
   fontSize: '0.9375rem'
 }));
 
+const ArticleCategoryTitle = styled(Typography, {
+  name: 'ArticleCategory',
+  slot: 'ArticleCategoryTitle',
+})<TypographyProps<React.ElementType>>(({ theme }) => ({
+  [theme.breakpoints.up('md')]: {
+    marginBottom: 0
+  }
+}));
+
 const Root = styled(Box)(({ theme }) => ({
   'borderBottom': `1px solid ${alpha(theme.palette.text.primary, 0.3)}`,
 
@@ -114,9 +123,9 @@ const ArticleCategory = ({
           <Box display="flex" justifyContent="space-between" mb={3}>
             <Box display="flex" alignItems="center" {...sidekick(sidekickLookup?.title)}>
               <DocumentIcon />
-              <Typography variant="h3" component="h3" ml={1} data-testid="ArticleCategory-title">
+              <ArticleCategoryTitle variant="h3" component="h3" ml={1} data-testid="ArticleCategory-title">
                 {title}
-              </Typography>
+              </ArticleCategoryTitle>
             </Box>
 
             {subCategories && (
@@ -126,6 +135,7 @@ const ArticleCategory = ({
                   <Button
                     variant="text"
                     color="secondary"
+                    disableRipple
                     onClick={changeAllSubCategoriesExpand(false)}
                     data-testid="ArticleCategory-expand-collapse-button">
                     Collapse all
@@ -135,6 +145,7 @@ const ArticleCategory = ({
                   <Button
                     variant="text"
                     color="secondary"
+                    disableRipple
                     onClick={changeAllSubCategoriesExpand(true)}
                     data-testid="ArticleCategory-expand-collapse-button"
                     sx={{ whiteSpace: 'nowrap' }}>
@@ -190,7 +201,9 @@ const ArticleCategory = ({
               data-testid="ArticleCategory-SubCategory">
               <AccordionSummary>
                 <Box display="flex" alignItems="center">
-                  <ChevronIcon open={Boolean(expandedSubCategories[subCategory.id])} />
+                  <ChevronIcon open={Boolean(expandedSubCategories[subCategory.id])}
+                    sx={{ ml: 1 }}
+                  />
                   <Typography
                     variant="h5"
                     component="h5"

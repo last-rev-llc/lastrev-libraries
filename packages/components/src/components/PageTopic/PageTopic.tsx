@@ -53,25 +53,56 @@ export const PageTopic = ({
 
       {hero ? <ContentModule {...(hero as any)} /> : null}
 
-      <Container maxWidth="xl" {...sidekick(sidekickLookup)} sx={{ my: 3 }}>
-        <Grid container spacing={{ xs: 2, lg: 4 }}>
-          <Grid item xs={12} md={4} xl={3} sx={{ display: { sm: 'none', md: 'flex' } }}>
-            <Box>
-              {categoryHierarchyLinks ? (
-                <TopicNav currentCategoryId={id} navItems={categoryHierarchyLinks} data-testid="Topic-sideNav" />
-              ) : null}
-            </Box>
+      <Container maxWidth="xl" {...sidekick(sidekickLookup)}
+        sx={{
+          my: 3,
+          px: { xs: 0, md: 3 },
+          mb: { xs: 0, md: 3 }
+        }}
+      >
+        <Grid container
+          spacing={{ xs: 2, lg: 4 }}
+          sx={{ px: { xs: 0, md: 6 } }}
+        >
+          <Grid item xs={12} md={4} xl={3}
+            sx={{
+              display: { xs: 'none', md: 'block' }
+            }}
+          >
+            {categoryHierarchyLinks ? (
+              <TopicNav currentCategoryId={id} navItems={categoryHierarchyLinks} data-testid="Topic-sideNav" />
+            ) : null}
           </Grid>
 
-          <Grid item xs {...sidekick(sidekickLookup)} data-testid="Topic-Articles-Wrap">
-            <ArticleCategory id={id} title={title} subCategories={subCategories} articles={articles} />
-          </Grid>
+          <Grid item xs>
+            <Grid container spacing={{ xs: 0, lg: 4 }}>
+              <Grid item xs={12} xl={8} {...sidekick(sidekickLookup)}
+                sx={{ pl: 3, pr: 3 }}
+                data-testid="Topic-Articles-Wrap"
+              >
+                <ArticleCategory id={id} title={title} subCategories={subCategories} articles={articles} />
+              </Grid>
 
-          {featuredArticles && featuredArticles.length && (
-            <Grid item xs={12} md={12} xl={3} {...sidekick(sidekickLookup)} data-testid="Topic-Featured-Articles-Wrap">
-              <FeaturedArticles articles={featuredArticles} />
+              {featuredArticles?.length && (
+                <Grid item xs={12} xl={4} {...sidekick(sidekickLookup)}
+                  sx={{
+                    bgcolor: { xs: 'midnight.A06', md: 'background.default' },
+                    pl: 3, pr: 3, pt: 3,
+                    '& .MuiCard-root': {
+                      bgcolor: 'transparent'
+                    },
+                    '& .MuiListItem-root': {
+                      pb: { xs: 0, md: 3 }
+                    }
+                  }}
+                  data-testid="Topic-Featured-Articles-Wrap"
+                >
+                  <FeaturedArticles articles={featuredArticles} />
+                </Grid>
+              )}
             </Grid>
-          )}
+          </Grid>
+
         </Grid>
       </Container>
 

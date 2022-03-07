@@ -72,7 +72,7 @@ const TopicNav = ({ navItems, currentCategoryId = '' }: TopicNavProps) => {
                     onChange={expandCategory(navItem.id ?? '')}>
                     <AccordionSummary>
                       <AccordionTitle
-                        sx={{ display: 'flex', alignItems: 'center', pl: 1, mb: 0 }}
+                        sx={{ display: 'flex', alignItems: 'center', mb: 0 }}
                         data-scrollspy-id={navItem.id}
                         data-testid={`TopicNav-categoryAccordion-${navItem.id}`}
                         className={
@@ -100,7 +100,7 @@ const TopicNav = ({ navItems, currentCategoryId = '' }: TopicNavProps) => {
                           <ListItem disablePadding sx={{ p: 0, listStyle: 'none', mb: 1.5 }} key={subNavItem.id}>
                             <NavLink
                               {...subNavItem}
-                              sx={{ pl: 4, mb: 0, mr: 2, display: 'block' }}
+                              sx={{ pl: 3, mb: 0, mr: 2, display: 'block' }}
                               onClick={() => setActive(subNavItem.id ?? '')}
                               className={subNavItem.id === active ? 'active' : ''}
                               data-testid={`TopicNav-subCategoryLink-${subNavItem.id}`}
@@ -114,7 +114,7 @@ const TopicNav = ({ navItems, currentCategoryId = '' }: TopicNavProps) => {
                   <NavLink
                     {...(navItem as any)}
                     onClick={() => setActive(navItem.id ?? '')}
-                    sx={{ display: 'flex', alignItems: 'center', pl: 2.25 }}
+                    sx={{ display: 'flex', alignItems: 'center', pl: 1 }}
                     className={`top-category ${(idx === 0 && !active) || active === navItem.id ? 'active' : ''}`}
                     data-testid={`TopicNav-categoryLink-${navItem.id}`}
                   />
@@ -161,7 +161,6 @@ const NavLink = styled(Link, {
 const AccordionTitle = styled(Box)(({ theme }) => ({
   ...theme.typography.smallText,
   'width': '100%',
-  'borderLeft': '2px solid transparent',
 
   '&.active': {
     color: theme.palette.text.primary,
