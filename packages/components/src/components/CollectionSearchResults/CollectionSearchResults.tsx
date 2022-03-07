@@ -166,7 +166,8 @@ const HitDescription = styled(Typography, {
   slot: 'HitDescription',
 })<TypographyProps<React.ElementType>>(({ theme }) => ({
   display: 'block',
-  paddingBottom: theme.spacing(2)
+  paddingBottom: theme.spacing(2),
+  wordBreak: 'break-word'
 }));
 
 export default CollectionSearchResults;
