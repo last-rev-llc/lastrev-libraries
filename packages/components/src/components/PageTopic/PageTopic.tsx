@@ -1,5 +1,4 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
@@ -55,9 +54,9 @@ export const PageTopic = ({
 
       <Container maxWidth="xl" {...sidekick(sidekickLookup)}
         sx={{
-          my: 3,
-          px: { xs: 0, md: 3 },
-          mb: { xs: 0, md: 3 }
+          mt: 5,
+          mb: { xs: 0, md: 3 },
+          px: { xs: 0, md: 3 }
         }}
       >
         <Grid container
