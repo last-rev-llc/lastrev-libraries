@@ -1,15 +1,12 @@
-import envPaths from 'env-paths';
-import { join } from 'path';
-import Configstore from 'configstore';
 import { isNil } from 'lodash';
 import { DistinctQuestion, prompt } from 'inquirer';
 import Messager from './Messager';
 
 import { version } from '../../../package.json';
+import getLastRevConfig, { emptyState } from '../../helpers/getLastRevConfig';
+import Configstore from 'configstore';
 
 const messager = Messager.getInstance();
-
-const OSBasedPaths = envPaths('last-rev', { suffix: '' });
 
 export const VAL_SELECTED_ACTIONS = 'selectedActions';
 export const VAL_RESOLVED_APP_ROOT = 'resolvedAppRoot';
@@ -61,47 +58,13 @@ export const ACTION_ADD_GITHUB_REPO_TO_NETLIFY = 'addGithubRepoToNetlify';
 export const ACTION_UPDATE_NETLIFY_BUILD_ENV = 'updateNetlifyBuildEnv';
 export const ACTION_WRITE_LOCAL_ENV_FILE = 'writeLocalEnvFile';
 
-type CliState = {
-  messages: string[];
-  completedActions: Record<string, boolean>;
-  inProgress: boolean;
-  values: Record<string, any>;
-  version: string;
-};
-
-const emptyState: CliState = {
-  messages: [],
-  values: {},
-  completedActions: {},
-  inProgress: false,
-  version
-};
-
-const defaults = {
-  cli: {
-    providers: {
-      github: {
-        token: null
-      },
-      netlify: {
-        token: null
-      },
-      contentful: {
-        token: null
-      }
-    },
-    state: emptyState
-  }
-};
-
 const stateRootKey = 'cli.state';
 
 export default class LastRevConfig {
   private _config: Configstore;
 
   constructor() {
-    const configPath = join(OSBasedPaths.config, 'config.json');
-    this._config = new Configstore('', defaults, { configPath });
+    this._config = getLastRevConfig();
     if (!this.inProgress()) {
       this.clearState();
     }

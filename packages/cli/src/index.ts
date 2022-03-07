@@ -14,4 +14,7 @@ program
   .command('gen-fragments', 'Generates the graphql fragments and page query from existing content JSON files', {
     executableFile: resolve(__dirname, '../dist/gen-fragments.js')
   })
+  .command('develop', 'Allows one to actively develop lastrev-libraries in conjunction with a client monorepo', {
+    executableFile: resolve(__dirname, '../dist/develop.js')
+  })
   .parse(process.argv);
