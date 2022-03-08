@@ -6,7 +6,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
 import sidekick from '../../utils/sidekick';
-import Text, { RichText } from '../Text';
+import ContentModule from '../ContentModule';
+import { RichText } from '../Text';
 
 export interface AccordionProps extends MuiAccordionProps {
   __typename?: string;
@@ -28,7 +29,13 @@ export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionPro
         </AccordionSummary>
         {body ? (
           <AccordionDetails>
-            <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="Accordion-body" />
+            <ContentModule
+              __typename="Text"
+              variant="accordion"
+              sidekickLookup={sidekickLookup?.body}
+              body={body}
+              data-testid="Accordion-body"
+            />
           </AccordionDetails>
         ) : null}
       </AccordionRoot>

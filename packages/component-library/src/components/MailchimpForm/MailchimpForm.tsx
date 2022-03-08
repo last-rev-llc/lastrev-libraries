@@ -6,7 +6,8 @@ import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
 import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
-import Text, { RichText } from '../Text';
+import ContentModule from '../ContentModule';
+import { RichText } from '../Text';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import snakeCase from 'lodash/snakeCase';
 import sidekick from '../../utils/sidekick';
@@ -153,10 +154,14 @@ const CustomForm = ({
             height: '100%',
             opacity: status === 'success' ? 1 : 0,
             pointerEvents: status === 'success' ? 'initial' : 'none'
-          }}
-        >
+          }}>
           {successMessage ? (
-            <Text body={successMessage} data-testid="MailchimpForm-successMessage" />
+            <ContentModule
+              __typename="Text"
+              variant="mailchimp-form"
+              body={successMessage}
+              data-testid="MailchimpForm-successMessage"
+            />
           ) : (
             <Box>Success</Box>
           )}
@@ -193,7 +198,15 @@ export const MailchimpForm = ({
                 {subtitle}
               </Typography>
             ) : null}
-            {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="MailchimpForm-body" /> : null}
+            {body ? (
+              <ContentModule
+                __typename="Text"
+                variant="MailchimpForm"
+                sidekickLookup={sidekickLookup?.body}
+                body={body}
+                data-testid="MailchimpForm-body"
+              />
+            ) : null}
           </Grid>
 
           <Grid container item sx={{ position: 'relative' }}>
