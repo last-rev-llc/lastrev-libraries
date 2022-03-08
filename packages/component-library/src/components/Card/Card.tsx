@@ -84,7 +84,8 @@ export const Card = ({
                 {...sidekick(sidekickLookup?.subtitle)}
                 variant="h4"
                 component="h4"
-                data-testid="Card-subtitle">
+                data-testid="Card-subtitle"
+              >
                 {subtitle}
               </Typography>
             ) : null}
