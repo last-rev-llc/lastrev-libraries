@@ -14,7 +14,9 @@ yarn add @last-rev/cli
 
 ## Known Issues:
 1. Some setups will erquire you to run the following command to update your Path depending on where you have yarn installed
-`export PATH="$(yarn global bin):$PATH"`
+```bash
+export PATH="$(yarn global bin):$PATH"
+```
 
 # Usage
 
