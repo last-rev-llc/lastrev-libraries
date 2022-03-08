@@ -60,11 +60,16 @@ Running Locally
 To start running the project locally please follow the [instructions here](https://docs.google.com/document/d/1pmVpw7tpe8l1EEpNRt-97cnIy-9oivB3qhz-aKIqwZ8/edit#)
 
 There are a few known issues at the moment:
+> IMPORTANT: Make sure you check these changes in for it to build correctly on Netlify
 1. In order to run yarn and install dependencies you will need to make sure you are running the correct version of node. `nvm use` will automatically switch to the correct version if you have it installed. To install a new version of node you can use `nvm install 16.14.0` or you can use the LTS version `nvm install --lts`
 2. Search and replace through all your files and replace all instances of @lrns with @<name of your project>
 3. The DOMAIN env variable is not set using the CLI. Please add it to your .env file with your package name `DOMAIN=<your package name>`
 ⋅⋅* `yarn propagate:env` to copy all of the variables to each package
 4. After installing all dependencies run `yarn build` in your terminal to build all of the dist folders
+5. You must add a Site content entry in Contentful and add that ID to your .env file) example: `DEFAULT_SITE_ID=10Gmpgoe7XdTwGmwXAyzah`
+6. If you are building on Netlify you will need to add the following env Variables
+* GRAPHQL_SERVER_URL=/.netlify/functions/graphql
+* DEFAULT_SITE_ID=<content ID of the site> example: `DEFAULT_SITE_ID=10Gmpgoe7XdTwGmwXAyzah`
 
 ```text
 Options:
