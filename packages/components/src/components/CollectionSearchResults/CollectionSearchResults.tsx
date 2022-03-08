@@ -14,6 +14,7 @@ import Typography, { TypographyProps } from '@mui/material/Typography';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { CollectionProps } from '@last-rev/component-library/dist/components/Collection';
+import Link from '@last-rev/component-library/dist/components/Link/Link';
 
 import CategoryLinks from '../CategoryLinks';
 import { sidekick } from '../../utils/sidekick';
@@ -26,6 +27,7 @@ interface CategoryProps {
 interface HitProps {
   categories: Array<string>;
   categoryLinks: Array<CategoryProps>;
+  permalink: string;
 }
 
 // TODO: Find proper TS type in Algolia API
@@ -38,8 +40,12 @@ const Hit = (props: any) => {
 
   return (
     <>
-      <HitTitle component={Highlight} variant="body2" attribute="title" hit={hit} />
-      <HitDescription component={Highlight} variant="body2" attribute="content" hit={hit} />
+      <Link href={hit.permalink}>
+        <HitTitle component={Highlight} variant="body2" attribute="title" hit={hit} />
+      </Link>
+      <Link href={hit.permalink}>
+        <HitDescription component={Highlight} variant="body2" attribute="content" hit={hit} />
+      </Link>
       {categories ? (
         <Box data-testid="CollectionSearchResults-categories">
           <CategoryLinks links={categories} />
@@ -167,6 +173,7 @@ const HitDescription = styled(Typography, {
 })<TypographyProps<React.ElementType>>(({ theme }) => ({
   display: 'block',
   paddingBottom: theme.spacing(2),
+  color: theme.palette.midnight.A80,
   wordBreak: 'break-word'
 }));
 
