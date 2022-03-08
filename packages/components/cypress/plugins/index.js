@@ -23,5 +23,9 @@ module.exports = (on, config) => {
   if (config.testingType === 'component') {
     require('@cypress/react/plugins/babel')(on, config);
   }
+  
+  config.projectId = process.env.CYPRESS_PROJECT_ID;
+  config.video = !!process.env.CYPRESS_PROJECT_ID;
+
   return config;
 };
