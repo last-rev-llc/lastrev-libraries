@@ -15,7 +15,8 @@ import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
 import Link, { LinkProps } from '../Link';
-import Text, { RichText } from '../Text';
+import ContentModule from '../ContentModule';
+import { RichText } from '../Text';
 import sidekick from '../../utils/sidekick';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 
@@ -83,12 +84,19 @@ export const Card = ({
                 {...sidekick(sidekickLookup?.subtitle)}
                 variant="h4"
                 component="h4"
-                data-testid="Card-subtitle"
-              >
+                data-testid="Card-subtitle">
                 {subtitle}
               </Typography>
             ) : null}
-            {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="Card-body" /> : null}
+            {body ? (
+              <ContentModule
+                __typename="Text"
+                variant="card"
+                sidekickLookup={sidekickLookup?.body}
+                body={body}
+                data-testid="Card-body"
+              />
+            ) : null}
             {actions?.length ? (
               <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions">
                 {actions?.map((link) => (
@@ -109,7 +117,15 @@ export const Card = ({
               <Skeleton width="100%" />
             </Typography>
             <Skeleton>
-              {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="Card-body" /> : null}
+              {body ? (
+                <ContentModule
+                  __typename="Text"
+                  variant="card"
+                  sidekickLookup={sidekickLookup?.body}
+                  body={body}
+                  data-testid="Card-body"
+                />
+              ) : null}
             </Skeleton>
             <CardActions>
               <Skeleton width={50} />
