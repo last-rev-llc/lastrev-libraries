@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.3.10
+
+### Patch Changes
+
+- 9354976: Update usage of Text to ContentModule to allow overrides
+
 ## 0.3.9
 
 ### Patch Changes

@@ -154,7 +154,8 @@ const CustomForm = ({
             height: '100%',
             opacity: status === 'success' ? 1 : 0,
             pointerEvents: status === 'success' ? 'initial' : 'none'
-          }}>
+          }}
+        >
           {successMessage ? (
             <ContentModule
               __typename="Text"
