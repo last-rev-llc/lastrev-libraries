@@ -102,16 +102,33 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
               item
               xs={12}
               sm={12}
-              md={3}
+              md={4}
               sx={{
+                display: 'flex',
                 order: { xs: '2', md: '3' } /* move below logo on mobile */,
                 marginLeft: 'auto',
                 marginRight: { xs: 'auto', md: '0' }
               }}>
               {actions && (
-                <List data-testid="Footer-Actions">
+                <List data-testid="Footer-Actions" sx={{ ml: { xs: '0', md: 'auto' }, pt: 0 }}>
                   {actions?.map((action) => (
-                    <ListItem data-testid="Footer-Actions-Item" key={action.id}>
+                    <ListItem data-testid="Footer-Actions-Item" key={action.id}
+                      sx={{
+                        pt: 0,
+                        pl: 0,
+                        pr: 0,
+                        '& .MuiButton-contained': {
+                          whiteSpace: 'nowrap',
+                          border: '1px solid transparent',
+                          backgroundColor: 'common.white',
+
+                          '&:hover': {
+                            backgroundColor: 'midnight.main',
+                            borderColor: 'common.white'
+                          }
+                        }
+                      }}
+                    >
                       <ContentModule {...action} />
                     </ListItem>
                   ))}
