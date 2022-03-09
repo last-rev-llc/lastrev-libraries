@@ -25,8 +25,18 @@ export interface ArticleCategoryProps {
 }
 
 const Accordion = styled(MuiAccordion)(({ theme }) => ({
-  'marginBottom': theme.spacing(3),
-  'backgroundColor': 'transparent',
+  marginBottom: theme.spacing(3),
+  backgroundColor: 'transparent',
+
+  '&:not(:last-child)': {
+    paddingBottom: theme.spacing(3),
+    borderBottom: '1px solid',
+    borderBottomColor: theme.palette.midnight.A20
+  },
+
+  '& .MuiAccordion-root': {
+    borderBottom: 0
+  },
 
   '&:before': {
     display: 'none'
@@ -157,71 +167,69 @@ const ArticleCategory = ({
           </Box>
         )}
 
-        {articles &&
-          articles.map((article: any) => (
-            <Box mb={3} key={article.id} data-testid="ArticleCategory-Article">
-              {article.link && (
-                <ContentModule
-                  {...article.link}
-                  sx={{
-                    '&': (theme: Theme) => theme.typography.body2Bold
-                  }}
-                  mb={1}
-                  text={article.title}
-                  data-testid={`ArticleCategory-${isNested ? 'SubCategory-' : ''}Article-${article.id}-title`}
+        {articles && articles.map((article: any) => (
+          <Box mb={3} key={article.id} data-testid="ArticleCategory-Article">
+            {article.link && (
+              <ContentModule
+                {...article.link}
+                sx={{
+                  '&': (theme: Theme) => theme.typography.body2Bold
+                }}
+                mb={1}
+                text={article.title}
+                data-testid={`ArticleCategory-${isNested ? 'SubCategory-' : ''}Article-${article.id}-title`}
+              />
+            )}
+            {article.body && (
+              <ContentModule
+                sx={{ color: 'midnight.A80', mt: 1 }}
+                data-testid={`ArticleCategory-${isNested ? 'SubCategory-' : ''}Article-${article.id}-summary`}
+                body={article.body}
+                __typename="Text"
+              />
+            )}
+            {article.pubDate && (
+              <Typography
+                variant="body2"
+                component="p"
+                sx={{
+                  '&': (theme: Theme) => theme.typography.articleDate
+                }}
+                data-testid={`ArticleCategory-${isNested ? 'SubCategory-' : ''}Article-${article.id}-pubdate`}>
+                {dayjs(article.pubDate).format('MMM D, YYYY')}
+              </Typography>
+            )}
+          </Box>
+        ))}
+
+        {subCategories && subCategories.map((subCategory: any) => (
+          <Accordion
+            key={`article-category-${subCategory.id}`}
+            elevation={0}
+            disableGutters
+            expanded={Boolean(expandedSubCategories[subCategory.id])}
+            onChange={toggleExpandSubCategory(subCategory.id)}
+            data-testid="ArticleCategory-SubCategory">
+            <AccordionSummary>
+              <Box display="flex" alignItems="center">
+                <ChevronIcon open={Boolean(expandedSubCategories[subCategory.id])}
+                  sx={{ ml: 1 }}
                 />
-              )}
-              {article.body && (
-                <ContentModule
-                  sx={{ color: 'midnight.A80', mt: 1 }}
-                  data-testid={`ArticleCategory-${isNested ? 'SubCategory-' : ''}Article-${article.id}-summary`}
-                  body={article.body}
-                  __typename="Text"
-                />
-              )}
-              {article.pubDate && (
                 <Typography
-                  variant="body2"
-                  component="p"
-                  sx={{
-                    '&': (theme: Theme) => theme.typography.articleDate
-                  }}
-                  data-testid={`ArticleCategory-${isNested ? 'SubCategory-' : ''}Article-${article.id}-pubdate`}>
-                  {dayjs(article.pubDate).format('MMM D, YYYY')}
+                  variant="h5"
+                  component="h5"
+                  sx={{ ml: 2 }}
+                  data-testid={`ArticleCategory-SubCategory-${subCategory.id}-title`}>
+                  {subCategory.title}
                 </Typography>
-              )}
-            </Box>
-          ))}
+              </Box>
+            </AccordionSummary>
 
-        {subCategories &&
-          subCategories.map((subCategory: any) => (
-            <Accordion
-              key={`article-category-${subCategory.id}`}
-              elevation={0}
-              disableGutters
-              expanded={Boolean(expandedSubCategories[subCategory.id])}
-              onChange={toggleExpandSubCategory(subCategory.id)}
-              data-testid="ArticleCategory-SubCategory">
-              <AccordionSummary>
-                <Box display="flex" alignItems="center">
-                  <ChevronIcon open={Boolean(expandedSubCategories[subCategory.id])}
-                    sx={{ ml: 1 }}
-                  />
-                  <Typography
-                    variant="h5"
-                    component="h5"
-                    sx={{ ml: 2 }}
-                    data-testid={`ArticleCategory-SubCategory-${subCategory.id}-title`}>
-                    {subCategory.title}
-                  </Typography>
-                </Box>
-              </AccordionSummary>
-
-              <AccordionDetails>
-                <ArticleCategory isNested {...subCategory} />
-              </AccordionDetails>
-            </Accordion>
-          ))}
+            <AccordionDetails>
+              <ArticleCategory isNested {...subCategory} />
+            </AccordionDetails>
+          </Accordion>
+        ))}
       </Root>
     </ErrorBoundary>
   );
