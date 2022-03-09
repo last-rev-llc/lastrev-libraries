@@ -82,9 +82,7 @@ const renderNodeOptions = ({ links }: { links?: any }) => {
         <TableContainer>
           <Table>
             {header ? header : null}
-            <TableBody>
-              {children}
-            </TableBody>
+            <TableBody>{children}</TableBody>
           </Table>
         </TableContainer>
       );
@@ -92,38 +90,24 @@ const renderNodeOptions = ({ links }: { links?: any }) => {
     'table-header': (_: any, children: any) => {
       return (
         <TableHead>
-          <TableRow>
-            {children}
-          </TableRow>
+          <TableRow>{children}</TableRow>
         </TableHead>
       );
     },
     [BLOCKS.TABLE_HEADER_CELL]: (_: any, children: any) => {
-      return (
-        <TableCell>
-          {children}
-        </TableCell>
-      );
+      return <TableCell>{children}</TableCell>;
     },
     [BLOCKS.TABLE_ROW]: (_: any, children: any) => {
-      return (
-        <TableRow>
-          {children}
-        </TableRow>
-      );
+      return <TableRow>{children}</TableRow>;
     },
     [BLOCKS.TABLE_CELL]: (_: any, children: any) => {
-      return (
-        <TableCell>
-          {children}
-        </TableCell>
-      );
-    },
+      return <TableCell>{children}</TableCell>;
+    }
   };
 };
 
 const Text = (props: TextProps) => {
-  const renderNode = React.useMemo(() => renderNodeOptions({ links: props?.body?.links }), []);
+  const renderNode = React.useMemo(() => renderNodeOptions({ links: props?.body?.links }), [props]);
   return <LRText {...props} renderNode={renderNode} />;
 };
 

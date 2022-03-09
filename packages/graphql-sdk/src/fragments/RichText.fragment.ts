@@ -65,9 +65,6 @@ const RichTextFragment = gql`
       components
       typography
     }
-    # background {
-    #   # ...RichText_ArtDirectedMediaFragment
-    # }
   }
 
   # This fragment is almost identical to the RichText_Fragment but skips Section
@@ -82,7 +79,6 @@ const RichTextFragment = gql`
     ... on Section {
       ...RichText_BaseSectionFragment
     }
-    # ...RichText_ArtDirectedMediaFragment
     ... on Text {
       ...RichText_SectionTextFragment
     }
@@ -104,7 +100,6 @@ const RichTextFragment = gql`
   }
 
   fragment RichText_MediaFragment on Media {
-    # ...RichText_BaseContentFragment
     id
     __typename
     title
@@ -166,7 +161,6 @@ const RichTextFragment = gql`
       entries {
         __typename
         id
-        # ...RichText_ArtDirectedMediaFragment
         ...RichText_LinkFragment
       }
       assets {
@@ -188,7 +182,6 @@ const RichTextFragment = gql`
         ...RichText_CollectionFragment
         ...RichText_LinkFragment
         ...RichText_SectionFragment
-        # ...RichText_TextFragment
       }
       assets {
         ...RichText_MediaFragment
@@ -236,7 +229,6 @@ const RichTextFragment = gql`
         ...RichText_CardFragment
         ...RichText_CollectionFragment
         ...RichText_LinkFragment
-        # ...RichText_SectionFragment
       }
       assets {
         ...RichText_MediaFragment

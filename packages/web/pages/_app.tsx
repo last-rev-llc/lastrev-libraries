@@ -21,15 +21,17 @@ const Card = dynamic(() => import('@last-rev/component-library/dist/components/C
 
 const Collection = dynamic(() => import('@last-rev/component-library/dist/components/Collection/Collection'));
 
-const CollectionCarousel = dynamic(() => import('@last-rev/component-library/dist/components/CollectionCarousel/CollectionCarousel'));
+const CollectionCarousel = dynamic(
+  () => import('@last-rev/component-library/dist/components/CollectionCarousel/CollectionCarousel')
+);
 
-const CollectionAccordion = dynamic(() => import('@last-rev/component-library/dist/components/CollectionAccordion/CollectionAccordion'));
+const CollectionAccordion = dynamic(
+  () => import('@last-rev/component-library/dist/components/CollectionAccordion/CollectionAccordion')
+);
 
 const NavigationBar = dynamic(() => import('@last-rev/component-library/dist/components/NavigationBar/NavigationBar'));
 
 const Hero = dynamic(() => import('@last-rev/component-library/dist/components/Hero/Hero'));
-
-const Text = dynamic(() => import('@last-rev/component-library/dist/components/Text/Text'));
 
 const Media = dynamic(() => import('@last-rev/component-library/dist/components/Media/Media'));
 
@@ -37,7 +39,9 @@ const BackToTop = dynamic(() => import('@last-rev/component-library/dist/compone
 
 // Custom components
 
-const CollectionFiltered = dynamic(() => import('@ias/components/src/components/CollectionFiltered/CollectionFiltered'));
+const CollectionFiltered = dynamic(
+  () => import('@ias/components/src/components/CollectionFiltered/CollectionFiltered')
+);
 
 const NavigationItem = dynamic(() => import('@ias/components/src/components/NavigationItem/NavigationItem'));
 
@@ -55,7 +59,7 @@ const PageGeneral = dynamic(() => import('@ias/components/src/components/PageGen
 
 const Table = dynamic(() => import('@ias/components/src/components/Table'));
 
-const CustomText = dynamic(() => import('@ias/components/src/components/Text'));
+const Text = dynamic(() => import('@ias/components/src/components/Text'));
 
 const SearchBox = dynamic(() => import('@ias/components/src/components/SearchBox'));
 
@@ -89,14 +93,14 @@ const contentMapping: {
   BackToTop,
   Card,
   Text,
-  'Text:article': CustomText,
+  'Text:article': Text,
   Media,
   Link,
   NavigationItem,
   Hero,
-  Page: PageGeneral,
+  'Page': PageGeneral,
   PageTopic,
-  CategoryArticle: PageTopic,
+  'CategoryArticle': PageTopic,
   Article,
   Quote,
   Table

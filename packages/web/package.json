@@ -22,7 +22,7 @@
     "@ias/components": "0.0.1",
     "@ias/graphql-sdk": "^0.1.0",
     "@ias/utils": "^0.1.0",
-    "@last-rev/component-library": "^0.3.9",
+    "@last-rev/component-library": "^0.3.10",
     "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/sitemap-generator": "^0.1.1",
     "@mui/icons-material": "^5.2.4",

@@ -6,11 +6,11 @@ export const alignLeftHeroVariant = (_: Theme) => ({
     variant: 'Align - Left'
   },
   style: {
-      '& .MuiGrid-container': {
-        justifyContent: 'flex-start'
-      },
+    '& .MuiGrid-container': {
+      justifyContent: 'flex-start'
+    },
 
-      '& .MuiTypography-root': {
+    '& .MuiTypography-root': {
       textAlign: 'left'
     }
   }
@@ -21,11 +21,11 @@ export const alignCenterHeroVariant = (_: Theme) => ({
     variant: 'Align - Center'
   },
   style: {
-      '& .MuiGrid-container': {
-        justifyContent: 'center'
-      },
+    '& .MuiGrid-container': {
+      justifyContent: 'center'
+    },
 
-      '& .MuiTypography-root': {
+    '& .MuiTypography-root': {
       textAlign: 'center'
     }
   }
@@ -42,15 +42,13 @@ export const heightMediumHeroVariant = (theme: Theme) => ({
       paddingTop: theme.spacing(1.5)
     },
 
-      '& .MuiTypography-body1': {
-        ...theme.typography.body2
-      },
+    '.MuiTypography-root.MuiTypography-body1': {
+      ...theme.typography.body2,
 
-      '& .MuiTypography-root': {
-
-      '& .MuiLink-root': {
-        textDecoration: 'underline',
-        textDecorationColor: 'currentColor',
+      '.MuiLink-root': {
+        'textDecoration': 'underline',
+        'textDecorationColor': 'inherit',
+        'color': 'inherit',
 
         '&:hover': {
           textDecoration: 'none'

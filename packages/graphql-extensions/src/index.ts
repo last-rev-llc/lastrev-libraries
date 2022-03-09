@@ -5,17 +5,7 @@ import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
 import { typeDefs as algoliaTypeDefs } from '@last-rev/graphql-algolia-integration';
 
-import {
-  Card,
-  Collection,
-  Hero,
-  // Link,
-  Page,
-  // NavigationItem,
-  Section,
-  Media,
-  RichText
-} from '@last-rev/graphql-contentful-extensions';
+import { Card, Collection, Hero, Page, Section, Media } from '@last-rev/graphql-contentful-extensions';
 
 import * as IasCard from './Card';
 import * as IasMedia from './Media';
@@ -28,6 +18,7 @@ import * as Quote from './Quote';
 import * as Header from './Header';
 import * as Footer from './Footer';
 import * as Article from './Article';
+import * as RichText from './RichText';
 import * as NavigationItem from './NavigationItem';
 import * as Link from './Link';
 import * as CategoryArticle from './CategoryArticle';

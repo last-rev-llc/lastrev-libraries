@@ -262,12 +262,6 @@ export const ContentTypes_Fragments = gql`
     settings
   }
 
-  fragment CategoryArticle_Link on CategoryArticle {
-    ...Content_Base
-    title
-    slug
-  }
-
   fragment CategoryArticle_Nested on CategoryArticle {
     ...Content_Base
     title
