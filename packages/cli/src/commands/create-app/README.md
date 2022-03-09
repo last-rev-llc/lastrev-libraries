@@ -70,6 +70,7 @@ There are a few known issues at the moment:
 6. If you are building on Netlify you will need to add the following env Variables
 * GRAPHQL_SERVER_URL=/.netlify/functions/graphql
 * DEFAULT_SITE_ID=<content ID of the site> example: `DEFAULT_SITE_ID=10Gmpgoe7XdTwGmwXAyzah`
+7. Preview, Webhooks, and UI Extensions are not copied over right now. Those must manually be setup in Contentful
 
 ```text
 Options:
