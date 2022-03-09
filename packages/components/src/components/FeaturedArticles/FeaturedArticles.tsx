@@ -63,11 +63,12 @@ const ArticleCard = styled(Card)(({ theme }) => ({
   },
 
   '& .MuiTypography-h3': {
-    fontWeight: 600,
+    ...theme.typography.body2Bold,
     marginBottom: theme.spacing(1)
   },
 
   '& .MuiTypography-body1': {
+    ...theme.typography.body2,
     marginBottom: 0
   }
 }));
