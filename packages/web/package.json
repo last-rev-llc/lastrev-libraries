@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export && yarn build:post",
-    "build:post": "yarn gen:sitemap && rm -rf out/404 && cp out/en-US/index.html out/index.html && cp -R out/en-US/* out/",
+    "build:post": "yarn gen:sitemap && rm -rf out/404 && cp out/en-US/index.html out/index.html && cp -R out/en-US/* out/  && npm run move:redirects",
     "gen:sitemap": "node scripts/generateSitemap.js",
     "lint": "next lint",
+    "move:redirects": "node scripts/moveRedirects",
     "serve": "serve out",
     "cypress:open": "cypress open",
     "test:e2e:web": "cross-env NODE_ENV=test percy exec -- cypress run"
