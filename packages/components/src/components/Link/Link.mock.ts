@@ -16,5 +16,5 @@ export const mockLinkBase = (): LinkProps => {
 };
 
 export default (): LinkProps => ({
-    ...mockLinkBase(),
-  });
+  ...mockLinkBase()
+});

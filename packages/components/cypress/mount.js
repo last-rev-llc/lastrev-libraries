@@ -7,7 +7,6 @@ import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 // import * as components from '@last-rev/component-library/dist';
 import Header from '@last-rev/component-library/dist/components/Header/Header';
 import Text from '@last-rev/component-library/dist/components/Text/Text';
-import Link from '@last-rev/component-library/dist/components/Link/Link';
 import Media from '@last-rev/component-library/dist/components/Media/Media';
 import Card from '@last-rev/component-library/dist/components/Card/Card';
 import Collection from '@last-rev/component-library/dist/components/Collection/Collection';
@@ -25,10 +24,12 @@ import SEO from '@last-rev/component-library/dist/components/SEO/SEO';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import theme from '../src/theme';
 import PageGeneral from '../src/components/PageGeneral/PageGeneral';
+import Link from '../src/components/Link/Link';
 import SearchBox from '../src/components/SearchBox';
 import Autocomplete from '../src/components/Autocomplete';
 import AutocompleteBox from '../src/components/AutocompleteBox';
 import SearchResultItem from '../src/components/SearchResultItem';
+import NavigationItem from '../src/components/NavigationItem';
 
 const components = {
   Accordion,
@@ -50,6 +51,7 @@ const components = {
   'LeadForm:marketo-default': FormMarketoEmbed,
   Image,
   MailchimpForm,
+  NavigationItem,
   SEO,
   PageGeneral,
   SearchBox,

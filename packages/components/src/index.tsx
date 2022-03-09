@@ -5,6 +5,7 @@ export { default as Quote } from './components/Quote';
 export { default as Table } from './components/Table';
 export { default as Text } from './components/Text';
 export { default as Header } from './components/Header';
+export { default as Link } from './components/Link';
 export { default as Footer } from './components/Footer';
 export { default as PageGeneral } from './components/PageGeneral';
 export { default as PageTopic } from './components/PageTopic';

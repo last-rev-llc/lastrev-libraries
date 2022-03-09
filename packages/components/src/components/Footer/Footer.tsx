@@ -9,11 +9,12 @@ import Divider from '@mui/material/Divider';
 
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
 import Media, { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
-import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
 import { RichText } from '@last-rev/component-library/dist/components/Text/Text';
 import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
 import { sidekick } from '../../utils/sidekick';
+import Link from '../Link';
 
 export interface FooterProps {
   media?: MediaProps[];

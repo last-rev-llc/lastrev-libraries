@@ -7,7 +7,8 @@ import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import Link from '../Link';
 
 export interface BreadcrumbsProps {
   breadcrumbs?: Array<LinkProps>;
@@ -18,26 +19,26 @@ export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot }: BreadcrumbsProps) 
   return (
     <ErrorBoundary>
       {breadcrumbs ? (
-        <Box p={2}
-          sx={{ display: { xs: 'none', md: 'block' }}}
-        >
+        <Box p={2} sx={{ display: { xs: 'none', md: 'block' } }}>
           <Container maxWidth="xl">
             <Grid container>
               <Grid item xs={12}>
                 <Root aria-label="breadcrumb" separator="|" data-testid="Breadcrumbs">
-                  <Link href="/"
+                  <Link
+                    href="/"
                     sx={{
                       display: 'flex',
                       alignItems: 'center'
                     }}
-                    data-testid="Breadcrumbs-breadcrumbsRoot"
-                  >
+                    data-testid="Breadcrumbs-breadcrumbsRoot">
                     <ChevronLeftIcon fontSize="small" />
                     {/* TODO: Use localization lookup for title (IAS-117) */}
                     {breadcrumbsRoot || 'Help Center'}
                   </Link>
-                  {breadcrumbs?.map(link => (
-                    <Link key={link?.id} href={link?.href} data-testid="Breadcrumbs-link">{link?.text}</Link>
+                  {breadcrumbs?.map((link) => (
+                    <Link key={link?.id} href={link?.href} data-testid="Breadcrumbs-link">
+                      {link?.text}
+                    </Link>
                   ))}
                 </Root>
               </Grid>
@@ -53,10 +54,10 @@ const Root = styled(MuiBreadcrumbs, {
   name: 'Breadcrumbs',
   slot: 'root'
 })<{}>(({ theme }) => ({
-  padding: theme.spacing(1, 0, 2),
-  fontSize: 15,
-  fontWeight: 500,
-  lineHeight: 1.125,
+  'padding': theme.spacing(1, 0, 2),
+  'fontSize': 15,
+  'fontWeight': 500,
+  'lineHeight': 1.125,
 
   '& [class*=separator]': {
     margin: theme.spacing(0, 3),
@@ -65,7 +66,7 @@ const Root = styled(MuiBreadcrumbs, {
   },
 
   '& a': {
-    color: theme.palette.midnight.A70,
+    'color': theme.palette.midnight.A70,
 
     '&:hover': {
       color: theme.palette.text.primary,

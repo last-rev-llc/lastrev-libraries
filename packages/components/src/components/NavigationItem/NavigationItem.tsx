@@ -8,17 +8,25 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
 import { sidekick } from '../../utils/sidekick';
+import Link from '../Link';
 
 export interface NavigationItemProps extends LinkProps {
   subNavigation?: Array<LinkProps>;
   sidekickLookup?: any;
   onRequestClose?: any;
+  hideIcon?: Boolean;
 }
 
-export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, ...props }: NavigationItemProps) => {
+export const NavigationItem = ({
+  subNavigation,
+  sidekickLookup,
+  onRequestClose,
+  hideIcon,
+  ...props
+}: NavigationItemProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const theme = useTheme();
   const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
@@ -44,7 +52,7 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
           <>
             <Box display="flex" alignItems="center">
               <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
-              <ExpandMoreIcon sx={{ fill: 'white', width: 24, ml: -0.25 }} />
+              {!hideIcon && <ExpandMoreIcon sx={{ fill: 'white', width: 24, ml: -0.25 }} />}
             </Box>
             <MenuRoot menuBreakpoint={menuBreakpoint}>
               {subNavigation?.map((item) => (

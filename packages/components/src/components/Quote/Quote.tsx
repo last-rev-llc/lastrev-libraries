@@ -4,7 +4,8 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
 import Media, { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
-import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import Link from '../Link';
 import { sidekick } from '../../utils/sidekick';
 
 export interface QuoteProps {

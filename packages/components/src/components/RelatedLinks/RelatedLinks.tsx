@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import Link from '../Link';
 
 import { sidekick } from '../../utils/sidekick';
 
@@ -13,27 +14,19 @@ export interface RelatedLinksProps {
   sidekickLookup?: any;
 }
 
-export const RelatedLinks = ({
-  title,
-  links,
-  sidekickLookup
-}: RelatedLinksProps) => {
+export const RelatedLinks = ({ title, links, sidekickLookup }: RelatedLinksProps) => {
   return (
     <ErrorBoundary>
       {links ? (
         <Root data-testid="RelatedLinks">
           {title ? (
-            <Typography variant="h6" component="h6" data-testid="RelatedLinks-title">{title}</Typography>
+            <Typography variant="h6" component="h6" data-testid="RelatedLinks-title">
+              {title}
+            </Typography>
           ) : null}
-          <Box component="ul" pl={3}
-            {...sidekick(sidekickLookup?.categories)}
-            data-testid="RelatedLinks-list"
-          >
-            {links?.map(link => (
-              <LinkItem component="li"
-                key={link?.id}
-                data-testid="RelatedLinks-item"
-              >
+          <Box component="ul" pl={3} {...sidekick(sidekickLookup?.categories)} data-testid="RelatedLinks-list">
+            {links?.map((link) => (
+              <LinkItem component="li" key={link?.id} data-testid="RelatedLinks-item">
                 <Link href={link?.href}>{link?.text}</Link>
               </LinkItem>
             ))}
@@ -46,7 +39,7 @@ export const RelatedLinks = ({
 
 const Root = styled(Box, {
   name: 'RelatedLinks',
-  slot: 'Root',
+  slot: 'Root'
 })<{}>(({ theme }) => ({
   marginBottom: theme.spacing(5),
   padding: theme.spacing(3),
@@ -56,23 +49,23 @@ const Root = styled(Box, {
 
 const LinkItem = styled(Typography, {
   name: 'RelatedLinks',
-  slot: 'LinkItem',
+  slot: 'LinkItem'
 })<TypographyProps<React.ElementType>>(({ theme }) => ({
   '&::marker': {
     color: theme.palette.background.greenishBlue,
     fontSize: '1rem'
   },
-  
+
   '&:not(:last-child)': {
     marginBottom: theme.spacing(1)
   },
-  
+
   '& a': {
-    color: theme.palette.background.greenishBlue,
-    fontSize: 16,
-    lineHeight: 1.5,
-    textDecoration: 'underline',
-   
+    'color': theme.palette.background.greenishBlue,
+    'fontSize': 16,
+    'lineHeight': 1.5,
+    'textDecoration': 'underline',
+
     '&:hover': {
       textDecoration: 'none'
     }

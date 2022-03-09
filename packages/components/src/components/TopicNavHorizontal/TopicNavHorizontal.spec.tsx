@@ -21,11 +21,20 @@ describe('TopicNavHorizontal', () => {
 
       mockedContent.navItems.forEach((navItem) => {
         if (navItem) {
-          cy.get(`[data-testid=TopicNav-Horizontal-List] [data-testid=TopicNav-Horizontal-List-Link-${navItem.id}]`)
+          cy.get(`[data-testid="TopicNav-Horizontal-List"] [data-testid="TopicNav-Horizontal-List-Link-${navItem.id}"]`)
+            .children('div')
+            .first()
+            .children('a')
+            .first()
+            .should('exist');
+
+          cy.get(`[data-testid="TopicNav-Horizontal-List"] [data-testid="TopicNav-Horizontal-List-Link-${navItem.id}"]`)
+            .children('div')
+            .first()
+            .children('a')
+            .first()
             .should('have.text', navItem.text)
             .and('have.attr', 'href', navItem.href);
-
-          return;
         }
       });
     });

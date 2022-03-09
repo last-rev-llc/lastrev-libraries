@@ -23,9 +23,9 @@ const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
       } else {
         const paths = await getPathReader(ctx)?.getPathsByContentId(content.sys.id, undefined, SITE);
         if (paths && paths.length) return paths[0];
-            
+
         const slug = getLocalizedField(content?.fields, 'slug', ctx);
-        if (slug) return createPath(getLocalizedField(content?.fields, 'slug', ctx))
+        if (slug) return createPath(getLocalizedField(content?.fields, 'slug', ctx));
       }
     }
   }
@@ -49,5 +49,6 @@ export const typeDefs = gql`
     href: String!
     icon: String
     iconPosition: String
+    isActive: Boolean
   }
 `;

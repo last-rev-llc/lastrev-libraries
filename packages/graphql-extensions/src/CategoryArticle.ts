@@ -9,8 +9,6 @@ import categoryArticleHeroResolver from './resolvers/categoryArticleHeroResolver
 import categoryArticleFeaturedArticlesResolver from './resolvers/categoryArticleFeaturedArticlesResolver';
 import categoryArticleItemsResolver from './resolvers/categoryArticleItemsResolver';
 import categoryArticleHierarchyResolver from './resolvers/categoryArticleHierarchyResolver';
-
-// import createPath from './utils/createPath';
 import getPathReader from './utils/getPathReader';
 
 const SITE = process.env.SITE;
@@ -28,6 +26,7 @@ export const typeDefs = gql`
     articles: [Card]
     featuredArticles: [Card]
     link: Link
+    seo: JSON
   }
 `;
 
@@ -40,6 +39,7 @@ export const mappers: any = {
       topicNavItems: topicNavHorizontalResolver,
       hero: categoryArticleHeroResolver,
       pubDate: 'pubDate',
+      seo: 'seo',
       subCategories: async (category: any, _args: any, ctx: ApolloContext) => {
         const getAllCategoryChildrenIds = async (categoryArticle: any): Promise<any> => {
           const childCategoriesRef = getLocalizedField(categoryArticle.fields, 'categoryItems', ctx);

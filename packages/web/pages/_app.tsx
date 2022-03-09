@@ -45,7 +45,7 @@ const CollectionFiltered = dynamic(
 
 const NavigationItem = dynamic(() => import('@ias/components/src/components/NavigationItem/NavigationItem'));
 
-const Link = dynamic(() => import('@last-rev/component-library/dist/components/Link/Link'));
+const Link = dynamic(() => import('@ias/components/src/components/Link/Link'));
 
 const Header = dynamic(() => import('@ias/components/src/components/Header/Header'));
 

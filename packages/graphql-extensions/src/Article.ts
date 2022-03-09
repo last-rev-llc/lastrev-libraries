@@ -1,16 +1,18 @@
 import gql from 'graphql-tag';
-import { ApolloContext } from '@last-rev/types';
+import { ApolloContext, ContentfulPathsGenerator } from '@last-rev/types';
 import { getDefaultFieldValue, getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ContentfulPathsGenerator } from '@last-rev/types';
 import * as types from '@contentful/rich-text-types';
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
 import { createRichText } from '@last-rev/graphql-contentful-core';
 import { constructObjectId } from '@last-rev/graphql-algolia-integration';
 import { BLOCKS } from '@contentful/rich-text-types';
-
+import categoryArticleLinkResolver from './resolvers/categoryArticleLinkResolver';
+import getCategoryArticleParentHierarchyResolver from './resolvers/getCategoryArticleParentHierarchyResolver';
+import articleSeoResolver from './resolvers/articleSeoResolver';
 import headerResolver from './resolvers/headerResolver';
 import footerResolver from './resolvers/footerResolver';
 import topicNavHorizontalResolver from './resolvers/topicNavHorizontalResolver';
+import articleLinkResolver from './resolvers/articleLinkResolver';
 import createType from './utils/createType';
 import createPath from './utils/createPath';
 import getPathReader from './utils/getPathReader';
@@ -20,6 +22,7 @@ import getCategoriesForArticle from './utils/getCategoriesForArticle';
 import getPathUrl from './utils/getPathUrl';
 
 const SITE = process.env.SITE;
+
 interface Heading {
   [key: string]: number;
 }
@@ -59,6 +62,7 @@ export const typeDefs = gql`
     sideNav: [Link]
     pubDate: Date
     link: Link
+    seo: JSON
   }
 `;
 
@@ -92,10 +96,25 @@ export const mappers = {
       footerItems: footerItemsResolver,
       topicNavItems: topicNavHorizontalResolver,
       pubDate: 'pubDate',
-      breadcrumbs: async (item: any, _args: any, ctx: ApolloContext) => {
-        const links: any = await getLocalizedField(item.fields, 'categories', ctx);
-        if (!links) return [];
-        return links;
+      seo: articleSeoResolver,
+      breadcrumbs: async (article: any, args: any, ctx: ApolloContext) => {
+        if (!ctx.path) return [];
+
+        const articleSlug: any = await getLocalizedField(article.fields, 'slug', ctx);
+        const currentCategoryNode = await getPathReader(ctx)?.getNodeByPath(ctx.path.replace(articleSlug, ''), SITE);
+
+        if (currentCategoryNode && currentCategoryNode?.data?.contentId && ctx.path.startsWith('/topics')) {
+          const currentCategory = await ctx.loaders.entryLoader.load({
+            id: currentCategoryNode?.data?.contentId,
+            preview: !!ctx.preview
+          });
+          const hierarchy = await getCategoryArticleParentHierarchyResolver(currentCategory, args, ctx);
+          if (hierarchy) return hierarchy;
+        }
+
+        const categoryItemsRef: any = await getLocalizedField(article.fields, 'categories', ctx);
+        if (!categoryItemsRef) return [];
+        return categoryItemsRef;
       },
       sideNav: async (article: any, _args: any, ctx: ApolloContext) => {
         const body: any = getLocalizedField(article.fields, 'body', ctx);
@@ -162,17 +181,17 @@ export const mappers = {
     },
     Link: {
       href: async (article: any, _args: any, ctx: ApolloContext) => {
-        const paths = await getPathReader(ctx)?.getPathsByContentId(article.sys.id, undefined, SITE);
-        if (!paths || !paths.length) return '#';
-        return paths[0];
+        const href = articleLinkResolver(article, _args, ctx);
+        if (!href) return '#';
+        return href;
       },
       text: 'title'
     },
     NavigationItem: {
       href: async (article: any, _args: any, ctx: ApolloContext) => {
-        const paths = await getPathReader(ctx)?.getPathsByContentId(article.sys.id, undefined, SITE);
-        if (!paths || !paths.length) return '#';
-        return paths[0];
+        const href = articleLinkResolver(article, _args, ctx);
+        if (!href) return '#';
+        return href;
       },
       text: 'title'
     },
@@ -212,24 +231,73 @@ export const mappers = {
 
 const article: ContentfulPathsGenerator = async (
   articleItem,
-  _loaders,
+  loaders,
   defaultLocale,
-  _locales,
-  _preview = false,
+  locales,
+  preview = false,
   _site
 ) => {
-  const slug = getDefaultFieldValue(articleItem, 'slug', defaultLocale);
-  const fullPath = createPath('article', slug);
+  const articleSlug = getDefaultFieldValue(articleItem, 'slug', defaultLocale);
+  const articleFullPath = createPath('article', articleSlug);
 
-  return {
-    [fullPath]: {
-      fullPath,
-      isPrimary: true,
-      contentId: articleItem?.sys?.id,
-      excludedLocales: [],
-      contentType: articleItem.sys.contentType.sys.id
+  const articlePaths: { [key: string]: any } = {};
+
+  const categoryItemsRef: any = await getDefaultFieldValue(articleItem, 'categories', defaultLocale);
+  if (categoryItemsRef?.length) {
+    const categoryItems = await loaders.entryLoader.loadMany(
+      categoryItemsRef.map((content: any) => ({ id: content?.sys.id, preview: !!preview }))
+    );
+
+    if (categoryItems) {
+      for (let category of categoryItems) {
+        if (!category) continue;
+        const categoryPath = await categoryArticleLinkResolver(category, null, {
+          loaders,
+          defaultLocale,
+          locales,
+          preview
+        } as ApolloContext);
+        if (categoryPath) {
+          const fullPath = `${categoryPath}/${articleSlug}`;
+          articlePaths[fullPath] = {
+            fullPath: fullPath,
+            contentId: articleItem?.sys?.id,
+            excludedLocales: [],
+            contentType: articleItem.sys.contentType.sys.id
+          };
+        }
+      }
     }
-  };
+  }
+
+  // Sorting by key in order to get the deepest path.   This will be set as the "0" index in the paths as the default.
+  const sortedPathKeys = Object.keys(articlePaths).sort((a: any, b: any) => {
+    // Shortcut to find deepest path based on number of slashes.
+    // If there are two equal ones at this point then it's a tossup as to which one will be returned first
+    return (b.match(new RegExp('/', 'g')) || []).length - (a.match(new RegExp('/', 'g')) || []).length;
+  });
+
+  const sortedArticlePaths: { [key: string]: any } = {};
+  for (let key of sortedPathKeys) {
+    if (Object.keys(sortedArticlePaths).length === 0) {
+      sortedArticlePaths[key] = {
+        ...articlePaths[key],
+        isPrimary: true
+      };
+
+      sortedArticlePaths[articleFullPath] = {
+        fullPath: articleFullPath,
+        isCanonical: true,
+        contentId: articleItem?.sys?.id,
+        excludedLocales: [],
+        contentType: articleItem.sys.contentType.sys.id
+      };
+    } else {
+      sortedArticlePaths[key] = articlePaths[key];
+    }
+  }
+
+  return sortedArticlePaths;
 };
 
 export const pathsConfigs = {

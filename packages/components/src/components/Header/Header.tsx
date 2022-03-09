@@ -9,7 +9,7 @@ import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import Drawer from '@mui/material/Drawer';
-import { styled, alpha } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
 import Media, { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
@@ -267,11 +267,11 @@ const NavItem = styled(ListItem, {
   },
 
   '.MuiMenuItem-root': {
-    marginLeft: theme.spacing(2),
-    backgroundColor: theme.palette.common.white,
-    borderBottom: '1px solid',
-    borderBottomColor: theme.palette.midnight.A12,
-    transition: 'background-color .15s linear',
+    'marginLeft': theme.spacing(2),
+    'backgroundColor': theme.palette.common.white,
+    'borderBottom': '1px solid',
+    'borderBottomColor': theme.palette.midnight.A12,
+    'transition': 'background-color .15s linear',
 
     '&:hover': {
       backgroundColor: theme.palette.midnight.A12,
@@ -279,8 +279,8 @@ const NavItem = styled(ListItem, {
     },
 
     '.MuiLink-root': {
-      color: theme.palette.text.primary,
-      padding: theme.spacing(1.5, 2),
+      'color': theme.palette.text.primary,
+      'padding': theme.spacing(1.5, 2),
 
       '&:hover': {
         textDecoration: 'none'

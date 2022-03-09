@@ -29,6 +29,7 @@ export const typeDefs = gql`
   union SubnavigationItem = Link | NavigationItem
   extend type NavigationItem {
     href: String!
+    className: String
     subNavigation: [SubnavigationItem]
     image: Media
   }
