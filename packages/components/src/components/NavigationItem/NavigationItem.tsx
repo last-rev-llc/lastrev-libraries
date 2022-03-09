@@ -1,7 +1,8 @@
 import React from 'react';
+import Box from '@mui/material/Box';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
-import Box from '@mui/material/Box';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
@@ -39,21 +40,28 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
   return (
     <ErrorBoundary>
       <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem" menuBreakpoint={menuBreakpoint}>
-        <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
         {subNavigation?.length ? (
-          <MenuRoot menuBreakpoint={menuBreakpoint}>
-            {subNavigation?.map((item) => (
-              <MenuItem key={item.id}>
-                <ContentModule
-                  {...item}
-                  variant={'link'}
-                  onClick={handleSubnavClick}
-                  onRequestClose={handleSubnavClick}
-                />
-              </MenuItem>
-            ))}
-          </MenuRoot>
-        ) : null}
+          <>
+            <Box display="flex" alignItems="center">
+              <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
+              <ExpandMoreIcon sx={{ fill: 'white', width: 24, ml: -0.25 }} />
+            </Box>
+            <MenuRoot menuBreakpoint={menuBreakpoint}>
+              {subNavigation?.map((item) => (
+                <MenuItem key={item.id}>
+                  <ContentModule
+                    {...item}
+                    variant="link"
+                    onClick={handleSubnavClick}
+                    onRequestClose={handleSubnavClick}
+                  />
+                </MenuItem>
+              ))}
+            </MenuRoot>
+          </>
+        ) : (
+          <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
+        )}
       </Root>
     </ErrorBoundary>
   );

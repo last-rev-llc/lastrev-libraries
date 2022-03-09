@@ -267,17 +267,24 @@ const NavItem = styled(ListItem, {
   },
 
   '.MuiMenuItem-root': {
-    'marginLeft': theme.spacing(2),
-    'backgroundColor': theme.palette.common.white,
-    'boxShadow': `0px ${theme.spacing(0.25)} ${theme.spacing(1)} ${alpha(theme.palette.common.black, 0.25)}`,
+    marginLeft: theme.spacing(2),
+    backgroundColor: theme.palette.common.white,
+    borderBottom: '1px solid',
+    borderBottomColor: theme.palette.midnight.A12,
+    transition: 'background-color .15s linear',
 
     '&:hover': {
-      backgroundColor: theme.palette.background.neutralGrey
+      backgroundColor: theme.palette.midnight.A12,
+      transition: 'background-color .15s linear'
     },
 
     '.MuiLink-root': {
       color: theme.palette.text.primary,
-      padding: theme.spacing(1.5, 2)
+      padding: theme.spacing(1.5, 2),
+
+      '&:hover': {
+        textDecoration: 'none'
+      }
     }
   }
 }));
