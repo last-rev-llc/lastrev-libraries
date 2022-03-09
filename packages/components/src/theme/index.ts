@@ -27,6 +27,7 @@ declare module '@mui/material/styles/createPalette' {
     integralOrange: string;
     aquaPearl: string;
     greenishBlue: string;
+    platinum: string;
   }
 }
 
@@ -43,6 +44,7 @@ declare module '@mui/material/styles' {
     aqua: Palette['primary'];
     periwinkle: Palette['primary'];
     coolGrey: Palette['primary'];
+    platinum: Palette['primary'];
   }
 
   interface PaletteColor {
@@ -256,6 +258,10 @@ const baseTheme = {
       main: '#C3DCDE',
       light: '#D3EBED',
       lighter: '#E3F1F2',
+      contrastText: '#00324A'
+    },
+    platinum: {
+      main: '#E0E6E9',
       contrastText: '#00324A'
     }
   }
