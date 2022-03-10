@@ -282,6 +282,7 @@ const createSchemeTheme = (schemeKey?: string) => {
             },
             root: {
               '& .MuiButton-contained': {
+                whiteSpace: 'nowrap',
                 padding: baseSchemeTheme.spacing(1.25, 2),
                 fontSize: 15,
                 lineHeight: 1.2,

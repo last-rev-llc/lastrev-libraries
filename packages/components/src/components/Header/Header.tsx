@@ -16,6 +16,7 @@ import Media, { MediaProps } from '@last-rev/component-library/dist/components/M
 import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
 import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
+import AutocompleteBox from '../AutocompleteBox';
 import { sidekick } from '../../utils/sidekick';
 
 export interface HeaderProps {
@@ -50,14 +51,16 @@ export const Header = ({
     setOpen(open);
   };
 
+  const showSearchForm = global.location?.pathname !== '/' && global.location?.pathname !== '/search/';
+
   return (
     <ErrorBoundary>
       <Root position="sticky" {...sidekick(sidekickLookup)} variant={variant} menuVisible={open}>
         <Toolbar
           sx={{
             width: '100%',
-            paddingTop: { xs: 1, md: 4 },
-            paddingBottom: { xs: 1, md: 4 }
+            paddingTop: { xs: 1, md: 2 },
+            paddingBottom: { xs: 1, md: 2 }
           }}>
           {logo && (
             <IconButton
@@ -75,7 +78,11 @@ export const Header = ({
               sx={{
                 borderLeft: `solid 1px`,
                 borderLeftColor: 'common.white',
-                marginLeft: 2
+                marginLeft: 2,
+
+                '& .MuiList-root': {
+                  padding: 0
+                }
               }}>
               <List data-testid="Header-LeftNav" sx={{ marginRight: 'auto' }}>
                 {leftNav?.map((navigationItem) => (
@@ -88,13 +95,63 @@ export const Header = ({
           )}
 
           <NavItems sx={{ display: { xs: 'none', md: 'flex' } }}>
+            {showSearchForm && (
+              <Box
+                sx={{
+                  width: '100%',
+                  marginLeft: 'auto',
+                  marginRight: 2,
+                  paddingTop: 1,
+                  paddingBottom: 1,
+
+                  '& .aa-Form': {
+                    height: 38,
+                    minHeight: 'auto',
+                    minWidth: 320,
+                    borderColor: 'transparent',
+                    borderRadius: 20,
+
+                    '&:focus-within': {
+                      borderColor: 'transparent',
+                      boxShadow: 'none',
+                      outline: 0
+                    }
+                  },
+
+                  '& .aa-Input': {
+                    height: 38,
+
+                    '&::placeholder': {
+                      color: 'midnight.A60'
+                    }
+                  },
+
+                  '& .aa-InputWrapperPrefix': {
+                    height: 38
+                  },
+
+                  '& .aa-Label svg': {
+                    color: 'midnight.main'
+                  },
+
+                  '& .aa-Autocomplete[aria-expanded=true]': {
+                    '& .aa-Form': {
+                      borderRadius: theme => `${theme.spacing(2.4)} ${theme.spacing(2.4)} 0 0`
+                    }
+                  }
+                }}
+              >
+                <AutocompleteBox settings={{ placeholder: 'Search our knowledge base' }} />
+              </Box>
+            )}
+
             {rightNav && (
               <List
                 data-testid="Header-RightNav-Desktop"
                 sx={{
-                  marginLeft: 'auto',
                   display: 'flex',
-                  flexDirection: 'row'
+                  flexDirection: 'row',
+                  ml: 'auto'
                 }}>
                 {rightNav?.map((navigationItem) => (
                   <NavItem key={navigationItem.id}>
@@ -105,7 +162,8 @@ export const Header = ({
             )}
 
             {actions && (
-              <List data-testid="Header-Actions-Desktop">
+              <List data-testid="Header-Actions-Desktop"
+                sx={{ padding: 0 }}>
                 {actions?.map((action) => (
                   <NavItem key={action.id}>
                     <ContentModule {...action} />

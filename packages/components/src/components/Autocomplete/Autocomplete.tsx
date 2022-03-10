@@ -14,16 +14,18 @@ export interface AutocompleteProps extends Omit<AutocompleteOptions<any>, 'conta
 
 const useStyles = makeStyles((theme:Theme) => ({
   panel: {
+    'zIndex': 1110,
     'margin': 0,
-    'zIndex': 10,
     'boxShadow': 'transparent',
     'borderRadius': '0px 0px 30px 30px',
     'textDecoration': 'none',
+
     '& .aa-Item': {
       '&:last-child': {
         borderRadius: '0px 0px 24px 24px'
       }
     },
+
     '& .aa-Item[aria-selected=true]': {
       backgroundColor: theme.palette.midnight.A06
     }
