@@ -49,8 +49,10 @@ export const mappers: Mappers = {
           const id = (entry as any)?.sys?.id;
 
           if (entryHyperlinks.has(id)) {
-            // @ts-ignore
-            entry.__typename = 'Link';
+            return {
+              ...entry,
+              __typename: 'Link'
+            };
           }
 
           return entry;
