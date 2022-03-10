@@ -13,7 +13,7 @@
     "algolia:update": "lr-algolia-updater https://starter.lastrev.com/.netlify/functions/algolia-background",
     "algolia:update:local": "lr-algolia-updater http://localhost:8888/.netlify/functions/algolia-background",
     "dev": "yarn propagate:env && turbo run dev --parallel",
-    "build": "./scripts/build.sh",
+    "build": "./scripts/build.sh && npm run move:redirects",
     "turbo:sync:cms": "turbo run sync:cms",
     "turbo:build": "turbo run build",
     "build:storybook": "turbo run build-storybook; status=$?; pm2 kill; exit $status",
@@ -39,7 +39,8 @@
     "test:e2e": "turbo run test:e2e",
     "version-packages": "changeset version && yarn prettier",
     "posttest": "yarn combine:reports",
-    "combine:reports": "node scripts/combineCoverage.js"
+    "combine:reports": "node scripts/combineCoverage.js",
+    "move:redirects": "node ./packages/web/scripts/moveRedirects"
   },
   "private": true,
   "resolutions": {
