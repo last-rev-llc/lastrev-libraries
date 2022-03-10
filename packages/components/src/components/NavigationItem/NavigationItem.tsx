@@ -76,8 +76,10 @@ export const NavigationItem = ({
 };
 
 const visibleStyles = (open: boolean) => `
-  max-height: ${open ? 300 : 0}px;
-  box-shadow: ${open ? 'inset 0 0 16px -8px rgb(0 0 0 / 30%)' : 'inset 0 0 0 0 rgb(0 0 0 / 0%)'};
+  @media (min-width: 1024px) {
+    box-shadow: ${open ? 'inset 0 0 16px -8px rgb(0 0 0 / 30%)' : 'inset 0 0 0 0 rgb(0 0 0 / 0%)'};
+    max-height: ${open ? 300 : 0}px;
+  }
 `;
 
 const Root = styled(Box, {
@@ -92,7 +94,7 @@ const Root = styled(Box, {
         ${visibleStyles(open)}
       }
     }
-    @media (min-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
+    @media (min-width: 1024px) {
       [class$=NavigationItem-menuRoot] {
         max-height: 0px;
       }
@@ -120,7 +122,7 @@ const MenuRoot = styled(MenuList, {
     background: rgb(242 242 242);
 
     // Desktop
-    @media (min-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
+    @media (min-width: 1024px) {
       box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 10px -10px 0px rgb(0 0 0 / 12%);
       position: absolute;
       right: 0;

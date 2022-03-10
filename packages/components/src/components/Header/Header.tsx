@@ -263,14 +263,31 @@ const MobileNavItems = styled(List, {
   alignItems: 'center',
   flexDirection: 'column',
   color: theme.palette.common.white,
-  backgroundColor: theme.palette.background.dark,
 
   [theme.breakpoints.up('md')]: {
     flexDirection: 'row'
   },
 
   [theme.breakpoints.down('md')]: {
-    marginTop: theme.spacing(6)
+    marginTop: theme.spacing(8)
+  },
+
+  '.MuiListItem-root': {
+    padding: theme.spacing(1, 0)
+  },
+
+  '.MuiButton-contained': {
+    marginTop: theme.spacing(4)
+  },
+
+  '.MuiLink-root': {
+    fontSize: 18,
+    lineHeight: 1.5,
+    textDecoration: 'none',
+
+    '& + svg': {
+      marginLeft: 'auto'
+    }
   }
 }));
 
@@ -279,10 +296,10 @@ const NavItem = styled(ListItem, {
   slot: 'NavItem',
   overridesResolver: (_, styles) => [styles.root]
 })<{}>(({ theme }) => ({
-  'padding': theme.spacing(0, 1),
-  'margin': 0,
-  'height': '100%',
-  'display': 'block',
+  display: 'block',
+  height: '100%',
+  margin: 0,
+  padding: theme.spacing(0, 1),
 
   [theme.breakpoints.up('md')]: {
     alignItems: 'center',
@@ -290,55 +307,69 @@ const NavItem = styled(ListItem, {
   },
 
   '.MuiLink-root': {
-    padding: theme.spacing(1),
     display: 'block',
+    padding: theme.spacing(1),
     ...theme.typography.smallText,
-    textDecoration: 'none',
     color: theme.palette.common.white,
+    textDecoration: 'none',
     whiteSpace: 'nowrap'
   },
 
   '.MuiList-root': {
     display: 'none',
+    marginBottom: theme.spacing(3),
     backgroundColor: 'transparent'
   },
 
   '&:hover': {
     '&, & [class*="NavigationItem"]:hover': {
       '.MuiList-root': {
-        'display': 'block',
+        display: 'block',
 
-        '&::after': {
-          content: "''",
-          position: 'absolute',
-          right: theme.spacing(2),
-          top: 0,
-          width: 0,
-          height: 0,
-          borderStyle: 'solid',
-          borderWidth: theme.spacing(0, 1, 1, 1),
-          borderColor: `transparent transparent ${theme.palette.common.white} transparent`,
-          zIndex: '9998'
+        [theme.breakpoints.up('md')]: {
+          '&::after': {
+            content: "''",
+            position: 'absolute',
+            right: theme.spacing(2),
+            top: 0,
+            width: 0,
+            height: 0,
+            borderStyle: 'solid',
+            borderWidth: theme.spacing(0, 1, 1, 1),
+            borderColor: `transparent transparent ${theme.palette.common.white} transparent`,
+            zIndex: '9998'
+          }
         }
       }
     }
   },
 
   '.MuiMenuItem-root': {
-    'marginLeft': theme.spacing(2),
-    'backgroundColor': theme.palette.common.white,
-    'borderBottom': '1px solid',
-    'borderBottomColor': theme.palette.midnight.A12,
-    'transition': 'background-color .15s linear',
+    [theme.breakpoints.up('md')]: {
+      marginLeft: theme.spacing(2),
+      backgroundColor: theme.palette.common.white,
+      borderBottom: '1px solid',
+      borderBottomColor: theme.palette.midnight.A12,
+      transition: 'background-color .15s linear',
 
-    '&:hover': {
-      backgroundColor: theme.palette.midnight.A12,
-      transition: 'background-color .15s linear'
+      '&:hover': {
+        backgroundColor: theme.palette.midnight.A12,
+        transition: 'background-color .15s linear'
+      }
     },
 
     '.MuiLink-root': {
-      'color': theme.palette.text.primary,
-      'padding': theme.spacing(1.5, 2),
+      padding: theme.spacing(1.5, 2),
+      color: theme.palette.common.white,
+
+      [theme.breakpoints.down('md')]: {
+        fontSize: 16,
+        lineHeight: 1.5
+      },
+
+      [theme.breakpoints.up('md')]: {
+        color: theme.palette.text.primary,
+      },
 
       '&:hover': {
         textDecoration: 'none'
