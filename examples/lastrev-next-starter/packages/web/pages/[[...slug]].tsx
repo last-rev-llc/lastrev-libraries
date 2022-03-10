@@ -17,10 +17,9 @@ export type PageGetStaticPathsProps = {
 export const getStaticPaths = async ({ locales }: PageGetStaticPathsProps) => {
   try {
     const { data } = await client.Paths({ locales, preview, site });
-
     return {
       paths: data?.paths,
-      fallback: false
+      fallback: true
     };
   } catch (error) {
     return {
@@ -41,9 +40,13 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
   try {
     const path = join('/', (params.slug || ['/']).join('/'));
     const { data: pageData } = await client.Page({ path, locale, preview, site });
-    if (!pageData) {
-      throw new Error('NoPageFound');
+    if (!pageData?.page) {
+      console.log('[NotFound][GetStaticProps]', path);
+      return {
+        notFound: true
+      };
     }
+
     return {
       props: {
         pageData
@@ -63,7 +66,7 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
 export default function Page({ pageData }: any) {
   return (
     <ContentModuleProvider contentMapping={contentMapping}>
-      <ContentModule {...pageData.page} />
+      <ContentModule {...pageData?.page} />
     </ContentModuleProvider>
   );
 }
