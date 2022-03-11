@@ -46,11 +46,11 @@ const Hit = (props: any) => {
       <Link href={hit.permalink}>
         <HitDescription component={Highlight} variant="body2" attribute="content" hit={hit} />
       </Link>
-      {categories ? (
-        <Box data-testid="CollectionSearchResults-categories">
+      {categories.length > 0 && (
+        <Box mt={2} data-testid="CollectionSearchResults-categories">
           <CategoryLinks links={categories} />
         </Box>
-      ) : null}
+      )}
     </>
   );
 };
@@ -101,13 +101,13 @@ const StateResults = connectStateResults((props) => {
   return (
     <>
       {searchState?.query && !!searchResults?.nbHits && !isSearching && (
-        <Typography variant="body2" component="p">
+        <Typography variant="body2" component="p" mb={5}>
           {`${searchResults?.nbHits} results for ${searchState?.query}`}
         </Typography>
       )}
       {isSearching && <LoadingResults />}
       {!isSearching && searchResults.nbHits === 0 && (
-        <Typography variant="body2" component="p">
+        <Typography variant="body2" component="p" mb={5}>
           No results found
         </Typography>
       )}
@@ -147,10 +147,9 @@ const HitList = styled(Hits, {
   '& ul': {
     listStyle: 'none',
     margin: 0,
-    padding: 0,
-    paddingTop: theme.spacing(0.5)
+    padding: 0
   },
-  '& li': {
+  '& li:not(:first-child)': {
     paddingTop: theme.spacing(4.5)
   },
   '& a:hover': {
@@ -172,7 +171,6 @@ const HitDescription = styled(Typography, {
   slot: 'HitDescription',
 })<TypographyProps<React.ElementType>>(({ theme }) => ({
   display: 'block',
-  paddingBottom: theme.spacing(2),
   color: theme.palette.midnight.A80,
   wordBreak: 'break-word'
 }));
