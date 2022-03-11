@@ -3,6 +3,8 @@ import { Mappers, ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
 import createPath from './utils/createPath';
 
+const domain = process.env.DOMAIN;
+
 const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
   const manualUrl = getLocalizedField(link.fields, 'manualUrl', ctx);
   if (manualUrl) return createPath(manualUrl) ?? '#';
@@ -13,7 +15,7 @@ const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
     return content && createPath(getLocalizedField(content?.fields, 'slug', ctx));
   }
 
-  return '#';
+  return `${domain}${ctx.path}/#`;
 };
 
 export const mappers: Mappers = {

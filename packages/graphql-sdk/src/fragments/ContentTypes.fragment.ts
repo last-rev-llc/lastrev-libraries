@@ -7,7 +7,6 @@ export const ContentTypes_Fragments = gql`
   fragment Content_Base on Content {
     id
     __typename
-    sidekickLookup
   }
 
   fragment Page_Base on Page {
@@ -37,6 +36,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment Content_Page_Base on Content {
     ...Content_Base
+    sidekickLookup
     ...Section_Base
     ...Media_Base
     ...RichText_TextFragment
@@ -47,6 +47,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment Link_Base on Link {
     ...Content_Base
+    sidekickLookup
     text
     href
     variant
@@ -56,6 +57,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment Header_Base on Header {
     ...Content_Base
+    sidekickLookup
     logo {
       ...Media_Base
     }
@@ -75,6 +77,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment Hero_Base on Hero {
     ...Content_Base
+    sidekickLookup
     variant
     internalTitle
     title
@@ -98,6 +101,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment Collection_Base on Collection {
     ...Content_Base
+    sidekickLookup
     variant
     itemsVariant
     itemsWidth
@@ -111,6 +115,7 @@ export const ContentTypes_Fragments = gql`
     styles
     introText {
       ...Content_Base
+      sidekickLookup
       body {
         ...RichText_NoEntries
       }
@@ -149,6 +154,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment Section_Base_Fields on Section {
     ...Content_Base
+    sidekickLookup
     variant
     styles
     # Style fields
@@ -170,6 +176,7 @@ export const ContentTypes_Fragments = gql`
   # Section_Base recursion is handled in Section_Base
   fragment Page_Base_Nested on Content {
     ...Content_Base
+    sidekickLookup
     ...Section_Base_Fields
     ...RichText_TextFragment
     ...Card_Base
@@ -208,6 +215,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment Card_Base on Card {
     ...Content_Base
+    sidekickLookup
     variant
     media {
       ...Media_Base
@@ -232,6 +240,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment NavigationItem_Nested on NavigationItem {
     ...Content_Base
+    sidekickLookup
     variant
     text
     href
@@ -264,6 +273,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment CategoryArticle_Nested on CategoryArticle {
     ...Content_Base
+    sidekickLookup
     title
     slug
     articles {
@@ -279,6 +289,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment CategoryArticle_Base on CategoryArticle {
     ...Content_Base
+    sidekickLookup
     title
     slug
     categoryHierarchyLinks {
@@ -368,6 +379,7 @@ export const ContentTypes_Fragments = gql`
 
   fragment Footer_Base on Footer {
     ...Content_Base
+    sidekickLookup
     media {
       ...Media_Base
     }

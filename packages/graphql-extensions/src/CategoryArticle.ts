@@ -10,6 +10,7 @@ import categoryArticleFeaturedArticlesResolver from './resolvers/categoryArticle
 import categoryArticleItemsResolver from './resolvers/categoryArticleItemsResolver';
 import categoryArticleHierarchyResolver from './resolvers/categoryArticleHierarchyResolver';
 import getPathReader from './utils/getPathReader';
+import { Entry } from 'contentful';
 
 const SITE = process.env.SITE;
 
@@ -41,8 +42,8 @@ export const mappers: any = {
       pubDate: 'pubDate',
       seo: 'seo',
       subCategories: async (category: any, _args: any, ctx: ApolloContext) => {
-        const getAllCategoryChildrenIds = async (categoryArticle: any): Promise<any> => {
-          const childCategoriesRef = getLocalizedField(categoryArticle.fields, 'categoryItems', ctx);
+        const getAllCategoryChildrenIds = async (categoryArticle?: Entry<any>): Promise<any> => {
+          const childCategoriesRef = getLocalizedField(categoryArticle?.fields, 'categoryItems', ctx);
 
           if (childCategoriesRef) {
             const childIds = childCategoriesRef.map((content: any) => {
@@ -53,7 +54,7 @@ export const mappers: any = {
             const childCategories = await ctx.loaders.entryLoader.loadMany(childIds);
 
             for (let childCategory of childCategories) {
-              await getAllCategoryChildrenIds(childCategory);
+              if (childCategory && !(childCategory instanceof Error)) await getAllCategoryChildrenIds(childCategory);
             }
           }
         };
@@ -128,6 +129,8 @@ const categoryArticle: ContentfulPathsGenerator = async (
     locales,
     preview
   } as ApolloContext);
+
+  if (!fullPath) return {};
 
   return {
     [fullPath]: {

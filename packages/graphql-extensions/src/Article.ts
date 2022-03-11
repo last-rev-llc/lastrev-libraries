@@ -278,25 +278,36 @@ const article: ContentfulPathsGenerator = async (
   });
 
   const sortedArticlePaths: { [key: string]: any } = {};
-  for (let key of sortedPathKeys) {
-    if (Object.keys(sortedArticlePaths).length === 0) {
-      sortedArticlePaths[key] = {
-        ...articlePaths[key],
-        isPrimary: true
-      };
 
-      sortedArticlePaths[articleFullPath] = {
-        fullPath: articleFullPath,
-        isCanonical: true,
-        contentId: articleItem?.sys?.id,
-        excludedLocales: [],
-        contentType: articleItem.sys.contentType.sys.id
-      };
-    } else {
-      sortedArticlePaths[key] = articlePaths[key];
+  if (!sortedPathKeys.length) {
+    sortedArticlePaths[articleFullPath] = {
+      fullPath: articleFullPath,
+      isCanonical: true,
+      isPrimary: true,
+      contentId: articleItem?.sys?.id,
+      excludedLocales: [],
+      contentType: articleItem.sys.contentType.sys.id
+    };
+  } else {
+    for (let key of sortedPathKeys) {
+      if (Object.keys(sortedArticlePaths).length === 0) {
+        sortedArticlePaths[key] = {
+          ...articlePaths[key],
+          isPrimary: true
+        };
+
+        sortedArticlePaths[articleFullPath] = {
+          fullPath: articleFullPath,
+          isCanonical: true,
+          contentId: articleItem?.sys?.id,
+          excludedLocales: [],
+          contentType: articleItem.sys.contentType.sys.id
+        };
+      } else {
+        sortedArticlePaths[key] = articlePaths[key];
+      }
     }
   }
-
   return sortedArticlePaths;
 };
 

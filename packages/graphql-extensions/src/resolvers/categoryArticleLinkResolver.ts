@@ -68,6 +68,8 @@ const categoryArticleLinkResolver = async (categoryItem: any, _args: any, ctx: A
     }
   }
 
+  if (!categoryItemPath.length) return null;
+
   const path = await createPath('topics', categoryItemPath.join('/'));
 
   return path;

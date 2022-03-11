@@ -25,6 +25,7 @@ const TopicNav = ({ navItems, currentCategoryId = '' }: TopicNavProps) => {
 
   const onScrollUpdate = (entry: { target: any; boundingClientRect: any }, isInViewPort: any) => {
     const { target, boundingClientRect } = entry;
+    if (!target) return;
 
     const correspondingNavItem = document.querySelector(`[data-scrollspy-id="${target.id}"]`);
     const parentnavItemId = target.attributes['parent-category-id']?.value; // subNavigation will have this custom attr to point to the parent category
@@ -62,7 +63,11 @@ const TopicNav = ({ navItems, currentCategoryId = '' }: TopicNavProps) => {
         <List data-testid="TopicNav-list" sx={{ p: 0, listStyle: 'none' }}>
           {navItems &&
             navItems.map((navItem, idx) => (
-              <ListItem disablePadding key={`topicNav-${navItem.id}`} sx={{ mb: 2.25 }} data-scrollspy-id={navItem.id}>
+              <ListItem
+                disablePadding
+                key={`topicNav-${navItem.id ?? ''}`}
+                sx={{ mb: 2.25 }}
+                data-scrollspy-id={navItem.id}>
                 {navItem.subNavigation ? (
                   <Accordion
                     elevation={0}

@@ -55,7 +55,11 @@ export const Header = ({
 
   return (
     <ErrorBoundary>
-      <Root position="sticky" {...sidekick(sidekickLookup)} variant={variant} menuVisible={open}>
+      <Root
+        position="sticky"
+        {...sidekick({ contentId: sidekickLookup?.contentId, contentTypeId: sidekickLookup?.contentTypeId })}
+        variant={variant}
+        menuVisible={open}>
         <Toolbar
           sx={{
             width: '100%',
@@ -65,20 +69,25 @@ export const Header = ({
           {logo && (
             <IconButton
               data-testid="Header-Logo-Button"
-              href={logoUrl || '/'}
-              {...sidekick(sidekickLookup?.logo)}
               disableRipple
+              href={logoUrl || '/'}
               sx={{ height: '100%', width: 'auto', padding: 0 }}>
-              <Media {...logo} priority disableInlineSVG sx={{ height: '100%', width: 'auto', padding: 0 }} />
+              <Media
+                {...logo}
+                {...sidekick(sidekickLookup?.logo)}
+                priority
+                disableInlineSVG
+                sx={{ height: '100%', width: 'auto', padding: 0 }}
+              />
             </IconButton>
           )}
 
           {leftNav && (
             <NavItems
               sx={{
-                borderLeft: `solid 1px`,
-                borderLeftColor: 'common.white',
-                marginLeft: 2,
+                'borderLeft': `solid 1px`,
+                'borderLeftColor': 'common.white',
+                'marginLeft': 2,
 
                 '& .MuiList-root': {
                   padding: 0
@@ -98,18 +107,18 @@ export const Header = ({
             {showSearchForm && (
               <Box
                 sx={{
-                  width: '100%',
-                  marginLeft: 'auto',
-                  marginRight: 2,
-                  paddingTop: 1,
-                  paddingBottom: 1,
+                  'width': '100%',
+                  'marginLeft': 'auto',
+                  'marginRight': 2,
+                  'paddingTop': 1,
+                  'paddingBottom': 1,
 
                   '& .aa-Form': {
-                    height: 38,
-                    minHeight: 'auto',
-                    minWidth: 320,
-                    borderColor: 'transparent',
-                    borderRadius: 20,
+                    'height': 38,
+                    'minHeight': 'auto',
+                    'minWidth': 320,
+                    'borderColor': 'transparent',
+                    'borderRadius': 20,
 
                     '&:focus-within': {
                       borderColor: 'transparent',
@@ -119,7 +128,7 @@ export const Header = ({
                   },
 
                   '& .aa-Input': {
-                    height: 38,
+                    'height': 38,
 
                     '&::placeholder': {
                       color: 'midnight.A60'
@@ -136,11 +145,10 @@ export const Header = ({
 
                   '& .aa-Autocomplete[aria-expanded=true]': {
                     '& .aa-Form': {
-                      borderRadius: theme => `${theme.spacing(2.4)} ${theme.spacing(2.4)} 0 0`
+                      borderRadius: (theme) => `${theme.spacing(2.4)} ${theme.spacing(2.4)} 0 0`
                     }
                   }
-                }}
-              >
+                }}>
                 <AutocompleteBox settings={{ placeholder: 'Search our knowledge base' }} />
               </Box>
             )}
@@ -162,8 +170,7 @@ export const Header = ({
             )}
 
             {actions && (
-              <List data-testid="Header-Actions-Desktop"
-                sx={{ padding: 0 }}>
+              <List data-testid="Header-Actions-Desktop" sx={{ padding: 0 }}>
                 {actions?.map((action) => (
                   <NavItem key={action.id}>
                     <ContentModule {...action} />
@@ -256,13 +263,13 @@ const MobileNavItems = styled(List, {
   slot: 'MobileNavItems',
   overridesResolver: (_, styles) => [styles.root]
 })(({ theme }) => ({
-  padding: 0,
-  height: '100%',
-  width: '100%',
-  display: 'flex',
-  alignItems: 'center',
-  flexDirection: 'column',
-  color: theme.palette.common.white,
+  'padding': 0,
+  'height': '100%',
+  'width': '100%',
+  'display': 'flex',
+  'alignItems': 'center',
+  'flexDirection': 'column',
+  'color': theme.palette.common.white,
 
   [theme.breakpoints.up('md')]: {
     flexDirection: 'row'
@@ -281,9 +288,9 @@ const MobileNavItems = styled(List, {
   },
 
   '.MuiLink-root': {
-    fontSize: 18,
-    lineHeight: 1.5,
-    textDecoration: 'none',
+    'fontSize': 18,
+    'lineHeight': 1.5,
+    'textDecoration': 'none',
 
     '& + svg': {
       marginLeft: 'auto'
@@ -296,10 +303,10 @@ const NavItem = styled(ListItem, {
   slot: 'NavItem',
   overridesResolver: (_, styles) => [styles.root]
 })<{}>(({ theme }) => ({
-  display: 'block',
-  height: '100%',
-  margin: 0,
-  padding: theme.spacing(0, 1),
+  'display': 'block',
+  'height': '100%',
+  'margin': 0,
+  'padding': theme.spacing(0, 1),
 
   [theme.breakpoints.up('md')]: {
     alignItems: 'center',
@@ -346,11 +353,11 @@ const NavItem = styled(ListItem, {
 
   '.MuiMenuItem-root': {
     [theme.breakpoints.up('md')]: {
-      marginLeft: theme.spacing(2),
-      backgroundColor: theme.palette.common.white,
-      borderBottom: '1px solid',
-      borderBottomColor: theme.palette.midnight.A12,
-      transition: 'background-color .15s linear',
+      'marginLeft': theme.spacing(2),
+      'backgroundColor': theme.palette.common.white,
+      'borderBottom': '1px solid',
+      'borderBottomColor': theme.palette.midnight.A12,
+      'transition': 'background-color .15s linear',
 
       '&:hover': {
         backgroundColor: theme.palette.midnight.A12,
@@ -359,8 +366,8 @@ const NavItem = styled(ListItem, {
     },
 
     '.MuiLink-root': {
-      padding: theme.spacing(1.5, 2),
-      color: theme.palette.common.white,
+      'padding': theme.spacing(1.5, 2),
+      'color': theme.palette.common.white,
 
       [theme.breakpoints.down('md')]: {
         fontSize: 16,
@@ -368,7 +375,7 @@ const NavItem = styled(ListItem, {
       },
 
       [theme.breakpoints.up('md')]: {
-        color: theme.palette.text.primary,
+        color: theme.palette.text.primary
       },
 
       '&:hover': {
