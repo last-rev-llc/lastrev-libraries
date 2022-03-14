@@ -178,8 +178,8 @@ const AccordionTitle = styled(Box)(({ theme }) => ({
 
   '& > svg': {
     marginLeft: 'auto',
-    minWidth: '10px',
-    minHeight: '16px'
+    maxWidth: '7.16px',
+    minHeight: '1rem'
   }
 }));
 

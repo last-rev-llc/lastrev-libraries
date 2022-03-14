@@ -9,6 +9,7 @@ import categoryArticleHeroResolver from './resolvers/categoryArticleHeroResolver
 import categoryArticleFeaturedArticlesResolver from './resolvers/categoryArticleFeaturedArticlesResolver';
 import categoryArticleItemsResolver from './resolvers/categoryArticleItemsResolver';
 import categoryArticleHierarchyResolver from './resolvers/categoryArticleHierarchyResolver';
+import categoryArticleLevelResolver from './resolvers/categoryArticleLevelResolver';
 import getPathReader from './utils/getPathReader';
 import { Entry } from 'contentful';
 
@@ -27,6 +28,7 @@ export const typeDefs = gql`
     articles: [Card]
     featuredArticles: [Card]
     link: Link
+    level: Int
     seo: JSON
   }
 `;
@@ -37,6 +39,7 @@ export const mappers: any = {
       header: headerResolver,
       footer: footerResolver,
       title: 'title',
+      level: categoryArticleLevelResolver,
       topicNavItems: topicNavHorizontalResolver,
       hero: categoryArticleHeroResolver,
       pubDate: 'pubDate',

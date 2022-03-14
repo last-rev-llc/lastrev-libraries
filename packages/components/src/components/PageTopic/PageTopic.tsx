@@ -28,12 +28,14 @@ export interface PageTopicProps {
   sidekickLookup?: any;
   link: LinkProps;
   topicNavItems: Array<LinkProps>;
+  level: number;
 }
 
 export const PageTopic = ({
   id,
   hero,
   title,
+  level,
   header,
   footer,
   articles,
@@ -79,7 +81,7 @@ export const PageTopic = ({
                 sx={{ pl: 3, pr: 3 }}
                 data-testid="Topic-Articles-Wrap"
               >
-                <ArticleCategory id={id} title={title} subCategories={subCategories} articles={articles} />
+                <ArticleCategory id={id} title={title} level={level} subCategories={subCategories as any} articles={articles} categoryHierarchyLinks={categoryHierarchyLinks} />
               </Grid>
 
               {featuredArticles?.length && (

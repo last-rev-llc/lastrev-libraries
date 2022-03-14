@@ -285,6 +285,7 @@ export const ContentTypes_Fragments = gql`
     link {
       ...Link_Base
     }
+    level
   }
 
   fragment CategoryArticle_Base on CategoryArticle {
@@ -317,7 +318,7 @@ export const ContentTypes_Fragments = gql`
     footer {
       ...Footer_Base
     }
-
+    level
     subCategories {
       ... on CategoryArticle {
         ...CategoryArticle_Nested

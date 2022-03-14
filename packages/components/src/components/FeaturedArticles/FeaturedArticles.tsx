@@ -39,7 +39,7 @@ const FeaturedArticles = ({ articles }: FeaturedArticlesProps) => {
               data-testid="FeaturedArticles-articleCard"
               sx={{
                 padding: (theme) => theme.spacing(3, 0),
-                borderBottom: (theme) => `1px solid ${alpha(theme?.palette?.midnight?.A40 ?? '#99ADB7', 0.3)}`
+                borderBottom: (theme) => `1px solid ${alpha(theme?.palette?.midnight?.A40 ?? 'midnight.A40', 0.3)}`
               }}>
               <ArticleCard elevation={0} {...card} />
             </ListItem>
@@ -51,11 +51,19 @@ const FeaturedArticles = ({ articles }: FeaturedArticlesProps) => {
 };
 
 const ArticleCard = styled(Card)(({ theme }) => ({
-  'background': theme.palette.background.default,
+  background: theme.palette.background.default,
 
   '& .MuiCardContent-root': {
-    padding: 0,
-    margin: 0
+    paddingTop: 0,
+    paddingLeft: 0,
+    paddingRight: 0,
+    margin: 0,
+
+    [theme.breakpoints.up('md')]: {
+      '&:last-child': {
+        padding: 0
+      }
+    }
   },
 
   '& .MuiTypography-root': {
