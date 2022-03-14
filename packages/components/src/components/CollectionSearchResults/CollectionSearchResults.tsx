@@ -10,6 +10,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Skeleton from '@mui/material/Skeleton';
 import MuiPagination from '@mui/material/Pagination';
+import PaginationItem from '@mui/material/PaginationItem';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
@@ -28,6 +29,10 @@ interface HitProps {
   categories: Array<string>;
   categoryLinks: Array<CategoryProps>;
   permalink: string;
+}
+
+interface LoadingItemsProps {
+  hitsPerPage: number;
 }
 
 // TODO: Find proper TS type in Algolia API
@@ -55,18 +60,23 @@ const Hit = (props: any) => {
   );
 };
 
-const LoadingResults = () => {
+const LoadingItems = (props: LoadingItemsProps) => {
   return (
     <React.Fragment>
-      <Typography variant="h5" mb={1}>
-        <Skeleton animation="wave" width="80%" />
-      </Typography>
-      <Skeleton animation="wave" height={12} width="92%" />
-      <Skeleton animation="wave" height={12} width="90%" />
-      <Box display="flex" mt={1}>
-        <Skeleton animation="wave" height={28} width={80} sx={{ marginRight: 2 }} />
-        <Skeleton animation="wave" height={28} width={60} />
-      </Box>
+      {[...Array(props.hitsPerPage)].map((idx) => (
+        <React.Fragment key={`loading-${idx}`}>
+          <Typography variant="h5" mb={1}>
+            <Skeleton animation="wave" width="80%" />
+          </Typography>
+          <Skeleton animation="wave" height={12} width="92%" />
+          <Skeleton animation="wave" height={12} width="90%" />
+          <Box display="flex" mt={1} mb={5}>
+            <Skeleton animation="wave" height={28} width={80} sx={{ marginRight: 2 }} />
+            <Skeleton animation="wave" height={28} width={60} />
+          </Box>
+        </React.Fragment>
+        )
+      )}
     </React.Fragment>
   );
 };
@@ -84,12 +94,28 @@ const QueryTitle = connectStateResults((props) => {
 
 interface PaginationProps {
   nbPages?: number;
+  // TODO: Find proper TS type in Algolia API
+  refine: any;
 }
 
 const Pagination = connectPagination((props: PaginationProps) => {
   return (
     props.nbPages !== undefined && props.nbPages > 0 ? (
-      <MuiPagination count={props.nbPages} variant="outlined" shape="rounded" />
+      <MuiPagination
+        variant="outlined"
+        shape="rounded"
+        count={props.nbPages}
+        onChange={(event: { preventDefault: () => void; }, value: number) => {
+          event.preventDefault();
+          props.refine(value);
+        }}
+        renderItem={item => (
+          <PaginationItem
+            component={Link}
+            {...item}
+          />
+        )}
+      />
     ) : null
   );
 });
@@ -105,7 +131,7 @@ const StateResults = connectStateResults((props) => {
           {`${searchResults?.nbHits} results for ${searchState?.query}`}
         </Typography>
       )}
-      {isSearching && <LoadingResults />}
+      {isSearching && <LoadingItems hitsPerPage={searchResults?.hitsPerPage} />}
       {!isSearching && searchResults.nbHits === 0 && (
         <Typography variant="body2" component="p" mb={5}>
           No results found
