@@ -5,23 +5,23 @@ import getCategoryArticleLevelOneResolver from './getCategoryArticleLevelOneReso
 // Loops through category hierarchy tree to find the Level 1 category for any given category
 // Opted to not use path reader to future proof changes to how paths are generated.
 const categoryArticleHierarchyResolver = async (category: any, _args: any, ctx: ApolloContext) => {
-    const topLevelCategory = await getCategoryArticleLevelOneResolver(category, _args, ctx);
-    
-    if (!topLevelCategory) return null;
+  const topLevelCategory = await getCategoryArticleLevelOneResolver(category, _args, ctx);
 
-    const childCategoriesRef = getLocalizedField(topLevelCategory.fields, 'categoryItems', ctx);
+  if (!topLevelCategory) return null;
 
-    if (!childCategoriesRef) return null;
+  const childCategoriesRef = getLocalizedField(topLevelCategory.fields, 'categoryItems', ctx);
 
-    const childIds = childCategoriesRef.map((content: any) => {
-      return { id: content?.sys.id, preview: !!ctx.preview };
-    });
+  if (!childCategoriesRef) return null;
 
-    const subCategoriesRef = await ctx.loaders.entryLoader.loadMany(childIds);
+  const childIds = childCategoriesRef.map((content: any) => {
+    return { id: content?.sys.id, preview: !!ctx.preview };
+  });
 
-    if (!subCategoriesRef) return null;
+  const subCategoriesRef = (await ctx.loaders.entryLoader.loadMany(childIds)).filter(Boolean);
 
-    return subCategoriesRef;
+  if (!subCategoriesRef || !subCategoriesRef.length) return null;
+
+  return subCategoriesRef;
 };
 
 export default categoryArticleHierarchyResolver;

@@ -14,7 +14,6 @@ const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
     const content = await ctx.loaders.entryLoader.load({ id: contentRef.sys.id, preview: !!ctx.preview });
     return content && createPath(getLocalizedField(content?.fields, 'slug', ctx));
   }
-
   return `${domain}${ctx.path}/#`;
 };
 

@@ -54,10 +54,11 @@ export const mappers: any = {
               return { id: content?.sys.id, preview: !!ctx.preview };
             });
 
-            const childCategories = await ctx.loaders.entryLoader.loadMany(childIds);
-
-            for (let childCategory of childCategories) {
-              if (childCategory && !(childCategory instanceof Error)) await getAllCategoryChildrenIds(childCategory);
+            const childCategories = (await ctx.loaders.entryLoader.loadMany(childIds)).filter(Boolean);
+            if (childCategories && childCategories.length) {
+              for (let childCategory of childCategories) {
+                if (childCategory && !(childCategory instanceof Error)) await getAllCategoryChildrenIds(childCategory);
+              }
             }
           }
         };

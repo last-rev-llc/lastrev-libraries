@@ -108,8 +108,9 @@ export const mappers = {
             id: currentCategoryNode?.data?.contentId,
             preview: !!ctx.preview
           });
+          if (!currentCategory) return [];
           const hierarchy = await getCategoryArticleParentHierarchyResolver(currentCategory, args, ctx);
-          if (hierarchy) return hierarchy;
+          if (hierarchy?.length) return hierarchy;
         }
 
         const categoryItemsRef: any = await getLocalizedField(article.fields, 'categories', ctx);

@@ -40,9 +40,11 @@ Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloConte
   const contentsRef = getLocalizedField(page.fields, 'contents', ctx);
   if (contentsRef?.length) {
     // Load the Page contents
-    const contents = await ctx.loaders.entryLoader.loadMany(
-      contentsRef.map((content: any) => ({ id: content?.sys.id, preview: !!ctx.preview }))
-    );
+    const contents = (
+      await ctx.loaders.entryLoader.loadMany(
+        contentsRef.map((content: any) => ({ id: content?.sys.id, preview: !!ctx.preview }))
+      )
+    ).filter(Boolean);
     return contents;
   }
   return [];

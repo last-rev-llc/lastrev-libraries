@@ -2746,10 +2746,10 @@
   dependencies:
     lodash "^4.17.21"
 
-"@last-rev/cli@^0.1.36":
-  version "0.1.36"
-  resolved "https://registry.yarnpkg.com/@last-rev/cli/-/cli-0.1.36.tgz#6c1eec068afbe64e59c843403783cd11388bf71e"
-  integrity sha512-ybLzeolBlZvAp2eOnrY3kPqr2PVI7Zqnr6l7sYgER/vQRDvchY+pSgxwqblB0Vw1Lk5JW2UfOYPMtMRhwPvWNw==
+"@last-rev/cli@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/cli/-/cli-0.2.0.tgz#4eb68b387e05c16afeab9262b91f79b034ab9def"
+  integrity sha512-EtxptJG1sxst4V2WC9tKtHoWizaVVLNLgIjWONX8OK74VQZ31bMpdvotDE1UVJpL+B2wNVPVeRc96WSeJHDO8A==
   dependencies:
     "@graphql-tools/merge" "^6.2.14"
     "@last-rev/app-config" "^0.1.5"
@@ -2905,13 +2905,6 @@
     cross-spawn "^7.0.3"
     tslib "^2.3.0"
 
-"@last-rev/contentful-sidekick-util@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-sidekick-util/-/contentful-sidekick-util-0.0.2.tgz#97d0960b450f07fff2a09d224841a31033c23c46"
-  integrity sha512-AFOrzDBDqD4y/N/5tABoM2dtT44AqSD9Aoa8G8U6r+S3YWJ0U6vDu5afiVs3eyGdR9YfCMqVnxkjXg9h/7YrVA==
-  dependencies:
-    lodash "^4.17.20"
-
 "@last-rev/contentful-sidekick-util@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@last-rev/contentful-sidekick-util/-/contentful-sidekick-util-0.1.0.tgz#bed085ca155a5f16e8260d5d916774e9af130f68"
@@ -2997,10 +2990,10 @@
     loglevel "^1.7.1"
     micro "^9.3.4"
 
-"@last-rev/graphql-contentful-extensions@^0.0.11":
-  version "0.0.11"
-  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-extensions/-/graphql-contentful-extensions-0.0.11.tgz#cdc0f0ebd315cbb6476a76694cf5b1d065a23928"
-  integrity sha512-TCqcPS7OrJwHJylHGGIayWjMZjxfEfmCHjx7NNJ8fdqMs/Z8lpigtckXZ42i1XqkQAsYdeWHISNxw/rWXJcUPQ==
+"@last-rev/graphql-contentful-extensions@^0.0.12":
+  version "0.0.12"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-extensions/-/graphql-contentful-extensions-0.0.12.tgz#db54da29f3e29c2a1898e2e13b380ba6bb50a40d"
+  integrity sha512-b7Esui32pn8RmxXTyyZZDsYS3Yr9Javfp3oJTMUnTpf23/cAkACim/1bW/uN7fI5bsCWNp5bITWTp9+MDLLLAQ==
   dependencies:
     "@graphql-tools/merge" "^6.2.14"
     "@last-rev/graphql-contentful-core" "^0.1.34"

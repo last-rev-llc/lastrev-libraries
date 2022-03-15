@@ -43,7 +43,7 @@ export const mappers: Mappers = {
         ]);
 
         // Loop through entries and if included in hyperlinks will change type to a "Link" to utilize mappers for that type
-        const tidiedEntries = await entries.map(async (entry: Entry<any> | Error | null) => {
+        const tidiedEntries = await entries.filter(Boolean).map(async (entry: Entry<any> | Error | null) => {
           if (!entry) return entry;
 
           const id = (entry as any)?.sys?.id;
@@ -59,8 +59,8 @@ export const mappers: Mappers = {
         });
 
         return {
-          entries: [...tidiedEntries],
-          assets
+          entries: [...tidiedEntries].filter(Boolean),
+          assets: assets.filter(Boolean)
         };
       }
     }
