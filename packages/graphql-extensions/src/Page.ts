@@ -1,11 +1,13 @@
 import gql from 'graphql-tag';
 import { getLocalizedField, getDefaultFieldValue } from '@last-rev/graphql-contentful-core';
 import { ApolloContext, ContentfulPathsGenerator } from '@last-rev/types';
+import topicNavHorizontalResolver from './resolvers/topicNavHorizontalResolver';
 import createPath from './utils/createPath';
 import createType from './utils/createType';
 
 export const typeDefs = gql`
   extend type Page {
+    topicNavItems: [NavigationItem]
     breadcrumbs: [Link]
   }
 `;
@@ -13,6 +15,11 @@ export const typeDefs = gql`
 export const mappers: any = {
   Page: {
     Page: {
+      topicNavItems: async (page: any, _args: any, ctx: ApolloContext) => {
+        const disableTopicNav: any = await getLocalizedField(page.fields, 'disableTopicNav', ctx);
+        if (disableTopicNav) return undefined;
+        return topicNavHorizontalResolver(page, _args, ctx);
+      },
       breadcrumbs: async (page: any, _args: any, ctx: ApolloContext) => {
         const disableBreadcrumbs: any = await getLocalizedField(page.fields, 'disableBreadcrumbs', ctx);
         if (disableBreadcrumbs) return undefined;

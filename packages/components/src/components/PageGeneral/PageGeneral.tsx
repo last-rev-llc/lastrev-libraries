@@ -5,6 +5,7 @@ import ContentModule from '@last-rev/component-library/dist/components/ContentMo
 import BackToTop from '@last-rev/component-library/dist/components/BackToTop/BackToTop';
 import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
 import Breadcrumbs from '../Breadcrumbs';
+import TopicNavHorizontal from '../TopicNavHorizontal';
 import { Page } from '../../../../graphql-sdk/dist';
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID as string, process.env.ALGOLIA_SEARCH_API_KEY as string);
@@ -14,13 +15,15 @@ const indexName = 'articles';
 interface PageGeneralProps extends Omit<Page, '__typename'> {
   __typename?: string | 'Page';
   breadcrumbs?: Array<LinkProps> | any;
+  topicNavItems?: Array<LinkProps> | any;
 }
 
-const PageGeneral = ({ header, hero, contents, footer, disableBackToTop, breadcrumbs }: PageGeneralProps) => {
+const PageGeneral = ({ header, hero, contents, footer, disableBackToTop, breadcrumbs, topicNavItems }: PageGeneralProps) => {
   return (
     <>
       <InstantSearch indexName={indexName} searchClient={searchClient} stalledSearchDelay={500}>
         {header ? <ContentModule {...(header as any)} /> : null}
+        {topicNavItems && <TopicNavHorizontal navItems={topicNavItems} />}
         {hero ? <ContentModule {...(hero as any)} /> : null}
         {breadcrumbs ? <Breadcrumbs breadcrumbs={breadcrumbs} /> : null}
         {contents?.map((content: any) => (
