@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { styled } from '@mui/material/styles';
+import { styled, alpha } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
 
@@ -29,9 +29,10 @@ export const NavigationItem = ({
 }: NavigationItemProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const theme = useTheme();
-  const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
+  const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'md';
   const isMobile = useMediaQuery(theme.breakpoints.down(menuBreakpoint));
-  const handleClick = (evt: any) => {
+
+  const handleClick = (evt: React.MouseEvent<HTMLElement>) => {
     if (isMobile && subNavigation?.length) {
       evt.preventDefault();
       evt.stopPropagation();
@@ -40,6 +41,7 @@ export const NavigationItem = ({
       if (onRequestClose) onRequestClose();
     }
   };
+
   const handleSubnavClick = () => {
     setOpen(false);
     if (onRequestClose) onRequestClose();
@@ -50,11 +52,15 @@ export const NavigationItem = ({
       <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem" menuBreakpoint={menuBreakpoint}>
         {subNavigation?.length ? (
           <>
-            <Box display="flex" alignItems="center">
-              <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
+            <Box display="flex" alignItems="center" onClick={handleClick}>
+              <Link {...props} {...sidekick(sidekickLookup)} />
               {!hideIcon && <ExpandMoreIcon sx={{ fill: 'white', width: 24, ml: -0.25 }} />}
             </Box>
-            <MenuRoot menuBreakpoint={menuBreakpoint}>
+            <MenuRoot menuBreakpoint={menuBreakpoint}
+              sx={{
+                display: open ? 'flex' : 'none'
+              }}
+            >
               {subNavigation?.map((item) => (
                 <MenuItem key={item.id}>
                   <ContentModule
@@ -78,7 +84,6 @@ export const NavigationItem = ({
 const visibleStyles = (open: boolean) => `
   @media (min-width: 1024px) {
     box-shadow: ${open ? 'inset 0 0 16px -8px rgb(0 0 0 / 30%)' : 'inset 0 0 0 0 rgb(0 0 0 / 0%)'};
-    max-height: ${open ? 300 : 0}px;
   }
 `;
 
@@ -95,16 +100,14 @@ const Root = styled(Box, {
       }
     }
     @media (min-width: 1024px) {
-      [class$=NavigationItem-menuRoot] {
-        max-height: 0px;
-      }
       &:hover {
-        background: rgba(0,0,0,0.05);
+        background-color: ${alpha(theme.palette.common.black, 0.05)},
+
         [class$=NavigationItem-menuRoot] {
-          max-height: 300px;
+          max-height: 400px;
         }
       }
-   }
+    }
   `}
 `;
 
@@ -115,7 +118,6 @@ const MenuRoot = styled(MenuList, {
   overridesResolver: (_, styles) => [styles.menuRoot]
 })<{ variant?: string; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
   ${({ theme, menuBreakpoint }) => `
-    display: flex;
     flex-direction: column;
     overflow: hidden;
     transition: 0.3s ease-in-out;
@@ -140,7 +142,7 @@ const MenuRoot = styled(MenuList, {
     @media (max-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
       width: 100%;
       && { // Needed to override Paper styles
-       box-shadow: inset 0 0 16px -8px rgb(0 0 0 / 30%)
+        box-shadow: none;
       }
       .MuiMenuItem-root{
         width: 100%;

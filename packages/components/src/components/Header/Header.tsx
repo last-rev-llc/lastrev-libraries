@@ -202,29 +202,26 @@ export const Header = ({
             <Box sx={{ backgroundColor: 'background.dark', paddingTop: 2, paddingBottom: 4 }}>
               <Container>
                 <MobileNavItems>
-                  {rightNav &&
-                    rightNav?.map((navigationItem) => (
-                      <NavItem
-                        data-testid="Header-RightNav-Mobile"
-                        key={`drawer-${navigationItem.id}`}
-                        role="presentation"
-                        onClick={toggleDrawer(false)}
-                        onKeyDown={toggleDrawer(false)}>
-                        <ContentModule {...navigationItem} />
-                      </NavItem>
-                    ))}
-
-                  {actions &&
-                    actions?.map((action) => (
-                      <NavItem
-                        data-testid="Header-Actions-Mobile"
-                        key={`drawer-${action.id}`}
-                        role="presentation"
-                        onClick={toggleDrawer(false)}
-                        onKeyDown={toggleDrawer(false)}>
-                        <ContentModule {...action} />
-                      </NavItem>
-                    ))}
+                  {rightNav?.map((navigationItem) => (
+                    <NavItem
+                      data-testid="Header-RightNav-Mobile"
+                      key={`drawer-${navigationItem.id}`}
+                      role="presentation"
+                      onClick={toggleDrawer(true)}
+                      onKeyDown={toggleDrawer(true)}>
+                      <ContentModule {...navigationItem} />
+                    </NavItem>
+                  ))}
+                  {actions?.map((action) => (
+                    <NavItem
+                      data-testid="Header-Actions-Mobile"
+                      key={`drawer-${action.id}`}
+                      role="presentation"
+                      onClick={toggleDrawer(false)}
+                      onKeyDown={toggleDrawer(false)}>
+                      <ContentModule {...action} />
+                    </NavItem>
+                  ))}
                 </MobileNavItems>
               </Container>
             </Box>
@@ -288,6 +285,7 @@ const MobileNavItems = styled(List, {
   },
 
   '.MuiLink-root': {
+    'width': '100%',
     'fontSize': 18,
     'lineHeight': 1.5,
     'textDecoration': 'none',
@@ -323,16 +321,17 @@ const NavItem = styled(ListItem, {
   },
 
   '.MuiList-root': {
-    display: 'none',
     marginBottom: theme.spacing(3),
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+
+    [theme.breakpoints.up('md')]: {
+      display: 'none'
+    }
   },
 
   '&:hover': {
     '&, & [class*="NavigationItem"]:hover': {
       '.MuiList-root': {
-        display: 'block',
-
         [theme.breakpoints.up('md')]: {
           '&::after': {
             content: "''",
