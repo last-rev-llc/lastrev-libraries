@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Hits,
-  Highlight,
-  connectStateResults,
-  connectPagination
-} from 'react-instantsearch-dom';
+import { Hits, Highlight, connectStateResults, connectPagination } from 'react-instantsearch-dom';
 import { SearchState, SearchResults } from 'react-instantsearch-core';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -75,21 +70,18 @@ const LoadingItems = (props: LoadingItemsProps) => {
             <Skeleton animation="wave" height={28} width={60} />
           </Box>
         </React.Fragment>
-        )
-      )}
+      ))}
     </React.Fragment>
   );
 };
 
 const QueryTitle = connectStateResults((props) => {
   const searchState = props.searchState as SearchState;
-  return (
-    searchState?.query ? (
-      <Typography variant="h3" component="h3" mb={2}>
-       {`Showing results for ${searchState?.query}`}
-      </Typography>
-    ) : null
-  );
+  return searchState?.query ? (
+    <Typography variant="h3" component="h3" mb={2}>
+      {`Showing results for ${searchState?.query}`}
+    </Typography>
+  ) : null;
 });
 
 interface PaginationProps {
@@ -99,25 +91,19 @@ interface PaginationProps {
 }
 
 const Pagination = connectPagination((props: PaginationProps) => {
-  return (
-    props.nbPages !== undefined && props.nbPages > 0 ? (
-      <MuiPagination
-        variant="outlined"
-        shape="rounded"
-        count={props.nbPages}
-        onChange={(event: { preventDefault: () => void; }, value: number) => {
-          event.preventDefault();
-          props.refine(value);
-        }}
-        renderItem={item => (
-          <PaginationItem
-            component={Link}
-            {...item}
-          />
-        )}
-      />
-    ) : null
-  );
+  return props.nbPages !== undefined && props.nbPages > 0 ? (
+    <MuiPagination
+      variant="outlined"
+      shape="rounded"
+      count={props.nbPages}
+      onChange={(event: { preventDefault: () => void }, value: number) => {
+        event.preventDefault();
+        setTimeout(() => props.refine(value), 100);
+        global.window.scrollTo(0, 0);
+      }}
+      renderItem={(item) => <PaginationItem component={Link} {...item} />}
+    />
+  ) : null;
 });
 
 const StateResults = connectStateResults((props) => {
@@ -145,10 +131,7 @@ const StateResults = connectStateResults((props) => {
   );
 });
 
-export const CollectionSearchResults = ({
-  introText,
-  sidekickLookup
-}: CollectionProps) => {
+export const CollectionSearchResults = ({ introText, sidekickLookup }: CollectionProps) => {
   return (
     <ErrorBoundary>
       <Box mb={6} data-testid="CollectionSearchResults" {...sidekick(sidekickLookup)}>
@@ -168,7 +151,7 @@ export const CollectionSearchResults = ({
 
 const HitList = styled(Hits, {
   name: 'CollectionSearchResults',
-  slot: 'Hits',
+  slot: 'Hits'
 })(({ theme }) => ({
   '& ul': {
     listStyle: 'none',
@@ -185,7 +168,7 @@ const HitList = styled(Hits, {
 
 const HitTitle = styled(Typography, {
   name: 'CollectionSearchResult',
-  slot: 'HitTitle',
+  slot: 'HitTitle'
 })<TypographyProps<React.ElementType>>(({ theme }) => ({
   display: 'block',
   paddingBottom: theme.spacing(1),
@@ -194,7 +177,7 @@ const HitTitle = styled(Typography, {
 
 const HitDescription = styled(Typography, {
   name: 'CollectionSearchResult',
-  slot: 'HitDescription',
+  slot: 'HitDescription'
 })<TypographyProps<React.ElementType>>(({ theme }) => ({
   display: 'block',
   color: theme.palette.midnight.A80,
