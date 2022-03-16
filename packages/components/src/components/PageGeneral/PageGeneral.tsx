@@ -4,8 +4,10 @@ import { InstantSearch } from 'react-instantsearch-dom';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import BackToTop from '@last-rev/component-library/dist/components/BackToTop/BackToTop';
 import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+
 import Breadcrumbs from '../Breadcrumbs';
 import TopicNavHorizontal from '../TopicNavHorizontal';
+import useSearchState from '../../utils/useSearchState';
 import { Page } from '../../../../graphql-sdk/dist';
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID as string, process.env.ALGOLIA_SEARCH_API_KEY as string);
@@ -18,10 +20,25 @@ interface PageGeneralProps extends Omit<Page, '__typename'> {
   topicNavItems?: Array<LinkProps> | any;
 }
 
-const PageGeneral = ({ header, hero, contents, footer, disableBackToTop, breadcrumbs, topicNavItems }: PageGeneralProps) => {
+const PageGeneral = ({
+  header,
+  hero,
+  contents,
+  footer,
+  disableBackToTop,
+  breadcrumbs,
+  topicNavItems
+}: PageGeneralProps) => {
+  const { searchState, handleSearchStateChange } = useSearchState();
+
   return (
     <>
-      <InstantSearch indexName={indexName} searchClient={searchClient} stalledSearchDelay={500}>
+      <InstantSearch
+        indexName={indexName}
+        searchClient={searchClient}
+        stalledSearchDelay={500}
+        searchState={searchState}
+        onSearchStateChange={handleSearchStateChange}>
         {header ? <ContentModule {...(header as any)} /> : null}
         {topicNavItems && <TopicNavHorizontal navItems={topicNavItems} />}
         {hero ? <ContentModule {...(hero as any)} /> : null}

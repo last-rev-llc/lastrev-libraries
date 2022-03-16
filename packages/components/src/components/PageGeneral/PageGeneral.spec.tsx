@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as NextRouter from 'next/router';
 import mount from '../../../cypress/mount';
 import PageGeneral from './PageGeneral';
 import { pageGeneralMock } from './PageGeneral.mock';
@@ -10,6 +11,7 @@ const parseNode = (node: { nodeType: string; value: any; content: any[] }) => {
 describe('PageGeneral', () => {
   context('Renders correctly', () => {
     it('Renders an PageGeneral with all fields provided', () => {
+      cy.stub(NextRouter, 'useRouter').returns({ pathname: '', asPath: '', query: {}, prefetch: () => {} });
       const mockedContent = { ...pageGeneralMock() };
       mount(<PageGeneral {...(mockedContent as any)} />);
       cy.get('[data-testid=Header]').should('not.exist');
