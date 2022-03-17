@@ -54,7 +54,7 @@ export const SearchResultItem = ({ hit, components }: SearchResultItemProps) => 
                   marginRight: 1,
                   marginTop: 1,
                   borderRadius: '3px',
-                  backgroundColor: 'coolGrey.light.main',
+                  backgroundColor: 'coolGrey.light',
                   fontWeight: 'bold',
                   color: 'grey.100'
                 }}
@@ -79,22 +79,27 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(({ theme }) => ({
   '& mark': {
-    // TODO: currently throwing: "TypeError: Cannot read properties of undefined (reading 'light')"
+    // TODO: currently throwing: "TypeError: Cannot read properties of undefined"
     // https://lastrev.atlassian.net/browse/IAS-249
     // backgroundColor: theme.palette.yellow.light
     backgroundColor: '#FFE173'
   },
 
   '& .MuiTypography-root': {
-    color: theme.palette.grey['900']
+    // TODO: currently throwing: "TypeError: Cannot read properties of undefined"
+    // https://lastrev.atlassian.net/browse/IAS-249
+    // color: theme.palette.midnight.A80
+    color: '#335B6E'
   },
 
   '& .MuiChip-root': {
-    // TODO: currently throwing: "TypeError: Cannot read properties of undefined (reading 'light')"
+    'height': 'auto',
+    'padding': theme.spacing(0.5, 0),
+    // TODO: currently throwing: "TypeError: Cannot read properties of undefined"
     // https://lastrev.atlassian.net/browse/IAS-249
     // backgroundColor: theme.palette.coolGrey.light,
-    backgroundColor: '#D3EBED',
-    color: theme.palette.text.primary,
+    'backgroundColor': '#D3EBED',
+    'color': theme.palette.text.primary,
 
     '&:hover': {
       backgroundColor: '#C3DCDE'

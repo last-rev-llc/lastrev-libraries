@@ -1,35 +1,97 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
-
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Container from '@mui/material/Container';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { styled, alpha } from '@mui/material/styles';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
+import Link from '@last-rev/component-library/dist/components/Link/Link';
+import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
+
 export interface TopicNavHorizontalProps {
   navItems?: Array<NavigationItemProps>;
 }
 
 const TopicNavHorizontal = ({ navItems }: TopicNavHorizontalProps) => {
   if (!navItems) return null;
+  const [topic, setTopic] = React.useState(navItems[0]?.text);
+  const handleChange = (event: SelectChangeEvent | any) => {
+    setTopic(event.target.value as string);
+  };
 
   return (
     <ErrorBoundary>
-      <Box p={2} sx={{ backgroundColor: 'background.neutralGrey' }} data-testid="TopicNav-Horizontal">
-        <Container maxWidth={'xl'}>
+      <Box
+        px={2}
+        py={{ xs: 1.345, md: 1.85 }}
+        sx={{ backgroundColor: 'background.neutralGrey' }}
+        data-testid="TopicNav-Horizontal">
+        <Container maxWidth="xl">
           <Grid container>
             <Grid item xs={12}>
-              <List
-                data-testid="TopicNav-Horizontal-List"
-                sx={{
-                  marginLeft: 'auto',
-                  display: 'inline-flex',
-                  flexDirection: 'row',
-                  py: 2
+              <SelectMobile
+                value={topic}
+                label="topic"
+                onChange={handleChange}
+                variant="standard"
+                IconComponent={KeyboardArrowDownIcon}
+                MenuProps={{
+                  PaperProps: {
+                    sx: {
+                      'mt': 2,
+                      'backgroundColor': 'common.white',
+                      'boxShadow':
+                        'rgba(0, 0, 0, 0.2) 0 2px 4px -1px, rgba(0, 0, 0, 0.14) 0 4px 5px 0, rgba(0, 0, 0, 0.12) 0 1px 10px 0',
+
+                      '& .MuiMenuItem-root': {
+                        'py': 1.5,
+                        'px': 4,
+                        'fontSize': 15,
+                        'fontWeight': 500,
+                        'lineHeight': '18px',
+
+                        '&:hover': {
+                          backgroundColor: 'transparent'
+                        }
+                      },
+
+                      '& [class*="MuiLink-root"]': {
+                        width: '100%'
+                      },
+
+                      '& .Mui-selected': {
+                        'backgroundColor': 'transparent',
+
+                        '&.Mui-focusVisible': {
+                          backgroundColor: 'transparent'
+                        }
+                      },
+
+                      '@media (max-width: 600px)': {
+                        'ml': -2,
+                        'right': 0,
+                        'maxWidth': '100%',
+
+                        '& .MuiMenuItem-root': {
+                          pl: 5
+                        }
+                      }
+                    }
+                  }
                 }}>
+                {navItems.map((navItem) => (
+                  <MenuItem value={navItem.text} key={navItem.id as string}>
+                    <Link href={navItem.href}>{navItem.text}</Link>
+                  </MenuItem>
+                ))}
+              </SelectMobile>
+
+              <NavList data-testid="TopicNav-Horizontal-List">
                 {navItems.map((navItem) => (
                   <NavItem
                     data-testid={`TopicNav-Horizontal-List-Link-${navItem.id as string}`}
@@ -42,7 +104,7 @@ const TopicNavHorizontal = ({ navItems }: TopicNavHorizontalProps) => {
                     />
                   </NavItem>
                 ))}
-              </List>
+              </NavList>
             </Grid>
           </Grid>
         </Container>
@@ -51,38 +113,91 @@ const TopicNavHorizontal = ({ navItems }: TopicNavHorizontalProps) => {
   );
 };
 
+const SelectMobile = styled(Select, {
+  name: 'Header',
+  slot: 'SelectMobile'
+})<{}>(({ theme }) => ({
+  ...theme.typography.smallText,
+  'fontWeight': 500,
+
+  [theme.breakpoints.up('md')]: {
+    display: 'none'
+  },
+
+  '&:before': {
+    border: 0
+  },
+
+  '&:after': {
+    border: 0
+  },
+
+  '&:hover:not(.Mui-disabled):before': {
+    border: 0
+  },
+
+  '&.MuiSelect-root:hover': {
+    border: 0
+  },
+
+  '& .MuiInput-input:focus': {
+    backgroundColor: 'transparent'
+  },
+
+  '& svg': {
+    right: -1,
+    width: 20,
+    marginTop: theme.spacing(-0.25),
+    color: theme.palette.primary.main
+  }
+}));
+
+const NavList = styled(List, {
+  name: 'Header',
+  slot: 'NavList'
+})<{}>(({ theme }) => ({
+  display: 'none',
+  flexDirection: 'row',
+  marginLeft: 'auto',
+  paddingTop: theme.spacing(2),
+  paddingBottom: theme.spacing(2),
+
+  [theme.breakpoints.up('md')]: {
+    display: 'inline-flex',
+    padding: theme.spacing(1, 0)
+  }
+}));
+
 const NavItem = styled(ListItem, {
   name: 'Header',
   slot: 'NavItem',
   overridesResolver: (_, styles) => [styles.root]
 })<{}>(({ theme }) => ({
-  'padding': theme.spacing(0, 1),
-  'margin': 0,
-  'height': '100%',
   'display': 'block',
-  'fontSize': theme.typography.smallText.fontSize,
-  'fontWeight': 500,
-  'lineHeight': theme.typography.smallText.lineHeight,
+  'height': '100%',
+  'margin': 0,
+  'padding': theme.spacing(0, 1),
   'paddingBottom': 0.5,
+  ...theme.typography.smallText,
+  'fontWeight': 500,
 
-  '[class*="NavigationItem-root"]': {
-    '&:hover': {
-      backgroundColor: 'transparent'
-    }
+  '[class*="NavigationItem-root"]:hover': {
+    backgroundColor: 'transparent'
   },
 
   '.MuiLink-root': {
-    'padding': theme.spacing(1),
     'display': 'block',
+    'padding': theme.spacing(1),
+    'whiteSpace': 'nowrap',
+    'borderBottom': '2px solid transparent',
     ...theme.typography.smallText,
     'textDecoration': 'none',
-    'whiteSpace': 'nowrap',
 
     '&:hover': {
+      backgroundColor: 'transparent',
       color: theme.palette.background.integralOrange,
       textDecoration: 'none',
-      transition: 'color 0.18s ease',
-      backgroundColor: 'transparent'
+      transition: 'color 0.18s ease'
     },
 
     '&.active, &.sub-path-active': {
@@ -93,46 +208,71 @@ const NavItem = styled(ListItem, {
   },
 
   '.MuiList-root': {
-    display: 'none',
-    backgroundColor: 'transparent',
-    left: 0,
-    right: 'unset',
-    zIndex: '10000'
+    'zIndex': '10000',
+    'display': 'none',
+    'marginTop': theme.spacing(2),
+    'left': 0,
+    'right': 'unset',
+    'padding': 0,
+    'overflow': 'visible',
+    'backgroundColor': 'transparent',
+    'boxShadow': `0px ${theme.spacing(0.25)} ${theme.spacing(1)} ${alpha(theme.palette.common.black, 0.25)}`,
+
+    '&::before': {
+      content: "''",
+      position: 'absolute',
+      top: -20,
+      left: 0,
+      width: '100%',
+      height: 20,
+      backgroundColor: 'transparent'
+    }
   },
 
-  '&:hover': {
-    '&, & [class*="NavigationItem"]:hover': {
-      '.MuiList-root': {
-        'display': 'block',
-
-        '&::after': {
-          content: "''",
-          position: 'absolute',
-          left: theme.spacing(2),
-          top: 0,
-          width: 0,
-          height: 0,
-          borderStyle: 'solid',
-          borderWidth: theme.spacing(0, 1, 1, 1),
-          borderColor: `transparent transparent ${theme.palette.common.white} transparent`,
-          zIndex: '10000'
+  [theme.breakpoints.up('md')]: {
+    '&:hover': {
+      '&, & [class*="NavigationItem"]:hover': {
+        '.MuiList-root': {
+          display: 'block',
+          maxHeight: 400
         }
       }
     }
   },
 
   '.MuiMenuItem-root': {
-    'marginLeft': theme.spacing(2),
     'backgroundColor': theme.palette.common.white,
-    'boxShadow': `0px ${theme.spacing(0.25)} ${theme.spacing(1)} ${alpha(theme.palette.common.black, 0.25)}`,
+
+    '&:first-child': {
+      'position': 'relative',
+
+      '&::after': {
+        content: "''",
+        zIndex: '10000',
+        position: 'absolute',
+        left: '50%',
+        top: theme.spacing(-1.5),
+        width: 0,
+        height: 0,
+        borderStyle: 'solid',
+        borderWidth: theme.spacing(0, 1.5, 1.5, 1.5),
+        borderColor: `transparent transparent ${theme.palette.common.white} transparent`,
+        transform: 'translateX(-50%)'
+      },
+
+      '&:hover:after': {
+        borderColor: `transparent transparent ${theme.palette.midnight.A09} transparent`
+      }
+    },
 
     '&:hover': {
-      backgroundColor: theme.palette.background.neutralGrey
+      backgroundColor: theme.palette.midnight.A09
     },
 
     '.MuiLink-root': {
+      padding: theme.spacing(1.5, 2),
       color: theme.palette.text.primary,
-      padding: theme.spacing(1.5, 2)
+      fontWeight: 500
     }
   }
 }));
