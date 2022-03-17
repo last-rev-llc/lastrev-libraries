@@ -333,6 +333,8 @@ const NavItem = styled(ListItem, {
     '&, & [class*="NavigationItem"]:hover': {
       '.MuiList-root': {
         [theme.breakpoints.up('md')]: {
+          'display': 'block',
+
           '&::after': {
             content: "''",
             position: 'absolute',
