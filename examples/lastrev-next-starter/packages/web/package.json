@@ -23,6 +23,7 @@
     "@last-rev/component-library": "^0.3.6",
     "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/sitemap-generator": "^0.1.1",
+    "@last-rev/testing-library": "^0.1.5",
     "@lrns/components": "0.0.1",
     "@lrns/graphql-sdk": "^0.1.0",
     "@lrns/utils": "^0.1.0",
@@ -44,9 +45,9 @@
   },
   "devDependencies": {
     "@cypress/code-coverage": "^3.9.12",
-    "@netlify/plugin-nextjs": "^4.1.3",
     "@lrns/graphql-extensions": "0.1.0",
     "@lrns/graphql-runner": "0.1.0",
+    "@netlify/plugin-nextjs": "^4.1.3",
     "@next/bundle-analyzer": "^12.0.7",
     "@percy/cli": "^1.0.0-beta.73",
     "@percy/cypress": "^3.1.1",
