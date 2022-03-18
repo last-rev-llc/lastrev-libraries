@@ -24,14 +24,16 @@ export const createContentfulClients = (config: LastRevAppConfig) => {
     space: config.contentful.spaceId,
     accessToken: config.contentful.contentPreviewToken,
     environment: config.contentful.env,
-    host: 'preview.contentful.com'
+    host: 'preview.contentful.com',
+    resolveLinks: false
   });
 
   const contentfulProdClient = createClient({
     space: config.contentful.spaceId,
     accessToken: config.contentful.contentDeliveryToken,
     environment: config.contentful.env,
-    host: 'cdn.contentful.com'
+    host: 'cdn.contentful.com',
+    resolveLinks: false
   });
 
   return { contentfulPreviewClient, contentfulProdClient };

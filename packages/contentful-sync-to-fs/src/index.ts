@@ -132,7 +132,8 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
       : config.contentful.contentDeliveryToken,
     space: config.contentful.spaceId,
     environment: config.contentful.env,
-    host: config.contentful.usePreview ? `preview.contentful.com` : `cdn.contentful.com`
+    host: config.contentful.usePreview ? `preview.contentful.com` : `cdn.contentful.com`,
+    resolveLinks: false
   });
 
   const { items: contentTypes } = await client.getContentTypes();

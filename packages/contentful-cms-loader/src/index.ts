@@ -17,14 +17,16 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
     accessToken: config.contentful.contentDeliveryToken,
     space: config.contentful.spaceId,
     environment: config.contentful.env,
-    host: 'cdn.contentful.com'
+    host: 'cdn.contentful.com',
+    resolveLinks: false
   });
 
   const previewClient = createClient({
     accessToken: config.contentful.contentPreviewToken,
     space: config.contentful.spaceId,
     environment: config.contentful.env,
-    host: 'preview.contentful.com'
+    host: 'preview.contentful.com',
+    resolveLinks: false
   });
 
   const fetchBatchItems = async (ids: string[], command: 'getEntries' | 'getAssets', client: ContentfulClientApi) => {
