@@ -1,5 +1,11 @@
 # @last-rev/testing-library
 
+## 0.1.5
+
+### Patch Changes
+
+- 331e973: HOTFIX: Fix generatePageSpec import
+
 ## 0.1.4
 
 ### Patch Changes
