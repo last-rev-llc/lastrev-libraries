@@ -16,4 +16,4 @@ const generatePage = (path, idx, integrationPath) => {
   return path;
 };
 
-export default generatePage;
+module.exports = generatePage;
