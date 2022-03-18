@@ -1,5 +1,11 @@
 # @last-rev/testing-library
 
+## 0.1.4
+
+### Patch Changes
+
+- e718693: Fix Cypress plugin export
+
 ## 0.1.3
 
 ### Patch Changes
