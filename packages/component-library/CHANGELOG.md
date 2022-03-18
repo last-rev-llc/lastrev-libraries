@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.3.11
+
+### Patch Changes
+
+- Updated dependencies [1e4c547]
+  - @last-rev/testing-library@0.1.3
+
 ## 0.3.10
 
 ### Patch Changes

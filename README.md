@@ -4,7 +4,6 @@ This repo holds all the code for our LastRev Libraries to be used for client pro
 
 It is built using [Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/) and [Lerna](https://lerna.js.org/).
 
-
 [![Run tests](https://github.com/last-rev-llc/lastrev-libraries/actions/workflows/run-tests.yml/badge.svg)](https://github.com/last-rev-llc/lastrev-libraries/actions/workflows/run-tests.yml)
 
 ## Installation

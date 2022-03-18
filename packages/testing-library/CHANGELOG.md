@@ -1,5 +1,11 @@
 # @last-rev/testing-library
 
+## 0.1.3
+
+### Patch Changes
+
+- 1e4c547: Added Cypress generatePages plugin
+
 ## 0.1.2
 
 ### Patch Changes
