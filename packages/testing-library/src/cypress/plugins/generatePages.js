@@ -2,7 +2,7 @@
 /* eslint-disable no-param-reassign */
 const path = require('path');
 const fs = require('fs');
-const { default: generatePage } = require('./utils/generatePageSpec');
+const generatePageSpec = require('./utils/generatePageSpec');
 
 function getAllFiles(dirPath, arrayOfFiles, filter) {
   const files = fs.readdirSync(dirPath);
@@ -41,7 +41,7 @@ const generatePages = async ({ nextPagesPath, fixturePagesPath, integrationPath 
     console.debug({ PAGES });
   }
 
-  PAGES.map((chunk, idx) => generatePage(chunk, idx, integrationPath));
+  PAGES.map((chunk, idx) => generatePageSpec(chunk, idx, integrationPath));
 };
 
 module.exports = generatePages;
