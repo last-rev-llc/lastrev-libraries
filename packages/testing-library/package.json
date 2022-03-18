@@ -10,5 +10,9 @@
   "dependencies": {
     "ts-jest": "^26.5.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "dotenv": "^16.0.0",
+    "fs-extra": "^10.0.1",
+    "handlebars": "^4.7.7"
+  }
 }
