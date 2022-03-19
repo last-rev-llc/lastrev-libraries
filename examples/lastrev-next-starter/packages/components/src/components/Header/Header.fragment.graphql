@@ -1,0 +1,12 @@
+fragment Header_BaseFragment on Header {
+  ...Content_BaseFragment
+  logo {
+    ...Media_BaseFragment
+  }
+  logoUrl
+  navigationItems {
+    ...Collection_BaseFragment
+  }
+  colorScheme
+  variant
+}

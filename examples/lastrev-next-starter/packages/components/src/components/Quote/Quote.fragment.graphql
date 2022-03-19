@@ -1,0 +1,10 @@
+fragment Quote_BaseFragment on Quote {
+  ...Content_BaseFragment
+  variant
+  quote
+  authorName
+  authorTitle
+  image {
+    ...Media_BaseFragment
+  }
+}
