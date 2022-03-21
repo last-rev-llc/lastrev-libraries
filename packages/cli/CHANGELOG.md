@@ -1,5 +1,14 @@
 # @last-rev/cli
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [25375f1]
+  - @last-rev/contentful-fragment-gen@0.2.0
+  - @last-rev/contentful-sync-to-fs@0.2.0
+  - @last-rev/graphql-contentful-core@0.2.0
+
 ## 0.2.0
 
 ### Minor Changes

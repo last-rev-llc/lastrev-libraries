@@ -1,5 +1,11 @@
 # @last-rev/contentful-cms-loader
 
+## 0.2.0
+
+### Minor Changes
+
+- 25375f1: Added resolveLinks:false to all contentful createClient calls in the framework
+
 ## 0.1.7
 
 ### Patch Changes

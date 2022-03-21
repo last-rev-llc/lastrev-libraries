@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "bin": {
     "last-rev": "bin/last-rev"
@@ -39,11 +39,11 @@
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
     "@last-rev/app-config": "^0.1.5",
-    "@last-rev/contentful-fragment-gen": "^0.1.4",
+    "@last-rev/contentful-fragment-gen": "^0.2.0",
     "@last-rev/contentful-import-export": "^0.1.3",
     "@last-rev/contentful-s3-sync": "^0.1.2",
-    "@last-rev/contentful-sync-to-fs": "^0.1.11",
-    "@last-rev/graphql-contentful-core": "^0.1.35",
+    "@last-rev/contentful-sync-to-fs": "^0.2.0",
+    "@last-rev/graphql-contentful-core": "^0.2.0",
     "@last-rev/testing-library": "^0.1.2",
     "@octokit/rest": "^18.6.2",
     "@types/inquirer": "^7.3.2",
