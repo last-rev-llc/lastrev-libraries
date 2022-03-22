@@ -1,23 +1,23 @@
 name: Run Next Starter Example page tests and build
 
-on: 
+on:
   push:
-    branches:    
-          - 'main'
+    branches:
+      - 'main'
     paths:
       - 'examples/lastrev-next-starter/**'
   pull_request:
-    branches-ignore:    
+    branches-ignore:
       - 'dependabot/**'
     paths:
-      - 'examples/lastrev-next-starter/**'  
+      - 'examples/lastrev-next-starter/**'
 
 jobs:
   test:
     if: github.actor != 'dependabot'
     runs-on: ubuntu-latest
     # Use default to set working-directory for whole job
-    defaults: 
+    defaults:
       run:
         working-directory: ./examples/lastrev-next-starter
     env:
@@ -51,10 +51,10 @@ jobs:
         id: turbo-cache
         uses: actions/cache@v2
         with:
-          path: node_modules/.cache/turbo
+          path: ./examples/lastrev-next-starter/node_modules/.cache/turbo
           key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
           restore-keys: |
-            turbo-${{ github.job }}-${{ github.ref_name }}-            
+            turbo-${{ github.job }}-${{ github.ref_name }}-
 
       - name: Install project dependencies
         run: yarn --prefer-offline
