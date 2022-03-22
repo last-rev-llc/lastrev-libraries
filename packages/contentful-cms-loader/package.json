@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-cms-loader",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {

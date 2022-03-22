@@ -1,5 +1,12 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.13
+
+### Patch Changes
+
+- Updated dependencies [25375f1]
+  - @last-rev/graphql-contentful-core@0.2.0
+
 ## 0.0.12
 
 ### Patch Changes

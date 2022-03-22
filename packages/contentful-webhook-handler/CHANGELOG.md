@@ -1,5 +1,16 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.2.0
+
+### Minor Changes
+
+- 25375f1: Added resolveLinks:false to all contentful createClient calls in the framework
+
+### Patch Changes
+
+- Updated dependencies [25375f1]
+  - @last-rev/graphql-contentful-helpers@0.2.0
+
 ## 0.1.12
 
 ### Patch Changes

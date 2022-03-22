@@ -1,5 +1,18 @@
 # @last-rev/graphql-contentful-core
 
+## 0.2.0
+
+### Minor Changes
+
+- 25375f1: Added resolveLinks:false to all contentful createClient calls in the framework
+
+### Patch Changes
+
+- Updated dependencies [25375f1]
+  - @last-rev/contentful-cms-loader@0.2.0
+  - @last-rev/graphql-contentful-helpers@0.2.0
+  - @last-rev/graphql-schema-gen@0.2.0
+
 ## 0.1.35
 
 ### Patch Changes

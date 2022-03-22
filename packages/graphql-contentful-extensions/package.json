@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/graphql-contentful-extensions",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
-    "@last-rev/graphql-contentful-core": "^0.1.34",
+    "@last-rev/graphql-contentful-core": "^0.2.0",
     "@last-rev/rollup-config": "^0.1.2",
     "@last-rev/types": "^0.1.7",
     "contentful": "^8.4.2",

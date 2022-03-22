@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.3.14
+
+### Patch Changes
+
+- 63990ac: removed log in Header component
+
 ## 0.3.13
 
 ### Patch Changes
