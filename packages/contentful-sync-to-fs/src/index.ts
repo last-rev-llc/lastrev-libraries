@@ -4,8 +4,8 @@ import map from 'lodash/map';
 import groupBy from 'lodash/fp/groupBy';
 import mapValues from 'lodash/fp/mapValues';
 import { join } from 'path';
-import { ensureDir, writeFile, createFile } from 'fs-extra';
-import { Asset, Entry, createClient, ContentfulClientApi, ContentType } from 'contentful';
+import { readFile, ensureDir, writeFile, createFile } from 'fs-extra';
+import { Asset, Entry, createClient, ContentfulClientApi, ContentType, SyncCollection } from 'contentful';
 import Timer from '@last-rev/timer';
 import logger from 'loglevel';
 import LastRevAppConfig from '@last-rev/app-config';
@@ -16,6 +16,7 @@ const ENTRIES_DIRNAME = 'entries';
 const ASSETS_DIRNAME = 'assets';
 const CONTENT_TYPES_DIRNAME = 'content_types';
 const CONTENT_TYPE_ENTRIES_DIRNAME = 'entry_ids_by_content_type';
+const SYNC_TOKEN_DIRNAME = '';
 
 const delay = (m: number) => new Promise((r) => setTimeout(r, m));
 
@@ -25,6 +26,10 @@ export type SlugToIdLookup = {
 
 export type ContentTypeIdToContentIdsLookup = {
   [contentTypeId: string]: string[];
+};
+
+export type ContentTypeIdToSyncTokensLookup = {
+  [contentTypeId: string]: string;
 };
 
 const groupByContentTypeAndMapToIds = flow(
@@ -50,6 +55,29 @@ const writeContentfulItems = async (
       })()
     )
   );
+};
+
+const writeContentfulSyncTokens = async (
+  syncTokens: ContentTypeIdToSyncTokensLookup,
+  root: string,
+  dirname: string
+): Promise<void> => {
+  const dir = join(root, dirname);
+  await ensureDir(dir);
+
+  await writeFile(join(dir, `sync_tokens.json`), JSON.stringify(syncTokens));
+};
+
+const readContentfulSyncTokens = async (root: string, dirname: string): Promise<ContentTypeIdToSyncTokensLookup> => {
+  try {
+    const filename = join(root, dirname, `sync_tokens.json`);
+    logger.info('Using sync tokens from:', filename);
+    const syncTokens = JSON.parse(await readFile(filename, 'utf-8'));
+
+    return syncTokens;
+  } catch (error) {
+    return {};
+  }
 };
 
 const writeEntriesByContentTypeFiles = async (lookup: ContentTypeIdToContentIdsLookup, root: string): Promise<void> => {
@@ -81,39 +109,46 @@ const validateArg = (arg: any, argname: string) => {
 
 const syncAllEntriesForContentType = async (
   client: ContentfulClientApi,
-  contentTypeId: string
-): Promise<Entry<any>[]> => {
-  return (
-    await client.sync({
-      initial: true,
-      content_type: contentTypeId,
-      resolveLinks: false
-    })
-  ).entries;
+  contentTypeId: string,
+  nextSyncToken?: string
+): Promise<SyncCollection> => {
+  const result = await client.sync({
+    initial: !nextSyncToken,
+    content_type: contentTypeId,
+    resolveLinks: false,
+    nextSyncToken
+  });
+
+  return result;
 };
 
-const syncAllAssets = async (client: ContentfulClientApi): Promise<Asset[]> => {
-  return (
-    await client.sync({
-      initial: true,
-      resolveLinks: false,
-      type: 'Asset'
-    })
-  ).assets;
+const syncAllAssets = async (client: ContentfulClientApi, nextSyncToken?: string): Promise<SyncCollection> => {
+  return await client.sync({
+    initial: !nextSyncToken,
+    resolveLinks: false,
+    nextSyncToken,
+    type: 'Asset'
+  });
 };
 
-const syncAllEntries = async (client: ContentfulClientApi, contentTypes: ContentType[]): Promise<Entry<any>[]> => {
-  return flatten(
-    await Promise.all(
-      contentTypes.map((contentType, index) =>
-        (async () => {
-          const {
-            sys: { id: contentTypeId }
-          } = contentType;
+const syncAllEntries = async (
+  client: ContentfulClientApi,
+  contentTypes: ContentType[],
+  syncTokens: ContentTypeIdToSyncTokensLookup
+): Promise<SyncCollection[]> => {
+  return Promise.all(
+    contentTypes.map((contentType, index) =>
+      (async () => {
+        const {
+          sys: { id: contentTypeId }
+        } = contentType;
+
+        if (!syncTokens[contentTypeId]) {
           await delay(index * 100);
-          return await syncAllEntriesForContentType(client, contentTypeId);
-        })()
-      )
+        }
+
+        return syncAllEntriesForContentType(client, contentTypeId, syncTokens[contentTypeId]);
+      })()
     )
   );
 };
@@ -135,14 +170,7 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
     host: config.contentful.usePreview ? `preview.contentful.com` : `cdn.contentful.com`,
     resolveLinks: false
   });
-
   const { items: contentTypes } = await client.getContentTypes();
-
-  let timer = new Timer(`fetched entries and assets`);
-  const [entries, assets] = await Promise.all([syncAllEntries(client, contentTypes), syncAllAssets(client)]);
-  logger.trace(timer.end());
-
-  const entryIdsByContentTypeLookup = groupByContentTypeAndMapToIds(entries);
 
   const root = join(
     config.fs.contentDir,
@@ -151,12 +179,33 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
     config.contentful.usePreview ? 'preview' : 'production'
   );
 
+  let timer = new Timer(`fetched entries and assets`);
+  const syncTokens = await readContentfulSyncTokens(root, SYNC_TOKEN_DIRNAME);
+  const [entriesResults, assetsResult] = await Promise.all([
+    syncAllEntries(client, contentTypes, syncTokens),
+    syncAllAssets(client, syncTokens['asset'])
+  ]);
+  logger.trace(timer.end());
+
+  const entries = flatten(entriesResults.map((result) => result.entries));
+  const assets = assetsResult.assets;
+  const entryIdsByContentTypeLookup = groupByContentTypeAndMapToIds(entries);
+  const nextSyncTokens: ContentTypeIdToSyncTokensLookup = contentTypes.reduce(
+    (accum, contentType, idx) => ({
+      ...accum,
+      [contentType?.sys?.id]: entriesResults[idx]?.nextSyncToken
+    }),
+    {}
+  );
+  nextSyncTokens['asset'] = assetsResult.nextSyncToken;
+
   timer = new Timer('wrote content files');
   await Promise.all([
     writeContentfulItems(entries, root, ENTRIES_DIRNAME),
     writeContentfulItems(assets, root, ASSETS_DIRNAME),
     writeContentfulItems(contentTypes, root, CONTENT_TYPES_DIRNAME),
-    writeEntriesByContentTypeFiles(entryIdsByContentTypeLookup, root)
+    writeEntriesByContentTypeFiles(entryIdsByContentTypeLookup, root),
+    writeContentfulSyncTokens(nextSyncTokens, root, SYNC_TOKEN_DIRNAME)
   ]);
   logger.trace(timer.end());
 
