@@ -1,5 +1,11 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.0
+
+### Minor Changes
+
+- 93453e8: Add support for sync tokens
+
 ## 0.2.0
 
 ### Minor Changes

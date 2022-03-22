@@ -1,5 +1,12 @@
 # @last-rev/cli
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [93453e8]
+  - @last-rev/contentful-sync-to-fs@0.3.0
+
 ## 0.2.1
 
 ### Patch Changes
