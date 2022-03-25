@@ -51,7 +51,10 @@ export const Header = ({
     setOpen(open);
   };
 
-  const showSearchForm = global.location?.pathname !== '/' && global.location?.pathname !== '/search/';
+  const showSearchForm =
+    global.location?.pathname !== '/' &&
+    global.location?.pathname !== '/search/' &&
+    !global.location?.search.includes('?query=');
 
   return (
     <ErrorBoundary>
@@ -149,7 +152,7 @@ export const Header = ({
                     }
                   }
                 }}>
-                <AutocompleteBox settings={{ placeholder: 'Search our knowledge base' }} />
+                <AutocompleteBox settings={{ placeholder: 'Search our knowledge base', searchResultsUrl: '/search' }} />
               </Box>
             )}
 
