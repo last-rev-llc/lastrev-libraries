@@ -12,5 +12,11 @@ export const mappers: any = {
       // NOTE: if needed, this can be modified based on conditions (eg. variant)
       controls: () => true
     }
+  },
+  Asset: {
+    Asset: {
+      width: async (media: any) => media?.details?.image?.width,
+      height: async (media: any) => media?.details?.image?.height
+    }
   }
 };

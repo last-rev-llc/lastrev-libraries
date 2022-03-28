@@ -109,6 +109,8 @@ const RichTextFragment = gql`
       url
       extension
       fileName
+      width
+      height
     }
   }
 

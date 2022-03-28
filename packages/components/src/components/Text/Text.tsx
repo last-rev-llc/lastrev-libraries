@@ -1,6 +1,7 @@
 import React from 'react';
 import keyBy from 'lodash/keyBy';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+import Box from '@mui/material/Box';
 import TableContainer from '@mui/material/TableContainer';
 import Table from '@mui/material/Table';
 import TableHead from '@mui/material/TableHead';
@@ -102,6 +103,22 @@ const renderNodeOptions = ({ links }: { links?: any }) => {
     },
     [BLOCKS.TABLE_CELL]: (_: any, children: any) => {
       return <TableCell>{children}</TableCell>;
+    },
+    [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
+      const id: string = node?.data?.target?.sys?.id;
+      const entry = assets[id];
+
+      return (
+        <Box textAlign="center">
+          <Media
+            {...entry}
+            sx={{
+              maxWidth: entry?.file?.width ? `${entry.file.width}px` : 'none'
+            }}
+            testId={`Text-${BLOCKS.EMBEDDED_ASSET}`}
+          />
+        </Box>
+      );
     }
   };
 };
