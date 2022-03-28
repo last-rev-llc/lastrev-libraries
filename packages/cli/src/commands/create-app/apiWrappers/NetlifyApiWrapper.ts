@@ -3,12 +3,11 @@ import NetlifyApi from 'netlify';
 import BaseApiWrapper from './BaseApiWrapper';
 import ora from 'ora';
 import LastRevConfig, {
-  VAL_NETLIFY_SITE_NAME,
-  VAL_NETLIFY_ACCOUNT_SLUG,
-  VAL_NETLIFY_SITE,
   VAL_GITHUB_REPO,
   VAL_NETLIFY_DEPLOY_KEY,
-  VAL_ENV_VARS
+  VAL_ENV_VARS,
+  VAL_NETLIFY_SITE,
+  VAL_NETLIFY_BUILD_HOOK
 } from '../LastRevConfig';
 import chalk from 'chalk';
 import Messager from '../Messager';
@@ -63,10 +62,8 @@ export default class NetlifyApiWrapper extends BaseApiWrapper {
     return await this.pollForToken(ticket);
   }
 
-  async createSiteInTeam(): Promise<{ shouldRerun: boolean }> {
+  async createSiteInTeam(siteName: string | undefined, accountSlug: string, type: string): Promise<void> {
     await this.ensureLoggedIn();
-    const siteName = this.config.getStateValue(VAL_NETLIFY_SITE_NAME);
-    const accountSlug = this.config.getStateValue(VAL_NETLIFY_ACCOUNT_SLUG);
     try {
       const site = await this.api.createSiteInTeam({
         accountSlug,
@@ -74,21 +71,24 @@ export default class NetlifyApiWrapper extends BaseApiWrapper {
           name: siteName
         }
       });
-      this.config.updateStateValue(VAL_NETLIFY_SITE, site);
+      this.config.updateStateValue(`${VAL_NETLIFY_SITE}-${type}`, site);
 
-      messager.log(chalk.greenBright.bold.underline(`Netlify Site Created`));
+      messager.log(chalk.greenBright.bold.underline(`Netlify ${type} site created`));
 
-      messager.delayed(`You can administer your netlify site at: ${site.admin_url}`);
-      messager.delayed(`You can view your published website, once deployed, at: ${site.ssl_url || site.url}`);
-
-      return { shouldRerun: false };
+      messager.delayed(`You can administer your netlify ${type} site at: ${site.admin_url}`);
+      messager.delayed(`You can view your published ${type} website, once deployed, at: ${site.ssl_url || site.url}`);
     } catch (error: any) {
       if (error.status === 422) {
-        messager.log(`${siteName}.netlify.app already exists. Please try a different slug.`);
-        this.config.updateStateValue(VAL_NETLIFY_SITE_NAME, undefined);
-        return { shouldRerun: true };
+        if (siteName) {
+          messager.log(`${siteName}.netlify.app already exists. Generating a random name...`);
+          await this.createSiteInTeam(undefined, accountSlug, type);
+        } else {
+          throw Error(
+            `Unable to create ${type} site. Please create it manually and alert the LastRev team about this issue.`
+          );
+        }
       } else {
-        throw Error(`Netlify createSiteInTeam error: ${error.status}: ${error.message}`);
+        throw Error(`Netlify createSiteInTeam ${type} error: ${error.status}: ${error.message}`);
       }
     }
   }
@@ -106,9 +106,10 @@ export default class NetlifyApiWrapper extends BaseApiWrapper {
     }
   }
 
-  async createHookBySiteId(event: string, githubToken: string): Promise<void> {
+  async createHookBySiteId(event: string, githubToken: string, type: string): Promise<void> {
     await this.ensureLoggedIn();
-    const siteId = this.config.getStateValue(`${VAL_NETLIFY_SITE}.id`);
+    const siteKey = `${VAL_NETLIFY_SITE}-${type}`;
+    const siteId = this.config.getStateValue(`${siteKey}.id`);
     try {
       await this.api.createHookBySiteId({
         site_id: siteId,
@@ -121,16 +122,19 @@ export default class NetlifyApiWrapper extends BaseApiWrapper {
         }
       });
     } catch (err: any) {
-      throw Error(`Netlify createHookBySiteId error: ${err.status}: ${err.message} - event ${err.event}`);
+      throw Error(
+        `Netlify createHookBySiteId error for ${type} site : ${err.status}: ${err.message} - event ${err.event}`
+      );
     }
   }
 
-  async updateSiteWithRepo() {
+  async updateSiteWithRepo(type: string) {
     await this.ensureLoggedIn();
-    const spinner = ora('Updating Netlify site with Github repository').start();
+    const siteKey = `${VAL_NETLIFY_SITE}-${type}`;
+    const spinner = ora(`Updating Netlify ${type} site with Github repository`).start();
     const githubRepo = this.config.getStateValue(VAL_GITHUB_REPO);
     const deployKey = this.config.getStateValue(VAL_NETLIFY_DEPLOY_KEY);
-    const siteId = this.config.getStateValue(`${VAL_NETLIFY_SITE}.id`);
+    const siteId = this.config.getStateValue(`${siteKey}.id`);
 
     try {
       const updatedSite = await this.api.updateSite({
@@ -143,18 +147,18 @@ export default class NetlifyApiWrapper extends BaseApiWrapper {
             repo_branch: githubRepo.default_branch,
             allowed_branches: [githubRepo.default_branch],
             deploy_key_id: deployKey.id,
-            base: '.',
-            dir: './packages/web',
+            base: type === 'storybook' ? './packages/components' : '.',
+            dir: type === 'storybook' ? './packages/components' : './packages/web',
             functions_dir: './packages/functions/src'
           }
         }
       });
 
-      this.config.updateStateValue(VAL_NETLIFY_SITE, updatedSite);
+      this.config.updateStateValue(siteKey, updatedSite);
       spinner.succeed();
     } catch (error: any) {
       spinner.fail();
-      const message = `Netlify updateSiteWithRepo error: ${error.status}, ${error.message}`;
+      const message = `Netlify updateSiteWithRepo for ${type} site error: ${error.status}, ${error.message}`;
       throw Error(message);
     }
   }
@@ -168,15 +172,43 @@ export default class NetlifyApiWrapper extends BaseApiWrapper {
     }
   }
 
-  async updateSiteWithEnvVars(): Promise<void> {
+  async userHasAccountAccess(accountSlug: string): Promise<boolean> {
+    await this.ensureLoggedIn();
+    const accounts = await this.api.listAccountsForUser();
+    return accounts.some((account: any) => account.slug === accountSlug);
+  }
+
+  async addBuildHookForSite(type: string): Promise<void> {
+    await this.ensureLoggedIn();
+    try {
+      const siteKey = `${VAL_NETLIFY_SITE}-${type}`;
+      const siteId = this.config.getStateValue(`${siteKey}.id`);
+      const { url } = await this.api.createSiteBuildHook({
+        siteId: siteId,
+        body: {
+          name: 'Contentful Build Hook',
+          branch: 'main'
+        }
+      });
+
+      this.config.updateStateValue(`${VAL_NETLIFY_BUILD_HOOK}-${type}`, url);
+    } catch (err: any) {
+      throw Error(`Netlify addBuildHookForSite ${type} error: ${err.message}`);
+    }
+  }
+
+  async updateSiteWithEnvVars(type: string): Promise<void> {
     await this.ensureLoggedIn();
 
-    const spinner = ora('Updating Netlify build environment variables').start();
+    const siteKey = `${VAL_NETLIFY_SITE}-${type}`;
+
+    const spinner = ora(`Updating Netlify ${type} build environment variables`).start();
 
     const envVars = this.config.getStateValue(VAL_ENV_VARS);
 
     try {
-      const siteId = this.config.getStateValue(`${VAL_NETLIFY_SITE}.id`);
+      const site = this.config.getStateValue(`${siteKey}`);
+      const siteId = site.id;
 
       const siteResult = await this.api.updateSite({
         siteId,
@@ -184,13 +216,24 @@ export default class NetlifyApiWrapper extends BaseApiWrapper {
           build_settings: {
             env: {
               ...envVars,
-              LOG_LEVEL: 'info'
+              LOG_LEVEL: type === 'prod' ? 'error' : 'info',
+              NEXT_PUBLIC_CONTENTFUL_SPACE_ID: envVars.CONTENTFUL_SPACE_ID,
+              NEXT_PUBLIC_CONTENTFUL_ENV: envVars.CONTENTFUL_ENV,
+              GRAPHQL_SERVER_URL: '/.netlify/functions/graphql',
+              DOMAIN: site.ssl_url || site.url,
+              YARN_FLAGS: '--prefer-offline',
+              ...(type !== 'prod'
+                ? {
+                    PAGES_REVALIDATE: '60',
+                    CONTENTFUL_USE_PREVIEW: 'true'
+                  }
+                : {})
             }
           }
         }
       });
 
-      this.config.updateStateValue(VAL_NETLIFY_SITE, siteResult);
+      this.config.updateStateValue(siteKey, siteResult);
       spinner.succeed();
     } catch (err: any) {
       spinner.fail();

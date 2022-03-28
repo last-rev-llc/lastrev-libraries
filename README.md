@@ -96,6 +96,4 @@ During the update process the following steps are taken:
 
 Even if there are no conflicts the user needs to manually review the changed files to ensure that all changes look good.
 
-> **As a final step remember to search and replace `@lrns/` with `@<app_name>/` globally in the project.**
-
 _For more details about migrating and breaking changes take a look at the [starter changelog](examples/lastrev-next-starter/CHANGELOG.md)_

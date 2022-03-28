@@ -10,6 +10,7 @@ declare module 'netlify' {
     updateSite(args: any): Promise<any>;
     listHooksBySiteId(args: any): Promise<any[]>;
     createHookBySiteId(args: any): Promise<any>;
+    createSiteBuildHook(args: any): Promise<any>;
   }
 
   export = NetlifyApi;
