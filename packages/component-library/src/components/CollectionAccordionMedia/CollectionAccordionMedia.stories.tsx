@@ -4,7 +4,7 @@ import CollectionAccordionMedia from './CollectionAccordionMedia';
 import mockContent from './CollectionAccordionMedia.mock';
 
 export default {
-  title: '1. Components / CollectionAccordionMedia',
+  title: 'Components / CollectionAccordionMedia',
   component: CollectionAccordionMedia,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

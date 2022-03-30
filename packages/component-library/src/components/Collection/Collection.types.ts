@@ -5,11 +5,11 @@ import { CardProps } from '../Card';
 import { NavigationItemProps } from '../NavigationItem';
 
 export interface CollectionProps {
+  variant?: string;
   id: string;
   __typename?: string;
   items?: CardProps[] | NavigationItemProps[];
   background?: MediaProps;
-  variant?: string;
   introText?: TextProps;
   itemsVariant?: string;
   itemsSpacing?: number;

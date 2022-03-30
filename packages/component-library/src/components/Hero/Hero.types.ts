@@ -7,6 +7,7 @@ import { RichText } from '../Text';
 type Color = keyof Palette;
 
 export interface HeroProps {
+  variant?: any;
   id: string;
   __typename?: string;
   overline?: string;
@@ -23,7 +24,6 @@ export interface HeroProps {
   backgroundColor?: Color | 'white' | 'black';
   contentWidth?: false | Breakpoint | undefined;
   contentHeight?: 'sm' | 'md' | 'lg' | 'xl';
-  variant?: any;
   theme?: any;
   styles?: {
     root?: SystemCssProperties;

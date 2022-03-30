@@ -19,16 +19,15 @@ import sidekick from '../../utils/sidekick';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import { CardProps } from './Card.types';
 
-
 export const Card = ({
-  media,
+  variant,
   title,
   subtitle,
+  media,
   body,
   link,
   tags,
   actions,
-  variant,
   loading,
   sidekickLookup,
   ...props

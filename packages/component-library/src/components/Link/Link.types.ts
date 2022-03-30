@@ -16,6 +16,7 @@ export interface NextLinkComposedProps {
 }
 
 export type LinkProps = {
+  variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
   id?: string;
   __typename?: string;
   activeClassName?: string;
@@ -24,7 +25,6 @@ export type LinkProps = {
   href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
   role?: React.AriaRole;
-  variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
   icon?: string;
   iconPosition?: string;
   children?: any;

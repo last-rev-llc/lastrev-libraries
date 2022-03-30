@@ -4,7 +4,7 @@ import CollectionFiltered from './CollectionFiltered';
 import CollectionFilteredMock from './CollectionFiltered.mock';
 
 export default {
-  title: '1. Components / CollectionFiltered',
+  title: 'Components / CollectionFiltered',
   component: CollectionFiltered,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

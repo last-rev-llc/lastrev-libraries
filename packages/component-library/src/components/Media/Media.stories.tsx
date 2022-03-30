@@ -4,7 +4,7 @@ import Media from './Media';
 import { mediaMock, mediaVideoMock, responsiveMediaMock, SVGMediaMock, ExternalSVGMediaMock } from './Media.mock';
 
 export default {
-  title: '1. Components / Media',
+  title: 'Components / Media',
   component: Media,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

@@ -33,6 +33,7 @@ export interface UseDynamicItemsInterface {
 
 export interface CollectionFilteredProps {
   id: string;
+  variant?: string;
   items?: CardProps[];
   settings?: Settings;
   options?: Options;
@@ -40,7 +41,6 @@ export interface CollectionFilteredProps {
   fetchItems?: (filter: any) => Promise<{ items?: CardProps[]; options?: Options; allOptions?: Options } | null>;
   onClearFilter?: () => void;
   background?: MediaProps;
-  variant?: string;
   itemsVariant?: string;
   itemsSpacing?: number | null;
   theme?: any;

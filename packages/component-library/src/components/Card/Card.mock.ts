@@ -20,7 +20,21 @@ export default (): CardProps => ({
   sidekickLookup: {}
 });
 
-export const cardWithTags: any = {
+export const baseMock = (): CardProps => ({
+  variant: 'default',
+  __typename: 'Card',
+  title: 'This is a card title',
+  subtitle: 'And this is the subtitle',
+  body: staticRichTextMock(),
+  media: {
+    file: {
+      url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
+    },
+    title: lorem.sentence()
+  }
+});
+
+export const cardWithTags = (): CardProps => ({
   __typename: 'Card',
   media: {
     file: {
@@ -34,4 +48,4 @@ export const cardWithTags: any = {
   tags: [{ ...mockLink(), text: 'Tag 1' }, { ...mockLink(), text: 'Tag 2' }, { text: 'Tag 3 - Not clickable' }],
   actions: [{ ...mockLink(), text: 'Card link' }],
   sidekickLookup: {}
-};
+});

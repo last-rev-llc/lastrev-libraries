@@ -7,7 +7,7 @@ import SEO from './SEO';
 import mockContent from './SEO.mock';
 
 export default {
-  title: '1. Components / SEO',
+  title: 'Components / SEO',
   component: SEO,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

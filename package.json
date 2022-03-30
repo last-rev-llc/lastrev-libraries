@@ -19,6 +19,7 @@
     "release": "yarn build && changeset publish",
     "start": "lerna run start",
     "storybook": "lerna run storybook",
+    "build-storybook-docs": "lerna run storybook --docs",
     "test:watch": "turbo run test:watch",
     "test": "turbo run test:e2e test",
     "posttest": "yarn combine:reports",

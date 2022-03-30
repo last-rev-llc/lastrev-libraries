@@ -4,9 +4,9 @@ import { CardProps } from '../Card';
 import { Breakpoint } from '@mui/material';
 
 export interface CollectionCarouselProps {
+  variant: string;
   items?: CardProps[];
   background?: MediaProps;
-  variant: string;
   itemsVariant?: string;
   itemsWidth?: false | Breakpoint | undefined;
   theme?: any;

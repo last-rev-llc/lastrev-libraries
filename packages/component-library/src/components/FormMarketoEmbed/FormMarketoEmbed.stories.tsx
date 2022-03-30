@@ -5,7 +5,7 @@ import { FormMarketoEmbedProps } from './FormMarketoEmbed.types';
 import formMarketoEmbedMock from './FormMarketoEmbed.mock';
 
 export default {
-  title: '1. Components / FormMarketoEmbed',
+  title: 'Components / FormMarketoEmbed',
   component: FormMarketoEmbed,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

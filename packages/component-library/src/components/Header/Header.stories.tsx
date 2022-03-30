@@ -4,7 +4,7 @@ import Header from './Header';
 import headerMock from './Header.mock';
 
 export default {
-  title: '1. Components / Header',
+  title: 'Components / Header',
   component: Header,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

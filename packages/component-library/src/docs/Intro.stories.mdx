@@ -1,11 +1,13 @@
-import { Meta } from '@storybook/addon-docs';
+import { Meta, Canvas, Story, ColorPalette, ColorItem } from '@storybook/addon-docs';
 import { linkTo } from '@storybook/addon-links';
 
-<Meta title="Intro"
+<Meta
+  title="Design System"
   parameters={{
     previewTabs: {
-      'storybook/docs/panel': { hidden: true },
+      'storybook/docs/panel': { hidden: true }
     },
+    viewMode: 'docs',
     options: { isToolshown: false }
   }}
 />
@@ -17,12 +19,12 @@ import { linkTo } from '@storybook/addon-links';
   .header {
     display: flex;
     align-content: center;
+    margin-bottom: 40px;
   }
   .pad {
     padding: 10px 0 0 30px;
   }
 `}</style>
-
 
 <div className="header">
   <div>
@@ -30,8 +32,138 @@ import { linkTo } from '@storybook/addon-links';
   </div>
   <div className="pad">
 
-  # LR Component Library
+# LR Component Library
 
-  The definitive source for building UI
+The definitive source for building UI
+
   </div>
 </div>
+
+# Typography
+
+<Story id="components-text--base" />
+
+# Palette
+
+<ColorPalette>
+  <ColorItem
+    title="theme.palette.primary"
+    subtitle="The primary color of the app, used as base color for various elements."
+    colors={{
+      main: '#fee501',
+      light: '#ffff55',
+      dark: '#c6b300',
+      contrastText: 'black'
+    }}
+  />
+  <ColorItem
+    title="theme.palette.secondary"
+    subtitle="The secondary color of the app, used in accenting various elements."
+    colors={{
+      main: '#005C7A',
+      light: '#4689a9',
+      dark: '#00334e',
+      contrastText: 'white'
+    }}
+  />
+
+  <ColorItem
+    title="theme.palette.text"
+    subtitle="The text color of the app."
+    colors={{
+      primary: '#00030B',
+      secondary: '#E5E5E5',
+      disabled: 'rgba(0, 0, 0, 0.38)'
+    }}
+  />
+  <ColorItem
+    title="theme.palette.error"
+    subtitle="The error color of the app."
+    colors={{
+      main: '#ff1744',
+      light: 'rgb(255, 69, 105)',
+      dark: 'rgb(178, 16, 47)',
+      contrastText: '#fff'
+    }}
+  />
+  <ColorItem
+    title="theme.palette.common"
+    subtitle="The common color of the app."
+    colors={{
+      black: '#00030B',
+      white: '#FFFFFF'
+    }}
+  />
+  <ColorItem
+    title="theme.palette.warning"
+    subtitle="The warning color of the app."
+    colors={{
+      main: '#ed6c02',
+      light: '#ff9800',
+      dark: '#e65100',
+      contrastText: '#fff'
+    }}
+  />
+  <ColorItem
+    title="theme.palette.info"
+    subtitle="The info color of the app."
+    colors={{
+      main: '#0288d1',
+      light: '#03a9f4',
+      dark: '#01579b',
+      contrastText: '#fff'
+    }}
+  />
+  <ColorItem
+    title="theme.palette.success"
+    subtitle="The success color of the app."
+    colors={{
+      main: '#2e7d32',
+      light: '#4caf50',
+      dark: '#1b5e20',
+      contrastText: '#fff'
+    }}
+  />
+</ColorPalette>
+
+# Components
+
+## Text
+
+### Complex
+
+<Story id="components-text--complex" />
+
+[Go to text documentation](?path=/docs/components-text--base)
+
+## Link
+
+**Default**
+
+<Story id="components-link--default" />
+
+**Button Contained**
+
+<Story id="components-link--button-contained" />
+
+**Button Outlined**
+
+<Story id="components-link--button-outlined" />
+
+**Button Text**
+
+<Story id="components-link--button-text" />
+
+**Link**
+
+<Story id="components-link--link-text" />
+
+[Go to link documentation](?path=/docs/components-link--default)
+
+## Cards
+
+### Base
+
+<Story name="BASE" id="components-card--base" />
+
+[Go to cards documentation](?path=/docs/components-card--base)

@@ -1,10 +1,10 @@
 import { AccordionProps } from '../Accordion';
 
 export interface CollectionAccordionProps {
-  items?: AccordionProps[];
   variant?: string;
   itemSpacing?: number;
   itemsVariant?: string;
+  items?: AccordionProps[];
   theme?: any;
   sidekickLookup?: any;
 }

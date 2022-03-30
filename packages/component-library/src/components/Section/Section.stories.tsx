@@ -7,7 +7,7 @@ import { singlePanelMock, splitPanelMock } from './Section.mock';
 import mockTheme from '../../theme/mock.theme';
 
 export default {
-  title: '1. Components / Section',
+  title: 'Components / Section',
   component: Section,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

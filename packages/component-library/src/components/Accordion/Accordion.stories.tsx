@@ -4,7 +4,7 @@ import Accordion from './Accordion';
 import mockContent from './Accordion.mock';
 
 export default {
-  title: '1. Components / Accordion',
+  title: 'Components / Accordion',
   component: Accordion,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
