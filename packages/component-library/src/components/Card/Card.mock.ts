@@ -1,9 +1,10 @@
 import { lorem } from 'faker';
 import mockLink from '../Link/Link.mock';
-import { CardProps } from './Card';
+import { CardProps } from './Card.types';
 import { staticRichTextMock } from '../Text/Text.mock';
 
 export default (): CardProps => ({
+  id: lorem.slug(),
   __typename: 'Card',
   media: {
     file: {

@@ -1,6 +1,6 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
-import { HeroProps } from './Hero';
+import { HeroProps } from './Hero.types';
 import mockLink from '../Link/Link.mock';
 import mockTheme from '../../theme/mock.theme';
 

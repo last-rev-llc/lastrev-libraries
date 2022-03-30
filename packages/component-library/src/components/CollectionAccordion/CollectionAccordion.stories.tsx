@@ -4,7 +4,7 @@ import CollectionAccordion from './CollectionAccordion';
 import mockContent from './CollectionAccordion.mock';
 
 export default {
-  title: '1. Primitives / MUI / CollectionAccordion',
+  title: '1. Components / CollectionAccordion',
   component: CollectionAccordion,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

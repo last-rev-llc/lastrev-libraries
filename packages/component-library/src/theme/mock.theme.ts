@@ -7,6 +7,7 @@ import createCollectionVariants from './createCollectionVariants';
 import createCollectionCarouselVariants from './createCollectionCarouselVariants';
 import createAppTheme from './createTheme';
 import { red } from '@mui/material/colors';
+import { ComponentsVariants } from '@mui/material';
 
 export const baseTheme = createAppTheme({
   spacing: 8,
@@ -83,10 +84,10 @@ const theme = createAppTheme(
         variants: createTextVariants(baseTheme)
       },
       Card: {
-        variants: createCardVariants(baseTheme)
+        variants: createCardVariants(baseTheme) as ComponentsVariants['Card']
       },
       Collection: {
-        variants: createCollectionVariants(baseTheme),
+        variants: createCollectionVariants(baseTheme) as ComponentsVariants['Collection'],
         styleOverrides: {
           root: {
             'maxWidth': 1280,
@@ -177,15 +178,15 @@ const theme = createAppTheme(
       Section: {
         variants: createSectionVariants(baseTheme),
         styleOverrides: {
-          'root': {
+          root: {
             // display: 'flex',
             // alignItems: 'center',
             // padding: baseTheme.spacing(5)
           },
-          'gridContainer': {
+          gridContainer: {
             alignItems: 'center'
           },
-          'gridItem': {
+          gridItem: {
             // TODO: Review if this makes sense as a default
             '& > img': {
               width: 'auto',
@@ -194,11 +195,7 @@ const theme = createAppTheme(
               // margin: 'auto'
             }
           },
-          'background_gradient-primary': {
-            'background': 'red',
-            '& *': { color: 'white' }
-          },
-          'contentContainer': {
+          contentContainer: {
             padding: baseTheme.spacing(3),
             [baseTheme.breakpoints.up('sm')]: {
               paddingLeft: baseTheme.spacing(10),

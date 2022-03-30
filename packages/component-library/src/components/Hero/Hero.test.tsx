@@ -2,7 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 // import preloadAll from 'jest-next-dynamic';
-import Hero, { HeroProps } from './Hero';
+import Hero from './Hero';
+import { HeroProps } from './Hero.types';
 import mockContent from './Hero.mock';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import define from '../../utils/define';
@@ -42,13 +43,13 @@ describe('<Hero />', () => {
 
   test('Hero renders image properly', () => {
     const { getByTestId } = renderComponent(mockedContent);
-    expect(getByTestId('Hero-image')).toHaveAttribute('src', define(getFirstOfArray(mockedContent.image)).file.url);
+    expect(getByTestId('Hero-image')).toHaveAttribute('src', define(getFirstOfArray(mockedContent.image)).file?.url);
     expect(getByTestId('Hero-image')).toHaveAttribute('alt', define(getFirstOfArray(mockedContent.image)).title);
   });
 
   test('Hero renders background properly', () => {
     const { getByTestId } = renderComponent(mockedContent);
-    expect(getByTestId('Hero-background')).toHaveAttribute('src', mockedContent.background?.file.url);
+    expect(getByTestId('Hero-background')).toHaveAttribute('src', mockedContent.background?.file?.url);
     expect(getByTestId('Hero-background')).toHaveAttribute('alt', mockedContent.background?.title);
   });
 });

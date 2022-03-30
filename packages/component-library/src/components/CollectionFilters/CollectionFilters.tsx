@@ -3,35 +3,7 @@ import { Grid, Chip, MenuItem, TextField, Button } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import styled from '@mui/system/styled';
 import capitalize from 'lodash/capitalize';
-
-interface FilterSetting {
-  id: string;
-  label?: string;
-  key: string;
-  type: 'select' | 'text' | 'autocomplete';
-  multiple?: boolean;
-}
-interface Option {
-  label: string;
-  value: string;
-}
-
-interface Options {
-  [key: string]: Array<Option>;
-}
-
-export interface CollectionFiltersProps {
-  id: string;
-  options?: Options;
-  allOptions?: Options;
-  filter?: FilterFormData;
-  filters?: FilterSetting[];
-  setFilter: any;
-  onClearFilter: any;
-}
-interface FilterFormData {
-  [key: string]: any;
-}
+import { CollectionFiltersProps, Option } from './CollectionFilters.types';
 
 const CollectionFilters = ({
   id,
@@ -78,8 +50,7 @@ const CollectionFilters = ({
                   label={`Select a ${label || id}`}
                   value={filter[id] ?? ''}
                   SelectProps={{ MenuProps: { disableScrollLock: true } }}
-                  onChange={handleChange(id)}
-                >
+                  onChange={handleChange(id)}>
                   {allOptions
                     ? allOptions[id]?.map(({ label, value }) => (
                         <MenuItem key={label} value={value ?? ''}>
@@ -143,8 +114,7 @@ const CollectionFilters = ({
           onClick={() => {
             setFilter({});
             if (onClearFilter) onClearFilter();
-          }}
-        >
+          }}>
           Clear
         </Button>
       </Grid>

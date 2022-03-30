@@ -1,5 +1,5 @@
 import mockNavigationItem from '../NavigationItem/NavigationItem.mock';
-import { NavigationBarProps } from './NavigationBar';
+import { NavigationBarProps } from './NavigationBar.types';
 import mockLink from '../Link/Link.mock';
 import mockTheme from '../../theme/mock.theme';
 

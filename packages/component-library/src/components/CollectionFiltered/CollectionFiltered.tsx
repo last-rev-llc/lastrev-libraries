@@ -1,61 +1,16 @@
 import React from 'react';
 import { Skeleton, Grid, Container, Box, Button, Typography } from '@mui/material';
-
-import { Breakpoint } from '@mui/material';
 import styled from '@mui/system/styled';
-import ErrorBoundary from '../ErrorBoundary';
-import Section from '../Section';
-import { MediaProps } from '../Media';
-import { CardProps } from '../Card';
-import CollectionFilters from '../CollectionFilters';
-import sidekick from '../../utils/sidekick';
 import { isEmpty, range } from 'lodash';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
-interface Settings {
-  filters: FilterSetting[];
-  limit?: number;
-}
 
-interface FilterSetting {
-  id: string;
-  label?: string;
-  key: string;
-  type: 'select' | 'text';
-}
-interface Option {
-  label: string;
-  value: string;
-}
-interface Options {
-  [key: string]: Array<Option>;
-}
-interface FilterFormData {
-  [key: string]: any;
-}
-export interface CollectionFilteredProps {
-  id: string;
-  items?: CardProps[];
-  settings?: Settings;
-  options?: Options;
-  filter?: FilterFormData;
-  fetchItems?: (filter: any) => Promise<{ items?: CardProps[]; options?: Options; allOptions?: Options } | null>;
-  onClearFilter?: () => void;
-  background?: MediaProps;
-  variant?: string;
-  itemsVariant?: string;
-  itemsSpacing?: number | null;
-  theme: any;
-  itemsWidth?: false | Breakpoint | undefined;
-  sidekickLookup?: string;
-  loadMoreText?: string;
-}
-export interface UseDynamicItemsInterface {
-  items?: CardProps[];
-  options?: Options;
-  fetchItems?: (filter: any) => Promise<{ items?: CardProps[]; options?: Options; allOptions?: Options } | null>;
-  filter: any;
-}
+import ErrorBoundary from '../ErrorBoundary';
+import Section from '../Section';
+import { CardProps } from '../Card';
+import CollectionFilters from '../CollectionFilters';
+import sidekick from '../../utils/sidekick';
+import { CollectionFilteredProps, FilterFormData, Options } from './CollectionFiltered.types';
 
 const useQueryState = (defaultValue: any): [any, any] => {
   const router = useRouter();

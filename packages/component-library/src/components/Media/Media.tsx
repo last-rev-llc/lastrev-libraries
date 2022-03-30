@@ -1,51 +1,13 @@
 import React from 'react';
 import styled from '@mui/system/styled';
-// import BackgroundMedia from '../BackgroundMedia';
+
 import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 import ArtDirectedImage from '../ArtDirectedImage';
 import sidekick from '../../utils/sidekick';
 import { useThemeProps } from '@mui/system';
+import { MediaProps, MediaVideoProps } from './Media.types';
 
-export interface File {
-  url: string;
-  width?: string;
-  height?: string;
-}
-export interface Asset {
-  file: File;
-  title?: string;
-  description?: string;
-}
-export interface MediaProps {
-  file?: File;
-  fileTablet?: File;
-  fileMobile?: File;
-  variant?: string;
-  title?: string;
-  description?: string;
-  desktop?: Asset;
-  tablet?: Asset;
-  mobile?: Asset;
-  sidekickLookup?: string;
-  sx?: any;
-  testId?: string;
-  priority?: boolean;
-  disableInlineSVG?: boolean;
-  q?: number;
-  unoptimized?: boolean;
-}
-export interface MediaVideoProps {
-  variant?: string;
-  file?: File;
-  title?: string;
-  sidekickLookup?: string;
-  sx?: any;
-  testId?: string;
-  controls?: boolean;
-}
-
-export interface MediaOverrides {}
 const Media = (inProps: MediaProps & MediaVideoProps) => {
   const props = useThemeProps({
     name: 'Media',
@@ -77,8 +39,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           preload="auto"
           data-testid={testId || 'Media'}
           {...props}
-          sx={{ width: '100%', height: '100%', ...props.sx }}
-        >
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
-import Header, { HeaderProps } from './Header';
+import Header from './Header';
+import { HeaderProps } from './Header.types';
 import mockContent from './Header.mock';
 
 let mockedContent: HeaderProps = { sidekickLookup: {} };

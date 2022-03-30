@@ -1,4 +1,4 @@
-import { HeaderProps } from './Header';
+import { HeaderProps } from './Header.types';
 import { mediaMock } from '../Media/Media.mock';
 import collectionMock from '../Collection/Collection.mock';
 import navigationItemMock from '../NavigationItem/NavigationItem.mock';

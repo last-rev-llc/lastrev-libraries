@@ -4,7 +4,7 @@ import Media from './Media';
 import { mediaMock, mediaVideoMock, responsiveMediaMock, SVGMediaMock, ExternalSVGMediaMock } from './Media.mock';
 
 export default {
-  title: '1. Primitives / LR / Media',
+  title: '1. Components / Media',
   component: Media,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
@@ -20,8 +20,7 @@ export default {
             width: '100%',
             height: '100%'
           }
-        }}
-      >
+        }}>
         {storyFn()}
       </Box>
     )

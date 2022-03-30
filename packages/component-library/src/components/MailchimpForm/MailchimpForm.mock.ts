@@ -1,6 +1,6 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
-import { MailchimpFormProps } from './MailchimpForm';
+import { MailchimpFormProps } from './MailchimpForm.types';
 import mockTheme from '../../theme/mock.theme';
 
 export default (): MailchimpFormProps => ({

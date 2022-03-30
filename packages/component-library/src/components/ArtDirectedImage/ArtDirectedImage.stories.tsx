@@ -4,7 +4,7 @@ import ArtDirectedImage from './ArtDirectedImage';
 import mockContent from './ArtDirectedImage.mock';
 
 export default {
-  title: '1. Primitives / LR / ArtDirectedImage',
+  title: '1. Components / ArtDirectedImage',
   component: ArtDirectedImage,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

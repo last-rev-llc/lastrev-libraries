@@ -6,7 +6,7 @@ import Text from './Text';
 import mockContent, { complexMock } from './Text.mock';
 
 export default {
-  title: '2. Modules / Text',
+  title: '1. Components / Text',
   component: Text,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

@@ -1,6 +1,8 @@
+import React from 'react';
 import { lorem } from 'faker';
-import { capitalize } from 'lodash';
-import { TextProps, RichText } from './Text';
+import BLOCKS from './BLOCKS';
+
+import { TextProps, RichText } from './Text.types';
 
 export const valueNode = (type: string = 'text') => ({
   data: {},
@@ -255,6 +257,18 @@ export const staticRichTextMock = (): RichText => ({
   }
 });
 
+export const formattedMock = () => ({
+  ...complexMock(),
+  renderNode: {
+    [BLOCKS.UL_LIST]: (_: any, children: any) => {
+      return <ul style={{ color: 'red' }}>{children}</ul>;
+    },
+    [BLOCKS.LIST_ITEM]: (_: any, children: any) => {
+      return <li>{children}</li>;
+    }
+  }
+});
+
 export const paragraphMock = (): TextProps => ({
   __typename: 'Text',
   body: {
@@ -282,33 +296,33 @@ export const paragraphMock = (): TextProps => ({
     }
   }
 });
-
-export default (): TextProps => ({
+export const baseMock = (): TextProps => ({
   __typename: 'Text',
   body: {
     json: {
       nodeType: 'document',
       data: {},
       content: [
-        {
-          nodeType: 'heading-2',
+        ...[1, 2, 3, 4, 5, 6].map((level) => ({
+          nodeType: `heading-${level}`,
           data: {},
           content: [
             {
               nodeType: 'text',
-              value: capitalize(lorem.words(2)),
+              value: `Heading ${level}`,
               marks: [],
               data: {}
             }
           ]
-        },
+        })),
+
         {
           nodeType: 'paragraph',
           data: {},
           content: [
             {
               nodeType: 'text',
-              value: lorem.sentences(2),
+              value: `Paragraph`,
               marks: [],
               data: {}
             }
@@ -329,7 +343,7 @@ export default (): TextProps => ({
           content: [
             {
               nodeType: 'text',
-              value: 'Heyo',
+              value: 'Hyperlink',
               marks: [],
               data: {}
             }
@@ -339,3 +353,5 @@ export default (): TextProps => ({
     }
   }
 });
+
+export default baseMock;

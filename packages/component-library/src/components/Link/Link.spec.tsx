@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { capitalize } from 'lodash';
 import mount from '../../../cypress/mount';
-import Link, { LinkProps } from './Link';
+import Link from './Link';
+import { LinkProps } from './Link.types';
 import mockContent from './Link.mock';
 
 let mockedContent: LinkProps = {};

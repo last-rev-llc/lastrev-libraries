@@ -1,4 +1,4 @@
-import { BackToTopProps } from './BackToTop';
+import { BackToTopProps } from './BackToTop.types';
 
 const mockContent = (): BackToTopProps => {
   return {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Paper, Grid } from '@mui/material';
-import Card, { CardProps } from '@last-rev/component-library/dist/components/Card/Card';
+import Card, { CardProps } from '@last-rev/component-library/dist/components/Card';
 import {
   mediaLeftTextRightMock,
   mediaRightTextLeftMock,

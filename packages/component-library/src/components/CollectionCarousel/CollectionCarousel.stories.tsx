@@ -4,7 +4,7 @@ import CollectionCarousel from './CollectionCarousel';
 import CollectionCarouselMock, { smallCarouselMock } from './CollectionCarousel.mock';
 
 export default {
-  title: '1. Primitives / MUI / CollectionCarousel',
+  title: '1. Components / CollectionCarousel',
   component: CollectionCarousel,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

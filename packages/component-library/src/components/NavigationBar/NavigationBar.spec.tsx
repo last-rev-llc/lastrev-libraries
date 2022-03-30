@@ -1,8 +1,9 @@
 import * as React from 'react';
 import 'cypress-real-events/support';
 import mount from '../../../cypress/mount';
-import NavigationBar, { NavigationBarProps } from './NavigationBar';
-import NavigationItem, { NavigationItemProps } from '../NavigationItem/NavigationItem';
+import { NavigationBarProps } from './NavigationBar.types';
+import { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
+import NavigationBar from './NavigationBar';
 import mockContent, { mockWithNavigationItems } from './NavigationBar.mock';
 
 let mockedContent: NavigationBarProps = { theme: {}, sidekickLookup: '' };

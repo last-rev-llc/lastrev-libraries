@@ -3,16 +3,8 @@ import { Grid } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
 import sidekick from '../../utils/sidekick';
-import Accordion, { AccordionProps } from '../Accordion';
-
-export interface CollectionAccordionProps {
-  items?: AccordionProps[];
-  variant?: string;
-  itemsVariant?: string;
-  theme: any;
-  sidekickLookup: string;
-  itemSpacing: number;
-}
+import Accordion from '../Accordion';
+import { CollectionAccordionProps } from './CollectionAccordion.types';
 
 export const CollectionAccordion = ({
   items,
@@ -30,8 +22,7 @@ export const CollectionAccordion = ({
         spacing={itemSpacing ?? 0}
         {...sidekick(sidekickLookup)}
         variant={variant}
-        data-testid="CollectionAccordion"
-      >
+        data-testid="CollectionAccordion">
         {itemsWithVariant.map((item, idx) => (
           <AccordionItem item key={idx}>
             <Accordion {...item} />

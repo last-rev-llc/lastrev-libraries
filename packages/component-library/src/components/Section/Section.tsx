@@ -1,51 +1,21 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import styled from '@mui/system/styled';
+
 import useTheme from '@mui/system/useTheme';
 import { Theme } from '@mui/system/createTheme';
-// import { Theme } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-// import { SystemCssProperties } from '@mui/system/styleFunctionSx';
 import get from 'lodash/get';
 import omit from 'lodash/omit';
-// import BackgroundMedia from '../BackgroundMedia';
+
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import { Breakpoint } from '@mui/material';
-import { MediaProps } from '../Media';
 import Media from '../Media';
 import sidekick from '../../utils/sidekick';
-import { TextProps } from '../Text';
-import { useThemeProps } from '@mui/system';
 import ConditionalWrapper from '../ConditionalWrapper';
-// interface Image {
-//   src: string;
-// }
-
-export interface SectionProps {
-  __typename?: string;
-  introText?: TextProps;
-  contents?: Array<{ __typename?: string; id?: string; file?: any }>;
-  background?: MediaProps;
-  backgroundColor?: string;
-  variant?: string;
-  testId?: string;
-  contentWidth?: false | Breakpoint | undefined;
-  contentDirection?: 'row' | 'column' | undefined;
-  contentSpacing?: number;
-  // Enables exposing inner `sx` prop through content
-  styles?: {
-    root?: any;
-    gridContainer?: any & { spacing: any };
-    gridItem?: any & { xs: any; sm: any; md: any };
-    gridItems?: Array<any & { xs: any; sm: any; md: any }>;
-  };
-  sidekickLookup?: any;
-  theme?: [Theme];
-}
-
-export interface SectionOverrides {}
+import { SectionProps } from './Section.types';
+import useThemeProps from '../../utils/useThemeProps';
 
 const VARIANTS_GRID_ITEM: Record<string, any> = {
   'one-per-row': { xs: 12 },
@@ -84,21 +54,18 @@ const Section = (inProps: SectionProps) => {
         backgroundColor={backgroundColor}
         variant={variant}
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
-        {...omit(props, 'theme')}
-      >
+        {...omit(props, 'theme')}>
         {background ? <BackgroundMedia {...background} /> : null}
         <ConditionalWrapper
           condition={!!contentWidth}
-          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}
-        >
+          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Section-introText" />
           )}
           <GridContainer
             container
             sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-            {...(contentSpacing && { spacing: contentSpacing })}
-          >
+            {...(contentSpacing && { spacing: contentSpacing })}>
             {contents?.map((content, idx) => {
               const itemStyle = get(styles?.gridItems, idx);
               if (!content) return null;
@@ -116,8 +83,7 @@ const Section = (inProps: SectionProps) => {
                   sx={{
                     ...styles?.gridItem,
                     ...itemStyle
-                  }}
-                >
+                  }}>
                   <ContentModule {...content} />
                 </GridItem>
               );

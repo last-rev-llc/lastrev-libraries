@@ -4,7 +4,7 @@ import Card from './Card';
 import mockContent, { cardWithTags } from './Card.mock';
 
 export default {
-  title: '1. Primitives / MUI / Card',
+  title: '1. Components / Card',
   component: Card,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

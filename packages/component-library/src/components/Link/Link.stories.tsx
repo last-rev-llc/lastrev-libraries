@@ -4,7 +4,7 @@ import Link from './Link';
 import mockContent from './Link.mock';
 
 export default {
-  title: '1. Primitives / MUI / Link',
+  title: '1. Components / Link',
   component: Link,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

@@ -7,16 +7,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
 import sidekick from '../../utils/sidekick';
 import ContentModule from '../ContentModule';
-import { RichText } from '../Text';
-
-export interface AccordionProps extends MuiAccordionProps {
-  __typename?: string;
-  internalTitle: string;
-  variant?: any;
-  title?: string;
-  body?: RichText;
-  sidekickLookup: any;
-}
+import { AccordionProps } from './Accordion.types';
 
 export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionProps) => {
   return (

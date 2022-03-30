@@ -1,6 +1,7 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
-import CollectionAccordion, { CollectionAccordionProps } from './CollectionAccordion';
+import CollectionAccordion from './CollectionAccordion';
+import { CollectionAccordionProps } from './CollectionAccordion.types';
 import mockContent from './CollectionAccordion.mock';
 
 let mockedContent: CollectionAccordionProps = { theme: {}, sidekickLookup: '', itemSpacing: 0 };

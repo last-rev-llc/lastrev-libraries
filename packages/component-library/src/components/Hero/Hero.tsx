@@ -1,49 +1,21 @@
 import React from 'react';
-import { Container, Box, Grid, Typography } from '@mui/material';
+import { Container, Box, Grid, Typography, Theme } from '@mui/material';
+import { Palette, PaletteColor } from '@mui/material/styles';
 import styled from '@mui/system/styled';
-import useTheme from '@mui/system/useTheme';
-import { Theme } from '@mui/system/createTheme';
-import { SystemCssProperties } from '@mui/system/styleFunctionSx';
 import get from 'lodash/get';
+
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
-import Media from '../Media';
-// import { LinkProps } from '../Link/Link';
-import { MediaProps } from '../Media/Media.types';
+import Media, { MediaProps } from '../Media';
 import ContentModule from '../ContentModule';
-import { RichText } from '../Text';
-import { Breakpoint } from '@mui/material';
 import sidekick from '../../utils/sidekick';
 import getFirstOfArray from '../../utils/getFirstOfArray';
-import { useThemeProps } from '@mui/system';
-
-export interface HeroProps {
-  id: string;
-  __typename?: string;
-  overline?: string;
-  title?: string;
-  subtitle?: string;
-  body?: RichText;
-  actions?: any[];
-  image?: MediaProps | MediaProps[];
-  background?: MediaProps;
-  backgroundColor?: string;
-  contentWidth?: false | Breakpoint | undefined;
-  contentHeight?: 'sm' | 'md' | 'lg' | 'xl';
-  variant?: any;
-  theme: any;
-  styles?: {
-    root?: SystemCssProperties;
-    gridContainer?: SystemCssProperties & { spacing: any };
-    gridItem?: SystemCssProperties & { xs: any; sm: any; md: any };
-    gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
-  };
-  sidekickLookup?: any;
-  disableGutters?: boolean;
-}
+import useThemeProps from '../../utils/useThemeProps';
+import { HeroProps } from './Hero.types';
+import { useTheme } from '@mui/system';
 
 export const Hero = (props: HeroProps) => {
-  const theme = useTheme();
+  const theme = useTheme<Theme>();
   const {
     variant,
     background,
@@ -55,11 +27,12 @@ export const Hero = (props: HeroProps) => {
     subtitle,
     body,
     actions,
-    image,
+    image: deprecatedImage,
+    images,
     sidekickLookup,
     disableGutters = true
   } = useThemeProps({ props, name: 'Hero' });
-
+  const image = getFirstOfArray(images ?? deprecatedImage);
   return (
     <ErrorBoundary>
       <Root
@@ -72,8 +45,7 @@ export const Hero = (props: HeroProps) => {
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined,
           py: 4
-        }}
-      >
+        }}>
         {background ? (
           <BackgroundRoot
             sx={{
@@ -83,8 +55,7 @@ export const Hero = (props: HeroProps) => {
               left: 0,
               width: '100%',
               height: '100%'
-            }}
-          >
+            }}>
             <Media
               testId="Hero-background"
               {...background}
@@ -104,8 +75,7 @@ export const Hero = (props: HeroProps) => {
                       data-testid="Hero-overline"
                       variant="overline"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.overline)}
-                    >
+                      {...sidekick(sidekickLookup?.overline)}>
                       {overline}
                     </Typography>
                   ) : null}
@@ -115,8 +85,7 @@ export const Hero = (props: HeroProps) => {
                       variant="h1"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.title)}
-                    >
+                      {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
                   ) : null}
@@ -126,8 +95,7 @@ export const Hero = (props: HeroProps) => {
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
                       sx={{ color: !title ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.subtitle)}
-                    >
+                      {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>
                   ) : null}
@@ -161,13 +129,13 @@ export const Hero = (props: HeroProps) => {
     </ErrorBoundary>
   );
 };
-
+type Color = keyof Palette;
 const rootStyles = ({
   backgroundColor,
   theme,
   background
 }: {
-  backgroundColor?: string;
+  backgroundColor?: Color | 'white' | 'black';
   theme: Theme;
   background?: MediaProps;
 }) => {
@@ -186,7 +154,7 @@ const rootStyles = ({
   }
   if (backgroundColor?.includes('gradient') && theme.palette[backgroundColor]) {
     return {
-      'background': theme.palette[backgroundColor]?.main,
+      'background': (theme.palette[backgroundColor] as PaletteColor)?.main,
       'color': `${backgroundColor}.contrastText`,
       // TODO find out a better way to override text color
       '& p, h1, h2, h3, h4, h5, h6, a': {

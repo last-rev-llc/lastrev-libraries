@@ -1,6 +1,5 @@
-import { CollectionAccordionProps } from './CollectionAccordion';
+import { CollectionAccordionProps } from './CollectionAccordion.types';
 import mockAccordion from '../Accordion/Accordion.mock';
-import mockTheme from '../../theme/mock.theme';
 
 export default (): CollectionAccordionProps => ({
   sidekickLookup: 'sidekick-lookup',
@@ -24,6 +23,5 @@ export default (): CollectionAccordionProps => ({
       title: 'How soon should I seek help? Will this get better on its own?'
     }
   ],
-  itemsVariant: 'accordion-standard',
-  theme: [mockTheme]
+  itemsVariant: 'accordion-standard'
 });

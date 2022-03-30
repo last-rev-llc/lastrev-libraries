@@ -1,4 +1,4 @@
-import { SectionProps } from './Section';
+import { SectionProps } from './Section.types';
 import mockTheme from '../../theme/mock.theme';
 import richTextMock from '../Text/Text.mock';
 

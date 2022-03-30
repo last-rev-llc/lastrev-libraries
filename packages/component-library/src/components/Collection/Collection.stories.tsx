@@ -4,7 +4,7 @@ import Collection from './Collection';
 import collectionMock, { collectionWithIntroText } from './Collection.mock';
 
 export default {
-  title: '1. Primitives / MUI / Collection',
+  title: '1. Components / Collection',
   component: Collection,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

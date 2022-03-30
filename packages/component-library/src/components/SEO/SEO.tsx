@@ -1,11 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import getSEO from '../../utils/getSEO';
-
-interface SEOProps {
-  seo?: any;
-  enableAntiFlicker?: boolean;
-}
+import { SEOProps } from './SEO.types';
 
 export const SEO = ({ seo = {}, enableAntiFlicker }: SEOProps) => {
   const metatags = getSEO(seo);
