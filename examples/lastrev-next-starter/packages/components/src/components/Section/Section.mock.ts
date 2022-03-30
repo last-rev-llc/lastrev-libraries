@@ -35,5 +35,3 @@ export const splitPanelMock = (): SectionProps => ({
   ],
   theme: [mockTheme]
 });
-
-export default splitPanelMock;

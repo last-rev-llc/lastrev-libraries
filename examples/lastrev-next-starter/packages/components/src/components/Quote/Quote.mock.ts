@@ -2,7 +2,7 @@ import { random } from 'faker';
 import { mediaMock } from '../Media/Media.mock';
 import { QuoteProps } from './Quote.types';
 
-export const mockQuoteBase = (): QuoteProps => {
+const mockQuoteBase = (): QuoteProps => {
   return {
     __typename: 'Quote',
     id: random.alphaNumeric(10),
@@ -30,5 +30,3 @@ export const mockQuoteTwoColumn = (): QuoteProps => {
     authorImage: mediaMock()
   };
 };
-
-export default mockQuoteBase;

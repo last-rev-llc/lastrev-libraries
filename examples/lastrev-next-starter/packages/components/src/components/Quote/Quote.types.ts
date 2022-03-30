@@ -1,11 +1,10 @@
-import { Quote_BaseFragmentFragment } from '@lrns/graphql-sdk/dist';
 import { LinkProps } from '../Link';
 import { MediaProps } from '../Media';
 
-export interface QuoteProps extends Quote_BaseFragmentFragment {
-  variant?: 'one-column' | 'two-column';
-  // __typename?: string;
+export interface QuoteProps {
+  __typename?: string;
   id?: string;
+  variant?: 'one-column' | 'two-column';
   sidekickLookup?: any;
   quote: string;
   authorName?: string;

@@ -1,13 +1,6 @@
-name: E2E Tests
+name: Cypress Tests
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    types: [labeled, unlabeled, opened, edited, synchronize]
-  # Used as a webhook event for publish success actions
-  repository_dispatch:
-  # Used to fire tests manually from Github
   workflow_dispatch:
     inputs:
       baseURL:
@@ -31,31 +24,8 @@ jobs:
       image: cypress/browsers:node16.14.0-slim-chrome99-ff97
       options: --user 1001
     steps:
-      # Enforce label on PR to prevent unnecesary testing
-      - name: Enforce labels
-        uses: mheap/github-action-required-labels@v1
-        if: ${{ github.event_name == 'pull_request' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          mode: exactly
-          count: 1
-          labels: 'qa-ready'
-
-      ## SETUP
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Dependencies cache
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: |
-            **/node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
 
       - name: Turbo Cache
         id: turbo-cache
@@ -66,8 +36,11 @@ jobs:
           restore-keys: |
             turbo-${{ github.job }}-${{ github.ref_name }}-
 
-      - name: Install project dependencies
-        run: yarn --prefer-offline
+      - name: Cypress install
+        uses: cypress-io/github-action@v2
+        with:
+          project: ./packages/web
+          runTests: false
 
       # report machine parameters
       - run: npx cypress info
@@ -102,20 +75,8 @@ jobs:
         containers: [1, 2, 3, 4, 5]
 
     steps:
-      ## SETUP
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Dependencies cache
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: |
-            **/node_modules
-            ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
 
       - name: Turbo Cache
         id: turbo-cache
@@ -126,21 +87,15 @@ jobs:
           restore-keys: |
             turbo-${{ github.job }}-${{ github.ref_name }}-
 
-      - name: Install project dependencies
-        run: yarn --prefer-offline
-
-      - name: Wait for Netlify Deploy Preview Commit
-        uses: jlevy-io/wait-for-netlify-deploy-with-headers@3.0.2
-        id: wait-for-netflify-preview
-        with:
-          site_id: ${{ secrets.NETLIFY_SITE_ID }}
-        env:
-          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+      # - name: Download the build folders
+      #   uses: actions/download-artifact@v2
+      #   with:
+      #     name: build
+      #     path: build
 
       - name: 'Website Tests - Chrome'
         uses: cypress-io/github-action@v2
         with:
-          install: false
           project: ./packages/web
           command-prefix: 'percy exec -- npx'
           # wait-on: http://localhost:5338/percy/healthcheck
@@ -151,8 +106,9 @@ jobs:
           group: 'UI - Chrome'
 
         env:
-          SITE: ${{ secrets.SITE }}
-          CYPRESS_BASE_URL: ${{ steps.wait-for-netflify-preview.outputs.url }}
+          # CYPRESS_BASE_URL: ${{ steps.baseURL.outputs.value }}
+          CYPRESS_BASE_URL: 'https://starter.lastrev.com'
+          NODE_ENV: ${{ github.event.inputs.environment }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}

@@ -3,7 +3,7 @@ import { staticRichTextMock } from '../Text/Text.mock';
 import { mediaMock } from '../Media/Media.mock';
 import mockLink from '../Link/Link.mock';
 
-export const cardMock = (): CardProps => ({
+const cardMock = (): CardProps => ({
   __typename: 'Card',
   media: mediaMock(),
   title: 'This is a card title',

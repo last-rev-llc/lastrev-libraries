@@ -1,26 +1,36 @@
 require('dotenv').config();
-
-const extensions = require('@lrns/graphql-extensions');
 const { resolve } = require('path');
 const LastRevAppConfig = require('@last-rev/app-config');
-// TODO extract this function into a package that doesnt required the runner
-// const { parseBooleanEnvVar } = require('@lrns/utils');
+const extensions = require('@lrns/graphql-extensions');
+
+const testForEnvVar = (name) => {
+  const envVar = process.env[name];
+  if (!envVar) {
+    throw Error(`Environment variable ${name} is required`);
+  }
+  return envVar;
+};
+
+const spaceId = testForEnvVar('CONTENTFUL_SPACE_ID');
+const contentDeliveryToken = testForEnvVar('CONTENTFUL_DELIVERY_TOKEN');
+const contentPreviewToken = testForEnvVar('CONTENTFUL_PREVIEW_TOKEN');
+const env = testForEnvVar('CONTENTFUL_ENV');
 const parseBooleanEnvVar = (value = '') => {
   // values parsed as true: true, 1, yes, y, => ignore caps
   const val = value.toString().toLowerCase();
   return /^(true|1|yes|y)$/.test(val);
 };
- 
+
 const config = new LastRevAppConfig({
   cms: 'Contentful',
-  strategy: process.env.GRAPHQL_RUNNER_STRATEGY || 'fs',
+  strategy: 'fs',
   sites: [process.env.SITE],
   extensions,
   contentful: {
-    contentPreviewToken: process.env.CONTENTFUL_PREVIEW_TOKEN,
-    contentDeliveryToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
-    spaceId: process.env.CONTENTFUL_SPACE_ID,
-    env: process.env.CONTENTFUL_ENV,
+    contentPreviewToken,
+    contentDeliveryToken,
+    spaceId,
+    env,
     usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW)
   },
   algolia: {
@@ -35,8 +45,9 @@ const config = new LastRevAppConfig({
     password: process.env.REDIS_PASSWORD,
     tls: {}
   },
-  fs: { contentDir: resolve(__dirname, './cms-sync') },
-  logLevel: 'debug'
+  fs: { contentDir: resolve(__dirname, '../../../../../../packages/graphql-runner/cms-sync') },
+  logLevel: 'debug',
+  skipReferenceFields: false
 });
 
 module.exports = config;

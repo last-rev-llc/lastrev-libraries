@@ -20,8 +20,6 @@ import {
 } from '@last-rev/graphql-contentful-extensions';
 
 import * as Theme from './Theme';
-// Uncomment if using Algolia, else delete the related file
-// import * as Algolia from './Algolia';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -48,7 +46,6 @@ Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloConte
 
 const extensions: GraphQlExtension[] = [
   { typeDefs: algoliaTypeDefs },
-  // Algolia,
   Card,
   Collection,
   Blog,

@@ -3,7 +3,8 @@
 import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs';
 
 import Card from './Card';
-import cardMock, { cardWithTags } from './Card.mock';
+import { CardClasses } from './Card.types';
+import cardMock, { cardWithTags, baseMock } from './Card.mock';
 
 <Meta
   title="Components / Card"
@@ -47,7 +48,7 @@ The Card component is the main type of display for a website.
 It represents one unit of content, such as a blog post, a product, a human or a service.
 
 <Canvas>
-  <Story name="base" args={{ ...cardMock(), actions: undefined }} />
+  <Story name="base" args={baseMock()} />
 </Canvas>
 
 ## Props
