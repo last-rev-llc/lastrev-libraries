@@ -152,9 +152,7 @@ type Header implements Content {
   logo: Media
   logoUrl: String
   colorScheme: String
-  logoLink: Link
   navigationItems: [Collection]
-  actions: [Link]
 }
 type Hero implements Content {
   sidekickLookup: JSON
@@ -231,8 +229,6 @@ type Quote implements Content {
   authorName: String
   authorTitle: String
   image: Media
-  quoteImage: Media
-  actions: [Link]
 }
 type Section implements Content {
   sidekickLookup: JSON
@@ -272,10 +268,6 @@ type Text implements Content {
   align: String
   styles: JSON
   color: String
-  textHeader: String
-  textSubheader: String
-  textActions: [Link]
-  colorScheme: String
 }
 type Blog implements Content {
   sidekickLookup: JSON

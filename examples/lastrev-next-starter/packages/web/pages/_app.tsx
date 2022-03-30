@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/system';
 import '@last-rev/component-library/dist/styles.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@lrns/components/src/theme';

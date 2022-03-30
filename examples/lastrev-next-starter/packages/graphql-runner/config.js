@@ -10,7 +10,7 @@ const parseBooleanEnvVar = (value = '') => {
   const val = value.toString().toLowerCase();
   return /^(true|1|yes|y)$/.test(val);
 };
-
+ 
 const config = new LastRevAppConfig({
   cms: 'Contentful',
   strategy: process.env.GRAPHQL_RUNNER_STRATEGY || 'fs',

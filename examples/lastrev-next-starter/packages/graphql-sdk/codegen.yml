@@ -16,7 +16,7 @@ generates:
       withComponent: false
       rawRequest: true
       withMutationFn: false
-      maybeValue: T | null
+      maybeValue: T | undefined
   # ./src/generated/apollo.tsx:
   #   plugins:
   #     - 'typescript'

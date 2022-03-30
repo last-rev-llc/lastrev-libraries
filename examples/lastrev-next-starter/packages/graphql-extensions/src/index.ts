@@ -13,16 +13,13 @@ import {
   Link,
   NavigationItem,
   Page,
+  Header,
   Section,
   Media,
   RichText
 } from '@last-rev/graphql-contentful-extensions';
 
-import * as Text from './Text';
-import * as Quote from './Quote';
-import * as Person from './Person';
-import * as Header from './Header';
-import * as CustomBlog from './Blog';
+import * as Theme from './Theme';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -52,18 +49,15 @@ const extensions: GraphQlExtension[] = [
   Card,
   Collection,
   Blog,
-  CustomBlog,
   Hero,
   Header,
   Link,
   NavigationItem,
   Page,
   Section,
-  Quote,
-  Person,
   Media,
   RichText,
-  Text
+  Theme
 ];
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));

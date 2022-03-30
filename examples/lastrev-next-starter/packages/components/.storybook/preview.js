@@ -13,7 +13,6 @@ import Hero from '@last-rev/component-library/dist/components/Hero/Hero';
 import Text from '@last-rev/component-library/dist/components/Text/Text';
 import Media from '@last-rev/component-library/dist/components/Media/Media';
 import NavigationItem from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
-import CollectionFiltered from '../src/components/CollectionFiltered';
 import Quote from '../src/components/Quote';
 import theme from '../src/theme';
 import './styles.css';
@@ -22,7 +21,6 @@ const contentMapping = {
   Header,
   Section,
   Collection,
-  'Collection:filtered': CollectionFiltered,
   Card,
   Quote,
   'Quote': Card,
