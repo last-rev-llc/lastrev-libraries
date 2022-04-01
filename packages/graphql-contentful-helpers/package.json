@@ -1,7 +1,7 @@
 {
   "name": "@last-rev/graphql-contentful-helpers",
   "private": false,
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -25,7 +25,7 @@
     "@last-rev/contentful-cms-loader": "^0.2.0",
     "@last-rev/contentful-dynamodb-loader": "^0.1.0",
     "@last-rev/contentful-fs-loader": "^0.1.9",
-    "@last-rev/contentful-redis-loader": "^0.1.5",
+    "@last-rev/contentful-redis-loader": "^0.2.0",
     "@last-rev/testing-library": "^0.1.2",
     "@last-rev/timer": "^0.1.1",
     "@last-rev/types": "^0.1.4",

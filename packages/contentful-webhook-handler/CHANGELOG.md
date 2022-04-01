@@ -1,5 +1,15 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.3.0
+
+### Minor Changes
+
+- 1d7f33d: Enhancing redis data with additional metadata for troubleshooting
+
+### Patch Changes
+
+- @last-rev/graphql-contentful-helpers@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

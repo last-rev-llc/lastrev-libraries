@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.2.0
+
+### Minor Changes
+
+- 1d7f33d: Enhancing redis data with additional metadata for troubleshooting
+
 ## 0.1.10
 
 ### Patch Changes

@@ -45,7 +45,8 @@ export const Hero = (props: HeroProps) => {
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined,
           py: 4
-        }}>
+        }}
+      >
         {background ? (
           <BackgroundRoot
             sx={{
@@ -55,7 +56,8 @@ export const Hero = (props: HeroProps) => {
               left: 0,
               width: '100%',
               height: '100%'
-            }}>
+            }}
+          >
             <Media
               testId="Hero-background"
               {...background}
@@ -75,7 +77,8 @@ export const Hero = (props: HeroProps) => {
                       data-testid="Hero-overline"
                       variant="overline"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.overline)}>
+                      {...sidekick(sidekickLookup?.overline)}
+                    >
                       {overline}
                     </Typography>
                   ) : null}
@@ -85,7 +88,8 @@ export const Hero = (props: HeroProps) => {
                       variant="h1"
                       component="h1"
                       sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.title)}>
+                      {...sidekick(sidekickLookup?.title)}
+                    >
                       {title}
                     </Typography>
                   ) : null}
@@ -95,7 +99,8 @@ export const Hero = (props: HeroProps) => {
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
                       sx={{ color: !title ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.subtitle)}>
+                      {...sidekick(sidekickLookup?.subtitle)}
+                    >
                       {subtitle}
                     </Typography>
                   ) : null}

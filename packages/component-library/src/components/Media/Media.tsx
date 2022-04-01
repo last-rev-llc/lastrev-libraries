@@ -39,7 +39,8 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           preload="auto"
           data-testid={testId || 'Media'}
           {...props}
-          sx={{ width: '100%', height: '100%', ...props.sx }}>
+          sx={{ width: '100%', height: '100%', ...props.sx }}
+        >
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>

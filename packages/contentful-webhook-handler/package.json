@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-webhook-handler",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -24,7 +24,7 @@
   "dependencies": {
     "@last-rev/contentful-path-util": "^0.1.9",
     "@last-rev/contentful-webhook-parser": "^0.1.0",
-    "@last-rev/graphql-contentful-helpers": "^0.2.0",
+    "@last-rev/graphql-contentful-helpers": "^0.2.1",
     "aws-sdk": "^2.1012.0",
     "contentful": "^9.0.0",
     "ioredis": "^4.27.9",
