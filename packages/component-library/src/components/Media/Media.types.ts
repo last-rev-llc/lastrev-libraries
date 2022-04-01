@@ -1,5 +1,5 @@
 export interface File {
-  url: string;
+  url?: string;
   width?: string;
   height?: string;
 }

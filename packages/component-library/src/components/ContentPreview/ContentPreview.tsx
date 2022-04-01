@@ -28,8 +28,7 @@ const ContentPreview = ({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
-          }}
-        >
+          }}>
           {error ? (
             <Typography>
               <br />
@@ -50,8 +49,7 @@ const ContentPreview = ({
               <br />
               <Link
                 target="_blank"
-                href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}
-              >
+                href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
                 {`Edit ${capitalize(content?.__typename)}#${id} in Contentful`}
               </Link>
               <br />
@@ -63,8 +61,7 @@ const ContentPreview = ({
       <div style={{ position: 'fixed', bottom: 16, right: 16 }}>
         <Link
           target="_blank"
-          href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}
-        >
+          href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
           {`${capitalize(content?.__typename)}#${id} in Contentful`}
         </Link>
         <br />
