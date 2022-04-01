@@ -1,5 +1,4 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import Link from './Link';
 import mockContent from './Link.mock';
 

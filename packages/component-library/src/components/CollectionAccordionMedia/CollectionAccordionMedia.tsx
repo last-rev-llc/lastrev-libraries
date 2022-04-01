@@ -29,8 +29,7 @@ export const CollectionAccordionMedia = ({
         spacing={itemsSpacing ?? 0}
         {...sidekick(sidekickLookup)}
         variant={variant}
-        data-testid="CollectionAccordionMedia"
-      >
+        data-testid="CollectionAccordionMedia">
         <SelectedMediaRoot>
           <SelectedMedia
             __typename="Media"

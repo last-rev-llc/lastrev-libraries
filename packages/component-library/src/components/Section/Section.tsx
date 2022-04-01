@@ -54,21 +54,18 @@ const Section = (inProps: SectionProps) => {
         backgroundColor={backgroundColor}
         variant={variant}
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
-        {...omit(props, 'theme')}
-      >
+        {...omit(props, 'theme')}>
         {background ? <BackgroundMedia {...background} /> : null}
         <ConditionalWrapper
           condition={!!contentWidth}
-          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}
-        >
+          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Section-introText" />
           )}
           <GridContainer
             container
             sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-            {...(contentSpacing && { spacing: contentSpacing })}
-          >
+            {...(contentSpacing && { spacing: contentSpacing })}>
             {contents?.map((content, idx) => {
               const itemStyle = get(styles?.gridItems, idx);
               if (!content) return null;
@@ -86,8 +83,7 @@ const Section = (inProps: SectionProps) => {
                   sx={{
                     ...styles?.gridItem,
                     ...itemStyle
-                  }}
-                >
+                  }}>
                   <ContentModule {...content} />
                 </GridItem>
               );
