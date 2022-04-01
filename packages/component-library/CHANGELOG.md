@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.3.15
+
+### Patch Changes
+
+- d3f17d2: Update type definitions for components
+
 ## 0.3.14
 
 ### Patch Changes
