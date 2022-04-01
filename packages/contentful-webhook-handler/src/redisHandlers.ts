@@ -5,6 +5,35 @@ import { updateAllPaths } from '@last-rev/contentful-path-util';
 import { createContext, createLoaders } from '@last-rev/graphql-contentful-helpers';
 import { Entry } from 'contentful';
 import { assetHasUrl, createContentfulClients } from './helpers';
+import isError from 'lodash/isError';
+import logger from 'loglevel';
+
+const isContentfulError = (item: any) => {
+  return item?.sys?.type === 'Error';
+};
+
+const enhanceContentfulObjectWithMetadata = (item: any) => {
+  return {
+    ...item,
+    lastrev_metadata: {
+      insert_date: new Date().toISOString(),
+      source: 'contentfulWebhook'
+    }
+  };
+};
+
+const stringify = (data: any) => {
+  if (typeof data === 'string') return data;
+  if (data !== null && data !== undefined && !isError(data) && !isContentfulError(data)) {
+    try {
+      return JSON.stringify(enhanceContentfulObjectWithMetadata(data));
+    } catch (err: any) {
+      logger.error(`stringify error`, err.message || err, err.stack, data?.sys?.id);
+      return '';
+    }
+  }
+  return '';
+};
 
 export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
   const redis = new Redis({
@@ -50,7 +79,7 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       const { data, isPreview } = command;
       const key = `${isPreview ? 'preview' : 'production'}:entries:${data.sys.id}`;
       if (command.action === 'update') {
-        await redis.set(key, JSON.stringify(data));
+        await redis.set(key, stringify(data));
       } else if (command.action === 'delete') {
         await redis.del(key);
       }
@@ -61,7 +90,7 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       const key = `${isPreview ? 'preview' : 'production'}:assets:${data.sys.id}`;
       if (command.action === 'update') {
         if (assetHasUrl(data)) {
-          await redis.set(key, JSON.stringify(data));
+          await redis.set(key, stringify(data));
         } else {
           // Asset must be deleted because the content was not ready in contentful
           await redis.del(key);
@@ -75,7 +104,7 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       const key = `${isPreview ? 'preview' : 'production'}:content_types`;
       if (command.action === 'update') {
         await redis.hset(key, {
-          [data.sys.id]: JSON.stringify(data)
+          [data.sys.id]: stringify(data)
         });
       } else if (command.action === 'delete') {
         await redis.hdel(key, data.sys.id);

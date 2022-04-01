@@ -24,10 +24,21 @@ const parse = (r: string | Error | null): any => {
   return null;
 };
 
+const enhanceContentfulObjectWithMetadata = (item: any) => {
+  return {
+    ...item,
+    lastrev_metadata: {
+      insert_date: new Date().toISOString(),
+      source: 'RedisLoader'
+    }
+  };
+};
+
 const stringify = (r: any) => {
+  if (typeof r === 'string') return r;
   if (!isNil(r) && !isError(r) && !isContentfulError(r)) {
     try {
-      return JSON.stringify(r);
+      return JSON.stringify(enhanceContentfulObjectWithMetadata(r));
     } catch (err: any) {
       logger.error(`stringify error`, err.message || err, err.stack, r?.sys?.id);
       return '';
