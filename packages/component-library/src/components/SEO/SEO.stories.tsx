@@ -19,7 +19,8 @@ export default {
           '& th': {
             fontWeight: 'bold'
           }
-        }}>
+        }}
+      >
         <TableBody>
           <TableRow>
             <TableCell component="th" scope="row">

@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.3.16
+
+### Patch Changes
+
+- c328895: Add missing components to Rollup entrypoint
+
 ## 0.3.15
 
 ### Patch Changes
