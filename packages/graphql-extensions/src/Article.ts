@@ -17,7 +17,6 @@ import createType from './utils/createType';
 import createPath from './utils/createPath';
 import getPathReader from './utils/getPathReader';
 import parseRichTextField from './utils/parseRichTextField';
-import createPermaLink from './utils/createPermaLink';
 import getCategoriesForArticle from './utils/getCategoriesForArticle';
 import getPathUrl from './utils/getPathUrl';
 
@@ -220,7 +219,7 @@ export const mappers = {
             title,
             section,
             content,
-            permalink: `${url}${createPermaLink(section)}`,
+            permalink: url,
             categories,
             categoryLinks
           }
