@@ -1,6 +1,7 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
-import Section, { SectionProps } from './Section';
+import Section from './Section';
+import { SectionProps } from './Section.types';
 import { singlePanelMock, splitPanelMock } from './Section.mock';
 import { paragraphMock } from '../Text/Text.mock';
 import { mediaMock } from '../Media/Media.mock';

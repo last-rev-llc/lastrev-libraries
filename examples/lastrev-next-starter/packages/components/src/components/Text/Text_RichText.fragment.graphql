@@ -1,0 +1,32 @@
+fragment Text_RichTextFragment on Text {
+  ...Content_BaseFragment
+  variant
+  align
+  body {
+    ...RichText_RichTextFragment
+    links {
+      entries {
+        ...Content_BaseFragment
+        ... on Text {
+          variant
+          align
+          body {
+            ...RichText_RichTextFragment
+            links {
+              entries {
+                ...Content_BaseFragment
+                ... on Text {
+                  variant
+                  align
+                  body {
+                    ...RichText_RichTextFragment
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

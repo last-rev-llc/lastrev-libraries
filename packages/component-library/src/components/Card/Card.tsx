@@ -13,38 +13,21 @@ import styled from '@mui/system/styled';
 import Skeleton from '@mui/material/Skeleton';
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
-import { MediaProps } from '../Media/Media.types';
 import Link, { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
-import { RichText } from '../Text';
 import sidekick from '../../utils/sidekick';
 import getFirstOfArray from '../../utils/getFirstOfArray';
-
-export interface CardProps extends MuiCardProps {
-  __typename?: string;
-  loading?: boolean;
-  variant?: any;
-  title?: string;
-  subtitle?: string;
-  media?: MediaProps | MediaProps[];
-  body?: RichText;
-  link?: LinkProps;
-  actions?: LinkProps[];
-  tags?: LinkProps[];
-  sidekickLookup: any;
-}
-
-export interface CardOverrides {}
+import { CardProps } from './Card.types';
 
 export const Card = ({
-  media,
+  variant,
   title,
   subtitle,
+  media,
   body,
   link,
   tags,
   actions,
-  variant,
   loading,
   sidekickLookup,
   ...props
@@ -84,8 +67,7 @@ export const Card = ({
                 {...sidekick(sidekickLookup?.subtitle)}
                 variant="h4"
                 component="h4"
-                data-testid="Card-subtitle"
-              >
+                data-testid="Card-subtitle">
                 {subtitle}
               </Typography>
             ) : null}

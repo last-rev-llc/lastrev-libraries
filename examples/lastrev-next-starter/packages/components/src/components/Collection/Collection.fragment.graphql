@@ -1,0 +1,27 @@
+fragment Collection_BaseFragment on Collection {
+  ...Content_BaseFragment
+  variant
+  itemsVariant
+  itemsWidth
+  itemsSpacing
+  theme {
+    id
+    components
+    typography
+  }
+  settings
+  introText {
+    ...Content_BaseFragment
+    body {
+      ...RichText_CollectionFragment
+    }
+    align
+    variant
+  }
+  items {
+    ...Card_BaseFragment
+    ...Link_BaseFragment
+    ...NavigationItem_BaseFragment
+    ...Media_BaseFragment
+  }
+}

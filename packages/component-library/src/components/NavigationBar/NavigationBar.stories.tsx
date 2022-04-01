@@ -4,7 +4,7 @@ import NavigationBar from './NavigationBar';
 import NavigationBarMock, { mockWithNavigationItems } from './NavigationBar.mock';
 
 export default {
-  title: '1. Primitives / MUI / NavigationBar',
+  title: 'Components / NavigationBar',
   component: NavigationBar,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

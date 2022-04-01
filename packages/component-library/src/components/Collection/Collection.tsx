@@ -1,33 +1,13 @@
 import React from 'react';
 import { Container, Box } from '@mui/material';
-import { Breakpoint } from '@mui/material';
 import styled from '@mui/system/styled';
 import omit from 'lodash/omit';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-// import { LinkProps } from '../Link/Link';
-import { MediaProps } from '../Media';
-import { TextProps } from '../Text';
-import { CardProps } from '../Card';
-import { NavigationItemProps } from '../NavigationItem';
 import Section from '../Section';
 import sidekick from '../../utils/sidekick';
 import ConditionalWrapper from '../ConditionalWrapper';
-
-export interface CollectionProps {
-  id: string;
-  __typename?: string;
-  items?: CardProps[] | NavigationItemProps[];
-  background?: MediaProps;
-  variant?: string;
-  introText?: TextProps;
-  itemsVariant?: string;
-  itemsSpacing?: number;
-  itemsWidth?: false | Breakpoint;
-  styles?: any;
-  theme?: any;
-  sidekickLookup?: any;
-}
+import { CollectionProps } from './Collection.types';
 
 export const Collection = ({
   items,
@@ -51,16 +31,14 @@ export const Collection = ({
         data-testid="Collection"
         {...omit(props, 'theme')}
         {...sidekick(sidekickLookup)}
-        sx={styles?.root}
-      >
+        sx={styles?.root}>
         <ConditionalWrapper
           condition={!!itemsWidth}
           wrapper={(children) => (
             <ContentContainer data-testid="Collection-contentContainer" maxWidth={itemsWidth}>
               {children}
             </ContentContainer>
-          )}
-        >
+          )}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
           )}

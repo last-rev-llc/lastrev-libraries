@@ -1,13 +1,5 @@
 import React from 'react';
-// import * as Sentry from '@sentry/react';
-
-// export const ErrorBoundaryPropTypes = {
-//   children: PropTypes.node.isRequired
-// };
-
-interface Props {
-  children: React.ReactNode;
-}
+import { ErrorBoundaryProps } from './ErrorBoundary.types';
 
 function FallbackComponent() {
   return <div>An error has occured</div>;
@@ -15,7 +7,6 @@ function FallbackComponent() {
 type Env = 'development' | 'production' | 'staging' | 'test' | string | undefined;
 const NODE_ENV: Env = process.env.NODE_ENV;
 
-type ErrorBoundaryProps = { fallback: any; showDialog?: boolean };
 class BaseErrorBoundary extends React.Component<ErrorBoundaryProps> {
   state: {
     hasError: boolean;
@@ -46,7 +37,7 @@ class BaseErrorBoundary extends React.Component<ErrorBoundaryProps> {
   }
 }
 
-export const ErrorBoundary = ({ children }: Props) => {
+export const ErrorBoundary = ({ children }: ErrorBoundaryProps) => {
   return (
     <BaseErrorBoundary fallback={<FallbackComponent />} showDialog={NODE_ENV !== 'production'}>
       {children}

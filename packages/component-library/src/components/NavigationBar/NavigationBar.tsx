@@ -1,21 +1,12 @@
 import React from 'react';
 import { Box, Grid } from '@mui/material';
 import styled from '@mui/system/styled';
-import ErrorBoundary from '../ErrorBoundary';
-import { LinkProps } from '../Link/Link';
-import { NavigationItemProps } from '../NavigationItem/NavigationItem';
 import { useTheme } from '@mui/system';
 
+import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
-export interface NavigationBarProps {
-  items?: LinkProps[] | NavigationItemProps[];
-  variant?: string;
-  itemsVariant?: string;
-  theme: any;
-  sidekickLookup: string;
-  onRequestClose?: any;
-}
+import { NavigationBarProps } from './NavigationBar.types';
 
 export const NavigationBar = ({ items, variant, itemsVariant, onRequestClose, sidekickLookup }: NavigationBarProps) => {
   if (!items?.length) return null;

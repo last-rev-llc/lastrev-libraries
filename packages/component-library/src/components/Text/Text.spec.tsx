@@ -2,7 +2,9 @@ import * as React from 'react';
 import { each } from 'lodash';
 import { BLOCKS } from '@contentful/rich-text-types';
 import mount from '../../../cypress/mount';
-import Text, { TextProps } from './Text';
+import { TextProps } from './Text.types';
+import Text from './Text';
+
 import mockContent, {
   dynamicMock,
   valueNode,

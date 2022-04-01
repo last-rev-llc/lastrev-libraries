@@ -1,0 +1,18 @@
+fragment RichText_BaseFragment on RichText {
+  id
+  __typename
+  json
+  links {
+    entries {
+      ...Content_BaseFragment
+      ...Link_BaseFragment
+      ...Collection_RichTextFragment
+      ...Card_RichTextFragment
+      ...Section_RichTextFragment
+      ...Text_RichTextFragment
+    }
+    assets {
+      ...Media_BaseFragment
+    }
+  }
+}

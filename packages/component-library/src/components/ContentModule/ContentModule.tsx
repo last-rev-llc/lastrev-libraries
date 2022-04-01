@@ -7,8 +7,10 @@ import { useContentModuleContext } from './ContentModuleContext';
 import merge from 'lodash/merge';
 import omitBy from 'lodash/omitBy';
 import isNull from 'lodash/isNull';
+import { ContentModuleProps } from './ContentModule.types';
 const AnimationContext = dynamic(() => import('./AnimationContext'));
 
+// TODO: Extract Theme composition into a separate hook
 const getMUITheme = ({
   theme,
   colorScheme,
@@ -56,17 +58,7 @@ const getProviders = (
   return providers.filter((x) => !!x);
 };
 
-interface Props {
-  __typename?: string;
-  theme?: Array<Theme>;
-  variant?: string;
-  animation?: string;
-  colorScheme?: string;
-  loading?: boolean;
-  [key: string]: any;
-}
-
-function ContentModule({ __typename, theme, ...fields }: Props) {
+function ContentModule({ __typename, theme, ...fields }: ContentModuleProps) {
   if (!__typename) return null;
   const contentMapping = useContentModuleContext();
   const contextTheme = useTheme();

@@ -1,4 +1,4 @@
-import { CollectionCarouselProps } from './CollectionCarousel';
+import { CollectionCarouselProps } from './CollectionCarousel.types';
 import mockCard from '../Card/Card.mock';
 import mockTheme from '../../theme/mock.theme';
 

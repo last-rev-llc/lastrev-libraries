@@ -1,6 +1,7 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
-import NavigationItem, { NavigationItemProps } from './NavigationItem';
+import NavigationItem from './NavigationItem';
+import { NavigationItemProps } from './NavigationItem.types';
 import mockContent from './NavigationItem.mock';
 
 let mockedContent: NavigationItemProps = {};

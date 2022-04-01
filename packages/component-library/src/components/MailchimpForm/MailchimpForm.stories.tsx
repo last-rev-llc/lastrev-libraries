@@ -4,7 +4,7 @@ import MailchimpForm from './MailchimpForm';
 import mailchimpFormMock from './MailchimpForm.mock';
 
 export default {
-  title: '1. Primitives / MUI / MailchimpForm',
+  title: 'Components / MailchimpForm',
   component: MailchimpForm,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => <Box>{storyFn()}</Box>

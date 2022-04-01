@@ -215,8 +215,10 @@ export const paragraphMock = {
     assets: []
   }
 };
-
-export default {
+export const formattedMock = () => ({
+  ...complexMock
+});
+export const baseMock = () => ({
   __typename: 'Text',
   json: {
     nodeType: 'document',
@@ -269,4 +271,5 @@ export default {
       }
     ]
   }
-};
+});
+export default baseMock();

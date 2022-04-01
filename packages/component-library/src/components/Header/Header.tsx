@@ -12,18 +12,11 @@ import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
-import { MediaProps } from '../Media';
-import { CollectionProps } from '../Collection';
+
 import ContentModule from '../ContentModule';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import sidekick from '../../utils/sidekick';
-export interface HeaderProps {
-  variant?: 'elevation' | 'outlined' | undefined;
-  logo?: MediaProps;
-  logoUrl?: string;
-  navigationItems?: CollectionProps[];
-  sidekickLookup: any;
-}
+import { HeaderProps } from './Header.types';
 
 export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup }: HeaderProps) => {
   const trigger = useScrollTrigger({
@@ -44,8 +37,7 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
           variant={variant}
           elevation={trigger ? 4 : 0}
           menuVisible={menuVisible}
-          menuBreakpoint={menuBreakpoint}
-        >
+          menuBreakpoint={menuBreakpoint}>
           <ContentContainer>
             {logo ? (
               <Link href={logoUrl} sx={{ height: '100%', py: 3 }} {...sidekick(sidekickLookup?.logo)}>
@@ -64,8 +56,7 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
                 color="secondary"
                 aria-label="menu"
                 onClick={() => setMenuVisible(!menuVisible)}
-                size="large"
-              >
+                size="large">
                 {menuVisible ? <CloseIcon /> : <MenuIcon />}
               </IconButton>
             </Hidden>

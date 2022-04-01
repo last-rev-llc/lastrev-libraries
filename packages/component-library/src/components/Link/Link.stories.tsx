@@ -4,15 +4,8 @@ import Link from './Link';
 import mockContent from './Link.mock';
 
 export default {
-  title: '1. Primitives / MUI / Link',
+  title: 'Components / Link',
   component: Link,
-  decorators: [
-    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box p={4} style={{ backgroundColor: '#f5f5f5' }}>
-        {storyFn()}
-      </Box>
-    )
-  ],
   argTypes: {
     variant: {
       name: 'Variant',
@@ -63,3 +56,11 @@ export default {
 const Template = (args: JSX.IntrinsicAttributes) => <Link __typename="Link" {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mockContent() };
+export const ButtonContained = Template.bind({});
+ButtonContained.args = { ...mockContent(), variant: 'button-contained' };
+export const ButtonOutlined = Template.bind({});
+ButtonOutlined.args = { ...mockContent(), variant: 'button-outlined' };
+export const ButtonText = Template.bind({});
+ButtonText.args = { ...mockContent(), variant: 'button-text' };
+export const LinkText = Template.bind({});
+LinkText.args = { ...mockContent(), variant: 'link' };

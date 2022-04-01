@@ -1,0 +1,46 @@
+# This will go 3 levels deep recursive
+fragment Section_BaseFragment on Section {
+  ...Section_BaseFieldsFragment
+  contents {
+    ...ContentModule_SectionFragment
+    ... on Section {
+      ...Section_BaseFieldsFragment
+      contents {
+        ...ContentModule_SectionFragment
+        ... on Section {
+          ...Section_BaseFieldsFragment
+          contents {
+            ...ContentModule_SectionFragment
+            ... on Section {
+              ...Section_BaseFieldsFragment
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment Section_BaseFieldsFragment on Section {
+  ...Content_BaseFragment
+  theme {
+    id
+    components
+    typography
+  }
+  variant
+  styles
+  # Style fields
+  backgroundColor
+  contentWidth
+  contentDirection
+  contentSpacing
+  theme {
+    id
+    components
+    typography
+  }
+  background {
+    ...Media_BaseFragment
+  }
+}

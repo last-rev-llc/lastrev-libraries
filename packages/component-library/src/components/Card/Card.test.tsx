@@ -2,7 +2,8 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 // import preloadAll from 'jest-next-dynamic';
-import Card, { CardProps } from './Card';
+import Card from './Card';
+import { CardProps } from './Card.types';
 import mockContent from './Card.mock';
 
 // beforeAll(async () => {
@@ -35,7 +36,7 @@ describe('<Card />', () => {
   test('Card renders media properly', () => {
     const { getByTestId } = renderComponent(mockedContent);
     const media = Array.isArray(mockedContent.media) ? mockedContent.media[0] : mockedContent.media;
-    expect(getByTestId('Card-media')).toHaveAttribute('src', media?.file.url);
+    expect(getByTestId('Card-media')).toHaveAttribute('src', media?.file?.url);
     expect(getByTestId('Card-media')).toHaveAttribute('alt', media?.title);
   });
 });

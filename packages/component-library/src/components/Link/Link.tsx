@@ -5,7 +5,7 @@
 import * as React from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
-import NextLink, { LinkProps as NextLinkProps } from 'next/link';
+import NextLink from 'next/link';
 import styled from '@mui/system/styled';
 import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
@@ -14,24 +14,10 @@ import MuiLink from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import sidekick from '../../utils/sidekick';
 import { useThemeProps } from '@mui/system';
-import { SxProps, Theme } from '@mui/material/styles';
+
+import { NextLinkComposedProps, LinkProps } from './Link.types';
 
 // TODO: Button components aren't hyperlinking
-
-interface NextLinkComposedProps {
-  to: NextLinkProps['href'];
-  linkAs?: NextLinkProps['as'];
-  href?: NextLinkProps['href'];
-  text?: string;
-  className?: string;
-  replace?: boolean;
-  scroll?: boolean;
-  passHref?: boolean;
-  shallow?: boolean;
-  prefetch?: boolean;
-  locale?: string | false;
-  children: React.ReactNode;
-}
 
 export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps>(function NextLinkComposed(
   props,
@@ -62,37 +48,13 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
       shallow={shallow}
       passHref={passHref}
       locale={locale}
-      {...other}
-    >
+      {...other}>
       <a ref={ref} {...other}>
         {text || children}
       </a>
     </NextLink>
   );
 });
-
-export type LinkProps = {
-  id?: string;
-  __typename?: string;
-  activeClassName?: string;
-  className?: string;
-  as?: NextLinkProps['as'];
-  href?: NextLinkProps['href'];
-  noLinkStyle?: boolean;
-  role?: React.AriaRole;
-  variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
-  icon?: string;
-  iconPosition?: string;
-  children?: any;
-  onClick?: any;
-  type?: 'button' | 'submit' | 'reset';
-  text?: string;
-  sidekickLookup?: any;
-  color?: any;
-  target?: string;
-  rel?: string;
-  sx?: SxProps<Theme>;
-};
 
 // Icon component using FontAwesome
 const getIcon = (icon: string) => {
@@ -149,7 +111,6 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
    * - Include that css file in head of any given project to render
    */
   // NOTES:
-  // - 1. ** Custom for Strong365 using FontAwesome **
   // -->  ** Is it possible to extend in that repo? **
   // - 2. Better to use SVG
   // --> https://material-ui.com/components/icons/#font-vs-svg-which-approach-to-use
@@ -162,8 +123,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}
-        >
+          {...extra}>
           <IconButton aria-label={icon} size="large">
             {getIcon(icon)}
           </IconButton>
@@ -188,8 +148,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         // type={other.type}
         // {...extra}
         onClick={other.onClick}
-        size="large"
-      >
+        size="large">
         {getIcon(icon)}
       </IconButton>
     );
@@ -207,8 +166,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
               type={other.type}
               {...extra}
               startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-              endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-            >
+              endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
               {text || children}
             </Button>
           </a>
@@ -223,8 +181,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
             type={other.type}
             {...extra}
             startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-          >
+            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
             {text || children}
           </Button>
         </NextLink>
@@ -238,8 +195,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         type={other.type}
         {...extra}
         startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-      >
+        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
         {text || children}
       </Button>
     );
@@ -254,8 +210,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}
-        >
+          {...extra}>
           {getButtonContent(text, children, iconPosition, icon)}
         </a>
       );
@@ -268,8 +223,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         ref={ref}
         target="_blank"
         rel="noopener noreferrer"
-        {...extra}
-      >
+        {...extra}>
         {getButtonContent(text, children, iconPosition, icon)}
       </MuiLink>
     );
@@ -303,8 +257,9 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
 });
 
 const ButtonWrap = styled(Box, {
-  name: 'Box',
-  slot: 'Content'
+  name: 'Link',
+  slot: 'ButtonWrap',
+  overridesResolver: (_, styles) => [styles.buttonWrap]
 })<{}>(() => ({
   display: 'inline-flex',
   alignItems: 'center'

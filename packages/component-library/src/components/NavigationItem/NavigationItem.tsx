@@ -7,20 +7,10 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
-import Link, { LinkProps } from '../Link';
+import Link from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
-
-// type NavigationItem = LinkProps | NavigationItemProps;
-
-// export type NavigationItemProps = {
-//   subNavigation: [NavigationItem];
-// } & LinkProps;
-export interface NavigationItemProps extends LinkProps {
-  subNavigation?: Array<LinkProps>;
-  sidekickLookup?: any;
-  onRequestClose?: any;
-}
+import { NavigationItemProps } from './NavigationItem.types';
 
 export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, ...props }: NavigationItemProps) => {
   const [open, setOpen] = React.useState<boolean>(false);

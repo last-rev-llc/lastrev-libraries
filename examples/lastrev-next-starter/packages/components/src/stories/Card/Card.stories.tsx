@@ -1,6 +1,6 @@
 import React from 'react';
 import { Paper, Grid } from '@mui/material';
-import Card, { CardProps } from '@last-rev/component-library/dist/components/Card/Card';
+import Card, { CardProps } from '@last-rev/component-library/dist/components/Card';
 import {
   mediaLeftTextRightMock,
   mediaRightTextLeftMock,
@@ -94,8 +94,7 @@ export default {
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal, ctx: any) => (
       <Paper
         sx={{ padding: 2, backgroundColor: variantProps[ctx?.args?.variant]?.backgroundColor ?? 'auto' }}
-        variant="outlined"
-      >
+        variant="outlined">
         <Grid container alignItems="center" justifyContent="center">
           <Grid item {...variantProps[ctx?.args?.variant]?.grid}>
             {storyFn()}

@@ -1,0 +1,8 @@
+fragment Text_BaseFragment on Text {
+  ...Content_BaseFragment
+  variant
+  align
+  body {
+    ...RichText_BaseFragment
+  }
+}

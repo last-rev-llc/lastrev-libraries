@@ -1,4 +1,7 @@
-import './@types/mui';
+export * from './@types/components';
+export * from './@types/overrides';
+export * from './@types/palette';
+export * from './@types/props';
 import './styles.scss';
 export { ContentModuleProvider } from './components/ContentModule/ContentModuleContext';
 export { default as ErrorBoundary } from './components/ErrorBoundary';
@@ -23,3 +26,4 @@ export { default as NavigationBar } from './components/NavigationBar';
 export { default as createTheme } from './theme/createTheme';
 export { default as BackToTop } from './components/BackToTop';
 export { default as FormMarketoEmbed } from './components/FormMarketoEmbed';
+export { default as useThemeProps } from './utils/useThemeProps';

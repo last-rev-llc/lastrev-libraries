@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { lorem } from 'faker';
 import mount from '../../../cypress/mount';
-import MailchimpForm, { MailchimpFormProps } from './MailchimpForm';
+import MailchimpForm from './MailchimpForm';
+import { MailchimpFormProps } from './MailchimpForm.types';
 import mockContent from './MailchimpForm.mock';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 

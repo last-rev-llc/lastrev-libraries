@@ -1,5 +1,5 @@
 import { lorem } from 'faker';
-import { CollectionProps } from './Collection';
+import { CollectionProps } from './Collection.types';
 import mockCard from '../Card/Card.mock';
 import { complexMock } from '../Text/Text.mock';
 import mockTheme from '../../theme/mock.theme';

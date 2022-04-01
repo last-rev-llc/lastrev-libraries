@@ -2,11 +2,7 @@ import React from 'react';
 import styled from '@mui/system/styled';
 import { css } from '@emotion/react';
 import Image from '../Image';
-interface File {
-  url: string;
-  width?: string;
-  height?: string;
-}
+import { ArtDirectedImageProps, File } from './ArtDirectedImage.types';
 
 const getImageMedia = (
   breakpoint: string,
@@ -29,18 +25,7 @@ const getImageMedia = (
   return '';
 };
 
-interface Props {
-  file?: File;
-  fileTablet?: File;
-  fileMobile?: File;
-  title?: string;
-  description?: string;
-  className?: string;
-  priority?: boolean;
-}
-type Ref = HTMLImageElement;
-
-const ArtDirectedImage = React.forwardRef<Ref, Props>(
+const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProps>(
   ({ title, description, file, fileMobile, fileTablet, ...props }, ref) => (
     <>
       {fileMobile?.url ? (
@@ -84,7 +69,11 @@ const ArtDirectedImage = React.forwardRef<Ref, Props>(
   )
 );
 
-const ResponsiveImage = styled(Image, { shouldForwardProp: (prop) => prop !== 'displaymedia' })<{
+const ResponsiveImage = styled(Image, {
+  name: 'ArtDirectedImage',
+  slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'displaymedia'
+})<{
   media?: string;
 }>`
   ${({ media }) =>

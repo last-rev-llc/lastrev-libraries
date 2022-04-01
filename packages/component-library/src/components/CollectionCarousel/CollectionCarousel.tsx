@@ -1,26 +1,15 @@
 import React from 'react';
 import { Container, Box } from '@mui/material';
-import { Breakpoint } from '@mui/material';
 import styled from '@mui/system/styled';
-import ErrorBoundary from '../ErrorBoundary';
-import { MediaProps } from '../Media';
-import { CardProps } from '../Card';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+
+import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
-SwiperCore.use([Navigation, Pagination]);
+import { CollectionCarouselProps } from './CollectionCarousel.types';
 
-export interface CollectionCarouselProps {
-  items?: CardProps[];
-  background?: MediaProps;
-  variant: string;
-  itemsVariant?: string;
-  itemsWidth?: false | Breakpoint | undefined;
-  theme: any;
-  sidekickLookup: string;
-  CarouselVariantProps?: { [key: string]: Swiper };
-}
+SwiperCore.use([Navigation, Pagination]);
 
 export const CollectionCarousel = ({
   items,

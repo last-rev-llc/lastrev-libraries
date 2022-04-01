@@ -1,6 +1,7 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
-import Hero, { HeroProps } from './Hero';
+import Hero from './Hero';
+import { HeroProps } from './Hero.types';
 import mockContent from './Hero.mock';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 

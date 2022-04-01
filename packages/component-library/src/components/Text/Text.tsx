@@ -11,37 +11,12 @@ import Typography from '@mui/material/Typography';
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
 import ContentModule from '../ContentModule';
-import Media, { MediaProps } from '../Media';
+import Media from '../Media';
 import sidekick from '../../utils/sidekick';
+import { TextLinks, TextProps } from './Text.types';
 
 const keyBy = (key: string, xs: any[]) => xs.reduce((acc, x) => ({ ...acc, [x[key]]: x }), {});
-interface Content {
-  __typename?: string;
-  id: string;
-}
 
-export interface TextProps {
-  __typename?: string;
-  id?: string;
-  styles?: {
-    root?: any;
-  };
-  sx?: any;
-  body: RichText;
-  sidekickLookup?: any;
-  variant?: string;
-  align?: 'left' | 'center' | 'right' | any;
-  renderNode?: any;
-}
-
-interface TextLinks {
-  entries?: Array<Content>;
-  assets?: Array<MediaProps>;
-}
-export interface RichText {
-  json: any;
-  links?: TextLinks;
-}
 const bodyXSS = new FilterXSS({
   whiteList: { div: ['id', 'style'] },
   css: false
@@ -162,8 +137,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ..
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}
-      >
+        {...props}>
         {documentToReactComponents(body?.json, renderOptions({ links: body?.links, renderNode }))}
       </Root>
     </ErrorBoundary>

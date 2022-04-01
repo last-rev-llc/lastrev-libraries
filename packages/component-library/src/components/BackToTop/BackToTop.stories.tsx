@@ -3,7 +3,7 @@ import BackToTop from './BackToTop';
 import mockContent from './BackToTop.mock';
 
 export default {
-  title: '1. Primitives / MUI / BackToTop',
+  title: 'Components / BackToTop',
   component: BackToTop,
   argTypes: {
     size: {

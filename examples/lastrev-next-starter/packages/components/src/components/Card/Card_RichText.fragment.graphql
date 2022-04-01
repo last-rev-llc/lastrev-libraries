@@ -1,0 +1,23 @@
+fragment Card_RichTextFragment on Card {
+  ...Content_BaseFragment
+  variant
+  theme {
+    id
+    components
+    typography
+  }
+  media {
+    ...Media_BaseFragment
+  }
+  title
+  subtitle
+  body {
+    ...RichText_CardFragment
+  }
+  actions {
+    ...Link_BaseFragment
+  }
+  link {
+    ...Link_BaseFragment
+  }
+}
