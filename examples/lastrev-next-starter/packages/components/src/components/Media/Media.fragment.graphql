@@ -8,5 +8,7 @@ fragment Media_BaseFragment on Media {
     url
     extension
     fileName
+    width
+    height
   }
 }

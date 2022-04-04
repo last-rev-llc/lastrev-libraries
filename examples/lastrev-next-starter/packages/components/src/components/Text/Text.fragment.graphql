@@ -1,8 +1,41 @@
-fragment Text_BaseFragment on Text {
+fragment Text_FieldsFragment on Text {
   ...Content_BaseFragment
   variant
   align
+}
+
+fragment Text_BaseFragment on Text {
+  ...Text_FieldsFragment
   body {
     ...RichText_BaseFragment
+  }
+}
+
+fragment Text_RichTextFragment on Text {
+  ...Text_FieldsFragment
+  body {
+    ...RichText_RichTextFragment
+    links {
+      entries {
+        ...Content_BaseFragment
+        ... on Text {
+          ...Text_FieldsFragment
+          body {
+            ...RichText_RichTextFragment
+            links {
+              entries {
+                ...Content_BaseFragment
+                ... on Text {
+                  ...Text_FieldsFragment
+                  body {
+                    ...RichText_RichTextFragment
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

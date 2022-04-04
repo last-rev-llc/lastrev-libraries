@@ -1,4 +1,4 @@
-fragment Collection_BaseFragment on Collection {
+fragment Collection_FieldsFragment on Collection {
   ...Content_BaseFragment
   variant
   itemsVariant
@@ -18,10 +18,25 @@ fragment Collection_BaseFragment on Collection {
     align
     variant
   }
+}
+
+# Base fragment used everywhere there's a Card
+fragment Collection_BaseFragment on Collection {
+  ...Collection_FieldsFragment
   items {
     ...Card_BaseFragment
     ...Link_BaseFragment
     ...NavigationItem_BaseFragment
     ...Media_BaseFragment
+  }
+}
+
+# Specific fragment used for the RichText embedded entries
+fragment Collection_RichTextFragment on Collection {
+  ...Collection_FieldsFragment
+  items {
+    ...Card_RichTextFragment
+    ...Link_BaseFragment
+    ...NavigationItem_BaseFragment
   }
 }
