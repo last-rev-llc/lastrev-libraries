@@ -22,7 +22,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
       <ErrorBoundary>
         <EmbedRoot
           {...sidekick(sidekickLookup)}
-          {...(props as IframeHTMLAttributes<any>)}
+          {...(props as React.IframeHTMLAttributes<any>)}
           src={image?.url}
           sx={{ width: '100%', height: '100%', ...props.sx }}
           data-testid={testId || 'Media'}
