@@ -1,15 +1,11 @@
 import program from 'commander';
-// import determineActions, { possibleActions } from './determineActions';
 import performCmsFunctions from './performCmsFunctions';
 import performAppCreateFunctions from './performAppCreateFunctions';
-// import installDependencies from './installDependencies';
 import performNetlifyFunctions from './performNetlifyFunctions';
 import ContentfulApiWrapper from './apiWrappers/ContentfulApiWrapper';
 import NetlifyApiWrapper from './apiWrappers/NetlifyApiWrapper';
 import GithubApiWrapper from './apiWrappers/GithubApiWrapper';
-// import { includes } from 'lodash';
 import LastRevConfig, { VAL_CREATE_APP_CONFIG } from './LastRevConfig';
-// import LastRevConfig, { VAL_SELECTED_ACTIONS, ACTION_DETERMINE_ACTIONS } from './LastRevConfig';
 import continueIfInProgress from './continueIfInProgress';
 import Messager from './Messager';
 import populateEnvVars from './populateEnvVars';
