@@ -2,7 +2,8 @@ import React from 'react';
 import styled from '@mui/system/styled';
 import { css } from '@emotion/react';
 import Image from '../Image';
-import { ArtDirectedImageProps, File } from './ArtDirectedImage.types';
+import { File } from '../Media/Media.types';
+import { ArtDirectedImageProps } from './ArtDirectedImage.types';
 
 const getImageMedia = (
   breakpoint: string,

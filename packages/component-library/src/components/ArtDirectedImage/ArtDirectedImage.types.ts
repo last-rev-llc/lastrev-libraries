@@ -1,8 +1,4 @@
-export interface File {
-  url: string;
-  width?: string;
-  height?: string;
-}
+import { File } from '../Media/Media.types';
 
 export interface ArtDirectedImageProps {
   file?: File;

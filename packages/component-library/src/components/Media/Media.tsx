@@ -22,7 +22,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
       <ErrorBoundary>
         <EmbedRoot
           {...sidekick(sidekickLookup)}
-          {...props}
+          {...(props as React.IframeHTMLAttributes<any>)}
           src={image?.url}
           sx={{ width: '100%', height: '100%', ...props.sx }}
           data-testid={testId || 'Media'}
@@ -38,9 +38,8 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           {...sidekick(sidekickLookup)}
           preload="auto"
           data-testid={testId || 'Media'}
-          {...props}
-          sx={{ width: '100%', height: '100%', ...props.sx }}
-        >
+          {...(props as MediaVideoProps)}
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>
