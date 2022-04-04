@@ -1,3 +1,5 @@
+import { ImageProps } from '../Image';
+
 export interface File {
   url?: string;
   width?: string;
@@ -8,7 +10,7 @@ export interface Asset {
   title?: string;
   description?: string;
 }
-export interface MediaProps {
+export interface MediaProps extends ImageProps {
   file?: File;
   fileTablet?: File;
   fileMobile?: File;
