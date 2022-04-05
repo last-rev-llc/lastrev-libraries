@@ -14,3 +14,35 @@ export type CmsOptions = {
   importToken?: string;
   importEnv?: string;
 };
+
+export type CreateAppConfig = {
+  app?: {
+    name?: string;
+    starter?: string;
+    contentfulSpaceId?: string;
+    contentfulEnv?: string;
+    repoName?: string;
+    repoOwner?: string;
+    redisHost?: string;
+    redisPort?: number;
+    redisPassword?: string;
+    devDomainUrl?: string;
+    googleTagManagerId?: string;
+  };
+  netlify?: {
+    accountSlug?: string;
+    devSiteName?: string;
+    prodSiteName?: string;
+    storybookSiteName?: string;
+  };
+  contentfulImport?: {
+    sourceSpaceId?: string;
+    sourceEnv?: string;
+    targetSpaceId?: string;
+    targetEnv?: string;
+    skipContentTypes?: boolean;
+    skipEntries?: boolean;
+    skipAssets?: boolean;
+    skipExtensions?: boolean;
+  };
+};

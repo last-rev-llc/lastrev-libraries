@@ -16,3 +16,5 @@ lerna-debug.log
 
 **/*sitemap.xml
 **/__generated/*.spec.js
+
+create-app.json
