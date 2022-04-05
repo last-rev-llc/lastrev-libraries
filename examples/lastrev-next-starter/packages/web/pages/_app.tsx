@@ -9,7 +9,6 @@ import { createEmotionCache } from '../src/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { LazyMotion } from 'framer-motion';
 // LastRev components
-import '../styles/globals.css';
 import dynamic from 'next/dynamic';
 const SEO = dynamic(() => import('@last-rev/component-library/dist/components/SEO/SEO'));
 const clientSideEmotionCache = createEmotionCache();
