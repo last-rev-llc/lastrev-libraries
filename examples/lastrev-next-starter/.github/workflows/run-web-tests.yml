@@ -106,8 +106,7 @@ jobs:
           group: 'UI - Chrome'
 
         env:
-          # CYPRESS_BASE_URL: ${{ steps.baseURL.outputs.value }}
-          CYPRESS_BASE_URL: 'https://starter.lastrev.com'
+          CYPRESS_BASE_URL: ${{ github.event.inputs.baseURL }}
           NODE_ENV: ${{ github.event.inputs.environment }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
