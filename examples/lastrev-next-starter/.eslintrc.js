@@ -1,15 +1,19 @@
+const isProduction = process.env.NODE_ENV === 'production';
+
 module.exports = {
+  root: true,
   extends: [
     'plugin:jsx-a11y/recommended',
     'prettier',
     'plugin:prettier/recommended', // Enables eslint-plugin-prettier and displays prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array,
-    'plugin:@next/next/recommended'
+    'plugin:@next/next/recommended',
+    'plugin:@last-rev/last-rev/recommended'
   ],
-  plugins: ['jsx-a11y', 'prettier'],
+  plugins: ['jsx-a11y', 'prettier', '@last-rev/last-rev', 'react', 'import'],
   env: {
     jest: true
   },
-  ignorePatterns: ['out/', 'storybook-static'],
+  ignorePatterns: ['out/', 'storybook-static', 'node_modules/'],
   rules: {
     'react/jsx-props-no-spreading': 0,
     'react/jsx-filename-extension': 0,
@@ -30,6 +34,7 @@ module.exports = {
       {
         endOfLine: 'auto'
       }
-    ]
+    ],
+    '@last-rev/last-rev/no-outside-workspaces': isProduction ? 2 : 0
   }
 };
