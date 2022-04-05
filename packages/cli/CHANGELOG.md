@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.3.0
+
+### Minor Changes
+
+- a9c0034: Updated CLI create-app to use a JSON input and added more features to it
+
 ## 0.2.2
 
 ### Patch Changes
