@@ -10,7 +10,7 @@ export interface Asset {
   title?: string;
   description?: string;
 }
-export interface MediaProps extends ImageProps {
+export interface MediaProps extends Omit<ImageProps, 'src'> {
   file?: File;
   fileTablet?: File;
   fileMobile?: File;

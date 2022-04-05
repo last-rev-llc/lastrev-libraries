@@ -6,7 +6,7 @@ export interface ContentModuleProps {
   variant?: string;
   animation?: string;
   colorScheme?: string;
-  loading?: boolean;
+  // loading?: boolean;
   [key: string]: any;
 }
 

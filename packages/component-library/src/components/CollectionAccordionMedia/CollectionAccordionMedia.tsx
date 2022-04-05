@@ -8,6 +8,7 @@ import ContentModule from '../ContentModule';
 import { CollectionProps } from '../Collection';
 import { AccordionProps } from '../Accordion';
 import getFirstOfArray from '../../utils/getFirstOfArray';
+import { MediaProps } from '../Media';
 
 export interface CollectionAccordionMediaProps extends CollectionProps {
   items: AccordionProps[];
@@ -75,7 +76,7 @@ const SelectedMedia = styled(ContentModule, {
   slot: 'SelectedMedia',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.selectedMedia]
-})``;
+})<MediaProps>``;
 
 const AccordionItem = styled(Grid, {
   name: 'CollectionAccordionMedia',
