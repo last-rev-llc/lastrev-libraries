@@ -24,3 +24,17 @@ a {
 * {
   box-sizing: border-box;
 }
+
+*,
+*::before,
+*::after {
+  scroll-margin-top: 70px;
+}
+
+@media (min-width: 1024px) {
+  *,
+  *::before,
+  *::after {
+    scroll-margin-top: 100px;
+  }
+}

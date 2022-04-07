@@ -59,6 +59,7 @@ export const Header = ({
   return (
     <ErrorBoundary>
       <Root
+        id="header"
         position="sticky"
         {...sidekick({ contentId: sidekickLookup?.contentId, contentTypeId: sidekickLookup?.contentTypeId })}
         variant={variant}

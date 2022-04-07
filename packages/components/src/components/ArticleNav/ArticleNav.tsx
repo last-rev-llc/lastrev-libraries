@@ -14,12 +14,11 @@ export interface ArticleNavProps {
 export const ArticleNav = ({ sideNav }: ArticleNavProps) => {
   const [active, setActive] = React.useState('');
 
-  const onScrollUpdate = (entry: { target: any; boundingClientRect: any; }, isInViewPort: any) => {
-    const { target, boundingClientRect } = entry;
-    const menuItem = document.querySelector(`[data-scrollspy-id="${target.id}"]`);
+  const onScrollUpdate = (entry: IntersectionObserverEntry, isInViewPort: any) => {
+    const menuItem = document.querySelector(`[data-scrollspy-id="${entry.target.id}"]`);
     if (!menuItem) return;
-    if (boundingClientRect.y <= 0 && isInViewPort) {
-      setActive(`/#${target.id}`);
+    if (entry.isIntersecting && entry.intersectionRect.top === entry.rootBounds?.top && isInViewPort) {
+      setActive(`/#${entry.target.id}`);
     }
   };
 
