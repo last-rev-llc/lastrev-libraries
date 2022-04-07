@@ -14,7 +14,8 @@ const ContentPreview = ({
   error,
   environment,
   spaceId,
-  locale = 'en-US'
+  locale = 'en-US',
+  pageURL
 }: ContentPreviewProps) => {
   return (
     <>
@@ -60,7 +61,7 @@ const ContentPreview = ({
         </Container>
       ) : null}
 
-      <div style={{ position: 'fixed', bottom: 16, right: 16 }}>
+      <div style={{ position: 'fixed', bottom: 16, right: 16, background: '#fff', padding: 8, zIndex: 10 }}>
         <Link
           target="_blank"
           href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}
@@ -68,6 +69,14 @@ const ContentPreview = ({
           {`${capitalize(content?.__typename)}#${id} in Contentful`}
         </Link>
         <br />
+        {pageURL && (
+          <Link
+            target="_blank"
+            href={pageURL}
+          >
+            {`Page URL: ${pageURL}`}
+          </Link>
+        )}
       </div>
     </>
   );
