@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.4.0
+
+### Minor Changes
+
+- 35c6c46: Add pageURL prop to the ContentPreview component
+
 ## 0.3.16
 
 ### Patch Changes

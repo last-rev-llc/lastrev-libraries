@@ -70,10 +70,7 @@ const ContentPreview = ({
         </Link>
         <br />
         {pageURL && (
-          <Link
-            target="_blank"
-            href={pageURL}
-          >
+          <Link target="_blank" href={pageURL}>
             {`Page URL: ${pageURL}`}
           </Link>
         )}
