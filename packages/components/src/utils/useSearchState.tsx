@@ -15,16 +15,16 @@ interface UseSearchState {
   handleSearchStateChange: (updatedSearchState: SearchState) => void;
 }
 
-if (typeof window !== 'undefined') {
-  const urlSearchParams = new URLSearchParams(window.location.search);
-  params = Object.fromEntries(urlSearchParams.entries());
-}
-
 export function useSearchState(): UseSearchState {
   const [searchState, setSearchState] = useState<SearchState>({ query: '', page: 1 });
   const setStateId = useRef<any>();
   const router = useRouter();
   const { query } = router;
+
+  if (typeof window !== 'undefined') {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    params = Object.fromEntries(urlSearchParams.entries());
+  }
 
   const handleSearchStateChange = (updatedSearchState: SearchState) => {
     clearTimeout(setStateId.current);
