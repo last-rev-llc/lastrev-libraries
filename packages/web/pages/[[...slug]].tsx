@@ -53,11 +53,14 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
       },
       // Re-generate the page at most once per second
       // if a request comes in
-      revalidate: 1
+      revalidate: false
     };
   } catch (err) {
     console.log('Error', err);
-    throw new Error('NotFound');
+    return {
+      props: {},
+      notFound: true
+    };
   }
 };
 
