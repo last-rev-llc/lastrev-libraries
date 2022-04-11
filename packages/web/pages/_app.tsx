@@ -71,6 +71,8 @@ const CollectionSearchFilters = dynamic(() => import('@ias/components/src/compon
 
 const CollectionSearchResults = dynamic(() => import('@ias/components/src/components/CollectionSearchResults'));
 
+const AuthProvider = dynamic(() => import('@ias/components/src/components/AuthProvider'));
+
 import '../styles/globals.css';
 
 const contentMapping: {
@@ -123,9 +125,11 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
-        <ContentModuleProvider contentMapping={contentMapping}>
-          <Component {...pageProps} />
-        </ContentModuleProvider>
+        <AuthProvider>
+          <ContentModuleProvider contentMapping={contentMapping}>
+            <Component {...pageProps} />
+          </ContentModuleProvider>
+        </AuthProvider>
       </ThemeProvider>
     </CacheProvider>
   );

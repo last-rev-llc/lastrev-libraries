@@ -15,5 +15,7 @@ export { default as CollectionSearchFilters } from './components/CollectionSearc
 export { default as CollectionSearchResults } from './components/CollectionSearchResults';
 export { default as TopicNav } from './components/TopicNav';
 export { default as TopicNavHorizontal } from './components/TopicNavHorizontal';
+export { default as AuthProvider } from './components/AuthProvider';
+export { default as AuthGuard } from './components/AuthGuard';
 
 export { default as theme } from './theme';

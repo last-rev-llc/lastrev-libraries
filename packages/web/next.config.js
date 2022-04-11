@@ -33,8 +33,11 @@ const nextConfig = {
     CONTENTFUL_DELIVERY_TOKEN: process.env.CONTENTFUL_DELIVERY_TOKEN,
     CONTENTFUL_PREVIEW_TOKEN: process.env.CONTENTFUL_PREVIEW_TOKEN,
     CONTENTFUL_ENV: process.env.CONTENTFUL_ENV,
+    OKTA_AUTH_DOMAIN: process.env.OKTA_AUTH_DOMAIN,
+    USER_AUTH_DOMAIN: process.env.USER_AUTH_DOMAIN,
     ALGOLIA_APP_ID: process.env.ALGOLIA_APP_ID,
-    ALGOLIA_SEARCH_API_KEY: process.env.ALGOLIA_SEARCH_API_KEY
+    ALGOLIA_SEARCH_API_KEY: process.env.ALGOLIA_SEARCH_API_KEY,
+    PROTECTED_PAGE_REQUIRED_ROLE: process.env.PROTECTED_PAGE_REQUIRED_ROLE
   },
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if

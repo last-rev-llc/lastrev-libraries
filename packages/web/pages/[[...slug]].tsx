@@ -1,10 +1,8 @@
 import React from 'react';
 import { join, sep, posix } from 'path';
 import { client, parseBooleanEnvVar } from '@ias/utils';
-import Article from '@ias/components/src/components/Article/Article';
-import PageTopic from '@ias/components/src/components/PageTopic/PageTopic';
-import PageGeneral from '@ias/components/src/components/PageGeneral';
 import { ContentModule } from '@last-rev/component-library';
+import AuthGuard from '@ias/components/src/components/AuthGuard';
 
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 const site = process.env.SITE;
@@ -46,10 +44,15 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
     if (!pageData) {
       throw new Error('NoPageFound');
     }
+    const isProtected = ((pageData?.page?.__typename === 'Article' && pageData?.page?.requiredRoles) || []).includes(
+      process.env.PROTECTED_PAGE_REQUIRED_ROLE || 'loggedIn'
+    );
 
     return {
       props: {
-        pageData
+        params: { path, locale, preview, site },
+        isProtected,
+        pageData: isProtected ? null : pageData
       },
       // Re-generate the page at most once per second
       // if a request comes in
@@ -64,10 +67,13 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
   }
 };
 
-export default function Page({ pageData }: any) {
+export default function Page({ params, isProtected, pageData }: any) {
   try {
+    if (isProtected) {
+      return <AuthGuard params={params} />;
+    }
     return <ContentModule {...pageData.page} />;
   } catch (err) {
-    console.log('failed here', err, pageData);
+    console.log('failed here', err, params);
   }
 }

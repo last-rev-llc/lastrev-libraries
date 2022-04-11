@@ -34,6 +34,7 @@ export interface ArticleProps {
   relatedLinks?: Array<LinkProps>;
   sideNav?: Array<LinkProps>;
   disableBackToTop?: boolean;
+  requiredRoles?: Array<string>;
   breadcrumbs?: Array<LinkProps>;
   footerItems?: Array<any>;
   header?: any;

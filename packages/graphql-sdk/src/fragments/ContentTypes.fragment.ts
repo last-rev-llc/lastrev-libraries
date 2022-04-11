@@ -359,6 +359,7 @@ export const ContentTypes_Fragments = gql`
     }
     seo
     disableBackToTop
+    requiredRoles
     categories {
       ...Link_Base
     }

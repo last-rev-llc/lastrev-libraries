@@ -61,6 +61,7 @@ export const typeDefs = gql`
     sideNav: [Link]
     pubDate: Date
     link: Link
+    requiredRoles: [String]
     seo: JSON
   }
 `;
@@ -172,6 +173,24 @@ export const mappers = {
       },
       link: async (article: any, _args: any, _ctx: ApolloContext) => {
         return article;
+      },
+      requiredRoles: async (article: any, _args: any, ctx: ApolloContext) => {
+        const ssoGroupItemsRef = await getLocalizedField(article?.fields, 'ssoGroupItems', ctx);
+        if (ssoGroupItemsRef) {
+          const childIds = ssoGroupItemsRef.map((content: any) => {
+            return { id: content?.sys.id, preview: !!ctx.preview };
+          });
+
+          const requiredRoles = [];
+          const childCategories: Array<any> = await ctx.loaders.entryLoader.loadMany(childIds);
+
+          for (let ssoGroupItem of childCategories) {
+            const groupId = await getLocalizedField(ssoGroupItem?.fields, 'groupId', ctx);
+            requiredRoles.push(groupId);
+          }
+          return requiredRoles;
+        }
+        return [];
       }
     },
     Card: {
