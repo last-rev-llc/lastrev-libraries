@@ -9,6 +9,7 @@
   directory = "packages/functions/src"
   external_node_modules = ["express"]
   node_bundler = "esbuild"
+  included_files = ["!node_modules/@swc/**/*", "!node_modules/@sentry/cli/**/*"]
 
 [[plugins]]
   package = "./packages/cache-netlify-plugin"
