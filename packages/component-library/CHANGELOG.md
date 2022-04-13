@@ -1,5 +1,13 @@
 # @last-rev/component-library
 
+## 0.4.1
+
+### Patch Changes
+
+- cf7d228: Change Hero component to use ContentModule when rendering a Link
+- Updated dependencies [6887a14]
+  - @last-rev/testing-library@0.1.6
+
 ## 0.4.0
 
 ### Minor Changes

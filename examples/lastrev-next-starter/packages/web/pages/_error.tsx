@@ -1,6 +1,6 @@
-import NextErrorComponent from "next/error";
+import NextErrorComponent from 'next/error';
 
-import * as Sentry from "@sentry/nextjs";
+import * as Sentry from '@sentry/nextjs';
 
 const MyError = ({ statusCode, hasGetInitialPropsRun, err }: any) => {
   if (!hasGetInitialPropsRun && err) {
@@ -17,7 +17,7 @@ const MyError = ({ statusCode, hasGetInitialPropsRun, err }: any) => {
 MyError.getInitialProps = async ({ res, err, asPath, req }: any) => {
   const errorInitialProps: any = await NextErrorComponent.getInitialProps({
     res,
-    err,
+    err
   } as any);
   console.log('request => ', req);
   const statusCode = res?.statusCode ?? err?.statusCode;
@@ -46,17 +46,14 @@ MyError.getInitialProps = async ({ res, err, asPath, req }: any) => {
   if (err) {
     if (err.message === 'Redirect') {
       console.log(`Handle Redirect error on path ${asPath}`);
-    }
-    else if (err.type === 'ChunkLoadError') {
+    } else if (err.type === 'ChunkLoadError') {
       console.log(`Handle ChunkLoadError error on path ${asPath}`);
-    }
-    else {
-
+    } else {
       Sentry.captureException(err);
 
       // Flushing before returning is necessary if deploying to Vercel, see
       // https://vercel.com/docs/platform/limits#streaming-responses
-      await Sentry.flush(2000);      
+      await Sentry.flush(2000);
     }
     return errorInitialProps;
   }
@@ -64,9 +61,7 @@ MyError.getInitialProps = async ({ res, err, asPath, req }: any) => {
   // If this point is reached, getInitialProps was called without any
   // information about what the error might be. This is unexpected and may
   // indicate a bug introduced in Next.js, so record it in Sentry
-  Sentry.captureException(
-    new Error(`_error.js getInitialProps missing data at path: ${asPath}`)
-  );
+  Sentry.captureException(new Error(`_error.js getInitialProps missing data at path: ${asPath}`));
   await Sentry.flush(2000);
 
   return errorInitialProps;
