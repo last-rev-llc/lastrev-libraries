@@ -1,5 +1,11 @@
 # @last-rev/testing-library
 
+## 0.1.6
+
+### Patch Changes
+
+- 6887a14: Add site to generatePage
+
 ## 0.1.5
 
 ### Patch Changes
