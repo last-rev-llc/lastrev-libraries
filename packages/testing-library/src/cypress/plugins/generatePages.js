@@ -23,15 +23,9 @@ function getAllFiles(dirPath, arrayOfFiles, filter) {
   return arrayOfFiles;
 }
 
-const generatePages = async ({ site, nextPagesPath, fixturePagesPath, integrationPath }) => {
   // Generate and store pages fixture
   const GENERATED_PAGES_FILENAME = path.join(fixturePagesPath, `${site ? `${site}_` : ''}generated_pages.json`);
   let PAGES;
-  console.debug('GeneratePages', { nextPagesPath, fixturePagesPath, integrationPath });
-  if (!fs.existsSync(GENERATED_PAGES_FILENAME)) {
-    console.debug('Pages Fixture not found, generating...');
-    PAGES = getAllFiles(nextPagesPath, [], (filePath) => filePath.endsWith('.html'))
-      .map((filePath) => filePath.split('/pages')[1].replace('.html', ''))
       .filter((filePath) => !filePath.includes('404') && !filePath.includes('500'));
 
     fs.writeFileSync(GENERATED_PAGES_FILENAME, JSON.stringify(PAGES));
