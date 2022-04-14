@@ -3768,17 +3768,17 @@
     handlebars "^4.7.7"
     lodash "^4.17.21"
 
-"@last-rev/testing-library@0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/testing-library/-/testing-library-0.1.2.tgz#5ad6a2d5b80125e0e07d83150b8c73dc013a900b"
-  integrity sha512-1XmG2ESQCapCMtTPFw4xF59IZEjXUjJEIHXUO5wZ1y2A7TkG2PjM3Mla4qPbolKJsdaqm1BxV1Elw3AWPNDgaQ==
-  dependencies:
-    ts-jest "^26.5.4"
-
-"@last-rev/testing-library@0.1.5", "@last-rev/testing-library@^0.1.2", "@last-rev/testing-library@^0.1.5":
+"@last-rev/testing-library@0.1.5", "@last-rev/testing-library@^0.1.2":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@last-rev/testing-library/-/testing-library-0.1.5.tgz#092e66486a02e5dd085fff97614db61e5d24c048"
   integrity sha512-G6rSPIYdQVLlzc5flaUno4bAIrAvUxtsjZtXOR3rZfAlYhhRWD+C+38o0WCrB1p4sYMoXniZBXcKwogUhXaaWw==
+  dependencies:
+    ts-jest "^26.5.4"
+
+"@last-rev/testing-library@^0.1.7":
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/@last-rev/testing-library/-/testing-library-0.1.7.tgz#5c4ab98a8ed81bf83dd9a06022e040b3ad5fa2d7"
+  integrity sha512-3IqQAnOytjVu/En1un3vKG4kU4NelABD3H7bNlsTKuY5JUhBKhZBC6Vhm3QfYahCDbCga6T9Un83QgDvcM3WtQ==
   dependencies:
     ts-jest "^26.5.4"
 
