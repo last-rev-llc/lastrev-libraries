@@ -1,5 +1,11 @@
 # @last-rev/testing-library
 
+## 0.1.7
+
+### Patch Changes
+
+- 3caca6a: Remove default site prefix
+
 ## 0.1.6
 
 ### Patch Changes
