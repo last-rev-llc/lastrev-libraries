@@ -10,7 +10,7 @@
     "gen:sitemap": "node scripts/generateSitemap.js",
     "lint": "next lint",
     "start": "next start",
-    "test:e2e:web": "cross-env NODE_ENV=test percy exec -- cypress run",
+    "test:e2e": "cross-env NODE_ENV=test percy exec -- cypress run",
     "serve": "serve out",
     "cypress:open": "cypress open"
   },
