@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PERCY_TOKEN: ${{ secrets.LRCL_PERCY_TOKEN }}
+      CYPRESS_PROJECT_ID: ${{ secrets.LRCL_CYPRESS_PROJECT_ID }}
+      CYPRESS_RECORD_KEY: ${{ secrets.LRCL_CYPRESS_RECORD_KEY }}
 
     steps:
       - name: Checkout Repo
