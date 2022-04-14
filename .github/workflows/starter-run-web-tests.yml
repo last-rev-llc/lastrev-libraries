@@ -1,4 +1,4 @@
-name: E2E Tests
+name: Starter E2E Tests
 
 on:
   push:
@@ -26,6 +26,9 @@ on:
 
 jobs:
   install:
+    defaults:
+      run:
+        working-directory: ./examples/lastrev-next-starter
     runs-on: ubuntu-latest
     container:
       image: cypress/browsers:node16.14.0-slim-chrome99-ff97
@@ -91,6 +94,9 @@ jobs:
       #     path: build
 
   ui-chrome-tests:
+    defaults:
+      run:
+        working-directory: ./examples/lastrev-next-starter
     timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
@@ -127,7 +133,7 @@ jobs:
         id: turbo-cache
         uses: actions/cache@v2
         with:
-          path: ./node_modules/.cache/turbo
+          path: ./examples/lastrev-next-starter/node_modules/.cache/turbo
           key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
           restore-keys: |
             turbo-${{ github.job }}-${{ github.ref_name }}-
@@ -150,6 +156,7 @@ jobs:
       - name: 'Website Tests - Chrome'
         uses: cypress-io/github-action@v2
         with:
+          working-directory: ./examples/lastrev-next-starter
           install: false
           project: ./packages/web
           command-prefix: 'percy exec -- npx'
@@ -163,9 +170,9 @@ jobs:
         env:
           SITE: ${{ secrets.SITE }}
           CYPRESS_BASE_URL: ${{ steps.wait-for-netflify-preview.outputs.url }}
-          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          CYPRESS_PROJECT_ID: ${{ secrets.STARTER_CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.STARTER_CYPRESS_RECORD_KEY }}
+          PERCY_TOKEN: ${{ secrets.STARTER_PERCY_TOKEN }}
           PERCY_PARALLEL_NONCE: '${{ github.event_name }}-${{ github.sha }}'
           PERCY_PARALLEL_TOTAL: 5
           COMMIT_INFO_BRANCH: ${{ github.head_ref }}

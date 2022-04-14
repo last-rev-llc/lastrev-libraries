@@ -1,4 +1,4 @@
-name: Run Next Starter Example page tests and build
+name: Starter tests
 
 on:
   push:
@@ -57,4 +57,4 @@ jobs:
         run: yarn --prefer-offline
 
       - name: Run the tests
-        run: yarn turbo run test test:e2e lint
+        run: yarn turbo run test lint
