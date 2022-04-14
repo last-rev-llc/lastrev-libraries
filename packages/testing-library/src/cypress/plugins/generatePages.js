@@ -23,9 +23,9 @@ function getAllFiles(dirPath, arrayOfFiles, filter) {
   return arrayOfFiles;
 }
 
-const generatePages = async ({ site = 'default', nextPagesPath, fixturePagesPath, integrationPath }) => {
+const generatePages = async ({ site, nextPagesPath, fixturePagesPath, integrationPath }) => {
   // Generate and store pages fixture
-  const GENERATED_PAGES_FILENAME = path.join(fixturePagesPath, `${site}_generated_pages.json`);
+  const GENERATED_PAGES_FILENAME = path.join(fixturePagesPath, `${site ? `${site}_` : ''}generated_pages.json`);
   let PAGES;
   console.debug('GeneratePages', { nextPagesPath, fixturePagesPath, integrationPath });
   if (!fs.existsSync(GENERATED_PAGES_FILENAME)) {
