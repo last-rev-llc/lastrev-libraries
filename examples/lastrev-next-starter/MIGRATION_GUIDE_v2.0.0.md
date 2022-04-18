@@ -19,7 +19,7 @@
             +import React from 'react';
             ```
 # Global Changes
-- Replace all instances of @lrns/ to be the main package name i.e @lrns/
+- Replace all instances of `@lrns` to be the main package name i.e `@lrns -> @custom-website` (make sure to ignore this file)
 - Go through all of the changes in the patch
     - If you get a message "file was deleted by us and modified by them" Always keep the deleted file and take a note to review it later to di into if it can be deleted or not
 - Ensure that all changes to the .env.template are merged into the project as this is the latest list of available env variables
@@ -41,6 +41,11 @@
 
 
 # Components
+- Every component should be updated to export the correct props and types. 
+    - i.e CollectionFiltered needs to be updated to include the `export type {...}`
+    - This also applies for any other LRCL "wrapped" or custom components
+- For every custom components, a new `Component.types.ts` will need to be created for correct integration with the theme. See [adding new components to the types](#migrating-themes)
+
 - Anything in the /packages/components folder is considered customer code and should be gone through individually. Most will keep the current customers code, but there are times when you will want the new code. Use carefully
 - mocks should keep current changes in most cases
 - stories will be keep current changes in most cases
@@ -55,15 +60,22 @@
     - For projects not using the `graphql-contentful-extensions` we will want to add them before the custom extensions
     - Update the import statement to use `import Card as LRCard` for all extensions coming from the @last-rev/graphql-contentful-extensions
     - Merge the changes and ensure that any custom extensions are sill being used, and then add all of the Last Rev extensions to the `extensions` array before the custom extensions
+    - When adding new extensions from the upgrade make sure to only keep the integrations being used and not the ones that are not being used. (i.e Algolia)
 - Fragments are the largst area of chage. For now, bring all your changes back by accepting current changes to fragements and queries, not incoming changes so you have the files to go through manually
 
 # Migrating Themes
 
-## Adding new components to the types for theme
+## Adding new components types for theme integration
 
 Every component that you create will need to be added to the MUI overrides to ensure a nice developer experience supported by Typescript.
 The files you will need to have in your components are: 
     - `components/src/components/Example/Example.types.ts`
+        - Make sure this file exports the following: 
+            - `ExampleProps`
+            - `ExampleClasses`
+            - `ExampleClassKey`
+        -  (Follow the example here for the contents of this file)[https://github.com/last-rev-llc/lastrev-libraries/blob/2af1939d0314911012d7dc6d92fcc0027772fab0/examples/lastrev-next-starter/packages/components/src/components/Quote/Quote.types.ts#L1]
+    
 Then you need to add them to the theme types in: 
     - `components/src/@types/components.d.ts`
     - `components/src/@types/overrides.d.ts`
@@ -92,20 +104,37 @@ Some components may have `createComponentVariants` file being used. This variant
 # Migrating Fragments
 
 - When migrating the fragments you need to make sure you're maintaining all the fields that are currently in use. 
-- For every content type that is present in the PreviewQuery.ts,  PageQuery.ts and ContentTypes.ts you will need to migrate the fields to the new fragment file. 
-- It's recommended to open the current query/fragment file side by side with the new content fragments and review one by one as you move them over. 
-- Person i.e :
+- For every content type that is present in the PreviewQuery.ts,  PageQuery.ts and ContentTypes.ts you will need to migrate the fields to the new fragment files. 
+- It's recommended to open the current query/fragment file side by side with the new content fragments and review one by one as you migrate them over. 
+- i.e Person:
     - Open Page.query.ts and look for base fragment on Person -> `fragment PersonFragment on Person { ... }`
     - Open or create the new fragment file at `components/Person/Person.fragment.graphql`
     - Verify the fields of the new fragment meet all the requirements from the old fragment
     - It's ok and encouraged if the new fragment has more fields, just make sure that the mininmum requirements are met.
     - Delete the fragment from the old query file
 - Repeat this process until every fragment is migrated.
-- After migrating all the files, run `yarn dev` from the root of the project to verify that everything is working correctly.
+- After migrating all the files, run `yarn gql:dev` from the root of the project to verify that everything is working correctly.
 - Review the output of the GQL code generation for errors and fix them (also use apollo vscode extension to see and fix gql errors)
 - Common issues: 
-    - *Field is not present in type* - This issue is due to the fragments including more fields than what's available in the current content models. Review the fragments for fields that are not present and remove them.
+    - `Error: Field is not present in type` 
+        - Solution:  This issue is due to the fragments including more fields than what's available in the current content models. Review the fragments for fields that are not present and remove them.
+    - `Error: Not all fragments have an unique name: <fragment_name>, <fragment_name>, <fragment_name>`
+        - Solution: Make sure you only have a single place where you define the fragment `<fragmentName> on <typeName> { ... }`
+    - `Error: Cannot spread fragment <fragment_name> within itself`
+        - Solution: Make sure you don't spread the fragment within itself by duplicating the current fragment and removing the conflicting references. Then update the nested fragment to use the new fragment name.
+            - Identify the fields being required by this usage of the fragment
+            - Create a new fragment that includes the required fields with a unique name following the pattern
+                - `<type_name>_<parent_type_name>Fragment on <type_name> { ...<type_name>_FieldsFragment ... }`
+            - Update the fragment usage to the new fragment
+            - Verify the error goes away
 
+# Verifying everything works as expected
+
+- Make sure the `yarn build` commands runs correctly without any error messages
+- Make sure the `yarn dev` commands runs and you can access the website locally
+- Run `yarn start` and then run the `PERCY_TOKEN=xxx yarn test:e2e` to generate a Percy report
+- Check the Percy report for any visual issues that may be present.
+- When everything looks good, create a PR and add the label `qa-ready` this will run the CI E2E tests and make sure everything is working as expected.
 
 # Common issues
 
@@ -115,12 +144,23 @@ Some components may have `createComponentVariants` file being used. This variant
     - `import { ExampleProps } from "@last-rev/component-library/dist/components/Example"`
 - `Import 'RichText' not found.` - Solution: Make sure your `components/src/components/Text` file correctly re-exports all types
     - i.e `export type { TextProps, TextClassKey, TextClasses } from '@last-rev/component-library/dist/components/Text';`
+- `**ERROR** Failed to apply patch for package <package_name> at path node_modules/<package_name>`
+    - Solution:
+        - check patch file to see what changes were made
+            - should be under error message as `Info: Patch file: patches/<patch_file_name>`
+        - check file(s) in node_modules to see if changes were made correctly
+            - If changes are not made correctly
+                - Make changes in file(s) and save
+                - Run `yarn patch-package <package_name>`
 
 
-## Verifying everything works as expected
 
-- Make sure the `yarn build` commands runs correctly without any error messages
-- Make sure the `yarn dev` commands runs and you can access the website locally
-- Run `yarn start` and then run the `PERCY_TOKEN=xxx yarn test:e2e` to generate a Percy report
-- Check the Percy report for any visual issues that may be present.
-- When everything looks good, create a PR and add the label `qa-ready` this will run the CI E2E tests and make sure everything is working as expected.
+# Schema generation
+
+- Run `yarn propagate:env` to update the packages `.env` file
+- Run `yarn sync:cms` to sync the content from the CMS to the local file system
+- Run `yarn gql:dev` to get the grapqhl server running, generate the schema and the sdk.
+- Check the `schema.graphql` to see the new changes
+- Check the logs to see if there are any errors during either the SDK, schema generation or extensions building.
+
+## Common errors

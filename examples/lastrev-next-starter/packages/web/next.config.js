@@ -13,8 +13,6 @@ const nextConfig = {
   /**
    * @type {import('next').NextConfig}
    */
-  // Disabled due to error https://github.com/vercel/next.js/issues/30429
-  // swcMinify: false,
   i18n: {
     // TODO: generate these and read from that
     locales: ['en-US'],

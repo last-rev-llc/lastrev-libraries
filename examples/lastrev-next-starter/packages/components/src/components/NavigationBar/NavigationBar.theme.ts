@@ -5,17 +5,12 @@ export const defaultProps: ComponentsProps['NavigationBar'] = {};
 
 // https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['NavigationBar'] = {
-  // Set some static styles
-  // root: {
-  //   backgroundColor: 'red'
-  // }
-  //
-  // Use the ownerState to set dynamic styles
-  // root: ({ ownerState, theme }) => {
-  //   return {
-  //     backgroundColor: ownerState.variant === 'example' ? 'red' : theme.palette.background.paper
-  //   };
-  // }
+  root: {
+    '& .MuiLink-root': {
+      'textDecoration': 'none',
+      '&.MuiLink-selected': { fontWeight: 'bold' }
+    }
+  }
 };
 
 // https://mui.com/customization/theme-components/#adding-new-component-variants

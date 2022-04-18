@@ -32,7 +32,7 @@ fragment RichText_CardFragment on RichText {
   }
 }
 
-fragment RichText_CollectionFragment on RichText {
+fragment RichText_IntroTextFragment on RichText {
   id
   __typename
   json

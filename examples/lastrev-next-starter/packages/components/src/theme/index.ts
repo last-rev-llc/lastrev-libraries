@@ -7,6 +7,7 @@ import Header from '../components/Header/Header.theme';
 import Section from '../components/Section/Section.theme';
 import Link from '../components/Link/Link.theme';
 import Text from '../components/Text/Text.theme';
+import NavigationBar from '../components/NavigationBar/NavigationBar.theme';
 import NavigationItem from '../components/NavigationItem/NavigationItem.theme';
 import Collection from '../components/Collection/Collection.theme';
 import merge from 'lodash/merge';
@@ -145,6 +146,7 @@ const createSchemeTheme = (schemeKey?: string) => {
         Media(baseSchemeTheme),
         Hero(baseSchemeTheme),
         NavigationItem(baseSchemeTheme),
+        NavigationBar(baseSchemeTheme),
         Link(baseSchemeTheme),
         Section(baseSchemeTheme),
         Collection(baseSchemeTheme)
@@ -153,16 +155,6 @@ const createSchemeTheme = (schemeKey?: string) => {
         createSchemeTheme,
         components: {
           // CollectionAccordionMedia:
-          NavigationBar: {
-            styleOverrides: {
-              root: {
-                '& .MuiLink-root': {
-                  'textDecoration': 'none',
-                  '&.MuiLink-selected': { fontWeight: 'bold' }
-                }
-              }
-            }
-          },
           MuiContainer: {
             defaultProps: {
               maxWidth: 'xl'

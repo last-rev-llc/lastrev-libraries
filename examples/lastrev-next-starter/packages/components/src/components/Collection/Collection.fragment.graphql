@@ -11,12 +11,7 @@ fragment Collection_FieldsFragment on Collection {
   }
   settings
   introText {
-    ...Content_BaseFragment
-    body {
-      ...RichText_CollectionFragment
-    }
-    align
-    variant
+    ...Text_IntroTextFragment
   }
 }
 

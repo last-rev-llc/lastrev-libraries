@@ -38,7 +38,7 @@
     "paths": {
       "@starter/*": ["packages/*/src"]
     },
-    "typeRoots": ["node_modules/@types", "node_modules/@last-rev/component-library/dist/@types"],
+    "typeRoots": ["node_modules/@types"],
     "types": ["jest", "node"],
 
     /* Advanced Options */

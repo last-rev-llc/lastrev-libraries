@@ -43,6 +43,9 @@ fragment Section_BaseFieldsFragment on Section {
   background {
     ...Media_BaseFragment
   }
+  #introText {
+  #  ...Text_IntroTextFragment
+  #}
 }
 
 # This will go 3 levels deep recursive

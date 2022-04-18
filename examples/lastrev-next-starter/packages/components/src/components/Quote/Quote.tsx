@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import ErrorBoundary from '../ErrorBoundary';
 import Media, { MediaProps } from '../Media';
 import Link from '../Link';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import { QuoteProps } from './Quote.types';
 
 export const Quote = ({
