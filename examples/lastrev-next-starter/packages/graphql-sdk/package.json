@@ -2,6 +2,7 @@
   "name": "@lrns/graphql-sdk",
   "version": "0.1.0",
   "main": "dist/index.js",
+  "license": "MIT",
   "files": [
     "dist"
   ],
@@ -14,7 +15,7 @@
     "download:schema": "./scripts/download_schema.sh",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
-    "gql:healthcheck": "wait-on -c wait-on-config.js || echo 'GQL server not available'",
+    "gql:healthcheck": "wait-on -c wait-on-config.js",
     "dev": "concurrently \"yarn download:schema:dev\" \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint",
