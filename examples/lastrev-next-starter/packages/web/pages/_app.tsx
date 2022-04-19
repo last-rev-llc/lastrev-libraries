@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import type { AppProps } from 'next/app';
-import { ThemeProvider } from '@mui/material/styles';
+import { ThemeProvider } from '@mui/system';
 import '@last-rev/component-library/dist/styles.css';
 import CssBaseline from '@mui/material/CssBaseline';
 import theme from '@lrns/components/src/theme';
@@ -9,7 +9,6 @@ import { createEmotionCache } from '../src/createEmotionCache';
 import { CacheProvider, EmotionCache } from '@emotion/react';
 import { LazyMotion } from 'framer-motion';
 // LastRev components
-import '../styles/globals.css';
 import dynamic from 'next/dynamic';
 const SEO = dynamic(() => import('@last-rev/component-library/dist/components/SEO/SEO'));
 const clientSideEmotionCache = createEmotionCache();

@@ -1,52 +1,41 @@
 import dynamic from 'next/dynamic';
 
-const Section = dynamic(() => import('@last-rev/component-library/dist/components/Section/Section'));
+const Section = dynamic(() => import('./components/Section'));
 
-const Card = dynamic(() => import('@last-rev/component-library/dist/components/Card/Card'));
+const Card = dynamic(() => import('./components/Card'));
 
-const Collection = dynamic(() => import('@last-rev/component-library/dist/components/Collection/Collection'));
+const Collection = dynamic(() => import('./components/Collection'));
 
-const CollectionCarousel = dynamic(
-  () => import('@last-rev/component-library/dist/components/CollectionCarousel/CollectionCarousel')
-);
+const CollectionAccordion = dynamic(() => import('./components/CollectionAccordion'));
 
-const CollectionAccordion = dynamic(
-  () => import('@last-rev/component-library/dist/components/CollectionAccordion/CollectionAccordion')
-);
+const NavigationBar = dynamic(() => import('./components/NavigationBar'));
 
-const NavigationBar = dynamic(() => import('@last-rev/component-library/dist/components/NavigationBar/NavigationBar'));
+const Media = dynamic(() => import('./components/Media'));
 
-const Media = dynamic(() => import('@last-rev/component-library/dist/components/Media/Media'));
+const Link = dynamic(() => import('./components/Link'));
 
-const Link = dynamic(() => import('@last-rev/component-library/dist/components/Link/Link'));
+const NavigationItem = dynamic(() => import('./components/NavigationItem'));
 
-const NavigationItem = dynamic(
-  () => import('@last-rev/component-library/dist/components/NavigationItem/NavigationItem')
-);
+const Header = dynamic(() => import('./components/Header'));
 
-const Header = dynamic(() => import('@last-rev/component-library/dist/components/Header/Header'));
+const Hero = dynamic(() => import('./components/Hero'));
 
-const Hero = dynamic(() => import('@last-rev/component-library/dist/components/Hero/Hero'));
+const Text = dynamic(() => import('./components/Text'));
 
-const Text = dynamic(() => import('@last-rev/component-library/dist/components/Text/Text'));
-
-const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop/BackToTop'));
+const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop'));
+const CollectionCarousel = dynamic(() => import('@last-rev/component-library/dist/components/CollectionCarousel'));
 
 // Custom components
-const CollectionFiltered = dynamic(
-  () => import('@lrns/components/src/components/CollectionFiltered/CollectionFiltered')
-);
+const CollectionFiltered = dynamic(() => import('./components/CollectionFiltered'));
 
 // Custom components
-const Quote = dynamic(() => import('@lrns/components/src/components/Quote/Quote'));
-const PageGeneral = dynamic(() => import('@lrns/components/src/components/PageGeneral/PageGeneral'));
-const PageBlog = dynamic(() => import('@lrns/components/src/components/PageBlog/PageBlog'));
+const Quote = dynamic(() => import('./components/Quote'));
+const Page = dynamic(() => import('./components/Page'));
 
 const contentMapping: {
   [key: string]: any;
 } = {
-  'Page': PageGeneral,
-  'Blog': PageBlog,
+  Page,
   Header,
   Section,
   Collection,

@@ -13,16 +13,15 @@ import {
   Link,
   NavigationItem,
   Page,
+  Header,
   Section,
   Media,
   RichText
 } from '@last-rev/graphql-contentful-extensions';
 
-import * as Text from './Text';
-import * as Quote from './Quote';
-import * as Person from './Person';
-import * as Header from './Header';
-import * as CustomBlog from './Blog';
+import * as Theme from './Theme';
+// Uncomment if using Algolia, else delete the related file
+// import * as Algolia from './Algolia';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -49,21 +48,19 @@ Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloConte
 
 const extensions: GraphQlExtension[] = [
   { typeDefs: algoliaTypeDefs },
+  // Algolia,
   Card,
   Collection,
   Blog,
-  CustomBlog,
   Hero,
   Header,
   Link,
   NavigationItem,
   Page,
   Section,
-  Quote,
-  Person,
   Media,
   RichText,
-  Text
+  Theme
 ];
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));

@@ -1,5 +1,25 @@
 # @last-rev/next-starter
 
+## 2.0.0
+
+### Major Changes
+
+- Add E2E automated tests: 
+    - Ran on main 
+    - Ran on PR when the qa-ready label is added
+- Component re-estructure to include fragments, themes and types per component
+- Improved DX with Apollo configuration
+- Updated documentation to include new and exising features
+- Improved TS Theme support by adding new files: 
+    - components.d.ts
+    - overrides.d.ts
+    - palette.d.ts
+    - props.d.ts
+- Added robots.txt to the website
+- Added improved download_schema script to graphql-sdk
+- Removed stories folder (using component stories instead)
+
+
 ## 1.0.0
 
 ### Major Changes

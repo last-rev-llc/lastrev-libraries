@@ -6,12 +6,11 @@
     "dist"
   ],
   "scripts": {
-    "dev": "run-s sync:cms gql:dev",
+    "dev": "run-s gql:pm2:kill 'gql:pm2 --watch' gql:healthcheck",
     "gql:start": "last-rev gql-serve -c config",
-    "gql:dev": "nodemon -x \"last-rev gql-serve -c config.js\" --config nodemon.json",
     "start": "if [ \"$NODE_ENV\" != \"test\" ]; then run-s gql:pm2:kill gql:pm2 gql:healthcheck; fi",
     "sync:cms": "last-rev cms-sync -c config.js",
-    "gql:pm2": "pm2 start pm2.json ",
+    "gql:pm2": "pm2 start pm2.json",
     "gql:healthcheck": "wait-on -c wait-on-config.js || echo 'Healthcheck failed'",
     "gql:pm2:kill": "pm2 kill",
     "logs": "pm2 logs"
@@ -19,7 +18,7 @@
   "peerDependencies": {},
   "dependencies": {
     "@last-rev/app-config": "^0.1.4",
-    "@last-rev/cli": "^0.1.34",
+    "@last-rev/cli": "^0.2.0",
     "@lrns/graphql-extensions": "^0.1.0",
     "dotenv": "^10.0.0",
     "npm-run-all": "^4.1.5"

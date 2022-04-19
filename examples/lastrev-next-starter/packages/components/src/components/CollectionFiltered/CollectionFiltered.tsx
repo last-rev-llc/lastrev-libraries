@@ -1,5 +1,10 @@
 import React from 'react';
-import CollectionFiltered from '@last-rev/component-library/dist/components/CollectionFiltered/CollectionFiltered';
+export type {
+  CollectionFilteredProps,
+  CollectionFilteredClassKey,
+  CollectionFilteredClasses
+} from '@last-rev/component-library/dist/components/CollectionFiltered';
+import CollectionFiltered from '@last-rev/component-library/dist/components/CollectionFiltered';
 
 const preview = !!process.env.CONTENTFUL_USE_PREVIEW;
 

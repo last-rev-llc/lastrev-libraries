@@ -20,7 +20,7 @@ export const getStaticPaths = async ({ locales }: PageGetStaticPathsProps) => {
 
     return {
       paths: data?.paths,
-      fallback: false
+      fallback: revalidate ? 'blocking' : false
     };
   } catch (error) {
     return {

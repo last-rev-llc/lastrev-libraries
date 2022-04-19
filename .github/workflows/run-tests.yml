@@ -1,11 +1,11 @@
 name: Run tests
 
-on: 
+on:
   push:
-    branches:    
-          - 'main'
+    branches:
+      - 'main'
   pull_request:
-    branches-ignore:    
+    branches-ignore:
       - 'dependabot/**'
 jobs:
   test:
@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PERCY_TOKEN: ${{ secrets.LRCL_PERCY_TOKEN }}
+      CYPRESS_PROJECT_ID: ${{ secrets.LRCL_CYPRESS_PROJECT_ID }}
+      CYPRESS_RECORD_KEY: ${{ secrets.LRCL_CYPRESS_RECORD_KEY }}
 
     steps:
       - name: Checkout Repo
@@ -26,14 +28,13 @@ jobs:
         with:
           node-version: 16
 
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-
-      - uses: actions/cache@v2
+      - name: Dependencies cache
+        uses: actions/cache@v2
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          path: |
+            **/node_modules
+            ~/.cache/Cypress
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
@@ -46,16 +47,15 @@ jobs:
           key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
           restore-keys: |
             turbo-${{ github.job }}-${{ github.ref_name }}-
-          
 
       - name: Install project dependencies
         run: yarn --prefer-offline
 
       - name: Run the tests
-        run: "yarn turbo run test test:e2e lint"
-  
+        run: 'yarn turbo run test test:e2e lint'
+
       - name: Collect coverage
-        run: "yarn combine:reports"
+        run: 'yarn combine:reports'
 
       - name: Archive code coverage results
         uses: actions/upload-artifact@v2
@@ -71,7 +71,7 @@ jobs:
       #     artifact-name: code-coverage-report
       #     github-token: ${{ secrets.GITHUB_TOKEN }}
       #     working-directory: packages
-      
+
       # Disable build because it already happens in Netlify
       # - name: Build modules
       #   run: yarn build

@@ -19,7 +19,7 @@
       "outputs": ["coverage/**"]
     },
     "test:e2e": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^build", "$PERCY_TOKEN"],
       "outputs": ["coverage/**"]
     },
     "test:watch": {
@@ -49,11 +49,6 @@
       "dependsOn": [],
       "outputs": []
     },
-    "@lrns/graphql-sdk#dev": {
-      "cache": false,
-      "dependsOn": ["@lrns/graphql-sdk#gql:healthcheck"],
-      "outputs": []
-    },
     "@lrns/graphql-runner#dev": {
       "cache": false,
       "dependsOn": ["@lrns/graphql-extensions#build"],
@@ -64,12 +59,27 @@
       "dependsOn": ["@lrns/graphql-extensions#build"],
       "outputs": []
     },
+    "@lrns/utils#dev": {
+      "cache": false,
+      "dependsOn": ["@lrns/graphql-sdk#build"],
+      "outputs": []
+    },
+    "@lrns/graphql-sdk#dev": {
+      "cache": false,
+      "dependsOn": ["@lrns/graphql-sdk#gql:healthcheck"],
+      "outputs": []
+    },
     "@lrns/graphql-sdk#build": {
-      "dependsOn": ["@lrns/graphql-runner#start", "^build"],
-      "outputs": ["dist/**"]
+      "dependsOn": ["@lrns/graphql-sdk#gql:healthcheck", "^build"],
+      "outputs": ["dist/**", "schema.graphql"]
+    },
+    "@lrns/web#dev": {
+      "cache": false,
+      "dependsOn": ["@lrns/graphql-runner#dev", "^build"],
+      "outputs": ["out/**", ".next/**"]
     },
     "@lrns/web#build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["@lrns/graphql-runner#start", "^build"],
       "outputs": ["out/**", ".next/**"]
     }
   }
