@@ -15,7 +15,7 @@
     "download:schema": "./scripts/download_schema.sh",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
-    "gql:healthcheck": "wait-on -c wait-on-config.js",
+    "gql:healthcheck": "wait-on -c wait-on-config.js || echo 'GraphQL Server is not available'",
     "dev": "concurrently \"yarn download:schema:dev\" \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint",

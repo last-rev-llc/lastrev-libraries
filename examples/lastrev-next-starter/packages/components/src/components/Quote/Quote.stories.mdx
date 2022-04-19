@@ -4,7 +4,7 @@ import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs';
 
 import Quote from './Quote';
 import { QuoteClasses } from './Quote.types';
-import quoteMock, { quoteWithTags, baseMock } from './Quote.mock';
+import quoteMock, { mockQuoteBase } from './Quote.mock';
 
 <Meta
   title="Components / Quote"
@@ -35,7 +35,7 @@ export const Template = (args) => <Quote {...args} />;
 The Quote component shows the text together with the author and some basic info.
 
 <Canvas>
-  <Story name="base" args={{ ...baseMock(), logo: undefined }} />
+  <Story name="base" args={{ ...mockQuoteBase(), logo: undefined }} />
 </Canvas>
 
 ## Props

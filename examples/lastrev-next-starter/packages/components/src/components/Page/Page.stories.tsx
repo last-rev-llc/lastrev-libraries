@@ -1,11 +1,11 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import NavigationItem from './NavigationItem';
-import mockContent from './NavigationItem.mock';
+import Page from './Page';
+import mockContent from './Page.mock';
 
 export default {
-  title: '1. LR Components / NavigationItem',
-  component: NavigationItem,
+  title: '1. LR Components / Page',
+  component: Page,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
       <Box m={5}>{storyFn()}</Box>
@@ -16,10 +16,10 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['NavigationItem', 'button-contained', 'button-outlined', 'button-text']
+        options: ['Page', 'button-contained', 'button-outlined', 'button-text']
       },
       table: {
-        defaultValue: { summary: 'NavigationItem' }
+        defaultValue: { summary: 'Page' }
       }
     },
     text: { name: 'Text' },
@@ -39,6 +39,6 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <NavigationItem __typename="NavigationItem" {...args} />;
+const Template = (args: JSX.IntrinsicAttributes) => <Page __typename="Page" {...args} />;
 export const Default = Template.bind({});
 Default.args = { ...mockContent() };
