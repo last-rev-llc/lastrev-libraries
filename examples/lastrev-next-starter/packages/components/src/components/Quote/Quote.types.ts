@@ -4,7 +4,7 @@ import { MediaProps } from '../Media';
 
 export interface QuoteProps extends Quote_BaseFragmentFragment {
   variant?: 'one-column' | 'two-column';
-  __typename?: string;
+  // __typename?: string;
   id?: string;
   sidekickLookup?: any;
   quote: string;
