@@ -59,6 +59,5 @@ export const typeDefs = gql`
     href: String!
     icon: String
     iconPosition: String
-    target: String
   }
 `;
