@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.14
+
+### Patch Changes
+
+- 91a15e8: added target resolver for links to improve ux on contentful
+
 ## 0.0.13
 
 ### Patch Changes
