@@ -23,7 +23,7 @@ const contentMapping = {
   Collection,
   Card,
   Quote,
-  'Quote': Card,
+  Quote: Card,
   NavigationItem,
   Text,
   Media,

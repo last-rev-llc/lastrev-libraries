@@ -17,7 +17,8 @@ export default (): CollectionAccordionProps => ({
       variant: 'accordion-standard',
       title: 'A communi observantia non est recedendum.'
     },
-    { ...mockAccordion,
+    {
+      ...mockAccordion,
       variant: 'accordion-standard',
       title: 'Paullum deliquit, ponderibus modulisque suis ratio utitur.'
     },
