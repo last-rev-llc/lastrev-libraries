@@ -3,6 +3,16 @@ import { Mappers, ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
 import { createPath } from './Page';
 
+type TargetMapping = {
+  'New Window': string;
+  'Current Window': string;
+};
+
+const TARGET_MAPPING: TargetMapping = {
+  'New Window': '_blank',
+  'Current Window': '_self'
+};
+
 const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
   const href = getLocalizedField(link.fields, 'href', ctx);
   const manualUrl = getLocalizedField(link.fields, 'manualUrl', ctx);
@@ -26,10 +36,16 @@ const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
   return '#';
 };
 
+const targetResolver = async (link: any, _: never, ctx: ApolloContext) => {
+  const target = getLocalizedField(link.fields, 'target', ctx);
+  return TARGET_MAPPING[target as keyof TargetMapping] ?? '_self';
+};
+
 export const mappers: Mappers = {
   Link: {
     Link: {
-      href: hrefUrlResolver
+      href: hrefUrlResolver,
+      target: targetResolver
     },
     NavigationItem: {
       link: (x: any) => ({ ...x, fieldName: 'link' }),
