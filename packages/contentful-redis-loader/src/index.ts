@@ -206,7 +206,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     if (cacheMissIds.length) {
       const sourceResults = await fallbackLoaders.entriesByContentTypeLoader.loadMany(cacheMissIds);
 
-      const filtered = sourceResults.filter((result) => !isError(result));
+      const filtered = sourceResults.filter((result) => !isError(result) && !isNil(result));
 
       timer = new Timer(`Set ${filtered.length} entries in redis`);
 
