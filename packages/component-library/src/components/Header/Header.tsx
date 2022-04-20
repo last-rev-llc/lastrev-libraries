@@ -41,13 +41,13 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
         >
           <ContentContainer>
             {logo ? (
-              <Link href={logoUrl} sx={{ height: '100%', py: 3 }} {...sidekick(sidekickLookup?.logo)}>
+              <LogoRoot href={logoUrl} sx={{ height: '100%', py: 3 }} {...sidekick(sidekickLookup?.logo)}>
                 <Logo {...logo} priority disableInlineSVG />
-              </Link>
+              </LogoRoot>
             ) : null}
             {navigationItems?.map((collection) => (
               <React.Fragment key={collection.id}>
-                <Box sx={{ flexGrow: 1 }} />
+                <NavigationDivider />
                 <ContentModule {...collection} variant={'navigation-bar'} onRequestClose={handleClose} />
               </React.Fragment>
             ))}
@@ -85,7 +85,6 @@ const Root = styled(AppBar, {
       left: 0;
       width: 100%;
       height: 100%;
-      background: ${theme.palette.background.paper};
     }
     
     @media (max-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
@@ -96,10 +95,10 @@ const Root = styled(AppBar, {
         z-index: -1;
         width: 100%;
         
-        max-height: calc(100vh - 62px); // Not sure why using the header height doesnt work 
+        max-height: calc(100vh - 62px);
         overflow-y: auto;
 
-        background: ${theme.palette.background.paper};
+
         transition: 300ms ease-in-out;
         transform: ${menuVisible ? 'translateY(0)' : 'translateY(-130%)'};
         opacity: ${menuVisible ? 1 : 0};
@@ -126,6 +125,12 @@ const Root = styled(AppBar, {
     `}
 `;
 
+const LogoRoot = styled(Link, {
+  name: 'Header',
+  slot: 'LogoRoot',
+  overridesResolver: (_, styles) => [styles.logoRoot]
+})(() => ({}));
+
 const Logo = styled(Media, {
   name: 'Header',
   slot: 'Logo',
@@ -134,6 +139,14 @@ const Logo = styled(Media, {
   height: '100%',
   width: 'auto'
 }));
+
+const NavigationDivider = styled(Box, {
+  name: 'Header',
+  slot: 'NavigationDivider',
+  overridesResolver: (_, styles) => [styles.navigationDivider]
+})`
+  flex-grow: 1;
+`;
 
 const ContentContainer = styled(Toolbar, {
   name: 'Header',

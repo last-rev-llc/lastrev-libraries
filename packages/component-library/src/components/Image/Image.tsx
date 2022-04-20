@@ -33,7 +33,7 @@ const Image = React.forwardRef<any, ImageProps>(
     ref
   ) => {
     if (!src) return null;
-    const isSVG = src?.includes('.svg');
+    const isSVG = src?.endsWith('.svg');
 
     let content;
     if (isSVG && !disableInlineSVG) {

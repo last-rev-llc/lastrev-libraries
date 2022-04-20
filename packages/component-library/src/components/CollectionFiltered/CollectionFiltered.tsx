@@ -9,7 +9,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import Section from '../Section';
 import { CardProps } from '../Card';
 import CollectionFilters from '../CollectionFilters';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import { CollectionFilteredProps, FilterFormData, Options } from './CollectionFiltered.types';
 
 const useQueryState = (defaultValue: any): [any, any] => {

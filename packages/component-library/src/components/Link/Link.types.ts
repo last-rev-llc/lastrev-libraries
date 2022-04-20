@@ -35,7 +35,8 @@ export type LinkProps = {
   color?: any;
   target?: string;
   rel?: string;
-  sx?: SxProps<Theme>;
+  // sx?: SxProps<Theme>;
+  sx?: any;
 };
 
 export interface LinkClasses {

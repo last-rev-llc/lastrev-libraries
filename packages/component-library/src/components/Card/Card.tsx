@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import styled from '@mui/system/styled';
 import Skeleton from '@mui/material/Skeleton';
+import { useThemeProps } from '@mui/system';
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import Link, { LinkProps } from '../Link';
@@ -19,19 +20,12 @@ import sidekick from '../../utils/sidekick';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import { CardProps } from './Card.types';
 
-export const Card = ({
-  variant,
-  title,
-  subtitle,
-  media,
-  body,
-  link,
-  tags,
-  actions,
-  loading,
-  sidekickLookup,
-  ...props
-}: CardProps) => {
+export const Card = (inProps: CardProps) => {
+  const props = useThemeProps({
+    name: 'Card',
+    props: inProps
+  });
+  const { media, title, subtitle, body, link, tags, actions, variant, loading, sidekickLookup } = props;
   return (
     <ErrorBoundary>
       <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)} {...(props as any)}>

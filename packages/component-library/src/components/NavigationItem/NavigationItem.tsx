@@ -106,7 +106,7 @@ const MenuRoot = styled(Paper, {
       position: absolute;
       right: 0;
       .MuiMenuItem-root {
-        padding: 0;
+        // padding: 0;
         display:block;
         width: 100%;
         * {
@@ -124,7 +124,7 @@ const MenuRoot = styled(Paper, {
       .MuiMenuItem-root{
         width: 100%;
         display: block;
-        padding: 0;
+        // padding: 0;
         > div {
           width: 100%;
         }

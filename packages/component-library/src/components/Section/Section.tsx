@@ -100,9 +100,9 @@ const Section = (inProps: SectionProps) => {
 };
 
 const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; theme: Theme }) => {
-  if (backgroundColor?.includes('gradient') && theme.palette[backgroundColor]) {
+  if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
     return {
-      'background': theme.palette[backgroundColor]?.main,
+      'background': get(theme.palette, backgroundColor)?.main,
       'color': `${backgroundColor}.contrastText`,
       // TODO find out a better way to override text color
       '& p, h1, h2, h3, h4, h5, h6, a': {

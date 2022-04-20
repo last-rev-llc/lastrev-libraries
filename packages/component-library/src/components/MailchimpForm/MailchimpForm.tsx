@@ -8,7 +8,7 @@ import Media from '../Media';
 import ContentModule from '../ContentModule';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import snakeCase from 'lodash/snakeCase';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import { CustomFormProps, MailchimpFormProps, SubscribeFormData } from './MailchimpForm.types';
 const url = '//strong365.us3.list-manage.com/subscribe/post?u=d86f5abb669bd78efab8bbf17&id=a842d73410';

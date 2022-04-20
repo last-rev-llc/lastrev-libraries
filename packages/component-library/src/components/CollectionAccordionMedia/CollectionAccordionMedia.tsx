@@ -6,12 +6,11 @@ import sidekick from '../../utils/sidekick';
 import Accordion from '../Accordion';
 import ContentModule from '../ContentModule';
 import { CollectionProps } from '../Collection';
-import { AccordionProps } from '../Accordion';
+import { CardProps } from '../Card';
 import getFirstOfArray from '../../utils/getFirstOfArray';
-import { MediaProps } from '../Media';
 
 export interface CollectionAccordionMediaProps extends CollectionProps {
-  items: AccordionProps[];
+  items: CardProps[];
 }
 
 export const CollectionAccordionMedia = ({
@@ -22,7 +21,7 @@ export const CollectionAccordionMedia = ({
 }: CollectionAccordionMediaProps) => {
   const [selectedIdx, setSelectedIdx] = React.useState(0);
   if (!items?.length) return null;
-  const selected = React.useMemo(() => items[selectedIdx] as AccordionProps, [items, selectedIdx]);
+  const selected = React.useMemo(() => items[selectedIdx] as CardProps, [items, selectedIdx]);
   return (
     <ErrorBoundary>
       <Root
@@ -77,7 +76,7 @@ const SelectedMedia = styled(ContentModule, {
   slot: 'SelectedMedia',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.selectedMedia]
-})<MediaProps>``;
+})``;
 
 const AccordionItem = styled(Grid, {
   name: 'CollectionAccordionMedia',
