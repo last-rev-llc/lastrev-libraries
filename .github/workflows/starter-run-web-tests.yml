@@ -26,6 +26,7 @@ on:
 
 jobs:
   install:
+    if: github.actor != "github-actions[bot]"
     defaults:
       run:
         working-directory: ./examples/lastrev-next-starter
@@ -37,6 +38,7 @@ jobs:
       # Enforce label on PR to prevent unnecesary testing
       - name: Enforce labels
         uses: mheap/github-action-required-labels@v1
+        if: github.ref_name != 'main' 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
