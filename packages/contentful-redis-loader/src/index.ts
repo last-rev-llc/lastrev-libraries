@@ -259,7 +259,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
       entryResults.forEach((entry) => {
         if (isNil(entry)) return;
-        const contentType = entry.sys.contentType.sys.id!;
+        const contentType = entry.sys.contentType.sys.id;
         out[contentType] = out[contentType] || [];
         out[contentType].push(entry);
       });
