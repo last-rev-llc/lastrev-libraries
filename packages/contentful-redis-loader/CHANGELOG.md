@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.3.0
+
+### Minor Changes
+
+- 71bf23b: 'Updated version of ioredis to 5.x, added contentful type checking to redis loader and contentful webhook'
+
 ## 0.2.0
 
 ### Minor Changes

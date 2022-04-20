@@ -1,5 +1,12 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [71bf23b]
+  - @last-rev/contentful-redis-loader@0.3.0
+
 ## 0.2.1
 
 ### Patch Changes
