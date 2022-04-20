@@ -1,5 +1,17 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.0
+
+### Minor Changes
+
+- 71bf23b: 'Updated version of ioredis to 5.x, added contentful type checking to redis loader and contentful webhook'
+
+### Patch Changes
+
+- Updated dependencies [71bf23b]
+  - @last-rev/contentful-path-util@0.1.10
+  - @last-rev/graphql-contentful-helpers@0.2.2
+
 ## 0.3.0
 
 ### Minor Changes

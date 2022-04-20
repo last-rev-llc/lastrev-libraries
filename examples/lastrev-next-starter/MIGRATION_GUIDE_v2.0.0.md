@@ -2,6 +2,7 @@
 
 - First thing you want to do is to run the migration script located in the main [README.md file](/../README.md)
 - When running the cli upgrade command, you may find issues with specific files.
+
   - i.e `error: could not build fake ancestor` - This issue is due to a patch file not being present in some projects
 
   - When prompted to verify the patch file again, check the patch file generated and remove any files that have issues before continuing, ie:

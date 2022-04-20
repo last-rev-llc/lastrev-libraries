@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.10
+
+### Patch Changes
+
+- 71bf23b: 'Updated version of ioredis to 5.x, added contentful type checking to redis loader and contentful webhook'
+
 ## 0.1.9
 
 ### Patch Changes
