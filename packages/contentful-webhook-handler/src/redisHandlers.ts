@@ -3,13 +3,22 @@ import { Handlers } from './types';
 import Redis from 'ioredis';
 import { updateAllPaths } from '@last-rev/contentful-path-util';
 import { createContext, createLoaders } from '@last-rev/graphql-contentful-helpers';
-import { Entry } from 'contentful';
+import { Asset, ContentType, Entry } from 'contentful';
 import { assetHasUrl, createContentfulClients } from './helpers';
-import isError from 'lodash/isError';
 import logger from 'loglevel';
+
+const logPrefix = '[contentful-webhook-handler]';
+
+const isError = (x: any): x is Error => x instanceof Error;
+// using coersion on purpose here (== instead of ===)
+const isNil = (x: any): x is null | undefined => x == null;
 
 const isContentfulError = (item: any) => {
   return item?.sys?.type === 'Error';
+};
+
+const isContentfulObject = (item: any): item is Entry<any> | Asset | ContentType => {
+  return item?.sys?.type === 'Entry' || item?.sys?.type === 'Asset' || item?.sys?.type === 'ContentType';
 };
 
 const enhanceContentfulObjectWithMetadata = (item: any) => {
@@ -22,24 +31,50 @@ const enhanceContentfulObjectWithMetadata = (item: any) => {
   };
 };
 
-const stringify = (data: any) => {
-  if (typeof data === 'string') return data;
-  if (data !== null && data !== undefined && !isError(data) && !isContentfulError(data)) {
-    try {
-      return JSON.stringify(enhanceContentfulObjectWithMetadata(data));
-    } catch (err: any) {
-      logger.error(`stringify error`, err.message || err, err.stack, data?.sys?.id);
-      return '';
-    }
+const stringify = (r: any, errorKey: string) => {
+  if (isNil(r)) {
+    logger.error(`${logPrefix} Error stringifying ${errorKey}: nil`);
+    return undefined;
   }
-  return '';
+
+  if (isError(r)) {
+    logger.error(`${logPrefix} Error stringifying ${errorKey}: ${r.message}`);
+    return undefined;
+  }
+
+  if (isContentfulError(r)) {
+    logger.error(`${logPrefix} Error stringifying ${errorKey}: ${r.sys.id}`);
+    return undefined;
+  }
+
+  if (!isContentfulObject(r)) {
+    logger.error(`${logPrefix} Error stringifying ${errorKey}: Not contentful Object: ${r}`);
+    return undefined;
+  }
+
+  try {
+    return JSON.stringify(enhanceContentfulObjectWithMetadata(r));
+  } catch (err: any) {
+    logger.error(`${logPrefix} Error stringifying ${errorKey}: ${err.message}`);
+    return undefined;
+  }
+};
+
+const clients: Record<string, Redis> = {};
+
+const getClient = (config: LastRevAppConfig) => {
+  const key = JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
+  if (!clients[key]) {
+    clients[key] = new Redis({
+      ...config.redis,
+      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
+    });
+  }
+  return clients[key];
 };
 
 export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
-  const redis = new Redis({
-    ...config.redis,
-    keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
-  });
+  const redis = getClient(config);
 
   const { contentfulPreviewClient, contentfulProdClient } = createContentfulClients(config);
 
@@ -79,7 +114,10 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       const { data, isPreview } = command;
       const key = `${isPreview ? 'preview' : 'production'}:entries:${data.sys.id}`;
       if (command.action === 'update') {
-        await redis.set(key, stringify(data));
+        const val = stringify(data, key);
+        if (val) {
+          await redis.set(key, val);
+        }
       } else if (command.action === 'delete') {
         await redis.del(key);
       }
@@ -90,7 +128,10 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       const key = `${isPreview ? 'preview' : 'production'}:assets:${data.sys.id}`;
       if (command.action === 'update') {
         if (assetHasUrl(data)) {
-          await redis.set(key, stringify(data));
+          const val = stringify(data, key);
+          if (val) {
+            await redis.set(key, val);
+          }
         } else {
           // Asset must be deleted because the content was not ready in contentful
           await redis.del(key);
@@ -103,9 +144,12 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       const { data, isPreview } = command;
       const key = `${isPreview ? 'preview' : 'production'}:content_types`;
       if (command.action === 'update') {
-        await redis.hset(key, {
-          [data.sys.id]: stringify(data)
-        });
+        const val = stringify(data, data.sys.id);
+        if (val) {
+          await redis.hset(key, {
+            [data.sys.id]: val
+          });
+        }
       } else if (command.action === 'delete') {
         await redis.hdel(key, data.sys.id);
       }
