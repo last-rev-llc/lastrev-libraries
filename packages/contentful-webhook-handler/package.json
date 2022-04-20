@@ -27,7 +27,7 @@
     "@last-rev/graphql-contentful-helpers": "^0.2.1",
     "aws-sdk": "^2.1012.0",
     "contentful": "^9.0.0",
-    "ioredis": "^4.27.9",
+    "ioredis": "^5.0.4",
     "lodash": "^4.17.21"
   }
 }

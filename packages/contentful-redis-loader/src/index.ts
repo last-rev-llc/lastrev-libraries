@@ -1,11 +1,18 @@
 import DataLoader, { Options } from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import { compact, filter, each, isEmpty, isError, isNil, isString, map, some, values, zipObject } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
 import { ItemKey, ContentfulLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
+
+const isString = (x: any): x is string => typeof x === 'string' || x instanceof String;
+const isError = (x: any): x is Error => x instanceof Error;
+// using coersion on purpose here (== instead of ===)
+const isNil = (x: any): x is null | undefined => x == null;
+
+const clients: Record<string, Redis> = {};
+const logPrefix = '[contentful-redis-loader]';
 
 const isContentfulError = (item: any) => {
   return item?.sys?.type === 'Error';
@@ -34,30 +41,56 @@ const enhanceContentfulObjectWithMetadata = (item: any) => {
   };
 };
 
-const stringify = (r: any) => {
-  if (typeof r === 'string') return r;
-  if (!isNil(r) && !isError(r) && !isContentfulError(r)) {
-    try {
-      return JSON.stringify(enhanceContentfulObjectWithMetadata(r));
-    } catch (err: any) {
-      logger.error(`stringify error`, err.message || err, err.stack, r?.sys?.id);
-      return '';
-    }
+const isContentfulObject = (item: any) => {
+  return item?.sys?.type === 'Entry' || item?.sys?.type === 'Asset' || item?.sys?.type === 'ContentType';
+};
+
+const stringify = (r: any, errorKey: string) => {
+  if (isNil(r)) {
+    logger.error(`${logPrefix} Error stringifying ${errorKey}: nil`);
+    return undefined;
   }
-  return '';
+
+  if (isError(r)) {
+    logger.error(`${logPrefix} Error stringifying ${errorKey}: ${r.message}`);
+    return undefined;
+  }
+
+  if (isContentfulError(r)) {
+    logger.error(`${logPrefix} Error stringifying ${errorKey}: ${r.sys.id}`);
+    return undefined;
+  }
+
+  if (!isContentfulObject(r)) {
+    logger.error(`${logPrefix} Error stringifying ${errorKey}: Not contentful Object: ${r}`);
+    return undefined;
+  }
+
+  try {
+    return JSON.stringify(enhanceContentfulObjectWithMetadata(r));
+  } catch (err: any) {
+    logger.error(`${logPrefix} Error stringifying ${errorKey}: ${err.message}`);
+    return undefined;
+  }
+};
+
+const getClient = (config: LastRevAppConfig) => {
+  const key = JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
+  if (!clients[key]) {
+    clients[key] = new Redis({
+      ...config.redis,
+      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
+    });
+  }
+  return clients[key];
 };
 
 const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoaders): ContentfulLoaders => {
-  const client = new Redis({
-    ...config.redis,
-    keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
-  });
+  const client = getClient(config);
 
   const getKey = (itemKey: ItemKey, dir: string) => {
     return [itemKey.preview ? 'preview' : 'production', dir, itemKey.id].join(':');
   };
-
-  // client.flushall();
 
   const fetchAndSet = async <T>(
     keys: readonly ItemKey[],
@@ -72,39 +105,44 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     try {
       unparsed = await client.mget(...redisKeys);
     } catch (err: any) {
-      logger.error(`Redis Loader: fetchAndSet(), mget()`, err.message || err, err.stack);
+      logger.error(`${logPrefix} fetchAndSet(), mget()`, err.message || err, err.stack);
       return [];
     }
 
-    const results = map(unparsed, parse);
+    const results = unparsed.map(parse);
 
-    logger.trace(timer.end());
+    logger.trace(`${logPrefix} ${timer.end()}`);
 
     const cacheMissIds: ItemKey[] = [];
 
-    each(results, (result, index) => {
+    results.forEach((result, index) => {
       if (isNil(result)) {
         cacheMissIds.push(keys[index]);
       }
     });
 
     if (cacheMissIds.length) {
-      logger.debug(`${dirname} cache misses: ${cacheMissIds.length}. Fetching from fallback`);
+      logger.debug(`${logPrefix} ${dirname} cache misses: ${cacheMissIds.length}. Fetching from fallback`);
       timer = new Timer(`set ${cacheMissIds.length} ${dirname} in redis`);
       const sourceResults = await fallbackLoader.loadMany(cacheMissIds);
 
-      const toSet = zipObject(
-        cacheMissIds.map((key) => getKey(key, dirname)),
-        sourceResults.map(stringify)
-      );
+      const toSet: Record<string, any> = {};
+
+      for (let i = 0; i < cacheMissIds.length; i++) {
+        const key = getKey(cacheMissIds[i], dirname);
+        const value = stringify(sourceResults[i], key);
+        if (key && value) {
+          toSet[key] = value;
+        }
+      }
 
       // don't block
       client
         .mset(toSet)
-        .then(() => logger.trace(timer.end()))
-        .catch((err) => logger.error(`Redis Loader: fetchAndSet(), mset()`, err.message || err));
+        .then(() => logger.trace(`${logPrefix}  ${timer.end()}`))
+        .catch((err) => logger.error(`${logPrefix} fetchAndSet(), mset()`, err.message || err));
 
-      each(keys, (key, index) => {
+      keys.forEach((key, index) => {
         if (isNil(results[index])) {
           const cacheMissIndex = cacheMissIds.indexOf(key);
           if (cacheMissIndex !== -1) {
@@ -131,34 +169,35 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
     if (!keys.length) return [];
 
-    const redisKeys = map(
-      keys,
+    const redisKeys = keys.map(
       (key) => `${key.preview ? 'preview' : 'production'}:entry_ids_by_content_type:${key.id}`
     );
 
     const multi = client.multi();
 
-    each(redisKeys, (k) => multi.smembers(k));
+    redisKeys.forEach((k) => multi.smembers(k));
 
-    let multiResults: [Error | null, any][] = [];
+    let multiResults: [Error | null, unknown][] | null;
 
     try {
-      multiResults = await multi.exec();
+      multiResults = (await multi.exec()) || [];
     } catch (err: any) {
-      logger.error(`Redis Loader: getBatchEntriesByContentTypeFetcher(), multi.exec()`, err.message || err);
+      logger.error(`${logPrefix} getBatchEntriesByContentTypeFetcher(), multi.exec()`, err.message || err);
       return [];
     }
 
-    logger.trace(timer.end());
+    logger.trace(`${logPrefix} ${timer.end()}`);
 
     const cacheMissIds: ItemKey[] = [];
     const entryIdsToRequest: ItemKey[] = [];
 
-    each(multiResults, ([err, arrayOfIds], index) => {
-      if (err || !arrayOfIds || !arrayOfIds.length) {
+    multiResults.forEach(([err, arrayOfIds], index) => {
+      if (err || !arrayOfIds || !(arrayOfIds as any[]).length) {
         cacheMissIds.push(keys[index]);
       } else {
-        entryIdsToRequest.push(...map(compact(arrayOfIds as string[]), (id) => ({ id, preview: keys[index].preview })));
+        entryIdsToRequest.push(
+          ...(arrayOfIds as any[]).filter((x) => !!x).map((id) => ({ id, preview: keys[index].preview }))
+        );
       }
     });
 
@@ -167,21 +206,24 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     if (cacheMissIds.length) {
       const sourceResults = await fallbackLoaders.entriesByContentTypeLoader.loadMany(cacheMissIds);
 
-      const filtered = filter(sourceResults, (result) => !isError(result));
+      const filtered = sourceResults.filter((result) => !isError(result));
 
       timer = new Timer(`Set ${filtered.length} entries in redis`);
 
       const msetKeys: Record<string, string> = {};
       const saddKeys: Record<string, string[]> = {};
 
-      each(filtered as Entry<any>[][], (value, index) => {
+      (filtered as Entry<any>[][]).forEach((value, index) => {
         const { id: contentType, preview } = cacheMissIds[index];
         const rootKey = getKey({ preview, id: contentType }, 'entry_ids_by_content_type');
 
-        saddKeys[rootKey] = map(value, 'sys.id');
+        saddKeys[rootKey] = value.map((v) => v.sys.id);
 
-        each(value, (entry) => {
-          msetKeys[getKey({ preview, id: entry.sys.id }, 'entries')] = stringify(entry);
+        value.forEach((entry) => {
+          const v = stringify(entry, entry.sys.id);
+          if (v) {
+            msetKeys[getKey({ preview, id: entry.sys.id }, 'entries')] = v;
+          }
         });
       });
 
@@ -189,20 +231,20 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         // don't block
         const multi = client.multi();
         multi.mset(msetKeys);
-        each(saddKeys, (v, k) => multi.sadd(k, ...v));
+        Object.keys(saddKeys).forEach((k) => multi.sadd(k, ...saddKeys[k]));
         multi
           .exec()
           .catch((e: any) => {
             logger.error(
-              `Redis Loader: getBatchEntriesByContentTypeFetcher(), multi.exec(), setting missed cache data`,
+              `${logPrefix} getBatchEntriesByContentTypeFetcher(), multi.exec(), setting missed cache data`,
               e.message || e,
               e.stack
             );
           })
-          .then(() => logger.trace(timer.end()));
+          .then(() => logger.trace(`${logPrefix} ${timer.end()}`));
       }
 
-      each(filtered as Entry<any>[][], (entryArray, idx) => {
+      (filtered as Entry<any>[][]).forEach((entryArray, idx) => {
         const { id: contentType } = cacheMissIds[idx];
         out[contentType] = entryArray;
       });
@@ -215,15 +257,15 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         'entries'
       );
 
-      each(entryResults, (entry) => {
+      entryResults.forEach((entry) => {
         if (isNil(entry)) return;
-        const contentType = entry.sys.contentType.sys.id;
+        const contentType = entry.sys.contentType.sys.id!;
         out[contentType] = out[contentType] || [];
         out[contentType].push(entry);
       });
     }
 
-    const outArray = map(keys, ({ id: contentType }) => out[contentType] || []);
+    const outArray = keys.map(({ id: contentType }) => out[contentType] || []);
 
     return outArray;
   };
@@ -236,30 +278,37 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       let timer = new Timer('Fetched all content types from redis');
 
       const key = `${preview ? 'preview' : 'production'}:content_types`;
-      const results: (ContentType | null)[] = map(values(await client.hgetall(key)), parse);
+      const results: (ContentType | null)[] = Object.values(await client.hgetall(key)).map(parse);
 
-      logger.trace(timer.end());
+      logger.trace(`${logPrefix} ${timer.end()}`);
 
-      if (isEmpty(results) || some(results, (result) => isNil(result))) {
+      if (!results.length || results.some(isNil)) {
         timer = new Timer('Set all content types in redis');
         const contentTypes = await fallbackLoaders.fetchAllContentTypes(preview);
-        const contentTypeIds = map(contentTypes, 'sys.id');
+        const contentTypeIds = contentTypes.map((v) => v?.sys?.id);
         if (contentTypeIds.length) {
-          const zipped = zipObject(contentTypeIds, map(contentTypes, stringify));
+          const zipped: Record<string, string> = {};
+
+          for (let i = 0; i < contentTypeIds.length; i++) {
+            const val = stringify(contentTypes[i], contentTypeIds[i]);
+            if (val) {
+              zipped[contentTypeIds[i]] = val;
+            }
+          }
 
           // don't block
           client
             .hset(key, zipped)
             .catch((e: any) => {
-              logger.error('error hsetting', e);
+              logger.error(`${logPrefix} error hsetting: ${e}`);
             })
-            .then(() => logger.trace(timer.end()));
+            .then(() => logger.trace(`${logPrefix} ${timer.end()}`));
         }
         return contentTypes;
       }
       return results as ContentType[];
     } catch (err: any) {
-      logger.error('Unable to fetch content types using redis loader:', err.message);
+      logger.error(`${logPrefix} Unable to fetch content types: ${err.message}`);
       return [];
     }
   };

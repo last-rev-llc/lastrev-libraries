@@ -31,7 +31,7 @@
     "aws-sdk": "^2.1012.0",
     "contentful": "^8.4.2",
     "fs-extra": "^10.0.0",
-    "ioredis": "^4.27.9",
+    "ioredis": "^5.0.4",
     "lodash": "^4.17.21",
     "loglevel": "^1.7.1",
     "tslib": "^2.3.0"
