@@ -52,7 +52,7 @@ jobs:
         run: yarn --prefer-offline
 
       - name: Run the tests
-        run: 'yarn turbo run test test:e2e lint'
+        run: 'yarn turbo run test test:e2e:record lint'
 
       - name: Collect coverage
         run: 'yarn combine:reports'
