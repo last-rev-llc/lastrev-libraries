@@ -172,9 +172,9 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           </RootLink>
         );
       }
-
+      console.log('RenderButton');
       return (
-        <NextLink href={href} as={linkAs} passHref>
+        <NextLink href={href} as={linkAs}>
           <Button
             className={className}
             type={other.type}
@@ -250,7 +250,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   }
 
   return (
-    <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra}>
+    <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra} passHref>
       {getButtonContent(text, children, iconPosition, icon)}
     </MuiLink>
   );
