@@ -35,3 +35,6 @@ yarn-error.log*
 
 # content json files
 graphql/fs
+
+# xml
+*.xml
