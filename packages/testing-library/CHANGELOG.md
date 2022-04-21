@@ -1,5 +1,11 @@
 # @last-rev/testing-library
 
+## 0.1.8
+
+### Patch Changes
+
+- 133d406: Add site to generatePages plugin
+
 ## 0.1.7
 
 ### Patch Changes
