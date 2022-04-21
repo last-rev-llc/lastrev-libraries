@@ -38,7 +38,7 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
       <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem" menuBreakpoint={menuBreakpoint}>
         <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
         {subNavigation?.length ? (
-          <MenuRoot menuBreakpoint={menuBreakpoint}>
+          <MenuRoot menuBreakpoint={menuBreakpoint} component="ul">
             {subNavigation?.map((item) => (
               <MenuItem key={item.id}>
                 <ContentModule
@@ -93,6 +93,7 @@ const MenuRoot = styled(Paper, {
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.menuRoot]
 })<{ variant?: string; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
+  margin: 0;
   ${({ theme, menuBreakpoint }) => `
     display: flex;
     flex-direction: column;

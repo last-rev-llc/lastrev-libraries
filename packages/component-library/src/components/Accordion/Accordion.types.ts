@@ -1,8 +1,6 @@
-import { AccordionProps as MuiAccordionProps } from '@mui/material';
-import { CardProps } from '../Card';
 import { RichText } from '../Text';
 
-export interface AccordionProps extends Omit<MuiAccordionProps, 'children' | 'onChange' | 'classes'>, CardProps {
+export interface AccordionProps {
   __typename?: string;
   internalTitle?: string;
   variant?: any;
