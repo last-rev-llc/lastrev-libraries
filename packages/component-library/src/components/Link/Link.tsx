@@ -124,23 +124,23 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           target="_blank"
           rel="noopener noreferrer"
           {...extra}>
-          <IconButton aria-label={icon} size="large">
+          <RootIconButton aria-label={icon} size="large">
             {getIcon(icon)}
-          </IconButton>
+          </RootIconButton>
         </RootLink>
       );
     }
     if (href !== '#') {
       return (
         <NextLink href={href} as={linkAs}>
-          <IconButton aria-label={icon} type={other.type} {...extra} className={className} size="large">
+          <RootIconButton aria-label={icon} type={other.type} {...extra} className={className} size="large">
             {getIcon(icon)}
-          </IconButton>
+          </RootIconButton>
         </NextLink>
       );
     }
     return (
-      <IconButton
+      <RootIconButton
         aria-label={icon}
         // component={Link}
         // href={href}
@@ -150,7 +150,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         onClick={other.onClick}
         size="large">
         {getIcon(icon)}
-      </IconButton>
+      </RootIconButton>
     );
   }
 
@@ -160,7 +160,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       if (isExternal) {
         return (
           <RootLink href={href as string} ref={ref as any} target="_blank" rel="noopener noreferrer" {...extra}>
-            <Button
+            <RootButton
               className={className}
               type={other.type}
               {...extra}
@@ -168,14 +168,14 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
               startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
               endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
               {text || children}
-            </Button>
+            </RootButton>
           </RootLink>
         );
       }
       console.log('RenderButton');
       return (
         <NextLink href={href} as={linkAs}>
-          <Button
+          <RootButton
             className={className}
             type={other.type}
             {...extra}
@@ -183,12 +183,12 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
             startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
             endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
             {text || children}
-          </Button>
+          </RootButton>
         </NextLink>
       );
     }
     return (
-      <Button
+      <RootButton
         className={className}
         onClick={other.onClick}
         type={other.type}
@@ -197,7 +197,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
         endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
         {text || children}
-      </Button>
+      </RootButton>
     );
   }
 
@@ -250,9 +250,18 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   }
 
   return (
-    <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra} passHref>
+    <RootMuiLink
+      component={NextLinkComposed}
+      linkAs={linkAs}
+      className={className}
+      ref={ref}
+      to={href}
+      {...extra}
+      // Not getting the prop validation from NextLinkComposed
+      // @ts-expect-error
+      passHref>
       {getButtonContent(text, children, iconPosition, icon)}
-    </MuiLink>
+    </RootMuiLink>
   );
 });
 
@@ -275,6 +284,18 @@ const RootMuiLink = styled(MuiLink, {
   name: 'Link',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root, styles.rootMuiLink]
+})``;
+
+const RootButton = styled(Button, {
+  name: 'Link',
+  slot: 'Root',
+  overridesResolver: (_, styles) => [styles.root, styles.rootButton]
+})``;
+
+const RootIconButton = styled(IconButton, {
+  name: 'Link',
+  slot: 'Root',
+  overridesResolver: (_, styles) => [styles.root, styles.rootButton]
 })``;
 
 export default Link;

@@ -8,6 +8,8 @@ export interface AccordionProps {
   body?: RichText;
   sidekickLookup?: any;
   children?: any;
+  expanded?: boolean;
+  onClick?: (event?: any) => void;
 }
 
 export interface AccordionClasses {

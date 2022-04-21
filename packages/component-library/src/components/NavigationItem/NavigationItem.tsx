@@ -93,7 +93,9 @@ const MenuRoot = styled(Paper, {
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.menuRoot]
 })<{ variant?: string; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
+  // Remove ul browser styles
   margin: 0;
+  padding: 0;
   ${({ theme, menuBreakpoint }) => `
     display: flex;
     flex-direction: column;
@@ -107,7 +109,7 @@ const MenuRoot = styled(Paper, {
       position: absolute;
       right: 0;
       .MuiMenuItem-root {
-        // padding: 0;
+        padding: 0;
         display:block;
         width: 100%;
         * {

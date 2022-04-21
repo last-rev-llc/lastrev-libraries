@@ -5,13 +5,9 @@ import styled from '@mui/system/styled';
 import sidekick from '../../utils/sidekick';
 import Accordion from '../Accordion';
 import ContentModule from '../ContentModule';
-import { CollectionProps } from '../Collection';
+import { CollectionAccordionMediaProps } from './CollectionAccordionMedia.types';
 import { CardProps } from '../Card';
 import getFirstOfArray from '../../utils/getFirstOfArray';
-
-export interface CollectionAccordionMediaProps extends CollectionProps {
-  items: CardProps[];
-}
 
 export const CollectionAccordionMedia = ({
   items,
@@ -29,8 +25,7 @@ export const CollectionAccordionMedia = ({
         spacing={itemsSpacing ?? 0}
         {...sidekick(sidekickLookup)}
         variant={variant}
-        data-testid="CollectionAccordionMedia"
-      >
+        data-testid="CollectionAccordionMedia">
         <SelectedMediaRoot>
           <SelectedMedia
             __typename="Media"
