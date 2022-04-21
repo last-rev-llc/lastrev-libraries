@@ -41,7 +41,7 @@ const generatePages = async ({ site, nextPagesPath, fixturePagesPath, integratio
     console.debug({ PAGES });
   }
 
-  PAGES.map((chunk, idx) => generatePageSpec(chunk, idx, integrationPath));
+  PAGES.map((chunk, idx) => generatePageSpec(chunk, idx, integrationPath, site));
 };
 
 module.exports = generatePages;

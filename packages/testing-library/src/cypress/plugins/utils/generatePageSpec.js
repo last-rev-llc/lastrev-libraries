@@ -7,11 +7,16 @@ const { readFileSync, writeFileSync } = require('fs');
 
 const pageTemplate = compile(readFileSync(resolve(__dirname, './visit_page.spec.hbs'), 'utf8'));
 
-const generatePage = (path, idx, integrationPath) => {
+const generatePage = (path, idx, integrationPath, site) => {
   const outDir = resolve(integrationPath, '__generated');
-  const filename = join(outDir, `visit_${path.replaceAll('/', '_')}.spec.js`);
   ensureDirSync(outDir);
-  const content = pageTemplate({ path });
+  const filename = join(outDir, `visit_${path.replaceAll('/', '_')}.spec.js`);
+
+  const specDescription = site ? `Visit ${site} page` : `Visit page`;
+  const testDescription = `renders ${path} correctly`;
+
+  const content = pageTemplate({ specDescription, testDescription, path });
+
   writeFileSync(filename, content);
   return path;
 };
