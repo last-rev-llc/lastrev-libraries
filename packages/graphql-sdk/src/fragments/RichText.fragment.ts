@@ -8,6 +8,7 @@ const RichTextFragment = gql`
     variant
     icon
     iconPosition
+    requireLogin
   }
 
   fragment RichText_CollectionFragment on Collection {

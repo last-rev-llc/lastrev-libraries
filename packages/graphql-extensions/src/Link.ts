@@ -50,5 +50,6 @@ export const typeDefs = gql`
     icon: String
     iconPosition: String
     isActive: Boolean
+    requireLogin: Boolean
   }
 `;

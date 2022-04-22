@@ -24,6 +24,7 @@ import theme from '../src/theme';
 import PageTopic from '../src/components/PageTopic';
 import TopicNav from '../src/components/TopicNav';
 import TopicNavHorizontal from '../src/components/TopicNavHorizontal';
+import AuthProvider from '../src/components/AuthProvider';
 
 const contentMapping = {
   Header,
@@ -51,11 +52,13 @@ const StorybookWrapper = (storyFn) => {
   return (
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <ContentModuleProvider contentMapping={contentMapping}>
-          <CssBaseline />
-          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
-          {storyFn()}
-        </ContentModuleProvider>
+        <AuthProvider>
+          <ContentModuleProvider contentMapping={contentMapping}>
+            <CssBaseline />
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
+            {storyFn()}
+          </ContentModuleProvider>
+        </AuthProvider>
       </ThemeProvider>
     </StyledEngineProvider>
   );

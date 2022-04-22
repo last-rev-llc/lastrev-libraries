@@ -57,6 +57,7 @@ export const ContentTypes_Fragments = gql`
     variant
     icon
     iconPosition
+    requireLogin
   }
 
   fragment Header_Base on Header {

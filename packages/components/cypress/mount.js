@@ -30,6 +30,7 @@ import Autocomplete from '../src/components/Autocomplete';
 import AutocompleteBox from '../src/components/AutocompleteBox';
 import SearchResultItem from '../src/components/SearchResultItem';
 import NavigationItem from '../src/components/NavigationItem';
+import AuthProvider from '../src/components/AuthProvider';
 
 const components = {
   Accordion,
@@ -63,11 +64,13 @@ const mount = (component, options) =>
   ogMount(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <ContentModuleProvider contentMapping={components}>
-          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
-          <CssBaseline />
-          {component}
-        </ContentModuleProvider>
+        <AuthProvider>
+          <ContentModuleProvider contentMapping={components}>
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
+            <CssBaseline />
+            {component}
+          </ContentModuleProvider>
+        </AuthProvider>
       </ThemeProvider>
     </StyledEngineProvider>,
     options
