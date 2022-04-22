@@ -97,6 +97,9 @@ const RichTextFragment = gql`
     ... on ModuleIntegration {
       ...RichText_ModuleIntegrationFragment
     }
+    ... on Table {
+      ...RichText_Nested_TableFragment
+    }
   }
 
   fragment RichText_MediaFragment on Media {
@@ -194,6 +197,13 @@ const RichTextFragment = gql`
   fragment RichText_TableFragment on Table {
     richText {
       ...RichText_Nested_RichTextFragment
+    }
+  }
+
+  fragment RichText_Nested_TableFragment on Table {
+    id
+    richText {
+      json
     }
   }
 
