@@ -42,7 +42,7 @@ jobs:
       # Enforce label on PR to prevent unnecesary testing
       - name: Enforce labels
         uses: mheap/github-action-required-labels@v1
-        if: github.ref_name != 'main'
+        if: ${{ github.event_name == 'pull_request' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -149,13 +149,10 @@ jobs:
 
       ## RUN TESTS
       - name: Wait for Netlify Deploy Preview Commit
-        # TODO: Fix weird issue with Netlify API not returning all sites
-        #uses: kamranayub/wait-for-netlify-action@v2.0.3
-        uses: jakepartusch/wait-for-netlify-action@v1.3
+        uses: jlevy-io/wait-for-netlify-deploy-with-headers@3.0.2
         id: wait-for-netflify-preview
         with:
-          site_name: '${{ secrets.SITE_NAME }}'
-          max_timeout: 60
+          site_id: ${{ secrets.STARTER_NETLIFY_SITE_ID }}
         env:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
 

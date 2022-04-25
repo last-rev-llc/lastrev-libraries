@@ -34,12 +34,14 @@ jobs:
       # Enforce label on PR to prevent unnecesary testing
       - name: Enforce labels
         uses: mheap/github-action-required-labels@v1
+        if: ${{ github.event_name == 'pull_request' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           mode: exactly
           count: 1
           labels: 'qa-ready'
+
       ## SETUP
       - name: Checkout
         uses: actions/checkout@v2
@@ -127,14 +129,11 @@ jobs:
       - name: Install project dependencies
         run: yarn --prefer-offline
 
-      ## RUN TESTS
       - name: Wait for Netlify Deploy Preview Commit
-        # TODO: Use an action that checks for the commit preview not the PR
-        uses: jakepartusch/wait-for-netlify-action@v1.3
+        uses: jlevy-io/wait-for-netlify-deploy-with-headers@3.0.2
         id: wait-for-netflify-preview
         with:
-          site_name: '${{ secrets.SITE_NAME }}'
-          max_timeout: 60
+          site_id: ${{ secrets.NETLIFY_SITE_ID }}
         env:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
 
