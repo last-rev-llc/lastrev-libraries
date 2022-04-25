@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.15
+
+### Patch Changes
+
+- 4ca501c: bumped version of @last-rev/graphql-contentful-core
+
 ## 0.0.14
 
 ### Patch Changes
