@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.3.1
+
+### Patch Changes
+
+- a5b06aa: bumped version of @last-rev/graphql-contentful-core
+
 ## 0.3.0
 
 ### Minor Changes
