@@ -1,5 +1,11 @@
 # @last-rev/testing-library
 
+## 0.1.9
+
+### Patch Changes
+
+- 8c37a33: Update cypress test spec name
+
 ## 0.1.8
 
 ### Patch Changes
