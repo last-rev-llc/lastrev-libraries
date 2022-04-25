@@ -26,7 +26,12 @@ const options: Options<ItemKey, any, string> = {
 
 const parse = (r: string | Error | null): any => {
   if (isString(r) && r.length) {
-    return JSON.parse(r);
+    try {
+      return JSON.parse(r);
+    } catch (err) {
+      logger.error(`${logPrefix} unable to parse: ${r}`);
+      return null;
+    }
   }
   return null;
 };
