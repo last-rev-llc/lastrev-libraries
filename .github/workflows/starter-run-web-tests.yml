@@ -3,8 +3,12 @@ name: Starter E2E Tests
 on:
   push:
     branches: [main]
+    paths:
+      - 'examples/lastrev-next-starter/**'
   pull_request:
     types: [labeled, unlabeled, opened, edited, synchronize]
+    paths:
+      - 'examples/lastrev-next-starter/**'
   # Used as a webhook event for publish success actions
   repository_dispatch:
   # Used to fire tests manually from Github
@@ -38,7 +42,7 @@ jobs:
       # Enforce label on PR to prevent unnecesary testing
       - name: Enforce labels
         uses: mheap/github-action-required-labels@v1
-        if: github.ref_name != 'main' 
+        if: github.ref_name != 'main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
