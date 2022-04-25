@@ -7,7 +7,7 @@ import theme from '../src/theme';
 import contentMapping from '../src/contentMapping';
 import '@last-rev/component-library/dist/styles.css';
 
-const mount = (component: any, options: any) =>
+const mount = (component: any, options?: any) =>
   ogMount(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
