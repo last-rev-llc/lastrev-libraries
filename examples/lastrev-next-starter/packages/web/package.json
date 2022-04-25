@@ -23,7 +23,7 @@
     "@last-rev/component-library": "^0.3.16",
     "@last-rev/contentful-sidekick-util": "^0.0.2",
     "@last-rev/sitemap-generator": "^0.1.1",
-    "@last-rev/testing-library": "^0.1.7",
+    "@last-rev/testing-library": "^0.1.9",
     "@lrns/components": "0.0.1",
     "@lrns/graphql-sdk": "^0.1.0",
     "@lrns/utils": "^0.1.0",
