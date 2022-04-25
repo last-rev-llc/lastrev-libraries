@@ -12,8 +12,8 @@ const generatePage = (path, idx, integrationPath, site) => {
   ensureDirSync(outDir);
   const filename = join(outDir, `visit_${path.replaceAll('/', '_')}.spec.js`);
 
-  const specDescription = site ? `Visit ${site} page` : `Visit page`;
-  const testDescription = `renders ${path} correctly`;
+  const specDescription = site ? `Visit ${site}` : `Visit `;
+  const testDescription = `${path} renders correctly`;
 
   const content = pageTemplate({ specDescription, testDescription, path });
 
