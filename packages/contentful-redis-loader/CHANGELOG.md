@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.3.1
+
+### Patch Changes
+
+- 48f3c48: Logging if parse fails
+
 ## 0.3.0
 
 ### Minor Changes
