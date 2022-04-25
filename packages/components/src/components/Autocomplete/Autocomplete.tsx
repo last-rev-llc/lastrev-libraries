@@ -55,7 +55,7 @@ export const Autocomplete = ({ placeholder, ...props }: AutocompleteProps) => {
     return () => {
       search.destroy();
     };
-  }, [containerRef]);
+  }, [containerRef, classes]);
   return <AutocompleteRoot ref={containerRef} data-testid="Autocomplete" />;
 };
 
