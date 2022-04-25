@@ -56,11 +56,11 @@ export const NavigationItem = ({
               <Link {...props} {...sidekick(sidekickLookup)} />
               {!hideIcon && <ExpandMoreIcon sx={{ fill: 'white', width: 24, ml: -0.25 }} />}
             </Box>
-            <MenuRoot menuBreakpoint={menuBreakpoint}
+            <MenuRoot
+              menuBreakpoint={menuBreakpoint}
               sx={{
                 display: open ? 'flex' : 'none'
-              }}
-            >
+              }}>
               {subNavigation?.map((item) => (
                 <MenuItem key={item.id}>
                   <ContentModule

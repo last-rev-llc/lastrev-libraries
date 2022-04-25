@@ -253,6 +253,7 @@ export const ContentTypes_Fragments = gql`
     image {
       ...Media_Base
     }
+    requireLogin
   }
 
   fragment NavigationItem_Base on NavigationItem {
