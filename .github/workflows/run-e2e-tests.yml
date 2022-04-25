@@ -129,7 +129,7 @@ jobs:
         with:
           install: false
           project: ./packages/component-library
-          command: yarn turbo run test:e2e
+          command: yarn turbo run test:e2e:record
           # wait-on: http://localhost:5338/percy/healthcheck
           # wait-on-timeout: 120
           browser: chrome
