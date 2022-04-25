@@ -33,8 +33,6 @@ const NavigationBar = dynamic(() => import('@last-rev/component-library/dist/com
 
 const Hero = dynamic(() => import('@last-rev/component-library/dist/components/Hero/Hero'));
 
-const Media = dynamic(() => import('@last-rev/component-library/dist/components/Media/Media'));
-
 const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop/BackToTop'));
 
 // Custom components
@@ -72,6 +70,8 @@ const CollectionSearchFilters = dynamic(() => import('@ias/components/src/compon
 const CollectionSearchResults = dynamic(() => import('@ias/components/src/components/CollectionSearchResults'));
 
 const AuthProvider = dynamic(() => import('@ias/components/src/components/AuthProvider'));
+
+const Media = dynamic(() => import('@ias/components/src/components/Media'));
 
 import '../styles/globals.css';
 

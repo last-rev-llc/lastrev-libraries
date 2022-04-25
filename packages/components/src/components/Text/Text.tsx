@@ -110,12 +110,12 @@ const renderNodeOptions = ({ links }: { links?: any }) => {
 
       return (
         <Box textAlign="center">
-          <Media
+          <ContentModule
             {...entry}
             sx={{
               maxWidth: entry?.file?.width ? `${entry.file.width}px` : 'none'
             }}
-            testId={`Text-${BLOCKS.EMBEDDED_ASSET}`}
+            data-testid={`Text-${BLOCKS.EMBEDDED_ASSET}`}
           />
         </Box>
       );

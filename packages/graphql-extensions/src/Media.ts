@@ -16,7 +16,11 @@ export const mappers: any = {
   Asset: {
     Asset: {
       width: async (media: any) => media?.details?.image?.width,
-      height: async (media: any) => media?.details?.image?.height
+      height: async (media: any) => media?.details?.image?.height,
+      extension: async (media: any) => {
+        const splitUrl = media?.url.split('.');
+        return splitUrl ? splitUrl[splitUrl.length - 1] : null;
+      }
     }
   }
 };
