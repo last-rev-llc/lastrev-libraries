@@ -1,6 +1,6 @@
 import * as React from 'react';
 import mount from '../../../../cypress/mount';
-import Hero from '@last-rev/component-library/dist/components/Hero/Hero';
+import Hero from '@last-rev/component-library/dist/components/Hero';
 import { alignCenterMock } from '../../../stories/Hero/Hero.mock';
 
 describe('Hero: Align - Center', () => {

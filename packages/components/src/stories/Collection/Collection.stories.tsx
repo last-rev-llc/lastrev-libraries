@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Collection, { CollectionProps } from '@last-rev/component-library/dist/components/Collection/Collection';
+import Collection, { CollectionProps } from '@last-rev/component-library/dist/components/Collection';
 import {
   mediumIconCenterCollectionMock,
   logosMock,

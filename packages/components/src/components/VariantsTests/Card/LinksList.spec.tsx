@@ -1,6 +1,6 @@
 import * as React from 'react';
 import mount from '../../../../cypress/mount';
-import Card from '@last-rev/component-library/dist/components/Card/Card';
+import Card from '@last-rev/component-library/dist/components/Card';
 import { linksListMock } from '../../../stories/Card/Card.mock';
 
 describe('Card: links list', () => {

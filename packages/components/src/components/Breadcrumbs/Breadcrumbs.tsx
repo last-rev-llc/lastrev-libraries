@@ -6,8 +6,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 import Link from '../Link';
 
 export interface BreadcrumbsProps {

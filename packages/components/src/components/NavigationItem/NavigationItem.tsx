@@ -7,9 +7,9 @@ import { styled, alpha } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
 
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
-import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { sidekick } from '../../utils/sidekick';
 import Link from '../Link';
 

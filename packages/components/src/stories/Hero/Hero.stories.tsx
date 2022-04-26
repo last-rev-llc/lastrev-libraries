@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Hero, { HeroProps } from '@last-rev/component-library/dist/components/Hero/Hero';
+import Hero, { HeroProps } from '@last-rev/component-library/dist/components/Hero';
 import { defaultHeroMock, alignLeftMock, alignCenterMock, heightShortMock, heightMediumMock } from './Hero.mock';
 
 export default {
@@ -24,7 +24,7 @@ export default {
       name: 'Content Height',
       control: {
         type: 'inline-radio',
-        options: { 'Small': 'sm', 'Medium': 'md', 'Large': 'lg' }
+        options: { Small: 'sm', Medium: 'md', Large: 'lg' }
       },
       table: {
         defaultValue: { summary: 'lg' }

@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Card, { CardProps } from '@last-rev/component-library/dist/components/Card/Card';
+import Card, { CardProps } from '@last-rev/component-library/dist/components/Card';
 import {
   mediaLeftTextRightMock,
   mediaRightTextLeftMock,

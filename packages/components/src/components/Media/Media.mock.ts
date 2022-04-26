@@ -1,5 +1,5 @@
 import { lorem } from 'faker';
-import { MediaProps, Asset, File } from '@last-rev/component-library/dist/components/Media/Media';
+import { MediaProps, Asset, File } from '@last-rev/component-library/dist/components/Media';
 
 export const mediaMock = (): MediaProps => ({
   file: {

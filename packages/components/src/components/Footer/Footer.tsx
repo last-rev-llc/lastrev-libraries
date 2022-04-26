@@ -7,12 +7,12 @@ import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
 
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import Media, { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
-import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
-import { RichText } from '@last-rev/component-library/dist/components/Text/Text';
-import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
-import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import Media, { MediaProps } from '@last-rev/component-library/dist/components/Media';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link';
+import { RichText } from '@last-rev/component-library/dist/components/Text';
+import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { sidekick } from '../../utils/sidekick';
 import Link from '../Link';
 
@@ -113,23 +113,24 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
               {actions && (
                 <List data-testid="Footer-Actions" sx={{ ml: { xs: '0', md: 'auto' }, pt: 0 }}>
                   {actions?.map((action) => (
-                    <ListItem data-testid="Footer-Actions-Item" key={action.id}
+                    <ListItem
+                      data-testid="Footer-Actions-Item"
+                      key={action.id}
                       sx={{
-                        pt: 0,
-                        pl: 0,
-                        pr: 0,
+                        'pt': 0,
+                        'pl': 0,
+                        'pr': 0,
                         '& .MuiButton-contained': {
-                          whiteSpace: 'nowrap',
-                          border: '1px solid transparent',
-                          backgroundColor: 'common.white',
+                          'whiteSpace': 'nowrap',
+                          'border': '1px solid transparent',
+                          'backgroundColor': 'common.white',
 
                           '&:hover': {
                             backgroundColor: 'midnight.main',
                             borderColor: 'common.white'
                           }
                         }
-                      }}
-                    >
+                      }}>
                       <ContentModule {...action} />
                     </ListItem>
                   ))}

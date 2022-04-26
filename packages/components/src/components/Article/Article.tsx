@@ -5,12 +5,12 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import BackToTop from '@last-rev/component-library/dist/components/BackToTop/BackToTop';
-import { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
-import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import BackToTop from '@last-rev/component-library/dist/components/BackToTop';
+import { MediaProps } from '@last-rev/component-library/dist/components/Media';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
-import { RichText } from '@last-rev/component-library/dist/components/Text/Text';
+import { RichText } from '@last-rev/component-library/dist/components/Text';
 
 import ArticleNav from '../ArticleNav';
 import ArticleHead from '../ArticleHead';

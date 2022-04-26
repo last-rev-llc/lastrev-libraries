@@ -17,7 +17,17 @@
 import './commands';
 
 import '@cypress/code-coverage/support';
+import * as NextRouter from 'next/router';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 crypto.randomUUID();
+
+before(() => {
+  cy.stub(NextRouter, 'useRouter').returns({
+    pathname: '',
+    asPath: '',
+    query: {},
+    prefetch: () => new Promise((resolve, reject) => {})
+  });
+});

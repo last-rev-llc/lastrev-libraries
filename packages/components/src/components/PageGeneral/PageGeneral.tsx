@@ -2,8 +2,8 @@ import React from 'react';
 import algoliasearch from 'algoliasearch/lite';
 import { InstantSearch } from 'react-instantsearch-dom';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
-import BackToTop from '@last-rev/component-library/dist/components/BackToTop/BackToTop';
-import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import BackToTop from '@last-rev/component-library/dist/components/BackToTop';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 
 import Breadcrumbs from '../Breadcrumbs';
 import TopicNavHorizontal from '../TopicNavHorizontal';

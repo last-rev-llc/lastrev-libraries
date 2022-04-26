@@ -3,7 +3,7 @@ import { Configure, RefinementList, MenuSelect } from 'react-instantsearch-dom';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { CollectionProps } from '@last-rev/component-library/dist/components/Collection';
 import { sidekick } from '../../utils/sidekick';
@@ -19,7 +19,7 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup }: Collectio
       <Box
         data-testid="CollectionSearchFilters"
         sx={{
-          marginTop: { xs: 3, md: 0 },
+          'marginTop': { xs: 3, md: 0 },
 
           '& [class*="Text-root"] b': {
             fontWeight: 500
@@ -28,19 +28,18 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup }: Collectio
         {...sidekick(sidekickLookup)}>
         <Box
           sx={{
-            display: 'flex',
-            alignItems: 'center',
+            'display': 'flex',
+            'alignItems': 'center',
 
             '& [class*="Text-root"] p': {
-              marginBottom: { xs: 0, md: 1 },
+              'marginBottom': { xs: 0, md: 1 },
 
               '@media (max-width: 1024px)': {
                 fontSize: 14,
                 textTransform: 'uppercase'
               }
             }
-          }}
-        >
+          }}>
           {introText ? (
             <ContentModule
               {...introText}
@@ -50,9 +49,9 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup }: Collectio
           ) : null}
           <Box
             sx={{
-              display: { xs: 'flex', md: 'none' },
-              alignItems: 'center',
-              marginLeft: 3,
+              'display': { xs: 'flex', md: 'none' },
+              'alignItems': 'center',
+              'marginLeft': 3,
 
               '& svg': {
                 zIndex: 1,
@@ -73,8 +72,7 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup }: Collectio
                 fontSize: 14,
                 appearance: 'none'
               }
-            }}
-          >
+            }}>
             <FilterAltIcon />
             <MenuSelect attribute="categories.level-1" />
           </Box>

@@ -11,11 +11,11 @@ import ListItem from '@mui/material/ListItem';
 import Drawer from '@mui/material/Drawer';
 import { styled } from '@mui/material/styles';
 
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import Media, { MediaProps } from '@last-rev/component-library/dist/components/Media/Media';
-import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
-import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
-import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import Media, { MediaProps } from '@last-rev/component-library/dist/components/Media';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link';
+import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import AutocompleteBox from '../AutocompleteBox';
 import { sidekick } from '../../utils/sidekick';
 

@@ -2784,10 +2784,10 @@
     tar "^6.1.0"
     uuid "^8.3.2"
 
-"@last-rev/component-library@^0.3.10":
-  version "0.3.10"
-  resolved "https://registry.yarnpkg.com/@last-rev/component-library/-/component-library-0.3.10.tgz#5f54e355210179ea8e186b5d4debe50d6727af0b"
-  integrity sha512-cgoM0NBxO9gsoSPKR3F5wo49GuLGZuKZvNY3c6XTaRBrNZZkkn0JtJD79UfP9g0a6za/Lyu/uAkn4L8ppDgr4Q==
+"@last-rev/component-library@^0.4.5":
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/@last-rev/component-library/-/component-library-0.4.5.tgz#26b36f6d1ec28a2b66af5aae47eb5b9acb28bd97"
+  integrity sha512-MQ+p2bF+7R195Xx/gKOdvOr2H9ldw3V4587i8dio1vQTXrqiU8Xp3lxFdOLcAC8HFsDyN5i2V878J34p5DNmJw==
   dependencies:
     "@contentful/rich-text-react-renderer" "^15.0.0"
     "@contentful/rich-text-types" "^15.0.0"
@@ -2795,7 +2795,7 @@
     "@emotion/styled" "^11.3.0"
     "@last-rev/contentful-sidekick-util" "^0.1.0"
     "@last-rev/rollup-config" "^0.1.1"
-    "@last-rev/testing-library" "0.1.2"
+    "@last-rev/testing-library" "0.1.9"
     "@rollup/plugin-typescript" "^8.3.0"
     "@sentry/react" "^6.7.1"
     framer-motion "^4.1.17"
@@ -3079,6 +3079,13 @@
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@last-rev/testing-library/-/testing-library-0.1.2.tgz#5ad6a2d5b80125e0e07d83150b8c73dc013a900b"
   integrity sha512-1XmG2ESQCapCMtTPFw4xF59IZEjXUjJEIHXUO5wZ1y2A7TkG2PjM3Mla4qPbolKJsdaqm1BxV1Elw3AWPNDgaQ==
+  dependencies:
+    ts-jest "^26.5.4"
+
+"@last-rev/testing-library@0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@last-rev/testing-library/-/testing-library-0.1.9.tgz#32a3d41b58c93f38deb968baff852eddf6b39b19"
+  integrity sha512-4cf5aPk01ijKX/O8PROKPYlSgQstLdLXX9u76gO3q0mFUW7+OANmPwC5jur+uvmRG5Tdkiotp9gKlkwXj/YgaQ==
   dependencies:
     ts-jest "^26.5.4"
 

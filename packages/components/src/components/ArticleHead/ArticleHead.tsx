@@ -2,7 +2,7 @@ import React from 'react';
 import dayjs from 'dayjs';
 import Typography from '@mui/material/Typography';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 
 import { sidekick } from '../../utils/sidekick';
 

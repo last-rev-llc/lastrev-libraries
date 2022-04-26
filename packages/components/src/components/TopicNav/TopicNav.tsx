@@ -6,10 +6,10 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import Link from '@last-rev/component-library/dist/components/Link/Link';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import Link from '@last-rev/component-library/dist/components/Link';
 
-import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
+import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem';
 
 import { ScrollSpy } from '../../utils/scrollSpy';
 import ChevronIcon from '../ChevronIcon';
@@ -27,14 +27,14 @@ const TopicNav = ({ navItems, currentCategoryId = '' }: TopicNavProps) => {
     // Expand top level nav item, if the initial currentCategoryId is a subnav item
     if (!navItems) return;
 
-    const navItem = navItems.find(navItem => navItem.id === currentCategoryId);
+    const navItem = navItems.find((navItem) => navItem.id === currentCategoryId);
     if (navItem) return;
 
     let topLevelNavItem = '';
     navItems.forEach((navItem) => {
       if (topLevelNavItem || !navItem.subNavigation) return;
 
-      const subNavItem = navItem.subNavigation.find(subnav => subnav.id === currentCategoryId);
+      const subNavItem = navItem.subNavigation.find((subnav) => subnav.id === currentCategoryId);
 
       if (subNavItem) {
         topLevelNavItem = navItem.id || '';
@@ -102,8 +102,7 @@ const TopicNav = ({ navItems, currentCategoryId = '' }: TopicNavProps) => {
                       <AccordionTitle
                         sx={{ display: 'flex', alignItems: 'center', mb: 0 }}
                         data-scrollspy-id={navItem.id}
-                        data-testid={`TopicNav-categoryAccordion-${navItem.id}`}
-                      >
+                        data-testid={`TopicNav-categoryAccordion-${navItem.id}`}>
                         <NavLink
                           {...(navItem as any)}
                           onClick={(evt: any) => {
@@ -111,7 +110,13 @@ const TopicNav = ({ navItems, currentCategoryId = '' }: TopicNavProps) => {
                             setActive(navItem.id ?? '');
                           }}
                           sx={{ display: 'flex', alignItems: 'center', pl: 1 }}
-                          className={`top-category ${(idx === 0 && !active) || active === navItem.id || navItem.subNavigation.map((navItem) => navItem.id).includes(active) ? 'active' : ''}`}
+                          className={`top-category ${
+                            (idx === 0 && !active) ||
+                            active === navItem.id ||
+                            navItem.subNavigation.map((navItem) => navItem.id).includes(active)
+                              ? 'active'
+                              : ''
+                          }`}
                           data-testid={`TopicNav-categoryLink-${navItem.id}`}
                         />
                         <ChevronIcon sx={{ ml: 'auto' }} open={navItem.id === expandedCategory} />

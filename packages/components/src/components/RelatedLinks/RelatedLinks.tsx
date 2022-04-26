@@ -2,8 +2,8 @@ import React from 'react';
 import Box from '@mui/material/Box';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 import Link from '../Link';
 
 import { sidekick } from '../../utils/sidekick';

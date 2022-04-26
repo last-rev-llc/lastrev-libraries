@@ -1,5 +1,5 @@
 import { random } from 'faker';
-import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 
 export const mockLinkBase = (): LinkProps => {
   const id = random.alphaNumeric(10);

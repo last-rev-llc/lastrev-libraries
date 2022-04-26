@@ -3,8 +3,8 @@ import Typography from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { styled, alpha } from '@mui/material/styles';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import Card, { CardProps } from '@last-rev/component-library/dist/components/Card/Card';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import Card, { CardProps } from '@last-rev/component-library/dist/components/Card';
 
 export interface FeaturedArticlesProps {
   articles?: Array<CardProps>;
@@ -51,7 +51,7 @@ const FeaturedArticles = ({ articles }: FeaturedArticlesProps) => {
 };
 
 const ArticleCard = styled(Card)(({ theme }) => ({
-  background: theme.palette.background.default,
+  'background': theme.palette.background.default,
 
   '& .MuiCardContent-root': {
     paddingTop: 0,

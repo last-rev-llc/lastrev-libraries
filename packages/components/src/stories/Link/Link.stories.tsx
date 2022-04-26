@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import Link from '@last-rev/component-library/dist/components/Link/Link';
+import Link from '@last-rev/component-library/dist/components/Link';
 import mockContent from './Link.mock';
 
 export default {
@@ -18,12 +18,7 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: [
-          'button-contained',
-          'button-outlined',
-          'button-text',
-          ''
-        ]
+        options: ['button-contained', 'button-outlined', 'button-text', '']
       },
       table: {
         defaultValue: { summary: 'button-contained' }

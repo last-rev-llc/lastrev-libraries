@@ -1,12 +1,12 @@
 import React from 'react';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import BackToTop from '@last-rev/component-library/dist/components/BackToTop/BackToTop';
-import { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
-import { CardProps } from '@last-rev/component-library/dist/components/Card/Card';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import BackToTop from '@last-rev/component-library/dist/components/BackToTop';
+import { LinkProps } from '@last-rev/component-library/dist/components/Link';
+import { CardProps } from '@last-rev/component-library/dist/components/Card';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
-import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
+import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem';
 import TopicNavHorizontal from '../TopicNavHorizontal';
 import TopicNav from '../TopicNav';
 import ArticleCategory from '../ArticleCategory/ArticleCategory';

@@ -1,5 +1,9 @@
 import React from 'react';
-import LRMedia, { MediaProps as LRMediaProps, File as LRFile } from '@last-rev/component-library/dist/components/Media/Media';
+import LRMedia from '@last-rev/component-library/dist/components/Media';
+import {
+  MediaProps as LRMediaProps,
+  File as LRFile
+} from '@last-rev/component-library/dist/components/Media/Media.types';
 
 interface File extends LRFile {
   extension?: string;

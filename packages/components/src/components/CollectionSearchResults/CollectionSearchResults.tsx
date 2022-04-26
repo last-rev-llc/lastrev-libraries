@@ -7,10 +7,10 @@ import Skeleton from '@mui/material/Skeleton';
 import MuiPagination from '@mui/material/Pagination';
 import PaginationItem from '@mui/material/PaginationItem';
 import Typography, { TypographyProps } from '@mui/material/Typography';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { CollectionProps } from '@last-rev/component-library/dist/components/Collection';
-import Link from '@last-rev/component-library/dist/components/Link/Link';
+import Link from '@last-rev/component-library/dist/components/Link';
 
 import CategoryLinks from '../CategoryLinks';
 import { sidekick } from '../../utils/sidekick';

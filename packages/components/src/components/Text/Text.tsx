@@ -10,8 +10,8 @@ import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import Typography from '@mui/material/Typography';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
-import LRText, { TextProps } from '@last-rev/component-library/dist/components/Text/Text';
-import Media from '@last-rev/component-library/dist/components/Media/Media';
+import LRText, { TextProps } from '@last-rev/component-library/dist/components/Text';
+import Media from '@last-rev/component-library/dist/components/Media';
 
 /**
  * Purpose of this local <Text /> is:

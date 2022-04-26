@@ -13,27 +13,23 @@ import { createEmotionCache } from '../src/createEmotionCache';
 
 // LastRev components
 
-const SEO = dynamic(() => import('@last-rev/component-library/dist/components/SEO/SEO'));
+const SEO = dynamic(() => import('@last-rev/component-library/dist/components/SEO'));
 
-const Section = dynamic(() => import('@last-rev/component-library/dist/components/Section/Section'));
+const Section = dynamic(() => import('@last-rev/component-library/dist/components/Section'));
 
-const Card = dynamic(() => import('@last-rev/component-library/dist/components/Card/Card'));
+const Card = dynamic(() => import('@last-rev/component-library/dist/components/Card'));
 
-const Collection = dynamic(() => import('@last-rev/component-library/dist/components/Collection/Collection'));
+const Collection = dynamic(() => import('@last-rev/component-library/dist/components/Collection'));
 
-const CollectionCarousel = dynamic(
-  () => import('@last-rev/component-library/dist/components/CollectionCarousel/CollectionCarousel')
-);
+const CollectionCarousel = dynamic(() => import('@last-rev/component-library/dist/components/CollectionCarousel'));
 
-const CollectionAccordion = dynamic(
-  () => import('@last-rev/component-library/dist/components/CollectionAccordion/CollectionAccordion')
-);
+const CollectionAccordion = dynamic(() => import('@last-rev/component-library/dist/components/CollectionAccordion'));
 
-const NavigationBar = dynamic(() => import('@last-rev/component-library/dist/components/NavigationBar/NavigationBar'));
+const NavigationBar = dynamic(() => import('@last-rev/component-library/dist/components/NavigationBar'));
 
-const Hero = dynamic(() => import('@last-rev/component-library/dist/components/Hero/Hero'));
+const Hero = dynamic(() => import('@last-rev/component-library/dist/components/Hero'));
 
-const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop/BackToTop'));
+const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop'));
 
 // Custom components
 

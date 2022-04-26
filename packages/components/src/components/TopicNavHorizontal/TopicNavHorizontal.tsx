@@ -8,10 +8,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Container from '@mui/material/Container';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { styled, alpha } from '@mui/material/styles';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
-import Link from '@last-rev/component-library/dist/components/Link/Link';
-import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
+import Link from '@last-rev/component-library/dist/components/Link';
+import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem';
 
 export interface TopicNavHorizontalProps {
   navItems?: Array<NavigationItemProps>;

@@ -8,9 +8,9 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import { styled, alpha } from '@mui/material/styles';
 import { Theme } from '@mui/material/styles';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
-import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem/NavigationItem';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
+import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem';
 import ChevronIcon from '../ChevronIcon';
 import DocumentIcon from '../DocumentIcon';
 

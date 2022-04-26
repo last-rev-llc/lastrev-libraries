@@ -1,5 +1,5 @@
 import React from 'react';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 
 import ArticleCategory from '../ArticleCategory';
 

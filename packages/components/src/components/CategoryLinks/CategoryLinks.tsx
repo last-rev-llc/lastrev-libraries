@@ -2,8 +2,8 @@ import React from 'react';
 import Chip, { ChipProps } from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link/Link';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link';
 
 import { sidekick } from '../../utils/sidekick';
 
@@ -12,20 +12,12 @@ export interface CategoryLinkProps {
   sidekickLookup?: any;
 }
 
-export const CategoryLinks = ({
-  links,
-  sidekickLookup
-}: CategoryLinkProps) => {
+export const CategoryLinks = ({ links, sidekickLookup }: CategoryLinkProps) => {
   return (
     <ErrorBoundary>
       {links ? (
-        <LinkGroup
-          direction="row"
-          gap={2}
-          {...sidekick(sidekickLookup?.categories)}
-          data-testid="CategoryLinks"
-        >
-          {links?.map(link => (
+        <LinkGroup direction="row" gap={2} {...sidekick(sidekickLookup?.categories)} data-testid="CategoryLinks">
+          {links?.map((link) => (
             <LinkItem
               href={link?.href}
               key={link?.id}
@@ -52,8 +44,6 @@ const LinkGroup = styled(Stack, {
 const LinkItem = styled(Chip, {
   name: 'CategoryLinks',
   slot: 'Item'
-})<ChipProps<React.ElementType>>(() => ({
-  
-}));
+})<ChipProps<React.ElementType>>(() => ({}));
 
 export default CategoryLinks;

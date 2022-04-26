@@ -1,6 +1,6 @@
 import * as React from 'react';
 import mount from '../../../../cypress/mount';
-import Collection from '@last-rev/component-library/dist/components/Collection/Collection';
+import Collection from '@last-rev/component-library/dist/components/Collection';
 import { fourPerRowMock } from '../../../stories/Collection/Collection.mock';
 
 describe('Collection: four-per-row', () => {

@@ -1,7 +1,7 @@
 import React from 'react';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
-import { RichText } from '@last-rev/component-library/dist/components/Text/Text';
+import { RichText } from '@last-rev/component-library/dist/components/Text';
 
 import { sidekick } from '../../utils/sidekick';
 

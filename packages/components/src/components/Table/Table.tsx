@@ -1,6 +1,6 @@
 import React from 'react';
-import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary/ErrorBoundary';
-import { RichText } from '@last-rev/component-library/dist/components/Text/Text';
+import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
+import { RichText } from '@last-rev/component-library/dist/components/Text';
 import Text from '@ias/components/src/components/Text/Text';
 
 export interface TableProps {
@@ -8,19 +8,10 @@ export interface TableProps {
   sidekickLookup?: any;
 }
 
-export const Table = ({
-  richText,
-  sidekickLookup
-}: TableProps) => {
+export const Table = ({ richText, sidekickLookup }: TableProps) => {
   return (
     <ErrorBoundary>
-      {richText ? (
-        <Text
-          sidekickLookup={sidekickLookup?.table}
-          body={richText}
-          data-testid="Table"
-        />
-      ) : null}
+      {richText ? <Text sidekickLookup={sidekickLookup?.table} body={richText} data-testid="Table" /> : null}
     </ErrorBoundary>
   );
 };
