@@ -48,11 +48,17 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
       process.env.PROTECTED_PAGE_REQUIRED_ROLE || 'loggedIn'
     );
 
+    const protectedPageData = {
+      page: {
+        seo: (pageData.page as any)?.seo
+      }
+    };
+
     return {
       props: {
         params: { path, locale, preview, site },
         isProtected,
-        pageData: isProtected ? null : pageData
+        pageData: isProtected ? protectedPageData : pageData
       },
       // Re-generate the page at most once per second
       // if a request comes in
