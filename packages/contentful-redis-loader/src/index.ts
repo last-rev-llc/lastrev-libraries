@@ -169,115 +169,93 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         dirname
       );
 
-  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => async (keys) => {
-    let timer = new Timer(`Fetched ${keys.length} entry IDs by contentType from redis`);
+  const getBatchEntriesByContentTypeFetcher =
+    ({ entryLoader }: { entryLoader: DataLoader<ItemKey, any> }): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> =>
+    async (keys) => {
+      // keys are content types [{ id: 'contentTypeId', preview: true}]
+      if (!keys.length) return [];
+      let timer = new Timer(`Fetched ${keys.length} entry IDs by contentType from redis`);
 
-    if (!keys.length) return [];
+      // Map of contentTypeId -> entries to be used as return
+      const out: { [contentType: string]: Entry<any>[] } = {};
+      // Content type ids for which we don't have Redis data
+      const cacheMissContentTypeIds: ItemKey[] = [];
+      // Entry ids from Redis that are ready to load
+      const entryIdsToRequest: ItemKey[] = [];
 
-    const redisKeys = keys.map(
-      (key) => `${key.preview ? 'preview' : 'production'}:entry_ids_by_content_type:${key.id}`
-    );
-
-    const multi = client.multi();
-
-    redisKeys.forEach((k) => multi.smembers(k));
-
-    let multiResults: [Error | null, unknown][] | null;
-
-    try {
-      multiResults = (await multi.exec()) || [];
-    } catch (err: any) {
-      logger.error(`${logPrefix} getBatchEntriesByContentTypeFetcher(), multi.exec()`, err.message || err);
-      return [];
-    }
-
-    logger.trace(`${logPrefix} ${timer.end()}`);
-
-    const cacheMissIds: ItemKey[] = [];
-    const entryIdsToRequest: ItemKey[] = [];
-
-    multiResults.forEach(([err, arrayOfIds], index) => {
-      if (err || !arrayOfIds || !(arrayOfIds as any[]).length) {
-        cacheMissIds.push(keys[index]);
-      } else {
-        entryIdsToRequest.push(
-          ...(arrayOfIds as any[]).filter((x) => !!x).map((id) => ({ id, preview: keys[index].preview }))
-        );
-      }
-    });
-
-    const out: { [contentType: string]: Entry<any>[] } = {};
-
-    if (cacheMissIds.length) {
-      const sourceResults = await fallbackLoaders.entriesByContentTypeLoader.loadMany(cacheMissIds);
-
-      const filtered = sourceResults.filter((result) => !isError(result) && !isNil(result));
-
-      timer = new Timer(`Set ${filtered.length} entries in redis`);
-
-      const msetKeys: Record<string, string> = {};
-      const saddKeys: Record<string, string[]> = {};
-
-      (filtered as Entry<any>[][]).forEach((value, index) => {
-        const { id: contentType, preview } = cacheMissIds[index];
-        const rootKey = getKey({ preview, id: contentType }, 'entry_ids_by_content_type');
-
-        saddKeys[rootKey] = value.map((v) => v.sys.id);
-
-        value.forEach((entry) => {
-          const v = stringify(entry, entry.sys.id);
-          if (v) {
-            msetKeys[getKey({ preview, id: entry.sys.id }, 'entries')] = v;
-          }
-        });
-      });
-
-      if (saddKeys.length) {
-        // don't block
-        const multi = client.multi();
-        multi.mset(msetKeys);
-        Object.keys(saddKeys).forEach((k) => multi.sadd(k, ...saddKeys[k]));
-        multi
-          .exec()
-          .catch((e: any) => {
-            logger.error(
-              `${logPrefix} getBatchEntriesByContentTypeFetcher(), multi.exec(), setting missed cache data`,
-              e.message || e,
-              e.stack
-            );
-          })
-          .then(() => logger.trace(`${logPrefix} ${timer.end()}`));
-      }
-
-      (filtered as Entry<any>[][]).forEach((entryArray, idx) => {
-        const { id: contentType } = cacheMissIds[idx];
-        out[contentType] = entryArray;
-      });
-    }
-
-    if (entryIdsToRequest.length) {
-      const entryResults = await fetchAndSet<Entry<any>>(
-        entryIdsToRequest,
-        fallbackLoaders.entryLoader as DataLoader<ItemKey, Entry<any>>,
-        'entries'
+      const redisKeys = keys.map(
+        (key) => `${key.preview ? 'preview' : 'production'}:entry_ids_by_content_type:${key.id}`
       );
 
-      entryResults.forEach((entry) => {
-        if (isNil(entry)) return;
-        const contentType = entry.sys.contentType.sys.id;
-        out[contentType] = out[contentType] || [];
-        out[contentType].push(entry);
+      const multi = client.multi();
+
+      // Get me all the ids inside Redis for every contentType in redisKeys
+      redisKeys.forEach((k) => multi.smembers(k));
+
+      let multiResults: [Error | null, unknown][] | null;
+
+      try {
+        // Array of arrays of ids for each contentType
+        multiResults = (await multi.exec()) || [];
+      } catch (err: any) {
+        logger.error(`${logPrefix} getBatchEntriesByContentTypeFetcher(), multi.exec()`, err.message || err);
+        return [];
+      }
+
+      logger.trace(`${logPrefix} ${timer.end()}`);
+
+      // Fill entryIdsToRequest with Redis data
+      multiResults.forEach(([err, arrayOfIds], index) => {
+        if (err || !arrayOfIds || !(arrayOfIds as any[]).length) {
+          // We don't have any ids for this contentType in Redis or there was an error
+          // Save for fallback
+          cacheMissContentTypeIds.push(keys[index]);
+        } else {
+          // Aggregate all the entry ids of each content type
+          entryIdsToRequest.push(
+            ...(arrayOfIds as any[]).filter((x) => !!x).map((id) => ({ id, preview: keys[index].preview }))
+          );
+        }
       });
-    }
 
-    const outArray = keys.map(({ id: contentType }) => out[contentType] || []);
+      // for every entry id that was found in Redis
+      // Use loader to get the entries
+      if (entryIdsToRequest.length) {
+        const entryResults = await entryLoader.loadMany(entryIdsToRequest);
 
-    return outArray;
-  };
+        entryResults.forEach((entry) => {
+          if (isNil(entry) || isError(entry)) return;
+          const contentType = entry.sys.contentType.sys.id;
+          out[contentType] = out[contentType] || [];
+          out[contentType].push(entry);
+        });
+      }
+
+      // Use the fallback loader for every missing content types in Redis
+      // Leverage getting the full entries + id to prime Redis
+      if (cacheMissContentTypeIds.length) {
+        const sourceResults = await fallbackLoaders.entriesByContentTypeLoader.loadMany(cacheMissContentTypeIds);
+
+        // Clean all errors and nulls
+        const filtered = sourceResults.filter((result) => !isError(result) && !isNil(result));
+
+        primeRedisEntriesByContentType(filtered, cacheMissContentTypeIds, getKey, client);
+
+        // Add all the fallback results in the out map
+        (filtered as Entry<any>[][]).forEach((entryArray, idx) => {
+          const { id: contentType } = cacheMissContentTypeIds[idx];
+          out[contentType] = entryArray;
+        });
+      }
+
+      // build return array from out map
+      const outArray = keys.map(({ id: contentType }) => out[contentType] || []);
+      return outArray;
+    };
 
   const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
   const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
-  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
+  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher({ entryLoader }), options);
   const fetchAllContentTypes = async (preview: boolean) => {
     try {
       let timer = new Timer('Fetched all content types from redis');
@@ -327,3 +305,72 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 };
 
 export default createLoaders;
+
+async function primeRedisEntriesByContentType(
+  filtered: (Entry<any>[] | Error)[],
+  cacheMissContentTypeIds: ItemKey[],
+  getKey: (itemKey: ItemKey, dir: string) => string,
+  client: Redis
+) {
+  try {
+    const timer = new Timer(`Set ${filtered.length} entries in redis`);
+    const msetKeys: Record<string, string> = {};
+    const saddKeys: Record<string, string[]> = {};
+
+    (filtered as Entry<any>[][]).forEach((entries, index) => {
+      // Entries can be any number of entries > 1000
+      const { id: contentType, preview } = cacheMissContentTypeIds[index];
+      const rootKey = getKey({ preview, id: contentType }, 'entry_ids_by_content_type');
+
+      saddKeys[rootKey] = entries.map((v) => v.sys.id);
+
+      entries.forEach((entry) => {
+        const v = stringify(entry, entry.sys.id);
+        if (v) {
+          msetKeys[getKey({ preview, id: entry.sys.id }, 'entries')] = v;
+        }
+      });
+    });
+
+    // Needs manual chunking when sending to Redis to avoid limits
+    // split SADD
+    // Split every MSET into chunks that wont surpass the limit of payload size
+    if (saddKeys.length) {
+      // Wait to store entry ids by contenType
+      const multiSadd = client.multi();
+      Object.keys(saddKeys).forEach((k) => multiSadd.sadd(k, ...saddKeys[k]));
+      try {
+        await multiSadd.exec();
+      } catch (e: any) {
+        logger.error(
+          `${logPrefix} getBatchEntriesByContentTypeFetcher(), multiSadd.exec(), setting missed cache data`,
+          e.message || e,
+          e.stack
+        );
+      }
+
+      // don't block
+      const multi = client.multi();
+      // Store entryId -> entry
+      // Danger ! Object size varies and will make everything go boom
+      multi.mset(msetKeys);
+
+      multi
+        .exec()
+        .catch((e: any) => {
+          logger.error(
+            `${logPrefix} getBatchEntriesByContentTypeFetcher(), multi.exec(), setting missed cache data`,
+            e.message || e,
+            e.stack
+          );
+        })
+        .then(() => logger.trace(`${logPrefix} ${timer.end()}`));
+    }
+  } catch (e: any) {
+    logger.error(
+      `${logPrefix} getBatchEntriesByContentTypeFetcher(), primeRedisEntriesByContentType(), Unexpected error`,
+      e.message || e,
+      e.stack
+    );
+  }
+}
