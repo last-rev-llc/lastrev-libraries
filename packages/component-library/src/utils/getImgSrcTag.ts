@@ -37,7 +37,7 @@ export const getOptimizedUrl = ({
   if (unoptimized) return fetchUrl;
   const options = [];
   if (q) options.push(`q=${q}`);
-  if (width && fetchUrl?.includes('ctfassets')) {
+  if (width && (fetchUrl?.includes('ctfassets') || fetchUrl?.includes('contentful'))) {
     if (width) options.push(`w=${Math.round(width)}`);
     fetchUrl = fetchUrl?.includes('?') ? `${fetchUrl}&${options.join('&')}` : `${fetchUrl}?${options.join('&')}`;
   } else {
