@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.4.5
+
+### Patch Changes
+
+- cf25fe7: Fix getImgSrc issues with diferent Contentful URL"
+
 ## 0.4.4
 
 ### Patch Changes
