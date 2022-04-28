@@ -5,7 +5,9 @@ const redis = () => ({
   port: 2,
   password: 'password',
   tls: {},
-  db: 1
+  db: 1,
+  username: 'username',
+  maxBatchSize: 500
 });
 
 const dynamodb = () => ({
@@ -22,7 +24,8 @@ const fs = () => ({
 const contentful = () => ({
   spaceId: 'spaceId',
   contentDeliveryToken: 'contentDeliveryToken',
-  contentPreviewToken: 'contentPreviewToken'
+  contentPreviewToken: 'contentPreviewToken',
+  maxBatchSize: 500
 });
 
 export const redisConfig = (): LastRevAppConfigArgs => ({
