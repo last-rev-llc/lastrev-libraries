@@ -7,6 +7,7 @@ if [ -z "$ROOT_DIR" ]; then
     exit 1
 fi
 
+
 [ ! -d "$ROOT_DIR" ] && echo "$ROOT_DIR is not an existing directory" && exit 1
 [ ! -d "$EXAMPLE_DIR" ] && echo "$EXAMPLE_DIR is not a valid example directory" && exit 1
 
