@@ -31,7 +31,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
     resolveLinks: false
   });
 
-  const maxBatchSize = config.contentful.maxBatchSize;
+  const maxBatchSize = config.contentful.maxBatchSize || 1000;
 
   logger.debug(`${LOG_PREFIX} createLoaders() maxBatchSize: ${maxBatchSize}`);
 

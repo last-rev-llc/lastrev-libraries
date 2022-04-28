@@ -33,7 +33,7 @@ const getClient = (config: LastRevAppConfig) => {
 const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoaders): ContentfulLoaders => {
   const client = getClient(config);
 
-  const maxBatchSize = config.redis.maxBatchSize;
+  const maxBatchSize = config.redis.maxBatchSize || 1000;
 
   logger.debug(`${LOG_PREFIX} createLoaders() maxBatchSize: ${maxBatchSize}`);
 
