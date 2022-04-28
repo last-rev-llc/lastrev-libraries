@@ -9,5 +9,5 @@ if [ $HEALTHCHECK -eq 0 ]; then
 else
   SCHEMA=$(npx rover graph introspect http://localhost:5000/graphql)
   echo "Schema"
-  echo $SCHEMA >schema.graphql
+  echo "$SCHEMA" >schema.graphql
 fi

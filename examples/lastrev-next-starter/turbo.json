@@ -33,7 +33,7 @@
     },
     "build-storybook": {
       "dependsOn": ["^build"],
-      "outputs": ["storybook-static"]
+      "outputs": ["storybook-static/**"]
     },
     "sync:cms": {
       "cache": false,

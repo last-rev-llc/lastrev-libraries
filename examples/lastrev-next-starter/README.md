@@ -208,15 +208,27 @@ This builds and exports the web project
 yarn start
 ```
 
-## Automated Tests
+# Automated Tests
 
-> [Cypress](https://Cypressjs.io/) Fast, easy and reliable testing for anything that runs in a browser.
+## **Github Required Secrets**
+
+## For the automated E2E test to run succesfully in Github Actions you need to add the following secrets to your project (some may be already avaiable as organization secrets):
+
+| Secret                    | Description                                                                                   |
+| ------------------------- | --------------------------------------------------------------------------------------------- |
+| CONTENTFUL_DELIVERY_TOKEN | Delivery token from Contentful (ask your admin for this value)                                |
+| NETLIFY_SITE_ID           | Netlify site id from Netlify (ask your admin for this value)                                  |
+| CYPRESS_PROJECT_ID        | Cypress project id, get it from the [project settings](https://dashboard.cypress.io/)         |
+| CYPRESS_RECORD_KEY        | Cypress project record key, get it from the [project settings](https://dashboard.cypress.io/) |
+| PERCY_TOKEN               | Percy token, get it from the [project settings](https://percy.io/)                            |
 
 Cypress tests are included in the directory of each website package along with the fixtures for the pages that are being tested in `visit_pages.spec.js`.
 
 The first time tests are run on the project a file called `fixtures/generated_pages.json` will be created from the output of a `next build`. This file is used to generate the fixtures for the `visit_pages` specs.
 
 This file can then be manually update to remove pages or add new ones. Once created it wont be re-generated again.
+
+> [Cypress](https://Cypressjs.io/) Fast, easy and reliable testing for anything that runs in a browser.
 
 **To run all tests:**
 
