@@ -11,7 +11,6 @@ import { primeRedisEntriesByContentType, primeRedisEntriesOrAssets } from './pri
 
 const clients: Record<string, Redis> = {};
 
-// TODO: use LastRevAppConfig for this
 const getOptions = (maxBatchSize: number): Options<ItemKey, any, string> => ({
   maxBatchSize,
   cacheKeyFn: (key: ItemKey) => {

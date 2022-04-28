@@ -123,18 +123,20 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
       let numSuccessfulTypes = 0;
       let numSuccessfulEntries = 0;
 
-      const finalOut = out.map((p, idx) => {
-        if (p.status === 'rejected') {
+      const finalOut = out.map((settledArrOfEntries, idx) => {
+        if (settledArrOfEntries.status === 'rejected') {
           logger.error(
             `${LOG_PREFIX} getBatchEntriesByContentTypeFetcher(). Unable to fetch content type ${
               keys[idx].id
-            }. Reason: ${p.reason.message} ${(p.reason.details?.errors || []).map((e: any) => `${e.name}: ${e.value}`)}`
+            }. Reason: ${settledArrOfEntries.reason.message} ${(settledArrOfEntries.reason.details?.errors || []).map(
+              (e: any) => `${e.name}: ${e.value}`
+            )}`
           );
           return [];
         }
         numSuccessfulTypes++;
-        numSuccessfulEntries += (p.value || []).length;
-        return p.value;
+        numSuccessfulEntries += (settledArrOfEntries.value || []).length;
+        return settledArrOfEntries.value;
       });
 
       logger.debug(
