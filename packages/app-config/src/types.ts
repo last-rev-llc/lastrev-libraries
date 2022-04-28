@@ -1,16 +1,13 @@
 import { Extensions } from '@last-rev/types';
 import { LogLevelDesc } from 'loglevel';
+import { RedisOptions } from 'ioredis';
 
 export type LastRevStrategy = 'fs' | 'redis' | 'dynamodb';
 export interface LastRevAppConfiguration {
   cms: 'Contentful';
   strategy: LastRevStrategy;
-  redis: {
-    host: string;
-    port: number;
-    password?: string;
-    tls?: any;
-    db?: number;
+  redis: RedisOptions & {
+    maxBatchSize: number;
   };
   dynamodb: {
     region: string;
@@ -27,6 +24,7 @@ export interface LastRevAppConfiguration {
     spaceId: string;
     env: string;
     usePreview: boolean;
+    maxBatchSize: number;
   };
   algolia: {
     applicationId: string;
@@ -47,12 +45,8 @@ export interface LastRevAppConfiguration {
 export type LastRevAppConfigArgs = {
   cms?: 'Contentful';
   strategy?: LastRevStrategy;
-  redis?: {
-    host?: string;
-    port?: number;
-    password?: string;
-    tls?: any;
-    db?: number;
+  redis?: RedisOptions & {
+    maxBatchSize?: number;
   };
   dynamodb?: {
     region?: string;
@@ -69,6 +63,7 @@ export type LastRevAppConfigArgs = {
     spaceId?: string;
     env?: string;
     usePreview?: boolean;
+    maxBatchSize?: number;
   };
   algolia?: {
     applicationId?: string;

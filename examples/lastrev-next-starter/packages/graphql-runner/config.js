@@ -11,6 +11,12 @@ const parseBooleanEnvVar = (value = '') => {
   return /^(true|1|yes|y)$/.test(val);
 };
 
+const parseNumberEnvVar = (value = '') => {
+  if (!value.length) return undefined;
+  const result = parseInt(value, 10);
+  return isNaN(result) ? undefined : result;
+};
+
 const config = new LastRevAppConfig({
   cms: 'Contentful',
   strategy: process.env.GRAPHQL_RUNNER_STRATEGY || 'fs',
@@ -21,7 +27,8 @@ const config = new LastRevAppConfig({
     contentDeliveryToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
     spaceId: process.env.CONTENTFUL_SPACE_ID,
     env: process.env.CONTENTFUL_ENV,
-    usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW)
+    usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW),
+    maxBatchSize: parseNumberEnvVar(process.env.CONTENTFUL_MAX_BATCH_SIZE)
   },
   algolia: {
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
@@ -33,7 +40,9 @@ const config = new LastRevAppConfig({
     port: process.env.REDIS_PORT,
     host: process.env.REDIS_HOST,
     password: process.env.REDIS_PASSWORD,
-    tls: {}
+    username: process.env.REDIS_USERNAME,
+    tls: {},
+    maxBatchSize: parseNumberEnvVar(process.env.REDIS_MAX_BATCH_SIZE)
   },
   fs: { contentDir: resolve(__dirname, './cms-sync') },
   logLevel: 'debug'
