@@ -10,6 +10,7 @@ fragment Collection_FieldsFragment on Collection {
     typography
   }
   settings
+  styles
   introText {
     ...Text_IntroTextFragment
   }

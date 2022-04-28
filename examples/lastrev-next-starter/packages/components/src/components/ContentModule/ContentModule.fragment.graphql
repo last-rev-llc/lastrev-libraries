@@ -21,7 +21,7 @@ fragment ContentModule_SectionFragment on Content {
   ...NavigationItem_BaseFragment
   ...Text_BaseFragment
   ...Collection_BaseFragment
-
+  ...Link_BaseFragment
   #...Section_BaseFragment
 }
 
@@ -35,4 +35,5 @@ fragment ContentModule_RichTextFragment on Content {
 
   ...Collection_RichTextFragment
   ...Card_RichTextFragment
+  ...Link_BaseFragment
 }

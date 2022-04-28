@@ -15,7 +15,7 @@ fragment Card_FieldsFragment on Card {
     ...Link_BaseFragment
   }
   link {
-    ...Link_BaseFragment
+    ...Link_CardFragment
   }
 }
 

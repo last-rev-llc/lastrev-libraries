@@ -6,3 +6,12 @@ fragment Link_BaseFragment on Link {
   icon
   iconPosition
 }
+
+fragment Link_CardFragment on Link {
+  ...Content_BaseFragment
+  #text
+  href
+  #variant
+  #icon
+  #iconPosition
+}
