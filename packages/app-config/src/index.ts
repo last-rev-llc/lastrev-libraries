@@ -1,5 +1,6 @@
 import { LastRevAppConfigArgs, LastRevAppConfiguration } from './types';
 import { merge, isNil } from 'lodash';
+import { RedisOptions } from 'ioredis';
 
 const defaultConfig: LastRevAppConfigArgs = {
   cms: 'Contentful',
@@ -81,7 +82,8 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       contentDeliveryToken: this.config.contentful?.contentDeliveryToken!,
       contentPreviewToken: this.config.contentful?.contentPreviewToken!,
       env: this.config.contentful?.env!,
-      usePreview: !!this.config.contentful?.usePreview
+      usePreview: !!this.config.contentful?.usePreview,
+      maxBatchSize: this.config.contentful?.maxBatchSize || 1000
     };
   }
 
@@ -114,12 +116,9 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
 
   get redis() {
     return {
-      host: this.config.redis?.host!,
-      port: this.config.redis?.port!,
-      password: this.config.redis?.password,
-      tls: this.config.redis?.tls,
-      db: this.config.redis?.db
-    };
+      ...this.config.redis,
+      maxBatchSize: this.config.redis?.maxBatchSize || 1000
+    } as RedisOptions & { maxBatchSize: number };
   }
 
   get dynamodb() {
