@@ -42,7 +42,10 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
     const path = join('/', (params.slug || ['/']).join('/'));
     const { data: pageData } = await client.Page({ path, locale, preview, site });
     if (!pageData?.page) {
-      throw new Error('NoPageFound');
+      return {
+        notFound: true,
+        revalidate
+      }
     }
     return {
       props: {
