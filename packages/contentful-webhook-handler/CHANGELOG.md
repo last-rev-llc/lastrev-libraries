@@ -1,5 +1,12 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.1
+
+### Patch Changes
+
+- f7e8fa4: After entry changes, deleting all entry ids by content type, as these will be immediately re-calculated upon path updating.
+  - @last-rev/graphql-contentful-helpers@0.2.3
+
 ## 0.4.0
 
 ### Minor Changes

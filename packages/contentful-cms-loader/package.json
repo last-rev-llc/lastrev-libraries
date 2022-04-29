@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-cms-loader",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@last-rev/app-config": "^0.1.5",
+    "@last-rev/app-config": "^0.2.0",
     "@last-rev/rollup-config": "^0.1.2",
     "@last-rev/testing-library": "^0.1.2",
     "@last-rev/types": "^0.1.7",
