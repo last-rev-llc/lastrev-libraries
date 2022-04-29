@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.4.6
+
+### Patch Changes
+
+- 65e1afd: Add nextImageOptimization feature
+
 ## 0.4.5
 
 ### Patch Changes
