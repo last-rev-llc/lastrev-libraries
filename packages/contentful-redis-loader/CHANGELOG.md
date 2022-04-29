@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.3.2
+
+### Patch Changes
+
+- f7e8fa4: Fixed some issues with redis and cms loading. chunking some requests.
+
 ## 0.3.1
 
 ### Patch Changes
