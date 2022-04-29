@@ -27,7 +27,6 @@
     "@last-rev/rollup-config": "^0.1.1",
     "@last-rev/testing-library": "0.1.9",
     "@rollup/plugin-typescript": "^8.3.0",
-    "@sentry/react": "^6.7.1",
     "framer-motion": "^4.1.17",
     "lodash": "^4.17.21",
     "react-context-composer": "^0.0.4",
@@ -44,6 +43,7 @@
     "@mui/material": "^5.4.4",
     "@mui/styles": "^5.4.4",
     "@mui/system": "^5.4.4",
+    "@sentry/react": "^6.7.1",
     "next": "^12.0.8",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"

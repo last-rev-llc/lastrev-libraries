@@ -3775,10 +3775,10 @@
   dependencies:
     ts-jest "^26.5.4"
 
-"@last-rev/testing-library@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@last-rev/testing-library/-/testing-library-0.1.7.tgz#5c4ab98a8ed81bf83dd9a06022e040b3ad5fa2d7"
-  integrity sha512-3IqQAnOytjVu/En1un3vKG4kU4NelABD3H7bNlsTKuY5JUhBKhZBC6Vhm3QfYahCDbCga6T9Un83QgDvcM3WtQ==
+"@last-rev/testing-library@^0.1.9":
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/@last-rev/testing-library/-/testing-library-0.1.9.tgz#32a3d41b58c93f38deb968baff852eddf6b39b19"
+  integrity sha512-4cf5aPk01ijKX/O8PROKPYlSgQstLdLXX9u76gO3q0mFUW7+OANmPwC5jur+uvmRG5Tdkiotp9gKlkwXj/YgaQ==
   dependencies:
     ts-jest "^26.5.4"
 
