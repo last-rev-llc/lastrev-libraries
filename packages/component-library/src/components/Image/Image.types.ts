@@ -1,4 +1,5 @@
-export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+import { ImageProps as NextImageProps } from 'next/image';
+export interface ImageProps extends NextImageProps {
   className?: string;
   columns?: number;
   priority?: boolean;
@@ -7,6 +8,7 @@ export interface ImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   media?: string;
   width?: number;
   disableInlineSVG?: boolean;
+  nextImageOptimization?: boolean;
   q?: number;
   unoptimized?: boolean;
 }

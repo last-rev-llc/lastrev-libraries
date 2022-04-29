@@ -29,7 +29,7 @@
     },
     "dev": {
       "cache": false,
-      "dependsOn": []
+      "dependsOn": ["^build"]
     }
   }
 }

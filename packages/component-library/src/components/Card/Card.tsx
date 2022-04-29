@@ -37,7 +37,7 @@ export const Card = ({
       <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)} {...(props as any)}>
         {!!link ? <CardLink __typename="Link" noLinkStyle {...(link as any)} /> : null}
         {media || loading ? (
-          <CardMedia sx={{ display: 'flex', justifyContent: 'center' }}>
+          <CardMedia sx={{ display: 'block', position: 'relative', width: '100%' }}>
             {!loading ? (
               <Media {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
             ) : (
@@ -67,8 +67,7 @@ export const Card = ({
                 {...sidekick(sidekickLookup?.subtitle)}
                 variant="h4"
                 component="h4"
-                data-testid="Card-subtitle"
-              >
+                data-testid="Card-subtitle">
                 {subtitle}
               </Typography>
             ) : null}

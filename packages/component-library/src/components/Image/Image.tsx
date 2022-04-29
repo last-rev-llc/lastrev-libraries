@@ -1,6 +1,7 @@
 import React from 'react';
 import LazyLoad from 'react-lazyload';
 import Head from 'next/head';
+import NextImage from 'next/image';
 import SVG from 'react-inlinesvg';
 import ErrorBoundary from '../ErrorBoundary';
 import getImgSrcTag from '../../utils/getImgSrcTag';
@@ -21,8 +22,12 @@ const Image = React.forwardRef<any, ImageProps>(
       itemProp,
       testId,
       disableInlineSVG,
+      nextImageOptimization,
       q,
       unoptimized,
+      width,
+      height,
+      layout,
       ...imageProps
     },
     ref
@@ -33,6 +38,23 @@ const Image = React.forwardRef<any, ImageProps>(
     let content;
     if (isSVG && !disableInlineSVG) {
       content = <SVG innerRef={ref} src={src} data-testid={testId} className={className} {...(imageProps as any)} />;
+    } else if (!isSVG && nextImageOptimization) {
+      return (
+        <NextImage
+          src={src}
+          // TODO: NextImage doesn't support ref
+          // ref={ref}
+          data-testid={testId}
+          className={className}
+          itemProp={itemProp}
+          priority={priority}
+          loading={priority ? 'eager' : 'lazy'}
+          height={height}
+          width={width}
+          layout={layout}
+          {...imageProps}
+        />
+      );
     } else {
       content = (
         <img
@@ -52,16 +74,18 @@ const Image = React.forwardRef<any, ImageProps>(
           {NODE_ENV === 'test' || priority ? (
             <>
               {content}
-              <Head>
-                <link
-                  rel="preload"
-                  href={src}
-                  // @ts-ignore
-                  imagesrcset={getImgSrcTag({ src, numColumns: columns, q, unoptimized })?.srcSet}
-                  as="image"
-                  media={media}
-                />
-              </Head>
+              {isSVG ? (
+                <Head>
+                  <link
+                    rel="preload"
+                    href={src}
+                    // @ts-ignore
+                    imagesrcset={getImgSrcTag({ src, numColumns: columns, q, unoptimized })?.srcSet}
+                    as="image"
+                    media={media}
+                  />
+                </Head>
+              ) : null}
             </>
           ) : (
             <LazyLoad offset={typeof window === 'undefined' ? 1000 : window.innerHeight}>{content}</LazyLoad>

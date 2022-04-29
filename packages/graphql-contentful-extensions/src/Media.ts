@@ -1,7 +1,9 @@
 import gql from 'graphql-tag';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
+
 export const typeMappings = {};
+
 const mediaFieldResolver = async ({ fields, field, assetField, ctx }: any) => {
   // TODO: Make getting a localized resolved link a single function
   const value: any = getLocalizedField(fields, assetField, ctx);
@@ -29,7 +31,20 @@ const resolveFile = async (media: any, _args: any, ctx: ApolloContext) => {
   return file;
 };
 
+export const resolvers = {
+  Asset: {
+    url: (asset: any) => (asset?.url?.startsWith('//') ? `https:${asset?.url}` : asset?.url)
+  }
+};
+
 export const mappers = {
+  Asset: {
+    Asset: {
+      url: (asset: any) => (asset?.url?.startsWith('//') ? `https:${asset?.url}` : asset?.url),
+      width: (asset: any) => asset?.details?.image?.width,
+      height: (asset: any) => asset?.details?.image?.height
+    }
+  },
   Media: {
     Media: {
       // TODO: enable this in fieldResolver

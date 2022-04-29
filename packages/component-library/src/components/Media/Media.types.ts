@@ -2,8 +2,8 @@ import { ImageProps } from '../Image';
 
 export interface File {
   url?: string;
-  width?: string;
-  height?: string;
+  width?: number;
+  height?: number;
 }
 export interface Asset {
   file: File;
