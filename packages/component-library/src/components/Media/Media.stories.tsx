@@ -1,7 +1,14 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Media from './Media';
-import { mediaMock, mediaVideoMock, responsiveMediaMock, SVGMediaMock, ExternalSVGMediaMock } from './Media.mock';
+import {
+  mediaMock,
+  mediaVideoMock,
+  responsiveMediaMock,
+  SVGMediaMock,
+  ExternalSVGMediaMock,
+  responsiveNextMediaMock
+} from './Media.mock';
 
 export default {
   title: 'Components / Media',
@@ -9,19 +16,18 @@ export default {
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
       <Box
-        m={5}
         sx={{
           'width': '100%',
-          'height': 600,
+
           'padding': 5,
           'backgroundColor': '#369',
-          '> *': {
+          '& [class*=Media-root]': {
+            background: '#5f87af',
             objectFit: 'cover',
             width: '100%',
             height: '100%'
           }
-        }}
-      >
+        }}>
         {storyFn()}
       </Box>
     )
@@ -47,6 +53,9 @@ SVG.args = { ...ExternalSVGMediaMock };
 
 export const Responsive = Template.bind({});
 Responsive.args = { ...responsiveMediaMock };
+
+export const ResponsiveNext = Template.bind({});
+ResponsiveNext.args = { ...responsiveNextMediaMock };
 
 export const Video = Template.bind({});
 Video.args = { ...mediaVideoMock() };

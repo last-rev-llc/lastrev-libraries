@@ -39,8 +39,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           preload="auto"
           data-testid={testId || 'Media'}
           {...(props as MediaVideoProps)}
-          sx={{ width: '100%', height: '100%', ...props.sx }}
-        >
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>
@@ -64,7 +63,14 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
   }
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} {...props} src={image?.url} alt={alt} data-testid={testId || 'Media'} />
+      <Root
+        {...sidekick(sidekickLookup)}
+        {...props}
+        {...image}
+        src={image?.url}
+        alt={alt}
+        data-testid={testId || 'Media'}
+      />
     </ErrorBoundary>
   );
 };
