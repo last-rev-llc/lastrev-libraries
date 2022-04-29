@@ -1,5 +1,4 @@
 import React from 'react';
-import { join } from 'path';
 import { client, parseBooleanEnvVar } from '@lrns/utils';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule/ContentModule';
@@ -10,43 +9,17 @@ const site = process.env.SITE;
 const pagesRevalidate = parseInt(process.env.PAGES_REVALIDATE as string, 10);
 const revalidate = !isNaN(pagesRevalidate) ? pagesRevalidate : false;
 
-export type PageGetStaticPathsProps = {
-  locales: string[];
-};
-
-export const getStaticPaths = async ({ locales }: PageGetStaticPathsProps) => {
-  try {
-    const { data } = await client.Paths({ locales, preview, site });
-
-    return {
-      paths: data?.paths,
-      fallback: revalidate ? 'blocking' : false
-    };
-  } catch (error) {
-    return {
-      paths: [],
-      fallback: false
-    };
-  }
-};
-
 export type PageStaticPropsProps = {
-  params: {
-    slug?: string[];
-  };
   locale: string;
 };
 
-export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) => {
+export const getStaticProps = async ({ locale }: PageStaticPropsProps) => {
   try {
-    const path = join('/', (params.slug || ['/']).join('/'));
-    const { data: pageData } = await client.Page({ path, locale, preview, site });
-    if (!pageData?.page) {
-      return {
-        notFound: true,
-        revalidate
-      }
+    const { data: pageData } = await client.Page({ path: 'error_404', locale, preview, site });
+    if (!pageData) {
+      throw new Error('NoPageFound');
     }
+
     return {
       props: {
         pageData
@@ -63,7 +36,7 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
   }
 };
 
-export default function Page({ pageData }: any) {
+export default function Page404({ pageData }: any) {
   return (
     <ContentModuleProvider contentMapping={contentMapping}>
       <ContentModule {...pageData.page} />
