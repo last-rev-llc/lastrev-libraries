@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.0.16
+
+### Patch Changes
+
+- 65e1afd: Add mapping to ensure https in front of Asset URLs
+
 ## 0.0.15
 
 ### Patch Changes

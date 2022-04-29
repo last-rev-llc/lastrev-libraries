@@ -45,7 +45,7 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
       return {
         notFound: true,
         revalidate
-      }
+      };
     }
     return {
       props: {
