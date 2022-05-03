@@ -9,7 +9,7 @@ export default function AuthCallback({}: any) {
   const { isSuperUser } = router.query;
   const url = getRedirect();
 
-  useEffect(() => setSuperUser(isSuperUser === 'true'), [isSuperUser]);
+  useEffect(() => setSuperUser(isSuperUser === 'true'), [setSuperUser, isSuperUser]);
 
   useEffect(() => {
     if (authenticated) {
@@ -20,7 +20,7 @@ export default function AuthCallback({}: any) {
         router.push('/');
       }
     }
-  }, [url, authenticated]);
+  }, [url, authenticated, clearRedirect, router]);
 
   return <ArticleLoading />;
 }

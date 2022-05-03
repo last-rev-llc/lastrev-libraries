@@ -6,7 +6,7 @@ import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { CollectionProps } from '@last-rev/component-library/dist/components/Collection';
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 interface FilterItem {
   label: string;

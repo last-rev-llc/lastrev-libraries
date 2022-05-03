@@ -13,6 +13,8 @@ import ContentModule from '@last-rev/component-library/dist/components/ContentMo
 import LRText, { TextProps } from '@last-rev/component-library/dist/components/Text';
 import Media from '@last-rev/component-library/dist/components/Media';
 
+export type { TextProps, TextClassKey, TextClasses } from '@last-rev/component-library/dist/components/Text';
+
 /**
  * Purpose of this local <Text /> is:
  * - Add ids and data-scrollspy attributes to H2 for article page links

@@ -3,17 +3,14 @@ import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoun
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { RichText } from '@last-rev/component-library/dist/components/Text';
 
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 export interface ArticleBodyProps {
   body?: RichText;
   sidekickLookup?: any;
 }
 
-export const ArticleBody = ({
-  body,
-  sidekickLookup
-}: ArticleBodyProps) => {
+export const ArticleBody = ({ body, sidekickLookup }: ArticleBodyProps) => {
   return (
     <ErrorBoundary>
       {body ? (

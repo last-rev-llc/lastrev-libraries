@@ -11,10 +11,7 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
-
-
-const generatePages = require('./generatePages');
-
+const path = require('path');
 /**
  * @type {Cypress.PluginConfig}
  */
@@ -22,7 +19,15 @@ const generatePages = require('./generatePages');
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
-  generatePages();
+  require('@cypress/code-coverage/task')(on, config);
+  const nextPagesPath = path.resolve(__dirname, '../../.next/server/pages');
+  const fixturePagesPath = path.resolve(__dirname, '../../cypress/fixtures');
+  const integrationPath = path.resolve(__dirname, '../../cypress/integration');
 
+  require('@last-rev/testing-library/src/cypress/plugins/generatePages')({
+    nextPagesPath,
+    fixturePagesPath,
+    integrationPath
+  });
   return config;
 };

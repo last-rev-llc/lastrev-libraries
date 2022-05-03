@@ -62,6 +62,17 @@ export const SVGMediaMock = {
   description: lorem.sentence()
 };
 
+export const mediaVideoMock = (): MediaVideoProps => ({
+  file: {
+    url: './LastRev.mp4',
+    width: 1280,
+    height: 720
+  },
+  variant: 'video',
+  title: lorem.sentence(),
+  controls: true
+});
+
 export const ExternalSVGMediaMock = {
   __typename: 'Media',
   file: {

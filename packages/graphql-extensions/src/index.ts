@@ -14,7 +14,6 @@ import * as Text from './Text';
 import * as Table from './Table';
 import * as CustomHero from './Hero';
 import * as CustomSection from './Section';
-import * as Quote from './Quote';
 import * as Header from './Header';
 import * as Footer from './Footer';
 import * as Article from './Article';
@@ -63,7 +62,6 @@ const extensions: GraphQlExtension[] = [
   CustomSection,
   IasCard,
   IasPage,
-  Quote,
   Media,
   IasMedia,
   RichText,

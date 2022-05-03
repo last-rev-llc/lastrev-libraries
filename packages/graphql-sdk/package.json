@@ -2,6 +2,7 @@
   "name": "@ias/graphql-sdk",
   "version": "0.1.0",
   "main": "dist/index.js",
+  "license": "MIT",
   "files": [
     "dist"
   ],
@@ -9,12 +10,16 @@
     "build": "run-s clean codegen build:prod",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "clean": "rimraf dist",
+    "install:rover": "yarn rover -V || node ../../node_modules/@apollo/rover/install",
+    "download:schema:dev": "nodemon -x \"yarn download:schema\" -w ../graphql-extensions/dist",
+    "download:schema": "./scripts/download_schema.sh",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
-    "dev": "concurrently \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
+    "gql:healthcheck": "wait-on -c wait-on-config.js || echo 'GraphQL Server is not available'",
+    "dev": "concurrently \"yarn download:schema:dev\" \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch"
   },
   "peerDependencies": {
@@ -44,6 +49,7 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.3.7",
+    "@apollo/rover": "0.4.1",
     "@ias/graphql-extensions": "0.1.0",
     "@ias/graphql-runner": "0.1.0",
     "@types/react": "^17.0.37",

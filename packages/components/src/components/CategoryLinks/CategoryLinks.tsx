@@ -5,7 +5,7 @@ import { styled } from '@mui/material/styles';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link';
 
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 export interface CategoryLinkProps {
   links?: Array<LinkProps>;

@@ -4,49 +4,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
-import Card from '@last-rev/component-library/dist/components/Card';
-import Header from '../src/components/Header';
-import Section from '@last-rev/component-library/dist/components/Section';
-import Collection from '@last-rev/component-library/dist/components/Collection';
-import Hero from '@last-rev/component-library/dist/components/Hero';
-import Text from '@last-rev/component-library/dist/components/Text';
-import Media from '@last-rev/component-library/dist/components/Media';
-import '@algolia/autocomplete-theme-classic';
-import NavigationItem from '../src/components/NavigationItem';
-import Link from '../src/components/Link';
-import SearchBox from '../src/components/SearchBox';
-import AutocompleteBox from '../src/components/AutocompleteBox';
-import CollectionFiltered from '../src/components/CollectionFiltered';
-import Quote from '../src/components/Quote';
-import Footer from '../src/components/Footer';
-import ArticleText from '../src/components/Text';
-import theme from '../src/theme';
-import PageTopic from '../src/components/PageTopic';
-import TopicNav from '../src/components/TopicNav';
-import TopicNavHorizontal from '../src/components/TopicNavHorizontal';
 import AuthProvider from '../src/components/AuthProvider';
+import contentMapping from '../src/contentMapping';
+import theme from '../src/theme';
 
-const contentMapping = {
-  Header,
-  Footer,
-  Section,
-  Collection,
-  'Collection:filtered': CollectionFiltered,
-  Card,
-  Quote,
-  'Quote': Card,
-  NavigationItem,
-  Text,
-  'Text:article': ArticleText,
-  Media,
-  Link,
-  Hero,
-  'ModuleIntegration:search-box': SearchBox,
-  'ModuleIntegration:autocomplete-search-box': AutocompleteBox,
-  PageTopic,
-  TopicNav,
-  TopicNavHorizontal
-};
+import '@algolia/autocomplete-theme-classic';
 
 const StorybookWrapper = (storyFn) => {
   return (

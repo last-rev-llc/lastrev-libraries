@@ -92,7 +92,7 @@ declare module '@mui/material/Typography' {
 const baseTheme = {
   spacing: 8,
   shape: {
-    borderRadius: 0
+    borderRadius: 8
   },
   breakpoints: {
     values: {

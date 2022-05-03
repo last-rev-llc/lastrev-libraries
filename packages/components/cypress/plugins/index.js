@@ -11,6 +11,9 @@
 
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
+const path = require('path');
+const toPath = (_path) => path.join(process.cwd(), _path);
+const webpack = require('webpack');
 
 /**
  * @type {Cypress.PluginConfig}
@@ -21,11 +24,33 @@ module.exports = (on, config) => {
   // `config` is the resolved Cypress config
   require('@cypress/code-coverage/task')(on, config);
   if (config.testingType === 'component') {
-    require('@cypress/react/plugins/babel')(on, config);
-  }
-  
-  config.projectId = process.env.CYPRESS_PROJECT_ID;
-  config.video = !!process.env.CYPRESS_PROJECT_ID;
+    require('@cypress/react/plugins/babel')(on, config, {
+      setWebpackConfig: (webpackConfig) => {
+        webpackConfig.plugins = webpackConfig.plugins ?? [];
+        webpackConfig.plugins.push(
+          new webpack.ProvidePlugin({
+            process: 'process/browser'
+          })
+        );
 
+        webpackConfig.resolve.alias = {
+          ...webpackConfig.resolve.alias,
+          'react': toPath('../../node_modules/react'),
+          '@emotion/core': toPath('../../node_modules/@emotion/react'),
+          'emotion-theming': toPath('../../node_modules/@emotion/react')
+        };
+        webpackConfig.module.rules.push({
+          test: /\.css$/,
+          use: ['style-loader', 'css-loader']
+        });
+
+        return webpackConfig;
+      }
+    });
+  }
+  if (!config.projectId) {
+    config.projectId = process.env.CYPRESS_PROJECT_ID;
+    config.video = !!process.env.CYPRESS_PROJECT_ID;
+  }
   return config;
 };

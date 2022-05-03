@@ -1,7 +1,8 @@
 require('dotenv').config();
 const path = require('path');
 const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['@ias/components']);
+const withTM = require('next-transpile-modules')(['@ias/components', '@last-rev/component-library']);
+const { withSentryConfig } = require('@sentry/nextjs');
 
 // Allow bundle analysis via ANALYZE_BUNDLE env variable
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -12,14 +13,11 @@ const nextConfig = {
   /**
    * @type {import('next').NextConfig}
    */
-  // Disabled due to error https://github.com/vercel/next.js/issues/30429
-  // swcMinify: true,
   i18n: {
     // TODO: generate these and read from that
     locales: ['en-US'],
     defaultLocale: 'en-US'
   },
-  trailingSlash: true,
   reactStrictMode: true,
   env: {
     CONTENTFUL_SETTINGS_ID: process.env.CONTENTFUL_SETTINGS_ID,
@@ -55,4 +53,4 @@ const nextConfig = {
   }
 };
 
-module.exports = withPlugins([[withTM], withBundleAnalyzer], nextConfig);
+module.exports = withPlugins([[withTM], withBundleAnalyzer, [withSentryConfig]], nextConfig);

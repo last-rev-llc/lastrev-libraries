@@ -14,7 +14,7 @@ import { NavigationItemProps } from '@last-rev/component-library/dist/components
 import ChevronIcon from '../ChevronIcon';
 import DocumentIcon from '../DocumentIcon';
 
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 export interface ArticleCategoryProps {
   id?: string;
@@ -28,8 +28,8 @@ export interface ArticleCategoryProps {
 }
 
 const Accordion = styled(MuiAccordion)(({ theme }) => ({
-  marginBottom: theme.spacing(2),
-  backgroundColor: 'transparent',
+  'marginBottom': theme.spacing(2),
+  'backgroundColor': 'transparent',
 
   '&:not(:last-child)': {
     paddingBottom: theme.spacing(2),
@@ -77,7 +77,7 @@ const Button = styled(MuiButton)(({ theme }) => ({
 
 const ArticleCategoryTitle = styled(Typography, {
   name: 'ArticleCategory',
-  slot: 'ArticleCategoryTitle',
+  slot: 'ArticleCategoryTitle'
 })<TypographyProps<React.ElementType>>(({ theme }) => ({
   [theme.breakpoints.up('md')]: {
     marginBottom: 0
@@ -85,7 +85,7 @@ const ArticleCategoryTitle = styled(Typography, {
 }));
 
 const Root = styled(Box)(({ theme }) => ({
-  borderBottom: `1px solid ${alpha(theme.palette.text.primary, 0.3)}`,
+  'borderBottom': `1px solid ${alpha(theme.palette.text.primary, 0.3)}`,
 
   '&:last-child': {
     border: 'none'
@@ -178,13 +178,14 @@ const ArticleCategory = ({
         )}
 
         {articles?.map((article: any) => (
-          <Box key={article.id} data-testid="ArticleCategory-Article"
+          <Box
+            key={article.id}
+            data-testid="ArticleCategory-Article"
             sx={{
               '&:not(:first-child)': {
                 marginTop: 3
               }
-            }}
-          >
+            }}>
             {article.link && (
               <ContentModule
                 {...article.link}
@@ -231,38 +232,37 @@ const ArticleCategory = ({
                 '& .MuiAccordionSummary-content.Mui-expanded span + svg': {
                   transform: level === 2 ? 'rotate(0deg)' : 'none'
                 }
-              }}
-            >
-              <Box display="flex" alignItems="center" justifyContent="flex-start" sx={{ width:'100%' }}>
+              }}>
+              <Box display="flex" alignItems="center" justifyContent="flex-start" sx={{ width: '100%' }}>
                 {level === 2 && (
                   <>
                     <span />
-                    <ChevronIcon open={isExpanded(subCategory)}
-                      sx={{ mr: 2 }}
-                    />
+                    <ChevronIcon open={isExpanded(subCategory)} sx={{ mr: 2 }} />
                   </>
                 )}
                 {categoryHierarchyLinks && level === 1 ? (
-                  <Box display="flex" alignItems="center" justifyContent="flex-start"
+                  <Box
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="flex-start"
                     sx={{
                       width: '100%',
                       marginBottom: isExpanded(subCategory) ? 1 : 0
-                    }}
-                  >
+                    }}>
                     <Box
                       sx={{
                         '& svg': {
                           width: (theme: Theme) => theme.spacing(5),
                           ml: -1
                         }
-                      }}
-                    >
+                      }}>
                       <DocumentIcon />
                     </Box>
                     <Typography
                       variant="h3"
                       component="h3"
-                      sx={{ ml: 2,
+                      sx={{
+                        'ml': 2,
                         '@media (min-width: 1024px)': {
                           mb: 0
                         }
@@ -270,9 +270,7 @@ const ArticleCategory = ({
                       data-testid={`ArticleCategory-SubCategory-${subCategory.id}-title`}>
                       {subCategory.title}
                     </Typography>
-                    <ChevronIcon open={Boolean(expandedSubCategories[subCategory.id])}
-                      sx={{ ml: 'auto' }}
-                    />
+                    <ChevronIcon open={Boolean(expandedSubCategories[subCategory.id])} sx={{ ml: 'auto' }} />
                   </Box>
                 ) : (
                   <Typography

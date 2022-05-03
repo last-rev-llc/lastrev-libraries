@@ -76,8 +76,13 @@ describe('AutocompleteBox', () => {
   });
 
   it('doest not call router.push when searchResultsUrl is missing', () => {
-    const mockedContent: AutocompleteBoxProps = { ...autocompleteBoxMock };
-    delete mockedContent.settings.searchResultsUrl;
+    const mockedContent: AutocompleteBoxProps = {
+      ...autocompleteBoxMock,
+      settings: {
+        ...autocompleteBoxMock.settings,
+        searchResultsUrl: undefined
+      }
+    };
     const fakeSearchQuery = 'Lorem Ipsum';
 
     mount(

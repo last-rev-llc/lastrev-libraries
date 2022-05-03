@@ -13,7 +13,7 @@ import { CollectionProps } from '@last-rev/component-library/dist/components/Col
 import Link from '@last-rev/component-library/dist/components/Link';
 
 import CategoryLinks from '../CategoryLinks';
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 interface CategoryProps {
   name: string;

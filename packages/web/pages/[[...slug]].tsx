@@ -2,10 +2,14 @@ import React from 'react';
 import { join, sep, posix } from 'path';
 import { client, parseBooleanEnvVar } from '@ias/utils';
 import { ContentModule } from '@last-rev/component-library';
+import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import AuthGuard from '@ias/components/src/components/AuthGuard';
+import contentMapping from '@ias/components/src/contentMapping';
 
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 const site = process.env.SITE;
+const pagesRevalidate = parseInt(process.env.PAGES_REVALIDATE as string, 10);
+const revalidate = !isNaN(pagesRevalidate) ? pagesRevalidate : false;
 
 export type PageGetStaticPathsProps = {
   locales: string[];
@@ -17,7 +21,7 @@ export const getStaticPaths = async ({ locales }: PageGetStaticPathsProps) => {
 
     return {
       paths: data?.paths,
-      fallback: false
+      fallback: revalidate ? 'blocking' : false
     };
   } catch (error) {
     return {
@@ -74,12 +78,9 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
 };
 
 export default function Page({ params, isProtected, pageData }: any) {
-  try {
-    if (isProtected) {
-      return <AuthGuard params={params} />;
-    }
-    return <ContentModule {...pageData.page} />;
-  } catch (err) {
-    console.log('failed here', err, params);
-  }
+  return (
+    <ContentModuleProvider contentMapping={contentMapping}>
+      {isProtected ? <AuthGuard params={params} /> : <ContentModule {...pageData.page} />}
+    </ContentModuleProvider>
+  );
 }

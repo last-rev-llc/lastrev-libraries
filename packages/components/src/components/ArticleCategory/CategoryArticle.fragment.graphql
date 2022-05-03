@@ -1,0 +1,59 @@
+fragment CategoryArticle_FieldsFragment on CategoryArticle {
+  ...Content_BaseFragment
+  sidekickLookup
+  title
+  slug
+  articles {
+    ...Card_BaseFragment
+    link {
+      ...Link_BaseFragment
+    }
+  }
+  link {
+    ...Link_BaseFragment
+  }
+  level
+}
+
+fragment CategoryArticle_PageFragment on CategoryArticle {
+  ...Content_BaseFragment
+  sidekickLookup
+  title
+  slug
+  categoryHierarchyLinks {
+    ...NavigationItem_BaseFragment
+  }
+  link {
+    ...Link_BaseFragment
+  }
+  seo
+  articles {
+    ...Card_BaseFragment
+  }
+  topicNavItems {
+    ...NavigationItem_BaseFragment
+  }
+  header {
+    ...Header_BaseFragment
+  }
+  hero {
+    ...Hero_BaseFragment
+  }
+  featuredArticles {
+    ...Card_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+  level
+  subCategories {
+    ... on CategoryArticle {
+      ...CategoryArticle_FieldsFragment
+      subCategories {
+        ... on CategoryArticle {
+          ...CategoryArticle_FieldsFragment
+        }
+      }
+    }
+  }
+}

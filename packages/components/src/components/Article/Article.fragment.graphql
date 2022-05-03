@@ -1,0 +1,47 @@
+fragment Article_FieldsFragment on Article {
+  id
+  title
+  slug
+  summary
+  pubDate
+  featuredMedia {
+    ...Media_BaseFragment
+  }
+}
+
+fragment Article_PageFragment on Article {
+  ...Article_FieldsFragment
+  header {
+    ...Header_BaseFragment
+  }
+  body {
+    ...RichText_RichTextFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+  seo
+  disableBackToTop
+  requiredRoles
+  categories {
+    ...Link_BaseFragment
+  }
+  relatedLinks {
+    ...Link_BaseFragment
+  }
+  footerItems {
+    ...Section_BaseFragment
+  }
+  breadcrumbs {
+    ...Link_BaseFragment
+  }
+  sideNav {
+    ...Link_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+  topicNavItems {
+    ...NavigationItem_BaseFragment
+  }
+}

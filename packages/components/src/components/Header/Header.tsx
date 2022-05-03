@@ -17,7 +17,7 @@ import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import AutocompleteBox from '../AutocompleteBox';
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 export interface HeaderProps {
   variant?: 'elevation' | 'outlined' | undefined;

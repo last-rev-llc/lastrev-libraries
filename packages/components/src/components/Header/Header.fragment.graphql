@@ -1,0 +1,25 @@
+fragment Header_BaseFragment on Header {
+  ...Content_BaseFragment
+  variant
+  colorScheme
+
+  logo {
+    ...Media_BaseFragment
+  }
+  logoUrl
+
+  #  navigationItems {
+  #    ...Collection_BaseFragment
+  #  }
+
+  # Custom
+  leftNav {
+    ...NavigationItem_BaseFragment
+  }
+  rightNav {
+    ...NavigationItem_BaseFragment
+  }
+  actions {
+    ...Link_BaseFragment
+  }
+}

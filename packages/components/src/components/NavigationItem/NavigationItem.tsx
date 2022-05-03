@@ -10,9 +10,12 @@ import { useTheme } from '@mui/system';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import Link from '../Link';
-
+export type {
+  NavigationItemClassKey,
+  NavigationItemClasses
+} from '@last-rev/component-library/dist/components/NavigationItem';
 export interface NavigationItemProps extends LinkProps {
   subNavigation?: Array<LinkProps>;
   sidekickLookup?: any;

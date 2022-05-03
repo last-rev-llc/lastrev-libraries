@@ -1,0 +1,16 @@
+fragment Footer_BaseFragment on Footer {
+  ...Content_BaseFragment
+  sidekickLookup
+  media {
+    ...Media_BaseFragment
+  }
+  navigationItems {
+    ...NavigationItem_BaseFragment
+  }
+  actions {
+    ...Link_BaseFragment
+  }
+  disclaimerText {
+    ...RichText_RichTextFragment
+  }
+}

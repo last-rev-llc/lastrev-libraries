@@ -13,6 +13,7 @@ export default class MyDocument extends Document {
           <link rel="preconnect" href="https://images.ctfassets.net" />
           <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
           <link rel="preconnect" href="https://www.googletagmanager.com" />
+          {/* eslint-disable-next-line @next/next/next-script-for-ga */}
           <script
             type="text/javascript"
             dangerouslySetInnerHTML={{
@@ -52,6 +53,7 @@ MyDocument.getInitialProps = async (ctx) => {
 
   ctx.renderPage = () =>
     originalRenderPage({
+      // eslint-disable-next-line react/display-name
       enhanceApp: (App: any) => (props) => <App emotionCache={cache} {...props} />
     });
 

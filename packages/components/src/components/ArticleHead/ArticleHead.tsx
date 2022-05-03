@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 export interface ArticleHeadProps {
   title?: string;
@@ -13,16 +13,14 @@ export interface ArticleHeadProps {
   sidekickLookup?: any;
 }
 
-export const ArticleHead = ({
-  title,
-  pubDate,
-  summary,
-  sidekickLookup
-}: ArticleHeadProps) => {
+export const ArticleHead = ({ title, pubDate, summary, sidekickLookup }: ArticleHeadProps) => {
   return (
     <ErrorBoundary>
       {title ? (
-        <Typography variant="h2" component="h1" mb={1}
+        <Typography
+          variant="h2"
+          component="h1"
+          mb={1}
           {...sidekick(sidekickLookup?.title)}
           data-testid="ArticleHead-title">
           {title}
@@ -31,7 +29,8 @@ export const ArticleHead = ({
 
       {pubDate ? (
         <>
-          <AccessTimeIcon fontSize="small"
+          <AccessTimeIcon
+            fontSize="small"
             sx={{
               width: 16,
               height: 16,
@@ -40,17 +39,26 @@ export const ArticleHead = ({
               fill: 'midnight.A80'
             }}
           />
-          <Typography variant="time" component="time"
+          <Typography
+            variant="time"
+            component="time"
             dateTime={pubDate}
-            {...sidekick(sidekickLookup?.pubDate)} data-testid="ArticleHead-pubDate"
-          >
+            {...sidekick(sidekickLookup?.pubDate)}
+            data-testid="ArticleHead-pubDate">
             {dayjs(pubDate).format('MMM D, YYYY')}
           </Typography>
         </>
       ) : null}
 
       {summary ? (
-        <Typography variant="body2" component="p" mt={4} {...sidekick(sidekickLookup?.summary)} data-testid="ArticleHead-summary">{summary}</Typography>
+        <Typography
+          variant="body2"
+          component="p"
+          mt={4}
+          {...sidekick(sidekickLookup?.summary)}
+          data-testid="ArticleHead-summary">
+          {summary}
+        </Typography>
       ) : null}
     </ErrorBoundary>
   );

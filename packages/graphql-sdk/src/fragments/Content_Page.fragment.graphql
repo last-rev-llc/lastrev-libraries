@@ -1,0 +1,5 @@
+fragment Content_PageFragment on Content {
+  ...Page_BaseFragment
+  ...Article_PageFragment
+  ...CategoryArticle_PageFragment
+}

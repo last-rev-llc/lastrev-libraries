@@ -1,11 +1,16 @@
 import React from 'react';
+export type {
+  CollectionFilteredProps,
+  CollectionFilteredClassKey,
+  CollectionFilteredClasses
+} from '@last-rev/component-library/dist/components/CollectionFiltered';
 import CollectionFiltered from '@last-rev/component-library/dist/components/CollectionFiltered';
-import { client, parseBooleanEnvVar } from '@ias/utils';
 
-const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
+const preview = !!process.env.CONTENTFUL_USE_PREVIEW;
 
 const withFetchItems = (Wrapped: any) => (props: any) => {
   const fetchItems = async ({ filter, limit, offset }: { filter: any; limit?: number; offset?: number }) => {
+    const client = await import('@ias/utils').then((module) => module.client);
     const { data } = await client.CollectionItems({ id: props.id, limit, offset, filter, preview });
     if (data?.content?.__typename == 'Collection') {
       const items = data?.content?.itemsConnection?.items;

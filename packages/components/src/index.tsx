@@ -1,3 +1,4 @@
+import './@types/mui';
 export { default as CollectionFiltered } from './components/CollectionFiltered';
 export { default as NavigationItem } from './components/NavigationItem';
 export { default as Article } from './components/Article';

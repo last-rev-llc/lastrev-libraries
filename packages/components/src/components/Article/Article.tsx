@@ -18,7 +18,7 @@ import ArticleBody from '../ArticleBody';
 import Breadcrumbs from '../Breadcrumbs';
 import CategoryLinks from '../CategoryLinks';
 import RelatedLinks from '../RelatedLinks';
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import TopicNavHorizontal from '../TopicNavHorizontal';
 
 export interface ArticleProps {

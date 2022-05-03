@@ -1,6 +1,6 @@
 node_modules
 .next
-.vscode
+#.vscode
 **/dist/**
 **/build/**
 **/.next/**
@@ -21,3 +21,8 @@ lerna-debug.log
 .netlify
 
 **/storybook-static
+**/*sitemap.xml
+**/__generated/*.spec.js
+**/.turbo
+
+create-app.json

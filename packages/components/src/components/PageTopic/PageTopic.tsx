@@ -11,7 +11,7 @@ import TopicNavHorizontal from '../TopicNavHorizontal';
 import TopicNav from '../TopicNav';
 import ArticleCategory from '../ArticleCategory/ArticleCategory';
 import FeaturedArticles from '../FeaturedArticles/FeaturedArticles';
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 export interface PageTopicProps {
   __typename?: string;

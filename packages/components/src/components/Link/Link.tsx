@@ -3,6 +3,8 @@ import Link from '@last-rev/component-library/dist/components/Link';
 import { useRouter } from 'next/router';
 import { useAuthContext } from '../AuthProvider';
 
+export type { LinkProps, LinkClassKey, LinkClasses } from '@last-rev/component-library/dist/components/Link';
+
 const withSubActivePath = (WrappedLink: any) => (props: any) => {
   const router = useRouter();
   const { authenticated, setRedirect } = useAuthContext();

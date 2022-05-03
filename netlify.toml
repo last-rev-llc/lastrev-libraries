@@ -1,7 +1,6 @@
 [build]
-#  publish = "packages/web/out"
   publish = "packages/web/.next" 
-  command = "yarn build:prod"
+  command = "yarn build"
 
 [dev]
   command = "yarn dev"
@@ -10,9 +9,14 @@
   directory = "packages/functions/src"
   external_node_modules = ["express"]
   node_bundler = "esbuild"
+  included_files = ["!node_modules/@swc/**/*"]
 
 [[plugins]]
-  package = "@netlify/plugin-nextjs" 
+  package = "./packages/cache-netlify-plugin"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 # Enable this plugin to run tests on Netlify
 #[[plugins]]
 #  package = "netlify-plugin-cypress"

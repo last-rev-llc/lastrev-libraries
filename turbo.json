@@ -1,0 +1,86 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "baseBranch": "origin/main",
+  "globalDependencies": [".env", "**/.env", "$TURBO_CACHE_KEY"],
+  "pipeline": {
+    "dev": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "storybook": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "lint": {
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"]
+    },
+    "test:e2e": {
+      "dependsOn": ["^build", "$PERCY_TOKEN"],
+      "outputs": ["coverage/**"]
+    },
+    "test:watch": {
+      "dependsOn": ["^build"],
+      "cache": false,
+      "outputs": []
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "build-storybook": {
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static/**"]
+    },
+    "sync:cms": {
+      "cache": false,
+      "dependsOn": ["@ias/graphql-extensions#build"]
+    },
+    "start": {
+      "cache": false,
+      "dependsOn": ["build"],
+      "outputs": []
+    },
+    "gql:healthcheck": {
+      "cache": false,
+      "dependsOn": [],
+      "outputs": []
+    },
+    "@ias/graphql-runner#dev": {
+      "cache": false,
+      "dependsOn": ["@ias/graphql-extensions#build"],
+      "outputs": []
+    },
+    "@ias/graphql-runner#start": {
+      "cache": false,
+      "dependsOn": ["@ias/graphql-extensions#build"],
+      "outputs": []
+    },
+    "@ias/utils#dev": {
+      "cache": false,
+      "dependsOn": ["@ias/graphql-sdk#build"],
+      "outputs": []
+    },
+    "@ias/graphql-sdk#dev": {
+      "cache": false,
+      "dependsOn": ["@ias/graphql-sdk#gql:healthcheck"],
+      "outputs": []
+    },
+    "@ias/graphql-sdk#build": {
+      "dependsOn": ["@ias/graphql-sdk#gql:healthcheck", "^build"],
+      "outputs": ["dist/**", "schema.graphql"]
+    },
+    "@ias/web#dev": {
+      "cache": false,
+      "dependsOn": ["@ias/graphql-runner#dev", "^build"],
+      "outputs": ["out/**", ".next/**"]
+    },
+    "@ias/web#build": {
+      "dependsOn": ["@ias/graphql-runner#start", "^build"],
+      "outputs": ["out/**", ".next/**"]
+    }
+  }
+}

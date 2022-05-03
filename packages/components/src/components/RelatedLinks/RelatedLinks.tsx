@@ -6,7 +6,7 @@ import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoun
 import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 import Link from '../Link';
 
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 export interface RelatedLinksProps {
   title?: string;

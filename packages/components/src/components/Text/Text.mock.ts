@@ -141,6 +141,54 @@ export const complexMock = {
     }
   }
 };
+export const richTextMock = {
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        nodeType: 'paragraph',
+        data: {},
+        content: [
+          {
+            nodeType: 'text',
+            value: lorem.sentences(2),
+            marks: [],
+            data: {}
+          }
+        ]
+      }
+    ]
+  },
+  links: {
+    entries: [],
+    assets: []
+  }
+};
+export const staticRichTextMock = {
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        nodeType: 'paragraph',
+        data: {},
+        content: [
+          {
+            nodeType: 'text',
+            value: 'This a paragraph of static text',
+            marks: [],
+            data: {}
+          }
+        ]
+      }
+    ]
+  },
+  links: {
+    entries: [],
+    assets: []
+  }
+};
 
 export const paragraphMock = {
   __typename: 'Text',

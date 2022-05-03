@@ -13,7 +13,7 @@ import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 import { RichText } from '@last-rev/component-library/dist/components/Text';
 import { NavigationItemProps } from '@last-rev/component-library/dist/components/NavigationItem';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
-import { sidekick } from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import Link from '../Link';
 
 export interface FooterProps {

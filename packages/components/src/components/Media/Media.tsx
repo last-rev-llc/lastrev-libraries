@@ -4,12 +4,13 @@ import {
   MediaProps as LRMediaProps,
   File as LRFile
 } from '@last-rev/component-library/dist/components/Media/Media.types';
+export type { MediaClassKey, MediaClasses } from '@last-rev/component-library/dist/components/Media';
 
-interface File extends LRFile {
+export interface File extends LRFile {
   extension?: string;
 }
 
-interface MediaProps extends LRMediaProps {
+export interface MediaProps extends LRMediaProps {
   file?: File;
 }
 

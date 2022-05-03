@@ -2,8 +2,9 @@ import React, { createElement, Fragment, useEffect, useRef } from 'react';
 import { render } from 'react-dom';
 import { autocomplete, AutocompleteOptions } from '@algolia/autocomplete-js';
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
+import { useTheme, styled } from '@mui/material/styles';
 import { makeStyles } from '@mui/styles';
+
 import { Theme } from '@mui/material/styles';
 
 export interface AutocompleteProps extends Omit<AutocompleteOptions<any>, 'container'> {
@@ -12,7 +13,7 @@ export interface AutocompleteProps extends Omit<AutocompleteOptions<any>, 'conta
   openOnFocus?: boolean;
 }
 
-const useStyles = makeStyles((theme:Theme) => ({
+const useStyles = makeStyles(({ theme }: { theme: Theme }) => ({
   panel: {
     'zIndex': 1110,
     'margin': 0,
@@ -27,14 +28,15 @@ const useStyles = makeStyles((theme:Theme) => ({
     },
 
     '& .aa-Item[aria-selected=true]': {
-      backgroundColor: theme.palette.midnight.A06
+      backgroundColor: theme?.palette?.midnight?.A06
     }
   }
 }));
 
 export const Autocomplete = ({ placeholder, ...props }: AutocompleteProps) => {
   const containerRef = useRef('');
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles({ theme });
 
   useEffect(() => {
     if (!containerRef.current) {

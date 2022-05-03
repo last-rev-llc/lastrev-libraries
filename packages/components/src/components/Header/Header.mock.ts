@@ -10,22 +10,24 @@ export const mockHeaderBase = (): HeaderProps => {
     logoUrl: 'http://www.example.com',
     leftNav: [mockNavigationItemBase()],
     rightNav: [
-      {...mockNavigationItemSubNavigation(), text:"Link 1"}, 
-      {...mockNavigationItemSubNavigation(), text:"Link 2"}, 
-      {...mockNavigationItemSubNavigation(), text:"Link 3"}, 
+      { ...mockNavigationItemSubNavigation(), text: 'Link 1' },
+      { ...mockNavigationItemSubNavigation(), text: 'Link 2' },
+      { ...mockNavigationItemSubNavigation(), text: 'Link 3' }
     ],
-    actions: [{
-      ...mockLinkBase(),
-      id: "header-nav-cta",
-      variant: null
-    }],
+    actions: [
+      {
+        ...mockLinkBase(),
+        id: 'header-nav-cta',
+        variant: null
+      }
+    ],
     sidekickLookup: {
       contentId: 'header-nav-cta',
       contentTypeId: 'Link'
     }
-  }
+  };
 };
 
 export default (): HeaderProps => ({
-  ...mockHeaderBase(),
+  ...mockHeaderBase()
 });

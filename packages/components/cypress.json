@@ -2,5 +2,9 @@
   "componentFolder": "src",
   "testFiles": "**/*spec.{js,jsx,ts,tsx}",
   "viewportWidth": 1440,
-  "viewportHeight": 900
+  "viewportHeight": 900,
+  "env": {
+    "algolia_app_id": "MH24U6G8TO",
+    "algolia_search_api_key": "f5c84e92bda6de1636e1e7519073c0c7"
+  }
 }

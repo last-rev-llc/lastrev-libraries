@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { client } from '@ias/utils';
-import { ContentModule } from '@last-rev/component-library';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { useAuthContext } from '../AuthProvider';
 import { ArticleLoading } from '../ArticleLoading';
 
