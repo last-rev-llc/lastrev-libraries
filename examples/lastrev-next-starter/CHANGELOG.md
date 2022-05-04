@@ -1,4 +1,6 @@
 # @last-rev/next-starter
+## Next
+- Added shared Sentry config with LRNS version tag
 
 ## 2.0.0
 
