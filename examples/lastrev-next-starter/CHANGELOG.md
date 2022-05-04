@@ -1,5 +1,11 @@
 # @last-rev/next-starter
 
+## 2.0.3
+
+- Improve fragments for Media, Collection and Card links
+- Improve download_schema
+- Fix e2e tests not being able to retry
+
 ## 2.0.0
 
 ### Major Changes
