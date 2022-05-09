@@ -4,6 +4,9 @@ import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/dist/client/router';
 import { ContentPreview } from '@last-rev/component-library';
 import useSWR from 'swr';
+import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
+import contentMapping from '@ias/components/src/contentMapping';
+
 const previewGqlClient = new GraphQLClient(
   `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/.netlify/functions/graphql'}`
 );
@@ -28,12 +31,14 @@ export default function Preview({}: any) {
   const isLoadingInitialData = !data && !error;
 
   return (
-    <ContentPreview
-      loading={isLoadingInitialData}
-      content={content}
-      environment={environment as string}
-      locale={locale as string}
-      spaceId={spaceId as string}
-    />
+    <ContentModuleProvider contentMapping={contentMapping}>
+      <ContentPreview
+        loading={isLoadingInitialData}
+        content={content}
+        environment={environment as string}
+        locale={locale as string}
+        spaceId={spaceId as string}
+      />
+    </ContentModuleProvider>
   );
 }

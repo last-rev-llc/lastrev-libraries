@@ -1,4 +1,5 @@
 fragment Article_FieldsFragment on Article {
+  __typename
   id
   title
   slug
