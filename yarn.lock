@@ -2285,12 +2285,12 @@
   resolved "https://registry.yarnpkg.com/@colors/colors/-/colors-1.5.0.tgz#bb504579c1cae923e6576a4f5da43d25f97bdbd9"
   integrity sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==
 
-"@contentful/rich-text-from-markdown@^15.10.0":
-  version "15.11.1"
-  resolved "https://registry.yarnpkg.com/@contentful/rich-text-from-markdown/-/rich-text-from-markdown-15.11.1.tgz#f46d9e87eebad1b4a86cd43f7aaa7927bdea04e0"
-  integrity sha512-wY4Z2ZXJ4alkNFZPItKXKv7UnITLVOjz4H7CW9VwguqUjGSPS8T1NQ9Lv8gp8haSh92KYc28rW+WP+vvRR00kw==
+"@contentful/rich-text-from-markdown@15.10.0":
+  version "15.10.0"
+  resolved "https://registry.yarnpkg.com/@contentful/rich-text-from-markdown/-/rich-text-from-markdown-15.10.0.tgz#50427785bbaeea5e224e1c3819c5c2f8bff23568"
+  integrity sha512-x6p8UiD6Eo5Jj0J18mcglizHRfdWBkRV9VVHQ2CLtMsvs52gF80up0eP+PTqMYjapzAVaH5UvR//wVRUEy1mfg==
   dependencies:
-    "@contentful/rich-text-types" "^15.11.1"
+    "@contentful/rich-text-types" "^15.10.0"
     lodash "^4.17.11"
     remark-parse "^6.0.3"
     unified "^7.1.0"
@@ -2313,6 +2313,11 @@
   version "15.11.1"
   resolved "https://registry.yarnpkg.com/@contentful/rich-text-types/-/rich-text-types-15.11.1.tgz#755e3efd5e0ac277d554e6f731ba9fdc1c45f6fe"
   integrity sha512-seO8Nl9cp894v7an6R8isX+HqYwVUesviGULTh/rIj2DCv2tXUU1GCqzSkt84XN6c6nbFYow9+Wzezkxx/IdIA==
+
+"@contentful/rich-text-types@^15.10.0":
+  version "15.12.1"
+  resolved "https://registry.yarnpkg.com/@contentful/rich-text-types/-/rich-text-types-15.12.1.tgz#3b131f03fc55b6001f6eb5f5615aefb22678b3d3"
+  integrity sha512-WQJic0fnAbTa8xzO3Z+aVqDmA5+JMNQlATQMVJ40GoOrnM8YoJZsKGf6xX/O6Y6Eq10T1LrpxIOslODFI9qFgg==
 
 "@cspotcode/source-map-consumer@0.8.0":
   version "0.8.0"

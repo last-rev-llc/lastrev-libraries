@@ -11,10 +11,41 @@ fragment RichText_BaseFragment on RichText {
       ...Card_RichTextFragment
       ...Section_RichTextFragment
       ...Text_RichTextFragment
+      ...Table_RichTextFragment
+      ...Media_BaseFragment
     }
     assets {
       ...Media_BaseFragment
     }
+  }
+}
+
+fragment Table_RichTextFragment on Table {
+  richText {
+    id
+    __typename
+    json
+    links {
+      entries {
+        __typename
+        id
+        ...Section_BaseFieldsFragment
+        ...Card_RichTextFragment
+        ...Collection_RichTextFragment
+        ...Link_BaseFragment
+        ...Section_RichTextFragment
+      }
+      assets {
+        ...Media_BaseFragment
+      }
+    }
+  }
+}
+
+fragment Table_BaseFragment on Table {
+  id
+  richText {
+    json
   }
 }
 
@@ -63,6 +94,8 @@ fragment RichText_RichTextFragment on RichText {
       ...Card_RichTextFragment
       ...Collection_RichTextFragment
       ...Section_RichTextFragment
+      ...Table_RichTextFragment
+      ...Media_BaseFragment
     }
     assets {
       ...Media_BaseFragment

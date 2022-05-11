@@ -7,7 +7,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "run-s clean codegen build:prod",
+    "build": "run-s clean download:schema codegen build:prod",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "clean": "rimraf dist",
     "install:rover": "yarn rover -V || node ../../node_modules/@apollo/rover/install",
