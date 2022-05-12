@@ -80,6 +80,5 @@ fragment ContentModule_RichText_SectionFragment on Content {
   ...NavigationItem_BaseFragment
   ...Collection_RichTextFragment
   ...Card_RichTextFragment
-  #...Text_RichTextFragment
-  #...Section_BaseFragment
+  ...Text_IntroTextFragment
 }
