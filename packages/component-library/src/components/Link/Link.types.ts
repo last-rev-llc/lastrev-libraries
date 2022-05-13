@@ -11,6 +11,7 @@ export interface NextLinkComposedProps {
   passHref?: boolean;
   shallow?: boolean;
   prefetch?: boolean;
+  forceRefresh?: boolean;
   locale?: string | false;
   children: React.ReactNode;
 }
@@ -36,6 +37,8 @@ export type LinkProps = {
   target?: string;
   rel?: string;
   sx?: SxProps<Theme>;
+  prefetch?: boolean;
+  forceRefresh?: boolean;
 };
 
 export interface LinkClasses {

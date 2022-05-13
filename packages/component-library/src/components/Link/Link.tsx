@@ -32,11 +32,20 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
     passHref,
     shallow,
     prefetch,
+    forceRefresh,
     locale,
     text,
     children,
     ...other
   } = props;
+
+  if (forceRefresh) {
+    return (
+      <a href={to as string} ref={ref} {...other}>
+        {text || children}
+      </a>
+    );
+  }
 
   return (
     <NextLink
@@ -91,6 +100,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     icon,
     iconPosition,
     sidekickLookup,
+    prefetch = true,
+    forceRefresh = false,
     ...other
   } = useThemeProps({ name: 'Link', props });
 
@@ -134,11 +145,19 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     }
     if (href !== '#') {
       return (
-        <NextLink href={href} as={linkAs}>
-          <IconButton aria-label={icon} type={other.type} {...extra} className={className} size="large">
-            {getIcon(icon)}
-          </IconButton>
-        </NextLink>
+        forceRefresh ? (
+          <a href={href as string} ref={ref as any}>
+            <IconButton aria-label={icon} type={other.type} {...extra} className={className} size="large">
+              {getIcon(icon)}
+            </IconButton>
+          </a>
+        ) : (
+          <NextLink href={href} as={linkAs} prefetch={prefetch}>
+            <IconButton aria-label={icon} type={other.type} {...extra} className={className} size="large">
+              {getIcon(icon)}
+            </IconButton>
+          </NextLink>
+        )
       );
     }
     return (
@@ -177,8 +196,25 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         );
       }
 
+      if (forceRefresh) {
+        return (
+          <a href={href as string} ref={ref as any} {...extra}>
+            <Button
+              className={className}
+              variant={buttonVariant}
+              type={other.type}
+              {...extra}
+              startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
+              endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
+            >
+              {text || children}
+            </Button>
+          </a>
+        );
+      }
+
       return (
-        <NextLink href={href} as={linkAs}>
+        <NextLink href={href} as={linkAs} prefetch={prefetch}>
           <Button
             className={className}
             variant={buttonVariant}
@@ -239,7 +275,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
 
   if (noLinkStyle && icon) {
     return (
-      <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
+      <NextLinkComposed className={className} ref={ref as any} to={href} prefetch={prefetch} {...extra}>
         <ButtonWrap sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
           <span>{children || text}</span>
           {icon && (
@@ -251,7 +287,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   }
   if (noLinkStyle) {
     return (
-      <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
+      <NextLinkComposed className={className} ref={ref as any} to={href} prefetch={prefetch} {...extra}>
         {children || text}
       </NextLinkComposed>
     );
