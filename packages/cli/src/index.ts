@@ -17,4 +17,7 @@ program
   .command('develop', 'Allows one to actively develop lastrev-libraries in conjunction with a client monorepo', {
     executableFile: resolve(__dirname, '../dist/develop.js')
   })
+  .command('framework-update', 'Updates repo to a specified version of the framework', {
+    executableFile: resolve(__dirname, '../dist/framework-update.js')
+  })
   .parse(process.argv);

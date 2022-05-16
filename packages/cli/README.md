@@ -352,3 +352,42 @@ nodemon -x '../lastrev-libraries/packages/cli/bin/last-rev gql-serve -c graphql/
 ```
 
 4. Any time a change is made in the monorepo, the server will restart automatically. If you want to also restart when the extensions directory changes, you can either just type `rs` in the terminal running nodemon, or add the directory to the nodemon watch argument
+
+### Developing New Commands
+
+1. Create a new directory/folder in `/src/commands` and name it what you want the new command to be called
+
+2. Create a new file (.ts) in the new directory/folder you created in step 1
+
+3. Create your new command using the commander package
+  - Look at cms-sync.ts as a simple example
+
+4. Add new command to `/src/index.ts` file
+  - Example:
+    ```bash
+    .command('new-command', 'Description of new command', {
+      executableFile: resolve(__dirname, '../dist/new-command.js')
+    })
+    ```
+
+5. Add new command's path to `rollup.config.js` file
+  - Example:
+    ```bash
+    './src/commands/new-command/new-command.ts'
+    ```
+
+6. Test command locally
+  - Run in dev mode
+    - Example:
+      ```bash
+      yarn dev --scope=@last-rev/cli
+      ```
+  - Open new terminal and run `which last-rev`
+    - This will show you which last-rev library version you are using
+      - If it is not your local version then export it
+        - Example:
+          ```bash
+          export PATH=/Users/anthonywhitley/repos/lastrev-libraries/packages/cli/bin:$PATH
+          ```
+  - Once you are pointing to your local version you should be able to test your new command
+  /Users/anthonywhitley/repos/lastrev-libraries/packages/cli/bin

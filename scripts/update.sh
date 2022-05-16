@@ -3,8 +3,8 @@
 # Given a source commit and a target commit
 TARGET_DIRECTORY=$1
 GITHUB_REPO=git@github.com:last-rev-llc/lastrev-libraries.git
-SOURCE_COMMIT=origin/main
-TARGET_COMMIT=origin/max/turbo
+SOURCE_COMMIT=71bf23bbcc91056bd32ee1473235651fe9ae27b9
+TARGET_COMMIT=origin/main
 
 echo "Updating $TARGET_DIRECTORY with $GITHUB_REPO from $SOURCE_COMMIT to $TARGET_COMMIT"
 
