@@ -1,7 +1,5 @@
 import program from 'commander';
-import { resolve } from 'path';
-import { spawn } from 'child_process';
-import simpleGit from 'simple-git';
+import updateScript from './updateFramework';
 
 program
   .requiredOption('-s, --source <source>', 'commit hash, or branch name, of the current version of the project being updated')
@@ -11,18 +9,6 @@ program
 
 const { source, target, directory } = program.opts();
 
-console.log('This is your directory in file => ', directory);
-console.log('cwd', process.cwd());
-console.log('dirname', __dirname);
+console.log('Starting process for => ', { source, target, directory });
 
-// exec(`sh ${resolve(__dirname, '../../../scripts/update.sh')} ${directory}`, (error, stdout, stderr) => {
-//   console.log('cwd', process.cwd());
-//   console.log('stdout => ', stdout);
-//   console.log('stderr => ', stderr);
-//   if (error !== null) {
-//       console.log(`exec error: ${error}`);
-//   }
-// });
-const result = spawn(`sh`, [resolve(__dirname, '../../../scripts/update.sh'), directory], { stdio: 'inherit' });
-
-result.on('end', () => console.log('Done!'));
+updateScript(directory, source, target);
