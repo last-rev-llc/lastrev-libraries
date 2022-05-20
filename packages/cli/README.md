@@ -389,5 +389,4 @@ nodemon -x '../lastrev-libraries/packages/cli/bin/last-rev gql-serve -c graphql/
           ```bash
           export PATH=/Users/anthonywhitley/repos/lastrev-libraries/packages/cli/bin:$PATH
           ```
-  - Once you are pointing to your local version you should be able to test your new command
-  /Users/anthonywhitley/repos/lastrev-libraries/packages/cli/bin
+  - You should now be able to test your new command by running `last-rev <new-command>` in the same terminal session

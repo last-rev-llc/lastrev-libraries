@@ -70,20 +70,21 @@ When changes are merged into main, public modules that have changesets associate
 _Make sure to check the changelog and migration guide before starting this process: [starter changelog](examples/lastrev-next-starter/CHANGELOG.md)_
 
 The update script is available to update projects created from the Last Rev Next Starter to the latest version.
-The current script requires the following parameters:
+The current script has been added as a CLI command: `last-rev framework-update`
 
-- `SOURCE_COMMIT`: This is the commit hash of the current version of the project that is being updated (e.g. `v1`).
+This command takes 3 required options
+
+- `-s` for `SOURCE_COMMIT`: This is the commit hash, or branch name, of the current version of the project that is being updated (e.g. `v1`).
   - Check the earliest commit where an update to the frmework happended. Either the initiali commit or a past update. Then cross-reference that with the history of the starter project.
-- `TARGET_COMMIT`: This is the commit hash of the target version that you want to update to (e.g. `main`).
-- `PROJECT_DIRECTORY`: This is the directory of the project that is being updated. It's the first argument that get's passed to the script.
+- `-t` for `TARGET_COMMIT`: This is the commit hash, or branch name, of the target version that you want to update to (e.g. `main`).
+- `-d` for `PROJECT_DIRECTORY`: This is the directory of the project that is being updated.
+  - ** `<project_directory`> must be an absolute path to the project directory.**
 
-To run the command you need to update the target and source commits in the `scripts/update.sh` file and run the following command:
+To run the command you need to run the following command:
 
 ```bash
- ./scripts/update.sh <project_directory>
+ last-rev framework-update -s <source_commit> -t <target_commit> -d <project_directory>
 ```
-
-** `<project_directory`> must be an absolute path to the project directory.**
 
 The process will update the project to the target version and create a commit with all the changes from the project.
 

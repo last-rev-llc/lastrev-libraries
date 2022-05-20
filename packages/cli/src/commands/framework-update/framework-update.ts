@@ -9,6 +9,6 @@ program
 
 const { source, target, directory } = program.opts();
 
-console.log('Starting process for => ', { source, target, directory });
+console.log(`Starting process for updating project at ${directory} from ${source} to ${target}`);
 
 updateScript(directory, source, target);

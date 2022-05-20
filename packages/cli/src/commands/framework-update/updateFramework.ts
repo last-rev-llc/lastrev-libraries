@@ -17,27 +17,27 @@ const git = simpleGit({
 });
 
 const run = async (directory: string, source: string, target: string) => {
+  
+  const TARGET_DIRECTORY = directory;
+  const SOURCE_COMMIT = source;
+  const TARGET_COMMIT = target;
+  const GITHUB_REPO = 'git@github.com:last-rev-llc/lastrev-libraries.git';
+
+  console.log(`Updating ${TARGET_DIRECTORY} with ${GITHUB_REPO} from ${SOURCE_COMMIT} to ${TARGET_COMMIT}`);
+
+  // Temporarilly clone the repo
+  const TEMP_DIR = join(tmpdir(), RANDOM().toString());
+  const REPO_DIR = join(TEMP_DIR, 'lastrev-libraries');
+
+  console.log(`Cloning ${GITHUB_REPO} to ${REPO_DIR}`);
+
   try {
-    const TARGET_DIRECTORY = directory;
-    const SOURCE_COMMIT = source;
-    const TARGET_COMMIT = target;
-    const GITHUB_REPO = 'git@github.com:last-rev-llc/lastrev-libraries.git';
-  
-    console.log(`Updating ${TARGET_DIRECTORY} with ${GITHUB_REPO} from ${SOURCE_COMMIT} to ${TARGET_COMMIT}`);
-  
-    // Temporarilly clone the repo
-    const TEMP_DIR = join(tmpdir(), RANDOM().toString());
-    const REPO_DIR = join(TEMP_DIR, 'lastrev-libraries');
-  
-    console.log(`Cloning ${GITHUB_REPO} to ${REPO_DIR}`);
-  
     try {
       // git clone $GITHUB_REPO $REPO_DIR -q || echo "Failed to clone repo, already exists"
       await git.clone(GITHUB_REPO, REPO_DIR, ['-q']);
-    } catch (err: any) {
-      console.log(`Failed to clone repo, already exists error: ${err.message}`);
+    } catch {
+      console.log(`Failed to clone repo, already exists`);
     }
-  
     // Find the diff between the two commits
     const PATCH_FILE = join(TEMP_DIR, 'patch.diff');
     const STARTER_FOLDER = join(REPO_DIR, 'examples', 'lastrev-next-starter');
@@ -71,8 +71,8 @@ const run = async (directory: string, source: string, target: string) => {
     // git remote add old_repo $GITHUB_REPO  || console.log("Remote already exists");
     try {
       await git.addRemote('old_repo', GITHUB_REPO);
-    } catch (err: any) {
-      console.log(`Remote already exists, error: ${err.message}`);
+    } catch {
+      console.log(`Remote already exists`);
     }
   
     // git fetch old_repo -q
@@ -118,15 +118,15 @@ const run = async (directory: string, source: string, target: string) => {
         ACTION = '';
       }
     }
-  
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  } finally {
     console.log('Patch applied successfully, please see the changes and open a pull request');
     // Cleanup the temp directory
     // rm -rf $TEMP_DIR
     fs.rmdirSync(TEMP_DIR, { recursive: true });
-  } catch (err) {
-    console.error(err);
-    process.exit(1);
-  }  
+  }
 };
 
 export default run;
