@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Head from 'next/head';
 import { getSdk } from '@ias/graphql-sdk';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/dist/client/router';
@@ -26,19 +27,35 @@ export default function Preview({}: any) {
     locale?: string;
   };
 
+  const getPageTitle = (_content: { __typename: any }) => {
+    if (content?.__typename === 'Page') {
+      return content?.seo?.title?.value;
+    }
+    if (content?.__typename === 'Article' || content?.__typename === 'CategoryArticle') {
+      return content?.title;
+    }
+    return 'Help Center';
+  };
+
   const { data, error } = useSWR(id ? [id, locale, environment, 'preview', spaceId] : null, fetchPreview);
   const content = data?.data?.content;
   const isLoadingInitialData = !data && !error;
-
   return (
-    <ContentModuleProvider contentMapping={contentMapping}>
-      <ContentPreview
-        loading={isLoadingInitialData}
-        content={content}
-        environment={environment as string}
-        locale={locale as string}
-        spaceId={spaceId as string}
-      />
-    </ContentModuleProvider>
+    <>
+      {!!content && (
+        <Head>
+          <title>{getPageTitle(content)}</title>
+        </Head>
+      )}
+      <ContentModuleProvider contentMapping={contentMapping}>
+        <ContentPreview
+          loading={isLoadingInitialData}
+          content={content}
+          environment={environment as string}
+          locale={locale as string}
+          spaceId={spaceId as string}
+        />
+      </ContentModuleProvider>
+    </>
   );
 }

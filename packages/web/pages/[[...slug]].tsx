@@ -78,6 +78,7 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
 };
 
 export default function Page({ params, isProtected, pageData }: any) {
+  params.title = pageData?.page?.seo?.title?.value || pageData?.page?.title;
   return (
     <ContentModuleProvider contentMapping={contentMapping}>
       {isProtected ? <AuthGuard params={params} /> : <ContentModule {...pageData.page} />}

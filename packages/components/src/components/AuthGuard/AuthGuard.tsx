@@ -10,6 +10,7 @@ type PageParams = {
   locale: string;
   preview: boolean;
   site?: string;
+  title?: string;
 };
 
 function AuthGuardContent({ params }: { params: PageParams }) {

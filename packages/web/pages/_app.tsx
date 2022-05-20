@@ -24,7 +24,11 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
     <CacheProvider value={emotionCache}>
       {pageProps.pageData?.page?.seo ? <SEO seo={pageProps.pageData.page.seo} /> : null}
       <Head>
-        {!!pageProps.pageData?.page?.seo?.title ? <title>{pageProps.pageData.page.seo.title.value}</title> : null}
+        {!!pageProps.pageData?.page?.seo?.title ? (
+          <title>{pageProps.pageData.page.seo.title.value}</title>
+        ) : !!pageProps.pageData?.page?.title ? (
+          <title>{pageProps.pageData?.page?.title}</title>
+        ) : null}
         <meta name="contentful_space" content={process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID} />
         <meta name="contentful_environment" content={process.env.NEXT_PUBLIC_CONTENTFUL_ENV} />
       </Head>
