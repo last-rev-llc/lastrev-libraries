@@ -118,11 +118,13 @@ const run = async (directory: string, source: string, target: string) => {
         ACTION = '';
       }
     }
+    
+    console.log('Patch applied successfully, please see the changes and open a pull request');
+
   } catch (err) {
     console.error(err);
     process.exit(1);
   } finally {
-    console.log('Patch applied successfully, please see the changes and open a pull request');
     // Cleanup the temp directory
     // rm -rf $TEMP_DIR
     fs.rmdirSync(TEMP_DIR, { recursive: true });
