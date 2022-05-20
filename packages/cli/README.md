@@ -360,33 +360,37 @@ nodemon -x '../lastrev-libraries/packages/cli/bin/last-rev gql-serve -c graphql/
 2. Create a new file (.ts) in the new directory/folder you created in step 1
 
 3. Create your new command using the commander package
-  - Look at cms-sync.ts as a simple example
+
+- Look at cms-sync.ts as a simple example
 
 4. Add new command to `/src/index.ts` file
-  - Example:
-    ```bash
-    .command('new-command', 'Description of new command', {
-      executableFile: resolve(__dirname, '../dist/new-command.js')
-    })
-    ```
+
+- Example:
+  ```bash
+  .command('new-command', 'Description of new command', {
+    executableFile: resolve(__dirname, '../dist/new-command.js')
+  })
+  ```
 
 5. Add new command's path to `rollup.config.js` file
-  - Example:
-    ```bash
-    './src/commands/new-command/new-command.ts'
-    ```
+
+- Example:
+  ```bash
+  './src/commands/new-command/new-command.ts'
+  ```
 
 6. Test command locally
-  - Run in dev mode
-    - Example:
-      ```bash
-      yarn dev --scope=@last-rev/cli
-      ```
-  - Open new terminal and run `which last-rev`
-    - This will show you which last-rev library version you are using
-      - If it is not your local version then export it
-        - Example:
-          ```bash
-          export PATH=/Users/anthonywhitley/repos/lastrev-libraries/packages/cli/bin:$PATH
-          ```
-  - You should now be able to test your new command by running `last-rev <new-command>` in the same terminal session
+
+- Run in dev mode
+  - Example:
+    ```bash
+    yarn dev --scope=@last-rev/cli
+    ```
+- Open new terminal and run `which last-rev`
+  - This will show you which last-rev library version you are using
+    - If it is not your local version then export it
+      - Example:
+        ```bash
+        export PATH=/Users/anthonywhitley/repos/lastrev-libraries/packages/cli/bin:$PATH
+        ```
+- You should now be able to test your new command by running `last-rev <new-command>` in the same terminal session

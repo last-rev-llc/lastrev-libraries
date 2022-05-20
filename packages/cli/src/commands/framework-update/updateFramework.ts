@@ -17,7 +17,6 @@ const git = simpleGit({
 });
 
 const run = async (directory: string, source: string, target: string) => {
-  
   const TARGET_DIRECTORY = directory;
   const SOURCE_COMMIT = source;
   const TARGET_COMMIT = target;
@@ -41,32 +40,34 @@ const run = async (directory: string, source: string, target: string) => {
     // Find the diff between the two commits
     const PATCH_FILE = join(TEMP_DIR, 'patch.diff');
     const STARTER_FOLDER = join(REPO_DIR, 'examples', 'lastrev-next-starter');
-  
+
     // cd $REPO_DIR
     await git.cwd({ path: REPO_DIR, root: true });
-  
+
     // Generate commit with squashed changes
     // git checkout $SOURCE_COMMIT -q
     await git.checkout(SOURCE_COMMIT, ['-q']);
-  
+
     // git checkout -b tmpsquash -q
     await git.raw(['checkout', '-b', 'tmpsquash', '-q']);
-  
+
     // git merge --squash $TARGET_COMMIT -q
     await git.raw(['merge', '--squash', TARGET_COMMIT, '-q']);
-  
+
     // git commit -a -m "Update from $SOURCE_COMMIT to $TARGET_COMMIT" -q
     await git.raw(['commit', '-a', '-m', `Update from ${SOURCE_COMMIT} to ${TARGET_COMMIT}`, '-q']);
-  
+
     // git format-patch $SOURCE_COMMIT --relative --stdout -- $STARTER_FOLDER > $PATCH_FILE
-    execSync(`git format-patch ${SOURCE_COMMIT} --relative --stdout -- ${STARTER_FOLDER} > ${PATCH_FILE}`, { cwd: REPO_DIR });
-  
+    execSync(`git format-patch ${SOURCE_COMMIT} --relative --stdout -- ${STARTER_FOLDER} > ${PATCH_FILE}`, {
+      cwd: REPO_DIR
+    });
+
     console.log(`Generated diff ${PATCH_FILE}`);
-  
+
     console.log(`Apply the patch to ${TARGET_DIRECTORY}`);
     // cd $TARGET_DIRECTORY
     await git.cwd({ path: TARGET_DIRECTORY, root: true });
-  
+
     // Add remote to prevent errors about sha misssings
     // git remote add old_repo $GITHUB_REPO  || console.log("Remote already exists");
     try {
@@ -74,10 +75,10 @@ const run = async (directory: string, source: string, target: string) => {
     } catch {
       console.log(`Remote already exists`);
     }
-  
+
     // git fetch old_repo -q
     await git.fetch('old_repo', ['-q']);
-  
+
     // Apply patch with three way resolution
     // git am -3 -p3 --whitespace=fix $PATCH_FILE || FAILED=1
     let ACTION = '';
@@ -86,17 +87,19 @@ const run = async (directory: string, source: string, target: string) => {
     } catch (err) {
       ACTION = 'continue';
     }
-  
+
     while (ACTION) {
       console.log('-------------------------------------');
       // read -p "Applying patch failed, please fix all conflicts and press enter to continue"
       // eslint-disable-next-line no-await-in-loop
       if (ACTION === 'continue') {
-        await inquirer.prompt([{
-          message: 'Applying patch failed, please fix all conflicts and press enter to continue',
-          type: 'input',
-          name: 'apply patch'
-        }]);
+        await inquirer.prompt([
+          {
+            message: 'Applying patch failed, please fix all conflicts and press enter to continue',
+            type: 'input',
+            name: 'apply patch'
+          }
+        ]);
       }
       // AM_OUTPUT=$(git am --continue 2>&1)
       let AM_OUTPUT = '';
@@ -105,22 +108,19 @@ const run = async (directory: string, source: string, target: string) => {
       } catch (err: any) {
         AM_OUTPUT = err.stdout;
       }
-      
+
       // Check AM_OUTPUT for errors
       // grep -q "unmerged paths in your index" <<< $AM_OUTPUT
       if (AM_OUTPUT.indexOf('unmerged paths in your index') > -1) {
         ACTION = 'continue';
-      }
-      else if (AM_OUTPUT.indexOf('No changes') > -1) {
+      } else if (AM_OUTPUT.indexOf('No changes') > -1) {
         ACTION = 'skip';
-      }
-      else {
+      } else {
         ACTION = '';
       }
     }
-    
-    console.log('Patch applied successfully, please see the changes and open a pull request');
 
+    console.log('Patch applied successfully, please see the changes and open a pull request');
   } catch (err) {
     console.error(err);
     process.exit(1);

@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.4.0
+
+### Minor Changes
+
+- d28f4a7: Added framework-update command to CLI
+
 ## 0.3.2
 
 ### Patch Changes
