@@ -7,7 +7,8 @@ export default config({
     './src/commands/create-app/create-app.ts',
     './src/commands/gql-serve/gql-serve.ts',
     './src/commands/gen-fragments/gen-fragments.ts',
-    './src/commands/develop/develop.ts'
+    './src/commands/develop/develop.ts',
+    './src/commands/framework-update/framework-update.ts'
   ],
   babelHelpers: 'runtime'
 });
