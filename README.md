@@ -72,12 +72,14 @@ _Make sure to check the changelog and migration guide before starting this proce
 The update script is available to update projects created from the Last Rev Next Starter to the latest version.
 The current script has been added as a CLI command: `last-rev framework-update`
 
-This command takes 3 required options
+This command takes 2 required options (SOURCE_COMMIT, TARGET_COMMIT), and 1 optional (PROJECT_DIRECTORY)
 
 - `-s` for `SOURCE_COMMIT`: This is the commit hash, or branch name, of the current version of the project that is being updated (e.g. `v1`).
   - Check the earliest commit where an update to the frmework happended. Either the initiali commit or a past update. Then cross-reference that with the history of the starter project.
 - `-t` for `TARGET_COMMIT`: This is the commit hash, or branch name, of the target version that you want to update to (e.g. `main`).
 - `-d` for `PROJECT_DIRECTORY`: This is the directory of the project that is being updated.
+  - this is an optional parameter
+  - default is current working directory
   - ** `<project_directory`> must be an absolute path to the project directory.**
 
 To run the command you need to run the following command:
