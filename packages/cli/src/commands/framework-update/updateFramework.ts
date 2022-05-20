@@ -1,5 +1,5 @@
 /* eslint-disable no-loop-func */
-// import fs from 'fs';
+import fs from 'fs';
 import simpleGit from 'simple-git';
 import inquirer from 'inquirer';
 import { execSync } from 'child_process';
@@ -83,7 +83,6 @@ const run = async (directory: string, source: string, target: string) => {
     let ACTION = '';
     try {
       execSync(`git am -3 -p3 --whitespace=fix ${PATCH_FILE}`, { cwd: TARGET_DIRECTORY });
-      // await git.raw(['am', '-3', '-p3', '--whitespace=fix', PATCH_FILE]);
     } catch (err) {
       ACTION = 'continue';
     }
@@ -123,7 +122,7 @@ const run = async (directory: string, source: string, target: string) => {
     console.log('Patch applied successfully, please see the changes and open a pull request');
     // Cleanup the temp directory
     // rm -rf $TEMP_DIR
-    // fs.rmdirSync(TEMP_DIR, { recursive: true });
+    fs.rmdirSync(TEMP_DIR, { recursive: true });
   } catch (err) {
     console.error(err);
     process.exit(1);
