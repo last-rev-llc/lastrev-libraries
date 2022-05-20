@@ -38,7 +38,7 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
       <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem" menuBreakpoint={menuBreakpoint}>
         <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
         {subNavigation?.length ? (
-          <MenuRoot menuBreakpoint={menuBreakpoint} component="ul">
+          <MenuRoot menuBreakpoint={menuBreakpoint} component={'ul'}>
             {subNavigation?.map((item) => (
               <MenuItem key={item.id}>
                 <ContentModule
@@ -92,7 +92,7 @@ const MenuRoot = styled(Paper, {
   slot: 'MenuRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.menuRoot]
-})<{ variant?: string; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
+})<{ variant?: string; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; component?: string }>`
   // Remove ul browser styles
   margin: 0;
   padding: 0;
