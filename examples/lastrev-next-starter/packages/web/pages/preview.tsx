@@ -7,12 +7,18 @@ import contentMapping from '@lrns/components/src/contentMapping';
 import useSWR from 'swr';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 
-const previewGqlClient = new GraphQLClient(
-  `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/.netlify/functions/graphql'}`
-);
+let client;
+
+const fetchPreview = async (id: string, locale: string, environment: string) => {
+  const previewGqlClient = new GraphQLClient(
+    `${
+      process.env.NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/.netlify/functions/graphql'
+    }?env=${environment}`
+  );
+  const sdk = getSdk(previewGqlClient);
+  return sdk.Preview({ id, locale });
+};
 const spaceId = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
-const sdk = getSdk(previewGqlClient);
-const fetchPreview = async (id: string, locale: string) => sdk.Preview({ id, locale });
 
 export default function Preview({}: any) {
   const { query } = useRouter();
@@ -30,12 +36,25 @@ export default function Preview({}: any) {
   const content = data?.data?.content;
   const isLoadingInitialData = !data && !error;
 
+  const [override, setOverride] = React.useState();
+  React.useLayoutEffect(() => {
+    console.log('HELLLo');
+    window.addEventListener(
+      'message',
+      (event) => {
+        // console.log('Event', event);
+        setOverride(event.data);
+      },
+      false
+    );
+  }, []);
+
   return (
     <ContentModuleProvider contentMapping={contentMapping}>
       <ContentPreview
         id={id}
         loading={isLoadingInitialData}
-        content={content}
+        content={{ ...content, ...override }}
         error={error}
         environment={environment as string}
         locale={locale as string}
