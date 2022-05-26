@@ -14,7 +14,7 @@ const fetchPreview = async (id: string, locale: string, environment: string) => 
   const previewGqlClient = new GraphQLClient(
     `${
       process.env.NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/.netlify/functions/graphql'
-    }?env=${environment}`
+    }?env=master`
   );
   const sdk = getSdk(previewGqlClient);
   return sdk.Preview({ id, locale });
