@@ -87,6 +87,16 @@ const baseTheme: ThemeOptions = {
   },
   palette: {
     mode: 'light',
+    ...{
+      white: {
+        main: '#FFF',
+        contrastText: 'rgba(0, 0, 0, 0.87)'
+      },
+      black: {
+        main: '#000',
+        contrastText: '#FFF'
+      }
+    },
     primary: {
       main: '#9146ff',
       contrastText: '#FFFFFF'
@@ -95,6 +105,7 @@ const baseTheme: ThemeOptions = {
       main: '#F9F871',
       contrastText: 'rgba(0, 0, 0, 0.87)'
     },
+
     text: {
       primary: '#00030B',
       secondary: '#E5E5E5',

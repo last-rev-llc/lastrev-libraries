@@ -33,6 +33,12 @@ const nextConfig = {
     CONTENTFUL_ENV: process.env.CONTENTFUL_ENV,
     DEPLOY_URL: process.env.DEPLOY_URL
   },
+  ...(!process.env.SENTRY_PROJECT && {
+    sentry: {
+      disableServerWebpackPlugin: true,
+      disableClientWebpackPlugin: true
+    }
+  }),
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
     // your project has ESLint errors.

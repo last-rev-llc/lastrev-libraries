@@ -1,2 +1,2 @@
-export * from './ContentPreview';
+export * from './ContentPreview.types';
 export { default } from './ContentPreview';

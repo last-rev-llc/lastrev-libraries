@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { getSdk } from '@lrns/graphql-sdk';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/dist/client/router';
-import ContentPreview from '@last-rev/component-library/dist/components/ContentPreview/ContentPreview';
+import ContentPreview from '@lrns/components/src/components/ContentPreview/ContentPreview';
 import contentMapping from '@lrns/components/src/contentMapping';
 import useSWR from 'swr';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
+import { Box } from '@mui/material';
 
 let client;
 
@@ -36,24 +37,27 @@ export default function Preview({}: any) {
     locale?: string;
   };
 
-  const { data, error, mutate } = useSWR(id ? [id, locale, environment, 'preview', spaceId] : null, fetchPreview);
+  const { data, error, mutate } = useSWR(id ? [id, locale, environment, 'preview', spaceId] : null, fetchPreview, {
+    // refreshInterval: 1000
+    onSuccess: (response) => {
+      console.log('Fetched', response);
+    }
+  });
   const content = data?.data?.content;
   const isLoadingInitialData = !data && !error;
 
   const [override, setOverride] = React.useState<any>();
   React.useLayoutEffect(() => {
-    console.log('HELLLo');
     window.addEventListener(
       'message',
       (event) => {
-        // console.log('Event', event);
         const action: Action = event.data;
 
         if (action.type === 'OVERRIDE_VALUES') {
+          console.log('Override', action.payload);
           setOverride(action.payload);
         }
         if (action.type === 'REFRESH_CONTENT') {
-          setOverride(null);
           mutate();
         }
       },
@@ -62,16 +66,19 @@ export default function Preview({}: any) {
   }, []);
 
   return (
-    <ContentModuleProvider contentMapping={contentMapping}>
-      <ContentPreview
-        id={id}
-        loading={isLoadingInitialData}
-        content={{ ...content, ...override }}
-        error={error}
-        environment={environment as string}
-        locale={locale as string}
-        spaceId={spaceId as string}
-      />
-    </ContentModuleProvider>
+    <Box sx={{ '*': { transition: '.2s ease-in-out' } }}>
+      <ContentModuleProvider contentMapping={contentMapping}>
+        <ContentPreview
+          id={id}
+          loading={isLoadingInitialData}
+          content={{ ...content, ...override }}
+          error={error}
+          environment={environment as string}
+          locale={locale as string}
+          spaceId={spaceId as string}
+          livePreview
+        />
+      </ContentModuleProvider>
+    </Box>
   );
 }

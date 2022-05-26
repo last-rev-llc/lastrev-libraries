@@ -6,9 +6,11 @@ export const defaultProps: ComponentsProps['Media'] = {};
 // https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
   // Set some static styles
-  // root: {
-  //   backgroundColor: 'red'
-  // }
+  root: {
+    width: '100%',
+    objectFit: 'contain',
+    objectPosition: 'center'
+  }
   //
   // Use the ownerState to set dynamic styles
   // root: ({ ownerState, theme }) => {
