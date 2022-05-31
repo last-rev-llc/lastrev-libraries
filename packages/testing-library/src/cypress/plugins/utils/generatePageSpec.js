@@ -10,7 +10,7 @@ const pageTemplate = compile(readFileSync(resolve(__dirname, './visit_page.spec.
 const generatePage = (path, idx, integrationPath, site) => {
   const outDir = resolve(integrationPath, '__generated');
   ensureDirSync(outDir);
-  const filename = join(outDir, `visit_${path.replaceAll('/', '_')}.spec.js`);
+  const filename = join(outDir, `visit_${path.replace(/\//g, '_')}.spec.js`);
 
   const specDescription = site ? `Visit ${site}` : `Visit `;
   const testDescription = `${path} renders correctly`;
