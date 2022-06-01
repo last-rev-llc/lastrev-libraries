@@ -7,6 +7,7 @@ export const defaultProps: ComponentsProps['Media'] = {};
 export const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
   // Set some static styles
   root: {
+    display: 'block',
     width: '100%',
     objectFit: 'contain',
     objectPosition: 'center'
