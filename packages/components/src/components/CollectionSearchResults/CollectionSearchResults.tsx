@@ -23,8 +23,7 @@ interface CategoryProps {
 interface HitProps {
   categories: Array<string>;
   categoryLinks: Array<CategoryProps>;
-  path: string;
-  summary?: string;
+  permalink: string;
 }
 
 interface LoadingItemsProps {
@@ -41,11 +40,11 @@ const Hit = (props: any) => {
 
   return (
     <>
-      <Link href={hit.path}>
+      <Link href={hit.permalink}>
         <HitTitle component={Highlight} variant="body2" attribute="title" hit={hit} />
       </Link>
-      <Link href={hit.path}>
-        <HitDescription component={Highlight} variant="body2" attribute="summary" hit={hit} />
+      <Link href={hit.permalink}>
+        <HitDescription component={Highlight} variant="body2" attribute="content" hit={hit} />
       </Link>
       {categories.length > 0 && (
         <Box mt={2} data-testid="CollectionSearchResults-categories">

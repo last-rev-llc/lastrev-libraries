@@ -10,7 +10,7 @@
     "clean": "rimraf dist",
     "dev": "cross-env NODE_ENV=development rollup -cw",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "test:watch": "jest --watch",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint"

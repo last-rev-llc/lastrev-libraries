@@ -6,22 +6,23 @@ import SearchBox, { SearchBoxProps } from './SearchBox';
 import searchBoxMock from './SearchBox.mock';
 
 const algoliaOptions = {
-  appId: process.env.ALGOLIA_APP_ID as string,
-  searchApiKey: process.env.ALGOLIA_SEARCH_API_KEY as string,
+  appId: (process.env.ALGOLIA_APP_ID as string),
+  searchApiKey: (process.env.ALGOLIA_SEARCH_API_KEY as string),
   sourceId: 'articles',
-  indexName: 'articles-test'
+  indexName: 'articles',
 };
 
 const searchClient = algoliasearch(algoliaOptions.appId, algoliaOptions.searchApiKey);
 
 describe('SearchBox', () => {
   it('renders a SearchBox', () => {
-    const mockedContent: SearchBoxProps = { ...searchBoxMock };
+    const mockedContent: SearchBoxProps = { ...searchBoxMock };;
     mount(
       <InstantSearch
         searchClient={searchClient}
         indexName={algoliaOptions.indexName}
-        searchState={{ query: 'technology' }}>
+        searchState={{ query: 'technology' }}
+      >
         <SearchBox {...mockedContent} />
       </InstantSearch>
     );

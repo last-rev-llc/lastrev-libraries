@@ -17,8 +17,8 @@ interface CategoryProps {
 
 export interface HitProps {
   title?: string;
-  path: string;
-  summary?: string;
+  permalink?: any;
+  content?: string;
   categories?: string[];
   categoryLinks: Array<CategoryProps>;
 }
@@ -26,7 +26,7 @@ export interface HitProps {
 export const SearchResultItem = ({ hit, components }: SearchResultItemProps) => {
   return (
     <Root p={2} data-testid="SearchResultItem">
-      <a href={hit?.path} style={{ textDecoration: 'none' }}>
+      <a href={hit?.permalink} style={{ textDecoration: 'none' }}>
         <Box>
           {hit?.title ? (
             <Typography variant="body1" data-testid="SearchResultItem-title">
@@ -37,9 +37,9 @@ export const SearchResultItem = ({ hit, components }: SearchResultItemProps) => 
           ) : (
             <Skeleton animation="wave" height={30} width="40%" />
           )}
-          {hit?.summary ? (
-            <Typography variant="body1" sx={{ py: [2] }} data-testid="SearchResultItem-summary">
-              <components.Highlight hit={hit} attribute="summary" />
+          {hit?.content ? (
+            <Typography variant="body1" sx={{ py: [2] }} data-testid="SearchResultItem-content">
+              <components.Highlight hit={hit} attribute="content" />
             </Typography>
           ) : (
             <Skeleton animation="wave" height={100} width="100%" />

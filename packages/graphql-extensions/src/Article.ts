@@ -5,6 +5,7 @@ import * as types from '@contentful/rich-text-types';
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
 import { createRichText } from '@last-rev/graphql-contentful-core';
 import { constructObjectId } from '@last-rev/graphql-algolia-integration';
+import { BLOCKS } from '@contentful/rich-text-types';
 import categoryArticleLinkResolver from './resolvers/categoryArticleLinkResolver';
 import getCategoryArticleParentHierarchyResolver from './resolvers/getCategoryArticleParentHierarchyResolver';
 import articleSeoResolver from './resolvers/articleSeoResolver';
@@ -214,33 +215,34 @@ export const mappers = {
       text: 'title'
     },
     AlgoliaRecord: {
-      algoliaObjects: async (article: any, args: any, ctx: ApolloContext) => {
+      algoliaObjects: async (article: any, _args: any, ctx: ApolloContext) => {
         const path = await getPathUrl(article, ctx);
+        const url = path ? path : null;
 
-        if (!path) return [];
+        if (!url) return [];
 
-        const contentBody = await parseRichTextField(getLocalizedField(article.fields, 'body', ctx), ctx);
+        const objects = parseRichTextField(getLocalizedField(article.fields, 'body', ctx), {
+          sectionDelimiter: BLOCKS.HEADING_2
+        });
 
-        const title = getLocalizedField(article.fields, 'title', ctx) || '';
-        const summary = await parseRichTextField(await articleSummaryResolver(article, args, ctx), ctx);
+        const title = getLocalizedField(article.fields, 'title', ctx);
+
         const { categories, categoryLinks } = await getCategoriesForArticle(article, ctx);
 
-        return [
-          {
-            index: 'articles-test',
-            data: {
-              objectID: constructObjectId(article, ctx),
-              locale: ctx.locale || ctx.defaultLocale,
-              preview: !!ctx.preview,
-              title,
-              summary,
-              contentBody,
-              path,
-              categories,
-              categoryLinks
-            }
+        return objects.map(({ section, content }, objectIndex) => ({
+          index: 'articles',
+          data: {
+            objectID: constructObjectId(article, ctx, objectIndex),
+            locale: ctx.locale || ctx.defaultLocale,
+            preview: !!ctx.preview,
+            title,
+            section,
+            content,
+            permalink: url,
+            categories,
+            categoryLinks
           }
-        ];
+        }));
       }
     }
   }
