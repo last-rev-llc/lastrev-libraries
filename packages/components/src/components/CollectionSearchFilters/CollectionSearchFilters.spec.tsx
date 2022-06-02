@@ -1,17 +1,15 @@
 import * as React from 'react';
 import algoliasearch from 'algoliasearch';
-import {
-  InstantSearch
-} from 'react-instantsearch-dom';
+import { InstantSearch } from 'react-instantsearch-dom';
 import CollectionSearchFilters from './CollectionSearchFilters';
 import { collectionSearchFiltersMock } from './CollectionSearchFilters.mock';
 import mount from '../../../cypress/mount';
 
 const algoliaOptions = {
-  appId: (process.env.ALGOLIA_APP_ID as string),
-  searchApiKey: (process.env.ALGOLIA_SEARCH_API_KEY as string),
+  appId: process.env.ALGOLIA_APP_ID as string,
+  searchApiKey: process.env.ALGOLIA_SEARCH_API_KEY as string,
   sourceId: 'articles',
-  indexName: 'articles',
+  indexName: 'articles-test'
 };
 
 const searchClient = algoliasearch(algoliaOptions.appId, algoliaOptions.searchApiKey);
@@ -24,8 +22,7 @@ describe('CollectionSearchFilters', () => {
         <InstantSearch
           searchClient={searchClient}
           indexName={algoliaOptions.indexName}
-          searchState={{ query: 'technology' }}
-        >
+          searchState={{ query: 'technology' }}>
           <CollectionSearchFilters {...mockedContent} />
         </InstantSearch>
       );

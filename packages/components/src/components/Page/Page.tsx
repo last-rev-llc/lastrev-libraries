@@ -12,7 +12,7 @@ import { Page } from '@ias/graphql-sdk/dist';
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID as string, process.env.ALGOLIA_SEARCH_API_KEY as string);
 
-const indexName = 'articles';
+const indexName = 'articles-test';
 
 interface PageGeneralProps extends Omit<Page, '__typename'> {
   __typename?: string | 'Page';
