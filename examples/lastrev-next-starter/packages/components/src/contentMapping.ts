@@ -27,6 +27,7 @@ const CollectionCarousel = dynamic(() => import('@last-rev/component-library/dis
 
 // Custom components
 const CollectionFiltered = dynamic(() => import('./components/CollectionFiltered'));
+const ModuleIntegration = dynamic(() => import('./components/ModuleIntegration'));
 
 // Custom components
 const Quote = dynamic(() => import('./components/Quote'));
@@ -45,6 +46,7 @@ const contentMapping: {
   'Collection:carousel-large': CollectionCarousel,
   'Collection:carousel-small': CollectionCarousel,
   'Collection:navigation-bar': NavigationBar,
+  ModuleIntegration,
   BackToTop,
   Card,
   Text,
