@@ -15,11 +15,12 @@ import {
   Page,
   Header,
   Section,
-  Media,
+  Media as LRMedia,
   RichText
 } from '@last-rev/graphql-contentful-extensions';
 
 import * as Theme from './Theme';
+import * as Media from './Media';
 // Uncomment if using Algolia, else delete the related file
 // import * as Algolia from './Algolia';
 
@@ -58,6 +59,7 @@ const extensions: GraphQlExtension[] = [
   NavigationItem,
   Page,
   Section,
+  LRMedia,
   Media,
   RichText,
   Theme
