@@ -3,9 +3,9 @@ require('dotenv').config();
 
 const generate = require('@last-rev/sitemap-generator');
 const { resolve } = require('path');
-const { client } = require('@ias/utils');
+const { client, parseBooleanEnvVar } = require('@ias/utils');
 
-const usePreview = !!process.env.CONTENTFUL_USE_PREVIEW;
+const usePreview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 
 const run = async () => {
   const { data } = await client.Sitemap({
