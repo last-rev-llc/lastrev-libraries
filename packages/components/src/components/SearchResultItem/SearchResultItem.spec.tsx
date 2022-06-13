@@ -9,7 +9,7 @@ describe('SearchResultItem', () => {
     mount(<SearchResultItem {...mockedContent} />);
     cy.get('[data-testid=SearchResultItem]').should('exist');
     cy.get('[data-testid=SearchResultItem-title]').should('exist');
-    cy.get('[data-testid=SearchResultItem-content]').should('exist');
+    cy.get('[data-testid=SearchResultItem-summary]').should('exist');
     searchResultItemMock.hit.categoryLinks.forEach((category, idx) => {
       cy.get(`[data-testid=SearchResultItem-category${idx}]`).should('exist');
     });
