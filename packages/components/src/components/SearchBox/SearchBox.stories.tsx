@@ -9,7 +9,7 @@ const algoliaOptions = {
   appId: process.env.STORYBOOK_ALGOLIA_APP_ID as string,
   searchApiKey: process.env.STORYBOOK_ALGOLIA_SEARCH_API_KEY as string,
   sourceId: 'articles',
-  indexName: 'articles-test'
+  indexName: 'articles'
 };
 
 const searchClient = algoliasearch(algoliaOptions.appId, algoliaOptions.searchApiKey);

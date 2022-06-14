@@ -227,7 +227,7 @@ export const mappers = {
 
         return [
           {
-            index: 'articles-test',
+            index: 'articles',
             data: {
               objectID: constructObjectId(article, ctx),
               locale: ctx.locale || ctx.defaultLocale,
