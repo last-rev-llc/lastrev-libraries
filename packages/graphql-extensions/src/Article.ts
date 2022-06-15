@@ -225,6 +225,12 @@ export const mappers = {
         const summary = await parseRichTextField(await articleSummaryResolver(article, args, ctx), ctx);
         const { categories, categoryLinks } = await getCategoriesForArticle(article, ctx);
 
+        const currentLocale = ctx.locale;
+        const translatedLocales: string[] =
+          getDefaultFieldValue(article, 'translatedInLocale', ctx.defaultLocale) || [];
+
+        const translatedInLocale = !!(currentLocale && translatedLocales.includes(currentLocale));
+
         return [
           {
             index: 'articles',
@@ -237,7 +243,8 @@ export const mappers = {
               contentBody,
               path,
               categories,
-              categoryLinks
+              categoryLinks,
+              translatedInLocale
             }
           }
         ];

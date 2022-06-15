@@ -320,8 +320,9 @@ type Article implements Content {
   body: RichText
   disableBackToTop: Boolean
   seo: JSON
-  salesforceIdForMigrationOnly: String
+  translatedInLocale: [String]
   salesforceOriginalHtmlForMigrationOnly: String
+  salesforceIdForMigrationOnly: String
   header: Header
   footer: Content
   topicNavItems: [NavigationItem]
