@@ -1,0 +1,5 @@
+fragment CommonResource_BaseFragment on CommonResource {
+  ...Content_BaseFragment
+  key
+  shortTextValue
+}

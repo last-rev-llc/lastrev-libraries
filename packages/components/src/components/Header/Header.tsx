@@ -19,6 +19,8 @@ import ContentModule from '@last-rev/component-library/dist/components/ContentMo
 import AutocompleteBox from '../AutocompleteBox';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
+import { useLocalizationContext } from '../LocalizationContext';
+
 export interface HeaderProps {
   variant?: 'elevation' | 'outlined' | undefined;
   logo?: MediaProps;
@@ -39,6 +41,7 @@ export const Header = ({
   sidekickLookup
 }: HeaderProps) => {
   const [open, setOpen] = React.useState(false);
+  const localization = useLocalizationContext();
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -153,7 +156,13 @@ export const Header = ({
                     }
                   }
                 }}>
-                <AutocompleteBox settings={{ placeholder: 'Search our knowledge base', searchResultsUrl: '/search' }} />
+                <AutocompleteBox
+                  settings={{
+                    placeholder:
+                      localization['header.search.placeholder']?.shortTextValue ?? 'Search our knowledge base',
+                    searchResultsUrl: '/search'
+                  }}
+                />
               </Box>
             )}
 

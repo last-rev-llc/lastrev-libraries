@@ -1,0 +1,5 @@
+query CommonResources($locale: String!, $preview: Boolean) {
+  contents(filter: { contentTypes: ["commonResource"], locale: $locale, preview: $preview }) {
+    ...CommonResource_BaseFragment
+  }
+}

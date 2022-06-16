@@ -3,6 +3,8 @@ import { SearchBox as AlgoliaSearchBox } from 'react-instantsearch-dom';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 
+import { useLocalizationContext } from '../LocalizationContext';
+
 export interface SearchBoxProps {
   settings?: SettingsProps;
 }
@@ -12,7 +14,9 @@ export interface SettingsProps {
 }
 
 export const SearchBox = ({ settings }: SearchBoxProps) => {
-  const { placeholder = 'Search' } = settings as SettingsProps;
+  const localization = useLocalizationContext();
+  const { placeholder = localization['search.placeholder']?.shortTextValue ?? 'Search' } = settings as SettingsProps;
+
   return (
     <Root data-testid="SearchBox" className="ais-InstantSearch">
       <AlgoliaSearchBox translations={{ placeholder }} />

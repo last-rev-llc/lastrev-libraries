@@ -4,6 +4,7 @@ import { client, parseBooleanEnvVar } from '@ias/utils';
 import { ContentModule } from '@last-rev/component-library';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import AuthGuard from '@ias/components/src/components/AuthGuard';
+import { LocalizationProvider } from '@ias/components/src/components/LocalizationContext';
 import contentMapping from '@ias/components/src/contentMapping';
 
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
@@ -57,12 +58,18 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
         seo: (pageData.page as any)?.seo
       }
     };
+    let localizationLookup;
+    try {
+      const { data: commonResources } = await client.CommonResources({ locale, preview });
+      localizationLookup = (commonResources as any)?.contents || [];
+    } catch (err) {}
 
     return {
       props: {
         params: { path, locale, preview, site },
         isProtected,
-        pageData: isProtected ? protectedPageData : pageData
+        pageData: isProtected ? protectedPageData : pageData,
+        localizationLookup
       },
       // Re-generate the page at most once per second
       // if a request comes in
@@ -77,11 +84,13 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
   }
 };
 
-export default function Page({ params, isProtected, pageData }: any) {
+export default function Page({ params, isProtected, pageData, localizationLookup }: any) {
   params.title = pageData?.page?.seo?.title?.value || pageData?.page?.title;
   return (
-    <ContentModuleProvider contentMapping={contentMapping}>
-      {isProtected ? <AuthGuard params={params} /> : <ContentModule {...pageData.page} />}
-    </ContentModuleProvider>
+    <LocalizationProvider localizationLookup={localizationLookup}>
+      <ContentModuleProvider contentMapping={contentMapping}>
+        {isProtected ? <AuthGuard params={params} /> : <ContentModule {...pageData.page} />}
+      </ContentModuleProvider>
+    </LocalizationProvider>
   );
 }

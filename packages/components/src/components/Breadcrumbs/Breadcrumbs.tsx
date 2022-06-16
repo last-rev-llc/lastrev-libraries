@@ -8,7 +8,9 @@ import { styled } from '@mui/material/styles';
 
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import { LinkProps } from '@last-rev/component-library/dist/components/Link';
+
 import Link from '../Link';
+import { useLocalizationContext } from '../LocalizationContext';
 
 export interface BreadcrumbsProps {
   breadcrumbs?: Array<LinkProps>;
@@ -16,6 +18,7 @@ export interface BreadcrumbsProps {
 }
 
 export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot }: BreadcrumbsProps) => {
+  const localization = useLocalizationContext();
   return (
     <ErrorBoundary>
       {breadcrumbs ? (
@@ -32,8 +35,7 @@ export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot }: BreadcrumbsProps) 
                     }}
                     data-testid="Breadcrumbs-breadcrumbsRoot">
                     <ChevronLeftIcon fontSize="small" />
-                    {/* TODO: Use localization lookup for title (IAS-117) */}
-                    {breadcrumbsRoot || 'Help Center'}
+                    {breadcrumbsRoot ?? localization['breadcrumbs.root.label']?.shortTextValue ?? 'Help Center'}
                   </Link>
                   {breadcrumbs?.map((link) => (
                     <Link key={link?.id} href={link?.href} data-testid="Breadcrumbs-link">

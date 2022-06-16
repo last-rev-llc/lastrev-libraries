@@ -12,8 +12,10 @@ import ContentModule from '@last-rev/component-library/dist/components/ContentMo
 import { CollectionProps } from '@last-rev/component-library/dist/components/Collection';
 import Link from '@last-rev/component-library/dist/components/Link';
 
-import CategoryLinks from '../CategoryLinks';
 import sidekick from '@last-rev/contentful-sidekick-util';
+
+import CategoryLinks from '../CategoryLinks';
+import { useLocalizationContext } from '../LocalizationContext';
 
 interface CategoryProps {
   name: string;
@@ -80,7 +82,8 @@ const QueryTitle = connectStateResults((props) => {
   const searchState = props.searchState as SearchState;
   return searchState?.query ? (
     <Typography variant="h3" component="h3" mb={2}>
-      {`Showing results for ${searchState?.query}`}
+      {/* @ts-ignore */}
+      {`${props.label} ${searchState?.query}`}
     </Typography>
   ) : null;
 });
@@ -115,13 +118,15 @@ const StateResults = connectStateResults((props) => {
     <>
       {searchState?.query && !!searchResults?.nbHits && !isSearching && (
         <Typography variant="body2" component="p" mb={5}>
-          {`${searchResults?.nbHits} results for ${searchState?.query}`}
+          {/* @ts-ignore */}
+          {`${searchResults?.nbHits} ${props.resultsForLabel} ${searchState?.query}`}
         </Typography>
       )}
       {isSearching && <LoadingItems hitsPerPage={searchResults?.hitsPerPage} />}
       {!isSearching && searchResults.nbHits === 0 && (
         <Typography variant="body2" component="p" mb={5}>
-          No results found
+          {/* @ts-ignore */}
+          {props.noResultsLabel}
         </Typography>
       )}
       <Box display={!isSearching && searchResults.nbHits !== 0 ? 'block' : 'none'}>
@@ -133,6 +138,8 @@ const StateResults = connectStateResults((props) => {
 });
 
 export const CollectionSearchResults = ({ introText, sidekickLookup }: CollectionProps) => {
+  const localization = useLocalizationContext();
+
   return (
     <ErrorBoundary>
       <Box mb={6} data-testid="CollectionSearchResults" {...sidekick(sidekickLookup)}>
@@ -143,8 +150,16 @@ export const CollectionSearchResults = ({ introText, sidekickLookup }: Collectio
             data-testid="CollectionSearchResults-introText"
           />
         ) : null}
-        <QueryTitle />
-        <StateResults />
+        <QueryTitle
+          // @ts-ignore
+          label={localization['collections.showingResultsFor.label']?.shortTextValue ?? 'Showing results for'}
+        />
+        <StateResults
+          // @ts-ignore
+          resultsForLabel={localization['collections.resultsFor.label']?.shortTextValue ?? 'results for'}
+          // @ts-ignore
+          noResultsLabel={localization['collections.noResultsFound.label']?.shortTextValue ?? 'No results found'}
+        />
       </Box>
     </ErrorBoundary>
   );

@@ -16,6 +16,8 @@ import DocumentIcon from '../DocumentIcon';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
+import { useLocalizationContext } from '../LocalizationContext';
+
 export interface ArticleCategoryProps {
   id?: string;
   title?: string;
@@ -103,6 +105,7 @@ const ArticleCategory = ({
   categoryHierarchyLinks
 }: ArticleCategoryProps) => {
   const [expandedSubCategories, setExpandedSubCategories] = useState<{ [key: string]: boolean }>({});
+  const localization = useLocalizationContext();
 
   const toggleExpandSubCategory =
     (subCategoryId: string) => (_event: React.SyntheticEvent<Element, Event>, expanded: boolean) => {
@@ -151,17 +154,15 @@ const ArticleCategory = ({
             {subCategories && (
               <Box ml="auto">
                 {allSubCategoriesAreExpanded ? (
-                  // TODO: Use localization lookup for title (IAS-117)
                   <Button
                     variant="text"
                     color="secondary"
                     disableRipple
                     onClick={changeAllSubCategoriesExpand(false)}
                     data-testid="ArticleCategory-expand-collapse-button">
-                    Collapse all
+                    {localization['articleCategory.collapseAll.label']?.shortTextValue ?? 'Collapse all'}
                   </Button>
                 ) : (
-                  // TODO: Use localization lookup for title (IAS-117)
                   <Button
                     variant="text"
                     color="secondary"
@@ -169,7 +170,7 @@ const ArticleCategory = ({
                     onClick={changeAllSubCategoriesExpand(true)}
                     data-testid="ArticleCategory-expand-collapse-button"
                     sx={{ whiteSpace: 'nowrap' }}>
-                    Expand all
+                    {localization['articleCategory.expandAll.label']?.shortTextValue ?? 'Expand all'}
                   </Button>
                 )}
               </Box>

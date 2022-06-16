@@ -11,6 +11,7 @@ fragment ContentModule_BaseFragment on Content {
   ...NavigationItem_BaseFragment
   ...Section_BaseFragment
   ...Text_BaseFragment
+  ...CommonResource_BaseFragment
 }
 
 fragment ContentModule_SectionFragment on Content {

@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import Link, { LinkProps } from '@last-rev/component-library/dist/components/Link';
 
+import { useLocalizationContext } from '../LocalizationContext';
 import { ScrollSpy } from '../../utils/scrollSpy';
 
 export interface ArticleNavProps {
@@ -13,6 +14,7 @@ export interface ArticleNavProps {
 
 export const ArticleNav = ({ sideNav }: ArticleNavProps) => {
   const [active, setActive] = React.useState('');
+  const localization = useLocalizationContext();
 
   const onScrollUpdate = (entry: IntersectionObserverEntry, isInViewPort: any) => {
     const menuItem = document.querySelector(`[data-scrollspy-id="${entry.target.id}"]`);
@@ -28,8 +30,11 @@ export const ArticleNav = ({ sideNav }: ArticleNavProps) => {
         <>
           <ScrollSpy handleScroll={onScrollUpdate} />
           <Root data-testid="ArticleNav">
-            {/* TODO: Use localization lookup for this overline (IAS-117) */}
-            {sideNav.length > 0 ? <Typography variant="overline">Contents</Typography> : null}
+            {sideNav.length > 0 ? (
+              <Typography variant="overline">
+                {localization['articleNav.contents.label']?.shortTextValue ?? 'Contents'}
+              </Typography>
+            ) : null}
 
             <Box component="ul" p={0} data-testid="ArticleNav-list" sx={{ listStyle: 'none' }}>
               {sideNav?.map((link, idx) => (

@@ -7,8 +7,10 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+
 import Autocomplete from '../Autocomplete';
 import SearchResultItem from '../SearchResultItem';
+import { useLocalizationContext } from '../LocalizationContext';
 
 const algoliaOptions = {
   appId: process.env.ALGOLIA_APP_ID as string,
@@ -37,14 +39,12 @@ export interface templatesItemsProps {
 export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
   const theme = useTheme();
   const router = useRouter();
+  const localization = useLocalizationContext();
 
   const { variant, placeholder, searchResultsUrl } = settings as SettingsProps;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
-  {
-    /* TODO: Use localization lookup for "searchPlaceholder" (IAS-117) */
-  }
-  const mobileText = 'Search';
+  const mobileText = localization['autocomplete.searchMobile.placeholder']?.shortTextValue ?? 'Search';
 
   const handleSubmit = (formData: OnSubmitParams<any>) => {
     const searchQuery: string = formData.state.query.trim();
@@ -87,10 +87,7 @@ export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
                 );
               },
               noResults() {
-                {
-                  /* TODO: Use localization lookup for "searchNoResultsText" (IAS-117) */
-                }
-                return 'No Results';
+                return localization['autocomplete.searchNoResults.label']?.shortTextValue ?? 'No Results';
               }
             }
           }

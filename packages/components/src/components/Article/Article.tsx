@@ -21,6 +21,8 @@ import RelatedLinks from '../RelatedLinks';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import TopicNavHorizontal from '../TopicNavHorizontal';
 
+import { useLocalizationContext } from '../LocalizationContext';
+
 export interface ArticleProps {
   __typename?: string;
   id?: string;
@@ -70,6 +72,8 @@ export const Article = ({
     'keywords': `${categories?.map((category) => category?.text).join(', ')}`,
     'url': `${process.env.DOMAIN || 'https://www.integralads.com/'}${slug}`
   };
+  const localization = useLocalizationContext();
+
   return (
     <ErrorBoundary>
       <Head>
@@ -108,8 +112,13 @@ export const Article = ({
 
               {relatedLinks ? (
                 <Box data-testid="Article-relatedLinks">
-                  {/* TODO: Use localization lookup for title (IAS-117) */}
-                  <RelatedLinks title="For more information, see the related articles:" links={relatedLinks} />
+                  <RelatedLinks
+                    title={
+                      localization['article.relatedLinks.label']?.shortTextValue ??
+                      'For more information, see the related articles:'
+                    }
+                    links={relatedLinks}
+                  />
                 </Box>
               ) : null}
 

@@ -4,11 +4,11 @@ import { InstantSearch } from 'react-instantsearch-dom';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import BackToTop from '@last-rev/component-library/dist/components/BackToTop';
 import { LinkProps } from '@last-rev/component-library/dist/components/Link';
+import { Page } from '@ias/graphql-sdk/dist';
 
 import Breadcrumbs from '../Breadcrumbs';
 import TopicNavHorizontal from '../TopicNavHorizontal';
 import useSearchState from '../../utils/useSearchState';
-import { Page } from '@ias/graphql-sdk/dist';
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID as string, process.env.ALGOLIA_SEARCH_API_KEY as string);
 

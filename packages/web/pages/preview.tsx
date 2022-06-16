@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Head from 'next/head';
 import { getSdk } from '@ias/graphql-sdk';
 import { GraphQLClient } from 'graphql-request';
@@ -6,6 +6,7 @@ import { useRouter } from 'next/dist/client/router';
 import { ContentPreview } from '@last-rev/component-library';
 import useSWR from 'swr';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
+import { LocalizationProvider } from '@ias/components/src/components/LocalizationContext';
 import contentMapping from '@ias/components/src/contentMapping';
 
 const previewGqlClient = new GraphQLClient(
@@ -14,6 +15,7 @@ const previewGqlClient = new GraphQLClient(
 const spaceId = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
 const sdk = getSdk(previewGqlClient);
 const fetchPreview = async (id: string, locale: string) => sdk.Preview({ id, locale });
+const fetchCommonResources = async (locale: string) => sdk.CommonResources({ locale, preview: true });
 
 export default function Preview({}: any) {
   const { query } = useRouter();
@@ -38,8 +40,11 @@ export default function Preview({}: any) {
   };
 
   const { data, error } = useSWR(id ? [id, locale, environment, 'preview', spaceId] : null, fetchPreview);
+  const { data: commonResources } = useSWR(id ? [locale, environment, 'preview', spaceId] : null, fetchCommonResources);
   const content = data?.data?.content;
   const isLoadingInitialData = !data && !error;
+  const localizationLookup = (commonResources as any)?.data?.contents || [];
+
   return (
     <>
       {!!content && (
@@ -47,15 +52,17 @@ export default function Preview({}: any) {
           <title>{getPageTitle(content)}</title>
         </Head>
       )}
-      <ContentModuleProvider contentMapping={contentMapping}>
-        <ContentPreview
-          loading={isLoadingInitialData}
-          content={content}
-          environment={environment as string}
-          locale={locale as string}
-          spaceId={spaceId as string}
-        />
-      </ContentModuleProvider>
+      <LocalizationProvider localizationLookup={localizationLookup}>
+        <ContentModuleProvider contentMapping={contentMapping}>
+          <ContentPreview
+            loading={isLoadingInitialData}
+            content={content}
+            environment={environment as string}
+            locale={locale as string}
+            spaceId={spaceId as string}
+          />
+        </ContentModuleProvider>
+      </LocalizationProvider>
     </>
   );
 }

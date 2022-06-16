@@ -6,16 +6,18 @@ import { styled, alpha } from '@mui/material/styles';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import Card, { CardProps } from '@last-rev/component-library/dist/components/Card';
 
+import { useLocalizationContext } from '../LocalizationContext';
+
 export interface FeaturedArticlesProps {
   articles?: Array<CardProps>;
 }
 
 const FeaturedArticles = ({ articles }: FeaturedArticlesProps) => {
+  const localization = useLocalizationContext();
   return (
     <ErrorBoundary>
-      {/* TODO: Use localization lookup for title (IAS-117) */}
       <Typography variant="h4" component="h4" mb={3} data-testid="FeaturedArticles-title">
-        Featured Articles
+        {localization['articles.featuredTitle.label']?.shortTextValue ?? 'Featured Articles'}
       </Typography>
 
       {articles && (
