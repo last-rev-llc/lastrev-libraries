@@ -31,7 +31,35 @@ describe('sideKickLookupResolver.ts', () => {
 
     const resolved = await resolver(content, {}, ctx, {});
 
+    expect(resolved.fieldTwo).toEqual({ contentId: '1', contentTypeId: 'foo', fieldName: 'fieldOne' });
+  });
+
+  it('maps all content fields and correct string mapper to a content field when mapper is used', async () => {
+    setMapper({
+      fieldTwo: 'fieldOne'
+    });
+
+    const resolved = await resolver(content, {}, ctx, {});
+
     expect(resolved).toEqual({
+      stringField: { contentId: '1', contentTypeId: 'foo', fieldName: 'stringField' },
+      stringArrayField: {
+        contentId: '1',
+        contentTypeId: 'foo',
+        fieldName: 'stringArrayField'
+      },
+      referenceField: { contentId: '1', contentTypeId: 'foo', fieldName: 'referenceField' },
+      assetField: { contentId: '1', contentTypeId: 'foo', fieldName: 'assetField' },
+      referenceArrayField: {
+        contentId: '1',
+        contentTypeId: 'foo',
+        fieldName: 'referenceArrayField'
+      },
+      assetArrayField: {
+        contentId: '1',
+        contentTypeId: 'foo',
+        fieldName: 'assetArrayField'
+      },
       fieldTwo: { contentId: '1', contentTypeId: 'foo', fieldName: 'fieldOne' },
       contentId: '1',
       contentTypeId: 'foo'
