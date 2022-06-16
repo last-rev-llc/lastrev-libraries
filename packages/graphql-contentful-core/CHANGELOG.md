@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.2.3
+
+### Patch Changes
+
+- 0d5a9ee: Moved default lookup out of else statement so it doesn't get overridden in sidekickLookupResolver
+
 ## 0.2.2
 
 ### Patch Changes
