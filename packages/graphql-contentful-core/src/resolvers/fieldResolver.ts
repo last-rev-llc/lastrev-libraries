@@ -34,7 +34,13 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
   if (mapper && mapper[field]) {
     const fieldMapper = mapper[field];
     if (isFunction(fieldMapper)) {
-      fieldValue = await fieldMapper(content, args, ctx, info);
+      try {
+        fieldValue = await fieldMapper(content, args, ctx, info);
+      } catch (err: any) {
+        const scopedLoggingPrefix = `[${typeName}][${displayType}][${field}]`;
+        logger.error(`GQL Extension error: ${scopedLoggingPrefix} ${err.message}`);
+        throw err;
+      }
     } else if (isString(fieldMapper)) {
       fieldValue = getLocalizedField(content.fields, fieldMapper as string, ctx);
     } else {
