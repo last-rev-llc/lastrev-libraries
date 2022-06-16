@@ -20,6 +20,11 @@ export const VAL_CONTENTFUL_PREVIEW_KEY = 'contentfulPreviewKey';
 export const VAL_CONTENTFUL_DEFAULT_SITE_ID = 'contentfulDefaultSiteId';
 export const VAL_CONTENTFUL_DEFAULT_SITE_KEY = 'contentfulDefaultSiteKey';
 
+export const VAL_REDIS_PASSWORD = 'redisPassword';
+export const VAL_REDIS_USERNAME = 'redisUsername';
+export const VAL_REDIS_HOST = 'redisHost';
+export const VAL_REDIS_PORT = 'redisPort';
+
 export const VAL_NETLIFY_SITE = 'netlifySite';
 export const VAL_NETLIFY_DEPLOY_KEY = 'netlifyDeployKey';
 export const VAL_NETLIFY_BUILD_HOOK = 'netlifyBuildHook';
@@ -45,6 +50,7 @@ export const ACTION_WRITE_LOCAL_ENV_FILE = 'writeLocalEnvFile';
 export const ACTION_CONTENTFUL_MIGRATE_EXTENSIONS = 'contentfulMigrateExtensions';
 export const ACTION_CREATE_CONTENTFUL_CACHE_WEBHOOK = 'createContentfulCacheWebhook';
 export const ACTION_CREATE_CONTENTFUL_PROD_WEBHOOK = 'createContentfulProdWebhook';
+export const ACTION_CREATE_REDIS_USER = 'createRedisUser';
 
 const stateRootKey = 'cli.state';
 
