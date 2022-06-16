@@ -26,34 +26,37 @@ export const sideKickLookupResolver =
     const typeName = getTypeName(content?.sys?.contentType, typeMappings);
     let lookup: { [key: string]: any } = {};
 
+    lookup = Object.keys(content?.fields || {}).reduce((accum, field) => {
+      accum[field] = {
+        contentId: content.sys.id,
+        contentTypeId: content?.sys?.contentType?.sys?.id,
+        fieldName: field
+      };
+
+      return accum;
+    }, {} as { [key: string]: any });
+
     if (mappers[typeName] && mappers[typeName][displayType]) {
       // TODO: figure out which fields are being queried for in the query, and map those, even if not in mappers
-      lookup = Object.keys(mappers[typeName][displayType])?.reduce((accum, field) => {
-        const mapper = mappers[typeName][displayType][field];
+      lookup = {
+        ...lookup,
+        ...Object.keys(mappers[typeName][displayType])?.reduce((accum, field) => {
+          const mapper = mappers[typeName][displayType][field];
 
-        if (typeof mapper === 'function') {
-          // TODO: Implement fieldName lookup for function mappers
-        }
+          if (typeof mapper === 'function') {
+            // TODO: Implement fieldName lookup for function mappers
+          }
 
-        if (typeof mapper === 'string') {
-          accum[field] = {
-            contentId: content.sys.id,
-            contentTypeId: content?.sys?.contentType?.sys?.id,
-            fieldName: mapper
-          };
-        }
-        return accum;
-      }, {} as { [key: string]: any });
-    } else {
-      lookup = Object.keys(content?.fields || {}).reduce((accum, field) => {
-        accum[field] = {
-          contentId: content.sys.id,
-          contentTypeId: content?.sys?.contentType?.sys?.id,
-          fieldName: field
-        };
-
-        return accum;
-      }, {} as { [key: string]: any });
+          if (typeof mapper === 'string') {
+            accum[field] = {
+              contentId: content.sys.id,
+              contentTypeId: content?.sys?.contentType?.sys?.id,
+              fieldName: mapper
+            };
+          }
+          return accum;
+        }, {} as { [key: string]: any })
+      };
     }
     return {
       ...lookup,
