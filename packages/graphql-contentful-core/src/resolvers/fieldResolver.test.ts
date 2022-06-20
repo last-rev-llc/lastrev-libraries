@@ -78,6 +78,17 @@ describe('fieldResolver.ts', () => {
     expect(logger.error).toHaveBeenCalledWith('Unsupported mapper type for Foo.Foo: object');
   });
 
+  it('should throw an error and log it with the correct prefix when function mapper throws', async () => {
+    setMapper({
+      fieldTwo: async () => {
+        throw new Error('Oops');
+      }
+    } as unknown as TypeMapper);
+
+    await expect(resolver(content, {}, ctx, { fieldName: 'fieldTwo' } as any)).rejects.toThrow();
+    expect(logger.error).toHaveBeenCalledWith('GQL Extension error: [Foo][Foo][fieldTwo] Oops');
+  });
+
   it('should resolve a string field when a string mapper exists', async () => {
     setMapper({
       fieldTwo: 'stringField'
