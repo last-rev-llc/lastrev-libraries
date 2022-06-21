@@ -1,6 +1,7 @@
 fragment Article_FieldsFragment on Article {
   __typename
   id
+  sidekickLookup
   title
   slug
   summary

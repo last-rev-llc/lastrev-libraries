@@ -8,6 +8,7 @@ import { styled } from '@mui/material/styles';
 
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import { LinkProps } from '@last-rev/component-library/dist/components/Link';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 import Link from '../Link';
 import { useLocalizationContext } from '../LocalizationContext';
@@ -15,9 +16,10 @@ import { useLocalizationContext } from '../LocalizationContext';
 export interface BreadcrumbsProps {
   breadcrumbs?: Array<LinkProps>;
   breadcrumbsRoot?: string;
+  sidekickLookup?: any;
 }
 
-export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot }: BreadcrumbsProps) => {
+export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot, sidekickLookup }: BreadcrumbsProps) => {
   const localization = useLocalizationContext();
   return (
     <ErrorBoundary>
@@ -26,7 +28,11 @@ export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot }: BreadcrumbsProps) 
           <Container maxWidth="xl">
             <Grid container>
               <Grid item xs={12}>
-                <Root aria-label="breadcrumb" separator="|" data-testid="Breadcrumbs">
+                <Root
+                  aria-label="breadcrumb"
+                  separator="|"
+                  data-testid="Breadcrumbs"
+                  {...sidekick(sidekickLookup?.categories)}>
                   <Link
                     href="/"
                     sx={{

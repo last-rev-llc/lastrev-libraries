@@ -85,7 +85,9 @@ export const Article = ({
 
       {topicNavItems && <TopicNavHorizontal navItems={topicNavItems} />}
 
-      {breadcrumbs ? <Breadcrumbs breadcrumbs={breadcrumbs} data-testid="Article-breadcrumbs" /> : null}
+      {breadcrumbs ? (
+        <Breadcrumbs breadcrumbs={breadcrumbs} sidekickLookup={sidekickLookup} data-testid="Article-breadcrumbs" />
+      ) : null}
 
       <Container>
         <Grid container spacing={{ xs: 2, lg: 4 }}>
@@ -100,18 +102,18 @@ export const Article = ({
               data-testid="Article">
               {title || pubDate || summary ? (
                 <Box data-testid="Article-head" mt={{ xs: 0, md: 1 }}>
-                  <ArticleHead title={title} pubDate={pubDate} summary={summary} />
+                  <ArticleHead title={title} pubDate={pubDate} summary={summary} sidekickLookup={sidekickLookup} />
                 </Box>
               ) : null}
 
               {body ? (
                 <Box data-testid="Article-body" my={5}>
-                  <ArticleBody body={body} />
+                  <ArticleBody body={body} sidekickLookup={sidekickLookup} />
                 </Box>
               ) : null}
 
               {relatedLinks ? (
-                <Box data-testid="Article-relatedLinks">
+                <Box data-testid="Article-relatedLinks" {...sidekick(sidekickLookup?.relatedLinks)}>
                   <RelatedLinks
                     title={
                       localization['article.relatedLinks.label']?.shortTextValue ??
@@ -123,7 +125,7 @@ export const Article = ({
               ) : null}
 
               {categories ? (
-                <Box data-testid="Article-categories">
+                <Box data-testid="Article-categories" {...sidekick(sidekickLookup?.categories)}>
                   <CategoryLinks links={categories} />
                 </Box>
               ) : null}

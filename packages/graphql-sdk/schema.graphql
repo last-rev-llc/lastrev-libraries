@@ -1,23 +1,14 @@
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy("The URL that specifies the behaviour of this scalar." url: String!) on SCALAR
 directive @key(fields: String!) on OBJECT | INTERFACE
-
 directive @extends on OBJECT | INTERFACE
-
 directive @external on OBJECT | FIELD_DEFINITION
-
 directive @requires(fields: String!) on FIELD_DEFINITION
-
 directive @provides(fields: String!) on FIELD_DEFINITION
-
-"""
-Date custom scalar type
-"""
+"Date custom scalar type"
 scalar Date
-
-"""
-The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
-"""
+"The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
 scalar JSON
-
 type Asset {
   id: String
   url: String
@@ -28,7 +19,6 @@ type Asset {
   height: String
   description: String
 }
-
 type Media implements Content {
   source: String
   sidekickLookup: JSON
@@ -47,23 +37,19 @@ type Media implements Content {
   fileMobile: Asset
   controls: Boolean
 }
-
 type Location {
   lat: String
   lon: String
 }
-
 type RichText {
   id: String
   json: JSON
   links: RichTextLinks
 }
-
 type RichTextLinks {
   entries: [Content]
   assets: [Media]
 }
-
 type Theme implements Content {
   variant: String
   sidekickLookup: JSON
@@ -75,12 +61,10 @@ type Theme implements Content {
   components: JSON
   typography: JSON
 }
-
 type Locales {
   default: String!
   available: [String!]!
 }
-
 input ContentsFilter {
   contentTypes: [String]
   ids: [String]
@@ -88,7 +72,6 @@ input ContentsFilter {
   preview: Boolean
   displayType: String
 }
-
 type Query {
   _service: _Service!
   page(path: String!, locale: String, preview: Boolean, site: String): Content
@@ -98,46 +81,36 @@ type Query {
   sitemap(root: String!, locales: [String!], preview: Boolean, site: String): Sitemap
   availableLocales: Locales
 }
-
 type _Service {
-  """
-  The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied
-  """
+  "The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied"
   sdl: String
 }
-
 type PagePathParam {
   slug: [String!]
 }
-
 type PagePathParams {
   params: PagePathParam!
   locale: String
 }
-
 interface Content {
   id: String
   theme: [Theme]
   animation: JSON
   sidekickLookup: JSON
 }
-
 type SitemapEntry {
   loc: String
   lastmod: String
 }
-
 type SitemapPage {
   entries: [SitemapEntry]
   loc: String
   lastmod: String
   filename: String
 }
-
 type Sitemap {
   pages: [SitemapPage]
 }
-
 type Card implements Content {
   sidekickLookup: JSON
   id: String
@@ -153,7 +126,6 @@ type Card implements Content {
   link: Link
   pubDate: Date
 }
-
 type Collection implements Content {
   sidekickLookup: JSON
   id: String
@@ -171,7 +143,6 @@ type Collection implements Content {
   introText: Text
   itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
 }
-
 type CommonResource implements Content {
   sidekickLookup: JSON
   id: String
@@ -182,7 +153,6 @@ type CommonResource implements Content {
   key: String
   shortTextValue: String
 }
-
 type Footer implements Content {
   sidekickLookup: JSON
   id: String
@@ -196,7 +166,6 @@ type Footer implements Content {
   logoLink: Link
   actions: [Link]
 }
-
 type Header implements Content {
   sidekickLookup: JSON
   id: String
@@ -212,7 +181,6 @@ type Header implements Content {
   rightNav: [NavigationItem]
   actions: [Link]
 }
-
 type Hero implements Content {
   sidekickLookup: JSON
   id: String
@@ -230,7 +198,6 @@ type Hero implements Content {
   background: Media
   actions: [Link]
 }
-
 type Link implements Content {
   sidekickLookup: JSON
   id: String
@@ -248,7 +215,6 @@ type Link implements Content {
   href: String!
   isActive: Boolean
 }
-
 type ModuleIntegration implements Content {
   sidekickLookup: JSON
   id: String
@@ -258,7 +224,6 @@ type ModuleIntegration implements Content {
   internalTitle: String
   settings: JSON
 }
-
 type NavigationItem implements Content {
   sidekickLookup: JSON
   id: String
@@ -276,7 +241,6 @@ type NavigationItem implements Content {
   subNavigation: [SubnavigationItem]
   image: Media
 }
-
 type Section implements Content {
   sidekickLookup: JSON
   id: String
@@ -294,7 +258,6 @@ type Section implements Content {
   contents: [Content]
   background: Media
 }
-
 type Seo implements Content {
   sidekickLookup: JSON
   id: String
@@ -308,7 +271,6 @@ type Seo implements Content {
   no_index: Boolean
   no_follow: Boolean
 }
-
 type Site implements Content {
   sidekickLookup: JSON
   id: String
@@ -319,7 +281,6 @@ type Site implements Content {
   siteKey: String
   seo: JSON
 }
-
 type SsoGroup implements Content {
   sidekickLookup: JSON
   id: String
@@ -329,7 +290,6 @@ type SsoGroup implements Content {
   internalTitle: String
   groupId: String
 }
-
 type Table implements Content {
   sidekickLookup: JSON
   id: String
@@ -340,7 +300,6 @@ type Table implements Content {
   table: String
   richText: RichText
 }
-
 type Text implements Content {
   sidekickLookup: JSON
   id: String
@@ -357,7 +316,6 @@ type Text implements Content {
   textActions: [Link]
   colorScheme: String
 }
-
 type Article implements Content {
   sidekickLookup: JSON
   id: String
@@ -387,7 +345,6 @@ type Article implements Content {
   link: Link
   requiredRoles: [String]
 }
-
 type CategoryArticle implements Content {
   sidekickLookup: JSON
   id: String
@@ -413,7 +370,6 @@ type CategoryArticle implements Content {
   link: Link
   level: Int
 }
-
 type Page implements Content {
   sidekickLookup: JSON
   id: String
@@ -435,7 +391,6 @@ type Page implements Content {
   topicNavItems: [NavigationItem]
   breadcrumbs: [Link]
 }
-
 type PageTopic implements Content {
   sidekickLookup: JSON
   id: String
@@ -449,12 +404,10 @@ type PageTopic implements Content {
   colorScheme: String
   disableBackToTop: Boolean
 }
-
 type AlgoliaObject {
   index: String!
   data: JSON!
 }
-
 type AlgoliaRecord implements Content {
   id: String
   theme: [Theme]
@@ -462,50 +415,40 @@ type AlgoliaRecord implements Content {
   sidekickLookup: JSON
   algoliaObjects: [AlgoliaObject]
 }
-
 type CollectionOptions {
   tags: [Option]
   topics: [Option]
 }
-
 type Option {
   label: String
   value: String
 }
-
 type ConnectionPageInfo {
   options: CollectionOptions
   allOptions: CollectionOptions
   total: Int
 }
-
 type CollectionItemConnection {
   pageInfo: ConnectionPageInfo
   items: [CollectionItem]
 }
-
 input CollectionFilterInput {
   topics: [String]
   tags: [String]
   body: String
 }
-
 union CollectionItem = Card | Link | Media | Section | NavigationItem
-
 union SubnavigationItem = Link | NavigationItem
-
 type Blog {
   header: Header
   footer: Content
 }
-
 type CategoryBlog {
   header: Header
   footer: Content
   contents: [Content]
   hero: Hero
 }
-
 type CategoryArticleLinkHierarchyNode {
   id: String
   text: String

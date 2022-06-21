@@ -6,7 +6,7 @@
     "@last-rev/app-config": "^0.2.0",
     "@last-rev/contentful-webhook-handler": "^0.4.1",
     "@last-rev/graphql-algolia-integration": "^0.1.4",
-    "@last-rev/graphql-contentful-core": "^0.2.2",
+    "@last-rev/graphql-contentful-core": "^0.2.3",
     "@ias/graphql-extensions": "^0.1.0",
     "dotenv": "^10.0.0"
   },

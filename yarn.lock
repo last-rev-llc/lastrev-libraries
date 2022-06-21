@@ -3727,7 +3727,7 @@
     loglevel "^1.7.1"
     tslib "^2.3.0"
 
-"@last-rev/contentful-redis-loader@^0.3.0", "@last-rev/contentful-redis-loader@^0.3.2":
+"@last-rev/contentful-redis-loader@^0.3.2":
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/@last-rev/contentful-redis-loader/-/contentful-redis-loader-0.3.2.tgz#347181f03ed18f5d4a60cbc1940d47cef1f6ae0d"
   integrity sha512-QbLlZNreSqk6IK0m3UxvjcaHRfeRpzjEQtq5NxBkPof3epF5jfyso3Y2j0hY99yHyrO3Fc3+SQflkJZZMTFbtg==
@@ -3809,19 +3809,19 @@
     graphql-tag "^2.12.4"
     lodash "^4.17.21"
 
-"@last-rev/graphql-contentful-core@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-core/-/graphql-contentful-core-0.2.2.tgz#2f9437ad13e1e88e01a4e9909389c4846c5ca30a"
-  integrity sha512-XXRaPI4lnQoxS3oeN4QRp2xM7lD5vx5G5gHaVX0dgYmLp9auotdSgjOknytRXwSe8rpvQ0sk3AqhnEbELcoFVg==
+"@last-rev/graphql-contentful-core@^0.2.2", "@last-rev/graphql-contentful-core@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-core/-/graphql-contentful-core-0.2.3.tgz#a699cc5abaf2330df1bbb948f3967a22b1f9bedc"
+  integrity sha512-bWL7jjSI0Ieiax0ywMsqdYS99chv0NatJSHtAmEfvsTEXvwCIt2MzVepvBsq893ZlEJQcxmG++O8g0bElUc8TA==
   dependencies:
     "@apollo/federation" "^0.20.7"
     "@graphql-tools/merge" "^6.2.14"
     "@graphql-tools/schema" "^8.3.1"
-    "@last-rev/contentful-cms-loader" "^0.2.0"
+    "@last-rev/contentful-cms-loader" "^0.2.1"
     "@last-rev/contentful-fs-loader" "^0.1.12"
     "@last-rev/contentful-path-util" "^0.1.10"
-    "@last-rev/contentful-redis-loader" "^0.3.0"
-    "@last-rev/graphql-contentful-helpers" "^0.2.2"
+    "@last-rev/contentful-redis-loader" "^0.3.2"
+    "@last-rev/graphql-contentful-helpers" "^0.2.3"
     "@last-rev/graphql-schema-gen" "^0.2.0"
     "@last-rev/testing-library" "^0.1.2"
     "@last-rev/timer" "^0.1.1"
@@ -3869,7 +3869,7 @@
     contentful "^8.4.2"
     lodash "^4.17.21"
 
-"@last-rev/graphql-contentful-helpers@^0.2.2", "@last-rev/graphql-contentful-helpers@^0.2.3":
+"@last-rev/graphql-contentful-helpers@^0.2.3":
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-helpers/-/graphql-contentful-helpers-0.2.3.tgz#a69e6937d809bb88a5c2ff1719896bf56fd7b66f"
   integrity sha512-os+EAAhfB73gPJsA7+FPoKpEMI7oblqX3wcRJ7WVHad3qCbbwuG8XlVTYXSSNkG2C0vVUFX6NcnNdnnvBGJPmg==
