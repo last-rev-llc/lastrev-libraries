@@ -1,7 +1,13 @@
 import { find, get, map } from 'lodash';
 import { createClient } from 'contentful';
-import { ApolloContext, ContentfulLoaders, PathReaders } from '@last-rev/types';
+import { ApolloContext, PathReaders } from '@last-rev/types';
+import { MicroRequest } from 'apollo-server-micro/dist/types';
 import LastRevAppConfig from '@last-rev/app-config';
+import querystring from 'querystring';
+import url from 'url';
+import createLoaders from './createLoaders';
+
+const isString = (value: any): value is string => typeof value === 'string' || value instanceof String;
 
 const getLocales = async (space: string, environment: string, accessToken: string) => {
   const client = createClient({
@@ -15,11 +21,28 @@ const getLocales = async (space: string, environment: string, accessToken: strin
   return locales.items;
 };
 
+export type BasicRequest = { query: { string: string | string[] } };
+
+const isBasicRequest = (value: any): value is BasicRequest => !!value?.query;
+
 const createContext = async (
   config: LastRevAppConfig,
-  loaders: ContentfulLoaders,
+  req: BasicRequest | MicroRequest,
   pathReaders?: PathReaders
 ): Promise<ApolloContext> => {
+  const query = isBasicRequest(req) ? req.query : querystring.parse(new url.URL(req.url || '').search);
+  const overrideEnv = query.environment && isString(query.environment) ? query.environment : undefined;
+
+  if (overrideEnv) {
+    config = new LastRevAppConfig({
+      ...config,
+      contentful: {
+        ...config.contentful,
+        env: overrideEnv
+      }
+    });
+  }
+
   const locales = await getLocales(
     config.contentful.spaceId,
     config.contentful.env,
@@ -52,7 +75,7 @@ const createContext = async (
   return {
     contentful,
     locales: map(locales, 'code'),
-    loaders,
+    loaders: createLoaders(config),
     mappers: config.extensions.mappers,
     defaultLocale,
     pathReaders,

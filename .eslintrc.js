@@ -9,7 +9,11 @@ module.exports = {
   ],
   plugins: ['jsx-a11y', 'prettier'],
   env: {
-    jest: true
+    jest: true,
+    es6: true
+  },
+  parserOptions: {
+    ecmaVersion: 2020
   },
   ignorePatterns: ['out/', 'storybook-static'],
   rules: {
