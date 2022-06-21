@@ -2,7 +2,7 @@
 
 1. Copy .env.template as .env and complete with your environment variables
 2. Run: `yarn`
-3. Run: `yarn build:prod`
+3. Run: `yarn build`
 4. Then: `yarn dev`.
    For building new components, just run:
    `yarn storybook`

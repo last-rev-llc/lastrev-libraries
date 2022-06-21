@@ -81,38 +81,48 @@ export const Article = ({
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `${xss(JSON.stringify(schemaData))}` }} />
       </Head>
 
-      {header ? <ContentModule {...(header as any)} /> : null}
+      {header && <ContentModule {...(header as any)} />}
 
       {topicNavItems && <TopicNavHorizontal navItems={topicNavItems} />}
 
-      {breadcrumbs ? (
-        <Breadcrumbs breadcrumbs={breadcrumbs} sidekickLookup={sidekickLookup} data-testid="Article-breadcrumbs" />
-      ) : null}
+      {breadcrumbs &&  <Breadcrumbs breadcrumbs={breadcrumbs} sidekickLookup={sidekickLookup} data-testid="Article-breadcrumbs" />}
 
       <Container>
         <Grid container spacing={{ xs: 2, lg: 4 }}>
           <Grid item xs={2} sx={{ display: { xs: 'none', md: 'flex' } }}>
-            <Box>{sideNav ? <ArticleNav sideNav={sideNav} data-testid="Article-sideNav" /> : null}</Box>
+            {sideNav && (
+              <Box>
+                <ArticleNav sideNav={sideNav} data-testid="Article-sideNav" />
+              </Box>
+            )}
           </Grid>
-          <Grid item sm={12} md={10} lg={8}>
+          <Grid item sm={12} md={10} lg={7}>
             <ArticleWrap
               {...sidekick(sidekickLookup)}
               itemScope
               itemType="https://schema.org/Article"
               data-testid="Article">
-              {title || pubDate || summary ? (
+              {(title || pubDate || summary) && (
                 <Box data-testid="Article-head" mt={{ xs: 0, md: 1 }}>
                   <ArticleHead title={title} pubDate={pubDate} summary={summary} sidekickLookup={sidekickLookup} />
                 </Box>
-              ) : null}
+              )}
 
-              {body ? (
+              {body && (
                 <Box data-testid="Article-body" my={5}>
                   <ArticleBody body={body} sidekickLookup={sidekickLookup} />
                 </Box>
-              ) : null}
+              )}
 
-              {relatedLinks ? (
+              {categories && (
+                <Box data-testid="Article-categories" {...sidekick(sidekickLookup?.categories)}>
+                  <CategoryLinks links={categories} />
+                </Box>
+              )}
+            </ArticleWrap>
+          </Grid>
+          <Grid item lg={3} sx={{ margin: { md: '0 auto' } }}>
+            {relatedLinks && (
                 <Box data-testid="Article-relatedLinks" {...sidekick(sidekickLookup?.relatedLinks)}>
                   <RelatedLinks
                     title={
@@ -122,14 +132,7 @@ export const Article = ({
                     links={relatedLinks}
                   />
                 </Box>
-              ) : null}
-
-              {categories ? (
-                <Box data-testid="Article-categories" {...sidekick(sidekickLookup?.categories)}>
-                  <CategoryLinks links={categories} />
-                </Box>
-              ) : null}
-            </ArticleWrap>
+              )}
           </Grid>
         </Grid>
       </Container>
@@ -143,9 +146,9 @@ export const Article = ({
         />
       ))}
 
-      {!disableBackToTop ? <BackToTop /> : null}
+      {!disableBackToTop && <BackToTop />}
 
-      {footer ? <ContentModule {...(footer as any)} /> : null}
+      {footer && <ContentModule {...(footer as any)} />}
     </ErrorBoundary>
   );
 };
