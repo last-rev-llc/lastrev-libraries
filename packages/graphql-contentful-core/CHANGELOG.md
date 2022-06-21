@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.2.4
+
+### Patch Changes
+
+- 1ca514f: Wrapping extension execution exceptions with a prefixed logger with mapper info
+
 ## 0.2.3
 
 ### Patch Changes
