@@ -29,6 +29,15 @@ on:
         required: false
 
 jobs:
+  # Nonce for re-runs: https://docs.percy.io/docs/parallel-test-suites#github-actions
+  nonce:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.nonce.outputs.result }}
+    steps:
+      - id: nonce
+        run: echo "::set-output name=result::${{ github.run_id }}-$(date +%s)"
+
   install:
     if: github.actor != 'github-actions[bot]'
     defaults:
@@ -108,7 +117,10 @@ jobs:
     container:
       image: cypress/browsers:node16.14.0-slim-chrome99-ff97
       options: --user 1001
-    needs: install
+    needs:
+      - install
+      - nonce
+
     strategy:
       # when one test fails, DO NOT cancel the other
       # containers, because this will kill Cypress processes
@@ -176,7 +188,7 @@ jobs:
           CYPRESS_PROJECT_ID: ${{ secrets.STARTER_CYPRESS_PROJECT_ID }}
           CYPRESS_RECORD_KEY: ${{ secrets.STARTER_CYPRESS_RECORD_KEY }}
           PERCY_TOKEN: ${{ secrets.STARTER_PERCY_TOKEN }}
-          PERCY_PARALLEL_NONCE: '${{ github.event_name }}-${{ github.sha }}'
+          PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
           PERCY_PARALLEL_TOTAL: 5
           COMMIT_INFO_BRANCH: ${{ github.head_ref }}
           # Recommended: pass the GitHub token lets this action correctly
