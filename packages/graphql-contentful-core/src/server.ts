@@ -21,7 +21,7 @@ export const getServer = async (config: LastRevAppConfig) => {
     introspection: true,
     debug: true,
     plugins: [ApolloServerPluginInlineTrace()],
-    context: async ({ req }) => createContext(config, req, pathReaders)
+    context: async ({ req }) => createContext({ config, expressReq: req, pathReaders })
   });
 
   logger.trace(timer.end());

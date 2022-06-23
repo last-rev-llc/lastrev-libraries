@@ -21,7 +21,7 @@ export const createVercelHandler = (config: LastRevAppConfig, path: string) => {
       schema,
       introspection: true,
       debug: true,
-      context: async () => createContext(config, req, pathReaders)
+      context: async () => createContext({ config, microReq: req, pathReaders })
     });
 
     await server.start();

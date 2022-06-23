@@ -6,6 +6,7 @@ import LastRevAppConfig from '@last-rev/app-config';
 import querystring from 'querystring';
 import url from 'url';
 import createLoaders from './createLoaders';
+import express from 'express';
 
 const isString = (value: any): value is string => typeof value === 'string' || value instanceof String;
 
@@ -21,28 +22,39 @@ const getLocales = async (space: string, environment: string, accessToken: strin
   return locales.items;
 };
 
-export type BasicRequest = { query: { string: string | string[] } };
+type CreateContextProps = {
+  config: LastRevAppConfig;
+  expressReq?: express.Request;
+  microReq?: MicroRequest;
+  pathReaders?: PathReaders;
+};
 
-const isBasicRequest = (value: any): value is BasicRequest => !!value?.query;
+const createContext = async ({
+  config,
+  expressReq,
+  microReq,
+  pathReaders
+}: CreateContextProps): Promise<ApolloContext> => {
+  let overrideEnv: string | undefined;
 
-const createContext = async (
-  config: LastRevAppConfig,
-  req?: BasicRequest | MicroRequest,
-  pathReaders?: PathReaders
-): Promise<ApolloContext> => {
-  if (req) {
-    const query = isBasicRequest(req) ? req.query : querystring.parse(new url.URL(req.url || '').search);
-    const overrideEnv = query.environment && isString(query.environment) ? query.environment : undefined;
+  if (expressReq) {
+    const env = expressReq.query.environment;
+    overrideEnv = env && isString(env) ? env : undefined;
+  }
 
-    if (overrideEnv) {
-      config = new LastRevAppConfig({
-        ...config,
-        contentful: {
-          ...config.contentful,
-          env: overrideEnv
-        }
-      });
-    }
+  if (microReq) {
+    const env = querystring.parse(new url.URL(microReq.url || '').search).environment;
+    overrideEnv = env && isString(env) ? env : undefined;
+  }
+
+  if (overrideEnv) {
+    config = new LastRevAppConfig({
+      ...config,
+      contentful: {
+        ...config.contentful,
+        env: overrideEnv
+      }
+    });
   }
 
   const locales = await getLocales(

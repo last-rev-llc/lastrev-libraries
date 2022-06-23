@@ -2,7 +2,7 @@ import LastRevAppConfig from '@last-rev/app-config';
 import { Handlers } from './types';
 import AWS from 'aws-sdk';
 import { updateAllPaths } from '@last-rev/contentful-path-util';
-import { createContext, createLoaders } from '@last-rev/graphql-contentful-helpers';
+import { createContext } from '@last-rev/graphql-contentful-helpers';
 import { assetHasUrl, createContentfulClients } from './helpers';
 import { Entry } from 'contentful';
 import { map } from 'lodash';
@@ -218,8 +218,7 @@ export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
     },
     contentType: async (command) => refreshContentTypes(command.isPreview),
     paths: async (updateForPreview, updateForProd) => {
-      const loaders = createLoaders(config);
-      const context = await createContext(config, loaders);
+      const context = await createContext({ config });
       await updateAllPaths({ config, updateForPreview, updateForProd, context });
     }
   };

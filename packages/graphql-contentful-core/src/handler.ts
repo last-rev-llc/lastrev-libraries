@@ -19,7 +19,7 @@ export const createHandler = (config: LastRevAppConfig) => {
       schema,
       introspection: true,
       debug: true,
-      context: async ({ express }) => createContext(config, express.req, pathReaders)
+      context: async ({ express }) => createContext({ config, expressReq: express.req, pathReaders })
     });
 
     const handler = server.createHandler();

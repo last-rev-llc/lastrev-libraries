@@ -2,7 +2,7 @@ import LastRevAppConfig from '@last-rev/app-config';
 import { Handlers } from './types';
 import Redis from 'ioredis';
 import { updateAllPaths } from '@last-rev/contentful-path-util';
-import { createContext, createLoaders } from '@last-rev/graphql-contentful-helpers';
+import { createContext } from '@last-rev/graphql-contentful-helpers';
 import { assetHasUrl, stringify } from './helpers';
 
 const clients: Record<string, Redis> = {};
@@ -75,8 +75,7 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       }
     },
     paths: async (updateForPreview, updateForProd) => {
-      const loaders = createLoaders(config);
-      const context = await createContext(config, loaders);
+      const context = await createContext({ config });
       await updateAllPaths({ config, updateForPreview, updateForProd, context });
     }
   };

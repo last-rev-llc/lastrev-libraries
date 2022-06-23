@@ -215,7 +215,7 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
     config,
     updateForPreview: !!config.contentful.usePreview,
     updateForProd: !config.contentful.usePreview,
-    context: await createContext(config),
+    context: await createContext({ config }),
     sites
   });
   logger.trace(timer.end());
