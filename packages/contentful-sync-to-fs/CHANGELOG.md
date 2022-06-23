@@ -1,5 +1,13 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.1
+
+### Patch Changes
+
+- d937c88: update sync-to-fs to not create loaders, since now it is done inside createContext
+- Updated dependencies [d937c88]
+  - @last-rev/graphql-contentful-helpers@0.2.4
+
 ## 0.3.0
 
 ### Minor Changes

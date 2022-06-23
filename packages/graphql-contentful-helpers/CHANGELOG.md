@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.2.4
+
+### Patch Changes
+
+- d937c88: Moved context creation into function called on each request in gql servers/handlers
+
 ## 0.2.3
 
 ### Patch Changes
