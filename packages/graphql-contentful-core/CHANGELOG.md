@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-core
 
+## 0.2.5
+
+### Patch Changes
+
+- d937c88: Moved context creation into function called on each request in gql servers/handlers
+- Updated dependencies [d937c88]
+  - @last-rev/graphql-contentful-helpers@0.2.4
+
 ## 0.2.4
 
 ### Patch Changes

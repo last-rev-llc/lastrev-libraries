@@ -1,5 +1,13 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.2
+
+### Patch Changes
+
+- d937c88: Using updated createContext function
+- Updated dependencies [d937c88]
+  - @last-rev/graphql-contentful-helpers@0.2.4
+
 ## 0.4.1
 
 ### Patch Changes
