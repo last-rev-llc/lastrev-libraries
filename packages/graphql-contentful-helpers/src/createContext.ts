@@ -27,20 +27,22 @@ const isBasicRequest = (value: any): value is BasicRequest => !!value?.query;
 
 const createContext = async (
   config: LastRevAppConfig,
-  req: BasicRequest | MicroRequest,
+  req?: BasicRequest | MicroRequest,
   pathReaders?: PathReaders
 ): Promise<ApolloContext> => {
-  const query = isBasicRequest(req) ? req.query : querystring.parse(new url.URL(req.url || '').search);
-  const overrideEnv = query.environment && isString(query.environment) ? query.environment : undefined;
+  if (req) {
+    const query = isBasicRequest(req) ? req.query : querystring.parse(new url.URL(req.url || '').search);
+    const overrideEnv = query.environment && isString(query.environment) ? query.environment : undefined;
 
-  if (overrideEnv) {
-    config = new LastRevAppConfig({
-      ...config,
-      contentful: {
-        ...config.contentful,
-        env: overrideEnv
-      }
-    });
+    if (overrideEnv) {
+      config = new LastRevAppConfig({
+        ...config,
+        contentful: {
+          ...config.contentful,
+          env: overrideEnv
+        }
+      });
+    }
   }
 
   const locales = await getLocales(
