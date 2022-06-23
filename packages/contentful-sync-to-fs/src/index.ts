@@ -10,7 +10,7 @@ import Timer from '@last-rev/timer';
 import logger from 'loglevel';
 import LastRevAppConfig from '@last-rev/app-config';
 import { updateAllPaths } from '@last-rev/contentful-path-util';
-import { createContext, createLoaders } from '@last-rev/graphql-contentful-helpers';
+import { createContext } from '@last-rev/graphql-contentful-helpers';
 
 const ENTRIES_DIRNAME = 'entries';
 const ASSETS_DIRNAME = 'assets';
@@ -215,7 +215,7 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
     config,
     updateForPreview: !!config.contentful.usePreview,
     updateForProd: !config.contentful.usePreview,
-    context: await createContext(config, createLoaders(config)),
+    context: await createContext({ config }),
     sites
   });
   logger.trace(timer.end());

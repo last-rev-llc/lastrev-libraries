@@ -7,9 +7,10 @@ import { GraphQLSchema } from 'graphql';
 import { buildFederatedSchema } from '@apollo/federation';
 import LastRevAppConfig from '@last-rev/app-config';
 import { addResolversToSchema } from '@graphql-tools/schema';
+import { createLoaders } from '@last-rev/graphql-contentful-helpers';
 
 const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
-  // may not have production content, if none there, use preview
+  // may not have production content, if none there, use preview (only needed for filesystem builds)
   const contentTypes = await loaders.fetchAllContentTypes(false);
   if (!contentTypes || !contentTypes.length) {
     return loaders.fetchAllContentTypes(true);
@@ -17,7 +18,8 @@ const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
   return contentTypes;
 };
 
-const buildSchema = async (config: LastRevAppConfig, loaders: ContentfulLoaders): Promise<GraphQLSchema> => {
+const buildSchema = async (config: LastRevAppConfig): Promise<GraphQLSchema> => {
+  const loaders = createLoaders(config);
   const contentTypes = await fetchAllContentTypes(loaders);
 
   const baseTypeDefs = await generateSchema({
