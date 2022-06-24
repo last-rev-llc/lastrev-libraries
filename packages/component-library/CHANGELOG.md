@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.4.7
+
+### Patch Changes
+
+- 658ee30: Make Link pass variant to root
+
 ## 0.4.6
 
 ### Patch Changes
