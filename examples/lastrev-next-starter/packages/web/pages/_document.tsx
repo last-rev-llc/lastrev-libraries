@@ -13,30 +13,38 @@ export default class MyDocument extends Document {
             rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700&display=swap"
           />
-          <link rel="preconnect" href="https://www.googletagmanager.com" />
-          <script
-            type="text/javascript"
-            dangerouslySetInnerHTML={{
-              __html: `
+          {process.env.NEXT_PUBLIC_GTM_ID ? (
+            <>
+              <link rel="preconnect" href="https://www.googletagmanager.com" />
+              <script
+                type="text/javascript"
+                dangerouslySetInnerHTML={{
+                  __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                 })(window,document,'script','dataLayer','${process.env.NEXT_PUBLIC_GTM_ID}');
               `
-            }}
-          />
+                }}
+              />
+            </>
+          ) : null}
         </Head>
         <body>
-          <noscript>
-            <iframe
-              title="GTM-NOSCRIPT"
-              src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
-              height="0"
-              width="0"
-              style={{ display: 'none', visibility: 'hidden' }}
-            />
-          </noscript>
+          {process.env.NEXT_PUBLIC_GTM_ID ? (
+            <>
+              <noscript>
+                <iframe
+                  title="GTM-NOSCRIPT"
+                  src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_ID}`}
+                  height="0"
+                  width="0"
+                  style={{ display: 'none', visibility: 'hidden' }}
+                />
+              </noscript>
+            </>
+          ) : null}
           <Main />
           <NextScript />
         </body>
