@@ -114,6 +114,7 @@ const CollectionFilters = ({
       </Grid>
       <Grid item>
         <Button
+          data-testid="CollectionFilters-clear"
           onClick={() => {
             setFilter({});
             if (onClearFilter) onClearFilter();
