@@ -1,7 +1,11 @@
 import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
 // https://mui.com/customization/theme-components/#default-props
-export const defaultProps: ComponentsProps['Media'] = {};
+export const defaultProps: ComponentsProps['Media'] = {
+  nextImageOptimization: true,
+  priority: false,
+  layout: 'responsive'
+};
 
 // https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Media'] = {

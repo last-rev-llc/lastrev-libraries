@@ -38,6 +38,14 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true
   },
+  images: {
+    domains: ['images.ctfassets.net'],
+    formats: ['image/webp']
+  },
+  sentry: {
+    disableServerWebpackPlugin: process.env.NODE_ENV != 'production' || !process.env.NEXT_PUBLIC_SENTRY_DSN,
+    disableClientWebpackPlugin: process.env.NODE_ENV != 'production' || !process.env.NEXT_PUBLIC_SENTRY_DSN
+  },
   webpack: (config) => {
     // Important: return the modified config
     config.resolve.alias = {

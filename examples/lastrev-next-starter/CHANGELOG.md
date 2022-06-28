@@ -3,6 +3,8 @@
 ## Next
 
 - Added shared Sentry config with LRNS version tag
+- Update Media theme to use Next image optimization
+- Update Sentry to skip in development or if no SENTRY_DSN environment is available
 
 ## 2.0.3
 

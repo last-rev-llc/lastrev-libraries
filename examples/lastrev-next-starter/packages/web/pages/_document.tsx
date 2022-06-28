@@ -10,8 +10,8 @@ export default class MyDocument extends Document {
         <Head>
           {/* Remove if not needed */}
           <link
-            rel="stylesheet"
             href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,500,700&display=swap"
+            rel="stylesheet"
           />
           {process.env.NEXT_PUBLIC_GTM_ID ? (
             <>
