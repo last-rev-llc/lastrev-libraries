@@ -54,7 +54,6 @@ export const CollectionFiltered = ({
 
   // The key includes a stable version of the filter object for shallow comparison
   const getKey = (pageIndex: number, previousPageData: any) => {
-    console.log({ pageIndex, previousPageData });
     if (previousPageData && previousPageData?.items && !previousPageData?.items?.length) return null; // reached the end
     if (pageIndex === 0) return [`collectionFiltered_${id}`, JSON.stringify(filter), 0]; // SWR key
     return [`collectionFiltered_${id}`, JSON.stringify(filter), pageIndex * limit]; // SWR key
@@ -74,7 +73,9 @@ export const CollectionFiltered = ({
       revalidateOnFocus: false
     }
   );
+  console.log('data => ', data);
   const options = data?.length ? data[0]?.options : defaultOptions;
+  console.log('options => ', options);
   const items = data?.reduce((accum: CardProps[], page: any) => [...accum, ...(page?.items || [])], []) ?? defaultItems;
   const isLoadingInitialData = !data && !error;
   const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined');
@@ -107,6 +108,7 @@ export const CollectionFiltered = ({
     .filter((x) => !!x)
     .join(', ');
 
+  console.log('itemsWithVariant => ', { itemsWithVariant, error });
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionFiltered">
@@ -151,7 +153,7 @@ export const CollectionFiltered = ({
                     // background={background}
                     variant={'three-per-row'}
                     contentSpacing={itemsSpacing ?? 0}
-                    testId='CollectionFiltered-ItemsSection'
+                    testId="CollectionFiltered-ItemsSection"
                   />
                 </Grid>
               </>
@@ -175,14 +177,17 @@ export const CollectionFiltered = ({
                     }))}
                     variant={'three-per-row'}
                     contentSpacing={itemsSpacing ?? 0}
-                    testId='CollectionFiltered-LoadingItemsSection'
+                    testId="CollectionFiltered-LoadingItemsSection"
                   />
                 </Grid>
               </>
             ) : null}
             {!isReachingEnd ? (
               <Grid item sx={{ padding: 2 }}>
-                <Button variant="contained" onClick={() => setSize(size + 1)} data-testid="CollectionFiltered-LoadMoreButton">
+                <Button
+                  variant="contained"
+                  onClick={() => setSize(size + 1)}
+                  data-testid="CollectionFiltered-LoadMoreButton">
                   {loadMoreText ?? 'LOAD MORE'}
                 </Button>
               </Grid>
