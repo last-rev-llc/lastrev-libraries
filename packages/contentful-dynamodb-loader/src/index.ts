@@ -3,7 +3,7 @@ import { Entry, Asset } from 'contentful';
 import { transform, omitBy, filter, negate, isEmpty, isError, isNil, map, some } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
-import { ItemKey, ContentfulLoaders } from '@last-rev/types';
+import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import AWS from 'aws-sdk';
 import { keyBy, partition } from 'lodash';
@@ -23,6 +23,13 @@ import { zipObject } from 'lodash';
 const options: Options<ItemKey, any, string> = {
   cacheKeyFn: (key: ItemKey) => {
     return key.preview ? `${key.id}-preview` : `${key.id}-prod`;
+  }
+};
+
+const flvOptions: Options<FVLKey, any, string> = {
+  cacheKeyFn: (key: FVLKey) => {
+    const baseKey = `${key.contentType}-${key.field}-${key.value}`;
+    return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
   }
 };
 
@@ -223,6 +230,10 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     return map(keys, (key) => keyedResults[`${key.id}::${key.preview}`] ?? []);
   };
 
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+    return async (keys) => fallbackLoaders.entryByFieldValueLoader.loadMany(keys);
+  };
+
   const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
   const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
   const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
@@ -280,11 +291,14 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     }
   };
 
+  const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), flvOptions);
+
   return {
     entryLoader,
     assetLoader,
     entriesByContentTypeLoader,
-    fetchAllContentTypes
+    fetchAllContentTypes,
+    entryByFieldValueLoader
   };
 };
 

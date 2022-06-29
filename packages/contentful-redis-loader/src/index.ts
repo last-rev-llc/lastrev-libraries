@@ -3,7 +3,7 @@ import { Entry, Asset, ContentType } from 'contentful';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
-import { ItemKey, ContentfulLoaders } from '@last-rev/types';
+import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { LOG_PREFIX } from './constants';
 import { getKey, isError, isNil, parse, stringify } from './helpers';
@@ -17,6 +17,13 @@ const getOptions = (maxBatchSize: number): Options<ItemKey, any, string> => ({
     return key.preview ? `${key.id}-preview` : `${key.id}-prod`;
   }
 });
+
+const flvOptions: Options<FVLKey, any, string> = {
+  cacheKeyFn: (key: FVLKey) => {
+    const baseKey = `${key.contentType}-${key.field}-${key.value}`;
+    return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
+  }
+};
 
 const getClient = (config: LastRevAppConfig) => {
   const key = JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
@@ -193,6 +200,10 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       return outArray;
     };
 
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+    return async (keys) => fallbackLoaders.entryByFieldValueLoader.loadMany(keys);
+  };
+
   const options = getOptions(maxBatchSize);
 
   const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
@@ -238,10 +249,13 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     }
   };
 
+  const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), flvOptions);
+
   return {
     entryLoader,
     assetLoader,
     entriesByContentTypeLoader,
+    entryByFieldValueLoader,
     fetchAllContentTypes
   };
 };
