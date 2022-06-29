@@ -30,7 +30,7 @@ export const mappers: Mappers = {
           ),
           ctx.loaders.assetLoader.loadMany(Array.from(assetsLinks.keys()).map((id) => ({ id, preview: !!ctx.preview })))
         ]);
-        return { entries, assets };
+        return { entries: entries.filter((entry) => !!entry), assets: assets.filter((asset) => !!asset) };
       }
     }
   }
