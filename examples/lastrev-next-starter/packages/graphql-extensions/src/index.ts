@@ -6,20 +6,20 @@ import { ApolloContext } from '@last-rev/types';
 import { typeDefs as algoliaTypeDefs } from '@last-rev/graphql-algolia-integration';
 
 import {
+  Blog,
   Card,
   Collection,
-  Blog,
+  Header,
   Hero,
   Link,
+  Media,
   NavigationItem,
   Page,
-  Header,
+  RichText,
   Section,
-  Media,
-  RichText
+  Theme
 } from '@last-rev/graphql-contentful-extensions';
 
-import * as Theme from './Theme';
 // Uncomment if using Algolia, else delete the related file
 // import * as Algolia from './Algolia';
 
@@ -49,17 +49,17 @@ Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloConte
 const extensions: GraphQlExtension[] = [
   { typeDefs: algoliaTypeDefs },
   // Algolia,
+  Blog,
   Card,
   Collection,
-  Blog,
-  Hero,
   Header,
+  Hero,
   Link,
+  Media,
   NavigationItem,
   Page,
-  Section,
-  Media,
   RichText,
+  Section,
   Theme
 ];
 
