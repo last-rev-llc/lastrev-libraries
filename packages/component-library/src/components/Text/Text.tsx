@@ -52,7 +52,7 @@ const renderText =
     }
     if (containsHTML(children)) {
       return (
-        <Typography variant={variant} data-testid={`Text-${variant}`}>
+        <>
           {children.map((child: any) => {
             if (isHTML(child)) {
               return (
@@ -63,12 +63,9 @@ const renderText =
                 />
               );
             }
-            if (isCmp(child)) {
-              return child;
-            }
             return child;
           })}
-        </Typography>
+        </>
       );
     }
 
@@ -103,7 +100,7 @@ const renderOptions = ({ links, renderNode }: { links?: TextLinks; renderNode?: 
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
         return (
-          <Box sx={{ py: 2 }} data-testid={`Text-${BLOCKS.EMBEDDED_ENTRY}`}>
+          <Box component="span" sx={{ py: 2, display: 'block' }} data-testid={`Text-${BLOCKS.EMBEDDED_ENTRY}`}>
             <ContentModule {...entry} />
           </Box>
         );
@@ -112,7 +109,7 @@ const renderOptions = ({ links, renderNode }: { links?: TextLinks; renderNode?: 
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
         return (
-          <Box sx={{ display: 'inline', px: 2 }} data-testid={`Text-${INLINES.EMBEDDED_ENTRY}`}>
+          <Box component="span" sx={{ display: 'inline', px: 2 }} data-testid={`Text-${INLINES.EMBEDDED_ENTRY}`}>
             <ContentModule {...entry} />
           </Box>
         );
@@ -137,8 +134,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ..
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}
-      >
+        {...props}>
         {documentToReactComponents(body?.json, renderOptions({ links: body?.links, renderNode }))}
       </Root>
     </ErrorBoundary>
@@ -148,7 +144,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ..
 const Root = styled(Box, {
   name: 'Text',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  // shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({}));
 

@@ -15,8 +15,16 @@ const ContentPreview = ({
   environment,
   spaceId,
   locale = 'en-US',
-  pageURL
+  pageURL,
+  livePreview = false
 }: ContentPreviewProps) => {
+  const [viewportW, setViewportW] = React.useState(0);
+  React.useLayoutEffect(() => {
+    setViewportW(window.innerWidth);
+    window.addEventListener('resize', () => {
+      setViewportW(window.innerWidth);
+    });
+  });
   return (
     <>
       {content ? <ContentModule {...content} /> : null}
@@ -29,8 +37,7 @@ const ContentPreview = ({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
-          }}
-        >
+          }}>
           {error ? (
             <Typography>
               <br />
@@ -51,8 +58,7 @@ const ContentPreview = ({
               <br />
               <Link
                 target="_blank"
-                href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}
-              >
+                href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
                 {`Edit ${capitalize(content?.__typename)}#${id} in Contentful`}
               </Link>
               <br />
@@ -61,20 +67,26 @@ const ContentPreview = ({
         </Container>
       ) : null}
 
-      <div style={{ position: 'fixed', bottom: 16, right: 16, background: '#fff', padding: 8, zIndex: 10 }}>
-        <Link
-          target="_blank"
-          href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}
-        >
-          {`${capitalize(content?.__typename)}#${id} in Contentful`}
-        </Link>
-        <br />
-        {pageURL && (
-          <Link target="_blank" href={pageURL}>
-            {`Page URL: ${pageURL}`}
+      {!livePreview ? (
+        <div style={{ position: 'fixed', bottom: 16, right: 16, background: '#fff', padding: 8, zIndex: 10 }}>
+          <Link
+            target="_blank"
+            href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
+            {`${capitalize(content?.__typename)}#${id} in Contentful`}
           </Link>
-        )}
-      </div>
+          <br />
+          {pageURL && (
+            <Link target="_blank" href={pageURL}>
+              {`Page URL: ${pageURL}`}
+            </Link>
+          )}
+        </div>
+      ) : null}
+      {livePreview && !viewportW ? (
+        <div style={{ position: 'fixed', top: 16, right: 16, background: '#fff', padding: 8, zIndex: 10 }}>
+          <Typography variant="overline">{viewportW}px</Typography>
+        </div>
+      ) : null}
     </>
   );
 };

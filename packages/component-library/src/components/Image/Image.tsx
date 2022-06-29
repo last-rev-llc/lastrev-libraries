@@ -52,7 +52,7 @@ const Image = React.forwardRef<any, ImageProps>(
           height={height}
           width={width}
           layout={layout}
-          {...imageProps}
+          // {...imageProps}
         />
       );
     } else {

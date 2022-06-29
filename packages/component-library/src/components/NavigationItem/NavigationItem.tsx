@@ -7,7 +7,7 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
-import Link from '../Link';
+import Link, { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '../../utils/sidekick';
 import { NavigationItemProps } from './NavigationItem.types';
@@ -36,7 +36,7 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
   return (
     <ErrorBoundary>
       <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem" menuBreakpoint={menuBreakpoint}>
-        <Link {...props} {...sidekick(sidekickLookup)} onClick={handleClick} />
+        <NavigationItemLink {...(props as LinkProps)} {...sidekick(sidekickLookup)} onClick={handleClick} />
         {subNavigation?.length ? (
           <MenuRoot menuBreakpoint={menuBreakpoint} component={'ul'}>
             {subNavigation?.map((item) => (
@@ -45,7 +45,11 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
                   {...item}
                   variant={'link'}
                   onClick={handleSubnavClick}
-                  onRequestClose={handleSubnavClick}
+                  {...(item?.__typename == 'NavigationItem'
+                    ? {
+                        onRequestClose: handleSubnavClick
+                      }
+                    : {})}
                 />
               </MenuItem>
             ))}
@@ -60,11 +64,13 @@ const visibleStyles = (open: boolean) => `
   max-height: ${open ? 300 : 0}px;
   box-shadow: ${open ? 'inset 0 0 16px -8px rgb(0 0 0 / 30%)' : 'inset 0 0 0 0 rgb(0 0 0 / 0%)'};
 `;
+const shouldForwardProp = (prop: string) =>
+  prop !== 'variant' && prop !== 'onRequestClose' && prop !== 'menuBreakpoint';
 
 const Root = styled(Box, {
   name: 'NavigationItem',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; open: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
   ${({ open, theme, menuBreakpoint }) => `
@@ -87,10 +93,17 @@ const Root = styled(Box, {
   `}
 `;
 
+const NavigationItemLink = styled(Link, {
+  name: 'NavigationItem',
+  slot: 'Link',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.link]
+})``;
+
 const MenuRoot = styled(Paper, {
   name: 'NavigationItem',
   slot: 'MenuRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.menuRoot]
 })<{ variant?: string; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; component?: string }>`
   // Remove ul browser styles

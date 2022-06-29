@@ -1,5 +1,4 @@
 import { LinkProps as NextLinkProps } from 'next/link';
-// import { SxProps, Theme } from '@mui/material/styles';
 export interface NextLinkComposedProps {
   to: NextLinkProps['href'];
   linkAs?: NextLinkProps['as'];
@@ -21,7 +20,7 @@ export type LinkProps = {
   __typename?: string;
   activeClassName?: string;
   className?: string;
-  as?: NextLinkProps['as'];
+  as?: NextLinkProps['as'] | any;
   href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
   role?: React.AriaRole;

@@ -172,7 +172,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           </RootLink>
         );
       }
-      console.log('RenderButton');
+
       return (
         <NextLink href={href} as={linkAs}>
           <RootButton

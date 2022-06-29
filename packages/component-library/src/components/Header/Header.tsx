@@ -37,8 +37,7 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
           variant={variant}
           elevation={trigger ? 4 : 0}
           menuVisible={menuVisible}
-          menuBreakpoint={menuBreakpoint}
-        >
+          menuBreakpoint={menuBreakpoint}>
           <ContentContainer>
             {logo ? (
               <LogoRoot href={logoUrl} sx={{ height: '100%', py: 3 }} {...sidekick(sidekickLookup?.logo)}>
@@ -57,8 +56,7 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
                 color="secondary"
                 aria-label="menu"
                 onClick={() => setMenuVisible(!menuVisible)}
-                size="large"
-              >
+                size="large">
                 {menuVisible ? <CloseIcon /> : <MenuIcon />}
               </IconButton>
             </Hidden>

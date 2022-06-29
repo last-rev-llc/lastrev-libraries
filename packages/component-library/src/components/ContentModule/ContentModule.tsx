@@ -74,7 +74,9 @@ function ContentModule({ __typename, theme, ...fields }: ContentModuleProps) {
   if (!Main) {
     // eslint-disable-next-line no-console
     console.info(
-      `Did not find mapping for Content Type ${contentType}. Please add a mapping in the ContentModuleProvider`
+      `Did not find mapping for Content Type ${contentType}${
+        fields?.variant ? `:${fields?.variant}` : ''
+      }. Please add a mapping in the ContentModuleProvider`
     );
     return null;
   }

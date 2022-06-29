@@ -39,8 +39,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           preload="auto"
           data-testid={testId || 'Media'}
           {...(props as MediaVideoProps)}
-          sx={{ width: '100%', height: '100%', ...props.sx }}
-        >
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>
@@ -78,31 +77,33 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
 
 // Define the pieces of the Media customizable through Theme
 
+const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'fileName';
+
 const Root = styled(Image, {
   name: 'Media',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 
 const ArtDirectedRoot = styled(ArtDirectedImage, {
   name: 'Media',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 
 const EmbedRoot = styled('iframe', {
   name: 'Media',
   slot: 'EmbedRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 
 const VideoRoot = styled('video', {
   name: 'Media',
   slot: 'VideoRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 
