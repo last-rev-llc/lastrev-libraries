@@ -3,6 +3,7 @@ import { getDefaultFieldValue, getLocalizedField } from '@last-rev/graphql-conte
 import { ApolloContext, ContentfulPathsGenerator } from '@last-rev/types';
 import { ContentfulLoaders } from '@last-rev/types';
 import { Entry } from 'contentful';
+import resolveLocalizedField from './utils/resolveLocalizedField';
 export const typeMappings = {};
 
 // TODO: Move to env variables
@@ -55,26 +56,17 @@ const createType = (type: string, content: any) => ({
 
 const pageContentsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
   // Get the PAge contents
-  const contentsRef = getLocalizedField(page.fields, 'contents', ctx);
-  // Load the Page contents
-  let contents;
-  if (contentsRef?.length) {
-    contents = await ctx.loaders.entryLoader.loadMany(
-      contentsRef?.map((content: any) => ({ id: content?.sys.id, preview: !!ctx.preview }))
-    );
-  }
+  const contents = (await resolveLocalizedField(page.fields, 'contents', ctx)) as Entry<any>[];
 
   // Map the Page contents (if not a Section wrap it)
-  return contents?.map((content: any) => {
+  return contents?.map((content) => {
     const variant = getLocalizedField(content.fields, 'variant', ctx);
     const contentType = content?.sys?.contentType?.sys?.id;
     return contentType === 'section'
       ? content
       : createType('Section', {
           contents: [content],
-          variant: `${contentType}_${variant ?? 'default'}_section-wrapper`,
-          contentWidth: 'xl',
-          contentSpacing: 4
+          variant: `${contentType}_${variant ?? 'default'}_section-wrapper`
         });
   });
 };

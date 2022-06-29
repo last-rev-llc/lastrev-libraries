@@ -17,8 +17,14 @@ import ContentModule from '../ContentModule';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import sidekick from '../../utils/sidekick';
 import { HeaderProps } from './Header.types';
+import useThemeProps from '../../utils/useThemeProps';
 
-export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup }: HeaderProps) => {
+export const Header = (inProps: HeaderProps) => {
+  const props = useThemeProps({
+    name: 'Header',
+    props: inProps
+  });
+  const { variant, logo, logoUrl, navigationItems, sidekickLookup } = props;
   const trigger = useScrollTrigger({
     disableHysteresis: true,
     threshold: 0
@@ -37,7 +43,8 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
           variant={variant}
           elevation={trigger ? 4 : 0}
           menuVisible={menuVisible}
-          menuBreakpoint={menuBreakpoint}>
+          menuBreakpoint={menuBreakpoint}
+          {...props}>
           <ContentContainer>
             {logo ? (
               <LogoRoot href={logoUrl} sx={{ height: '100%', py: 3 }} {...sidekick(sidekickLookup?.logo)}>
@@ -67,13 +74,19 @@ export const Header = ({ variant, logo, logoUrl, navigationItems, sidekickLookup
     </ErrorBoundary>
   );
 };
+const shouldForwardProp = (prop: string) =>
+  prop !== 'variant' &&
+  prop !== 'menuVisible' &&
+  prop !== 'menuBreakpoint' &&
+  prop !== 'sidekickLookup' &&
+  prop !== 'colorScheme';
 
 const Root = styled(AppBar, {
   name: 'Header',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'menuVisible' && prop !== 'menuBreakpoint',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string; menuVisible: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
+})<{ variant?: string; menuVisible: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; color: any }>`
   ${({ theme, menuVisible, menuBreakpoint }) => `
     &::before {
       display: block;
@@ -126,12 +139,14 @@ const Root = styled(AppBar, {
 const LogoRoot = styled(Link, {
   name: 'Header',
   slot: 'LogoRoot',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.logoRoot]
 })(() => ({}));
 
 const Logo = styled(Media, {
   name: 'Header',
   slot: 'Logo',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.logo]
 })<{ variant?: string }>(() => ({
   height: '100%',
@@ -141,6 +156,7 @@ const Logo = styled(Media, {
 const NavigationDivider = styled(Box, {
   name: 'Header',
   slot: 'NavigationDivider',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.navigationDivider]
 })`
   flex-grow: 1;
@@ -149,6 +165,7 @@ const NavigationDivider = styled(Box, {
 const ContentContainer = styled(Toolbar, {
   name: 'Header',
   slot: 'ContentContainer',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>`
   height: 100%;

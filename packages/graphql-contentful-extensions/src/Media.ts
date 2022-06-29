@@ -52,6 +52,16 @@ export const mappers = {
       // asset: 'media.asset'
       variant: async (media: any, _args: any, ctx: ApolloContext) => {
         const assetURL: any = getLocalizedField(media?.fields, 'assetURL', ctx);
+        const url: any = await mediaFieldResolver({
+          fields: media?.fields,
+          field: 'asset',
+          assetField: 'url',
+          ctx
+        });
+        console.log('Variantresolver', { assetURL, url });
+        if (url?.split('.')[url?.split('.').length - 1] === 'pdf') {
+          return 'embed';
+        }
         if (assetURL) {
           if (getVideoEmbedUrl(assetURL)) {
             return 'embed';

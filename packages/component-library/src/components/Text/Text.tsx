@@ -15,7 +15,7 @@ import Media from '../Media';
 import sidekick from '../../utils/sidekick';
 import { TextLinks, TextProps } from './Text.types';
 
-const keyBy = (key: string, xs: any[]) => xs.reduce((acc, x) => ({ ...acc, [x[key]]: x }), {});
+const keyBy = (key: string, xs: any[]) => xs.filter(Boolean).reduce((acc, x) => ({ ...acc, [x[key]]: x }), {});
 
 const bodyXSS = new FilterXSS({
   whiteList: { div: ['id', 'style'] },
@@ -144,7 +144,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, ..
 const Root = styled(Box, {
   name: 'Text',
   slot: 'Root',
-  // shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({}));
 
