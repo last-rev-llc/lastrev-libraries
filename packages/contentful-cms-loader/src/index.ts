@@ -111,49 +111,40 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
 
   const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
     return async (keys) => {
-      const fvlRequests = keys.reduce(
-        (acc, { contentType, field, value, preview }) => {
-          // Group values by clientType, contentType and field
-          const clientType = preview ? 'preview' : 'prod';
-          if (!acc[clientType]) {
-            acc[clientType] = {};
-          }
-          if (!acc[clientType][contentType]) {
-            acc[clientType][contentType] = {};
-          }
-          if (!acc[clientType][contentType][field]) {
-            acc[clientType][contentType][field] = [];
-          }
-          acc[clientType][contentType][field].push(value);
-          return acc;
-        },
-        {} as {
-          [clientType: string]: {
-            [contentType: string]: { [field: string]: string[] };
-          };
+      const fvlRequests = keys.reduce((acc, { contentType, field, value, preview }) => {
+        const clientType = preview ? 'preview' : 'prod';
+        if (!acc[clientType]) {
+          acc[clientType] = {};
         }
-      );
+        if (!acc[clientType][contentType]) {
+          acc[clientType][contentType] = {};
+        }
+        if (!acc[clientType][contentType][field]) {
+          acc[clientType][contentType][field] = [];
+        }
+        acc[clientType][contentType][field].push(value);
+        return acc;
+      }, {} as { [clientType: string]: { [contentType: string]: { [field: string]: string[] } } });
 
-      // Map the requests to CMS queries for each clientType and field
       const requests = Object.entries(fvlRequests).reduce(
-        ({ preview, prod }, [clientType, requestObject]) => {
-          const requestObjects = Object.entries(requestObject).reduce((queries, [content_type, fieldValues]) => {
+        (acc, [clientType, requestObject]) => {
+          const requestObjects = Object.entries(requestObject).reduce((acc, [content_type, fieldValues]) => {
             Object.entries(fieldValues).forEach(([field, values]) => {
-              queries.push({
+              acc.push({
                 content_type,
                 field,
                 values: values.join(',')
               });
             });
-            return queries;
+            return acc;
           }, [] as { content_type: string; field: string; values: string }[]);
 
           if (clientType === 'preview') {
-            preview.push(...requestObjects);
+            acc.preview.push(...requestObjects);
           } else if (clientType === 'prod') {
-            prod.push(...requestObjects);
+            acc.prod.push(...requestObjects);
           }
-          return { preview, prod };
+          return acc;
         },
         { prod: [], preview: [] } as {
           prod: { content_type: string; field: string; values: string }[];
@@ -189,39 +180,16 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
       const collectedPreview = collectedPreviewSettled.filter(isFulFilled);
       const collectedProd = collectedProdSettled.filter(isFulFilled);
 
-      const previewEntries = collectedPreview.flatMap((p) => p.value || []);
-      const productionEntries = collectedProd.flatMap((p) => p.value || []);
-
-      const toKeyStr = ({ preview, field, value, contentType }) =>
-        `preview:${preview}field:${field}value:${value}contentType:${contentType}`;
-
-      const previewResults = previewEntries.reduce((acc, entry) => {
-        const key = toKeyStr({
-          preview: true,
-          field: field,
-          value: entry.fields[field]?.[defaultLocale],
-          contentType: entry.sys.contentType.sys.id
-        });
-        acc[key] = entry;
-        return acc;
-      }, {});
-
-      const productionResults = productionEntries.reduce((acc, entry) => {
-        const key = toKeyStr({
-          preview: false,
-          field: field,
-          value: entry.fields[field]?.[defaultLocale],
-          contentType: entry.sys.contentType.sys.id
-        });
-        acc[key] = entry;
-        return acc;
-      }, {});
+      const prev = collectedPreview.flatMap((p) => p.value || []);
+      const prod = collectedProd.flatMap((p) => p.value || []);
 
       const result = keys.map(({ preview, field, value, contentType }) => {
-        const entry = preview
-          ? previewResults[toKeyStr({ preview, field, value, contentType })]
-          : productionResults[toKeyStr({ preview, field, value, contentType })];
-        return entry ?? null;
+        const arr = preview ? prev : prod;
+        return (
+          arr.find((i: Entry<any>) => {
+            return i.sys.contentType.sys.id === contentType && i.fields[field]?.[defaultLocale] === value;
+          }) || null
+        );
       });
 
       return result;
