@@ -10,6 +10,7 @@ fragment RichText_BaseFragment on RichText {
       ...Card_RichTextFragment
       ...Section_RichTextFragment
       ...Text_RichTextFragment
+      ...Media_BaseFragment
     }
     assets {
       ...Media_BaseFragment
@@ -25,6 +26,7 @@ fragment RichText_CardFragment on RichText {
     entries {
       ...Content_BaseFragment
       ...Link_BaseFragment
+      ...Media_BaseFragment
     }
     assets {
       ...Media_BaseFragment
@@ -40,6 +42,7 @@ fragment RichText_IntroTextFragment on RichText {
     entries {
       ...Content_BaseFragment
       ...Link_BaseFragment
+      ...Media_BaseFragment
     }
     assets {
       ...Media_BaseFragment
@@ -59,6 +62,7 @@ fragment RichText_RichTextFragment on RichText {
       ...Card_RichTextFragment
       ...Collection_RichTextFragment
       ...Section_RichTextFragment
+      ...Media_BaseFragment
     }
     assets {
       ...Media_BaseFragment
