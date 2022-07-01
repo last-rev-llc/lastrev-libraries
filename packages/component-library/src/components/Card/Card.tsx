@@ -16,7 +16,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import Link, { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import { CardProps } from './Card.types';
 

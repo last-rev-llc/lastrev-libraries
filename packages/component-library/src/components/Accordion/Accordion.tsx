@@ -5,7 +5,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import ContentModule from '../ContentModule';
 import { AccordionProps } from './Accordion.types';
 

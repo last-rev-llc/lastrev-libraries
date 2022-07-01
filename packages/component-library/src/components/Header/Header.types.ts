@@ -1,9 +1,9 @@
-import { ComponentsOverrides, ComponentsProps, ComponentsVariants } from '@mui/material';
 import { CollectionProps } from '../Collection';
 import { MediaProps } from '../Media';
 
 export interface HeaderProps {
   variant?: 'elevation' | 'outlined' | undefined;
+  color?: string;
   colorScheme?: string;
   logo?: MediaProps;
   logoUrl?: string;
@@ -23,24 +23,3 @@ export interface HeaderClasses {
 export declare type HeaderClassKey = keyof HeaderClasses;
 declare const accordionClasses: HeaderClasses;
 export default accordionClasses;
-
-// declare module '@mui/material/styles' {
-//   export interface ComponentNameToClassKey {
-//     Header: HeaderClassKey;
-//   }
-//   export interface ComponentsPropsList {
-//     Header: HeaderProps;
-//   }
-// }
-// declare module '@mui/material/styles' {
-//   export interface Components {
-//     Header?: {
-//       defaultProps?: ComponentsProps['Header'];
-//       styleOverrides?: ComponentsOverrides<Theme>['Header'];
-//       /**
-//        * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-//        */
-//       variants?: ComponentsVariants['Header'];
-//     };
-//   }
-// }

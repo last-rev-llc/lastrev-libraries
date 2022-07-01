@@ -4,7 +4,7 @@ import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 import ArtDirectedImage from '../ArtDirectedImage';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import { useThemeProps } from '@mui/system';
 import { MediaProps, MediaVideoProps } from './Media.types';
 
@@ -13,7 +13,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
     name: 'Media',
     props: inProps
   });
-  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup } = props;
+  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup, nextImageOptimization } = props;
   // TODO: Add support for video
   const image = file;
   const alt = title;
@@ -65,8 +65,9 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
     <ErrorBoundary>
       <Root
         {...sidekick(sidekickLookup)}
-        {...props}
         {...image}
+        {...props}
+        nextImageOptimization={nextImageOptimization}
         src={image?.url}
         alt={alt}
         data-testid={testId || 'Media'}
@@ -77,7 +78,8 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
 
 // Define the pieces of the Media customizable through Theme
 
-const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'fileName';
+const shouldForwardProp = (prop: string) =>
+  prop !== 'variant' && prop !== 'fileName' && prop !== 'priority' && prop !== 'testId' && prop !== 'sidekickLookup';
 
 const Root = styled(Image, {
   name: 'Media',

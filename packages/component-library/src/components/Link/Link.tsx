@@ -12,49 +12,48 @@ import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
 import MuiLink from '@mui/material/Link';
 import Button from '@mui/material/Button';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import { useThemeProps } from '@mui/system';
 
 import { NextLinkComposedProps, LinkProps } from './Link.types';
 
 // TODO: Button components aren't hyperlinking
 
-export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps>(function NextLinkComposed(
-  props,
-  ref
-) {
-  const {
-    to,
-    linkAs,
-    href = '#',
-    replace,
-    scroll,
-    passHref,
-    shallow,
-    prefetch,
-    locale,
-    text,
-    children,
-    ...other
-  } = props;
+export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps & { onClick?: any }>(
+  function NextLinkComposed(props, ref) {
+    const {
+      to,
+      linkAs,
+      href = '#',
+      replace,
+      scroll,
+      passHref,
+      shallow,
+      prefetch,
+      locale,
+      text,
+      children,
+      onClick,
+      ...other
+    } = props;
 
-  return (
-    <NextLink
-      href={to}
-      prefetch={prefetch}
-      as={linkAs}
-      replace={replace}
-      scroll={scroll}
-      shallow={shallow}
-      passHref={passHref}
-      locale={locale}
-      {...other}>
-      <RootLink ref={ref} {...other}>
-        {text || children}
-      </RootLink>
-    </NextLink>
-  );
-});
+    return (
+      <NextLink
+        href={to}
+        prefetch={prefetch}
+        as={linkAs}
+        replace={replace}
+        scroll={scroll}
+        shallow={shallow}
+        passHref={passHref}
+        locale={locale}>
+        <RootLink ref={ref} {...other} onClick={onClick}>
+          {text || children}
+        </RootLink>
+      </NextLink>
+    );
+  }
+);
 
 // Icon component using FontAwesome
 const getIcon = (icon: string) => {
@@ -103,7 +102,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
-  const extra = { variant, ...other, ...sidekick(sidekickLookup) };
+  const extra = { variant, ...other, ...sidekick(sidekickLookup), 'aria-label': text };
 
   /** Link with Icon only
    * - Classes reference FontAwesome stylesheet linked in .storybook/preview
@@ -132,11 +131,11 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     }
     if (href !== '#') {
       return (
-        <NextLink href={href} as={linkAs}>
-          <RootIconButton aria-label={icon} type={other.type} {...extra} className={className} size="large">
+        <NextLinkComposed href={href} as={linkAs}>
+          <RootIconButton type={other.type} {...extra} className={className} size="large" aria-label={icon}>
             {getIcon(icon)}
           </RootIconButton>
-        </NextLink>
+        </NextLinkComposed>
       );
     }
     return (
@@ -174,7 +173,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       }
 
       return (
-        <NextLink href={href} as={linkAs}>
+        <NextLink href={href} as={linkAs as Url} passHref>
           <RootButton
             className={className}
             type={other.type}
@@ -187,6 +186,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         </NextLink>
       );
     }
+
     return (
       <RootButton
         className={className}
@@ -231,7 +231,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
 
   if (noLinkStyle && icon) {
     return (
-      <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
+      <NextLinkComposed className={className} ref={ref as any} to={href} {...other}>
         <Root sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
           <span>{children || text}</span>
           {icon && (
@@ -243,7 +243,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   }
   if (noLinkStyle) {
     return (
-      <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
+      <NextLinkComposed className={className} ref={ref as any} to={href} {...other}>
         {children || text}
       </NextLinkComposed>
     );

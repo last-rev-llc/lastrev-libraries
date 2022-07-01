@@ -1,7 +1,8 @@
 import React from 'react';
 import { Skeleton, Grid, Container, Box, Button, Typography } from '@mui/material';
 import styled from '@mui/system/styled';
-import { isEmpty, range } from 'lodash';
+import isEmpty from 'lodash/isEmpty';
+import range from 'lodash/range';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
 

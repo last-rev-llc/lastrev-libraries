@@ -5,7 +5,7 @@ import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import { NavigationBarProps } from './NavigationBar.types';
 
 export const NavigationBar = ({ items, variant, itemsVariant, onRequestClose, sidekickLookup }: NavigationBarProps) => {

@@ -7,12 +7,12 @@ import { Theme } from '@mui/system/createTheme';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import get from 'lodash/get';
-import omit from 'lodash/omit';
+// import omit from 'lodash/omit';
 
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import Media from '../Media';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import ConditionalWrapper from '../ConditionalWrapper';
 import { SectionProps } from './Section.types';
 import useThemeProps from '../../utils/useThemeProps';
@@ -54,7 +54,7 @@ const Section = (inProps: SectionProps) => {
         backgroundColor={backgroundColor}
         variant={variant}
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
-        {...omit(props, 'theme')}>
+        {...props}>
         {background ? <BackgroundMedia {...background} /> : null}
         <ConditionalWrapper
           condition={!!contentWidth}

@@ -9,7 +9,7 @@ import Media from '../Media';
 import { MediaProps } from '../Media/Media.types';
 import ContentModule from '../ContentModule';
 
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import useThemeProps from '../../utils/useThemeProps';
 import { HeroProps } from './Hero.types';

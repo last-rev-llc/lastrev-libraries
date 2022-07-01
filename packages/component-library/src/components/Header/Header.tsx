@@ -15,7 +15,7 @@ import Media from '../Media';
 
 import ContentModule from '../ContentModule';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import { HeaderProps } from './Header.types';
 import useThemeProps from '../../utils/useThemeProps';
 
@@ -48,7 +48,7 @@ export const Header = (inProps: HeaderProps) => {
           <ContentContainer>
             {logo ? (
               <LogoRoot href={logoUrl} sx={{ height: '100%', py: 3 }} {...sidekick(sidekickLookup?.logo)}>
-                <Logo {...logo} priority disableInlineSVG />
+                <Logo {...logo} priority disableInlineSVG alt={logo?.title ?? 'Go to homepage'} />
               </LogoRoot>
             ) : null}
             {navigationItems?.map((collection) => (
@@ -79,7 +79,9 @@ const shouldForwardProp = (prop: string) =>
   prop !== 'menuVisible' &&
   prop !== 'menuBreakpoint' &&
   prop !== 'sidekickLookup' &&
-  prop !== 'colorScheme';
+  prop !== 'colorScheme' &&
+  prop !== 'logoUrl' &&
+  prop !== 'navigationItems';
 
 const Root = styled(AppBar, {
   name: 'Header',

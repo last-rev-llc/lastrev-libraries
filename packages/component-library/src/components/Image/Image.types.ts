@@ -9,6 +9,7 @@ export interface ImageProps extends NextImageProps {
   width?: number;
   disableInlineSVG?: boolean;
   nextImageOptimization?: boolean;
+  sizes?: string;
   q?: number;
   unoptimized?: boolean;
 }
