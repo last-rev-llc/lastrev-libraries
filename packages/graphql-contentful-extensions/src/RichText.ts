@@ -1,10 +1,25 @@
 import { ApolloContext, Mappers } from '@last-rev/types';
-import { Entry } from 'contentful';
+import { Entry, RichTextContent } from 'contentful';
 
 export const mappers: Mappers = {
   RichText: {
     RichText: {
-      json: async (raw: any) => raw,
+      json: async (raw: RichTextContent) => {
+        // Sanitize RichText Contentful JSOn
+        // It will add extra empty lines almost all the times
+        const { content } = raw;
+        if (content) {
+          const last = content[content.length - 1];
+          if (last?.nodeType === 'paragraph' && last.content && last.content[0].value == '') {
+            content.pop();
+          }
+          return {
+            ...raw,
+            content
+          };
+        }
+        return raw;
+      },
       links: async (raw: any, _args: any, ctx: ApolloContext) => {
         const entriesLinks = new Map();
         const assetsLinks = new Map();
@@ -22,6 +37,9 @@ export const mappers: Mappers = {
 
           if (target?.sys?.type === 'Link') {
             if (nodeType === 'entry-hyperlink') {
+              entryHyperlinks.add(target?.sys?.id);
+            }
+            if (nodeType === 'asset-hyperlink') {
               entryHyperlinks.add(target?.sys?.id);
             }
 
