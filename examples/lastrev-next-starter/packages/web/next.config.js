@@ -46,7 +46,9 @@ const nextConfig = {
   },
   images: {
     domains: ['images.ctfassets.net'],
-    formats: ['image/avif', 'image/webp']
+    // Disabled as it's timing out on Netlify
+    // formats: ['image/avif', 'image/webp']
+    formats: ['image/webp']
   },
   ...(!process.env.SENTRY_PROJECT && {
     sentry: {
