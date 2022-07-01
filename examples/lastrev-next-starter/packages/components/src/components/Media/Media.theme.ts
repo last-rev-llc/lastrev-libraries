@@ -15,7 +15,8 @@ export const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
     // img default display: inline introduces a line-height space at the bottom
     display: 'block',
     maxWidth: `100%`,
-    margin: 'auto'
+    margin: 'auto',
+    height: 'auto'
   })
   // root: {
   //   backgroundColor: 'red'

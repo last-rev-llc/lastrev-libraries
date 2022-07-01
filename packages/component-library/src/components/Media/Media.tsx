@@ -91,7 +91,7 @@ const Root = styled(Image, {
   name: 'Media',
   slot: 'Root',
   shouldForwardProp: (prop: string) =>
-    prop !== 'variant' && prop !== 'fileName' && prop !== 'priority' && prop !== 'testId' && prop !== 'sidekickLookup',
+    prop !== 'variant' && prop !== 'fileName' && prop !== 'testId' && prop !== 'sidekickLookup',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 
