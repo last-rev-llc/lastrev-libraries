@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import styled from '@mui/system/styled';
 
 import useTheme from '@mui/system/useTheme';
-import { Theme } from '@mui/system/createTheme';
+import { Theme } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import get from 'lodash/get';

@@ -13,6 +13,11 @@ const nextConfig = {
   /**
    * @type {import('next').NextConfig}
    */
+  experimental: {
+    images: {
+      allowFutureImage: true
+    }
+  },
   i18n: {
     // TODO: generate these and read from that
     locales: ['en-US'],
@@ -33,6 +38,7 @@ const nextConfig = {
     CONTENTFUL_ENV: process.env.CONTENTFUL_ENV,
     DEPLOY_URL: process.env.DEPLOY_URL
   },
+  productionBrowserSourceMaps: true,
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
     // your project has ESLint errors.
@@ -40,17 +46,20 @@ const nextConfig = {
   },
   images: {
     domains: ['images.ctfassets.net'],
-    formats: ['image/webp']
+    formats: ['image/avif', 'image/webp']
   },
-  sentry: {
-    disableServerWebpackPlugin: process.env.NODE_ENV != 'production' || !process.env.NEXT_PUBLIC_SENTRY_DSN,
-    disableClientWebpackPlugin: process.env.NODE_ENV != 'production' || !process.env.NEXT_PUBLIC_SENTRY_DSN
-  },
+  ...(!process.env.SENTRY_PROJECT && {
+    sentry: {
+      disableServerWebpackPlugin: true,
+      disableClientWebpackPlugin: true
+    }
+  }),
   webpack: (config) => {
     // Important: return the modified config
     config.resolve.alias = {
       ...config.resolve.alias,
       'react': path.resolve(__dirname, '../../node_modules', 'react'),
+      '@emotion/react': path.resolve(__dirname, '../../node_modules', '@emotion/react'),
       '@mui': path.resolve(__dirname, '../../node_modules/@mui')
     };
     return config;

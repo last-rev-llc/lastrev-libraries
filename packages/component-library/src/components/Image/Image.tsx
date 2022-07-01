@@ -1,5 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
+// @ts-ignore-next-line
 import NextImage from 'next/future/image';
 import ErrorBoundary from '../ErrorBoundary';
 import getImgSrcTag from '../../utils/getImgSrcTag';

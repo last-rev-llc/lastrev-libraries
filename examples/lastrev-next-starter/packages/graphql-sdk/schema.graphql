@@ -151,7 +151,7 @@ type Header implements Content {
   internalTitle: String
   logo: Media
   logoUrl: String
-  colorScheme: String
+  color: String
   navigationItems: [Collection]
 }
 type Hero implements Content {

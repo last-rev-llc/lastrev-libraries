@@ -1,4 +1,3 @@
-import { Palette } from '@mui/material';
 import { CollectionProps } from '../Collection';
 import { MediaProps } from '../Media';
 

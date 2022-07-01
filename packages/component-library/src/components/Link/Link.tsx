@@ -133,7 +133,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     }
     if (href !== '#') {
       return (
-        <NextLinkComposed href={href} as={linkAs}>
+        <NextLinkComposed href={href} as={linkAs as any}>
           <RootIconButton type={other.type} {...extra} className={className} size="large" aria-label={icon}>
             {getIcon(icon)}
           </RootIconButton>
@@ -175,7 +175,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       }
 
       return (
-        <NextLink href={href} as={linkAs as Url} passHref>
+        <NextLink href={href} as={linkAs as any} passHref>
           <RootButton
             className={className}
             type={other.type}
