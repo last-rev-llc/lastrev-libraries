@@ -6,9 +6,22 @@ export const defaultProps: ComponentsProps['Text'] = {};
 // https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
-  // root: {
-  //   backgroundColor: 'red'
-  // }
+  root: {
+    'p': {
+      margin: '0 0 0.5rem 0'
+    },
+    'table': {
+      // Paragraphs alone in tables should not have margin-bottom
+      'p:only-child': {
+        margin: 0
+      }
+    },
+    'ol, ul, li': {
+      /* Padding is what gives the indentation */
+      margin: 'revert',
+      padding: 'revert'
+    }
+  }
   //
   // Use the ownerState to set dynamic styles
   // root: ({ ownerState, theme }) => {

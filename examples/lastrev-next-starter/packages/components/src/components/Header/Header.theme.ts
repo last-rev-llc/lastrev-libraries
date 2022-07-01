@@ -1,7 +1,9 @@
 import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
 // https://mui.com/customization/theme-components/#default-props
-export const defaultProps: ComponentsProps['Header'] = {};
+export const defaultProps: ComponentsProps['Header'] = {
+  color: 'secondary'
+};
 
 // https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
