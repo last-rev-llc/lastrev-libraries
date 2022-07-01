@@ -1,9 +1,8 @@
 import { LinkProps as NextLinkProps } from 'next/link';
 import React from 'react';
 export interface NextLinkComposedProps {
-  to: NextLinkProps['href'];
   linkAs?: NextLinkProps['as'];
-  href?: NextLinkProps['href'];
+  to?: NextLinkProps['href'];
   text?: string;
   className?: string;
   replace?: boolean;

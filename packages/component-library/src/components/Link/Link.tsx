@@ -22,9 +22,9 @@ import useThemeProps from '../../utils/useThemeProps';
 export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps & { onClick?: any }>(
   function NextLinkComposed(props, ref) {
     const {
-      to,
+      to = '#',
       linkAs,
-      href = '#',
+
       replace,
       scroll,
       passHref,
@@ -133,7 +133,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     }
     if (href !== '#') {
       return (
-        <NextLinkComposed href={href} as={linkAs as any}>
+        <NextLinkComposed to={href} linkAs={linkAs as any}>
           <RootIconButton type={other.type} {...extra} className={className} size="large" aria-label={icon}>
             {getIcon(icon)}
           </RootIconButton>

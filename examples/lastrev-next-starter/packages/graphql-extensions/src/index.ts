@@ -31,21 +31,6 @@ export type GraphQlExtension = {
   pathsConfigs?: {};
 };
 
-// @ts-ignore: Unreachable code error
-// Example of how to diasable/override the wrapping of the page contents in a section
-Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloContext) => {
-  // Get the Page contents
-  const contentsRef = getLocalizedField(page.fields, 'contents', ctx);
-  if (contentsRef?.length) {
-    // Load the Page contents
-    const contents = await ctx.loaders.entryLoader.loadMany(
-      contentsRef.map((content: any) => ({ id: content?.sys.id, preview: !!ctx.preview }))
-    );
-    return contents;
-  }
-  return [];
-};
-
 const extensions: GraphQlExtension[] = [
   { typeDefs: algoliaTypeDefs },
   // Algolia,

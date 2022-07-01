@@ -4,28 +4,18 @@ import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVa
 export const defaultProps: ComponentsProps['Media'] = {
   nextImageOptimization: true,
   priority: false,
-  // layout: 'responsive',
   // All images are shown close to full bleed size
   sizes: '100vw'
-  // imageSizes: []
 };
 
 // https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
   // Set some static styles
-  root: ({ fullBleed, width }) => ({
+  root: () => ({
     // img default display: inline introduces a line-height space at the bottom
     display: 'block',
-    height: 'auto',
-    ...(fullBleed
-      ? {
-          width: '100%'
-        }
-      : {
-          // width: `${width}px`,
-          maxWidth: `100%`,
-          margin: 'auto'
-        })
+    maxWidth: `100%`,
+    margin: 'auto'
   })
   // root: {
   //   backgroundColor: 'red'
