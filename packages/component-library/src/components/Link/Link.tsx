@@ -89,6 +89,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     icon,
     iconPosition,
     sidekickLookup,
+    // Remove id from other props
+    id,
     ...other
   } = useThemeProps({ name: 'Link', props });
   // Color prop fails if it's null
