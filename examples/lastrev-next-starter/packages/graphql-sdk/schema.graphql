@@ -164,12 +164,13 @@ type Hero implements Content {
   title: String
   subtitle: String
   body: RichText
-  background: Media
+  backgroundAsset: Media
   backgroundColor: String
   image: [Media]
   contentWidth: String
   contentHeight: String
   actions: [Link]
+  background: Media
 }
 type Link implements Content {
   sidekickLookup: JSON
@@ -182,6 +183,7 @@ type Link implements Content {
   text: String
   icon: String
   iconPosition: String
+  color: String
   href: String!
 }
 type ModuleIntegration implements Content {
@@ -238,12 +240,17 @@ type Section implements Content {
   variant: String
   internalTitle: String
   anchorName: String
+  settings: JSON
   backgroundColor: String
   contentDirection: String
   contentAlignment: String
   contentSpacing: Int
   contentWidth: String
   styles: JSON
+  paddingTop: Int
+  paddingBottom: Int
+  paddingLeft: Int
+  paddingRight: Int
   contents: [Content]
   background: Media
 }
@@ -257,17 +264,27 @@ type Site implements Content {
   siteKey: String
   seo: JSON
 }
+type Template implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  templateName: String
+  image: Media
+  category: String
+}
 type Text implements Content {
   sidekickLookup: JSON
   id: String
   theme: [Theme]
   animation: JSON
   variant: String
-  internalTitle: String
   body: RichText
+  internalTitle: String
   align: String
-  styles: JSON
   color: String
+  styles: JSON
 }
 type Blog implements Content {
   sidekickLookup: JSON
