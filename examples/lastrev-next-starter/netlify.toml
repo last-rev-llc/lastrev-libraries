@@ -1,6 +1,6 @@
 [build]
   publish = "packages/web/.next"
-  command = "cd ../../ && yarn build --scope=@last-rev/component-library --scope=@last-rev/graphql-contentful-extensions --include-dependencies && cd examples/lastrev-next-starter yarn build"
+  command = "cd ../../ && yarn && yarn build --include-dependencies && cd examples/lastrev-next-starter && yarn build"
 
 [dev]
   command = "yarn dev"

@@ -7,18 +7,9 @@ export const defaultProps: ComponentsProps['Text'] = {};
 export const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
   root: {
-    'p': {
-      margin: '0 0 0.5rem 0'
-    },
-    'table': {
-      // Paragraphs alone in tables should not have margin-bottom
-      'p:only-child': {
-        margin: 0
-      }
-    },
     'ol, ul, li': {
-      /* Padding is what gives the indentation */
-      margin: 'revert',
+      /* Revert padding reset is what gives the indentation to list */
+
       padding: 'revert'
     }
   }
