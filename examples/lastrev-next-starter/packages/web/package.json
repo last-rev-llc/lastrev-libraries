@@ -48,7 +48,7 @@
     "@cypress/code-coverage": "^3.9.12",
     "@lrns/graphql-extensions": "0.1.0",
     "@lrns/graphql-runner": "0.1.0",
-    "@netlify/plugin-nextjs": "^4.7.0",
+    "@netlify/plugin-nextjs": "^4.11.1",
     "@next/bundle-analyzer": "^12.0.7",
     "@percy/cli": "v1.2.1",
     "@percy/cypress": "^3.1.1",
