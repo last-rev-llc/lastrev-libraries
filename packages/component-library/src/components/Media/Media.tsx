@@ -5,8 +5,9 @@ import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 import ArtDirectedImage from '../ArtDirectedImage';
 import sidekick from '@last-rev/contentful-sidekick-util';
-import { useThemeProps } from '@mui/system';
+
 import { MediaProps, MediaVideoProps } from './Media.types';
+import useThemeProps from '../../utils/useThemeProps';
 
 const Media = (inProps: MediaProps & MediaVideoProps) => {
   const props = useThemeProps({
@@ -79,12 +80,18 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
 // Define the pieces of the Media customizable through Theme
 
 const shouldForwardProp = (prop: string) =>
-  prop !== 'variant' && prop !== 'fileName' && prop !== 'priority' && prop !== 'testId' && prop !== 'sidekickLookup';
+  prop !== 'variant' &&
+  prop !== 'fileName' &&
+  prop !== 'priority' &&
+  prop !== 'testId' &&
+  prop !== 'sidekickLookup' &&
+  prop !== 'nextImageOptimization';
 
 const Root = styled(Image, {
   name: 'Media',
   slot: 'Root',
-  shouldForwardProp,
+  shouldForwardProp: (prop: string) =>
+    prop !== 'variant' && prop !== 'fileName' && prop !== 'priority' && prop !== 'testId' && prop !== 'sidekickLookup',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 

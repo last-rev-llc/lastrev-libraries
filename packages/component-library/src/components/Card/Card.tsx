@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import styled from '@mui/system/styled';
 import Skeleton from '@mui/material/Skeleton';
-import { useThemeProps } from '@mui/system';
+
 import ErrorBoundary from '../ErrorBoundary';
 import Media from '../Media';
 import Link, { LinkProps } from '../Link';
@@ -19,6 +19,7 @@ import ContentModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import { CardProps } from './Card.types';
+import useThemeProps from '../../utils/useThemeProps';
 
 export const Card = (inProps: CardProps) => {
   const props = useThemeProps({

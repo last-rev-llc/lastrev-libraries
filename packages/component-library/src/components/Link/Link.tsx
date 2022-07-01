@@ -13,9 +13,9 @@ import IconButton from '@mui/material/IconButton';
 import MuiLink from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import sidekick from '@last-rev/contentful-sidekick-util';
-import { useThemeProps } from '@mui/system';
 
 import { NextLinkComposedProps, LinkProps } from './Link.types';
+import useThemeProps from '../../utils/useThemeProps';
 
 // TODO: Button components aren't hyperlinking
 

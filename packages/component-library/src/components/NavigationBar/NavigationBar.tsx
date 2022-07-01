@@ -22,6 +22,7 @@ export const NavigationBar = ({ items, variant, itemsVariant, onRequestClose, si
               <ContentModule
                 {...item}
                 onClick={onRequestClose}
+                color={item?.color ?? 'inherit'}
                 {...(item?.__typename == 'NavigationItem' && {
                   onRequestClose
                 })}

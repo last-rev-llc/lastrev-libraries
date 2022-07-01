@@ -88,7 +88,7 @@ const Root = styled(AppBar, {
   slot: 'Root',
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string; menuVisible: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; color: any }>`
+})<{ variant?: string; menuVisible: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
   ${({ theme, menuVisible, menuBreakpoint }) => `
     &::before {
       display: block;

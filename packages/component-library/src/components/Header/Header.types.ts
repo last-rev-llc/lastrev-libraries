@@ -1,9 +1,10 @@
+import { Palette } from '@mui/material';
 import { CollectionProps } from '../Collection';
 import { MediaProps } from '../Media';
 
 export interface HeaderProps {
   variant?: 'elevation' | 'outlined' | undefined;
-  color?: string;
+  color?: any;
   colorScheme?: string;
   logo?: MediaProps;
   logoUrl?: string;

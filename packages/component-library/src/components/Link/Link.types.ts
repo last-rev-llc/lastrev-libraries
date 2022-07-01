@@ -1,5 +1,5 @@
 import { LinkProps as NextLinkProps } from 'next/link';
-import { ElementType } from 'react';
+import React from 'react';
 export interface NextLinkComposedProps {
   to: NextLinkProps['href'];
   linkAs?: NextLinkProps['as'];
@@ -21,7 +21,7 @@ export type LinkProps = {
   __typename?: string;
   activeClassName?: string;
   className?: string;
-  as?: NextLinkProps['as'] | ElementType<any>;
+  as?: React.ElementType;
   href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
   role?: React.AriaRole;

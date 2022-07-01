@@ -7,7 +7,7 @@ import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
-import Link, { LinkProps } from '../Link';
+import { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import { NavigationItemProps } from './NavigationItem.types';
@@ -36,7 +36,12 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
   return (
     <ErrorBoundary>
       <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem" menuBreakpoint={menuBreakpoint}>
-        <NavigationItemLink {...(props as LinkProps)} {...sidekick(sidekickLookup)} onClick={handleClick} />
+        <NavigationItemLink
+          {...(props as LinkProps)}
+          {...sidekick(sidekickLookup)}
+          onClick={handleClick}
+          __typename="Link"
+        />
         {subNavigation?.length ? (
           <MenuRoot menuBreakpoint={menuBreakpoint} component={'ul'}>
             {subNavigation?.map((item) => (
@@ -93,12 +98,12 @@ const Root = styled(Box, {
   `}
 `;
 
-const NavigationItemLink = styled(Link, {
+const NavigationItemLink = styled(ContentModule, {
   name: 'NavigationItem',
   slot: 'Link',
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.link]
-})``;
+})<LinkProps>``;
 
 const MenuRoot = styled(Paper, {
   name: 'NavigationItem',
