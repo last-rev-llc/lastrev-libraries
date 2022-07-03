@@ -2,6 +2,7 @@ import { LinkProps } from '../Link';
 import { NavigationItemProps } from '../NavigationItem';
 
 export interface NavigationBarProps {
+  color?: string;
   items?: LinkProps[] | NavigationItemProps[];
   variant?: string;
   itemsVariant?: string;

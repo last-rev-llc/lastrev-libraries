@@ -8,14 +8,27 @@ import ContentModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import { NavigationBarProps } from './NavigationBar.types';
 
-export const NavigationBar = ({ items, variant, itemsVariant, onRequestClose, sidekickLookup }: NavigationBarProps) => {
+export const NavigationBar = ({
+  items,
+  variant,
+  itemsVariant,
+  onRequestClose,
+  sidekickLookup,
+  color
+}: NavigationBarProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   const theme = useTheme();
+  console.log('test');
   const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="NavigationBar" menuBreakpoint={menuBreakpoint}>
+      <Root
+        {...sidekick(sidekickLookup)}
+        variant={variant}
+        data-testid="NavigationBar"
+        menuBreakpoint={menuBreakpoint}
+        sx={{ backgroundColor: `${color}.main`, color: `${color}.contrastText` }}>
         <Grid container sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
             <Grid item key={item.id} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>

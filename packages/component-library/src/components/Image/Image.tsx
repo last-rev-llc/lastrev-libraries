@@ -27,7 +27,6 @@ const Image = React.forwardRef<any, ImageProps>((props, ref) => {
     unoptimized,
     width,
     height,
-    layout,
     alt,
     ...imageProps
   } = props;
@@ -71,7 +70,6 @@ const Image = React.forwardRef<any, ImageProps>((props, ref) => {
           loading={priority ? 'eager' : 'lazy'}
           height={height}
           width={width}
-          layout={layout}
           sizes={imageProps.sizes}
           alt={alt}
         />

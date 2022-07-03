@@ -54,13 +54,18 @@ export const Header = (inProps: HeaderProps) => {
             {navigationItems?.map((collection) => (
               <React.Fragment key={collection.id}>
                 <NavigationDivider />
-                <ContentModule {...collection} variant={'navigation-bar'} onRequestClose={handleClose} />
+                <ContentModule
+                  {...collection}
+                  variant={'navigation-bar'}
+                  onRequestClose={handleClose}
+                  color={props?.color}
+                />
               </React.Fragment>
             ))}
             <Hidden implementation="css" {...{ [`${menuBreakpoint}Up`]: true }}>
               <IconButton
                 edge="end"
-                color="secondary"
+                color="inherit"
                 aria-label="menu"
                 onClick={() => setMenuVisible(!menuVisible)}
                 size="large">
@@ -112,9 +117,14 @@ const Root = styled(AppBar, {
         overflow-y: auto;
 
 
-        transition: 300ms ease-in-out;
+        transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
         transform: ${menuVisible ? 'translateY(0)' : 'translateY(-130%)'};
-        opacity: ${menuVisible ? 1 : 0};
+        transition-delay: ${menuVisible ? 0 : 0.2}s;
+        > * {
+          transition: .2s;
+          opacity: ${menuVisible ? 1 : 0};
+          transition-delay: ${menuVisible ? 0.3 : 0}s;
+        }
 
         > .MuiGrid-container {
           flex-direction: column;
@@ -128,9 +138,12 @@ const Root = styled(AppBar, {
             display: flex;
             flex-direction: column;
           }
+
+          > .MuiGrid-item {
+            padding: ${theme.spacing(2)};
+          }
         }
         .MuiLink-root {
-          padding: ${theme.spacing(3)};
           display: block;
         }
       }

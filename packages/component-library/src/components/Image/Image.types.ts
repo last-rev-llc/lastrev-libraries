@@ -1,5 +1,6 @@
 import { ImageProps as NextImageProps } from 'next/image';
-export interface ImageProps extends NextImageProps {
+export interface ImageProps extends Omit<NextImageProps, 'src'> {
+  src?: string;
   className?: string;
   columns?: number;
   priority?: boolean;
