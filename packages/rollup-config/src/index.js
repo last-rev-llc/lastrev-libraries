@@ -6,7 +6,7 @@ const typescript = require(`rollup-plugin-typescript2`);
 const { babel } = require(`@rollup/plugin-babel`);
 const json = require(`@rollup/plugin-json`);
 const commonjs = require(`@rollup/plugin-commonjs`);
-const nodeResolve = require(`@rollup/plugin-node-resolve`);
+const { nodeResolve } = require(`@rollup/plugin-node-resolve`);
 const alias = require(`@rollup/plugin-alias`);
 const postcss = require(`rollup-plugin-postcss`);
 const autoprefixer = require(`autoprefixer`);
@@ -34,7 +34,9 @@ const omitOpts = omit([
   `output`,
   `slugins`,
   `babelHelpers`,
-  `filename`
+  `filename`,
+  'disableTerser',
+  'enableSourcemap'
 ]);
 
 const defaultExternal = (id) => {
@@ -95,13 +97,15 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       browser: true
     }),
     commonjs({
-      include: /\/node_modules\//,
-      namedExports: {
-        '../../../../node_modules/graphql-request/dist/types.dom': ['HeadersInit']
-      }
+      include: /\/node_modules\//
+      // namedExports: {
+      //   '../../../../node_modules/graphql-request/dist/types.dom': ['HeadersInit']
+      // }
     }),
     json(),
-    typescriptR(),
+    typescriptR({
+      sourceMap: isProduction || defaultOpts.enableSourcemap
+    }),
     !isProduction
       ? // Production uss babel to leverage babel-plugin-import and optimize MUI imports
         swc({
@@ -154,7 +158,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
           exclude: /node_modules/
         }),
     sourcemap(),
-    isProduction && terser(),
+    isProduction && !defaultOpts.disableTerser && terser(),
     // size(dir),
     progress({
       clearLine: false
@@ -169,7 +173,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     {
       dir,
       format: `cjs`,
-      sourcemap: isProduction ? `` : true,
+      sourcemap: isProduction || defaultOpts.enableSourcemap ? true : '',
       chunkFileNames: filename ? `${filename}.js` : `[name].js`,
       entryFileNames: filename ? `${filename}.js` : `[name].js`,
       exports: 'auto',
@@ -178,7 +182,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     {
       dir,
       format: `esm`,
-      sourcemap: isProduction ? `` : true,
+      sourcemap: isProduction || defaultOpts.enableSourcemap ? true : '',
       chunkFileNames: filename ? `${filename}.esm.js` : `[name].esm.js`,
       entryFileNames: filename ? `${filename}.esm.js` : `[name].esm.js`,
       exports: 'auto',
@@ -194,7 +198,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
   };
 };
 
-exports.copy = copy;
+// exports.copy = copy;
 exports.config = (opts) => {
   const inputs = Array.isArray(opts) ? opts : [opts];
   return inputs.map(({ dest: dir, ...o }) => {
