@@ -111,9 +111,6 @@ const MenuRoot = styled(Paper, {
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.menuRoot]
 })<{ variant?: string; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; component?: string }>`
-  // Remove ul browser styles
-  margin: 0;
-  padding: 0;
   ${({ theme, menuBreakpoint }) => `
     display: flex;
     flex-direction: column;
