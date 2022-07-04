@@ -29,7 +29,7 @@
     "@lrns/utils": "^0.1.0",
     "@mui/icons-material": "^5.2.4",
     "@mui/material": "^5.4.4",
-    "@sentry/nextjs": "^6.19.6",
+    "@sentry/nextjs": "^7.3.1",
     "@types/react": "^17.0.37",
     "dotenv": "^10.0.0",
     "eslint": "^8.6.0",

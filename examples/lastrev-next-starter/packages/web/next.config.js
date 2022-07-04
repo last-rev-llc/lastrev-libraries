@@ -2,7 +2,6 @@ require('dotenv').config();
 const path = require('path');
 const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(['@lrns/components', '@last-rev/component-library']);
-const { withSentryConfig } = require('@sentry/nextjs');
 
 // Allow bundle analysis via ANALYZE_BUNDLE env variable
 const enableAnalyzer = !!(process.env.ANALYZE_BUNDLE && process.env.ANALYZE_BUNDLE.toLowerCase() === 'true');
@@ -100,7 +99,7 @@ const nextConfig = {
       disableClientWebpackPlugin: true
     }
   }),
-  webpack: (config) => {
+  webpack: (config, { webpack }) => {
     // Important: return the modified config
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -108,8 +107,14 @@ const nextConfig = {
       '@emotion/react': path.resolve(__dirname, '../../node_modules', '@emotion/react'),
       '@mui': path.resolve(__dirname, '../../node_modules/@mui')
     };
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        __SENTRY_DEBUG__: false,
+        __SENTRY_TRACING__: false
+      })
+    );
     return config;
   }
 };
 
-module.exports = withPlugins([[withTM], withBundleAnalyzer, [withSentryConfig]], nextConfig);
+module.exports = withPlugins([[withTM], withBundleAnalyzer], nextConfig);
