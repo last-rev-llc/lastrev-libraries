@@ -2,14 +2,14 @@ import React from 'react';
 import { Container, Box } from '@mui/material';
 import styled from '@mui/system/styled';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation, Pagination } from 'swiper/core';
+import SwiperCore, { Navigation, Pagination, A11y } from 'swiper/core';
 
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import { CollectionCarouselProps } from './CollectionCarousel.types';
 
-SwiperCore.use([Navigation, Pagination]);
+SwiperCore.use([Navigation, Pagination, A11y]);
 
 export const CollectionCarousel = ({
   items,
