@@ -75,11 +75,7 @@ export const Hero = (props: HeroProps) => {
               <Grid item container direction="column" spacing={2} xs={12} md={6}>
                 <Grid item>
                   {overline ? (
-                    <Typography
-                      data-testid="Hero-overline"
-                      variant="overline"
-                      sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.overline)}>
+                    <Typography data-testid="Hero-overline" variant="overline" {...sidekick(sidekickLookup?.overline)}>
                       {overline}
                     </Typography>
                   ) : null}
@@ -88,7 +84,6 @@ export const Hero = (props: HeroProps) => {
                       data-testid="Hero-title"
                       variant="h1"
                       component="h1"
-                      sx={{ color: !subtitle ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.title)}>
                       {title}
                     </Typography>
@@ -98,7 +93,6 @@ export const Hero = (props: HeroProps) => {
                       data-testid="Hero-subtitle"
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
-                      sx={{ color: !title ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
                     </Typography>
@@ -152,27 +146,10 @@ const rootStyles = ({
   theme: Theme;
   background?: MediaProps;
 }) => {
-  if (backgroundColor === 'white') {
-    return { backgroundColor };
-  }
-  if (backgroundColor === 'black') {
-    return {
-      backgroundColor,
-      'color': 'white',
-      // TODO find out a better way to override text color
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: 'white'
-      }
-    };
-  }
   if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
     return {
-      'background': get(theme.palette, backgroundColor)?.main,
-      'color': `${backgroundColor}.contrastText`,
-      // TODO find out a better way to override text color
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: `${backgroundColor}.contrastText`
-      }
+      background: get(theme.palette, backgroundColor)?.main,
+      color: `${backgroundColor}.contrastText`
     };
   }
   const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
@@ -180,10 +157,8 @@ const rootStyles = ({
 
   if (backgroundColor && get(theme.palette, parsedBGColor)) {
     return {
-      'bgcolor': parsedBGColor,
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: `${paletteColor}.contrastText`
-      }
+      backgroundColor: parsedBGColor,
+      color: `${paletteColor}.contrastText`
     };
   }
 
