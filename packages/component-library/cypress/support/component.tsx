@@ -1,5 +1,5 @@
 // ***********************************************************
-// This example support/index.js is processed and
+// This example support/component.ts is processed and
 // loaded automatically before your test files.
 //
 // This is a great place to put global configuration and
@@ -14,11 +14,28 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
-import './commands';
 import '@percy/cypress';
 
-import '@cypress/code-coverage/support';
+import faker from 'faker';
+import '../../src/styles.scss';
+import mount from '../mount';
 
-import faker from 'faker'; // Alternatively you can use CommonJS syntax:
-// require('./commands')
+// TODO: Enable code-coverage when https://github.com/cypress-io/code-coverage/issues/580 is fixed
+// import '@cypress/code-coverage/support';
+
+// import './commands';
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      mount: typeof mount;
+    }
+  }
+}
+
 faker.seed(123);
+
+Cypress.Commands.add('mount', mount);
+
+// Example use:
+// cy.mount(<MyComponent />)

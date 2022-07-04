@@ -2,17 +2,12 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import Accordion from '../Accordion';
 import ContentModule from '../ContentModule';
-import { CollectionProps } from '../Collection';
-import { AccordionProps } from '../Accordion';
+import { CollectionAccordionMediaProps } from './CollectionAccordionMedia.types';
+import { CardProps } from '../Card';
 import getFirstOfArray from '../../utils/getFirstOfArray';
-import { MediaProps } from '../Media';
-
-export interface CollectionAccordionMediaProps extends CollectionProps {
-  items: AccordionProps[];
-}
 
 export const CollectionAccordionMedia = ({
   items,
@@ -22,7 +17,7 @@ export const CollectionAccordionMedia = ({
 }: CollectionAccordionMediaProps) => {
   const [selectedIdx, setSelectedIdx] = React.useState(0);
   if (!items?.length) return null;
-  const selected = React.useMemo(() => items[selectedIdx] as AccordionProps, [items, selectedIdx]);
+  const selected = React.useMemo(() => items[selectedIdx] as CardProps, [items, selectedIdx]);
   return (
     <ErrorBoundary>
       <Root
@@ -30,8 +25,7 @@ export const CollectionAccordionMedia = ({
         spacing={itemsSpacing ?? 0}
         {...sidekick(sidekickLookup)}
         variant={variant}
-        data-testid="CollectionAccordionMedia"
-      >
+        data-testid="CollectionAccordionMedia">
         <SelectedMediaRoot>
           <SelectedMedia
             __typename="Media"
@@ -77,7 +71,7 @@ const SelectedMedia = styled(ContentModule, {
   slot: 'SelectedMedia',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.selectedMedia]
-})<MediaProps>``;
+})``;
 
 const AccordionItem = styled(Grid, {
   name: 'CollectionAccordionMedia',

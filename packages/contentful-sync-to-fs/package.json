@@ -15,13 +15,13 @@
   "devDependencies": {
     "@last-rev/app-config": "^0.2.0",
     "@last-rev/rollup-config": "^0.1.2",
-    "@last-rev/testing-library": "^0.1.2",
+    "@last-rev/testing-library": "^0.1.9",
     "@types/fs-extra": "^9.0.11",
     "@types/node": "^14.14.35",
     "contentful": "^8.4.2",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.4",
-    "typescript": "4.3.4"
+    "typescript": "^4.7.4"
   },
   "keywords": [],
   "author": "",

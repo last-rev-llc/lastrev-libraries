@@ -21,9 +21,4 @@ describe('<Accordion />', () => {
     const { getByTestId } = renderComponent();
     expect(getByTestId('Accordion-title')).toHaveTextContent(mockContent.title);
   });
-
-  // test('Accordion renders body properly', () => {
-  //   const { getByTestId } = renderComponent();
-  //   expect(getByTestId('Accordion-body')).toHaveTextContent(mockContent.body);
-  // });
 });

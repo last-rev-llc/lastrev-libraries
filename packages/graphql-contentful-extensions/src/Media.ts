@@ -51,7 +51,16 @@ export const mappers = {
       // title: 'media.title',
       // asset: 'media.asset'
       variant: async (media: any, _args: any, ctx: ApolloContext) => {
-        const assetURL: any = getLocalizedField(media?.fields, 'assetURL', ctx);
+        let assetURL: any = getLocalizedField(media?.fields, 'assetURL', ctx);
+        const file = await mediaFieldResolver({ fields: media?.fields, field: 'asset', assetField: 'file', ctx });
+
+        // Asset reference will be used if set
+        //TODO: Support other ways to control priority
+        if (file?.url) assetURL = file?.url;
+
+        if (assetURL.split('.')[assetURL.split('.').length - 1] === 'pdf') {
+          return 'embed';
+        }
         if (assetURL) {
           if (getVideoEmbedUrl(assetURL)) {
             return 'embed';

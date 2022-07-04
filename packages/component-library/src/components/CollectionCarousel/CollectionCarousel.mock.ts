@@ -1,6 +1,5 @@
 import { CollectionCarouselProps } from './CollectionCarousel.types';
 import mockCard from '../Card/Card.mock';
-import mockTheme from '../../theme/mock.theme';
 
 export default (): CollectionCarouselProps => ({
   variant: 'carousel-large',
@@ -11,7 +10,6 @@ export default (): CollectionCarouselProps => ({
     { ...mockCard(), variant: 'media-and-text', title: 'Card four title' }
   ],
   itemsVariant: 'media-and-text',
-  theme: [mockTheme],
   sidekickLookup: 'sidekick-lookup'
 });
 
@@ -24,6 +22,5 @@ export const smallCarouselMock = (): CollectionCarouselProps => ({
     { ...mockCard(), variant: 'media-hover', title: 'Card four title' }
   ],
   itemsVariant: 'media-hover',
-  theme: [mockTheme],
   sidekickLookup: 'sidekick-lookup'
 });

@@ -1,8 +1,6 @@
-import { AccordionProps as MuiAccordionProps } from '@mui/material';
-import { CardProps } from '../Card';
 import { RichText } from '../Text';
 
-export interface AccordionProps extends Omit<MuiAccordionProps, 'children' | 'onChange' | 'classes'>, CardProps {
+export interface AccordionProps {
   __typename?: string;
   internalTitle?: string;
   variant?: any;
@@ -10,6 +8,8 @@ export interface AccordionProps extends Omit<MuiAccordionProps, 'children' | 'on
   body?: RichText;
   sidekickLookup?: any;
   children?: any;
+  expanded?: boolean;
+  onClick?: (event?: any) => void;
 }
 
 export interface AccordionClasses {

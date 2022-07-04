@@ -1,3 +1,4 @@
+import { Options } from '@contentful/rich-text-react-renderer';
 import { MediaProps } from '../Media';
 
 interface Content {
@@ -17,6 +18,7 @@ export interface TextProps {
   variant?: string;
   align?: 'left' | 'center' | 'right' | any;
   renderNode?: any;
+  renderOptions?: Options;
 }
 
 export interface TextLinks {

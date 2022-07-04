@@ -14,17 +14,17 @@
   },
   "devDependencies": {
     "@last-rev/rollup-config": "^0.1.2",
-    "@last-rev/testing-library": "^0.1.2",
+    "@last-rev/testing-library": "^0.1.9",
     "@last-rev/timer": "^0.1.2",
     "jest": "^26.6.3",
     "ts-jest": "^26.5.4",
-    "typescript": "4.3.4"
+    "typescript": "^4.7.4"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "^2.25.0",
+    "apollo-server": "^3.9.0",
     "contentful": "^8.4.2",
     "graphql": "^15.5.1",
     "lodash": "^4.17.21",

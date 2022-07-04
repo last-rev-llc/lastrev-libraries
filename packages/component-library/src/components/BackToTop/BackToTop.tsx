@@ -4,7 +4,7 @@ import Fab from '@mui/material/Fab';
 import styled from '@mui/system/styled';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import ErrorBoundary from '../ErrorBoundary';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import { BackToTopProps } from './BackToTop.types';
 
 export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
@@ -23,8 +23,8 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
         {...(FabProps as any)}
         onClick={handleClick}
         data-testid="BackToTop"
-        {...sidekick(sidekickLookup)}
-      >
+        aria-label="Back to top"
+        {...sidekick(sidekickLookup)}>
         <KeyboardArrowUpIcon />
       </Root>
     </ErrorBoundary>
