@@ -1,10 +1,5 @@
 "Exposes a URL that specifies the behaviour of this scalar."
 directive @specifiedBy("The URL that specifies the behaviour of this scalar." url: String!) on SCALAR
-directive @key(fields: String!) on OBJECT | INTERFACE
-directive @extends on OBJECT | INTERFACE
-directive @external on OBJECT | FIELD_DEFINITION
-directive @requires(fields: String!) on FIELD_DEFINITION
-directive @provides(fields: String!) on FIELD_DEFINITION
 "Date custom scalar type"
 scalar Date
 "The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
@@ -74,17 +69,12 @@ input ContentsFilter {
   displayType: String
 }
 type Query {
-  _service: _Service!
   page(path: String!, locale: String, preview: Boolean, site: String): Content
   paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
   content(id: String!, locale: String, preview: Boolean, displayType: String): Content
   contents(filter: ContentsFilter!): [Content]
   sitemap(root: String!, locales: [String!], preview: Boolean, site: String): Sitemap
   availableLocales: Locales
-}
-type _Service {
-  "The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied"
-  sdl: String
 }
 type PagePathParam {
   slug: [String!]
@@ -151,7 +141,7 @@ type Header implements Content {
   internalTitle: String
   logo: Media
   logoUrl: String
-  colorScheme: String
+  color: String
   navigationItems: [Collection]
 }
 type Hero implements Content {
@@ -164,12 +154,13 @@ type Hero implements Content {
   title: String
   subtitle: String
   body: RichText
-  background: Media
+  backgroundAsset: Media
   backgroundColor: String
   image: [Media]
   contentWidth: String
   contentHeight: String
   actions: [Link]
+  background: Media
 }
 type Link implements Content {
   sidekickLookup: JSON
@@ -182,6 +173,7 @@ type Link implements Content {
   text: String
   icon: String
   iconPosition: String
+  color: String
   href: String!
 }
 type ModuleIntegration implements Content {
@@ -238,12 +230,17 @@ type Section implements Content {
   variant: String
   internalTitle: String
   anchorName: String
+  settings: JSON
   backgroundColor: String
   contentDirection: String
   contentAlignment: String
   contentSpacing: Int
   contentWidth: String
   styles: JSON
+  paddingTop: Int
+  paddingBottom: Int
+  paddingLeft: Int
+  paddingRight: Int
   contents: [Content]
   background: Media
 }
@@ -257,17 +254,27 @@ type Site implements Content {
   siteKey: String
   seo: JSON
 }
+type Template implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  templateName: String
+  image: Media
+  category: String
+}
 type Text implements Content {
   sidekickLookup: JSON
   id: String
   theme: [Theme]
   animation: JSON
   variant: String
-  internalTitle: String
   body: RichText
+  internalTitle: String
   align: String
-  styles: JSON
   color: String
+  styles: JSON
 }
 type Blog implements Content {
   sidekickLookup: JSON

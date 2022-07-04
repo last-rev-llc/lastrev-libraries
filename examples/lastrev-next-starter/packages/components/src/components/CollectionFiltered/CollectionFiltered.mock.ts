@@ -24,6 +24,5 @@ export default (): CollectionFilteredProps => ({
       title: 'Unam incolunt Belgae, aliam Aquitani, tertiam.'
     }
   ],
-  itemsVariant: 'accordion',
-  theme: [mockTheme]
+  itemsVariant: 'accordion'
 });
