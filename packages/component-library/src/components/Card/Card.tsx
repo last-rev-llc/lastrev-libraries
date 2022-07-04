@@ -13,7 +13,7 @@ import styled from '@mui/system/styled';
 import Skeleton from '@mui/material/Skeleton';
 
 import ErrorBoundary from '../ErrorBoundary';
-import Media from '../Media';
+
 import Link, { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
@@ -34,10 +34,10 @@ export const Card = (inProps: CardProps) => {
         {media || loading ? (
           <CardMedia sx={{ display: 'block', position: 'relative', width: '100%' }}>
             {!loading ? (
-              <Media {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
+              <ContentModule {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
             ) : (
               <Skeleton>
-                <Media {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
+                <ContentModule {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
               </Skeleton>
             )}
           </CardMedia>

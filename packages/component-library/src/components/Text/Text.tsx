@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-import dynamic from 'next/dynamic';
+
 import { documentToReactComponents, Options } from '@contentful/rich-text-react-renderer';
 
 import Box from '@mui/material/Box';
@@ -22,7 +22,7 @@ import ContentModule from '../ContentModule';
 import { TextLinks, TextProps } from './Text.types';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
-const SafeHTML = dynamic(() => import('./SafeHTML'));
+import SafeHTML from '../SafeHTML';
 
 const keyBy = (key: string, xs: any[]) => xs.filter(Boolean).reduce((acc, x) => ({ ...acc, [x[key]]: x }), {});
 

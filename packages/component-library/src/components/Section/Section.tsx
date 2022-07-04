@@ -11,7 +11,7 @@ import get from 'lodash/get';
 
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import Media from '../Media';
+
 import sidekick from '@last-rev/contentful-sidekick-util';
 import ConditionalWrapper from '../ConditionalWrapper';
 import { SectionProps } from './Section.types';
@@ -135,7 +135,7 @@ const ContentContainer = styled(Container, {
   zIndex: 1
 }));
 
-const BackgroundMedia = styled(Media, {
+const BackgroundMedia = styled(ContentModule, {
   name: 'Section',
   slot: 'BackgroundMedia',
   overridesResolver: (_, styles) => [styles.backgroundImage]

@@ -5,7 +5,7 @@ import styled from '@mui/system/styled';
 import get from 'lodash/get';
 
 import ErrorBoundary from '../ErrorBoundary';
-import Media from '../Media';
+
 import { MediaProps } from '../Media/Media.types';
 import ContentModule from '../ContentModule';
 
@@ -58,7 +58,7 @@ export const Hero = (props: HeroProps) => {
               width: '100%',
               height: '100%'
             }}>
-            <Media
+            <ContentModule
               key={background?.id}
               testId="Hero-background"
               {...background}
@@ -124,7 +124,7 @@ export const Hero = (props: HeroProps) => {
             ) : null}
             {image ? (
               <MediaRoot item xs={12} md={6}>
-                <Media
+                <ContentModule
                   key={image?.id}
                   {...image}
                   {...sidekick(sidekickLookup?.images)}
@@ -222,7 +222,7 @@ const MediaRoot = styled(Grid, {
   position: relative;
 `;
 
-const MediaDivider = styled(Media, {
+const MediaDivider = styled(ContentModule, {
   name: 'Hero',
   slot: 'MediaDividerRoot',
   shouldForwardProp: (prop) => prop !== 'variant',

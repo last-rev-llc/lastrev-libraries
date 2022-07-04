@@ -4,7 +4,7 @@ import { useForm, Controller } from 'react-hook-form';
 import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
-import Media from '../Media';
+
 import ContentModule from '../ContentModule';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import snakeCase from 'lodash/snakeCase';
@@ -112,8 +112,7 @@ const CustomForm = ({
             height: '100%',
             opacity: status === 'success' ? 1 : 0,
             pointerEvents: status === 'success' ? 'initial' : 'none'
-          }}
-        >
+          }}>
           {successMessage ? (
             <ContentModule
               __typename="Text"
@@ -208,7 +207,7 @@ const ContentContainer = styled(Container, {
   paddingBottom: theme.spacing(8)
 }));
 
-const FormImage = styled(Media, {
+const FormImage = styled(ContentModule, {
   name: 'Form',
   slot: 'Image',
   overridesResolver: (_, styles) => [styles.formImage]

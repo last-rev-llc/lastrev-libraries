@@ -11,7 +11,6 @@ import styled from '@mui/system/styled';
 import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
-import Media from '../Media';
 
 import ContentModule from '../ContentModule';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
@@ -158,7 +157,7 @@ const LogoRoot = styled(Link, {
   overridesResolver: (_, styles) => [styles.logoRoot]
 })(() => ({}));
 
-const Logo = styled(Media, {
+const Logo = styled(ContentModule, {
   name: 'Header',
   slot: 'Logo',
   shouldForwardProp,

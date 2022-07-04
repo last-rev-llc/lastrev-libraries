@@ -8,6 +8,10 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 
 import { MediaProps, MediaVideoProps } from './Media.types';
 import useThemeProps from '../../utils/useThemeProps';
+// import dynamic from 'next/dynamic';
+
+// const Image = dynamic(() => import('../Image'));
+// const ArtDirectedImage = dynamic(() => import('../ArtDirectedImage'));
 
 const Media = (inProps: MediaProps & MediaVideoProps) => {
   const props = useThemeProps({

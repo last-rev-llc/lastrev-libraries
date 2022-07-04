@@ -5,12 +5,9 @@ import NextImage from 'next/future/image';
 import ErrorBoundary from '../ErrorBoundary';
 import getImgSrcTag from '../../utils/getImgSrcTag';
 import { ImageProps } from './Image.types';
+import dynamic from 'next/dynamic';
 
-import LazyLoad from 'react-lazyload';
-import SVG from 'react-inlinesvg';
-// TODO: Move this to the correct place
-type Env = 'development' | 'production' | 'test' | string | undefined;
-const NODE_ENV: Env = process.env.NODE_ENV;
+const SVG = dynamic(() => import('react-inlinesvg'));
 
 const Image = React.forwardRef<any, ImageProps>((props, ref) => {
   const {
@@ -95,19 +92,7 @@ const Image = React.forwardRef<any, ImageProps>((props, ref) => {
     return content;
   }, [props]);
 
-  try {
-    return (
-      <ErrorBoundary>
-        {NODE_ENV === 'test' || nextImageOptimization ? (
-          <>{imgContent}</>
-        ) : (
-          <LazyLoad offset={typeof window === 'undefined' ? 1000 : window.innerHeight}>{imgContent}</LazyLoad>
-        )}
-      </ErrorBoundary>
-    );
-  } catch (err) {
-    return null;
-  }
+  return <ErrorBoundary>{imgContent}</ErrorBoundary>;
 });
 
-export default React.memo(Image);
+export default Image;
