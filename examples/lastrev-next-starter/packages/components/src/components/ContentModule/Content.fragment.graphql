@@ -1,5 +1,5 @@
 fragment Content_BaseFragment on Content {
   id
   __typename
-  #  sidekickLookup
+  sidekickLookup
 }

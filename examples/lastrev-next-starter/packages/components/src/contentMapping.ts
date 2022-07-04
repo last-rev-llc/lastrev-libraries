@@ -1,7 +1,7 @@
 import dynamic from 'next/dynamic';
 
 import Section from './components/Section';
-import Card from './components/Card';
+// import Card from './components/Card';
 import Collection from './components/Collection';
 import NavigationBar from './components/NavigationBar';
 import Link from './components/Link';
@@ -10,10 +10,11 @@ import Header from './components/Header';
 import Hero from './components/Hero';
 
 import Media from './components/Media';
-// import Text from './components/Text';
+import Text from './components/Text';
 
 // const Media = dynamic(() => import('./components/Media'));
-const Text = dynamic(() => import('./components/Text'));
+const Card = dynamic(() => import('./components/Card'));
+// const Text = dynamic(() => import('./components/Text'));
 const CollectionAccordion = dynamic(() => import('./components/CollectionAccordion'));
 const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop'));
 const CollectionCarousel = dynamic(() => import('@last-rev/component-library/dist/components/CollectionCarousel'));
