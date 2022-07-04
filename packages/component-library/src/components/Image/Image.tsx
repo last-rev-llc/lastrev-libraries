@@ -69,6 +69,7 @@ const Image = React.forwardRef<any, ImageProps>((props, ref) => {
           width={width}
           sizes={imageProps.sizes}
           alt={alt}
+          {...imageProps}
         />
       );
     } else {
@@ -84,6 +85,7 @@ const Image = React.forwardRef<any, ImageProps>((props, ref) => {
             height={height}
             width={width}
             alt={alt}
+            {...imageProps}
           />
           {imgPreload}
         </>

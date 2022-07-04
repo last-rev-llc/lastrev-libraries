@@ -61,7 +61,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           file={file}
           fileTablet={fileTablet}
           fileMobile={fileMobile}
-          data-testid={testId || 'Media'}
+          testId={testId || 'Media'}
         />
       </ErrorBoundary>
     );
@@ -75,7 +75,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
         nextImageOptimization={nextImageOptimization}
         src={image?.url}
         alt={alt}
-        data-testid={testId || 'Media'}
+        testId={testId || 'Media'}
       />
     </ErrorBoundary>
   );
@@ -87,15 +87,13 @@ const shouldForwardProp = (prop: string) =>
   prop !== 'variant' &&
   prop !== 'fileName' &&
   prop !== 'priority' &&
-  prop !== 'testId' &&
   prop !== 'sidekickLookup' &&
   prop !== 'nextImageOptimization';
 
 const Root = styled(Image, {
   name: 'Media',
   slot: 'Root',
-  shouldForwardProp: (prop: string) =>
-    prop !== 'variant' && prop !== 'fileName' && prop !== 'testId' && prop !== 'sidekickLookup',
+  shouldForwardProp: (prop: string) => prop !== 'variant' && prop !== 'fileName' && prop !== 'sidekickLookup',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 

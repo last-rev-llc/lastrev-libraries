@@ -101,7 +101,7 @@ const CustomForm = ({
             ))}
           </FormControl>
         </SubmitContainer>
-        <FormImage {...sidekick(sidekickLookup?.image)} {...getFirstOfArray(image)} />
+        <FormImage __typename="Media" {...sidekick(sidekickLookup?.image)} {...getFirstOfArray(image)} />
         <Grid
           container
           sx={{

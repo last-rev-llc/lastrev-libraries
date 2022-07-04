@@ -34,7 +34,12 @@ export const Card = (inProps: CardProps) => {
         {media || loading ? (
           <CardMedia sx={{ display: 'block', position: 'relative', width: '100%' }}>
             {!loading ? (
-              <ContentModule {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
+              <ContentModule
+                __typename="Media"
+                {...sidekick(sidekickLookup?.media)}
+                {...getFirstOfArray(media)}
+                data-testid="Card-media"
+              />
             ) : (
               <Skeleton>
                 <ContentModule {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />

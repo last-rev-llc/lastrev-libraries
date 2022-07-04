@@ -59,6 +59,7 @@ export const Hero = (props: HeroProps) => {
               height: '100%'
             }}>
             <ContentModule
+              __typename="Media"
               key={background?.id}
               testId="Hero-background"
               {...background}
@@ -119,6 +120,7 @@ export const Hero = (props: HeroProps) => {
             {image ? (
               <MediaRoot item xs={12} md={6}>
                 <ContentModule
+                  __typename="Media"
                   key={image?.id}
                   {...image}
                   {...sidekick(sidekickLookup?.images)}

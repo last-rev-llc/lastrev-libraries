@@ -50,7 +50,7 @@ const components = {
   SEO
 };
 
-const mount = (component, options) =>
+const mount = (component, options?: any) =>
   ogMount(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
