@@ -17,7 +17,7 @@
 import '@percy/cypress';
 
 import faker from 'faker';
-import '@last-rev/component-library/dist/styles.css';
+import '../../src/styles.scss';
 import mount from '../mount';
 
 // TODO: Enable code-coverage when https://github.com/cypress-io/code-coverage/issues/580 is fixed
