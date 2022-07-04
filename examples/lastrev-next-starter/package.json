@@ -7,7 +7,9 @@
   "workspaces": {
     "packages": [
       "packages/*",
+      "../../packages/cli",
       "../../packages/component-library",
+      "../../packages/graphql-contentful-core",
       "../../packages/graphql-contentful-extensions"
     ]
   },
