@@ -102,8 +102,8 @@ const baseTheme: ThemeOptions = {
       contrastText: '#FFFFFF'
     },
     secondary: {
-      main: '#F9F871',
-      contrastText: 'rgba(0, 0, 0, 0.87)'
+      main: '#F9F871'
+      // contrastText: 'rgba(0, 0, 0, 0.87)'
     },
 
     text: {

@@ -19,7 +19,6 @@ export const NavigationBar = ({
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   const theme = useTheme();
-  console.log('test');
   const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
   return (
     <ErrorBoundary>
@@ -28,7 +27,7 @@ export const NavigationBar = ({
         variant={variant}
         data-testid="NavigationBar"
         menuBreakpoint={menuBreakpoint}
-        sx={{ backgroundColor: `${color}.main`, color: `${color}.contrastText` }}>
+        sx={color ? { backgroundColor: `${color}.main`, color: `${color}.contrastText` } : null}>
         <Grid container sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
             <Grid item key={item.id} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>
