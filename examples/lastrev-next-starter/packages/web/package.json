@@ -50,9 +50,9 @@
     "@lrns/graphql-runner": "0.1.0",
     "@netlify/plugin-nextjs": "^4.11.1",
     "@next/bundle-analyzer": "^12.0.7",
-    "@percy/cli": "v1.2.1",
+    "@percy/cli": "^1.5.1",
     "@percy/cypress": "^3.1.1",
-    "cypress": "^9.4.1",
+    "cypress": "^10.3.0",
     "eslint-config-next": "^12.0.8",
     "netlify-plugin-cypress": "^2.2.0"
   }

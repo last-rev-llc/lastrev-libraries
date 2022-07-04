@@ -10,5 +10,5 @@ trap "cleanup" EXIT
 
 echo "Starting develop server..."
 yarn propagate:env
-yarn sync:cms
+yarn sync:cms --output-logs=new-only
 turbo run dev --output-logs=new-only
