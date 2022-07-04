@@ -2,8 +2,8 @@ const { omit } = require(`lodash/fp`);
 const path = require('path');
 
 const replace = require(`@rollup/plugin-replace`);
-const typescript = require(`rollup-plugin-typescript2`);
-const { babel } = require(`@rollup/plugin-babel`);
+// const typescript = require(`rollup-plugin-typescript2`);
+// const { babel } = require(`@rollup/plugin-babel`);
 const json = require(`@rollup/plugin-json`);
 const commonjs = require(`@rollup/plugin-commonjs`);
 const { nodeResolve } = require(`@rollup/plugin-node-resolve`);
@@ -14,15 +14,16 @@ const progress = require(`rollup-plugin-progress`);
 const { terser } = require(`rollup-plugin-terser`);
 const sourcemap = require(`rollup-plugin-sourcemaps`);
 const peerDepsExternal = require('rollup-plugin-peer-deps-external');
-const analyze = require('rollup-plugin-analyzer');
-const { visualizer } = require('rollup-plugin-visualizer');
-const swc = require('rollup-plugin-swc').default;
+// const analyze = require('rollup-plugin-analyzer');
+// const { visualizer } = require('rollup-plugin-visualizer');
+const { swc, defineRollupSwcOption } = require('rollup-plugin-swc3');
 const typescriptR = require('@rollup/plugin-typescript');
-
+// const { plugins: swcPlugins } = require('@swc/core');
+const PluginTransformImport = require('swc-plugin-transform-import').default;
 // const multi = require(`@rollup/plugin-multi-entry`);
-const clean = require(`./plugins/clean`);
+// const clean = require(`./plugins/clean`);
 // const size = require(`./plugins/size`);
-const copy = require(`./plugins/copy`);
+// const copy = require(`./plugins/copy`);
 
 const env = process.env.NODE_ENV;
 const isProduction = env === `production`;
@@ -56,19 +57,11 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     external,
     output,
     plugins = [],
-    filename,
-    babelHelpers
+    filename
   } = defaultOpts;
 
-  const tsconfigOverride = {
-    compilerOptions: {
-      sourceMap: !isProduction,
-      mapRoot: !isProduction ? dir : undefined
-    }
-  };
-
   const defaultPlugins = [
-    isProduction && clean(dir),
+    // isProduction && clean(dir),
     // multi(),
     isProduction && peerDepsExternal(),
     replace({
@@ -82,7 +75,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       },
       plugins: [autoprefixer()],
       inject: true,
-      sourceMap: true, // defult false
+      sourceMap: !isProduction || defaultOpts.enableSourcemap, // defult false
       extract: path.resolve('dist/styles.css'),
       extensions: ['.css']
     }),
@@ -104,60 +97,42 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     }),
     json(),
     typescriptR({
-      sourceMap: isProduction || defaultOpts.enableSourcemap
+      sourceMap: !isProduction || defaultOpts.enableSourcemap
     }),
-    !isProduction
-      ? // Production uss babel to leverage babel-plugin-import and optimize MUI imports
-        swc({
-          sourceMaps: true,
-          jsc: {
-            parser: {
-              syntax: 'typescript',
-              tsx: true,
-              decorators: true,
-              dynamicImport: true
+    swc(
+      defineRollupSwcOption({
+        sourceMaps: !isProduction || defaultOpts.enableSourcemap,
+        jsc: {
+          parser: {
+            syntax: 'typescript',
+            tsx: true,
+            decorators: true,
+            dynamicImport: true
+          },
+          externalHelpers: false,
+          target: 'es2016'
+        },
+        plugin: (m) =>
+          new PluginTransformImport({
+            'lodash': {
+              // eslint-disable-next-line no-template-curly-in-string
+              transform: 'lodash/${member}',
+              preventFullImport: true
             },
-            externalHelpers: false,
-            target: 'es2016'
-          }
-        })
-      : babel({
-          babelHelpers: babelHelpers || `bundled`,
-          extensions: EXTENSIONS,
-          presets: [['@babel/env', { modules: false }], '@babel/preset-react'],
-          plugins: [
-            '@babel/plugin-proposal-optional-chaining',
-            babelHelpers === 'runtime' ? '@babel/plugin-transform-runtime' : null,
-            [
-              'babel-plugin-import',
-              {
-                libraryName: '@mui/material',
-                libraryDirectory: '',
-                camel2DashComponentName: false
-              },
-              'core'
-            ],
-            [
-              'babel-plugin-import',
-              {
-                libraryName: '@mui/icons-material',
-                libraryDirectory: '',
-                camel2DashComponentName: false
-              },
-              'icons'
-            ],
-            [
-              'babel-plugin-import',
-              {
-                libraryName: 'lodash',
-                libraryDirectory: '',
-                camel2DashComponentName: false
-              }
-            ]
-          ],
-          exclude: /node_modules/
-        }),
-    sourcemap(),
+            '@mui/material': {
+              // eslint-disable-next-line no-template-curly-in-string
+              transform: '@mui/material/${member}',
+              preventFullImport: true
+            },
+            '@mui/icons-material': {
+              // eslint-disable-next-line no-template-curly-in-string
+              transform: '@mui/icons-material/${member}',
+              preventFullImport: true
+            }
+          }).visitProgram(m)
+      })
+    ),
+    (!isProduction || defaultOpts.enableSourcemap) && sourcemap(),
     isProduction && !defaultOpts.disableTerser && terser(),
     // size(dir),
     progress({
@@ -173,7 +148,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     {
       dir,
       format: `cjs`,
-      sourcemap: isProduction || defaultOpts.enableSourcemap ? true : '',
+      sourcemap: !isProduction || defaultOpts.enableSourcemap ? true : '',
       chunkFileNames: filename ? `${filename}.js` : `[name].js`,
       entryFileNames: filename ? `${filename}.js` : `[name].js`,
       exports: 'auto',
@@ -182,7 +157,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     {
       dir,
       format: `esm`,
-      sourcemap: isProduction || defaultOpts.enableSourcemap ? true : '',
+      sourcemap: !isProduction || defaultOpts.enableSourcemap ? true : '',
       chunkFileNames: filename ? `${filename}.esm.js` : `[name].esm.js`,
       entryFileNames: filename ? `${filename}.esm.js` : `[name].esm.js`,
       exports: 'auto',
