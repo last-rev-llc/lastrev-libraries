@@ -12,11 +12,11 @@
     "build": "cross-env NODE_ENV=production rollup -c",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
-    "cypress:open": "percy exec -- cypress open-ct",
+    "cypress:open": "percy exec -- cypress cypress open --component",
     "test": "jest --passWithNoTests",
     "percy:storybook": "percy storybook ./storybook-static || true",
-    "test:e2e": "cross-env NODE_ENV=test percy exec --  cypress run-ct",
-    "test:e2e:record": "cross-env NODE_ENV=test percy exec --  cypress run-ct --record",
+    "test:e2e": "cross-env NODE_ENV=test percy exec --  cypress run --component",
+    "test:e2e:record": "cross-env NODE_ENV=test percy exec --  cypress run --component --record",
     "test:watch": "jest --watch"
   },
   "dependencies": {

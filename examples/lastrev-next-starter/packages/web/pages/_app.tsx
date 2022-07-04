@@ -1,17 +1,17 @@
+import type { AppProps } from 'next/app';
 import React from 'react';
 import Head from 'next/head';
-import type { AppProps } from 'next/app';
-import { ThemeProvider } from '@mui/system';
-import '@last-rev/component-library/dist/styles.css';
-import CssBaseline from '@mui/material/CssBaseline';
 import Script from 'next/script';
-
-import theme from '@lrns/components/src/theme';
-import { createEmotionCache } from '../src/createEmotionCache';
+import { ThemeProvider } from '@mui/system';
+import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-// import { LazyMotion } from 'framer-motion';
-// LastRev components
 import SEO from '@last-rev/component-library/dist/components/SEO/SEO';
+import '@last-rev/component-library/dist/styles.css';
+import theme from '@lrns/components/src/theme';
+// import { LazyMotion } from 'framer-motion';
+
+import { createEmotionCache } from '../src/createEmotionCache';
+
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps {
