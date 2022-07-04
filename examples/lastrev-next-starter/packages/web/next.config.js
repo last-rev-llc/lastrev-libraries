@@ -11,7 +11,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 const ContentSecurityPolicy = `
-  default-src 'self'  *.sentry.io  *.facebook.com
+  default-src 'self'  *.sentry.io  *.facebook.com;
   style-src 'self' 'unsafe-inline'  *.sentry.io  fonts.googleapis.com;
   script-src 'self' 'unsafe-inline'  *.sentry.io  *.google-analytics.com *.googletagmanager.com;
   font-src 'self'  *.sentry.io  fonts.gstatic.com data:;
