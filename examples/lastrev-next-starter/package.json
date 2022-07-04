@@ -10,7 +10,8 @@
       "../../packages/cli",
       "../../packages/component-library",
       "../../packages/graphql-contentful-core",
-      "../../packages/graphql-contentful-extensions"
+      "../../packages/graphql-contentful-extensions",
+      "../../packages/testing-library"
     ]
   },
   "scripts": {

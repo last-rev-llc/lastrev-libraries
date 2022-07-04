@@ -52,9 +52,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.13",
     "@babel/plugin-proposal-nullish-coalescing-operator": "^7.14.5",
-    "@cypress/code-coverage": "^3.9.12",
-    "@cypress/react": "^5.12.2",
-    "@cypress/webpack-dev-server": "^1.8.1",
+    "@cypress/code-coverage": "^3.10.0",
     "@mui/icons-material": "^5.0.0",
     "@mui/material": "^5.4.4",
     "@mui/styles": "^5.4.4",

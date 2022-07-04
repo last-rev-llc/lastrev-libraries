@@ -45,7 +45,7 @@
     "swr": "^1.1.0"
   },
   "devDependencies": {
-    "@cypress/code-coverage": "^3.9.12",
+    "@cypress/code-coverage": "^3.10.0",
     "@lrns/graphql-extensions": "0.1.0",
     "@lrns/graphql-runner": "0.1.0",
     "@netlify/plugin-nextjs": "^4.11.1",
