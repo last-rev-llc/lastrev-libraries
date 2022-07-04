@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount as ogMount } from '@cypress/react';
+import { mount as ogMount } from 'cypress/react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 
@@ -54,11 +54,13 @@ const mount = (component, options) =>
   ogMount(
     <StyledEngineProvider injectFirst>
       <ThemeProvider theme={theme}>
-        <ContentModuleProvider contentMapping={components}>
-          <base href="/public/" />
-          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
-          <CssBaseline />
-          {component}
+        <ContentModuleProvider contentMapping={components as any}>
+          <>
+            <base href="/public/" />
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
+            <CssBaseline />
+            {component}
+          </>
         </ContentModuleProvider>
       </ThemeProvider>
     </StyledEngineProvider>,
