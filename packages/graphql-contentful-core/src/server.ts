@@ -29,7 +29,7 @@ export const getServer = async (config: LastRevAppConfig) => {
       process.env.NODE_ENV === 'production'
         ? ApolloServerPluginLandingPageProductionDefault({
             embed: true,
-            graphRef: `${process.env.GRAPHQL_GRAPH_ID}@current`
+            graphRef: `${process.env.APOLLO_GRAPH_REF}@current`
           })
         : ApolloServerPluginLandingPageLocalDefault({ embed: true })
     ],

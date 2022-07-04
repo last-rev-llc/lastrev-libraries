@@ -1,10 +1,5 @@
 "Exposes a URL that specifies the behaviour of this scalar."
 directive @specifiedBy("The URL that specifies the behaviour of this scalar." url: String!) on SCALAR
-directive @key(fields: String!) on OBJECT | INTERFACE
-directive @extends on OBJECT | INTERFACE
-directive @external on OBJECT | FIELD_DEFINITION
-directive @requires(fields: String!) on FIELD_DEFINITION
-directive @provides(fields: String!) on FIELD_DEFINITION
 "Date custom scalar type"
 scalar Date
 "The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
@@ -74,17 +69,12 @@ input ContentsFilter {
   displayType: String
 }
 type Query {
-  _service: _Service!
   page(path: String!, locale: String, preview: Boolean, site: String): Content
   paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
   content(id: String!, locale: String, preview: Boolean, displayType: String): Content
   contents(filter: ContentsFilter!): [Content]
   sitemap(root: String!, locales: [String!], preview: Boolean, site: String): Sitemap
   availableLocales: Locales
-}
-type _Service {
-  "The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied"
-  sdl: String
 }
 type PagePathParam {
   slug: [String!]
