@@ -9,8 +9,6 @@ import ContentModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import { CollectionCarouselProps } from './CollectionCarousel.types';
 
-import '@last-rev/component-library/dist/styles.css';
-
 SwiperCore.use([Navigation, Pagination]);
 
 export const CollectionCarousel = ({
