@@ -24,6 +24,7 @@ export const getServer = async (config: LastRevAppConfig) => {
     schema,
     introspection: true,
     debug: true,
+    csrfPrevention: process.env.STAGE !== 'build' && process.env.NODE_ENV === 'production',
     plugins: [
       ApolloServerPluginInlineTrace(),
       process.env.NODE_ENV === 'production'
@@ -33,7 +34,10 @@ export const getServer = async (config: LastRevAppConfig) => {
           })
         : ApolloServerPluginLandingPageLocalDefault({ embed: true })
     ],
-    context: async ({ req }) => createContext({ config, expressReq: req, pathReaders })
+    context: async ({ req }) => createContext({ config, expressReq: req, pathReaders }),
+    cors: {
+      origin: ['https://studio.apollographql.com']
+    }
   });
 
   logger.trace(timer.end());
