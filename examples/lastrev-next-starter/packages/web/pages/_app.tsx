@@ -33,7 +33,7 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
             <link key={url} rel="preload" href={url} as="font" type="font/woff2" crossOrigin="anonymous"></link>
           ))
         }
-
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         {!!pageProps.pageData?.page?.seo?.title ? <title>{pageProps.pageData.page.seo.title.value}</title> : null}
         <meta name="contentful_space" content={process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID} />
         <meta name="contentful_environment" content={process.env.NEXT_PUBLIC_CONTENTFUL_ENV} />
