@@ -63,7 +63,7 @@ export default function Preview({}: any) {
       },
       false
     );
-  }, []);
+  }, [mutate]);
 
   return (
     <Box sx={{ '*': { transition: '.2s ease-in-out' } }}>

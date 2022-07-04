@@ -2,7 +2,7 @@ import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVa
 
 // https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['Header'] = {
-  color: 'secondary'
+  color: 'black'
 };
 
 // https://mui.com/customization/theme-components/#global-style-overrides

@@ -16,6 +16,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
     display: 'block',
     maxWidth: `100%`,
     margin: 'auto',
+
     height: 'auto'
   })
   // root: {

@@ -1,8 +1,6 @@
 import { compact, map, merge } from 'lodash';
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { Source, DocumentNode, GraphQLSchema } from 'graphql';
-import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
 import { typeDefs as algoliaTypeDefs } from '@last-rev/graphql-algolia-integration';
 
 import {

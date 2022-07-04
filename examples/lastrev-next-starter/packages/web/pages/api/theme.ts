@@ -29,9 +29,11 @@ type Data = {
   name: string;
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const themeHandler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await cors(req, res);
   const theme = await import('@lrns/components/src/theme');
   const size = roughSizeOfObject(theme);
   res.status(200).json(JSON.parse(JSON.stringify({ size, ...theme })));
 };
+
+export default themeHandler;

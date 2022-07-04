@@ -58,7 +58,7 @@ export default function Preview({}: any) {
       },
       false
     );
-  }, []);
+  }, [mutate]);
 
   return (
     <ContentModuleProvider contentMapping={contentMapping}>
