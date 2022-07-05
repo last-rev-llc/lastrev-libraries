@@ -1,5 +1,13 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.5
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-webhook-parser@0.1.1
+
 ## 0.1.4
 
 ### Patch Changes

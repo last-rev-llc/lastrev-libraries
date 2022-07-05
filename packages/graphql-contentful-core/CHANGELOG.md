@@ -1,5 +1,24 @@
 # @last-rev/graphql-contentful-core
 
+## 0.3.0
+
+### Minor Changes
+
+- 3ba98cd: July updates
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-cms-loader@0.2.2
+  - @last-rev/contentful-fs-loader@0.1.13
+  - @last-rev/contentful-path-util@0.1.11
+  - @last-rev/contentful-redis-loader@0.3.3
+  - @last-rev/graphql-contentful-helpers@0.2.5
+  - @last-rev/graphql-schema-gen@0.2.1
+  - @last-rev/testing-library@0.1.10
+  - @last-rev/timer@0.1.3
+
 ## 0.2.5
 
 ### Patch Changes

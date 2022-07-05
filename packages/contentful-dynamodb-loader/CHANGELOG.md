@@ -1,5 +1,13 @@
 # @last-rev/contentful-dynamodb-loader
 
+## 0.1.5
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/timer@0.1.3
+
 ## 0.1.4
 
 ### Patch Changes

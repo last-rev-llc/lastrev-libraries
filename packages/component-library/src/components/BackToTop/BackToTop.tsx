@@ -24,7 +24,8 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
         onClick={handleClick}
         data-testid="BackToTop"
         aria-label="Back to top"
-        {...sidekick(sidekickLookup)}>
+        {...sidekick(sidekickLookup)}
+      >
         <KeyboardArrowUpIcon />
       </Root>
     </ErrorBoundary>

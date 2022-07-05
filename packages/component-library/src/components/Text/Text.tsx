@@ -186,7 +186,8 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, re
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}>
+        {...props}
+      >
         {documentToReactComponents(
           body?.json,
           createRenderOptions({ links: body?.links, renderNode, ...renderOptions })

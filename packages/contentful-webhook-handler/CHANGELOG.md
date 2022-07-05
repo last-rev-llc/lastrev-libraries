@@ -1,5 +1,15 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.3
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-path-util@0.1.11
+  - @last-rev/contentful-webhook-parser@0.1.1
+  - @last-rev/graphql-contentful-helpers@0.2.5
+
 ## 0.4.2
 
 ### Patch Changes
