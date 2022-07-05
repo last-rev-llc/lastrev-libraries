@@ -7,6 +7,7 @@ export interface ContentPreviewProps {
   spaceId?: string;
   locale?: string;
   pageURL?: string;
+  livePreview?: boolean;
 }
 
 export interface ContentPreviewClasses {

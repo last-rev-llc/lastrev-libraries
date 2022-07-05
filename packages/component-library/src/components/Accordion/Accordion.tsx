@@ -5,14 +5,14 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import ContentModule from '../ContentModule';
 import { AccordionProps } from './Accordion.types';
 
-export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionProps) => {
+export const Accordion = ({ variant, title, body, sidekickLookup, ...props }: AccordionProps) => {
   return (
     <ErrorBoundary>
-      <AccordionRoot {...sidekick(sidekickLookup)} variant={variant} data-testid="Accordion">
+      <AccordionRoot {...sidekick(sidekickLookup)} variant={variant} data-testid="Accordion" {...props}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="h4" data-testid="Accordion-title">
             {title}

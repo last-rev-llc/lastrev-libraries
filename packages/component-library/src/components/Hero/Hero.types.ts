@@ -22,6 +22,7 @@ export interface HeroProps {
   images?: MediaProps[];
   background?: MediaProps;
   backgroundColor?: Color | 'white' | 'black';
+  divider?: MediaProps;
   contentWidth?: false | Breakpoint | undefined;
   contentHeight?: 'sm' | 'md' | 'lg' | 'xl';
   theme?: any;

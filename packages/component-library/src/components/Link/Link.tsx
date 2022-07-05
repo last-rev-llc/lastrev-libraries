@@ -12,50 +12,46 @@ import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
 import MuiLink from '@mui/material/Link';
 import Button from '@mui/material/Button';
-import sidekick from '../../utils/sidekick';
-import { useThemeProps } from '@mui/system';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 import { NextLinkComposedProps, LinkProps } from './Link.types';
+import useThemeProps from '../../utils/useThemeProps';
 
-// TODO: Button components aren't hyperlinking
+export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps & { onClick?: any }>(
+  function NextLinkComposed(props, ref) {
+    const {
+      to = '#',
+      linkAs,
 
-export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps>(function NextLinkComposed(
-  props,
-  ref
-) {
-  const {
-    to,
-    linkAs,
-    href = '#',
-    replace,
-    scroll,
-    passHref,
-    shallow,
-    prefetch,
-    locale,
-    text,
-    children,
-    ...other
-  } = props;
+      replace,
+      scroll,
+      passHref,
+      shallow,
+      prefetch,
+      locale,
+      text,
+      children,
+      onClick,
+      ...other
+    } = props;
 
-  return (
-    <NextLink
-      href={to}
-      prefetch={prefetch}
-      as={linkAs}
-      replace={replace}
-      scroll={scroll}
-      shallow={shallow}
-      passHref={passHref}
-      locale={locale}
-      {...other}
-    >
-      <a ref={ref} {...other}>
-        {text || children}
-      </a>
-    </NextLink>
-  );
-});
+    return (
+      <NextLink
+        href={to}
+        prefetch={prefetch}
+        as={linkAs}
+        replace={replace}
+        scroll={scroll}
+        shallow={shallow}
+        passHref={passHref}
+        locale={locale}>
+        <RootLink ref={ref} {...other} onClick={onClick}>
+          {text || children}
+        </RootLink>
+      </NextLink>
+    );
+  }
+);
 
 // Icon component using FontAwesome
 const getIcon = (icon: string) => {
@@ -66,12 +62,12 @@ const getIcon = (icon: string) => {
 const getButtonContent = (text: string | undefined, children: any, iconPosition: string | undefined, icon: any) => {
   if (!icon) return text || children;
   return (
-    <ButtonWrap sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+    <Root sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
       <span>{text || children}</span>
       {icon && (
         <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>{icon && getIcon(icon)}</Box>
       )}
-    </ButtonWrap>
+    </Root>
   );
 };
 
@@ -91,9 +87,10 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     icon,
     iconPosition,
     sidekickLookup,
+    // Remove id from other props
+    id,
     ...other
   } = useThemeProps({ name: 'Link', props });
-
   // Color prop fails if it's null
   if (!other.color) delete other.color;
 
@@ -105,44 +102,44 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);
-  const extra = { ...other, ...sidekick(sidekickLookup), variant };
+  const extra = { variant, ...other, ...sidekick(sidekickLookup), 'aria-label': text };
 
   /** Link with Icon only
    * - Classes reference FontAwesome stylesheet linked in .storybook/preview
    * - Include that css file in head of any given project to render
    */
   // NOTES:
+  // - 1. ** Custom for Strong365 using FontAwesome **
   // -->  ** Is it possible to extend in that repo? **
   // - 2. Better to use SVG
   // --> https://material-ui.com/components/icons/#font-vs-svg-which-approach-to-use
   if (!noLinkStyle && icon && !text) {
     if (isExternal) {
       return (
-        <a
+        <RootLink
           className={className}
           href={href as string}
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}
-        >
-          <IconButton aria-label={icon} size="large">
+          {...extra}>
+          <RootIconButton aria-label={icon} size="large">
             {getIcon(icon)}
-          </IconButton>
-        </a>
+          </RootIconButton>
+        </RootLink>
       );
     }
     if (href !== '#') {
       return (
-        <NextLink href={href} as={linkAs}>
-          <IconButton aria-label={icon} type={other.type} {...extra} className={className} size="large">
+        <NextLinkComposed to={href} linkAs={linkAs as any}>
+          <RootIconButton type={other.type} {...extra} className={className} size="large" aria-label={icon}>
             {getIcon(icon)}
-          </IconButton>
-        </NextLink>
+          </RootIconButton>
+        </NextLinkComposed>
       );
     }
     return (
-      <IconButton
+      <RootIconButton
         aria-label={icon}
         // component={Link}
         // href={href}
@@ -150,10 +147,9 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         // type={other.type}
         // {...extra}
         onClick={other.onClick}
-        size="large"
-      >
+        size="large">
         {getIcon(icon)}
-      </IconButton>
+      </RootIconButton>
     );
   }
 
@@ -162,115 +158,144 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     if (href !== '#') {
       if (isExternal) {
         return (
-          <a href={href as string} ref={ref as any} target="_blank" rel="noopener noreferrer" {...extra}>
-            <Button
+          <RootLink href={href as string} ref={ref as any} target="_blank" rel="noopener noreferrer" {...extra}>
+            <RootButton
               className={className}
               type={other.type}
               {...extra}
               variant={buttonVariant}
               startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-              endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-            >
+              endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
               {text || children}
-            </Button>
-          </a>
+            </RootButton>
+          </RootLink>
         );
       }
 
       return (
-        <NextLink href={href} as={linkAs}>
-          <Button
+        <NextLink href={href} as={linkAs as any} passHref>
+          <RootButton
             className={className}
             type={other.type}
             {...extra}
             variant={buttonVariant}
             startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-          >
+            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
             {text || children}
-          </Button>
+          </RootButton>
         </NextLink>
       );
     }
+
     return (
-      <Button
+      <RootButton
         className={className}
         onClick={other.onClick}
         type={other.type}
         {...extra}
         variant={buttonVariant}
         startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-      >
+        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
         {text || children}
-      </Button>
+      </RootButton>
     );
   }
 
   if (isExternal) {
     if (noLinkStyle) {
       return (
-        <a
+        <RootLink
           className={className}
           href={href as string}
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}
-        >
+          {...extra}>
           {getButtonContent(text, children, iconPosition, icon)}
-        </a>
+        </RootLink>
       );
     }
 
     return (
-      <MuiLink
+      <RootMuiLink
         className={className}
         href={href as string}
         ref={ref}
         target="_blank"
         rel="noopener noreferrer"
-        {...extra}
-      >
+        {...extra}>
         {getButtonContent(text, children, iconPosition, icon)}
-      </MuiLink>
+      </RootMuiLink>
     );
   }
 
   if (noLinkStyle && icon) {
     return (
-      <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
-        <ButtonWrap sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
+      <NextLinkComposed className={className} ref={ref as any} to={href} {...other}>
+        <Root sx={{ flexDirection: iconPosition === 'Left' ? 'row-reverse' : undefined }}>
           <span>{children || text}</span>
           {icon && (
             <Box sx={{ margin: iconPosition === 'Left' ? '0 10px 0 0' : '0 0 0 10px' }}>{icon && getIcon(icon)}</Box>
           )}
-        </ButtonWrap>
+        </Root>
       </NextLinkComposed>
     );
   }
   if (noLinkStyle) {
     return (
-      <NextLinkComposed className={className} ref={ref as any} to={href} {...extra}>
+      <NextLinkComposed className={className} ref={ref as any} to={href} {...other}>
         {children || text}
       </NextLinkComposed>
     );
   }
 
   return (
-    <MuiLink component={NextLinkComposed} linkAs={linkAs} className={className} ref={ref} to={href} {...extra}>
+    <RootMuiLink
+      component={NextLinkComposed}
+      linkAs={linkAs}
+      className={className}
+      ref={ref}
+      to={href}
+      {...extra}
+      // Not getting the prop validation from NextLinkComposed
+      // @ts-expect-error
+      passHref>
       {getButtonContent(text, children, iconPosition, icon)}
-    </MuiLink>
+    </RootMuiLink>
   );
 });
 
-const ButtonWrap = styled(Box, {
+const Root = styled(Box, {
   name: 'Link',
-  slot: 'ButtonWrap',
-  overridesResolver: (_, styles) => [styles.buttonWrap]
+  slot: 'Root',
+  overridesResolver: (_, styles) => [styles.root]
 })<{}>(() => ({
   display: 'inline-flex',
   alignItems: 'center'
 }));
+
+const RootLink = styled('a', {
+  name: 'Link',
+  slot: 'Root',
+  overridesResolver: (_, styles) => [styles.root, styles.rootLink]
+})<{}>(() => ({}));
+
+const RootMuiLink = styled(MuiLink, {
+  name: 'Link',
+  slot: 'Root',
+  overridesResolver: (_, styles) => [styles.root, styles.rootMuiLink]
+})``;
+
+const RootButton = styled(Button, {
+  name: 'Link',
+  slot: 'Root',
+  overridesResolver: (_, styles) => [styles.root, styles.rootButton]
+})``;
+
+const RootIconButton = styled(IconButton, {
+  name: 'Link',
+  slot: 'Root',
+  overridesResolver: (_, styles) => [styles.root, styles.rootButton]
+})``;
 
 export default Link;

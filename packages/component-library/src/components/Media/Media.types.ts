@@ -11,6 +11,7 @@ export interface Asset {
   description?: string;
 }
 export interface MediaProps extends Omit<ImageProps, 'src'> {
+  __typename?: any;
   file?: File;
   fileTablet?: File;
   fileMobile?: File;

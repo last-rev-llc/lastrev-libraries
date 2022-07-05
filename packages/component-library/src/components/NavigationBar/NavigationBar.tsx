@@ -5,21 +5,40 @@ import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import { NavigationBarProps } from './NavigationBar.types';
 
-export const NavigationBar = ({ items, variant, itemsVariant, onRequestClose, sidekickLookup }: NavigationBarProps) => {
+export const NavigationBar = ({
+  items,
+  variant,
+  itemsVariant,
+  onRequestClose,
+  sidekickLookup,
+  color
+}: NavigationBarProps) => {
   if (!items?.length) return null;
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
   const theme = useTheme();
   const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="NavigationBar" menuBreakpoint={menuBreakpoint}>
+      <Root
+        {...sidekick(sidekickLookup)}
+        variant={variant}
+        data-testid="NavigationBar"
+        menuBreakpoint={menuBreakpoint}
+        sx={color ? { backgroundColor: `${color}.main`, color: `${color}.contrastText` } : null}>
         <Grid container sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
             <Grid item key={item.id} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>
-              <ContentModule {...item} onClick={onRequestClose} onRequestClose={onRequestClose} />
+              <ContentModule
+                {...item}
+                onClick={onRequestClose}
+                color={item?.color ?? 'inherit'}
+                {...(item?.__typename == 'NavigationItem' && {
+                  onRequestClose
+                })}
+              />
             </Grid>
           ))}
         </Grid>
