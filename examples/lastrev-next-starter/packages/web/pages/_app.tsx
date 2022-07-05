@@ -1,6 +1,5 @@
 import type { AppProps } from 'next/app';
 import React from 'react';
-import * as Sentry from '@sentry/nextjs';
 import Head from 'next/head';
 import Script from 'next/script';
 import { ThemeProvider } from '@mui/system';
@@ -14,45 +13,6 @@ import theme from '@lrns/components/src/theme';
 import { createEmotionCache } from '../src/createEmotionCache';
 
 const clientSideEmotionCache = createEmotionCache();
-
-const lrns = require('../../../lastrev.json');
-
-import {
-  Breadcrumbs,
-  BrowserClient,
-  Dedupe,
-  defaultStackParser,
-  FunctionToString,
-  getCurrentHub,
-  GlobalHandlers,
-  HttpContext,
-  makeFetchTransport,
-  TryCatch
-} from '@sentry/browser';
-
-const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
-
-const client = new BrowserClient({
-  // all options you normally pass to Sentry.init
-  dsn: SENTRY_DSN,
-  tracesSampleRate: 1.0,
-
-  transport: makeFetchTransport,
-  stackParser: defaultStackParser,
-  // Only the integrations listed here will be used
-  integrations: [
-    new Breadcrumbs(),
-    new Dedupe(),
-    new GlobalHandlers(),
-    new FunctionToString(),
-    new HttpContext(),
-    new TryCatch()
-  ]
-});
-
-getCurrentHub().bindClient(client);
-
-Sentry.setTag('lrns_version', lrns?.app?.version);
 
 interface MyAppProps extends AppProps {
   emotionCache?: EmotionCache;
