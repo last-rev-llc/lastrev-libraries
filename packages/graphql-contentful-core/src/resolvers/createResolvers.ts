@@ -34,6 +34,17 @@ const createResolvers = ({
         ctx.preview = preview;
         ctx.path = path;
 
+        const loadPath = ctx.loadEntriesForPath!;
+
+        const pathEntries = await loadPath(path, ctx, site);
+
+        if (pathEntries) {
+          ctx.pathEntries = pathEntries;
+          return pathEntries.reduce((acc, curr) => (curr ? curr : acc));
+        }
+
+        // keeping old behavior for now
+
         if (!ctx.pathReaders) return null;
 
         const pathReader = ctx.pathReaders[preview ? 'preview' : 'prod'];
