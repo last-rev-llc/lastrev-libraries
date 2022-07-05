@@ -1,5 +1,15 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.2
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-path-util@0.1.11
+  - @last-rev/graphql-contentful-helpers@0.2.5
+  - @last-rev/timer@0.1.3
+
 ## 0.3.1
 
 ### Patch Changes

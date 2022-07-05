@@ -47,7 +47,8 @@ export const Hero = (props: HeroProps) => {
           position: background ? 'relative' : undefined,
           overflow: background ? 'hidden' : undefined,
           py: 4
-        }}>
+        }}
+      >
         {background ? (
           <BackgroundRoot
             sx={{
@@ -57,7 +58,8 @@ export const Hero = (props: HeroProps) => {
               left: 0,
               width: '100%',
               height: '100%'
-            }}>
+            }}
+          >
             <ContentModule
               __typename="Media"
               key={background?.id}
@@ -85,7 +87,8 @@ export const Hero = (props: HeroProps) => {
                       data-testid="Hero-title"
                       variant="h1"
                       component="h1"
-                      {...sidekick(sidekickLookup?.title)}>
+                      {...sidekick(sidekickLookup?.title)}
+                    >
                       {title}
                     </Typography>
                   ) : null}
@@ -94,7 +97,8 @@ export const Hero = (props: HeroProps) => {
                       data-testid="Hero-subtitle"
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
-                      {...sidekick(sidekickLookup?.subtitle)}>
+                      {...sidekick(sidekickLookup?.subtitle)}
+                    >
                       {subtitle}
                     </Typography>
                   ) : null}

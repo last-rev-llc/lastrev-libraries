@@ -1,5 +1,19 @@
 # @last-rev/cli
 
+## 0.4.1
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+- Updated dependencies [3ba98cd]
+  - @last-rev/app-config@0.2.1
+  - @last-rev/contentful-fragment-gen@0.2.1
+  - @last-rev/contentful-import-export@0.1.4
+  - @last-rev/contentful-sync-to-fs@0.3.2
+  - @last-rev/graphql-contentful-core@0.3.0
+  - @last-rev/testing-library@0.1.10
+
 ## 0.4.0
 
 ### Minor Changes
