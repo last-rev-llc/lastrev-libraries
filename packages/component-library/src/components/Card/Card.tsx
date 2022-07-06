@@ -91,7 +91,7 @@ export const Card = (inProps: CardProps) => {
           </CardContent>
         ) : null}
         {loading ? (
-          <CardContent>
+          <CardContent data-testid="Card-ContentSkeleton">
             <Typography variant="h3" component="h3">
               <Skeleton width="100%" />
             </Typography>

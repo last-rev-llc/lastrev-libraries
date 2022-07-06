@@ -36,6 +36,7 @@ const CollectionFilters = ({
                   label={label || id}
                   value={filter[id] ?? ''}
                   onChange={handleChange(id)}
+                  data-testid="CollectionFilters-text"
                 />
               );
               break;
@@ -51,7 +52,7 @@ const CollectionFilters = ({
                   value={filter[id] ?? ''}
                   SelectProps={{ MenuProps: { disableScrollLock: true } }}
                   onChange={handleChange(id)}
-                >
+                  data-testid="CollectionFilters-select">
                   {allOptions
                     ? allOptions[id]?.map(({ label, value }) => (
                         <MenuItem key={label} value={value ?? ''}>
@@ -94,6 +95,7 @@ const CollectionFilters = ({
                       fullWidth
                       margin="normal"
                       value={filter[id] ?? ''}
+                      data-testid="CollectionFilters-autocomplete"
                     />
                   )}
                 />
@@ -112,11 +114,11 @@ const CollectionFilters = ({
       </Grid>
       <Grid item>
         <Button
+          data-testid="CollectionFilters-clear"
           onClick={() => {
             setFilter({});
             if (onClearFilter) onClearFilter();
-          }}
-        >
+          }}>
           Clear
         </Button>
       </Grid>

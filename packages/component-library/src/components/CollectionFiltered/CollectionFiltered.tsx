@@ -74,7 +74,9 @@ export const CollectionFiltered = ({
       revalidateOnFocus: false
     }
   );
+  console.log('data => ', data);
   const options = data?.length ? data[0]?.options : defaultOptions;
+  console.log('options => ', options);
   const items = data?.reduce((accum: CardProps[], page: any) => [...accum, ...(page?.items || [])], []) ?? defaultItems;
   const isLoadingInitialData = !data && !error;
   const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined');
@@ -107,9 +109,10 @@ export const CollectionFiltered = ({
     .filter((x) => !!x)
     .join(', ');
 
+  console.log('itemsWithVariant => ', { itemsWithVariant, error });
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} variant={variant}>
+      <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionFiltered">
         <ContentContainer maxWidth={itemsWidth}>
           <Grid container spacing={itemsSpacing ?? 0} sx={{ flexDirection: 'column', alignItems: 'center' }}>
             <Grid item container sx={{ justifyContent: 'flex-end' }}>
@@ -125,7 +128,7 @@ export const CollectionFiltered = ({
             </Grid>
             {!itemsWithVariant?.length && !isEmpty(filter) && !loading ? (
               <Grid item>
-                <Typography variant="h4">
+                <Typography variant="h4" data-testid="CollectionFiltered-NoResultsDisplay">
                   No results for filter: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
                 </Typography>
               </Grid>
@@ -133,7 +136,7 @@ export const CollectionFiltered = ({
             {!itemsWithVariant?.length && error ? (
               <Grid item>
                 <Typography variant="h4">Error searching for: {parsedFilters}, try again!</Typography>
-                <Button variant="contained" onClick={() => refetch()}>
+                <Button variant="contained" onClick={() => refetch()} data-testid="CollectionFiltered-TryAgainButton">
                   {'TRY AGAIN'}
                 </Button>
               </Grid>
@@ -142,7 +145,7 @@ export const CollectionFiltered = ({
               <>
                 <Grid item container>
                   <Grid item xs={12}>
-                    <Typography variant="h4">
+                    <Typography variant="h4" data-testid="CollectionFiltered-ResultsDisplay">
                       {parsedFilters ? `Showing results for: ${parsedFilters}` : 'Showing results for: All'}
                     </Typography>
                   </Grid>
@@ -151,6 +154,7 @@ export const CollectionFiltered = ({
                     // background={background}
                     variant={'three-per-row'}
                     contentSpacing={itemsSpacing ?? 0}
+                    testId="CollectionFiltered-ItemsSection"
                   />
                 </Grid>
               </>
@@ -160,8 +164,8 @@ export const CollectionFiltered = ({
                 <Grid item container>
                   {isLoadingMore && (itemsWithVariant?.length ?? 0) < limit ? (
                     <Grid item xs={12}>
-                      <Typography variant="h4">
-                        Showing results for: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
+                      <Typography variant="h4" data-testid="CollectionFiltered-LoadingResultsDisplay">
+                        Showing results for: {parsedFilters ? parsedFilters : <Skeleton width={100} data-testid="" />}
                       </Typography>
                     </Grid>
                   ) : null}
@@ -174,13 +178,17 @@ export const CollectionFiltered = ({
                     }))}
                     variant={'three-per-row'}
                     contentSpacing={itemsSpacing ?? 0}
+                    testId="CollectionFiltered-LoadingItemsSection"
                   />
                 </Grid>
               </>
             ) : null}
             {!isReachingEnd ? (
               <Grid item sx={{ padding: 2 }}>
-                <Button variant="contained" onClick={() => setSize(size + 1)}>
+                <Button
+                  variant="contained"
+                  onClick={() => setSize(size + 1)}
+                  data-testid="CollectionFiltered-LoadMoreButton">
                   {loadMoreText ?? 'LOAD MORE'}
                 </Button>
               </Grid>
