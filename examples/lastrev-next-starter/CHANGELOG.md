@@ -1,6 +1,6 @@
 # @last-rev/next-starter
 
-## Next
+## 2.1.0
 
 Added:
 
