@@ -4,16 +4,21 @@ import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 import ArtDirectedImage from '../ArtDirectedImage';
-import sidekick from '../../utils/sidekick';
-import { useThemeProps } from '@mui/system';
+import sidekick from '@last-rev/contentful-sidekick-util';
+
 import { MediaProps, MediaVideoProps } from './Media.types';
+import useThemeProps from '../../utils/useThemeProps';
+// import dynamic from 'next/dynamic';
+
+// const Image = dynamic(() => import('../Image'));
+// const ArtDirectedImage = dynamic(() => import('../ArtDirectedImage'));
 
 const Media = (inProps: MediaProps & MediaVideoProps) => {
   const props = useThemeProps({
     name: 'Media',
     props: inProps
   });
-  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup } = props;
+  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup, nextImageOptimization } = props;
   // TODO: Add support for video
   const image = file;
   const alt = title;
@@ -57,7 +62,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           file={file}
           fileTablet={fileTablet}
           fileMobile={fileMobile}
-          data-testid={testId || 'Media'}
+          testId={testId || 'Media'}
         />
       </ErrorBoundary>
     );
@@ -66,11 +71,12 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
     <ErrorBoundary>
       <Root
         {...sidekick(sidekickLookup)}
-        {...props}
         {...image}
+        {...props}
+        nextImageOptimization={nextImageOptimization}
         src={image?.url}
         alt={alt}
-        data-testid={testId || 'Media'}
+        testId={testId || 'Media'}
       />
     </ErrorBoundary>
   );
@@ -78,31 +84,38 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
 
 // Define the pieces of the Media customizable through Theme
 
+const shouldForwardProp = (prop: string) =>
+  prop !== 'variant' &&
+  prop !== 'fileName' &&
+  prop !== 'priority' &&
+  prop !== 'sidekickLookup' &&
+  prop !== 'nextImageOptimization';
+
 const Root = styled(Image, {
   name: 'Media',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp: (prop: string) => prop !== 'variant' && prop !== 'fileName' && prop !== 'sidekickLookup',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 
 const ArtDirectedRoot = styled(ArtDirectedImage, {
   name: 'Media',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 
 const EmbedRoot = styled('iframe', {
   name: 'Media',
   slot: 'EmbedRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 
 const VideoRoot = styled('video', {
   name: 'Media',
   slot: 'VideoRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 

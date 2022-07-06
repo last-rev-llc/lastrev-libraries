@@ -5,13 +5,15 @@ fragment Link_BaseFragment on Link {
   variant
   icon
   iconPosition
+  color
 }
 
 fragment Link_CardFragment on Link {
   ...Content_BaseFragment
-  #text
+  text
   href
-  #variant
-  #icon
-  #iconPosition
+  variant
+  icon
+  iconPosition
+  color
 }

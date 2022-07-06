@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import Accordion from '../Accordion';
 import { CollectionAccordionProps } from './CollectionAccordion.types';
 

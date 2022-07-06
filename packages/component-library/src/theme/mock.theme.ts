@@ -352,6 +352,7 @@ const theme = createAppTheme(
           }
         }
       },
+
       MuiLink: {
         styleOverrides: {
           root: {

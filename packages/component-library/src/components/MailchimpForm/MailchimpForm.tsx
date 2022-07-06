@@ -4,11 +4,11 @@ import { useForm, Controller } from 'react-hook-form';
 import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
-import Media from '../Media';
+
 import ContentModule from '../ContentModule';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import snakeCase from 'lodash/snakeCase';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import { CustomFormProps, MailchimpFormProps, SubscribeFormData } from './MailchimpForm.types';
 const url = '//strong365.us3.list-manage.com/subscribe/post?u=d86f5abb669bd78efab8bbf17&id=a842d73410';
@@ -101,7 +101,7 @@ const CustomForm = ({
             ))}
           </FormControl>
         </SubmitContainer>
-        <FormImage {...sidekick(sidekickLookup?.image)} {...getFirstOfArray(image)} />
+        <FormImage __typename="Media" {...sidekick(sidekickLookup?.image)} {...getFirstOfArray(image)} />
         <Grid
           container
           sx={{
@@ -208,7 +208,7 @@ const ContentContainer = styled(Container, {
   paddingBottom: theme.spacing(8)
 }));
 
-const FormImage = styled(Media, {
+const FormImage = styled(ContentModule, {
   name: 'Form',
   slot: 'Image',
   overridesResolver: (_, styles) => [styles.formImage]

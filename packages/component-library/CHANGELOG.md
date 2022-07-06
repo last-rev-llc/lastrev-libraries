@@ -1,5 +1,26 @@
 # @last-rev/component-library
 
+## 0.5.0
+
+### Minor Changes
+
+- 3ba98cd: July updates
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- 3ba98cd: Improve bundle size of components
+  Improve forwarded props to remove errors
+  Remove framer-motion dependency from ContentModule
+- 211f24a: Added next/script to SEO
+- 3ba98cd: Added more slots for Card, Hero, Header, Link. Removed default styles for text color.
+- 3ba98cd: Make Header and NavigationItem links use color inherit as a default
+  Fix as prop for Link
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-sidekick-util@0.1.1
+  - @last-rev/rollup-config@0.1.4
+  - @last-rev/testing-library@0.1.10
+
 ## 0.4.7
 
 ### Patch Changes

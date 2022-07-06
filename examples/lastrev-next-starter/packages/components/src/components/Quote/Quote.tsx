@@ -3,7 +3,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import ErrorBoundary from '../ErrorBoundary';
-import Media, { MediaProps } from '../Media';
+import { MediaProps } from '../Media';
+import ContentModule from '../ContentModule';
 import Link from '../Link';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import { QuoteProps } from './Quote.types';
@@ -61,13 +62,13 @@ const AuthorRoot = styled(Box, {
   overridesResolver: (_, styles) => [styles.authorRoot]
 })``;
 
-const MediaItem = styled(Media, {
+const MediaItem = styled(ContentModule, {
   name: 'Quote',
   slot: 'MediaItem',
   overridesResolver: (_, styles) => [styles.mediaItem]
 })<MediaProps>(() => ({}));
 
-const AuthorImage = styled(Media, {
+const AuthorImage = styled(ContentModule, {
   name: 'Quote',
   slot: 'AuthorImage',
   overridesResolver: (_, styles) => [styles.authorImage]

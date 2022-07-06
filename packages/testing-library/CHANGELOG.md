@@ -1,5 +1,11 @@
 # @last-rev/testing-library
 
+## 0.1.10
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+
 ## 0.1.9
 
 ### Patch Changes

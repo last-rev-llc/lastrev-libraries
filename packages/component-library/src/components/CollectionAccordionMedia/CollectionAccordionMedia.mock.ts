@@ -1,4 +1,4 @@
-import { CollectionAccordionMediaProps } from './CollectionAccordionMedia';
+import { CollectionAccordionMediaProps } from './CollectionAccordionMedia.types';
 import mockAccordion from '../Accordion/Accordion.mock';
 
 export default (): CollectionAccordionMediaProps => ({

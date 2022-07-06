@@ -4,6 +4,7 @@ import mockTheme from '../../theme/mock.theme';
 import { CollectionFilteredProps, Settings, Options, FilterSetting } from './CollectionFiltered.types';
 import { mediaMock } from '../Media/Media.mock';
 
+
 const items = [
   { ...mockCard(), variant: 'media-and-text', title: 'Card one title' },
   { ...mockCard(), variant: 'media-and-text', title: 'Card two title' },

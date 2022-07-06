@@ -29,5 +29,6 @@ export default config({
     './src/components/Text/index.ts'
   ],
   babelHelpers: 'runtime',
-  preserveModules: true
+  preserveModules: true,
+  disableTerser: true
 });

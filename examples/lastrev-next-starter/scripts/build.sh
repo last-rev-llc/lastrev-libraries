@@ -1,12 +1,13 @@
 #!/bin/bash
-
 function cleanup() {
-  rv=$?
-  sh "$PWD/scripts/post_build.sh"
-  exit $rv
+    rv=$?
+    sh "$PWD/scripts/post_build.sh"
+    exit $rv
 }
 
 trap "cleanup" EXIT
+
+yarn propagate:env
 
 echo "Building..."
 sh "$PWD/scripts/pre_build.sh"

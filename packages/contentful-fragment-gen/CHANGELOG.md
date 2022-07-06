@@ -1,5 +1,13 @@
 # @last-rev/contentful-fragment-gen
 
+## 0.2.1
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/timer@0.1.3
+
 ## 0.2.0
 
 ### Minor Changes

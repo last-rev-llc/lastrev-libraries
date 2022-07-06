@@ -1,5 +1,11 @@
 # @last-rev/rollup-config
 
+## 0.1.4
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+
 ## 0.1.3
 
 ### Patch Changes

@@ -2,7 +2,6 @@ import { lorem } from 'faker';
 import { CollectionProps } from './Collection.types';
 import mockCard from '../Card/Card.mock';
 import { complexMock } from '../Text/Text.mock';
-import mockTheme from '../../theme/mock.theme';
 
 export default (): CollectionProps => ({
   id: '1',
@@ -11,8 +10,7 @@ export default (): CollectionProps => ({
   itemsSpacing: 2,
   variant: 'three-per-row',
   items: [{ ...mockCard() }, { ...mockCard(), title: lorem.sentence() }, { ...mockCard() }, { ...mockCard() }],
-  itemsVariant: 'standard-round',
-  theme: [mockTheme]
+  itemsVariant: 'standard-round'
 });
 
 export const collectionWithIntroText: CollectionProps = {
@@ -24,6 +22,5 @@ export const collectionWithIntroText: CollectionProps = {
   items: [{ ...mockCard() }, { ...mockCard(), title: lorem.sentence() }, { ...mockCard() }, { ...mockCard() }],
   itemsVariant: 'standard-round',
   // itemsWidth: 'xl',
-  introText: complexMock(),
-  theme: [mockTheme]
+  introText: complexMock()
 };

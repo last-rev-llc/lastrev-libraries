@@ -1,4 +1,4 @@
-import { Theme, Breakpoint } from '@mui/material';
+import { Breakpoint } from '@mui/material';
 import { MediaProps } from '../Media';
 import { TextProps } from '../Text';
 
@@ -21,7 +21,6 @@ export interface SectionProps {
     gridItems?: Array<any & { xs: any; sm: any; md: any }>;
   };
   sidekickLookup?: any;
-  theme?: [Theme];
 }
 
 export interface SectionClasses {

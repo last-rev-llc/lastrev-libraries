@@ -1,5 +1,19 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.0
+
+### Minor Changes
+
+- 3ba98cd: July updates
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+- Updated dependencies [3ba98cd]
+  - @last-rev/graphql-contentful-core@0.3.0
+  - @last-rev/rollup-config@0.1.4
+
 ## 0.0.16
 
 ### Patch Changes

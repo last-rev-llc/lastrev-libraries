@@ -3,6 +3,8 @@ import { MediaProps } from '../Media';
 
 export interface HeaderProps {
   variant?: 'elevation' | 'outlined' | undefined;
+  color?: any;
+  colorScheme?: string;
   logo?: MediaProps;
   logoUrl?: string;
   navigationItems?: CollectionProps[];
