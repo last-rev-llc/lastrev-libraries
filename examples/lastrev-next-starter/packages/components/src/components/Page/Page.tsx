@@ -4,15 +4,16 @@ import ContentModule from '@last-rev/component-library/dist/components/ContentMo
 const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop/BackToTop'));
 import { Page as PageContent } from '@lrns/graphql-sdk/dist';
 import { styled } from '@mui/material/styles';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
 export interface PageProps extends PageContent {}
 
-const Page = ({ header, hero, contents, footer, disableBackToTop }: PageProps) => {
+const Page = ({ header, hero, contents, footer, disableBackToTop, sidekickLookup }: PageProps) => {
   return (
     <>
       {header ? <ContentModule {...(header as any)} /> : null}
-      <Main>
-        {hero ? <ContentModule {...(hero as any)} /> : null}
+      {hero ? <ContentModule {...(hero as any)} /> : null}
+      <Main {...sidekick({ ...sidekickLookup, fieldName: 'contents' })}>
         {contents?.map((content: any) => (
           <ContentModule key={content?.id} {...content} component="section" />
         ))}
