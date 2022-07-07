@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.1
+
+### Patch Changes
+
+- 5bd5e96: Fix Card using Link component directly
+
 ## 0.5.0
 
 ### Minor Changes

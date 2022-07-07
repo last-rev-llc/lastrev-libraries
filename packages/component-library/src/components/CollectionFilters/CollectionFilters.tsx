@@ -52,7 +52,8 @@ const CollectionFilters = ({
                   value={filter[id] ?? ''}
                   SelectProps={{ MenuProps: { disableScrollLock: true } }}
                   onChange={handleChange(id)}
-                  data-testid="CollectionFilters-select">
+                  data-testid="CollectionFilters-select"
+                >
                   {allOptions
                     ? allOptions[id]?.map(({ label, value }) => (
                         <MenuItem key={label} value={value ?? ''}>
@@ -118,7 +119,8 @@ const CollectionFilters = ({
           onClick={() => {
             setFilter({});
             if (onClearFilter) onClearFilter();
-          }}>
+          }}
+        >
           Clear
         </Button>
       </Grid>
