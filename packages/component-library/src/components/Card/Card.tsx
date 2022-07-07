@@ -14,7 +14,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 import ErrorBoundary from '../ErrorBoundary';
 
-import Link, { LinkProps } from '../Link';
+import { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import getFirstOfArray from '../../utils/getFirstOfArray';
@@ -67,8 +67,7 @@ export const Card = (inProps: CardProps) => {
                 {...sidekick(sidekickLookup?.subtitle)}
                 variant="h4"
                 component="h4"
-                data-testid="Card-subtitle"
-              >
+                data-testid="Card-subtitle">
                 {subtitle}
               </Typography>
             ) : null}
@@ -84,7 +83,7 @@ export const Card = (inProps: CardProps) => {
             {actions?.length ? (
               <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions">
                 {actions?.map((link) => (
-                  <Link key={link.id} {...link} />
+                  <ContentModule __typename="Link" key={link.id} {...link} />
                 ))}
               </CardActions>
             ) : null}
@@ -130,7 +129,7 @@ const CardTag = ({ href, text }: LinkProps) =>
     </CardTagRoot>
   );
 
-const CardTagRoot = styled(Link, { name: 'Card', slot: 'TagRoot' })``;
+const CardTagRoot = styled(ContentModule, { name: 'Card', slot: 'TagRoot' })``;
 
 const Root = styled(MuiCard, {
   name: 'Card',
@@ -152,7 +151,7 @@ const CardTags = styled(Box, {
   padding: ${({ theme }) => theme.spacing(2)};
 `;
 
-const CardLink = styled(Link, {
+const CardLink = styled(ContentModule, {
   name: 'Card',
   slot: 'CardLink',
   shouldForwardProp: (prop) => prop !== 'variant',
