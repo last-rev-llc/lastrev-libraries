@@ -109,68 +109,6 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     };
   };
 
-  // TODO: linkedby loader:
-
-  // const getByLinkedBy = async ({ contentType, linkingField, entryId }) => {
-  //   try {
-  //     const { items } = await client.getEntries({
-  //       locale: '*',
-  //       include: 0,
-  //       content_type: contentType,
-  //       [`fields.${linkingField}.sys.id[in]`]: values.join(',')
-  //     });
-
-  //     return items;
-  //   } catch (err) {
-  //     console.error(err);
-  //     return [];
-  //   }
-  // };
-
-  // const run = async () => {
-  //   const items = await getByLinkedBy({
-  //     entryId: '25t08LoN1kHj5yY2SKY04V',
-  //     contentType: 'pageService',
-  //     linkingField: 'conditionCategory'
-  //   });
-  //   // const items = await getByTfv(
-  //   //   {
-  //   //     type: 'pageGeneral',
-  //   //     field: 'slug',
-  //   //     value: 'alan-kaplan'
-  //   //   },
-  //   //   {
-  //   //     type: 'pageGeneral',
-  //   //     field: 'slug',
-  //   //     value: 'home'
-  //   //   },
-  //   //   {
-  //   //     type: 'pageGeneral',
-  //   //     field: 'slug',
-  //   //     value: 'kids'
-  //   //   },
-  //   //   {
-  //   //     type: 'pageLocation',
-  //   //     field: 'slug',
-  //   //     value: 'bellin-health-301'
-  //   //   },
-  //   //   {
-  //   //     type: 'pageLocation',
-  //   //     field: 'slug',
-  //   //     value: 'marshfield-clinic-245'
-  //   //   },
-  //   //   {
-  //   //     type: 'pageService',
-  //   //     field: 'serviceName',
-  //   //     value: 'OrthoCare Now'
-  //   //   }
-  //   // );
-
-  //   items.map((item) => {
-  //     console.log(item.fields && item.fields.slug['en-US']);
-  //   });
-  // };
-
   const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
     return async (keys) => {
       const fvlRequests = keys.reduce((acc, { contentType, field, value, preview }) => {
