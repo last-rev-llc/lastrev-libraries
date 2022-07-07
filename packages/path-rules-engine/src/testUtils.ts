@@ -34,6 +34,13 @@ export const entryMocks = {
       },
       {
         sys: {
+          id: 'category2',
+          type: 'Link',
+          linkType: 'Entry'
+        }
+      },
+      {
+        sys: {
           id: 'noncategory1',
           type: 'Link',
           linkType: 'Entry'
@@ -44,6 +51,9 @@ export const entryMocks = {
   categoryWithSubcategory: createMockEntry('category1', 'category', {
     slug: 'category-1',
     subCategories: [{ sys: { id: 'subcategory1', type: 'Link', linkType: 'Entry' } }]
+  }),
+  categoryWithoutSubcategory: createMockEntry('category2', 'category', {
+    slug: 'category-2'
   }),
   subcategory: createMockEntry('subcategory1', 'category', { slug: 'sub-category-1' }),
   noncategory: createMockEntry('noncategory1', 'noncategory', { slug: 'non-category-1' }),

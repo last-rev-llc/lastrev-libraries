@@ -1,14 +1,45 @@
-import { ApolloContext, PathData2, PathRuleConfig } from 'packages/types';
-// import { PathRule } from './types';
-// import PathRuleParser from './PathRuleParser';
+import { ApolloContext, PathData2, PathFilterFunction, PathRuleConfig } from 'packages/types';
+import traversePathRule, { PathVisitor } from './traversePathRule';
+import { PathRule } from './types';
+import PathRuleParser from './PathRuleParser';
 
-// const parser = new PathRuleParser();
+type IdLookupObject = {
+  rule: string;
+  pathRule: PathRule;
+  rootContentType: string;
+  isCanonical: boolean;
+  filter?: PathFilterFunction;
+};
+
+const createIdLookupObjects = (config: PathRuleConfig): IdLookupObject[] => {
+  return Object.entries(config).reduce((acc, [rootContentType, { filter, rules }]) => {
+    acc.push(
+      ...rules.map(({ rule, isCanonical }) => {
+        const pathRule = parser.parse(rule).PathRule();
+        return {
+          rule,
+          pathRule,
+          rootContentType,
+          isCanonical: !!isCanonical,
+          filter
+        };
+      })
+    );
+    return acc;
+  }, [] as IdLookupObject[]);
+};
+
+type IdToPathsContext = {};
+
+const idToPathsLoaderVisitor: PathVisitor<IdToPathsContext> = {};
+
+const parser = new PathRuleParser();
 
 export default class IdToPathsLoader {
-  // private readonly _pathRule: PathRule;
+  private readonly _lookups: IdLookupObject[];
 
-  constructor(_config: PathRuleConfig) {
-    // this._pathRule = parser.parse
+  constructor(config: PathRuleConfig) {
+    this._lookups = createIdLookupObjects(config);
   }
 
   async loadPathsFromId(_id: string, _ctx: ApolloContext, _site?: string): Promise<PathData2[]> {
