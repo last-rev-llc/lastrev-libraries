@@ -100,7 +100,7 @@ const nextConfig = {
       disableClientWebpackPlugin: true
     }
   }),
-  webpack: (config) => {
+  webpack: (config, { webpack }) => {
     // Important: return the modified config
     config.resolve.alias = {
       ...config.resolve.alias,
@@ -108,6 +108,12 @@ const nextConfig = {
       '@emotion/react': path.resolve(__dirname, '../../node_modules', '@emotion/react'),
       '@mui': path.resolve(__dirname, '../../node_modules/@mui')
     };
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        __SENTRY_DEBUG__: false,
+        __SENTRY_TRACING__: false
+      })
+    );
     return config;
   }
 };
