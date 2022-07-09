@@ -70,6 +70,7 @@
       "outputs": []
     },
     "@lrns/graphql-sdk#build": {
+      "cache": false,
       "dependsOn": ["@lrns/graphql-sdk#gql:healthcheck", "^build"],
       "outputs": ["dist/**", "schema.graphql"]
     },

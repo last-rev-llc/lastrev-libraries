@@ -104,9 +104,13 @@ const nextConfig = {
     // Important: return the modified config
     config.resolve.alias = {
       ...config.resolve.alias,
-      'react': path.resolve(__dirname, '../../node_modules', 'react'),
       '@emotion/react': path.resolve(__dirname, '../../node_modules', '@emotion/react'),
-      '@mui': path.resolve(__dirname, '../../node_modules/@mui')
+      '@mui': path.resolve(__dirname, '../../node_modules/@mui'),
+
+      // 'react': path.resolve(__dirname, '../../node_modules', 'react'),
+      'react': path.resolve(__dirname, '../../node_modules', 'preact/compat'),
+      'react-dom/test-utils': path.resolve(__dirname, '../../node_modules', 'preact/test-utils'),
+      'react-dom': path.resolve(__dirname, '../../node_modules', 'preact/compat')
     };
     config.plugins.push(
       new webpack.DefinePlugin({
