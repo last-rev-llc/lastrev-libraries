@@ -4,7 +4,7 @@
 # The fingerprint hash that Turbo uses ignores anything ignored in the .gitignore file
 # We want the cms-sync data to be part of the hash for the graphql-runner package
 # This way when content changes packages depending on graphql-runner will be invalidated
-echo "Removing cms-sync from graphql-runner .gitignore"
+#echo "Removing cms-sync from graphql-runner .gitignore"
 
 RUNNER_FOLDER=$PWD/packages/graphql-runner
 GITIGNORE=$RUNNER_FOLDER/.gitignore
@@ -17,8 +17,8 @@ if [ -f "$GITIGNORE" ]; then
 else
     echo ".gitignore does not exist. Trying to fix..."
     if [ -f "$NOT_GITIGNORE" ]; then
-        mv ${NOT_GITIGNORE} ${GITIGNORE} || echo "Failed to fix from !gitignore"
-        # echo "Not using cms-sync for cache"
+        # mv ${NOT_GITIGNORE} ${GITIGNORE} || echo "Failed to fix from !gitignore"
+        echo "Not using cms-sync for cache"
     else
         echo "!gitignore does not exist. Please fix manually."
         echo "Web build cache hash will not include cms-sync folder"

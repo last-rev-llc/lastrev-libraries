@@ -2,7 +2,6 @@ schema:
   - 'schema.graphql'
 documents:
   - './src/**/*.graphql'
-  - './src/**/*.ts'
   - '../components/**/*.graphql'
 generates:
   ./src/generated/sdk.ts:

@@ -10,7 +10,7 @@ trap "cleanup" EXIT
 yarn propagate:env
 
 echo "Building..."
-sh "$PWD/scripts/pre_build.sh"
+#sh "$PWD/scripts/pre_build.sh"
 
 echo "Syncing CMS data.."
 yarn turbo:sync:cms --output-logs=new-only

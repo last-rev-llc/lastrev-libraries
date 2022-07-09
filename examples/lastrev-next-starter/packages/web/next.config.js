@@ -4,6 +4,7 @@ const withPlugins = require('next-compose-plugins');
 const withTM = require('next-transpile-modules')(['@lrns/components', '@last-rev/component-library']);
 const { withSentryConfig } = require('@sentry/nextjs');
 
+const withPreact = require('next-plugin-preact');
 // Allow bundle analysis via ANALYZE_BUNDLE env variable
 const enableAnalyzer = !!(process.env.ANALYZE_BUNDLE && process.env.ANALYZE_BUNDLE.toLowerCase() === 'true');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
@@ -107,10 +108,7 @@ const nextConfig = {
       '@emotion/react': path.resolve(__dirname, '../../node_modules', '@emotion/react'),
       '@mui': path.resolve(__dirname, '../../node_modules/@mui'),
 
-      // 'react': path.resolve(__dirname, '../../node_modules', 'react'),
-      'react': path.resolve(__dirname, '../../node_modules', 'preact/compat'),
-      'react-dom/test-utils': path.resolve(__dirname, '../../node_modules', 'preact/test-utils'),
-      'react-dom': path.resolve(__dirname, '../../node_modules', 'preact/compat')
+      'react': path.resolve(__dirname, '../../node_modules', 'react')
     };
     config.plugins.push(
       new webpack.DefinePlugin({
@@ -122,4 +120,4 @@ const nextConfig = {
   }
 };
 
-module.exports = withPlugins([[withTM], withBundleAnalyzer, [withSentryConfig]], nextConfig);
+module.exports = withPlugins([withPreact, [withTM], withBundleAnalyzer, [withSentryConfig]], nextConfig);
