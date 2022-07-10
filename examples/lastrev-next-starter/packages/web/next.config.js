@@ -64,6 +64,7 @@ const nextConfig = {
    * @type {import('next').NextConfig}
    */
   experimental: {
+    esmExternals: false,
     images: {
       allowFutureImage: true
     }
