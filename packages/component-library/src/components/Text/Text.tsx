@@ -16,13 +16,10 @@ import TableCell from '@mui/material/TableCell';
 import BLOCKS from './BLOCKS';
 import INLINES from './INLINES';
 import ErrorBoundary from '../ErrorBoundary';
-import Link from '../Link';
 import ContentModule from '../ContentModule';
 
 import { TextLinks, TextProps } from './Text.types';
 import sidekick from '@last-rev/contentful-sidekick-util';
-
-import SafeHTML from '../SafeHTML';
 
 const keyBy = (key: string, xs: any[]) => xs.filter(Boolean).reduce((acc, x) => ({ ...acc, [x[key]]: x }), {});
 
@@ -59,14 +56,19 @@ const renderTypography =
     if (containsHTML(children)) {
       return (
         // Use div as Typograph to use the correct styles and avoid invalid DOM nesting when there embedded entries
-        <Typography component="div" variant={variant} data-testid={`Text-${variant}`}>
-          {children.map((child: any) => {
-            if (isHTML(child)) {
-              return <SafeHTML>{children}</SafeHTML>;
-            }
-            return child;
-          })}
-        </Typography>
+        children.map((child: any) => {
+          if (isHTML(child)) {
+            return (
+              <Typography
+                component="span"
+                variant={variant}
+                data-testid={`Text-html-${variant}`}
+                dangerouslySetInnerHTML={{ __html: child }}
+              />
+            );
+          }
+          return child;
+        })
       );
     }
 
@@ -87,9 +89,9 @@ const createRenderOptions = ({ links, renderNode, renderText }: { links?: TextLi
     renderNode: {
       [INLINES.HYPERLINK]: (_: any, children: any) => {
         return (
-          <Link href={_.data.uri} data-testid={`Text-${INLINES.HYPERLINK}`}>
+          <ContentModule __typename="Link" href={_.data.uri} data-testid={`Text-${INLINES.HYPERLINK}`}>
             {children}
-          </Link>
+          </ContentModule>
         );
       },
       [INLINES.ENTRY_HYPERLINK]: (node: any) => {
@@ -103,9 +105,14 @@ const createRenderOptions = ({ links, renderNode, renderText }: { links?: TextLi
         const id: string = node?.data?.target?.sys?.id;
         const entry = assets[id];
         return (
-          <Link href={entry?.file?.url} target="_blank" rel="noopener noreferrer" data-testid="Text-asset-hyperlink">
+          <ContentModule
+            __typename="Link"
+            href={entry?.file?.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            data-testid="Text-asset-hyperlink">
             {children}
-          </Link>
+          </ContentModule>
         );
       },
       [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
@@ -186,8 +193,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, re
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}
-      >
+        {...props}>
         {documentToReactComponents(
           body?.json,
           createRenderOptions({ links: body?.links, renderNode, ...renderOptions })

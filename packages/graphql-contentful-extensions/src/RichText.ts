@@ -1,30 +1,51 @@
 import { ApolloContext, Mappers } from '@last-rev/types';
 import { Entry, RichTextContent } from 'contentful';
+import { FilterXSS } from 'xss';
 
+const ALLOWED_TAGS = ['div', 'span'];
+const ALLOWED_ATTRIBUTES = ['id', 'style'];
+const bodyXSS = new FilterXSS({
+  whiteList: { ...ALLOWED_TAGS.reduce((accum, key) => ({ ...accum, [key]: ALLOWED_ATTRIBUTES }), {}) },
+  // stripIgnoreTagBody: ['script'],
+  css: false
+});
+
+// const __html = React.useMemo(() => bodyXSS.process(children), [children]);
 export const mappers: Mappers = {
   RichText: {
     RichText: {
       json: async (raw: RichTextContent) => {
-        // Sanitize RichText Contentful JSOn
+        let sanitized = raw; // Sanitize RichText Contentful JSOn
         // It will add extra empty lines almost all the times
-        const { content } = raw;
+        const { content } = sanitized;
         if (content) {
           const last = content[content.length - 1];
           if (last?.nodeType === 'paragraph' && last.content && last.content[0].value == '') {
             content.pop();
           }
-          return {
-            ...raw,
+          sanitized = {
+            ...sanitized,
             content
           };
         }
+        const traverseRichText = (node: any) => {
+          // DFS collect children links
+          if (node?.content?.length) {
+            node.content.forEach(traverseRichText);
+          }
+          if (node?.value?.includes('<')) {
+            node.value = bodyXSS.process(node.value);
+          }
+        };
+
+        traverseRichText(sanitized);
         return raw;
       },
       links: async (raw: any, _args: any, ctx: ApolloContext) => {
         const entriesLinks = new Map();
         const assetsLinks = new Map();
         const entryHyperlinks = new Set();
-        const collectLinks = (node: any) => {
+        const traverseRichText = (node: any) => {
           const {
             data: { target },
             nodeType,
@@ -32,7 +53,7 @@ export const mappers: Mappers = {
           } = node;
           // DFS collect children links
           if (content?.length) {
-            content.forEach(collectLinks);
+            content.forEach(traverseRichText);
           }
 
           if (target?.sys?.type === 'Link') {
@@ -51,7 +72,7 @@ export const mappers: Mappers = {
           }
         };
 
-        collectLinks(raw);
+        traverseRichText(raw);
 
         const [entries, assets] = await Promise.all([
           ctx.loaders.entryLoader.loadMany(

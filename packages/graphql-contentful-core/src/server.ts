@@ -36,7 +36,8 @@ export const getServer = async (config: LastRevAppConfig) => {
     ],
     context: async ({ req }) => createContext({ config, expressReq: req, pathReaders }),
     cors: {
-      origin: ['https://studio.apollographql.com']
+      // TODO: Add CORS options through config
+      origin: ['http://localhost:3000', 'https://studio.apollographql.com']
     }
   });
 
