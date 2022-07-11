@@ -11,25 +11,30 @@ import { LOG_PREFIX } from './constants';
 const options: Options<ItemKey, any, string> = {
   cacheKeyFn: (key: ItemKey) => {
     return key.preview ? `${key.id}-preview` : `${key.id}-prod`;
-  }
+  },
 };
 
-const flvOptions: Options<FVLKey, any, string> = {
+const fvlOptions: Options<FVLKey, any, string> = {
   cacheKeyFn: (key: FVLKey) => {
     const baseKey = `${key.contentType}-${key.field}-${key.value}`;
     return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
-  }
+  },
 };
 
-const isFulFilled = <T>(p: PromiseSettledResult<T>): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
+const isFulFilled = <T>(
+  p: PromiseSettledResult<T>
+): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
 
-const createLoaders = (config: LastRevAppConfig, defaultLocale: string): ContentfulLoaders => {
+const createLoaders = (
+  config: LastRevAppConfig,
+  defaultLocale: string
+): ContentfulLoaders => {
   const prodClient = createClient({
     accessToken: config.contentful.contentDeliveryToken,
     space: config.contentful.spaceId,
     environment: config.contentful.env,
     host: 'cdn.contentful.com',
-    resolveLinks: false
+    resolveLinks: false,
   });
 
   const previewClient = createClient({
@@ -37,7 +42,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     space: config.contentful.spaceId,
     environment: config.contentful.env,
     host: 'preview.contentful.com',
-    resolveLinks: false
+    resolveLinks: false,
   });
 
   const maxBatchSize = config.contentful.maxBatchSize || 1000;
@@ -51,12 +56,19 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     maxBatchSize: number
   ) => {
     const commandString = command.substring(3).toLowerCase();
-    logger.debug(`${LOG_PREFIX} fetchBatchItems() Attempting to fetch ${ids.length} ${commandString} from Contentful`);
+    logger.debug(
+      `${LOG_PREFIX} fetchBatchItems() Attempting to fetch ${ids.length} ${commandString} from Contentful`
+    );
     const chunks = chunk(ids, maxBatchSize);
     const settled = await Promise.allSettled(
       chunks.map(async (idz) => {
-        const query = { 'sys.id[in]': idz.join(','), 'include': 0, 'locale': '*' };
-        return await makeContentfulRequest(client, command, maxBatchSize, query);
+        const query = { 'sys.id[in]': idz.join(','), include: 0, locale: '*' };
+        return await makeContentfulRequest(
+          client,
+          command,
+          maxBatchSize,
+          query
+        );
       })
     );
 
@@ -66,7 +78,9 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
         logger.error(
           `${LOG_PREFIX} fetchBatchItems(). Unable to fetch ${batchSize} ${commandString}. Reason: ${
             p.reason.message
-          } ${(p.reason.details?.errors || []).map((e: any) => `${e.name}: ${e.value}`)}`
+          } ${(p.reason.details?.errors || []).map(
+            (e: any) => `${e.name}: ${e.value}`
+          )}`
         );
         return [];
       }
@@ -74,7 +88,9 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     });
 
     logger.debug(
-      `${LOG_PREFIX} fetchBatchItems() Found ${results.length} ${command.substring(3).toLowerCase()} in Contentful`
+      `${LOG_PREFIX} fetchBatchItems() Found ${results.length} ${command
+        .substring(3)
+        .toLowerCase()} in Contentful`
     );
     return results;
   };
@@ -87,8 +103,13 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
       const [previewKeys, prodKeys] = partition(keys, (k) => k.preview);
       const command = dirname === 'entries' ? 'getEntries' : 'getAssets';
       const [previewItems, prodItems] = await Promise.all([
-        fetchBatchItems(map(previewKeys, 'id'), command, previewClient, maxBatchSize),
-        fetchBatchItems(map(prodKeys, 'id'), command, prodClient, maxBatchSize)
+        fetchBatchItems(
+          map(previewKeys, 'id'),
+          command,
+          previewClient,
+          maxBatchSize
+        ),
+        fetchBatchItems(map(prodKeys, 'id'), command, prodClient, maxBatchSize),
       ]);
 
       // need to return items in same order as list of ids, replacing items not found with null values
@@ -109,42 +130,57 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     };
   };
 
-  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<
+    FVLKey,
+    Entry<any> | null
+  > => {
     return async (keys) => {
-      const fvlRequests = keys.reduce((acc, { contentType, field, value, preview }) => {
-        const clientType = preview ? 'preview' : 'prod';
-        if (!acc[clientType]) {
-          acc[clientType] = {};
+      const fvlRequests = keys.reduce(
+        (acc, { contentType, field, value, preview }) => {
+          // Group values by clientType, contentType and field
+          const clientType = preview ? 'preview' : 'prod';
+          if (!acc[clientType]) {
+            acc[clientType] = {};
+          }
+          if (!acc[clientType][contentType]) {
+            acc[clientType][contentType] = {};
+          }
+          if (!acc[clientType][contentType][field]) {
+            acc[clientType][contentType][field] = [];
+          }
+          acc[clientType][contentType][field].push(value);
+          return acc;
+        },
+        {} as {
+          [clientType: string]: {
+            [contentType: string]: { [field: string]: string[] };
+          };
         }
-        if (!acc[clientType][contentType]) {
-          acc[clientType][contentType] = {};
-        }
-        if (!acc[clientType][contentType][field]) {
-          acc[clientType][contentType][field] = [];
-        }
-        acc[clientType][contentType][field].push(value);
-        return acc;
-      }, {} as { [clientType: string]: { [contentType: string]: { [field: string]: string[] } } });
+      );
 
+      // Map the requests to CMS queries for each clientType and field
       const requests = Object.entries(fvlRequests).reduce(
-        (acc, [clientType, requestObject]) => {
-          const requestObjects = Object.entries(requestObject).reduce((acc, [content_type, fieldValues]) => {
-            Object.entries(fieldValues).forEach(([field, values]) => {
-              acc.push({
-                content_type,
-                field,
-                values: values.join(',')
+        ({ preview, prod }, [clientType, requestObject]) => {
+          const requestObjects = Object.entries(requestObject).reduce(
+            (queries, [content_type, fieldValues]) => {
+              Object.entries(fieldValues).forEach(([field, values]) => {
+                queries.push({
+                  content_type,
+                  field,
+                  values: values.join(','),
+                });
               });
-            });
-            return acc;
-          }, [] as { content_type: string; field: string; values: string }[]);
+              return queries;
+            },
+            [] as { content_type: string; field: string; values: string }[]
+          );
 
           if (clientType === 'preview') {
-            acc.preview.push(...requestObjects);
+            preview.push(...requestObjects);
           } else if (clientType === 'prod') {
-            acc.prod.push(...requestObjects);
+            prod.push(...requestObjects);
           }
-          return acc;
+          return { preview, prod };
         },
         { prod: [], preview: [] } as {
           prod: { content_type: string; field: string; values: string }[];
@@ -152,51 +188,79 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
         }
       );
 
-      const [collectedProdSettled, collectedPreviewSettled] = await Promise.all([
-        Promise.allSettled(
-          requests.prod.map(async ({ content_type, field, values }) => {
-            const { items } = await prodClient.getEntries<any>({
-              content_type,
-              locale: '*',
-              include: 0,
-              [`fields.${field}[in]`]: values
-            });
-            return items;
-          })
-        ),
-        Promise.allSettled(
-          requests.preview.map(async ({ content_type, field, values }) => {
-            const { items } = await previewClient.getEntries<any>({
-              content_type,
-              locale: '*',
-              include: 0,
-              [`fields.${field}[in]`]: values
-            });
-            return items;
-          })
-        )
-      ]);
+      const [collectedProdSettled, collectedPreviewSettled] = await Promise.all(
+        [
+          Promise.allSettled(
+            requests.prod.map(async ({ content_type, field, values }) => {
+              const { items } = await prodClient.getEntries<any>({
+                content_type,
+                locale: '*',
+                include: 0,
+                [`fields.${field}[in]`]: values,
+              });
+              return items;
+            })
+          ),
+          Promise.allSettled(
+            requests.preview.map(async ({ content_type, field, values }) => {
+              const { items } = await previewClient.getEntries<any>({
+                content_type,
+                locale: '*',
+                include: 0,
+                [`fields.${field}[in]`]: values,
+              });
+              return items;
+            })
+          ),
+        ]
+      );
 
       const collectedPreview = collectedPreviewSettled.filter(isFulFilled);
       const collectedProd = collectedProdSettled.filter(isFulFilled);
 
-      const prev = collectedPreview.flatMap((p) => p.value || []);
-      const prod = collectedProd.flatMap((p) => p.value || []);
+      const previewEntries = collectedPreview.flatMap((p) => p.value || []);
+      const productionEntries = collectedProd.flatMap((p) => p.value || []);
+
+      const toKeyStr = ({ preview, field, value, contentType }) =>
+        `preview:${preview}field:${field}value:${value}contentType:${contentType}`;
+
+      const previewResults = previewEntries.reduce((acc, entry) => {
+        const key = toKeyStr({
+          preview: true,
+          field: field,
+          value: entry.fields[field]?.[defaultLocale],
+          contentType: entry.sys.contentType.sys.id,
+        });
+        acc[key] = entry;
+        return acc;
+      }, {});
+
+      const productionResults = productionEntries.reduce((acc, entry) => {
+        const key = toKeyStr({
+          preview: false,
+          field: field,
+          value: entry.fields[field]?.[defaultLocale],
+          contentType: entry.sys.contentType.sys.id,
+        });
+        acc[key] = entry;
+        return acc;
+      }, {});
 
       const result = keys.map(({ preview, field, value, contentType }) => {
-        const arr = preview ? prev : prod;
-        return (
-          arr.find((i: Entry<any>) => {
-            return i.sys.contentType.sys.id === contentType && i.fields[field]?.[defaultLocale] === value;
-          }) || null
-        );
+        const entry = preview
+          ? previewResults[toKeyStr({ preview, field, value, contentType })]
+          : productionResults[toKeyStr({ preview, field, value, contentType })];
+        return entry ?? null;
       });
 
       return result;
     };
   };
 
-  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
+  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<
+    ItemKey,
+    Entry<any>[]
+  > => {
     return async (keys) => {
       logger.debug(
         `${LOG_PREFIX} getBatchEntriesByContentTypeFetcher() Attempting to fetch entries for ${keys.length} content types from Contentful`
@@ -206,11 +270,16 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
         map(keys, (key) =>
           (async () => {
             const { preview, id } = key;
-            return (await makeContentfulRequest(preview ? previewClient : prodClient, 'getEntries', maxBatchSize, {
-              content_type: id,
-              include: 0,
-              locale: '*'
-            })) as Entry<any>[];
+            return (await makeContentfulRequest(
+              preview ? previewClient : prodClient,
+              'getEntries',
+              maxBatchSize,
+              {
+                content_type: id,
+                include: 0,
+                locale: '*',
+              }
+            )) as Entry<any>[];
           })()
         )
       );
@@ -224,9 +293,9 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
           logger.error(
             `${LOG_PREFIX} getBatchEntriesByContentTypeFetcher(). Unable to fetch content type ${
               keys[idx].id
-            }. Reason: ${settledArrOfEntries.reason.message} ${(settledArrOfEntries.reason.details?.errors || []).map(
-              (e: any) => `${e.name}: ${e.value}`
-            )}`
+            }. Reason: ${settledArrOfEntries.reason.message} ${(
+              settledArrOfEntries.reason.details?.errors || []
+            ).map((e: any) => `${e.name}: ${e.value}`)}`
           );
           return [];
         }
@@ -243,29 +312,46 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     };
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
-  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
+  const entryLoader = new DataLoader(
+    getBatchItemFetcher<Entry<any>>('entries'),
+    options
+  );
+  const assetLoader = new DataLoader(
+    getBatchItemFetcher<Asset>('assets'),
+    options
+  );
+  const entriesByContentTypeLoader = new DataLoader(
+    getBatchEntriesByContentTypeFetcher(),
+    options
+  );
   const fetchAllContentTypes = async (preview: boolean) => {
     try {
       const timer = new Timer('Fetched all content types from CMS');
-      const result = await (preview ? previewClient : prodClient).getContentTypes();
+      const result = await (preview
+        ? previewClient
+        : prodClient
+      ).getContentTypes();
       logger.trace(`${LOG_PREFIX} ${timer.end()}`);
       return result.items;
     } catch (err: any) {
-      logger.error(`${LOG_PREFIX} Unable to fetch content types : ${err.message}`);
+      logger.error(
+        `${LOG_PREFIX} Unable to fetch content types : ${err.message}`
+      );
       return [];
     }
   };
 
-  const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), flvOptions);
+  const entryByFieldValueLoader = new DataLoader(
+    getBatchEntriesByFieldValueFetcher(),
+    fvlOptions
+  );
 
   return {
     entryLoader,
     assetLoader,
     entriesByContentTypeLoader,
     entryByFieldValueLoader,
-    fetchAllContentTypes
+    fetchAllContentTypes,
   };
 };
 
