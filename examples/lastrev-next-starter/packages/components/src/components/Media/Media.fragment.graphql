@@ -10,5 +10,6 @@ fragment Media_BaseFragment on Media {
     fileName
     width
     height
+    svgContent
   }
 }
