@@ -1,5 +1,14 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.1
+
+### Patch Changes
+
+- f09f4e5: Add support for inlined svg with svgContent from GQL
+- 2ead5c4: Move XSS filtering from Components to Data Layer
+- Updated dependencies [2ead5c4]
+  - @last-rev/graphql-contentful-core@0.3.1
+
 ## 0.1.0
 
 ### Minor Changes

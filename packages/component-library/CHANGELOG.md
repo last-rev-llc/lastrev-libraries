@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.5.2
+
+### Patch Changes
+
+- f09f4e5: Add support for inlined svg with svgContent from GQL
+- 2ead5c4: Move XSS filtering from Components to Data Layer
+
 ## 0.5.1
 
 ### Patch Changes
