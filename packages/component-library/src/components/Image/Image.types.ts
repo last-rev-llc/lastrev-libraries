@@ -13,6 +13,7 @@ export interface ImageProps extends Omit<NextImageProps, 'src'> {
   sizes?: string;
   q?: number;
   unoptimized?: boolean;
+  svgContent?: string;
 }
 
 //TODO: Use styled for Image
