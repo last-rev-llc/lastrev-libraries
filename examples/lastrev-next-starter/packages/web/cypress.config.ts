@@ -9,6 +9,7 @@ module.exports = defineConfig({
     runMode: 2,
     openMode: 0
   },
+  blockHosts: ['www.googletagmanager.com', '*.google-analytics.com', '*.sentry.io'],
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.
