@@ -1,13 +1,9 @@
 import React from 'react';
 import Head from 'next/head';
-// @ts-ignore-next-line
 import NextImage from 'next/future/image';
 import ErrorBoundary from '../ErrorBoundary';
 import getImgSrcTag from '../../utils/getImgSrcTag';
 import { ImageProps } from './Image.types';
-import dynamic from 'next/dynamic';
-
-const SVG = dynamic(() => import('react-inlinesvg'));
 
 const Image = React.forwardRef<any, ImageProps>((props, ref) => {
   const {
@@ -47,11 +43,19 @@ const Image = React.forwardRef<any, ImageProps>((props, ref) => {
     const isSVG = src?.endsWith('.svg');
 
     let content;
-    if (isSVG && !disableInlineSVG) {
+    if (isSVG && !disableInlineSVG && imageProps.svgContent) {
       content = (
         <>
-          <SVG innerRef={ref} src={src} data-testid={testId} className={className} {...(imageProps as any)} />
-          {imgPreload}
+          <svg
+            ref={ref}
+            className={className}
+            data-testid={testId}
+            height={height}
+            width={width}
+            focusable={false}
+            // TODO: Figure out better a11y support for svg
+            dangerouslySetInnerHTML={{ __html: `<title>${alt}</title>${imageProps.svgContent}` }}
+          />
         </>
       );
     } else if (!isSVG && nextImageOptimization) {
@@ -69,7 +73,6 @@ const Image = React.forwardRef<any, ImageProps>((props, ref) => {
           width={width}
           sizes={imageProps.sizes}
           alt={alt}
-          {...imageProps}
         />
       );
     } else {

@@ -21,6 +21,7 @@
     "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/types": "^0.1.7",
     "contentful": "^8.4.2",
+    "fast-xml-parser": "^4.0.8",
     "graphql": "^15.5.1",
     "graphql-tag": "^2.12.4",
     "lodash": "^4.17.21",

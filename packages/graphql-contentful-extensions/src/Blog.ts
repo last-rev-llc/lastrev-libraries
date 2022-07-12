@@ -3,7 +3,7 @@ import { getLocalizedField, createRichText } from '@last-rev/graphql-contentful-
 import { ApolloContext } from '@last-rev/types';
 import kebabCase from 'lodash/kebabCase';
 import { createPath } from './Page';
-import { getThumbnailURL } from './Media';
+import { getThumbnailURL } from './getVideoEmbedUrl';
 
 // Controls which site the Blogs gets it's global config from
 const BLOGS_SITE_ID = process.env.BLOGS_SITE_ID ?? (process.env.DEFAULT_SITE_ID || process.env.SITE_ID);
