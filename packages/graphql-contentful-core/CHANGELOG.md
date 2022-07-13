@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.3.1
+
+### Patch Changes
+
+- 2ead5c4: Move XSS filtering from Components to Data Layer
+
 ## 0.3.0
 
 ### Minor Changes
