@@ -9,6 +9,7 @@ module.exports = defineConfig({
     runMode: 2,
     openMode: 0
   },
+  blockHosts: ['*.sentry.io'],
   e2e: {
     // We've imported your old cypress plugins here.
     // You may want to clean this up later by importing these.

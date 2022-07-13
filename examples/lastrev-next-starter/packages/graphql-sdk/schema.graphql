@@ -159,6 +159,7 @@ type Hero implements Content {
   image: [Media]
   contentWidth: String
   contentHeight: String
+  overline: String
   actions: [Link]
   background: Media
 }
