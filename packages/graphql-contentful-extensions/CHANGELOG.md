@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.2
+
+### Patch Changes
+
+- 372fab9: Cleanup for forwarded props and svg best practices
+
 ## 0.1.1
 
 ### Patch Changes

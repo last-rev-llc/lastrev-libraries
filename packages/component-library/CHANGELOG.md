@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.3
+
+### Patch Changes
+
+- 372fab9: Cleanup for forwarded props and svg best practices
+
 ## 0.5.2
 
 ### Patch Changes
