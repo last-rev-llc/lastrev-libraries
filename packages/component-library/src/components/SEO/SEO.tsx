@@ -11,7 +11,7 @@ export const SEO = ({ seo = {}, enableAntiFlicker }: SEOProps) => {
       <Head>
         <link rel="shortcut icon" href="/images/favicon.ico" />
 
-        {metatags.map((tag) => (
+        {metatags?.map((tag) => (
           <meta key={tag.name || tag.property} {...tag} />
         ))}
       </Head>

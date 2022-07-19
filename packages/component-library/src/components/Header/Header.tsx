@@ -43,16 +43,14 @@ export const Header = (inProps: HeaderProps) => {
           elevation={trigger ? 4 : 0}
           menuVisible={menuVisible}
           menuBreakpoint={menuBreakpoint}
-          {...props}
-        >
+          {...props}>
           <ContentContainer>
             {logo ? (
               <LogoRoot
                 href={logoUrl}
                 sx={{ height: '100%', py: 3 }}
                 {...sidekick(sidekickLookup?.logo)}
-                aria-label={'Go to homepage'}
-              >
+                aria-label={'Go to homepage'}>
                 <Logo {...logo} priority alt={logo?.title ?? 'Go to homepage'} />
               </LogoRoot>
             ) : null}
@@ -73,8 +71,7 @@ export const Header = (inProps: HeaderProps) => {
                 color="inherit"
                 aria-label="menu"
                 onClick={() => setMenuVisible(!menuVisible)}
-                size="large"
-              >
+                size="large">
                 {menuVisible ? <CloseIcon /> : <MenuIcon />}
               </IconButton>
             </Hidden>
@@ -91,6 +88,7 @@ const shouldForwardProp = (prop: string) =>
   prop !== 'menuBreakpoint' &&
   prop !== 'sidekickLookup' &&
   prop !== 'colorScheme' &&
+  prop !== 'logo' &&
   prop !== 'logoUrl' &&
   prop !== 'navigationItems';
 

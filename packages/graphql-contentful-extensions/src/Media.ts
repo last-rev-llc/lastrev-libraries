@@ -3,7 +3,7 @@ import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
 import fetch from 'node-fetch';
 import { getVideoEmbedUrl } from './getVideoEmbedUrl';
-import { cleanSVG } from './cleanSVG';
+import { cleanSVG } from './utils/cleanSVG';
 
 export const typeMappings = {};
 
