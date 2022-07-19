@@ -31,16 +31,14 @@ export const Collection = ({
         data-testid="Collection"
         {...props}
         {...sidekick(sidekickLookup)}
-        sx={styles?.root}
-      >
+        sx={styles?.root}>
         <ConditionalWrapper
           condition={!!itemsWidth}
           wrapper={(children) => (
             <ContentContainer data-testid="Collection-contentContainer" maxWidth={itemsWidth}>
               {children}
             </ContentContainer>
-          )}
-        >
+          )}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Collection-introText" />
           )}
@@ -58,16 +56,18 @@ export const Collection = ({
   );
 };
 
+const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'itemsVariant';
 const Root = styled(Box, {
   name: 'Collection',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'itemsVariant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; itemsVariant?: string }>``;
 
 const ContentContainer = styled(Container, {
   name: 'Collection',
   slot: 'ContentContainer',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>``;
 

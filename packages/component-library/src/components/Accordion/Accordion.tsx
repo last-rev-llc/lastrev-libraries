@@ -33,10 +33,20 @@ export const Accordion = ({ variant, title, body, sidekickLookup, ...props }: Ac
     </ErrorBoundary>
   );
 };
+export const shouldForwardProp = (prop: string) =>
+  prop !== 'sidekickLookup' &&
+  prop !== 'body' &&
+  prop !== 'subtitle' &&
+  prop !== 'actions' &&
+  prop !== 'media' &&
+  prop !== 'actions' &&
+  prop !== 'link' &&
+  prop != '__typename';
 
 const AccordionRoot = styled(MuiAccordion, {
   name: 'Accordion',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<MuiAccordionProps & {}>(() => ({}));
 

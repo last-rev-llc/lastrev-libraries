@@ -53,6 +53,7 @@ const Image = React.forwardRef<any, ImageProps>((props, ref) => {
             height={height}
             width={width}
             focusable={false}
+            role="img"
             // TODO: Figure out better a11y support for svg
             dangerouslySetInnerHTML={{ __html: `<title>${alt}</title>${imageProps.svgContent}` }}
           />

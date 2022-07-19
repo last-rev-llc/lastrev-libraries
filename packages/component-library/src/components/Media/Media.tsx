@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@mui/system/styled';
-
+import { useAmp } from 'next/amp';
 import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 import ArtDirectedImage from '../ArtDirectedImage';
@@ -14,6 +14,7 @@ import useThemeProps from '../../utils/useThemeProps';
 // const ArtDirectedImage = dynamic(() => import('../ArtDirectedImage'));
 
 const Media = (inProps: MediaProps & MediaVideoProps) => {
+  const isAmp = useAmp();
   const props = useThemeProps({
     name: 'Media',
     props: inProps
@@ -22,6 +23,23 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
   // TODO: Add support for video
   const image = file;
   const alt = title;
+
+  if (variant === 'embed' && isAmp) {
+    return (
+      <ErrorBoundary>
+        {/* @ts-expect-error */}
+        <amp-iframe
+          {...sidekick(sidekickLookup)}
+          src={image?.url}
+          data-testid={testId || 'Media'}
+          width={image?.width ?? 800}
+          height={image?.height ?? 400}
+          layout="responsive"
+          sandbox="allow-scripts allow-same-origin"
+        />
+      </ErrorBoundary>
+    );
+  }
   if (variant === 'embed') {
     return (
       <ErrorBoundary>
@@ -44,8 +62,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           preload="auto"
           data-testid={testId || 'Media'}
           {...(props as MediaVideoProps)}
-          sx={{ width: '100%', height: '100%', ...props.sx }}
-        >
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>
@@ -89,6 +106,8 @@ const shouldForwardProp = (prop: string) =>
   prop !== 'fileName' &&
   prop !== 'priority' &&
   prop !== 'sidekickLookup' &&
+  prop !== 'sx' &&
+  prop !== 'file' &&
   prop !== 'nextImageOptimization';
 
 const Root = styled(Image, {
@@ -110,7 +129,7 @@ const EmbedRoot = styled('iframe', {
   slot: 'EmbedRoot',
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>``;
+})``;
 
 const VideoRoot = styled('video', {
   name: 'Media',

@@ -67,8 +67,7 @@ export const Card = (inProps: CardProps) => {
                 {...sidekick(sidekickLookup?.subtitle)}
                 variant="h4"
                 component="h4"
-                data-testid="Card-subtitle"
-              >
+                data-testid="Card-subtitle">
                 {subtitle}
               </Typography>
             ) : null}
@@ -132,10 +131,21 @@ const CardTag = ({ href, text }: LinkProps) =>
 
 const CardTagRoot = styled(ContentModule, { name: 'Card', slot: 'TagRoot' })``;
 
+const shouldForwardProp = (prop: string) =>
+  prop !== 'variant' &&
+  prop !== 'sidekickLookup' &&
+  prop !== 'body' &&
+  prop !== 'subtitle' &&
+  prop !== 'actions' &&
+  prop !== 'media' &&
+  prop !== 'actions' &&
+  prop !== 'link' &&
+  prop != '__typename';
+
 const Root = styled(MuiCard, {
   name: 'Card',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'sidekickLookup',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<MuiCardProps & {}>`
   position: relative;
@@ -143,7 +153,7 @@ const Root = styled(MuiCard, {
 const CardTags = styled(Box, {
   name: 'Card',
   slot: 'Tags',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.cardTags]
 })<{}>`
   width: 100%;
@@ -155,7 +165,7 @@ const CardTags = styled(Box, {
 const CardLink = styled(ContentModule, {
   name: 'Card',
   slot: 'CardLink',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.cardLink]
 })<LinkProps & {}>`
   position: absolute;
