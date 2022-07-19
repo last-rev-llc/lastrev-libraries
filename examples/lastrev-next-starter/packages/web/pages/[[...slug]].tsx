@@ -14,6 +14,10 @@ export type PageGetStaticPathsProps = {
   locales: string[];
 };
 
+export const config = {
+  amp: 'hybrid'
+};
+
 export const getStaticPaths = async ({ locales }: PageGetStaticPathsProps) => {
   try {
     const { data } = await client.Paths({ locales, preview, site });

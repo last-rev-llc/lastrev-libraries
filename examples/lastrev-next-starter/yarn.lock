@@ -3144,10 +3144,10 @@
     tar "^6.1.0"
     uuid "^8.3.2"
 
-"@last-rev/component-library@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/component-library/-/component-library-0.5.2.tgz#8c1c13a85409aa134612b4540e9ad2c51e43a3a1"
-  integrity sha512-QV1Ru8tbXHTcIKfyDyfwk+UzF67qn5OYv+xpecZQ5hRkodrZMt9cnBGN7XESBzMFVisISeWGPsCr81CEKtfTFw==
+"@last-rev/component-library@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@last-rev/component-library/-/component-library-0.5.3.tgz#a1f765996dc9da8749d118c96f83334bfbbdb9fd"
+  integrity sha512-RqYW47IdT4Lm3AEotkSEkd6pAiNfnayPJ38ZQtmZex1cQh1QG9ELnYvbK8oTlLIotf/Dxl736oMhjr66bNgDOw==
   dependencies:
     "@contentful/rich-text-react-renderer" "^15.0.0"
     "@contentful/rich-text-types" "^15.0.0"
@@ -3383,10 +3383,10 @@
     loglevel "^1.7.1"
     micro "^9.3.4"
 
-"@last-rev/graphql-contentful-extensions@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-extensions/-/graphql-contentful-extensions-0.1.1.tgz#9543489fa98649aef2a3c8237e9c00fe3383c52e"
-  integrity sha512-T+8BVXdHIw27TWycbYYO+IBVSoRxo+k+2EntOZ6JuFTUpBl2D7RPFNcVAauVM3HokgqbeIEpHQJLNT8TNKy5Mg==
+"@last-rev/graphql-contentful-extensions@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-extensions/-/graphql-contentful-extensions-0.1.2.tgz#1baa408e30c1b8e8a771c39f075ae9019c88ec64"
+  integrity sha512-gtOYp2X91ULAyPHJIshQmiDF+cPC5pgQ3WL+3F10gWWtik+lQr0wXYTuk4iSSeXQihw0xI9BvVyHPJDDqw5glw==
   dependencies:
     "@graphql-tools/merge" "^6.2.14"
     "@last-rev/graphql-contentful-core" "^0.3.1"

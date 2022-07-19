@@ -22,7 +22,7 @@
     "@graphql-tools/merge": "^6.2.14",
     "@last-rev/graphql-algolia-integration": "^0.1.5",
     "@last-rev/graphql-contentful-core": "^0.3.0",
-    "@last-rev/graphql-contentful-extensions": "^0.1.1",
+    "@last-rev/graphql-contentful-extensions": "^0.1.2",
     "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/types": "^0.1.7",
     "contentful": "^9.1.3",

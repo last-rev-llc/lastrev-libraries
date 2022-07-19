@@ -11,6 +11,7 @@ import theme from '@lrns/components/src/theme';
 // import { LazyMotion } from 'framer-motion';
 
 import { createEmotionCache } from '../src/createEmotionCache';
+import { useAmp } from 'next/amp';
 
 const clientSideEmotionCache = createEmotionCache();
 
@@ -23,9 +24,10 @@ interface MyAppProps extends AppProps {
 const FONT_URLS = ['https://fonts.gstatic.com/s/opensans/v29/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-mu0SC55I.woff2'];
 
 function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: MyAppProps) {
+  const isAmp = useAmp();
   return (
     <CacheProvider value={emotionCache}>
-      {pageProps.pageData?.page?.seo ? <SEO seo={pageProps.pageData.page.seo} /> : null}
+      <SEO seo={pageProps?.pageData?.page?.seo} />
       <Head>
         {
           /* This is loaded here to force NextJS to put font preloads as the first thing */
@@ -33,7 +35,7 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
             <link key={url} rel="preload" href={url} as="font" type="font/woff2" crossOrigin="anonymous"></link>
           ))
         }
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {!isAmp ? <meta name="viewport" content="width=device-width, initial-scale=1.0" /> : null}
         {!!pageProps.pageData?.page?.seo?.title ? <title>{pageProps.pageData.page.seo.title.value}</title> : null}
         <meta name="contentful_space" content={process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID} />
         <meta name="contentful_environment" content={process.env.NEXT_PUBLIC_CONTENTFUL_ENV} />
