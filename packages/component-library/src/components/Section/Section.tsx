@@ -42,8 +42,6 @@ const Section = (inProps: SectionProps) => {
   } = useThemeProps({ name: 'Section', props: inProps });
   const gridItemStyle = variant && VARIANTS_GRID_ITEM[variant] ? VARIANTS_GRID_ITEM[variant] : {};
 
-  console.log({ styles }, 'this is from section');
-
   return (
     <ErrorBoundary>
       <Root
