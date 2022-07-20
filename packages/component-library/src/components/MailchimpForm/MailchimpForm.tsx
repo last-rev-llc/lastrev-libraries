@@ -112,8 +112,7 @@ const CustomForm = ({
             height: '100%',
             opacity: status === 'success' ? 1 : 0,
             pointerEvents: status === 'success' ? 'initial' : 'none'
-          }}
-        >
+          }}>
           {successMessage ? (
             <ContentModule
               __typename="Text"
@@ -201,6 +200,7 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'Form',
   slot: 'ContentContainer',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(({ theme }) => ({
   position: 'relative',
@@ -211,6 +211,7 @@ const ContentContainer = styled(Container, {
 const FormImage = styled(ContentModule, {
   name: 'Form',
   slot: 'Image',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.formImage]
 })<{ variant?: string }>(({ theme }) => ({
   position: 'absolute',
@@ -234,6 +235,7 @@ const FormImage = styled(ContentModule, {
 const FormContainer = styled(Grid, {
   name: 'Form',
   slot: 'FormContainer',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.formContainer]
 })<{ variant?: string }>(({ theme }) => ({
   'position': 'relative',
@@ -264,6 +266,7 @@ const FormContainer = styled(Grid, {
 const SubmitContainer = styled(Grid, {
   name: 'Form',
   slot: 'SubmitContainer',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.submitContainer]
 })<{ variant?: string }>(({ theme }) => ({
   [theme.breakpoints.down('md')]: {

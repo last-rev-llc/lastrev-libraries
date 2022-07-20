@@ -74,7 +74,8 @@ const shouldForwardProp = (prop: string) => prop !== 'displaymedia';
 const ResponsiveImage = styled(Image, {
   name: 'ArtDirectedImage',
   slot: 'Root',
-  shouldForwardProp
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.root]
 })<{
   media?: string;
 }>`

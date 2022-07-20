@@ -56,6 +56,7 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'CollectionCarousel',
   slot: 'ContentContainer',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(() => ({
   display: 'flex'
@@ -64,6 +65,7 @@ const ContentContainer = styled(Container, {
 const CarouselContainer = styled(Swiper, {
   name: 'CollectionCarousel',
   slot: 'CarouselContainer',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.carouselContainer]
 })<{ variant?: string }>(({ theme }) => ({
   '--swiper-theme-color': theme.palette.primary.main,
@@ -84,6 +86,7 @@ const CarouselContainer = styled(Swiper, {
 const CarouselItem = styled(Box, {
   name: 'CollectionCarousel',
   slot: 'CarouselItem',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.carouselItem]
 })<{ variant?: string }>(() => ({
   display: 'flex',

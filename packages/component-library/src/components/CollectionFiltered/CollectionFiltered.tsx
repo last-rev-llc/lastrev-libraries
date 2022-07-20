@@ -188,8 +188,7 @@ export const CollectionFiltered = ({
                 <Button
                   variant="contained"
                   onClick={() => setSize(size + 1)}
-                  data-testid="CollectionFiltered-LoadMoreButton"
-                >
+                  data-testid="CollectionFiltered-LoadMoreButton">
                   {loadMoreText ?? 'LOAD MORE'}
                 </Button>
               </Grid>
@@ -214,6 +213,7 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'CollectionFiltered',
   slot: 'ContentContainer',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(() => ({
   display: 'flex'

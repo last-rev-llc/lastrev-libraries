@@ -42,6 +42,8 @@ const Section = (inProps: SectionProps) => {
   } = useThemeProps({ name: 'Section', props: inProps });
   const gridItemStyle = variant && VARIANTS_GRID_ITEM[variant] ? VARIANTS_GRID_ITEM[variant] : {};
 
+  console.log({ styles }, 'this is from section');
+
   return (
     <ErrorBoundary>
       <Root
@@ -54,21 +56,18 @@ const Section = (inProps: SectionProps) => {
         backgroundColor={backgroundColor}
         variant={variant}
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
-        {...props}
-      >
+        {...props}>
         {background ? <BackgroundMedia {...background} /> : null}
         <ConditionalWrapper
           condition={!!contentWidth}
-          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}
-        >
+          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup?.introText)} data-testid="Section-introText" />
           )}
           <GridContainer
             container
             sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-            {...(contentSpacing && { spacing: contentSpacing })}
-          >
+            {...(contentSpacing && { spacing: contentSpacing })}>
             {contents?.map((content, idx) => {
               const itemStyle = get(styles?.gridItems, idx);
               if (!content) return null;
@@ -87,8 +86,7 @@ const Section = (inProps: SectionProps) => {
                     ...styles?.gridItem,
                     ...itemStyle
                   }}
-                  data-testid="Section-ContentItem"
-                >
+                  data-testid="Section-ContentItem">
                   <ContentModule {...content} />
                 </GridItem>
               );
@@ -119,11 +117,13 @@ const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; them
   return {};
 };
 
+const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'backgroundColor';
 // Define the pieces of the Section customizable through Theme
 
 const Root = styled(Box, {
   name: 'Section',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; backgroundColor?: string }>(() => ({
   width: '100%',
@@ -135,6 +135,7 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'Section',
   slot: 'ContentContainer',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(() => ({
   zIndex: 1
@@ -143,6 +144,7 @@ const ContentContainer = styled(Container, {
 const BackgroundMedia = styled(ContentModule, {
   name: 'Section',
   slot: 'BackgroundMedia',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.backgroundImage]
 })(() => ({
   zIndex: 0,
@@ -158,6 +160,7 @@ const BackgroundMedia = styled(ContentModule, {
 const GridContainer = styled(Grid, {
   name: 'Section',
   slot: 'GridContainer',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.gridContainer]
 })(() => ({
   zIndex: 1
@@ -166,12 +169,14 @@ const GridContainer = styled(Grid, {
 const GridItem = styled(Grid, {
   name: 'Section',
   slot: 'GridItem',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.gridItem]
 })(() => ({}));
 
 const IntroText = styled(ContentModule, {
   name: 'Section',
   slot: 'IntroText',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.introText]
 })(() => ({}));
 
