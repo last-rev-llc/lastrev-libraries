@@ -26,19 +26,11 @@ export const Card = (inProps: CardProps) => {
     name: 'Card',
     props: inProps
   });
-  const { media, title, subtitle, body, link, tags, actions, variant, loading, styles, sidekickLookup } = props;
-  console.log({ styles });
-  console.log('hola');
+  const { media, title, subtitle, body, link, tags, actions, variant, loading, sidekickLookup } = props;
+
   return (
     <ErrorBoundary>
-      <Root
-        variant={variant}
-        data-testid="Card"
-        sx={{
-          ...styles?.root
-        }}
-        {...sidekick(sidekickLookup)}
-        {...(props as any)}>
+      <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)} {...(props as any)}>
         {!!link ? <CardLink __typename="Link" noLinkStyle {...(link as any)} /> : null}
         {media || loading ? (
           <CardMedia sx={{ display: 'block', position: 'relative', width: '100%' }}>
