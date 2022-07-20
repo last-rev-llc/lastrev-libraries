@@ -8,19 +8,20 @@ import styled from '@mui/system/styled';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import ContentModule from '../ContentModule';
 import { AccordionProps } from './Accordion.types';
+import { TextProps } from '../Text';
 
 export const Accordion = ({ variant, title, body, sidekickLookup, ...props }: AccordionProps) => {
   return (
     <ErrorBoundary>
       <AccordionRoot {...sidekick(sidekickLookup)} variant={variant} data-testid="Accordion" {...props}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography variant="h4" data-testid="Accordion-title">
+          <TitleText variant="h4" data-testid="Accordion-title">
             {title}
-          </Typography>
+          </TitleText>
         </AccordionSummary>
         {body ? (
           <AccordionDetails>
-            <ContentModule
+            <TextItem
               __typename="Text"
               variant="accordion"
               sidekickLookup={sidekickLookup?.body}
@@ -49,5 +50,17 @@ const AccordionRoot = styled(MuiAccordion, {
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<MuiAccordionProps & {}>(() => ({}));
+
+const TitleText = styled(Typography, {
+  name: 'Accordion',
+  slot: 'TitleText',
+  overridesResolver: (_, styles) => [styles.titleText]
+})``;
+
+const TextItem = styled(ContentModule, {
+  name: 'Accordion',
+  slot: 'TextItem',
+  overridesResolver: (_, styles) => [styles.textItem]
+})<TextProps>(() => ({}));
 
 export default Accordion;
