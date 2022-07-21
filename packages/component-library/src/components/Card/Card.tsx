@@ -71,7 +71,7 @@ export const Card = (inProps: CardProps) => {
               </Typography>
             ) : null}
             {body ? (
-              <ContentModule
+              <CardBody
                 __typename="Text"
                 variant="card"
                 sidekickLookup={sidekickLookup?.body}
@@ -82,7 +82,7 @@ export const Card = (inProps: CardProps) => {
             {actions?.length ? (
               <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions">
                 {actions?.map((link) => (
-                  <ContentModule __typename="Link" key={link.id} {...link} />
+                  <CardButtons __typename="Link" key={link.id} {...link} />
                 ))}
               </CardActions>
             ) : null}
@@ -227,6 +227,13 @@ const CardBody = styled(ContentModule, {
   slot: 'CardBody',
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.cardBody]
+})``;
+
+const CardButtons = styled(ContentModule, {
+  name: 'Card',
+  slot: 'CardButtons',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.cardButtons]
 })``;
 
 const CardActions = styled(MuiCardActions, {
