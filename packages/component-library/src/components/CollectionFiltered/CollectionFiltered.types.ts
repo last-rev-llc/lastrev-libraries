@@ -55,6 +55,24 @@ export interface CollectionFilteredClasses {
   root: string;
   /** Styles applied to the contentContainer element. */
   contentContainer: string;
+  // todo: add the rest of the comments
+  containerGrid: string;
+  collectionFiltersGrid: string;
+  noResultsGrid: string;
+  tryAgainGrid: string;
+  resultsGridContainer: string;
+  resultsGrid: string;
+  noResultsText: string;
+  tryAgainText: string;
+  resultsText: string;
+  moreResultsText: string;
+  noResultsSkeleton: string;
+  moreResultsSkeleton: string;
+  reachingEndButton: string;
+  tryAgainButton: string;
+  moreResultsContainerGrid: string;
+  moreResultsGrid: string;
+  reachingEndGrid: string;
 }
 
 export declare type CollectionFilteredClassKey = keyof CollectionFilteredClasses;

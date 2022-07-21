@@ -9,6 +9,8 @@ export interface BackToTopProps {
 export interface BackToTopClasses {
   /** Styles applied to the root element. */
   root: string;
+  /** Styles applied to the keyboardArrowUpIcon element. */
+  keyboardArrowUpIcon: string;
 }
 
 export declare type BackToTopClassKey = keyof BackToTopClasses;

@@ -74,6 +74,7 @@ export const CollectionFiltered = ({
       revalidateOnFocus: false
     }
   );
+  // todo: ask if we really want this logs here
   console.log('data => ', data);
   const options = data?.length ? data[0]?.options : defaultOptions;
   console.log('options => ', options);
@@ -109,13 +110,14 @@ export const CollectionFiltered = ({
     .filter((x) => !!x)
     .join(', ');
 
+  //todo: figure out if we still need this log
   console.log('itemsWithVariant => ', { itemsWithVariant, error });
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionFiltered">
         <ContentContainer maxWidth={itemsWidth}>
-          <Grid container spacing={itemsSpacing ?? 0} sx={{ flexDirection: 'column', alignItems: 'center' }}>
-            <Grid item container sx={{ justifyContent: 'flex-end' }}>
+          <ContainerGrid container spacing={itemsSpacing ?? 0} sx={{ flexDirection: 'column', alignItems: 'center' }}>
+            <CollectionFiltersGrid item container sx={{ justifyContent: 'flex-end' }}>
               <CollectionFilters
                 id={id}
                 filters={filters}
@@ -125,30 +127,33 @@ export const CollectionFiltered = ({
                 filter={filter}
                 onClearFilter={onClearFilter}
               />
-            </Grid>
+            </CollectionFiltersGrid>
             {!itemsWithVariant?.length && !isEmpty(filter) && !loading ? (
-              <Grid item>
-                <Typography variant="h4" data-testid="CollectionFiltered-NoResultsDisplay">
-                  No results for filter: {parsedFilters ? parsedFilters : <Skeleton width={100} />}
-                </Typography>
-              </Grid>
+              <NoResultsGrid item>
+                <NoResultsText variant="h4" data-testid="CollectionFiltered-NoResultsDisplay">
+                  No results for filter: {parsedFilters ? parsedFilters : <NoResultsSkeleton width={100} />}
+                </NoResultsText>
+              </NoResultsGrid>
             ) : null}
             {!itemsWithVariant?.length && error ? (
-              <Grid item>
-                <Typography variant="h4">Error searching for: {parsedFilters}, try again!</Typography>
-                <Button variant="contained" onClick={() => refetch()} data-testid="CollectionFiltered-TryAgainButton">
+              <TryAgainGrid item>
+                <TryAgainText variant="h4">Error searching for: {parsedFilters}, try again!</TryAgainText>
+                <TryAgainButton
+                  variant="contained"
+                  onClick={() => refetch()}
+                  data-testid="CollectionFiltered-TryAgainButton">
                   {'TRY AGAIN'}
-                </Button>
-              </Grid>
+                </TryAgainButton>
+              </TryAgainGrid>
             ) : null}
             {itemsWithVariant?.length ? (
               <>
-                <Grid item container>
-                  <Grid item xs={12}>
-                    <Typography variant="h4" data-testid="CollectionFiltered-ResultsDisplay">
+                <ResultsGridContainer item container>
+                  <ResultsGrid item xs={12}>
+                    <ResultsText variant="h4" data-testid="CollectionFiltered-ResultsDisplay">
                       {parsedFilters ? `Showing results for: ${parsedFilters}` : 'Showing results for: All'}
-                    </Typography>
-                  </Grid>
+                    </ResultsText>
+                  </ResultsGrid>
                   <Section
                     contents={itemsWithVariant}
                     // background={background}
@@ -156,18 +161,19 @@ export const CollectionFiltered = ({
                     contentSpacing={itemsSpacing ?? 0}
                     testId="CollectionFiltered-ItemsSection"
                   />
-                </Grid>
+                </ResultsGridContainer>
               </>
             ) : null}
             {loading ? (
               <>
-                <Grid item container>
+                <MoreResultsContainerGrid item container>
                   {isLoadingMore && (itemsWithVariant?.length ?? 0) < limit ? (
-                    <Grid item xs={12}>
-                      <Typography variant="h4" data-testid="CollectionFiltered-LoadingResultsDisplay">
-                        Showing results for: {parsedFilters ? parsedFilters : <Skeleton width={100} data-testid="" />}
-                      </Typography>
-                    </Grid>
+                    <MoreResultsGrid item xs={12}>
+                      <MoreResultsText variant="h4" data-testid="CollectionFiltered-LoadingResultsDisplay">
+                        Showing results for:{' '}
+                        {parsedFilters ? parsedFilters : <MoreResultsSkeleton width={100} data-testid="" />}
+                      </MoreResultsText>
+                    </MoreResultsGrid>
                   ) : null}
                   <Section
                     contents={range(limit).map((_: any, idx: number) => ({
@@ -180,30 +186,31 @@ export const CollectionFiltered = ({
                     contentSpacing={itemsSpacing ?? 0}
                     testId="CollectionFiltered-LoadingItemsSection"
                   />
-                </Grid>
+                </MoreResultsContainerGrid>
               </>
             ) : null}
             {!isReachingEnd ? (
-              <Grid item sx={{ padding: 2 }}>
-                <Button
+              <ReachingEndGrid item sx={{ padding: 2 }}>
+                <ReachingEndButton
                   variant="contained"
                   onClick={() => setSize(size + 1)}
                   data-testid="CollectionFiltered-LoadMoreButton">
                   {loadMoreText ?? 'LOAD MORE'}
-                </Button>
-              </Grid>
+                </ReachingEndButton>
+              </ReachingEndGrid>
             ) : null}
-          </Grid>
+          </ContainerGrid>
         </ContentContainer>
       </Root>
     </ErrorBoundary>
   );
 };
+const shouldForwardProp = (prop: string) => prop !== 'variant';
 
 const Root = styled(Box, {
   name: 'CollectionFiltered',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({
   display: 'flex',
@@ -213,10 +220,132 @@ const Root = styled(Box, {
 const ContentContainer = styled(Container, {
   name: 'CollectionFiltered',
   slot: 'ContentContainer',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(() => ({
   display: 'flex'
 }));
+
+const ContainerGrid = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'ContainerGrid',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.containerGrid]
+})``;
+
+const CollectionFiltersGrid = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'CollectionFiltersGrid',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.collectionFiltersGrid]
+})``;
+
+const NoResultsGrid = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'NoResultsGrid',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.noResultsGrid]
+})``;
+
+const TryAgainGrid = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'TryAgainGrid',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.tryAgainGrid]
+})``;
+
+const ResultsGridContainer = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'ResultsGridContainer',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.resultsGridContainer]
+})``;
+
+const ResultsGrid = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'ResultsGrid',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.resultsGrid]
+})``;
+
+//is it OK to add shouldForwardProp, if this means passing no variant(?)
+// should this be removed from the styled component?
+const NoResultsText = styled(Typography, {
+  name: 'CollectionFiltered',
+  slot: 'NoResultsText',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.noResultsText]
+})``;
+
+const TryAgainText = styled(Typography, {
+  name: 'CollectionFiltered',
+  slot: 'TryAgainText',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.tryAgainText]
+})``;
+
+const ResultsText = styled(Typography, {
+  name: 'CollectionFiltered',
+  slot: 'ResultsText',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.resultsText]
+})``;
+
+const MoreResultsText = styled(Typography, {
+  name: 'CollectionFiltered',
+  slot: 'MoreResultsText',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.moreResultsText]
+})``;
+
+const NoResultsSkeleton = styled(Skeleton, {
+  name: 'CollectionFiltered',
+  slot: 'NoResultsSkeleton',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.noResultsSkeleton]
+})``;
+
+const MoreResultsSkeleton = styled(Skeleton, {
+  name: 'CollectionFiltered',
+  slot: 'MoreResultsSkeleton',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.moreResultsSkeleton]
+})``;
+
+// same question as above
+const ReachingEndButton = styled(Button, {
+  name: 'CollectionFiltered',
+  slot: 'ReachingEndButton',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.reachingEndButton]
+})``;
+
+const TryAgainButton = styled(Button, {
+  name: 'CollectionFiltered',
+  slot: 'TryAgainButton',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.tryAgainButton]
+})``;
+
+const MoreResultsContainerGrid = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'MoreResultsContainerGrid',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.moreResultsContainerGrid]
+})``;
+
+const MoreResultsGrid = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'MoreResultsGrid',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.moreResultsGrid]
+})``;
+
+const ReachingEndGrid = styled(Grid, {
+  name: 'CollectionFiltered',
+  slot: 'ReachingEndGrid',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.reachingEndGrid]
+})``;
 
 export default CollectionFiltered;

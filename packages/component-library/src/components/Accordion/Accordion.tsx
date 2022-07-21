@@ -1,27 +1,29 @@
 import React from 'react';
-import { Accordion as MuiAccordion, AccordionProps as MuiAccordionProps, Typography } from '@mui/material';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import {
+  Accordion as MuiAccordion,
+  Typography,
+  AccordionDetails as MuiAccordionDetails,
+  AccordionSummary as MuiAccordionSummary
+} from '@mui/material';
+import MuiExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import ContentModule from '../ContentModule';
 import { AccordionProps } from './Accordion.types';
-import { TextProps } from '../Text';
 
 export const Accordion = ({ variant, title, body, sidekickLookup, ...props }: AccordionProps) => {
   return (
     <ErrorBoundary>
       <AccordionRoot {...sidekick(sidekickLookup)} variant={variant} data-testid="Accordion" {...props}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <TitleText variant="h4" data-testid="Accordion-title">
+          <AccordionTitle variant="h4" data-testid="Accordion-title">
             {title}
-          </TitleText>
+          </AccordionTitle>
         </AccordionSummary>
         {body ? (
           <AccordionDetails>
-            <TextItem
+            <AccordionBody
               __typename="Text"
               variant="accordion"
               sidekickLookup={sidekickLookup?.body}
@@ -49,18 +51,40 @@ const AccordionRoot = styled(MuiAccordion, {
   slot: 'Root',
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
-})<MuiAccordionProps & {}>(() => ({}));
-
-const TitleText = styled(Typography, {
-  name: 'Accordion',
-  slot: 'TitleText',
-  overridesResolver: (_, styles) => [styles.titleText]
 })``;
 
-const TextItem = styled(ContentModule, {
+const AccordionSummary = styled(MuiAccordionSummary, {
   name: 'Accordion',
-  slot: 'TextItem',
-  overridesResolver: (_, styles) => [styles.textItem]
-})<TextProps>(() => ({}));
+  slot: 'AccordionSummary',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.accordionSummary]
+})``;
+
+const AccordionDetails = styled(MuiAccordionDetails, {
+  name: 'Accordion',
+  slot: 'AccordionDetails',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.accordionDetails]
+})``;
+
+const AccordionTitle = styled(Typography, {
+  name: 'Accordion',
+  slot: 'AccordionTitle',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.accordionTitle]
+})``;
+
+const AccordionBody = styled(ContentModule, {
+  name: 'Accordion',
+  slot: 'AccordionBody',
+  overridesResolver: (_, styles) => [styles.accordionBody]
+})``;
+
+const ExpandMoreIcon = styled(MuiExpandMoreIcon, {
+  name: 'Accordion',
+  slot: 'ExpandMoreIcon',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.expandMoreIcon]
+})``;
 
 export default Accordion;

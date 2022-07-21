@@ -3,17 +3,16 @@ import {
   Box,
   Card as MuiCard,
   CardProps as MuiCardProps,
-  CardMedia,
-  CardActions,
-  CardContent,
+  CardMedia as MuiCardMedia,
+  CardActions as MuiCardActions,
+  CardContent as MuiCardContent,
   Typography,
-  Chip
+  Chip as MuiChip
 } from '@mui/material';
 import styled from '@mui/system/styled';
-import Skeleton from '@mui/material/Skeleton';
+import MuiSkeleton from '@mui/material/Skeleton';
 
 import ErrorBoundary from '../ErrorBoundary';
-
 import { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
@@ -35,7 +34,7 @@ export const Card = (inProps: CardProps) => {
         {media || loading ? (
           <CardMedia sx={{ display: 'block', position: 'relative', width: '100%' }}>
             {!loading ? (
-              <ContentModule
+              <Media
                 __typename="Media"
                 {...sidekick(sidekickLookup?.media)}
                 {...getFirstOfArray(media)}
@@ -43,7 +42,7 @@ export const Card = (inProps: CardProps) => {
               />
             ) : (
               <Skeleton>
-                <ContentModule {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
+                <Media {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
               </Skeleton>
             )}
           </CardMedia>
@@ -55,7 +54,6 @@ export const Card = (inProps: CardProps) => {
             ))}
           </CardTags>
         ) : null}
-
         {!loading && (title || subtitle || body || actions) ? (
           <CardContent>
             {title ? (
@@ -92,17 +90,17 @@ export const Card = (inProps: CardProps) => {
         ) : null}
         {loading ? (
           <CardContent data-testid="Card-ContentSkeleton">
-            <Typography variant="h3" component="h3">
+            <CardTextSkeleton variant="h3">
               <Skeleton width="100%" />
-            </Typography>
-            <Typography variant="h4" component="h4">
+            </CardTextSkeleton>
+            <CardTextSkeleton variant="h4">
               <Skeleton width="100%" />
               <br />
               <Skeleton width="100%" />
-            </Typography>
+            </CardTextSkeleton>
             <Skeleton>
               {body ? (
-                <ContentModule
+                <CardBody
                   __typename="Text"
                   variant="card"
                   sidekickLookup={sidekickLookup?.body}
@@ -130,8 +128,6 @@ const CardTag = ({ href, text }: LinkProps) =>
     </CardTagRoot>
   );
 
-const CardTagRoot = styled(ContentModule, { name: 'Card', slot: 'TagRoot' })``;
-
 const shouldForwardProp = (prop: string) =>
   prop !== 'variant' &&
   prop !== 'sidekickLookup' &&
@@ -151,17 +147,6 @@ const Root = styled(MuiCard, {
 })<MuiCardProps & {}>`
   position: relative;
 `;
-const CardTags = styled(Box, {
-  name: 'Card',
-  slot: 'Tags',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardTags]
-})<{}>`
-  width: 100%;
-  display: flex;
-  gap: ${({ theme }) => theme.spacing(1)};
-  padding: ${({ theme }) => theme.spacing(2)};
-`;
 
 const CardLink = styled(ContentModule, {
   name: 'Card',
@@ -175,5 +160,80 @@ const CardLink = styled(ContentModule, {
   width: 100%;
   height: 100%;
 `;
+
+const CardMedia = styled(MuiCardMedia, {
+  name: 'Card',
+  slot: 'CardMedia',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.cardMedia]
+})``;
+
+const Skeleton = styled(MuiSkeleton, {
+  name: 'Card',
+  slot: 'Skeleton',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.skeleton]
+})``;
+
+const Media = styled(ContentModule, {
+  name: 'Card',
+  slot: 'Media',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.media]
+})``;
+
+const Chip = styled(MuiChip, {
+  name: 'Card',
+  slot: 'Chip',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.chip]
+})``;
+
+const CardTags = styled(Box, {
+  name: 'Card',
+  slot: 'Tags',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.cardTags]
+})<{}>`
+  width: 100%;
+  display: flex;
+  gap: ${({ theme }) => theme.spacing(1)};
+  padding: ${({ theme }) => theme.spacing(2)};
+`;
+
+const CardTagRoot = styled(ContentModule, {
+  name: 'Card',
+  slot: 'CardTagRoot',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.cardTagRoot]
+})``;
+
+const CardContent = styled(MuiCardContent, {
+  name: 'Card',
+  slot: 'CardContent',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.cardContent]
+})``;
+
+const CardTextSkeleton = styled(Typography, {
+  name: 'Card',
+  slot: 'CardTextSkeleton',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.cardTextSkeleton]
+})``;
+
+const CardBody = styled(ContentModule, {
+  name: 'Card',
+  slot: 'CardBody',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.cardBody]
+})``;
+
+const CardActions = styled(MuiCardActions, {
+  name: 'Card',
+  slot: 'CardActions',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.cardActions]
+})``;
 
 export default Card;

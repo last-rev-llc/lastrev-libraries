@@ -6,7 +6,8 @@
   "license": "MIT",
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "../../packages/component-library"
     ]
   },
   "scripts": {

@@ -152,7 +152,6 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       </RootIconButton>
     );
   }
-
   if (variant?.includes('button-')) {
     const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
     if (href !== '#') {
@@ -200,7 +199,6 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       </RootButton>
     );
   }
-
   if (isExternal) {
     if (noLinkStyle) {
       return (
@@ -228,7 +226,6 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       </RootMuiLink>
     );
   }
-
   if (noLinkStyle && icon) {
     return (
       <NextLinkComposed className={className} ref={ref as any} to={href} {...other}>
@@ -264,6 +261,8 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     </RootMuiLink>
   );
 });
+
+const shouldForwardProp = (prop: string) => prop !== '__typename';
 
 const Root = styled(Box, {
   name: 'Link',

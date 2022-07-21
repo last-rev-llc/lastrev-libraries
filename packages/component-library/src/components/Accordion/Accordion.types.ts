@@ -25,6 +25,16 @@ export interface AccordionClasses {
   gutters: string;
   /** Styles applied to the region element, the container of the children. */
   region: string;
+  /** Styles applied to the region element, the container of the children. */
+  accordionSummary: string;
+  /** Styles applied to the region element, the container of the children. */
+  accordionDetails: string;
+  /** Styles applied to the region element, the container of the children. */
+  accordionTitle: string;
+  /** Styles applied to the region element, the container of the children. */
+  accordionBody: string;
+  /** Styles applied to the region element, the container of the children. */
+  expandMoreIcon: string;
 }
 export declare type AccordionClassKey = keyof AccordionClasses;
 declare const accordionClasses: AccordionClasses;

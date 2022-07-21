@@ -1,5 +1,5 @@
 import React from 'react';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import MuiKeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Fab from '@mui/material/Fab';
 import styled from '@mui/system/styled';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
@@ -24,18 +24,19 @@ export const BackToTop = ({ FabProps, sidekickLookup }: BackToTopProps) => {
         onClick={handleClick}
         data-testid="BackToTop"
         aria-label="Back to top"
-        {...sidekick(sidekickLookup)}
-      >
+        {...sidekick(sidekickLookup)}>
         <KeyboardArrowUpIcon />
       </Root>
     </ErrorBoundary>
   );
 };
 
+const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'visible';
+
 const Root = styled(Fab, {
   name: 'BackToTop',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'visible',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; visible?: boolean }>`
   position: fixed;
@@ -47,5 +48,12 @@ const Root = styled(Fab, {
   transform: translateY(${visible ? 0 : 100}px);
   `};
 `;
+
+const KeyboardArrowUpIcon = styled(MuiKeyboardArrowUpIcon, {
+  name: 'Card',
+  slot: 'KeyboardArrowUpIcon',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.keyboardArrowUpIcon]
+})``;
 
 export default BackToTop;

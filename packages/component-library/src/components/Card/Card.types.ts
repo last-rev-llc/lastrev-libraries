@@ -35,6 +35,24 @@ export interface CardClasses {
   cardTitle: string;
   /** Styles applied to the card link element. */
   cardLink: string;
+  /** Styles applied to the card media element. */
+  cardMedia: string;
+  /** Styles applied to the card skeleton element. */
+  skeleton: string;
+  /** Styles applied to the media content module element. */
+  media: string;
+  /** Styles applied to the card chip element. */
+  chip: string;
+  /** Styles applied to the card tag element. */
+  cardTagRoot: string;
+  /** Styles applied to the card content element. */
+  cardContent: string;
+  /** Styles applied to the typography used to build the skeleton for the card element. */
+  cardTextSkeleton: string;
+  /** Styles applied to the card text content module element. */
+  cardBody: string;
+  /** Styles applied to the card actions element. */
+  cardActions: string;
 }
 
 export declare type CardClassKey = keyof CardClasses;
