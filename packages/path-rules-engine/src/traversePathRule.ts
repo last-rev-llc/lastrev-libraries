@@ -50,14 +50,14 @@ const traversePathRule = <T>(root: PathRule, visitor: PathVisitor<T>, ctx: T) =>
         traverseNode(node.body, node, context);
         break;
       case 'RefByExpression':
-        traverseNode(node.property, node, context);
-        break;
       case 'ReferenceExpression':
+      case 'SegmentReference':
         traverseNode(node.property, node, context);
         break;
       case 'Field':
       case 'StaticSegment':
         break;
+
       default:
         throw TypeError(`Unsupported node type: ${(node as any).type}`);
     }

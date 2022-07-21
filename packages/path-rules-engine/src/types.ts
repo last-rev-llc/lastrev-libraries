@@ -22,6 +22,14 @@ export type RefByExpression = {
 
 export type Expression = Field | ReferenceExpression | RefByExpression;
 
+export type SegmentReference = {
+  type: 'SegmentReference';
+  index: number;
+  property: Expression;
+};
+
+export type PrimaryExpression = Expression | SegmentReference;
+
 // ---------------------------------------------------------------
 // segments
 
@@ -32,7 +40,7 @@ export type StaticSegment = {
 
 export type DynamicSegment = {
   type: 'DynamicSegment';
-  body: Expression;
+  body: PrimaryExpression;
 };
 
 export type Segment = StaticSegment | DynamicSegment;
@@ -48,7 +56,7 @@ export type PathRule = {
 // ---------------------------------------------------------------
 // AstNode
 
-export type AstNode = PathRule | Segment | Expression;
+export type AstNode = PathRule | Segment | Expression | SegmentReference;
 
 // ---------------------------------------------------------------
 // type checkers

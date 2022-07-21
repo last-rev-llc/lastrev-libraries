@@ -1,241 +1,168 @@
 import { Entry } from 'contentful';
-import { ApolloContext, ContentfulLoaders, PathEntries } from '@last-rev/types';
+import { ApolloContext, PathEntries } from '@last-rev/types';
 import traversePathRule, { PathVisitor } from './traversePathRule';
-import { Field, PathRule, RefByExpression, ReferenceExpression, StaticSegment } from './types';
-
-type SegmentResult = {
-  segmentIndex: number;
-  entry: Entry<any>;
-  slug: string;
-};
+import { AstNode, Field, PathRule, ReferenceExpression, SegmentReference, StaticSegment } from './types';
+import ContentToPathsFetcherTree, {
+  ContentToPathsHasChildrenNode,
+  ContentToPathTreeRefByNode,
+  ContentToPathTreeRefChildNode,
+  ContentToPathTreeRefNode
+} from './ContentToPathsFetcherTree';
 
 type ContentToPathsFetcherContext = {
-  entry: Entry<any>;
-  defaultLocale: string;
-  preview: boolean;
   currentSegmentIndex: number;
-  promises: Promise<SegmentResult[]>[];
-  entriesRefByLoader: ContentfulLoaders['entriesRefByLoader'];
-  entryLoader: ContentfulLoaders['entryLoader'];
-  currentPromise: Promise<Entry<any>[]> | null;
-  slugs: (string | null)[];
+  tree: ContentToPathsFetcherTree;
+  segmentRefChainIndex: number | null;
+  currentTreeNode: ContentToPathsHasChildrenNode;
+  nodesToBeAppendedToSegment: Map<number, ContentToPathTreeRefChildNode[]>;
+  completedSegments: Map<number, ContentToPathsHasChildrenNode>;
 };
 
-const pathToItemsFetcherVisitor: PathVisitor<ContentToPathsFetcherContext> = {
+const appendNodeToSegmentOrCurrent = ({
+  treeNode,
+  parent,
+  context
+}: {
+  treeNode: ContentToPathTreeRefNode | ContentToPathTreeRefByNode;
+  parent: AstNode;
+  context: ContentToPathsFetcherContext;
+}) => {
+  const { completedSegments, segmentRefChainIndex, nodesToBeAppendedToSegment, currentTreeNode } = context;
+  if (parent.type === 'SegmentReference' && segmentRefChainIndex !== null) {
+    if (completedSegments.get(segmentRefChainIndex)) {
+      const completedSegment = completedSegments.get(segmentRefChainIndex)!;
+      completedSegment.children.push(treeNode);
+    } else {
+      if (!nodesToBeAppendedToSegment.get(segmentRefChainIndex)) {
+        nodesToBeAppendedToSegment.set(segmentRefChainIndex, []);
+      }
+      nodesToBeAppendedToSegment.get(segmentRefChainIndex)!.push(treeNode);
+    }
+  } else {
+    currentTreeNode.children.push(treeNode);
+  }
+};
+
+const ContentToPathsFetcherVisitor: PathVisitor<ContentToPathsFetcherContext> = {
   StaticSegment: {
     exit: (node, _parent, context) => {
       const { value } = node as StaticSegment;
-      context.slugs[context.currentSegmentIndex] = value;
+      const { tree, currentSegmentIndex } = context;
+
+      tree.appendStatic(value, currentSegmentIndex);
       // segment ended, increment segment index
       context.currentSegmentIndex++;
+      tree.incrementNumSegments();
     }
   },
   DynamicSegment: {
     enter: (_node, _parent, context) => {
-      context.currentPromise = null;
+      const { tree } = context;
+      context.currentTreeNode = tree.root;
     },
     exit: (_node, _parent, context) => {
-      context.slugs[context.currentSegmentIndex] = null;
-      // segment ended, increment segment index
+      const { tree, currentTreeNode, completedSegments, currentSegmentIndex, nodesToBeAppendedToSegment } = context;
+
+      completedSegments.set(currentSegmentIndex, currentTreeNode);
+
+      const toAppend = nodesToBeAppendedToSegment.get(currentSegmentIndex);
+      if (toAppend) {
+        currentTreeNode.children.push(...toAppend);
+      }
+
       context.currentSegmentIndex++;
+      tree.incrementNumSegments();
     }
   },
-  RefByExpression: {
-    enter: (node, parent, context) => {
-      const { refByField, contentType } = node as RefByExpression;
-      switch (parent!.type) {
-        case 'RefByExpression':
-        case 'ReferenceExpression': {
-          const { currentPromise } = context;
-          if (!currentPromise) {
-            throw Error(`node is ${node.type}, parent is ${parent!.type}, but currentPromise is null`);
-          }
-          const func = async () => {
-            const results = await currentPromise;
-            if (!results.length) return [];
-
-            const ids: string[] = results.map((entry) => entry.sys.id);
-            const entriesArr = await context.entriesRefByLoader.loadMany(
-              ids.map((id) => ({ id, preview: !!context.preview, field: refByField, contentType }))
-            );
-            return entriesArr.reduce((acc: Entry<any>[], entries) => {
-              if (Array.isArray(entries)) {
-                acc.push(...entries);
-              }
-              return acc;
-            }, [] as Entry<any>[]);
-          };
-          context.currentPromise = func();
-          break;
-        }
-        case 'DynamicSegment': {
-          const { entry } = context;
-          const func = async () => {
-            const id = entry.sys.id;
-            return await context.entriesRefByLoader.load({
-              id,
-              preview: !!context.preview,
-              field: refByField,
-              contentType
-            });
-          };
-          context.currentPromise = func();
-          break;
-        }
-      }
+  SegmentReference: {
+    enter: (node, _parent, context) => {
+      const { index } = node as SegmentReference;
+      context.segmentRefChainIndex = index;
+    },
+    exit: (_node, _parent, context) => {
+      context.segmentRefChainIndex = null;
     }
   },
   ReferenceExpression: {
     enter: (node, parent, context) => {
       const { field, contentType } = node as ReferenceExpression;
-      switch (parent!.type) {
-        case 'RefByExpression':
-        case 'ReferenceExpression': {
-          const { currentPromise } = context;
-          if (!currentPromise) {
-            throw Error(`node is ${node.type}, parent is ${parent!.type}, but currentPromise is null`);
-          }
-          const func = async () => {
-            const results = await currentPromise;
-            if (!results.length) return [];
-            const ids: string[] = results
-              .map((entry) => {
-                const ref = entry.fields[field]?.[context.defaultLocale];
-                if (!ref) return [];
-                if (!Array.isArray(ref)) {
-                  return [ref.sys.id];
-                }
-                return ref.map((x) => x.sys.id);
-              })
-              .flat();
-            const entries = await context.entryLoader.loadMany(ids.map((id) => ({ id, preview: !!context.preview })));
-            return entries.filter((e) => e && (e as Entry<any>).sys.contentType.sys.id === contentType) as Entry<any>[];
-          };
-          context.currentPromise = func();
-          break;
-        }
-        case 'DynamicSegment': {
-          const { entry } = context;
-          const func = async () => {
-            let ids: string[] = [];
-            const ref = entry.fields[field]?.[context.defaultLocale];
-            if (!ref) ids = [];
-            if (!Array.isArray(ref)) {
-              ids = [ref.sys.id];
-            }
-            ids = ref.map((x: any) => x.sys.id);
-            const entries = await context.entryLoader.loadMany(ids.map((id) => ({ id, preview: !!context.preview })));
-            return entries.filter((e) => e && (e as Entry<any>).sys.contentType.sys.id === contentType) as Entry<any>[];
-          };
-          context.currentPromise = func();
-          break;
-        }
-      }
+      const { currentSegmentIndex } = context;
+
+      const treeNode: ContentToPathTreeRefNode = {
+        type: 'ref',
+        field,
+        contentType,
+        segmentIndex: currentSegmentIndex,
+        children: []
+      };
+
+      appendNodeToSegmentOrCurrent({ treeNode, parent: parent!, context });
+
+      context.currentTreeNode = treeNode;
     }
   },
-
-  Field: {
+  RefByExpression: {
     enter: (node, parent, context) => {
-      const { name } = node as Field;
-      const { currentSegmentIndex, currentPromise, defaultLocale, entry } = context;
-      switch (parent!.type) {
-        case 'ReferenceExpression':
-        case 'RefByExpression':
-          if (!currentPromise) {
-            throw Error(`node is ${node.type}, parent is ${parent!.type}, but currentPromise is null`);
-          }
-          const func = async () => {
-            const results = await currentPromise;
-            if (!results.length) return [];
-            const segmentResults: SegmentResult[] = results.map((entry) => {
-              return {
-                segmentIndex: currentSegmentIndex,
-                entry,
-                slug: entry.fields[name]?.[defaultLocale]
-              };
-            });
-            return segmentResults.filter((x) => !!x.slug);
-          };
-          context.promises.push(func());
-          break;
-        case 'DynamicSegment':
-          const slug = entry.fields[name]?.[defaultLocale];
-          if (slug) {
-            context.promises.push(
-              new Promise((resolve) =>
-                resolve([
-                  {
-                    segmentIndex: currentSegmentIndex,
-                    slug,
-                    entry
-                  }
-                ])
-              )
-            );
-          }
+      const { field, contentType } = node as ReferenceExpression;
+      const { currentSegmentIndex } = context;
 
-          break;
-        default:
-      }
+      const treeNode: ContentToPathTreeRefByNode = {
+        type: 'refBy',
+        field,
+        contentType,
+        segmentIndex: currentSegmentIndex,
+        children: []
+      };
+
+      appendNodeToSegmentOrCurrent({ treeNode, parent: parent!, context });
+
+      context.currentTreeNode = treeNode;
+    }
+  },
+  Field: {
+    enter: (node, _parent, context) => {
+      const { name: field } = node as Field;
+      const { currentSegmentIndex, currentTreeNode } = context;
+      currentTreeNode.children.push({
+        type: 'field',
+        field,
+        segmentIndex: currentSegmentIndex
+      });
     }
   }
 };
 
 export default class ContentToPathsFetcher {
-  private readonly _pathRule: PathRule;
+  private readonly _tree: ContentToPathsFetcherTree = new ContentToPathsFetcherTree();
 
   constructor({ pathRule }: { pathRule: PathRule }) {
-    this._pathRule = pathRule;
+    const context: ContentToPathsFetcherContext = {
+      currentSegmentIndex: 0,
+      tree: this._tree,
+      nodesToBeAppendedToSegment: new Map(),
+      completedSegments: new Map(),
+      currentTreeNode: this._tree.root,
+      segmentRefChainIndex: null
+    };
+
+    traversePathRule(pathRule, ContentToPathsFetcherVisitor, context);
   }
 
   get logPrefix() {
     return `[${this.constructor.name}]`;
   }
 
-  async fetch({ entry, apolloContext }: { entry: Entry<any>; apolloContext: ApolloContext }) {
-    const context: ContentToPathsFetcherContext = {
-      entry,
-      currentSegmentIndex: 0,
-      promises: [],
-      entryLoader: apolloContext.loaders!.entryLoader,
-      entriesRefByLoader: apolloContext.loaders!.entriesRefByLoader,
-      defaultLocale: apolloContext.defaultLocale,
-      preview: !!apolloContext.preview,
-      currentPromise: null,
-      slugs: []
-    };
+  async fetch({}: // entry,
+  // apolloContext
+  {
+    entry: Entry<any>;
+    apolloContext: ApolloContext;
+  }): Promise<{ path: string; pathEntries: PathEntries }[]> {
+    // await this._readyPromise;
 
-    traversePathRule(this._pathRule, pathToItemsFetcherVisitor, context);
+    console.log(JSON.stringify(this._tree.root, null, 2));
 
-    const resolved = (await Promise.all(context.promises)).flat();
-
-    const { slugs } = context;
-
-    const results = slugs.reduce((acc, slug, index) => {
-      if (slug) {
-        if (!acc.length) {
-          return [{ path: `/${slug}`, pathEntries: [null] }];
-        }
-        return acc.map((old) => ({
-          path: `${old.path}/${slug}`,
-          pathEntries: [...old.pathEntries, null]
-        }));
-      } else {
-        const resultsForThisIndex = resolved.filter((r) => r.segmentIndex === index);
-        if (!acc.length) {
-          return resultsForThisIndex.map((r) => ({ path: `/${r.slug}`, pathEntries: [r.entry] }));
-        }
-        return acc
-          .map((old) => {
-            return resultsForThisIndex.map((r) => ({
-              path: `${old.path}/${r.slug}`,
-              pathEntries: [...old.pathEntries, r.entry]
-            }));
-          })
-          .flat();
-      }
-    }, [] as { path: string; pathEntries: PathEntries }[]);
-
-    return results;
+    //TODO:
+    return [];
   }
 }

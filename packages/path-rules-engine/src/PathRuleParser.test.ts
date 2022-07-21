@@ -120,6 +120,112 @@ describe('PathParser', () => {
     });
   });
 
+  it('parses a rule with a segment reference', () => {
+    parser.parse(`/:__segment__(1).parent(page).slug/:parent(page).slug/:slug`);
+
+    expect(parser.PathRule()).toEqual({
+      type: 'PathRule',
+      segments: [
+        {
+          type: 'DynamicSegment',
+          body: {
+            type: 'SegmentReference',
+            index: 1,
+            property: {
+              type: 'ReferenceExpression',
+              contentType: 'page',
+              field: 'parent',
+              property: {
+                type: 'Field',
+                name: 'slug'
+              }
+            }
+          }
+        },
+        {
+          type: 'DynamicSegment',
+          body: {
+            type: 'ReferenceExpression',
+            contentType: 'page',
+            field: 'parent',
+            property: {
+              type: 'Field',
+              name: 'slug'
+            }
+          }
+        },
+        {
+          type: 'DynamicSegment',
+          body: {
+            type: 'Field',
+            name: 'slug'
+          }
+        }
+      ]
+    });
+  });
+
+  it('parses a rule with multiple segment references', () => {
+    parser.parse(`/:__segment__(1).parent(page).slug/:__segment__(2).parent(page).slug/:parent(page).slug/:slug`);
+
+    expect(parser.PathRule()).toEqual({
+      type: 'PathRule',
+      segments: [
+        {
+          type: 'DynamicSegment',
+          body: {
+            type: 'SegmentReference',
+            index: 1,
+            property: {
+              type: 'ReferenceExpression',
+              contentType: 'page',
+              field: 'parent',
+              property: {
+                type: 'Field',
+                name: 'slug'
+              }
+            }
+          }
+        },
+        {
+          type: 'DynamicSegment',
+          body: {
+            type: 'SegmentReference',
+            index: 2,
+            property: {
+              type: 'ReferenceExpression',
+              contentType: 'page',
+              field: 'parent',
+              property: {
+                type: 'Field',
+                name: 'slug'
+              }
+            }
+          }
+        },
+        {
+          type: 'DynamicSegment',
+          body: {
+            type: 'ReferenceExpression',
+            contentType: 'page',
+            field: 'parent',
+            property: {
+              type: 'Field',
+              name: 'slug'
+            }
+          }
+        },
+        {
+          type: 'DynamicSegment',
+          body: {
+            type: 'Field',
+            name: 'slug'
+          }
+        }
+      ]
+    });
+  });
+
   it('parses a rule with a refBy expression', () => {
     parser.parse(`/courses/:__refBy__(course,topics).slug/:slug`);
 

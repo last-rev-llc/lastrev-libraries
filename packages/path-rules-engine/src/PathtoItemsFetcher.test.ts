@@ -1,27 +1,10 @@
 import PathToItemsFetcher from './PathToItemsFetcher';
 import PathRuleParser from './PathRuleParser';
-import { ApolloContext, FVLKey } from '@last-rev/types';
-import { entryMocks } from './testUtils';
+import { entryMocks, mockApolloContext } from './testUtils';
 
-const entries = Object.values(entryMocks);
+const apolloContext = mockApolloContext();
 
 const parser = new PathRuleParser();
-
-const apolloContext: ApolloContext = {
-  defaultLocale: 'en-US',
-  preview: false,
-  loaders: {
-    entryByFieldValueLoader: {
-      load: async ({ field, value, contentType }: FVLKey) => {
-        const entry =
-          entries.find((e) => {
-            return e.fields[field]?.['en-US'] === value && e.sys.contentType.sys.id === contentType;
-          }) || null;
-        return Promise.resolve(entry);
-      }
-    }
-  }
-} as unknown as ApolloContext;
 
 describe('PathToItemsFetcher', () => {
   it('fetches items from a simple path', async () => {

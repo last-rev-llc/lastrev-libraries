@@ -1,192 +1,182 @@
-import { Field, PathRule, RefByExpression, ReferenceExpression } from './types';
+import { PathRule, RefByExpression, ReferenceExpression, SegmentReference } from './types';
 import traversePathRule, { PathVisitor } from './traversePathRule';
 import { Entry } from 'contentful';
+import { ApolloContext, PathEntries } from '@last-rev/types';
+
+type SegmentValidator = (item: Entry<any>, pathEntries: PathEntries, ctx: ApolloContext) => Promise<string | null>;
+type ResolutionRootsResolver = (pathEntries: PathEntries, ctx: ApolloContext) => Promise<Entry<any>[]>;
 
 type Context = {
-  rootEntry: Entry<any>;
-  idToEntryMap: Record<string, Entry<any>>;
-  defaultLocale: string;
-  currentResolutionNodes: Entry<any>[];
-  errors: string[];
-  slugs: (string | null)[];
-  currentSlugIndex: number;
-  entriesByContentType: Record<string, Entry<any>[]>;
+  currentSegmentIndex: number;
+  segmentValidators: (SegmentValidator | null)[];
+  getResolutionRoots: ResolutionRootsResolver;
+};
+
+const createRefResolutionRootsResolver = (
+  field: string,
+  contentType: string,
+  getResolutionRoots: ResolutionRootsResolver
+): ResolutionRootsResolver => {
+  return async (pathEntries, ctx) => {
+    try {
+      const resolutionRoots = await getResolutionRoots(pathEntries, ctx);
+      const preview = !!ctx.preview;
+      const refs = resolutionRoots
+        .map((root) => {
+          const ref = root.fields[field]?.[ctx.defaultLocale];
+          if (!ref) return [];
+          if (!Array.isArray(ref)) return [ref];
+          return ref;
+        })
+        .flat();
+      const loaded = await ctx.loaders.entryLoader.loadMany(refs.map((e: any) => ({ id: e.sys.id, preview })));
+
+      return loaded.filter((a: any) => {
+        return !!a?.sys?.id && a?.sys?.contentType?.sys?.id === contentType;
+      }) as Entry<any>[];
+    } catch (err: any) {
+      console.log('caught in ref roots', err, err.stack);
+      return [];
+    }
+  };
+};
+
+const createRefbyResolutionRootsResolver = (
+  refByField: string,
+  contentType: string,
+  getResolutionRoots: ResolutionRootsResolver
+): ResolutionRootsResolver => {
+  return async (pathEntries, ctx) => {
+    try {
+      const resolutionRoots = await getResolutionRoots(pathEntries, ctx);
+      const preview = !!ctx.preview;
+      const ids = resolutionRoots.map((root) => root.sys.id);
+      const settled = await Promise.allSettled(
+        ids.map((id) => ctx.loaders.entriesRefByLoader.load({ id, preview, contentType, field: refByField }))
+      );
+      return settled
+        .filter((s) => s.status === 'fulfilled')
+        .map((s) => (s as PromiseFulfilledResult<Entry<any>[]>).value)
+        .flat();
+    } catch (err: any) {
+      console.log('caught in refBy roots', err, err.stack);
+      return [];
+    }
+  };
+};
+
+const createSegmentValidator = (
+  currentSegment: number,
+  getResolutionRoots: ResolutionRootsResolver
+): SegmentValidator => {
+  return async (item, pathEntries, ctx) => {
+    try {
+      const roots = await getResolutionRoots(pathEntries, ctx);
+      if (!roots.length) {
+        return `no resolution roots found for segment ${currentSegment}`;
+      }
+      const results = roots.some((r) => {
+        return r.sys.id === item.sys.id;
+      });
+      if (!results) {
+        return `resolution roots did not match any item with id ${item.sys.id} in segment ${currentSegment}`;
+      }
+      return null;
+    } catch (err: any) {
+      console.log('caught here', err, err.stack);
+      return null;
+    }
+  };
+};
+
+const createSegmentResolutionRootsResolver = (index: number): ResolutionRootsResolver => {
+  return async (pathEntries) => {
+    const item = pathEntries[index];
+    if (!item) throw Error(`Segment at ${index} does not resolve to an entry!`);
+    return [item];
+  };
 };
 
 const relationshipValidationVisitor: PathVisitor<Context> = {
   StaticSegment: {
+    enter: (_node, _parent, context) => {
+      context.segmentValidators[context.currentSegmentIndex] = null;
+    },
     exit: (_node, _parent, context) => {
       // segment ended, increment slug index
-      context.currentSlugIndex++;
+      context.currentSegmentIndex++;
     }
   },
   DynamicSegment: {
     enter: (_node, _parent, context) => {
-      // all nodes are resolved from the root. reset to this when entering dynamic segement
-      context.currentResolutionNodes = [context.rootEntry];
+      // default to last slug segment;
+      // TODO: allow for static segment at end
+      context.getResolutionRoots = async (pathEntries) => [pathEntries[pathEntries.length - 1] as Entry<any>];
     },
     exit: (_node, _parent, context) => {
+      const currentSegment = context.currentSegmentIndex;
+      const { getResolutionRoots } = context;
+      context.segmentValidators[currentSegment] = createSegmentValidator(currentSegment, getResolutionRoots);
       // segment ended, increment slug index
-      context.currentSlugIndex++;
+      context.currentSegmentIndex++;
     }
   },
-  Field: {
+  SegmentReference: {
     enter: (node, _parent, context) => {
-      // resolve field against all possible resolution nodes
-      const resolvedNodes = context.currentResolutionNodes.filter((currentResolutionNode) => {
-        const currentField = currentResolutionNode.fields[(node as Field).name]?.[context.defaultLocale];
-        if (!currentField) {
-          return false;
-        }
-        const currentSlug = context.slugs[context.currentSlugIndex]!;
-        if (currentField !== currentSlug) {
-          return false;
-        }
-
-        return true;
-      });
-
-      if (resolvedNodes.length === 0) {
-        context.errors.push(`Unable to resolve field ${(node as Field).name} in segment[${context.currentSlugIndex}]`);
-      }
+      const { index } = node as SegmentReference;
+      context.getResolutionRoots = createSegmentResolutionRootsResolver(index);
     }
   },
   ReferenceExpression: {
     enter: (node, _parent, context) => {
-      const newResolvedNodes = context.currentResolutionNodes.flatMap((currentResolutionNode) => {
-        let currentField = currentResolutionNode.fields[(node as ReferenceExpression).field]?.[context.defaultLocale];
+      const { field, contentType } = node as ReferenceExpression;
+      const { getResolutionRoots } = context;
 
-        if (!currentField) {
-          return [];
-        }
-
-        if (!Array.isArray(currentField)) {
-          currentField = [currentField];
-        }
-
-        return currentField
-          .map((currentFieldValue: any) => {
-            const linkRefId = currentFieldValue.sys?.id;
-            if (!linkRefId) {
-              return null;
-            }
-            if (!context.idToEntryMap[linkRefId]) {
-              return null;
-            }
-            if (context.idToEntryMap[linkRefId].sys.contentType.sys.id !== (node as ReferenceExpression).contentType) {
-              return null;
-            }
-            return context.idToEntryMap[linkRefId];
-          })
-          .filter((currentFieldValue: Entry<any> | null) => currentFieldValue !== null);
-      });
-
-      if (!newResolvedNodes.length) {
-        context.errors.push(
-          `Unable to resolve reference ${(node as ReferenceExpression).field} in segment[${context.currentSlugIndex}]`
-        );
-      }
-
-      context.currentResolutionNodes = newResolvedNodes;
+      context.getResolutionRoots = createRefResolutionRootsResolver(field, contentType, getResolutionRoots);
     }
   },
-
   RefByExpression: {
     enter: (node, _parent, context) => {
-      const newResolvedNodes = context.currentResolutionNodes.flatMap((currentResolutionNode) => {
-        const refereredId = currentResolutionNode.sys.id;
-        const possibleLinkingEntries = context.entriesByContentType[(node as RefByExpression).contentType] || [];
+      const { refByField, contentType } = node as RefByExpression;
+      const { getResolutionRoots } = context;
 
-        if (!possibleLinkingEntries.length) {
-          return [];
-        }
-
-        const refByField = (node as RefByExpression).refByField;
-
-        return possibleLinkingEntries
-          .flatMap((entry) => {
-            let refByLinkingField = entry.fields[refByField]?.[context.defaultLocale];
-
-            if (!refByLinkingField) {
-              return [];
-            }
-
-            if (!Array.isArray(refByLinkingField)) {
-              refByLinkingField = [refByLinkingField];
-            }
-
-            return refByLinkingField
-              .map((linkingField: any) => {
-                const refByFieldLikingId = linkingField.sys?.id;
-                if (!refByFieldLikingId) {
-                  return null;
-                }
-                return refByFieldLikingId === refereredId ? entry : null;
-              })
-              .filter((linkingField: any) => linkingField !== null);
-          })
-          .filter((entry: Entry<any> | null) => entry !== null);
-      });
-
-      if (!newResolvedNodes.length) {
-        context.errors.push(
-          `Unable to resolve refBy ${(node as RefByExpression).refByField} in segment[${context.currentSlugIndex}]`
-        );
-      }
-
-      context.currentResolutionNodes = newResolvedNodes;
+      context.getResolutionRoots = createRefbyResolutionRootsResolver(refByField, contentType, getResolutionRoots);
     }
   }
 };
 
 export default class RelationShipValidator {
-  private readonly _pathRule: PathRule;
-  private readonly _rootEntry: Entry<any>;
-  private readonly _entries: Entry<any>[];
-  private readonly _defaultLocale: string;
-  private readonly _slugs: (string | null)[];
+  private readonly segmentValidators: (SegmentValidator | null)[];
 
-  constructor({
-    pathRule,
-    rootEntry,
-    entries,
-    defaultLocale,
-    slugs
-  }: {
-    pathRule: PathRule;
-    rootEntry: Entry<any>;
-    entries: Entry<any>[];
-    defaultLocale: string;
-    slugs: (string | null)[];
-  }) {
-    this._pathRule = pathRule;
-    this._entries = entries;
-    this._rootEntry = rootEntry;
-    this._defaultLocale = defaultLocale;
-    this._slugs = slugs;
+  constructor(pathRule: PathRule) {
+    const context = {
+      currentSegmentIndex: 0,
+      segmentValidators: [],
+      getResolutionRoots: async () => []
+    };
+
+    traversePathRule(pathRule, relationshipValidationVisitor, context);
+
+    this.segmentValidators = context.segmentValidators;
   }
 
-  validate(): string[] {
-    const errors: string[] = [];
-
-    traversePathRule(this._pathRule, relationshipValidationVisitor, {
-      rootEntry: this._rootEntry,
-      idToEntryMap: this._entries.reduce((acc, entry) => {
-        acc[entry.sys.id] = entry;
-        return acc;
-      }, {} as Record<string, Entry<any>>),
-      defaultLocale: this._defaultLocale,
-      currentResolutionNodes: [this._rootEntry],
-      errors,
-      slugs: this._slugs,
-      currentSlugIndex: 0,
-      entriesByContentType: this._entries.reduce((acc, entry) => {
-        acc[entry.sys.contentType.sys.id] = acc[entry.sys.contentType.sys.id] || [];
-        acc[entry.sys.contentType.sys.id].push(entry);
-        return acc;
-      }, {} as Record<string, Entry<any>[]>)
-    });
-
-    return errors;
+  async validate(pathEntries: PathEntries, ctx: ApolloContext): Promise<string[]> {
+    return (
+      await Promise.all(
+        pathEntries.map(async (e, i) => {
+          const validator = this.segmentValidators[i];
+          if (e && !validator) {
+            return `entry at segment ${i} but none expected`;
+          }
+          if (!e && validator) {
+            return `no entry at segment ${i} but expected one`;
+          }
+          if (e && validator) {
+            return await validator(e, pathEntries, ctx);
+          }
+          return null;
+        })
+      )
+    ).filter((v) => !!v) as string[];
   }
 }

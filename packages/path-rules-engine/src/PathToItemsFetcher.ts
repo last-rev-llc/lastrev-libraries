@@ -1,5 +1,5 @@
 import { Entry } from 'contentful';
-import { ApolloContext, ContentfulLoaders } from 'packages/types';
+import { ApolloContext, ContentfulLoaders } from '@last-rev/types';
 import RelationShipValidator from './RelationshipValidator';
 import traversePathRule, { PathVisitor } from './traversePathRule';
 import { Field, PathRule, RefByExpression, ReferenceExpression } from './types';
@@ -83,10 +83,12 @@ const pathToItemsFetcherVisitor: PathVisitor<PathToItemsFetcherContext> = {
 export default class PathToItemsFetcher {
   private readonly _pathRule: PathRule;
   private readonly _rootContentType: string;
+  private readonly _relationshipValidator: RelationShipValidator;
 
   constructor({ pathRule, rootContentType }: { pathRule: PathRule; rootContentType: string }) {
     this._pathRule = pathRule;
     this._rootContentType = rootContentType;
+    this._relationshipValidator = new RelationShipValidator(pathRule);
   }
 
   get logPrefix() {
@@ -116,18 +118,7 @@ export default class PathToItemsFetcher {
       return acc;
     }, new Array(slugs.length).fill(null) as (Entry<any> | null)[]);
 
-    const entries = results.filter((r) => r !== null) as Entry<any>[];
-
-    const validator = new RelationShipValidator({
-      // this assumes the root entry is always the furthes segment down the path
-      rootEntry: entries[entries.length - 1],
-      entries,
-      defaultLocale: apolloContext.defaultLocale,
-      slugs,
-      pathRule: this._pathRule
-    });
-
-    const errors = validator.validate();
+    const errors = await this._relationshipValidator.validate(results, apolloContext);
 
     if (errors.length > 0) {
       errors.map((error) => logger.debug(`${this.logPrefix} ${error}`), this);

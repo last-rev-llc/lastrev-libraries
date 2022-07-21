@@ -1,6 +1,4 @@
-// `/courses/:__refBy__(course,topics).slug/:slug`
-
-export type TokenType = 'IDENTIFIER' | '__refBy__' | '__fullPath__' | '/' | ':' | '(' | ')' | '.' | ',' | '$';
+export type TokenType = 'IDENTIFIER' | 'NUMBER' | '__refBy__' | '__segment__' | '/' | ':' | '(' | ')' | '.' | ',';
 
 export type Token = {
   type: TokenType;
@@ -20,12 +18,13 @@ const spec: [RegExp, TokenType | null][] = [
   [/^\./, '.'],
   [/^\//, '/'],
   [/^\:/, ':'],
-  [/^\$/, '$'],
   // ---------------------------------------------------------------
   // keywords
   [/^\b\__refBy__\b/, '__refBy__'],
+  [/^\b\__segment__\b/, '__segment__'],
   // ---------------------------------------------------------------
   // numbers
+  [/^\d+/, 'NUMBER'],
 
   // ---------------------------------------------------------------
   // identifiers

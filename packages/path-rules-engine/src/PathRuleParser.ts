@@ -1,5 +1,16 @@
 import PathRuleTokenizer, { Token, TokenType } from './PathRuleTokenizer';
-import { AstNode, DynamicSegment, Expression, Field, PathRule, RefByExpression, Segment, StaticSegment } from './types';
+import {
+  AstNode,
+  DynamicSegment,
+  Expression,
+  Field,
+  PathRule,
+  PrimaryExpression,
+  RefByExpression,
+  Segment,
+  SegmentReference,
+  StaticSegment
+} from './types';
 
 export default class PathRuleParser {
   _string: string;
@@ -103,13 +114,45 @@ export default class PathRuleParser {
   }
 
   /**
+   * SegementReference
+   *    : '__Segement__' '(' NUMBER ')' '.' Expression
+   */
+
+  SegementReference(): SegmentReference {
+    this._eat('__segment__');
+    this._eat('(');
+    const index = parseInt(this._eat('NUMBER').value, 10);
+    this._eat(')');
+    this._eat('.');
+    const property = this.Expression();
+    return {
+      type: 'SegmentReference',
+      index,
+      property
+    };
+  }
+
+  /**
+   * PrimaryExpression
+   *    : Expression
+   *    | SegmentReference
+   *    ;
+   */
+  PrimaryExpression(): PrimaryExpression {
+    if (this._lookahead?.type === '__segment__') {
+      return this.SegementReference();
+    }
+    return this.Expression();
+  }
+
+  /**
    * DynamicSegment
-   *    : ':' Expression '/'?
+   *    : ':' PrimaryExpression '/'?
    *    ;
    */
   DynamicSegment(): DynamicSegment {
     this._eat(':');
-    const body = this.Expression();
+    const body = this.PrimaryExpression();
     if (this._lookahead) {
       this._eat('/');
     }
