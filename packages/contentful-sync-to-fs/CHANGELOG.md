@@ -1,5 +1,12 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/graphql-contentful-helpers@0.3.0
+
 ## 0.3.2
 
 ### Patch Changes

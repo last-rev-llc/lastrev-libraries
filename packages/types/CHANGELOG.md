@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.2.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
 ## 0.1.7
 
 ### Patch Changes
