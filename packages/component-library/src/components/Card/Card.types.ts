@@ -27,32 +27,50 @@ export interface CardProps extends Omit<MuiCardProps, 'variant'> {
 }
 
 export interface CardClasses {
-  /** Styles applied to the root element. */
+  /** Styles applied to the Root element. */
   root: string;
-  /** Styles applied to the card tags root container element. */
-  cardTags: string;
-  /** Styles applied to the card title element. */
-  cardTitle: string;
-  /** Styles applied to the card link element. */
+  /** Styles applied to the Card Link element. */
   cardLink: string;
-  /** Styles applied to the card media element. */
+  /** Styles applied to the Card Media element. */
   cardMedia: string;
-  /** Styles applied to the card skeleton element. */
-  skeleton: string;
-  /** Styles applied to the media content module element. */
+  /** Styles applied to the Media ContentModule element. */
   media: string;
-  /** Styles applied to the card chip element. */
+  /** Styles applied to the Media Skeleton element. */
+  mediaSkeleton: string;
+  /** Styles applied to the CardTagsRoot Container element. */
+  cardTags: string;
+  /** Styles applied to the Card Chip element. */
   chip: string;
-  /** Styles applied to the card tag element. */
+  /** Styles applied to the CardTag element. */
   cardTagRoot: string;
-  /** Styles applied to the card content element. */
+  /** Styles applied to the CardContent element. */
   cardContent: string;
-  /** Styles applied to the typography used to build the skeleton for the card element. */
-  cardTextSkeleton: string;
-  /** Styles applied to the card text content module element. */
+  /** Styles applied to the Card Title element. */
+  cardTitle: string;
+  /** Styles applied to the Card Subtitle element. */
+  cardSubtitle: string;
+  /** Styles applied to the Card Text ContentModule element. */
   cardBody: string;
-  /** Styles applied to the card actions element. */
+  /** Styles applied to the Card Actions element. */
   cardActions: string;
+  /** Styles applied to the Buttons or Links from CardActions element. */
+  cardButtons: string;
+  /** Styles applied to the CardContent used to build the skeleton for the card element. */
+  CardContentForSkeleton: string;
+  /** Styles applied to the Typography used to build the skeleton for the card element. */
+  CardTitleForSkeleton: string;
+  /** Styles applied to the skeleton of the title Typography the for the card element. */
+  TitleSkeleton: string;
+  /** Styles applied to the Typography used to build the skeleton for the card element. */
+  CardSubtitleForSkeleton: string;
+  /** Styles applied to the skeleton of the title Typography the for the card element. */
+  SubtitleSkeleton: string;
+  /** Styles applied to the skeleton of the Text the for the card element. */
+  TextSkeleton: string;
+  /** Styles applied to the CardActions used to build the skeleton for the card element. */
+  CardActionsForSkeleton: string;
+  /** Styles applied to the skeleton of the CardActions the for the card element. */
+  ActionsSkeleton: string;
 }
 
 export declare type CardClassKey = keyof CardClasses;
