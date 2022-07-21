@@ -89,7 +89,7 @@ const createContext = async ({
   return {
     contentful,
     locales: map(locales, 'code'),
-    loaders: createLoaders(config),
+    loaders: createLoaders(config, defaultLocale),
     mappers: config.extensions.mappers,
     defaultLocale,
     pathReaders,

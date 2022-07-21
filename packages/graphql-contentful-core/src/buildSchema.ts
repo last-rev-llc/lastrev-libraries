@@ -19,7 +19,8 @@ const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
 };
 
 const buildSchema = async (config: LastRevAppConfig): Promise<GraphQLSchema> => {
-  const loaders = createLoaders(config);
+  // locale doesn't matter for this use case
+  const loaders = createLoaders(config, 'en-US');
   const contentTypes = await fetchAllContentTypes(loaders);
 
   const baseTypeDefs = await generateSchema({
