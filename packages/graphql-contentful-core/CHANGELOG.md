@@ -1,5 +1,20 @@
 # @last-rev/graphql-contentful-core
 
+## 0.4.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/contentful-cms-loader@0.3.0
+  - @last-rev/contentful-fs-loader@0.2.0
+  - @last-rev/contentful-redis-loader@0.4.0
+  - @last-rev/graphql-contentful-helpers@0.3.0
+  - @last-rev/types@0.2.0
+
 ## 0.3.1
 
 ### Patch Changes

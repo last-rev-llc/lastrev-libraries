@@ -1,5 +1,11 @@
 # @last-rev/contentful-dynamodb-loader
 
+## 0.2.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
 ## 0.1.5
 
 ### Patch Changes

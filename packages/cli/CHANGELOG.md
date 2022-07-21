@@ -1,5 +1,13 @@
 # @last-rev/cli
 
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/graphql-contentful-core@0.4.0
+  - @last-rev/contentful-sync-to-fs@0.3.3
+
 ## 0.4.1
 
 ### Patch Changes

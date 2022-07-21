@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.4.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
 ## 0.3.3
 
 ### Patch Changes

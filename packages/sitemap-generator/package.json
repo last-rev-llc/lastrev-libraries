@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/sitemap-generator",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/types": "^0.1.4",
+    "@last-rev/types": "^0.2.0",
     "fs-extra": "^10.0.0",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21"

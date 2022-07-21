@@ -1,5 +1,11 @@
 # @last-rev/contentful-cms-loader
 
+## 0.3.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
 ## 0.2.2
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @last-rev/contentful-fs-loader
 
+## 0.2.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
 ## 0.1.13
 
 ### Patch Changes
