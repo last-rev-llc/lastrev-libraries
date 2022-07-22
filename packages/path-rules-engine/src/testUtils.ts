@@ -146,9 +146,7 @@ export const mockApolloContext = (locale?: string) => {
           return Promise.resolve(entry);
         },
         loadMany: async (keys: ItemKey[]) => {
-          const es = entries.filter((e) => {
-            return keys.find((k) => k.id === e.sys.id);
-          });
+          const es = keys.map((k) => entries.find((e) => k.id === e.sys.id));
           return Promise.resolve(es);
         }
       }

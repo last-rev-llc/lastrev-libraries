@@ -40,6 +40,7 @@ const isRefNode = (node: any): node is ContentToPathTreeRefNode => node.type ===
 const isRefByNode = (node: any): node is ContentToPathTreeRefByNode => node.type === 'refBy';
 const isStaticNode = (node: any): node is ContentToPathTreeStaticNode => node.type === 'static';
 const isFieldNode = (node: any): node is ContentToPathTreeFieldNode => node.type === 'field';
+const isRootNode = (node: any): node is ContentToPathTreeRootNode => !node.type;
 
 const getRefNodeKeyObjects = (
   nodes: ContentToPathTreeRefNode[],
@@ -121,82 +122,122 @@ const deepLoad = async ({
   node,
   resolvedSlugs,
   entry,
-  ctx
+  ctx,
+  delayedFields
 }: {
   node: ContentToPathTreeRefNode | ContentToPathTreeRefByNode;
   entry: Entry<any>;
   ctx: ApolloContext;
-  resolvedSlugs: (SegmentInfo | null)[];
-}): Promise<(SegmentInfo | null)[][]> => {
-  const newResolvedSlugs = [...resolvedSlugs];
-  node.children.filter(isFieldNode).forEach(({ segmentIndex, field }) => {
-    const fieldValue = entry.fields[field]?.[ctx.defaultLocale];
-    if (fieldValue) {
-      newResolvedSlugs[segmentIndex] = { value: fieldValue, entry };
-    }
-  });
+  resolvedSlugs: (SegmentInfo | null)[][];
+  delayedFields: { info: SegmentInfo; segmentIndex: number }[];
+}): Promise<void> => {
+  console.log('deeploading', resolvedSlugs);
 
-  const refNodeKeyObjects = getRefNodeKeyObjects(node.children.filter(isRefNode), [entry], ctx);
-  const refByNodeKeyObjects = getRefByNodeKeyObjects(node.children.filter(isRefByNode), [entry], ctx);
+  const refChildren = node.children.filter(isRefNode);
+  const refByChildren = node.children.filter(isRefByNode);
+
+  const refNodeKeyObjects = getRefNodeKeyObjects(refChildren, [entry], ctx);
+  const refByNodeKeyObjects = getRefByNodeKeyObjects(refByChildren, [entry], ctx);
 
   const [loadedRefEntries, loadedRefByEntries] = await Promise.all([
     ctx.loaders.entryLoader.loadMany(refNodeKeyObjects.map(({ key }) => key)),
     ctx.loaders.entriesRefByLoader.loadMany(refByNodeKeyObjects.map(({ key }) => key))
   ]);
 
-  const loadedRefNodes: { node: ContentToPathTreeRefNode; entry: Entry<any>; resolvedSlugs: (SegmentInfo | null)[] }[] =
-    [];
+  console.log('loadedRefByEntries', refByNodeKeyObjects, loadedRefByEntries);
+
+  const loadedRefNodes: { node: ContentToPathTreeRefNode; entry: Entry<any> }[] = [];
   const loadedRefByNodes: {
     node: ContentToPathTreeRefByNode;
     entry: Entry<any>;
-    resolvedSlugs: (SegmentInfo | null)[];
   }[] = [];
 
   refNodeKeyObjects.forEach(({ node }, i) => {
     const entry = loadedRefEntries[i];
-    if (entry) {
-      loadedRefNodes.push({ node, entry: entry as Entry<any>, resolvedSlugs: newResolvedSlugs.slice() });
+    if (entry && (entry as Entry<any>).sys.contentType.sys.id === node.contentType) {
+      loadedRefNodes.push({ node, entry: entry as Entry<any> });
     }
   });
 
   refByNodeKeyObjects.forEach(({ node }, i) => {
     const entries = (loadedRefByEntries[i] as Entry<any>[]) || [];
     entries.forEach((entry) => {
-      loadedRefByNodes.push({ node, entry, resolvedSlugs: newResolvedSlugs.slice() });
+      loadedRefByNodes.push({ node, entry });
     });
   });
 
-  if (!loadedRefNodes.length && !loadedRefByNodes.length) {
-    return [newResolvedSlugs];
-  }
-
-  const slugsToReturn: (SegmentInfo | null)[][] = [];
-
   if (loadedRefNodes.length) {
-    slugsToReturn.push(
-      ...(
-        await Promise.all(
-          loadedRefNodes.map(async ({ node, entry: e, resolvedSlugs: r }) =>
-            deepLoad({ node, resolvedSlugs: r, entry: e, ctx })
-          )
-        )
-      ).flat()
+    await Promise.all(
+      loadedRefNodes.map(async ({ node, entry: e }) => deepLoad({ node, resolvedSlugs, entry: e, ctx, delayedFields }))
     );
   }
 
   if (loadedRefByNodes.length) {
-    slugsToReturn.push(
-      ...(
-        await Promise.all(
-          loadedRefByNodes.map(async ({ node, entry: e, resolvedSlugs: r }) =>
-            deepLoad({ node, resolvedSlugs: r, entry: e, ctx })
-          )
-        )
-      ).flat()
+    await Promise.all(
+      loadedRefByNodes.map(async ({ node, entry: e }) =>
+        deepLoad({ node, resolvedSlugs, entry: e, ctx, delayedFields })
+      )
     );
   }
 
-  return slugsToReturn;
+  const isFinal = isRootNode(node) || !(refChildren.length > 0 || refByChildren.length > 0);
+
+  if (refChildren.length > 0 && loadedRefNodes.length === 0) {
+    delayedFields = [];
+  }
+
+  if (refByChildren.length > 0 && loadedRefByNodes.length === 0) {
+    delayedFields = [];
+  }
+
+  node.children.filter(isFieldNode).forEach(({ segmentIndex, field }) => {
+    const fieldValue = entry.fields[field]?.[ctx.defaultLocale];
+    if (fieldValue) {
+      if (isFinal) {
+        console.log('isFinal', segmentIndex);
+        resolvedSlugs[segmentIndex]!.push({
+          value: fieldValue,
+          entry
+        });
+
+        delayedFields.forEach((f) => {
+          resolvedSlugs[f.segmentIndex]!.push(f.info);
+        });
+        delayedFields = [];
+      } else {
+        console.log('pushing gto delauyed', segmentIndex);
+        delayedFields.push({
+          info: {
+            value: fieldValue,
+            entry
+          },
+          segmentIndex
+        });
+      }
+    }
+  });
+};
+
+const removeNull = (arr: any[]) => {
+  return arr.filter((x) => x !== null);
+};
+
+const cartesian = (args: (SegmentInfo | null)[][]) => {
+  var r: SegmentInfo[][] = [],
+    max = args.length - 1;
+
+  const helper = (arr: SegmentInfo[], i: number) => {
+    const arg = removeNull(args[i]);
+    for (var j = 0, l = arg.length; j < l; j++) {
+      var a = arr.slice(0); // clone arr
+      a.push(arg[j]);
+      if (i == max) r.push(a);
+      else helper(a, i + 1);
+    }
+  };
+
+  helper([], 0);
+  return r;
 };
 
 export default class ContentToPathsFetcherTree {
@@ -204,23 +245,36 @@ export default class ContentToPathsFetcherTree {
   private _numSegments: number = 0;
 
   async fetch(entry: Entry<any>, ctx: ApolloContext): Promise<PathInfo[]> {
-    const resolvedSlugs: (SegmentInfo | null)[] = new Array(this._numSegments).fill(null);
+    const resolvedSlugs: (SegmentInfo | null)[][] = new Array(this._numSegments);
+
+    for (var i = 0; i < resolvedSlugs.length; i++) {
+      resolvedSlugs[i] = [];
+    }
 
     this._root.children.filter(isStaticNode).forEach(({ segmentIndex, value }) => {
-      resolvedSlugs[segmentIndex] = { value, entry: null };
+      console.log('static found', segmentIndex, value);
+      resolvedSlugs[segmentIndex].push({
+        value,
+        entry: null
+      });
     });
 
-    const finalSlugs = await deepLoad({
+    console.log('resolveSlugs a', resolvedSlugs);
+
+    await deepLoad({
       node: this._root as unknown as ContentToPathTreeRefNode | ContentToPathTreeRefByNode,
       resolvedSlugs,
       entry,
-      ctx
+      ctx,
+      delayedFields: []
     });
 
-    const filtered = finalSlugs.filter((arr) => arr.every((seg) => seg !== null)) as SegmentInfo[][];
+    console.log('resolveSlugs b', resolvedSlugs);
+
+    const filtered = cartesian(resolvedSlugs);
 
     return filtered.reduce((pathInfos, segmentInfoArray) => {
-      const path = `'/${segmentInfoArray.map(({ value }) => value).join('/')}`;
+      const path = `/${segmentInfoArray.map(({ value }) => value).join('/')}`;
       const pathEntries = segmentInfoArray.map(({ entry }) => entry);
       pathInfos.push({ path, pathEntries });
       return pathInfos;

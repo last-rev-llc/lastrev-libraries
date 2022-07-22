@@ -1,12 +1,21 @@
 import { Entry } from 'contentful';
-import { ApolloContext, PathEntries } from '@last-rev/types';
+import { ApolloContext } from '@last-rev/types';
 import traversePathRule, { PathVisitor } from './traversePathRule';
-import { AstNode, Field, PathRule, ReferenceExpression, SegmentReference, StaticSegment } from './types';
+import {
+  AstNode,
+  Field,
+  PathRule,
+  RefByExpression,
+  ReferenceExpression,
+  SegmentReference,
+  StaticSegment
+} from './types';
 import ContentToPathsFetcherTree, {
   ContentToPathsHasChildrenNode,
   ContentToPathTreeRefByNode,
   ContentToPathTreeRefChildNode,
-  ContentToPathTreeRefNode
+  ContentToPathTreeRefNode,
+  PathInfo
 } from './ContentToPathsFetcherTree';
 
 type ContentToPathsFetcherContext = {
@@ -103,12 +112,12 @@ const ContentToPathsFetcherVisitor: PathVisitor<ContentToPathsFetcherContext> = 
   },
   RefByExpression: {
     enter: (node, parent, context) => {
-      const { field, contentType } = node as ReferenceExpression;
+      const { refByField, contentType } = node as RefByExpression;
       const { currentSegmentIndex } = context;
 
       const treeNode: ContentToPathTreeRefByNode = {
         type: 'refBy',
-        field,
+        field: refByField,
         contentType,
         segmentIndex: currentSegmentIndex,
         children: []
@@ -152,17 +161,8 @@ export default class ContentToPathsFetcher {
     return `[${this.constructor.name}]`;
   }
 
-  async fetch({}: // entry,
-  // apolloContext
-  {
-    entry: Entry<any>;
-    apolloContext: ApolloContext;
-  }): Promise<{ path: string; pathEntries: PathEntries }[]> {
-    // await this._readyPromise;
-
+  async fetch({ entry, apolloContext }: { entry: Entry<any>; apolloContext: ApolloContext }): Promise<PathInfo[]> {
     console.log(JSON.stringify(this._tree.root, null, 2));
-
-    //TODO:
-    return [];
+    return this._tree.fetch(entry, apolloContext);
   }
 }
