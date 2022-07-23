@@ -1,6 +1,6 @@
 import { Entry } from 'contentful';
 import { ApolloContext } from '@last-rev/types';
-import traversePathRule, { PathVisitor } from './traversePathRule';
+import traversePathRule, { PathVisitor } from '../core/traversePathRule';
 import {
   AstNode,
   Field,
@@ -9,7 +9,7 @@ import {
   ReferenceExpression,
   SegmentReference,
   StaticSegment
-} from './types';
+} from '../types';
 import ContentToPathsFetcherTree, {
   ContentToPathsHasChildrenNode,
   ContentToPathTreeRefByNode,
@@ -162,7 +162,6 @@ export default class ContentToPathsFetcher {
   }
 
   async fetch({ entry, apolloContext }: { entry: Entry<any>; apolloContext: ApolloContext }): Promise<PathInfo[]> {
-    console.log(JSON.stringify(this._tree.root, null, 2));
     return this._tree.fetch(entry, apolloContext);
   }
 }

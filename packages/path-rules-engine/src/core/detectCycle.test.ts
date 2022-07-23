@@ -1,5 +1,5 @@
 import PathRuleParser from './PathRuleParser';
-import detectCycle, { CycleDetctionResult } from './detectCycle';
+import detectCycle from './detectCycle';
 
 const parser = new PathRuleParser();
 

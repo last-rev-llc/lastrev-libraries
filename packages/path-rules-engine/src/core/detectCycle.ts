@@ -1,4 +1,4 @@
-import { PathRule } from './types';
+import { PathRule } from '../types';
 
 export type CycleDetctionResult = false | number[];
 

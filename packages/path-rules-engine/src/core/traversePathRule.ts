@@ -1,37 +1,10 @@
-import {
-  AstNode,
-  PathRule /*, RefByExpression, ReferenceExpression, StaticSegment, DynamicSegment, Field, */
-} from './types';
+import { AstNode, PathRule } from '../types';
 
 export type PathVisitor<C> = {
   [key in AstNode['type']]?: {
     enter?: (node: AstNode, parent: AstNode | null, context: C) => void;
     exit?: (node: AstNode, parent: AstNode | null, context: C) => void;
   };
-  // PathRule?: {
-  //   enter?: (node: PathRule, parent: AstNode | null, context: C) => void;
-  //   exit?: (node: PathRule, parent: AstNode | null, context: C) => void;
-  // };
-  // DynamicSegment?: {
-  //   enter?: (node: DynamicSegment, parent: AstNode | null, context: C) => void;
-  //   exit?: (node: DynamicSegment, parent: AstNode | null, context: C) => void;
-  // };
-  // StaticSegment?: {
-  //   enter?: (node: StaticSegment, parent: AstNode | null, context: C) => void;
-  //   exit?: (node: StaticSegment, parent: AstNode | null, context: C) => void;
-  // };
-  // RefByExpression?: {
-  //   enter?: (node: RefByExpression, parent: AstNode | null, context: C) => void;
-  //   exit?: (node: RefByExpression, parent: AstNode | null, context: C) => void;
-  // };
-  // ReferenceExpression?: {
-  //   enter?: (node: ReferenceExpression, parent: AstNode | null, context: C) => void;
-  //   exit?: (node: ReferenceExpression, parent: AstNode | null, context: C) => void;
-  // }
-  // Field?: {
-  //   enter?: (node: Field, parent: AstNode | null, context: C) => void;
-  //   exit?: (node: Field, parent: AstNode | null, context: C) => void;
-  // }
 };
 
 const traversePathRule = <T>(root: PathRule, visitor: PathVisitor<T>, ctx: T) => {

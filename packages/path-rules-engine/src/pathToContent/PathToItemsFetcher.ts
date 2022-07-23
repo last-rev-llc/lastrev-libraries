@@ -1,8 +1,8 @@
 import { Entry } from 'contentful';
 import { ApolloContext, ContentfulLoaders } from '@last-rev/types';
 import RelationShipValidator from './RelationshipValidator';
-import traversePathRule, { PathVisitor } from './traversePathRule';
-import { Field, PathRule, RefByExpression, ReferenceExpression } from './types';
+import traversePathRule, { PathVisitor } from '../core/traversePathRule';
+import { Field, PathRule, RefByExpression, ReferenceExpression } from '../types';
 import logger from 'loglevel';
 
 export type NoMatchFieldValueResult = {

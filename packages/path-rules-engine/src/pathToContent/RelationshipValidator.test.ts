@@ -1,7 +1,7 @@
 import RelationshipValidator from './RelationshipValidator';
-import PathRuleParser from './PathRuleParser';
+import PathRuleParser from '../core/PathRuleParser';
 
-import { entryMocks, mockApolloContext } from './testUtils';
+import { entryMocks, mockApolloContext } from '../testUtils';
 
 const apolloContext = mockApolloContext();
 

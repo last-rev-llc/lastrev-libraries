@@ -1,6 +1,6 @@
 import ContentToPathsFetcher from './ContentToPathsFetcher';
-import PathRuleParser from './PathRuleParser';
-import { entryMocks, mockApolloContext } from './testUtils';
+import PathRuleParser from '../PathRuleParser';
+import { entryMocks, mockApolloContext } from '../testUtils';
 
 const parser = new PathRuleParser();
 
@@ -56,13 +56,6 @@ describe('ContentToPathsFetcher', () => {
   });
   it('fails to fetfh paths for an item with a reference expression but wrong content type', async () => {
     parser.parse(`/topics/:categories(someOtherType).slug/:slug`);
-    const fetcher = new ContentToPathsFetcher({
-      pathRule: parser.PathRule()
-    });
-    await expect(fetcher.fetch({ entry: entryMocks.blogWithCategories, apolloContext })).resolves.toEqual([]);
-  });
-  it('fails to fetfh paths for an item with a reference expression but wrong field name', async () => {
-    parser.parse(`/topics/:categories2(category).slug/:slug`);
     const fetcher = new ContentToPathsFetcher({
       pathRule: parser.PathRule()
     });

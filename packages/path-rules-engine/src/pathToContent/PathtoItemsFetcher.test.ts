@@ -1,6 +1,6 @@
 import PathToItemsFetcher from './PathToItemsFetcher';
-import PathRuleParser from './PathRuleParser';
-import { entryMocks, mockApolloContext } from './testUtils';
+import PathRuleParser from '../core/PathRuleParser';
+import { entryMocks, mockApolloContext } from '../testUtils';
 
 const apolloContext = mockApolloContext();
 

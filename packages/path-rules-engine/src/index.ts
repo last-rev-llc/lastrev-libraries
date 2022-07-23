@@ -1,2 +1,2 @@
-export { default as PathToContentLoader } from './PathToContentLoader';
-export { default as IdToPathsLoader } from './IdToPathsLoader';
+export { default as PathToContentLoader } from './pathToContent/PathToContentLoader';
+export { default as ContentToPathsLoader } from './contentToPaths/ContentToPathsLoader';

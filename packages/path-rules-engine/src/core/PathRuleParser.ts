@@ -10,7 +10,7 @@ import {
   Segment,
   SegmentReference,
   StaticSegment
-} from './types';
+} from '../types';
 
 export default class PathRuleParser {
   _string: string;

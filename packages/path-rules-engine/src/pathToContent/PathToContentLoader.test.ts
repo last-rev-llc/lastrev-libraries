@@ -1,7 +1,5 @@
 import PathLoader from './PathToContentLoader';
-import { entryMocks, mockApolloContext } from './testUtils';
-
-const entries = Object.values(entryMocks);
+import { entryMocks, mockApolloContext } from '../testUtils';
 
 const pathLoader = new PathLoader({
   page: {

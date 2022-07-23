@@ -131,8 +131,6 @@ const deepLoad = async ({
   resolvedSlugs: (SegmentInfo | null)[][];
   delayedFields: { info: SegmentInfo; segmentIndex: number }[];
 }): Promise<void> => {
-  console.log('deeploading', resolvedSlugs);
-
   const refChildren = node.children.filter(isRefNode);
   const refByChildren = node.children.filter(isRefByNode);
 
@@ -143,8 +141,6 @@ const deepLoad = async ({
     ctx.loaders.entryLoader.loadMany(refNodeKeyObjects.map(({ key }) => key)),
     ctx.loaders.entriesRefByLoader.loadMany(refByNodeKeyObjects.map(({ key }) => key))
   ]);
-
-  console.log('loadedRefByEntries', refByNodeKeyObjects, loadedRefByEntries);
 
   const loadedRefNodes: { node: ContentToPathTreeRefNode; entry: Entry<any> }[] = [];
   const loadedRefByNodes: {
@@ -194,7 +190,6 @@ const deepLoad = async ({
     const fieldValue = entry.fields[field]?.[ctx.defaultLocale];
     if (fieldValue) {
       if (isFinal) {
-        console.log('isFinal', segmentIndex);
         resolvedSlugs[segmentIndex]!.push({
           value: fieldValue,
           entry
@@ -252,14 +247,11 @@ export default class ContentToPathsFetcherTree {
     }
 
     this._root.children.filter(isStaticNode).forEach(({ segmentIndex, value }) => {
-      console.log('static found', segmentIndex, value);
       resolvedSlugs[segmentIndex].push({
         value,
         entry: null
       });
     });
-
-    console.log('resolveSlugs a', resolvedSlugs);
 
     await deepLoad({
       node: this._root as unknown as ContentToPathTreeRefNode | ContentToPathTreeRefByNode,
@@ -268,8 +260,6 @@ export default class ContentToPathsFetcherTree {
       ctx,
       delayedFields: []
     });
-
-    console.log('resolveSlugs b', resolvedSlugs);
 
     const filtered = cartesian(resolvedSlugs);
 

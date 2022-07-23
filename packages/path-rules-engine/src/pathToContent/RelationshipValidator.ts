@@ -1,5 +1,5 @@
-import { PathRule, RefByExpression, ReferenceExpression, SegmentReference } from './types';
-import traversePathRule, { PathVisitor } from './traversePathRule';
+import { PathRule, RefByExpression, ReferenceExpression, SegmentReference } from '../types';
+import traversePathRule, { PathVisitor } from '../core/traversePathRule';
 import { Entry } from 'contentful';
 import { ApolloContext, PathEntries } from '@last-rev/types';
 

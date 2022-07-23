@@ -1,10 +1,11 @@
 import { ApolloContext, PathFilterFunction, PathRuleConfig } from '@last-rev/types';
 import PathMatcher from './PathMatcher';
-import PathRuleParser from './PathRuleParser';
+import PathRuleParser from '../core/PathRuleParser';
 import PathToItemsFetcher from './PathToItemsFetcher';
-import { PathRule, SlugArray } from './types';
+import { PathRule, SlugArray } from '../types';
 import logger from 'loglevel';
 import { Entry } from 'contentful';
+import detectCycle from '../core/detectCycle';
 
 const parser = new PathRuleParser();
 
@@ -23,6 +24,12 @@ const createPathLookupObjects = (config: PathRuleConfig): PathLookupObject[] => 
     acc.push(
       ...rules.map(({ rule, isCanonical }) => {
         const pathRule = parser.parse(rule).PathRule();
+        const cycle = detectCycle(pathRule);
+
+        if (cycle) {
+          throw Error(`Cycle detected in path rule ${rule} between segments ${cycle[0]} and ${cycle[1]}`);
+        }
+
         return {
           rule,
           pathRule,
