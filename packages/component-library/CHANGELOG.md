@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.4
+
+### Patch Changes
+
+- 97d5928: Fix Text with formatted links missing tags
+
 ## 0.5.3
 
 ### Patch Changes
