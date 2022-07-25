@@ -41,6 +41,9 @@ const createContentLookupObjects = (config: PathRuleConfig): ContentLookupObject
   }, [] as ContentLookupObject[]);
 };
 
+/**
+ * Creates a lookup that takes an entry, finds the rules that apply to it, and rusn the ContentToPathsFetcher for each of them.
+ */
 export default class ContentToPathsLoader {
   private readonly _lookups: ContentLookupObject[];
 

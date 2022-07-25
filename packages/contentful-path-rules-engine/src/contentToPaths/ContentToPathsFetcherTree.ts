@@ -198,7 +198,6 @@ const deepLoad = async ({
         });
         delayedFields = [];
       } else {
-        console.log('pushing gto delauyed', segmentIndex);
         delayedFields.push({
           info: {
             value: fieldValue,
