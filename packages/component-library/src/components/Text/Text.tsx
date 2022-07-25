@@ -49,26 +49,29 @@ const renderTypography =
       | 'body1'
       | undefined;
   }) =>
-  (_: any, children: any) => {
+  (node: any, children: any) => {
     if (children?.length === 1 && children[0] === '') {
       return <br />;
     }
     if (containsHTML(children)) {
+      const hasEmbed = node?.content?.some((child: any) => child.nodeType?.includes('embedded'));
       return (
         // Use div as Typograph to use the correct styles and avoid invalid DOM nesting when there embedded entries
-        children.map((child: any) => {
-          if (isHTML(child)) {
-            return (
-              <Typography
-                component="span"
-                variant={variant}
-                data-testid={`Text-html-${variant}`}
-                dangerouslySetInnerHTML={{ __html: child }}
-              />
-            );
-          }
-          return child;
-        })
+        <Typography variant={variant} {...(hasEmbed && { component: 'span' })} data-testid={`Text-${variant}`}>
+          {children.map((child: any) => {
+            if (isHTML(child)) {
+              return (
+                <Typography
+                  component="span"
+                  variant={variant}
+                  data-testid={`Text-html-${variant}`}
+                  dangerouslySetInnerHTML={{ __html: child }}
+                />
+              );
+            }
+            return child;
+          })}
+        </Typography>
       );
     }
 
@@ -110,8 +113,7 @@ const createRenderOptions = ({ links, renderNode, renderText }: { links?: TextLi
             href={entry?.file?.url}
             target="_blank"
             rel="noopener noreferrer"
-            data-testid="Text-asset-hyperlink"
-          >
+            data-testid="Text-asset-hyperlink">
             {children}
           </ContentModule>
         );
@@ -194,8 +196,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, re
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}
-      >
+        {...props}>
         {documentToReactComponents(
           body?.json,
           createRenderOptions({ links: body?.links, renderNode, ...renderOptions })

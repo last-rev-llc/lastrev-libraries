@@ -105,6 +105,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
 const shouldForwardProp = (prop: string) =>
   prop !== 'variant' &&
   prop !== 'fileName' &&
+  prop !== 'testId' &&
   prop !== 'priority' &&
   prop !== 'sidekickLookup' &&
   prop !== 'sx' &&
