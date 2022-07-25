@@ -1,9 +1,8 @@
-import { ApolloContext, PathFilterFunction, PathRuleConfig } from '@last-rev/types';
+import { ApolloContext, PathFilterFunction, PathInfo, PathRuleConfig } from '@last-rev/types';
 import { PathRule } from '../types';
 import PathRuleParser from '../core/PathRuleParser';
 import detectCycle from '../core/detectCycle';
 import { Entry } from 'contentful';
-import { PathInfo } from './ContentToPathsFetcherTree';
 import ContentToPathsFetcher from './ContentToPathsFetcher';
 
 const parser = new PathRuleParser();

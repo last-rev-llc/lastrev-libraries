@@ -80,6 +80,10 @@ const pathToItemsFetcherVisitor: PathVisitor<PathToItemsFetcherContext> = {
   }
 };
 
+/**
+ * Given a PathRule (and assuming a match already), loads the slugs for each segment and validates
+ * the relationship between segments.
+ */
 export default class PathToItemsFetcher {
   private readonly _pathRule: PathRule;
   private readonly _rootContentType: string;

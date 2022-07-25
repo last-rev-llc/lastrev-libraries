@@ -7,6 +7,9 @@ export type PathVisitor<C> = {
   };
 };
 
+/**
+ * Traverses a path rule and calls the visitor functions for each node upon entry and exit
+ */
 const traversePathRule = <T>(root: PathRule, visitor: PathVisitor<T>, ctx: T) => {
   const traverseNode = (node: AstNode, parent: AstNode | null, context: T) => {
     const methods = visitor[node.type];

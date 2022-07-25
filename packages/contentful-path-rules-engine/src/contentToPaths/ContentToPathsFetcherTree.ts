@@ -1,5 +1,5 @@
 import { Entry } from 'contentful';
-import { ApolloContext, ItemKey, PathEntries, RefByKey } from '@last-rev/types';
+import { ApolloContext, ItemKey, PathInfo, RefByKey } from '@last-rev/types';
 
 export type ContentToPathTreeStaticNode = {
   type: 'static';
@@ -108,16 +108,14 @@ export type ContentToPathsHasChildrenNode =
   | ContentToPathTreeRefNode
   | ContentToPathTreeRefByNode;
 
-export type PathInfo = {
-  path: string;
-  pathEntries: PathEntries;
-};
-
 export type SegmentInfo = {
   value: string;
   entry: Entry<any> | null;
 };
 
+/**
+ * recursively loads each level of the tree
+ */
 const deepLoad = async ({
   node,
   resolvedSlugs,
@@ -235,6 +233,11 @@ const cartesian = (args: (SegmentInfo | null)[][]) => {
   return r;
 };
 
+/**
+ * This tree is a representation of the segments of the path, structured in the order in which they entries to be loaded.
+ * For example if entry1 has a reference field, then entry1 must be loaded prior to loading its references.
+ * Each loaded entry will have metadata associating it back to the segment it belongs to, in order for the path to be reconstructed.
+ */
 export default class ContentToPathsFetcherTree {
   private readonly _root: ContentToPathTreeRootNode = { children: [] };
   private _numSegments: number = 0;

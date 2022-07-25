@@ -1,5 +1,5 @@
 import { Entry } from 'contentful';
-import { ApolloContext } from '@last-rev/types';
+import { ApolloContext, PathInfo } from '@last-rev/types';
 import traversePathRule, { PathVisitor } from '../core/traversePathRule';
 import {
   AstNode,
@@ -14,8 +14,7 @@ import ContentToPathsFetcherTree, {
   ContentToPathsHasChildrenNode,
   ContentToPathTreeRefByNode,
   ContentToPathTreeRefChildNode,
-  ContentToPathTreeRefNode,
-  PathInfo
+  ContentToPathTreeRefNode
 } from './ContentToPathsFetcherTree';
 
 type ContentToPathsFetcherContext = {
@@ -141,6 +140,9 @@ const ContentToPathsFetcherVisitor: PathVisitor<ContentToPathsFetcherContext> = 
   }
 };
 
+/**
+ * Builds a ContentToPathsFetcherTree from a Path Rule, and then calls fetch on it.
+ */
 export default class ContentToPathsFetcher {
   private readonly _tree: ContentToPathsFetcherTree = new ContentToPathsFetcherTree();
 

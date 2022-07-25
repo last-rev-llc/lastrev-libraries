@@ -1,14 +1,9 @@
-import traversePathRule, { PathVisitor } from './traversePathRule';
-import { PathRule, StaticSegment } from './types';
+import traversePathRule, { PathVisitor } from '../core/traversePathRule';
+import { PathRule, StaticSegment } from '../types';
 
 const escapeRegExp = (str: string) => {
   return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 };
-
-// const isString = (x: any): x is string => typeof x === 'string';
-
-// const buildPathMatcher = (parts: PathMatcherInputdata[]): PathMatcherFunc => {
-//   const patternString = `^${parts.map((p) => (isString(p) ? `\\/${escapeRegExp(p)}` : '(\\/[^\\/]*)')).join('')}$`;
 
 export type PathMatcherContext = {
   matcherString: string;
@@ -41,6 +36,9 @@ const pathMatcherBuilderVisitor: PathVisitor<PathMatcherContext> = {
   }
 };
 
+/**
+ * Given a PathRule, generates a matcher capturing the dynamic segments
+ */
 export default class PathMatcher {
   private readonly _pathRule: PathRule;
   private readonly _matcher: RegExp;

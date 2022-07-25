@@ -145,6 +145,10 @@ const relationshipValidationVisitor: PathVisitor<Context> = {
   }
 };
 
+/**
+ * given a PathEntries, and a PathRule, validates that the entries do indeed adhere to the relationships
+ * declared in the PathRule
+ */
 export default class RelationShipValidator {
   private readonly segmentValidators: (SegmentValidator | null)[];
 

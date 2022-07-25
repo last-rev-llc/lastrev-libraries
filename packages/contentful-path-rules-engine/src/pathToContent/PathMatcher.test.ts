@@ -1,5 +1,5 @@
 import PathMatcher from './PathMatcher';
-import PathRuleParser from './PathRuleParser';
+import PathRuleParser from '../core/PathRuleParser';
 
 const parser = new PathRuleParser();
 

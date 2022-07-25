@@ -2,6 +2,9 @@ import { PathRule } from '../types';
 
 export type CycleDetctionResult = false | number[];
 
+/**
+ * Detects cycles in the path rule. and outputs an object representing the segment locations of the circular reference
+ */
 function detectCycle({ segments }: PathRule): CycleDetctionResult {
   var segmentReferences: (boolean | undefined)[] = [];
 

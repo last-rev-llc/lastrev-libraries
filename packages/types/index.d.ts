@@ -109,13 +109,18 @@ export type ContentfulClients = {
 
 export type PathEntries = (Entry<any> | null)[];
 
+export type PathInfo = {
+  path: string;
+  pathEntries: PathEntries;
+};
+
 export type LoadEntriesForPathFunction = (
   path: string,
   ctx: ApolloContext,
   site?: string
 ) => Promise<PathEntries | null>;
 
-export type loadPathsForIdFunction = (id: string, ctx: ApolloContext, site?: string) => Promise<PathData2[]>;
+export type loadPathsForContentFunction = (entry: Entry<any>, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
 
 export type ApolloContext = Context<{
   loaders: ContentfulLoaders;
@@ -123,7 +128,7 @@ export type ApolloContext = Context<{
   defaultLocale: string;
   typeMappings: TypeMappings;
   loadEntriesForPath: LoadEntriesForPathFunction;
-  loadPathsForId: loadPathsForIdFunction;
+  loadPathsForContent: loadPathsForContentFunction;
   locale?: string;
   path?: string;
   locales: string[];

@@ -1,10 +1,9 @@
-import { ApolloContext, PathFilterFunction, PathRuleConfig } from '@last-rev/types';
+import { ApolloContext, PathEntries, PathFilterFunction, PathRuleConfig } from '@last-rev/types';
 import PathMatcher from './PathMatcher';
 import PathRuleParser from '../core/PathRuleParser';
 import PathToItemsFetcher from './PathToItemsFetcher';
 import { PathRule, SlugArray } from '../types';
 import logger from 'loglevel';
-import { Entry } from 'contentful';
 import detectCycle from '../core/detectCycle';
 
 const parser = new PathRuleParser();
@@ -47,6 +46,11 @@ const createPathLookupObjects = (config: PathRuleConfig): PathLookupObject[] => 
 
 const isNotNull = <T>(x: T | null): x is T => x !== null;
 
+/**
+ * Creates a lookup that takes a path, runs it against the path matchers to find matching rules,
+ * loads the items for each rule, validates the relationships in those items,
+ * and returns a PathEntries or null
+ */
 export default class PathLoader {
   private readonly _lookups: PathLookupObject[];
 
@@ -58,11 +62,7 @@ export default class PathLoader {
     return `[${this.constructor.name}]`;
   }
 
-  async getItemsForPath(
-    path: string,
-    apolloContext: ApolloContext,
-    site?: string
-  ): Promise<(Entry<any> | null)[] | null> {
+  async getItemsForPath(path: string, apolloContext: ApolloContext, site?: string): Promise<PathEntries | null> {
     const matched = this._lookups.reduce((acc, lookup) => {
       const slugs = lookup.matcher.match(path);
       if (slugs) {

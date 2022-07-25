@@ -7,7 +7,7 @@ import querystring from 'querystring';
 import url from 'url';
 import createLoaders from './createLoaders';
 import express from 'express';
-import { PathToContentLoader, IdToPathsLoader } from '@last-rev/path-rules-engine';
+import { PathToContentLoader, ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
 
 const isString = (value: any): value is string => typeof value === 'string' || value instanceof String;
 
@@ -94,8 +94,8 @@ const createContext = async ({
     ? new PathToContentLoader(config.extensions.pathsConfigs)
     : null;
 
-  const idToPathsLoader = isNewPathsConfig(config.extensions?.pathsConfigs)
-    ? new IdToPathsLoader(config.extensions.pathsConfigs)
+  const contentToPathsLoader = isNewPathsConfig(config.extensions?.pathsConfigs)
+    ? new ContentToPathsLoader(config.extensions.pathsConfigs)
     : null;
 
   return {
@@ -106,9 +106,9 @@ const createContext = async ({
       }
       return null;
     },
-    loadPathsForId: async (id, ctx, site) => {
-      if (idToPathsLoader) {
-        return idToPathsLoader.loadPathsFromId(id, ctx, site);
+    loadPathsForContent: async (entry, ctx, site) => {
+      if (contentToPathsLoader) {
+        return contentToPathsLoader.loadPathsFromContent(entry, ctx, site);
       }
       return [];
     },

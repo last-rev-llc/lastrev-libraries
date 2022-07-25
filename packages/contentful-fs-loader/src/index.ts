@@ -131,7 +131,8 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     assetLoader,
     entriesByContentTypeLoader,
     entryByFieldValueLoader,
-    fetchAllContentTypes
+    fetchAllContentTypes,
+    entriesRefByLoader: fallbackLoaders.entriesRefByLoader
   };
 };
 

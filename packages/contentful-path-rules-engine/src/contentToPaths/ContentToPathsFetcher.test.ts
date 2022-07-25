@@ -1,5 +1,5 @@
 import ContentToPathsFetcher from './ContentToPathsFetcher';
-import PathRuleParser from '../PathRuleParser';
+import PathRuleParser from '../core/PathRuleParser';
 import { entryMocks, mockApolloContext } from '../testUtils';
 
 const parser = new PathRuleParser();

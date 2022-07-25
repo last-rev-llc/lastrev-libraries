@@ -1,5 +1,5 @@
 {
-  "name": "@last-rev/path-rules-engine",
+  "name": "@last-rev/contentful-path-rules-engine",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
