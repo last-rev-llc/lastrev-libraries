@@ -85,7 +85,7 @@ export default class RedisApiWrapper extends BaseApiWrapper {
 
       const pass = this.config.getStateValue(VAL_REDIS_PASSWORD);
 
-      const rules = ['on', `~${contentfulSpaceId}:*`, `+@all`, `-@dangerous`, `>${pass}`];
+      const rules = ['on', `~${contentfulSpaceId}:*`, `+@all`, `-@dangerous`, `+info`, `>${pass}`];
 
       await this.redis.acl('SETUSER', username, ...rules);
       messager.log(`Created Redis ACL user: ${username}`);
