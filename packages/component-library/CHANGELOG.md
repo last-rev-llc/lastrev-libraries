@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.5
+
+### Patch Changes
+
+- dea64cc: Fix ArtDirectedMedia not rendering all images
+
 ## 0.5.4
 
 ### Patch Changes
