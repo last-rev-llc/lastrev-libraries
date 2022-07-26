@@ -13,14 +13,12 @@ import {
 } from '../types';
 
 export default class PathRuleParser {
-  _string: string;
-  _tokenizer: PathRuleTokenizer;
-  _lookahead: Token | null;
+  private readonly _tokenizer: PathRuleTokenizer = new PathRuleTokenizer();
+  private _lookahead: Token | null;
 
-  constructor() {
-    this._string = '';
-    this._tokenizer = new PathRuleTokenizer();
-    this._lookahead = null;
+  constructor(str: string) {
+    this._tokenizer.init(str);
+    this._lookahead = this._tokenizer.getNextToken();
   }
 
   _eat(type: TokenType) {
@@ -44,13 +42,6 @@ export default class PathRuleParser {
       return node;
     }
     throw SyntaxError(`Invalid left-hand side in assignment expression: ${node.type}`);
-  }
-
-  parse(str: string) {
-    this._string = str;
-    this._tokenizer.init(str);
-    this._lookahead = this._tokenizer.getNextToken();
-    return this;
   }
 
   /**

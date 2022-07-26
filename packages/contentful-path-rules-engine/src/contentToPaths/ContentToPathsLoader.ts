@@ -5,8 +5,6 @@ import detectCycle from '../core/detectCycle';
 import { Entry } from 'contentful';
 import ContentToPathsFetcher from './ContentToPathsFetcher';
 
-const parser = new PathRuleParser();
-
 type ContentLookupObject = {
   rule: string;
   pathRule: PathRule;
@@ -20,7 +18,7 @@ const createContentLookupObjects = (config: PathRuleConfig): ContentLookupObject
   return Object.entries(config).reduce((acc, [rootContentType, { filter, rules }]) => {
     acc.push(
       ...rules.map(({ rule, isCanonical }) => {
-        const pathRule = parser.parse(rule).PathRule();
+        const pathRule = new PathRuleParser(rule).PathRule();
         const cycle = detectCycle(pathRule);
 
         if (cycle) {

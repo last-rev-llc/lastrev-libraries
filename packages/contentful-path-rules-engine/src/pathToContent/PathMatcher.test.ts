@@ -1,11 +1,9 @@
 import PathMatcher from './PathMatcher';
 import PathRuleParser from '../core/PathRuleParser';
 
-const parser = new PathRuleParser();
-
 describe('PathMatcher', () => {
   it('matches a rule with simple slug', () => {
-    parser.parse(`/:slug`);
+    const parser = new PathRuleParser(`/:slug`);
     const matcher = new PathMatcher({
       pathRule: parser.PathRule()
     });
@@ -14,7 +12,7 @@ describe('PathMatcher', () => {
   });
 
   it('does not match when too many segments exist', () => {
-    parser.parse(`/:slug`);
+    const parser = new PathRuleParser(`/:slug`);
     const matcher = new PathMatcher({
       pathRule: parser.PathRule()
     });
@@ -23,7 +21,7 @@ describe('PathMatcher', () => {
   });
 
   it('matches a rule with static and dynamic segment', () => {
-    parser.parse(`/music/:slug`);
+    const parser = new PathRuleParser(`/music/:slug`);
     const matcher = new PathMatcher({
       pathRule: parser.PathRule()
     });
@@ -32,7 +30,7 @@ describe('PathMatcher', () => {
   });
 
   it('does not match a rule with static and dynamic segments with the wrong static string', () => {
-    parser.parse(`/music/:slug`);
+    const parser = new PathRuleParser(`/music/:slug`);
     const matcher = new PathMatcher({
       pathRule: parser.PathRule()
     });
@@ -41,7 +39,7 @@ describe('PathMatcher', () => {
   });
 
   it('does not match a rule with static and dynamic segments with the wrong number of segments', () => {
-    parser.parse(`/music/:slug`);
+    const parser = new PathRuleParser(`/music/:slug`);
     const matcher = new PathMatcher({
       pathRule: parser.PathRule()
     });
@@ -52,7 +50,7 @@ describe('PathMatcher', () => {
   });
 
   it('matches a rule with reference segments', () => {
-    parser.parse(`/music/:categories(category).slug/:slug`);
+    const parser = new PathRuleParser(`/music/:categories(category).slug/:slug`);
     const matcher = new PathMatcher({
       pathRule: parser.PathRule()
     });
@@ -61,7 +59,7 @@ describe('PathMatcher', () => {
   });
 
   it('matches a rule with refBy segments', () => {
-    parser.parse(`/music/:__refBy__(composer, songs).slug/:slug`);
+    const parser = new PathRuleParser(`/music/:__refBy__(composer, songs).slug/:slug`);
     const matcher = new PathMatcher({
       pathRule: parser.PathRule()
     });
@@ -70,7 +68,7 @@ describe('PathMatcher', () => {
   });
 
   it('matches a rule with inter-mixed static and dynamic segments', () => {
-    parser.parse(`/music/:slug/songs/:slug`);
+    const parser = new PathRuleParser(`/music/:slug/songs/:slug`);
     const matcher = new PathMatcher({
       pathRule: parser.PathRule()
     });

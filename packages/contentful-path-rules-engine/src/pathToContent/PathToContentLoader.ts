@@ -6,8 +6,6 @@ import { PathRule, SlugArray } from '../types';
 import logger from 'loglevel';
 import detectCycle from '../core/detectCycle';
 
-const parser = new PathRuleParser();
-
 export type PathLookupObject = {
   rule: string;
   pathRule: PathRule;
@@ -22,7 +20,7 @@ const createPathLookupObjects = (config: PathRuleConfig): PathLookupObject[] => 
   return Object.entries(config).reduce((acc, [rootContentType, { filter, rules }]) => {
     acc.push(
       ...rules.map(({ rule, isCanonical }) => {
-        const pathRule = parser.parse(rule).PathRule();
+        const pathRule = new PathRuleParser(rule).PathRule();
         const cycle = detectCycle(pathRule);
 
         if (cycle) {

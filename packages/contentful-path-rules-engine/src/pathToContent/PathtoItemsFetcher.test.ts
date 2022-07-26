@@ -4,11 +4,9 @@ import { entryMocks, mockApolloContext } from '../testUtils';
 
 const apolloContext = mockApolloContext();
 
-const parser = new PathRuleParser();
-
 describe('PathToItemsFetcher', () => {
   it('fetches items from a simple path', async () => {
-    parser.parse(`/:slug`);
+    const parser = new PathRuleParser(`/:slug`);
 
     const fetcher = new PathToItemsFetcher({
       pathRule: parser.PathRule(),
@@ -21,7 +19,7 @@ describe('PathToItemsFetcher', () => {
   });
 
   it('fails to fetch from simple path if content type does not match', async () => {
-    parser.parse(`/:slug`);
+    const parser = new PathRuleParser(`/:slug`);
 
     const fetcher = new PathToItemsFetcher({
       pathRule: parser.PathRule(),
@@ -34,7 +32,7 @@ describe('PathToItemsFetcher', () => {
   });
 
   it('fails to fetch from simple path if slug does not match', async () => {
-    parser.parse(`/:slug`);
+    const parser = new PathRuleParser(`/:slug`);
 
     const fetcher = new PathToItemsFetcher({
       pathRule: parser.PathRule(),
@@ -47,7 +45,7 @@ describe('PathToItemsFetcher', () => {
   });
 
   it('fails to fetch from simple path if path segment length does not match', async () => {
-    parser.parse(`/:slug`);
+    const parser = new PathRuleParser(`/:slug`);
 
     const fetcher = new PathToItemsFetcher({
       pathRule: parser.PathRule(),
@@ -60,7 +58,7 @@ describe('PathToItemsFetcher', () => {
   });
 
   it('fails to fetch from simple path if field does not match', async () => {
-    parser.parse(`/:slug2`);
+    const parser = new PathRuleParser(`/:slug2`);
 
     const fetcher = new PathToItemsFetcher({
       pathRule: parser.PathRule(),
@@ -73,7 +71,7 @@ describe('PathToItemsFetcher', () => {
   });
 
   it('fetches items from a simple path with a static segment', async () => {
-    parser.parse(`/pages/:slug`);
+    const parser = new PathRuleParser(`/pages/:slug`);
 
     const fetcher = new PathToItemsFetcher({
       pathRule: parser.PathRule(),
@@ -86,7 +84,7 @@ describe('PathToItemsFetcher', () => {
   });
 
   it('fetches items from a path with reference expression', async () => {
-    parser.parse(`/blogs/:categories(category).slug/:slug`);
+    const parser = new PathRuleParser(`/blogs/:categories(category).slug/:slug`);
 
     const fetcher = new PathToItemsFetcher({
       pathRule: parser.PathRule(),
@@ -103,7 +101,7 @@ describe('PathToItemsFetcher', () => {
   });
 
   it('fetches items from a path with refBy expression', async () => {
-    parser.parse(`/courses/:__refBy__(course, topics).slug/:slug`);
+    const parser = new PathRuleParser(`/courses/:__refBy__(course, topics).slug/:slug`);
 
     const fetcher = new PathToItemsFetcher({
       pathRule: parser.PathRule(),

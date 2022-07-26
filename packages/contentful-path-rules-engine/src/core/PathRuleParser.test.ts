@@ -1,10 +1,8 @@
 import PathRuleParser from './PathRuleParser';
 
 describe('PathParser', () => {
-  const parser = new PathRuleParser();
-
   it('parses a rule with simple slug', () => {
-    parser.parse(`/:slug`);
+    const parser = new PathRuleParser(`/:slug`);
 
     expect(parser.PathRule()).toEqual({
       type: 'PathRule',
@@ -21,7 +19,7 @@ describe('PathParser', () => {
   });
 
   it('parses a rule with static segment and a simple slug', () => {
-    parser.parse(`/blogs/:slug`);
+    const parser = new PathRuleParser(`/blogs/:slug`);
 
     expect(parser.PathRule()).toEqual({
       type: 'PathRule',
@@ -42,7 +40,7 @@ describe('PathParser', () => {
   });
 
   it('parses a rule with direct member expression', () => {
-    parser.parse(`/blogs/:categories(category).slug/:slug`);
+    const parser = new PathRuleParser(`/blogs/:categories(category).slug/:slug`);
 
     expect(parser.PathRule()).toEqual({
       type: 'PathRule',
@@ -75,7 +73,7 @@ describe('PathParser', () => {
   });
 
   it('parses a rule with deeply nested direct member expressions', () => {
-    parser.parse(`/:parent(page).parent(page).slug/:parent(page).slug/:slug`);
+    const parser = new PathRuleParser(`/:parent(page).parent(page).slug/:parent(page).slug/:slug`);
 
     expect(parser.PathRule()).toEqual({
       type: 'PathRule',
@@ -121,7 +119,7 @@ describe('PathParser', () => {
   });
 
   it('parses a rule with a segment reference', () => {
-    parser.parse(`/:__segment__(1).parent(page).slug/:parent(page).slug/:slug`);
+    const parser = new PathRuleParser(`/:__segment__(1).parent(page).slug/:parent(page).slug/:slug`);
 
     expect(parser.PathRule()).toEqual({
       type: 'PathRule',
@@ -166,7 +164,9 @@ describe('PathParser', () => {
   });
 
   it('parses a rule with multiple segment references', () => {
-    parser.parse(`/:__segment__(1).parent(page).slug/:__segment__(2).parent(page).slug/:parent(page).slug/:slug`);
+    const parser = new PathRuleParser(
+      `/:__segment__(1).parent(page).slug/:__segment__(2).parent(page).slug/:parent(page).slug/:slug`
+    );
 
     expect(parser.PathRule()).toEqual({
       type: 'PathRule',
@@ -227,7 +227,7 @@ describe('PathParser', () => {
   });
 
   it('parses a rule with a refBy expression', () => {
-    parser.parse(`/courses/:__refBy__(course,topics).slug/:slug`);
+    const parser = new PathRuleParser(`/courses/:__refBy__(course,topics).slug/:slug`);
 
     expect(parser.PathRule()).toEqual({
       type: 'PathRule',
@@ -260,7 +260,7 @@ describe('PathParser', () => {
   });
 
   it('parses a rule with nested linking expressions', () => {
-    parser.parse(
+    const parser = new PathRuleParser(
       `/course-packs/:__refBy__(course,topics).__refBy__(coursePack,courses).slug/:__refBy__(course,topics).slug/:slug`
     );
 
