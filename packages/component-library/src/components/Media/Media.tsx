@@ -19,7 +19,8 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
     name: 'Media',
     props: inProps
   });
-  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup, nextImageOptimization } = props;
+  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup, nextImageOptimization, ...other } =
+    props;
   // TODO: Add support for video
   const image = file;
   const alt = title;
@@ -62,8 +63,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           preload="auto"
           data-testid={testId || 'Media'}
           {...(props as MediaVideoProps)}
-          sx={{ width: '100%', height: '100%', ...props.sx }}
-        >
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>
@@ -75,7 +75,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
       <ErrorBoundary>
         <ArtDirectedRoot
           {...sidekick(sidekickLookup)}
-          {...props}
+          {...other}
           title={title}
           file={file}
           fileTablet={fileTablet}
@@ -90,7 +90,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
       <Root
         {...sidekick(sidekickLookup)}
         {...image}
-        {...props}
+        {...other}
         nextImageOptimization={nextImageOptimization}
         src={image?.url}
         alt={alt}
@@ -122,7 +122,6 @@ const Root = styled(Image, {
 const ArtDirectedRoot = styled(ArtDirectedImage, {
   name: 'Media',
   slot: 'Root',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>``;
 
