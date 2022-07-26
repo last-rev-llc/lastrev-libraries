@@ -71,6 +71,7 @@ export type LegacyContentfulPathsConfigs = {
 export type PathRuleDefinition = {
   rule: string;
   isCanonical?: boolean;
+  allowFullPaths?: boolean;
 };
 
 export type PathFilerFunctionArgs = {

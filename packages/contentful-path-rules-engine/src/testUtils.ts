@@ -22,6 +22,7 @@ export const createMockEntry = (id: string, contentType: string, fields: Record<
 
 export const entryMocks = {
   page: createMockEntry('page1', 'page', { slug: 'page-1', excludeFromLocales: ['fr'] }),
+  pageWithFullPath: createMockEntry('page2', 'page', { slug: 'some/path/here', excludeFromLocales: ['fr'] }),
   blogWithCategories: createMockEntry('blog1', 'blog', {
     slug: 'blog-1',
     excludeFromLocales: ['fr'],

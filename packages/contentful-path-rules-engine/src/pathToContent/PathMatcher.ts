@@ -8,7 +8,9 @@ const escapeRegExp = (str: string) => {
 export type PathMatcherContext = {
   matcherString: string;
   segmentCount: number;
+  allowFullPaths: boolean;
   matchedSegmentIndices: number[];
+  fullPathFieldEncountrered: boolean;
 };
 
 const pathMatcherBuilderVisitor: PathVisitor<PathMatcherContext> = {
@@ -30,8 +32,25 @@ const pathMatcherBuilderVisitor: PathVisitor<PathMatcherContext> = {
   DynamicSegment: {
     enter: (_node, _parent, context) => {
       context.matchedSegmentIndices.push(context.segmentCount);
-      context.matcherString += `\\/([^\\/]*)`;
+      if (context.allowFullPaths) {
+        context.matcherString += `\\/(.*)`;
+      } else {
+        context.matcherString += `\\/([^\\/]*)`;
+      }
+
       context.segmentCount += 1;
+    }
+  },
+  Field: {
+    enter: (_node, parent, context) => {
+      if (!context.allowFullPaths) return;
+      if (context.fullPathFieldEncountrered) {
+        throw Error('Only one simple field can be used in a full path');
+      }
+      if (parent!.type !== 'DynamicSegment') {
+        throw Error('No references or refBy segments allowed when using a full path');
+      }
+      context.fullPathFieldEncountrered = true;
     }
   }
 };
@@ -46,12 +65,14 @@ export default class PathMatcher {
   private readonly _matchedSegmentIndices: number[];
 
   // TODO: match whole path later
-  constructor({ pathRule }: { pathRule: PathRule }) {
+  constructor({ pathRule, allowFullPaths }: { pathRule: PathRule; allowFullPaths?: boolean }) {
     this._pathRule = pathRule;
 
     const context: PathMatcherContext = {
       matcherString: '',
       segmentCount: 0,
+      allowFullPaths: !!allowFullPaths,
+      fullPathFieldEncountrered: false,
       matchedSegmentIndices: []
     };
     traversePathRule(this._pathRule, pathMatcherBuilderVisitor, context);

@@ -19,7 +19,7 @@ export type PathLookupObject = {
 const createPathLookupObjects = (config: PathRuleConfig): PathLookupObject[] => {
   return Object.entries(config).reduce((acc, [rootContentType, { filter, rules }]) => {
     acc.push(
-      ...rules.map(({ rule, isCanonical }) => {
+      ...rules.map(({ rule, isCanonical, allowFullPaths }) => {
         const pathRule = new PathRuleParser(rule).PathRule();
         const cycle = detectCycle(pathRule);
 
@@ -33,7 +33,7 @@ const createPathLookupObjects = (config: PathRuleConfig): PathLookupObject[] => 
           rootContentType,
           isCanonical: !!isCanonical,
           fetcher: new PathToItemsFetcher({ pathRule, rootContentType }),
-          matcher: new PathMatcher({ pathRule }),
+          matcher: new PathMatcher({ pathRule, allowFullPaths }),
           filter
         };
       })

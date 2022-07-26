@@ -3,7 +3,7 @@ import { entryMocks, mockApolloContext } from '../testUtils';
 
 const pathLoader = new PathLoader({
   page: {
-    rules: [{ rule: '/:slug', isCanonical: true }],
+    rules: [{ rule: '/:slug', isCanonical: true, allowFullPaths: true }],
     filter: async ({ pathEntries, ctx }) => {
       const item = pathEntries[pathEntries.length - 1];
       const excludedLocales = (item && item.fields.excludeFromLocales['en-US']) || [];
@@ -49,6 +49,11 @@ describe('ContentToPathsLoader', () => {
     it('does not load when item exists, but filter function returns false', async () => {
       const loaded = await pathLoader.loadPathsFromContent(entryMocks.page, mockApolloContext('fr'));
       expect(loaded).toEqual([]);
+    });
+
+    it('loads when item exists and has a full path', async () => {
+      const loaded = await pathLoader.loadPathsFromContent(entryMocks.pageWithFullPath, mockApolloContext());
+      expect(loaded).toEqual([{ path: '/some/path/here', pathEntries: [entryMocks.pageWithFullPath] }]);
     });
   });
 

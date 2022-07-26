@@ -75,4 +75,57 @@ describe('PathMatcher', () => {
 
     expect(matcher.match('/music/chopin/songs/nocturne')).toEqual([null, 'chopin', null, 'nocturne']);
   });
+
+  it('matches a full path rule', () => {
+    const parser = new PathRuleParser(`/:slug`);
+    const matcher = new PathMatcher({
+      pathRule: parser.PathRule(),
+      allowFullPaths: true
+    });
+
+    expect(matcher.match('/some/path/here')).toEqual(['some/path/here']);
+  });
+
+  it('matches a full path rule with static segment', () => {
+    const parser = new PathRuleParser(`/products/:slug`);
+    const matcher = new PathMatcher({
+      pathRule: parser.PathRule(),
+      allowFullPaths: true
+    });
+
+    expect(matcher.match('/products/some/path/here')).toEqual([null, 'some/path/here']);
+  });
+
+  it('throws error when full path is used but more than one dynamic segment', () => {
+    const parser = new PathRuleParser(`/:slug1/:slug`);
+    expect(
+      () =>
+        new PathMatcher({
+          pathRule: parser.PathRule(),
+          allowFullPaths: true
+        })
+    ).toThrowError('Only one simple field can be used in a full path');
+  });
+
+  it('throws error when full path is used but a reference field is used', () => {
+    const parser = new PathRuleParser(`/:parent(page).slug`);
+    expect(
+      () =>
+        new PathMatcher({
+          pathRule: parser.PathRule(),
+          allowFullPaths: true
+        })
+    ).toThrowError('No references or refBy segments allowed when using a full path');
+  });
+
+  it('throws error when full path is used but a refBy field is used', () => {
+    const parser = new PathRuleParser(`/:__refBy__(children, page).slug`);
+    expect(
+      () =>
+        new PathMatcher({
+          pathRule: parser.PathRule(),
+          allowFullPaths: true
+        })
+    ).toThrowError('No references or refBy segments allowed when using a full path');
+  });
 });
