@@ -57,7 +57,7 @@ describe('ContentToPathsLoader', () => {
     });
   });
 
-  describe('slug with static segment', () => {
+  describe('slug with static segment and references', () => {
     it('loads when item exists', async () => {
       const loaded = await pathLoader.loadPathsFromContent(entryMocks.blogWithCategories, mockApolloContext());
       expect(loaded).toHaveLength(4);
@@ -82,89 +82,24 @@ describe('ContentToPathsLoader', () => {
     });
   });
 
-  // describe('reference expressions', () => {
-  //   it('loads when item exists', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/blogs/category-1/blog-1', mockApolloContext());
-  //     expect(loaded).toEqual([null, entryMocks.categoryWithSubcategory, entryMocks.blogWithCategories]);
-  //   });
+  describe('slug with static segment and refBy', () => {
+    it('loads when item exists', async () => {
+      const loaded = await pathLoader.loadPathsFromContent(entryMocks.topic, mockApolloContext());
+      expect(loaded).toHaveLength(3);
+      expect(loaded).toContainEqual({ path: '/topics/topic-1', pathEntries: [null, entryMocks.topic] });
+      expect(loaded).toContainEqual({
+        path: '/courses/course-1/topic-1',
+        pathEntries: [null, entryMocks.courseWithTopic1, entryMocks.topic]
+      });
+      expect(loaded).toContainEqual({
+        path: '/classes/class-1/courses/course-1/topic-1',
+        pathEntries: [null, entryMocks.class, null, entryMocks.courseWithTopic1, entryMocks.topic]
+      });
+    });
 
-  //   it('does not load when item does not exist', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/blogs/category-1/music', mockApolloContext());
-  //     expect(loaded).toEqual(null);
-  //   });
-
-  //   it('does not load when reference item does not exist', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/blogs/category-none/blog-1', mockApolloContext());
-  //     expect(loaded).toEqual(null);
-  //   });
-
-  //   it('does not load when reference item exists but is not referred', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/blogs/category-3/blog-1', mockApolloContext());
-  //     expect(loaded).toEqual(null);
-  //   });
-
-  //   it('does not load when reference item exists but is wrong type', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/blogs/non-category-1/blog-1', mockApolloContext());
-  //     expect(loaded).toEqual(null);
-  //   });
-
-  //   it('does not load when item exists, but filter function returns false', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/blogs/category-1/blog-1', mockApolloContext('fr'));
-  //     expect(loaded).toEqual(null);
-  //   });
-
-  //   it('loads path items with a deeply nested reference expression when item exists', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/blogs/category-1/sub-category-1/blog-1', mockApolloContext());
-  //     expect(loaded).toEqual([
-  //       null,
-  //       entryMocks.categoryWithSubcategory,
-  //       entryMocks.subcategory,
-  //       entryMocks.blogWithCategories
-  //     ]);
-  //   });
-  // });
-
-  // describe('refBy expressions', () => {
-  //   it('loads when item exists', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/courses/course-1/topic-1', mockApolloContext());
-  //     expect(loaded).toEqual([null, entryMocks.courseWithTopic1, entryMocks.topic]);
-  //   });
-
-  //   it('does not load when item does not exist', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/courses/course-1/music', mockApolloContext());
-  //     expect(loaded).toEqual(null);
-  //   });
-
-  //   it('does not load when refBy item does not exist', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/courses/course-none/topic-1', mockApolloContext());
-  //     expect(loaded).toEqual(null);
-  //   });
-
-  //   it('does not load when refBy item exists but is not referred', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/courses/course-2/topic-1', mockApolloContext());
-  //     expect(loaded).toEqual(null);
-  //   });
-
-  //   it('does not load when refBy item exists but is wrong type', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/courses/non-course-1/topic-1', mockApolloContext());
-  //     expect(loaded).toEqual(null);
-  //   });
-
-  //   it('does not load when item exists, but filter function returns false', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/courses/course-1/topic-1', mockApolloContext('fr'));
-  //     expect(loaded).toEqual(null);
-  //   });
-
-  //   it('loads path items with a deeply nested refBy expression when item exists', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/classes/class-1/courses/course-1/topic-1', mockApolloContext());
-  //     expect(loaded).toEqual([null, entryMocks.class, null, entryMocks.courseWithTopic1, entryMocks.topic]);
-  //   });
-  // });
-
-  // describe('site based filter', () => {
-  //   it('does not load when item exists, but filter function returns false', async () => {
-  //     const loaded = await pathLoader.loadPathsFromContent('/blogs/blog-1', mockApolloContext(), 'no-blog-site');
-  //     expect(loaded).toEqual(null);
-  //   });
-  // });
+    it('does not load when item exists, but filter function returns false', async () => {
+      const loaded = await pathLoader.loadPathsFromContent(entryMocks.topic, mockApolloContext('fr'));
+      expect(loaded).toEqual([]);
+    });
+  });
 });
