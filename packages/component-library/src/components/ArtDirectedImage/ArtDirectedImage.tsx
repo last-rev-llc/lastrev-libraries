@@ -69,7 +69,7 @@ const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProp
     </>
   )
 );
-const shouldForwardProp = (prop) => prop !== 'displaymedia';
+const shouldForwardProp = (prop: string) => prop !== 'displaymedia';
 
 const ResponsiveImage = styled(Image, {
   name: 'ArtDirectedImage',
