@@ -55,29 +55,29 @@ const AccordionRoot = styled(MuiAccordion, {
 
 const AccordionSummary = styled(MuiAccordionSummary, {
   name: 'Accordion',
-  slot: 'AccordionSummary',
+  slot: 'Summary',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.accordionSummary]
+  overridesResolver: (_, styles) => [styles.summary]
 })``;
 
 const AccordionDetails = styled(MuiAccordionDetails, {
   name: 'Accordion',
-  slot: 'AccordionDetails',
+  slot: 'Details',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.accordionDetails]
+  overridesResolver: (_, styles) => [styles.details]
 })``;
 
 const AccordionTitle = styled(Typography, {
   name: 'Accordion',
-  slot: 'AccordionTitle',
+  slot: 'Title',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.accordionTitle]
+  overridesResolver: (_, styles) => [styles.title]
 })``;
 
 const AccordionBody = styled(ContentModule, {
   name: 'Accordion',
-  slot: 'AccordionBody',
-  overridesResolver: (_, styles) => [styles.accordionBody]
+  slot: 'Body',
+  overridesResolver: (_, styles) => [styles.body]
 })``;
 
 const ExpandMoreIcon = styled(MuiExpandMoreIcon, {

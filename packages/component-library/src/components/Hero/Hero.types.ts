@@ -37,23 +37,45 @@ export interface HeroProps {
 }
 
 export interface HeroClasses {
-  /** Styles applied to the root element. */
+  /** Styles applied to the Root for the Hero element. */
   root: string;
-  /** Styles applied to the mediaRoot element. */
-  mediaRoot: string;
-  /** Styles applied to the backgroundRoot element. */
+  /** Styles applied to the BackgroundRoot for the Hero element. */
   backgroundRoot: string;
-  /** Styles applied to the actionsRoot element. */
-  actionsRoot: string;
-  /** Styles applied to the contentContainer element. */
+  /** Styles applied to the BackgroundMedia ContentModule for the Hero element. */
+  backgroundMedia: string;
+  /** Styles applied to the ContentContainer for the Hero element.. */
   contentContainer: string;
-  /** Styles applied to the root element when contentHeigh is sm. */
+  /** Styles applied to the ContentRoot for the Hero element. */
+  contentRoot: string;
+  /** Styles applied to the TextsContainer for the Hero element. */
+  textsContainer: string;
+  /** Styles applied to the TextsRoot for the Hero element. */
+  textsRoot: string;
+  /** Styles applied to the Typography of the overline text for the Hero element. */
+  overlineHero: string;
+  /** Styles applied to the Typography of the title text the for the Hero element. */
+  titleHero: string;
+  /** Styles applied to the Typography of the subtitle text the for the Hero element. */
+  SubtitleHero: string;
+  /** Styles applied to the Text of the body for the Hero element. */
+  bodyHero: string;
+  /** Styles applied to the ActionsRoot for the Hero element. */
+  actionsRoot: string;
+  /** Styles applied to the ButtonHero for the Hero element. */
+  ButtonHero: string;
+  /** Styles applied to the mediaRoot for the Hero element. */
+  mediaRoot: string;
+  /** Styles applied to the MediaHero ContentModule for the Hero element. */
+  mediaHero: string;
+  /** Styles applied to the MediaDivider for the Hero element. */
+  mediaDivider: string;
+  /** Styles applied to the root element when contentHeigh is sm for the Hero element.*/
   contentHeightSM: string;
-  /** Styles applied to the root element when contentHeigh is md. */
+  /** Styles applied to the root element when contentHeigh is md for the Hero element. */
   contentHeightMD: string;
-  /** Styles applied to the root element when contentHeigh is lg. */
+  /** Styles applied to the root element when contentHeigh is lg for the Hero element. */
   contentHeightLG: string;
-  /** Styles applied to the root element when contentHeigh is xl. */
+  /** Styles applied to the root element when contentHeigh is xl for the Hero element. */
   contentHeightXL: string;
 }
 

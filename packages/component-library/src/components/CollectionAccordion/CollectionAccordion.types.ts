@@ -12,8 +12,8 @@ export interface CollectionAccordionProps {
 export interface CollectionAccordionClasses {
   /** Styles applied to the root element. */
   root: string;
-  /** Styles applied to every accordion item */
-  accordionItem: string;
+  /** Styles applied to each accordion item */
+  item: string;
 }
 
 export declare type CollectionAccordionClassKey = keyof CollectionAccordionClasses;

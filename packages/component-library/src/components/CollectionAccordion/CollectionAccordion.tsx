@@ -22,8 +22,7 @@ export const CollectionAccordion = ({
         spacing={itemSpacing ?? 0}
         {...sidekick(sidekickLookup)}
         variant={variant}
-        data-testid="CollectionAccordion"
-      >
+        data-testid="CollectionAccordion">
         {itemsWithVariant.map((item, idx) => (
           <AccordionItem item key={idx}>
             <Accordion {...item} />
@@ -43,8 +42,8 @@ const Root = styled(Grid, {
 
 const AccordionItem = styled(Grid, {
   name: 'CollectionAccordion',
-  slot: 'AccordionItem',
-  overridesResolver: (_, styles) => [styles.accordionItem]
+  slot: 'item',
+  overridesResolver: (_, styles) => [styles.item]
 })<{ variant?: string }>`
   width: 100%;
 `;

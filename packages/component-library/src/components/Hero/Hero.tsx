@@ -58,7 +58,7 @@ export const Hero = (props: HeroProps) => {
               width: '100%',
               height: '100%'
             }}>
-            <ContentModule
+            <BackgroundMedia
               __typename="Media"
               key={background?.id}
               testId="Hero-background"
@@ -71,35 +71,33 @@ export const Hero = (props: HeroProps) => {
           </BackgroundRoot>
         ) : null}
         <ContentContainer maxWidth={contentWidth} disableGutters={disableGutters}>
-          <Grid container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
+          <ContentRoot container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
-              <Grid item container direction="column" spacing={2} xs={12} md={6}>
-                <Grid item>
+              <TextsContainer item container direction="column" spacing={2} xs={12} md={6}>
+                <TextsRoot item>
                   {overline ? (
-                    <Typography data-testid="Hero-overline" variant="overline" {...sidekick(sidekickLookup?.overline)}>
+                    <OverlineHero
+                      data-testid="Hero-overline"
+                      variant="overline"
+                      {...sidekick(sidekickLookup?.overline)}>
                       {overline}
-                    </Typography>
+                    </OverlineHero>
                   ) : null}
                   {title ? (
-                    <Typography
-                      data-testid="Hero-title"
-                      variant="h1"
-                      component="h1"
-                      {...sidekick(sidekickLookup?.title)}>
+                    <TitleHero data-testid="Hero-title" variant="h1" {...sidekick(sidekickLookup?.title)}>
                       {title}
-                    </Typography>
+                    </TitleHero>
                   ) : null}
                   {subtitle ? (
-                    <Typography
+                    <SubtitleHero
                       data-testid="Hero-subtitle"
                       variant={!title ? 'h1' : 'h2'}
-                      component={!title ? 'h1' : 'h2'}
                       {...sidekick(sidekickLookup?.subtitle)}>
                       {subtitle}
-                    </Typography>
+                    </SubtitleHero>
                   ) : null}
                   {body ? (
-                    <ContentModule
+                    <BodyHero
                       __typename="Text"
                       variant="hero"
                       body={body}
@@ -110,16 +108,16 @@ export const Hero = (props: HeroProps) => {
                   {actions ? (
                     <ActionsRoot pt={title || subtitle || body ? 3 : undefined} {...sidekick(sidekickLookup?.actions)}>
                       {actions?.map((link) => (
-                        <ContentModule key={link.id} {...link} />
+                        <ButtonHero key={link.id} {...link} />
                       ))}
                     </ActionsRoot>
                   ) : null}
-                </Grid>
-              </Grid>
+                </TextsRoot>
+              </TextsContainer>
             ) : null}
             {image ? (
               <MediaRoot item xs={12} md={6}>
-                <ContentModule
+                <MediaHero
                   __typename="Media"
                   key={image?.id}
                   {...image}
@@ -130,7 +128,7 @@ export const Hero = (props: HeroProps) => {
                 />
               </MediaRoot>
             ) : null}
-          </Grid>
+          </ContentRoot>
         </ContentContainer>
         {divider ? (
           <MediaDivider {...divider} {...sidekick(sidekickLookup?.divider)} testId="Hero-divider" priority />
@@ -190,22 +188,6 @@ const Root = styled(Box, {
   alignContent: 'center'
 }));
 
-const MediaRoot = styled(Grid, {
-  name: 'Hero',
-  slot: 'MediaRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.mediaRoot]
-})`
-  position: relative;
-`;
-
-const MediaDivider = styled(ContentModule, {
-  name: 'Hero',
-  slot: 'MediaDividerRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.mediaDividerRoot]
-})``;
-
 const BackgroundRoot = styled(Box, {
   name: 'Hero',
   slot: 'BackgroundRoot',
@@ -213,14 +195,11 @@ const BackgroundRoot = styled(Box, {
   overridesResolver: (_, styles) => [styles.backgroundRoot]
 })``;
 
-const ActionsRoot = styled(Box, {
+const BackgroundMedia = styled(ContentModule, {
   name: 'Hero',
-  slot: 'ActionsRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.actionsRoot]
-})`
-  display: flex;
-`;
+  slot: 'BackgroundMedia',
+  overridesResolver: (_, styles) => [styles.backgroundMedia]
+})``;
 
 const ContentContainer = styled(Container, {
   name: 'Hero',
@@ -237,5 +216,86 @@ const ContentContainer = styled(Container, {
     alignContent: 'center'
   }
 }));
+
+const ContentRoot = styled(Grid, {
+  name: 'Hero',
+  slot: 'ContentRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.contentRoot]
+})``;
+
+const TextsContainer = styled(Grid, {
+  name: 'Hero',
+  slot: 'TextsContainer',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.textsContainer]
+})``;
+
+const TextsRoot = styled(Grid, {
+  name: 'Hero',
+  slot: 'TextsRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.textsRoot]
+})``;
+
+const OverlineHero = styled(Typography, {
+  name: 'Hero',
+  slot: 'OverlineHero',
+  overridesResolver: (_, styles) => [styles.OverlineHero]
+})``;
+
+const TitleHero = styled(Typography, {
+  name: 'Hero',
+  slot: 'TitleHero',
+  overridesResolver: (_, styles) => [styles.titleHero]
+})``;
+
+const SubtitleHero = styled(Typography, {
+  name: 'Hero',
+  slot: 'SubtitleHero',
+  overridesResolver: (_, styles) => [styles.subtitleHero]
+})``;
+
+const BodyHero = styled(ContentModule, {
+  name: 'Hero',
+  slot: 'BodyHero',
+  overridesResolver: (_, styles) => [styles.bodyHero]
+})``;
+
+const ActionsRoot = styled(Box, {
+  name: 'Hero',
+  slot: 'ActionsRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.actionsRoot]
+})`
+  display: flex;
+`;
+
+const ButtonHero = styled(ContentModule, {
+  name: 'Hero',
+  slot: 'ButtonHero',
+  overridesResolver: (_, styles) => [styles.buttonHero]
+})``;
+
+const MediaRoot = styled(Grid, {
+  name: 'Hero',
+  slot: 'MediaRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.mediaRoot]
+})`
+  position: relative;
+`;
+
+const MediaHero = styled(ContentModule, {
+  name: 'Hero',
+  slot: 'MediaHero',
+  overridesResolver: (_, styles) => [styles.mediaHero]
+})``;
+
+const MediaDivider = styled(ContentModule, {
+  name: 'Hero',
+  slot: 'MediaDividerRoot',
+  overridesResolver: (_, styles) => [styles.mediaDividerRoot]
+})``;
 
 export default Hero;

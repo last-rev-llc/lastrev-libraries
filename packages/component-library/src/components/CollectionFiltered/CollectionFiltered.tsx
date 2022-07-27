@@ -74,10 +74,8 @@ export const CollectionFiltered = ({
       revalidateOnFocus: false
     }
   );
-  // todo: ask if we really want this logs here
-  console.log('data => ', data);
+
   const options = data?.length ? data[0]?.options : defaultOptions;
-  console.log('options => ', options);
   const items = data?.reduce((accum: CardProps[], page: any) => [...accum, ...(page?.items || [])], []) ?? defaultItems;
   const isLoadingInitialData = !data && !error;
   const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined');
@@ -110,14 +108,12 @@ export const CollectionFiltered = ({
     .filter((x) => !!x)
     .join(', ');
 
-  //todo: figure out if we still need this log
-  console.log('itemsWithVariant => ', { itemsWithVariant, error });
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionFiltered">
-        <ContentContainer maxWidth={itemsWidth}>
-          <ContainerGrid container spacing={itemsSpacing ?? 0} sx={{ flexDirection: 'column', alignItems: 'center' }}>
-            <CollectionFiltersGrid item container sx={{ justifyContent: 'flex-end' }}>
+        <ContentRoot maxWidth={itemsWidth}>
+          <Content container spacing={itemsSpacing ?? 0} sx={{ flexDirection: 'column', alignItems: 'center' }}>
+            <CollectionFilteredRoot item container sx={{ justifyContent: 'flex-end' }}>
               <CollectionFilters
                 id={id}
                 filters={filters}
@@ -127,33 +123,30 @@ export const CollectionFiltered = ({
                 filter={filter}
                 onClearFilter={onClearFilter}
               />
-            </CollectionFiltersGrid>
+            </CollectionFilteredRoot>
             {!itemsWithVariant?.length && !isEmpty(filter) && !loading ? (
-              <NoResultsGrid item>
+              <NoResultsRoot item>
                 <NoResultsText variant="h4" data-testid="CollectionFiltered-NoResultsDisplay">
                   No results for filter: {parsedFilters ? parsedFilters : <NoResultsSkeleton width={100} />}
                 </NoResultsText>
-              </NoResultsGrid>
+              </NoResultsRoot>
             ) : null}
             {!itemsWithVariant?.length && error ? (
-              <TryAgainGrid item>
-                <TryAgainText variant="h4">Error searching for: {parsedFilters}, try again!</TryAgainText>
-                <TryAgainButton
-                  variant="contained"
-                  onClick={() => refetch()}
-                  data-testid="CollectionFiltered-TryAgainButton">
+              <ErrorRoot item>
+                <ErrorMessage variant="h4">Error searching for: {parsedFilters}, try again!</ErrorMessage>
+                <ErrorButton variant="contained" onClick={() => refetch()} data-testid="CollectionFiltered-ErrorButton">
                   {'TRY AGAIN'}
-                </TryAgainButton>
-              </TryAgainGrid>
+                </ErrorButton>
+              </ErrorRoot>
             ) : null}
             {itemsWithVariant?.length ? (
               <>
-                <ResultsGridContainer item container>
-                  <ResultsGrid item xs={12}>
+                <ResultsRoot item container>
+                  <Results item xs={12}>
                     <ResultsText variant="h4" data-testid="CollectionFiltered-ResultsDisplay">
                       {parsedFilters ? `Showing results for: ${parsedFilters}` : 'Showing results for: All'}
                     </ResultsText>
-                  </ResultsGrid>
+                  </Results>
                   <Section
                     contents={itemsWithVariant}
                     // background={background}
@@ -161,19 +154,19 @@ export const CollectionFiltered = ({
                     contentSpacing={itemsSpacing ?? 0}
                     testId="CollectionFiltered-ItemsSection"
                   />
-                </ResultsGridContainer>
+                </ResultsRoot>
               </>
             ) : null}
             {loading ? (
               <>
-                <MoreResultsContainerGrid item container>
+                <LoadingResultsRoot item container>
                   {isLoadingMore && (itemsWithVariant?.length ?? 0) < limit ? (
-                    <MoreResultsGrid item xs={12}>
-                      <MoreResultsText variant="h4" data-testid="CollectionFiltered-LoadingResultsDisplay">
+                    <LoadingResults item xs={12}>
+                      <LoadingResultsText variant="h4" data-testid="CollectionFiltered-LoadingResultsDisplay">
                         Showing results for:{' '}
-                        {parsedFilters ? parsedFilters : <MoreResultsSkeleton width={100} data-testid="" />}
-                      </MoreResultsText>
-                    </MoreResultsGrid>
+                        {parsedFilters ? parsedFilters : <LoadingResultsSkeleton width={100} data-testid="" />}
+                      </LoadingResultsText>
+                    </LoadingResults>
                   ) : null}
                   <Section
                     contents={range(limit).map((_: any, idx: number) => ({
@@ -186,21 +179,21 @@ export const CollectionFiltered = ({
                     contentSpacing={itemsSpacing ?? 0}
                     testId="CollectionFiltered-LoadingItemsSection"
                   />
-                </MoreResultsContainerGrid>
+                </LoadingResultsRoot>
               </>
             ) : null}
             {!isReachingEnd ? (
-              <ReachingEndGrid item sx={{ padding: 2 }}>
-                <ReachingEndButton
+              <LoadMoreRoot item sx={{ padding: 2 }}>
+                <LoadMoreButton
                   variant="contained"
                   onClick={() => setSize(size + 1)}
                   data-testid="CollectionFiltered-LoadMoreButton">
                   {loadMoreText ?? 'LOAD MORE'}
-                </ReachingEndButton>
-              </ReachingEndGrid>
+                </LoadMoreButton>
+              </LoadMoreRoot>
             ) : null}
-          </ContainerGrid>
-        </ContentContainer>
+          </Content>
+        </ContentRoot>
       </Root>
     </ErrorBoundary>
   );
@@ -217,85 +210,79 @@ const Root = styled(Box, {
   justifyContent: 'center'
 }));
 
-const ContentContainer = styled(Container, {
+const ContentRoot = styled(Container, {
   name: 'CollectionFiltered',
-  slot: 'ContentContainer',
+  slot: 'ContentRoot',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.contentContainer]
+  overridesResolver: (_, styles) => [styles.contentRoot]
 })<{ variant?: string }>(() => ({
   display: 'flex'
 }));
 
-const ContainerGrid = styled(Grid, {
+const Content = styled(Grid, {
   name: 'CollectionFiltered',
-  slot: 'ContainerGrid',
+  slot: 'Content',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.containerGrid]
+  overridesResolver: (_, styles) => [styles.content]
 })``;
 
-const CollectionFiltersGrid = styled(Grid, {
+const CollectionFilteredRoot = styled(Grid, {
   name: 'CollectionFiltered',
-  slot: 'CollectionFiltersGrid',
+  slot: 'FiltersRoot',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.collectionFiltersGrid]
+  overridesResolver: (_, styles) => [styles.filtersRoot]
 })``;
 
-const NoResultsGrid = styled(Grid, {
+const NoResultsRoot = styled(Grid, {
   name: 'CollectionFiltered',
-  slot: 'NoResultsGrid',
+  slot: 'NoResultsRoot',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.noResultsGrid]
+  overridesResolver: (_, styles) => [styles.noResultsRoot]
 })``;
 
-const TryAgainGrid = styled(Grid, {
+const ErrorRoot = styled(Grid, {
   name: 'CollectionFiltered',
-  slot: 'TryAgainGrid',
+  slot: 'ErrorRoot',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.tryAgainGrid]
+  overridesResolver: (_, styles) => [styles.errorRoot]
 })``;
 
-const ResultsGridContainer = styled(Grid, {
+const ResultsRoot = styled(Grid, {
   name: 'CollectionFiltered',
-  slot: 'ResultsGridContainer',
+  slot: 'ResultsRoot',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.resultsGridContainer]
+  overridesResolver: (_, styles) => [styles.resultsRoot]
 })``;
 
-const ResultsGrid = styled(Grid, {
+const Results = styled(Grid, {
   name: 'CollectionFiltered',
-  slot: 'ResultsGrid',
+  slot: 'Results',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.resultsGrid]
+  overridesResolver: (_, styles) => [styles.results]
 })``;
 
-//is it OK to add shouldForwardProp, if this means passing no variant(?)
-// should this be removed from the styled component?
 const NoResultsText = styled(Typography, {
   name: 'CollectionFiltered',
   slot: 'NoResultsText',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.noResultsText]
 })``;
 
-const TryAgainText = styled(Typography, {
+const ErrorMessage = styled(Typography, {
   name: 'CollectionFiltered',
-  slot: 'TryAgainText',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.tryAgainText]
+  slot: 'ErrorMessage',
+  overridesResolver: (_, styles) => [styles.errorMessage]
 })``;
 
 const ResultsText = styled(Typography, {
   name: 'CollectionFiltered',
   slot: 'ResultsText',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.resultsText]
 })``;
 
-const MoreResultsText = styled(Typography, {
+const LoadingResultsText = styled(Typography, {
   name: 'CollectionFiltered',
-  slot: 'MoreResultsText',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.moreResultsText]
+  slot: 'LoadingResultsText',
+  overridesResolver: (_, styles) => [styles.loadingResultsText]
 })``;
 
 const NoResultsSkeleton = styled(Skeleton, {
@@ -305,47 +292,44 @@ const NoResultsSkeleton = styled(Skeleton, {
   overridesResolver: (_, styles) => [styles.noResultsSkeleton]
 })``;
 
-const MoreResultsSkeleton = styled(Skeleton, {
+const LoadingResultsSkeleton = styled(Skeleton, {
   name: 'CollectionFiltered',
-  slot: 'MoreResultsSkeleton',
+  slot: 'LoadingResultsSkeleton',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.moreResultsSkeleton]
+  overridesResolver: (_, styles) => [styles.loadingResultsSkeleton]
 })``;
 
-// same question as above
-const ReachingEndButton = styled(Button, {
+const LoadMoreButton = styled(Button, {
   name: 'CollectionFiltered',
-  slot: 'ReachingEndButton',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.reachingEndButton]
+  slot: 'LoadMoreButton',
+  overridesResolver: (_, styles) => [styles.loadMoreButton]
 })``;
 
-const TryAgainButton = styled(Button, {
+const ErrorButton = styled(Button, {
   name: 'CollectionFiltered',
-  slot: 'TryAgainButton',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.tryAgainButton]
+  slot: 'ErrorButton',
+  overridesResolver: (_, styles) => [styles.errorButton]
 })``;
 
-const MoreResultsContainerGrid = styled(Grid, {
+const LoadingResultsRoot = styled(Grid, {
   name: 'CollectionFiltered',
-  slot: 'MoreResultsContainerGrid',
+  slot: 'LoadingResultsRoot',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.moreResultsContainerGrid]
+  overridesResolver: (_, styles) => [styles.loadingResultsRoot]
 })``;
 
-const MoreResultsGrid = styled(Grid, {
+const LoadingResults = styled(Grid, {
   name: 'CollectionFiltered',
-  slot: 'MoreResultsGrid',
+  slot: 'LoadingResults',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.moreResultsGrid]
+  overridesResolver: (_, styles) => [styles.loadingResults]
 })``;
 
-const ReachingEndGrid = styled(Grid, {
+const LoadMoreRoot = styled(Grid, {
   name: 'CollectionFiltered',
-  slot: 'ReachingEndGrid',
+  slot: 'LoadMoreRoot',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.reachingEndGrid]
+  overridesResolver: (_, styles) => [styles.loadMoreRoot]
 })``;
 
 export default CollectionFiltered;

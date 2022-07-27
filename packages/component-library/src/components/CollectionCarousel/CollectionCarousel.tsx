@@ -23,18 +23,18 @@ export const CollectionCarousel = ({
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
 
   const config = CarouselVariantProps[variant];
-
+  console.log({ items });
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionCarousel">
         <ContentContainer maxWidth={itemsWidth} disableGutters>
           <CarouselContainer navigation pagination={{ clickable: true }} loop {...config}>
             {itemsWithVariant.map((item, idx) => (
-              <SwiperSlide key={idx}>
-                <CarouselItem>
-                  <ContentModule {...item} />
-                </CarouselItem>
-              </SwiperSlide>
+              <CarouselSlideRoot key={idx}>
+                <CarouselSlide>
+                  <CarouselContent {...item} sx={undefined} />
+                </CarouselSlide>
+              </CarouselSlideRoot>
             ))}
           </CarouselContainer>
         </ContentContainer>
@@ -83,11 +83,18 @@ const CarouselContainer = styled(Swiper, {
   }
 }));
 
-const CarouselItem = styled(Box, {
+const CarouselSlideRoot = styled(SwiperSlide, {
   name: 'CollectionCarousel',
-  slot: 'CarouselItem',
+  slot: 'SlideRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.carouselItem]
+  overridesResolver: (_, styles) => [styles.slideRoot]
+})``;
+
+const CarouselSlide = styled(Box, {
+  name: 'CollectionCarousel',
+  slot: 'Slide',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.slide]
 })<{ variant?: string }>(() => ({
   display: 'flex',
   justifyContent: 'center',
@@ -95,5 +102,11 @@ const CarouselItem = styled(Box, {
   height: '100%',
   width: '100%'
 }));
+
+const CarouselContent = styled(ContentModule, {
+  name: 'CollectionCarousel',
+  slot: 'Content',
+  overridesResolver: (_, styles) => [styles.content]
+})``;
 
 export default CollectionCarousel;

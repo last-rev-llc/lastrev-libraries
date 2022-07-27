@@ -15,14 +15,18 @@ export interface CollectionCarouselProps {
 }
 
 export interface CollectionCarouselClasses {
-  /** Styles applied to the root element. */
+  /** Styles applied to the root for the CollectionCarousel element. */
   root: string;
-  /** Styles applied to the contentContainer element. */
+  /** Styles applied to the ContentContainer for the CollectionCarousel element. */
   contentContainer: string;
-  /** Styles applied to the carouselContainer element. */
+  /** Styles applied to the CarouselContent (Swiper) for the CollectionCarousel element. */
   carouselContainer: string;
-  /** Styles applied to every carouselItem element. */
-  carouselItem: string;
+  /** Styles applied each Slide(SwiperSlide) Root for the CollectionCarousel element. */
+  slideRoot: string;
+  /** Styles applied each Slide Box for the CollectionCarousel element. */
+  slide: string;
+  /** Styles applied to the CarouselContent ContentModule for the CollectionCarousel element. */
+  content: string;
 }
 
 export declare type CollectionCarouselClassKey = keyof CollectionCarouselClasses;

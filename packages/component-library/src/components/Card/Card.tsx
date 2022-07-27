@@ -78,25 +78,25 @@ export const Card = (inProps: CardProps) => {
             {actions?.length ? (
               <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions">
                 {actions?.map((link) => (
-                  <CardButtons __typename="Link" key={link.id} {...link} />
+                  <CardButton __typename="Link" key={link.id} {...link} />
                 ))}
               </CardActions>
             ) : null}
           </CardContent>
         ) : null}
         {loading ? (
-          <CardContentForSkeleton data-testid="Card-ContentSkeleton">
-            <CardTitleForSkeleton variant="h3">
+          <CardContent data-testid="Card-ContentSkeleton">
+            <CardTitle variant="h3">
               <TitleSkeleton width="100%" />
-            </CardTitleForSkeleton>
-            <CardSubtitleForSkeleton variant="h4">
+            </CardTitle>
+            <CardSubtitle variant="h4">
               <SubtitleSkeleton width="100%" />
               <br />
               <SubtitleSkeleton width="100%" />
-            </CardSubtitleForSkeleton>
+            </CardSubtitle>
             <TextSkeleton>
               {body ? (
-                <CardTextForSkeleton
+                <CardBody
                   __typename="Text"
                   variant="card"
                   sidekickLookup={sidekickLookup?.body}
@@ -105,10 +105,10 @@ export const Card = (inProps: CardProps) => {
                 />
               ) : null}
             </TextSkeleton>
-            <CardActionsForSkeleton>
+            <CardActions>
               <ActionsSkeleton width={50} />
-            </CardActionsForSkeleton>
-          </CardContentForSkeleton>
+            </CardActions>
+          </CardContent>
         ) : null}
       </Root>
     </ErrorBoundary>
@@ -146,9 +146,8 @@ const Root = styled(MuiCard, {
 
 const CardLink = styled(ContentModule, {
   name: 'Card',
-  slot: 'CardLink',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardLink]
+  slot: 'Link',
+  overridesResolver: (_, styles) => [styles.link]
 })<LinkProps & {}>`
   position: absolute;
   top: 0;
@@ -159,15 +158,14 @@ const CardLink = styled(ContentModule, {
 
 const CardMedia = styled(MuiCardMedia, {
   name: 'Card',
-  slot: 'CardMedia',
+  slot: 'MediaRoot',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardMedia]
+  overridesResolver: (_, styles) => [styles.mediaRoot]
 })``;
 
 const Media = styled(ContentModule, {
   name: 'Card',
   slot: 'Media',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.media]
 })``;
 
@@ -182,7 +180,7 @@ const CardTags = styled(Box, {
   name: 'Card',
   slot: 'Tags',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardTags]
+  overridesResolver: (_, styles) => [styles.tags]
 })<{}>`
   width: 100%;
   display: flex;
@@ -199,86 +197,46 @@ const Chip = styled(MuiChip, {
 
 const CardTagRoot = styled(ContentModule, {
   name: 'Card',
-  slot: 'CardTagRoot',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardTagRoot]
+  slot: 'TagRoot',
+  overridesResolver: (_, styles) => [styles.tagRoot]
 })``;
 
 const CardContent = styled(MuiCardContent, {
   name: 'Card',
-  slot: 'CardContent',
+  slot: 'Content',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardContent]
+  overridesResolver: (_, styles) => [styles.content]
 })``;
 
 const CardTitle = styled(Typography, {
   name: 'Card',
-  slot: 'CardTitle',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardTitle]
+  slot: 'Title',
+  overridesResolver: (_, styles) => [styles.title]
 })``;
 
 const CardSubtitle = styled(Typography, {
   name: 'Card',
-  slot: 'CardSubtitle',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardSubtitle]
+  slot: 'Subtitle',
+  overridesResolver: (_, styles) => [styles.subtitle]
 })``;
 
 const CardBody = styled(ContentModule, {
   name: 'Card',
-  slot: 'CardBody',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardBody]
+  slot: 'Body',
+  overridesResolver: (_, styles) => [styles.body]
 })``;
 
 const CardActions = styled(MuiCardActions, {
   name: 'Card',
-  slot: 'CardActions',
+  slot: 'Actions',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardActions]
+  overridesResolver: (_, styles) => [styles.actions]
 })``;
 
-const CardButtons = styled(ContentModule, {
+const CardButton = styled(ContentModule, {
   name: 'Card',
-  slot: 'CardButtons',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardButtons]
-})``;
-
-const CardContentForSkeleton = styled(MuiCardContent, {
-  name: 'Card',
-  slot: 'CardContentForSkeleton',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardContentForSkeleton]
-})``;
-
-const CardTitleForSkeleton = styled(Typography, {
-  name: 'Card',
-  slot: 'CardTitleForSkeleton',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardTitleForSkeleton]
-})``;
-
-const CardSubtitleForSkeleton = styled(Typography, {
-  name: 'Card',
-  slot: 'CardSubtitleForSkeleton',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardSubtitleForSkeleton]
-})``;
-
-const CardTextForSkeleton = styled(ContentModule, {
-  name: 'Card',
-  slot: 'CardTextForSkeleton',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardTextForSkeleton]
-})``;
-
-const CardActionsForSkeleton = styled(MuiCardActions, {
-  name: 'Card',
-  slot: 'CardActionsForSkeleton',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardActionsForSkeleton]
+  slot: 'Button',
+  overridesResolver: (_, styles) => [styles.button]
 })``;
 
 const TitleSkeleton = styled(MuiSkeleton, {

@@ -25,8 +25,7 @@ export const CollectionAccordionMedia = ({
         spacing={itemsSpacing ?? 0}
         {...sidekick(sidekickLookup)}
         variant={variant}
-        data-testid="CollectionAccordionMedia"
-      >
+        data-testid="CollectionAccordionMedia">
         <SelectedMediaRoot>
           <SelectedMedia
             __typename="Media"
@@ -70,7 +69,6 @@ const SelectedMediaRoot = styled(Grid, {
 const SelectedMedia = styled(ContentModule, {
   name: 'CollectionAccordionMedia',
   slot: 'SelectedMedia',
-  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.selectedMedia]
 })``;
 

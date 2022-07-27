@@ -1,12 +1,12 @@
-import React from 'react';
+import React, { Fragment as ReactFragment } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Link from '@mui/material/Link';
-import IconButton from '@mui/material/IconButton';
+import MuiIconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import Hidden from '@mui/material/Hidden';
+import MuiHidden from '@mui/material/Hidden';
 import styled from '@mui/system/styled';
 import { useTheme } from '@mui/system';
 
@@ -43,29 +43,27 @@ export const Header = (inProps: HeaderProps) => {
           elevation={trigger ? 4 : 0}
           menuVisible={menuVisible}
           menuBreakpoint={menuBreakpoint}
-          {...props}
-        >
+          {...props}>
           <ContentContainer>
             {logo ? (
               <LogoRoot
                 href={logoUrl}
                 sx={{ height: '100%', py: 3 }}
                 {...sidekick(sidekickLookup?.logo)}
-                aria-label={'Go to homepage'}
-              >
+                aria-label={'Go to homepage'}>
                 <Logo {...logo} priority alt={logo?.title ?? 'Go to homepage'} />
               </LogoRoot>
             ) : null}
             {navigationItems?.map((collection) => (
-              <React.Fragment key={collection.id}>
+              <Fragment key={collection.id}>
                 <NavigationDivider />
-                <ContentModule
+                <NavigationBar
                   {...collection}
                   variant={'navigation-bar'}
                   onRequestClose={handleClose}
                   color={props?.color}
                 />
-              </React.Fragment>
+              </Fragment>
             ))}
             <Hidden implementation="css" {...{ [`${menuBreakpoint}Up`]: true }}>
               <IconButton
@@ -73,8 +71,7 @@ export const Header = (inProps: HeaderProps) => {
                 color="inherit"
                 aria-label="menu"
                 onClick={() => setMenuVisible(!menuVisible)}
-                size="large"
-              >
+                size="large">
                 {menuVisible ? <CloseIcon /> : <MenuIcon />}
               </IconButton>
             </Hidden>
@@ -158,6 +155,15 @@ const Root = styled(AppBar, {
     `}
 `;
 
+const ContentContainer = styled(Toolbar, {
+  name: 'Header',
+  slot: 'ContentContainer',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.contentContainer]
+})<{ variant?: string }>`
+  height: 100%;
+`;
+
 const LogoRoot = styled(Link, {
   name: 'Header',
   slot: 'LogoRoot',
@@ -168,7 +174,6 @@ const LogoRoot = styled(Link, {
 const Logo = styled(ContentModule, {
   name: 'Header',
   slot: 'Logo',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.logo]
 })<{ variant?: string }>(() => ({
   height: '100%',
@@ -184,13 +189,29 @@ const NavigationDivider = styled(Box, {
   flex-grow: 1;
 `;
 
-const ContentContainer = styled(Toolbar, {
+const NavigationBar = styled(ContentModule, {
   name: 'Header',
-  slot: 'ContentContainer',
+  slot: 'NavigationBar',
+  overridesResolver: (_, styles) => [styles.navigationBar]
+})``;
+
+const Fragment = styled(ReactFragment, {
+  name: 'Header',
+  slot: 'Fragment',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.contentContainer]
-})<{ variant?: string }>`
-  height: 100%;
-`;
+  overridesResolver: (_, styles) => [styles.fragment]
+})``;
+
+const Hidden = styled(MuiHidden, {
+  name: 'Header',
+  slot: 'Hidden',
+  overridesResolver: (_, styles) => [styles.hidden]
+})``;
+
+const IconButton = styled(MuiIconButton, {
+  name: 'Header',
+  slot: 'IconButton',
+  overridesResolver: (_, styles) => [styles.iconButton]
+})``;
 
 export default Header;

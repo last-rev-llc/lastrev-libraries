@@ -11,9 +11,11 @@ export interface FormMarketoEmbedProps {
 }
 
 export interface FormMarketoEmbedClasses {
-  /** Styles applied to the root element. */
+  /** Styles applied to the Root element. */
   root: string;
-  /** Styles applied to the form element. */
+  /** Styles applied to the Script element. */
+  script: string;
+  /** Styles applied to the Form element. */
   form: string;
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Script from 'next/script';
+import NextScript from 'next/script';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { FormMarketoEmbedProps } from './FormMarketoEmbed.types';
@@ -45,7 +45,14 @@ const Root = styled(Box, {
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => styles.root
-})<{ variant?: string }>(() => ({}));
+})``;
+
+const Script = styled(NextScript, {
+  name: 'FormMarketoEmbed',
+  slot: 'Script',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => styles.script
+})``;
 
 const Form = styled('form', {
   name: 'FormMarketoEmbed',
@@ -60,7 +67,6 @@ const Form = styled('form', {
       duration: theme.transitions.duration.shorter
     })
   };
-
   return {
     'width': '100% !important',
     'paddingRight': '10px',
