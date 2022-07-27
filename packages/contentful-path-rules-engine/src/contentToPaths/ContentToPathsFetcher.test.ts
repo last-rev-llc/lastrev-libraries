@@ -122,7 +122,6 @@ describe('ContentToPathsFetcher', () => {
         path: '/classes/class-1/course-1/topic-1',
         pathEntries: [null, entryMocks.class, entryMocks.courseWithTopic1, entryMocks.topic]
       }
-      // TODO: test other scenario
     ]);
   });
   it('fetches all paths for an item with nested reference expressions using segment references', async () => {

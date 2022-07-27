@@ -4,7 +4,6 @@ import PathRuleParser from '../core/PathRuleParser';
 import PathToItemsFetcher from './PathToItemsFetcher';
 import { PathRule, SlugArray } from '../types';
 import logger from 'loglevel';
-import detectCycle from '../core/detectCycle';
 
 export type PathLookupObject = {
   rule: string;
@@ -21,11 +20,6 @@ const createPathLookupObjects = (config: PathRuleConfig): PathLookupObject[] => 
     acc.push(
       ...rules.map(({ rule, isCanonical, allowFullPaths }) => {
         const pathRule = new PathRuleParser(rule).PathRule();
-        const cycle = detectCycle(pathRule);
-
-        if (cycle) {
-          throw Error(`Cycle detected in path rule ${rule} between segments ${cycle[0]} and ${cycle[1]}`);
-        }
 
         return {
           rule,

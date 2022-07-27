@@ -109,9 +109,15 @@ const relationshipValidationVisitor: PathVisitor<Context> = {
   },
   DynamicSegment: {
     enter: (_node, _parent, context) => {
-      // default to last slug segment;
-      // TODO: allow for static segment at end
-      context.getResolutionRoots = async (pathEntries) => [pathEntries[pathEntries.length - 1] as Entry<any>];
+      // default to last valid slug segment;
+
+      context.getResolutionRoots = async (pathEntries) => {
+        const lastValidEntry = pathEntries.reduce(
+          (acc: Entry<any> | null, curr: Entry<any> | null) => (curr ? curr : acc),
+          null
+        );
+        return lastValidEntry ? [lastValidEntry] : [];
+      };
     },
     exit: (_node, _parent, context) => {
       const currentSegment = context.currentSegmentIndex;

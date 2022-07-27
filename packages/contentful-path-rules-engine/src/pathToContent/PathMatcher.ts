@@ -64,7 +64,6 @@ export default class PathMatcher {
   private readonly _segmentCount: number;
   private readonly _matchedSegmentIndices: number[];
 
-  // TODO: match whole path later
   constructor({ pathRule, allowFullPaths }: { pathRule: PathRule; allowFullPaths?: boolean }) {
     this._pathRule = pathRule;
 

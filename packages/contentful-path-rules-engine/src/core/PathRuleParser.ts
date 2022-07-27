@@ -12,6 +12,35 @@ import {
   StaticSegment
 } from '../types';
 
+type CycleDetctionResult = false | number[];
+
+/**
+ * Detects cycles in the path rule. and outputs an object representing the segment locations of the circular reference
+ */
+function detectCycle({ segments }: PathRule): CycleDetctionResult {
+  var segmentReferences: (boolean | undefined)[] = [];
+
+  let result: CycleDetctionResult = false;
+
+  segments.forEach((s, i) => {
+    let hasRef = false;
+    if (s.type === 'DynamicSegment') {
+      const { body } = s;
+      if (body.type === 'SegmentReference') {
+        if (segmentReferences[body.index]) {
+          result = [i, body.index];
+          return false;
+        }
+        hasRef = true;
+      }
+    }
+    segmentReferences[i] = hasRef;
+    return true;
+  });
+
+  return result;
+}
+
 export default class PathRuleParser {
   private readonly _tokenizer: PathRuleTokenizer = new PathRuleTokenizer();
   private _lookahead: Token | null;
@@ -51,10 +80,15 @@ export default class PathRuleParser {
    */
   PathRule(): PathRule {
     this._eat('/');
-    return {
+    const pathRule: PathRule = {
       type: 'PathRule',
       segments: this.SegmentList()
     };
+    const cycle = detectCycle(pathRule);
+    if (cycle) {
+      throw SyntaxError(`Cycle detected between segments ${cycle[0]} and ${cycle[1]}`);
+    }
+    return pathRule;
   }
 
   /**
