@@ -142,7 +142,6 @@ const ContentContainer = styled(Container, {
 const BackgroundMedia = styled(ContentModule, {
   name: 'Section',
   slot: 'BackgroundMedia',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.backgroundImage]
 })(() => ({
   zIndex: 0,
@@ -174,7 +173,6 @@ const GridItem = styled(Grid, {
 const IntroText = styled(ContentModule, {
   name: 'Section',
   slot: 'IntroText',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.introText]
 })(() => ({}));
 

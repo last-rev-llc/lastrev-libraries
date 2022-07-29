@@ -101,7 +101,6 @@ const Root = styled(Box, {
 const NavigationItemLink = styled(ContentModule, {
   name: 'NavigationItem',
   slot: 'Link',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.link]
 })<LinkProps>``;
 

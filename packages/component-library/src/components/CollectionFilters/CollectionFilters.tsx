@@ -1,11 +1,17 @@
 import React from 'react';
-import { Grid, Chip, MenuItem, TextField, Button } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
+import {
+  Grid,
+  Chip as MuiChip,
+  MenuItem as MuiMenuItem,
+  TextField as MuiTextField,
+  Button as MuiButton
+} from '@mui/material';
+import MuiAutocomplete from '@mui/material/Autocomplete';
 import styled from '@mui/system/styled';
 import capitalize from 'lodash/capitalize';
 import { CollectionFiltersProps, Option } from './CollectionFilters.types';
 
-const CollectionFilters = ({
+const CollectionFiltersComponent = ({
   id,
   // options,
   allOptions,
@@ -21,7 +27,7 @@ const CollectionFilters = ({
 
   return (
     <CollectionFiltersRoot id={`collection_${id}_filters`} container style={{ justifyContent: 'flex-end' }} {...props}>
-      <Grid item container sx={{ justifyContent: 'flex-end' }} spacing={2}>
+      <CollectionFilters item container sx={{ justifyContent: 'flex-end' }} spacing={2}>
         {filters?.map(({ id, label, type, multiple }) => {
           if (!id) return null;
           let input;
@@ -42,7 +48,7 @@ const CollectionFilters = ({
               break;
             case 'select':
               input = (
-                <TextField
+                <SelectTextField
                   select
                   id={id}
                   name={id}
@@ -52,8 +58,7 @@ const CollectionFilters = ({
                   value={filter[id] ?? ''}
                   SelectProps={{ MenuProps: { disableScrollLock: true } }}
                   onChange={handleChange(id)}
-                  data-testid="CollectionFilters-select"
-                >
+                  data-testid="CollectionFilters-select">
                   {allOptions
                     ? allOptions[id]?.map(({ label, value }) => (
                         <MenuItem key={label} value={value ?? ''}>
@@ -61,7 +66,7 @@ const CollectionFilters = ({
                         </MenuItem>
                       ))
                     : null}
-                </TextField>
+                </SelectTextField>
               );
               break;
             case 'autocomplete':
@@ -89,7 +94,7 @@ const CollectionFilters = ({
                     ))
                   }
                   renderInput={(params) => (
-                    <TextField
+                    <AutocompleteTextField
                       {...params}
                       label={`Select a ${label || id}`}
                       name={id}
@@ -106,33 +111,101 @@ const CollectionFilters = ({
           }
           if (input)
             return (
-              <Grid key={id} item xs>
+              <InputRoot key={id} item xs>
                 {input}
-              </Grid>
+              </InputRoot>
             );
           return null;
         })}
-      </Grid>
-      <Grid item>
+      </CollectionFilters>
+      <ButtonRoot item>
         <Button
           data-testid="CollectionFilters-clear"
           onClick={() => {
             setFilter({});
             if (onClearFilter) onClearFilter();
-          }}
-        >
+          }}>
           Clear
         </Button>
-      </Grid>
+      </ButtonRoot>
     </CollectionFiltersRoot>
   );
 };
 
 const CollectionFiltersRoot = styled(Grid, {
-  name: 'CollectionFiltered',
+  name: 'CollectionFilters',
   slot: 'FiltersRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>(() => ({}));
+})``;
 
-export default CollectionFilters;
+const CollectionFilters = styled(Grid, {
+  name: 'CollectionFilters',
+  slot: 'Filters',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.filters]
+})``;
+
+const TextField = styled(MuiTextField, {
+  name: 'CollectionFilters',
+  slot: 'TextField',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.textField]
+})``;
+
+const SelectTextField = styled(MuiTextField, {
+  name: 'CollectionFilters',
+  slot: 'SelectTextField',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.selectTextField]
+})``;
+
+const AutocompleteTextField = styled(MuiTextField, {
+  name: 'CollectionFilters',
+  slot: 'AutocompleteTextField',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.autocompleteTextField]
+})``;
+
+const MenuItem = styled(MuiMenuItem, {
+  name: 'CollectionFilters',
+  slot: 'MenuItem',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.menuItem]
+})``;
+
+const Autocomplete = styled(MuiAutocomplete, {
+  name: 'CollectionFilters',
+  slot: 'Autocomplete',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.autocomplete]
+})``;
+
+const Chip = styled(MuiChip, {
+  name: 'CollectionFilters',
+  slot: 'Chip',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.chip]
+})``;
+
+const InputRoot = styled(Grid, {
+  name: 'CollectionFilters',
+  slot: 'InputRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.inputRoot]
+})``;
+
+const ButtonRoot = styled(Grid, {
+  name: 'CollectionFilters',
+  slot: 'ButtonRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.buttonRoot]
+})``;
+
+const Button = styled(MuiButton, {
+  name: 'CollectionFilters',
+  slot: 'Button',
+  overridesResolver: (_, styles) => [styles.button]
+})``;
+
+export default CollectionFiltersComponent;
