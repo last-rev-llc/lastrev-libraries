@@ -20,5 +20,5 @@ export interface FormMarketoEmbedClasses {
 }
 
 export declare type FormMarketoEmbedClassKey = keyof FormMarketoEmbedClasses;
-declare const accordionClasses: FormMarketoEmbedClasses;
-export default accordionClasses;
+declare const formMarketoEmbedClasses: FormMarketoEmbedClasses;
+export default formMarketoEmbedClasses;

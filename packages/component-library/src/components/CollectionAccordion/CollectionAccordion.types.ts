@@ -12,10 +12,10 @@ export interface CollectionAccordionProps {
 export interface CollectionAccordionClasses {
   /** Styles applied to the root element. */
   root: string;
-  /** Styles applied to each accordion item */
+  /** Styles applied to each accordion item element */
   item: string;
 }
 
 export declare type CollectionAccordionClassKey = keyof CollectionAccordionClasses;
-declare const accordionClasses: CollectionAccordionClasses;
-export default accordionClasses;
+declare const collectionAccordionClasses: CollectionAccordionClasses;
+export default collectionAccordionClasses;

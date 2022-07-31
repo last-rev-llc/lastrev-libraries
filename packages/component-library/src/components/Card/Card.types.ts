@@ -27,44 +27,44 @@ export interface CardProps extends Omit<MuiCardProps, 'variant'> {
 }
 
 export interface CardClasses {
-  /** Styles applied to the Root for the Card element. */
+  /** Styles applied to the Root element. */
   root: string;
-  /** Styles applied to the Link for the Card element. */
+  /** Styles applied to the Link element. */
   link: string;
-  /** Styles applied to the MediaRoot for the Card element. */
+  /** Styles applied to the MediaRoot element. */
   mediaRoot: string;
-  /** Styles applied to the Media ContentModule for the Card element. */
+  /** Styles applied to the Media ContentModule element. */
   media: string;
-  /** Styles applied to the Media Skeleton for the Card element. */
+  /** Styles applied to the Media Skeleton element. */
   mediaSkeleton: string;
-  /** Styles applied to the Root of the Tags for the Card element. */
+  /** Styles applied to the Root of the Tags element. */
   tags: string;
-  /** Styles applied to the Chip/Tag Element for the Card element. */
+  /** Styles applied to the Chip/Tag Element element. */
   chip: string;
-  /** Styles applied to the CardTagRoot ContentModule for the Card element. */
+  /** Styles applied to the CardTagRoot ContentModule element. */
   tagRoot: string;
-  /** Styles applied to the CardContent for the Card element. */
+  /** Styles applied to the CardContent element. */
   content: string;
-  /** Styles applied to the Typography of the title text for the Card element. */
+  /** Styles applied to the Typography of the title text element. */
   title: string;
-  /** Styles applied to the Typography of the subtitle text for the Card element. */
+  /** Styles applied to the Typography of the subtitle text element. */
   subtitle: string;
-  /** Styles applied to the Text of the body for the Card element. */
+  /** Styles applied to the Text of the body element. */
   body: string;
-  /** Styles applied to the CardActions for the Card element. */
+  /** Styles applied to the CardActions element. */
   actions: string;
-  /** Styles applied to the ButtonHero for the Card element. */
+  /** Styles applied to the ButtonHero element. */
   button: string;
-  /** Styles applied to the Skeleton of the title text for the Card element. */
+  /** Styles applied to the Skeleton of the title text element. */
   titleSkeleton: string;
-  /** Styles applied to the Skeleton of the subtitle text for the Card element. */
+  /** Styles applied to the Skeleton of the subtitle text element. */
   subtitleSkeleton: string;
-  /** Styles applied to the Skeleton of the body text for the Card element. */
+  /** Styles applied to the Skeleton of the body text element. */
   textSkeleton: string;
-  /** Styles applied to the Skeleton of the CardActions for the Card element. */
+  /** Styles applied to the Skeleton of the CardActions element. */
   actionsSkeleton: string;
 }
 
 export declare type CardClassKey = keyof CardClasses;
-declare const accordionClasses: CardClasses;
-export default accordionClasses;
+declare const cardClasses: CardClasses;
+export default cardClasses;

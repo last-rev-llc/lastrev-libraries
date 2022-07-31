@@ -1,17 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-
 import { documentToReactComponents, Options } from '@contentful/rich-text-react-renderer';
-
 import Box from '@mui/material/Box';
 import styled from '@mui/system/styled';
-import Typography from '@mui/material/Typography';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
+import MuiTypography from '@mui/material/Typography';
+import MuiTableContainer from '@mui/material/TableContainer';
+import MuiTable from '@mui/material/Table';
+import MuiTableHead from '@mui/material/TableHead';
+import MuiTableBody from '@mui/material/TableBody';
+import MuiTableRow from '@mui/material/TableRow';
+import MuiTableCell from '@mui/material/TableCell';
 
 import BLOCKS from './BLOCKS';
 import INLINES from './INLINES';
@@ -62,7 +60,6 @@ const renderTypography =
             if (isHTML(child)) {
               return (
                 <Typography
-                  component="span"
                   variant={variant}
                   data-testid={`Text-html-${variant}`}
                   dangerouslySetInnerHTML={{ __html: child }}
@@ -92,9 +89,9 @@ const createRenderOptions = ({ links, renderNode, renderText }: { links?: TextLi
     renderNode: {
       [INLINES.HYPERLINK]: (_: any, children: any) => {
         return (
-          <ContentModule __typename="Link" href={_.data.uri} data-testid={`Text-${INLINES.HYPERLINK}`}>
+          <HyperLink __typename="Link" href={_.data.uri} data-testid={`Text-${INLINES.HYPERLINK}`}>
             {children}
-          </ContentModule>
+          </HyperLink>
         );
       },
       [INLINES.ENTRY_HYPERLINK]: (node: any) => {
@@ -102,34 +99,33 @@ const createRenderOptions = ({ links, renderNode, renderText }: { links?: TextLi
         const entry = entries[id];
         const content = node?.content[0]?.value;
 
-        return <ContentModule {...entry} data-testid={`Texts-${INLINES.ENTRY_HYPERLINK}`} text={content} />;
+        return <EntryHyperLink {...entry} data-testid={`Texts-${INLINES.ENTRY_HYPERLINK}`} text={content} />;
       },
       [INLINES.ASSET_HYPERLINK]: (node: any, children: any) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = assets[id];
         return (
-          <ContentModule
+          <AssetHyperLink
             __typename="Link"
             href={entry?.file?.url}
             target="_blank"
             rel="noopener noreferrer"
-            data-testid="Text-asset-hyperlink"
-          >
+            data-testid="Text-asset-hyperlink">
             {children}
-          </ContentModule>
+          </AssetHyperLink>
         );
       },
       [BLOCKS.EMBEDDED_ASSET]: (node: any) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = assets[id];
-        return <ContentModule {...entry} testId={`Text-${BLOCKS.EMBEDDED_ASSET}`} />;
+        return <EmbeddedAsset {...entry} testId={`Text-${BLOCKS.EMBEDDED_ASSET}`} />;
       },
       [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
         return (
           <EmbeddedRoot component="span" sx={{ display: 'block' }} data-testid={`Text-${BLOCKS.EMBEDDED_ENTRY}`}>
-            <ContentModule {...entry} />
+            <EmbeddedEntry {...entry} />
           </EmbeddedRoot>
         );
       },
@@ -138,7 +134,7 @@ const createRenderOptions = ({ links, renderNode, renderText }: { links?: TextLi
         const entry = entries[id];
         return (
           <InlineRoot component="span" sx={{ display: 'inline' }} data-testid={`Text-${INLINES.EMBEDDED_ENTRY}`}>
-            <ContentModule {...entry} />
+            <InlineEntry {...entry} />
           </InlineRoot>
         );
       },
@@ -170,7 +166,7 @@ const createRenderOptions = ({ links, renderNode, renderText }: { links?: TextLi
         );
       },
       [BLOCKS.TABLE_HEADER_CELL]: (_: any, children: any) => {
-        return <TableCell>{children}</TableCell>;
+        return <TableHeaderCell>{children}</TableHeaderCell>;
       },
       [BLOCKS.TABLE_ROW]: (_: any, children: any) => {
         return <TableRow>{children}</TableRow>;
@@ -197,8 +193,7 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, re
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}
-      >
+        {...props}>
         {documentToReactComponents(
           body?.json,
           createRenderOptions({ links: body?.links, renderNode, ...renderOptions })
@@ -218,25 +213,109 @@ const Root = styled(Box, {
   white-space: pre-wrap;
 `;
 
+const Typography = styled(MuiTypography, {
+  name: 'Text',
+  slot: 'Typography',
+  overridesResolver: (_, styles) => [styles.typography]
+})``;
+
+const HyperLink = styled(ContentModule, {
+  name: 'Text',
+  slot: 'HyperLink',
+  overridesResolver: (_, styles) => [styles.hyperLink]
+})``;
+
+const EntryHyperLink = styled(ContentModule, {
+  name: 'Text',
+  slot: 'EntryHyperLink',
+  overridesResolver: (_, styles) => [styles.entryHyperLink]
+})``;
+
+const AssetHyperLink = styled(ContentModule, {
+  name: 'Text',
+  slot: 'AssetHyperLink',
+  overridesResolver: (_, styles) => [styles.assetHyperLink]
+})``;
+
+const EmbeddedAsset = styled(ContentModule, {
+  name: 'Text',
+  slot: 'EmbeddedAsset',
+  overridesResolver: (_, styles) => [styles.embeddedAsset]
+})``;
+
+const EmbeddedEntry = styled(ContentModule, {
+  name: 'Text',
+  slot: 'EmbeddedEntry',
+  overridesResolver: (_, styles) => [styles.embeddedEntry]
+})``;
+
+const InlineEntry = styled(ContentModule, {
+  name: 'Text',
+  slot: 'InlineEntry',
+  overridesResolver: (_, styles) => [styles.inlineEntry]
+})``;
+
 const EmbeddedRoot = styled(Box, {
   name: 'Text',
   slot: 'EmbeddedRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.embeddedRoot]
-})<{ variant?: string }>(() => ({}));
+})``;
 
 const InlineRoot = styled(Box, {
   name: 'Text',
   slot: 'InlineRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.inlineRoot]
-})<{ variant?: string }>(() => ({}));
+})``;
 
-const TableRoot = styled(TableContainer, {
+const TableRoot = styled(MuiTableContainer, {
   name: 'Text',
   slot: 'TableRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.tableRoot]
-})<{ variant?: string }>(() => ({}));
+})``;
+
+const Table = styled(MuiTable, {
+  name: 'Text',
+  slot: 'Table',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.table]
+})``;
+
+const TableHead = styled(MuiTableHead, {
+  name: 'Text',
+  slot: 'TableHead',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.tableHead]
+})``;
+
+const TableBody = styled(MuiTableBody, {
+  name: 'Text',
+  slot: 'TableBody',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.tableBody]
+})``;
+
+const TableHeaderCell = styled(MuiTableCell, {
+  name: 'Text',
+  slot: 'TableHeaderCell',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.tableHeaderCell]
+})``;
+
+const TableRow = styled(MuiTableRow, {
+  name: 'Text',
+  slot: 'TableRow',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.tableRow]
+})``;
+
+const TableCell = styled(MuiTableCell, {
+  name: 'Text',
+  slot: 'TableCell',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.tableCell]
+})``;
 
 export default Text;

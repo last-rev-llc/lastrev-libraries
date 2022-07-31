@@ -11,6 +11,12 @@ export interface NavigationItemClasses {
   root: string;
   /** Styles applied to the menuRoot element. */
   menuRoot: string;
+  /** Styles applied to the NavigationItemLink element. */
+  link: string;
+  /** Styles applied to the menuItem element. */
+  menuItem: string;
+  /** Styles applied to the navigationBarItem (Content Module) element. */
+  navigationBarItem: string;
 }
 
 export declare type NavigationItemClassKey = keyof NavigationItemClasses;

@@ -53,5 +53,5 @@ export interface CollectionFiltersClasses {
 }
 
 export declare type CollectionFiltersClassKey = keyof CollectionFiltersClasses;
-declare const accordionClasses: CollectionFiltersClasses;
-export default accordionClasses;
+declare const collectionFiltersClasses: CollectionFiltersClasses;
+export default collectionFiltersClasses;

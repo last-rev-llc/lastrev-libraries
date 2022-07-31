@@ -12,26 +12,26 @@ export interface HeaderProps {
 }
 
 export interface HeaderClasses {
-  /** Styles applied to the Root for the Header element. */
+  /** Styles applied to the Root element. */
   root: string;
-  /** Styles applied to the contentContainer for the Header element. */
+  /** Styles applied to the contentContainer element. */
   contentContainer: string;
-  /** Styles applied to the Logo Link for the Header element. */
+  /** Styles applied to the Logo Link element. */
   logoRoot: string;
-  /** Styles applied to the Logo - Content Module for the Header element. */
+  /** Styles applied to the Logo - Content Module element. */
   logo: string;
-  /** Styles applied to the Navigation Divider for the Header element. */
+  /** Styles applied to the Navigation Divider element. */
   navigationDivider: string;
-  /** Styles applied to the Navigation Bar - Content Module for the Header element. */
+  /** Styles applied to the Navigation Bar - Content Module element. */
   navigationBar: string;
-  /** Styles applied to the Fragment that contains Navigation Divider and Navigation Bar for the Header element. */
+  /** Styles applied to the Fragment that contains Navigation Divider and Navigation Bar element. */
   fragment: string;
-  /** Styles applied to the Hidden for the Header element. */
+  /** Styles applied to the Hidden element. */
   hidden: string;
-  /** Styles applied to the IconButton Icon for the Header element. */
+  /** Styles applied to the IconButton Icon element. */
   iconButton: string;
 }
 
 export declare type HeaderClassKey = keyof HeaderClasses;
-declare const accordionClasses: HeaderClasses;
-export default accordionClasses;
+declare const headerClasses: HeaderClasses;
+export default headerClasses;

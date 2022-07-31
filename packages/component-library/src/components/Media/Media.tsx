@@ -8,10 +8,6 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 
 import { MediaProps, MediaVideoProps } from './Media.types';
 import useThemeProps from '../../utils/useThemeProps';
-// import dynamic from 'next/dynamic';
-
-// const Image = dynamic(() => import('../Image'));
-// const ArtDirectedImage = dynamic(() => import('../ArtDirectedImage'));
 
 const Media = (inProps: MediaProps & MediaVideoProps) => {
   const isAmp = useAmp();
@@ -63,8 +59,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           preload="auto"
           data-testid={testId || 'Media'}
           {...(props as MediaVideoProps)}
-          sx={{ width: '100%', height: '100%', ...props.sx }}
-        >
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>
@@ -123,21 +118,22 @@ const Root = styled(Image, {
 const ArtDirectedRoot = styled(ArtDirectedImage, {
   name: 'Media',
   slot: 'Root',
-  overridesResolver: (_, styles) => [styles.root]
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.artDirectedRoot]
 })<{ variant?: string }>``;
 
 const EmbedRoot = styled('iframe', {
   name: 'Media',
   slot: 'EmbedRoot',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.root]
+  overridesResolver: (_, styles) => [styles.embedRoot]
 })``;
 
 const VideoRoot = styled('video', {
   name: 'Media',
   slot: 'VideoRoot',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.root]
+  overridesResolver: (_, styles) => [styles.videoRoot]
 })<{ variant?: string }>``;
 
 export default Media;

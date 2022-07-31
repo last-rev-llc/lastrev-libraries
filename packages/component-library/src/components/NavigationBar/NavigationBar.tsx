@@ -27,12 +27,11 @@ export const NavigationBar = ({
         variant={variant}
         data-testid="NavigationBar"
         menuBreakpoint={menuBreakpoint}
-        sx={color ? { backgroundColor: `${color}.main`, color: `${color}.contrastText` } : null}
-      >
-        <Grid container sx={{ alignItems: 'center' }}>
+        sx={color ? { backgroundColor: `${color}.main`, color: `${color}.contrastText` } : null}>
+        <NavigationBarRoot container sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
-            <Grid item key={item.id} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>
-              <ContentModule
+            <NavigationBarItemRoot item key={item.id} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>
+              <NavigationBarItem
                 {...item}
                 onClick={onRequestClose}
                 color={item?.color ?? 'inherit'}
@@ -40,9 +39,9 @@ export const NavigationBar = ({
                   onRequestClose
                 })}
               />
-            </Grid>
+            </NavigationBarItemRoot>
           ))}
-        </Grid>
+        </NavigationBarRoot>
       </Root>
     </ErrorBoundary>
   );
@@ -85,5 +84,26 @@ const Root = styled(Box, {
     }
   `}
 `;
+
+const NavigationBarRoot = styled(Grid, {
+  name: 'Hero',
+  slot: 'NavigationBarRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.navigationBarRoot]
+})``;
+
+const NavigationBarItemRoot = styled(Grid, {
+  name: 'Hero',
+  slot: 'NavigationBarItemRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.navigationBarItemRoot]
+})``;
+
+const NavigationBarItem = styled(ContentModule, {
+  name: 'Hero',
+  slot: 'NavigationBarItem',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.navigationBarItem]
+})``;
 
 export default NavigationBar;

@@ -13,6 +13,12 @@ export interface NavigationBarProps {
 export interface NavigationBarClasses {
   /** Styles applied to the root element. */
   root: string;
+  /** Styles applied to the navigationBarRoot element. */
+  navigationBarRoot: string;
+  /** Styles applied to the navigationBarItemRoot element. */
+  navigationBarItemRoot: string;
+  /** Styles applied to the navigationBarItem (Content Module) element. */
+  navigationBarItem: string;
 }
 
 export declare type NavigationBarClassKey = keyof NavigationBarClasses;

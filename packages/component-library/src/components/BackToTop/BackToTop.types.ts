@@ -14,5 +14,5 @@ export interface BackToTopClasses {
 }
 
 export declare type BackToTopClassKey = keyof BackToTopClasses;
-declare const accordionClasses: BackToTopClasses;
-export default accordionClasses;
+declare const backToTopClasses: BackToTopClasses;
+export default backToTopClasses;

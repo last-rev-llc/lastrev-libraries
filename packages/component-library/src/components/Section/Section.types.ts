@@ -36,6 +36,8 @@ export interface SectionClasses {
   gridItem: string;
   /** Styles applied to the introText element. */
   introText: string;
+  /** Styles applied to the content element. */
+  content: string;
 }
 
 export declare type SectionClassKey = keyof SectionClasses;

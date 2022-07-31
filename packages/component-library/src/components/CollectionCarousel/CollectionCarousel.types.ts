@@ -15,20 +15,20 @@ export interface CollectionCarouselProps {
 }
 
 export interface CollectionCarouselClasses {
-  /** Styles applied to the root for the CollectionCarousel element. */
+  /** Styles applied to the root element. */
   root: string;
-  /** Styles applied to the ContentContainer for the CollectionCarousel element. */
+  /** Styles applied to the ContentContainer element. */
   contentContainer: string;
-  /** Styles applied to the CarouselContent (Swiper) for the CollectionCarousel element. */
+  /** Styles applied to the CarouselContent (Swiper) element. */
   carouselContainer: string;
-  /** Styles applied each Slide(SwiperSlide) Root for the CollectionCarousel element. */
+  /** Styles applied each Slide(SwiperSlide) Root element. */
   slideRoot: string;
-  /** Styles applied each Slide Box for the CollectionCarousel element. */
+  /** Styles applied each Slide Box element. */
   slide: string;
-  /** Styles applied to the CarouselContent ContentModule for the CollectionCarousel element. */
+  /** Styles applied to the CarouselContent ContentModule element. */
   content: string;
 }
 
 export declare type CollectionCarouselClassKey = keyof CollectionCarouselClasses;
-declare const accordionClasses: CollectionCarouselClasses;
-export default accordionClasses;
+declare const collectionCarouselClasses: CollectionCarouselClasses;
+export default collectionCarouselClasses;

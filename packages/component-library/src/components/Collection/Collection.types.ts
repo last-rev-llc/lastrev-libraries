@@ -29,5 +29,5 @@ export interface CollectionClasses {
 }
 
 export declare type CollectionClassKey = keyof CollectionClasses;
-declare const accordionClasses: CollectionClasses;
-export default accordionClasses;
+declare const collectionClasses: CollectionClasses;
+export default collectionClasses;

@@ -39,7 +39,7 @@ describe('CollectionFiltered', () => {
       };
       mockedContent.items = undefined;
       swrMount(<CollectionFiltered {...mockedContent} />);
-      cy.get('[data-testid=CollectionFiltered-TryAgainButton]').should('have.text', 'TRY AGAIN');
+      cy.get('[data-testid=CollectionFiltered-ErrorButton]').should('have.text', 'TRY AGAIN');
     });
 
     it('loads more items when load more button is clicked', () => {

@@ -23,7 +23,6 @@ export const CollectionCarousel = ({
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
 
   const config = CarouselVariantProps[variant];
-  console.log({ items });
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionCarousel">

@@ -43,6 +43,12 @@ export interface MediaVideoProps {
 export interface MediaClasses {
   /** Styles applied to the root element. */
   root: string;
+  /** Styles applied to the artDirectedRoot element. */
+  artDirectedRoot: string;
+  /** Styles applied to the embedRoot element. */
+  embedRoot: string;
+  /** Styles applied to the videoRoot element. */
+  videoRoot: string;
 }
 
 export declare type MediaClassKey = keyof MediaClasses;

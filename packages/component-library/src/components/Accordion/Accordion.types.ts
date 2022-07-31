@@ -13,7 +13,7 @@ export interface AccordionProps {
 }
 
 export interface AccordionClasses {
-  /** Styles applied to the root element for the Accordion element*/
+  /** Styles applied to the root element */
   root: string;
   /** Styles applied to the root element unless `square={true}`. */
   rounded: string;
@@ -25,15 +25,15 @@ export interface AccordionClasses {
   gutters: string;
   /** Styles applied to the Region element, the container of the children. */
   region: string;
-  /** Styles applied to the Summary for the Accordion element. */
+  /** Styles applied to the summary element */
   summary: string;
-  /** Styles applied to the Details for the Accordion element. */
+  /** Styles applied to the details element */
   details: string;
-  /** Styles applied to the Typography of the title text for the Accordion element. */
+  /** Styles applied to the title typography text element */
   title: string;
-  /** Styles applied to the Text of the body for the Accordion element. */
+  /** Styles applied to the body text element */
   body: string;
-  /** Styles applied to the ExpandMore Icon for the Accordion element. */
+  /** Styles applied to the expandMore icon element */
   expandMoreIcon: string;
 }
 export declare type AccordionClassKey = keyof AccordionClasses;

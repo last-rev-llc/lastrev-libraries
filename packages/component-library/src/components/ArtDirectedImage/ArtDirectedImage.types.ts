@@ -16,5 +16,5 @@ export interface ArtDirectedImageClasses {
   root: string;
 }
 export declare type ArtDirectedImageClassKey = keyof ArtDirectedImageClasses;
-declare const accordionClasses: ArtDirectedImageClasses;
-export default accordionClasses;
+declare const artDirectedImageClasses: ArtDirectedImageClasses;
+export default artDirectedImageClasses;

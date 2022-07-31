@@ -85,7 +85,7 @@ const Section = (inProps: SectionProps) => {
                     ...itemStyle
                   }}
                   data-testid="Section-ContentItem">
-                  <ContentModule {...content} />
+                  <Content {...content} />
                 </GridItem>
               );
             })}
@@ -175,5 +175,11 @@ const IntroText = styled(ContentModule, {
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
 })(() => ({}));
+
+const Content = styled(ContentModule, {
+  name: 'Hero',
+  slot: 'Content',
+  overridesResolver: (_, styles) => [styles.content]
+})``;
 
 export default Section;

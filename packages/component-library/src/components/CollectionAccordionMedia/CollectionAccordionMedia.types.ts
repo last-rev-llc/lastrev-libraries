@@ -7,18 +7,18 @@ export interface CollectionAccordionMediaProps extends CollectionProps {
 }
 
 export interface CollectionAccordionMediaClasses {
-  /** Styles applied to the root element for the CollectionAccordionMedia element*/
+  /** Styles applied to the root element element*/
   root: string;
-  /** Styles applied to the accordionRoot for the CollectionAccordionMedia element. */
+  /** Styles applied to the accordionRoot element. */
   accordionRoot: string;
-  /** Styles applied to the selectedMediaRoot for the CollectionAccordionMedia element. */
+  /** Styles applied to the selectedMediaRoot element. */
   selectedMediaRoot: string;
-  /** Styles applied to the SelectedMedia ContentModule for the CollectionAccordionMedia element. */
+  /** Styles applied to the SelectedMedia ContentModule element. */
   selectedMedia: string;
-  /** Styles applied to the accordionItem for the CollectionAccordionMedia element. */
+  /** Styles applied to the accordionItem element. */
   accordionItem: string;
 }
 
 export declare type CollectionAccordionMediaClassKey = keyof CollectionAccordionMediaClasses;
-declare const accordionClasses: CollectionAccordionMediaClasses;
-export default accordionClasses;
+declare const collectionAccordionMediaClasses: CollectionAccordionMediaClasses;
+export default collectionAccordionMediaClasses;

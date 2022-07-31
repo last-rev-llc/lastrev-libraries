@@ -1,5 +1,5 @@
 import React from 'react';
-import MenuItem from '@mui/material/MenuItem';
+import MuiMenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import styled from '@mui/system/styled';
@@ -31,8 +31,6 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
     if (onRequestClose) onRequestClose();
   };
 
-  // console.log({ handleSubnavClick, onRequestClose });
-
   return (
     <ErrorBoundary>
       <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem" menuBreakpoint={menuBreakpoint}>
@@ -46,7 +44,7 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
           <MenuRoot menuBreakpoint={menuBreakpoint} component={'ul'}>
             {subNavigation?.map((item) => (
               <MenuItem key={item.id}>
-                <ContentModule
+                <NavigationBarItem
                   {...item}
                   variant={'link'}
                   onClick={handleSubnavClick}
@@ -149,5 +147,19 @@ const MenuRoot = styled(Paper, {
     }
   `}
 `;
+
+const MenuItem = styled(MuiMenuItem, {
+  name: 'Hero',
+  slot: 'MenuItem',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.menuItem]
+})``;
+
+const NavigationBarItem = styled(ContentModule, {
+  name: 'Hero',
+  slot: 'NavigationBarItem',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.navigationBarItem]
+})``;
 
 export default NavigationItem;
