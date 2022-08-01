@@ -24,9 +24,9 @@ export interface CollectionCarouselClasses {
   /** Styles applied each Slide(SwiperSlide) Root element. */
   slideRoot: string;
   /** Styles applied each Slide Box element. */
-  slide: string;
+  item: string;
   /** Styles applied to the CarouselContent ContentModule element. */
-  content: string;
+  contentModule: string;
 }
 
 export declare type CollectionCarouselClassKey = keyof CollectionCarouselClasses;

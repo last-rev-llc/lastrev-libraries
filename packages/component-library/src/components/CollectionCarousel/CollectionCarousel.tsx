@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import SwiperCore, { Navigation, Pagination, A11y } from 'swiper/core';
 
 import ErrorBoundary from '../ErrorBoundary';
-import ContentModule from '../ContentModule';
+import CModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import { CollectionCarouselProps } from './CollectionCarousel.types';
 
@@ -23,17 +23,18 @@ export const CollectionCarousel = ({
   const itemsWithVariant = items.map((item) => ({ ...item, variant: itemsVariant ?? item?.variant }));
 
   const config = CarouselVariantProps[variant];
+
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionCarousel">
         <ContentContainer maxWidth={itemsWidth} disableGutters>
           <CarouselContainer navigation pagination={{ clickable: true }} loop {...config}>
             {itemsWithVariant.map((item, idx) => (
-              <CarouselSlideRoot key={idx}>
-                <CarouselSlide>
-                  <CarouselContent {...item} sx={undefined} />
-                </CarouselSlide>
-              </CarouselSlideRoot>
+              <SwiperSlide key={idx}>
+                <CarouselItem>
+                  <ContentModule {...item} sx={undefined} />
+                </CarouselItem>
+              </SwiperSlide>
             ))}
           </CarouselContainer>
         </ContentContainer>
@@ -82,18 +83,11 @@ const CarouselContainer = styled(Swiper, {
   }
 }));
 
-const CarouselSlideRoot = styled(SwiperSlide, {
+const CarouselItem = styled(Box, {
   name: 'CollectionCarousel',
-  slot: 'SlideRoot',
+  slot: 'Item',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.slideRoot]
-})``;
-
-const CarouselSlide = styled(Box, {
-  name: 'CollectionCarousel',
-  slot: 'Slide',
-  shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.slide]
+  overridesResolver: (_, styles) => [styles.item]
 })<{ variant?: string }>(() => ({
   display: 'flex',
   justifyContent: 'center',
@@ -102,10 +96,10 @@ const CarouselSlide = styled(Box, {
   width: '100%'
 }));
 
-const CarouselContent = styled(ContentModule, {
+const ContentModule = styled(CModule, {
   name: 'CollectionCarousel',
-  slot: 'Content',
-  overridesResolver: (_, styles) => [styles.content]
+  slot: 'ContentModule',
+  overridesResolver: (_, styles) => [styles.contentModule]
 })``;
 
 export default CollectionCarousel;

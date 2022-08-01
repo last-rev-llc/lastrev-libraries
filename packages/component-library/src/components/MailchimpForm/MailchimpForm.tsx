@@ -6,7 +6,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import LRFALink from '../Link';
 
 import ContentModule from '../ContentModule';
-import MCMailchimpSubscribe from 'react-mailchimp-subscribe';
+import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import snakeCase from 'lodash/snakeCase';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import getFirstOfArray from '../../utils/getFirstOfArray';
@@ -248,13 +248,6 @@ const FormRoot = styled(Grid, {
   slot: 'FormRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.formRoot]
-})``;
-
-const MailchimpSubscribe = styled(MCMailchimpSubscribe, {
-  name: 'MailchimpForm',
-  slot: 'MailchimpSubscribe',
-  shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.mailchimpSubscribe]
 })``;
 
 //Form components
