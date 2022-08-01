@@ -23,5 +23,5 @@ export interface ImageClasses {
 }
 
 export declare type ImageClassKey = keyof ImageClasses;
-declare const accordionClasses: ImageClasses;
-export default accordionClasses;
+declare const imageClasses: ImageClasses;
+export default imageClasses;

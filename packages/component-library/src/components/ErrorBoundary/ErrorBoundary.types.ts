@@ -10,5 +10,5 @@ export interface ErrorBoundaryClasses {
 }
 
 export declare type ErrorBoundaryClassKey = keyof ErrorBoundaryClasses;
-declare const accordionClasses: ErrorBoundaryClasses;
-export default accordionClasses;
+declare const errorBoundaryClasses: ErrorBoundaryClasses;
+export default errorBoundaryClasses;

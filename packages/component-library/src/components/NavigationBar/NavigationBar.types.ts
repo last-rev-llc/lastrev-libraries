@@ -14,13 +14,13 @@ export interface NavigationBarClasses {
   /** Styles applied to the root element. */
   root: string;
   /** Styles applied to the navigationBarRoot element. */
-  navigationBarRoot: string;
+  nvRoot: string;
   /** Styles applied to the navigationBarItemRoot element. */
-  navigationBarItemRoot: string;
+  itemRoot: string;
   /** Styles applied to the navigationBarItem (Content Module) element. */
-  navigationBarItem: string;
+  item: string;
 }
 
 export declare type NavigationBarClassKey = keyof NavigationBarClasses;
-declare const accordionClasses: NavigationBarClasses;
-export default accordionClasses;
+declare const navigationBarClasses: NavigationBarClasses;
+export default navigationBarClasses;

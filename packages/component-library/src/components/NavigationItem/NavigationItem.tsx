@@ -149,17 +149,17 @@ const MenuRoot = styled(Paper, {
 `;
 
 const MenuItem = styled(MuiMenuItem, {
-  name: 'Hero',
+  name: 'NavigationItem',
   slot: 'MenuItem',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.menuItem]
 })``;
 
 const NavigationBarItem = styled(ContentModule, {
-  name: 'Hero',
-  slot: 'NavigationBarItem',
+  name: 'NavigationItem',
+  slot: 'item',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.navigationBarItem]
+  overridesResolver: (_, styles) => [styles.item]
 })``;
 
 export default NavigationItem;

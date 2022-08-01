@@ -241,7 +241,7 @@ const TextsRoot = styled(Grid, {
 const OverlineHero = styled(Typography, {
   name: 'Hero',
   slot: 'OverlineHero',
-  overridesResolver: (_, styles) => [styles.OverlineHero]
+  overridesResolver: (_, styles) => [styles.overlineHero]
 })``;
 
 const TitleHero = styled(Typography, {

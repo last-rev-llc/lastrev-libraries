@@ -86,24 +86,23 @@ const Root = styled(Box, {
 `;
 
 const NavigationBarRoot = styled(Grid, {
-  name: 'Hero',
-  slot: 'NavigationBarRoot',
+  name: 'NavigationBar',
+  slot: 'NVRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.navigationBarRoot]
+  overridesResolver: (_, styles) => [styles.nvRoot]
 })``;
 
 const NavigationBarItemRoot = styled(Grid, {
-  name: 'Hero',
-  slot: 'NavigationBarItemRoot',
+  name: 'NavigationBar',
+  slot: 'ItemRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.navigationBarItemRoot]
+  overridesResolver: (_, styles) => [styles.itemRoot]
 })``;
 
 const NavigationBarItem = styled(ContentModule, {
-  name: 'Hero',
-  slot: 'NavigationBarItem',
-  shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.navigationBarItem]
+  name: 'NavigationBar',
+  slot: 'Item',
+  overridesResolver: (_, styles) => [styles.item]
 })``;
 
 export default NavigationBar;

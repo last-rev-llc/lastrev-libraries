@@ -52,5 +52,5 @@ export interface MediaClasses {
 }
 
 export declare type MediaClassKey = keyof MediaClasses;
-declare const accordionClasses: MediaClasses;
-export default accordionClasses;
+declare const mediaClasses: MediaClasses;
+export default mediaClasses;

@@ -41,5 +41,5 @@ export interface SectionClasses {
 }
 
 export declare type SectionClassKey = keyof SectionClasses;
-declare const accordionClasses: SectionClasses;
-export default accordionClasses;
+declare const sectionClasses: SectionClasses;
+export default sectionClasses;

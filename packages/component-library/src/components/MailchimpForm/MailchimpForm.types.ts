@@ -90,5 +90,5 @@ export interface CustomFormClasses {
 }
 
 export declare type MailchimpFormClassKey = keyof MailchimpFormClasses;
-declare const accordionClasses: MailchimpFormClasses;
-export default accordionClasses;
+declare const mailchimpFormClasses: MailchimpFormClasses;
+export default mailchimpFormClasses;

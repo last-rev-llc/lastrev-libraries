@@ -47,5 +47,5 @@ export interface LinkClasses {
 }
 
 export declare type LinkClassKey = keyof LinkClasses;
-declare const accordionClasses: LinkClasses;
-export default accordionClasses;
+declare const linkClasses: LinkClasses;
+export default linkClasses;

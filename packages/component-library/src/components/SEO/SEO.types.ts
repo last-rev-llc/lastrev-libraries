@@ -9,5 +9,5 @@ export interface SEOClasses {
 }
 
 export declare type SEOClassKey = keyof SEOClasses;
-declare const accordionClasses: SEOClasses;
-export default accordionClasses;
+declare const seoClasses: SEOClasses;
+export default seoClasses;

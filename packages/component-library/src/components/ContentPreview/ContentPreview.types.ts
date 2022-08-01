@@ -16,5 +16,5 @@ export interface ContentPreviewClasses {
 }
 
 export declare type ContentPreviewClassKey = keyof ContentPreviewClasses;
-declare const accordionClasses: ContentPreviewClasses;
-export default accordionClasses;
+declare const contentPreviewClasses: ContentPreviewClasses;
+export default contentPreviewClasses;

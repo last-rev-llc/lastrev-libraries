@@ -12,5 +12,5 @@ export interface ContentModuleClasses {
 }
 
 export declare type ContentModuleClassKey = keyof ContentModuleClasses;
-declare const accordionClasses: ContentModuleClasses;
-export default accordionClasses;
+declare const contentModuleClasses: ContentModuleClasses;
+export default contentModuleClasses;

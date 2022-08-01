@@ -297,49 +297,21 @@ const FormFieldsRoot = styled(Grid, {
   overridesResolver: (_, styles) => [styles.formFieldsRoot]
 })``;
 
-// do you think the Controller component need to be a styled component?
-// since it doesnt need any css styling, im guessing not. but if you think it is, then I need some guidance with it,
-//  since when styling the component it shows an error with the control prop from the Controller
-
-// const FirstNameController = styled(Controller, {
-//   name: 'CustomForm',
-//   slot: 'FirstNameController',
-//   shouldForwardProp: (prop) => prop !== 'variant',
-//   overridesResolver: (_, styles) => [styles.firstNameController]
-// })``;
-
-// const LastNameController = styled(Controller, {
-//   name: 'CustomForm',
-//   slot: 'LastNameController',
-//   shouldForwardProp: (prop) => prop !== 'variant',
-//   overridesResolver: (_, styles) => [styles.LastNameController]
-// })``;
-
-// const EmailController = styled(Controller, {
-//   name: 'CustomForm',
-//   slot: 'EmailController',
-//   shouldForwardProp: (prop) => prop !== 'variant',
-//   overridesResolver: (_, styles) => [styles.EmailController]
-// })``;
-
 const FirstNameTextField = styled(TextField, {
   name: 'CustomForm',
   slot: 'FirstNameTextField',
-  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.firstNameTextField]
 })``;
 
 const LastNameTextField = styled(TextField, {
   name: 'CustomForm',
   slot: 'LastNameTextField',
-  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.lastNameTextField]
 })``;
 
 const EmailTextField = styled(TextField, {
   name: 'CustomForm',
   slot: 'EmailTextField',
-  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.emailTextField]
 })``;
 
@@ -415,6 +387,7 @@ const SuccessText = styled(ContentModule, {
 const Success = styled(Box, {
   name: 'CustomForm',
   slot: 'Success',
+  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.success]
 })``;
 
