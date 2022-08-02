@@ -343,7 +343,6 @@ const FormControl = styled(MuiFormControl, {
 const Link = styled(LRFALink, {
   name: 'Form',
   slot: 'Link',
-  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.link]
 })``;
 
