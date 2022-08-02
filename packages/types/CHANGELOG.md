@@ -1,5 +1,17 @@
 # @last-rev/types
 
+## 0.2.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
+## 0.1.7
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.6
 
 ### Patch Changes

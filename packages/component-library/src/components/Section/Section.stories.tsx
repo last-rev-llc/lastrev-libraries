@@ -4,25 +4,9 @@ import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Section from './Section';
 import { singlePanelMock, splitPanelMock } from './Section.mock';
-import mockTheme from '../../theme/mock.theme';
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
 
 export default {
-  title: '2. Modules / Section',
+  title: 'Components / Section',
   component: Section,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
@@ -135,8 +119,7 @@ Module03.args = {
       minHeight: 400
     }
   },
-  variant: 'gradient-background',
-  theme: [mockTheme]
+  variant: 'gradient-background'
 };
 
 export const Module04 = Template.bind({});
@@ -745,6 +728,5 @@ Module09.args = {
         }
       }
     }
-  ],
-  theme: [mockTheme]
+  ]
 };

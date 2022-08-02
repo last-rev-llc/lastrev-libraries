@@ -3,35 +3,7 @@ import { Grid, Chip, MenuItem, TextField, Button } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import styled from '@mui/system/styled';
 import capitalize from 'lodash/capitalize';
-
-interface FilterSetting {
-  id: string;
-  label?: string;
-  key: string;
-  type: 'select' | 'text' | 'autocomplete';
-  multiple?: boolean;
-}
-interface Option {
-  label: string;
-  value: string;
-}
-
-interface Options {
-  [key: string]: Array<Option>;
-}
-
-export interface CollectionFiltersProps {
-  id: string;
-  options?: Options;
-  allOptions?: Options;
-  filter?: FilterFormData;
-  filters?: FilterSetting[];
-  setFilter: any;
-  onClearFilter: any;
-}
-interface FilterFormData {
-  [key: string]: any;
-}
+import { CollectionFiltersProps, Option } from './CollectionFilters.types';
 
 const CollectionFilters = ({
   id,
@@ -64,6 +36,7 @@ const CollectionFilters = ({
                   label={label || id}
                   value={filter[id] ?? ''}
                   onChange={handleChange(id)}
+                  data-testid="CollectionFilters-text"
                 />
               );
               break;
@@ -79,6 +52,7 @@ const CollectionFilters = ({
                   value={filter[id] ?? ''}
                   SelectProps={{ MenuProps: { disableScrollLock: true } }}
                   onChange={handleChange(id)}
+                  data-testid="CollectionFilters-select"
                 >
                   {allOptions
                     ? allOptions[id]?.map(({ label, value }) => (
@@ -122,6 +96,7 @@ const CollectionFilters = ({
                       fullWidth
                       margin="normal"
                       value={filter[id] ?? ''}
+                      data-testid="CollectionFilters-autocomplete"
                     />
                   )}
                 />
@@ -140,6 +115,7 @@ const CollectionFilters = ({
       </Grid>
       <Grid item>
         <Button
+          data-testid="CollectionFilters-clear"
           onClick={() => {
             setFilter({});
             if (onClearFilter) onClearFilter();

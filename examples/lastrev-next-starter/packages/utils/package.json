@@ -13,7 +13,7 @@
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "compile": "tsc -p tsconfig.json",
     "compile:watch": "tsc-watch -p tsconfig.json",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint",
@@ -29,8 +29,8 @@
     "@lrns/graphql-sdk": "^0.1.0"
   },
   "devDependencies": {
-    "@last-rev/rollup-config": "^0.1.0",
-    "rollup": "^2.6.1"
+    "@last-rev/rollup-config": "^0.1.4",
+    "rollup": "^2.75.7"
   },
   "husky": {
     "hooks": {

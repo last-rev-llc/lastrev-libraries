@@ -1,8 +1,9 @@
 import * as React from 'react';
 import 'cypress-real-events/support';
 import mount from '../../../cypress/mount';
-import NavigationBar, { NavigationBarProps } from './NavigationBar';
-import NavigationItem, { NavigationItemProps } from '../NavigationItem/NavigationItem';
+import { NavigationBarProps } from './NavigationBar.types';
+import { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
+import NavigationBar from './NavigationBar';
 import mockContent, { mockWithNavigationItems } from './NavigationBar.mock';
 
 let mockedContent: NavigationBarProps = { theme: {}, sidekickLookup: '' };
@@ -18,8 +19,10 @@ describe('NavigationBar', () => {
     describe('items as NavigationItems', () => {
       it('renders a NavigationBar with correct navigation items and subnav items', () => {
         const mainNavLinks = mockedContentWithNavigationItems.items.length;
-        const subNavLinks = mockedContentWithNavigationItems.items.map(item => item.subNavigation.length).reduce((previous, current) => previous + current, 0);
-        
+        const subNavLinks = mockedContentWithNavigationItems.items
+          .map((item) => item.subNavigation.length)
+          .reduce((previous, current) => previous + current, 0);
+
         mount(<NavigationBar {...mockedContentWithNavigationItems} />);
         cy.get('[data-testid=NavigationBar]').should('exist');
         cy.get('[data-testid=NavigationItem]').should('have.length', mainNavLinks);
@@ -40,15 +43,16 @@ describe('NavigationBar', () => {
         mount(<NavigationBar {...mockedContent} />);
         cy.get('[data-testid=NavigationBar]').should('exist');
         cy.get('a').each((a, index) => {
-          cy.wrap(a).should('have.attr', 'href', `/${mockedContent.items[index].href}`)
+          cy.wrap(a)
+            .should('have.attr', 'href', `/${mockedContent.items[index].href}`)
             .and('have.text', mockedContent.items[index].text);
-        })
+        });
       });
     });
 
     context('functions correctly', () => {
       describe('hover on NavigationItems', () => {
-        it('renders a NavigationBar with correct navigation items', () => {
+        it('renders with correct sub-navigation items', () => {
           mount(<NavigationBar {...mockedContentWithNavigationItems} />);
           cy.get('[data-testid=NavigationItem]').each((navItem, index) => {
             const item: NavigationItemProps = { ...mockedContentWithNavigationItems.items[index] };

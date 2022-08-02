@@ -1,5 +1,94 @@
 # @last-rev/cli
 
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/graphql-contentful-core@0.4.0
+  - @last-rev/contentful-sync-to-fs@0.3.3
+
+## 0.4.1
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+- Updated dependencies [3ba98cd]
+  - @last-rev/app-config@0.2.1
+  - @last-rev/contentful-fragment-gen@0.2.1
+  - @last-rev/contentful-import-export@0.1.4
+  - @last-rev/contentful-sync-to-fs@0.3.2
+  - @last-rev/graphql-contentful-core@0.3.0
+  - @last-rev/testing-library@0.1.10
+
+## 0.4.0
+
+### Minor Changes
+
+- d28f4a7: Added framework-update command to CLI
+
+## 0.3.2
+
+### Patch Changes
+
+- Updated dependencies [f7e8fa4]
+  - @last-rev/app-config@0.2.0
+
+## 0.3.1
+
+### Patch Changes
+
+- a5b06aa: bumped version of @last-rev/graphql-contentful-core
+
+## 0.3.0
+
+### Minor Changes
+
+- a9c0034: Updated CLI create-app to use a JSON input and added more features to it
+
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [93453e8]
+  - @last-rev/contentful-sync-to-fs@0.3.0
+
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [25375f1]
+  - @last-rev/contentful-fragment-gen@0.2.0
+  - @last-rev/contentful-sync-to-fs@0.2.0
+  - @last-rev/graphql-contentful-core@0.2.0
+
+## 0.2.0
+
+### Minor Changes
+
+- 233c117: 'Added a new Develop command to the CLI, and a new eslint plugin package'
+
+## 0.1.36
+
+### Patch Changes
+
+- db8b0af: 'Fixed fieldResolver to resolve unexpanded links and sidekickLookupResolver to return an object always'
+- Updated dependencies [db8b0af]
+  - @last-rev/graphql-contentful-core@0.1.35
+
+## 0.1.35
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+- Updated dependencies [d6ec293]
+  - @last-rev/app-config@0.1.5
+  - @last-rev/contentful-fragment-gen@0.1.4
+  - @last-rev/contentful-import-export@0.1.3
+  - @last-rev/contentful-sync-to-fs@0.1.11
+  - @last-rev/graphql-contentful-core@0.1.34
+
 ## 0.1.34
 
 ### Patch Changes

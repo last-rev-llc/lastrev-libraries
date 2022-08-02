@@ -1,98 +1,50 @@
-import envPaths from 'env-paths';
-import { join } from 'path';
-import Configstore from 'configstore';
 import { isNil } from 'lodash';
 import { DistinctQuestion, prompt } from 'inquirer';
 import Messager from './Messager';
 
 import { version } from '../../../package.json';
+import getLastRevConfig, { emptyState } from '../../helpers/getLastRevConfig';
+import Configstore from 'configstore';
 
 const messager = Messager.getInstance();
 
-const OSBasedPaths = envPaths('last-rev', { suffix: '' });
+export const VAL_CREATE_APP_CONFIG = 'createAppConfig';
 
-export const VAL_SELECTED_ACTIONS = 'selectedActions';
-export const VAL_RESOLVED_APP_ROOT = 'resolvedAppRoot';
-export const VAL_EXAMPLE_NAME = 'exampleName';
-export const VAL_PARENT_DIR = 'parentDir';
-export const VAL_PROJECT_NAME = 'projectName';
-export const VAL_SHOULD_CREATE_GITHUB_REPO = 'shouldCreateGithubRepo';
-export const VAL_GITHUB_REPO_NAME = 'githubRepoName';
-export const VAL_GITHUB_REPO_DESCRIPTION = 'githubRepoDescription';
-export const VAL_GITHUB_REPO_ORG = 'githubRepoOrg';
-export const VAL_GITHUB_REPO_PRIVACY = 'githubRepoPrivacy';
-export const VAL_GITHUB_REPO_HOMEPAGE = 'githubRepoHomepage';
-export const VAL_GITHUB_REPO_URL = 'githubRepoUrl';
+export const VAL_SKIP_GIT_PUSH = 'skipGitPush';
+
+// export const VAL_GITHUB_REPO_URL = 'githubRepoUrl';
 export const VAL_GITHUB_REPO = 'githubRepo';
-export const VAL_CONTENTFUL_EXPORT_SPACE_ID = 'contentfulExportSpaceId';
-export const VAL_CONTENTFUL_EXPORT_ENV_ID = 'contentfulExportEnvId';
-export const VAL_CONTENTFUL_SPACE_ID = 'contentfulSpaceId';
-export const VAL_CONTENTFUL_ENV_ID = 'contentfulEnvId';
-export const VAL_CONTENTFUL_MIGRATE_CMS_TYPES = 'contentfulMigrateCmsTypes';
+
 export const VAL_CONTENTFUL_DELIVERY_KEY = 'contentfulDeliveryKey';
 export const VAL_CONTENTFUL_PREVIEW_KEY = 'contentfulPreviewKey';
-export const VAL_NETLIFY_SITE_NAME = 'netlifySiteName';
-export const VAL_NETLIFY_ACCOUNT_SLUG = 'netlifyAccountSlug';
+export const VAL_CONTENTFUL_DEFAULT_SITE_ID = 'contentfulDefaultSiteId';
+export const VAL_CONTENTFUL_DEFAULT_SITE_KEY = 'contentfulDefaultSiteKey';
+
 export const VAL_NETLIFY_SITE = 'netlifySite';
 export const VAL_NETLIFY_DEPLOY_KEY = 'netlifyDeployKey';
-export const VAL_SHOULD_FETCH_GITHUB_REPO = 'shouldFetchGithubRepo';
-export const VAL_SHOULD_INSTALL_DEPENDENCIES = 'shouldInstallDependencies';
-export const VAL_REDIS_HOST = 'redisHost';
-export const VAL_REDIS_PORT = 'redisPort';
-export const VAL_REDIS_PASSWORD = 'redisPassword';
+export const VAL_NETLIFY_BUILD_HOOK = 'netlifyBuildHook';
+
 export const VAL_ENV_VARS = 'envVars';
 export const VAL_CONTENTFUL_PROCEED_WITH_MIGRATION = 'contentfulProceedWithMigration';
 
 export const ACTION_DETERMINE_ACTIONS = 'determineActions';
 export const ACTION_EXTRACT_ARCHIVE = 'extractArchive';
 export const ACTION_CREATE_APP = 'createApp';
-export const ACTION_CREATE_PROJECT_ROOT_DIR = 'createProjectRootDir';
 export const ACTION_CREATE_GITHUB_REPO = 'createGithubRepo';
 export const ACTION_GIT_INIT = 'gitInit';
 export const ACTION_PUSH_REPO_TO_GITHUB = 'pushRepoToGithub';
 export const ACTION_UPDATE_GITHUB_BRANCH_PROTECTION_RULES = 'updateGithubBranchProtectionRules';
 export const ACTION_NETLIFY_ADD_DEPLOY_KEY = 'netlifyAddDeployKey';
 export const ACTION_CONTENTFUL_MIGRATION = 'contentfulMigration';
-export const ACTION_PICK_NETLIFY_ACCOUNT = 'pickNetlifyAccount';
 export const ACTION_CREATE_NETLIFY_SITE = 'createNetlifySite';
 export const ACTION_NETLIFY_ADD_DEPLOY_HOOK = 'netlifyAddDeployHook';
 export const ACTION_NETLIFY_ADD_NOTIFICATION_HOOKS = 'netlifyAddNotificationHook';
 export const ACTION_ADD_GITHUB_REPO_TO_NETLIFY = 'addGithubRepoToNetlify';
 export const ACTION_UPDATE_NETLIFY_BUILD_ENV = 'updateNetlifyBuildEnv';
 export const ACTION_WRITE_LOCAL_ENV_FILE = 'writeLocalEnvFile';
-
-type CliState = {
-  messages: string[];
-  completedActions: Record<string, boolean>;
-  inProgress: boolean;
-  values: Record<string, any>;
-  version: string;
-};
-
-const emptyState: CliState = {
-  messages: [],
-  values: {},
-  completedActions: {},
-  inProgress: false,
-  version
-};
-
-const defaults = {
-  cli: {
-    providers: {
-      github: {
-        token: null
-      },
-      netlify: {
-        token: null
-      },
-      contentful: {
-        token: null
-      }
-    },
-    state: emptyState
-  }
-};
+export const ACTION_CONTENTFUL_MIGRATE_EXTENSIONS = 'contentfulMigrateExtensions';
+export const ACTION_CREATE_CONTENTFUL_CACHE_WEBHOOK = 'createContentfulCacheWebhook';
+export const ACTION_CREATE_CONTENTFUL_PROD_WEBHOOK = 'createContentfulProdWebhook';
 
 const stateRootKey = 'cli.state';
 
@@ -100,8 +52,7 @@ export default class LastRevConfig {
   private _config: Configstore;
 
   constructor() {
-    const configPath = join(OSBasedPaths.config, 'config.json');
-    this._config = new Configstore('', defaults, { configPath });
+    this._config = getLastRevConfig();
     if (!this.inProgress()) {
       this.clearState();
     }

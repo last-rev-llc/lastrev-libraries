@@ -1,51 +1,21 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import styled from '@mui/system/styled';
+
 import useTheme from '@mui/system/useTheme';
-import { Theme } from '@mui/system/createTheme';
-// import { Theme } from '@mui/material';
+import { Theme } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-// import { SystemCssProperties } from '@mui/system/styleFunctionSx';
 import get from 'lodash/get';
-import omit from 'lodash/omit';
-// import BackgroundMedia from '../BackgroundMedia';
+// import omit from 'lodash/omit';
+
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import { Breakpoint } from '@mui/material';
-import { MediaProps } from '../Media';
-import Media from '../Media';
-import sidekick from '../../utils/sidekick';
-import { TextProps } from '../Text';
-import { useThemeProps } from '@mui/system';
+
+import sidekick from '@last-rev/contentful-sidekick-util';
 import ConditionalWrapper from '../ConditionalWrapper';
-// interface Image {
-//   src: string;
-// }
-
-export interface SectionProps {
-  __typename?: string;
-  introText?: TextProps;
-  contents?: Array<{ __typename?: string; id?: string; file?: any }>;
-  background?: MediaProps;
-  backgroundColor?: string;
-  variant?: string;
-  testId?: string;
-  contentWidth?: false | Breakpoint | undefined;
-  contentDirection?: 'row' | 'column' | undefined;
-  contentSpacing?: number;
-  // Enables exposing inner `sx` prop through content
-  styles?: {
-    root?: any;
-    gridContainer?: any & { spacing: any };
-    gridItem?: any & { xs: any; sm: any; md: any };
-    gridItems?: Array<any & { xs: any; sm: any; md: any }>;
-  };
-  sidekickLookup?: any;
-  theme?: [Theme];
-}
-
-export interface SectionOverrides {}
+import { SectionProps } from './Section.types';
+import useThemeProps from '../../utils/useThemeProps';
 
 const VARIANTS_GRID_ITEM: Record<string, any> = {
   'one-per-row': { xs: 12 },
@@ -84,7 +54,7 @@ const Section = (inProps: SectionProps) => {
         backgroundColor={backgroundColor}
         variant={variant}
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
-        {...omit(props, 'theme')}
+        {...props}
       >
         {background ? <BackgroundMedia {...background} /> : null}
         <ConditionalWrapper
@@ -117,6 +87,7 @@ const Section = (inProps: SectionProps) => {
                     ...styles?.gridItem,
                     ...itemStyle
                   }}
+                  data-testid="Section-ContentItem"
                 >
                   <ContentModule {...content} />
                 </GridItem>
@@ -130,14 +101,10 @@ const Section = (inProps: SectionProps) => {
 };
 
 const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; theme: Theme }) => {
-  if (backgroundColor?.includes('gradient') && theme.palette[backgroundColor]) {
+  if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
     return {
-      'background': theme.palette[backgroundColor]?.main,
-      'color': `${backgroundColor}.contrastText`,
-      // TODO find out a better way to override text color
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: `${backgroundColor}.contrastText`
-      }
+      background: get(theme.palette, backgroundColor)?.main,
+      color: `${backgroundColor}.contrastText`
     };
   }
   const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
@@ -145,10 +112,8 @@ const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; them
 
   if (backgroundColor && get(theme.palette, parsedBGColor)) {
     return {
-      'bgcolor': parsedBGColor,
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: `${paletteColor}.contrastText`
-      }
+      bgcolor: parsedBGColor,
+      color: `${paletteColor}.contrastText`
     };
   }
   return {};
@@ -175,7 +140,7 @@ const ContentContainer = styled(Container, {
   zIndex: 1
 }));
 
-const BackgroundMedia = styled(Media, {
+const BackgroundMedia = styled(ContentModule, {
   name: 'Section',
   slot: 'BackgroundMedia',
   overridesResolver: (_, styles) => [styles.backgroundImage]
@@ -194,7 +159,9 @@ const GridContainer = styled(Grid, {
   name: 'Section',
   slot: 'GridContainer',
   overridesResolver: (_, styles) => [styles.gridContainer]
-})(() => ({}));
+})(() => ({
+  zIndex: 1
+}));
 
 const GridItem = styled(Grid, {
   name: 'Section',

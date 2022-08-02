@@ -2,47 +2,29 @@ import LastRevAppConfig from '@last-rev/app-config';
 import { Handlers } from './types';
 import Redis from 'ioredis';
 import { updateAllPaths } from '@last-rev/contentful-path-util';
-import { createContext, createLoaders } from '@last-rev/graphql-contentful-helpers';
-import { Entry } from 'contentful';
-import { assetHasUrl, createContentfulClients } from './helpers';
+import { createContext } from '@last-rev/graphql-contentful-helpers';
+import { assetHasUrl, stringify } from './helpers';
+
+const clients: Record<string, Redis> = {};
+
+const getClient = (config: LastRevAppConfig) => {
+  const key = JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
+  if (!clients[key]) {
+    clients[key] = new Redis({
+      ...config.redis,
+      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
+    });
+  }
+  return clients[key];
+};
 
 export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
-  const redis = new Redis({
-    ...config.redis,
-    keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
-  });
+  const redis = getClient(config);
 
-  const { contentfulPreviewClient, contentfulProdClient } = createContentfulClients(config);
-
-  const refreshEntriesByContentType = async (contentTypeId: string, isPreview: boolean) => {
-    const client = isPreview ? contentfulPreviewClient : contentfulProdClient;
+  const deleteEntriesByContentType = async (contentTypeId: string, isPreview: boolean) => {
     const setKey = `${isPreview ? 'preview' : 'production'}:entry_ids_by_content_type:${contentTypeId}`;
 
-    const makeRequest = async (skip: number = 0, existing: Entry<any>[] = []): Promise<Entry<any>[]> => {
-      const results = await client.getEntries({
-        content_type: contentTypeId,
-        skip,
-        limit: 1000,
-        select: 'sys.id'
-      });
-
-      const { items = [], total } = results;
-
-      existing.push(...items);
-      if (existing.length === total) {
-        return existing;
-      }
-      return makeRequest(skip + 1000, existing);
-    };
-
-    const entries = await makeRequest();
-    const entryIds = entries.map((entry) => entry.sys.id);
-
-    await redis
-      .multi()
-      .del(setKey)
-      .sadd(setKey, ...entryIds)
-      .exec();
+    await redis.del(setKey);
   };
 
   return {
@@ -50,18 +32,26 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       const { data, isPreview } = command;
       const key = `${isPreview ? 'preview' : 'production'}:entries:${data.sys.id}`;
       if (command.action === 'update') {
-        await redis.set(key, JSON.stringify(data));
+        const val = stringify(data, key);
+        if (val) {
+          await redis.set(key, val);
+        }
       } else if (command.action === 'delete') {
         await redis.del(key);
       }
-      await refreshEntriesByContentType(data.sys.contentType.sys.id, isPreview);
+
+      // simply deleting these as it removes an unnecessary call to contentful and makes the subsequent call more efficient
+      await deleteEntriesByContentType(data.sys.contentType.sys.id, isPreview);
     },
     asset: async (command) => {
       const { data, isPreview } = command;
       const key = `${isPreview ? 'preview' : 'production'}:assets:${data.sys.id}`;
       if (command.action === 'update') {
         if (assetHasUrl(data)) {
-          await redis.set(key, JSON.stringify(data));
+          const val = stringify(data, key);
+          if (val) {
+            await redis.set(key, val);
+          }
         } else {
           // Asset must be deleted because the content was not ready in contentful
           await redis.del(key);
@@ -74,16 +64,18 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       const { data, isPreview } = command;
       const key = `${isPreview ? 'preview' : 'production'}:content_types`;
       if (command.action === 'update') {
-        await redis.hset(key, {
-          [data.sys.id]: JSON.stringify(data)
-        });
+        const val = stringify(data, data.sys.id);
+        if (val) {
+          await redis.hset(key, {
+            [data.sys.id]: val
+          });
+        }
       } else if (command.action === 'delete') {
         await redis.hdel(key, data.sys.id);
       }
     },
     paths: async (updateForPreview, updateForProd) => {
-      const loaders = createLoaders(config);
-      const context = await createContext(config, loaders);
+      const context = await createContext({ config });
       await updateAllPaths({ config, updateForPreview, updateForProd, context });
     }
   };

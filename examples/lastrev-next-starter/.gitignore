@@ -1,6 +1,6 @@
 node_modules
 .next
-.vscode
+#.vscode
 **/dist/**
 **/build/**
 **/.next/**
@@ -12,3 +12,9 @@ node_modules
 
 lerna-debug.log
 .env
+.turbo
+
+**/*sitemap.xml
+**/__generated/*.cy.js
+
+create-app.json

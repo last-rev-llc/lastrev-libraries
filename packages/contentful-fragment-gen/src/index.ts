@@ -17,8 +17,6 @@ import buildReferenceTree from './buildReferenceTree';
 import capitalizeFirst from './capitalizeFirst';
 import Handlebars from 'handlebars';
 
-logger.setLevel('info');
-
 const fileMatcher = new FileMatcher();
 
 type RunProps = {
@@ -131,7 +129,7 @@ const run = async ({
       const loadedExtensions = require(resolve(process.cwd(), extensions));
       typeMappings = loadedExtensions.typeMappings || {};
     } catch (error: any) {
-      console.log(`Unable to load extensions from ${extensions}: ${error.message}`);
+      logger.info(`Unable to load extensions from ${extensions}: ${error.message}`);
     }
   }
 
@@ -141,7 +139,8 @@ const run = async ({
     space: contentfulSpaceId,
     accessToken: contentfulDeliveryToken,
     environment: contentfulEnvironment,
-    host: 'cdn.contentful.com'
+    host: 'cdn.contentful.com',
+    resolveLinks: false
   });
 
   const { items } = await client.getContentTypes();

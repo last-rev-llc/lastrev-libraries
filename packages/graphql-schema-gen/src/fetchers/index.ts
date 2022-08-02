@@ -17,14 +17,14 @@ export default async (
   // in the future, switch statement to get correct fetcher for source
   if (contentTypes) {
     const generated = generateContentfulSchema(typeMappings, contentTypes, skipReferenceFields);
-    logger.debug(timer.end());
+    logger.trace(timer.end());
     return gql`
       ${generated}
     `;
   }
   if (params) {
     const fetched = await contentfulFetcher(typeMappings, params, skipReferenceFields);
-    logger.debug(timer.end());
+    logger.trace(timer.end());
     return gql`
       ${fetched}
     `;

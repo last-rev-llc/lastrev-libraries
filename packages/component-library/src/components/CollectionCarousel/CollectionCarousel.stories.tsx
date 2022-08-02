@@ -4,7 +4,7 @@ import CollectionCarousel from './CollectionCarousel';
 import CollectionCarouselMock, { smallCarouselMock } from './CollectionCarousel.mock';
 
 export default {
-  title: '1. Primitives / MUI / CollectionCarousel',
+  title: 'Components / CollectionCarousel',
   component: CollectionCarousel,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
@@ -49,10 +49,14 @@ export default {
   }
 };
 
-const TemplateLarge = (args: JSX.IntrinsicAttributes) => <CollectionCarousel theme {...args} />;
+const TemplateLarge = (args: JSX.IntrinsicAttributes) => (
+  <CollectionCarousel theme variant={undefined} sidekickLookup={undefined} {...args} />
+);
 export const Default = TemplateLarge.bind({});
-Default.args = { ...CollectionCarouselMock };
+Default.args = { ...CollectionCarouselMock() };
 
-const TemplateSmall = (args: JSX.IntrinsicAttributes) => <CollectionCarousel theme {...args} />;
+const TemplateSmall = (args: JSX.IntrinsicAttributes) => (
+  <CollectionCarousel theme variant={undefined} sidekickLookup={undefined} {...args} />
+);
 export const DefaultSmall = TemplateSmall.bind({});
-DefaultSmall.args = { ...smallCarouselMock };
+DefaultSmall.args = { ...smallCarouselMock() };

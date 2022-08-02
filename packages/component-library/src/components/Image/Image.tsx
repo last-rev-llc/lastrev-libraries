@@ -1,77 +1,104 @@
 import React from 'react';
-import LazyLoad from 'react-lazyload';
 import Head from 'next/head';
-import SVG from 'react-inlinesvg';
+import NextImage from 'next/future/image';
 import ErrorBoundary from '../ErrorBoundary';
 import getImgSrcTag from '../../utils/getImgSrcTag';
 import { ImageProps } from './Image.types';
 
-// TODO: Move this to the correct place
-type Env = 'development' | 'production' | 'test' | string | undefined;
-const NODE_ENV: Env = process.env.NODE_ENV;
-
-const Image = React.forwardRef<any, ImageProps>(
-  (
-    {
-      src,
-      className,
-      media,
-      columns = 12,
-      priority = true,
-      itemProp,
-      testId,
-      disableInlineSVG,
-      q,
-      unoptimized,
-      ...imageProps
-    },
-    ref
-  ) => {
-    if (!src) return null;
-    const isSVG = src?.includes('.svg');
+const Image = React.forwardRef<any, ImageProps>((props, ref) => {
+  const {
+    src,
+    className,
+    media,
+    columns = 12,
+    priority = true,
+    itemProp,
+    testId,
+    disableInlineSVG,
+    nextImageOptimization,
+    q,
+    unoptimized,
+    width,
+    height,
+    alt,
+    ...imageProps
+  } = props;
+  if (!src) return null;
+  const imgPreload = React.useMemo(
+    () => (
+      <Head>
+        <link
+          rel="preload"
+          href={src}
+          // @ts-ignore
+          imagesrcset={getImgSrcTag({ src, numColumns: columns, q, unoptimized })?.srcSet}
+          as="image"
+          media={media}
+        />
+      </Head>
+    ),
+    [src, columns, q, unoptimized]
+  );
+  const imgContent = React.useMemo(() => {
+    const isSVG = src?.endsWith('.svg');
 
     let content;
-    if (isSVG && !disableInlineSVG) {
-      content = <SVG innerRef={ref} src={src} data-testid={testId} className={className} {...(imageProps as any)} />;
-    } else {
+    if (isSVG && !disableInlineSVG && imageProps.svgContent) {
       content = (
-        <img
-          {...getImgSrcTag({ src, numColumns: columns, q, unoptimized })}
-          ref={ref}
+        <>
+          <svg
+            ref={ref}
+            className={className}
+            data-testid={testId}
+            height={height}
+            width={width}
+            focusable={false}
+            role="img"
+            // TODO: Figure out better a11y support for svg
+            dangerouslySetInnerHTML={{ __html: `<title>${alt}</title>${imageProps.svgContent}` }}
+          />
+        </>
+      );
+    } else if (!isSVG && nextImageOptimization) {
+      content = (
+        <NextImage
+          src={src}
+          // TODO: NextImage doesn't support ref
+          // ref={ref}
           data-testid={testId}
           className={className}
           itemProp={itemProp}
+          priority={priority}
           loading={priority ? 'eager' : 'lazy'}
-          {...imageProps}
+          height={height}
+          width={width}
+          sizes={imageProps.sizes}
+          alt={alt}
         />
       );
-    }
-    try {
-      return (
-        <ErrorBoundary>
-          {NODE_ENV === 'test' || priority ? (
-            <>
-              {content}
-              <Head>
-                <link
-                  rel="preload"
-                  href={src}
-                  // @ts-ignore
-                  imagesrcset={getImgSrcTag({ src, numColumns: columns, q, unoptimized })?.srcSet}
-                  as="image"
-                  media={media}
-                />
-              </Head>
-            </>
-          ) : (
-            <LazyLoad offset={typeof window === 'undefined' ? 1000 : window.innerHeight}>{content}</LazyLoad>
-          )}
-        </ErrorBoundary>
+    } else {
+      content = (
+        <>
+          <img
+            {...getImgSrcTag({ src, numColumns: columns, q, unoptimized })}
+            ref={ref}
+            data-testid={testId}
+            className={className}
+            itemProp={itemProp}
+            loading={priority ? 'eager' : 'lazy'}
+            height={height}
+            width={width}
+            alt={alt}
+            {...imageProps}
+          />
+          {imgPreload}
+        </>
       );
-    } catch (err) {
-      return null;
     }
-  }
-);
+    return content;
+  }, [props]);
 
-export default React.memo(Image);
+  return <ErrorBoundary>{imgContent}</ErrorBoundary>;
+});
+
+export default Image;

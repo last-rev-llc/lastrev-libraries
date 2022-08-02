@@ -1,16 +1,24 @@
 import gql from 'graphql-tag';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
+import fetch from 'node-fetch';
+import { getVideoEmbedUrl } from './getVideoEmbedUrl';
+import { cleanSVG } from './utils/cleanSVG';
+
 export const typeMappings = {};
+
 const mediaFieldResolver = async ({ fields, field, assetField, ctx }: any) => {
   // TODO: Make getting a localized resolved link a single function
-  const title: any = getLocalizedField(fields, assetField, ctx);
-  if (title) return title;
+  const value: any = getLocalizedField(fields, assetField, ctx);
+  if (value) return value;
+
   const assetRef: any = getLocalizedField(fields, field, ctx);
   if (!assetRef) return null;
+
   const asset = await ctx.loaders.assetLoader.load({ id: assetRef?.sys?.id, preview: !!ctx.preview });
-  const assetTitle: any = getLocalizedField(asset?.fields, assetField, ctx);
-  return assetTitle;
+  const fieldValue: any = getLocalizedField(asset?.fields, assetField, ctx);
+
+  return fieldValue;
 };
 
 const resolveFile = async (media: any, _args: any, ctx: ApolloContext) => {
@@ -26,14 +34,51 @@ const resolveFile = async (media: any, _args: any, ctx: ApolloContext) => {
   return file;
 };
 
+export const resolvers = {
+  Asset: {
+    url: (asset: any) => (asset?.url?.startsWith('//') ? `https:${asset?.url}` : asset?.url)
+  }
+};
+
 export const mappers = {
+  Asset: {
+    Asset: {
+      url: (asset: any) => (asset?.url?.startsWith('//') ? `https:${asset?.url}` : asset?.url),
+      width: (asset: any) => asset?.details?.image?.width,
+      height: (asset: any) => asset?.details?.image?.height,
+      svgContent: async (asset: any, _args: any, _ctx: ApolloContext) => {
+        // We load the SVG content and clean it up for use as inline element
+        // We remove the SVG width and height and instead use the one from the content
+        const url: string = asset?.url?.startsWith('//') ? `https:${asset?.url}` : asset?.url;
+        if (url?.endsWith('.svg')) {
+          try {
+            const svgContent = await fetch(url).then((res) => res.text());
+            let cleaned = cleanSVG(svgContent);
+            return cleaned;
+          } catch (err) {
+            return null;
+          }
+        }
+        return null;
+      }
+    }
+  },
   Media: {
     Media: {
       // TODO: enable this in fieldResolver
       // title: 'media.title',
       // asset: 'media.asset'
       variant: async (media: any, _args: any, ctx: ApolloContext) => {
-        const assetURL: any = getLocalizedField(media?.fields, 'assetURL', ctx);
+        let assetURL: any = getLocalizedField(media?.fields, 'assetURL', ctx);
+        const file = await mediaFieldResolver({ fields: media?.fields, field: 'asset', assetField: 'file', ctx });
+
+        // Asset reference will be used if set
+        //TODO: Support other ways to control priority
+        if (file?.url) assetURL = file?.url;
+
+        if (assetURL.split('.')[assetURL.split('.').length - 1] === 'pdf') {
+          return 'embed';
+        }
         if (assetURL) {
           if (getVideoEmbedUrl(assetURL)) {
             return 'embed';
@@ -54,7 +99,23 @@ export const mappers = {
         });
         return title ?? assetTitle;
       },
-      file: resolveFile
+      file: resolveFile,
+      fileTablet: async (media: any, _args: any, ctx: ApolloContext) => {
+        let file: any;
+        const assetFile = await mediaFieldResolver({ fields: media?.fields, field: 'tablet', assetField: 'file', ctx });
+        if (assetFile) {
+          file = assetFile;
+        }
+        return file;
+      },
+      fileMobile: async (media: any, _args: any, ctx: ApolloContext) => {
+        let file: any;
+        const assetFile = await mediaFieldResolver({ fields: media?.fields, field: 'mobile', assetField: 'file', ctx });
+        if (assetFile) {
+          file = assetFile;
+        }
+        return file;
+      }
     },
     Card: {
       media: async (media: any, _args: any, ctx: ApolloContext) => {
@@ -67,69 +128,14 @@ export const mappers = {
   }
 };
 
-const getVideoEmbedUrl = (assetURL: string) => {
-  if (typeof assetURL !== 'string') {
-    return null;
-  }
-  if (assetURL?.includes('youtu.be/')) {
-    const vidId = assetURL?.split('youtu.be/')[1];
-    return `https://www.youtube.com/embed/${vidId}`;
-  }
-  //https://www.youtube.com/watch?v=xxxxxx
-  if (assetURL?.includes('youtube.com/watch?v=')) {
-    const vidId = assetURL?.split('youtube.com/watch?v=')[1];
-    return `https://www.youtube.com/embed/${vidId}`;
-  }
-  //https://vimeo.com/xxxxxx
-  if (assetURL?.includes('vimeo.com/')) {
-    const vidId = assetURL?.split('vimeo.com/')[1];
-    return `https://player.vimeo.com/video/${vidId}`;
-  }
-  //https://www.facebook.com/photo.php?v=xxxxxx
-  if (assetURL?.includes('facebook.com/photo.php?v=')) {
-    const vidId = assetURL?.split('facebook.com/photo.php?v=')[1];
-    return `https://www.facebook.com/video/${vidId}`;
-  }
-  //https://www.facebook.com/video/video.php?v=xxxxxx
-  if (assetURL?.includes('facebook.com/video/video.php?v=')) {
-    const vidId = assetURL?.split('facebook.com/video/video.php?v=')[1];
-    return `https://www.facebook.com/video/${vidId}`;
-  }
-  return null;
-};
-export const getThumbnailURL = (assetURL: string) => {
-  if (typeof assetURL !== 'string') {
-    return null;
-  }
-  if (assetURL?.includes('youtu.be/')) {
-    const vidId = assetURL?.split('youtu.be/')[1];
-    return `https://img.youtube.com/vi/${vidId}/maxresdefault.jpg`;
-  }
-  //https://www.youtube.com/watch?v=xxxxxx
-  if (assetURL?.includes('youtube.com/watch?v=')) {
-    const vidId = assetURL?.split('youtube.com/watch?v=')[1];
-    return `https://img.youtube.com/vi/${vidId}/maxresdefault.jpg`;
-  }
-  //https://vimeo.com/xxxxxx
-  if (assetURL?.includes('vimeo.com/')) {
-    const vidId = assetURL?.split('vimeo.com/')[1];
-    return `https://i.vimeocdn.com/video/${vidId}_640.jpg`;
-  }
-  //https://www.facebook.com/photo.php?v=xxxxxx
-  if (assetURL?.includes('facebook.com/photo.php?v=')) {
-    const vidId = assetURL?.split('facebook.com/photo.php?v=')[1];
-    return `https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/${vidId}.jpg`;
-  }
-  //https://www.facebook.com/video/video.php?v=xxxxxx
-  if (assetURL?.includes('facebook.com/video/video.php?v=')) {
-    const vidId = assetURL?.split('facebook.com/video/video.php?v=')[1];
-    return `https://scontent.xx.fbcdn.net/v/t1.0-1/p200x200/${vidId}.jpg`;
-  }
-  return null;
-};
 export const typeDefs = gql`
   extend type Media {
     variant: String
+    fileTablet: Asset
+    fileMobile: Asset
+  }
+  extend type Asset {
+    # SVG may access content for inline rendering
+    svgContent: String
   }
 `;
-// A function to remove the opacity of an image

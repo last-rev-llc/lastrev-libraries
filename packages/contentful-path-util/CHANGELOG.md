@@ -1,5 +1,19 @@
 # @last-rev/contentful-path-util
 
+## 0.1.11
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/timer@0.1.3
+
+## 0.1.10
+
+### Patch Changes
+
+- 71bf23b: 'Updated version of ioredis to 5.x, added contentful type checking to redis loader and contentful webhook'
+
 ## 0.1.9
 
 ### Patch Changes

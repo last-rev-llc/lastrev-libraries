@@ -2,19 +2,24 @@
   "name": "@lrns/graphql-sdk",
   "version": "0.1.0",
   "main": "dist/index.js",
+  "license": "MIT",
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "run-s clean codegen build:prod",
+    "build": "run-s clean download:schema codegen build:prod",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
     "clean": "rimraf dist",
+    "install:rover": "yarn rover -V || node ../../node_modules/@apollo/rover/install",
+    "download:schema:dev": "nodemon -x \"yarn download:schema\" -w ../graphql-extensions/dist",
+    "download:schema": "./scripts/download_schema.sh",
     "codegen": "graphql-codegen --config codegen.yml",
     "codegen:watch": "graphql-codegen --config codegen.yml --watch",
-    "dev": "concurrently \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
+    "gql:healthcheck": "wait-on -c wait-on-config.js || echo 'GraphQL Server is not available'",
+    "dev": "concurrently \"yarn download:schema:dev\" \"cross-env NODE_ENV=development rollup -cw\" \"yarn codegen:watch\"",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint",
-    "test": "jest",
+    "test": "jest --passWithNoTests",
     "test:watch": "jest --watch"
   },
   "peerDependencies": {
@@ -24,7 +29,7 @@
     "@types/react-router-dom": "^5.3.2",
     "graphql": "^15.5.1",
     "nodemon": "^2.0.15",
-    "react": "^17.0.1",
+    "react": "^17.0.2",
     "react-dom": "^17.0.1",
     "react-scripts": "^4.0.1",
     "tsc-watch": "^4.2.9"
@@ -36,7 +41,7 @@
     "@graphql-codegen/typescript-graphql-request": "3.0.0",
     "@graphql-codegen/typescript-operations": "^1.17.13",
     "@graphql-codegen/typescript-react-apollo": "^2.2.1",
-    "@last-rev/rollup-config": "^0.1.0",
+    "@last-rev/rollup-config": "^0.1.4",
     "concurrently": "^5.3.0",
     "dotenv": "^10.0.0",
     "graphql-tag": "^2.12.5",
@@ -44,17 +49,18 @@
   },
   "devDependencies": {
     "@apollo/client": "^3.3.7",
-    "@lrns/graphql-extensions": "0.1.0",
-    "@lrns/graphql-runner": "0.1.0",
+    "@apollo/rover": "^0.4.1",
+    "@lrns/graphql-runner": "^0.1.0",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.2",
     "graphql": "^15.5.1",
     "nodemon": "^2.0.15",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "react-scripts": "^4.0.1",
-    "rollup": "^2.6.1",
-    "tsc-watch": "^4.2.9"
+    "rollup": "^2.75.7",
+    "tsc-watch": "^4.2.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.1",
+    "wait-on": "^5.3.0"
   }
 }

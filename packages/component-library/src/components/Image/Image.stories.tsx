@@ -1,16 +1,10 @@
 import React from 'react';
-import Box from '@mui/material/Box';
 import Image from './Image';
 import mockContent from './Image.mock';
 
 export default {
-  title: '1. Primitives / LR / Image',
+  title: 'Components / Image',
   component: Image,
-  decorators: [
-    (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
-      <Box m={5}>{storyFn()}</Box>
-    )
-  ],
   argTypes: {
     alt: { name: 'Alt' },
     src: { name: 'Src' },

@@ -7,14 +7,18 @@ const run = async () => {
   const packagesDir = resolve(__dirname, '../packages');
   const packages = await readdir(packagesDir);
 
-  await Promise.all(
-    packages.map(async (packageName) => {
-      if (packageName !== '.DS_Store') {
-        const newEnv = join(packagesDir, packageName, '.env');
-        await copyFile(envFile, newEnv);
-      }
-    })
-  );
+  try {
+    await Promise.all(
+      packages.map(async (packageName) => {
+        if (packageName !== '.DS_Store') {
+          const newEnv = join(packagesDir, packageName, '.env');
+          await copyFile(envFile, newEnv);
+        }
+      })
+    );
+  } catch (err) {
+    console.log('PropagateEnv Error', err);
+  }
 };
 
 run()

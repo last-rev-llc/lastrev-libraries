@@ -1,13 +1,12 @@
 import { Entry } from 'contentful';
-import isArray from 'lodash/isArray';
 import { GraphQLResolveInfo } from 'graphql';
-import getFieldDataFetcher from '../utils/getFieldDataFetcher';
 import { ApolloContext } from '@last-rev/types';
-import capitalizeFirst from '../utils/capitalizeFirst';
-import map from 'lodash/map';
-import filter from 'lodash/filter';
-import isNull from 'lodash/isNull';
-import negate from 'lodash/negate';
+import getTypeName from '../utils/getTypeName';
+import isString from 'lodash/isString';
+import isFunction from 'lodash/isFunction';
+import { TypeMapper } from '@last-rev/types';
+import getLocalizedField from '../utils/getLocalizedField';
+import logger from 'loglevel';
 
 export type Resolver<TSource, TContext> = (
   content: TSource,
@@ -18,57 +17,64 @@ export type Resolver<TSource, TContext> = (
 
 type FieldResolver = <T>(displayType: string) => Resolver<Entry<T>, ApolloContext>;
 
-const fieldResolver: FieldResolver = (displayType: string) => async (content, args, ctx, info) => {
+const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content, args, ctx, info) => {
   const { fieldName: field } = info;
-  const { loaders, mappers, typeMappings, preview = false } = ctx;
+  const { loaders, mappers, typeMappings, preview = false, displayType: overrideDisplayType } = ctx;
 
-  const contentType =
-    content && content.sys && content.sys.contentType && content.sys.contentType.sys
-      ? content.sys.contentType.sys.id
-      : '';
-  // console.log('resolving field', {
-  //   content,
-  //   displayType,
-  //   field,
-  //   sys: content?.sys,
-  //   contentType,
-  //   typeMapping: typeMappings[contentType]
-  // });
-  const typeName = contentType ? capitalizeFirst(typeMappings[contentType] ?? contentType) : displayType;
+  const displayType = overrideDisplayType || displayTypeArg;
 
-  const fieldDataFetcher = getFieldDataFetcher(typeName, displayType, field, mappers);
+  const contentType = content?.sys?.contentType?.sys?.id || '';
 
-  let { fieldValue } = await fieldDataFetcher(content, args, ctx, info);
+  const typeName = contentType ? getTypeName(contentType, typeMappings) : displayType;
 
-  // console.log('fieldValue', fieldValue);
+  const mapper = mappers?.[typeName]?.[displayType] as TypeMapper;
+
+  let fieldValue: any;
+
+  if (mapper && mapper[field]) {
+    const fieldMapper = mapper[field];
+    if (isFunction(fieldMapper)) {
+      try {
+        fieldValue = await fieldMapper(content, args, ctx, info);
+      } catch (err: any) {
+        const scopedLoggingPrefix = `[${typeName}][${displayType}][${field}]`;
+        logger.error(`GQL Extension error: ${scopedLoggingPrefix} ${err.message}`);
+        throw err;
+      }
+    } else if (isString(fieldMapper)) {
+      fieldValue = getLocalizedField(content.fields, fieldMapper as string, ctx);
+    } else {
+      logger.error(`Unsupported mapper type for ${typeName}.${displayType}: ${typeof fieldMapper}`);
+      return null;
+    }
+  } else {
+    fieldValue = getLocalizedField(content.fields, field, ctx);
+  }
 
   //Check if the field is a reference then resolve it
-  if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Entry') {
+  if (fieldValue?.sys?.linkType == 'Entry') {
     return loaders.entryLoader.load({ id: fieldValue.sys.id, preview });
   }
-  if (fieldValue && fieldValue.sys && fieldValue.sys.linkType == 'Asset') {
+  if (fieldValue?.sys?.linkType == 'Asset') {
     return loaders.assetLoader.load({ id: fieldValue.sys.id, preview });
   }
 
   // Expand links
-  if (isArray(fieldValue) && fieldValue.length > 0) {
+  if (Array.isArray(fieldValue) && fieldValue.length > 0) {
     const firstItem = fieldValue[0];
     // contentful cannot have mixed arrays, so it is okay to make assumptions based on the first item
     if (firstItem?.sys?.linkType === 'Entry') {
-      return filter(
-        await loaders.entryLoader.loadMany(map(fieldValue, (x) => ({ id: x.sys.id, preview }))),
-        negate(isNull)
+      return (await loaders.entryLoader.loadMany(fieldValue.map((x) => ({ id: x.sys.id, preview })))).filter(
+        (r) => r !== null
       );
     }
     if (firstItem?.sys?.linkType === 'Asset') {
-      return filter(
-        await loaders.assetLoader.loadMany(map(fieldValue, (x) => ({ id: x.sys.id, preview }))),
-        negate(isNull)
+      return (await loaders.assetLoader.loadMany(fieldValue.map((x) => ({ id: x.sys.id, preview })))).filter(
+        (r) => r !== null
       );
     }
   }
-  // console.log('ResolveField', { displayType, content, field, typeName, contentType, fieldValue });
-  // console.timeEnd(`FieldResolver:${displayType}->${field}`);
+
   return fieldValue;
 };
 export default fieldResolver;

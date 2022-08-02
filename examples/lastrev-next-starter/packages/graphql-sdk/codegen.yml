@@ -1,7 +1,9 @@
-overwrite: true
-schema: 'http://localhost:5000/graphql'
+schema:
+  - 'schema.graphql'
 documents:
+  - './src/**/*.graphql'
   - './src/**/*.ts'
+  - '../components/**/*.graphql'
 generates:
   ./src/generated/sdk.ts:
     plugins:
@@ -9,17 +11,25 @@ generates:
       - 'typescript-operations'
       - 'typescript-graphql-request'
     config:
-      rawRequest: true
-  ./src/generated/apollo.tsx:
-    plugins:
-      - 'typescript'
-      - 'typescript-operations'
-      - 'typescript-react-apollo'
-    config:
       withHooks: true
       withHOC: false
       withComponent: false
       rawRequest: true
+      withMutationFn: false
+      maybeValue: T | undefined
+  # ./src/generated/apollo.tsx:
+  #   plugins:
+  #     - 'typescript'
+  #     - 'typescript-operations'
+  #     - 'typescript-react-apollo'
+  #   config:
+  #     withHooks: true
+  #     withHOC: false
+  #     withComponent: false
+  #     rawRequest: true
+  #     withMutationFn: false
+  #     reactApolloVersion: 3
+  #     maybeValue: T | null
   ./src/generated/fragmentTypes.json:
     plugins:
       - fragment-matcher

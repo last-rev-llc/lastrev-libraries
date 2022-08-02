@@ -1,26 +1,25 @@
 import { compact, map, merge } from 'lodash';
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { Source, DocumentNode, GraphQLSchema } from 'graphql';
-import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
+import { typeDefs as algoliaTypeDefs } from '@last-rev/graphql-algolia-integration';
 
 import {
+  Blog,
   Card,
   Collection,
-  Blog,
+  Header,
   Hero,
   Link,
+  Media,
   NavigationItem,
   Page,
+  RichText,
   Section,
-  Media,
-  RichText
+  Theme
 } from '@last-rev/graphql-contentful-extensions';
 
-import * as Text from './Text';
-import * as Quote from './Quote';
-import * as Person from './Person';
-import * as Header from './Header';
+// Uncomment if using Algolia, else delete the related file
+// import * as Algolia from './Algolia';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -30,36 +29,21 @@ export type GraphQlExtension = {
   pathsConfigs?: {};
 };
 
-// @ts-ignore: Unreachable code error
-// Example of how to diasable/override the wrapping of the page contents in a section
-Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloContext) => {
-  // Get the Page contents
-  const contentsRef = getLocalizedField(page.fields, 'contents', ctx);
-  if (contentsRef?.length) {
-    // Load the Page contents
-    const contents = await ctx.loaders.entryLoader.loadMany(
-      contentsRef.map((content: any) => ({ id: content?.sys.id, preview: !!ctx.preview }))
-    );
-    return contents;
-  }
-  return [];
-};
-
 const extensions: GraphQlExtension[] = [
+  { typeDefs: algoliaTypeDefs },
+  // Algolia,
+  Blog,
   Card,
   Collection,
-  Blog,
-  Hero,
   Header,
+  Hero,
   Link,
+  Media,
   NavigationItem,
   Page,
-  Section,
-  Quote,
-  Person,
-  Media,
   RichText,
-  Text
+  Section,
+  Theme
 ];
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));

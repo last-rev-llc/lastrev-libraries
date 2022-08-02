@@ -1,5 +1,113 @@
 # @last-rev/graphql-contentful-core
 
+## 0.4.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/contentful-cms-loader@0.3.0
+  - @last-rev/contentful-fs-loader@0.2.0
+  - @last-rev/contentful-redis-loader@0.4.0
+  - @last-rev/graphql-contentful-helpers@0.3.0
+  - @last-rev/types@0.2.0
+
+## 0.3.1
+
+### Patch Changes
+
+- 2ead5c4: Move XSS filtering from Components to Data Layer
+
+## 0.3.0
+
+### Minor Changes
+
+- 3ba98cd: July updates
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-cms-loader@0.2.2
+  - @last-rev/contentful-fs-loader@0.1.13
+  - @last-rev/contentful-path-util@0.1.11
+  - @last-rev/contentful-redis-loader@0.3.3
+  - @last-rev/graphql-contentful-helpers@0.2.5
+  - @last-rev/graphql-schema-gen@0.2.1
+  - @last-rev/testing-library@0.1.10
+  - @last-rev/timer@0.1.3
+
+## 0.2.5
+
+### Patch Changes
+
+- d937c88: Moved context creation into function called on each request in gql servers/handlers
+- Updated dependencies [d937c88]
+  - @last-rev/graphql-contentful-helpers@0.2.4
+
+## 0.2.4
+
+### Patch Changes
+
+- 1ca514f: Wrapping extension execution exceptions with a prefixed logger with mapper info
+
+## 0.2.3
+
+### Patch Changes
+
+- 0d5a9ee: Moved default lookup out of else statement so it doesn't get overridden in sidekickLookupResolver
+
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [71bf23b]
+  - @last-rev/contentful-redis-loader@0.3.0
+  - @last-rev/contentful-path-util@0.1.10
+  - @last-rev/graphql-contentful-helpers@0.2.2
+
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [1d7f33d]
+  - @last-rev/contentful-redis-loader@0.2.0
+  - @last-rev/graphql-contentful-helpers@0.2.1
+
+## 0.2.0
+
+### Minor Changes
+
+- 25375f1: Added resolveLinks:false to all contentful createClient calls in the framework
+
+### Patch Changes
+
+- Updated dependencies [25375f1]
+  - @last-rev/contentful-cms-loader@0.2.0
+  - @last-rev/graphql-contentful-helpers@0.2.0
+  - @last-rev/graphql-schema-gen@0.2.0
+
+## 0.1.35
+
+### Patch Changes
+
+- db8b0af: 'Fixed fieldResolver to resolve unexpanded links and sidekickLookupResolver to return an object always'
+
+## 0.1.34
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+- Updated dependencies [d6ec293]
+  - @last-rev/contentful-cms-loader@0.1.6
+  - @last-rev/contentful-fs-loader@0.1.12
+  - @last-rev/contentful-redis-loader@0.1.9
+  - @last-rev/graphql-schema-gen@0.1.9
+  - @last-rev/types@0.1.7
+
 ## 0.1.33
 
 ### Patch Changes

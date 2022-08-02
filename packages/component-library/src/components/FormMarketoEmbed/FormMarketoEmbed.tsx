@@ -2,18 +2,7 @@ import React from 'react';
 import Script from 'next/script';
 import { Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
-
-declare global {
-  interface Window {
-    MktoForms2: any;
-  }
-}
-
-export interface FormMarketoEmbedProps {
-  baseUrl: string;
-  munchkinId: string;
-  formId: string;
-}
+import { FormMarketoEmbedProps } from './FormMarketoEmbed.types';
 
 /* 
     Add modifiers to be able to target specific fields

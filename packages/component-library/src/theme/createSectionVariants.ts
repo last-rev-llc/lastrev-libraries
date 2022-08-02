@@ -104,7 +104,7 @@ export const highlightVariant = (theme: Theme) => ({
         zIndex: -1,
         width: 'calc(100% + 40px)',
         height: '100%',
-        backgroundColor: theme.palette.quartiary.main,
+        backgroundColor: theme.palette.quartiary?.main,
         transform: 'skew(-5deg)'
       },
       '& > [class*="Section-gridItem"]': {

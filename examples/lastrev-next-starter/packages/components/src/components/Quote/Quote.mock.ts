@@ -1,42 +1,34 @@
 import { random } from 'faker';
-import mockFile from '../../stories/mocks/file.mock';
+import { mediaMock } from '../Media/Media.mock';
+import { QuoteProps } from './Quote.types';
 
-const mockQuoteBase = () => {
+export const mockQuoteBase = (): QuoteProps => {
   return {
     __typename: 'Quote',
     id: random.alphaNumeric(10),
     variant: 'one-column',
-    quoteImage: {
-      __typename: 'Media',
-      file: mockFile({ height: 2160, width: 3840, text: 'Quote Base' }),
-      alt: 'Quote Base'
-    },
+    authorImage: mediaMock(),
     quote: 'Get in touch and learn how our services can help you!',
     authorName: `Adam Harris`,
-    authorTitle: `Co-Founder`
+    authorTitle: `Co-Founder`,
+    logo: mediaMock()
   };
 };
 
-export const mockQuoteOneColumn = () => {
+export const mockQuoteOneColumn = (): QuoteProps => {
   return {
     ...mockQuoteBase(),
     variant: 'one-column',
-    quoteImage: {
-      __typename: 'Media',
-      file: mockFile({ height: 2160, width: 3840, text: 'Quote One Column' }),
-      alt: 'Quote One Column'
-    }
+    authorImage: mediaMock()
   };
 };
 
-export const mockQuoteTwoColumn = () => {
+export const mockQuoteTwoColumn = (): QuoteProps => {
   return {
     ...mockQuoteBase(),
     variant: 'two-column',
-    quoteImage: {
-      __typename: 'Media',
-      file: mockFile({ height: 2160, width: 3840, text: 'Quote Two Column' }),
-      alt: 'Quote Two Column'
-    }
+    authorImage: mediaMock()
   };
 };
+
+export default mockQuoteBase;

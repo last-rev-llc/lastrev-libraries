@@ -1,5 +1,23 @@
 # @last-rev/rollup-config
 
+## 0.1.4
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+
+## 0.1.3
+
+### Patch Changes
+
+- 6fc686e: Added dependency on @rollup/plugin-typescript
+
+## 0.1.2
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.1
 
 ### Patch Changes

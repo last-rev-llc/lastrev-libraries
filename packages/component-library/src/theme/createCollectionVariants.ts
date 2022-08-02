@@ -71,7 +71,7 @@ export const collectionThreePerRowRoundedWrapper = (theme: Theme) => ({
     '& [class*="Section-root"] > [class*="Section-gridContainer"]': {
       'border': '2px solid #595959',
       'borderRadius': 40,
-      'backgroundColor': theme.palette.quartiary.main,
+      'backgroundColor': theme.palette.quartiary?.main,
       'transition': 'background-color ease .15s',
       '& > [class*="Section-gridItem"]': {
         margin: 0

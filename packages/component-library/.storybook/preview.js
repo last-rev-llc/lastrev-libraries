@@ -41,7 +41,10 @@ const StorybookWrapper = (storyFn) => {
 addDecorator(StorybookWrapper);
 
 addParameters({
-  // controls: { expanded: true },,
+  theme,
+
+  controls: { expanded: true },
+  layout: 'centered',
   options: {
     isToolshown: true,
     storySort: {

@@ -1,5 +1,25 @@
 # @last-rev/contentful-fs-loader
 
+## 0.2.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
+## 0.1.13
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/timer@0.1.3
+
+## 0.1.12
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.11
 
 ### Patch Changes

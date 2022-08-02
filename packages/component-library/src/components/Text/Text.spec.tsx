@@ -2,7 +2,9 @@ import * as React from 'react';
 import { each } from 'lodash';
 import { BLOCKS } from '@contentful/rich-text-types';
 import mount from '../../../cypress/mount';
-import Text, { TextProps } from './Text';
+import { TextProps } from './Text.types';
+import Text from './Text';
+
 import mockContent, {
   dynamicMock,
   valueNode,
@@ -10,7 +12,8 @@ import mockContent, {
   embeddedEntryInlineNode,
   embeddedEntryBlockNode,
   embeddedAssetBlockNode,
-  hyperlinkNode
+  hyperlinkNode,
+  withLinksMock
 } from './Text.mock';
 import { mediaMock } from '../Media/Media.mock';
 import linkMock from '../Link/Link.mock';
@@ -92,6 +95,12 @@ describe('Text', () => {
           const mockedContent: TextProps = dynamicMock([hyperlinkNode(mockedLink.text, mockedLink.href)]);
           mount(<Text {...mockedContent} />);
           cy.get('[data-testid=Text-hyperlink]').contains(mockedLink.text).should('exist');
+          cy.percySnapshot();
+        });
+
+        it('renders formatted text with hyperlink', () => {
+          const mockedContent: TextProps = withLinksMock();
+          mount(<Text {...mockedContent} />);
           cy.percySnapshot();
         });
       });

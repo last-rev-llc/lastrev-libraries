@@ -1,11 +1,16 @@
 import React from 'react';
-import CollectionFiltered from '@last-rev/component-library/dist/components/CollectionFiltered/CollectionFiltered';
-import { client, parseBooleanEnvVar } from '@lrns/utils';
+export type {
+  CollectionFilteredProps,
+  CollectionFilteredClassKey,
+  CollectionFilteredClasses
+} from '@last-rev/component-library/dist/components/CollectionFiltered';
+import CollectionFiltered from '@last-rev/component-library/dist/components/CollectionFiltered';
 
-const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
+const preview = !!process.env.CONTENTFUL_USE_PREVIEW;
 
 const withFetchItems = (Wrapped: any) => (props: any) => {
   const fetchItems = async ({ filter, limit, offset }: { filter: any; limit?: number; offset?: number }) => {
+    const client = await import('@lrns/utils').then((module) => module.client);
     const { data } = await client.CollectionItems({ id: props.id, limit, offset, filter, preview });
     if (data?.content?.__typename == 'Collection') {
       const items = data?.content?.itemsConnection?.items;

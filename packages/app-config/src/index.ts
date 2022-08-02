@@ -1,5 +1,6 @@
 import { LastRevAppConfigArgs, LastRevAppConfiguration } from './types';
 import { merge, isNil } from 'lodash';
+import { RedisOptions } from 'ioredis';
 
 const defaultConfig: LastRevAppConfigArgs = {
   cms: 'Contentful',
@@ -20,9 +21,7 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
   config: LastRevAppConfigArgs;
 
   constructor(config: LastRevAppConfigArgs) {
-    console.log(config.sites, defaultConfig.sites);
     this.config = merge({}, defaultConfig, config);
-    console.log(config.sites, defaultConfig.sites, this.config.sites);
     this.validateCmsVars();
     this.validateStrategy();
   }
@@ -37,9 +36,6 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       }
       if (!this.config.contentful?.contentPreviewToken) {
         throw new Error('Contentful CMS: contentful.contentPreviewToken is required.');
-      }
-      if (!this.config.contentful?.env) {
-        throw new Error('Contentful CMS: contentful.environment is required.');
       }
     } else {
       throw new Error(`Invalid CMS: ${this.config.cms}`);
@@ -86,7 +82,17 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       contentDeliveryToken: this.config.contentful?.contentDeliveryToken!,
       contentPreviewToken: this.config.contentful?.contentPreviewToken!,
       env: this.config.contentful?.env!,
-      usePreview: !!this.config.contentful?.usePreview
+      usePreview: !!this.config.contentful?.usePreview,
+      maxBatchSize: this.config.contentful?.maxBatchSize || 1000
+    };
+  }
+
+  get algolia() {
+    return {
+      applicationId: this.config.algolia?.applicationId!,
+      adminApiKey: this.config.algolia?.adminApiKey!,
+      contentTypeIds: this.config.algolia?.contentTypeIds!,
+      indexDraftContent: !!this.config.algolia?.indexDraftContent
     };
   }
 
@@ -110,12 +116,9 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
 
   get redis() {
     return {
-      host: this.config.redis?.host!,
-      port: this.config.redis?.port!,
-      password: this.config.redis?.password,
-      tls: this.config.redis?.tls,
-      db: this.config.redis?.db
-    };
+      ...this.config.redis,
+      maxBatchSize: this.config.redis?.maxBatchSize || 1000
+    } as RedisOptions & { maxBatchSize: number };
   }
 
   get dynamodb() {

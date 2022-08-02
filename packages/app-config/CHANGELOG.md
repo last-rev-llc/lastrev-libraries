@@ -1,5 +1,23 @@
 # @last-rev/app-config
 
+## 0.2.1
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+
+## 0.2.0
+
+### Minor Changes
+
+- f7e8fa4: Added maxBatchSize as options for redis and contentful. Allowed all ioredis options to be used.
+
+## 0.1.5
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.4
 
 ### Patch Changes

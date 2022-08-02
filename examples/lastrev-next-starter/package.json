@@ -2,7 +2,7 @@
   "name": "lastrev-next-starter",
   "version": "0.1.0",
   "main": "index.js",
-  "author": "Jaime Morales",
+  "author": "LastRev",
   "license": "MIT",
   "workspaces": {
     "packages": [
@@ -10,31 +10,36 @@
     ]
   },
   "scripts": {
-    "build": "lerna run build --scope @lrns/web --include-dependencies --ignore @lrns/graphql-extensions --ignore @lrns/graphql-runner --loglevel info",
-    "build:prod": "yarn build:extensions && yarn sync:cms && yarn gql:pm2 && wait-on -c wait-on-config.js && yarn build; status=$?; pm2 kill; exit $status",
-    "build:extensions": "lerna run build --scope @lrns/graphql-extensions --include-dependencies --loglevel info",
-    "build:components": "lerna run build --scope @lrns/components --include-dependencies --loglevel info",
-    "build:storybook": "yarn build:extensions && yarn sync:cms && yarn gql:pm2 && wait-on -c wait-on-config.js && yarn build:components && lerna run build-storybook; status=$?; pm2 kill; exit $status",
+    "algolia:update": "lr-algolia-updater https://starter.lastrev.com/.netlify/functions/algolia-background",
+    "algolia:update:local": "lr-algolia-updater http://localhost:8888/.netlify/functions/algolia-background",
+    "dev": "./scripts/dev.sh",
+    "build": "./scripts/build.sh",
+    "turbo:sync:cms": "turbo run sync:cms",
+    "turbo:build": "turbo run build",
+    "build:storybook": "turbo run build-storybook; status=$?; pm2 kill; exit $status",
     "clean": "lerna exec 'rm -rf dist/'",
     "deps:check": "echo \"-- depcheck for root --\"; depcheck . --specials=babel,eslint,prettier,webpack,bin,jest; for d in ./packages/*/ ; do (echo \"-- depcheck for $d --\"; depcheck \"$d\" --specials=babel,eslint,prettier,webpack,bin,jest); done;manypkg check",
     "deps:fix": "manypkg fix",
-    "dev": "yarn propagate:env && lerna run dev --parallel --scope @lrns/web --include-dependencies --loglevel silly",
-    "gql:dev": "lerna run dev --parallel --scope @lrns/graphql-runner --include-dependencies --loglevel silly",
-    "gql:pm2": "pm2 start pm2.json",
+    "gql:dev": "turbo run dev --scope=*graphql-runner* --no-deps --include-dependencies",
     "gql:pm2:kill": "pm2 delete gql-serve",
-    "gql:start": "lerna run start --scope @lrns/graphql-runner --include-dependencies --loglevel silly",
+    "gql:start": "turbo run start --scope=*graphql-runner*  --no-deps --include-dependencies && echo 'GQL server started, kill with `yarn gql:pm2:kill`'",
     "nuclear": "lerna exec 'rm -rf node_modules/ dist/'; rm -rf node_modules/; yarn install",
     "postinstall": "patch-package",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
     "propagate:env": "node scripts/propagateEnv.js",
     "serve:site": "yarn workspace @lrns/web serve",
-    "start": "run-s build serve",
-    "storybook": "lerna run storybook",
+    "start": "turbo run start --output-logs=new-only",
+    "storybook": "turbo run storybook",
     "sync:cms": "yarn workspace @lrns/graphql-runner sync:cms",
-    "test": "lerna run test -- --passWithNoTests",
-    "test:watch": "lerna run test:watch -- --passWithNoTests",
-    "test:e2e": "lerna run test:e2e",
-    "version-packages": "changeset version && yarn prettier"
+    "lint": "turbo run lint",
+    "lint:prod": "cross-env NODE_ENV=production eslint ./package.json",
+    "test": "turbo run test",
+    "test:watch": "turbo run test:watch -- --passWithNoTests",
+    "test:unit": "turbo run test -- --passWithNoTests",
+    "test:e2e": "turbo run test:e2e",
+    "version-packages": "changeset version && yarn prettier",
+    "posttest": "yarn combine:reports",
+    "combine:reports": "node scripts/combineCoverage.js"
   },
   "private": true,
   "resolutions": {
@@ -42,32 +47,36 @@
     "lodash-es": "^4.17.21",
     "lodash": "^4.17.21",
     "**/react": "^17.0.2",
-    "**/react-dom": "^17.0.2"
+    "**/react-dom": "^17.0.2",
+    "@sentry/react": "^7.3.1",
+    "@sentry/nextjs": "^7.3.1"
   },
   "browserslist": [
     "> 0.5%",
     "last 2 version",
     "Firefox ESR",
     "not dead",
-    "not IE 11",
-    "maintained node versions"
+    "not IE 11"
   ],
   "dependencies": {
+    "@last-rev/eslint-plugin-last-rev": "^0.1.1",
     "@manypkg/cli": "^0.19.1",
     "cross-env": "^7.0.2",
     "eslint": "^8.4.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-google": "^0.14.0",
+    "eslint-config-next": "^12.0.8",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-filenames": "^1.3.2",
     "eslint-plugin-flowtype": "^8.0.3",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "fs-extra": "^10.0.0",
+    "husky": "^7.0.4",
     "lerna": "^3.22.1",
     "netlify-cli": "^8.1.8",
     "npm-run-all": "^4.1.5",
@@ -77,7 +86,14 @@
     "prettier": "^2.5.1",
     "prettier-eslint": "^13.0.0",
     "tslib": "^2.3.1",
-    "typescript": "4.3.4",
+    "turbo": "1.2.0-canary.5",
+    "typescript": "^4.7.4",
     "wait-on": "^5.3.0"
+  },
+  "packageManager": "yarn@1.22.17",
+  "husky": {
+    "hooks": {
+      "pre-push": "yarn lint:prod"
+    }
   }
 }

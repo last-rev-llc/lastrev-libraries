@@ -1,5 +1,83 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/graphql-contentful-core@0.4.0
+  - @last-rev/types@0.2.0
+
+## 0.1.2
+
+### Patch Changes
+
+- 372fab9: Cleanup for forwarded props and svg best practices
+
+## 0.1.1
+
+### Patch Changes
+
+- f09f4e5: Add support for inlined svg with svgContent from GQL
+- 2ead5c4: Move XSS filtering from Components to Data Layer
+- Updated dependencies [2ead5c4]
+  - @last-rev/graphql-contentful-core@0.3.1
+
+## 0.1.0
+
+### Minor Changes
+
+- 3ba98cd: July updates
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+- Updated dependencies [3ba98cd]
+  - @last-rev/graphql-contentful-core@0.3.0
+  - @last-rev/rollup-config@0.1.4
+
+## 0.0.16
+
+### Patch Changes
+
+- 65e1afd: Add mapping to ensure https in front of Asset URLs
+
+## 0.0.15
+
+### Patch Changes
+
+- 4ca501c: bumped version of @last-rev/graphql-contentful-core
+
+## 0.0.14
+
+### Patch Changes
+
+- 91a15e8: added target resolver for links to improve ux on contentful
+
+## 0.0.13
+
+### Patch Changes
+
+- Updated dependencies [25375f1]
+  - @last-rev/graphql-contentful-core@0.2.0
+
+## 0.0.12
+
+### Patch Changes
+
+- 1d57f99: Add support for Media responsive fields: tablet and mobile
+
+## 0.0.11
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+- Updated dependencies [d6ec293]
+  - @last-rev/graphql-contentful-core@0.1.34
+  - @last-rev/rollup-config@0.1.2
+  - @last-rev/types@0.1.7
+
 ## 0.0.10
 
 ### Patch Changes

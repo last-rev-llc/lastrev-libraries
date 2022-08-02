@@ -1,10 +1,11 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import FormMarketoEmbed, { FormMarketoEmbedProps } from './FormMarketoEmbed';
+import FormMarketoEmbed from './FormMarketoEmbed';
+import { FormMarketoEmbedProps } from './FormMarketoEmbed.types';
 import formMarketoEmbedMock from './FormMarketoEmbed.mock';
 
 export default {
-  title: '2. Modules / FormMarketoEmbed',
+  title: 'Components / FormMarketoEmbed',
   component: FormMarketoEmbed,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

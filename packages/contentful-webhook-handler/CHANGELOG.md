@@ -1,5 +1,76 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.4
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/graphql-contentful-helpers@0.3.0
+
+## 0.4.3
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-path-util@0.1.11
+  - @last-rev/contentful-webhook-parser@0.1.1
+  - @last-rev/graphql-contentful-helpers@0.2.5
+
+## 0.4.2
+
+### Patch Changes
+
+- d937c88: Using updated createContext function
+- Updated dependencies [d937c88]
+  - @last-rev/graphql-contentful-helpers@0.2.4
+
+## 0.4.1
+
+### Patch Changes
+
+- f7e8fa4: After entry changes, deleting all entry ids by content type, as these will be immediately re-calculated upon path updating.
+  - @last-rev/graphql-contentful-helpers@0.2.3
+
+## 0.4.0
+
+### Minor Changes
+
+- 71bf23b: 'Updated version of ioredis to 5.x, added contentful type checking to redis loader and contentful webhook'
+
+### Patch Changes
+
+- Updated dependencies [71bf23b]
+  - @last-rev/contentful-path-util@0.1.10
+  - @last-rev/graphql-contentful-helpers@0.2.2
+
+## 0.3.0
+
+### Minor Changes
+
+- 1d7f33d: Enhancing redis data with additional metadata for troubleshooting
+
+### Patch Changes
+
+- @last-rev/graphql-contentful-helpers@0.2.1
+
+## 0.2.0
+
+### Minor Changes
+
+- 25375f1: Added resolveLinks:false to all contentful createClient calls in the framework
+
+### Patch Changes
+
+- Updated dependencies [25375f1]
+  - @last-rev/graphql-contentful-helpers@0.2.0
+
+## 0.1.12
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.11
 
 ### Patch Changes

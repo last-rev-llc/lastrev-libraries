@@ -1,39 +1,22 @@
-import { responsiveFontSizes } from '@mui/material/styles';
-import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
-import createCardVariants from './variants/createCardVariants';
-import createTextVariants from './variants/createTextVariants';
-import { Mixins } from '@mui/material/styles/createMixins';
+import { responsiveFontSizes, ThemeOptions, createTheme } from '@mui/material/styles';
+import Hero from '../components/Hero/Hero.theme';
+import Card from '../components/Card/Card.theme';
+import Media from '../components/Media/Media.theme';
+import Quote from '../components/Quote/Quote.theme';
+import Header from '../components/Header/Header.theme';
+import Section from '../components/Section/Section.theme';
+import Link from '../components/Link/Link.theme';
+import Text from '../components/Text/Text.theme';
+import NavigationBar from '../components/NavigationBar/NavigationBar.theme';
+import NavigationItem from '../components/NavigationItem/NavigationItem.theme';
+import Collection from '../components/Collection/Collection.theme';
 import merge from 'lodash/merge';
 import camelCase from 'lodash/camelCase';
-// import { ThemeOptions } from '@mui/material/styles';
-// import { createSchemePalette } from './schemes/utils/paletteColors';
-// import { getPaletteAccents } from './schemes/utils/accentColors';
-// import colorSchemes from './schemes/colors';
-declare module '@mui/material/styles/createMixins' {
-  interface Mixins {
-    // declare any custom mixins here - Example Below
-    // container: (theme: Theme, options?: any) => CSSProperties;
-  }
-}
 
-declare module '@mui/material/styles' {
-  // eslint-disable-next-line
-  interface Theme {
-    mixins: Mixins;
-  }
-}
-declare module '@mui/material/styles' {
-  // eslint-disable-next-line
-  interface Theme {
-    scheme?: string;
-    createScheme: (scheme: string) => Theme;
-  }
-}
-
-const baseTheme = {
+const baseTheme: ThemeOptions = {
   spacing: 8,
   shape: {
-    borderRadius: 0
+    borderRadius: 8
   },
   breakpoints: {
     // Add any custom breakpoints here
@@ -44,13 +27,6 @@ const baseTheme = {
       lg: 1200,
       xl: 1536
     }
-  },
-  mixins: {
-    // Add any custom mixins here - Example Below
-    // container: (theme: Theme, options: { noGutters?: boolean; maxWidth?: string } = {}) => ({
-    //   ...theme.mixins.containerWrap(theme, { maxWidth: options?.maxWidth }),
-    //   ...theme.mixins.responsiveContainerSpacing(theme, { noGutters: options?.noGutters })
-    // })
   },
   typography: {
     // Customize add and/or remove as necesary
@@ -111,18 +87,24 @@ const baseTheme = {
   },
   palette: {
     mode: 'light',
+    ...{
+      white: {
+        main: '#FFF',
+        contrastText: 'rgba(0, 0, 0, 0.87)'
+      },
+      black: {
+        main: '#000',
+        contrastText: '#FFF'
+      }
+    },
     primary: {
-      main: '#FFFFFF',
-      light: 'rgb(255, 255, 255)',
-      dark: 'rgb(178, 178, 178)',
-      contrastText: 'rgba(0, 0, 0, 0.87)'
+      main: '#9146ff',
+      contrastText: '#FFFFFF'
     },
     secondary: {
-      main: '#add8e6',
-      light: '#add8e6',
-      dark: 'rgb(121, 151, 161)',
-      contrastText: 'rgba(0, 0, 0, 0.87)'
+      main: '#F9F871'
     },
+
     text: {
       primary: '#00030B',
       secondary: '#E5E5E5',
@@ -137,10 +119,6 @@ const baseTheme = {
     common: {
       black: '#00030B',
       white: '#FFFFFF'
-    },
-    background: {
-      default: '#E5E5E5',
-      paper: '#E5E5E5'
     },
     warning: {
       main: '#ed6c02',
@@ -164,132 +142,61 @@ const baseTheme = {
 };
 
 const createSchemeTheme = (schemeKey?: string) => {
-  const baseSchemeTheme = createAppTheme(baseTheme as any);
+  const baseSchemeTheme = createTheme(baseTheme);
 
-  const schemeTheme = createAppTheme(
-    merge({ scheme: camelCase(schemeKey) }, baseSchemeTheme, {
-      createSchemeTheme,
-      components: {
-        // Add any default props, styleoverrides, etc. below.
-        // The below can be removed safely on project start, these are just examples
-        Header: {
-          height: 100,
-          mobileMenuBreakpoint: 'md',
-          styleOverrides: {
-            contentContainer: {
-              height: 100,
-              [baseSchemeTheme.breakpoints.up('sm')]: {
-                paddingLeft: baseSchemeTheme.spacing(10),
-                paddingRight: baseSchemeTheme.spacing(10)
-              }
-            }
-          }
-        },
-        NavigationBar: {
-          styleOverrides: {
-            root: {
-              '& .MuiLink-root': {
-                'textDecoration': 'none',
-                '&.MuiLink-selected': { fontWeight: 'bold' }
-              }
-            }
-          }
-        },
-        Text: {
-          variants: createTextVariants(baseSchemeTheme),
-          styleOverrides: {
-            root: {}
-          }
-        },
-        Card: {
-          variants: createCardVariants(baseSchemeTheme),
-          styleOverrides: {
-            root: {}
-          }
-        },
-        Collection: {
-          styleOverrides: {
-            root: {
-              'maxWidth': 1280,
-              'margin': '0 auto',
-              '[class*="Section-gridContainer"]': {
-                'display': 'grid',
-                'gridAutoRows': '1fr',
-                '[class*="Box-content"]': {
-                  display: 'block'
-                }
-              },
-              '[class*="Section-gridItem"]': {
-                display: 'flex',
-                justifyContent: 'center',
-                flexBasis: '100%',
-                maxWidth: '100%',
-                height: '100%',
-                [baseSchemeTheme.breakpoints.up('md')]: {
-                  flexBasis: '50%'
+  const schemeTheme = createTheme(
+    merge(
+      { scheme: camelCase(schemeKey) },
+      baseSchemeTheme,
+      ...[
+        Header(baseSchemeTheme),
+        Text(baseSchemeTheme),
+        Card(baseSchemeTheme),
+        Quote(baseSchemeTheme),
+        Media(baseSchemeTheme),
+        Hero(baseSchemeTheme),
+        NavigationItem(baseSchemeTheme),
+        NavigationBar(baseSchemeTheme),
+        Link(baseSchemeTheme),
+        Section(baseSchemeTheme),
+        Collection(baseSchemeTheme)
+      ],
+      {
+        createSchemeTheme,
+        components: {
+          // CollectionAccordionMedia:
+          MuiContainer: {
+            defaultProps: {
+              maxWidth: 'xl'
+            },
+            styleOverrides: {
+              root: {
+                [baseSchemeTheme.breakpoints.down('sm')]: {
+                  'paddingLeft': baseSchemeTheme.spacing(5),
+                  'paddingRight': baseSchemeTheme.spacing(5),
+                  '&.MuiContainer-disableGutters': {
+                    paddingLeft: 0,
+                    paddingRight: 0
+                  }
                 },
-                [baseSchemeTheme.breakpoints.up('lg')]: {
-                  flexBasis: '33.333333%'
-                }
-              }
-            }
-          }
-        },
-        CollectionFiltered: {
-          styleOverrides: {
-            root: {}
-          }
-        },
-        CollectionCarousel: {},
-        CollectionAccordion: {},
-        Hero: {
-          styleOverrides: {
-            root: {}
-          }
-        },
-        Section: {
-          styleOverrides: {
-            contentContainer: {
-              padding: baseSchemeTheme.spacing(3),
-              paddingLeft: baseSchemeTheme.spacing(10),
-              paddingRight: baseSchemeTheme.spacing(10),
-              [baseSchemeTheme.breakpoints.down('sm')]: {
-                paddingLeft: baseSchemeTheme.spacing(3),
-                paddingRight: baseSchemeTheme.spacing(3)
-              }
-            }
-          }
-        },
-        MuiContainer: {
-          defaultProps: {
-            maxWidth: 'xl'
-          },
-          styleOverrides: {
-            root: {
-              [baseSchemeTheme.breakpoints.down('sm')]: {
-                'paddingLeft': baseSchemeTheme.spacing(3),
-                'paddingRight': baseSchemeTheme.spacing(3),
-                '& .MuiContainer-disableGutters': {
+                [baseSchemeTheme.breakpoints.up('sm')]: {
+                  paddingLeft: baseSchemeTheme.spacing(10),
+                  paddingRight: baseSchemeTheme.spacing(10)
+                },
+                '&.MuiContainer-disableGutters': {
                   paddingLeft: 0,
                   paddingRight: 0
                 }
-              },
-              'paddingLeft': baseSchemeTheme.spacing(10),
-              'paddingRight': baseSchemeTheme.spacing(10),
-              '& .MuiContainer-disableGutters': {
-                paddingLeft: 0,
-                paddingRight: 0
               }
             }
           }
         }
       }
-    })
+    )
   );
 
   return responsiveFontSizes(schemeTheme);
 };
 
 const theme = createSchemeTheme();
-
 export default theme;

@@ -1,7 +1,6 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
-import { MailchimpFormProps } from './MailchimpForm';
-import mockTheme from '../../theme/mock.theme';
+import { MailchimpFormProps } from './MailchimpForm.types';
 
 export default (): MailchimpFormProps => ({
   variant: 'default',
@@ -55,6 +54,5 @@ export default (): MailchimpFormProps => ({
     }
   },
   actions: [{ text: 'Join now', variant: 'button-contained' }],
-  theme: [mockTheme],
   sidekickLookup: ''
 });

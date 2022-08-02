@@ -5,16 +5,7 @@ import Container from '@mui/material/Container';
 import ContentModule from '../ContentModule';
 import capitalize from 'lodash/capitalize';
 import { CircularProgress } from '@mui/material';
-
-interface ContentPreviewProps {
-  id?: string;
-  loading?: boolean;
-  content?: any;
-  error?: any;
-  environment: string;
-  spaceId: string;
-  locale: string;
-}
+import { ContentPreviewProps } from './ContentPreview.types';
 
 const ContentPreview = ({
   id,
@@ -23,8 +14,17 @@ const ContentPreview = ({
   error,
   environment,
   spaceId,
-  locale = 'en-US'
+  locale = 'en-US',
+  pageURL,
+  livePreview = false
 }: ContentPreviewProps) => {
+  const [viewportW, setViewportW] = React.useState(0);
+  React.useLayoutEffect(() => {
+    setViewportW(window.innerWidth);
+    window.addEventListener('resize', () => {
+      setViewportW(window.innerWidth);
+    });
+  });
   return (
     <>
       {content ? <ContentModule {...content} /> : null}
@@ -69,15 +69,27 @@ const ContentPreview = ({
         </Container>
       ) : null}
 
-      <div style={{ position: 'fixed', bottom: 16, right: 16 }}>
-        <Link
-          target="_blank"
-          href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}
-        >
-          {`${capitalize(content?.__typename)}#${id} in Contentful`}
-        </Link>
-        <br />
-      </div>
+      {!livePreview ? (
+        <div style={{ position: 'fixed', bottom: 16, right: 16, background: '#fff', padding: 8, zIndex: 10 }}>
+          <Link
+            target="_blank"
+            href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}
+          >
+            {`${capitalize(content?.__typename)}#${id} in Contentful`}
+          </Link>
+          <br />
+          {pageURL && (
+            <Link target="_blank" href={pageURL}>
+              {`Page URL: ${pageURL}`}
+            </Link>
+          )}
+        </div>
+      ) : null}
+      {livePreview && !viewportW ? (
+        <div style={{ position: 'fixed', top: 16, right: 16, background: '#fff', padding: 8, zIndex: 10 }}>
+          <Typography variant="overline">{viewportW}px</Typography>
+        </div>
+      ) : null}
     </>
   );
 };

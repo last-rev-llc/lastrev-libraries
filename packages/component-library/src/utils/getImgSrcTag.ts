@@ -1,6 +1,5 @@
-// import { map, filter } from 'lodash';
-import map from 'lodash/map';
-import filter from 'lodash/filter';
+// import map from 'lodash/map';
+// import filter from 'lodash/filter';
 
 interface GetRatioParams {
   width: number;
@@ -37,7 +36,7 @@ export const getOptimizedUrl = ({
   if (unoptimized) return fetchUrl;
   const options = [];
   if (q) options.push(`q=${q}`);
-  if (width && fetchUrl?.includes('ctfassets')) {
+  if (width && (fetchUrl?.includes('ctfassets') || fetchUrl?.includes('contentful'))) {
     if (width) options.push(`w=${Math.round(width)}`);
     fetchUrl = fetchUrl?.includes('?') ? `${fetchUrl}&${options.join('&')}` : `${fetchUrl}?${options.join('&')}`;
   } else {
@@ -66,14 +65,14 @@ const getImgSrcTag = ({ src, numColumns = 12, q, unoptimized = false }: GetImgSr
   const sizes = [3840, 3520, 3200, 2880, 2560, 2240, 1920, 1600, 1440, 1280, 960, 640];
 
   // ratio = 1 for full width (12), 0.5 for half width (6)
-  const srcSets = map(
-    filter(sizes, (fs) => fs <= maxWidth),
-    (s) => `${getOptimizedUrl({ url: src, width: s * getRatio({ width: s, numColumns }), q, unoptimized })} ${s}w`
-  );
-  const attrSizes = map(
-    filter(sizes, (fs) => fs <= maxWidth),
-    (s) => `(max-width: ${s}x) ${s * getRatio({ width: s, numColumns })}px`
-  );
+  const srcSets = sizes
+    .filter((fs) => fs <= maxWidth)
+    .map(
+      (s) => `${getOptimizedUrl({ url: src, width: s * getRatio({ width: s, numColumns }), q, unoptimized })} ${s}w`
+    );
+  const attrSizes = sizes
+    .filter((fs) => fs <= maxWidth)
+    .map((s) => `(max-width: ${s}x) ${s * getRatio({ width: s, numColumns })}px`);
 
   // NOTE: Commented out, but do we need?
   // attrs.src = `${{ url: src, width: sizes[sizes.length - 1], settings }}`;

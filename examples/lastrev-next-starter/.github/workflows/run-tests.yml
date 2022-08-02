@@ -1,0 +1,57 @@
+name: Run tests
+
+on: [pull_request]
+
+jobs:
+  test:
+    if: github.actor != 'dependabot'
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: 0
+
+      - name: Setup Node.js 16
+        uses: actions/setup-node@master
+        with:
+          node-version: 16
+
+      - name: Dependencies cache
+        uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: |
+            **/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules/.cache/turbo
+          key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.job }}-${{ github.ref_name }}-
+
+      - name: Install project dependencies
+        run: yarn --prefer-offline
+
+      - name: Run the tests
+        run: 'yarn turbo run test lint --output-logs=new-only'
+
+      - name: Collect coverage
+        run: 'yarn combine:reports'
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: coverage

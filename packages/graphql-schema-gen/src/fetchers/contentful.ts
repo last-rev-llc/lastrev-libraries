@@ -120,7 +120,7 @@ const contentfulFetcher: Fetcher = async (
   clientParams: CreateClientParams,
   skipReferenceFields: boolean
 ) => {
-  const client = createClient(clientParams);
+  const client = createClient({ ...clientParams, resolveLinks: false });
 
   return generateContentfulSchema(typeMappings, (await client.getContentTypes()).items, skipReferenceFields);
 };

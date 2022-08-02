@@ -1,6 +1,5 @@
-import { CollectionAccordionProps } from './CollectionAccordion';
+import { CollectionAccordionProps } from './CollectionAccordion.types';
 import mockAccordion from '../Accordion/Accordion.mock';
-import mockTheme from '../../theme/mock.theme';
 
 export default (): CollectionAccordionProps => ({
   sidekickLookup: 'sidekick-lookup',
@@ -10,20 +9,23 @@ export default (): CollectionAccordionProps => ({
     {
       ...mockAccordion,
       variant: 'accordion-standard',
-      title: 'Stress and anxiety: What’s the difference?'
+      title: 'Cum sociis natoque penatibus et magnis dis parturient.'
     },
     {
       ...mockAccordion,
       variant: 'accordion-standard',
-      title: 'What is depression? How do I know if I have it'
+      title: 'A communi observantia non est recedendum.'
     },
-    { ...mockAccordion, variant: 'accordion-standard', title: 'What is psychosis? How do I know if I have it?' },
     {
       ...mockAccordion,
       variant: 'accordion-standard',
-      title: 'How soon should I seek help? Will this get better on its own?'
+      title: 'Paullum deliquit, ponderibus modulisque suis ratio utitur.'
+    },
+    {
+      ...mockAccordion,
+      variant: 'accordion-standard',
+      title: 'Unam incolunt Belgae, aliam Aquitani, tertiam.'
     }
   ],
-  itemsVariant: 'accordion-standard',
-  theme: [mockTheme]
+  itemsVariant: 'accordion-standard'
 });

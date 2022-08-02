@@ -1,11 +1,13 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Collection from './Collection';
+import Card from '../Card';
 import collectionMock, { collectionWithIntroText } from './Collection.mock';
 
 export default {
-  title: '1. Primitives / MUI / Collection',
+  title: 'Components / Collection',
   component: Collection,
+  subComponents: { Card },
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (
       <Box mx={2}>{storyFn()}</Box>

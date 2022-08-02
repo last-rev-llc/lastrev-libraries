@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { capitalize } from 'lodash';
 import mount from '../../../cypress/mount';
-import Link, { LinkProps } from './Link';
+import Link from './Link';
+import { LinkProps } from './Link.types';
 import mockContent from './Link.mock';
 
 let mockedContent: LinkProps = {};
@@ -30,7 +31,7 @@ const testAlignTypes = (linkType: 'button' | 'link') => {
         }
       } else {
         mount(<Link {...mockedContent} align={alignment} />);
-        cy.get('button').should('have.attr', 'align', alignment);
+        cy.get('a').should('have.attr', 'align', alignment);
       }
     });
   });
@@ -44,7 +45,7 @@ const testUnderlineTypes = (linkType: 'button' | 'link') => {
         cy.get('a').should('have.class', `MuiLink-underline${capitalize(underline)}`);
       } else {
         mount(<Link {...mockedContent} underline={underline} />);
-        cy.get('button').should('have.attr', 'underline', underline);
+        cy.get('a').should('have.attr', 'underline', underline);
       }
     });
   });
@@ -72,19 +73,19 @@ describe('Link', () => {
 
       it('renders a contained button when variant is button-contained', () => {
         mount(<Link {...mockedContent} variant="button-contained" />);
-        cy.get('button').should('exist').and('have.class', 'MuiButton-contained').and('have.text', mockedContent.text);
+        cy.get('a').should('exist').and('have.class', 'MuiButton-contained').and('have.text', mockedContent.text);
         cy.percySnapshot();
       });
 
       it('renders an outlined button when variant is button-outlined', () => {
         mount(<Link {...mockedContent} variant="button-outlined" />);
-        cy.get('button').should('exist').and('have.class', 'MuiButton-outlined').and('have.text', mockedContent.text);
+        cy.get('a').should('exist').and('have.class', 'MuiButton-outlined').and('have.text', mockedContent.text);
         cy.percySnapshot();
       });
 
       it('renders text as a button when variant is button-text', () => {
         mount(<Link {...mockedContent} variant="button-text" />);
-        cy.get('button').should('exist').and('have.class', 'MuiButton-text').and('have.text', mockedContent.text);
+        cy.get('a').should('exist').and('have.class', 'MuiButton-text').and('have.text', mockedContent.text);
         cy.percySnapshot();
       });
     });
@@ -128,19 +129,19 @@ describe('Link', () => {
     describe('size attribute when variant starts with button-', () => {
       it('renders a small button when size is small', () => {
         mount(<Link {...mockedContent} size="small" />);
-        cy.get('button').should('have.class', 'MuiButton-sizeSmall');
+        cy.get('a').should('have.class', 'MuiButton-sizeSmall');
         cy.percySnapshot();
       });
 
       it('renders a medium button when size is medium', () => {
         mount(<Link {...mockedContent} size="medium" />);
-        cy.get('button').should('have.class', 'MuiButton-sizeMedium');
+        cy.get('a').should('have.class', 'MuiButton-sizeMedium');
         cy.percySnapshot();
       });
 
       it('renders a large button when size is large', () => {
         mount(<Link {...mockedContent} size="large" />);
-        cy.get('button').should('have.class', 'MuiButton-sizeLarge');
+        cy.get('a').should('have.class', 'MuiButton-sizeLarge');
         cy.percySnapshot();
       });
     });

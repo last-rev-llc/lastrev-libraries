@@ -1,5 +1,23 @@
 # @last-rev/graphql-schema-gen
 
+## 0.2.1
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+
+## 0.2.0
+
+### Minor Changes
+
+- 25375f1: Added resolveLinks:false to all contentful createClient calls in the framework
+
+## 0.1.9
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.8
 
 ### Patch Changes

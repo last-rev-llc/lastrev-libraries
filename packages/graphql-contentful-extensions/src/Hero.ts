@@ -8,5 +8,6 @@ export const typeDefs = gql`
 
     # Comment this fields if added in Contentful
     contentHeight: String
+    background: Media
   }
 `;

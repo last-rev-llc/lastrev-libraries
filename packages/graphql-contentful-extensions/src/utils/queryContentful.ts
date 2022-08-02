@@ -28,7 +28,6 @@ const query = async ({
     select: 'sys.id',
     ...parseFilters(filter, filters)
   };
-  console.log('queryContentful', { filter, filters, contentType, contentfulQuery });
   if (ctx.preview) {
     items = (await ctx.contentful.preview.getEntries(contentfulQuery)).items;
   } else {

@@ -1,58 +1,17 @@
 import React from 'react';
-import { Container, Box, Grid, Typography, Breakpoint, FormControl, TextField } from '@mui/material';
+import { Container, Box, Grid, Typography, FormControl, TextField } from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import Link from '../Link';
-import Media from '../Media';
-import { MediaProps } from '../Media/Media.types';
-import Text, { RichText } from '../Text';
+
+import ContentModule from '../ContentModule';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import snakeCase from 'lodash/snakeCase';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import getFirstOfArray from '../../utils/getFirstOfArray';
+import { CustomFormProps, MailchimpFormProps, SubscribeFormData } from './MailchimpForm.types';
 const url = '//strong365.us3.list-manage.com/subscribe/post?u=d86f5abb669bd78efab8bbf17&id=a842d73410';
-
-export interface MailchimpFormProps {
-  internalTitle?: string;
-  title?: string;
-  subtitle?: string;
-  body?: RichText;
-  successMessage?: RichText;
-  actions?: any[];
-  image?: MediaProps | MediaProps[];
-  background?: any;
-  contentWidth?: false | Breakpoint | undefined;
-  variant?: any;
-  theme: any;
-  sidekickLookup: any;
-}
-
-interface FormFields {
-  EMAIL: string;
-  FNAME?: string;
-  LNAME?: string;
-}
-
-type StatusTypes = 'sending' | 'error' | 'success' | undefined | null;
-
-type SubscribeType = (data: FormFields) => void;
-
-interface CustomFormProps {
-  internalTitle?: string;
-  status?: StatusTypes;
-  message?: String | Error | null;
-  subscribe: SubscribeType;
-  actions?: any[];
-  successMessage?: RichText;
-  image?: MediaProps | MediaProps[];
-  sidekickLookup: any;
-}
-interface SubscribeFormData {
-  EMAIL: string;
-  FNAME?: string;
-  LNAME?: string;
-}
 
 const CustomForm = ({
   status,
@@ -142,7 +101,7 @@ const CustomForm = ({
             ))}
           </FormControl>
         </SubmitContainer>
-        <FormImage {...sidekick(sidekickLookup?.image)} {...getFirstOfArray(image)} />
+        <FormImage __typename="Media" {...sidekick(sidekickLookup?.image)} {...getFirstOfArray(image)} />
         <Grid
           container
           sx={{
@@ -156,7 +115,12 @@ const CustomForm = ({
           }}
         >
           {successMessage ? (
-            <Text body={successMessage} data-testid="MailchimpForm-successMessage" />
+            <ContentModule
+              __typename="Text"
+              variant="mailchimp-form"
+              body={successMessage}
+              data-testid="MailchimpForm-successMessage"
+            />
           ) : (
             <Box>Success</Box>
           )}
@@ -193,7 +157,15 @@ export const MailchimpForm = ({
                 {subtitle}
               </Typography>
             ) : null}
-            {body ? <Text sidekickLookup={sidekickLookup?.body} body={body} data-testid="MailchimpForm-body" /> : null}
+            {body ? (
+              <ContentModule
+                __typename="Text"
+                variant="MailchimpForm"
+                sidekickLookup={sidekickLookup?.body}
+                body={body}
+                data-testid="MailchimpForm-body"
+              />
+            ) : null}
           </Grid>
 
           <Grid container item sx={{ position: 'relative' }}>
@@ -236,7 +208,7 @@ const ContentContainer = styled(Container, {
   paddingBottom: theme.spacing(8)
 }));
 
-const FormImage = styled(Media, {
+const FormImage = styled(ContentModule, {
   name: 'Form',
   slot: 'Image',
   overridesResolver: (_, styles) => [styles.formImage]
@@ -266,7 +238,7 @@ const FormContainer = styled(Grid, {
 })<{ variant?: string }>(({ theme }) => ({
   'position': 'relative',
   'borderRadius': 20,
-  'backgroundColor': theme.palette.quartiary.main,
+  'backgroundColor': theme.palette.quartiary?.main,
   'border': '1px solid grey',
   'paddingTop': theme.spacing(3),
   'paddingBottom': theme.spacing(4),

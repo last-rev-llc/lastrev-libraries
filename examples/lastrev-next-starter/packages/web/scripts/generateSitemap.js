@@ -15,7 +15,7 @@ const run = async () => {
     site: process.env.SITE
   });
 
-  await generate(data.sitemap, resolve(__dirname, '../out'));
+  await generate(data.sitemap, resolve(__dirname, '../public'));
 };
 
 run()

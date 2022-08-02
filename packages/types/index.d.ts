@@ -19,8 +19,16 @@ export type PathDataMap = {
   [path: string]: PathData;
 };
 
+export type FVLKey = {
+  preview: boolean;
+  field: string;
+  value: string;
+  contentType: string;
+};
+
 export type ContentfulLoaders = {
   entryLoader: DataLoader<ItemKey, Entry<any> | null>;
+  entryByFieldValueLoader: DataLoader<FVLKey, Entry<any> | null>;
   assetLoader: DataLoader<ItemKey, Asset | null>;
   entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
   fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
@@ -69,6 +77,7 @@ export type ApolloContext = Context<{
   preview?: boolean;
   contentful: ContentfulClients;
   pathReaders?: PathReaders;
+  displayType?: string;
 }>;
 
 export type TypeMapper = {

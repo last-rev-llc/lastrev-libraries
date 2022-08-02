@@ -4,12 +4,13 @@ import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
 import { ContentfulLoaders } from '@last-rev/types';
 import { GraphQLSchema } from 'graphql';
-import { buildFederatedSchema } from '@apollo/federation';
+// TODO: Re-enable federation if needed
+// import { buildFederatedSchema } from '@apollo/federation';
 import LastRevAppConfig from '@last-rev/app-config';
-import { addResolversToSchema } from '@graphql-tools/schema';
-
+import { addResolversToSchema, makeExecutableSchema } from '@graphql-tools/schema';
+import { createLoaders } from '@last-rev/graphql-contentful-helpers';
 const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
-  // may not have production content, if none there, use preview
+  // may not have production content, if none there, use preview (only needed for filesystem builds)
   const contentTypes = await loaders.fetchAllContentTypes(false);
   if (!contentTypes || !contentTypes.length) {
     return loaders.fetchAllContentTypes(true);
@@ -17,7 +18,9 @@ const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
   return contentTypes;
 };
 
-const buildSchema = async (config: LastRevAppConfig, loaders: ContentfulLoaders): Promise<GraphQLSchema> => {
+const buildSchema = async (config: LastRevAppConfig): Promise<GraphQLSchema> => {
+  // locale doesn't matter for this use case
+  const loaders = createLoaders(config, 'en-US');
   const contentTypes = await fetchAllContentTypes(loaders);
 
   const baseTypeDefs = await generateSchema({
@@ -37,10 +40,10 @@ const buildSchema = async (config: LastRevAppConfig, loaders: ContentfulLoaders)
   const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, config.extensions.typeDefs]);
   const resolvers: Record<string, any> = mergeResolvers([defaultResolvers, config.extensions.resolvers]);
 
-  const federatedSchema = buildFederatedSchema([{ typeDefs }]);
+  const schema = makeExecutableSchema({ typeDefs });
 
   return addResolversToSchema({
-    schema: federatedSchema,
+    schema,
     resolvers,
     inheritResolversFromInterfaces: true,
     resolverValidationOptions: {

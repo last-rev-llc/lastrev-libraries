@@ -6,13 +6,13 @@ import createDynamoDbLoaders from '@last-rev/contentful-dynamodb-loader';
 import { ContentfulLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 
-const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
+const createLoaders = (config: LastRevAppConfig, defaultLocale: string): ContentfulLoaders => {
   let loaders;
 
+  const cmsLoaders = createCmsLoaders(config, defaultLocale);
   if (config.strategy === 'fs') {
-    loaders = createFsLoaders(config);
+    loaders = createFsLoaders(config, cmsLoaders);
   } else {
-    const cmsLoaders = createCmsLoaders(config);
     if (config.strategy === 'redis') {
       loaders = createRedisLoaders(config, cmsLoaders);
     } else if (config.strategy === 'dynamodb') {

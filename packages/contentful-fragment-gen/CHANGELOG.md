@@ -1,5 +1,25 @@
 # @last-rev/contentful-fragment-gen
 
+## 0.2.1
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/timer@0.1.3
+
+## 0.2.0
+
+### Minor Changes
+
+- 25375f1: Added resolveLinks:false to all contentful createClient calls in the framework
+
+## 0.1.4
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.3
 
 ### Patch Changes

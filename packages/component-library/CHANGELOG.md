@@ -1,5 +1,169 @@
 # @last-rev/component-library
 
+## 0.5.5
+
+### Patch Changes
+
+- dea64cc: Fix ArtDirectedMedia not rendering all images
+
+## 0.5.4
+
+### Patch Changes
+
+- 97d5928: Fix Text with formatted links missing tags
+
+## 0.5.3
+
+### Patch Changes
+
+- 372fab9: Cleanup for forwarded props and svg best practices
+
+## 0.5.2
+
+### Patch Changes
+
+- f09f4e5: Add support for inlined svg with svgContent from GQL
+- 2ead5c4: Move XSS filtering from Components to Data Layer
+
+## 0.5.1
+
+### Patch Changes
+
+- 5bd5e96: Fix Card using Link component directly
+
+## 0.5.0
+
+### Minor Changes
+
+- 3ba98cd: July updates
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- 3ba98cd: Improve bundle size of components
+  Improve forwarded props to remove errors
+  Remove framer-motion dependency from ContentModule
+- 211f24a: Added next/script to SEO
+- 3ba98cd: Added more slots for Card, Hero, Header, Link. Removed default styles for text color.
+- 3ba98cd: Make Header and NavigationItem links use color inherit as a default
+  Fix as prop for Link
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-sidekick-util@0.1.1
+  - @last-rev/rollup-config@0.1.4
+  - @last-rev/testing-library@0.1.10
+
+## 0.4.7
+
+### Patch Changes
+
+- 658ee30: Make Link pass variant to root
+
+## 0.4.6
+
+### Patch Changes
+
+- 65e1afd: Add nextImageOptimization feature
+
+## 0.4.5
+
+### Patch Changes
+
+- cf25fe7: Fix getImgSrc issues with diferent Contentful URL"
+
+## 0.4.4
+
+### Patch Changes
+
+- Updated dependencies [8c37a33]
+  - @last-rev/testing-library@0.1.9
+
+## 0.4.3
+
+### Patch Changes
+
+- Updated dependencies [133d406]
+  - @last-rev/testing-library@0.1.8
+
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [3caca6a]
+  - @last-rev/testing-library@0.1.7
+
+## 0.4.1
+
+### Patch Changes
+
+- cf7d228: Change Hero component to use ContentModule when rendering a Link
+- Updated dependencies [6887a14]
+  - @last-rev/testing-library@0.1.6
+
+## 0.4.0
+
+### Minor Changes
+
+- 35c6c46: Add pageURL prop to the ContentPreview component
+
+## 0.3.16
+
+### Patch Changes
+
+- c328895: Add missing components to Rollup entrypoint
+
+## 0.3.15
+
+### Patch Changes
+
+- d3f17d2: Update type definitions for components
+
+## 0.3.14
+
+### Patch Changes
+
+- 63990ac: removed log in Header component
+
+## 0.3.13
+
+### Patch Changes
+
+- Updated dependencies [331e973]
+  - @last-rev/testing-library@0.1.5
+
+## 0.3.12
+
+### Patch Changes
+
+- Updated dependencies [e718693]
+  - @last-rev/testing-library@0.1.4
+
+## 0.3.11
+
+### Patch Changes
+
+- Updated dependencies [1e4c547]
+  - @last-rev/testing-library@0.1.3
+
+## 0.3.10
+
+### Patch Changes
+
+- 9354976: Update usage of Text to ContentModule to allow overrides
+
+## 0.3.9
+
+### Patch Changes
+
+- f3fe612: Add basic video support for Media content module
+- Updated dependencies [e657cb0]
+  - @last-rev/contentful-sidekick-util@0.1.0
+
+## 0.3.8
+
+### Patch Changes
+
+- b99497c: Cleanup theme TS typings
+
 ## 0.3.7
 
 ### Patch Changes

@@ -9,14 +9,11 @@ import BaseApiWrapper from './BaseApiWrapper';
 import LastRevConfig, {
   VAL_GITHUB_REPO,
   VAL_NETLIFY_SITE,
-  VAL_GITHUB_REPO_NAME,
-  VAL_GITHUB_REPO_PRIVACY,
-  VAL_GITHUB_REPO_ORG,
-  VAL_GITHUB_REPO_DESCRIPTION,
-  VAL_GITHUB_REPO_HOMEPAGE,
-  VAL_NETLIFY_DEPLOY_KEY
+  VAL_NETLIFY_DEPLOY_KEY,
+  VAL_CREATE_APP_CONFIG
 } from '../LastRevConfig';
 import Messager from '../Messager';
+import { CreateAppConfig } from '../types';
 
 const messager = Messager.getInstance();
 
@@ -116,10 +113,11 @@ export default class GithubApiWrapper extends BaseApiWrapper {
     }
   }
 
-  async createWebhook() {
+  async createWebhookForNetlifSite(type: string) {
     await this.ensureLoggedIn();
-    const spinner = ora('Creating deploy webhook in Github').start();
-    const deployHook = this.config.getStateValue(`${VAL_NETLIFY_SITE}.deploy_hook`);
+    const siteKey = `${VAL_NETLIFY_SITE}-${type}`;
+    const spinner = ora(`Creating deploy webhook for ${type} site in Github`).start();
+    const deployHook = this.config.getStateValue(`${siteKey}.deploy_hook`);
     const githubRepo = this.config.getStateValue(VAL_GITHUB_REPO);
     try {
       await this.octokit.repos.createWebhook({
@@ -135,14 +133,41 @@ export default class GithubApiWrapper extends BaseApiWrapper {
       });
       spinner.succeed();
     } catch (error: any) {
-      spinner.fail();
       if (!error.message.includes('Hook already exists on this repository')) {
-        let message = `Failed creating repo hook: ${error.message}`;
+        spinner.fail();
+        let message = `Failed creating repo hook for ${type} site: ${error.message}`;
         if (error.status === 404) {
           message = `${message}. Do the repository and owner have the correct permissions to set up hooks?`;
         }
-        throw Error(`Github createWebhook error: ${message}`);
+        throw Error(`Github createWebhook error for ${type} site: ${message}`);
+      } else {
+        // nothing to do. hook already exists.
+        spinner.succeed();
       }
+    }
+  }
+
+  async getMembershipForUser(org: string) {
+    await this.ensureLoggedIn();
+
+    const {
+      data: { state, permissions }
+    } = await this.octokit.orgs.getMembershipForAuthenticatedUser({
+      org
+    });
+    return { state, permissions };
+  }
+
+  async userHasRepoAccess(repoOwner: string, repoName: string) {
+    await this.ensureLoggedIn();
+    try {
+      const { data } = await this.octokit.repos.get({
+        owner: repoOwner,
+        repo: repoName
+      });
+      return data && data.name === repoName;
+    } catch (error: any) {
+      return false;
     }
   }
 
@@ -193,21 +218,36 @@ export default class GithubApiWrapper extends BaseApiWrapper {
     }
   }
 
-  async createGithubRepoInOrg(orgs: any[]): Promise<any> {
+  async userCanCreateInOrg(repoOwner: string): Promise<boolean> {
     await this.ensureLoggedIn();
-    const org = orgs.find((org) => org.login === this.config.getStateValue(VAL_GITHUB_REPO_ORG))!;
-    const spinner = ora(`Creating Github repo in ${org.login}`).start();
-    const name = this.config.getStateValue(VAL_GITHUB_REPO_NAME);
-    const description = this.config.getStateValue(VAL_GITHUB_REPO_DESCRIPTION);
-    const homepage = this.config.getStateValue(VAL_GITHUB_REPO_HOMEPAGE);
-    const isPrivate = this.config.getStateValue(VAL_GITHUB_REPO_PRIVACY) === 'private';
+    try {
+      const { data } = await this.octokit.orgs.listForAuthenticatedUser();
+      return data.some((org) => org.login === repoOwner);
+    } catch (err: any) {
+      throw Error(`Github listOrgsForAuthenticatedUser error: ${err.message}`);
+    }
+  }
+
+  async getCurrentUserLogin(): Promise<any> {
+    await this.ensureLoggedIn();
+    try {
+      const { data } = await this.octokit.users.getAuthenticated();
+      return data.login;
+    } catch (err: any) {
+      throw Error(`Github getCurrentUserLogin error: ${err.message}`);
+    }
+  }
+
+  async createGithubRepoInOrg(org: string): Promise<any> {
+    await this.ensureLoggedIn();
+    const { app }: CreateAppConfig = this.config.getStateValue(VAL_CREATE_APP_CONFIG);
+    const spinner = ora(`Creating Github repo in ${org}`).start();
     try {
       const created = await this.octokit.repos.createInOrg({
-        org: org.login,
-        name,
-        description,
-        homepage,
-        private: isPrivate,
+        org: org,
+        name: app!.name!,
+        description: `Monorepo for ${app!.name}`,
+        private: true,
         allow_squash_merge: true,
         allow_auto_merge: false,
         allow_merge_commit: false,
@@ -267,7 +307,7 @@ export default class GithubApiWrapper extends BaseApiWrapper {
       spinner.succeed();
     } catch (err: any) {
       spinner.fail();
-      throw Error(`Github updateBranchProtectionRules error: ${err.message}`);
+      messager.error(`Github updateBranchProtectionRules error: ${err.message}. Skipping this step.`);
     }
   }
 }

@@ -1,5 +1,55 @@
 # @last-rev/contentful-redis-loader
 
+## 0.4.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
+## 0.3.3
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/timer@0.1.3
+
+## 0.3.2
+
+### Patch Changes
+
+- f7e8fa4: Fixed some issues with redis and cms loading. chunking some requests.
+
+## 0.3.1
+
+### Patch Changes
+
+- 48f3c48: Logging if parse fails
+
+## 0.3.0
+
+### Minor Changes
+
+- 71bf23b: 'Updated version of ioredis to 5.x, added contentful type checking to redis loader and contentful webhook'
+
+## 0.2.0
+
+### Minor Changes
+
+- 1d7f33d: Enhancing redis data with additional metadata for troubleshooting
+
+## 0.1.10
+
+### Patch Changes
+
+- dd98970: Fixed an error where invalid contentful queries were leading to failed webhook update
+
+## 0.1.9
+
+### Patch Changes
+
+- d6ec293: Added Algolia integration, cleaned up logs
+
 ## 0.1.8
 
 ### Patch Changes
