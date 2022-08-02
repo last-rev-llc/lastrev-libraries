@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   Accordion as MuiAccordion,
-  Typography,
+  Typography as MuiTypography,
   AccordionDetails as MuiAccordionDetails,
   AccordionSummary as MuiAccordionSummary
 } from '@mui/material';
@@ -9,7 +9,7 @@ import MuiExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
 import sidekick from '@last-rev/contentful-sidekick-util';
-import ContentModule from '../ContentModule';
+import CModule from '../ContentModule';
 import { AccordionProps } from './Accordion.types';
 
 export const Accordion = ({ variant, title, body, sidekickLookup, ...props }: AccordionProps) => {
@@ -17,13 +17,13 @@ export const Accordion = ({ variant, title, body, sidekickLookup, ...props }: Ac
     <ErrorBoundary>
       <AccordionRoot {...sidekick(sidekickLookup)} variant={variant} data-testid="Accordion" {...props}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <AccordionTitle variant="h4" data-testid="Accordion-title">
+          <Typography variant="h4" data-testid="Accordion-title">
             {title}
-          </AccordionTitle>
+          </Typography>
         </AccordionSummary>
         {body ? (
           <AccordionDetails>
-            <AccordionBody
+            <ContentModule
               __typename="Text"
               variant="accordion"
               sidekickLookup={sidekickLookup?.body}
@@ -67,17 +67,17 @@ const AccordionDetails = styled(MuiAccordionDetails, {
   overridesResolver: (_, styles) => [styles.details]
 })``;
 
-const AccordionTitle = styled(Typography, {
+const Typography = styled(MuiTypography, {
   name: 'Accordion',
-  slot: 'Title',
+  slot: 'Typography',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.title]
+  overridesResolver: (_, styles) => [styles.typography]
 })``;
 
-const AccordionBody = styled(ContentModule, {
+const ContentModule = styled(CModule, {
   name: 'Accordion',
-  slot: 'Body',
-  overridesResolver: (_, styles) => [styles.body]
+  slot: 'ContentModule',
+  overridesResolver: (_, styles) => [styles.contentModule]
 })``;
 
 const ExpandMoreIcon = styled(MuiExpandMoreIcon, {

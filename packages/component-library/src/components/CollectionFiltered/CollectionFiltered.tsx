@@ -111,7 +111,7 @@ export const CollectionFiltered = ({
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionFiltered">
-        <ContentRoot maxWidth={itemsWidth}>
+        <ContentContainer maxWidth={itemsWidth}>
           <Content container spacing={itemsSpacing ?? 0} sx={{ flexDirection: 'column', alignItems: 'center' }}>
             <CollectionFilteredRoot item container sx={{ justifyContent: 'flex-end' }}>
               <CollectionFilters
@@ -193,7 +193,7 @@ export const CollectionFiltered = ({
               </LoadMoreRoot>
             ) : null}
           </Content>
-        </ContentRoot>
+        </ContentContainer>
       </Root>
     </ErrorBoundary>
   );
@@ -210,11 +210,11 @@ const Root = styled(Box, {
   justifyContent: 'center'
 }));
 
-const ContentRoot = styled(Container, {
+const ContentContainer = styled(Container, {
   name: 'CollectionFiltered',
-  slot: 'ContentRoot',
+  slot: 'ContentContainer',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.contentRoot]
+  overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>(() => ({
   display: 'flex'
 }));

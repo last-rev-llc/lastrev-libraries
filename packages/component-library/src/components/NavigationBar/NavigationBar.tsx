@@ -1,10 +1,10 @@
 import React from 'react';
-import { Box, Grid } from '@mui/material';
+import { Box as MuiBox, Grid as MuiGrid } from '@mui/material';
 import styled from '@mui/system/styled';
 import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
-import ContentModule from '../ContentModule';
+import CModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import { NavigationBarProps } from './NavigationBar.types';
 
@@ -28,10 +28,10 @@ export const NavigationBar = ({
         data-testid="NavigationBar"
         menuBreakpoint={menuBreakpoint}
         sx={color ? { backgroundColor: `${color}.main`, color: `${color}.contrastText` } : null}>
-        <NavigationBarRoot container sx={{ alignItems: 'center' }}>
+        <Grid container sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item) => (
             <NavigationBarItemRoot item key={item.id} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>
-              <NavigationBarItem
+              <ContentModule
                 {...item}
                 onClick={onRequestClose}
                 color={item?.color ?? 'inherit'}
@@ -41,13 +41,13 @@ export const NavigationBar = ({
               />
             </NavigationBarItemRoot>
           ))}
-        </NavigationBarRoot>
+        </Grid>
       </Root>
     </ErrorBoundary>
   );
 };
 
-const Root = styled(Box, {
+const Root = styled(MuiBox, {
   name: 'NavigationBar',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
@@ -85,24 +85,24 @@ const Root = styled(Box, {
   `}
 `;
 
-const NavigationBarRoot = styled(Grid, {
+const Grid = styled(MuiGrid, {
   name: 'NavigationBar',
-  slot: 'NVRoot',
+  slot: 'Grid',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.nvRoot]
+  overridesResolver: (_, styles) => [styles.grid]
 })``;
 
-const NavigationBarItemRoot = styled(Grid, {
+const NavigationBarItemRoot = styled(MuiGrid, {
   name: 'NavigationBar',
   slot: 'ItemRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.itemRoot]
 })``;
 
-const NavigationBarItem = styled(ContentModule, {
-  name: 'NavigationBar',
+const ContentModule = styled(CModule, {
+  name: 'ContentModule',
   slot: 'Item',
-  overridesResolver: (_, styles) => [styles.item]
+  overridesResolver: (_, styles) => [styles.contentModule]
 })``;
 
 export default NavigationBar;

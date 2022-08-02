@@ -68,7 +68,7 @@ export interface CustomFormClasses {
   /** Styles applied to the formContainer element. */
   formContainer: string;
   /** Styles applied to the formFieldsRoot element. */
-  formFieldsRoot: string;
+  grid: string;
   /** Styles applied to the firstNameTextField element. */
   firstNameTextField: string;
   /** Styles applied to the lastNameTextField element. */
@@ -84,9 +84,9 @@ export interface CustomFormClasses {
   /** Styles applied to the successRoot element. */
   successRoot: string;
   /** Styles applied to the ContentModule successText element. */
-  successText: string;
+  contentModule: string;
   /** Styles applied to the successBox element. */
-  success: string;
+  box: string;
 }
 
 export declare type MailchimpFormClassKey = keyof MailchimpFormClasses;

@@ -10,7 +10,7 @@ import get from 'lodash/get';
 // import omit from 'lodash/omit';
 
 import ErrorBoundary from '../ErrorBoundary';
-import ContentModule from '../ContentModule';
+import CModule from '../ContentModule';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 import ConditionalWrapper from '../ConditionalWrapper';
@@ -85,7 +85,7 @@ const Section = (inProps: SectionProps) => {
                     ...itemStyle
                   }}
                   data-testid="Section-ContentItem">
-                  <Content {...content} />
+                  <ContentModule {...content} />
                 </GridItem>
               );
             })}
@@ -139,7 +139,7 @@ const ContentContainer = styled(Container, {
   zIndex: 1
 }));
 
-const BackgroundMedia = styled(ContentModule, {
+const BackgroundMedia = styled(CModule, {
   name: 'Section',
   slot: 'BackgroundMedia',
   overridesResolver: (_, styles) => [styles.backgroundImage]
@@ -170,16 +170,16 @@ const GridItem = styled(Grid, {
   overridesResolver: (_, styles) => [styles.gridItem]
 })(() => ({}));
 
-const IntroText = styled(ContentModule, {
+const IntroText = styled(CModule, {
   name: 'Section',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
 })(() => ({}));
 
-const Content = styled(ContentModule, {
-  name: 'Hero',
-  slot: 'Content',
-  overridesResolver: (_, styles) => [styles.content]
+const ContentModule = styled(CModule, {
+  name: 'Section',
+  slot: 'ContentModule',
+  overridesResolver: (_, styles) => [styles.contentModule]
 })``;
 
 export default Section;

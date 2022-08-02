@@ -22,8 +22,8 @@ export interface HeaderClasses {
   logo: string;
   /** Styles applied to the Navigation Divider element. */
   navigationDivider: string;
-  /** Styles applied to the Navigation Bar - Content Module element. */
-  navigationBar: string;
+  /** Styles applied to the Content Module - Navigation Bar element. */
+  contentModule: string;
   /** Styles applied to the Fragment that contains Navigation Divider and Navigation Bar element. */
   fragment: string;
   /** Styles applied to the Hidden element. */

@@ -8,7 +8,7 @@ import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
 import { LinkProps } from '../Link';
-import ContentModule from '../ContentModule';
+import CModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import { NavigationItemProps } from './NavigationItem.types';
 
@@ -44,7 +44,7 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
           <MenuRoot menuBreakpoint={menuBreakpoint} component={'ul'}>
             {subNavigation?.map((item) => (
               <MenuItem key={item.id}>
-                <NavigationBarItem
+                <ContentModule
                   {...item}
                   variant={'link'}
                   onClick={handleSubnavClick}
@@ -96,7 +96,7 @@ const Root = styled(Box, {
   `}
 `;
 
-const NavigationItemLink = styled(ContentModule, {
+const NavigationItemLink = styled(CModule, {
   name: 'NavigationItem',
   slot: 'Link',
   overridesResolver: (_, styles) => [styles.link]
@@ -155,11 +155,11 @@ const MenuItem = styled(MuiMenuItem, {
   overridesResolver: (_, styles) => [styles.menuItem]
 })``;
 
-const NavigationBarItem = styled(ContentModule, {
+const ContentModule = styled(CModule, {
   name: 'NavigationItem',
-  slot: 'item',
+  slot: 'ContentModule',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.item]
+  overridesResolver: (_, styles) => [styles.contentModule]
 })``;
 
 export default NavigationItem;

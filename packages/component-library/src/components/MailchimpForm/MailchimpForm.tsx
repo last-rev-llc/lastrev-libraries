@@ -1,11 +1,18 @@
 import React from 'react';
-import { Container, Box, Grid, Typography, FormControl as MuiFormControl, TextField } from '@mui/material';
+import {
+  Container,
+  Box as MuiBox,
+  Grid as MuiGrid,
+  Typography,
+  FormControl as MuiFormControl,
+  TextField
+} from '@mui/material';
 import { useForm, Controller } from 'react-hook-form';
 import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import LRFALink from '../Link';
 
-import ContentModule from '../ContentModule';
+import CModule from '../ContentModule';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import snakeCase from 'lodash/snakeCase';
 import sidekick from '@last-rev/contentful-sidekick-util';
@@ -29,7 +36,7 @@ const CustomForm = ({
   return (
     <form id={`form_${snakeCase(internalTitle)}`} onSubmit={handleSubmit(subscribe)} style={{ width: '100%' }}>
       <FormContainer container>
-        <FormFieldsRoot sx={{ px: 5, opacity: status === 'success' ? 0 : 1 }} container item xs={12} sm={8}>
+        <Grid sx={{ px: 5, opacity: status === 'success' ? 0 : 1 }} container item xs={12} sm={8}>
           {/* {status === 'error' ? <Box>Error {message}</Box> : null} */}
           <Controller
             name="FNAME"
@@ -93,11 +100,11 @@ const CustomForm = ({
               />
             )}
           />
-        </FormFieldsRoot>
+        </Grid>
         <SubmitContainer container item xs={12} sm={4} sx={{ px: 5, zIndex: 1, opacity: status === 'success' ? 0 : 1 }}>
           <FormControl>
             {actions?.map((link) => (
-              <LRFALink key={link.id} {...link} type="submit" disabled={loading} />
+              <Link key={link.id} {...link} type="submit" disabled={loading} />
             ))}
           </FormControl>
         </SubmitContainer>
@@ -114,14 +121,14 @@ const CustomForm = ({
             pointerEvents: status === 'success' ? 'initial' : 'none'
           }}>
           {successMessage ? (
-            <SuccessText
+            <ContentModule
               __typename="Text"
               variant="mailchimp-form"
               body={successMessage}
               data-testid="MailchimpForm-successMessage"
             />
           ) : (
-            <Success>Success</Success>
+            <Box>Success</Box>
           )}
         </SuccessRoot>
       </FormContainer>
@@ -192,7 +199,7 @@ export const MailchimpForm = ({
   </ErrorBoundary>
 );
 
-const Root = styled(Box, {
+const Root = styled(MuiBox, {
   name: 'MailchimpForm',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
@@ -210,14 +217,14 @@ const ContentContainer = styled(Container, {
   paddingBottom: theme.spacing(8)
 }));
 
-const ContentRoot = styled(Grid, {
+const ContentRoot = styled(MuiGrid, {
   name: 'MailchimpForm',
   slot: 'ContentRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.contentRoot]
 })``;
 
-const TextsRoot = styled(Grid, {
+const TextsRoot = styled(MuiGrid, {
   name: 'MailchimpForm',
   slot: 'TextsRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
@@ -236,13 +243,13 @@ const SubtitleMailChimpForm = styled(Typography, {
   overridesResolver: (_, styles) => [styles.subtitleMailChimpForm]
 })``;
 
-const BodyMailChimpForm = styled(ContentModule, {
+const BodyMailChimpForm = styled(CModule, {
   name: 'MailchimpForm',
   slot: 'BodyMailChimpForm',
   overridesResolver: (_, styles) => [styles.bodyMailChimpForm]
 })``;
 
-const FormRoot = styled(Grid, {
+const FormRoot = styled(MuiGrid, {
   name: 'MailchimpForm',
   slot: 'FormRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
@@ -251,7 +258,7 @@ const FormRoot = styled(Grid, {
 
 //Form components
 
-const FormContainer = styled(Grid, {
+const FormContainer = styled(MuiGrid, {
   name: 'Form',
   slot: 'FormContainer',
   shouldForwardProp: (prop) => prop !== 'variant',
@@ -282,11 +289,11 @@ const FormContainer = styled(Grid, {
   }
 }));
 
-const FormFieldsRoot = styled(Grid, {
+const Grid = styled(MuiGrid, {
   name: 'Form',
-  slot: 'FormFieldsRoot',
+  slot: 'Grid',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.formFieldsRoot]
+  overridesResolver: (_, styles) => [styles.grid]
 })``;
 
 const FirstNameTextField = styled(TextField, {
@@ -307,7 +314,7 @@ const EmailTextField = styled(TextField, {
   overridesResolver: (_, styles) => [styles.emailTextField]
 })``;
 
-const SubmitContainer = styled(Grid, {
+const SubmitContainer = styled(MuiGrid, {
   name: 'Form',
   slot: 'SubmitContainer',
   shouldForwardProp: (prop) => prop !== 'variant',
@@ -340,7 +347,7 @@ const Link = styled(LRFALink, {
   overridesResolver: (_, styles) => [styles.link]
 })``;
 
-const FormImage = styled(ContentModule, {
+const FormImage = styled(CModule, {
   name: 'Form',
   slot: 'Image',
   overridesResolver: (_, styles) => [styles.formImage]
@@ -363,24 +370,24 @@ const FormImage = styled(ContentModule, {
   }
 }));
 
-const SuccessRoot = styled(Grid, {
+const SuccessRoot = styled(MuiGrid, {
   name: 'Form',
   slot: 'SuccessRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.successRoot]
 })``;
 
-const SuccessText = styled(ContentModule, {
+const ContentModule = styled(CModule, {
   name: 'Form',
-  slot: 'SuccessText',
-  overridesResolver: (_, styles) => [styles.successText]
+  slot: 'ContentModule',
+  overridesResolver: (_, styles) => [styles.contentModule]
 })``;
 
-const Success = styled(Box, {
+const Box = styled(MuiBox, {
   name: 'Form',
-  slot: 'Success',
+  slot: 'Box',
   shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.success]
+  overridesResolver: (_, styles) => [styles.box]
 })``;
 
 export default MailchimpForm;

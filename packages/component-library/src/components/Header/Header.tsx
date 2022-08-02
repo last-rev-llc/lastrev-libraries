@@ -1,4 +1,4 @@
-import React, { Fragment as ReactFragment } from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -12,7 +12,7 @@ import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
 
-import ContentModule from '../ContentModule';
+import CModule from '../ContentModule';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import { HeaderProps } from './Header.types';
@@ -55,15 +55,15 @@ export const Header = (inProps: HeaderProps) => {
               </LogoRoot>
             ) : null}
             {navigationItems?.map((collection) => (
-              <Fragment key={collection.id}>
+              <React.Fragment key={collection.id}>
                 <NavigationDivider />
-                <NavigationBar
+                <ContentModule
                   {...collection}
                   variant={'navigation-bar'}
                   onRequestClose={handleClose}
                   color={props?.color}
                 />
-              </Fragment>
+              </React.Fragment>
             ))}
             <Hidden implementation="css" {...{ [`${menuBreakpoint}Up`]: true }}>
               <IconButton
@@ -171,7 +171,7 @@ const LogoRoot = styled(Link, {
   overridesResolver: (_, styles) => [styles.logoRoot]
 })(() => ({}));
 
-const Logo = styled(ContentModule, {
+const Logo = styled(CModule, {
   name: 'Header',
   slot: 'Logo',
   overridesResolver: (_, styles) => [styles.logo]
@@ -189,17 +189,10 @@ const NavigationDivider = styled(Box, {
   flex-grow: 1;
 `;
 
-const NavigationBar = styled(ContentModule, {
+const ContentModule = styled(CModule, {
   name: 'Header',
-  slot: 'NavigationBar',
-  overridesResolver: (_, styles) => [styles.navigationBar]
-})``;
-
-const Fragment = styled(ReactFragment, {
-  name: 'Header',
-  slot: 'Fragment',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.fragment]
+  slot: 'ContentModule',
+  overridesResolver: (_, styles) => [styles.contentModule]
 })``;
 
 const Hidden = styled(MuiHidden, {

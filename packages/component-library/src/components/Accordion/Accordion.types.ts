@@ -30,9 +30,9 @@ export interface AccordionClasses {
   /** Styles applied to the details element */
   details: string;
   /** Styles applied to the title typography text element */
-  title: string;
-  /** Styles applied to the body text element */
-  body: string;
+  typography: string;
+  /** Styles applied to the body (Content Module) text element */
+  contentModule: string;
   /** Styles applied to the expandMore icon element */
   expandMoreIcon: string;
 }

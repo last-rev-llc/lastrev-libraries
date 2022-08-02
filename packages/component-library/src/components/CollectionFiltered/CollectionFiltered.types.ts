@@ -54,7 +54,7 @@ export interface CollectionFilteredClasses {
   /** Styles applied to the root element element*/
   root: string;
   /** Styles applied to the ContentRoot element. */
-  contentRoot: string;
+  contentContainer: string;
   /** Styles applied to the Content Grid element. */
   content: string;
   /** Styles applied to the FiltersRoot element. */
