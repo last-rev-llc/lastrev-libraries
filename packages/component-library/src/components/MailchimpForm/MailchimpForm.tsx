@@ -97,7 +97,7 @@ const CustomForm = ({
         <SubmitContainer container item xs={12} sm={4} sx={{ px: 5, zIndex: 1, opacity: status === 'success' ? 0 : 1 }}>
           <FormControl>
             {actions?.map((link) => (
-              <Link key={link.id} {...link} type="submit" disabled={loading} />
+              <LRFALink key={link.id} {...link} type="submit" disabled={loading} />
             ))}
           </FormControl>
         </SubmitContainer>
@@ -169,7 +169,6 @@ export const MailchimpForm = ({
               />
             ) : null}
           </TextsRoot>
-
           <FormRoot container item sx={{ position: 'relative' }}>
             <MailchimpSubscribe
               url={url}
@@ -226,19 +225,19 @@ const TextsRoot = styled(Grid, {
 })``;
 
 const TitleMailChimpForm = styled(Typography, {
-  name: 'Hero',
+  name: 'MailchimpForm',
   slot: 'TitleMailChimpForm',
   overridesResolver: (_, styles) => [styles.titleMailChimpForm]
 })``;
 
 const SubtitleMailChimpForm = styled(Typography, {
-  name: 'Hero',
+  name: 'MailchimpForm',
   slot: 'SubtitleMailChimpForm',
   overridesResolver: (_, styles) => [styles.subtitleMailChimpForm]
 })``;
 
 const BodyMailChimpForm = styled(ContentModule, {
-  name: 'Hero',
+  name: 'MailchimpForm',
   slot: 'BodyMailChimpForm',
   overridesResolver: (_, styles) => [styles.bodyMailChimpForm]
 })``;
@@ -284,26 +283,26 @@ const FormContainer = styled(Grid, {
 }));
 
 const FormFieldsRoot = styled(Grid, {
-  name: 'CustomForm',
+  name: 'Form',
   slot: 'FormFieldsRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.formFieldsRoot]
 })``;
 
 const FirstNameTextField = styled(TextField, {
-  name: 'CustomForm',
+  name: 'Form',
   slot: 'FirstNameTextField',
   overridesResolver: (_, styles) => [styles.firstNameTextField]
 })``;
 
 const LastNameTextField = styled(TextField, {
-  name: 'CustomForm',
+  name: 'Form',
   slot: 'LastNameTextField',
   overridesResolver: (_, styles) => [styles.lastNameTextField]
 })``;
 
 const EmailTextField = styled(TextField, {
-  name: 'CustomForm',
+  name: 'Form',
   slot: 'EmailTextField',
   overridesResolver: (_, styles) => [styles.emailTextField]
 })``;
@@ -328,14 +327,14 @@ const SubmitContainer = styled(Grid, {
 }));
 
 const FormControl = styled(MuiFormControl, {
-  name: 'CustomForm',
+  name: 'Form',
   slot: 'FormControl',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.formControl]
 })``;
 
 const Link = styled(LRFALink, {
-  name: 'CustomForm',
+  name: 'Form',
   slot: 'Link',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.link]
@@ -365,20 +364,20 @@ const FormImage = styled(ContentModule, {
 }));
 
 const SuccessRoot = styled(Grid, {
-  name: 'CustomForm',
+  name: 'Form',
   slot: 'SuccessRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.successRoot]
 })``;
 
 const SuccessText = styled(ContentModule, {
-  name: 'CustomForm',
+  name: 'Form',
   slot: 'SuccessText',
   overridesResolver: (_, styles) => [styles.successText]
 })``;
 
 const Success = styled(Box, {
-  name: 'CustomForm',
+  name: 'Form',
   slot: 'Success',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.success]
