@@ -80,7 +80,7 @@ export interface CustomFormClasses {
   /** Styles applied to the link element. */
   link: string;
   /** Styles applied to the formImage element. */
-  formImage: string;
+  image: string;
   /** Styles applied to the successRoot element. */
   successRoot: string;
   /** Styles applied to the ContentModule successText element. */

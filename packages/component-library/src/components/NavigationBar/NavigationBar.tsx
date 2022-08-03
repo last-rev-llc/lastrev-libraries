@@ -100,8 +100,8 @@ const NavigationBarItemRoot = styled(MuiGrid, {
 })``;
 
 const ContentModule = styled(CModule, {
-  name: 'ContentModule',
-  slot: 'Item',
+  name: 'NavigationBar',
+  slot: 'ContentModule',
   overridesResolver: (_, styles) => [styles.contentModule]
 })``;
 

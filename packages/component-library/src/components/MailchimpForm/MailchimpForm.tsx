@@ -349,7 +349,7 @@ const Link = styled(LRFALink, {
 const FormImage = styled(CModule, {
   name: 'Form',
   slot: 'Image',
-  overridesResolver: (_, styles) => [styles.formImage]
+  overridesResolver: (_, styles) => [styles.image]
 })<{ variant?: string }>(({ theme }) => ({
   position: 'absolute',
   height: '125%',

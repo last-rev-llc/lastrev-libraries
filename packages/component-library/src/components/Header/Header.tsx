@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Link from '@mui/material/Link';
 import MuiIconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import CloseIcon from '@mui/icons-material/Close';
+import MuiMenuIcon from '@mui/icons-material/Menu';
+import MuiCloseIcon from '@mui/icons-material/Close';
 import MuiHidden from '@mui/material/Hidden';
 import styled from '@mui/system/styled';
 import { useTheme } from '@mui/system';
@@ -204,7 +204,22 @@ const Hidden = styled(MuiHidden, {
 const IconButton = styled(MuiIconButton, {
   name: 'Header',
   slot: 'IconButton',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.iconButton]
+})``;
+
+const CloseIcon = styled(MuiCloseIcon, {
+  name: 'Header',
+  slot: 'CloseIcon',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.closeIcon]
+})``;
+
+const MenuIcon = styled(MuiMenuIcon, {
+  name: 'Header',
+  slot: 'MenuIcon',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.menuIcon]
 })``;
 
 export default Header;

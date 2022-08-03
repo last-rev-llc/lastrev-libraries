@@ -41,9 +41,15 @@ export type LinkProps = {
 export interface LinkClasses {
   // TODO: Add root styled to Link for every variant
   /** Styles applied to the root element. */
-  // root: string;
+  root: string;
+  /** Styles applied to the Link element. */
+  rootLink: string;
+  /** Styles applied to the MuiLink element. */
+  rootMuiLink: string;
+  /** Styles applied to the Button element. */
+  rootButton: string;
   /** Styles applied to the container element ONLY when icon is selected. */
-  // buttonWrap: string;
+  buttonWrap: string;
 }
 
 export declare type LinkClassKey = keyof LinkClasses;

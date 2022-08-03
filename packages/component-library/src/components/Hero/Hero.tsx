@@ -294,8 +294,8 @@ const MediaHero = styled(ContentModule, {
 
 const MediaDivider = styled(ContentModule, {
   name: 'Hero',
-  slot: 'MediaDividerRoot',
-  overridesResolver: (_, styles) => [styles.mediaDividerRoot]
+  slot: 'MediaDivider',
+  overridesResolver: (_, styles) => [styles.mediaDivider]
 })``;
 
 export default Hero;

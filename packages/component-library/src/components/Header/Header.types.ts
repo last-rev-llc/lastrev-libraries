@@ -30,6 +30,10 @@ export interface HeaderClasses {
   hidden: string;
   /** Styles applied to the IconButton Icon element. */
   iconButton: string;
+  /** Styles applied to the Close Icon element. */
+  closeIcon: string;
+  /** Styles applied to the Menu Icon element. */
+  menuIcon: string;
 }
 
 export declare type HeaderClassKey = keyof HeaderClasses;
