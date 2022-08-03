@@ -37,6 +37,17 @@ export default {
   plugins: [
     new webpack.ProvidePlugin({
       process: 'process/browser'
+    }),
+    new webpack.DefinePlugin({
+      'process.env.__NEXT_IMAGE_OPTS': JSON.stringify({
+        experimentalFuture: true,
+        experimentalUnoptimized: true,
+        deviceSizes: [320, 420, 768, 1024, 1200],
+        imageSizes: [20, 40, 60, 70, 200, 400, 440],
+        domains: ['anydomain.com'],
+        path: '/_next/image/',
+        loader: 'default'
+      })
     })
   ]
 };
