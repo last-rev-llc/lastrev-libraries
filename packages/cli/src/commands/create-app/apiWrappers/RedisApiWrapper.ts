@@ -13,6 +13,9 @@ import Messager from '../Messager';
 
 const messager = Messager.getInstance();
 
+const REDIS_PORT_REGEX = /^[0-9]{4,5}$/;
+const REDIS_PASSWORD_REGEX = /^[a-zA-Z0-9]+$/;
+
 export default class RedisApiWrapper extends BaseApiWrapper {
   private redis: Redis;
 
@@ -41,14 +44,14 @@ export default class RedisApiWrapper extends BaseApiWrapper {
         name: 'port',
         message:
           'Paste the port of your redis admin account (if you are using an upstash instance, this can be found in the upstash console).',
-        validate: (val) => /^[0-9]{4,5}$/.test(val.trim()) || 'Please enter a valid port consisting of 4-5 numbers.'
+        validate: (val) => REDIS_PORT_REGEX.test(val.trim()) || 'Please enter a valid port consisting of 4-5 numbers.'
       },
       {
         type: 'password',
         name: 'password',
         message:
           'Paste the password of your redis admin account (if you are using an upstash instance, this can be found in the upstash console).',
-        validate: (val) => /^[a-zA-Z0-9]+$/.test(val.trim()) || 'Please enter a valid password.'
+        validate: (val) => REDIS_PASSWORD_REGEX.test(val.trim()) || 'Please enter a valid password.'
       }
     ]);
 
