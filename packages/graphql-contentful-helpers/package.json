@@ -28,6 +28,7 @@
     "@last-rev/contentful-dynamodb-loader": "^0.2.0",
     "@last-rev/contentful-fs-loader": "^0.2.0",
     "@last-rev/contentful-redis-loader": "^0.4.0",
+    "@last-rev/contentful-path-rules-engine": "^0.1.0",
     "@last-rev/testing-library": "^0.1.10",
     "@last-rev/timer": "^0.1.3",
     "@last-rev/types": "^0.2.0",
