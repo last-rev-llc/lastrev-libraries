@@ -1,15 +1,44 @@
 import ContentfulApiWrapper from './apiWrappers/ContentfulApiWrapper';
+import RedisApiWrapper from './apiWrappers/RedisApiWrapper';
 import LastRevConfig, {
   VAL_CONTENTFUL_PREVIEW_KEY,
   VAL_CONTENTFUL_DELIVERY_KEY,
   VAL_ENV_VARS,
   VAL_CONTENTFUL_DEFAULT_SITE_ID,
   VAL_CONTENTFUL_DEFAULT_SITE_KEY,
-  VAL_CREATE_APP_CONFIG
+  VAL_CREATE_APP_CONFIG,
+  VAL_REDIS_HOST,
+  VAL_REDIS_PORT,
+  VAL_REDIS_PASSWORD,
+  VAL_REDIS_USERNAME,
+  ACTION_CREATE_REDIS_USER
 } from './LastRevConfig';
 import { CreateAppConfig } from './types';
 
-const populateEnvVars = async (config: LastRevConfig, contentfulApiWrapper: ContentfulApiWrapper) => {
+const createRedisUser = async (config: LastRevConfig, redisApiWrapper: RedisApiWrapper) => {
+  const createAppConfig = config.getStateValue(VAL_CREATE_APP_CONFIG);
+  if (!createAppConfig.redis) {
+    if (!config.hasCompletedAction(ACTION_CREATE_REDIS_USER)) {
+      await redisApiWrapper.generateAclPassword();
+      await redisApiWrapper.createAclUser();
+      config.completeAction(ACTION_CREATE_REDIS_USER);
+    }
+    await redisApiWrapper.saveHost();
+    await redisApiWrapper.savePort();
+  } else {
+    config.updateStateValue(VAL_REDIS_HOST, createAppConfig.redis.host);
+    config.updateStateValue(VAL_REDIS_PORT, createAppConfig.redis.port);
+    config.updateStateValue(VAL_REDIS_PASSWORD, createAppConfig.redis.password);
+    config.updateStateValue(VAL_REDIS_USERNAME, createAppConfig.redis.username);
+  }
+};
+
+const populateEnvVars = async (
+  config: LastRevConfig,
+  contentfulApiWrapper: ContentfulApiWrapper,
+  redisApiWrapper: RedisApiWrapper
+) => {
+  await createRedisUser(config, redisApiWrapper);
   await contentfulApiWrapper.createApiKeys();
   await contentfulApiWrapper.setSiteValues();
 
@@ -20,9 +49,10 @@ const populateEnvVars = async (config: LastRevConfig, contentfulApiWrapper: Cont
     CONTENTFUL_DELIVERY_TOKEN: config.getStateValue(VAL_CONTENTFUL_DELIVERY_KEY),
     CONTENTFUL_ENV: createAppConfig.app!.contentfulEnv || 'master',
     CONTENTFUL_SPACE_ID: createAppConfig.app!.contentfulSpaceId!,
-    REDIS_HOST: createAppConfig.app!.redisHost || 'TBD',
-    REDIS_PORT: `${createAppConfig.app!.redisPort}` || 'TBD',
-    REDIS_PASSWORD: createAppConfig.app!.redisPassword || 'TBD',
+    REDIS_HOST: config.getStateValue(VAL_REDIS_HOST) || 'TBD',
+    REDIS_PORT: config.getStateValue(VAL_REDIS_PORT) || 'TBD',
+    REDIS_PASSWORD: config.getStateValue(VAL_REDIS_PASSWORD) || 'TBD',
+    REDIS_USERNAME: config.getStateValue(VAL_REDIS_USERNAME) || 'TBD',
     SITE_ID: config.getStateValue(VAL_CONTENTFUL_DEFAULT_SITE_ID),
     DEFAULT_SITE_ID: config.getStateValue(VAL_CONTENTFUL_DEFAULT_SITE_ID),
     SITE: config.getStateValue(VAL_CONTENTFUL_DEFAULT_SITE_KEY),

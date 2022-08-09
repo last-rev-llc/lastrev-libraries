@@ -14,6 +14,7 @@ import { existsSync, readFile, writeFile } from 'fs-extra';
 import { join } from 'path';
 import { CreateAppConfig } from './types';
 import performPostFunctions from './performPostFunctions';
+import RedisApiWrapper from './apiWrappers/RedisApiWrapper';
 
 const messager = Messager.getInstance();
 const config = new LastRevConfig();
@@ -23,9 +24,6 @@ const basicConfig: CreateAppConfig = {
     name: 'your-app-name',
     contentfulSpaceId: 'abcxyz123',
     repoOwner: 'your-github-org',
-    redisHost: 'http://your-redis-host.com',
-    redisPort: 12345,
-    redisPassword: 'abcxyz123',
     googleTagManagerId: 'GTM-12345'
   },
   netlify: {
@@ -55,6 +53,7 @@ const run = async () => {
   const contentfulApiWrapper = new ContentfulApiWrapper(config);
   const netlifyApiWrapper = new NetlifyApiWrapper(config);
   const githubApiWrapper = new GithubApiWrapper(config);
+  const redisApiWrapper = new RedisApiWrapper(config);
 
   let createAppConfig: CreateAppConfig = config.getStateValue(VAL_CREATE_APP_CONFIG);
 
@@ -81,7 +80,7 @@ const run = async () => {
   }
 
   if (createAppConfig.app || createAppConfig.netlify) {
-    await populateEnvVars(config, contentfulApiWrapper);
+    await populateEnvVars(config, contentfulApiWrapper, redisApiWrapper);
   }
 
   if (createAppConfig.app) {
