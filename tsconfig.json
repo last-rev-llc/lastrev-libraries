@@ -47,7 +47,11 @@
 
     "skipLibCheck": true
   },
-  "include": ["packages/*/src", "packages/sitemap-generator/tests/sitemap.mock.ts", "packages/sitemap-generator/tests/sitemap-generator.test.tsx"],
+  "include": [
+    "packages/*/src",
+    "packages/sitemap-generator/tests/sitemap.mock.ts",
+    "packages/sitemap-generator/tests/sitemap-generator.test.tsx"
+  ],
   "exclude": ["node_modules", "**/__tests__/**/*", "**/lib/**/*", "**/build/**/*", "**/dist/**/*", "**/*.spec*"],
   "traceResolution": true
 }
