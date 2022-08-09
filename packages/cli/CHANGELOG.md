@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.5.0
+
+### Minor Changes
+
+- 50e472d: Added automated creation of redis ACL user to CLI
+
 ## 0.4.2
 
 ### Patch Changes
