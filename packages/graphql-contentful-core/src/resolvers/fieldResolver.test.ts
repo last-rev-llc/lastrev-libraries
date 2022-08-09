@@ -22,6 +22,7 @@ describe('fieldResolver.ts', () => {
     entryLoader: createMockLoader(),
     assetLoader: createMockLoader(),
     entriesByContentTypeLoader: createMockLoader(),
+    entriesRefByLoader: createMockLoader(),
     entryByFieldValueLoader: createMockLoader(),
     fetchAllContentTypes: jest.fn()
   };

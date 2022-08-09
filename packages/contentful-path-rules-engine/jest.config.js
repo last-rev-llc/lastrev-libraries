@@ -1,1 +1,1 @@
-module.exports = require('@last-rev/testing-library').config();
+module.exports = require('@last-rev/testing-library').config({ coverageProvider: 'v8' });

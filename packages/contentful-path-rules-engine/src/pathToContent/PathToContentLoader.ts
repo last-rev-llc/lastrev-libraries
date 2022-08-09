@@ -18,7 +18,6 @@ export type PathLookupObject = {
 
 const createPathLookupObjects = (config: PathRuleConfig): PathLookupObject[] => {
   return Object.entries(config).reduce((acc, [rootContentType, { filter, rules }]) => {
-    console.log('here!', typeof filter, typeof rules, rootContentType);
     acc.push(
       ...rules.map(({ rule, isCanonical, allowFullPaths }) => {
         const pathRule = new PathRuleParser(rule).PathRule();
