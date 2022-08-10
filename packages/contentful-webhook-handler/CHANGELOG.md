@@ -1,5 +1,13 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies [a996010]
+- Updated dependencies [a996010]
+  - @last-rev/graphql-contentful-helpers@0.4.0
+
 ## 0.4.4
 
 ### Patch Changes

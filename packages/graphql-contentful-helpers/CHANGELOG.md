@@ -1,5 +1,22 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.4.0
+
+### Minor Changes
+
+- a996010: Added a new entryByFieldBValue loader
+- a996010: Added contentful path rules engine and support for it in various packages
+
+### Patch Changes
+
+- Updated dependencies [a996010]
+- Updated dependencies [a996010]
+  - @last-rev/contentful-cms-loader@0.4.0
+  - @last-rev/contentful-dynamodb-loader@0.3.0
+  - @last-rev/contentful-fs-loader@0.3.0
+  - @last-rev/contentful-redis-loader@0.5.0
+  - @last-rev/types@0.3.0
+
 ## 0.3.0
 
 ### Minor Changes
