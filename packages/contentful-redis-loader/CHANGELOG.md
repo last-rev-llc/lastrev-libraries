@@ -1,5 +1,12 @@
 # @last-rev/contentful-redis-loader
 
+## 0.5.0
+
+### Minor Changes
+
+- a996010: Added a new entryByFieldBValue loader
+- a996010: Added contentful path rules engine and support for it in various packages
+
 ## 0.4.0
 
 ### Minor Changes

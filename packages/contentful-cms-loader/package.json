@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-cms-loader",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "@last-rev/app-config": "^0.2.1",
     "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/testing-library": "^0.1.10",
-    "@last-rev/types": "^0.2.0",
+    "@last-rev/types": "^0.3.0",
     "contentful": "^8.4.2"
   },
   "keywords": [],

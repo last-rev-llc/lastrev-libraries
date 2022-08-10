@@ -1,5 +1,12 @@
 # @last-rev/contentful-cms-loader
 
+## 0.4.0
+
+### Minor Changes
+
+- a996010: Added a new entryByFieldBValue loader
+- a996010: Added contentful path rules engine and support for it in various packages
+
 ## 0.3.0
 
 ### Minor Changes
