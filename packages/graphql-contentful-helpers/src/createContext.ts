@@ -3,8 +3,6 @@ import { createClient } from 'contentful';
 import { ApolloContext, PathReaders, PathRuleConfig } from '@last-rev/types';
 import { MicroRequest } from 'apollo-server-micro/dist/types';
 import LastRevAppConfig from '@last-rev/app-config';
-import querystring from 'querystring';
-import url from 'url';
 import createLoaders from './createLoaders';
 import express from 'express';
 import { PathToContentLoader, ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
@@ -44,7 +42,7 @@ const createContext = async ({
   }
 
   if (microReq) {
-    const env = querystring.parse(new url.URL(microReq.url || '').search).environment;
+    const env = (microReq as any).query?.environment;
     overrideEnv = env && isString(env) ? env : undefined;
   }
 
