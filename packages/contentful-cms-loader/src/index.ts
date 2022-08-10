@@ -3,7 +3,7 @@ import { Entry, Asset, createClient, ContentfulClientApi } from 'contentful';
 import { find, map, partition } from 'lodash';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
-import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
+import { ItemKey, ContentfulLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { chunk, makeContentfulRequest } from './helpers';
 import { LOG_PREFIX } from './constants';
@@ -17,6 +17,13 @@ const options: Options<ItemKey, any, string> = {
 const fvlOptions: Options<FVLKey, any, string> = {
   cacheKeyFn: (key: FVLKey) => {
     const baseKey = `${key.contentType}-${key.field}-${key.value}`;
+    return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
+  }
+};
+
+const refByOptions: Options<RefByKey, any, string> = {
+  cacheKeyFn: (key: RefByKey) => {
+    const baseKey = `${key.contentType}-${key.field}-${key.id}`;
     return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
   }
 };
@@ -111,49 +118,40 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
 
   const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
     return async (keys) => {
-      const fvlRequests = keys.reduce(
-        (acc, { contentType, field, value, preview }) => {
-          // Group values by clientType, contentType and field
-          const clientType = preview ? 'preview' : 'prod';
-          if (!acc[clientType]) {
-            acc[clientType] = {};
-          }
-          if (!acc[clientType][contentType]) {
-            acc[clientType][contentType] = {};
-          }
-          if (!acc[clientType][contentType][field]) {
-            acc[clientType][contentType][field] = [];
-          }
-          acc[clientType][contentType][field].push(value);
-          return acc;
-        },
-        {} as {
-          [clientType: string]: {
-            [contentType: string]: { [field: string]: string[] };
-          };
+      const fvlRequests = keys.reduce((acc, { contentType, field, value, preview }) => {
+        const clientType = preview ? 'preview' : 'prod';
+        if (!acc[clientType]) {
+          acc[clientType] = {};
         }
-      );
+        if (!acc[clientType][contentType]) {
+          acc[clientType][contentType] = {};
+        }
+        if (!acc[clientType][contentType][field]) {
+          acc[clientType][contentType][field] = [];
+        }
+        acc[clientType][contentType][field].push(value);
+        return acc;
+      }, {} as { [clientType: string]: { [contentType: string]: { [field: string]: string[] } } });
 
-      // Map the requests to CMS queries for each clientType and field
       const requests = Object.entries(fvlRequests).reduce(
-        ({ preview, prod }, [clientType, requestObject]) => {
-          const requestObjects = Object.entries(requestObject).reduce((queries, [content_type, fieldValues]) => {
+        (acc, [clientType, requestObject]) => {
+          const requestObjects = Object.entries(requestObject).reduce((acc, [content_type, fieldValues]) => {
             Object.entries(fieldValues).forEach(([field, values]) => {
-              queries.push({
+              acc.push({
                 content_type,
                 field,
                 values: values.join(',')
               });
             });
-            return queries;
+            return acc;
           }, [] as { content_type: string; field: string; values: string }[]);
 
           if (clientType === 'preview') {
-            preview.push(...requestObjects);
+            acc.preview.push(...requestObjects);
           } else if (clientType === 'prod') {
-            prod.push(...requestObjects);
+            acc.prod.push(...requestObjects);
           }
-          return { preview, prod };
+          return acc;
         },
         { prod: [], preview: [] } as {
           prod: { content_type: string; field: string; values: string }[];
@@ -189,39 +187,114 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
       const collectedPreview = collectedPreviewSettled.filter(isFulFilled);
       const collectedProd = collectedProdSettled.filter(isFulFilled);
 
-      const previewEntries = collectedPreview.flatMap((p) => p.value || []);
-      const productionEntries = collectedProd.flatMap((p) => p.value || []);
-
-      const toKeyStr = ({ preview, field, value, contentType }) =>
-        `preview:${preview}field:${field}value:${value}contentType:${contentType}`;
-
-      const previewResults = previewEntries.reduce((acc, entry) => {
-        const key = toKeyStr({
-          preview: true,
-          field: field,
-          value: entry.fields[field]?.[defaultLocale],
-          contentType: entry.sys.contentType.sys.id
-        });
-        acc[key] = entry;
-        return acc;
-      }, {});
-
-      const productionResults = productionEntries.reduce((acc, entry) => {
-        const key = toKeyStr({
-          preview: false,
-          field: field,
-          value: entry.fields[field]?.[defaultLocale],
-          contentType: entry.sys.contentType.sys.id
-        });
-        acc[key] = entry;
-        return acc;
-      }, {});
+      const prev = collectedPreview.flatMap((p) => p.value || []);
+      const prod = collectedProd.flatMap((p) => p.value || []);
 
       const result = keys.map(({ preview, field, value, contentType }) => {
-        const entry = preview
-          ? previewResults[toKeyStr({ preview, field, value, contentType })]
-          : productionResults[toKeyStr({ preview, field, value, contentType })];
-        return entry ?? null;
+        const arr = preview ? prev : prod;
+        return (
+          arr.find((i: Entry<any>) => {
+            return i.sys.contentType.sys.id === contentType && i.fields[field]?.[defaultLocale] === value;
+          }) || null
+        );
+      });
+
+      return result;
+    };
+  };
+
+  const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, Entry<any>[]> => {
+    return async (keys) => {
+      const refByRequests = keys.reduce((acc, { contentType, field, id, preview }) => {
+        const clientType = preview ? 'preview' : 'prod';
+        if (!acc[clientType]) {
+          acc[clientType] = {};
+        }
+        if (!acc[clientType][contentType]) {
+          acc[clientType][contentType] = {};
+        }
+        if (!acc[clientType][contentType][field]) {
+          acc[clientType][contentType][field] = [];
+        }
+        acc[clientType][contentType][field].push(id);
+        return acc;
+      }, {} as { [clientType: string]: { [contentType: string]: { [field: string]: string[] } } });
+
+      const requests = Object.entries(refByRequests).reduce(
+        (acc, [clientType, requestObject]) => {
+          const requestObjects = Object.entries(requestObject).reduce((acc, [content_type, fieldValues]) => {
+            Object.entries(fieldValues).forEach(([field, ids]) => {
+              acc.push({
+                content_type,
+                field,
+                ids: ids.join(',')
+              });
+            });
+            return acc;
+          }, [] as { content_type: string; field: string; ids: string }[]);
+
+          if (clientType === 'preview') {
+            acc.preview.push(...requestObjects);
+          } else if (clientType === 'prod') {
+            acc.prod.push(...requestObjects);
+          }
+          return acc;
+        },
+        { prod: [], preview: [] } as {
+          prod: { content_type: string; field: string; ids: string }[];
+          preview: { content_type: string; field: string; ids: string }[];
+        }
+      );
+
+      const [collectedProdSettled, collectedPreviewSettled] = await Promise.all([
+        Promise.allSettled(
+          requests.prod.map(async ({ content_type, field, ids }) => {
+            const { items } = await prodClient.getEntries<any>({
+              content_type,
+              locale: '*',
+              include: 0,
+              [`fields.${field}.sys.id[in]`]: ids
+            });
+            return items;
+          })
+        ),
+        Promise.allSettled(
+          requests.preview.map(async ({ content_type, field, ids }) => {
+            const { items } = await previewClient.getEntries<any>({
+              content_type,
+              locale: '*',
+              include: 0,
+              [`fields.${field}.sys.id[in]`]: ids
+            });
+            return items;
+          })
+        )
+      ]);
+
+      const collectedPreview = collectedPreviewSettled.filter(isFulFilled);
+      const collectedProd = collectedProdSettled.filter(isFulFilled);
+
+      const prev = collectedPreview.flatMap((p) => p.value || []);
+      const prod = collectedProd.flatMap((p) => p.value || []);
+
+      const result = keys.map(({ preview, field, id, contentType }) => {
+        const arr = preview ? prev : prod;
+        return arr.reduce((acc, x) => {
+          if (x.sys.contentType.sys.id === contentType) {
+            const fieldValue = x.fields[field]?.[defaultLocale];
+            if (Array.isArray(fieldValue)) {
+              if (fieldValue.some((f) => f?.type === 'Link' && f?.sys?.id === id)) {
+                acc.push(x);
+              }
+            } else {
+              if (fieldValue?.type === 'Link' && fieldValue?.sys?.id === id) {
+                acc.push(x);
+              }
+            }
+            acc.push(x);
+          }
+          return acc;
+        }, [] as Entry<any>[]);
       });
 
       return result;
@@ -291,12 +364,14 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
   };
 
   const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), fvlOptions);
+  const entriesRefByLoader = new DataLoader(getBatchEntriesRefByFetcher(), refByOptions);
 
   return {
     entryLoader,
     assetLoader,
     entriesByContentTypeLoader,
     entryByFieldValueLoader,
+    entriesRefByLoader,
     fetchAllContentTypes
   };
 };

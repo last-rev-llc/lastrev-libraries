@@ -4,7 +4,7 @@ exports.config = (options = {}) => {
     globals: {
       'ts-jest': {
         tsconfig: {
-          target: 'ES2019',
+          target: 'ES2020',
           jsx: 'react'
         }
       }
