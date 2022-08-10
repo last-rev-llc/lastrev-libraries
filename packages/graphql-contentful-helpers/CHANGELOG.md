@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.4.1
+
+### Patch Changes
+
+- 9078801: 'fixed issue with parsing env for vercelHandler'
+
 ## 0.4.0
 
 ### Minor Changes
