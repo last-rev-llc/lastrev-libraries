@@ -3179,10 +3179,33 @@
     loglevel "^1.7.1"
     tslib "^2.3.0"
 
+"@last-rev/contentful-cms-loader@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-cms-loader/-/contentful-cms-loader-0.4.0.tgz#1910f3055ce76d1a88a60d10fa9d0da4f4d849af"
+  integrity sha512-VKmD2STnyEQLCiwfB0RmVBNJSCJoPAzVsPL0/NWGIjL61lwCSqH3nPBk/O5s1zLX9wiOyImYvRKjQs8peOjHog==
+  dependencies:
+    "@last-rev/timer" "^0.1.3"
+    dataloader "^2.0.0"
+    lodash "^4.17.21"
+    loglevel "^1.7.1"
+    tslib "^2.3.0"
+
 "@last-rev/contentful-dynamodb-loader@^0.1.5":
   version "0.1.5"
   resolved "https://registry.yarnpkg.com/@last-rev/contentful-dynamodb-loader/-/contentful-dynamodb-loader-0.1.5.tgz#5d100404951675e48e315d7b926530839faf9bd6"
   integrity sha512-McN9wayIf6X9KwQpuEaqgD9D2sq4vNysWKnWywut389W3mHmQHTcczPUaZ2gi71GbatehwnjStvRY7Bh6azC/A==
+  dependencies:
+    "@last-rev/timer" "^0.1.3"
+    aws-sdk "^2.1012.0"
+    dataloader "^2.0.0"
+    lodash "^4.17.21"
+    loglevel "^1.7.1"
+    tslib "^2.3.0"
+
+"@last-rev/contentful-dynamodb-loader@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-dynamodb-loader/-/contentful-dynamodb-loader-0.3.0.tgz#f2f1f84dfd87a11a0070db9bbd002b3835beeccb"
+  integrity sha512-gklJSWLHCoP7G1FQrU6BL7OHeGNCl7uh5QYZAK/UzDOeFyNpJjMJUYPH/IICfHSrvekTcNIaE0FaVGV+ef7/DQ==
   dependencies:
     "@last-rev/timer" "^0.1.3"
     aws-sdk "^2.1012.0"
@@ -3219,6 +3242,18 @@
     loglevel "^1.7.1"
     tslib "^2.3.0"
 
+"@last-rev/contentful-fs-loader@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-fs-loader/-/contentful-fs-loader-0.3.0.tgz#1a191c9ffe6dee69fa68f7596a148460a3a212ce"
+  integrity sha512-QEUaVfiGwavs4A5UbbEhLaQwbvaqNKMRfpWPlxLFUHNpLczfvj1AxT21jV0yMThn16Y0C66dA7bQNPd+y5BwbQ==
+  dependencies:
+    "@last-rev/timer" "^0.1.3"
+    dataloader "^2.0.0"
+    fs-extra "^10.0.0"
+    lodash "^4.17.21"
+    loglevel "^1.7.1"
+    tslib "^2.3.0"
+
 "@last-rev/contentful-import-export@^0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@last-rev/contentful-import-export/-/contentful-import-export-0.1.4.tgz#dac89790252bb139b56cacf4e60d88f23b741ebf"
@@ -3227,6 +3262,13 @@
     contentful-export "^7.13.14"
     contentful-import "^8.2.9"
     lodash "^4.17.21"
+
+"@last-rev/contentful-path-rules-engine@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-path-rules-engine/-/contentful-path-rules-engine-0.1.0.tgz#8b90ebe60f8f4ab671bc898b1985605acad7ca26"
+  integrity sha512-0ys4iqb8+YFtK17aN54y97x/rq2dbTMfpHEazi4gJCLY4EHtmSrSC409k86a8XbPkN/yptvbd4kvw1hRJ8LTGg==
+  dependencies:
+    loglevel "^1.7.1"
 
 "@last-rev/contentful-path-util@^0.1.11":
   version "0.1.11"
@@ -3247,6 +3289,16 @@
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/@last-rev/contentful-redis-loader/-/contentful-redis-loader-0.3.3.tgz#1899abe2574d52babcea009cd7304c921d46da24"
   integrity sha512-8L1rMbtNv43VQPTrM1uHWi6lEjmNTQMdpvno+ImiZ81B1tRzkyrpAK5JrY1T+HauwybOMOhdoi6vP8JETaj8Hw==
+  dependencies:
+    "@last-rev/timer" "^0.1.3"
+    dataloader "^2.0.0"
+    ioredis "^5.0.4"
+    loglevel "^1.7.1"
+
+"@last-rev/contentful-redis-loader@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-redis-loader/-/contentful-redis-loader-0.5.0.tgz#4528980c5765d0902c8baf6489834ab4cdd261af"
+  integrity sha512-39A1/NX9UC848BbujKkAWJqv92ESZV97cCJjqLi99lWCpT2uLJB8OEfmUSUcVlJEGBKQVC6NFV+dZG+nkTLi/A==
   dependencies:
     "@last-rev/timer" "^0.1.3"
     dataloader "^2.0.0"
@@ -3383,6 +3435,35 @@
     loglevel "^1.7.1"
     micro "^9.3.4"
 
+"@last-rev/graphql-contentful-core@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-core/-/graphql-contentful-core-0.5.0.tgz#8dd4876130b6c5f89ab7ebc2c1c45d6cec2746e6"
+  integrity sha512-Nkox3nJDi7B6iYw8cbC/nxRJG141QZE/b59FcVW+c4hCRtwvtoRC1NmqjSoKfRtheCZ/CdaePvoF8FkxjtyqGQ==
+  dependencies:
+    "@apollo/federation" "^0.20.7"
+    "@graphql-tools/merge" "^6.2.14"
+    "@graphql-tools/schema" "^8.3.1"
+    "@last-rev/contentful-cms-loader" "^0.4.0"
+    "@last-rev/contentful-fs-loader" "^0.3.0"
+    "@last-rev/contentful-path-util" "^0.1.11"
+    "@last-rev/contentful-redis-loader" "^0.5.0"
+    "@last-rev/graphql-contentful-helpers" "^0.4.0"
+    "@last-rev/graphql-schema-gen" "^0.2.1"
+    "@last-rev/testing-library" "^0.1.10"
+    "@last-rev/timer" "^0.1.3"
+    "@last-rev/types" "^0.3.0"
+    apollo-graphql "^0.9.3"
+    apollo-server "^3.9.0"
+    apollo-server-core "^3.9.0"
+    apollo-server-lambda "^3.9.0"
+    apollo-server-micro "^3.9.0"
+    contentful "^8.4.2"
+    graphql "^15.5.1"
+    graphql-type-json "^0.3.2"
+    lodash "^4.17.21"
+    loglevel "^1.7.1"
+    micro "^9.3.4"
+
 "@last-rev/graphql-contentful-extensions@^0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-extensions/-/graphql-contentful-extensions-0.1.1.tgz#9543489fa98649aef2a3c8237e9c00fe3383c52e"
@@ -3412,6 +3493,23 @@
     "@last-rev/testing-library" "^0.1.10"
     "@last-rev/timer" "^0.1.3"
     "@last-rev/types" "^0.1.4"
+    contentful "^8.4.2"
+    lodash "^4.17.21"
+
+"@last-rev/graphql-contentful-helpers@^0.4.0":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-helpers/-/graphql-contentful-helpers-0.4.1.tgz#d916dfec0ab38199ab20f578eb36d8aacbafeca2"
+  integrity sha512-EmANYq8Od/QfP7r2PCY4swhJEoXsDQhbP1wmrodtGKHtLrJOdvkfpVW0Gi9PMjGjq1iXdnG8MRk3qerQkG7JIQ==
+  dependencies:
+    "@last-rev/app-config" "^0.2.1"
+    "@last-rev/contentful-cms-loader" "^0.4.0"
+    "@last-rev/contentful-dynamodb-loader" "^0.3.0"
+    "@last-rev/contentful-fs-loader" "^0.3.0"
+    "@last-rev/contentful-path-rules-engine" "^0.1.0"
+    "@last-rev/contentful-redis-loader" "^0.5.0"
+    "@last-rev/testing-library" "^0.1.10"
+    "@last-rev/timer" "^0.1.3"
+    "@last-rev/types" "^0.3.0"
     contentful "^8.4.2"
     lodash "^4.17.21"
 
@@ -3489,6 +3587,11 @@
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/@last-rev/types/-/types-0.1.7.tgz#fa36a31b2dc390be179f301c265ff64bc3ad9698"
   integrity sha512-G9jJounYSOOfdhZSWSTiGU9dcRa4pt5Faa00+pJ5R/pvGCNjdCocbCBBDGqoDarNFjj9gbhak/24kGBligx0xg==
+
+"@last-rev/types@^0.3.0":
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/types/-/types-0.3.0.tgz#07c9ae14a1a27c43915105110e4be837a1c08346"
+  integrity sha512-vRUoKCBzHQPlPz3cHIvFTEVYdS3Af7StQ7AE595F1b4txX+YDowlvcF9Fe0WoakvNmhn+9XGMuUejjf4LWgPnw==
 
 "@lerna/add@3.21.0":
   version "3.21.0"

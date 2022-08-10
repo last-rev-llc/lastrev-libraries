@@ -7,9 +7,7 @@
   ],
   "scripts": {
     "dev": "run-s gql:pm2:kill 'gql:pm2 --watch' gql:healthcheck",
-    "gql:start": "last-rev gql-serve -c config",
     "start": "if [ \"$NODE_ENV\" != \"test\" ]; then run-s gql:pm2:kill gql:pm2 gql:healthcheck; fi",
-    "sync:cms": "last-rev cms-sync -c config.js",
     "gql:pm2": "pm2 start pm2.json",
     "gql:healthcheck": "wait-on -c wait-on-config.js || echo 'Healthcheck failed'",
     "gql:pm2:kill": "pm2 kill",

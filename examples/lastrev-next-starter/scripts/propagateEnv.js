@@ -1,9 +1,15 @@
 /* eslint-disable no-console */
-const { readdir, copyFile } = require('fs-extra');
+const { readdir, copyFile, existsSync } = require('fs-extra');
 const { resolve, join } = require('path');
 
 const run = async () => {
   const envFile = resolve(__dirname, '../.env');
+
+  if (!existsSync(envFile)) {
+    console.log('No .env file found. skipping.');
+    return;
+  }
+
   const packagesDir = resolve(__dirname, '../packages');
   const packages = await readdir(packagesDir);
 
