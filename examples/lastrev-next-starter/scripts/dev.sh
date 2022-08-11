@@ -2,7 +2,7 @@
 
 function cleanup() {
     rv=$?
-    npx pm2 delete gql-serve
+    yarn gql:pm2:kill  
     exit $rv
 }
 

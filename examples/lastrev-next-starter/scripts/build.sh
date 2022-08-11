@@ -1,7 +1,7 @@
 #!/bin/bash
 function cleanup() {
     rv=$?
-    sh "$PWD/scripts/post_build.sh"
+    yarn gql:pm2:kill
     exit $rv
 }
 

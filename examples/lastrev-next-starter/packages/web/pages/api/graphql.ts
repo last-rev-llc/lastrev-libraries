@@ -34,8 +34,6 @@ export const config = {
 const handler: NextApiHandler = async (req, res) => {
   await cors(req, res);
 
-  const query = req.query;
-
   return await createVercelHandler(lrConfig, '/api/graphql')(req, res);
 };
 
