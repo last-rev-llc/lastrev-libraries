@@ -22,6 +22,7 @@
     "@emotion/styled": "^11.6.0",
     "@last-rev/component-library": "^0.5.2",
     "@last-rev/contentful-sidekick-util": "^0.1.1",
+    "@last-rev/graphql-contentful-core": "^0.5.0",
     "@last-rev/sitemap-generator": "^0.1.2",
     "@last-rev/testing-library": "^0.1.10",
     "@lrns/components": "0.0.1",

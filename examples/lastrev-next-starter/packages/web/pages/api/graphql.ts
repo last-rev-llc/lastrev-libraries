@@ -35,15 +35,8 @@ const handler: NextApiHandler = async (req, res) => {
   await cors(req, res);
 
   const query = req.query;
-  const config =
-    query && query.env && query.env !== lrConfig.contentful.env
-      ? lrConfig.clone({
-          contentful: {
-            env: query.env
-          }
-        })
-      : lrConfig;
-  return await createVercelHandler(config, '/api/graphql')(req, res);
+
+  return await createVercelHandler(lrConfig, '/api/graphql')(req, res);
 };
 
 export default handler;
