@@ -2,6 +2,7 @@ import { lorem } from 'faker';
 import { MediaProps } from './Media';
 
 export const mediaMock = (): MediaProps => ({
+  __typename: 'Media',
   file: {
     url: '/flower-large.jpg',
     width: 920,
@@ -12,6 +13,7 @@ export const mediaMock = (): MediaProps => ({
 });
 
 export const mediaVideoMock = () => ({
+  __typename: 'Media',
   file: {
     url: './LastRev.mp4',
     width: 1280,
