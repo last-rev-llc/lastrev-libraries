@@ -16,10 +16,8 @@ export type PageGetStaticPathsProps = {
 
 export const getStaticPaths = async ({ locales }: PageGetStaticPathsProps) => {
   try {
-    const { data } = await client.Paths({ locales, preview, site });
-
     return {
-      paths: data?.paths,
+      paths: revalidate ? [] : (await client.Paths({ locales, preview, site }))?.data?.paths || [],
       fallback: revalidate ? 'blocking' : false
     };
   } catch (error) {

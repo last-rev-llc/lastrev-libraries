@@ -1,19 +1,13 @@
 #!/bin/bash
 function cleanup() {
     rv=$?
-    sh "$PWD/scripts/post_build.sh"
+    yarn gql:pm2:kill
     exit $rv
 }
 
 trap "cleanup" EXIT
 
 yarn propagate:env
-
-echo "Building..."
-sh "$PWD/scripts/pre_build.sh"
-
-echo "Syncing CMS data.."
-yarn turbo:sync:cms --output-logs=new-only
 
 # Run build and cleanup pm2 if it fails
 echo "Building..."

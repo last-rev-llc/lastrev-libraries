@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const handleWebhook = require('@last-rev/contentful-webhook-handler');
-const config = require('../../shared/config');
+const config = require('../../../../config');
 
 module.exports.handler = async (event) => {
   try {
