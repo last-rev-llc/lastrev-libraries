@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const LastRevAppConfig = require('@last-rev/app-config');
 const extensions = require('@lrns/graphql-extensions');
+const { resolve } = require('path');
 
 const testForEnvVar = (name) => {
   const envVar = process.env[name];
@@ -29,7 +30,7 @@ const parseBooleanEnvVar = (value = '') => {
 
 const config = new LastRevAppConfig({
   cms: 'Contentful',
-  strategy: 'redis',
+  strategy: process.env.GRAPHQL_RUNNER_STRATEGY || 'fs',
   sites: [process.env.SITE],
   extensions,
   contentful: {
@@ -54,7 +55,10 @@ const config = new LastRevAppConfig({
     tls: {},
     maxBatchSize: parseNumberEnvVar(process.env.REDIS_MAX_BATCH_SIZE)
   },
-  logLevel: 'debug'
+  logLevel: 'debug',
+  fs: {
+    contentDir: resolve(__dirname, './packages/graphql-runner/cms-sync')
+  }
 });
 
 module.exports = config;

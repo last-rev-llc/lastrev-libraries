@@ -1,5 +1,3 @@
-"Exposes a URL that specifies the behaviour of this scalar."
-directive @specifiedBy("The URL that specifies the behaviour of this scalar." url: String!) on SCALAR
 "Date custom scalar type"
 scalar Date
 "The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
@@ -62,13 +60,6 @@ type Locales {
   default: String!
   available: [String!]!
 }
-input ContentsFilter {
-  contentTypes: [String]
-  ids: [String]
-  locale: String
-  preview: Boolean
-  displayType: String
-}
 type Query {
   page(path: String!, locale: String, preview: Boolean, site: String): Content
   paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
@@ -84,12 +75,6 @@ type PagePathParams {
   params: PagePathParam!
   locale: String
 }
-interface Content {
-  id: String
-  theme: [Theme]
-  animation: JSON
-  sidekickLookup: JSON
-}
 type SitemapEntry {
   loc: String
   lastmod: String
@@ -102,51 +87,6 @@ type SitemapPage {
 }
 type Sitemap {
   pages: [SitemapPage]
-}
-type Person implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  name: String
-  jobTitle: String
-  image: Media
-}
-type ModuleIntegration implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  settings: JSON
-}
-type Text implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  body: RichText
-  internalTitle: String
-  align: String
-  color: String
-  styles: JSON
-}
-type Link implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  manualUrl: String
-  text: String
-  icon: String
-  iconPosition: String
-  color: String
-  href: String!
 }
 type Card implements Content {
   sidekickLookup: JSON
@@ -161,54 +101,6 @@ type Card implements Content {
   body: RichText
   actions: [Link]
   link: Link
-}
-type Site implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  siteKey: String
-  seo: JSON
-}
-type NavigationItem implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  manualUrl: String
-  text: String
-  summary: String
-  media: Media
-  href: String!
-  subNavigation: [SubnavigationItem]
-  image: Media
-}
-type Header implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  logo: Media
-  logoUrl: String
-  colorScheme: String
-  color: String
-  navigationItems: [Collection]
-}
-type Template implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  templateName: String
-  image: Media
-  category: String
 }
 type Collection implements Content {
   sidekickLookup: JSON
@@ -225,6 +117,97 @@ type Collection implements Content {
   items: [CollectionItem]
   introText: Text
   itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
+}
+type Header implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  logo: Media
+  logoUrl: String
+  color: String
+  navigationItems: [Collection]
+}
+type Hero implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  title: String
+  subtitle: String
+  body: RichText
+  backgroundAsset: Media
+  backgroundColor: String
+  image: [Media]
+  contentWidth: String
+  contentHeight: String
+  overline: String
+  actions: [Link]
+  background: Media
+}
+type Link implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  manualUrl: String
+  text: String
+  icon: String
+  iconPosition: String
+  color: String
+  href: String!
+}
+type ModuleIntegration implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  settings: JSON
+}
+type NavigationItem implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  manualUrl: String
+  text: String
+  summary: String
+  media: Media
+  href: String!
+  subNavigation: [SubnavigationItem]
+  image: Media
+}
+type Person implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  name: String
+  jobTitle: String
+  image: Media
+}
+type Quote implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  quote: String
+  authorName: String
+  authorTitle: String
+  image: Media
 }
 type Section implements Content {
   sidekickLookup: JSON
@@ -248,36 +231,59 @@ type Section implements Content {
   contents: [Content]
   background: Media
 }
-type Quote implements Content {
+type Site implements Content {
   sidekickLookup: JSON
   id: String
   theme: [Theme]
   animation: JSON
   variant: String
   internalTitle: String
-  quote: String
-  authorName: String
-  authorTitle: String
-  image: Media
+  siteKey: String
+  seo: JSON
 }
-type Hero implements Content {
+type Template implements Content {
   sidekickLookup: JSON
   id: String
   theme: [Theme]
   animation: JSON
   variant: String
-  internalTitle: String
-  title: String
-  subtitle: String
+  templateName: String
+  image: Media
+  category: String
+}
+type Text implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
   body: RichText
-  backgroundAsset: Media
-  backgroundColor: String
-  image: [Media]
-  contentWidth: String
-  contentHeight: String
-  overline: String
-  actions: [Link]
-  background: Media
+  internalTitle: String
+  align: String
+  color: String
+  styles: JSON
+}
+type Blog implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  slug: String
+  lr__path__: String
+  title: String
+  featuredMedia: Media
+  pubDate: Date
+  summary: String
+  body: RichText
+  tags: [String]
+  disableBackToTop: Boolean
+  seo: JSON
+  relatedLinks: [Link]
+  categories: [CategoryBlog]
+  author: Person
+  contents: [Content]
+  header: Header
+  footer: Content
 }
 type CategoryBlog implements Content {
   sidekickLookup: JSON
@@ -310,28 +316,6 @@ type Page implements Content {
   hero: Hero
   contents: [Content]
 }
-type Blog implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  slug: String
-  lr__path__: String
-  title: String
-  featuredMedia: Media
-  pubDate: Date
-  summary: String
-  body: RichText
-  tags: [String]
-  disableBackToTop: Boolean
-  seo: JSON
-  relatedLinks: [Link]
-  categories: [CategoryBlog]
-  author: Person
-  contents: [Content]
-  header: Header
-  footer: Content
-}
 type AlgoliaObject {
   index: String!
   data: JSON!
@@ -360,10 +344,28 @@ type CollectionItemConnection {
   pageInfo: ConnectionPageInfo
   items: [CollectionItem]
 }
+interface Content {
+  id: String
+  theme: [Theme]
+  animation: JSON
+  sidekickLookup: JSON
+}
+union CollectionItem = Card | Link | Media | Section | NavigationItem
+union SubnavigationItem = Link | NavigationItem
+input ContentsFilter {
+  contentTypes: [String]
+  ids: [String]
+  locale: String
+  preview: Boolean
+  displayType: String
+}
 input CollectionFilterInput {
   topics: [String]
   tags: [String]
   body: String
 }
-union CollectionItem = Card | Link | Media | Section | NavigationItem
-union SubnavigationItem = Link | NavigationItem
+"Exposes a URL that specifies the behaviour of this scalar."
+directive @specifiedBy(
+    "The URL that specifies the behaviour of this scalar."
+    url: String!
+  ) on SCALAR
