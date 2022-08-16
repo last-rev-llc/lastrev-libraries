@@ -34,7 +34,12 @@ export const config = {
 const handler: NextApiHandler = async (req, res) => {
   await cors(req, res);
 
-  return await createVercelHandler(lrConfig, '/api/graphql')(req, res);
+  return await createVercelHandler(
+    lrConfig.clone({
+      strategy: 'redis' // always use redis strategy for live api
+    }),
+    '/api/graphql'
+  )(req, res);
 };
 
 export default handler;
