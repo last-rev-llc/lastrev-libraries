@@ -35,6 +35,10 @@
       "dependsOn": ["^build"],
       "outputs": ["storybook-static/**"]
     },
+    "sync:cms": {
+      "cache": false,
+      "dependsOn": ["@lrns/graphql-extensions#build"]
+    },
     "start": {
       "cache": false,
       "dependsOn": ["build"],
