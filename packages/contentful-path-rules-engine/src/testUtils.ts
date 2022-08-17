@@ -36,6 +36,13 @@ export const entryMocks = {
       },
       {
         sys: {
+          id: 'category3',
+          type: 'Link',
+          linkType: 'Entry'
+        }
+      },
+      {
+        sys: {
           id: 'category2',
           type: 'Link',
           linkType: 'Entry'
@@ -54,10 +61,15 @@ export const entryMocks = {
     slug: 'category-1',
     subCategories: [{ sys: { id: 'subcategory1', type: 'Link', linkType: 'Entry' } }]
   }),
+  categoryWithOtherSubcategory: createMockEntry('category3', 'category', {
+    slug: 'category-3',
+    subCategories: [{ sys: { id: 'subcategory2', type: 'Link', linkType: 'Entry' } }]
+  }),
   categoryWithoutSubcategory: createMockEntry('category2', 'category', {
     slug: 'category-2'
   }),
   subcategory: createMockEntry('subcategory1', 'category', { slug: 'sub-category-1' }),
+  subcategory2: createMockEntry('subcategory2', 'category', { slug: 'sub-category-2' }),
   noncategory: createMockEntry('noncategory1', 'noncategory', { slug: 'non-category-1' }),
   topic: createMockEntry('topic1', 'topic', { excludeFromLocales: ['fr'], slug: 'topic-1' }),
   courseWithTopic1: createMockEntry('course1', 'course', {

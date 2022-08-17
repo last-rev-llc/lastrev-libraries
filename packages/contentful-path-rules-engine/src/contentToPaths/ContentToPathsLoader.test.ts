@@ -60,7 +60,7 @@ describe('ContentToPathsLoader', () => {
   describe('slug with static segment and references', () => {
     it('loads when item exists', async () => {
       const loaded = await pathLoader.loadPathsFromContent(entryMocks.blogWithCategories, mockApolloContext());
-      expect(loaded).toHaveLength(4);
+      expect(loaded).toHaveLength(6);
       expect(loaded).toContainEqual({ path: '/blogs/blog-1', pathEntries: [null, entryMocks.blogWithCategories] });
       expect(loaded).toContainEqual({
         path: '/blogs/category-1/blog-1',
@@ -71,8 +71,21 @@ describe('ContentToPathsLoader', () => {
         pathEntries: [null, entryMocks.categoryWithoutSubcategory, entryMocks.blogWithCategories]
       });
       expect(loaded).toContainEqual({
+        path: '/blogs/category-3/blog-1',
+        pathEntries: [null, entryMocks.categoryWithOtherSubcategory, entryMocks.blogWithCategories]
+      });
+      expect(loaded).toContainEqual({
         path: '/blogs/category-1/sub-category-1/blog-1',
         pathEntries: [null, entryMocks.categoryWithSubcategory, entryMocks.subcategory, entryMocks.blogWithCategories]
+      });
+      expect(loaded).toContainEqual({
+        path: '/blogs/category-3/sub-category-2/blog-1',
+        pathEntries: [
+          null,
+          entryMocks.categoryWithOtherSubcategory,
+          entryMocks.subcategory2,
+          entryMocks.blogWithCategories
+        ]
       });
     });
 

@@ -16,6 +16,7 @@ import ContentToPathsFetcherTree, {
   ContentToPathTreeRefChildNode,
   ContentToPathTreeRefNode
 } from './ContentToPathsFetcherTree';
+import RelationShipValidator from '../core/RelationshipValidator';
 
 type ContentToPathsFetcherContext = {
   currentSegmentIndex: number;
@@ -145,6 +146,7 @@ const ContentToPathsFetcherVisitor: PathVisitor<ContentToPathsFetcherContext> = 
  */
 export default class ContentToPathsFetcher {
   private readonly _tree: ContentToPathsFetcherTree = new ContentToPathsFetcherTree();
+  private readonly _validator: RelationShipValidator;
 
   constructor({ pathRule }: { pathRule: PathRule }) {
     const context: ContentToPathsFetcherContext = {
@@ -157,6 +159,8 @@ export default class ContentToPathsFetcher {
     };
 
     traversePathRule(pathRule, ContentToPathsFetcherVisitor, context);
+
+    this._validator = new RelationShipValidator(pathRule);
   }
 
   get logPrefix() {
@@ -164,6 +168,14 @@ export default class ContentToPathsFetcher {
   }
 
   async fetch({ entry, apolloContext }: { entry: Entry<any>; apolloContext: ApolloContext }): Promise<PathInfo[]> {
-    return this._tree.fetch(entry, apolloContext);
+    const pathInfos = await this._tree.fetch(entry, apolloContext);
+    const validator = this._validator;
+    return asyncFilter(pathInfos, async (pathInfo) => {
+      const errors = await validator.validate(pathInfo.pathEntries, apolloContext);
+      return errors.length === 0;
+    });
   }
 }
+
+const asyncFilter = async <T>(arr: T[], predicate: (t: T) => Promise<boolean>) =>
+  Promise.all(arr.map(predicate)).then((results) => arr.filter((_v, index) => results[index]));
