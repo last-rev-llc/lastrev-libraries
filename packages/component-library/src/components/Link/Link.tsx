@@ -155,8 +155,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
 
   if (variant?.includes('button-')) {
     const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
-    // const { id, ...rest as any } = extra;
-    // console.log(rest, 'rest');
+
     if (href !== '#') {
       if (isExternal) {
         return (
