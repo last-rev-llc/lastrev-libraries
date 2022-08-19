@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.6
+
+### Patch Changes
+
+- c97c755: ADA bug comming from link, duplicated id for a and button element
+
 ## 0.5.5
 
 ### Patch Changes
