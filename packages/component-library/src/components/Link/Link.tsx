@@ -44,8 +44,7 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
         scroll={scroll}
         shallow={shallow}
         passHref={passHref}
-        locale={locale}
-      >
+        locale={locale}>
         <RootLink ref={ref} {...other} onClick={onClick}>
           {text || children}
         </RootLink>
@@ -123,8 +122,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}
-        >
+          {...extra}>
           <RootIconButton aria-label={icon} size="large">
             {getIcon(icon)}
           </RootIconButton>
@@ -149,8 +147,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         // type={other.type}
         // {...extra}
         onClick={other.onClick}
-        size="large"
-      >
+        size="large">
         {getIcon(icon)}
       </RootIconButton>
     );
@@ -158,6 +155,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
 
   if (variant?.includes('button-')) {
     const buttonVariant = variant.replace('button-', '') as 'text' | 'outlined' | 'contained' | undefined;
+
     if (href !== '#') {
       if (isExternal) {
         return (
@@ -168,8 +166,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
               {...extra}
               variant={buttonVariant}
               startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-              endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-            >
+              endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
               {text || children}
             </RootButton>
           </RootLink>
@@ -184,8 +181,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
             {...extra}
             variant={buttonVariant}
             startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-          >
+            endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
             {text || children}
           </RootButton>
         </NextLink>
@@ -200,8 +196,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         {...extra}
         variant={buttonVariant}
         startIcon={icon && iconPosition === 'Left' && getIcon(icon)}
-        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}
-      >
+        endIcon={icon && iconPosition !== 'Left' && getIcon(icon)}>
         {text || children}
       </RootButton>
     );
@@ -216,8 +211,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
           ref={ref as any}
           target="_blank"
           rel="noopener noreferrer"
-          {...extra}
-        >
+          {...extra}>
           {getButtonContent(text, children, iconPosition, icon)}
         </RootLink>
       );
@@ -230,8 +224,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
         ref={ref}
         target="_blank"
         rel="noopener noreferrer"
-        {...extra}
-      >
+        {...extra}>
         {getButtonContent(text, children, iconPosition, icon)}
       </RootMuiLink>
     );
@@ -267,8 +260,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
       {...extra}
       // Not getting the prop validation from NextLinkComposed
       // @ts-expect-error
-      passHref
-    >
+      passHref>
       {getButtonContent(text, children, iconPosition, icon)}
     </RootMuiLink>
   );
@@ -286,6 +278,7 @@ const Root = styled(Box, {
 const RootLink = styled('a', {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp: (prop) => prop !== 'id',
   overridesResolver: (_, styles) => [styles.root, styles.rootLink]
 })<{}>(() => ({}));
 
