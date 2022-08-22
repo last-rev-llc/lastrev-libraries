@@ -47,6 +47,10 @@ describe('ContentToPathsFetcher', () => {
         pathEntries: [null, entryMocks.categoryWithSubcategory, entryMocks.blogWithCategories]
       },
       {
+        path: '/topics/category-3/blog-1',
+        pathEntries: [null, entryMocks.categoryWithOtherSubcategory, entryMocks.blogWithCategories]
+      },
+      {
         path: '/topics/category-2/blog-1',
         pathEntries: [null, entryMocks.categoryWithoutSubcategory, entryMocks.blogWithCategories]
       }
@@ -66,23 +70,48 @@ describe('ContentToPathsFetcher', () => {
     const fetcher = new ContentToPathsFetcher({
       pathRule: parser.PathRule()
     });
-    await expect(fetcher.fetch({ entry: entryMocks.blogWithCategories, apolloContext })).resolves.toEqual([
-      {
-        path: '/topics/category-1/sub-category-1/blog-1',
-        pathEntries: [null, entryMocks.categoryWithSubcategory, entryMocks.subcategory, entryMocks.blogWithCategories]
-      },
-      // NOTE: this is expected, but is not probably what the end user would usually want.
-      // See pattern below for segment references
-      {
-        path: '/topics/category-2/sub-category-1/blog-1',
-        pathEntries: [
-          null,
-          entryMocks.categoryWithoutSubcategory,
-          entryMocks.subcategory,
-          entryMocks.blogWithCategories
-        ]
-      }
-    ]);
+    const fetched = await fetcher.fetch({ entry: entryMocks.blogWithCategories, apolloContext });
+
+    expect(fetched).toHaveLength(6);
+    expect(fetched).toContainEqual({
+      path: '/topics/category-1/sub-category-1/blog-1',
+      pathEntries: [null, entryMocks.categoryWithSubcategory, entryMocks.subcategory, entryMocks.blogWithCategories]
+    });
+    expect(fetched).toContainEqual({
+      path: '/topics/category-3/sub-category-2/blog-1',
+      pathEntries: [
+        null,
+        entryMocks.categoryWithOtherSubcategory,
+        entryMocks.subcategory2,
+        entryMocks.blogWithCategories
+      ]
+    });
+    // NOTE: these below are expected, but are not probably what the end user would usually want.
+    // See pattern below for segment references
+    expect(fetched).toContainEqual({
+      path: '/topics/category-1/sub-category-2/blog-1',
+      pathEntries: [null, entryMocks.categoryWithSubcategory, entryMocks.subcategory2, entryMocks.blogWithCategories]
+    });
+
+    expect(fetched).toContainEqual({
+      path: '/topics/category-2/sub-category-1/blog-1',
+      pathEntries: [null, entryMocks.categoryWithoutSubcategory, entryMocks.subcategory, entryMocks.blogWithCategories]
+    });
+
+    expect(fetched).toContainEqual({
+      path: '/topics/category-2/sub-category-2/blog-1',
+      pathEntries: [null, entryMocks.categoryWithoutSubcategory, entryMocks.subcategory2, entryMocks.blogWithCategories]
+    });
+
+    expect(fetched).toContainEqual({
+      path: '/topics/category-3/sub-category-1/blog-1',
+      pathEntries: [
+        null,
+        entryMocks.categoryWithOtherSubcategory,
+        entryMocks.subcategory,
+        entryMocks.blogWithCategories
+      ]
+    });
   });
   it('fetches all paths for an item with nested reference expressions using segment references', async () => {
     const parser = new PathRuleParser(
@@ -95,6 +124,15 @@ describe('ContentToPathsFetcher', () => {
       {
         path: '/topics/category-1/sub-category-1/blog-1',
         pathEntries: [null, entryMocks.categoryWithSubcategory, entryMocks.subcategory, entryMocks.blogWithCategories]
+      },
+      {
+        path: '/topics/category-3/sub-category-2/blog-1',
+        pathEntries: [
+          null,
+          entryMocks.categoryWithOtherSubcategory,
+          entryMocks.subcategory2,
+          entryMocks.blogWithCategories
+        ]
       }
     ]);
   });
@@ -124,7 +162,7 @@ describe('ContentToPathsFetcher', () => {
       }
     ]);
   });
-  it('fetches all paths for an item with nested reference expressions using segment references', async () => {
+  it('fetches all paths for an item with nested refBy expressions using segment references', async () => {
     const parser = new PathRuleParser(
       `/classes/:__segment__(2).__refBy__(class, courses).slug/:__refBy__(course, topics).slug/:slug`
     );

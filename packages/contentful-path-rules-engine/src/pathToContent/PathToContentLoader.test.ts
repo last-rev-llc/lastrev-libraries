@@ -91,7 +91,7 @@ describe('PathToContentLoader', () => {
     });
 
     it('does not load when reference item exists but is not referred', async () => {
-      const loaded = await pathLoader.getItemsForPath('/blogs/category-3/blog-1', mockApolloContext());
+      const loaded = await pathLoader.getItemsForPath('/blogs/category-4/blog-1', mockApolloContext());
       expect(loaded).toEqual(null);
     });
 

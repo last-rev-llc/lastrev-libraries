@@ -1,5 +1,5 @@
 import RelationshipValidator from './RelationshipValidator';
-import PathRuleParser from '../core/PathRuleParser';
+import PathRuleParser from './PathRuleParser';
 
 import { entryMocks, mockApolloContext } from '../testUtils';
 
