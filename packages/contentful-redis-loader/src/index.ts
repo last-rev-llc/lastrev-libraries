@@ -40,6 +40,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
   const client = getClient(config);
 
   const maxBatchSize = config.redis.maxBatchSize || 1000;
+  const ttlSeconds = config.redis.ttlSeconds;
 
   logger.debug(`${LOG_PREFIX} createLoaders() maxBatchSize: ${maxBatchSize}`);
 
@@ -83,7 +84,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
       const sourceResults = await fallbackLoader.loadMany(cacheMissIds);
 
-      primeRedisEntriesOrAssets<T>(client, cacheMissIds, dirname, sourceResults, maxBatchSize);
+      primeRedisEntriesOrAssets<T>(client, cacheMissIds, dirname, sourceResults, maxBatchSize, ttlSeconds);
 
       keys.forEach((key, index) => {
         if (isNil(results[index])) {
@@ -186,7 +187,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         // Clean all errors and nulls
         const filtered = sourceResults.filter((result) => !isError(result) && !isNil(result));
 
-        primeRedisEntriesByContentType(client, filtered, cacheMissContentTypeIds, maxBatchSize);
+        primeRedisEntriesByContentType(client, filtered, cacheMissContentTypeIds, maxBatchSize, ttlSeconds);
 
         // Add all the fallback results in the out map
         (filtered as Entry<any>[][]).forEach((entryArray, idx) => {
@@ -233,8 +234,11 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
           }
 
           // don't block
-          client
+          const hsetMulti = client.multi();
+          hsetMulti
             .hset(key, zipped)
+            .expire(key, ttlSeconds)
+            .exec()
             .catch((e: any) => {
               logger.error(`${LOG_PREFIX} error hsetting: ${e}`);
             })

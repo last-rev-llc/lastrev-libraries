@@ -7,7 +7,8 @@ const redis = () => ({
   tls: {},
   db: 1,
   username: 'username',
-  maxBatchSize: 500
+  maxBatchSize: 500,
+  ttlSeconds: 2992000
 });
 
 const dynamodb = () => ({
