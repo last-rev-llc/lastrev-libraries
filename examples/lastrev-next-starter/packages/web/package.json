@@ -20,10 +20,10 @@
     "@emotion/react": "^11.7.1",
     "@emotion/server": "^11.4.0",
     "@emotion/styled": "^11.6.0",
-    "@last-rev/component-library": "^0.5.2",
+    "@last-rev/component-library": "^0.5.6",
     "@last-rev/contentful-sidekick-util": "^0.1.1",
     "@last-rev/graphql-contentful-core": "^0.5.0",
-    "@last-rev/sitemap-generator": "^0.1.2",
+    "@last-rev/sitemap-generator": "^0.1.4",
     "@last-rev/testing-library": "^0.1.10",
     "@lrns/components": "0.0.1",
     "@lrns/graphql-sdk": "^0.1.0",
@@ -34,7 +34,6 @@
     "@types/react": "^17.0.37",
     "dotenv": "^10.0.0",
     "eslint": "^8.6.0",
-    "eslint-config-next": "^12.0.8",
     "graphql": "^15.5.1",
     "graphql-request": "^3.6.0",
     "next": "^12.2.0",
@@ -54,7 +53,6 @@
     "@percy/cli": "^1.6.0",
     "@percy/cypress": "^3.1.1",
     "cypress": "^10.3.0",
-    "eslint-config-next": "^12.0.8",
     "netlify-plugin-cypress": "^2.2.0"
   }
 }

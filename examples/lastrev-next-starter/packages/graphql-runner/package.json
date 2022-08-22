@@ -17,8 +17,8 @@
   },
   "peerDependencies": {},
   "dependencies": {
-    "@last-rev/app-config": "^0.2.1",
-    "@last-rev/cli": "^0.4.1",
+    "@last-rev/app-config": "^0.2.2",
+    "@last-rev/cli": "^0.5.2",
     "@lrns/graphql-extensions": "^0.1.0",
     "dotenv": "^10.0.0",
     "npm-run-all": "^4.1.5"
