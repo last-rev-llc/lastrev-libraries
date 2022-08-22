@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.5.2
+
+### Patch Changes
+
+- 44f8245: bumped dependency versions
+
 ## 0.5.1
 
 ### Patch Changes
