@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.2.2
+
+### Patch Changes
+
+- f7e1181: Added TTLs to Redis calls
+
 ## 0.2.1
 
 ### Patch Changes

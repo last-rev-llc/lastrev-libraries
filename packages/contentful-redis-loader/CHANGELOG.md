@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.5.1
+
+### Patch Changes
+
+- f7e1181: Added TTLs to Redis calls
+
 ## 0.5.0
 
 ### Minor Changes

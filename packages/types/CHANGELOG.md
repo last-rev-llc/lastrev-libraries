@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.3.1
+
+### Patch Changes
+
+- f7e1181: Added TTLs to Redis calls
+
 ## 0.3.0
 
 ### Minor Changes

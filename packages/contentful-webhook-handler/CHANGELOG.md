@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.6
+
+### Patch Changes
+
+- f7e1181: Added TTLs to Redis calls
+
 ## 0.4.5
 
 ### Patch Changes
