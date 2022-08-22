@@ -8,6 +8,7 @@ export interface LastRevAppConfiguration {
   strategy: LastRevStrategy;
   redis: RedisOptions & {
     maxBatchSize: number;
+    ttlSeconds: number;
   };
   dynamodb: {
     region: string;
@@ -47,6 +48,7 @@ export type LastRevAppConfigArgs = {
   strategy?: LastRevStrategy;
   redis?: RedisOptions & {
     maxBatchSize?: number;
+    ttlSeconds?: number;
   };
   dynamodb?: {
     region?: string;

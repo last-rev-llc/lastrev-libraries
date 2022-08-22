@@ -11,7 +11,8 @@ export const primeRedisEntriesOrAssets = async <T>(
   cacheMissIds: ItemKey[],
   dirname: string,
   sourceResults: (T | Error)[],
-  maxBatchSize: number
+  maxBatchSize: number,
+  ttlSeconds: number
 ) => {
   try {
     const timer = new Timer(`set ${cacheMissIds.length} ${dirname} in redis`);
@@ -36,7 +37,13 @@ export const primeRedisEntriesOrAssets = async <T>(
       toSetArr.push(toSet);
     }
 
-    const results = await Promise.allSettled(toSetArr.map(async (toSet) => client.mset(toSet)));
+    const results = await Promise.allSettled(
+      toSetArr.map(async (toSet) => {
+        await client.mset(toSet);
+        await Promise.all(Object.keys(toSet).map(async (key) => client.expire(key, ttlSeconds)));
+      })
+    );
+
     logger.trace(`${LOG_PREFIX} ${timer.end()}`);
 
     let totalSuccessful = 0;
@@ -52,7 +59,7 @@ export const primeRedisEntriesOrAssets = async <T>(
       }
     });
 
-    logger.debug(`${LOG_PREFIX} primeRedisEntriesOrAssets() Primed ${totalSuccessful} entries in Redis}`);
+    logger.debug(`${LOG_PREFIX} primeRedisEntriesOrAssets() Primed ${totalSuccessful} entries in Redis`);
   } catch (err: any) {
     logger.error(`${LOG_PREFIX} primeRedisEntriesOrAssets(), unexpected`, err.message);
   }
@@ -62,7 +69,8 @@ export const primeRedisEntriesByContentType = async (
   client: Redis,
   filtered: (Entry<any>[] | Error)[],
   cacheMissContentTypeIds: ItemKey[],
-  maxBatchSize: number
+  maxBatchSize: number,
+  ttlSeconds: number
 ) => {
   try {
     const timer = new Timer(`Set ${filtered.length} entries in redis`);
@@ -104,6 +112,7 @@ export const primeRedisEntriesByContentType = async (
       // Wait to store entry ids by contenType
       const multiSadd = client.multi();
       Object.keys(saddKeys).forEach((k) => multiSadd.sadd(k, ...saddKeys[k]));
+
       try {
         await multiSadd.exec();
         logger.debug(
@@ -125,6 +134,9 @@ export const primeRedisEntriesByContentType = async (
           // Store entryId -> entry
           // Danger ! Object size varies and will make everything go boom
           multi.mset(msetKeys);
+
+          // Set expiration for each entry
+          Object.keys(msetKeys).forEach((key) => multi.expire(key, ttlSeconds));
 
           multi.exec().catch((e: any) => {
             logger.error(

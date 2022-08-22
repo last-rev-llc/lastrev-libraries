@@ -117,8 +117,12 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
   get redis() {
     return {
       ...this.config.redis,
-      maxBatchSize: this.config.redis?.maxBatchSize || 1000
-    } as RedisOptions & { maxBatchSize: number };
+      maxBatchSize: this.config.redis?.maxBatchSize || 1000,
+      ttlSeconds: this.config.redis?.ttlSeconds || 60 * 60 * 24 * 30 // 30 days
+    } as RedisOptions & {
+      maxBatchSize: number;
+      ttlSeconds: number;
+    };
   }
 
   get dynamodb() {
