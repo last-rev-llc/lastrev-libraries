@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.7
+
+### Patch Changes
+
+- 43bbfed: Fix Theme not propagating, Fix mailto link
+
 ## 0.5.6
 
 ### Patch Changes
