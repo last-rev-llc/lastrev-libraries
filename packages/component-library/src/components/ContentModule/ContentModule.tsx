@@ -4,8 +4,6 @@ import { useContentModuleContext } from './ContentModuleContext';
 import { ContentModuleProps } from './ContentModule.types';
 import ContentThemeProvider from '../ContentThemeProvider';
 
-// TODO: Extract Theme composition into a separate hook
-
 function ContentModule({ __typename, theme, ...fields }: ContentModuleProps) {
   if (!__typename) return null;
   const contentMapping = useContentModuleContext();
@@ -28,7 +26,7 @@ function ContentModule({ __typename, theme, ...fields }: ContentModuleProps) {
   Main.displayName = `Content_${contentType}:${fields?.variant}`;
 
   return (
-    <ContentThemeProvider {...fields}>
+    <ContentThemeProvider theme={theme} {...fields}>
       <Main {...fields} />
     </ContentThemeProvider>
   );

@@ -19,4 +19,7 @@ fragment Hero_BaseFragment on Hero {
   actions {
     ...Link_BaseFragment
   }
+  theme {
+    components
+  }
 }
