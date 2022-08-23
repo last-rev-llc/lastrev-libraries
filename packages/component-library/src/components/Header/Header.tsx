@@ -34,6 +34,7 @@ export const Header = (inProps: HeaderProps) => {
   const handleClose = () => {
     setMenuVisible(false);
   };
+  
   return (
     <ErrorBoundary>
       <>
@@ -62,12 +63,18 @@ export const Header = (inProps: HeaderProps) => {
                 <ContentModule
                   {...collection}
                   variant={'navigation-bar'}
-                  onRequestClose={handleClose}
                   color={props?.color}
                 />
               </React.Fragment>
             ))}
             <Hidden implementation="css" {...{ [`${menuBreakpoint}Up`]: true }}>
+              <ContentModule
+                { ...(navigationItems?.[0] || {}) }
+                variant={'navigation-bar'}
+                onRequestClose={handleClose}
+                items={navigationItems?.map(navItem => navItem.items)?.reduce((acc, items) => acc?.concat(items), [] as any)}
+                color={props?.color}
+              />
               <IconButton
                 edge="end"
                 color="inherit"
