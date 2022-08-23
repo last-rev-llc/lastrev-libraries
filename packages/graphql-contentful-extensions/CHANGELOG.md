@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.5
+
+### Patch Changes
+
+- 43bbfed: Fix Theme not propagating, Fix mailto link
+
 ## 0.1.4
 
 ### Patch Changes
