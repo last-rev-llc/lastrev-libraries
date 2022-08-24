@@ -30,8 +30,8 @@ export const NavigationBar = ({
         sx={color ? { backgroundColor: `${color}.main`, color: `${color}.contrastText` } : null}
       >
         <Grid container sx={{ alignItems: 'center' }}>
-          {itemsWithVariant?.map((item) => (
-            <Grid item key={item.id} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>
+          {itemsWithVariant?.map((item, index) => (
+            <Grid item key={`${item.id}-${index}`} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>
               <ContentModule
                 {...item}
                 onClick={onRequestClose}
