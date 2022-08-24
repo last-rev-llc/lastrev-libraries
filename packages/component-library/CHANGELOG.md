@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.8
+
+### Patch Changes
+
+- 675d271: spred props into root from hero
+
 ## 0.5.7
 
 ### Patch Changes
