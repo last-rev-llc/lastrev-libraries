@@ -79,6 +79,15 @@ const run = async (directory: string, source: string, target: string) => {
     // git fetch old_repo -q
     await git.fetch('old_repo', ['-q']);
 
+    execSync(`open ${PATCH_FILE}`, { cwd: TARGET_DIRECTORY });
+    await inquirer.prompt([
+      {
+        message: 'Verify the patch and hit enter to continue',
+        type: 'input',
+        name: 'apply patch'
+      }
+    ]);
+
     // Apply patch with three way resolution
     // git am -3 -p3 --whitespace=fix $PATCH_FILE || FAILED=1
     let ACTION = '';
