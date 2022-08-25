@@ -55,26 +55,22 @@ export const Header = (inProps: HeaderProps) => {
                 <Logo {...logo} priority alt={logo?.title ?? 'Go to homepage'} />
               </LogoRoot>
             ) : null}
-            {typeof window !== 'undefined' && window.innerWidth > theme.breakpoints.values[menuBreakpoint]
-              ? navigationItems?.map((collection, index) => (
-                  <React.Fragment key={`${collection.id}-${index}`}>
-                    <NavigationDivider />
-                    <ContentModule {...collection} variant={'navigation-bar'} color={props?.color} />
-                  </React.Fragment>
-                ))
-              : null}
+            {navigationItems?.map((collection, index) => (
+              <React.Fragment key={`${collection.id}-${index}`}>
+                <NavigationDivider />
+                <ContentModule {...collection} variant={'navigation-bar'} color={props?.color} />
+              </React.Fragment>
+            ))}
             <Hidden implementation="css" {...{ [`${menuBreakpoint}Up`]: true }}>
-              {typeof window !== 'undefined' && window.innerWidth <= theme.breakpoints.values[menuBreakpoint] ? (
-                <ContentModule
-                  {...(navigationItems?.[0] || {})}
-                  variant={'navigation-bar'}
-                  onRequestClose={handleClose}
-                  items={navigationItems
-                    ?.map((navItem) => navItem.items)
-                    ?.reduce((acc, items) => acc?.concat(items), [] as any)}
-                  color={props?.color}
-                />
-              ) : null}
+              <ContentModule
+                {...(navigationItems?.[0] || {})}
+                variant={'navigation-bar'}
+                onRequestClose={handleClose}
+                items={navigationItems
+                  ?.map((navItem) => navItem.items)
+                  ?.reduce((acc, items) => acc?.concat(items), [] as any)}
+                color={props?.color}
+              />
               <IconButton
                 edge="end"
                 color="inherit"
