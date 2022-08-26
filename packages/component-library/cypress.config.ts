@@ -5,8 +5,8 @@ export default defineConfig({
   viewportHeight: 900,
 
   fileServerFolder: 'public',
-  videoUploadOnPasses: false,
-  video: false,
+  // videoUploadOnPasses: false,
+  // video: false,
   component: {
     specPattern: 'src/**/*spec.{js,jsx,ts,tsx}',
     setupNodeEvents(on, config) {
