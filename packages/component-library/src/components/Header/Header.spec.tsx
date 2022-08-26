@@ -19,7 +19,6 @@ describe('Header', () => {
       cy.get('a').should('exist').and('have.attr', 'href', mockedContent.logoUrl);
       cy.get('img').should('exist').and('have.attr', 'src', mockedContent.logo?.file?.url);
       cy.get('[data-testid=NavigationBar]:first')
-        .should('exist')
         .find('[data-testid=NavigationItem]')
         .each((item) => {
           cy.wrap(item).should('be.visible');
@@ -29,34 +28,34 @@ describe('Header', () => {
       cy.percySnapshot();
     });
 
-    // it('supports multiple navigation items/bars', () => {
-    //   mockedContent.navigationItems?.push(collectionWithItems);
-    //   mount(<Header {...mockedContent} />);
-    //   cy.get('[data-testid=NavigationBar]').each((navBar, index, $list) => {
-    //     if (index !== $list.length - 1) {
-    //       cy.wrap(navBar)
-    //         .find('[data-testid=NavigationItem]')
-    //         .should(
-    //           'have.length',
-    //           (mockedContent.navigationItems && mockedContent.navigationItems[index].items?.length) || 0
-    //         )
-    //         .each((item) => {
-    //           cy.wrap(item).should('be.visible');
-    //         });
-    //     } else {
-    //       cy.wrap(navBar)
-    //         .find('[data-testid=NavigationItem]')
-    //         .should(
-    //           'have.length',
-    //           mockedContent.navigationItems?.map((navItem) => navItem.items?.length || 0).reduce(getSumReducer, 0)
-    //         )
-    //         .each((item) => {
-    //           cy.wrap(item).should('not.be.visible');
-    //         });
-    //     }
-    //   });
-    //   cy.percySnapshot();
-    // });
+    it('supports multiple navigation items/bars', () => {
+      mockedContent.navigationItems?.push(collectionWithItems);
+      mount(<Header {...mockedContent} />);
+      cy.get('[data-testid=NavigationBar]').each((navBar, index, $list) => {
+        if (index !== $list.length - 1) {
+          cy.wrap(navBar)
+            .find('[data-testid=NavigationItem]')
+            .should(
+              'have.length',
+              (mockedContent.navigationItems && mockedContent.navigationItems[index].items?.length) || 0
+            )
+            .each((item) => {
+              cy.wrap(item).should('be.visible');
+            });
+        } else {
+          cy.wrap(navBar)
+            .find('[data-testid=NavigationItem]')
+            .should(
+              'have.length',
+              mockedContent.navigationItems?.map((navItem) => navItem.items?.length || 0).reduce(getSumReducer, 0)
+            )
+            .each((item) => {
+              cy.wrap(item).should('not.be.visible');
+            });
+        }
+      });
+      cy.percySnapshot();
+    });
     // it('supports multiple navigation items/bars in mobile', () => {
     //   mockedContent.navigationItems?.push(collectionWithItems);
     //   mount(<Header {...mockedContent} />);
