@@ -18,8 +18,7 @@ describe('Header', () => {
       mount(<Header {...mockedContent} />);
       cy.get('a').should('exist').and('have.attr', 'href', mockedContent.logoUrl);
       cy.get('img').should('exist').and('have.attr', 'src', mockedContent.logo?.file?.url);
-      cy.get('[data-testid=NavigationBar]')
-        .first()
+      cy.get('[data-testid=NavigationBar]:first')
         .should('exist')
         .find('[data-testid=NavigationItem]')
         .each((item) => {
