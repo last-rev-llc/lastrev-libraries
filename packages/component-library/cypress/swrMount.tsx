@@ -2,7 +2,7 @@ import React from 'react';
 import { SWRConfig } from 'swr';
 import mount from './mount';
 
-const swrMount = (component, options) => {
+const swrMount = (component, options?: any) => {
   return mount(<SWRConfig value={{ provider: () => new Map(), dedupingInterval: 0 }}>{component}</SWRConfig>, options);
 };
 
