@@ -56,37 +56,38 @@ describe('Header', () => {
       });
       cy.percySnapshot();
     });
-    // it('supports multiple navigation items/bars in mobile', () => {
-    //   mockedContent.navigationItems?.push(collectionWithItems);
-    //   mount(<Header {...mockedContent} />);
-    //   cy.viewport(550, 750);
-    //   cy.get('[data-testid=NavigationBar]').should('exist');
-    //   cy.get('[data-testid=NavigationItem]').should('not.be.visible');
-    //   cy.get('[data-testid=MenuIcon]').should('exist').and('be.visible');
-    //   cy.get('[data-testid=CloseIcon]').should('exist').and('not.be.visible');
-    //   cy.percySnapshot();
 
-    //   cy.get('button[type="button"]').click();
-    //   cy.get('[data-testid=MenuIcon]').should('exist').and('not.be.visible');
-    //   cy.get('[data-testid=CloseIcon]').should('exist').and('be.visible');
-    //   cy.get('[data-testid=NavigationBar]').each((navBar, index, $list) => {
-    //     if (index !== $list.length - 1) {
-    //       cy.wrap(navBar)
-    //         .find('[data-testid=NavigationItem]')
-    //         .should(
-    //           'have.length',
-    //           (mockedContent.navigationItems && mockedContent.navigationItems[index].items?.length) || 0
-    //         );
-    //     } else {
-    //       cy.wrap(navBar)
-    //         .find('[data-testid=NavigationItem]')
-    //         .should(
-    //           'have.length',
-    //           mockedContent.navigationItems?.map((navItem) => navItem.items?.length || 0).reduce(getSumReducer, 0)
-    //         );
-    //     }
-    //   });
-    //   cy.percySnapshot();
-    // });
+    it('supports multiple navigation items/bars in mobile', () => {
+      mockedContent.navigationItems?.push(collectionWithItems);
+      mount(<Header {...mockedContent} />);
+      cy.viewport(550, 750);
+      cy.get('[data-testid=NavigationBar]').should('exist');
+      cy.get('[data-testid=NavigationItem]').should('not.be.visible');
+      cy.get('[data-testid=MenuIcon]').should('exist').and('be.visible');
+      cy.get('[data-testid=CloseIcon]').should('exist').and('not.be.visible');
+      cy.percySnapshot();
+
+      cy.get('button[type="button"]').click();
+      cy.get('[data-testid=MenuIcon]').should('exist').and('not.be.visible');
+      cy.get('[data-testid=CloseIcon]').should('exist').and('be.visible');
+      cy.get('[data-testid=NavigationBar]').each((navBar, index, $list) => {
+        if (index !== $list.length - 1) {
+          cy.wrap(navBar)
+            .find('[data-testid=NavigationItem]')
+            .should(
+              'have.length',
+              (mockedContent.navigationItems && mockedContent.navigationItems[index].items?.length) || 0
+            );
+        } else {
+          cy.wrap(navBar)
+            .find('[data-testid=NavigationItem]')
+            .should(
+              'have.length',
+              mockedContent.navigationItems?.map((navItem) => navItem.items?.length || 0).reduce(getSumReducer, 0)
+            );
+        }
+      });
+      cy.percySnapshot();
+    });
   });
 });
