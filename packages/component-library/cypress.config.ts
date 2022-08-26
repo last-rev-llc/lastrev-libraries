@@ -5,8 +5,8 @@ export default defineConfig({
   viewportHeight: 900,
 
   fileServerFolder: 'public',
-  // videoUploadOnPasses: false,
-  // video: false,
+  // TODO: Enable video when issues with Cypress hanging is fixed
+  video: false,
   component: {
     specPattern: 'src/**/*spec.{js,jsx,ts,tsx}',
     setupNodeEvents(on, config) {
