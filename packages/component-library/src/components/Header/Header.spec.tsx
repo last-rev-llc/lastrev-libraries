@@ -57,7 +57,7 @@ describe('Header', () => {
       cy.percySnapshot();
     });
 
-    it('supports multiple navigation items/bars in mobile', () => {
+    it('mobile when menu is closed', () => {
       mockedContent.navigationItems?.push(collectionWithItems);
       mount(<Header {...mockedContent} />);
       cy.viewport(550, 750);
@@ -66,7 +66,12 @@ describe('Header', () => {
       cy.get('[data-testid=MenuIcon]').should('exist').and('be.visible');
       cy.get('[data-testid=CloseIcon]').should('exist').and('not.be.visible');
       cy.percySnapshot();
+    });
 
+    it('mobile when menu is open', () => {
+      mockedContent.navigationItems?.push(collectionWithItems);
+      mount(<Header {...mockedContent} />);
+      cy.viewport(550, 750);
       cy.get('button[type="button"]').click();
       cy.get('[data-testid=MenuIcon]').should('exist').and('not.be.visible');
       cy.get('[data-testid=CloseIcon]').should('exist').and('be.visible');
