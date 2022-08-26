@@ -6,6 +6,7 @@ export default defineConfig({
 
   fileServerFolder: 'public',
   videoUploadOnPasses: false,
+  video: false,
   component: {
     specPattern: 'src/**/*spec.{js,jsx,ts,tsx}',
     setupNodeEvents(on, config) {
