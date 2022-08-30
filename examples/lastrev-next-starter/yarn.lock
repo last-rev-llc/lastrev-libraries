@@ -3186,9 +3186,9 @@
     uuid "^8.3.2"
 
 "@last-rev/component-library@^0.5.6":
-  version "0.5.8"
-  resolved "https://registry.yarnpkg.com/@last-rev/component-library/-/component-library-0.5.8.tgz#8b536824f5beaf9bdca76dbd589861b095ba3d44"
-  integrity sha512-UU6R9fETABjePOcCgg8vTbIZ1j8g56w14+3RDAQOMRcyR5a7h0hajFkG4PenVpTNBNFY++KwIQio/mhDX7ENDQ==
+  version "0.5.6"
+  resolved "https://registry.yarnpkg.com/@last-rev/component-library/-/component-library-0.5.6.tgz#9cc402062bbffe2596c5f261bd2faf4a147ed67d"
+  integrity sha512-4QHKIPIEDjFUVbeh9qUD5rHgzdYLhna0Xbf23RJZH5HYes11TNYAsazhUDYqga7KbAt/NkBjb6ixuRFgcSXBOA==
   dependencies:
     "@contentful/rich-text-react-renderer" "^15.0.0"
     "@contentful/rich-text-types" "^15.0.0"
