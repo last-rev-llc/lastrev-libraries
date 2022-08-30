@@ -4,7 +4,8 @@ import path from 'path';
 module.exports = defineConfig({
   viewportWidth: 1440,
   viewportHeight: 900,
-  videoUploadOnPasses: false,
+  // TODO: Enable video when issues with Cypress hanging is fixed
+  video: false,
   retries: {
     runMode: 2,
     openMode: 0
