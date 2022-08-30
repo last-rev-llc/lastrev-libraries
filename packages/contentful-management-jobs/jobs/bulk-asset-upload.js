@@ -2,12 +2,13 @@
 const sdk = require('contentful-management');
 const fs = require('fs');
 const path = require('path');
+const contentfulFields = require('../shared/contentful-fields');
 
-const IS_DEBUG_MODE = true;
-const BASE_FOLDER_PATH = 'UPDATE PATH IN bulk-asset-upload.js'; // The local folder to import assets from
+const IS_DEBUG_MODE = false;
+const BASE_FOLDER_PATH = '/Users/bradtaylor/Desktop/images/accelerators/'; // The local folder to import assets from
 const FOLDER_DELIMETER = '_'; // Must be alphanumeric characters, dots (.) hyphens (-) or underscores (_)
 const INVALID_FILE_DELIMETER = '-'; // Must be alphanumeric characters, dots (.) hyphens (-) or underscores (_)
-const ENVIRONMENT = 'bulk-upload'; // make srue you update the environment;
+const ENVIRONMENT = 'yaml-test'; // make srue you update the environment;
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
 const CMA_ACCESS_TOKEN = process.env.CONTENTFUL_MANAGEMENT_API;
 
@@ -36,6 +37,7 @@ const getContentType = (fileExtension) => {
 
 const logError = (error, fromPath, errorPath) => {
   if (fromPath) {
+    console.log(`Error: ${fromPath}`);
     if (!IS_DEBUG_MODE) {
       fs.rename(fromPath, errorPath, () => {
         console.log(`Error: ${fromPath}`);
@@ -69,14 +71,15 @@ const cleanupEntryId = (folderPath) => {
   return entryId;
 };
 
-const cleanUpTitle = (folderPath) => {
-  let title = folderPath.replace(BASE_FOLDER_PATH, '');
+const cleanUpFileName = (fileName) => {
   // replace all instances if '/' with FOLDER_DELIMETER variable
+  let title = fileName;
   title = title.replace(/\//g, FOLDER_DELIMETER);
   // truncate to 255 characters if title is greater than 255 characters
   if (title.length > 255) {
     title = title.substring(0, 254);
   }
+  return title;
 };
 
 const fileExtensions = [];
@@ -86,9 +89,10 @@ const uploadAssetToContentful = async (fromPath, errorPath) => {
 
   if (contentType) {
     fileExtensions.push(contentType);
-    const fileName = cleanupEntryId(fromPath);
+    const fileName = fromPath.replace(BASE_FOLDER_PATH, 'accelerators/');
+    const assetId = contentfulFields.getContentfulIdFromString(fileName);
 
-    const title = cleanUpTitle(fromPath);
+     console.log('fileName: ', fileName);
 
     const space = await sdkClient.getSpace(SPACE_ID);
     const env = await space.getEnvironment(ENVIRONMENT);
@@ -96,19 +100,19 @@ const uploadAssetToContentful = async (fromPath, errorPath) => {
       .createUpload({
         file: fs.readFileSync(fromPath),
         contentType,
-        fileName
+        fileName: cleanUpFileName(fileName)
       })
       .catch((error) => logError(error, fromPath, errorPath));
 
     let asset = await env
-      .createAssetWithId(fileName, {
+      .createAssetWithId(assetId, {
         fields: {
           title: {
-            'en-US': title
+            'en-US': fileName
           },
           file: {
             'en-US': {
-              fileName,
+              fileName: cleanUpFileName(fileName),
               contentType,
               uploadFrom: {
                 sys: {
@@ -133,16 +137,16 @@ const uploadAssetToContentful = async (fromPath, errorPath) => {
   return false;
 };
 
-const getAllImagesInFolder = async (FOLDER_PATH) => {
+const getAllImagesInFolder = async () => {
   try {
-    const files = await fs.promises.readdir(FOLDER_PATH);
+    const files = await fs.promises.readdir(BASE_FOLDER_PATH);
 
     for (let index = 0; index < files.length; index++) {
       const file = files[index];
-      const fromPath = path.join(FOLDER_PATH, file);
+      const fromPath = path.join(BASE_FOLDER_PATH, file);
 
-      const toPath = path.join(`${FOLDER_PATH}/completed`, file);
-      const errorPath = path.join(`${FOLDER_PATH}/errors`, file);
+      const toPath = path.join(`${BASE_FOLDER_PATH}/completed`, file);
+      const errorPath = path.join(`${BASE_FOLDER_PATH}/errors`, file);
 
       try {
         const stat = await fs.promises.stat(fromPath);
@@ -158,10 +162,8 @@ const getAllImagesInFolder = async (FOLDER_PATH) => {
           }
         } else if (stat.isDirectory() && file.toString() !== 'errors' && file.toString() !== 'completed') {
           console.log('Getting images in: ', fromPath);
-          if (!IS_DEBUG_MODE) {
-            const DIR_FOLDER_PATH = path.join(FOLDER_PATH, file);
-            getAllImagesInFolder(DIR_FOLDER_PATH);
-          }
+          const DIR_FOLDER_PATH = path.join(BASE_FOLDER_PATH, file);
+          getAllImagesInFolder(DIR_FOLDER_PATH);
         } else {
           console.log('Skipping: ', fromPath);
         }
