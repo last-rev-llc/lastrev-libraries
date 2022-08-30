@@ -10,9 +10,9 @@ const appRoot = path.resolve(__dirname);
 
 
 const IS_DEBUG_MODE = true;
-CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'accelerator';
-const LOCALE = 'en-US';
-const MAX_NUMBER_OF_FILES = 2;
+CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'accelerator'; // The main content type that is being imported
+const LOCALE = 'en-US'; // The locale of the content type
+const MAX_NUMBER_OF_FILES = 2;  // The maximum number of files to import at once, used for debugging purposes
 const BASE_FOLDER_PATH = '/Users/bradtaylor/Desktop/yaml/accelerators'; // The local folder to import yaml files from
 const ENVIRONMENT = 'yaml-test'; // make sure you update the environment;
 // const ENVIRONMENT = 'k078sfqkr9te'; // make sure you update the environment;
