@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -31,9 +31,16 @@ export const Header = (inProps: HeaderProps) => {
   const theme = useTheme();
   const menuBreakpoint: Breakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
   const [menuVisible, setMenuVisible] = React.useState(false);
+  const [mobileNavItems, setMobileNavItems] = React.useState([]);
   const handleClose = () => {
     setMenuVisible(false);
   };
+
+  useMemo(() => {
+    setMobileNavItems(
+      navigationItems?.map((navItem) => navItem.items)?.reduce((acc, items) => acc?.concat(items), [] as any)
+    );
+  }, [navigationItems]);
 
   return (
     <ErrorBoundary>
@@ -66,9 +73,7 @@ export const Header = (inProps: HeaderProps) => {
                 {...(navigationItems?.[0] || {})}
                 variant={'navigation-bar'}
                 onRequestClose={handleClose}
-                items={navigationItems
-                  ?.map((navItem) => navItem.items)
-                  ?.reduce((acc, items) => acc?.concat(items), [] as any)}
+                items={mobileNavItems}
                 color={props?.color}
               />
               <IconButton
