@@ -26,7 +26,8 @@ const getSpaceFieldTypeLookup = async (contentfulEnvironment) => {
   } ,{});
 };
 
-const getContentfulFieldValue = async (value, fieldType, JOB) => {
+const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
+  // console.log('fieldType: ', fieldType);
   switch (fieldType.type) {
     case 'Array':
       if(value.length > 0 && typeof value[0] !== 'object') {
@@ -76,7 +77,7 @@ const getContentfulFieldValue = async (value, fieldType, JOB) => {
         },
       };
     case 'CustomParser':
-      const parsedValue = await fieldType.customParser(value, JOB);
+      const parsedValue = await fieldType.customParser(value, JOB, yamlObj);
       return parsedValue;
     default:
       return value;

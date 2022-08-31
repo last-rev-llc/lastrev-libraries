@@ -1,6 +1,7 @@
 const contentfulFieldsParsers = require('../shared/contentful-fields');
 
-const createMediaEntry = (assetId, asset_url, assetRefObject) => {
+const createMediaEntry = (assetId, asset_url, assetRefObject, height, width) => {
+    // We use the same ID for the asset and the media entry.
     return {
         entryId: assetId,
         contentType: 'media',
@@ -10,6 +11,12 @@ const createMediaEntry = (assetId, asset_url, assetRefObject) => {
             },
             asset: {
                 'en-US': assetRefObject
+            },
+            height: {
+                'en-US': height
+            },
+            width: {
+                'en-US': width
             }
         }
     }
@@ -46,6 +53,87 @@ const createCardEntry = (entryId, title, linkRefObj, mediaRefObj, category) => {
             },
             category: {
                 'en-US': category
+            }
+        }
+    }
+}
+
+const createEditionTabApp = async (JOB, entryId, {internalTitle, name, apps}) => {
+    try {
+        const appsRelArray = [];
+        for (let index = 0; index < apps.length; index++) {
+            const app = apps[index];
+            const internalTitle = `Edition App Flow Logo - ${app.name}`;
+            const entryId = await contentfulFieldsParsers.getContentfulIdFromString(internalTitle);
+            JOB.relatedEntries.push(await createEditionTabApp(JOB, entryId, {
+                internalTitle,
+                name: app.name,
+                apps: [],
+            }));
+    
+            const relTabObj = await contentfulFieldsParsers.getContentfulFieldValue(entryId, {type: 'Entry'});
+            // console.log('relTabObj: ', relTabObj);
+    
+            appsRelArray.push(relTabObj);
+        }
+    } catch (err) {
+        console.log('err: ', err);
+    }
+    return {
+        entryId: entryId,
+        contentType: 'editionTabApp',
+        contentfulFields: {
+            internalTitle: {
+                'en-US': internalTitle
+            },
+            name: {
+                'en-US': name
+            },
+            apps: {
+                'en-US': []
+            }
+        }
+    }
+}
+
+const createEditionTab = async (JOB, entryId, {internalTitle, name, title, text, apps_flow}) => {
+
+    const appsRelArray = [];
+    for (let index = 0; index < apps_flow.length; index++) {
+        const app = apps_flow[index];
+        const internalTitle = `Edition App Flow - ${app.name}`;
+        const entryId = await contentfulFieldsParsers.getContentfulIdFromString(internalTitle);
+
+        JOB.relatedEntries.push(await createEditionTabApp(JOB, entryId, {
+            internalTitle,
+            name: app.name,
+            apps: [],
+        }));
+
+        const relTabObj = await contentfulFieldsParsers.getContentfulFieldValue(entryId, {type: 'Entry'});
+        // console.log('relTabObj: ', relTabObj);
+
+        appsRelArray.push(relTabObj);
+    }
+
+    return {
+        entryId: entryId,
+        contentType: 'editionTab',
+        contentfulFields: {
+            internalTitle: {
+                'en-US': internalTitle
+            },
+            name: {
+                'en-US': name
+            },
+            title: {
+                'en-US': title
+            },
+            text: {
+                'en-US': text
+            },
+            apps_flow: {
+                'en-US': []
             }
         }
     }
@@ -98,6 +186,7 @@ const accelerators = {
                 const entryId = await contentfulFieldsParsers.getContentfulIdFromString(`${card.title}+${card.link}`);
                 const assetId = await contentfulFieldsParsers.getContentfulIdFromString(`${card.img2}`);
                 const mediaId = await contentfulFieldsParsers.getContentfulIdFromString(`media-${card.img2}`);
+                console.log('mediaId: ', mediaId, card.title);
                 const linkId = await contentfulFieldsParsers.getContentfulIdFromString(`link-${card.link}`);
                 // console.log('assetId: ', assetId);
                 const assetRefObject = await contentfulFieldsParsers.getContentfulFieldValue(assetId, {type: 'Asset'});
@@ -117,8 +206,91 @@ const accelerators = {
         return relatedArray;
       }
     },
+}
+
+
+const customerStory = {
+    logo: {
+        id: 'logo_path',
+        type: 'CustomParser',
+        customParser: async (value, JOB) => {
+            // console.log('============== logo CustomParser', value);
+            const assetId = await contentfulFieldsParsers.getContentfulIdFromString(value);
+            // console.log('assetId: ', assetId);
+            const assetRefObj = await contentfulFieldsParsers.getContentfulFieldValue(assetId, {type: 'Asset'});
+            // console.log('assetObject: ', assetObject);
+
+            JOB.relatedEntries.push(createMediaEntry(assetId, value, asset));
+            return assetRefObj;
+        }
+    },
+    info_statistic: null,
+}
+
+const pageEdition = {
+    image: {
+        id: 'image',
+        type: 'CustomParser',
+        customParser: async (value, JOB) => {
+            // console.log('============== image CustomParser', value);
+            const assetId = await contentfulFieldsParsers.getContentfulIdFromString(value);
+            // console.log('assetId: ', assetId);
+            const assetRefObj = await contentfulFieldsParsers.getContentfulFieldValue(assetId, {type: 'Asset'});
+
+            return assetRefObj;
+        }
+    },
+    steps_title: {
+        id: 'steps.title',
+        type: 'CustomParser',
+        customParser: async (value, JOB) => {
+            return await contentfulFieldsParsers.getContentfulFieldValue(value, {type: 'Symbol'});
+        }
+    },
+    steps_list: {
+        id: 'steps.list',
+        type: 'CustomParser',
+        customParser: async (array, JOB) => {
+            // Return an array of the 'title' fields
+            const stepsArray = array.map((step) => {
+                return step.title;
+            });
+            return stepsArray;
+        }
+    },
+    tabs: {
+        id: 'tabs',
+        type: 'CustomParser',
+        customParser: async (array, JOB, yamlObj) => {
+            // console.log('yamlObj: ', yamlObj);
+            const tabsRelArray = [];
+            for (let index = 0; index < array.length; index++) {
+                const tab = array[index];
+                const internalTitle = `Edition - ${yamlObj.parsedYamlFile.title} - ${tab.name}`;
+                const entryId = await contentfulFieldsParsers.getContentfulIdFromString(internalTitle);
+                JOB.relatedEntries.push(await createEditionTab(JOB, entryId, {
+                    internalTitle,
+                    name: tab.name,
+                    title: tab.functions[0].title,
+                    text: tab.functions[0].text,
+                    apps_flow: tab.functions[0].apps_flow,
+                }));
+
+                const relTabObj = await contentfulFieldsParsers.getContentfulFieldValue(entryId, {type: 'Entry'});
+                // console.log('relTabObj: ', relTabObj);
+
+                tabsRelArray.push(relTabObj);
+            }
+            
+            // console.log('tabsArray: ', tabsRelArray);
+            return tabsRelArray;
+        }
+    },
+    calloutsList: null,
 
 }
 module.exports = {
     accelerators,
+    customerStory,
+    pageEdition
 }

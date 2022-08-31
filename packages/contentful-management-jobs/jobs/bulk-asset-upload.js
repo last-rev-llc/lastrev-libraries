@@ -5,17 +5,19 @@ const path = require('path');
 const contentfulFields = require('../shared/contentful-fields');
 
 const IS_DEBUG_MODE = false;
-const BASE_FOLDER_PATH = '/Users/bradtaylor/Desktop/images/accelerators/'; // The local folder to import assets from
+const SUB_FOLDER_BASE = ''
+const BASE_FOLDER_PATH =  `/Users/bradtaylor/Desktop/images/${SUB_FOLDER_BASE}`; // The local folder to import assets from
 const FOLDER_DELIMETER = '_'; // Must be alphanumeric characters, dots (.) hyphens (-) or underscores (_)
 const INVALID_FILE_DELIMETER = '-'; // Must be alphanumeric characters, dots (.) hyphens (-) or underscores (_)
-const ENVIRONMENT = 'yaml-test'; // make srue you update the environment;
+const ENVIRONMENT = 'master'; // make srue you update the environment;
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
 const CMA_ACCESS_TOKEN = process.env.CONTENTFUL_MANAGEMENT_API;
 
-const sdkClient = sdk.createClient({
-  spaceId: SPACE_ID,
-  accessToken: CMA_ACCESS_TOKEN
-});
+let SDK_CLIENT, CONTENTFUL_SPACE, CONTENTFUL_ENVIRONMENT, GLOBAL_CONTENTTYPE_FIELD_LOOKUP;
+
+const sleep = (ms) => {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 const getContentType = (fileExtension) => {
   switch (fileExtension) {
@@ -89,14 +91,12 @@ const uploadAssetToContentful = async (fromPath, errorPath) => {
 
   if (contentType) {
     fileExtensions.push(contentType);
-    const fileName = fromPath.replace(BASE_FOLDER_PATH, 'accelerators/');
+    const fileName = fromPath.replace(BASE_FOLDER_PATH, SUB_FOLDER_BASE);
     const assetId = contentfulFields.getContentfulIdFromString(fileName);
 
      console.log('fileName: ', fileName);
 
-    const space = await sdkClient.getSpace(SPACE_ID);
-    const env = await space.getEnvironment(ENVIRONMENT);
-    const upload = await env
+    const upload = await CONTENTFUL_ENVIRONMENT
       .createUpload({
         file: fs.readFileSync(fromPath),
         contentType,
@@ -104,7 +104,7 @@ const uploadAssetToContentful = async (fromPath, errorPath) => {
       })
       .catch((error) => logError(error, fromPath, errorPath));
 
-    let asset = await env
+    let asset = await CONTENTFUL_ENVIRONMENT
       .createAssetWithId(assetId, {
         fields: {
           title: {
@@ -131,22 +131,25 @@ const uploadAssetToContentful = async (fromPath, errorPath) => {
       .processForLocale('en-US', { processingCheckWait: 2000 })
       .catch((error) => logError(error, fromPath, errorPath));
     asset = await asset.publish().catch((error) => logError(error, fromPath, errorPath));
-
+    
     return asset;
+
+    // return {};
   }
-  return false;
 };
 
-const getAllImagesInFolder = async () => {
+const getAllImagesInFolder = async (SUBFOLDER_PATH) => {
   try {
-    const files = await fs.promises.readdir(BASE_FOLDER_PATH);
-
+    const filePath = SUBFOLDER_PATH || BASE_FOLDER_PATH;
+    const files = await fs.promises.readdir(filePath);
+    console.log(`NEW SUB FOLDER ${files.length} ${filePath}`)
     for (let index = 0; index < files.length; index++) {
+      await sleep(1000); // wait 1 second to avoid rate limiting
       const file = files[index];
-      const fromPath = path.join(BASE_FOLDER_PATH, file);
+      const fromPath = path.join(filePath, file);
 
-      const toPath = path.join(`${BASE_FOLDER_PATH}/completed`, file);
-      const errorPath = path.join(`${BASE_FOLDER_PATH}/errors`, file);
+      const toPath = path.join(`${filePath}/completed`, file);
+      const errorPath = path.join(`${filePath}/errors`, file);
 
       try {
         const stat = await fs.promises.stat(fromPath);
@@ -155,15 +158,15 @@ const getAllImagesInFolder = async () => {
           console.log('Uploading: ', fromPath);
           if (!IS_DEBUG_MODE) {
             await uploadAssetToContentful(fromPath, errorPath);
-
-            fs.rename(fromPath, toPath, () => {
-              console.log(`Success: ${file}`);
-            });
+            
+            // fs.rename(fromPath, toPath, () => {
+            //   console.log(`Success: ${file}`);
+            // });
           }
         } else if (stat.isDirectory() && file.toString() !== 'errors' && file.toString() !== 'completed') {
-          console.log('Getting images in: ', fromPath);
-          const DIR_FOLDER_PATH = path.join(BASE_FOLDER_PATH, file);
-          getAllImagesInFolder(DIR_FOLDER_PATH);
+          // console.log('Getting images in: ', fromPath);
+          const SUBDIR_FOLDER_PATH = path.join(filePath, file);
+          await getAllImagesInFolder(SUBDIR_FOLDER_PATH);
         } else {
           console.log('Skipping: ', fromPath);
         }
@@ -177,5 +180,12 @@ const getAllImagesInFolder = async () => {
 };
 
 (async () => {
+  SDK_CLIENT = sdk.createClient({
+    spaceId: SPACE_ID,
+    accessToken: CMA_ACCESS_TOKEN
+  });
+
+  CONTENTFUL_SPACE = await SDK_CLIENT.getSpace(SPACE_ID);
+  CONTENTFUL_ENVIRONMENT = await CONTENTFUL_SPACE.getEnvironment(ENVIRONMENT);
   await getAllImagesInFolder(BASE_FOLDER_PATH);
 })();

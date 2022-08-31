@@ -10,10 +10,10 @@ const appRoot = path.resolve(__dirname);
 
 
 const IS_DEBUG_MODE = true;
-CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'accelerator'; // The main content type that is being imported
+CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pageEdition'; // The main content type that is being imported
 const LOCALE = 'en-US'; // The locale of the content type
-const MAX_NUMBER_OF_FILES = 2;  // The maximum number of files to import at once, used for debugging purposes
-const BASE_FOLDER_PATH = '/Users/bradtaylor/Desktop/yaml/accelerators'; // The local folder to import yaml files from
+const MAX_NUMBER_OF_FILES = 1;  // The maximum number of files to import at once, used for debugging purposes
+const BASE_FOLDER_PATH = '/Users/bradtaylor/Desktop/yaml/editions'; // The local folder to import yaml files from
 const ENVIRONMENT = 'yaml-test'; // make sure you update the environment;
 // const ENVIRONMENT = 'k078sfqkr9te'; // make sure you update the environment;
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
@@ -76,11 +76,12 @@ const getParsedContentfulFields = async (yamlObj, fieldTypeLookup, JOB) => {
   // llop through the fieldTypeLookup keys and get the value for each field if the field is not null in the fieldTypeLookup
   for (let key in fieldTypeLookup) {
     if (fieldTypeLookup[key] !== null) {
+      // console.log('key: ', key);
       // Will bet the value of the field, or if this is a nested field will get the value listed in the id of the customParser lookup
       const value = _.get(yamlObj.parsedYamlFile, fieldTypeLookup[key].id || yamlObj.parsedYamlFile[key]);
       let convertedValue;
       
-      convertedValue = await contentfulFieldsParsers.getContentfulFieldValue(value, fieldTypeLookup[key], JOB);
+      convertedValue = await contentfulFieldsParsers.getContentfulFieldValue(value, fieldTypeLookup[key], JOB, yamlObj);
       if (convertedValue) {
         parsedFields[key] = {
           [LOCALE]: convertedValue
@@ -175,7 +176,7 @@ const getAllFilesInFolder = async () => {
   });
   CONTENTFUL_SPACE = await SDK_CLIENT.getSpace(SPACE_ID);
 
-  // const CONTENTFUL_ENVIRONMENT = await CONTENTFUL_SPACE.createEnvironmentWithId(ENVIRONMENT, { name: ENVIRONMENT }, 'master');
+  // const CONTENTFUL_ENVIRONMENT = await CONTENTFUL_SPACE.createEnvironmentWithId(ENVIRONMENT, { name: ENVIRONMENT });
   // console.log('createEnvironment: ', CONTENTFUL_ENVIRONMENT);
 
   CONTENTFUL_ENVIRONMENT = await CONTENTFUL_SPACE.getEnvironment(ENVIRONMENT);
@@ -186,10 +187,11 @@ const getAllFilesInFolder = async () => {
   
   const JOB = {
     contentType: CONTENTFUL_CONTENT_TYPE_TO_IMPORT,
-    lookupOverride: workatoParsers.accelerators,
+    lookupOverride: workatoParsers.pageEdition,
     relatedEntries: [],
     locale: LOCALE
   }
+
 
   // console.log('JOB.yamlFilesToImport: ', JOB);
 
@@ -204,8 +206,9 @@ const getAllFilesInFolder = async () => {
   // console.log('JOB.fieldTypeLookup: ', JSON.stringify(JOB, null, 2));
 
   JOB.contentfulEntriesJson = await getContentfulFormat(JOB);
-  // console.log('JOB.contentfulEntriesJson: ', JSON.stringify(JOB, null, 2));
+  // console.log('JOB.contentfulEntriesJson: ', JSON.stringify(JOB.contentfulEntriesJson, null, 2));
 
+  console.log('JOB.relatedEntries: ', JSON.stringify(JOB.relatedEntries, null, 2));
   JOB.contentfulRelatedEntries = await importContentToContentful(JOB.relatedEntries, JOB);
 
   JOB.contentfulMainEntries = await importContentToContentful(JOB.contentfulEntriesJson, JOB);
