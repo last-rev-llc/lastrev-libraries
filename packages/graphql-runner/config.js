@@ -21,7 +21,8 @@ const config = new LastRevAppConfig({
     contentDeliveryToken: process.env.CONTENTFUL_DELIVERY_TOKEN,
     spaceId: process.env.CONTENTFUL_SPACE_ID,
     env: process.env.CONTENTFUL_ENV,
-    usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW)
+    usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW),
+    maxBatchSize: process.env.CONTENTFUL_MAX_BATCH_SIZE || 1000
   },
   algolia: {
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
