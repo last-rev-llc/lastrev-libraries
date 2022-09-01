@@ -33,7 +33,8 @@ const config = new LastRevAppConfig({
     contentDeliveryToken,
     spaceId,
     env,
-    usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW)
+    usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW),
+    maxBatchSize: process.env.CONTENTFUL_MAX_BATCH_SIZE || 1000
   },
   algolia: {
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
