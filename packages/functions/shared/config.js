@@ -46,7 +46,8 @@ const config = new LastRevAppConfig({
     port: process.env.REDIS_PORT,
     host: process.env.REDIS_HOST,
     password: process.env.REDIS_PASSWORD,
-    tls: {}
+    tls: {},
+    maxBatchSize: process.env.CONTENTFUL_MAX_BATCH_SIZE || 1000
   },
   logLevel: 'debug'
 });
