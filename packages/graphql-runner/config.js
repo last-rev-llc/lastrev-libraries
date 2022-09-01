@@ -22,7 +22,7 @@ const config = new LastRevAppConfig({
     spaceId: process.env.CONTENTFUL_SPACE_ID,
     env: process.env.CONTENTFUL_ENV,
     usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW),
-    maxBatchSize: process.env.CONTENTFUL_MAX_BATCH_SIZE || 1000
+    maxBatchSize: parseNumberEnvVar(process.env.CONTENTFUL_MAX_BATCH_SIZE)
   },
   algolia: {
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
@@ -35,7 +35,7 @@ const config = new LastRevAppConfig({
     host: process.env.REDIS_HOST,
     password: process.env.REDIS_PASSWORD,
     tls: {},
-    maxBatchSize: process.env.CONTENTFUL_MAX_BATCH_SIZE || 1000
+    maxBatchSize: parseNumberEnvVar(process.env.CONTENTFUL_MAX_BATCH_SIZE)
   },
   fs: { contentDir: resolve(__dirname, './cms-sync') },
   logLevel: 'debug'

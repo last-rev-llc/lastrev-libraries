@@ -17,7 +17,11 @@ const parseBooleanEnvVar = (value) => {
   const val = value.toString().toLowerCase();
   return /^(true|1|yes|y)$/.test(val);
 };
-
+const parseNumberEnvVar = (value = '') => {
+  if (!value.length) return undefined;
+  const result = parseInt(value, 10);
+  return Number.isNaN(result) ? undefined : result;
+};
 const spaceId = testForEnvVar('CONTENTFUL_SPACE_ID');
 const contentDeliveryToken = testForEnvVar('CONTENTFUL_DELIVERY_TOKEN');
 const contentPreviewToken = testForEnvVar('CONTENTFUL_PREVIEW_TOKEN');
@@ -34,7 +38,7 @@ const config = new LastRevAppConfig({
     spaceId,
     env,
     usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW),
-    maxBatchSize: process.env.CONTENTFUL_MAX_BATCH_SIZE || 1000
+    maxBatchSize: parseNumberEnvVar(process.env.CONTENTFUL_MAX_BATCH_SIZE)
   },
   algolia: {
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
@@ -47,7 +51,7 @@ const config = new LastRevAppConfig({
     host: process.env.REDIS_HOST,
     password: process.env.REDIS_PASSWORD,
     tls: {},
-    maxBatchSize: process.env.CONTENTFUL_MAX_BATCH_SIZE || 1000
+    maxBatchSize: parseNumberEnvVar(process.env.CONTENTFUL_MAX_BATCH_SIZE)
   },
   logLevel: 'debug'
 });
