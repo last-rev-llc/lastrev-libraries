@@ -49,6 +49,12 @@ Page.mappers.Page.Page.contents = async (page: any, _args: any, ctx: ApolloConte
   return [];
 };
 
+// Remove unused path configs from the Page extension
+// @ts-ignore
+delete Page?.pathsConfigs?.blog;
+// @ts-ignore
+delete Page?.pathsConfigs?.categoryBlog;
+
 const extensions: GraphQlExtension[] = [
   { typeDefs: algoliaTypeDefs },
   Card,
