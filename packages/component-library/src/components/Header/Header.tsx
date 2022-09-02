@@ -31,16 +31,14 @@ export const Header = (inProps: HeaderProps) => {
   const theme = useTheme();
   const menuBreakpoint: Breakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
   const [menuVisible, setMenuVisible] = React.useState(false);
-  const [mobileNavItems, setMobileNavItems] = React.useState([]);
   const handleClose = () => {
     setMenuVisible(false);
   };
 
-  useMemo(() => {
-    setMobileNavItems(
-      navigationItems?.map((navItem) => navItem.items)?.reduce((acc, items) => acc?.concat(items), [] as any)
-    );
-  }, [navigationItems]);
+  const mobileNavItems = useMemo(
+    () => navigationItems?.map((navItem) => navItem.items)?.reduce((acc, items) => acc?.concat(items), [] as any),
+    [navigationItems]
+  );
 
   return (
     <ErrorBoundary>
