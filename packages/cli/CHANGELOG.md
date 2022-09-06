@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.5.3
+
+### Patch Changes
+
+- 43124bd: Added update.sh script back; Added logic to open and edit patch file
+
 ## 0.5.2
 
 ### Patch Changes

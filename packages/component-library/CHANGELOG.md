@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.5.9
+
+### Patch Changes
+
+- cbd864c: Fix buttonWrap not available
+- 114a0b5: Made Header support multiple NavigationBars
+
 ## 0.5.8
 
 ### Patch Changes
