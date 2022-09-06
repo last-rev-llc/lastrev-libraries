@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -8,7 +8,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import Hidden from '@mui/material/Hidden';
 import styled from '@mui/system/styled';
-import { useTheme } from '@mui/system';
+import { Breakpoint, useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
 
@@ -29,11 +29,17 @@ export const Header = (inProps: HeaderProps) => {
     threshold: 0
   });
   const theme = useTheme();
-  const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
+  const menuBreakpoint: Breakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
   const [menuVisible, setMenuVisible] = React.useState(false);
   const handleClose = () => {
     setMenuVisible(false);
   };
+
+  const mobileNavItems = useMemo(
+    () => navigationItems?.map((navItem) => navItem.items)?.reduce((acc, items) => acc?.concat(items), [] as any),
+    [navigationItems]
+  );
+
   return (
     <ErrorBoundary>
       <>
@@ -43,39 +49,39 @@ export const Header = (inProps: HeaderProps) => {
           elevation={trigger ? 4 : 0}
           menuVisible={menuVisible}
           menuBreakpoint={menuBreakpoint}
-          {...props}
-        >
+          {...props}>
           <ContentContainer>
             {logo ? (
               <LogoRoot
                 href={logoUrl}
                 sx={{ height: '100%', py: 3 }}
                 {...sidekick(sidekickLookup?.logo)}
-                aria-label={'Go to homepage'}
-              >
+                aria-label={'Go to homepage'}>
                 <Logo {...logo} priority alt={logo?.title ?? 'Go to homepage'} />
               </LogoRoot>
             ) : null}
-            {navigationItems?.map((collection) => (
-              <React.Fragment key={collection.id}>
+            {navigationItems?.map((collection, index) => (
+              <React.Fragment key={`${collection.id}-${index}`}>
                 <NavigationDivider />
-                <ContentModule
-                  {...collection}
-                  variant={'navigation-bar'}
-                  onRequestClose={handleClose}
-                  color={props?.color}
-                />
+                <ContentModule {...collection} variant={'navigation-bar'} color={props?.color} />
               </React.Fragment>
             ))}
             <Hidden implementation="css" {...{ [`${menuBreakpoint}Up`]: true }}>
+              <ContentModule
+                {...(navigationItems?.[0] || {})}
+                variant={'navigation-bar'}
+                onRequestClose={handleClose}
+                items={mobileNavItems}
+                color={props?.color}
+              />
               <IconButton
                 edge="end"
                 color="inherit"
                 aria-label="menu"
                 onClick={() => setMenuVisible(!menuVisible)}
-                size="large"
-              >
-                {menuVisible ? <CloseIcon /> : <MenuIcon />}
+                size="large">
+                <MenuIcon sx={{ display: menuVisible ? 'none' : 'block' }} />
+                <CloseIcon sx={{ display: !menuVisible ? 'none' : 'block' }} />
               </IconButton>
             </Hidden>
           </ContentContainer>
