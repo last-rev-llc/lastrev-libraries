@@ -5,8 +5,8 @@ const path = require('path');
 const contentfulFields = require('../shared/contentful-fields');
 
 const IS_DEBUG_MODE = false;
-const SUB_FOLDER_BASE = ''
-const BASE_FOLDER_PATH =  `/Users/bradtaylor/Desktop/images/${SUB_FOLDER_BASE}`; // The local folder to import assets from
+const SUB_FOLDER_BASE = '';
+const BASE_FOLDER_PATH = `/Users/bradtaylor/Desktop/images/${SUB_FOLDER_BASE}`; // The local folder to import assets from
 const FOLDER_DELIMETER = '_'; // Must be alphanumeric characters, dots (.) hyphens (-) or underscores (_)
 const INVALID_FILE_DELIMETER = '-'; // Must be alphanumeric characters, dots (.) hyphens (-) or underscores (_)
 const ENVIRONMENT = 'master'; // make srue you update the environment;
@@ -16,8 +16,8 @@ const CMA_ACCESS_TOKEN = process.env.CONTENTFUL_MANAGEMENT_API;
 let SDK_CLIENT, CONTENTFUL_SPACE, CONTENTFUL_ENVIRONMENT, GLOBAL_CONTENTTYPE_FIELD_LOOKUP;
 
 const sleep = (ms) => {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
 
 const getContentType = (fileExtension) => {
   switch (fileExtension) {
@@ -40,11 +40,6 @@ const getContentType = (fileExtension) => {
 const logError = (error, fromPath, errorPath) => {
   if (fromPath) {
     console.log(`Error: ${fromPath}`);
-    if (!IS_DEBUG_MODE) {
-      fs.rename(fromPath, errorPath, () => {
-        console.log(`Error: ${fromPath}`);
-      });
-    }
   }
   console.log(error);
 };
@@ -94,44 +89,40 @@ const uploadAssetToContentful = async (fromPath, errorPath) => {
     const fileName = fromPath.replace(BASE_FOLDER_PATH, SUB_FOLDER_BASE);
     const assetId = contentfulFields.getContentfulIdFromString(fileName);
 
-     console.log('fileName: ', fileName);
+    console.log('fileName: ', fileName);
 
-    const upload = await CONTENTFUL_ENVIRONMENT
-      .createUpload({
-        file: fs.readFileSync(fromPath),
-        contentType,
-        fileName: cleanUpFileName(fileName)
-      })
-      .catch((error) => logError(error, fromPath, errorPath));
+    const upload = await CONTENTFUL_ENVIRONMENT.createUpload({
+      file: fs.readFileSync(fromPath),
+      contentType,
+      fileName: cleanUpFileName(fileName)
+    }).catch((error) => logError(error, fromPath, errorPath));
 
-    let asset = await CONTENTFUL_ENVIRONMENT
-      .createAssetWithId(assetId, {
-        fields: {
-          title: {
-            'en-US': fileName
-          },
-          file: {
-            'en-US': {
-              fileName: cleanUpFileName(fileName),
-              contentType,
-              uploadFrom: {
-                sys: {
-                  type: 'Link',
-                  linkType: 'Upload',
-                  id: upload.sys.id
-                }
+    let asset = await CONTENTFUL_ENVIRONMENT.createAssetWithId(assetId, {
+      fields: {
+        title: {
+          'en-US': fileName
+        },
+        file: {
+          'en-US': {
+            fileName: cleanUpFileName(fileName),
+            contentType,
+            uploadFrom: {
+              sys: {
+                type: 'Link',
+                linkType: 'Upload',
+                id: upload.sys.id
               }
             }
           }
         }
-      })
-      .catch((error) => logError(error, fromPath, errorPath));
+      }
+    }).catch((error) => logError(error, fromPath, errorPath));
 
     asset = await asset
       .processForLocale('en-US', { processingCheckWait: 2000 })
       .catch((error) => logError(error, fromPath, errorPath));
     asset = await asset.publish().catch((error) => logError(error, fromPath, errorPath));
-    
+
     return asset;
 
     // return {};
@@ -142,7 +133,7 @@ const getAllImagesInFolder = async (SUBFOLDER_PATH) => {
   try {
     const filePath = SUBFOLDER_PATH || BASE_FOLDER_PATH;
     const files = await fs.promises.readdir(filePath);
-    console.log(`NEW SUB FOLDER ${files.length} ${filePath}`)
+    console.log(`NEW SUB FOLDER ${files.length} ${filePath}`);
     for (let index = 0; index < files.length; index++) {
       await sleep(1000); // wait 1 second to avoid rate limiting
       const file = files[index];
@@ -158,7 +149,7 @@ const getAllImagesInFolder = async (SUBFOLDER_PATH) => {
           console.log('Uploading: ', fromPath);
           if (!IS_DEBUG_MODE) {
             await uploadAssetToContentful(fromPath, errorPath);
-            
+
             // fs.rename(fromPath, toPath, () => {
             //   console.log(`Success: ${file}`);
             // });
