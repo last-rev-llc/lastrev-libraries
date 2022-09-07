@@ -1,17 +1,13 @@
 const fs = require('fs');
 const logError = (error, fromPath, errorPath) => {
   console.log(`Error File: ${fromPath}`);
-  console.log('Error: ', error);  
+  console.log('Error: ', error);
   if (fromPath) {
-      if (!IS_DEBUG_MODE) {
-        fs.rename(fromPath, errorPath, () => {
-          console.log(`Error: ${fromPath}`);
-        });
-      }
-    }
-    console.log(error);
-  };
+    console.log(`Error: ${fromPath}`);
+  }
+  console.log(error);
+};
 
 module.exports = {
-    logError
-}
+  logError
+};

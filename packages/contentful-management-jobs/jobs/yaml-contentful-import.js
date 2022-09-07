@@ -8,11 +8,12 @@ const workatoParsers = require('../migrations/workato');
 const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
-const IS_DEBUG_MODE = true;
-const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pageEdition'; // The main content type that is being imported
+const IS_DEBUG_MODE = false;
+const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'customerStory'; // The main content type that is being imported
+const BASE_FOLDER_PATH = '/Users/bradtaylor/Desktop/yaml/customers'; // The local folder to import yaml files from
+const CUSTOM_PARSER_LOOKUP = workatoParsers.customerStory;
 const LOCALE = 'en-US'; // The locale of the content type
-const MAX_NUMBER_OF_FILES = 1; // The maximum number of files to import at once, used for debugging purposes
-const BASE_FOLDER_PATH = '/Users/bradtaylor/Desktop/yaml/editions'; // The local folder to import yaml files from
+const MAX_NUMBER_OF_FILES = 10; // The maximum number of files to import at once, used for debugging purposes
 const ENVIRONMENT = 'yaml-test'; // make sure you update the environment;
 // const ENVIRONMENT = 'k078sfqkr9te'; // make sure you update the environment;
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
@@ -22,7 +23,7 @@ const CMA_ACCESS_TOKEN = process.env.CONTENTFUL_MANAGEMENT_API;
 let SDK_CLIENT, CONTENTFUL_SPACE, CONTENTFUL_ENVIRONMENT, GLOBAL_CONTENTTYPE_FIELD_LOOKUP;
 
 const getContentTypeLookup = async (JOB) => {
-  //console.log('lookupOverride: ', lookupOverride);
+  // console.log('lookupOverride: ', JOB.lookupOverride);
   const contentTypeLookup = GLOBAL_CONTENTTYPE_FIELD_LOOKUP[CONTENTFUL_CONTENT_TYPE_TO_IMPORT].fields;
   const contentTypeOverrides = await JOB.lookupOverride;
 
@@ -78,13 +79,15 @@ const getParsedContentfulFields = async (yamlObj, fieldTypeLookup, JOB) => {
       // console.log('key: ', key);
       // Will bet the value of the field, or if this is a nested field will get the value listed in the id of the customParser lookup
       const value = _.get(yamlObj.parsedYamlFile, fieldTypeLookup[key].id || yamlObj.parsedYamlFile[key]);
-
+      // console.log('value', value);
+      // console.log('fieldTypeLookup[key]', fieldTypeLookup[key]);
       const convertedValue = await contentfulFieldsParsers.getContentfulFieldValue(
         value,
         fieldTypeLookup[key],
         JOB,
         yamlObj
       );
+      // console.log('convertedValue', convertedValue);
       if (convertedValue) {
         parsedFields[key] = {
           [LOCALE]: convertedValue
@@ -117,18 +120,36 @@ const importContentToContentful = async (contentfulEntriesJson, { contentType, f
     let entry = contentfulEntriesJson[index];
     const relContentType = entry.contentType || contentType;
 
-    entry = await CONTENTFUL_ENVIRONMENT.createEntryWithId(relContentType, entry.entryId, {
-      fields: entry.contentfulFields
-    })
-      .then((contentfulEntry) =>
-        console.log(
-          'Entry created: ',
-          `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${contentfulEntry.sys.id}`
-        )
-      )
-      .catch((error) => logging.logError(error, fromPath, errorPath));
+    // console.log('entry', entry);
 
-    arrayEntries.push(entry);
+    // Check if entry exists in content first
+    const existingEntry = await CONTENTFUL_ENVIRONMENT.getEntry(entry.entryId).catch(() => null);
+
+    if (!existingEntry) {
+      entry = await CONTENTFUL_ENVIRONMENT.createEntryWithId(relContentType, entry.entryId, {
+        fields: entry.contentfulFields
+      })
+        .then((newEntry) =>
+          console.log(
+            'Entry created: ',
+            `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${newEntry.sys.id}`
+          )
+        )
+        .catch((error) => logging.logError(error, fromPath, errorPath));
+      arrayEntries.push(entry);
+    } else {
+      console.log(`Already Exists: id: ${existingEntry.sys.id} file: ${fromPath}`);
+      existingEntry.fields = entry.contentfulFields;
+      existingEntry
+        .update()
+        .then((upatedEntry) =>
+          console.log(
+            'Entry UPDATED: ',
+            `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${upatedEntry.sys.id}`
+          )
+        )
+        .catch((error) => logging.logError(error, fromPath, errorPath));
+    }
   }
   return arrayEntries;
 };
@@ -142,6 +163,8 @@ const getAllFilesInFolder = async () => {
       if (index < MAX_NUMBER_OF_FILES) {
         const file = files[index];
         const fromPath = path.join(BASE_FOLDER_PATH, file);
+
+        console.log(file);
 
         const toPath = path.join(`${BASE_FOLDER_PATH}/completed`, file);
         const errorPath = path.join(`${BASE_FOLDER_PATH}/errors`, file);
@@ -195,15 +218,14 @@ const getAllFilesInFolder = async () => {
 
   const JOB = {
     contentType: CONTENTFUL_CONTENT_TYPE_TO_IMPORT,
-    lookupOverride: workatoParsers.pageEdition,
+    lookupOverride: CUSTOM_PARSER_LOOKUP,
     relatedEntries: [],
     locale: LOCALE
   };
 
   // console.log('JOB.yamlFilesToImport: ', JOB);
 
-  let yamlFilesToImport = await getAllFilesInFolder(BASE_FOLDER_PATH);
-  JOB.yamlFilesToImport = yamlFilesToImport;
+  JOB.yamlFilesToImport = await getAllFilesInFolder(BASE_FOLDER_PATH);
 
   // console.log('JOB.yamlFilesToImport: ', JOB);
 
@@ -215,9 +237,11 @@ const getAllFilesInFolder = async () => {
   JOB.contentfulEntriesJson = await getContentfulFormat(JOB);
   // console.log('JOB.contentfulEntriesJson: ', JSON.stringify(JOB.contentfulEntriesJson, null, 2));
 
-  console.log('JOB.relatedEntries: ', JSON.stringify(JOB.relatedEntries, null, 2));
-  // JOB.contentfulRelatedEntries = await importContentToContentful(JOB.relatedEntries, JOB);
+  // console.log('JOB.relatedEntries: ', JSON.stringify(JOB.relatedEntries, null, 2));
+  if (!IS_DEBUG_MODE) {
+    JOB.contentfulRelatedEntries = await importContentToContentful(JOB.relatedEntries, JOB);
+    JOB.contentfulMainEntries = await importContentToContentful(JOB.contentfulEntriesJson, JOB);
+  }
 
-  // JOB.contentfulMainEntries = await importContentToContentful(JOB.contentfulEntriesJson, JOB);
   // console.log('JOB.contentfulEntries: ', JSON.stringify(JOB, null, 2));
 })();
