@@ -51,6 +51,41 @@ describe('LastRevAppConfig', () => {
     });
   });
 
+  describe('paths', () => {
+    test('paths values default to v1 and generateFullPathTree:true', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.paths).toEqual({
+        version: 'v1',
+        generateFullPathTree: true
+      });
+    });
+
+    test('throws error when version is v1, but generate full path tree is false', () => {
+      expect(
+        () =>
+          new LastRevAppConfig({
+            ...mockedConfig,
+            paths: {
+              version: 'v1',
+              generateFullPathTree: false
+            }
+          })
+      ).toThrowError('Invalid paths configuration: generateFullPathTree must be true when using paths v1');
+    });
+
+    test('throws error when version is not defined, but generate full path tree is false', () => {
+      expect(
+        () =>
+          new LastRevAppConfig({
+            ...mockedConfig,
+            paths: {
+              generateFullPathTree: false
+            }
+          })
+      ).toThrowError('Invalid paths configuration: generateFullPathTree must be true when using paths v1');
+    });
+  });
+
   describe('cms errors', () => {
     test('throws error if contentful.spaceId is not provided', () => {
       if (mockedConfig.contentful) {

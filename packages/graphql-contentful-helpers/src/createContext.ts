@@ -1,6 +1,6 @@
 import { find, get, map } from 'lodash';
 import { createClient } from 'contentful';
-import { ApolloContext, PathReaders, PathRuleConfig } from '@last-rev/types';
+import { ApolloContext, PathReaders } from '@last-rev/types';
 import { MicroRequest } from 'apollo-server-micro/dist/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import createLoaders from './createLoaders';
@@ -85,28 +85,29 @@ const createContext = async ({
     })
   };
 
-  const isNewPathsConfig = (pathsConfig: any): pathsConfig is PathRuleConfig =>
-    Object.values(pathsConfig || {}).some((x: any) => !!x.rules);
+  const pathToContentLoader =
+    config.paths.version === 'v2' ? new PathToContentLoader(config.extensions.pathsConfigs) : null;
 
-  const pathToContentLoader = isNewPathsConfig(config.extensions?.pathsConfigs)
-    ? new PathToContentLoader(config.extensions.pathsConfigs)
-    : null;
-
-  const contentToPathsLoader = isNewPathsConfig(config.extensions?.pathsConfigs)
-    ? new ContentToPathsLoader(config.extensions.pathsConfigs)
-    : null;
+  const contentToPathsLoader =
+    config.paths.version === 'v2' ? new ContentToPathsLoader(config.extensions.pathsConfigs) : null;
 
   return {
     contentful,
     loadEntriesForPath: async (path, ctx, site) => {
       if (pathToContentLoader) {
         return pathToContentLoader.getItemsForPath(path, ctx, site);
+      } else if (pathReaders) {
+        const node = await pathReaders[ctx.preview ? 'preview' : 'prod'].getNodeByPath(path, site);
+        if (!node) return [];
+        return node.getPathEntries(ctx);
       }
-      return null;
+      return [];
     },
     loadPathsForContent: async (entry, ctx, site) => {
       if (contentToPathsLoader) {
         return contentToPathsLoader.loadPathsFromContent(entry, ctx, site);
+      } else if (pathReaders) {
+        return await pathReaders[ctx.preview ? 'preview' : 'prod'].getPathInfosByContentId(entry.sys.id, ctx, site);
       }
       return [];
     },

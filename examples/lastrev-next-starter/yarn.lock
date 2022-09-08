@@ -3132,14 +3132,7 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@last-rev/app-config@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@last-rev/app-config/-/app-config-0.2.1.tgz#7c46534aa062cf94d843224cd3ab9129587c33d4"
-  integrity sha512-r8TV99PBS7pjrr79/ahpZKY5z2cIgri6UXIQiJAZcQsJiQe73ovw8HQnRaRmvqWN4UqExOL34kW3qkEjIJaruA==
-  dependencies:
-    lodash "^4.17.21"
-
-"@last-rev/app-config@^0.2.2":
+"@last-rev/app-config@^0.2.1", "@last-rev/app-config@^0.2.2":
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/@last-rev/app-config/-/app-config-0.2.2.tgz#2d14bdd0f2a555f127ffe1ccf27d9e766058f383"
   integrity sha512-deopT+AX5VRcRrnqIg64+fXCRn8FKdKblxIlYhFk84JRcJS0bprzoyVhPxIjxKnik66zs8oxkKtkTOR7bm6JHA==
@@ -3147,9 +3140,9 @@
     lodash "^4.17.21"
 
 "@last-rev/cli@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/cli/-/cli-0.5.2.tgz#79f5cd4ecbd1b8abeda1b13076722e84f54c6468"
-  integrity sha512-iqNdUBBYICw2AllshrTZnSdE4Divv5PTzativ2QaepVO72e+CwMaV/HSWYXF+AFJrwvhRSxKahXovrTeQPH+6g==
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@last-rev/cli/-/cli-0.5.3.tgz#8de78396a39a3af4a5af54f443b0a3c1eaa2a12e"
+  integrity sha512-lyAhAWygdTKctx/7xs/trKoTG1/4kNVxC1lzHv1H868Ac8HalQPxn7DOyOSNptIjzvCZNEKcfZOcH2tj47S2mQ==
   dependencies:
     "@graphql-tools/merge" "^6.2.14"
     "@last-rev/app-config" "^0.2.2"
@@ -3270,9 +3263,9 @@
     lodash "^4.17.21"
 
 "@last-rev/contentful-path-rules-engine@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-path-rules-engine/-/contentful-path-rules-engine-0.1.0.tgz#8b90ebe60f8f4ab671bc898b1985605acad7ca26"
-  integrity sha512-0ys4iqb8+YFtK17aN54y97x/rq2dbTMfpHEazi4gJCLY4EHtmSrSC409k86a8XbPkN/yptvbd4kvw1hRJ8LTGg==
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-path-rules-engine/-/contentful-path-rules-engine-0.1.1.tgz#8d087afa4a28915ce277b9696ac604130c69514f"
+  integrity sha512-3kvRco3xuJy1PBsujfG5BgKulM4G50z1sVKbNifZ1eIvtVYrAvPBvq3YGEMk5ejJgKSZNhef9moF+zOa7vp/5Q==
   dependencies:
     loglevel "^1.7.1"
 
@@ -3505,12 +3498,7 @@
   resolved "https://registry.yarnpkg.com/@last-rev/timer/-/timer-0.1.3.tgz#1bdb46dddbc55644c22c54cdd444dfc28be6c7d8"
   integrity sha512-Ps7+r/Ukqn0mXTgldwwXx8Uq2qCA1GpTl9+ZVSUdpDKQ1/yxJIbcxvjPi6c7o2lTeJf2uyiz8X/YKIofOOD1GQ==
 
-"@last-rev/types@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@last-rev/types/-/types-0.3.0.tgz#07c9ae14a1a27c43915105110e4be837a1c08346"
-  integrity sha512-vRUoKCBzHQPlPz3cHIvFTEVYdS3Af7StQ7AE595F1b4txX+YDowlvcF9Fe0WoakvNmhn+9XGMuUejjf4LWgPnw==
-
-"@last-rev/types@^0.3.1":
+"@last-rev/types@^0.3.0", "@last-rev/types@^0.3.1":
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/@last-rev/types/-/types-0.3.1.tgz#5adbcf8e6498af667cd91bf2362ae1837aadc7c9"
   integrity sha512-wsq1EjLTLZX0ahKXWxSmsrMGmsyhWOiv3vt3M5j2Zh4vg6A2CkSYxsVEn+0CC5oYesKC7iPvjPGlxpwlDTegYw==

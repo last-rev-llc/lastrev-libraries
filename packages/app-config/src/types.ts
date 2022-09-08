@@ -3,6 +3,9 @@ import { LogLevelDesc } from 'loglevel';
 import { RedisOptions } from 'ioredis';
 
 export type LastRevStrategy = 'fs' | 'redis' | 'dynamodb';
+
+export type PathVersion = 'v1' | 'v2';
+
 export interface LastRevAppConfiguration {
   cms: 'Contentful';
   strategy: LastRevStrategy;
@@ -42,6 +45,10 @@ export interface LastRevAppConfiguration {
   };
   sites: string[];
   skipReferenceFields: boolean;
+  paths: {
+    version: PathVersion;
+    generateFullPathTree: boolean;
+  };
 }
 
 export type LastRevAppConfigArgs = {
@@ -83,4 +90,8 @@ export type LastRevAppConfigArgs = {
   };
   sites?: string[];
   skipReferenceFields?: boolean;
+  paths?: {
+    version?: PathVersion;
+    generateFullPathTree?: boolean;
+  };
 };

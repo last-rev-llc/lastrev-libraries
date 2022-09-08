@@ -4,7 +4,6 @@ import PathRuleParser from '../core/PathRuleParser';
 import PathToItemsFetcher from './PathToItemsFetcher';
 import { PathRule, SlugArray } from '../types';
 import logger from 'loglevel';
-import { isV2Config } from '../helpers';
 
 export type PathLookupObject = {
   rule: string;
@@ -48,7 +47,7 @@ export default class PathLoader {
   private readonly _lookups: PathLookupObject[];
 
   constructor(config: PathRuleConfig) {
-    this._lookups = isV2Config(config) ? createPathLookupObjects(config) : [];
+    this._lookups = createPathLookupObjects(config);
   }
 
   get logPrefix() {

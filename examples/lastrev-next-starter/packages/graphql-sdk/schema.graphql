@@ -93,24 +93,44 @@ type SitemapPage {
 type Sitemap {
   pages: [SitemapPage]
 }
-type Person implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  name: String
-  jobTitle: String
-  image: Media
-}
-type ModuleIntegration implements Content {
+type Site implements Content {
   sidekickLookup: JSON
   id: String
   theme: [Theme]
   animation: JSON
   variant: String
   internalTitle: String
-  settings: JSON
+  siteKey: String
+  seo: JSON
+}
+type Hero implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  title: String
+  subtitle: String
+  body: RichText
+  backgroundAsset: Media
+  backgroundColor: String
+  image: [Media]
+  contentWidth: String
+  contentHeight: String
+  overline: String
+  actions: [Link]
+  background: Media
+}
+type Template implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  templateName: String
+  image: Media
+  category: String
 }
 type Section implements Content {
   sidekickLookup: JSON
@@ -134,124 +154,15 @@ type Section implements Content {
   contents: [Content]
   background: Media
 }
-type Collection implements Content {
+type Person implements Content {
   sidekickLookup: JSON
   id: String
   theme: [Theme]
   animation: JSON
   variant: String
-  internalTitle: String
-  itemsVariant: String
-  itemsWidth: String
-  itemsSpacing: Int
-  settings: JSON
-  styles: JSON
-  items: [CollectionItem]
-  introText: Text
-  itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
-}
-type Quote implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  quote: String
-  authorName: String
-  authorTitle: String
+  name: String
+  jobTitle: String
   image: Media
-}
-type Site implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  siteKey: String
-  seo: JSON
-}
-type Header implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  logo: Media
-  logoUrl: String
-  color: String
-  navigationItems: [Collection]
-}
-type Template implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  templateName: String
-  image: Media
-  category: String
-}
-type Hero implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  title: String
-  subtitle: String
-  body: RichText
-  backgroundAsset: Media
-  backgroundColor: String
-  image: [Media]
-  contentWidth: String
-  contentHeight: String
-  overline: String
-  actions: [Link]
-  background: Media
-}
-type Text implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  body: RichText
-  internalTitle: String
-  align: String
-  color: String
-  styles: JSON
-}
-type Link implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  manualUrl: String
-  text: String
-  icon: String
-  iconPosition: String
-  color: String
-  href: String!
-}
-type Card implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  media: [Media]
-  title: String
-  subtitle: String
-  body: RichText
-  actions: [Link]
-  link: Link
 }
 type NavigationItem implements Content {
   sidekickLookup: JSON
@@ -268,27 +179,94 @@ type NavigationItem implements Content {
   subNavigation: [SubnavigationItem]
   image: Media
 }
-type Blog implements Content {
+type Card implements Content {
   sidekickLookup: JSON
   id: String
   theme: [Theme]
   animation: JSON
-  slug: String
-  lr__path__: String
+  variant: String
+  internalTitle: String
+  media: [Media]
   title: String
-  featuredMedia: Media
-  pubDate: Date
-  summary: String
+  subtitle: String
   body: RichText
-  tags: [String]
-  disableBackToTop: Boolean
-  seo: JSON
-  relatedLinks: [Link]
-  categories: [CategoryBlog]
-  author: Person
-  contents: [Content]
-  header: Header
-  footer: Content
+  actions: [Link]
+  link: Link
+}
+type Text implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  body: RichText
+  internalTitle: String
+  align: String
+  color: String
+  styles: JSON
+}
+type Collection implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  itemsVariant: String
+  itemsWidth: String
+  itemsSpacing: Int
+  settings: JSON
+  styles: JSON
+  items: [CollectionItem]
+  introText: Text
+  itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
+}
+type Link implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  manualUrl: String
+  text: String
+  icon: String
+  iconPosition: String
+  color: String
+  href: String!
+}
+type Header implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  logo: Media
+  logoUrl: String
+  color: String
+  navigationItems: [Collection]
+}
+type Quote implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  quote: String
+  authorName: String
+  authorTitle: String
+  image: Media
+}
+type ModuleIntegration implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  settings: JSON
 }
 type CategoryBlog implements Content {
   sidekickLookup: JSON
@@ -320,6 +298,28 @@ type Page implements Content {
   footer: Content
   hero: Hero
   contents: [Content]
+}
+type Blog implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  slug: String
+  lr__path__: String
+  title: String
+  featuredMedia: Media
+  pubDate: Date
+  summary: String
+  body: RichText
+  tags: [String]
+  disableBackToTop: Boolean
+  seo: JSON
+  relatedLinks: [Link]
+  categories: [CategoryBlog]
+  author: Person
+  contents: [Content]
+  header: Header
+  footer: Content
 }
 type AlgoliaObject {
   index: String!

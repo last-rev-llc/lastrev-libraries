@@ -24,6 +24,7 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
     this.config = merge({}, defaultConfig, config);
     this.validateCmsVars();
     this.validateStrategy();
+    this.validatePaths();
   }
 
   validateCmsVars() {
@@ -69,6 +70,12 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       }
     } else {
       throw new Error(`Invalid strategy: ${this.config.strategy}`);
+    }
+  }
+
+  validatePaths() {
+    if (this.config.paths?.version !== 'v2' && this.config.paths?.generateFullPathTree === false) {
+      throw new Error(`Invalid paths configuration: generateFullPathTree must be true when using paths v1`);
     }
   }
 
@@ -156,6 +163,13 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
 
   get sites() {
     return this.config.sites!;
+  }
+
+  get paths() {
+    return {
+      version: this.config.paths?.version || 'v1',
+      generateFullPathTree: this.config.paths?.generateFullPathTree || true
+    };
   }
 
   get skipReferenceFields() {

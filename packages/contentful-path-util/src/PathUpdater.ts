@@ -1,10 +1,13 @@
 import { each, get, has, isFunction, isString, map, transform } from 'lodash';
 import { join } from 'path';
-import { ApolloContext, TypeMappings, ContentfulPathsConfigs } from '@last-rev/types';
+import { ApolloContext, TypeMappings, ContentfulPathsConfigs, PathRuleConfig, PathData } from '@last-rev/types';
 import PathTree from './PathTree';
 import { DEFAULT_SITE_KEY } from './constants';
 import { createPathStore, PathStore } from './PathStore';
 import LastRevAppConfig from '@last-rev/app-config';
+import { ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
+
+type PathVersion = 'v1' | 'v2';
 
 type PathUpdaterProps = {
   pathsConfigs: ContentfulPathsConfigs;
@@ -12,6 +15,7 @@ type PathUpdaterProps = {
   preview: boolean;
   site?: string;
   pathStore: PathStore;
+  pathVersion?: PathVersion;
 };
 
 export default class PathUpdater {
@@ -22,13 +26,15 @@ export default class PathUpdater {
   pathsConfigs: ContentfulPathsConfigs;
   typeMappings: TypeMappings = {};
   pathStore: PathStore;
+  pathVersion: PathVersion;
 
-  constructor({ pathsConfigs, context, preview, site, pathStore }: PathUpdaterProps) {
+  constructor({ pathsConfigs, context, preview, site, pathStore, pathVersion = 'v1' }: PathUpdaterProps) {
     this.pathsConfigs = pathsConfigs;
     this.context = context;
     this.preview = preview;
     this.site = site || DEFAULT_SITE_KEY;
     this.pathStore = pathStore;
+    this.pathVersion = pathVersion;
   }
 
   get reverseTypeMappings() {
@@ -43,7 +49,11 @@ export default class PathUpdater {
   }
 
   async updatePaths() {
-    await this.loadFromContent();
+    if (this.pathVersion === 'v1') {
+      await this.loadFromV1Content();
+    } else if (this.pathVersion === 'v2') {
+      await this.loadFromV2Content();
+    }
     await this.save();
   }
 
@@ -52,7 +62,65 @@ export default class PathUpdater {
     await this.pathStore.save(serialized, this.site);
   }
 
-  async loadFromContent() {
+  async loadFromV2Content() {
+    const pathRuleConfig = this.pathsConfigs as PathRuleConfig;
+
+    const tree = new PathTree();
+    const pathLoader = new ContentToPathsLoader(pathRuleConfig);
+    const context = this.context;
+    const locales = this.context.locales;
+
+    await Promise.all(
+      Object.keys(pathRuleConfig).map(async (contentTypeId) => {
+        const allItems = await this.context.loaders.entriesByContentTypeLoader.load({
+          id: contentTypeId,
+          preview: this.preview
+        });
+        const pathDatas = (
+          await Promise.all(
+            allItems.map(async (item) => {
+              const pathToLocales: Record<string, string[]> = {};
+
+              await Promise.all(
+                locales.map(async (locale) => {
+                  const pathInfos = await pathLoader.loadPathsFromContent(item, {
+                    ...context,
+                    locale
+                  });
+                  pathInfos.forEach((pathInfo) => {
+                    const path = pathInfo.path;
+                    if (!pathToLocales[path]) {
+                      pathToLocales[path] = [];
+                    }
+                    pathToLocales[path].push(locale);
+                  });
+                })
+              );
+
+              const pathDatas: PathData[] = Object.keys(pathToLocales).reduce((accum, path) => {
+                const excludedLocales = locales.filter((locale) => !pathToLocales[path].includes(locale));
+                accum.push({
+                  fullPath: path,
+                  contentId: item.sys.id,
+                  excludedLocales,
+                  isPrimary: true // ???
+                });
+                return accum;
+              }, [] as PathData[]);
+
+              return pathDatas;
+            })
+          )
+        ).flat();
+
+        pathDatas.forEach((pathData) => tree.appendNewNode(pathData));
+      })
+    );
+
+    this.tree = tree;
+  }
+
+  async loadFromV1Content() {
     const defaultLocale = this.context.defaultLocale;
     const locales = this.context.locales;
     const loaders = this.context.loaders;
@@ -105,6 +173,8 @@ type UpdatePathsProps = {
 };
 
 export const updateAllPaths = async ({ config, updateForPreview, updateForProd, context }: UpdatePathsProps) => {
+  if (!config.paths.generateFullPathTree) return;
+
   let promises = [];
   if (updateForPreview) {
     const pathStore = createPathStore(config);
@@ -116,7 +186,8 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
           updateForProd,
           site,
           pathsConfigs: config.extensions.pathsConfigs,
-          context
+          context,
+          pathVersion: config.paths.version
         })
       )
     );
@@ -132,7 +203,8 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
           updateForProd,
           site,
           pathsConfigs: config.extensions.pathsConfigs,
-          context
+          context,
+          pathVersion: config.paths.version
         })
       )
     );
@@ -147,7 +219,8 @@ const updatePathsForSite = async ({
   updateForProd,
   site,
   pathsConfigs,
-  context
+  context,
+  pathVersion
 }: {
   pathStore: PathStore;
   updateForPreview: boolean;
@@ -155,13 +228,14 @@ const updatePathsForSite = async ({
   site: string;
   pathsConfigs: ContentfulPathsConfigs;
   context: ApolloContext;
+  pathVersion: PathVersion;
 }) => {
   if (updateForPreview) {
-    const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: true });
+    const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: true, pathVersion });
     await updater.updatePaths();
   }
   if (updateForProd) {
-    const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: false });
+    const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: false, pathVersion });
     await updater.updatePaths();
   }
 };

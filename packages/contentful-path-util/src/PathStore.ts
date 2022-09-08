@@ -46,7 +46,7 @@ export class FsPathStore implements PathStore {
 }
 
 export class RedisPathStore implements PathStore {
-  client: Redis.Redis;
+  client: Redis;
 
   constructor(config: LastRevAppConfig) {
     this.client = new Redis({
