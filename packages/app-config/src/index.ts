@@ -176,4 +176,8 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
     // defaults to true, to allow backwards compatibility
     return isNil(this.config.skipReferenceFields) ? true : this.config.skipReferenceFields;
   }
+
+  get sitemapMaxPageSize() {
+    return this.config.sitemapMaxPageSize || 1000;
+  }
 }

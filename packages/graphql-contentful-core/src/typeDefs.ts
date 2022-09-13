@@ -65,6 +65,8 @@ const baseDefs = gql`
     content(id: String!, locale: String, preview: Boolean, displayType: String): Content
     contents(filter: ContentsFilter!): [Content]
     sitemap(root: String!, locales: [String!], preview: Boolean, site: String): Sitemap
+    sitemapIndex(preview: Boolean, site: String): Sitemap
+    sitemapPage(contentType: String!, locale: String, preview: Boolean, site: String, page: Int): SitemapPage
     availableLocales: Locales
   }
 
@@ -91,6 +93,9 @@ const baseDefs = gql`
 
   type SitemapPage {
     entries: [SitemapEntry]
+    contentType: String
+    page: Int
+    locale: String
     loc: String
     lastmod: String
     filename: String

@@ -113,11 +113,108 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           }: { root: string; locales: string[]; preview?: boolean; site?: string },
           ctx: ApolloContext
         ) => {
+          ctx.preview = !!preview;
           if (!ctx.pathReaders) return null;
           const pathReader = ctx.pathReaders[preview ? 'preview' : 'prod'];
           const entries = await pathReader.getSitemap(locales, site);
           const sitemap = await buildSitemapFromEntries(root, entries, !!preview, ctx);
           return sitemap;
+        },
+        sitemapIndex: async (_: never, { preview = false }: { preview?: boolean }, ctx: ApolloContext) => {
+          ctx.preview = !!preview;
+          const client = ctx.contentful[preview ? 'preview' : 'prod'];
+
+          const pages: { contentType: string; page: number; locale: string; lastmod: string }[] = [];
+
+          const pathPageTypes = Object.keys(config.extensions?.pathsConfigs || {});
+
+          await Promise.all(
+            pathPageTypes.map(async (contentType) => {
+              const { total, items } = await client.getEntries({
+                content_type: contentType,
+                select: `sys.id,sys.updatedAt`,
+                limit: 1,
+                skip: 0,
+                order: 'sys.updatedAt'
+              });
+
+              if (!total || !items.length) return;
+
+              const lastmod = items[0].sys.updatedAt;
+
+              const numPages = Math.ceil(total / config.sitemapMaxPageSize);
+
+              for (const locale of ctx.locales) {
+                for (let i = 1; i <= numPages; i++) {
+                  // returning each of these instead of a constructed path allows the
+                  // consumer to construct the path however they want
+                  pages.push({
+                    contentType,
+                    page: i,
+                    locale,
+                    lastmod
+                  });
+                }
+              }
+            })
+          );
+
+          return { pages };
+        },
+        sitemapPage: async (
+          _: never,
+          {
+            contentType,
+            locale,
+            preview = false,
+            site,
+            page
+          }: {
+            contentType: string;
+            locale: string;
+            preview?: boolean;
+            site: string;
+            page: number;
+          },
+          ctx: ApolloContext
+        ) => {
+          ctx.preview = !!preview;
+
+          const maxPageSize = config.sitemapMaxPageSize;
+
+          const buildSitemapPath = (path: string) =>
+            `${locale === ctx.defaultLocale ? '' : `${locale}/`}${path.replace(/^\//, '')}`;
+
+          const ids = (
+            await ctx.contentful[preview ? 'preview' : 'prod'].getEntries({
+              content_type: contentType,
+              select: `sys.id`,
+              limit: maxPageSize,
+              skip: (page - 1) * maxPageSize,
+              order: 'sys.updatedAt'
+            })
+          ).items.map((item) => item.sys.id);
+
+          const entries = (await ctx.loaders.entryLoader.loadMany(ids.map((id) => ({ id, preview })))).filter(
+            (e) => !!e && !isError(e)
+          ) as Entry<any>[];
+
+          const sitemapEntries = (
+            await Promise.all(
+              entries.map(async (entry) => {
+                const paths = await ctx.loadPathsForContent(entry, ctx, site);
+
+                return paths.map((p) => ({
+                  loc: buildSitemapPath(p.path),
+                  lastmod: entry.sys.updatedAt
+                }));
+              })
+            )
+          ).flat();
+
+          return {
+            entries: sitemapEntries
+          };
         },
         availableLocales: async (_: never, __: never, ctx: ApolloContext) => {
           const defaultLocale = ctx.defaultLocale || 'en-US';
