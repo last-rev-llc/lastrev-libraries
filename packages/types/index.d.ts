@@ -164,6 +164,7 @@ export interface iPathNode {
   parent?: iPathNode;
   children: Map<string, iPathNode>;
   hasChildren: () => boolean;
+  getPathEntries: (ctx: ApolloContext) => Promise<PathEntries>;
 }
 
 export type PathNodeVisitor = (node: iPathNode) => void;
@@ -190,6 +191,11 @@ export interface iPathReader {
   getTree: (site?: string) => Promise<iPathTree | undefined>;
   load: (site?: string) => Promise<void>;
   getPathsByContentId: (contentId: string, locale?: string, site?: string) => Promise<string[]>;
+  getPathInfosByContentId: (
+    contentId: string,
+    ctx: ApolloContext,
+    site: string = DEFAULT_SITE_KEY
+  ) => Promise<PathInfo[]>;
   getAllPaths: (locales: string[], site?: string) => Promise<PagePathsParam[]>;
   getNodeByPath(path: string, site?: string): Promise<iPathNode | undefined>;
   getFilteredTree: (filter?: (node: iPathNode) => boolean, site?: string) => Promise<iPathTree>;

@@ -3,7 +3,7 @@ import PathTree from './PathTree';
 import { PathNode } from './PathNode';
 import { PathStore } from './PathStore';
 import { DEFAULT_SITE_KEY } from './constants';
-import { iPathReader, PagePathsParam, SitemapPathEntry } from 'packages/types';
+import { ApolloContext, iPathReader, PagePathsParam, PathInfo, SitemapPathEntry } from 'packages/types';
 import AsyncLock from 'async-lock';
 
 const lock = new AsyncLock({
@@ -48,6 +48,26 @@ export default class PathReader implements iPathReader {
       if (locale && node.data.excludedLocales.includes(locale)) return;
       paths.push(node.data.fullPath);
     });
+    return paths;
+  }
+
+  async getPathInfosByContentId(
+    contentId: string,
+    ctx: ApolloContext,
+    site: string = DEFAULT_SITE_KEY
+  ): Promise<PathInfo[]> {
+    await this.ensureLoaded(site);
+    const tree = this.trees[site]!;
+    const nodes = tree.getNodesById(contentId);
+    const paths: PathInfo[] = [];
+    for (const node of nodes) {
+      if (!node.data) break;
+      if (ctx.locale && node.data.excludedLocales.includes(ctx.locale)) break;
+      paths.push({
+        path: node.data.fullPath,
+        pathEntries: await node.getPathEntries(ctx)
+      });
+    }
     return paths;
   }
 

@@ -3,7 +3,6 @@ import { PathRule } from '../types';
 import PathRuleParser from '../core/PathRuleParser';
 import { Entry } from 'contentful';
 import ContentToPathsFetcher from './ContentToPathsFetcher';
-import { isV2Config } from '../helpers';
 
 type ContentLookupObject = {
   rule: string;
@@ -41,7 +40,7 @@ export default class ContentToPathsLoader {
   private readonly _lookups: ContentLookupObject[];
 
   constructor(config: PathRuleConfig) {
-    this._lookups = isV2Config(config) ? createContentLookupObjects(config) : [];
+    this._lookups = createContentLookupObjects(config);
   }
 
   async loadPathsFromContent(entry: Entry<any>, ctx: ApolloContext, site?: string): Promise<PathInfo[]> {

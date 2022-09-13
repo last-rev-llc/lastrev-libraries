@@ -33,8 +33,7 @@ const buildSchema = async (config: LastRevAppConfig): Promise<GraphQLSchema> => 
 
   const defaultResolvers = createResolvers({
     contentTypes,
-    mappers: config.extensions.mappers,
-    typeMappings: config.extensions.typeMappings
+    config
   });
 
   const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, config.extensions.typeDefs]);
