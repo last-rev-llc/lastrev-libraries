@@ -48,7 +48,7 @@ export class PathNode implements iPathNode {
     node = this;
 
     while (node.parent) {
-      entries.push(node.data?.contentId ? entriesById[node.data.contentId] : null);
+      entries.unshift(node.data?.contentId ? entriesById[node.data.contentId] : null);
       node = node.parent;
     }
 
