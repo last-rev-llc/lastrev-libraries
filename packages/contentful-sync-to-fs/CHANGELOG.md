@@ -1,5 +1,11 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.5
+
+### Patch Changes
+
+- 3d8437c: Add syncLimit configuration
+
 ## 0.3.4
 
 ### Patch Changes

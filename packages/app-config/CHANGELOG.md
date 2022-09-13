@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.2.3
+
+### Patch Changes
+
+- 3d8437c: Add syncLimit configuration
+
 ## 0.2.2
 
 ### Patch Changes
