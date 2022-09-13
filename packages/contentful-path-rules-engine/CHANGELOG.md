@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-rules-engine
 
+## 0.1.2
+
+### Patch Changes
+
+- c62ce9d: allow for dynamic or static path generation with old or new path engine
+
 ## 0.1.1
 
 ### Patch Changes

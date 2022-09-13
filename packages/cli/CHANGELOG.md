@@ -1,5 +1,15 @@
 # @last-rev/cli
 
+## 0.5.4
+
+### Patch Changes
+
+- c62ce9d: bump version of core
+- Updated dependencies [c62ce9d]
+- Updated dependencies [c62ce9d]
+  - @last-rev/app-config@0.3.0
+  - @last-rev/graphql-contentful-core@0.5.1
+
 ## 0.5.3
 
 ### Patch Changes
