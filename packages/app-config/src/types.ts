@@ -26,6 +26,7 @@ export interface LastRevAppConfiguration {
     env: string;
     usePreview: boolean;
     maxBatchSize: number;
+    syncLimit?: number;
   };
   algolia: {
     applicationId: string;
@@ -66,6 +67,7 @@ export type LastRevAppConfigArgs = {
     env?: string;
     usePreview?: boolean;
     maxBatchSize?: number;
+    syncLimit?: number;
   };
   algolia?: {
     applicationId?: string;

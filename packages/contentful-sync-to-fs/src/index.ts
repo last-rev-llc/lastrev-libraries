@@ -110,13 +110,15 @@ const validateArg = (arg: any, argname: string) => {
 const syncAllEntriesForContentType = async (
   client: ContentfulClientApi,
   contentTypeId: string,
-  nextSyncToken?: string
+  nextSyncToken?: string,
+  config?: LastRevAppConfig
 ): Promise<SyncCollection> => {
   const result = await client.sync({
     initial: !nextSyncToken,
     content_type: contentTypeId,
     resolveLinks: false,
-    nextSyncToken
+    nextSyncToken,
+    ...(!nextSyncToken && config && config.contentful.syncLimit && { limit: config.contentful.syncLimit })
   });
 
   return result;
@@ -134,7 +136,8 @@ const syncAllAssets = async (client: ContentfulClientApi, nextSyncToken?: string
 const syncAllEntries = async (
   client: ContentfulClientApi,
   contentTypes: ContentType[],
-  syncTokens: ContentTypeIdToSyncTokensLookup
+  syncTokens: ContentTypeIdToSyncTokensLookup,
+  config: LastRevAppConfig
 ): Promise<SyncCollection[]> => {
   return Promise.all(
     contentTypes.map((contentType, index) =>
@@ -147,7 +150,7 @@ const syncAllEntries = async (
           await delay(index * 100);
         }
 
-        return syncAllEntriesForContentType(client, contentTypeId, syncTokens[contentTypeId]);
+        return syncAllEntriesForContentType(client, contentTypeId, syncTokens[contentTypeId], config);
       })()
     )
   );
@@ -182,7 +185,7 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
   let timer = new Timer(`fetched entries and assets`);
   const syncTokens = await readContentfulSyncTokens(root, SYNC_TOKEN_DIRNAME);
   const [entriesResults, assetsResult] = await Promise.all([
-    syncAllEntries(client, contentTypes, syncTokens),
+    syncAllEntries(client, contentTypes, syncTokens, config),
     syncAllAssets(client, syncTokens['asset'])
   ]);
   logger.trace(timer.end());
