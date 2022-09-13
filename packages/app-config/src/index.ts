@@ -83,7 +83,8 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       contentPreviewToken: this.config.contentful?.contentPreviewToken!,
       env: this.config.contentful?.env!,
       usePreview: !!this.config.contentful?.usePreview,
-      maxBatchSize: this.config.contentful?.maxBatchSize || 1000
+      maxBatchSize: this.config.contentful?.maxBatchSize || 1000,
+      syncLimit: this.config.contentful?.syncLimit
     };
   }
 
