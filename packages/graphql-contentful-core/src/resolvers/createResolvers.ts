@@ -53,7 +53,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
 
           const pathReader = ctx.pathReaders[preview ? 'preview' : 'prod'];
 
-          return await pathReader.getAllPaths(locales, site);
+          return pathReader.getAllPaths(locales, site);
         },
         content: async (
           _: any,

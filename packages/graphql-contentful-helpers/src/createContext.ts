@@ -107,7 +107,7 @@ const createContext = async ({
       if (contentToPathsLoader) {
         return contentToPathsLoader.loadPathsFromContent(entry, ctx, site);
       } else if (pathReaders) {
-        return await pathReaders[ctx.preview ? 'preview' : 'prod'].getPathInfosByContentId(entry.sys.id, ctx, site);
+        return pathReaders[ctx.preview ? 'preview' : 'prod'].getPathInfosByContentId(entry.sys.id, ctx, site);
       }
       return [];
     },

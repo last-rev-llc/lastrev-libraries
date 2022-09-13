@@ -69,6 +69,7 @@ export default class PathUpdater {
     const pathLoader = new ContentToPathsLoader(pathRuleConfig);
     const context = this.context;
     const locales = this.context.locales;
+    const site = this.site;
 
     await Promise.all(
       Object.keys(pathRuleConfig).map(async (contentTypeId) => {
@@ -83,10 +84,14 @@ export default class PathUpdater {
 
               await Promise.all(
                 locales.map(async (locale) => {
-                  const pathInfos = await pathLoader.loadPathsFromContent(item, {
-                    ...context,
-                    locale
-                  });
+                  const pathInfos = await pathLoader.loadPathsFromContent(
+                    item,
+                    {
+                      ...context,
+                      locale
+                    },
+                    site
+                  );
                   pathInfos.forEach((pathInfo) => {
                     const path = pathInfo.path;
                     if (!pathToLocales[path]) {
