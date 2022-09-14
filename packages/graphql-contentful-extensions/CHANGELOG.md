@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.6
+
+### Patch Changes
+
+- 36fb4b7: Fix split on undefined
+
 ## 0.1.5
 
 ### Patch Changes
