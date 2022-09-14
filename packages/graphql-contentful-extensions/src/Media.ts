@@ -76,10 +76,10 @@ export const mappers = {
         //TODO: Support other ways to control priority
         if (file?.url) assetURL = file?.url;
 
-        if (assetURL.split('.')[assetURL.split('.').length - 1] === 'pdf') {
-          return 'embed';
-        }
         if (assetURL) {
+          if (assetURL.split('.')[assetURL.split('.').length - 1] === 'pdf') {
+            return 'embed';
+          }
           if (getVideoEmbedUrl(assetURL)) {
             return 'embed';
           }
