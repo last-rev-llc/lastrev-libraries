@@ -1,5 +1,17 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.4.2
+
+### Patch Changes
+
+- c62ce9d: allow for dynamic or static path generation with old or new path engine
+- Updated dependencies [c62ce9d]
+- Updated dependencies [c62ce9d]
+- Updated dependencies [c62ce9d]
+  - @last-rev/app-config@0.3.0
+  - @last-rev/types@0.3.2
+  - @last-rev/contentful-path-rules-engine@0.1.2
+
 ## 0.4.1
 
 ### Patch Changes

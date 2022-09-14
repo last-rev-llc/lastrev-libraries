@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.3.0
+
+### Minor Changes
+
+- c62ce9d: added paths config
+
 ## 0.2.3
 
 ### Patch Changes

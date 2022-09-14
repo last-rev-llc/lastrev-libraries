@@ -1,5 +1,13 @@
 # @last-rev/contentful-path-util
 
+## 0.1.12
+
+### Patch Changes
+
+- c62ce9d: Added method to iPathNode to return pathEntries
+- Updated dependencies [c62ce9d]
+  - @last-rev/contentful-path-rules-engine@0.1.2
+
 ## 0.1.11
 
 ### Patch Changes

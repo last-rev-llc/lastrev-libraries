@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.3.2
+
+### Patch Changes
+
+- c62ce9d: Added method to iPathNode to return pathEntries
+
 ## 0.3.1
 
 ### Patch Changes

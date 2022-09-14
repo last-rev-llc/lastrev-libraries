@@ -1,5 +1,18 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.1
+
+### Patch Changes
+
+- c62ce9d: Allowing for either static or dynaimc path generation in graphql-contentful-core
+- Updated dependencies [c62ce9d]
+- Updated dependencies [c62ce9d]
+- Updated dependencies [c62ce9d]
+  - @last-rev/app-config@0.3.0
+  - @last-rev/contentful-path-util@0.1.12
+  - @last-rev/types@0.3.2
+  - @last-rev/graphql-contentful-helpers@0.4.2
+
 ## 0.5.0
 
 ### Minor Changes
