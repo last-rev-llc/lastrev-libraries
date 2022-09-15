@@ -4,14 +4,18 @@ const { createQuote } = require('./createQuote');
 const { createMediaEntry } = require('./createMediaEntry');
 
 const partner = {
-  button_title: {
-    id: 'button_title',
+  description_rich_text: {
+    id: 'description',
     type: 'CustomParser',
     customParser: async (value) => {
-      const parsedValue = await contentfulFieldsParsers.getContentfulFieldValue(value, { type: 'Symbol' });
-      return parsedValue;
+      return contentfulFieldsParsers.getContentfulFieldValue(value, { type: 'RichText' });
     }
   },
+  button_title: {
+    id: 'button.title',
+    type: 'Symbol'
+  },
+
   button_login_title: {
     id: 'button.login.title',
     type: 'CustomParser',
@@ -19,6 +23,10 @@ const partner = {
       const parsedValue = await contentfulFieldsParsers.getContentfulFieldValue(value, { type: 'Symbol' });
       return parsedValue;
     }
+  },
+  button_login_url: {
+    id: 'button.login.url',
+    type: 'Symbol'
   },
   img: {
     id: 'image',
@@ -76,18 +84,34 @@ const partner = {
       return perksContent;
     }
   },
-  quote: {
-    id: 'quote',
+  quotes: {
+    id: 'quotes',
     type: 'CustomParser',
     customParser: async (value, JOB) => {
-      const quote = value[0];
-      const entryId = await contentfulFieldsParsers.getContentfulIdFromString(
-        `Quote - ${quote.author} - ${quote.position}`
+      return Promise.all(
+        value.map(async (quote) => {
+          const entryId = await contentfulFieldsParsers.getContentfulIdFromString(
+            `Quote - ${quote.author} - ${quote.position} - ${quote.text}}`
+          );
+          const relQuoteObj = await contentfulFieldsParsers.getContentfulFieldValue(entryId, { type: 'Entry' });
+
+          JOB.relatedEntries.push(await createQuote(JOB, entryId, { ...quote, img: quote.avatar2x }));
+          return relQuoteObj;
+        })
       );
-      const relQuoteObj = await contentfulFieldsParsers.getContentfulFieldValue(entryId, { type: 'Entry' });
-      JOB.relatedEntries.push(await createQuote(JOB, entryId, quote));
-      return [relQuoteObj];
     }
+  },
+  logo_list_title: {
+    id: 'logo_list.title',
+    type: 'Symbol'
+  },
+  logo_list_button_title: {
+    id: 'logo_list.button.directory.title',
+    type: 'Symbol'
+  },
+  logo_list_button_url: {
+    id: 'logo_list.button.directory.url',
+    type: 'Symbol'
   },
   logo_list_list: {
     id: 'logo_list.list',
@@ -99,10 +123,13 @@ const partner = {
         const entryId = await contentfulFieldsParsers.getContentfulIdFromString(`card-${card.url}`);
 
         // console.log('card.logo2x: ', card.logo2x);
-        if (card.logo2x) {
+        const logo = card.logo2x || card.logo;
+        if (logo) {
           card.asset = {
-            id: await contentfulFieldsParsers.getContentfulIdFromString(card.logo2x),
-            assetURL: card.logo2x
+            id: await contentfulFieldsParsers.getContentfulIdFromString(logo),
+            assetURL: logo,
+            height: card.height,
+            width: card.width
           };
         }
 
@@ -126,7 +153,54 @@ const partner = {
       return relatedArray;
     }
   },
-  sdk_asset: null
+  form_title: {
+    id: 'form.title',
+    type: 'Symbol'
+  },
+  form_subtitle: {
+    id: 'form.subtitle',
+    type: 'Symbol'
+  },
+  form_base_url: {
+    id: 'form.baseUrl',
+    type: 'Symbol'
+  },
+  form_munchkinId: {
+    id: 'form.munchkinId',
+    type: 'Symbol'
+  },
+  form_id: {
+    id: 'form.id',
+    type: 'Symbol'
+  },
+  sdk_content: {
+    id: 'sdk.content',
+    type: 'Text'
+  },
+  sdk_button_title: {
+    id: 'sdk.button.title',
+    type: 'Symbol'
+  },
+  sdk_button_url: {
+    id: 'sdk.button.url',
+    type: 'Symbol'
+  },
+  sdk_asset: {
+    id: 'sdk.asset2x',
+    type: 'CustomParser',
+    customParser: async (value, JOB) => {
+      const assetId = await contentfulFieldsParsers.getContentfulIdFromString(value);
+      JOB.relatedEntries.push(
+        await createMediaEntry(JOB, assetId, {
+          assetURL: value
+        })
+      );
+
+      const entryObject = await contentfulFieldsParsers.getContentfulFieldValue(assetId, { type: 'Entry' });
+      // console.log('entryObject: ', entryObject);
+      return entryObject;
+    }
+  }
 };
 
 module.exports = partner;
