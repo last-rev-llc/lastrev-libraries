@@ -49,6 +49,7 @@ export interface LastRevAppConfiguration {
     version: PathVersion;
     generateFullPathTree: boolean;
   };
+  sitemapMaxPageSize: number;
 }
 
 export type LastRevAppConfigArgs = {
@@ -94,4 +95,5 @@ export type LastRevAppConfigArgs = {
     version?: PathVersion;
     generateFullPathTree?: boolean;
   };
+  sitemapMaxPageSize?: number;
 };
