@@ -182,11 +182,10 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
 
   let promises = [];
   if (updateForPreview) {
-    const pathStore = createPathStore(config);
     promises.push(
       ...map(config.sites.length ? config.sites : [DEFAULT_SITE_KEY], (site) =>
         updatePathsForSite({
-          pathStore,
+          config,
           updateForPreview,
           updateForProd,
           site,
@@ -198,12 +197,10 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
     );
   }
   if (updateForProd) {
-    const pathStore = createPathStore(config);
-
     promises.push(
       ...map(config.sites || [DEFAULT_SITE_KEY], (site) =>
         updatePathsForSite({
-          pathStore,
+          config,
           updateForPreview,
           updateForProd,
           site,
@@ -219,7 +216,7 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
 };
 
 const updatePathsForSite = async ({
-  pathStore,
+  config,
   updateForPreview,
   updateForProd,
   site,
@@ -227,7 +224,7 @@ const updatePathsForSite = async ({
   context,
   pathVersion
 }: {
-  pathStore: PathStore;
+  config: LastRevAppConfig;
   updateForPreview: boolean;
   updateForProd: boolean;
   site: string;
@@ -236,10 +233,26 @@ const updatePathsForSite = async ({
   pathVersion: PathVersion;
 }) => {
   if (updateForPreview) {
+    const pathStore = createPathStore(
+      config.clone({
+        contentful: {
+          ...config.contentful,
+          usePreview: true
+        }
+      })
+    );
     const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: true, pathVersion });
     await updater.updatePaths();
   }
   if (updateForProd) {
+    const pathStore = createPathStore(
+      config.clone({
+        contentful: {
+          ...config.contentful,
+          usePreview: false
+        }
+      })
+    );
     const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: false, pathVersion });
     await updater.updatePaths();
   }

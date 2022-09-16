@@ -84,7 +84,9 @@ export const primeRedisEntriesByContentType = async (
       const { id: contentType, preview } = cacheMissContentTypeIds[index];
       const rootKey = getKey({ preview, id: contentType }, 'entry_ids_by_content_type');
 
-      saddKeys[rootKey] = entries.map((v) => v.sys.id);
+      if (entries.length) {
+        saddKeys[rootKey] = entries.map((v) => v.sys.id);
+      }
 
       entries.forEach((entry) => {
         const v = isNil(entry) ? null : stringify(entry, entry.sys.id);
@@ -111,7 +113,10 @@ export const primeRedisEntriesByContentType = async (
     if (Object.keys(saddKeys).length) {
       // Wait to store entry ids by contenType
       const multiSadd = client.multi();
-      Object.keys(saddKeys).forEach((k) => multiSadd.sadd(k, ...saddKeys[k]));
+      Object.keys(saddKeys).forEach((k) => {
+        multiSadd.sadd(k, ...saddKeys[k]);
+        multiSadd.expire(k, ttlSeconds);
+      });
 
       try {
         await multiSadd.exec();
