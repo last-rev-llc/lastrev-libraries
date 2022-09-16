@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.5.2
+
+### Patch Changes
+
+- b596435: Fixed an issue with pathUpdater where the wrong preview var was being used in the pathStore
+
 ## 0.5.1
 
 ### Patch Changes

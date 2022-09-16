@@ -1,5 +1,12 @@
 # @last-rev/contentful-path-util
 
+## 0.1.13
+
+### Patch Changes
+
+- b596435: Fixed an issue with pathUpdater where the wrong preview var was being used in the pathStore
+- 0639f30: adding queries to allow for more fine grained sitemap construction/generation
+
 ## 0.1.12
 
 ### Patch Changes

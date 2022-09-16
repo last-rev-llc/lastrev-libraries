@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-redis-loader",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@last-rev/app-config": "^0.3.0",
+    "@last-rev/app-config": "^0.3.1",
     "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/testing-library": "^0.1.10",
     "@last-rev/types": "^0.3.2",

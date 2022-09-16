@@ -1,5 +1,16 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.2
+
+### Patch Changes
+
+- 0639f30: adding queries to allow for more fine grained sitemap construction/generation
+- Updated dependencies [b596435]
+- Updated dependencies [0639f30]
+  - @last-rev/contentful-path-util@0.1.13
+  - @last-rev/contentful-redis-loader@0.5.2
+  - @last-rev/app-config@0.3.1
+
 ## 0.5.1
 
 ### Patch Changes
