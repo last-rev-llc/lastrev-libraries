@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.3.1
+
+### Patch Changes
+
+- 0639f30: adding queries to allow for more fine grained sitemap construction/generation
+
 ## 0.3.0
 
 ### Minor Changes

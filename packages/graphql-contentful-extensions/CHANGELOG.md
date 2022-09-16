@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.7
+
+### Patch Changes
+
+- d697abe: adding unique ids to cleanSVG
+- Updated dependencies [0639f30]
+  - @last-rev/graphql-contentful-core@0.5.2
+
 ## 0.1.6
 
 ### Patch Changes

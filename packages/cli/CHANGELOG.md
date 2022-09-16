@@ -1,5 +1,14 @@
 # @last-rev/cli
 
+## 0.5.5
+
+### Patch Changes
+
+- 0639f30: adding queries to allow for more fine grained sitemap construction/generation
+- Updated dependencies [0639f30]
+  - @last-rev/app-config@0.3.1
+  - @last-rev/graphql-contentful-core@0.5.2
+
 ## 0.5.4
 
 ### Patch Changes
