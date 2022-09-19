@@ -33,15 +33,15 @@ export const getServerSideProps: GetServerSideProps = async ({ res, params, loca
       site: process.env.SITE
     });
 
-    if (data) {
+    if (data?.sitemapPage) {
       sitemap = `
     <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-    ${data.sitemapPage.entries
+    ${(data.sitemapPage.entries || [])
       .filter((e: any) => e.loc !== 'error_404')
       .map(
         (entry: any) => `
         <url>
-      <loc>${entry?.loc}</loc>
+      <loc>${process.env.DOMAIN}/${entry?.loc}</loc>
       <lastmod>${entry?.lastmod}</lastmod>
     </url>
         `

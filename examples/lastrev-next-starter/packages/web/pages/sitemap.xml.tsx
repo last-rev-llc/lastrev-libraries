@@ -12,7 +12,6 @@ export const getServerSideProps: GetServerSideProps = async ({ res, locales }) =
   try {
     //TODO: use optimized page query
     const { data } = await client.SitemapIndex({
-      locales,
       preview
     });
 

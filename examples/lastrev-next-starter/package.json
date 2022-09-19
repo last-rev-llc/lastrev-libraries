@@ -6,12 +6,7 @@
   "license": "MIT",
   "workspaces": {
     "packages": [
-      "packages/*",
-      "../../packages/app-config",
-      "../../packages/cli",
-      "../../packages/graphql-contentful-core",
-      "../../packages/graphql-contentful-helpers",
-      "../../packages/types"
+      "packages/*"
     ]
   },
   "scripts": {

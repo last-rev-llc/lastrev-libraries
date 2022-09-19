@@ -4,10 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && yarn build:post",
-    "build:static": "next build && next export && rm -rf out/404 && yarn build:post",
-    "build:post": "yarn gen:sitemap",
-    "gen:sitemap": "node scripts/generateSitemap.js",
+    "build": "next build",
+    "build:static": "next build && next export && rm -rf out/404",
     "lint": "next lint",
     "start": "next start",
     "test:e2e": "cross-env NODE_ENV=test percy exec -- cypress run --e2e",
