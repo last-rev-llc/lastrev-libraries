@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.5.6
+
+### Patch Changes
+
+- ad87311: Update sync to fs version
+
 ## 0.5.5
 
 ### Patch Changes
