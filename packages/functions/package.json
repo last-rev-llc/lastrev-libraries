@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@last-rev/app-config": "^0.2.0",
+    "@last-rev/app-config": "^0.3.1",
     "@last-rev/contentful-webhook-handler": "^0.4.1",
     "@last-rev/graphql-algolia-integration": "^0.1.4",
     "@last-rev/graphql-contentful-core": "^0.2.3",

@@ -26,7 +26,8 @@ const config = new LastRevAppConfig({
     spaceId: process.env.CONTENTFUL_SPACE_ID,
     env: process.env.CONTENTFUL_ENV,
     usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW),
-    maxBatchSize: parseNumberEnvVar(process.env.CONTENTFUL_MAX_BATCH_SIZE)
+    maxBatchSize: parseNumberEnvVar(process.env.CONTENTFUL_MAX_BATCH_SIZE),
+    syncLimit: 50
   },
   algolia: {
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
@@ -42,7 +43,10 @@ const config = new LastRevAppConfig({
     maxBatchSize: parseNumberEnvVar(process.env.CONTENTFUL_MAX_BATCH_SIZE)
   },
   fs: { contentDir: resolve(__dirname, './cms-sync') },
-  logLevel: 'debug'
+  logLevel: 'debug',
+  paths: {
+    version: 'v1'
+  }
 });
 
 module.exports = config;
