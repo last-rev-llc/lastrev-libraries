@@ -9,12 +9,13 @@ const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
 const IS_DEBUG_MODE = false;
-const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'customerStory'; // The main content type that is being imported
-const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/customers'; // The local folder to import yaml files from
-const CUSTOM_PARSER_LOOKUP = workatoParsers.customerStory;
+const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'useCase'; // The main content type that is being imported
+const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/use_cases'; // The local folder to import yaml files from
+const CUSTOM_PARSER_LOOKUP = workatoParsers.useCase;
 const LOCALE = 'en-US'; // The locale of the content type
 const MAX_NUMBER_OF_FILES = Infinity; // The maximum number of files to import at once, used for debugging purposes
-const ENVIRONMENT = 'customer-import'; // make sure you update the environment;
+// const MAX_NUMBER_OF_FILES = 1; // The maximum number of files to import at once, used for debugging purposes
+const ENVIRONMENT = 'master'; // make sure you update the environment;
 // const ENVIRONMENT = 'k078sfqkr9te'; // make sure you update the environment;
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
 const CMA_ACCESS_TOKEN = process.env.CONTENTFUL_MANAGEMENT_API;
