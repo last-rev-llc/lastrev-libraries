@@ -3,7 +3,11 @@ const { createMediaEntry } = require('./createMediaEntry');
 const { removeEmpty } = require('./removeEmpty');
 const { createLinkEntry } = require('./createLinkEntry');
 
-const createCard = async (JOB, entryId, { title, name, text, list, category, asset, link, variant, content }) => {
+const createCard = async (
+  JOB,
+  entryId,
+  { title, name, text, list, category, asset, link, variant, content, number }
+) => {
   let mediaRefObj;
   let linkRefObj;
 
@@ -48,8 +52,8 @@ const createCard = async (JOB, entryId, { title, name, text, list, category, ass
       variant: {
         'en-US': variant
       },
-      content: {
-        'en-US': content
+      number: {
+        'en-US': number
       }
     })
   };
