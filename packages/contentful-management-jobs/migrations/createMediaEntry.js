@@ -1,14 +1,14 @@
 const contentfulFieldsParsers = require('../shared/contentful-fields');
 const { removeEmpty } = require('./removeEmpty');
 
-const createMediaEntry = async (JOB, assetId, { assetURL, height, width, title }) => {
+const createMediaEntry = async (JOB, assetId, { assetURL, height, width, title, variant }) => {
   // We use the same ID for the asset and the media entry.
   return {
     entryId: assetId,
     contentType: 'media',
     contentfulFields: removeEmpty({
       title: {
-        'en-US': title
+        'en-US': title || assetURL
       },
       assetURL: {
         'en-US': assetURL
@@ -20,7 +20,10 @@ const createMediaEntry = async (JOB, assetId, { assetURL, height, width, title }
         'en-US': height
       },
       width: {
-        'en-US': width
+        'en-US': width?.toString()
+      },
+      variant: {
+        'en-US': variant?.toString()
       }
     })
   };

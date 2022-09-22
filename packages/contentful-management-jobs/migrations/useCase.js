@@ -59,7 +59,6 @@ const useCase = {
           );
 
           const entryObject = await contentfulFieldsParsers.getContentfulFieldValue(assetId, { type: 'Entry' });
-          // console.log('entryObject: ', entryObject);
           return entryObject;
         })
       )

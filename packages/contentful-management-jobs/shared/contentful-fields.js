@@ -92,5 +92,9 @@ const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
 module.exports = {
   getSpaceFieldTypeLookup,
   getContentfulFieldValue,
-  getContentfulIdFromString: (string) => MurmurHash3(string).result().toString()
+  getContentfulIdFromString: (string) => {
+    const id = MurmurHash3(string).result().toString();
+    if (!id) console.log('Warning ID is empty for string: ', string);
+    return id;
+  }
 };
