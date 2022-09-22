@@ -1,5 +1,11 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.6
+
+### Patch Changes
+
+- e2d81c1: Split queries by content type to optimze size
+
 ## 0.1.5
 
 ### Patch Changes
