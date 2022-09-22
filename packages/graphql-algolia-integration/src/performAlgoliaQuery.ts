@@ -18,27 +18,31 @@ const performAlgoliaQuery = async (
   } = await client.query({ query: avaliableLocalesQuery });
 
   const queryConfigs: QueryConfig[] = (locales as string[]).flatMap((locale) =>
-    envs.flatMap((env) => ({
-      preview: env === 'preview',
-      locale
-    }))
+    envs.flatMap((env) =>
+      config.algolia.contentTypeIds.flatMap((contentType) => ({
+        preview: env === 'preview',
+        locale,
+        contentTypes: [contentType]
+      }))
+    )
   );
 
+  logger.debug('queryConfigs', queryConfigs);
   const results = (
     await Promise.allSettled(
       queryConfigs.map(async (queryConfig) => {
         const filter = {
-          contentTypes: config.algolia.contentTypeIds,
           displayType: 'AlgoliaRecord',
           ...queryConfig
         };
-
+        const timerQuery = new Timer('Query:' + JSON.stringify(filter));
         const result = await client.query({
           query: algoliaQuery,
           variables: {
             filter
           }
         });
+        logger.debug(timerQuery.end());
 
         const {
           data: { contents: algoliaResults }
@@ -49,7 +53,7 @@ const performAlgoliaQuery = async (
     )
   ).flat();
 
-  logger.trace(timer.end());
+  logger.debug(timer.end());
 
   return {
     errors: (results.filter((result) => result.status === 'rejected') as PromiseRejectedResult[]).map((r) => r.reason),
