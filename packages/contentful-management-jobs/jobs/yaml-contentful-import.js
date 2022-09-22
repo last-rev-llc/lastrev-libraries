@@ -9,9 +9,9 @@ const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
 const IS_DEBUG_MODE = false;
-const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'useCase'; // The main content type that is being imported
-const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/use_cases'; // The local folder to import yaml files from
-const CUSTOM_PARSER_LOOKUP = workatoParsers.useCase;
+const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'workbot'; // The main content type that is being imported
+const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/workbot'; // The local folder to import yaml files from
+const CUSTOM_PARSER_LOOKUP = workatoParsers.workbot;
 const LOCALE = 'en-US'; // The locale of the content type
 const MAX_NUMBER_OF_FILES = Infinity; // The maximum number of files to import at once, used for debugging purposes
 // const MAX_NUMBER_OF_FILES = 1; // The maximum number of files to import at once, used for debugging purposes
@@ -217,6 +217,9 @@ const getAllFilesInFolder = async () => {
   // const deleteEnvironment = await CONTENTFUL_ENVIRONMENT.delete();
   // console.log('deleteEnvironment: ', deleteEnvironment);
 
+  if (!CUSTOM_PARSER_LOOKUP) {
+    console.log('NO CUSTOM_PARSER_LOOKUP: ', CUSTOM_PARSER_LOOKUP);
+  }
   const JOB = {
     contentType: CONTENTFUL_CONTENT_TYPE_TO_IMPORT,
     lookupOverride: CUSTOM_PARSER_LOOKUP,

@@ -6,7 +6,8 @@ const { createLinkEntry } = require('./createLinkEntry');
 const createCard = async (
   JOB,
   entryId,
-  { title, name, text, list, category, asset, link, variant, content, number }
+  // eslint-disable-next-line camelcase
+  { id, title, name, text, list, category, asset, link, variant, video_id, number }
 ) => {
   let mediaRefObj;
   let linkRefObj;
@@ -27,6 +28,9 @@ const createCard = async (
     entryId,
     contentType: 'card',
     contentfulFields: removeEmpty({
+      id: {
+        'en-US': id
+      },
       title: {
         'en-US': title
       },
@@ -41,6 +45,9 @@ const createCard = async (
       },
       category: {
         'en-US': category
+      },
+      video_id: {
+        'en-US': video_id
       },
 
       link: {
