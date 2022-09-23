@@ -16,17 +16,16 @@ const messager = Messager.getInstance();
 const REDIS_PORT_REGEX = /^[0-9]{4,5}$/;
 const REDIS_PASSWORD_REGEX = /^[a-zA-Z0-9]+$/;
 
+let redis: Redis;
 export default class RedisApiWrapper extends BaseApiWrapper {
-  private redis: Redis;
-
   constructor(config: LastRevConfig) {
     super(config, 'Redis');
     const connectionUrl = this.getToken();
     if (connectionUrl) {
-      this.redis = new Redis(connectionUrl);
+      if (!redis) redis = new Redis(connectionUrl);
     } else {
       // doing this to avoid type checking all over the place
-      this.redis = undefined as unknown as Redis;
+      redis = undefined as unknown as Redis;
     }
   }
 
@@ -61,15 +60,15 @@ export default class RedisApiWrapper extends BaseApiWrapper {
   }
 
   resetApi(): void {
-    this.redis = undefined as unknown as Redis;
+    redis = undefined as unknown as Redis;
     // doing this to avoid type checking all over the place
-    this.redis = this.getToken() ? new Redis(this.getToken()!) : (undefined as unknown as Redis);
+    redis = this.getToken() ? new Redis(this.getToken()!) : (undefined as unknown as Redis);
   }
 
   async generateAclPassword(): Promise<void> {
     await this.ensureLoggedIn();
     try {
-      const pass = await this.redis.acl('GENPASS', '64');
+      const pass = await redis.acl('GENPASS', '64');
       this.config.updateStateValue(VAL_REDIS_PASSWORD, pass);
     } catch (err: any) {
       throw Error(`Error generating ACL password: ${err.message}`);
@@ -90,7 +89,7 @@ export default class RedisApiWrapper extends BaseApiWrapper {
 
       const rules = ['on', `~${contentfulSpaceId}:*`, `+@all`, `-@dangerous`, `+info`, `>${pass}`];
 
-      await this.redis.acl('SETUSER', username, ...rules);
+      await redis.acl('SETUSER', username, ...rules);
       messager.log(`Created Redis ACL user: ${username}`);
     } catch (err: any) {
       throw Error(`Error creating Redis ACL user: ${err.message}`);

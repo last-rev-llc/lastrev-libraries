@@ -12,6 +12,18 @@ export interface PathStore {
   save: (pathDataMap: PathDataMap, site: string) => Promise<void>;
 }
 
+const clients: Record<string, Redis> = {};
+const getClient = (config: LastRevAppConfig) => {
+  const key = JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
+  if (!clients[key]) {
+    clients[key] = new Redis({
+      ...config.redis,
+      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
+    });
+  }
+  return clients[key];
+};
+
 export class FsPathStore implements PathStore {
   basePath: string;
 
@@ -47,14 +59,8 @@ export class FsPathStore implements PathStore {
 
 export class RedisPathStore implements PathStore {
   client: Redis;
-
   constructor(config: LastRevAppConfig) {
-    this.client = new Redis({
-      ...config.redis,
-      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:${
-        config.contentful.usePreview ? 'preview' : 'production'
-      }`
-    });
+    this.client = getClient(config);
   }
 
   getKey(site: string) {
