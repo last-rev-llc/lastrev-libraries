@@ -18,9 +18,12 @@ const getClient = (config: LastRevAppConfig) => {
   if (!clients[key]) {
     clients[key] = new Redis({
       ...config.redis,
-      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
+      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:${
+        config.contentful.usePreview ? 'preview' : 'production'
+      }`
     });
   }
+  console.log('Client', key, clients[key]);
   return clients[key];
 };
 
