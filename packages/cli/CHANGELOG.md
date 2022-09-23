@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.5.7
+
+### Patch Changes
+
+- 6ea22ce: Extract all Redis client to file scope
+
 ## 0.5.6
 
 ### Patch Changes

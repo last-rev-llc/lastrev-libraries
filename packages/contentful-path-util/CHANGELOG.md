@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.14
+
+### Patch Changes
+
+- 6ea22ce: Extract all Redis client to file scope
+
 ## 0.1.13
 
 ### Patch Changes
