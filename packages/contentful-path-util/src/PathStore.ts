@@ -23,7 +23,6 @@ const getClient = (config: LastRevAppConfig) => {
       }`
     });
   }
-  console.log('Client', key, clients[key]);
   return clients[key];
 };
 
