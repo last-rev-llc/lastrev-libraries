@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.5
+
+### Patch Changes
+
+- 53a8a57: Bump versions
+
 ## 0.5.4
 
 ### Patch Changes
