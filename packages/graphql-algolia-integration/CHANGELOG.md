@@ -1,5 +1,12 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.7
+
+### Patch Changes
+
+- 6ea22ce: Extract all Redis client to file scope
+- 6ea22ce: Split queries by content type to optimze size
+
 ## 0.1.6
 
 ### Patch Changes
