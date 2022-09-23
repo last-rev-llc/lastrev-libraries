@@ -1,5 +1,11 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.7
+
+### Patch Changes
+
+- d302953: Bump versions
+
 ## 0.3.6
 
 ### Patch Changes
