@@ -29,7 +29,7 @@
     "@last-rev/app-config": "^0.3.1",
     "@last-rev/contentful-cms-loader": "^0.4.0",
     "@last-rev/contentful-fs-loader": "^0.3.0",
-    "@last-rev/contentful-path-util": "^0.1.13",
+    "@last-rev/contentful-path-util": "^0.1.14",
     "@last-rev/contentful-redis-loader": "^0.5.2",
     "@last-rev/graphql-contentful-helpers": "^0.4.2",
     "@last-rev/graphql-schema-gen": "^0.2.1",
