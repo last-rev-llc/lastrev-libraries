@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.8
+
+### Patch Changes
+
+- d302953: Bump versions
+
 ## 0.4.7
 
 ### Patch Changes
