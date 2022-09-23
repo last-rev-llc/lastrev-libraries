@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.16
+
+### Patch Changes
+
+- ee7f115: Remove console.log
+
 ## 0.1.15
 
 ### Patch Changes
