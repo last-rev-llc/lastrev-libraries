@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.15
+
+### Patch Changes
+
+- 1e7a4e5: HOTFIX: missing env keyprefix on PathStore
+
 ## 0.1.14
 
 ### Patch Changes
