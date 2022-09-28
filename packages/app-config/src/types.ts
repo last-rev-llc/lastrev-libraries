@@ -52,7 +52,13 @@ export interface LastRevAppConfiguration {
     version: PathVersion;
     generateFullPathTree: boolean;
   };
-  sitemapMaxPageSize: number;
+  sitemap: {
+    domain: string;
+    maxPageSize: number;
+    indexRootPath: string;
+    pagesRootPath: string;
+    excludePages: string[];
+  };
 }
 
 export type LastRevAppConfigArgs = {
@@ -103,5 +109,11 @@ export type LastRevAppConfigArgs = {
     version?: PathVersion;
     generateFullPathTree?: boolean;
   };
-  sitemapMaxPageSize?: number;
+  sitemap?: {
+    domain?: string;
+    maxPageSize?: number;
+    indexRootPath?: string;
+    pagesRootPath?: string;
+    excludePages?: string[];
+  };
 };

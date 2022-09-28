@@ -23,8 +23,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@last-rev/app-config": "^0.3.1",
     "@last-rev/types": "^0.3.0",
     "fs-extra": "^10.0.0",
+    "graphql-request": "^5.0.0",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21"
   }
