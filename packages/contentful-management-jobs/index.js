@@ -8,4 +8,7 @@ program
   .command('yaml-contentful-import', 'Run the YAML Contentful Import Script', {
     executableFile: resolve(__dirname, './jobs/yaml-contentful-import.js')
   })
+  .command('remote-asset-upload', 'remote-asset-upload', {
+    executableFile: resolve(__dirname, './jobs/remote-asset-upload.js')
+  })
   .parse(process.argv);

@@ -13,7 +13,10 @@ const ENVIRONMENT = 'master'; // make srue you update the environment;
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
 const CMA_ACCESS_TOKEN = process.env.CONTENTFUL_MANAGEMENT_API;
 
-let SDK_CLIENT, CONTENTFUL_SPACE, CONTENTFUL_ENVIRONMENT, GLOBAL_CONTENTTYPE_FIELD_LOOKUP;
+let SDK_CLIENT;
+let CONTENTFUL_SPACE;
+let CONTENTFUL_ENVIRONMENT;
+let GLOBAL_CONTENTTYPE_FIELD_LOOKUP;
 
 const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
