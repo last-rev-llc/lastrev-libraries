@@ -3,14 +3,14 @@
 const accelerators = require('./accelerators');
 const customerStory = require('./customerStory');
 const partner = require('./partner');
-const pageEdition = require('./pageEdition');
+const editions = require('./editions');
 const useCase = require('./useCase');
 const workbot = require('./workbot');
 
 module.exports = {
   accelerators,
   customerStory,
-  pageEdition,
+  editions,
   partner,
   useCase,
   workbot

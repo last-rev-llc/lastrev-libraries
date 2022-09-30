@@ -167,7 +167,8 @@ const workbot = {
         // ...quoteYaml,
         author: quoteYaml.author,
         position: quoteYaml.position,
-        quote: quoteYaml.text
+        quote: quoteYaml.text,
+        company: quoteYaml.company
       };
       const entryId = await contentfulFieldsParsers.getContentfulIdFromString(
         `quote-${quoteYaml.author}-${quoteYaml.text}`
