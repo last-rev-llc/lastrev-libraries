@@ -79,6 +79,8 @@ type Query {
   content(id: String!, locale: String, preview: Boolean, displayType: String): Content
   contents(filter: ContentsFilter!): [Content]
   sitemap(root: String!, locales: [String!], preview: Boolean, site: String): Sitemap
+  sitemapIndex(preview: Boolean, site: String): Sitemap
+  sitemapPage(contentType: String!, locale: String, preview: Boolean, site: String, page: Int): SitemapPage
   availableLocales: Locales
 }
 type _Service {
@@ -104,6 +106,9 @@ type SitemapEntry {
 }
 type SitemapPage {
   entries: [SitemapEntry]
+  contentType: String
+  page: Int
+  locale: String
   loc: String
   lastmod: String
   filename: String
@@ -152,6 +157,7 @@ type CommonResource implements Content {
   internalTitle: String
   key: String
   shortTextValue: String
+  media: Media
 }
 type Footer implements Content {
   sidekickLookup: JSON
@@ -331,8 +337,6 @@ type Article implements Content {
   disableBackToTop: Boolean
   seo: JSON
   translatedInLocale: [String]
-  salesforceOriginalHtmlForMigrationOnly: String
-  salesforceIdForMigrationOnly: String
   header: Header
   footer: Content
   topicNavItems: [NavigationItem]
