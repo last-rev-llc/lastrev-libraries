@@ -1,44 +1,28 @@
 const contentfulFieldsParsers = require('../shared/contentful-fields');
-const { createEditionTabApp } = require('./createEditionTabApp');
+const { createEditionFunction } = require('./createEditionFunction');
 
-const createEditionTab = async (JOB, entryId, { internalTitle, name, title, text, apps_flow }) => {
-  const appsRelArray = [];
-  for (let index = 0; index < apps_flow.length; index++) {
-    const app = apps_flow[index];
-    const internalTitle = `Edition App Flow - ${app.name}`;
-    const entryId = await contentfulFieldsParsers.getContentfulIdFromString(internalTitle);
+const createEditionTab = async (JOB, entryId, { name, functions }) => {
+  const tab = { name };
+  tab.functions = await Promise.all(
+    functions.map(async (func) => {
+      const funcEntryId = await contentfulFieldsParsers.getContentfulIdFromString(`${func.name}-${func.text}`);
 
-    JOB.relatedEntries.push(
-      await createEditionTabApp(JOB, entryId, {
-        internalTitle,
-        name: app.name,
-        apps: []
-      })
-    );
+      JOB.relatedEntries.push(await createEditionFunction(JOB, funcEntryId, func));
 
-    const relTabObj = await contentfulFieldsParsers.getContentfulFieldValue(entryId, { type: 'Entry' });
-    // console.log('relTabObj: ', relTabObj);
-    appsRelArray.push(relTabObj);
-  }
+      return contentfulFieldsParsers.getContentfulFieldValue(funcEntryId, { type: 'Entry' });
+    })
+  );
 
   return {
-    entryId: entryId,
+    entryId,
     contentType: 'editionTab',
     contentfulFields: {
-      internalTitle: {
-        'en-US': internalTitle
-      },
       name: {
-        'en-US': name
+        'en-US': tab.name
       },
-      title: {
-        'en-US': title
-      },
-      text: {
-        'en-US': text
-      },
-      apps_flow: {
-        'en-US': []
+
+      functions: {
+        'en-US': tab.functions
       }
     }
   };
