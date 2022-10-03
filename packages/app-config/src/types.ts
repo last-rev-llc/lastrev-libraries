@@ -3,12 +3,15 @@ import { LogLevelDesc } from 'loglevel';
 import { RedisOptions } from 'ioredis';
 
 export type LastRevStrategy = 'fs' | 'redis' | 'dynamodb';
+export type ContentStrategy = 'fs' | 'cms';
+export type CmsCacheStrategy = 'redis' | 'dynamodb' | 'none';
 
 export type PathVersion = 'v1' | 'v2';
 
 export interface LastRevAppConfiguration {
   cms: 'Contentful';
-  strategy: LastRevStrategy;
+  contentStrategy: ContentStrategy;
+  cmsCacheStrategy: CmsCacheStrategy;
   redis: RedisOptions & {
     maxBatchSize: number;
     ttlSeconds: number;
@@ -54,7 +57,12 @@ export interface LastRevAppConfiguration {
 
 export type LastRevAppConfigArgs = {
   cms?: 'Contentful';
+  /*
+    @deprecated use contentStrategy and cmsCacheStrategy instead
+  */
   strategy?: LastRevStrategy;
+  contentStrategy?: ContentStrategy;
+  cmsCacheStrategy?: CmsCacheStrategy;
   redis?: RedisOptions & {
     maxBatchSize?: number;
     ttlSeconds?: number;

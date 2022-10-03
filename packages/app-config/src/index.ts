@@ -44,32 +44,66 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
   }
 
   validateStrategy() {
-    if (this.config.strategy === 'fs') {
-      if (!this.config.fs?.contentDir) {
-        throw new Error(`FS strategy: fs.contentDir is required`);
+    if (this.config.contentStrategy) {
+      if (this.config.contentStrategy === 'fs') {
+        if (!this.config.fs?.contentDir) {
+          throw new Error(`FS strategy: fs.contentDir is required`);
+        }
+      } else if (this.config.contentStrategy === 'cms') {
+        if (this.config.cmsCacheStrategy === 'redis') {
+          if (!this.config.redis?.host) {
+            throw new Error(`Redis strategy: redis.host is required`);
+          }
+          if (!this.config.redis?.port) {
+            throw new Error(`Redis strategy: redis.port is required`);
+          }
+        } else if (this.config.cmsCacheStrategy === 'dynamodb') {
+          if (!this.config.dynamodb?.region) {
+            throw new Error(`DynamoDB strategy: dynamodb.region is required`);
+          }
+          if (!this.config.dynamodb?.accessKeyId) {
+            throw new Error(`DynamoDB strategy: dynamodb.accessKeyId is required`);
+          }
+          if (!this.config.dynamodb?.secretAccessKey) {
+            throw new Error(`DynamoDB strategy: dynamodb.secretAccessKey is required`);
+          }
+          if (!this.config.dynamodb?.tableName) {
+            throw new Error(`DynamoDB strategy: dynamodb.tableName is required`);
+          }
+        }
+      } else {
+        throw new Error(`Invalid contentStrategy: ${this.config.contentStrategy}`);
       }
-    } else if (this.config.strategy === 'redis') {
-      if (!this.config.redis?.host) {
-        throw new Error(`Redis strategy: redis.host is required`);
-      }
-      if (!this.config.redis?.port) {
-        throw new Error(`Redis strategy: redis.port is required`);
-      }
-    } else if (this.config.strategy === 'dynamodb') {
-      if (!this.config.dynamodb?.region) {
-        throw new Error(`DynamoDB strategy: dynamodb.region is required`);
-      }
-      if (!this.config.dynamodb?.accessKeyId) {
-        throw new Error(`DynamoDB strategy: dynamodb.accessKeyId is required`);
-      }
-      if (!this.config.dynamodb?.secretAccessKey) {
-        throw new Error(`DynamoDB strategy: dynamodb.secretAccessKey is required`);
-      }
-      if (!this.config.dynamodb?.tableName) {
-        throw new Error(`DynamoDB strategy: dynamodb.tableName is required`);
+    } else if (this.config.strategy) {
+      if (this.config.strategy === 'fs') {
+        if (!this.config.fs?.contentDir) {
+          throw new Error(`FS strategy: fs.contentDir is required`);
+        }
+      } else if (this.config.strategy === 'redis') {
+        if (!this.config.redis?.host) {
+          throw new Error(`Redis strategy: redis.host is required`);
+        }
+        if (!this.config.redis?.port) {
+          throw new Error(`Redis strategy: redis.port is required`);
+        }
+      } else if (this.config.strategy === 'dynamodb') {
+        if (!this.config.dynamodb?.region) {
+          throw new Error(`DynamoDB strategy: dynamodb.region is required`);
+        }
+        if (!this.config.dynamodb?.accessKeyId) {
+          throw new Error(`DynamoDB strategy: dynamodb.accessKeyId is required`);
+        }
+        if (!this.config.dynamodb?.secretAccessKey) {
+          throw new Error(`DynamoDB strategy: dynamodb.secretAccessKey is required`);
+        }
+        if (!this.config.dynamodb?.tableName) {
+          throw new Error(`DynamoDB strategy: dynamodb.tableName is required`);
+        }
+      } else {
+        throw new Error(`Invalid strategy: ${this.config.strategy}`);
       }
     } else {
-      throw new Error(`Invalid strategy: ${this.config.strategy}`);
+      throw new Error(`Must specify a content stratgy`);
     }
   }
 
@@ -112,8 +146,17 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
     return this.config.cms!;
   }
 
-  get strategy() {
-    return this.config.strategy!;
+  get contentStrategy() {
+    if (this.config.contentStrategy) return this.config.contentStrategy;
+    if (this.config.strategy !== 'fs') return 'cms';
+    return 'fs';
+  }
+
+  get cmsCacheStrategy() {
+    if (this.config.cmsCacheStrategy) return this.config.cmsCacheStrategy;
+    if (this.config.contentStrategy === 'cms') return 'none';
+    if (this.config.strategy === 'redis' || 'dynamodb') return this.config.strategy as 'redis' | 'dynamodb';
+    return 'none';
   }
 
   get fs() {

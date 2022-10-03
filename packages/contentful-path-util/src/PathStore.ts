@@ -159,12 +159,27 @@ export class DynamoDbPathStore implements PathStore {
   };
 }
 
+export class DummyStore implements PathStore {
+  load = async () => {
+    return {};
+  };
+
+  save = async () => {};
+}
+
 export const createPathStore = (config: LastRevAppConfig) => {
-  switch (config.strategy) {
-    case 'redis':
-      return new RedisPathStore(config);
-    case 'dynamodb':
-      return new DynamoDbPathStore(config);
+  switch (config.contentStrategy) {
+    case 'cms': {
+      switch (config.cmsCacheStrategy) {
+        case 'redis':
+          return new RedisPathStore(config);
+        case 'dynamodb':
+          return new DynamoDbPathStore(config);
+        case 'none':
+          // path reader only works with pre-calculated paths in redis/dynamodb/fs
+          return new DummyStore();
+      }
+    }
     case 'fs':
       return new FsPathStore(config);
   }
