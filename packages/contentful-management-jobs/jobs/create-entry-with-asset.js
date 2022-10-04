@@ -109,12 +109,12 @@ const createEntries = async (entries, contentType) => {
 };
 
 const getAllAssets = async () => {
-  let assets = [];
+  let assets;
   if (STEPS.getAssets) {
     const query = {
       limit: 1000
     };
-    assets = await importParser(() => clientDelivery.getAssets(query), query);
+    assets = await importParser(() => clientDelivery.getAssets(query));
   }
   return assets;
 };
@@ -160,9 +160,14 @@ const findDuplicateEntries = (entries) => {
 (async () => {
   // Step 1 - Get all entries
   const assets = getAllAssets();
-  console.log('assets => ', assets.length);
+  console.log('assets => ', assets.items.length);
+  logItems(
+    assets.items,
+    (asset, index) => index === 100,
+    (asset) => `${asset.sys.id} => ${JSON.stringify(asset)}`
+  );
 
-  if (assets.length) {
+  if (assets) {
     // Step 2 - Filter assets that do not have urls
     const filteredAssets = filterAssets(assets);
     console.log('filteredAssets => ', filteredAssets.length);

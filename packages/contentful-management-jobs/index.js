@@ -11,4 +11,10 @@ program
   .command('remote-asset-upload', 'remote-asset-upload', {
     executableFile: resolve(__dirname, './jobs/remote-asset-upload.js')
   })
+  .command('create-entry-with-asset', 'create-entry-with-asset', {
+    executableFile: resolve(__dirname, './jobs/create-entry-with-asset.js')
+  })
+  .command('update-linked-entries', 'update-linked-entries', {
+    executableFile: resolve(__dirname, './jobs/update-linked-entries.js')
+  })
   .parse(process.argv);

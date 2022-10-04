@@ -11,7 +11,7 @@ const logError = (error, fromPath, errorPath) => {
 };
 
 const logItems = (assets, condition, log) => {
-  assets.forEach((asset) => {
+  assets.forEach((asset, index) => {
     if (condition(asset)) {
       console.log(log(asset));
     }
