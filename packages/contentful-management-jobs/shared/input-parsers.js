@@ -14,18 +14,18 @@ const yamlToJson = async (filePath) => {
 
 const wait = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
-const importParser = async (clientDelivery, query, callback) => {
-  // get entries via delivery api
-  let entries;
+const importParser = async (getItems, callback) => {
+  // get items via delivery api
+  let items;
   try {
-    entries = await clientDelivery.getEntries(query);
+    items = await getItems();
   } catch (error) {
     console.log('Error importing entries => ', error);
   }
   if (callback) {
-    callback(query, entries);
+    callback(items);
   }
-  return entries;
+  return items;
 };
 
 module.exports = {

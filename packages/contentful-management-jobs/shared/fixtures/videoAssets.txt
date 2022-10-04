@@ -1,0 +1,44 @@
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1596238546/PublicCloud/s5elwfqhv4hdwjsp59sb.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605852486/media%20kit/video/Impossible%E2%84%A2%20Burger/IF_APRIL2020_CHEETAH.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605852950/media%20kit/video/Impossible%E2%84%A2%20Burger/IF_SEPT2019_RETAIL_EAST_COAST.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605853709/media%20kit/video/Impossible%E2%84%A2%20Burger/IF_SEPT2019_RETAIL.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605853679/media%20kit/video/Impossible%E2%84%A2%20Burger/IF_FOR_THE_LOVE_OF_MEAT.mov
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605855383/media%20kit/video/Impossible%20Foods%20HQ/IF_MAR2019_HQ_B-ROLL.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605855278/media%20kit/video/Impossible%20Foods%20HQ/IF_DEC2019_HQ_B-ROLL.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605854910/media%20kit/video/Impossible%20Foods%20HQ/IF_MAR2018_HQ_VNR.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605854289/media%20kit/video/Impossible%20Foods%20HQ/IF_JAN2019_HQ_VNR.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605857718/media%20kit/video/Hong%20Kong%20Foodservice/IF_LITTLEBAO_B-ROLL.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605857689/media%20kit/video/Hong%20Kong%20Foodservice/IF_BEEF_LIBERTY_B-ROLL.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605858860/media%20kit/video/Impossible%20Pork%20Made%20From%20Plants/IF_JAN2020_IMPOSSIBLE_PORK_B-ROLL_1.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605859685/media%20kit/video/Impossible%20Pork%20Made%20From%20Plants/IF_JAN2020_IMPOSSIBLE_PORK_VNR_2.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605860786/media%20kit/video/Manufacturing/IF_MAY2020_OAKLAND_B-ROLL.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605894579/media%20kit/video/Manufacturing/IF_HEME_-_THE_MAGIC_INGREDIENT.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1605857177/media%20kit/video/Impossible%20Foods%20HQ/IF_JUL2016_HQ_B-ROLL.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1578016678/PublicCloud/d0ueqsmnzuwjlrqjjw8b.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1578016675/PublicCloud/gkrpwhrhbxauaf0vwmsn.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1569610632/PublicCloud/ivfrj1y5gobt5nowdr9d.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1568835328/PublicCloud/bbbhjwevcq9mv1q5v9md.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1609792324/HEME_ANIMATED_VIDEO.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1610386078/01_Generic-Now-At_1080x1080.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1610386089/03_Generic-Now-At_1080x1920.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1617400383/Hero/Spot_Montage_loopable_2560x1586.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1617400362/Hero/Spot_Montage_loopable_400x800_-_option_1.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1618864017/Birds_Trees_FireLoop_Desktop_IK_041621_V1.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto,q_auto/v1618864005/Birds_Trees_FireLoop_Mobile_IK_041621_V1.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto/q_auto/v1631064190/2021_Impossible_Chicken_Nuggets_Stack_FS_2560x1586_Home_Page_Desktop_V2.mp4
+video asset =>  http://res.cloudinary.com/impossible-foods/video/upload/f_auto/q_auto/v1631064190/2021_Impossible_Chicken_Nuggets_Stack_FS_400x800_Home_Page_Mobile_ALT.mp4
+
+http://res.cloudinary.com/impossible-foods/image/upload/f_auto/q_auto/v1626716452/Impossible_Foods_Circular_Ad_8x9.75_12_oz_Brick.pdf
+
+filteredEntries =>  625
+sortedEntries =>  625
+assets =>  625
+filteredAssets =>  372
+duplicates =>  []
+cloudinary image assets =>  310
+cloudinary video assets =>  29
+cloudinary application assets =>  33
+
+uploadedImageAssets =>  310
+uploadedAppAssets =>  33
+uploadedVideoAssets =>  29
