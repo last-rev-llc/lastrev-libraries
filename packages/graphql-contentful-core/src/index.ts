@@ -6,6 +6,9 @@ import getLocalizedField from './utils/getLocalizedField';
 import getDefaultFieldValue from './utils/getDefaultFieldValue';
 import getTypeName from './utils/getTypeName';
 import capitalizeFirst from './utils/capitalizeFirst';
+import buildSchema from './buildSchema';
+import SchemaCache from './SchemaCache';
+import createPathReaders from './createPathReaders';
 
 export {
   getServer,
@@ -15,5 +18,8 @@ export {
   createVercelHandler,
   createRichText,
   getTypeName,
-  capitalizeFirst
+  capitalizeFirst,
+  buildSchema,
+  SchemaCache,
+  createPathReaders
 };
