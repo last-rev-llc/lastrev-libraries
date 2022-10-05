@@ -1,12 +1,13 @@
 const contentfulFieldsParsers = require('../shared/contentful-fields');
 const { createMediaEntry } = require('./createMediaEntry');
 
-const createQuote = async (JOB, entryId, { quote, text, author, name, position, company, img, iframe }) => {
-  const assetId = await contentfulFieldsParsers.getContentfulIdFromString(img);
+const createQuote = async (JOB, entryId, { quote, text, author, name, position, company, img, avatar2x, iframe }) => {
+  const asset = img || avatar2x;
+  const assetId = await contentfulFieldsParsers.getContentfulIdFromString(asset);
   const imgRefObj = await contentfulFieldsParsers.getContentfulFieldValue(assetId, { type: 'Entry' });
   JOB.relatedEntries.push(
     await createMediaEntry(JOB, assetId, {
-      assetURL: img
+      assetURL: asset
     })
   );
 
