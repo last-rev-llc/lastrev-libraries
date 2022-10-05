@@ -44,7 +44,7 @@ const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
       case 'Link':
         return value;
       case 'Symbol':
-        return value.toString();
+        return Array.isArray(value) ? value : value.toString();
       case 'Integer':
         return parseInt(value);
       case 'Number':
