@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.6
+
+### Patch Changes
+
+- dd724b8: Export more inner pieces, todo: move to contentful utils
+
 ## 0.5.5
 
 ### Patch Changes
