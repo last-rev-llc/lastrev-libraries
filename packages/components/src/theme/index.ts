@@ -356,6 +356,19 @@ const createSchemeTheme = (schemeKey?: string) => {
 
               '& [class*="MuiCardActions-root"] > :not(:first-of-type)': {
                 marginLeft: baseSchemeTheme.spacing(2)
+              },
+
+              '& [class*="MuiCardMedia-root"] img[class*="Media-root"] ': {
+                aspectRatio: '16/2',
+                minHeight: baseSchemeTheme.spacing(14),
+
+                [baseSchemeTheme.breakpoints.up('sm')]: {
+                  aspectRatio: '15/4'
+                },
+
+                [baseSchemeTheme.breakpoints.up('md')]: {
+                  aspectRatio: 'initial'
+                }
               }
             }
           }
