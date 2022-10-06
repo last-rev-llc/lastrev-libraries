@@ -10,13 +10,16 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
   let loaders;
 
   const cmsLoaders = createCmsLoaders(config, defaultLocale);
-  if (config.strategy === 'fs') {
+
+  if (config.contentStrategy === 'fs') {
     loaders = createFsLoaders(config, cmsLoaders);
   } else {
-    if (config.strategy === 'redis') {
+    if (config.cmsCacheStrategy === 'redis') {
       loaders = createRedisLoaders(config, cmsLoaders);
-    } else if (config.strategy === 'dynamodb') {
+    } else if (config.cmsCacheStrategy === 'dynamodb') {
       loaders = createDynamoDbLoaders(config, cmsLoaders);
+    } else if (config.cmsCacheStrategy === 'none') {
+      loaders = cmsLoaders;
     }
   }
 
