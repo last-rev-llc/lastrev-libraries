@@ -1,5 +1,14 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.7
+
+### Patch Changes
+
+- Updated dependencies [bc28135]
+  - @last-rev/app-config@0.4.0
+  - @last-rev/contentful-path-util@0.1.17
+  - @last-rev/graphql-contentful-helpers@0.4.3
+
 ## 0.5.6
 
 ### Patch Changes

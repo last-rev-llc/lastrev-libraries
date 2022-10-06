@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.17
+
+### Patch Changes
+
+- bc28135: separated out content and caching strategies in order to support no cache
+
 ## 0.1.16
 
 ### Patch Changes
