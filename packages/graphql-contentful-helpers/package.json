@@ -1,7 +1,7 @@
 {
   "name": "@last-rev/graphql-contentful-helpers",
   "private": false,
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/app-config": "^0.3.0",
+    "@last-rev/app-config": "^0.4.0",
     "@last-rev/contentful-cms-loader": "^0.4.0",
     "@last-rev/contentful-dynamodb-loader": "^0.3.0",
     "@last-rev/contentful-fs-loader": "^0.3.0",

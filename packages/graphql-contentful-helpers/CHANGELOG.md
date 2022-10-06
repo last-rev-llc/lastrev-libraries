@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.4.3
+
+### Patch Changes
+
+- bc28135: separated out content and caching strategies in order to support no cache
+- Updated dependencies [bc28135]
+  - @last-rev/app-config@0.4.0
+
 ## 0.4.2
 
 ### Patch Changes

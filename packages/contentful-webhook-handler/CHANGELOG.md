@@ -1,5 +1,14 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.10
+
+### Patch Changes
+
+- bc28135: separated out content and caching strategies in order to support no cache
+- Updated dependencies [bc28135]
+  - @last-rev/contentful-path-util@0.1.17
+  - @last-rev/graphql-contentful-helpers@0.4.3
+
 ## 0.4.9
 
 ### Patch Changes

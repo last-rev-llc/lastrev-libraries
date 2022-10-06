@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.4.0
+
+### Minor Changes
+
+- bc28135: separated out content and caching strategies in order to support no cache
+
 ## 0.3.1
 
 ### Patch Changes

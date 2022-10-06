@@ -1,5 +1,14 @@
 # @last-rev/cli
 
+## 0.5.8
+
+### Patch Changes
+
+- bc28135: separated out content and caching strategies in order to support no cache
+- Updated dependencies [bc28135]
+  - @last-rev/app-config@0.4.0
+  - @last-rev/graphql-contentful-core@0.5.7
+
 ## 0.5.7
 
 ### Patch Changes
