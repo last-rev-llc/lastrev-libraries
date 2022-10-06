@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.8
+
+### Patch Changes
+
+- 4f69103: bumped versions of dependencies
+
 ## 0.1.7
 
 ### Patch Changes

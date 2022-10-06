@@ -1,5 +1,11 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.9
+
+### Patch Changes
+
+- 4f69103: bumped versions of dependencies
+
 ## 0.3.8
 
 ### Patch Changes
