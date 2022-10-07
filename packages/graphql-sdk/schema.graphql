@@ -346,6 +346,7 @@ type Article implements Content {
   breadcrumbsRoot: String
   footerItems: [Content]
   sideNav: [Link]
+  variant: String
   link: Link
   requiredRoles: [String]
 }

@@ -24,6 +24,7 @@ const PageTopic = dynamic(() => import('./components/PageTopic'));
 const TopicNav = dynamic(() => import('./components/TopicNav'));
 const TopicNavHorizontal = dynamic(() => import('./components/TopicNavHorizontal'));
 const Article = dynamic(() => import('./components/Article/Article'));
+const ArticleEmbeded = dynamic(() => import('./components/Article/ArticleEmbeded'));
 const Table = dynamic(() => import('./components/Table'));
 const CollectionSearchFilters = dynamic(() => import('./components/CollectionSearchFilters'));
 const CollectionSearchResults = dynamic(() => import('./components/CollectionSearchResults'));
@@ -63,6 +64,7 @@ const contentMapping: {
   'Collection:Search Results': CollectionSearchResults,
   'CategoryArticle': PageTopic,
   Article,
+  'Article:embeded': ArticleEmbeded,
   Table
 };
 

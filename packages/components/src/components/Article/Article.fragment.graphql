@@ -6,6 +6,7 @@ fragment Article_FieldsFragment on Article {
   slug
   summary
   pubDate
+  variant
   featuredMedia {
     ...Media_BaseFragment
   }
@@ -45,5 +46,19 @@ fragment Article_PageFragment on Article {
   }
   topicNavItems {
     ...NavigationItem_BaseFragment
+  }
+}
+
+fragment Article_EmbedFieldsFragment on Article {
+  __typename
+  id
+  sidekickLookup
+  variant
+}
+
+fragment Article_EmbedFragment on Article {
+  ...Article_EmbedFieldsFragment
+  body {
+    ...RichText_RichTextArticleEmbedFragment
   }
 }

@@ -59,6 +59,7 @@ export const typeDefs = gql`
     footerItems: [Content]
     sideNav: [Link]
     pubDate: Date
+    variant: String
     link: Link
     requiredRoles: [String]
     seo: JSON

@@ -96,6 +96,29 @@ fragment RichText_RichTextFragment on RichText {
       ...Section_RichTextFragment
       ...Table_RichTextFragment
       ...Media_BaseFragment
+      ...Article_EmbedFragment
+    }
+    assets {
+      ...Media_BaseFragment
+    }
+  }
+}
+
+fragment RichText_RichTextArticleEmbedFragment on RichText {
+  id
+  __typename
+  json
+  links {
+    entries {
+      ...Content_BaseFragment
+      ...ModuleIntegration_BaseFragment
+      ...Link_BaseFragment
+      ...Section_BaseFieldsFragment
+      ...Card_RichTextFragment
+      ...Collection_RichTextFragment
+      ...Section_RichTextFragment
+      ...Table_RichTextFragment
+      ...Media_BaseFragment
     }
     assets {
       ...Media_BaseFragment

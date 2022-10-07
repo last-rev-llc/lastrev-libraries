@@ -55,6 +55,13 @@ export const mappers: Mappers = {
             };
           }
 
+          if ((entry as any)?.sys?.contentType?.sys?.id === 'article') {
+            return {
+              ...entry,
+              variant: 'embeded'
+            };
+          }
+
           return entry;
         });
 
