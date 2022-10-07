@@ -7,6 +7,7 @@ const editions = require('./editions');
 const useCase = require('./useCase');
 const workbot = require('./workbot');
 const homepage = require('./homepage');
+const aboutUs = require('./aboutUs');
 
 module.exports = {
   accelerators,
@@ -15,5 +16,6 @@ module.exports = {
   partner,
   useCase,
   workbot,
-  homepage
+  homepage,
+  aboutUs
 };
