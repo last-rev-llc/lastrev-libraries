@@ -4,14 +4,15 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 const contentfulFieldsParsers = require('../shared/contentful-fields');
-const workatoParsers = require('../migrations/workato');
+
 const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
 const IS_DEBUG_MODE = false;
-const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'homepage'; // The main content type that is being imported
-const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/homepage/'; // The local folder to import yaml files from
-const CUSTOM_PARSER_LOOKUP = workatoParsers.homepage;
+const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'aboutUs'; // The main content type that is being imported
+const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/about_us/'; // The local folder to import yaml files from
+const CUSTOM_PARSER_LOOKUP = require('../migrations/aboutUs');
+
 const LOCALE = 'en-US'; // The locale of the content type
 const MAX_NUMBER_OF_FILES = Infinity; // The maximum number of files to import at once, used for debugging purposes
 // const MAX_NUMBER_OF_FILES = 1; // The maximum number of files to import at once, used for debugging purposes
