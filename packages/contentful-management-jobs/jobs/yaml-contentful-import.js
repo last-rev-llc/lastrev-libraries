@@ -1,3 +1,5 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable no-await-in-loop */
 const sdk = require('contentful-management');
 const fs = require('fs');
@@ -9,9 +11,9 @@ const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
 const IS_DEBUG_MODE = false;
-const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'aboutUs'; // The main content type that is being imported
-const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/about_us/'; // The local folder to import yaml files from
-const CUSTOM_PARSER_LOOKUP = require('../migrations/aboutUs');
+const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pageCustomerMain'; // The main content type that is being imported
+const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/customers_main/'; // The local folder to import yaml files from
+const CUSTOM_PARSER_LOOKUP = require('../migrations/customersMain');
 
 const LOCALE = 'en-US'; // The locale of the content type
 const MAX_NUMBER_OF_FILES = Infinity; // The maximum number of files to import at once, used for debugging purposes
@@ -115,45 +117,59 @@ const getContentfulFormat = async (JOB) => {
   return array;
 };
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+async function upsertContent(entry, contentType, fromPath, errorPath) {
+  const relContentType = entry.contentType || contentType;
+
+  // console.log('entry', entry);
+  // Check if entry exists in content first
+  const existingEntry = await CONTENTFUL_ENVIRONMENT.getEntry(entry.entryId).catch(() => null);
+
+  if (!existingEntry) {
+    return CONTENTFUL_ENVIRONMENT.createEntryWithId(relContentType, entry.entryId, {
+      fields: entry.contentfulFields
+    })
+      .then((newEntry) =>
+        console.log(
+          'Entry created: ',
+          `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${newEntry.sys.id}`
+        )
+      )
+      .catch((error) => logging.logError(error, fromPath, errorPath));
+  }
+  // console.log(`Already Exists: id: ${existingEntry.sys.id} file: ${fromPath}`);
+  existingEntry.fields = entry.contentfulFields;
+  return existingEntry
+    .update()
+    .then((updatedEntry) => {
+      console.log(
+        'Entry UPDATED: ',
+        `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${updatedEntry.sys.id}`
+      );
+      return updatedEntry;
+    })
+    .catch((error) => logging.logError(error, fromPath, errorPath));
+}
+
 const importContentToContentful = async (contentfulEntriesJson, { contentType, fromPath, errorPath }) => {
   // Import into Contentful
   const arrayEntries = [];
-  for (let index = 0; index < contentfulEntriesJson.length; index++) {
-    let entry = contentfulEntriesJson[index];
-    const relContentType = entry.contentType || contentType;
+  let processed = 0;
 
-    // console.log('entry', entry);
-
-    // Check if entry exists in content first
-    const existingEntry = await CONTENTFUL_ENVIRONMENT.getEntry(entry.entryId).catch(() => null);
-
-    if (!existingEntry) {
-      entry = await CONTENTFUL_ENVIRONMENT.createEntryWithId(relContentType, entry.entryId, {
-        fields: entry.contentfulFields
+  const chunks = _.chunk(contentfulEntriesJson, 5);
+  for (const chunk of chunks) {
+    await Promise.all(
+      chunk.map(async (entry) => {
+        arrayEntries.push(upsertContent(entry, contentType, fromPath, errorPath));
       })
-        .then((newEntry) =>
-          console.log(
-            'Entry created: ',
-            `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${newEntry.sys.id}`
-          )
-        )
-        .catch((error) => logging.logError(error, fromPath, errorPath));
-      arrayEntries.push(entry);
-    } else {
-      console.log(`Already Exists: id: ${existingEntry.sys.id} file: ${fromPath}`);
-      existingEntry.fields = entry.contentfulFields;
-      existingEntry
-        .update()
-        .then((upatedEntry) =>
-          console.log(
-            'Entry UPDATED: ',
-            `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${upatedEntry.sys.id}`
-          )
-        )
-        .catch((error) => logging.logError(error, fromPath, errorPath));
-    }
+    ).then(() => {
+      processed += chunk.length;
+      console.log('Chunk completed', processed, new Date());
+    });
+    await sleep(1000);
   }
-  return arrayEntries;
+  return Promise.all(arrayEntries);
 };
 
 const getAllFilesInFolder = async () => {
