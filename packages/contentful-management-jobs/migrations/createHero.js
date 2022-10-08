@@ -15,7 +15,7 @@ const createHero = async (JOB, entryId, hero) => {
   return createEntry({
     entryId,
     contentType: 'hero',
-    fields: ['position', 'background', 'title', 'subtitle', 'image'],
+    fields: ['position', 'reduced_paddings', 'background', 'title', 'subtitle', 'subtitle_2', 'image', 'scroll'],
     entry: {
       ...hero,
       image

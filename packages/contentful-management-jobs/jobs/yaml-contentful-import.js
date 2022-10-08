@@ -11,9 +11,9 @@ const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
 const IS_DEBUG_MODE = false;
-const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pageCustomerMain'; // The main content type that is being imported
-const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/customers_main/'; // The local folder to import yaml files from
-const CUSTOM_PARSER_LOOKUP = require('../migrations/customersMain');
+const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pageCareer'; // The main content type that is being imported
+const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/career/'; // The local folder to import yaml files from
+const CUSTOM_PARSER_LOOKUP = require('../migrations/career');
 
 const LOCALE = 'en-US'; // The locale of the content type
 const MAX_NUMBER_OF_FILES = Infinity; // The maximum number of files to import at once, used for debugging purposes
