@@ -118,7 +118,7 @@ const aboutUs = {
               contentType: 'location',
               fields: ['title', 'address_postal_code', 'address_state', 'address_city', 'address_street'],
               entry: {
-                title: location.title,
+                ...location,
                 address_postal_code: location?.address?.postal_code,
                 address_state: location?.address?.state,
                 address_city: location?.address?.city,
@@ -149,6 +149,7 @@ const aboutUs = {
               contentType: 'location',
               fields: ['title', 'address_postal_code', 'address_state', 'address_city', 'address_street'],
               entry: {
+                ...location,
                 address_city: location?.city
               }
             })
