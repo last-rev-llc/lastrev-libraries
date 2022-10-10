@@ -41,5 +41,6 @@ const getEnvironmentManagement = async () => {
 
 module.exports = {
   clientDelivery,
-  getEnvironmentManagement
+  getEnvironmentManagement,
+  environmentManagement
 };

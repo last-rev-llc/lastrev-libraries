@@ -6,36 +6,31 @@ const { importParser } = require('../shared/input-parsers');
 const { publishItem, checkForExistingItem } = require('../shared/contentful-actions');
 const { logItems } = require('../shared/logging');
 
-const entryLookup = {};
+// const entryLookup = {};
 const STEPS = {
   getAssets: true,
-  filterAssets: false,
-  sortAssets: false,
-  transformAssetsToEntries: false,
+  transformAssetsToEntries: true,
   filterEntries: false,
   checkForDuplicates: false,
   createEntries: false
 };
-
-const getMediaObject = (media) => {
-  let mediaObject = {};
-  if (media) {
-    mediaObject = media.length ? media[0] : media;
-  }
-  return mediaObject;
+const ASSETS_QUERY = {
+  'sys.createdAt[gte]': '2022-09-30T17:00:00Z',
+  'fields.file.url[exists]': true,
+  'limit': 1000,
+  'order': '-sys.createdAt'
 };
 
 const transformAssetsToEntries = (assets) => {
   if (STEPS.transformAssetsToEntries) {
-    return assets.map(({ entryId, asset, publish }) => {
+    return assets.map((asset) => {
       if (asset) {
         const {
           sys: { id },
           fields: { title }
         } = asset || {};
         return {
-          publish,
-          entryId,
+          entryId: id,
           entry: {
             fields: {
               internalTitle: {
@@ -57,7 +52,7 @@ const transformAssetsToEntries = (assets) => {
           }
         };
       }
-      console.log('asset not found => ', entryId);
+      console.log('asset not found');
       return null;
     });
   }
@@ -67,72 +62,53 @@ const transformAssetsToEntries = (assets) => {
 const createEntryWithId = async (environment, entryId, entryObject, contentType) => {
   let entry;
   try {
-    console.log(`creating entry => ${entryId} for ${entryLookup[entryId].url}`);
+    console.log(`creating entry => ${entryId}`);
     entry = await environment.createEntryWithId(contentType, entryId, entryObject);
   } catch (error) {
-    console.log(`error creating entry => ${entryId} for ${entryLookup[entryId].url} => `, error);
+    console.log(`error creating entry => ${entryId} => `, error);
   }
   return entry;
 };
 
 const createEntries = async (entries, contentType) => {
   const createdEntries = [];
-  const environment = await getEnvironmentManagement();
-  if (!environment) {
-    console.log('environment not found');
-    return [];
-  }
+  if (STEPS.createEntries) {
+    const environment = await getEnvironmentManagement();
+    if (!environment) {
+      console.log('environment not found');
+      return [];
+    }
 
-  for (let index = 0; index < entries.length; index++) {
-    const currentEntry = entries[index];
-    const { entry, entryId, publish } = currentEntry;
+    for (let index = 0; index < entries.length; index++) {
+      const currentEntry = entries[index];
+      const { entry, entryId, publish } = currentEntry;
 
-    const existingAsset = await checkForExistingItem(entryId, async () => clientDelivery.getEntry(entryId));
+      const existingAsset = await checkForExistingItem(entryId, async () => clientDelivery.getEntry(entryId));
 
-    if (!existingAsset) {
-      const createdEntry = await createEntryWithId(environment, entryId, entry, contentType);
+      if (!existingAsset) {
+        const createdEntry = await createEntryWithId(environment, entryId, entry, contentType);
 
-      if (createdEntry) {
-        console.log(`created entry => ${entryId} for ${entryLookup[entryId].url}`);
+        if (createdEntry) {
+          console.log(`created entry => ${entryId}`);
 
-        if (publish) {
-          await publishItem(createdEntry, entryId);
+          if (publish) {
+            await publishItem(createdEntry, entryId);
+          }
+          createdEntries.push({ entryId, asset: createdEntry });
         }
-        createdEntries.push({ entryId, asset: createdEntry });
+      } else {
+        console.log(`existing entry => ${entryId}`);
+        createdEntries.push({ asset: existingAsset, entryId });
       }
-    } else {
-      console.log(`existing entry => ${entryId} for ${entryLookup[entryId].url}`);
-      createdEntries.push({ asset: existingAsset, entryId });
     }
   }
   return createdEntries;
 };
 
-const getAllAssets = async () => {
+const getAllAssets = async (query) => {
   let assets;
   if (STEPS.getAssets) {
-    const query = {
-      limit: 1000
-    };
     assets = await importParser(() => clientDelivery.getAssets(query));
-  }
-  return assets;
-};
-
-const filterAssets = (entries) => {
-  if (STEPS.filterAssets) {
-    // filter out entries that do not have urls
-    return entries?.items.filter((entry) => {
-      const mediaObject = getMediaObject(entry.fields.media);
-      return mediaObject.original_secure_url || mediaObject.original_url || mediaObject.url;
-    });
-  }
-  return entries;
-};
-
-const sortAssets = (assets) => {
-  if (STEPS.sortAssets) {
-    return assets.sort((a, b) => new Date(a.sys.createdAt) - new Date(b.sys.createdAt));
   }
   return assets;
 };
@@ -159,25 +135,18 @@ const findDuplicateEntries = (entries) => {
 
 (async () => {
   // Step 1 - Get all entries
-  const assets = getAllAssets();
-  console.log('assets => ', assets.items.length);
-  logItems(
-    assets.items,
-    (asset, index) => index === 100,
-    (asset) => `${asset.sys.id} => ${JSON.stringify(asset)}`
-  );
+  const assets = await getAllAssets(ASSETS_QUERY);
+  // logItems(
+  //   assets.items,
+  //   (asset, index) => index === 100,
+  //   (asset) => `${asset.sys.id} => ${JSON.stringify(asset, null, 2)}`
+  // );
 
-  if (assets) {
-    // Step 2 - Filter assets that do not have urls
-    const filteredAssets = filterAssets(assets);
-    console.log('filteredAssets => ', filteredAssets.length);
+  console.log('assets count => ', assets.items.length);
 
-    // Step 3 - Sort assets by date created
-    const sortedFilteredAssets = sortAssets(assets);
-    console.log('sortedFilteredAssets => ', sortedFilteredAssets.length);
-
+  if (assets?.items?.length) {
     // Step 4 - transform assets into contentful entries
-    const entriesWithAsset = transformAssetsToEntries(sortedFilteredAssets);
+    const entriesWithAsset = transformAssetsToEntries(assets.items);
     // console.log('entriesWithAsset => ', JSON.stringify(entriesWithAsset, null, 2));
     console.log('entriesWithAsset => ', entriesWithAsset.length);
 

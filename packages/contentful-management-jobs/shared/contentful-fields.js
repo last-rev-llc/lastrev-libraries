@@ -122,6 +122,14 @@ const getAssetType = (fileExtension) => {
   }
 };
 
+const getMediaObject = (media) => {
+  let mediaObject = {};
+  if (media) {
+    mediaObject = media.length ? media[0] : media;
+  }
+  return mediaObject;
+};
+
 const cleanupId = (entryId) => {
   // check if entyryId matches regex of /^[a-zA-Z0-9-_.]{1,64}$/
   let cleanedId = entryId;
@@ -145,5 +153,6 @@ module.exports = {
     return id;
   },
   getAssetType,
-  cleanupId
+  cleanupId,
+  getMediaObject
 };

@@ -19,7 +19,6 @@ const importParser = async (getItems, callback) => {
   let items;
   try {
     items = await getItems();
-    console.log(`items => ${items}`);
   } catch (error) {
     console.log('Error importing entries => ', error);
   }
