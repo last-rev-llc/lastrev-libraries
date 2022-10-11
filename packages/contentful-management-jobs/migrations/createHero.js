@@ -15,10 +15,24 @@ const createHero = async (JOB, entryId, hero) => {
   return createEntry({
     entryId,
     contentType: 'hero',
-    fields: ['position', 'reduced_paddings', 'background', 'title', 'subtitle', 'subtitle_2', 'image', 'scroll'],
+    fields: [
+      'position',
+      'reduced_paddings',
+      'background',
+      'title',
+      'subtitle',
+      'subtitle_2',
+      'image',
+      'scroll',
+      'request_demo_form_cta',
+      'request_demo_form_id',
+      'cta_demo_url'
+    ],
     entry: {
       ...hero,
-      image
+      image,
+      request_demo_form_cta: hero?.request_demo_form.cta,
+      request_demo_form_id: hero?.request_demo_form.form_id
     }
   });
 };
