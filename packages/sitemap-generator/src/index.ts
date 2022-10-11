@@ -45,8 +45,9 @@ async function generateSitemap(sitemap: Sitemap, outdir: string): Promise<void>;
 async function generateSitemap(p: SitemapGenParams | Sitemap, outdir?: string) {
   if (outdir) {
     await generateSitemapLegacy(p as Sitemap, outdir);
+  } else {
+    await performQueriesAndGenerateSitemap(p as SitemapGenParams);
   }
-  await performQueriesAndGenerateSitemap(p as SitemapGenParams);
 }
 
 const performQueriesAndGenerateSitemap = async ({ outdir, site, graphqlEndpoint, config }: SitemapGenParams) => {
