@@ -20,7 +20,12 @@ export const mappers: Mappers = {
         const { content } = sanitized;
         if (content) {
           const last = content[content.length - 1];
-          if (last?.nodeType === 'paragraph' && last.content && last.content[0].value == '') {
+          if (
+            last?.nodeType === 'paragraph' &&
+            last.content &&
+            last.content.length == 1 &&
+            last.content[0].value == ''
+          ) {
             content.pop();
           }
           sanitized = {
