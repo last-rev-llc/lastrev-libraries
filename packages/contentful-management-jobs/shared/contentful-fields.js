@@ -34,10 +34,11 @@ const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
   if (value) {
     switch (fieldType.type) {
       case 'Array':
-        if (value.length > 0 && typeof value[0] !== 'object') {
+        if (value?.length > 0 && typeof value[0] !== 'object') {
           return value;
         } else {
-          return value.split(',');
+          console.log('field', { fieldType, value });
+          return value?.split(',');
         }
       case 'Object':
         return value;
