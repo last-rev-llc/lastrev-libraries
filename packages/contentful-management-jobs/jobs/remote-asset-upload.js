@@ -20,15 +20,15 @@ const createAssetWithId = async (environment, { entryId, assetEntry, url }) => {
   return asset;
 };
 
-const processAsset = async (asset, entryId, isVideo) => {
+const processAsset = async (asset, { entryId, url }, isVideo) => {
   let processedAsset;
   try {
     console.log(`processing asset => ${entryId} for ${url}`);
     processedAsset = await asset.processForAllLocales(
-      isVideo || entryId === '2610549456' ? { processingCheckWait: 5000, processingCheckRetries: 20 } : {}
+      isVideo || entryId === '2610549456' ? { processingCheckWait: 5000, processingCheckRetries: 10 } : {}
     );
   } catch (error) {
-    console.log(`error processing asset => ${entryId} for ${url} => `, error);
+    console.log(`error processing asset => ${entryId} for ${url} => ${}`, error);
     await deleteItem(asset, entryId);
   }
   return processedAsset;
@@ -40,10 +40,10 @@ const STEPS = {
   filterAssets: true,
   checkForDuplicates: true,
   createAssets: true,
-  createEntries: true,
-  fillDuplicateIds: true,
-  getLinkedEntries: true,
-  updateLinkedEntries: true
+  createEntries: false,
+  fillDuplicateIds: false,
+  getLinkedEntries: false,
+  updateLinkedEntries: false
 };
 
 const entriesQuery = {
@@ -81,10 +81,11 @@ const transformItems = (entries) => {
 
       // take care of duplicate assets
       if (entryLookup[entryId]) {
-        entryLookup[entryId].duplicateIds = entryLookup[entryId].duplicateIds || [];
         entryLookup[entryId].duplicateIds.push(entry.sys.id);
         return null;
       }
+
+      entryLookup[entryId] = { duplicateIds: [] };
 
       return {
         linkingId: entry.sys.id,
@@ -187,7 +188,7 @@ const createAssets = async (assets) => {
 
           if (createdAsset) {
             console.log(`created assetId => ${entryId} for ${url}`);
-            const processedAsset = await processAsset(createdAsset, entryId, isVideo);
+            const processedAsset = await processAsset(createdAsset, asset, isVideo);
 
             if (processedAsset) {
               const publishedAsset = await publishItem(processedAsset, entryId);
@@ -310,39 +311,56 @@ const updateLinkedEntries = async (items) => {
         if (linkedEntries?.items?.length) {
           for (let i = 0; i < linkedEntries.items.length; i += 1) {
             const linkedEntry = linkedEntries.items[i];
+            const newField = { sys: { type: 'Link', linkType: 'Entry', id: entryId } };
+
+            let update = false;
             switch (linkedEntry.sys.contentType.sys.id) {
               case 'cardList':
                 linkedEntry.fields.cards['en-US'] =
-                  linkedEntry?.fields?.cards['en-US']?.map((card) => {
+                  linkedEntry?.fields?.cards?.['en-US']?.map((card) => {
                     // console.log('card => ', card);
                     const currentId = duplicateIds.filter((id) => card.sys.id === id)[0];
                     if (currentId) {
-                      return {
-                        sys: { type: 'Link', linkType: 'Entry', id: entryId }
-                      };
+                      update = true;
+                      return newField;
                     }
                     return card;
                   }) || undefined;
-                try {
-                  console.log(`updating linked entries => ${linkedEntryIds} for ${entryId}`);
-                  await linkedEntry.update();
-                } catch (error) {
-                  console.log(`error updating linked entries => ${linkedEntryIds} for ${entryId} => `, error);
-                }
                 break;
               case 'card':
                 console.log('card found => ', JSON.stringify(linkedEntry, null, 2));
                 break;
-              case 'ctaHero':
-                console.log('ctaHero found => ', JSON.stringify(linkedEntry, null, 2));
+              case 'ctaHero': {
+                const videoDesktop = linkedEntry?.fields?.videoDesktop?.['en-US'];
+                const videoMobile = linkedEntry?.fields?.videoMobile?.['en-US'];
+                if (videoDesktop && duplicateIds.some((id) => id === videoDesktop.sys.id)) {
+                  linkedEntry.fields.videoDesktop['en-US'] = newField;
+                  update = true;
+                }
+                if (videoMobile && duplicateIds.some((id) => id === videoMobile.sys.id)) {
+                  linkedEntry.fields.videoMobile['en-US'] = newField;
+                  update = true;
+                }
                 break;
+              }
               default:
                 console.log('Found different content type => ', linkedEntry.sys.contentType.sys.id);
                 break;
             }
+            if (update) {
+              try {
+                console.log(`updating linked entry => ${linkedEntry.sys.id} for ${entryId}`);
+                await linkedEntry.update();
+              } catch (error) {
+                console.log(`error updating linked entry => ${linkedEntry.sys.id} for ${entryId} => `, error);
+              }
+            }
           }
+        } else {
+          console.log(`no linked entry items found for => ${linkedEntryIds} for ${entryId}`);
         }
-        console.log(`no linked entries found for => ${linkedEntryIds} for ${entryId}`);
+      } else {
+        console.log(`no linked entries found for ${entryId}`);
       }
     }
     console.log('finished updating linked entries');

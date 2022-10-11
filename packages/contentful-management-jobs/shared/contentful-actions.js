@@ -27,7 +27,7 @@ const checkForExistingItem = async (entryId, getItem) => {
     console.log(`checking if item exists => ${entryId}`);
     item = await getItem();
   } catch (error) {
-    if (error?.name !== 'NotFound') {
+    if (error?.name !== 'NotFound' && error?.sys?.id !== 'NotFound') {
       console.log(`error checking for existing item => ${entryId} => `, JSON.stringify(error, null, 2));
     }
   }

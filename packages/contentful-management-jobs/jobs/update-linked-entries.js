@@ -9,14 +9,14 @@ const STEPS = {
   getEntries: true,
   prepareItems: true,
   fillDuplicateIds: true,
-  getLinkedEntries: false,
-  updateLinkedEntries: false
+  getLinkedEntries: true,
+  updateLinkedEntries: true
 };
 
 const entriesQuery = {
-  'content_type': 'card',
-  'sys.createdAt[gte]': '2022-10-05T00:00:00Z',
+  'content_type': 'cloudinaryMedia',
   'limit': 1000,
+  'fields.media[exists]': true,
   'order': '-sys.createdAt'
 };
 
@@ -46,51 +46,50 @@ const prepareItems = (items) => {
 
       // take care of duplicate assets
       if (entryLookup[entryId]) {
-        entryLookup[entryId].duplicateIds = entryLookup[entryId].duplicateIds || [];
         entryLookup[entryId].duplicateIds.push(entry.sys.id);
         return null;
       }
 
-      entryLookup[entryId].duplicateIds = [];
+      entryLookup[entryId] = { duplicateIds: [] };
 
       return {
         linkingId: entry.sys.id,
         publish,
         entryId,
-        url,
-        assetEntry: {
-          fields: {
-            title: {
-              'en-US': internalTitle
-            },
-            file: {
-              'en-US': {
-                contentType: getAssetType(mediaObject.format),
-                fileName,
-                upload: internalTitle !== 'IF_2020_IMPOSSIBLE_SAUSAGE.jpg.jpg' ? url : `${url}.jpg`
-              }
-            }
-          }
-        },
-        entry: {
-          fields: {
-            internalTitle: {
-              'en-US': internalTitle
-            },
-            media: {
-              'en-US': {
-                sys: {
-                  type: 'Link',
-                  linkType: 'Asset',
-                  id: entryId
-                }
-              }
-            },
-            cardStyle: {
-              'en-US': 'Media'
-            }
-          }
-        }
+        url
+        // assetEntry: {
+        //   fields: {
+        //     title: {
+        //       'en-US': internalTitle
+        //     },
+        //     file: {
+        //       'en-US': {
+        //         contentType: getAssetType(mediaObject.format),
+        //         fileName,
+        //         upload: internalTitle !== 'IF_2020_IMPOSSIBLE_SAUSAGE.jpg.jpg' ? url : `${url}.jpg`
+        //       }
+        //     }
+        //   }
+        // },
+        // entry: {
+        //   fields: {
+        //     internalTitle: {
+        //       'en-US': internalTitle
+        //     },
+        //     media: {
+        //       'en-US': {
+        //         sys: {
+        //           type: 'Link',
+        //           linkType: 'Asset',
+        //           id: entryId
+        //         }
+        //       }
+        //     },
+        //     cardStyle: {
+        //       'en-US': 'Media'
+        //     }
+        //   }
+        // }
       };
     });
   }
@@ -106,6 +105,17 @@ const fillDuplicateIds = (items) => {
     });
   }
   return [];
+};
+
+const getLinks = async (linkedEntryIds, entryId, environment) => {
+  let linkedEntries;
+  try {
+    console.log(`getting linked entries => ${linkedEntryIds} for ${entryId}`);
+    linkedEntries = await environment.getEntries({ 'sys.id[in]': linkedEntryIds });
+  } catch (error) {
+    console.log(`error getting linked entries => ${linkedEntryIds} for ${entryId} => `, error);
+  }
+  return linkedEntries;
 };
 
 const getLinkedEntries = async (items) => {
@@ -144,6 +154,64 @@ const getLinkedEntries = async (items) => {
   return [];
 };
 
+const updateEntry = async (linkedEntry, entryId) => {
+  try {
+    console.log(`updating linked entry => ${linkedEntry.sys.id} for ${entryId}`);
+    await linkedEntry.update();
+  } catch (error) {
+    console.log(`error updating linked entry => ${linkedEntry.sys.id} for ${entryId} => `, error);
+  }
+};
+
+const findUpdateField = (entry, newField, duplicateIds) => {
+  let update = false;
+  switch (entry.sys.contentType.sys.id) {
+    case 'cardList':
+      entry.fields.cards['en-US'] =
+        entry?.fields?.cards['en-US']?.map((card) => {
+          const currentId = duplicateIds.filter((id) => card.sys.id === id)[0];
+          if (currentId) {
+            update = true;
+            return newField;
+          }
+          return card;
+        }) || undefined;
+      break;
+    case 'card':
+      console.log('card found => ', JSON.stringify(entry, null, 2));
+      break;
+    case 'ctaHero': {
+      const videoDesktop = entry?.fields?.videoDesktop['en-US'];
+      const videoMobile = entry?.fields?.videoMobile['en-US'];
+      if (videoDesktop && duplicateIds.some((id) => id === videoDesktop.sys.id)) {
+        entry.fields.videoDesktop['en-US'] = newField;
+        update = true;
+      }
+      if (videoMobile && duplicateIds.some((id) => id === videoMobile.sys.id)) {
+        entry.fields.videoMobile['en-US'] = newField;
+        update = true;
+      }
+      break;
+    }
+    default:
+      console.log('Found different content type => ', entry.sys.contentType.sys.id);
+      break;
+  }
+  return { update, entry };
+};
+
+const updateLinks = async (linkedEntries, entryId, duplicateIds) => {
+  for (let i = 0; i < linkedEntries.items.length; i += 1) {
+    const linkedEntry = linkedEntries.items[i];
+    const newField = { sys: { type: 'Link', linkType: 'Entry', id: entryId } };
+
+    const { update, entry } = findUpdateField(linkedEntry, newField, duplicateIds);
+    if (update) {
+      await updateEntry(entry);
+    }
+  }
+};
+
 const updateLinkedEntries = async (items) => {
   if (STEPS.updateLinkedEntries) {
     const environment = await getEnvironmentManagement();
@@ -153,52 +221,15 @@ const updateLinkedEntries = async (items) => {
     }
     for (let index = 0; index < items.length; index += 1) {
       const { entryId, linkedEntryIds, duplicateIds } = items[index];
-      // console.log('linkedEntryIds => ', linkedEntryIds);
       if (linkedEntryIds) {
-        let linkedEntries;
-        try {
-          console.log(`getting linked entries => ${linkedEntryIds} for ${entryId}`);
-          linkedEntries = await environment.getEntries({ 'sys.id[in]': linkedEntryIds });
-        } catch (error) {
-          console.log(`error getting linked entries => ${linkedEntryIds} for ${entryId} => `, error);
-        }
-        // console.log('linkedEntries => ', JSON.stringify(linkedEntries, null, 2));
+        const linkedEntries = await getLinks(linkedEntryIds, entryId, environment);
         if (linkedEntries?.items?.length) {
-          for (let i = 0; i < linkedEntries.items.length; i += 1) {
-            const linkedEntry = linkedEntries.items[i];
-            switch (linkedEntry.sys.contentType.sys.id) {
-              case 'cardList':
-                linkedEntry.fields.cards['en-US'] =
-                  linkedEntry?.fields?.cards['en-US']?.map((card) => {
-                    // console.log('card => ', card);
-                    const currentId = duplicateIds.filter((id) => card.sys.id === id)[0];
-                    if (currentId) {
-                      return {
-                        sys: { type: 'Link', linkType: 'Entry', id: entryId }
-                      };
-                    }
-                    return card;
-                  }) || undefined;
-                try {
-                  console.log(`updating linked entries => ${linkedEntryIds} for ${entryId}`);
-                  await linkedEntry.update();
-                } catch (error) {
-                  console.log(`error updating linked entries => ${linkedEntryIds} for ${entryId} => `, error);
-                }
-                break;
-              case 'card':
-                console.log('card found => ', JSON.stringify(linkedEntry, null, 2));
-                break;
-              case 'ctaHero':
-                console.log('ctaHero found => ', JSON.stringify(linkedEntry, null, 2));
-                break;
-              default:
-                console.log('Found different content type => ', linkedEntry.sys.contentType.sys.id);
-                break;
-            }
-          }
+          await updateLinks(linkedEntries, entryId, duplicateIds);
+        } else {
+          console.log(`no linked entry items found for => ${linkedEntryIds} for ${entryId}`);
         }
-        console.log(`no linked entries found for => ${linkedEntryIds} for ${entryId}`);
+      } else {
+        console.log(`no linked entries found for => ${entryId}`);
       }
     }
     console.log('finished updating linked entries');
@@ -206,20 +237,24 @@ const updateLinkedEntries = async (items) => {
 };
 
 (async () => {
-  // Step 1 - Get all entries
+  // Step 1 - Get All Entries
   const entries = await getAllEntries(entriesQuery);
   console.log('entries => ', entries.items.length);
 
   if (entries.items.length) {
+    // Step 2 - Prepare Items
     const preparedItems = prepareItems(entries.items);
     console.log('preparedItems => ', preparedItems.length);
 
-    const filledItems = fillDuplicateIds(preparedItems);
+    // Step 3 - Fill Duplicates
+    const filledItems = fillDuplicateIds(preparedItems.filter((item) => item));
     console.log('filledItems => ', filledItems.length);
 
+    // Step 4 - Get Linked Entries
     const linkedItems = await getLinkedEntries(filledItems);
     console.log('linkedItems => ', linkedItems.length);
 
+    // Step 5 - Update Linked Entries
     await updateLinkedEntries(linkedItems);
   } else {
     console.log('No entries found');
