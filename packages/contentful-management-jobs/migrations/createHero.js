@@ -4,19 +4,23 @@ const { createEntry } = require('./createEntry');
 
 const createHero = async (JOB, entryId, hero) => {
   const asset = hero.image_src2x || hero.image_src;
-  const assetId = await contentfulFieldsParsers.getContentfulIdFromString(asset);
-  JOB.relatedEntries.push(
-    await createMediaEntry(JOB, assetId, {
-      title: hero.alt,
-      assetURL: asset
-    })
-  );
-  const image = await contentfulFieldsParsers.getContentfulFieldValue(assetId, { type: 'Entry' });
+  let image;
+  if (asset) {
+    const assetId = await contentfulFieldsParsers.getContentfulIdFromString(asset);
+    JOB.relatedEntries.push(
+      await createMediaEntry(JOB, assetId, {
+        title: hero.alt,
+        assetURL: asset
+      })
+    );
+    image = await contentfulFieldsParsers.getContentfulFieldValue(assetId, { type: 'Entry' });
+  }
   return createEntry({
     entryId,
     contentType: 'hero',
     fields: [
       'position',
+      'pre_header',
       'reduced_paddings',
       'background',
       'background_modifier',
@@ -27,7 +31,11 @@ const createHero = async (JOB, entryId, hero) => {
       'scroll',
       'request_demo_form_cta',
       'request_demo_form_id',
-      'cta_demo_url'
+      'cta_demo_url',
+      'learn_more_link',
+      'learn_more_url',
+      'learn_more_target',
+      'buttons'
     ],
     entry: {
       ...hero,

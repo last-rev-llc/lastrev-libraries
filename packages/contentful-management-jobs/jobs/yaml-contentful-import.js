@@ -11,9 +11,9 @@ const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
 const IS_DEBUG_MODE = false;
-const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pageResources'; // The main content type that is being imported
-const BASE_FOLDER_PATH = '/home/max/dev/workato-website/content/resources'; // The local folder to import yaml files from
-const CUSTOM_PARSER_LOOKUP = require('../migrations/resources');
+const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pagePress'; // The main content type that is being imported
+const BASE_FOLDER_PATH = '/home/max/dev/workato-website/content/press'; // The local folder to import yaml files from
+const CUSTOM_PARSER_LOOKUP = require('../migrations/press');
 
 const LOCALE = 'en-US'; // The locale of the content type
 const MAX_NUMBER_OF_FILES = Infinity; // The maximum number of files to import at once, used for debugging purposes
@@ -164,7 +164,10 @@ const importContentToContentful = async (contentfulEntriesJson, { contentType, f
   const arrayEntries = [];
   let processed = 0;
 
-  const chunks = _.chunk(contentfulEntriesJson, 5);
+  // Remove duplicates
+  const uniqueEntries = _.uniqBy(contentfulEntriesJson, 'entryId');
+  console.log('UniqueEntries', uniqueEntries.length, 'from', contentfulEntriesJson.length);
+  const chunks = _.chunk(uniqueEntries, 5);
   for (const chunk of chunks) {
     await Promise.all(
       chunk.map(async (entry) => {
