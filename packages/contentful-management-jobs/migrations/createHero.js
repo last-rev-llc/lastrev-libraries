@@ -19,6 +19,7 @@ const createHero = async (JOB, entryId, hero) => {
       'position',
       'reduced_paddings',
       'background',
+      'background_modifier',
       'title',
       'subtitle',
       'subtitle_2',
@@ -31,8 +32,8 @@ const createHero = async (JOB, entryId, hero) => {
     entry: {
       ...hero,
       image,
-      request_demo_form_cta: hero?.request_demo_form.cta,
-      request_demo_form_id: hero?.request_demo_form.form_id
+      request_demo_form_cta: hero?.request_demo_form?.cta,
+      request_demo_form_id: hero?.request_demo_form?.form_id
     }
   });
 };
