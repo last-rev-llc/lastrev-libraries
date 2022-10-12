@@ -31,6 +31,8 @@ const createHero = async (JOB, entryId, hero) => {
       'scroll',
       'request_demo_form_cta',
       'request_demo_form_id',
+      'request_demo_button_cta',
+      'request_demo_button_style',
       'cta_demo_url',
       'learn_more_link',
       'learn_more_url',
@@ -41,7 +43,9 @@ const createHero = async (JOB, entryId, hero) => {
       ...hero,
       image,
       request_demo_form_cta: hero?.request_demo_form?.cta,
-      request_demo_form_id: hero?.request_demo_form?.form_id
+      request_demo_form_id: hero?.request_demo_form?.form_id,
+      request_demo_button_cta: hero?.request_demo_button?.cta,
+      request_demo_button_style: hero?.request_demo_button?.style
     }
   });
 };

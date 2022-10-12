@@ -76,7 +76,7 @@ const press = {
               items: await Promise.all(
                 item?.links?.map(async (card) =>
                   createEntryReference(JOB, {
-                    contentType: 'cardNew',
+                    contentType: 'cardNews',
                     fields: ['title', 'category', 'date', 'image', 'link'],
                     entry: {
                       title: card?.title,

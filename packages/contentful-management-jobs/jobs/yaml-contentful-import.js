@@ -11,9 +11,9 @@ const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
 const IS_DEBUG_MODE = false;
-const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pagePress'; // The main content type that is being imported
-const BASE_FOLDER_PATH = '/home/max/dev/workato-website/content/press'; // The local folder to import yaml files from
-const CUSTOM_PARSER_LOOKUP = require('../migrations/press');
+const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pagePlatform'; // The main content type that is being imported
+const BASE_FOLDER_PATH = '/home/max/dev/workato-website/content/platform'; // The local folder to import yaml files from
+const CUSTOM_PARSER_LOOKUP = require('../migrations/platform');
 
 const LOCALE = 'en-US'; // The locale of the content type
 const MAX_NUMBER_OF_FILES = Infinity; // The maximum number of files to import at once, used for debugging purposes
@@ -124,6 +124,7 @@ async function upsertContent(entry, contentType, fromPath, errorPath) {
 
   // console.log('entry', entry);
   // Check if entry exists in content first
+  // If this succeeds will count towards the rate limit!!!
   const existingEntry = await CONTENTFUL_ENVIRONMENT.getEntry(entry.entryId).catch(() => null);
 
   if (!entry.entryId) {
@@ -142,6 +143,9 @@ async function upsertContent(entry, contentType, fromPath, errorPath) {
       )
       .catch((error) => logging.logError(error, fromPath, errorPath));
   }
+
+  // We've already used up the rate limit for this second, so wait a second and try again
+  await sleep(1000);
   // console.log(`Already Exists: id: ${existingEntry.sys.id} file: ${fromPath}`);
   existingEntry.fields = entry.contentfulFields;
   return existingEntry
