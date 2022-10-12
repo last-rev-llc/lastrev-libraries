@@ -23,6 +23,7 @@ import * as Link from './Link';
 import * as CategoryArticle from './CategoryArticle';
 import * as CategoryArticleLinkHierarchyNode from './CategoryArticleLinkHierarchyNode';
 import * as ModuleIntegration from './ModuleIntegration';
+import * as CommonResource from './CommonResource';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -78,7 +79,8 @@ const extensions: GraphQlExtension[] = [
   Article,
   CategoryArticle,
   CategoryArticleLinkHierarchyNode,
-  ModuleIntegration
+  ModuleIntegration,
+  CommonResource
 ];
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));

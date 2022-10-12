@@ -19,16 +19,20 @@ export const styleOverrides: ComponentsOverrides<Theme>['NavigationItem'] = {
 };
 
 // https://mui.com/customization/theme-components/#adding-new-component-variants
-const createVariants = (_theme: Theme): ComponentsVariants['NavigationItem'] => [
+const createVariants = (theme: Theme): ComponentsVariants['NavigationItem'] => [
   // Use prop matching to set variant styles
-  // {
-  //   props: {
-  //     variant: 'example'
-  //   },
-  //   style: {
-  //     backgroundColor: theme.palette.primary.main
-  //   }
-  // }
+  {
+    props: {
+      variant: 'locale group label'
+    },
+    style: {
+      [theme.breakpoints.up('md')]: {
+        '& .localeLink': {
+          marginLeft: 0
+        }
+      }
+    }
+  }
   // Other props are also valid
   // {
   //   props: {

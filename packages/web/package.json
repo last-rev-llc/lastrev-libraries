@@ -26,7 +26,7 @@
     "@last-rev/testing-library": "^0.1.9",
     "@ias/components": "0.0.1",
     "@ias/graphql-sdk": "^0.1.0",
-    "@mui/system": "^5.3.0",
+    "@mui/system": "^5.4.4",
     "@ias/utils": "^0.1.0",
     "@mui/icons-material": "^5.2.4",
     "@mui/material": "^5.4.4",

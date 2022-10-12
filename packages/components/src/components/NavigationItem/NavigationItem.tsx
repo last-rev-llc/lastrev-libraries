@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import Box from '@mui/material/Box';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
@@ -6,16 +7,19 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled, alpha } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
+import { UrlObject } from 'url';
 
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import Link from '../Link';
+
 export type {
   NavigationItemClassKey,
   NavigationItemClasses
 } from '@last-rev/component-library/dist/components/NavigationItem';
+
 export interface NavigationItemProps extends LinkProps {
   subNavigation?: Array<LinkProps>;
   sidekickLookup?: any;
@@ -28,10 +32,13 @@ export const NavigationItem = ({
   sidekickLookup,
   onRequestClose,
   hideIcon,
+  variant,
   ...props
 }: NavigationItemProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const theme = useTheme();
+  const router = useRouter();
+  const { asPath, pathname, query } = router;
   const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'md';
   const isMobile = useMediaQuery(theme.breakpoints.down(menuBreakpoint));
 
@@ -50,9 +57,20 @@ export const NavigationItem = ({
     if (onRequestClose) onRequestClose();
   };
 
+  const handleLocaleClick = (locale: string | UrlObject | undefined) => () => {
+    if (!!locale && typeof locale === 'string') {
+      router.push({ pathname, query }, asPath, { locale: String(locale).replace(/\//g, '') });
+    }
+  };
+
   return (
     <ErrorBoundary>
-      <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem" menuBreakpoint={menuBreakpoint}>
+      <Root
+        sx={{ position: 'relative' }}
+        open={open}
+        data-testid="NavigationItem"
+        menuBreakpoint={menuBreakpoint}
+        variant={variant}>
         {subNavigation?.length ? (
           <>
             <Box display="flex" alignItems="center" onClick={handleClick}>
@@ -64,16 +82,27 @@ export const NavigationItem = ({
               sx={{
                 display: open ? 'flex' : 'none'
               }}>
-              {subNavigation?.map((item) => (
-                <MenuItem key={item.id}>
-                  <ContentModule
-                    {...item}
-                    variant="link"
-                    onClick={handleSubnavClick}
-                    onRequestClose={handleSubnavClick}
-                  />
-                </MenuItem>
-              ))}
+              {subNavigation?.map((item) => {
+                if (!!item.href && item.variant === 'locale') {
+                  return (
+                    <MenuItem key={item.id} className="localeLink">
+                      <Link variant="body2" component="button" onClick={handleLocaleClick(item.href)}>
+                        {item.text}
+                      </Link>
+                    </MenuItem>
+                  );
+                }
+                return (
+                  <MenuItem key={item.id}>
+                    <ContentModule
+                      {...item}
+                      variant="link"
+                      onClick={handleSubnavClick}
+                      onRequestClose={handleSubnavClick}
+                    />
+                  </MenuItem>
+                );
+              })}
             </MenuRoot>
           </>
         ) : (

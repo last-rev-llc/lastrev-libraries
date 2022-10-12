@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -42,6 +43,8 @@ export const Header = ({
 }: HeaderProps) => {
   const [open, setOpen] = React.useState(false);
   const localization = useLocalizationContext();
+  const router = useRouter();
+  const { locale } = router;
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     if (
@@ -54,10 +57,14 @@ export const Header = ({
     setOpen(open);
   };
 
+  const urlPath = global.location?.pathname;
+  const isQuery = global.location?.search.includes('?query=');
   const showSearchForm =
-    global.location?.pathname !== '/' &&
-    global.location?.pathname !== '/search/' &&
-    !global.location?.search.includes('?query=');
+    urlPath !== '/' &&
+    urlPath !== '/search/' &&
+    urlPath !== '/preview' &&
+    !isQuery &&
+    !(locale !== 'en-US' && urlPath === `/${locale}`);
 
   return (
     <ErrorBoundary>
@@ -117,8 +124,6 @@ export const Header = ({
                   'width': '100%',
                   'marginLeft': 'auto',
                   'marginRight': 2,
-                  'paddingTop': 1,
-                  'paddingBottom': 1,
 
                   '& .aa-Form': {
                     'height': 38,
@@ -167,19 +172,24 @@ export const Header = ({
             )}
 
             {rightNav && (
-              <List
-                data-testid="Header-RightNav-Desktop"
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  ml: 'auto'
-                }}>
-                {rightNav?.map((navigationItem) => (
-                  <NavItem key={navigationItem.id}>
-                    <ContentModule {...navigationItem} />
-                  </NavItem>
-                ))}
-              </List>
+              <RightNavItems data-testid="Header-RightNav-Desktop">
+                {rightNav?.map((navigationItem) =>
+                  navigationItem.variant === 'locale group label' ? (
+                    <NavItemLocaleMenu key={navigationItem.id}>
+                      <LocaleSwitcherIcon
+                        sx={{
+                          backgroundImage: `url(${localization['header.localeSwitcher.icon']?.image?.file?.url})`
+                        }}
+                      />
+                      <ContentModule {...navigationItem} />
+                    </NavItemLocaleMenu>
+                  ) : (
+                    <NavItem key={navigationItem.id}>
+                      <ContentModule {...navigationItem} />
+                    </NavItem>
+                  )
+                )}
+              </RightNavItems>
             )}
 
             {actions && (
@@ -268,47 +278,6 @@ const NavItems = styled(Box, {
   backgroundColor: theme.palette.background.dark
 }));
 
-const MobileNavItems = styled(List, {
-  name: 'Header',
-  slot: 'MobileNavItems',
-  overridesResolver: (_, styles) => [styles.root]
-})(({ theme }) => ({
-  'padding': 0,
-  'height': '100%',
-  'width': '100%',
-  'display': 'flex',
-  'alignItems': 'center',
-  'flexDirection': 'column',
-  'color': theme.palette.common.white,
-
-  [theme.breakpoints.up('md')]: {
-    flexDirection: 'row'
-  },
-
-  [theme.breakpoints.down('md')]: {
-    marginTop: theme.spacing(8)
-  },
-
-  '.MuiListItem-root': {
-    padding: theme.spacing(1, 0)
-  },
-
-  '.MuiButton-contained': {
-    marginTop: theme.spacing(4)
-  },
-
-  '.MuiLink-root': {
-    'width': '100%',
-    'fontSize': 18,
-    'lineHeight': 1.5,
-    'textDecoration': 'none',
-
-    '& + svg': {
-      marginLeft: 'auto'
-    }
-  }
-}));
-
 const NavItem = styled(ListItem, {
   name: 'Header',
   slot: 'NavItem',
@@ -395,6 +364,101 @@ const NavItem = styled(ListItem, {
       '&:hover': {
         textDecoration: 'none'
       }
+    }
+  }
+}));
+
+const NavItemLocaleMenu = styled(NavItem, {
+  name: 'Header',
+  slot: 'NavItemLocaleMenu'
+})(({ theme }) => ({
+  display: 'flex',
+  margin: theme.spacing(0, 1),
+  paddingTop: theme.spacing(0.5),
+
+  [theme.breakpoints.up('md')]: {
+    '& > div > div > a': {
+      padding: theme.spacing(1, 4, 0, 0),
+      position: 'absolute',
+      width: 1,
+      height: 1,
+      margin: -1,
+      overflow: 'hidden',
+      clip: 'rect(0,0,0,0)',
+      border: 0
+    },
+
+    '& svg': {
+      marginLeft: theme.spacing(0.5)
+    },
+
+    '& [class*=menuRoot]': {
+      right: theme.spacing(-0.5)
+    }
+  }
+}));
+
+const LocaleSwitcherIcon = styled(Box, {
+  name: 'Header',
+  slot: 'LocaleSwitcherIcon'
+})(({ theme }) => ({
+  display: 'none',
+  width: theme.spacing(3),
+  height: theme.spacing(3.25),
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center 2px',
+
+  [theme.breakpoints.up('md')]: {
+    display: 'block'
+  }
+}));
+
+const RightNavItems = styled(List, {
+  name: 'Header',
+  slot: 'RightNavItems'
+})(() => ({
+  display: 'flex',
+  flexDirection: 'row',
+  marginLeft: 'auto'
+}));
+
+const MobileNavItems = styled(List, {
+  name: 'Header',
+  slot: 'MobileNavItems',
+  overridesResolver: (_, styles) => [styles.root]
+})(({ theme }) => ({
+  'padding': 0,
+  'height': '100%',
+  'width': '100%',
+  'display': 'flex',
+  'alignItems': 'center',
+  'flexDirection': 'column',
+  'color': theme.palette.common.white,
+
+  [theme.breakpoints.up('md')]: {
+    flexDirection: 'row'
+  },
+
+  [theme.breakpoints.down('md')]: {
+    marginTop: theme.spacing(8)
+  },
+
+  '.MuiListItem-root': {
+    padding: theme.spacing(1, 0)
+  },
+
+  '.MuiButton-contained': {
+    marginTop: theme.spacing(4)
+  },
+
+  '.MuiLink-root': {
+    'width': '100%',
+    'fontSize': 18,
+    'lineHeight': 1.5,
+    'textDecoration': 'none',
+
+    '& + svg': {
+      marginLeft: 'auto'
     }
   }
 }));

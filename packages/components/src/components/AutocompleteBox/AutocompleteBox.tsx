@@ -40,11 +40,14 @@ export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
   const theme = useTheme();
   const router = useRouter();
   const localization = useLocalizationContext();
+  const { locale, defaultLocale } = router;
 
   const { variant, placeholder, searchResultsUrl } = settings as SettingsProps;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   const mobileText = localization['autocomplete.searchMobile.placeholder']?.shortTextValue ?? 'Search';
+
+  const filters = locale !== defaultLocale ? `locale:${locale} AND translatedInLocale:true` : `locale:${locale}`;
 
   const handleSubmit = (formData: OnSubmitParams<any>) => {
     const searchQuery: string = formData.state.query.trim();
@@ -63,6 +66,7 @@ export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
   return (
     <Root variant={variant} data-testid="AutocompleteBox">
       <Autocomplete
+        key={locale}
         onSubmit={handleSubmit}
         placeholder={matchesDesktop ? placeholder : mobileText}
         components={{ SearchResultItem }}
@@ -75,7 +79,10 @@ export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
                 queries: [
                   {
                     indexName: algoliaOptions.indexName,
-                    query
+                    query,
+                    params: {
+                      filters
+                    }
                   }
                 ]
               });

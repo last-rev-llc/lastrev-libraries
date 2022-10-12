@@ -158,6 +158,7 @@ type CommonResource implements Content {
   key: String
   shortTextValue: String
   media: Media
+  image: Media
 }
 type Footer implements Content {
   sidekickLookup: JSON

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Configure, RefinementList, MenuSelect } from 'react-instantsearch-dom';
+import { useRouter } from 'next/router';
+import { Configure, RefinementList, MenuSelect, connectRefinementList } from 'react-instantsearch-dom';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -8,12 +9,32 @@ import ContentModule from '@last-rev/component-library/dist/components/ContentMo
 import { CollectionProps } from '@last-rev/component-library/dist/components/Collection';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
+import { useLocalizationContext } from '../LocalizationContext';
+
 interface FilterItem {
   label: string;
   count?: number;
 }
 
-export const CollectionSearchFilters = ({ introText, sidekickLookup }: CollectionProps) => {
+const RefinementListTest = (props: any) => {
+  React.useEffect(() => {
+    if (props.currentRefinement.length === 2) {
+      props.refine(['false']);
+    } else if (props.currentRefinement.length === 0) {
+      props.refine(['true']);
+    }
+  }, [props.currentRefinement]);
+
+  return <Filters {...props} />;
+};
+
+const CustomRefinementList = connectRefinementList(RefinementListTest);
+
+export const CollectionSearchFilters = ({ introText, sidekickLookup, ...props  }: CollectionProps) => {
+  const router = useRouter();
+  const localization = useLocalizationContext();
+  const { locale, defaultLocale } = router;
+
   return (
     <ErrorBoundary>
       <Box
@@ -89,7 +110,36 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup }: Collectio
             })
           }
         />
-        <Configure hitsPerPage={8} facetingAfterDistinct={true} />
+        {locale !== defaultLocale && (
+          <CustomRefinementList
+            attribute="translatedInLocale"
+            defaultRefinement={['true']}
+            transformItems={(items: Array<FilterItem>) =>
+              items
+                .filter((item) => item.label !== 'true')
+                .map((item) => {
+                  return {
+                    ...item,
+                    label:
+                      localization['search.untranslatedResults.label']?.shortTextValue ?? 'View unstranslated results',
+                    count: `(${item.count})`
+                  };
+                })
+            }
+          />
+        )}
+        <Configure hitsPerPage={8} facetingAfterDistinct={true} filters={`locale:${locale}`} />
+        {/* Locale switcher */}
+        {props.items?.map((item) => {
+          if (item.__typename === 'NavigationItem') {
+            return (
+              <LocaleSwitcher>
+                <ContentModule {...item} />
+              </LocaleSwitcher>
+            );
+          }
+          return null;
+        })}
       </Box>
     </ErrorBoundary>
   );
@@ -120,6 +170,66 @@ const Filters = styled(RefinementList, {
     marginLeft: 0,
     marginRight: theme.spacing(1),
     accentColor: theme.palette.midnight.A20
+  }
+}));
+
+const LocaleSwitcher = styled(Box, {
+  name: 'CollectionSearchFilters',
+  slot: 'LocaleSwitcher'
+})(({ theme }) => ({
+  'display': 'flex',
+
+  [theme.breakpoints.down('md')]: {
+    marginTop: theme.spacing(2)
+  },
+
+  '& [class*=NavigationItem-root]': {
+    '&:hover': {
+      'cursor': 'pointer',
+      'backgroundColor': 'transparent',
+
+      '& [class*=NavigationItem-menuRoot]': {
+        display: 'block'
+      }
+    },
+
+    '& a': {
+      ...theme.typography.body2,
+      'fontWeight': 500,
+
+      '&:hover': {
+        textDecoration: 'none'
+      },
+
+      [theme.breakpoints.down('md')]: {
+        fontSize: 14
+      }
+    },
+
+    '& [class*=NavigationItem-menuRoot]': {
+      'right': 'auto',
+      'width': '100%',
+      'margin': 0,
+      'padding': 0,
+      'borderRadius': 0,
+      'backgroundColor': theme.palette.midnight.A03,
+
+      '& button': {
+        'display': 'block',
+        'padding': theme.spacing(1),
+        'textAlign': 'left',
+        ...theme.typography.body3,
+
+        '&:hover': {
+          textDecoration: 'none'
+        }
+      }
+    },
+
+    '& svg': {
+      fill: theme.palette.midnight.main,
+      marginLeft: theme.spacing(0.5)
+    }
   }
 }));
 

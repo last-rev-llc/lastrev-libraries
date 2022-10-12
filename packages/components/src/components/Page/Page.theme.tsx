@@ -4,6 +4,7 @@ import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVa
 export const defaultProps: ComponentsProps['Page'] = {};
 
 // https://mui.com/customization/theme-components/#global-style-overrides
+
 export const styleOverrides: ComponentsOverrides<Theme>['Page'] = {
   // Set some static styles
   // root: {

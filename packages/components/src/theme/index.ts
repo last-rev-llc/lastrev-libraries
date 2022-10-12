@@ -1,15 +1,16 @@
 import createAppTheme from '@last-rev/component-library/dist/theme/createTheme';
-import createCardVariants from './variants/createCardVariants';
-import createTextVariants from './variants/createTextVariants';
 import { TypographyStyle } from '@mui/material/styles';
-import createAutocompleteBoxVariants from './variants/createAutocompleteBoxVariants';
 import { Mixins } from '@mui/material/styles/createMixins';
 import merge from 'lodash/merge';
 import camelCase from 'lodash/camelCase';
 
+import createCardVariants from './variants/createCardVariants';
+import createTextVariants from './variants/createTextVariants';
 import createCollectionVariants from './variants/createCollectionVariants';
 import createHeroVariants from './variants/createHeroVariants';
 import createSectionVariants from './variants/createSectionVariants';
+import createAutocompleteBoxVariants from './variants/createAutocompleteBoxVariants';
+import NavigationItem from '../components/NavigationItem/NavigationItem.theme';
 
 declare module '@mui/material/styles/createMixins' {
   interface Mixins {
@@ -271,7 +272,7 @@ const createSchemeTheme = (schemeKey?: string) => {
   const baseSchemeTheme = createAppTheme(baseTheme as any);
 
   const schemeTheme = createAppTheme(
-    merge({ scheme: camelCase(schemeKey) }, baseSchemeTheme, {
+    merge({ scheme: camelCase(schemeKey) }, baseSchemeTheme, ...[NavigationItem(baseSchemeTheme)], {
       createSchemeTheme,
       components: {
         Header: {
@@ -439,7 +440,9 @@ const createSchemeTheme = (schemeKey?: string) => {
         AutocompleteBox: {
           variants: createAutocompleteBoxVariants(baseSchemeTheme),
           styleOverrides: {
-            root: {}
+            root: {
+              minHeight: '56px'
+            }
           }
         },
         BackToTop: {
