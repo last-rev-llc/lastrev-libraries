@@ -1,11 +1,11 @@
 import '@testing-library/jest-dom';
 import fs from 'fs';
 import path from 'path';
-import generateSitemap from '..';
+import { generateSitemap } from '..';
 import sitemapMock from './sitemap.mock';
 import libxmljs from 'libxmljs2';
 
-describe('sitemap-generator', () => {
+describe('sitemap-generator (legacy)', () => {
   test('generates valid index and sitemap files', async () => {
     await generateSitemap(sitemapMock(), './out');
 

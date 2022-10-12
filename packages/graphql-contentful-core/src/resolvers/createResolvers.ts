@@ -142,7 +142,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
 
               const lastmod = items[0].sys.updatedAt;
 
-              const numPages = Math.ceil(total / config.sitemapMaxPageSize);
+              const numPages = Math.ceil(total / config.sitemap.maxPageSize);
 
               for (const locale of ctx.locales) {
                 for (let i = 1; i <= numPages; i++) {
@@ -180,7 +180,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
         ) => {
           ctx.preview = !!preview;
 
-          const maxPageSize = config.sitemapMaxPageSize;
+          const maxPageSize = config.sitemap.maxPageSize;
 
           const buildSitemapPath = (path: string) =>
             `${locale === ctx.defaultLocale ? '' : `${locale}/`}${path.replace(/^\//, '')}`;

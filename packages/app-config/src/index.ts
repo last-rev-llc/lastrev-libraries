@@ -220,7 +220,13 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
     return isNil(this.config.skipReferenceFields) ? true : this.config.skipReferenceFields;
   }
 
-  get sitemapMaxPageSize() {
-    return this.config.sitemapMaxPageSize || 1000;
+  get sitemap() {
+    return {
+      domain: this.config.sitemap?.domain || '',
+      maxPageSize: this.config.sitemap?.maxPageSize || 1000,
+      indexRootPath: this.config.sitemap?.indexRootPath || '/',
+      pagesRootPath: this.config.sitemap?.pagesRootPath || '/sitemap',
+      excludePages: this.config.sitemap?.excludePages || []
+    };
   }
 }
