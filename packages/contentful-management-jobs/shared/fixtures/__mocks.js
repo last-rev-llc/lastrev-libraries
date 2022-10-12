@@ -45,6 +45,96 @@ const entries = {
   ]
 };
 
+const entryItemFromManagement = {
+  metadata: {
+    tags: []
+  },
+  sys: {
+    space: {
+      sys: {
+        type: 'Link',
+        linkType: 'Space',
+        id: 'hhv516v5f7sj'
+      }
+    },
+    id: '9nJkNjgbJ508mhked5eDi',
+    type: 'Entry',
+    createdAt: '2022-05-12T17:21:38.816Z',
+    updatedAt: '2022-05-12T18:08:17.228Z',
+    environment: {
+      sys: {
+        id: 'support-2048-test-3',
+        type: 'Link',
+        linkType: 'Environment'
+      }
+    },
+    publishedVersion: 15,
+    publishedAt: '2022-05-12T18:08:17.228Z',
+    firstPublishedAt: '2022-05-12T17:21:48.284Z',
+    createdBy: {
+      sys: {
+        type: 'Link',
+        linkType: 'User',
+        id: '1WeEuhqqX00Wy2PFKo2y7H'
+      }
+    },
+    updatedBy: {
+      sys: {
+        type: 'Link',
+        linkType: 'User',
+        id: '1WeEuhqqX00Wy2PFKo2y7H'
+      }
+    },
+    publishedCounter: 3,
+    version: 16,
+    publishedBy: {
+      sys: {
+        type: 'Link',
+        linkType: 'User',
+        id: '1WeEuhqqX00Wy2PFKo2y7H'
+      }
+    },
+    contentType: {
+      sys: {
+        type: 'Link',
+        linkType: 'ContentType',
+        id: 'cloudinaryMedia'
+      }
+    }
+  },
+  fields: {
+    internalTitle: {
+      'en-US': 'IF-UK-Le Bab-Dirty Bab-01'
+    },
+    media: {
+      'en-US': [
+        {
+          url: 'http://res.cloudinary.com/impossible-foods/image/upload/f_auto/q_auto/v1652374295/UK_MediaCenter_partner_Lebab_1270x1770.png',
+          tags: [],
+          type: 'upload',
+          bytes: 680835,
+          width: 1270,
+          format: 'png',
+          height: 1770,
+          version: 1652374295,
+          duration: null,
+          metadata: [],
+          public_id: 'UK_MediaCenter_partner_Lebab_1270x1770',
+          created_at: '2022-05-12T16:51:35Z',
+          secure_url:
+            'https://res.cloudinary.com/impossible-foods/image/upload/f_auto/q_auto/v1652374295/UK_MediaCenter_partner_Lebab_1270x1770.png',
+          original_url:
+            'http://res.cloudinary.com/impossible-foods/image/upload/v1652374295/UK_MediaCenter_partner_Lebab_1270x1770.png',
+          resource_type: 'image',
+          raw_transformation: 'f_auto/q_auto',
+          original_secure_url:
+            'https://res.cloudinary.com/impossible-foods/image/upload/v1652374295/UK_MediaCenter_partner_Lebab_1270x1770.png'
+        }
+      ]
+    }
+  }
+};
+
 const linkedEntries = [
   { '7Fi9Imq9QS5qqv0eFcLURT': ['3uYesjLriOI94xWa9CbEVl'] },
   { '1UGmOpMiiK3Bef3QOPcvjU': ['2Zy6GdhxoI2TCOTJP3gqnw'] }

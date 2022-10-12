@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-await-in-loop */
-const { clientDelivery, getEnvironmentManagement } = require('../shared/contentful-init');
+const { clientDelivery, environmentManagement } = require('../shared/contentful-init');
 const { importParser } = require('../shared/input-parsers');
 const { getAssetType, getContentfulIdFromString, getMediaObject } = require('../shared/contentful-fields');
 
@@ -23,10 +23,8 @@ const entriesQuery = {
 const entryLookup = {};
 
 const getAllEntries = async (query) => {
-  // let entries = testEntries;
   let entries;
   if (STEPS.getEntries) {
-    // console.log('clientDelivery => ', clientDelivery);
     entries = await importParser(async () => clientDelivery.getEntries(query));
   }
   return entries;
@@ -35,16 +33,14 @@ const getAllEntries = async (query) => {
 const prepareItems = (items) => {
   if (STEPS.prepareItems) {
     return items.map((entry) => {
-      const { media, internalTitle } = entry.fields;
-      const publish = !!entry.sys.publishedVersion && entry.sys.version === entry.sys.publishedVersion + 1;
+      const { media } = entry.fields;
       const mediaObject = getMediaObject(media);
-      const fileName = (mediaObject.url && mediaObject.url.split('/').pop()) || 'Missing url';
 
       const url = mediaObject.original_secure_url || mediaObject.original_url || mediaObject.url;
 
       const entryId = getContentfulIdFromString(url);
 
-      // take care of duplicate assets
+      // take care of duplicate items
       if (entryLookup[entryId]) {
         entryLookup[entryId].duplicateIds.push(entry.sys.id);
         return null;
@@ -54,42 +50,8 @@ const prepareItems = (items) => {
 
       return {
         linkingId: entry.sys.id,
-        publish,
         entryId,
         url
-        // assetEntry: {
-        //   fields: {
-        //     title: {
-        //       'en-US': internalTitle
-        //     },
-        //     file: {
-        //       'en-US': {
-        //         contentType: getAssetType(mediaObject.format),
-        //         fileName,
-        //         upload: internalTitle !== 'IF_2020_IMPOSSIBLE_SAUSAGE.jpg.jpg' ? url : `${url}.jpg`
-        //       }
-        //     }
-        //   }
-        // },
-        // entry: {
-        //   fields: {
-        //     internalTitle: {
-        //       'en-US': internalTitle
-        //     },
-        //     media: {
-        //       'en-US': {
-        //         sys: {
-        //           type: 'Link',
-        //           linkType: 'Asset',
-        //           id: entryId
-        //         }
-        //       }
-        //     },
-        //     cardStyle: {
-        //       'en-US': 'Media'
-        //     }
-        //   }
-        // }
       };
     });
   }
@@ -181,8 +143,8 @@ const findUpdateField = (entry, newField, duplicateIds) => {
       console.log('card found => ', JSON.stringify(entry, null, 2));
       break;
     case 'ctaHero': {
-      const videoDesktop = entry?.fields?.videoDesktop['en-US'];
-      const videoMobile = entry?.fields?.videoMobile['en-US'];
+      const videoDesktop = entry?.fields?.videoDesktop?.['en-US'];
+      const videoMobile = entry?.fields?.videoMobile?.['en-US'];
       if (videoDesktop && duplicateIds.some((id) => id === videoDesktop.sys.id)) {
         entry.fields.videoDesktop['en-US'] = newField;
         update = true;
@@ -207,14 +169,14 @@ const updateLinks = async (linkedEntries, entryId, duplicateIds) => {
 
     const { update, entry } = findUpdateField(linkedEntry, newField, duplicateIds);
     if (update) {
-      await updateEntry(entry);
+      await updateEntry(entry, entryId);
     }
   }
 };
 
 const updateLinkedEntries = async (items) => {
   if (STEPS.updateLinkedEntries) {
-    const environment = await getEnvironmentManagement();
+    const environment = await environmentManagement;
     if (!environment) {
       console.log('environment not found');
       return;
@@ -246,15 +208,19 @@ const updateLinkedEntries = async (items) => {
     const preparedItems = prepareItems(entries.items);
     console.log('preparedItems => ', preparedItems.length);
 
-    // Step 3 - Fill Duplicates
-    const filledItems = fillDuplicateIds(preparedItems.filter((item) => item));
+    // Step 3 - Filter Items
+    const filteredItems = preparedItems.filter((item) => item);
+    console.log('filteredItems => ', filteredItems.length);
+
+    // Step 4 - Fill Duplicates
+    const filledItems = fillDuplicateIds(filteredItems);
     console.log('filledItems => ', filledItems.length);
 
-    // Step 4 - Get Linked Entries
+    // Step 5 - Get Linked Entries
     const linkedItems = await getLinkedEntries(filledItems);
     console.log('linkedItems => ', linkedItems.length);
 
-    // Step 5 - Update Linked Entries
+    // Step 6 - Update Linked Entries
     await updateLinkedEntries(linkedItems);
   } else {
     console.log('No entries found');

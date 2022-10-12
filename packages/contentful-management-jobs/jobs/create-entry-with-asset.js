@@ -1,24 +1,67 @@
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-await-in-loop */
-const { clientDelivery, getEnvironmentManagement } = require('../shared/contentful-init');
+const { clientDelivery, environmentManagement } = require('../shared/contentful-init');
 const { importParser } = require('../shared/input-parsers');
 const { publishItem, checkForExistingItem } = require('../shared/contentful-actions');
 const { logItems } = require('../shared/logging');
 
-// const entryLookup = {};
 const STEPS = {
   getAssets: true,
   transformAssetsToEntries: true,
-  filterEntries: false,
-  checkForDuplicates: false,
-  createEntries: false
+  filterEntries: true,
+  checkForDuplicates: true,
+  createEntries: true
 };
+
 const ASSETS_QUERY = {
-  'sys.createdAt[gte]': '2022-09-30T17:00:00Z',
+  'sys.createdAt[gte]': '2022-10-12T00:00:00Z',
   'fields.file.url[exists]': true,
   'limit': 1000,
   'order': '-sys.createdAt'
+};
+
+const cardEntry = (title, id) => ({
+  fields: {
+    internalTitle: {
+      'en-US': title
+    },
+    media: {
+      'en-US': {
+        sys: {
+          type: 'Link',
+          linkType: 'Asset',
+          id
+        }
+      }
+    },
+    cardStyle: {
+      'en-US': 'Media'
+    }
+  }
+});
+
+const mediaEntry = (title, id) => ({
+  fields: {
+    internalTitle: {
+      'en-US': title
+    },
+    desktop: {
+      'en-US': {
+        sys: {
+          type: 'Link',
+          linkType: 'Asset',
+          id
+        }
+      }
+    }
+  }
+});
+
+const getEntryType = (title, id, type) => {
+  const assetType = type.split('/')[0];
+  const isImageOrVideo = assetType === 'image' || assetType === 'video';
+  return isImageOrVideo ? cardEntry(title, id) : mediaEntry(title, id);
 };
 
 const transformAssetsToEntries = (assets) => {
@@ -27,29 +70,18 @@ const transformAssetsToEntries = (assets) => {
       if (asset) {
         const {
           sys: { id },
-          fields: { title }
-        } = asset || {};
-        return {
-          entryId: id,
-          entry: {
-            fields: {
-              internalTitle: {
-                'en-US': title
-              },
-              media: {
-                'en-US': {
-                  sys: {
-                    type: 'Link',
-                    linkType: 'Asset',
-                    id
-                  }
-                }
-              },
-              cardStyle: {
-                'en-US': 'Media'
-              }
+          fields: {
+            title: { 'en-US': title },
+            file: {
+              'en-US': { contentType }
             }
           }
+        } = asset || {};
+        const publish = !!asset.sys.publishedVersion && asset.sys.version === asset.sys.publishedVersion + 1;
+        return {
+          publish,
+          entryId: id,
+          entry: getEntryType(title, id, contentType)
         };
       }
       console.log('asset not found');
@@ -73,7 +105,7 @@ const createEntryWithId = async (environment, entryId, entryObject, contentType)
 const createEntries = async (entries, contentType) => {
   const createdEntries = [];
   if (STEPS.createEntries) {
-    const environment = await getEnvironmentManagement();
+    const environment = await environmentManagement;
     if (!environment) {
       console.log('environment not found');
       return [];
@@ -108,7 +140,8 @@ const createEntries = async (entries, contentType) => {
 const getAllAssets = async (query) => {
   let assets;
   if (STEPS.getAssets) {
-    assets = await importParser(() => clientDelivery.getAssets(query));
+    const environment = await environmentManagement;
+    assets = await importParser(() => environment.getAssets(query));
   }
   return assets;
 };
@@ -136,29 +169,23 @@ const findDuplicateEntries = (entries) => {
 (async () => {
   // Step 1 - Get all entries
   const assets = await getAllAssets(ASSETS_QUERY);
-  // logItems(
-  //   assets.items,
-  //   (asset, index) => index === 100,
-  //   (asset) => `${asset.sys.id} => ${JSON.stringify(asset, null, 2)}`
-  // );
 
   console.log('assets count => ', assets.items.length);
 
   if (assets?.items?.length) {
-    // Step 4 - transform assets into contentful entries
+    // Step 2 - transform assets into contentful entries
     const entriesWithAsset = transformAssetsToEntries(assets.items);
-    // console.log('entriesWithAsset => ', JSON.stringify(entriesWithAsset, null, 2));
     console.log('entriesWithAsset => ', entriesWithAsset.length);
 
     if (entriesWithAsset.length) {
-      // Step 5 - Filter out entries that do not have urls
+      // Step 3 - Filter out entries that do not have urls
       const filteredEntries = filterEntries(entriesWithAsset);
 
-      // Step 6 - check for missed duplicates
+      // Step 4 - check for missed duplicates
       const duplicateEntries = findDuplicateEntries(filteredEntries);
       console.log('duplicateEntries => ', duplicateEntries.length);
 
-      // Step 7 - Create entries
+      // Step 5 - Create entries
       const createdEntries = await createEntries(entriesWithAsset, 'card');
       console.log('createdEntries => ', createdEntries.length);
     }
