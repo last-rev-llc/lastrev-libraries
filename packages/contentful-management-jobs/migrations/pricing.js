@@ -66,8 +66,9 @@ const pricing = {
         items.map(async (item) =>
           createEntryReference(JOB, {
             contentType: 'card',
-            fields: ['title', 'id', 'list'],
+            fields: ['title', 'id', 'list', 'variant'],
             entry: {
+              variant: 'platform',
               title: item?.title,
               id: item?.icon_modifier,
               list: item?.list
@@ -88,8 +89,9 @@ const pricing = {
         items.map(async (item) =>
           createEntryReference(JOB, {
             contentType: 'card',
-            fields: ['img', 'title', 'link'],
+            fields: ['img', 'title', 'link', 'variant'],
             entry: {
+              variant: 'logo-link',
               title: item?.name,
               img: await createMediaReference(JOB, {
                 title: item?.name,

@@ -63,9 +63,10 @@ const career = {
         list.map(async (card) =>
           createEntryReference(JOB, {
             contentType: 'card',
-            fields: ['id', 'title', 'text', 'img', 'list'],
+            fields: ['id', 'title', 'text', 'img', 'list', 'variant'],
             entry: {
               ...card,
+              variant: 'career-benefit',
               id: card?.title_modifier,
               img: await createMediaReference(JOB, { assetURL: card.icon }),
               list: card?.bullet_list

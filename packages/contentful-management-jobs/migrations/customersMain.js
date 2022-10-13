@@ -35,9 +35,10 @@ const customersMain = {
                 customerFeatured.statbar?.list?.map((stat) =>
                   createEntryReference(JOB, {
                     contentType: 'card',
-                    fields: ['number', 'text'],
+                    fields: ['number', 'text', 'variant'],
                     entry: {
                       ...stat,
+                      variant: 'featured-stat',
                       number: stat?.stat,
                       text: stat?.description
                     }
