@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.8
+
+### Patch Changes
+
+- 3371479: Bring fetching logic into sitemap generator
+- Updated dependencies [3371479]
+  - @last-rev/app-config@0.4.1
+
 ## 0.5.7
 
 ### Patch Changes

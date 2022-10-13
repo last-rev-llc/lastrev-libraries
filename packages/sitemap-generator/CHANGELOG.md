@@ -1,5 +1,16 @@
 # @last-rev/sitemap-generator
 
+## 0.2.0
+
+### Minor Changes
+
+- 3371479: Bring fetching logic into sitemap generator
+
+### Patch Changes
+
+- Updated dependencies [3371479]
+  - @last-rev/app-config@0.4.1
+
 ## 0.1.4
 
 ### Patch Changes
