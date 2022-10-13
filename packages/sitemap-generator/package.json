@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/sitemap-generator",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -23,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/app-config": "^0.4.0",
+    "@last-rev/app-config": "^0.4.1",
     "@last-rev/types": "^0.3.0",
     "fs-extra": "^10.0.0",
     "graphql-request": "^5.0.0",

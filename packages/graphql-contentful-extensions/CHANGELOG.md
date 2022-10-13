@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.9
+
+### Patch Changes
+
+- 0026ed0: Fixed the last embedded inline entry from being removed
+- Updated dependencies [3371479]
+  - @last-rev/graphql-contentful-core@0.5.8
+
 ## 0.1.8
 
 ### Patch Changes

@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.4.1
+
+### Patch Changes
+
+- 3371479: Bring fetching logic into sitemap generator
+
 ## 0.4.0
 
 ### Minor Changes
