@@ -1,6 +1,7 @@
-import React from 'react';
-import { useRouter } from 'next/router';
+import React, { useEffect } from 'react';
 import { Configure, RefinementList, MenuSelect, connectRefinementList } from 'react-instantsearch-dom';
+import { useRouter } from 'next/router';
+import aa from 'search-insights';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
@@ -30,10 +31,21 @@ const RefinementListTest = (props: any) => {
 
 const CustomRefinementList = connectRefinementList(RefinementListTest);
 
-export const CollectionSearchFilters = ({ introText, sidekickLookup, ...props  }: CollectionProps) => {
+export const CollectionSearchFilters = ({ introText, sidekickLookup, ...props }: CollectionProps) => {
   const router = useRouter();
   const localization = useLocalizationContext();
   const { locale, defaultLocale } = router;
+
+  let userToken = '';
+  useEffect(() => {
+    aa('getUserToken', null, (err: any, algoliaUserToken: string) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      userToken = algoliaUserToken;
+    });
+  }, []);
 
   return (
     <ErrorBoundary>
@@ -104,8 +116,9 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup, ...props  }
             items.map((item) => {
               return {
                 ...item,
-                label: item.label,
-                count: `(${item.count})`
+                'label': item.label,
+                'count': `(${item.count})`,
+                'data-insights-filter': `categories: ${item.label}`
               };
             })
           }
@@ -128,7 +141,13 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup, ...props  }
             }
           />
         )}
-        <Configure hitsPerPage={8} facetingAfterDistinct={true} filters={`locale:${locale}`} />
+        <Configure
+          hitsPerPage={8}
+          facetingAfterDistinct={true}
+          filters={`locale:${locale}`}
+          clickAnalytics={true}
+          userToken={userToken}
+        />
         {/* Locale switcher */}
         {props.items?.map((item) => {
           if (item.__typename === 'NavigationItem') {

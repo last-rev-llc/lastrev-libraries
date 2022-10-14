@@ -11,7 +11,6 @@ import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoun
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { CollectionProps } from '@last-rev/component-library/dist/components/Collection';
 import Link from '@last-rev/component-library/dist/components/Link';
-
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import CategoryLinks from '../CategoryLinks';
@@ -27,6 +26,9 @@ interface HitProps {
   categoryLinks: Array<CategoryProps>;
   path: string;
   summary?: string;
+  objectID?: string;
+  __position?: string;
+  __queryID?: string;
 }
 
 interface LoadingItemsProps {
@@ -42,7 +44,10 @@ const Hit = (props: any) => {
   }));
 
   return (
-    <>
+    <div
+      data-insights-object-id={hit.objectID}
+      data-insights-position={hit.__position}
+      data-insights-query-id={hit.__queryID}>
       <Link href={hit.path}>
         <HitTitle component={Highlight} variant="body2" attribute="title" hit={hit} />
       </Link>
@@ -54,7 +59,7 @@ const Hit = (props: any) => {
           <CategoryLinks links={categories} />
         </Box>
       )}
-    </>
+    </div>
   );
 };
 

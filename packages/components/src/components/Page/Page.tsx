@@ -32,7 +32,7 @@ const PageGeneral = ({
   const { searchState, handleSearchStateChange } = useSearchState();
 
   return (
-    <>
+    <div data-insights-index={indexName}>
       <InstantSearch
         indexName={indexName}
         searchClient={searchClient}
@@ -49,7 +49,7 @@ const PageGeneral = ({
         {!disableBackToTop ? <BackToTop FabProps={{ 'aria-label': 'Back To Top' }} /> : null}
         {footer ? <ContentModule {...(footer as any)} /> : null}
       </InstantSearch>
-    </>
+    </div>
   );
 };
 
