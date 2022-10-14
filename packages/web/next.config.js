@@ -15,7 +15,7 @@ const nextConfig = {
    */
   i18n: {
     // TODO: generate these and read from that
-    locales: ['en-US', 'es-419', 'pt-BR', 'ja-JP'],
+    locales: ['en-US', 'es-419', 'pt-BR', 'ja-JP', 'de-DE'],
     defaultLocale: 'en-US'
   },
   reactStrictMode: true,
