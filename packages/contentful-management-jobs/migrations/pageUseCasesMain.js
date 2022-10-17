@@ -42,6 +42,7 @@ const pageUseCasesMain = {
             entry: {
               variant: 'stat-card',
               title: item?.name,
+              text: item?.description,
               img: await createMediaReference(JOB, {
                 assetURL: item.logo2x || item.logo,
                 title: item?.name,

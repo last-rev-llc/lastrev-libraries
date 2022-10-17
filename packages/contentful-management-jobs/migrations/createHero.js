@@ -10,7 +10,9 @@ const createHero = async (JOB, entryId, hero) => {
     JOB.relatedEntries.push(
       await createMediaEntry(JOB, assetId, {
         title: hero.alt,
-        assetURL: asset
+        assetURL: asset,
+        width: hero?.image_width,
+        height: hero?.image_height
       })
     );
     image = await contentfulFieldsParsers.getContentfulFieldValue(assetId, { type: 'Entry' });
@@ -21,6 +23,7 @@ const createHero = async (JOB, entryId, hero) => {
     fields: [
       'position',
       'pre_header',
+      'disclaimer',
       'reduced_paddings',
       'background',
       'background_modifier',
