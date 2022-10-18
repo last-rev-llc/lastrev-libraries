@@ -58,9 +58,7 @@ const mediaEntry = (title, id) => ({
   }
 });
 
-const getEntryType = (title, id, type) => {
-  const assetType = type.split('/')[0];
-  const isImageOrVideo = assetType === 'image' || assetType === 'video';
+const setEntryByType = (title, id, isImageOrVideo) => {
   return isImageOrVideo ? cardEntry(title, id) : mediaEntry(title, id);
 };
 
@@ -78,10 +76,13 @@ const transformAssetsToEntries = (assets) => {
           }
         } = asset || {};
         const publish = !!asset.sys.publishedVersion && asset.sys.version === asset.sys.publishedVersion + 1;
+        const assetType = contentType.split('/')[0];
+        const isImageOrVideo = assetType === 'image' || assetType === 'video';
         return {
           publish,
           entryId: id,
-          entry: getEntryType(title, id, contentType)
+          contentType: isImageOrVideo ? 'card' : 'media',
+          entry: setEntryByType(title, id, isImageOrVideo)
         };
       }
       console.log('asset not found');
@@ -102,7 +103,7 @@ const createEntryWithId = async (environment, entryId, entryObject, contentType)
   return entry;
 };
 
-const createEntries = async (entries, contentType) => {
+const createEntries = async (entries) => {
   const createdEntries = [];
   if (STEPS.createEntries) {
     const environment = await environmentManagement;
@@ -113,7 +114,7 @@ const createEntries = async (entries, contentType) => {
 
     for (let index = 0; index < entries.length; index++) {
       const currentEntry = entries[index];
-      const { entry, entryId, publish } = currentEntry;
+      const { entry, entryId, publish, contentType } = currentEntry;
 
       const existingAsset = await checkForExistingItem(entryId, async () => clientDelivery.getEntry(entryId));
 
@@ -186,7 +187,7 @@ const findDuplicateEntries = (entries) => {
       console.log('duplicateEntries => ', duplicateEntries.length);
 
       // Step 5 - Create entries
-      const createdEntries = await createEntries(entriesWithAsset, 'card');
+      const createdEntries = await createEntries(entriesWithAsset);
       console.log('createdEntries => ', createdEntries.length);
     }
   } else {
