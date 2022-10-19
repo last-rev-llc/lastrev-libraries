@@ -58,6 +58,10 @@ const config = new LastRevAppConfig({
   logLevel: 'debug',
   fs: {
     contentDir: resolve(__dirname, './packages/graphql-runner/cms-sync')
+  },
+  sitemap: {
+    domain: `${process.env.DOMAIN}`,
+    excludePages: ['error_404']
   }
 });
 
