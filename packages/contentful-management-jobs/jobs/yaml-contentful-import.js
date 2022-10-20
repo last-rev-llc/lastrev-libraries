@@ -11,9 +11,9 @@ const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
 const IS_DEBUG_MODE = false;
-const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pageIpaas'; // The main content type that is being imported
-const BASE_FOLDER_PATH = '/home/max/dev/workato-website/content/ipaas'; // The local folder to import yaml files from
-const CUSTOM_PARSER_LOOKUP = require('../migrations/pageIpaas');
+const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'mainPageIntegration'; // The main content type that is being imported
+const BASE_FOLDER_PATH = '/home/max/dev/workato-website/content/integrations'; // The local folder to import yaml files from
+const CUSTOM_PARSER_LOOKUP = require('../migrations/mainPageIntegration');
 
 const LOCALE = 'en-US'; // The locale of the content type
 const MAX_NUMBER_OF_FILES = Infinity; // The maximum number of files to import at once, used for debugging purposes

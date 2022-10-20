@@ -47,6 +47,7 @@ const pageHowItWorks = {
             fields: ['title', 'id', 'list'],
             entry: {
               variant: 'how-it-works',
+              id: item?.title_modifier,
               title: item?.title,
               list: item?.details
             }
