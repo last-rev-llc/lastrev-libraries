@@ -3,19 +3,41 @@ import { ApolloContext } from '@last-rev/types';
 import getPathUrl from './getPathUrl';
 
 type AlgoliaCategoryMapping = {
-  [id: string]: { name: string; breadCrumbName: string; href?: string; level: number; relativeIds: string[] };
+  [id: string]: AlgoliaCategoryInfo;
+};
+
+type AlgoliaCategoryMappingsByLocale = {
+  [locale: string]: AlgoliaCategoryMapping;
+};
+
+type AlgoliaLocaleCategoryMappingsByState = {
+  preview: AlgoliaCategoryMappingsByLocale;
+  prod: AlgoliaCategoryMappingsByLocale;
+};
+
+type AlgoliaCategoryInfo = {
+  name: string;
+  breadCrumbName: string;
+  href?: string;
+  level: number;
+  relativeIds: string[];
 };
 
 const ROOT_CATEGORY_ID = '1d36wf7VTxu5K8BxjJHEY4';
 
 const getAlgoliaCategoryMapping = (() => {
-  let algoliaCategoriesByState: { [key: string]: AlgoliaCategoryMapping } = {};
+  let algoliaLocaleCategoryMappingsByState: AlgoliaLocaleCategoryMappingsByState = {
+    preview: {},
+    prod: {}
+  };
 
   return async (ctx: ApolloContext): Promise<AlgoliaCategoryMapping> => {
     const state = ctx.preview ? 'preview' : 'prod';
+    const currentStateMappingsByLocale = algoliaLocaleCategoryMappingsByState[state];
+    const locale = ctx.locale || ctx.defaultLocale;
 
-    if (algoliaCategoriesByState[state]) {
-      return algoliaCategoriesByState[state] as AlgoliaCategoryMapping;
+    if (currentStateMappingsByLocale[locale]) {
+      return currentStateMappingsByLocale[locale];
     }
 
     const allCategories = await ctx.loaders.entriesByContentTypeLoader.load({
@@ -33,7 +55,7 @@ const getAlgoliaCategoryMapping = (() => {
     const root = categoriesById[ROOT_CATEGORY_ID];
 
     if (!root) {
-      algoliaCategoriesByState[state] = result;
+      currentStateMappingsByLocale[locale] = result;
       return result;
     }
 
@@ -71,7 +93,7 @@ const getAlgoliaCategoryMapping = (() => {
       });
     }
 
-    algoliaCategoriesByState[state] = result;
+    currentStateMappingsByLocale[locale] = result;
     return result;
   };
 })();
