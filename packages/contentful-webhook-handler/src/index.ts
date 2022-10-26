@@ -5,21 +5,38 @@ import { ProcessCommand } from './types';
 import { createHandlers } from './handlers';
 import parseWebhook from '@last-rev/contentful-webhook-parser';
 import logger from 'loglevel';
+import jwt from 'jsonwebtoken';
 
 const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Record<string, string>) => {
   logger.setLevel(config.logLevel);
-  const eventAction = parseWebhook(config, body, headers);
+  const token = headers['authorization']?.split(' ')[1];
+
+  const { type, action, envs } = parseWebhook(config, body, headers);
   const handlers = createHandlers(config);
 
+  // if signing secret is provided, decode the token and verify it
+  if (config.jwtSigningSecret) {
+    if (!token) throw Error('No authorization token provided.');
+    try {
+      const decoded = (await jwt.verify(token, config.jwtSigningSecret)) as jwt.JwtPayload;
+      if (decoded?.spaceId !== config.contentful.spaceId) {
+        throw new Error('Invalid spaceId in JWT Token');
+      }
+    } catch (e) {
+      logger.error('Invalid JWT token');
+      throw e;
+    }
+  }
+
   await Promise.all(
-    map(eventAction.envs, async (env) => {
+    map(envs, async (env) => {
       try {
         const command = {
           isPreview: env === 'preview',
-          action: eventAction.action,
+          action: action,
           data: body
         };
-        switch (eventAction.type) {
+        switch (type) {
           case 'Asset':
             await handlers.asset(command as ProcessCommand<Asset>);
             break;
@@ -30,7 +47,7 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
             await handlers.contentType(command as ProcessCommand<ContentType>);
             break;
           default:
-            throw Error(`unsupported type! ${eventAction.type}`);
+            throw Error(`unsupported tpe! ${type}`);
         }
       } catch (err) {
         logger.error('Error handling webhook', err);
@@ -39,7 +56,7 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
     })
   );
 
-  await handlers.paths(eventAction.envs.includes('preview'), eventAction.envs.includes('production'));
+  await handlers.paths(envs.includes('preview'), envs.includes('production'));
 };
 
 export default handleWebhook;

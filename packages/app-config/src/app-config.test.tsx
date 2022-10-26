@@ -369,5 +369,16 @@ describe('LastRevAppConfig', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
       expect(appConfig.skipReferenceFields).toBe(true);
     });
+
+    test('jwtSigningSecret defaults to nothing if not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.jwtSigningSecret).toBeUndefined();
+    });
+
+    test('skipReferenceFields defaults to true if not provided', () => {
+      mockedConfig.jwtSigningSecret = 'test-token';
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.jwtSigningSecret).toBe('test-token');
+    });
   });
 });

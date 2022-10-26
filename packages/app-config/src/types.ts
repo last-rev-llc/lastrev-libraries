@@ -12,6 +12,7 @@ export interface LastRevAppConfiguration {
   cms: 'Contentful';
   contentStrategy: ContentStrategy;
   cmsCacheStrategy: CmsCacheStrategy;
+  jwtSigningSecret?: string;
   redis: RedisOptions & {
     maxBatchSize: number;
     ttlSeconds: number;
@@ -69,6 +70,7 @@ export type LastRevAppConfigArgs = {
   strategy?: LastRevStrategy;
   contentStrategy?: ContentStrategy;
   cmsCacheStrategy?: CmsCacheStrategy;
+  jwtSigningSecret?: string;
   redis?: RedisOptions & {
     maxBatchSize?: number;
     ttlSeconds?: number;

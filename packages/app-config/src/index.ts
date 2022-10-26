@@ -117,6 +117,10 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
     return new LastRevAppConfig(merge({}, this.config, newConfig));
   }
 
+  get jwtSigningSecret() {
+    return this.config.jwtSigningSecret;
+  }
+
   get contentful() {
     return {
       spaceId: this.config.contentful?.spaceId!,
