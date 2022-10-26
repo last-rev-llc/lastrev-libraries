@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.4.2
+
+### Patch Changes
+
+- 4fc37b3: Added ability to add jwt signing for webhook verification
+
 ## 0.4.1
 
 ### Patch Changes
