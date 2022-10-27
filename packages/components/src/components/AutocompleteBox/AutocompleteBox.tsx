@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { getAlgoliaResults } from '@algolia/autocomplete-js';
 import { OnSubmitParams } from '@algolia/autocomplete-core';
 import algoliasearch from 'algoliasearch';
@@ -8,6 +9,7 @@ import Box from '@mui/material/Box';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
+import { RouterContext } from 'next/dist/shared/lib/router-context';
 import Autocomplete from '../Autocomplete';
 import SearchResultItem from '../SearchResultItem';
 import { useLocalizationContext } from '../LocalizationContext';
@@ -35,6 +37,20 @@ export interface templatesItemsProps {
   item: any;
   components: any;
 }
+
+export interface ResultItemProps {
+  router: any;
+  href: string;
+  children: JSX.Element;
+}
+
+const ResultItem = ({ router, href, children }: ResultItemProps) => {
+  return (
+    <RouterContext.Provider value={router}>
+      <Link href={href}>{children}</Link>
+    </RouterContext.Provider>
+  );
+};
 
 export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
   const theme = useTheme();
@@ -89,8 +105,22 @@ export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
             },
             templates: {
               item({ item, components }: templatesItemsProps) {
+                if (
+                  router?.locale !== defaultLocale &&
+                  !item?.path.includes(item?.locale) &&
+                  !router?.asPath.includes(item?.locale)
+                ) {
+                  item.path = `/${item.locale}${item.path}`;
+                }
                 return (
-                  <components.SearchResultItem hit={item} data-testid="SearchResultItem" components={components} />
+                  <ResultItem router={router} href={item.path}>
+                    <components.SearchResultItem
+                      hit={item}
+                      router={router}
+                      data-testid="SearchResultItem"
+                      components={components}
+                    />
+                  </ResultItem>
                 );
               },
               noResults() {
