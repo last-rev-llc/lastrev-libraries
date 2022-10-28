@@ -163,8 +163,6 @@ export const Header = ({
                 }}>
                 <AutocompleteBox
                   settings={{
-                    placeholder:
-                      localization['header.search.placeholder']?.shortTextValue ?? 'Search our knowledge base',
                     searchResultsUrl: '/search'
                   }}
                 />

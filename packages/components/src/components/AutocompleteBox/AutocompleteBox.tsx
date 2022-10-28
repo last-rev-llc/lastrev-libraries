@@ -58,9 +58,10 @@ export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
   const localization = useLocalizationContext();
   const { locale, defaultLocale } = router;
 
-  const { variant, placeholder, searchResultsUrl } = settings as SettingsProps;
+  const { variant, searchResultsUrl } = settings as SettingsProps;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
+  const placeholder = localization['header.search.placeholder']?.shortTextValue ?? 'Search our knowledge base';
   const mobileText = localization['autocomplete.searchMobile.placeholder']?.shortTextValue ?? 'Search';
 
   const filters = locale !== defaultLocale ? `locale:${locale} AND translatedInLocale:true` : `locale:${locale}`;
