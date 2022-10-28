@@ -42,7 +42,7 @@ export const ArticleNav = ({ sideNav }: ArticleNavProps) => {
                   component="li"
                   mb={2}
                   pl={1}
-                  key={link?.id}
+                  key={`${idx}-${link?.id}`}
                   data-testid="ArticleNav-link"
                   data-scrollspy-id={String(link?.href).substring(2)}
                   className={`
