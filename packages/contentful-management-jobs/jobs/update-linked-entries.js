@@ -3,7 +3,7 @@
 /* eslint-disable no-await-in-loop */
 const { clientDelivery, environmentManagement } = require('../shared/contentful-init');
 const { importParser } = require('../shared/input-parsers');
-const { getAssetType, getContentfulIdFromString, getMediaObject } = require('../shared/contentful-fields');
+const { getContentfulIdFromString, getMediaObject } = require('../shared/contentful-fields');
 
 const STEPS = {
   getEntries: true,
@@ -32,13 +32,30 @@ const getAllEntries = async (query) => {
 
 const prepareItems = (items) => {
   if (STEPS.prepareItems) {
+    let videos = 0;
     return items.map((entry) => {
       const { media } = entry.fields;
       const mediaObject = getMediaObject(media);
 
       const url = mediaObject.original_secure_url || mediaObject.original_url || mediaObject.url;
+      const fileExtension = url.split('.').pop();
+      const isVideo = fileExtension === 'mp4' || fileExtension === 'mov';
 
       const entryId = getContentfulIdFromString(url);
+      let stillImageId = '';
+      if (isVideo) {
+        videos += 1;
+        console.log(`video #${videos} => ${entryId} for ${url}`);
+        const stillImageUrl = url.split('.');
+        // remove the file extension
+        stillImageUrl.pop();
+        // add the still image extension
+        stillImageUrl.push('jpg');
+        // join the array back into a string
+        const imageUrl = stillImageUrl.join('.');
+
+        stillImageId = getContentfulIdFromString(imageUrl);
+      }
 
       // take care of duplicate items
       if (entryLookup[entryId]) {
@@ -51,7 +68,8 @@ const prepareItems = (items) => {
       return {
         linkingId: entry.sys.id,
         entryId,
-        url
+        url,
+        stillImageId
       };
     });
   }
@@ -69,11 +87,19 @@ const fillDuplicateIds = (items) => {
   return [];
 };
 
-const getLinks = async (linkedEntryIds, entryId, environment) => {
+const getLinks = async ({ linkedEntryIds, entryId }, environment) => {
   let linkedEntries;
   try {
     console.log(`getting linked entries => ${linkedEntryIds} for ${entryId}`);
     linkedEntries = await environment.getEntries({ 'sys.id[in]': linkedEntryIds });
+
+    if (linkedEntries?.items?.length !== linkedEntryIds?.split(',')?.length) {
+      console.log(
+        `MATCH_CHECK_ERROR: linkedEntries => ${linkedEntries.items.length} should = linkedEntryIds => ${
+          linkedEntryIds.split(',').length
+        }`
+      );
+    }
   } catch (error) {
     console.log(`error getting linked entries => ${linkedEntryIds} for ${entryId} => `, error);
   }
@@ -88,7 +114,8 @@ const getLinkedEntries = async (items) => {
       const linkedEntryIds = duplicateIds?.join(',') || linkingId;
 
       console.log('linkedEntryIds => ', linkedEntryIds);
-      let allLinks = [];
+      const allLinks = [];
+      allLinks.length = 0;
       if (duplicateIds && duplicateIds.length) {
         for (let idIndex = 0; idIndex < duplicateIds.length; idIndex += 1) {
           const id = duplicateIds[idIndex];
@@ -96,7 +123,10 @@ const getLinkedEntries = async (items) => {
             try {
               console.log(`getting linked entries for ${id} for new id ${entryId}`);
               links = await clientDelivery.getEntries({ links_to_entry: id });
-              allLinks = [...allLinks, ...links.items];
+              if (links?.items?.length) {
+                console.log(`linked entries for ${id} for => ${entryId} were found`);
+                allLinks.push(links.items);
+              }
             } catch (error) {
               console.log(`error getting linked entries for ${id} for new id ${entryId} => `, error);
             }
@@ -104,9 +134,13 @@ const getLinkedEntries = async (items) => {
         }
       }
 
-      if (allLinks?.length) {
-        items[index].linkedEntryIds = links.items.map((item) => item.sys.id).join(',');
-        console.log(`linked entries for ${linkingId} for => ${entryId} were found`);
+      if (allLinks?.flat().length) {
+        items[index].linkedEntryIds = allLinks
+          .flat()
+          .map((item) => item.sys.id)
+          .join(',');
+        console.log('found linked items => ', items[index].linkedEntryIds);
+        console.log(`linked entries for ${linkedEntryIds} for => ${entryId} were found`);
       } else {
         console.log(`no linked entries for ${linkingId} for => ${entryId} were found`);
       }
@@ -140,7 +174,8 @@ const findUpdateField = (entry, newField, duplicateIds) => {
         }) || undefined;
       break;
     case 'card':
-      console.log('card found => ', JSON.stringify(entry, null, 2));
+      entry.fields.videoStillImage = { 'en-US': newField };
+      update = true;
       break;
     case 'ctaHero': {
       const videoDesktop = entry?.fields?.videoDesktop?.['en-US'];
@@ -162,10 +197,10 @@ const findUpdateField = (entry, newField, duplicateIds) => {
   return { update, entry };
 };
 
-const updateLinks = async (linkedEntries, entryId, duplicateIds) => {
+const updateLinks = async (linkedEntries, { entryId, duplicateIds }, linkType = 'Entry') => {
   for (let i = 0; i < linkedEntries.items.length; i += 1) {
     const linkedEntry = linkedEntries.items[i];
-    const newField = { sys: { type: 'Link', linkType: 'Entry', id: entryId } };
+    const newField = { sys: { type: 'Link', linkType, id: entryId } };
 
     const { update, entry } = findUpdateField(linkedEntry, newField, duplicateIds);
     if (update) {
@@ -174,7 +209,7 @@ const updateLinks = async (linkedEntries, entryId, duplicateIds) => {
   }
 };
 
-const updateLinkedEntries = async (items) => {
+const updateLinkedEntries = async (items, linkType = 'Entry') => {
   if (STEPS.updateLinkedEntries) {
     const environment = await environmentManagement;
     if (!environment) {
@@ -182,11 +217,12 @@ const updateLinkedEntries = async (items) => {
       return;
     }
     for (let index = 0; index < items.length; index += 1) {
-      const { entryId, linkedEntryIds, duplicateIds } = items[index];
+      const currentItem = items[index];
+      const { entryId, linkedEntryIds } = currentItem;
       if (linkedEntryIds) {
-        const linkedEntries = await getLinks(linkedEntryIds, entryId, environment);
+        const linkedEntries = await getLinks(currentItem, environment);
         if (linkedEntries?.items?.length) {
-          await updateLinks(linkedEntries, entryId, duplicateIds);
+          await updateLinks(linkedEntries, currentItem, linkType);
         } else {
           console.log(`no linked entry items found for => ${linkedEntryIds} for ${entryId}`);
         }
@@ -215,13 +251,39 @@ const updateLinkedEntries = async (items) => {
     // Step 4 - Fill Duplicates
     const filledItems = fillDuplicateIds(filteredItems);
     console.log('filledItems => ', filledItems.length);
+    // console.log('filledItems => ', JSON.stringify(filledItems, null, 2));
 
     // Step 5 - Get Linked Entries
     const linkedItems = await getLinkedEntries(filledItems);
     console.log('linkedItems => ', linkedItems.length);
+    // console.log('linkedItems => ', JSON.stringify(linkedItems, null, 2));
 
-    // Step 6 - Update Linked Entries
+    // Step 6 - Filter Linked Items
+    const filteredLinkedItems = linkedItems.filter((item) => item.linkedEntryIds);
+    console.log('filteredLinkedItems => ', filteredLinkedItems.length);
+
+    // Step 7 - Update Linked Entries
     await updateLinkedEntries(linkedItems);
+
+    const videoItemIds = filledItems
+      .filter((item) => item.stillImageId)
+      .map((item) => item.entryId)
+      .join(',');
+    const videoEntries = await getAllEntries({
+      'content_type': 'card',
+      'limit': 1000,
+      'sys.id[in]': videoItemIds,
+      'order': '-sys.createdAt'
+    });
+    console.log('videoEntries => ', videoEntries.items.length);
+    await updateLinkedEntries(
+      videoEntries.items.map((item) => ({
+        ...item,
+        entryId: filledItems.filter((i) => item.sys.id === i.entryId)[0]?.stillImageId,
+        linkedEntryIds: item.sys.id
+      })),
+      'Asset'
+    );
   } else {
     console.log('No entries found');
   }

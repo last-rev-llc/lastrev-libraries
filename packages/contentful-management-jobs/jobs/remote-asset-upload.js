@@ -1,3 +1,4 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-await-in-loop */
@@ -5,7 +6,6 @@ const { clientDelivery, environmentManagement } = require('../shared/contentful-
 const { importParser } = require('../shared/input-parsers');
 const { getAssetType, getContentfulIdFromString, getMediaObject } = require('../shared/contentful-fields');
 const { publishItem, deleteItem, checkForExistingItem } = require('../shared/contentful-actions');
-const { logItems } = require('../shared/logging');
 
 const entryLookup = {};
 
@@ -26,11 +26,12 @@ const entriesQuery = {
 };
 
 const PUBLISH_ASSETS = true;
+let videos = 0;
 
-const createAssetWithId = async (environment, { entryId, assetEntry, url }) => {
+const createAssetWithId = async (environment, { entryId, assetEntry, url }, index) => {
   let asset;
   try {
-    console.log(`creating asset => ${entryId} for ${url}`);
+    console.log(`creating asset #${index} => ${entryId} for ${url}`);
     asset = await environment.createAssetWithId(entryId, assetEntry);
   } catch (error) {
     console.log(`error creating asset => ${entryId} for ${url} => `, error);
@@ -61,6 +62,51 @@ const getAllEntries = async (query) => {
   return entries;
 };
 
+const createFile = (format, url) => {
+  const fileName = (url && url.split('/').pop()) || 'Missing url';
+  return {
+    contentType: getAssetType(format),
+    fileName,
+    upload: url
+  };
+};
+
+const getVideoStillImage = (url, entryId, publish, entry, title) => {
+  let videoStillImage;
+  const fileExtension = url.split('.').pop();
+  const isVideo = fileExtension === 'mp4' || fileExtension === 'mov';
+
+  if (isVideo) {
+    videos += 1;
+    console.log(`video #${videos} => ${entryId} for ${url}`);
+    const stillImageUrl = url.split('.');
+    // remove the file extension
+    stillImageUrl.pop();
+    // add the still image extension
+    stillImageUrl.push('jpg');
+    // join the array back into a string
+    const imageUrl = stillImageUrl.join('.');
+
+    videoStillImage = {
+      entryId: getContentfulIdFromString(imageUrl),
+      url: imageUrl,
+      linkingId: entry.sys.id,
+      publish,
+      assetEntry: {
+        fields: {
+          title: {
+            'en-US': `${title} - Video Still Image`
+          },
+          file: {
+            'en-US': createFile('jpg', imageUrl)
+          }
+        }
+      }
+    };
+  }
+  return videoStillImage;
+};
+
 const transformItems = (entries) => {
   if (STEPS.transformItems) {
     let publish = false;
@@ -71,8 +117,6 @@ const transformItems = (entries) => {
       } = entry.fields;
       publish = PUBLISH_ASSETS && !!entry.sys.publishedVersion && entry.sys.version === entry.sys.publishedVersion + 1;
       const mediaObject = getMediaObject(media?.['en-US']);
-      const fileName = (mediaObject.url && mediaObject.url.split('/').pop()) || 'Missing url';
-
       const url = mediaObject.original_secure_url || mediaObject.original_url || mediaObject.url;
 
       const entryId = getContentfulIdFromString(url);
@@ -84,7 +128,6 @@ const transformItems = (entries) => {
       }
 
       entryLookup[entryId] = { duplicateIds: [] };
-
       return {
         linkingId: entry.sys.id,
         publish,
@@ -96,14 +139,11 @@ const transformItems = (entries) => {
               'en-US': title
             },
             file: {
-              'en-US': {
-                contentType: getAssetType(mediaObject.format),
-                fileName,
-                upload: url
-              }
+              'en-US': createFile(mediaObject.format, url)
             }
           }
-        }
+        },
+        videoStillImage: getVideoStillImage(url, entryId, publish, entry, title)
       };
     });
   }
@@ -130,44 +170,57 @@ const findDuplicateAssets = (assets) => {
   return duplicateAssets;
 };
 
+const createdAssets = [];
+const processAndPublishAsset = async (createdAsset, { entryId, url, linkingId, publish }, index, isVideo) => {
+  if (createdAsset) {
+    console.log(`created assetId #${index + 1} => ${entryId} for ${url}`);
+    const processedAsset = await processAsset(createdAsset, { entryId, url, linkingId }, isVideo);
+
+    if (processedAsset) {
+      if (publish) {
+        await publishItem(processedAsset, entryId);
+      }
+      createdAssets.push({ entryId, asset: processedAsset, publish });
+    }
+  }
+};
+
+const createAsset = async (environment, asset, index) => {
+  const { assetEntry, entryId, publish, url } = asset;
+  const fileExtension = url.split('.').pop();
+  const isVideo = fileExtension === 'mp4' || fileExtension === 'mov';
+
+  const existingAsset = await checkForExistingItem(entryId, async () => clientDelivery.getAsset(entryId));
+
+  if (!existingAsset) {
+    if (assetEntry.fields.file['en-US'].upload) {
+      const createdAsset = await createAssetWithId(environment, asset, index + 1);
+
+      await processAndPublishAsset(createdAsset, asset, index, isVideo);
+    }
+  } else {
+    console.log(`existing asset => ${entryId} for ${url}`);
+    createdAssets.push({ asset: existingAsset, entryId, publish });
+  }
+};
+
 const createAssets = async (assets) => {
-  const createdAssets = [];
   if (STEPS.createAssets) {
     const environment = await environmentManagement;
     if (!environment) {
       console.log('environment not found');
       return [];
     }
+    let videoCount = 0;
 
     for (let index = 0; index < assets.length; index++) {
       const asset = assets[index];
-      const { assetEntry, entryId, publish, url } = asset;
-
-      const existingAsset = await checkForExistingItem(entryId, async () => clientDelivery.getAsset(entryId));
-
-      if (!existingAsset) {
-        if (assetEntry.fields.file['en-US'].upload) {
-          const createdAsset = await createAssetWithId(environment, asset);
-
-          const fileExtension = assetEntry.fields.file['en-US'].upload.split('.').pop();
-
-          const isVideo = fileExtension === 'mp4' || fileExtension === 'mov';
-
-          if (createdAsset) {
-            console.log(`created assetId => ${entryId} for ${url}`);
-            const processedAsset = await processAsset(createdAsset, asset, isVideo);
-
-            if (processedAsset) {
-              if (publish) {
-                await publishItem(processedAsset, entryId);
-              }
-              createdAssets.push({ entryId, asset: processedAsset, publish });
-            }
-          }
-        }
-      } else {
-        console.log(`existing asset => ${entryId} for ${url}`);
-        createdAssets.push({ asset: existingAsset, entryId, publish });
+      await createAsset(environment, asset, index);
+      const { entryId, videoStillImage } = asset;
+      if (videoStillImage) {
+        videoCount += 1;
+        console.log(`creating video still #${videoCount} image for ${entryId}`);
+        await createAsset(environment, videoStillImage, index);
       }
     }
   }

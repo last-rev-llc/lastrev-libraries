@@ -4,7 +4,6 @@
 const { clientDelivery, environmentManagement } = require('../shared/contentful-init');
 const { importParser } = require('../shared/input-parsers');
 const { publishItem, checkForExistingItem } = require('../shared/contentful-actions');
-const { logItems } = require('../shared/logging');
 
 const STEPS = {
   getAssets: true,
@@ -15,7 +14,7 @@ const STEPS = {
 };
 
 const ASSETS_QUERY = {
-  'sys.createdAt[gte]': '2022-10-12T00:00:00Z',
+  'sys.createdAt[gte]': '2022-10-31T00:00:00Z',
   'fields.file.url[exists]': true,
   'limit': 1000,
   'order': '-sys.createdAt'
@@ -58,10 +57,6 @@ const mediaEntry = (title, id) => ({
   }
 });
 
-const setEntryByType = (title, id, isImageOrVideo) => {
-  return isImageOrVideo ? cardEntry(title, id) : mediaEntry(title, id);
-};
-
 const transformAssetsToEntries = (assets) => {
   if (STEPS.transformAssetsToEntries) {
     return assets.map((asset) => {
@@ -69,20 +64,15 @@ const transformAssetsToEntries = (assets) => {
         const {
           sys: { id },
           fields: {
-            title: { 'en-US': title },
-            file: {
-              'en-US': { contentType }
-            }
+            title: { 'en-US': title }
           }
         } = asset || {};
         const publish = !!asset.sys.publishedVersion && asset.sys.version === asset.sys.publishedVersion + 1;
-        const assetType = contentType.split('/')[0];
-        const isImageOrVideo = assetType === 'image' || assetType === 'video';
         return {
           publish,
           entryId: id,
-          contentType: isImageOrVideo ? 'card' : 'media',
-          entry: setEntryByType(title, id, isImageOrVideo)
+          contentType: 'card',
+          entry: cardEntry(title, id)
         };
       }
       console.log('asset not found');
@@ -181,13 +171,14 @@ const findDuplicateEntries = (entries) => {
     if (entriesWithAsset.length) {
       // Step 3 - Filter out entries that do not have urls
       const filteredEntries = filterEntries(entriesWithAsset);
+      console.log('filteredEntries => ', filteredEntries.length);
 
       // Step 4 - check for missed duplicates
       const duplicateEntries = findDuplicateEntries(filteredEntries);
       console.log('duplicateEntries => ', duplicateEntries.length);
 
       // Step 5 - Create entries
-      const createdEntries = await createEntries(entriesWithAsset);
+      const createdEntries = await createEntries(filteredEntries);
       console.log('createdEntries => ', createdEntries.length);
     }
   } else {

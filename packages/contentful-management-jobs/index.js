@@ -17,4 +17,10 @@ program
   .command('update-linked-entries', 'update-linked-entries', {
     executableFile: resolve(__dirname, './jobs/update-linked-entries.js')
   })
+  .command('find-linked-entries', 'find-linked-entries', {
+    executableFile: resolve(__dirname, './jobs/find-linked-entries.js')
+  })
+  .command('find-entries', 'find-entries', {
+    executableFile: resolve(__dirname, './jobs/find-entries.js')
+  })
   .parse(process.argv);
