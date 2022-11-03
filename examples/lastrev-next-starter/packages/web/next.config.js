@@ -1,7 +1,13 @@
 require('dotenv').config();
 const path = require('path');
 const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['@lrns/components', '@last-rev/component-library']);
+const withTM = require('next-transpile-modules')([
+  '@lrns/components',
+  '@last-rev/component-library',
+  '@lrns/graphql-sdk',
+  '@lrns/utils',
+  '@last-rev/contentful-app-components'
+]);
 const { withSentryConfig } = require('@sentry/nextjs');
 
 // Allow bundle analysis via ANALYZE_BUNDLE env variable
@@ -13,11 +19,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const ContentSecurityPolicy = `
   default-src 'self'  *.sentry.io  *.facebook.com;
   style-src 'self' 'unsafe-inline'  *.sentry.io  fonts.googleapis.com;
-  script-src 'self' 'unsafe-inline'  *.sentry.io  *.google-analytics.com *.googletagmanager.com;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' *.sentry.io  *.google-analytics.com *.googletagmanager.com;
   font-src 'self'  *.sentry.io  fonts.gstatic.com data:;
   img-src * data:;
   media-src * data:;
   object-src 'none';
+  frame-ancestors 'self' https://app.contentful.com
 `;
 
 const securityHeaders = [
@@ -28,10 +35,6 @@ const securityHeaders = [
   {
     key: 'Content-Security-Policy',
     value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim()
-  },
-  {
-    key: 'X-Frame-Options',
-    value: 'SAMEORIGIN'
   },
   {
     key: 'X-Content-Type-Options',
@@ -106,7 +109,9 @@ const nextConfig = {
       ...config.resolve.alias,
       'react': path.resolve(__dirname, '../../node_modules', 'react'),
       '@emotion/react': path.resolve(__dirname, '../../node_modules', '@emotion/react'),
-      '@mui': path.resolve(__dirname, '../../node_modules/@mui')
+      '@mui': path.resolve(__dirname, '../../node_modules/@mui'),
+      '@lrns/graphql-sdk': path.resolve(__dirname, '../../node_modules/@lrns/graphql-sdk/src'),
+      '@lrns/utils': path.resolve(__dirname, '../../node_modules/@lrns/utils/src')
     };
     config.plugins.push(
       new webpack.DefinePlugin({
