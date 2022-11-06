@@ -11,9 +11,9 @@ const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
 const IS_DEBUG_MODE = false;
-const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'mainPageIntegration'; // The main content type that is being imported
-const BASE_FOLDER_PATH = '/home/max/dev/workato-website/content/integrations'; // The local folder to import yaml files from
-const CUSTOM_PARSER_LOOKUP = require('../migrations/mainPageIntegration');
+const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pageAdapter'; // The main content type that is being imported
+const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/adapters'; // The local folder to import yaml files from
+const CUSTOM_PARSER_LOOKUP = require('../migrations/adapters');
 
 const LOCALE = 'en-US'; // The locale of the content type
 const MAX_NUMBER_OF_FILES = Infinity; // The maximum number of files to import at once, used for debugging purposes
@@ -181,7 +181,7 @@ const importContentToContentful = async (contentfulEntriesJson, { contentType, f
       processed += chunk.length;
       console.log('Chunk completed', processed, new Date());
     });
-    await sleep(1000);
+    await sleep(1200);
   }
   return Promise.all(arrayEntries);
 };
@@ -272,7 +272,7 @@ const getAllFilesInFolder = async () => {
   JOB.contentfulEntriesJson = await getContentfulFormat(JOB);
   // console.log('JOB.contentfulEntriesJson: ', JSON.stringify(JOB.contentfulEntriesJson, null, 2));
 
-  // console.log('JOB.relatedEntries: ', JSON.stringify(JOB.relatedEntries, null, 2));
+  console.log('JOB.relatedEntries: ', JSON.stringify(JOB.relatedEntries, null, 2));
   if (!IS_DEBUG_MODE) {
     JOB.contentfulRelatedEntries = await importContentToContentful(JOB.relatedEntries, JOB);
     JOB.contentfulMainEntries = await importContentToContentful(JOB.contentfulEntriesJson, JOB);
