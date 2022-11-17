@@ -9,6 +9,7 @@ import { CacheProvider, EmotionCache } from '@emotion/react';
 import '@algolia/autocomplete-theme-classic';
 import '@last-rev/component-library/dist/styles.css';
 import theme from '@ias/components/src/theme';
+import getLanguageByLocale from '../../components/src/utils/getLanguageByLocale';
 import { createEmotionCache } from '../src/createEmotionCache';
 import '../styles/globals.css';
 
@@ -24,6 +25,7 @@ interface MyAppProps extends AppProps {
 declare global {
   interface Window {
     aa?: any;
+    dataLayer?: any;
   }
 }
 
@@ -44,6 +46,17 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
       },
       { immediate: true }
     );
+  }, []);
+
+  /**
+   * Track language in GA
+   * 1. Get language from locale
+   * 2. Push value to dataLayer
+   */
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.dataLayer) {
+      window.dataLayer.push({ localeLanguage: getLanguageByLocale() });
+    }
   }, []);
 
   return (

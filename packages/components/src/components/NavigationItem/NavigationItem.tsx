@@ -13,6 +13,7 @@ import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoun
 import { LinkProps } from '@last-rev/component-library/dist/components/Link';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
+import getLanguageByLocale from '../../utils/getLanguageByLocale';
 import Link from '../Link';
 
 export type {
@@ -25,6 +26,12 @@ export interface NavigationItemProps extends LinkProps {
   sidekickLookup?: any;
   onRequestClose?: any;
   hideIcon?: Boolean;
+}
+
+declare global {
+  interface Window {
+    dataLayer?: any;
+  }
 }
 
 export const NavigationItem = ({
@@ -59,7 +66,12 @@ export const NavigationItem = ({
 
   const handleLocaleClick = (locale: string | UrlObject | undefined) => () => {
     if (!!locale && typeof locale === 'string') {
-      router.push({ pathname, query }, asPath, { locale: String(locale).replace(/\//g, '') });
+      const localeString = String(locale).replace(/\//g, '');
+      router.push({ pathname, query }, asPath, { locale: localeString });
+      // Track language in GA
+      if (typeof window !== 'undefined' && window.dataLayer) {
+        window.dataLayer.push({ localeLanguage: getLanguageByLocale(localeString) });
+      }
     }
   };
 

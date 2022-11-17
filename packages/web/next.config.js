@@ -14,20 +14,23 @@ const nextConfig = {
    * @type {import('next').NextConfig}
    */
   i18n: {
-    // TODO: generate these and read from that
+    /**
+     * Add new locales below
+     * -- Also to the localeMapping obj in /components/src/utils/getLanguageByLocale
+     */
     locales: [
       'en-US',
       'es-419',
-      'pt-BR',
-      'ja-JP',
-      'de-DE',
       'fr-FR',
+      'de-DE',
       'it-IT',
+      'ja-JP',
+      'pt-BR',
+      'ko-KR',
       'id-ID',
       'zh-CN',
-      'vi-VN',
       'th-TH',
-      'ko-KR'
+      'vi-VN'
     ],
     defaultLocale: 'en-US'
   },
