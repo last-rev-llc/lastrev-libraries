@@ -17,10 +17,14 @@ Installing this package exposes the `lr-algolia-updater` binary, which can trigg
 Configuring the Algolia integration consists of two steps:
 
 1. Add Algolia configuration to your site's `AppConfig`
-   - `applicationId` (`String`) - The Algolia application ID.
-   - `adminApiKey` (`String`) - The Algolia admin API key.
-   - `contentTypeIds` (`String[]`) - An array of Contentful content type IDs representing the types to index.
-2. Create `mappers` to map your content types to Algolia fields.
+   - `applicationId` (`string`) - The Algolia application ID.
+   - `adminApiKey` (`string`) - The Algolia admin API key.
+   - `contentTypeIds` (`string[]`) - An array of Contentful content type IDs representing the types to index.
+   - `indices` (`string[]`) - An array of the names of all the Algolia indices this implementation will use.
+   - `hitsPerPage` (`number`) - Number of hits per page when querying for algolia recoreds referencing a particular ID
+2. Add urls configuration to your site's `AppConfig`
+   - `graphql` (`string`) - The full URL to a luve instance of the graphql endpoint for your app
+3. Create `mappers` to map your content types to Algolia fields.
 
 ## Implementing the Algolia Integration
 
@@ -50,11 +54,14 @@ const mappers = {
           index: 'blogs',
           data: {
             objectID: blog.sys.id,
-            locale: ctx.locale || ctx.defaultLocale,
-            site: process.env.SITE,
-            preview: !!ctx.preview,
-            url: getContentUrl(item, ctx); // function defined elsewhere in project
-            title: getLocalizedField(blog.fields, 'title', ctx)
+            referencedIds: [item.sys.id, someOtherReferencedId]
+            additionalFields: {
+              locale: ctx.locale || ctx.defaultLocale,
+              site: process.env.SITE,
+              preview: !!ctx.preview,
+              url: getContentUrl(item, ctx); // function defined elsewhere in project
+              title: getLocalizedField(blog.fields, 'title', ctx)
+            }
           }
         }
       ];
@@ -85,7 +92,11 @@ const config = new LastRevAppConfig({
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
     adminApiKey: process.env.ALGOLIA_ADMIN_API_KEY,
     contentTypeIds: ['blog', 'article'],
-    indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT)
+    indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT),
+    indices: ['articles', 'blogs']
+  },
+  urs: {
+    graphql: `${process.env.DOMAIN}.netlify/functions/graphql`
   }
 });
 

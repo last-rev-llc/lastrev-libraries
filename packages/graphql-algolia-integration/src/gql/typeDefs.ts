@@ -3,7 +3,9 @@ import gql from 'graphql-tag';
 const typeDefs = gql`
   type AlgoliaObject {
     index: String!
-    data: JSON!
+    objectId: String!
+    referencedIds: [String!]!
+    additionalFields: JSON!
   }
 
   type AlgoliaRecord implements Content {
