@@ -6,14 +6,17 @@ const fs = require('fs');
 const path = require('path');
 const _ = require('lodash');
 const contentfulFieldsParsers = require('../shared/contentful-fields');
+const { publishEntries } = require('./publishEntries');
 
 const inputParsers = require('../shared/input-parsers');
 const logging = require('../shared/logging');
 
 const IS_DEBUG_MODE = false;
 const CONTENTFUL_CONTENT_TYPE_TO_IMPORT = 'pageAdapter'; // The main content type that is being imported
-const BASE_FOLDER_PATH = '/Users/max/dev/lastrev/workato-website/content/adapters'; // The local folder to import yaml files from
+const BASE_FOLDER_PATH = '/home/max/dev/workato-website/content/adapters'; // The local folder to import yaml files from
 const CUSTOM_PARSER_LOOKUP = require('../migrations/adapters');
+const PUBLISH_ON_UPSERT = true;
+const UPDATE_ENTRIES = true;
 
 const LOCALE = 'en-US'; // The locale of the content type
 const MAX_NUMBER_OF_FILES = Infinity; // The maximum number of files to import at once, used for debugging purposes
@@ -22,7 +25,6 @@ const ENVIRONMENT = 'master'; // make sure you update the environment;
 // const ENVIRONMENT = 'k078sfqkr9te'; // make sure you update the environment;
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
 const CMA_ACCESS_TOKEN = process.env.CONTENTFUL_MANAGEMENT_API;
-
 // Global Variables that get set based on the rules from Contentful
 let SDK_CLIENT, CONTENTFUL_SPACE, CONTENTFUL_ENVIRONMENT, GLOBAL_CONTENTTYPE_FIELD_LOOKUP;
 
@@ -111,56 +113,68 @@ const getContentfulFormat = async (JOB) => {
     const yamlObj = JOB.yamlFilesToImport[index];
     yamlObj.contentfulFields = await getParsedContentfulFields(yamlObj, JOB.fieldTypeLookup, JOB);
     // console.log('yamlObj.fromPath: ', yamlObj.fromPath);
-    yamlObj.entryId = contentfulFieldsParsers.getContentfulIdFromString(yamlObj.fromPath);
+    // TODO: Fix from path being the id
+    console.log('SLUG', yamlObj.contentfulFields.slug);
+    yamlObj.entryId = contentfulFieldsParsers.getContentfulIdFromString(yamlObj.contentfulFields.slug['en-US']);
     array.push(yamlObj);
   }
   return array;
 };
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-async function upsertContent(entry, contentType, fromPath, errorPath) {
-  const relContentType = entry.contentType || contentType;
+function isPublished(entity) {
+  return !!entity.sys.publishedVersion && entity.sys.version == entity.sys.publishedVersion + 1;
+}
+async function upsertContent(aEntry, contentType, fromPath, errorPath) {
+  const relContentType = aEntry.contentType || contentType;
 
   // console.log('entry', entry);
   // Check if entry exists in content first
   // If this succeeds will count towards the rate limit!!!
-  const existingEntry = await CONTENTFUL_ENVIRONMENT.getEntry(entry.entryId).catch(() => null);
+  let entry = await CONTENTFUL_ENVIRONMENT.getEntry(aEntry.entryId).catch(() => null);
 
-  if (!entry.entryId) {
-    console.log('Entry with no id', entry);
-    return;
+  if (!aEntry.entryId) {
+    console.log('Entry with no id', aEntry);
+    return null;
   }
-  if (!existingEntry) {
-    return CONTENTFUL_ENVIRONMENT.createEntryWithId(relContentType, entry.entryId, {
-      fields: entry.contentfulFields
+  if (!entry) {
+    await CONTENTFUL_ENVIRONMENT.createEntryWithId(relContentType, aEntry.entryId, {
+      fields: aEntry.contentfulFields
     })
-      .then((newEntry) =>
+      .then((newEntry) => {
         console.log(
           'Entry created: ',
           `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${newEntry.sys.id}`
-        )
-      )
+        );
+        entry = newEntry;
+      })
       .catch((error) => logging.logError(error, fromPath, errorPath));
-  }
+  } else if (UPDATE_ENTRIES) {
+    // console.log(`Already Exists: id: ${existingEntry.sys.id} file: ${fromPath}`);
 
-  // We've already used up the rate limit for this second, so wait a second and try again
-  await sleep(1000);
-  // console.log(`Already Exists: id: ${existingEntry.sys.id} file: ${fromPath}`);
-  existingEntry.fields = entry.contentfulFields;
-  return existingEntry
-    .update()
-    .then((updatedEntry) => {
-      console.log(
-        'Entry UPDATED: ',
-        `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${updatedEntry.sys.id}`
-      );
-      if (updatedEntry.sys.id == '0') {
-        console.log('ID is 0', JSON.stringify(updatedEntry, null, 2));
-      }
-      return updatedEntry;
-    })
-    .catch((error) => logging.logError(error, fromPath, errorPath));
+    entry.fields = aEntry.contentfulFields;
+    // We've already used up the rate limit for this second, so wait a second and try again
+    await sleep(1200);
+    await entry
+      .update()
+      .then((updatedEntry) => {
+        console.log(
+          'Entry UPDATED: ',
+          `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${updatedEntry.sys.id}`
+        );
+        if (updatedEntry.sys.id == '0') {
+          console.log('ID is 0', JSON.stringify(updatedEntry, null, 2));
+        }
+        entry = updatedEntry;
+      })
+      .catch((error) => logging.logError(error, fromPath, errorPath));
+  } else {
+    console.log(
+      'Entry EXISTS: ',
+      `https://app.contentful.com/spaces/${SPACE_ID}/environments/${ENVIRONMENT}/entries/${entry.sys.id}`
+    );
+  }
+  return entry;
 }
 
 const importContentToContentful = async (contentfulEntriesJson, { contentType, fromPath, errorPath }) => {
@@ -171,7 +185,7 @@ const importContentToContentful = async (contentfulEntriesJson, { contentType, f
   // Remove duplicates
   const uniqueEntries = _.uniqBy(contentfulEntriesJson, 'entryId');
   console.log('UniqueEntries', uniqueEntries.length, 'from', contentfulEntriesJson.length);
-  const chunks = _.chunk(uniqueEntries, 5);
+  const chunks = _.chunk(uniqueEntries, UPDATE_ENTRIES ? 4 : 7);
   for (const chunk of chunks) {
     await Promise.all(
       chunk.map(async (entry) => {
@@ -181,9 +195,15 @@ const importContentToContentful = async (contentfulEntriesJson, { contentType, f
       processed += chunk.length;
       console.log('Chunk completed', processed, new Date());
     });
-    await sleep(1200);
+    await sleep(1000);
   }
-  return Promise.all(arrayEntries);
+  const entries = await Promise.all(arrayEntries);
+  // console.log('entries', entries);
+  if (PUBLISH_ON_UPSERT) {
+    const unpublishedEntries = entries.filter((entry) => !!entry && !isPublished(entry));
+    console.log('Publishing', unpublishedEntries.length, 'entries');
+    await publishEntries(CONTENTFUL_ENVIRONMENT, unpublishedEntries);
+  }
 };
 
 const getAllFilesInFolder = async () => {
@@ -272,10 +292,13 @@ const getAllFilesInFolder = async () => {
   JOB.contentfulEntriesJson = await getContentfulFormat(JOB);
   // console.log('JOB.contentfulEntriesJson: ', JSON.stringify(JOB.contentfulEntriesJson, null, 2));
 
-  console.log('JOB.relatedEntries: ', JSON.stringify(JOB.relatedEntries, null, 2));
+  // console.log('JOB.relatedEntries: ', JSON.stringify(JOB.relatedEntries, null, 2));
   if (!IS_DEBUG_MODE) {
     JOB.contentfulRelatedEntries = await importContentToContentful(JOB.relatedEntries, JOB);
     JOB.contentfulMainEntries = await importContentToContentful(JOB.contentfulEntriesJson, JOB);
+  } else {
+    // console.log(JOB.contentfulEntriesJson);
+    // console.log(JOB.relatedEntries);
   }
 
   // console.log('JOB.contentfulEntries: ', JSON.stringify(JOB, null, 2));

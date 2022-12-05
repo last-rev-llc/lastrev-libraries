@@ -5,11 +5,11 @@ const path = require('path');
 const contentfulFields = require('../shared/contentful-fields');
 
 const IS_DEBUG_MODE = false;
-const SUB_FOLDER_BASE = '';
+const SUB_FOLDER_BASE = 'logos';
 const BASE_FOLDER_PATH = `/home/max/dev/workato-website/assets/images/${SUB_FOLDER_BASE}`; // The local folder to import assets from
 const FOLDER_DELIMETER = '_'; // Must be alphanumeric characters, dots (.) hyphens (-) or underscores (_)
 const INVALID_FILE_DELIMETER = '-'; // Must be alphanumeric characters, dots (.) hyphens (-) or underscores (_)
-const ENVIRONMENT = 'images-import-2'; // make srue you update the environment;
+const ENVIRONMENT = 'master'; // make srue you update the environment;
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
 const CMA_ACCESS_TOKEN = process.env.CONTENTFUL_MANAGEMENT_API;
 

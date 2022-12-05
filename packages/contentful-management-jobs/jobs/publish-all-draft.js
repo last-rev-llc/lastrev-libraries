@@ -1,21 +1,14 @@
-/* eslint-disable no-loop-func */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-await-in-loop */
 const fs = require('fs'); // - Define which contents can't live by themselves
 const sdk = require('contentful-management');
-const { publishEntries } = require('./publishEntries');
+const { chunk } = require('lodash');
 
 const SPACE_ID = process.env.CONTENTFUL_SPACE_ID;
 const CMA_ACCESS_TOKEN = process.env.CONTENTFUL_MANAGEMENT_API;
 const ENVIRONMENT = 'master';
-const IS_DEBUG = true;
 
 let SDK_CLIENT, CONTENTFUL_SPACE, CONTENTFUL_ENVIRONMENT;
-exports.SDK_CLIENT = SDK_CLIENT;
-exports.CONTENTFUL_SPACE = CONTENTFUL_SPACE;
-exports.CONTENTFUL_ENVIRONMENT = CONTENTFUL_ENVIRONMENT;
 
-const ENTRIES_FOLDER_PATH = `/home/max/dev/workato-website/.cms-sync/khy5qy7zbpmq/master/preview/entries`;
+const ENTRIES_FOLDER_PATH = `/Users/max/dev/lastrev/workato-website/.cms-sync/khy5qy7zbpmq/master/preview/entries`;
 const MUST_HAVE_PARENT = [
   'banner',
   'card',
@@ -102,6 +95,19 @@ const getUnreferencedEntries = ({ contentTypes = MUST_HAVE_PARENT, entriesPath =
 
   const toBeDeletedIds = getUnreferencedEntries();
   console.log('Entries to be deleted', toBeDeletedIds);
-  if (IS_DEBUG) return;
-  await publishEntries(toBeDeletedIds);
+
+  const bulkChunks = chunk(toBeDeletedIds, 200);
+
+  await Promise.all(
+    bulkChunks?.map((ids, idx) =>
+      CONTENTFUL_ENVIRONMENT.createUnpublishBulkAction({
+        entities: {
+          sys: { type: 'Array' },
+          items: ids?.map((id) => ({ sys: { linkType: 'Entry', type: 'Link', id } }))
+        }
+      })
+        .then((bulkActionInProgress) => bulkActionInProgress.waitProcessing())
+        .then((bulkActionCompleted) => console.log('IDX', idx, bulkActionCompleted))
+    )
+  );
 })();

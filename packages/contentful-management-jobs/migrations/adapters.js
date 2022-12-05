@@ -11,11 +11,12 @@ const adapters = {
     customParser: async (adaptersMap, JOB) =>
       Promise.all(
         Object.keys(adaptersMap)
-          // .slice(25, 50)
+          // .slice(0, 1)
+          // .slice(0, 50)
           // .slice(50, 100)
           // .slice(100, 150)
           // .slice(150, 200)
-          .slice(200, 250)
+          // .slice(200, 250)
           .map(async (slug) => {
             const adapter = adaptersMap[slug];
             createEntryReference(JOB, {
@@ -53,7 +54,7 @@ const adapters = {
                           entry: {
                             variant: 'usecase-related-content',
                             title: item?.title,
-
+                            category: item?.category,
                             img: await createMediaReference(JOB, {
                               assetURL: item.img2x || item.img,
                               title: item?.title
@@ -145,9 +146,13 @@ const adapters = {
                                 createEntryReference(JOB, {
                                   contentType: 'adapterAction',
                                   fields: ['title', 'description'],
-                                  entry: {
+                                  key: {
                                     title: action?.title,
                                     text: action?.description
+                                  },
+                                  entry: {
+                                    title: action?.title,
+                                    description: action?.description
                                   }
                                 })
                               )
