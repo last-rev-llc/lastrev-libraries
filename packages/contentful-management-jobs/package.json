@@ -1,0 +1,21 @@
+{
+  "name": "contentful-management-jobs",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node -r dotenv/config index.js"
+  },
+  "dependencies": {
+    "@contentful/rich-text-from-markdown": "^15.13.1",
+    "commander": "^9.3.0",
+    "contentful": "^9.2.4",
+    "contentful-management": "^7.33.0",
+    "contentful-migration": "^4.5.0",
+    "dotenv": "^10.0.0",
+    "imurmurhash": "^0.1.4",
+    "js-yaml": "^4.1.0",
+    "lodash": "^4.17.21",
+    "turndown": "^7.1.1"
+  },
+  "devDependencies": {}
+}
