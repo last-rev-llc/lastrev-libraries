@@ -13,7 +13,7 @@ const getSpaceFieldTypeLookup = async (contentfulEnvironment) => {
   const contentTypes = await contentfulEnvironment.getContentTypes();
   // Loop through the values in contentful and return a new array with only the data we need
   // Could these be combined into one loop?
-  return contentTypes.items
+  return (contentTypeLookup = contentTypes.items
     .map((contentType) => {
       return {
         id: contentType.sys.id,
@@ -28,7 +28,7 @@ const getSpaceFieldTypeLookup = async (contentfulEnvironment) => {
     .reduce((acc, curr) => {
       acc[curr.id] = curr;
       return acc;
-    }, {});
+    }, {}));
 };
 
 const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
@@ -39,10 +39,10 @@ const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
       case 'Array':
         if (value?.length > 0 && typeof value[0] !== 'object') {
           return value;
+        } else {
+          console.log('field', { fieldType, value });
+          return value?.split(',');
         }
-        console.log('field', { fieldType, value });
-        return value?.split(',');
-
       case 'Object':
         return value;
       case 'Link':
@@ -59,14 +59,13 @@ const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
         return value;
       case 'Text':
         return value;
-      case 'RichText': {
+      case 'RichText':
         // You need to convert to markdown before using the Rich Text Parser
         const markdownText = turndownService.turndown(value);
         // console.log('markdownText: ', markdownText);
         const richtext = await richTextFromMarkdown(markdownText);
         // console.log('richtext: ', richtext);
         return richtext;
-      }
       case 'Location':
         return value;
       case 'Asset':
@@ -85,10 +84,9 @@ const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
             id: value
           }
         };
-      case 'CustomParser': {
+      case 'CustomParser':
         const parsedValue = await fieldType.customParser(value, JOB, yamlObj);
         return parsedValue;
-      }
       default:
         return value;
     }

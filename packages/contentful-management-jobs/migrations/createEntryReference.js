@@ -1,8 +1,10 @@
 const contentfulFieldsParsers = require('../shared/contentful-fields');
 const { createEntry } = require('./createEntry');
 
-const createEntryReference = async (JOB, { entry, contentType, fields }) => {
-  const entryId = await contentfulFieldsParsers.getContentfulIdFromString(JSON.stringify(entry));
+// Variant is not considered for the id
+const createEntryReference = async (JOB, { key: keyOverride, entry, contentType, fields }) => {
+  const { variant, ...key } = entry;
+  const entryId = await contentfulFieldsParsers.getContentfulIdFromString(JSON.stringify(keyOverride ?? key));
 
   JOB.relatedEntries.push(
     createEntry({

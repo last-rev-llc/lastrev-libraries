@@ -30,9 +30,10 @@ const embed = {
         items.map(async (item) =>
           createEntryReference(JOB, {
             contentType: 'card',
-            fields: ['id', 'title', 'text', 'link', 'img', 'list'],
+            fields: ['id', 'title', 'text', 'link', 'img', 'list', 'variant'],
             entry: {
               ...item,
+              variant: 'logo-link',
               id: item?.title_modifier,
               title: item?.name,
               img: await createMediaReference(JOB, {
@@ -142,8 +143,9 @@ const embed = {
         items.map(async (item) =>
           createEntryReference(JOB, {
             contentType: 'card',
-            fields: ['title', 'link', 'img'],
+            fields: ['title', 'link', 'img', 'variant'],
             entry: {
+              variant: 'ebook-link',
               title: item?.title,
               img: await createMediaReference(JOB, {
                 title: item?.title,

@@ -46,7 +46,7 @@ const accelerators = {
         for (let index = 0; index < array.length; index++) {
           const card = array[index];
           const entryId = await contentfulFieldsParsers.getContentfulIdFromString(`${card.title}+${card.link}`);
-
+          card.variant = 'related-content';
           card.asset = {
             id: await contentfulFieldsParsers.getContentfulIdFromString(`${card.img2}`),
             assetURL: card.img2
