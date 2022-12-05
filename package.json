@@ -10,11 +10,11 @@
     ]
   },
   "scripts": {
-    "build": "turbo run build",
+    "build": "turbo run build --output-logs=new-only",
     "clean": "lerna exec 'rm -rf node_modules/ dist/'; rm -rf node_modules/; yarn install",
     "deps:check": "manypkg check",
     "deps:fix": "manypkg fix",
-    "dev": "turbo run dev --parallel",
+    "dev": "turbo run dev --parallel --output-logs=new-only",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
     "release": "yarn build && changeset publish",
     "start": "lerna run start",
@@ -94,11 +94,11 @@
     "rimraf": "^3.0.0",
     "svgo": "1.3.2",
     "tslib": "^2.3.1",
-    "typescript": "4.3.4",
+    "typescript": "^4.7.4",
     "wait-on": "^5.3.0"
   },
   "devDependencies": {
-    "turbo": "^1.1.2"
+    "turbo": "^1.3.1"
   },
   "packageManager": "yarn@1.22.4"
 }

@@ -12,7 +12,6 @@ export const mockWithNavigationItems = (): NavigationBarProps => ({
     { ...mockNavigationItem() }
   ],
   itemsVariant: 'standard-round',
-  theme: [mockTheme],
   sidekickLookup: 'sidekick-lookup'
 });
 
@@ -20,6 +19,5 @@ export default (): NavigationBarProps => ({
   variant: 'collection-three-per-row',
   items: [{ ...mockLink() }, { ...mockLink() }, { ...mockLink() }, { ...mockLink() }],
   itemsVariant: 'standard-round',
-  theme: [mockTheme],
   sidekickLookup: 'sidekick-lookup'
 });

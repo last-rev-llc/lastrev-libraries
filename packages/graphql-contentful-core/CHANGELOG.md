@@ -1,5 +1,127 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.8
+
+### Patch Changes
+
+- 3371479: Bring fetching logic into sitemap generator
+- Updated dependencies [3371479]
+  - @last-rev/app-config@0.4.1
+
+## 0.5.7
+
+### Patch Changes
+
+- Updated dependencies [bc28135]
+  - @last-rev/app-config@0.4.0
+  - @last-rev/contentful-path-util@0.1.17
+  - @last-rev/graphql-contentful-helpers@0.4.3
+
+## 0.5.6
+
+### Patch Changes
+
+- dd724b8: Export more inner pieces, todo: move to contentful utils
+
+## 0.5.5
+
+### Patch Changes
+
+- 53a8a57: Bump versions
+
+## 0.5.4
+
+### Patch Changes
+
+- d302953: Bump versions
+
+## 0.5.3
+
+### Patch Changes
+
+- 5abaed7: Bump version
+
+## 0.5.2
+
+### Patch Changes
+
+- 0639f30: adding queries to allow for more fine grained sitemap construction/generation
+- Updated dependencies [b596435]
+- Updated dependencies [0639f30]
+  - @last-rev/contentful-path-util@0.1.13
+  - @last-rev/contentful-redis-loader@0.5.2
+  - @last-rev/app-config@0.3.1
+
+## 0.5.1
+
+### Patch Changes
+
+- c62ce9d: Allowing for either static or dynaimc path generation in graphql-contentful-core
+- Updated dependencies [c62ce9d]
+- Updated dependencies [c62ce9d]
+- Updated dependencies [c62ce9d]
+  - @last-rev/app-config@0.3.0
+  - @last-rev/contentful-path-util@0.1.12
+  - @last-rev/types@0.3.2
+  - @last-rev/graphql-contentful-helpers@0.4.2
+
+## 0.5.0
+
+### Minor Changes
+
+- a996010: Added a new entryByFieldBValue loader
+- a996010: Added contentful path rules engine and support for it in various packages
+
+### Patch Changes
+
+- Updated dependencies [a996010]
+- Updated dependencies [a996010]
+  - @last-rev/contentful-cms-loader@0.4.0
+  - @last-rev/contentful-fs-loader@0.3.0
+  - @last-rev/contentful-redis-loader@0.5.0
+  - @last-rev/graphql-contentful-helpers@0.4.0
+  - @last-rev/types@0.3.0
+
+## 0.4.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/contentful-cms-loader@0.3.0
+  - @last-rev/contentful-fs-loader@0.2.0
+  - @last-rev/contentful-redis-loader@0.4.0
+  - @last-rev/graphql-contentful-helpers@0.3.0
+  - @last-rev/types@0.2.0
+
+## 0.3.1
+
+### Patch Changes
+
+- 2ead5c4: Move XSS filtering from Components to Data Layer
+
+## 0.3.0
+
+### Minor Changes
+
+- 3ba98cd: July updates
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-cms-loader@0.2.2
+  - @last-rev/contentful-fs-loader@0.1.13
+  - @last-rev/contentful-path-util@0.1.11
+  - @last-rev/contentful-redis-loader@0.3.3
+  - @last-rev/graphql-contentful-helpers@0.2.5
+  - @last-rev/graphql-schema-gen@0.2.1
+  - @last-rev/testing-library@0.1.10
+  - @last-rev/timer@0.1.3
+
 ## 0.2.5
 
 ### Patch Changes

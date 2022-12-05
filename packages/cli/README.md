@@ -152,19 +152,22 @@ Below are the full JSON configuration options:
     // the github repo is a combination of name and owner
     // if an owner is not provided, the current logged in user will be used.
     repoOwner: string;
-    // The redis host to use for the app. Get this from your upstash instance.
-    // Can be left blank and updated later in the .env file
-    redisHost: string;
-    // The redis port to use for the app. Get this from your upstash instance.
-    // Can be left blank and updated later in the .env file
-    redisPort: number;
-    // The redis password to use for the app. Get this from your upstash instance.
-    // Can be left blank and updated later in the .env file
-    redisPassword: string;
+
     // Only needed if netlify dev site is not being created as part of this run
     // The Domaibn URL of the netlify dev site
     // Will be used to set up the contentful webhooks for the app
     devDomainUrl: string;
+  };
+  // A redis user configured with access to only the current space. Usually this will be created as part of the create-app process and should be omitted. But if a user has already been created, provide the info below
+  redis: {
+    // The redis host to use for the app. Required if providing any config for the redis section.
+    host: string;
+    // The redis port to use for the app. Required if providing any config for the redis section.
+    port: number;
+    // The redis password to use for the app. Required if providing any config for the redis section.
+    password: string;
+    // The redis username to use for the app. Required if providing any config for the redis section.
+    username: string;
   };
   // Configuration to set up your netlify sites. Leave this empty if you have already
   // created the sites and just want to run the other parts of the command

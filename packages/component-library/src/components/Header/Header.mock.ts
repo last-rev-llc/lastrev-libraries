@@ -6,6 +6,8 @@ import navigationItemMock from '../NavigationItem/NavigationItem.mock';
 const collection = collectionMock();
 collection.items = [navigationItemMock(), navigationItemMock(), navigationItemMock()];
 
+export const collectionWithItems = { ...collection };
+
 export default (): HeaderProps => ({
   variant: 'elevation',
   logo: mediaMock(),

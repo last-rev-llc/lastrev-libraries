@@ -12,42 +12,77 @@ describe('LastRevAppConfig', () => {
   describe('returns object with a config property with correct data', () => {
     test('cms is Contentful when not provided', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.config.cms).toBe('Contentful');
+      expect(appConfig.cms).toBe('Contentful');
     });
 
     test('stategy is fs when not provided', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.config.strategy).toBe('fs');
+      expect(appConfig.contentStrategy).toBe('fs');
     });
 
     test('logLevel is warn when not provided', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.config.logLevel).toBe('warn');
+      expect(appConfig.logLevel).toBe('warn');
     });
 
     test('graphql has port of 5000 when not provided', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.config.graphql?.port).toBe(5000);
+      expect(appConfig.graphql?.port).toBe(5000);
     });
 
     test('graphql has host of localhost when not provided', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.config.graphql?.host).toBe('localhost');
+      expect(appConfig.graphql?.host).toBe('localhost');
     });
 
     test('sites is empty array when not provided', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(JSON.stringify(appConfig.config.sites)).toBe(JSON.stringify([]));
+      expect(JSON.stringify(appConfig.sites)).toBe(JSON.stringify([]));
     });
 
     test('contentful has env of master when not provided', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.config.graphql?.port).toBe(5000);
+      expect(appConfig.graphql?.port).toBe(5000);
     });
 
     test('contentful has usePreview of false when not provided', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.config.graphql?.host).toBe('localhost');
+      expect(appConfig.graphql?.host).toBe('localhost');
+    });
+  });
+
+  describe('paths', () => {
+    test('paths values default to v1 and generateFullPathTree:true', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.paths).toEqual({
+        version: 'v1',
+        generateFullPathTree: true
+      });
+    });
+
+    test('throws error when version is v1, but generate full path tree is false', () => {
+      expect(
+        () =>
+          new LastRevAppConfig({
+            ...mockedConfig,
+            paths: {
+              version: 'v1',
+              generateFullPathTree: false
+            }
+          })
+      ).toThrowError('Invalid paths configuration: generateFullPathTree must be true when using paths v1');
+    });
+
+    test('throws error when version is not defined, but generate full path tree is false', () => {
+      expect(
+        () =>
+          new LastRevAppConfig({
+            ...mockedConfig,
+            paths: {
+              generateFullPathTree: false
+            }
+          })
+      ).toThrowError('Invalid paths configuration: generateFullPathTree must be true when using paths v1');
     });
   });
 
@@ -217,12 +252,22 @@ describe('LastRevAppConfig', () => {
   describe('clone functionality', () => {
     test('clone merges new config with old config', () => {
       const oldConfig = mockedConfig;
-      oldConfig.redis = undefined;
-      const appConfig = new LastRevAppConfig(oldConfig);
-      expect(appConfig.config.redis).toBeUndefined();
+      const appConfig = new LastRevAppConfig({
+        ...oldConfig,
+        redis: {
+          host: 'abc',
+          port: 1234
+        }
+      });
+      expect(appConfig.redis).toEqual({
+        host: 'abc',
+        port: 1234,
+        maxBatchSize: 1000,
+        ttlSeconds: 2592000
+      });
 
       const clonedAppConfig = appConfig.clone({ ...redisConfig() });
-      expect(clonedAppConfig.config.redis).toBeDefined();
+      expect(clonedAppConfig.redis).toEqual(oldConfig.redis);
     });
   });
 
@@ -255,10 +300,31 @@ describe('LastRevAppConfig', () => {
       expect(appConfig.cms).toBe(mockedConfig.cms);
     });
 
-    test('strategy returns strategy', () => {
+    test('contentStrategy returns strategy', () => {
       mockedConfig.strategy = 'redis';
       const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.strategy).toBe(mockedConfig.strategy);
+      expect(appConfig.cmsCacheStrategy).toBe(mockedConfig.strategy);
+    });
+
+    test('cms contentStrategy returns "cms" and cmsCacheStrategy is "none"', () => {
+      mockedConfig.contentStrategy = 'cms';
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.contentStrategy).toBe(mockedConfig.contentStrategy);
+      expect(appConfig.cmsCacheStrategy).toBe('none');
+    });
+
+    test('cms contentStrategy with cache strategy returns correct values', () => {
+      mockedConfig.contentStrategy = 'cms';
+      mockedConfig.cmsCacheStrategy = 'redis';
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.contentStrategy).toBe(mockedConfig.contentStrategy);
+      expect(appConfig.cmsCacheStrategy).toBe(mockedConfig.cmsCacheStrategy);
+    });
+
+    test('fs contentStrategy returns "fs"', () => {
+      mockedConfig.contentStrategy = 'fs';
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.contentStrategy).toBe(mockedConfig.contentStrategy);
     });
 
     test('fs returns fs', () => {
@@ -302,6 +368,17 @@ describe('LastRevAppConfig', () => {
       mockedConfig.skipReferenceFields = undefined;
       const appConfig = new LastRevAppConfig(mockedConfig);
       expect(appConfig.skipReferenceFields).toBe(true);
+    });
+
+    test('jwtSigningSecret defaults to nothing if not provided', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.jwtSigningSecret).toBeUndefined();
+    });
+
+    test('skipReferenceFields defaults to true if not provided', () => {
+      mockedConfig.jwtSigningSecret = 'test-token';
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.jwtSigningSecret).toBe('test-token');
     });
   });
 });

@@ -1,5 +1,82 @@
 # @last-rev/component-library
 
+## 0.5.9
+
+### Patch Changes
+
+- cbd864c: Fix buttonWrap not available
+- 114a0b5: Made Header support multiple NavigationBars
+
+## 0.5.8
+
+### Patch Changes
+
+- 675d271: spred props into root from hero
+
+## 0.5.7
+
+### Patch Changes
+
+- 43bbfed: Fix Theme not propagating, Fix mailto link
+
+## 0.5.6
+
+### Patch Changes
+
+- c97c755: ADA bug comming from link, duplicated id for a and button element
+
+## 0.5.5
+
+### Patch Changes
+
+- dea64cc: Fix ArtDirectedMedia not rendering all images
+
+## 0.5.4
+
+### Patch Changes
+
+- 97d5928: Fix Text with formatted links missing tags
+
+## 0.5.3
+
+### Patch Changes
+
+- 372fab9: Cleanup for forwarded props and svg best practices
+
+## 0.5.2
+
+### Patch Changes
+
+- f09f4e5: Add support for inlined svg with svgContent from GQL
+- 2ead5c4: Move XSS filtering from Components to Data Layer
+
+## 0.5.1
+
+### Patch Changes
+
+- 5bd5e96: Fix Card using Link component directly
+
+## 0.5.0
+
+### Minor Changes
+
+- 3ba98cd: July updates
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- 3ba98cd: Improve bundle size of components
+  Improve forwarded props to remove errors
+  Remove framer-motion dependency from ContentModule
+- 211f24a: Added next/script to SEO
+- 3ba98cd: Added more slots for Card, Hero, Header, Link. Removed default styles for text color.
+- 3ba98cd: Make Header and NavigationItem links use color inherit as a default
+  Fix as prop for Link
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-sidekick-util@0.1.1
+  - @last-rev/rollup-config@0.1.4
+  - @last-rev/testing-library@0.1.10
+
 ## 0.4.7
 
 ### Patch Changes

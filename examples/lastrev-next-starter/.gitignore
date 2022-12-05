@@ -15,6 +15,6 @@ lerna-debug.log
 .turbo
 
 **/*sitemap.xml
-**/__generated/*.spec.js
+**/__generated/*.cy.js
 
 create-app.json

@@ -1,5 +1,26 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.7
+
+### Patch Changes
+
+- 6ea22ce: Extract all Redis client to file scope
+- 6ea22ce: Split queries by content type to optimze size
+
+## 0.1.6
+
+### Patch Changes
+
+- e2d81c1: Split queries by content type to optimze size
+
+## 0.1.5
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-webhook-parser@0.1.1
+
 ## 0.1.4
 
 ### Patch Changes

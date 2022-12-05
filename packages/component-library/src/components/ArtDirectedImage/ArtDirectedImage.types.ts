@@ -8,6 +8,7 @@ export interface ArtDirectedImageProps {
   description?: string;
   className?: string;
   priority?: boolean;
+  testId?: any;
 }
 
 export interface ArtDirectedImageClasses {

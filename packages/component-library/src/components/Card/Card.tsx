@@ -11,27 +11,22 @@ import {
 } from '@mui/material';
 import styled from '@mui/system/styled';
 import Skeleton from '@mui/material/Skeleton';
+
 import ErrorBoundary from '../ErrorBoundary';
-import Media from '../Media';
-import Link, { LinkProps } from '../Link';
+
+import { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import { CardProps } from './Card.types';
+import useThemeProps from '../../utils/useThemeProps';
 
-export const Card = ({
-  variant,
-  title,
-  subtitle,
-  media,
-  body,
-  link,
-  tags,
-  actions,
-  loading,
-  sidekickLookup,
-  ...props
-}: CardProps) => {
+export const Card = (inProps: CardProps) => {
+  const props = useThemeProps({
+    name: 'Card',
+    props: inProps
+  });
+  const { media, title, subtitle, body, link, tags, actions, variant, loading, sidekickLookup } = props;
   return (
     <ErrorBoundary>
       <Root variant={variant} data-testid="Card" {...sidekick(sidekickLookup)} {...(props as any)}>
@@ -39,10 +34,15 @@ export const Card = ({
         {media || loading ? (
           <CardMedia sx={{ display: 'block', position: 'relative', width: '100%' }}>
             {!loading ? (
-              <Media {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
+              <ContentModule
+                __typename="Media"
+                {...sidekick(sidekickLookup?.media)}
+                {...getFirstOfArray(media)}
+                data-testid="Card-media"
+              />
             ) : (
               <Skeleton>
-                <Media {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
+                <ContentModule {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
               </Skeleton>
             )}
           </CardMedia>
@@ -84,14 +84,14 @@ export const Card = ({
             {actions?.length ? (
               <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions">
                 {actions?.map((link) => (
-                  <Link key={link.id} {...link} />
+                  <ContentModule __typename="Link" key={link.id} {...link} />
                 ))}
               </CardActions>
             ) : null}
           </CardContent>
         ) : null}
         {loading ? (
-          <CardContent>
+          <CardContent data-testid="Card-ContentSkeleton">
             <Typography variant="h3" component="h3">
               <Skeleton width="100%" />
             </Typography>
@@ -130,12 +130,23 @@ const CardTag = ({ href, text }: LinkProps) =>
     </CardTagRoot>
   );
 
-const CardTagRoot = styled(Link, { name: 'Card', slot: 'TagRoot' })``;
+const CardTagRoot = styled(ContentModule, { name: 'Card', slot: 'TagRoot' })``;
+
+const shouldForwardProp = (prop: string) =>
+  prop !== 'variant' &&
+  prop !== 'sidekickLookup' &&
+  prop !== 'body' &&
+  prop !== 'subtitle' &&
+  prop !== 'actions' &&
+  prop !== 'media' &&
+  prop !== 'actions' &&
+  prop !== 'link' &&
+  prop != '__typename';
 
 const Root = styled(MuiCard, {
   name: 'Card',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<MuiCardProps & {}>`
   position: relative;
@@ -143,7 +154,7 @@ const Root = styled(MuiCard, {
 const CardTags = styled(Box, {
   name: 'Card',
   slot: 'Tags',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.cardTags]
 })<{}>`
   width: 100%;
@@ -152,10 +163,10 @@ const CardTags = styled(Box, {
   padding: ${({ theme }) => theme.spacing(2)};
 `;
 
-const CardLink = styled(Link, {
+const CardLink = styled(ContentModule, {
   name: 'Card',
   slot: 'CardLink',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.cardLink]
 })<LinkProps & {}>`
   position: absolute;

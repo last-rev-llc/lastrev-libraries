@@ -20,11 +20,11 @@
     "@contentful/rich-text-from-markdown": "^15.10.0",
     "@contentful/rich-text-types": "^15.11.1",
     "@graphql-tools/merge": "^6.2.14",
-    "@last-rev/graphql-algolia-integration": "^0.1.3",
-    "@last-rev/graphql-contentful-core": "^0.1.33",
-    "@last-rev/graphql-contentful-extensions": "^0.0.16",
-    "@last-rev/rollup-config": "^0.1.0",
-    "@last-rev/types": "^0.1.6",
+    "@last-rev/graphql-algolia-integration": "^0.1.5",
+    "@last-rev/graphql-contentful-core": "^0.5.0",
+    "@last-rev/graphql-contentful-extensions": "^0.1.4",
+    "@last-rev/rollup-config": "^0.1.4",
+    "@last-rev/types": "^0.3.1",
     "contentful": "^9.1.3",
     "date-fns": "^2.25.0",
     "graphql": "^15.5.1",
@@ -33,6 +33,6 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.178",
-    "rollup": "^2.6.1"
+    "rollup": "^2.75.7"
   }
 }

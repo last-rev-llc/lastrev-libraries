@@ -24,6 +24,7 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
     this.config = merge({}, defaultConfig, config);
     this.validateCmsVars();
     this.validateStrategy();
+    this.validatePaths();
   }
 
   validateCmsVars() {
@@ -43,37 +44,81 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
   }
 
   validateStrategy() {
-    if (this.config.strategy === 'fs') {
-      if (!this.config.fs?.contentDir) {
-        throw new Error(`FS strategy: fs.contentDir is required`);
+    if (this.config.contentStrategy) {
+      if (this.config.contentStrategy === 'fs') {
+        if (!this.config.fs?.contentDir) {
+          throw new Error(`FS strategy: fs.contentDir is required`);
+        }
+      } else if (this.config.contentStrategy === 'cms') {
+        if (this.config.cmsCacheStrategy === 'redis') {
+          if (!this.config.redis?.host) {
+            throw new Error(`Redis strategy: redis.host is required`);
+          }
+          if (!this.config.redis?.port) {
+            throw new Error(`Redis strategy: redis.port is required`);
+          }
+        } else if (this.config.cmsCacheStrategy === 'dynamodb') {
+          if (!this.config.dynamodb?.region) {
+            throw new Error(`DynamoDB strategy: dynamodb.region is required`);
+          }
+          if (!this.config.dynamodb?.accessKeyId) {
+            throw new Error(`DynamoDB strategy: dynamodb.accessKeyId is required`);
+          }
+          if (!this.config.dynamodb?.secretAccessKey) {
+            throw new Error(`DynamoDB strategy: dynamodb.secretAccessKey is required`);
+          }
+          if (!this.config.dynamodb?.tableName) {
+            throw new Error(`DynamoDB strategy: dynamodb.tableName is required`);
+          }
+        }
+      } else {
+        throw new Error(`Invalid contentStrategy: ${this.config.contentStrategy}`);
       }
-    } else if (this.config.strategy === 'redis') {
-      if (!this.config.redis?.host) {
-        throw new Error(`Redis strategy: redis.host is required`);
-      }
-      if (!this.config.redis?.port) {
-        throw new Error(`Redis strategy: redis.port is required`);
-      }
-    } else if (this.config.strategy === 'dynamodb') {
-      if (!this.config.dynamodb?.region) {
-        throw new Error(`DynamoDB strategy: dynamodb.region is required`);
-      }
-      if (!this.config.dynamodb?.accessKeyId) {
-        throw new Error(`DynamoDB strategy: dynamodb.accessKeyId is required`);
-      }
-      if (!this.config.dynamodb?.secretAccessKey) {
-        throw new Error(`DynamoDB strategy: dynamodb.secretAccessKey is required`);
-      }
-      if (!this.config.dynamodb?.tableName) {
-        throw new Error(`DynamoDB strategy: dynamodb.tableName is required`);
+    } else if (this.config.strategy) {
+      if (this.config.strategy === 'fs') {
+        if (!this.config.fs?.contentDir) {
+          throw new Error(`FS strategy: fs.contentDir is required`);
+        }
+      } else if (this.config.strategy === 'redis') {
+        if (!this.config.redis?.host) {
+          throw new Error(`Redis strategy: redis.host is required`);
+        }
+        if (!this.config.redis?.port) {
+          throw new Error(`Redis strategy: redis.port is required`);
+        }
+      } else if (this.config.strategy === 'dynamodb') {
+        if (!this.config.dynamodb?.region) {
+          throw new Error(`DynamoDB strategy: dynamodb.region is required`);
+        }
+        if (!this.config.dynamodb?.accessKeyId) {
+          throw new Error(`DynamoDB strategy: dynamodb.accessKeyId is required`);
+        }
+        if (!this.config.dynamodb?.secretAccessKey) {
+          throw new Error(`DynamoDB strategy: dynamodb.secretAccessKey is required`);
+        }
+        if (!this.config.dynamodb?.tableName) {
+          throw new Error(`DynamoDB strategy: dynamodb.tableName is required`);
+        }
+      } else {
+        throw new Error(`Invalid strategy: ${this.config.strategy}`);
       }
     } else {
-      throw new Error(`Invalid strategy: ${this.config.strategy}`);
+      throw new Error(`Must specify a content stratgy`);
+    }
+  }
+
+  validatePaths() {
+    if (this.config.paths?.version !== 'v2' && this.config.paths?.generateFullPathTree === false) {
+      throw new Error(`Invalid paths configuration: generateFullPathTree must be true when using paths v1`);
     }
   }
 
   clone(newConfig: LastRevAppConfigArgs) {
     return new LastRevAppConfig(merge({}, this.config, newConfig));
+  }
+
+  get jwtSigningSecret() {
+    return this.config.jwtSigningSecret;
   }
 
   get contentful() {
@@ -83,7 +128,8 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       contentPreviewToken: this.config.contentful?.contentPreviewToken!,
       env: this.config.contentful?.env!,
       usePreview: !!this.config.contentful?.usePreview,
-      maxBatchSize: this.config.contentful?.maxBatchSize || 1000
+      maxBatchSize: this.config.contentful?.maxBatchSize || 1000,
+      syncLimit: this.config.contentful?.syncLimit
     };
   }
 
@@ -104,8 +150,17 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
     return this.config.cms!;
   }
 
-  get strategy() {
-    return this.config.strategy!;
+  get contentStrategy() {
+    if (this.config.contentStrategy) return this.config.contentStrategy;
+    if (this.config.strategy !== 'fs') return 'cms';
+    return 'fs';
+  }
+
+  get cmsCacheStrategy() {
+    if (this.config.cmsCacheStrategy) return this.config.cmsCacheStrategy;
+    if (this.config.contentStrategy === 'cms') return 'none';
+    if (this.config.strategy === 'redis' || 'dynamodb') return this.config.strategy as 'redis' | 'dynamodb';
+    return 'none';
   }
 
   get fs() {
@@ -117,8 +172,12 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
   get redis() {
     return {
       ...this.config.redis,
-      maxBatchSize: this.config.redis?.maxBatchSize || 1000
-    } as RedisOptions & { maxBatchSize: number };
+      maxBatchSize: this.config.redis?.maxBatchSize || 1000,
+      ttlSeconds: this.config.redis?.ttlSeconds || 60 * 60 * 24 * 30 // 30 days
+    } as RedisOptions & {
+      maxBatchSize: number;
+      ttlSeconds: number;
+    };
   }
 
   get dynamodb() {
@@ -153,8 +212,25 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
     return this.config.sites!;
   }
 
+  get paths() {
+    return {
+      version: this.config.paths?.version || 'v1',
+      generateFullPathTree: this.config.paths?.generateFullPathTree || true
+    };
+  }
+
   get skipReferenceFields() {
     // defaults to true, to allow backwards compatibility
     return isNil(this.config.skipReferenceFields) ? true : this.config.skipReferenceFields;
+  }
+
+  get sitemap() {
+    return {
+      domain: this.config.sitemap?.domain || '',
+      maxPageSize: this.config.sitemap?.maxPageSize || 1000,
+      indexRootPath: this.config.sitemap?.indexRootPath || '/',
+      pagesRootPath: this.config.sitemap?.pagesRootPath || '/sitemap',
+      excludePages: this.config.sitemap?.excludePages || []
+    };
   }
 }

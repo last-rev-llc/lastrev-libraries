@@ -1,4 +1,6 @@
+/* eslint-disable no-console */
 const fs = require('fs');
+
 const logError = (error, fromPath, errorPath) => {
   console.log(`Error File: ${fromPath}`);
   console.log('Error: ', error);
@@ -8,6 +10,15 @@ const logError = (error, fromPath, errorPath) => {
   console.log(error);
 };
 
+const logItems = (assets, condition, log) => {
+  assets.forEach((asset, index) => {
+    if (condition(asset, index)) {
+      console.log(log(asset));
+    }
+  });
+};
+
 module.exports = {
-  logError
+  logError,
+  logItems
 };

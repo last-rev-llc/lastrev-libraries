@@ -5,7 +5,7 @@ import { filter, identity, isNil } from 'lodash';
 import { join } from 'path';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
-import { ItemKey, ContentfulLoaders } from '@last-rev/types';
+import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 
 const options: Options<ItemKey, any, string> = {
@@ -14,7 +14,14 @@ const options: Options<ItemKey, any, string> = {
   }
 };
 
-const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
+const flvOptions: Options<FVLKey, any, string> = {
+  cacheKeyFn: (key: FVLKey) => {
+    const baseKey = `${key.contentType}-${key.field}-${key.value}`;
+    return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
+  }
+};
+
+const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoaders): ContentfulLoaders => {
   const getUri = (...args: string[]) => {
     return join(config.fs.contentDir, config.contentful.spaceId, config.contentful.env, ...args);
   };
@@ -84,6 +91,10 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
     };
   };
 
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+    return async (keys) => fallbackLoaders.entryByFieldValueLoader.loadMany(keys);
+  };
+
   const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
   const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
   const entryIdsByContentTypeLoader = new DataLoader(getBatchEntryIdsByContentTypeFetcher(), options);
@@ -113,11 +124,15 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
     }
   };
 
+  const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), flvOptions);
+
   return {
     entryLoader,
     assetLoader,
     entriesByContentTypeLoader,
-    fetchAllContentTypes
+    entryByFieldValueLoader,
+    fetchAllContentTypes,
+    entriesRefByLoader: fallbackLoaders.entriesRefByLoader
   };
 };
 

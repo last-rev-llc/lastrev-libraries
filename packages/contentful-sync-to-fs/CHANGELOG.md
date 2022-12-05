@@ -1,5 +1,60 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.9
+
+### Patch Changes
+
+- 4f69103: bumped versions of dependencies
+
+## 0.3.8
+
+### Patch Changes
+
+- 53a8a57: Bump versions
+
+## 0.3.7
+
+### Patch Changes
+
+- d302953: Bump versions
+
+## 0.3.6
+
+### Patch Changes
+
+- 5abaed7: Bump version
+
+## 0.3.5
+
+### Patch Changes
+
+- 3d8437c: Add syncLimit configuration
+
+## 0.3.4
+
+### Patch Changes
+
+- Updated dependencies [a996010]
+- Updated dependencies [a996010]
+  - @last-rev/graphql-contentful-helpers@0.4.0
+
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/graphql-contentful-helpers@0.3.0
+
+## 0.3.2
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-path-util@0.1.11
+  - @last-rev/graphql-contentful-helpers@0.2.5
+  - @last-rev/timer@0.1.3
+
 ## 0.3.1
 
 ### Patch Changes

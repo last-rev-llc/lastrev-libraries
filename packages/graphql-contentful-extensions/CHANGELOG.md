@@ -1,5 +1,85 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.9
+
+### Patch Changes
+
+- 0026ed0: Fixed the last embedded inline entry from being removed
+- Updated dependencies [3371479]
+  - @last-rev/graphql-contentful-core@0.5.8
+
+## 0.1.8
+
+### Patch Changes
+
+- 4f69103: bumped versions of dependencies
+
+## 0.1.7
+
+### Patch Changes
+
+- d697abe: adding unique ids to cleanSVG
+- Updated dependencies [0639f30]
+  - @last-rev/graphql-contentful-core@0.5.2
+
+## 0.1.6
+
+### Patch Changes
+
+- 36fb4b7: Fix split on undefined
+
+## 0.1.5
+
+### Patch Changes
+
+- 43bbfed: Fix Theme not propagating, Fix mailto link
+
+## 0.1.4
+
+### Patch Changes
+
+- Updated dependencies [a996010]
+- Updated dependencies [a996010]
+  - @last-rev/graphql-contentful-core@0.5.0
+  - @last-rev/types@0.3.0
+
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/graphql-contentful-core@0.4.0
+  - @last-rev/types@0.2.0
+
+## 0.1.2
+
+### Patch Changes
+
+- 372fab9: Cleanup for forwarded props and svg best practices
+
+## 0.1.1
+
+### Patch Changes
+
+- f09f4e5: Add support for inlined svg with svgContent from GQL
+- 2ead5c4: Move XSS filtering from Components to Data Layer
+- Updated dependencies [2ead5c4]
+  - @last-rev/graphql-contentful-core@0.3.1
+
+## 0.1.0
+
+### Minor Changes
+
+- 3ba98cd: July updates
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+- Updated dependencies [3ba98cd]
+  - @last-rev/graphql-contentful-core@0.3.0
+  - @last-rev/rollup-config@0.1.4
+
 ## 0.0.16
 
 ### Patch Changes

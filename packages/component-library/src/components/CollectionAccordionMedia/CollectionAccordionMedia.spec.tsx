@@ -1,6 +1,7 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
-import CollectionAccordionMedia, { CollectionAccordionMediaProps } from './CollectionAccordionMedia';
+import CollectionAccordionMedia from './CollectionAccordionMedia';
+import { CollectionAccordionMediaProps } from './CollectionAccordionMedia.types';
 import mockContent from './CollectionAccordionMedia.mock';
 
 let mockedContent: CollectionAccordionMediaProps = { theme: {}, sidekickLookup: '', itemSpacing: 0 };
@@ -27,22 +28,6 @@ describe('CollectionAccordionMedia', () => {
         cy.wrap(element).should('have.text', mockedContent.items[index].body.json.content[0].content[0].value);
       });
       cy.percySnapshot();
-    });
-  });
-
-  context('functions correctly', () => {
-    it('accordions open and collapse correctly', () => {
-      mount(<CollectionAccordionMedia {...mockedContent} />);
-      cy.get('[data-testid=Accordion]').each((element, idx) => {
-        cy.get('[data-testid=Accordion-body]').should('not.be.visible');
-
-        cy.wrap(element).click();
-        cy.get('[data-testid=Accordion-body]').should('be.visible');
-
-        if (idx === 0) cy.percySnapshot();
-        cy.wrap(element).click();
-        cy.get('[data-testid=Accordion-body]').should('not.be.visible');
-      });
     });
   });
 });

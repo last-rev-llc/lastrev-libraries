@@ -1,5 +1,69 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.11
+
+### Patch Changes
+
+- 4fc37b3: Added ability to add jwt signing for webhook verification
+
+## 0.4.10
+
+### Patch Changes
+
+- bc28135: separated out content and caching strategies in order to support no cache
+- Updated dependencies [bc28135]
+  - @last-rev/contentful-path-util@0.1.17
+  - @last-rev/graphql-contentful-helpers@0.4.3
+
+## 0.4.9
+
+### Patch Changes
+
+- 53a8a57: Bump versions
+
+## 0.4.8
+
+### Patch Changes
+
+- d302953: Bump versions
+
+## 0.4.7
+
+### Patch Changes
+
+- 5abaed7: Bump version
+
+## 0.4.6
+
+### Patch Changes
+
+- f7e1181: Added TTLs to Redis calls
+
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies [a996010]
+- Updated dependencies [a996010]
+  - @last-rev/graphql-contentful-helpers@0.4.0
+
+## 0.4.4
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/graphql-contentful-helpers@0.3.0
+
+## 0.4.3
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/contentful-path-util@0.1.11
+  - @last-rev/contentful-webhook-parser@0.1.1
+  - @last-rev/graphql-contentful-helpers@0.2.5
+
 ## 0.4.2
 
 ### Patch Changes

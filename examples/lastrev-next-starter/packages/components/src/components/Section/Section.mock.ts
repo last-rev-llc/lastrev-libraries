@@ -10,8 +10,7 @@ export const singlePanelMock = (): SectionProps => ({
       spacing: 4
     }
   },
-  contents: [richTextMock()],
-  theme: [mockTheme]
+  contents: [richTextMock()]
 });
 
 export const splitPanelMock = (): SectionProps => ({
@@ -32,8 +31,7 @@ export const splitPanelMock = (): SectionProps => ({
         width: '100%'
       }
     }
-  ],
-  theme: [mockTheme]
+  ]
 });
 
 export default splitPanelMock;

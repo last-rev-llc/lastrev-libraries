@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-fs-loader",
-  "version": "0.1.12",
+  "version": "0.3.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -13,10 +13,10 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@last-rev/app-config": "^0.2.0",
-    "@last-rev/rollup-config": "^0.1.2",
-    "@last-rev/testing-library": "^0.1.2",
-    "@last-rev/types": "^0.1.7",
+    "@last-rev/app-config": "^0.4.0",
+    "@last-rev/rollup-config": "^0.1.4",
+    "@last-rev/testing-library": "^0.1.10",
+    "@last-rev/types": "^0.3.2",
     "@types/fs-extra": "^9.0.11",
     "@types/node": "^14.14.35",
     "contentful": "^8.4.2",
@@ -26,7 +26,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/timer": "^0.1.2",
+    "@last-rev/timer": "^0.1.3",
     "dataloader": "^2.0.0",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",

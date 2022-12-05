@@ -7,11 +7,7 @@ export const defaultProps: ComponentsProps['Header'] = {};
 export const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   // Set some static styles
   contentContainer: ({ theme }) => ({
-    height: '100px',
-    [theme.breakpoints.up('sm')]: {
-      paddingLeft: theme.spacing(10),
-      paddingRight: theme.spacing(10)
-    }
+    height: '100px'
   })
   //
   // Use the ownerState to set dynamic styles

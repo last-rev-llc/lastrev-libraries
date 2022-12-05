@@ -19,10 +19,33 @@ export type PathDataMap = {
   [path: string]: PathData;
 };
 
+export type FVLKey = {
+  preview: boolean;
+  field: string;
+  value: string;
+  contentType: string;
+};
+
+export type PathKey = {
+  preview: boolean;
+  id: string;
+  site?: string;
+};
+
+export type RefByKey = {
+  preview: boolean;
+  id: string;
+  contentType: string;
+  field: string;
+};
+
 export type ContentfulLoaders = {
   entryLoader: DataLoader<ItemKey, Entry<any> | null>;
+  entriesRefByLoader: DataLoader<RefByKey, Entry<any>[]>;
+  entryByFieldValueLoader: DataLoader<FVLKey, Entry<any> | null>;
   assetLoader: DataLoader<ItemKey, Asset | null>;
   entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
+  // pathLoader: DataLoader<PathKey, PathData2 | null>;
   fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
 };
 
@@ -41,9 +64,36 @@ export type ContentfulPathsGenerator = (
 
 export type ContentfulPathsConfig = string | ContentfulPathsGenerator;
 
-export type ContentfulPathsConfigs = {
+export type LegacyContentfulPathsConfigs = {
   [contentTypeId: string]: ContentfulPathsConfig;
 };
+
+export type PathRuleDefinition = {
+  rule: string;
+  isCanonical?: boolean;
+  allowFullPaths?: boolean;
+};
+
+export type PathFilerFunctionArgs = {
+  pathEntries: PathEntries;
+  ctx: ApolloContext;
+  matchedRule: string;
+  site?: string;
+};
+
+export type PathFilterFunction = (args: PathFilerFunctionArgs) => Promise<boolean>;
+
+export type ContentTypePathRuleConfig = {
+  rules: PathRuleDefinition[];
+  filter?: PathFilterFunction;
+  allowFullPaths?: boolean;
+};
+
+export type PathRuleConfig = {
+  [contentType: string]: ContentTypePathRuleConfig;
+};
+
+export type ContentfulPathsConfigs = LegacyContentfulPathsConfigs | PathRuleConfig;
 
 export type Extensions = {
   typeDefs: string | DocumentNode | Source | GraphQLSchema;
@@ -58,11 +108,28 @@ export type ContentfulClients = {
   preview: ContentfulClientApi;
 };
 
+export type PathEntries = (Entry<any> | null)[];
+
+export type PathInfo = {
+  path: string;
+  pathEntries: PathEntries;
+};
+
+export type LoadEntriesForPathFunction = (
+  path: string,
+  ctx: ApolloContext,
+  site?: string
+) => Promise<PathEntries | null>;
+
+export type loadPathsForContentFunction = (entry: Entry<any>, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
+
 export type ApolloContext = Context<{
   loaders: ContentfulLoaders;
   mappers: Mappers;
   defaultLocale: string;
   typeMappings: TypeMappings;
+  loadEntriesForPath: LoadEntriesForPathFunction;
+  loadPathsForContent: loadPathsForContentFunction;
   locale?: string;
   path?: string;
   locales: string[];
@@ -70,6 +137,8 @@ export type ApolloContext = Context<{
   contentful: ContentfulClients;
   pathReaders?: PathReaders;
   displayType?: string;
+
+  pathEntries?: PathEntries;
 }>;
 
 export type TypeMapper = {
@@ -95,6 +164,7 @@ export interface iPathNode {
   parent?: iPathNode;
   children: Map<string, iPathNode>;
   hasChildren: () => boolean;
+  getPathEntries: (ctx: ApolloContext) => Promise<PathEntries>;
 }
 
 export type PathNodeVisitor = (node: iPathNode) => void;
@@ -121,6 +191,11 @@ export interface iPathReader {
   getTree: (site?: string) => Promise<iPathTree | undefined>;
   load: (site?: string) => Promise<void>;
   getPathsByContentId: (contentId: string, locale?: string, site?: string) => Promise<string[]>;
+  getPathInfosByContentId: (
+    contentId: string,
+    ctx: ApolloContext,
+    site: string = DEFAULT_SITE_KEY
+  ) => Promise<PathInfo[]>;
   getAllPaths: (locales: string[], site?: string) => Promise<PagePathsParam[]>;
   getNodeByPath(path: string, site?: string): Promise<iPathNode | undefined>;
   getFilteredTree: (filter?: (node: iPathNode) => boolean, site?: string) => Promise<iPathTree>;

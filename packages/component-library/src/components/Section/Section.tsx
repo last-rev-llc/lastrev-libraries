@@ -3,16 +3,16 @@ import Box from '@mui/material/Box';
 import styled from '@mui/system/styled';
 
 import useTheme from '@mui/system/useTheme';
-import { Theme } from '@mui/system/createTheme';
+import { Theme } from '@mui/system';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
 import get from 'lodash/get';
-import omit from 'lodash/omit';
+// import omit from 'lodash/omit';
 
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import Media from '../Media';
-import sidekick from '../../utils/sidekick';
+
+import sidekick from '@last-rev/contentful-sidekick-util';
 import ConditionalWrapper from '../ConditionalWrapper';
 import { SectionProps } from './Section.types';
 import useThemeProps from '../../utils/useThemeProps';
@@ -54,7 +54,7 @@ const Section = (inProps: SectionProps) => {
         backgroundColor={backgroundColor}
         variant={variant}
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
-        {...omit(props, 'theme')}
+        {...props}
       >
         {background ? <BackgroundMedia {...background} /> : null}
         <ConditionalWrapper
@@ -87,6 +87,7 @@ const Section = (inProps: SectionProps) => {
                     ...styles?.gridItem,
                     ...itemStyle
                   }}
+                  data-testid="Section-ContentItem"
                 >
                   <ContentModule {...content} />
                 </GridItem>
@@ -100,14 +101,10 @@ const Section = (inProps: SectionProps) => {
 };
 
 const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; theme: Theme }) => {
-  if (backgroundColor?.includes('gradient') && theme.palette[backgroundColor]) {
+  if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
     return {
-      'background': theme.palette[backgroundColor]?.main,
-      'color': `${backgroundColor}.contrastText`,
-      // TODO find out a better way to override text color
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: `${backgroundColor}.contrastText`
-      }
+      background: get(theme.palette, backgroundColor)?.main,
+      color: `${backgroundColor}.contrastText`
     };
   }
   const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
@@ -115,10 +112,8 @@ const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; them
 
   if (backgroundColor && get(theme.palette, parsedBGColor)) {
     return {
-      'bgcolor': parsedBGColor,
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: `${paletteColor}.contrastText`
-      }
+      bgcolor: parsedBGColor,
+      color: `${paletteColor}.contrastText`
     };
   }
   return {};
@@ -145,7 +140,7 @@ const ContentContainer = styled(Container, {
   zIndex: 1
 }));
 
-const BackgroundMedia = styled(Media, {
+const BackgroundMedia = styled(ContentModule, {
   name: 'Section',
   slot: 'BackgroundMedia',
   overridesResolver: (_, styles) => [styles.backgroundImage]

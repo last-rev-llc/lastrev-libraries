@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount as ogMount } from '@cypress/react';
+import { mount as ogMount } from 'cypress/react';
 import { ThemeProvider, CssBaseline } from '@mui/material';
 import StyledEngineProvider from '@mui/material/StyledEngineProvider';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';

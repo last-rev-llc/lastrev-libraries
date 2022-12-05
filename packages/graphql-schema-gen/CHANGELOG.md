@@ -1,5 +1,11 @@
 # @last-rev/graphql-schema-gen
 
+## 0.2.1
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+
 ## 0.2.0
 
 ### Minor Changes

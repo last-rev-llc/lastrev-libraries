@@ -3,10 +3,9 @@ import { createClient } from 'contentful';
 import { ApolloContext, PathReaders } from '@last-rev/types';
 import { MicroRequest } from 'apollo-server-micro/dist/types';
 import LastRevAppConfig from '@last-rev/app-config';
-import querystring from 'querystring';
-import url from 'url';
 import createLoaders from './createLoaders';
 import express from 'express';
+import { PathToContentLoader, ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
 
 const isString = (value: any): value is string => typeof value === 'string' || value instanceof String;
 
@@ -43,7 +42,7 @@ const createContext = async ({
   }
 
   if (microReq) {
-    const env = querystring.parse(new url.URL(microReq.url || '').search).environment;
+    const env = (microReq as any).query?.environment;
     overrideEnv = env && isString(env) ? env : undefined;
   }
 
@@ -86,10 +85,34 @@ const createContext = async ({
     })
   };
 
+  const pathToContentLoader =
+    config.paths.version === 'v2' ? new PathToContentLoader(config.extensions.pathsConfigs) : null;
+
+  const contentToPathsLoader =
+    config.paths.version === 'v2' ? new ContentToPathsLoader(config.extensions.pathsConfigs) : null;
+
   return {
     contentful,
+    loadEntriesForPath: async (path, ctx, site) => {
+      if (pathToContentLoader) {
+        return pathToContentLoader.getItemsForPath(path, ctx, site);
+      } else if (pathReaders) {
+        const node = await pathReaders[ctx.preview ? 'preview' : 'prod'].getNodeByPath(path, site);
+        if (!node) return [];
+        return node.getPathEntries(ctx);
+      }
+      return [];
+    },
+    loadPathsForContent: async (entry, ctx, site) => {
+      if (contentToPathsLoader) {
+        return contentToPathsLoader.loadPathsFromContent(entry, ctx, site);
+      } else if (pathReaders) {
+        return pathReaders[ctx.preview ? 'preview' : 'prod'].getPathInfosByContentId(entry.sys.id, ctx, site);
+      }
+      return [];
+    },
     locales: map(locales, 'code'),
-    loaders: createLoaders(config),
+    loaders: createLoaders(config, defaultLocale),
     mappers: config.extensions.mappers,
     defaultLocale,
     pathReaders,

@@ -232,6 +232,85 @@ export const richTextMock = (): RichText => ({
   }
 });
 
+export const withLinksMock = (): TextProps => ({
+  __typename: 'Text',
+  body: {
+    json: {
+      nodeType: 'document',
+      data: {},
+      content: [
+        {
+          nodeType: 'heading-5',
+          data: {},
+          marks: [],
+          content: [
+            {
+              nodeType: 'hyperlink',
+              data: {
+                uri: '/blog?category=1'
+              },
+              marks: [],
+              content: [
+                {
+                  nodeType: 'text',
+                  value: 'Example Project',
+                  data: {},
+                  marks: []
+                }
+              ]
+            },
+            {
+              nodeType: 'text',
+              value: ' • June 2022',
+              data: {},
+              marks: []
+            }
+          ]
+        },
+        {
+          nodeType: 'heading-6',
+          data: {},
+          marks: [],
+          content: [
+            {
+              nodeType: 'hyperlink',
+              data: {
+                uri: '/blog/a-blog-link'
+              },
+              marks: [],
+              content: [
+                {
+                  nodeType: 'text',
+                  value: 'Project grows and expands with customer success',
+                  data: {},
+                  marks: []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          nodeType: 'paragraph',
+          data: {},
+          marks: [],
+          content: [
+            {
+              nodeType: 'text',
+              value: 'Senior hires assume critical roles in marketing, finance, and compliance.',
+              data: {},
+              marks: []
+            }
+          ]
+        }
+      ]
+    },
+    links: {
+      entries: [],
+      assets: []
+    }
+  }
+});
+
 export const staticRichTextMock = (): RichText => ({
   json: {
     nodeType: 'document',

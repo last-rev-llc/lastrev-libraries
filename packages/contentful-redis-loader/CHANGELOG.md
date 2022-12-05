@@ -1,5 +1,38 @@
 # @last-rev/contentful-redis-loader
 
+## 0.5.2
+
+### Patch Changes
+
+- b596435: Fixed an issue with pathUpdater where the wrong preview var was being used in the pathStore
+
+## 0.5.1
+
+### Patch Changes
+
+- f7e1181: Added TTLs to Redis calls
+
+## 0.5.0
+
+### Minor Changes
+
+- a996010: Added a new entryByFieldBValue loader
+- a996010: Added contentful path rules engine and support for it in various packages
+
+## 0.4.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
+## 0.3.3
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/timer@0.1.3
+
 ## 0.3.2
 
 ### Patch Changes

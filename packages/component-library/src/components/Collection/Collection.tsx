@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container, Box } from '@mui/material';
 import styled from '@mui/system/styled';
-import omit from 'lodash/omit';
+
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import Section from '../Section';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import ConditionalWrapper from '../ConditionalWrapper';
 import { CollectionProps } from './Collection.types';
 
@@ -29,7 +29,7 @@ export const Collection = ({
         variant={variant}
         itemsVariant={itemsVariant}
         data-testid="Collection"
-        {...omit(props, 'theme')}
+        {...props}
         {...sidekick(sidekickLookup)}
         sx={styles?.root}
       >
@@ -58,16 +58,18 @@ export const Collection = ({
   );
 };
 
+const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'itemsVariant';
 const Root = styled(Box, {
   name: 'Collection',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'itemsVariant',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; itemsVariant?: string }>``;
 
 const ContentContainer = styled(Container, {
   name: 'Collection',
   slot: 'ContentContainer',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>``;
 

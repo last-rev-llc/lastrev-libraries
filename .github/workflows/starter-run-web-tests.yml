@@ -77,9 +77,9 @@ jobs:
           path: |
             **/node_modules
             ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-starter-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-starter-yarn-
 
       - name: Turbo Cache
         id: turbo-cache
@@ -143,9 +143,9 @@ jobs:
           path: |
             **/node_modules
             ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-starter-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-
+            ${{ runner.os }}-starter-yarn-
 
       - name: Turbo Cache
         id: turbo-cache
@@ -169,7 +169,7 @@ jobs:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
 
       - name: 'Website Tests - Chrome'
-        uses: cypress-io/github-action@v2
+        uses: cypress-io/github-action@v4
         with:
           working-directory: ./examples/lastrev-next-starter
           install: false

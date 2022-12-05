@@ -32,6 +32,7 @@ export interface UseDynamicItemsInterface {
 }
 
 export interface CollectionFilteredProps {
+  __typename?: string;
   id: string;
   variant?: string;
   items?: CardProps[];

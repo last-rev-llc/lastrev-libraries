@@ -1,5 +1,30 @@
 # @last-rev/types
 
+## 0.3.2
+
+### Patch Changes
+
+- c62ce9d: Added method to iPathNode to return pathEntries
+
+## 0.3.1
+
+### Patch Changes
+
+- f7e1181: Added TTLs to Redis calls
+
+## 0.3.0
+
+### Minor Changes
+
+- a996010: Added a new entryByFieldBValue loader
+- a996010: Added contentful path rules engine and support for it in various packages
+
+## 0.2.0
+
+### Minor Changes
+
+- fc0aab6: Added a new entryByFieldBValue loader
+
 ## 0.1.7
 
 ### Patch Changes

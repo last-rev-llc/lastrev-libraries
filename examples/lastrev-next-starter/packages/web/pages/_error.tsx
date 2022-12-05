@@ -19,7 +19,7 @@ MyError.getInitialProps = async ({ res, err, asPath, req }: any) => {
     res,
     err
   } as any);
-  console.log('request => ', req);
+
   const statusCode = res?.statusCode ?? err?.statusCode;
 
   if (statusCode === 404) {

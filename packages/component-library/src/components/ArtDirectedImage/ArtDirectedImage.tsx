@@ -69,11 +69,12 @@ const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProp
     </>
   )
 );
+const shouldForwardProp = (prop: string) => prop !== 'displaymedia';
 
 const ResponsiveImage = styled(Image, {
   name: 'ArtDirectedImage',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'displaymedia'
+  shouldForwardProp
 })<{
   media?: string;
 }>`
@@ -90,4 +91,4 @@ const ResponsiveImage = styled(Image, {
       : ''}
 `;
 
-export default React.memo(ArtDirectedImage);
+export default ArtDirectedImage;

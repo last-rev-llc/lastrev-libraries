@@ -1,21 +1,24 @@
 import React from 'react';
-import { Container, Box, Grid, Typography, Theme } from '@mui/material';
-import { Palette, PaletteColor } from '@mui/material/styles';
+import { Grid, Typography, Container, Box } from '@mui/material';
+import { Theme, useTheme } from '@mui/material/styles';
 import styled from '@mui/system/styled';
 import get from 'lodash/get';
 
 import ErrorBoundary from '../ErrorBoundary';
-import Media, { MediaProps } from '../Media';
+
+import { MediaProps } from '../Media/Media.types';
 import ContentModule from '../ContentModule';
-import sidekick from '../../utils/sidekick';
+
+import sidekick from '@last-rev/contentful-sidekick-util';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import useThemeProps from '../../utils/useThemeProps';
 import { HeroProps } from './Hero.types';
-import { useTheme } from '@mui/system';
 
 export const Hero = (props: HeroProps) => {
-  const theme = useTheme<Theme>();
+  const theme = useTheme();
+
   const {
+    divider,
     variant,
     background,
     backgroundColor,
@@ -38,6 +41,7 @@ export const Hero = (props: HeroProps) => {
         data-testid="Hero"
         variant={variant}
         contentHeight={contentHeight}
+        {...props}
         {...sidekick(sidekickLookup)}
         sx={{
           ...rootStyles({ backgroundColor, theme, background }),
@@ -57,7 +61,9 @@ export const Hero = (props: HeroProps) => {
               height: '100%'
             }}
           >
-            <Media
+            <ContentModule
+              __typename="Media"
+              key={background?.id}
               testId="Hero-background"
               {...background}
               {...sidekick(sidekickLookup?.background)}
@@ -73,12 +79,7 @@ export const Hero = (props: HeroProps) => {
               <Grid item container direction="column" spacing={2} xs={12} md={6}>
                 <Grid item>
                   {overline ? (
-                    <Typography
-                      data-testid="Hero-overline"
-                      variant="overline"
-                      sx={{ color: !subtitle ? 'secondary.main' : undefined }}
-                      {...sidekick(sidekickLookup?.overline)}
-                    >
+                    <Typography data-testid="Hero-overline" variant="overline" {...sidekick(sidekickLookup?.overline)}>
                       {overline}
                     </Typography>
                   ) : null}
@@ -87,7 +88,6 @@ export const Hero = (props: HeroProps) => {
                       data-testid="Hero-title"
                       variant="h1"
                       component="h1"
-                      sx={{ color: !subtitle ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.title)}
                     >
                       {title}
@@ -98,7 +98,6 @@ export const Hero = (props: HeroProps) => {
                       data-testid="Hero-subtitle"
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
-                      sx={{ color: !title ? 'secondary.main' : undefined }}
                       {...sidekick(sidekickLookup?.subtitle)}
                     >
                       {subtitle}
@@ -125,9 +124,11 @@ export const Hero = (props: HeroProps) => {
             ) : null}
             {image ? (
               <MediaRoot item xs={12} md={6}>
-                <Media
-                  {...getFirstOfArray(image)}
-                  {...sidekick(sidekickLookup?.image)}
+                <ContentModule
+                  __typename="Media"
+                  key={image?.id}
+                  {...image}
+                  {...sidekick(sidekickLookup?.images)}
                   sizes="(max-width: 640px) 100vw, 50vw"
                   testId="Hero-image"
                   priority
@@ -136,43 +137,26 @@ export const Hero = (props: HeroProps) => {
             ) : null}
           </Grid>
         </ContentContainer>
+        {divider ? (
+          <MediaDivider {...divider} {...sidekick(sidekickLookup?.divider)} testId="Hero-divider" priority />
+        ) : null}
       </Root>
     </ErrorBoundary>
   );
 };
 
-type Color = keyof Palette;
-
 const rootStyles = ({
   backgroundColor,
-  theme,
-  background
+  theme
 }: {
-  backgroundColor?: Color | 'white' | 'black';
+  backgroundColor?: string;
   theme: Theme;
   background?: MediaProps;
 }) => {
-  if (backgroundColor === 'white') {
-    return { backgroundColor };
-  }
-  if (backgroundColor === 'black') {
+  if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
     return {
-      backgroundColor,
-      'color': 'white',
-      // TODO find out a better way to override text color
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: 'white'
-      }
-    };
-  }
-  if (backgroundColor?.includes('gradient') && theme.palette[backgroundColor]) {
-    return {
-      'background': (theme.palette[backgroundColor] as PaletteColor)?.main,
-      'color': `${backgroundColor}.contrastText`,
-      // TODO find out a better way to override text color
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: `${backgroundColor}.contrastText`
-      }
+      background: get(theme.palette, backgroundColor)?.main,
+      color: `${backgroundColor}.contrastText`
     };
   }
   const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
@@ -180,22 +164,11 @@ const rootStyles = ({
 
   if (backgroundColor && get(theme.palette, parsedBGColor)) {
     return {
-      'bgcolor': parsedBGColor,
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: `${paletteColor}.contrastText`
-      }
+      backgroundColor: parsedBGColor,
+      color: `${paletteColor}.contrastText`
     };
   }
-  if (!!background) {
-    return {
-      'backgroundColor': 'transparent',
-      'color': 'white',
-      // TODO find out a better way to override text color
-      '& p, h1, h2, h3, h4, h5, h6, a': {
-        color: 'white'
-      }
-    };
-  }
+
   return {};
 };
 
@@ -230,6 +203,13 @@ const MediaRoot = styled(Grid, {
 })`
   position: relative;
 `;
+
+const MediaDivider = styled(ContentModule, {
+  name: 'Hero',
+  slot: 'MediaDividerRoot',
+  shouldForwardProp: (prop) => prop !== 'variant',
+  overridesResolver: (_, styles) => [styles.mediaDividerRoot]
+})``;
 
 const BackgroundRoot = styled(Box, {
   name: 'Hero',

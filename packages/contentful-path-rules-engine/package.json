@@ -1,0 +1,30 @@
+{
+  "name": "@last-rev/contentful-path-rules-engine",
+  "version": "0.1.2",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "run-s clean build:prod",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "contentful": "^8.4.2",
+    "@last-rev/rollup-config": "^0.1.0",
+    "@last-rev/testing-library": "^0.1.2",
+    "@last-rev/types": "^0.3.2",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.5.4",
+    "typescript": "4.3.4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "loglevel": "^1.7.1"
+  }
+}

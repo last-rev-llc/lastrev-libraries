@@ -1,5 +1,9 @@
 import { ApolloServer } from 'apollo-server';
-import { ApolloServerPluginInlineTrace } from 'apollo-server-core';
+import {
+  ApolloServerPluginInlineTrace,
+  ApolloServerPluginLandingPageProductionDefault,
+  ApolloServerPluginLandingPageLocalDefault
+} from 'apollo-server-core';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import { createContext } from '@last-rev/graphql-contentful-helpers';
@@ -20,8 +24,21 @@ export const getServer = async (config: LastRevAppConfig) => {
     schema,
     introspection: true,
     debug: true,
-    plugins: [ApolloServerPluginInlineTrace()],
-    context: async ({ req }) => createContext({ config, expressReq: req, pathReaders })
+    csrfPrevention: process.env.STAGE !== 'build' && process.env.NODE_ENV === 'production',
+    plugins: [
+      ApolloServerPluginInlineTrace(),
+      process.env.NODE_ENV === 'production'
+        ? ApolloServerPluginLandingPageProductionDefault({
+            embed: true,
+            graphRef: `${process.env.APOLLO_GRAPH_REF}@current`
+          })
+        : ApolloServerPluginLandingPageLocalDefault({ embed: true })
+    ],
+    context: async ({ req }) => createContext({ config, expressReq: req, pathReaders }),
+    cors: {
+      // TODO: Add CORS options through config
+      origin: ['http://localhost:3000', 'https://studio.apollographql.com']
+    }
   });
 
   logger.trace(timer.end());

@@ -20,6 +20,7 @@ const getClient = (config: LastRevAppConfig) => {
 
 export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
   const redis = getClient(config);
+  const { ttlSeconds } = config.redis;
 
   const deleteEntriesByContentType = async (contentTypeId: string, isPreview: boolean) => {
     const setKey = `${isPreview ? 'preview' : 'production'}:entry_ids_by_content_type:${contentTypeId}`;
@@ -34,7 +35,7 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       if (command.action === 'update') {
         const val = stringify(data, key);
         if (val) {
-          await redis.set(key, val);
+          await redis.set(key, val, 'EX', ttlSeconds);
         }
       } else if (command.action === 'delete') {
         await redis.del(key);
@@ -50,7 +51,7 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
         if (assetHasUrl(data)) {
           const val = stringify(data, key);
           if (val) {
-            await redis.set(key, val);
+            await redis.set(key, val, 'EX', ttlSeconds);
           }
         } else {
           // Asset must be deleted because the content was not ready in contentful
@@ -66,9 +67,13 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       if (command.action === 'update') {
         const val = stringify(data, data.sys.id);
         if (val) {
-          await redis.hset(key, {
-            [data.sys.id]: val
-          });
+          const multi = redis.multi();
+          await multi
+            .hset(key, {
+              [data.sys.id]: val
+            })
+            .expire(key, ttlSeconds)
+            .exec();
         }
       } else if (command.action === 'delete') {
         await redis.hdel(key, data.sys.id);

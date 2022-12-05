@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/testing-library",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "main": "src/index.js",
   "files": [
     "src",

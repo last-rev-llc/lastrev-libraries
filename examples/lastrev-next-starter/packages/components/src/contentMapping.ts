@@ -1,27 +1,19 @@
 import dynamic from 'next/dynamic';
 
-const Section = dynamic(() => import('./components/Section'));
+import Section from './components/Section';
+// import Card from './components/Card';
+import Collection from './components/Collection';
+import NavigationBar from './components/NavigationBar';
+import Link from './components/Link';
+import NavigationItem from './components/NavigationItem';
+import Header from './components/Header';
+import Hero from './components/Hero';
+
+import Media from './components/Media';
+import Text from './components/Text';
 
 const Card = dynamic(() => import('./components/Card'));
-
-const Collection = dynamic(() => import('./components/Collection'));
-
 const CollectionAccordion = dynamic(() => import('./components/CollectionAccordion'));
-
-const NavigationBar = dynamic(() => import('./components/NavigationBar'));
-
-const Media = dynamic(() => import('./components/Media'));
-
-const Link = dynamic(() => import('./components/Link'));
-
-const NavigationItem = dynamic(() => import('./components/NavigationItem'));
-
-const Header = dynamic(() => import('./components/Header'));
-
-const Hero = dynamic(() => import('./components/Hero'));
-
-const Text = dynamic(() => import('./components/Text'));
-
 const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop'));
 const CollectionCarousel = dynamic(() => import('@last-rev/component-library/dist/components/CollectionCarousel'));
 

@@ -8,15 +8,17 @@ import performAlgoliaQuery from './performAlgoliaQuery';
 import updateAlgoliaIndices from './updateAlgoliaIndices';
 import logger from 'loglevel';
 import extractDomainUrlFromEvent from './extractDomainUrlFromEvent';
+import Timer from '@last-rev/timer';
 
 const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, maxRecords?: number) => {
   const { algolia, logLevel } = config;
 
-  logger.setLevel(logLevel);
+  logger.setLevel('TRACE');
 
   const algoliaClient = algoliasearch(algolia.applicationId, algolia.adminApiKey);
 
   return async (event: any) => {
+    const timer = new Timer('Algolia sync handler');
     try {
       if (!event) {
         logger.error('no event object passed.');
@@ -58,13 +60,17 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
         // manually triggered. ignore, and use the default envs.
       }
 
+      const performAlgoliaQueryTime = new Timer('performAlgoliaQuery');
       const { errors: queryErrors, results } = await performAlgoliaQuery(apolloClient, config, envs);
+      logger.debug(performAlgoliaQueryTime.end());
 
       const algoliaObjectsByIndex = groupAlgoliaObjectsByIndex(results);
-
+      const updateAlgoliaIndicesTime = new Timer('updateAlgoliaIndices');
       const updateErrors = await updateAlgoliaIndices(algoliaClient, algoliaObjectsByIndex, maxRecords);
+      logger.debug(updateAlgoliaIndicesTime.end());
 
       const allErrors = [...queryErrors, ...updateErrors];
+      logger.debug(timer.end());
 
       if (allErrors.length) {
         allErrors.map((error) => logger.error(`Error syncing to Algolia: ${error.message || error}`));

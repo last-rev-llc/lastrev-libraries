@@ -1,5 +1,52 @@
 # @last-rev/contentful-path-util
 
+## 0.1.17
+
+### Patch Changes
+
+- bc28135: separated out content and caching strategies in order to support no cache
+
+## 0.1.16
+
+### Patch Changes
+
+- ee7f115: Remove console.log
+
+## 0.1.15
+
+### Patch Changes
+
+- 1e7a4e5: HOTFIX: missing env keyprefix on PathStore
+
+## 0.1.14
+
+### Patch Changes
+
+- 6ea22ce: Extract all Redis client to file scope
+
+## 0.1.13
+
+### Patch Changes
+
+- b596435: Fixed an issue with pathUpdater where the wrong preview var was being used in the pathStore
+- 0639f30: adding queries to allow for more fine grained sitemap construction/generation
+
+## 0.1.12
+
+### Patch Changes
+
+- c62ce9d: Added method to iPathNode to return pathEntries
+- Updated dependencies [c62ce9d]
+  - @last-rev/contentful-path-rules-engine@0.1.2
+
+## 0.1.11
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+  - @last-rev/timer@0.1.3
+
 ## 0.1.10
 
 ### Patch Changes

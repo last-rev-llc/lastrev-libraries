@@ -79,6 +79,24 @@ const run = async (directory: string, source: string, target: string) => {
     // git fetch old_repo -q
     await git.fetch('old_repo', ['-q']);
 
+    console.log('-------------------------------------');
+    const { editPatch } = await inquirer.prompt([
+      { type: 'confirm', name: 'editPatch', message: 'Would you like to edit the patch?' }
+    ]);
+    console.log('-------------------------------------');
+
+    if (editPatch) {
+      execSync(`open ${PATCH_FILE}`, { cwd: TARGET_DIRECTORY });
+      await inquirer.prompt([
+        {
+          message: 'Verify the patch and hit enter to continue',
+          type: 'input',
+          name: 'apply patch'
+        }
+      ]);
+      console.log('-------------------------------------');
+    }
+
     // Apply patch with three way resolution
     // git am -3 -p3 --whitespace=fix $PATCH_FILE || FAILED=1
     let ACTION = '';

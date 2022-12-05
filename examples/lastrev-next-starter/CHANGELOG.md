@@ -1,10 +1,34 @@
 # @last-rev/next-starter
 
-## Next
+## 2.1.0
 
-- Added shared Sentry config with LRNS version tag
-- Update Media theme to use Next image optimization
-- Update Sentry to skip in development or if no SENTRY_DSN environment is available
+Added:
+
+- Shared Sentry config with LRNS version tag
+- Embedded Apollo Studio for GraphQL (check new .env.template variables)
+- Default Security Headers
+- LivePreview and Theme API route
+- RichText support for: hyperlinks, table and better handling of new lines.
+- Sidekick to page contents
+- Media support for pdf through iframe
+- Fix Media entries not showing in RichText
+- Theme extension for normalizing color values (i.e `primary.main_whateverOther_things` -> `primary.main`)
+
+Removed:
+
+- Overall fixes and cleanups of styles, types and console warnings/errors.
+- Direct use of Media across components to ContentModule
+- Federated schema generated
+- Removed next patch, deprecated export flow
+
+Updated:
+
+- Cypress e2e and component testing to version 10
+- Build process to use SWC by default
+- A11y tags
+- nvmrc to be node LTS
+- propagateEnv to be fail safe and run on build/dev
+- Sentry to skip in development or if no SENTRY_DSN environment is available
 
 ## 2.0.3
 

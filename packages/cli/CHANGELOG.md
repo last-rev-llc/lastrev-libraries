@@ -1,5 +1,94 @@
 # @last-rev/cli
 
+## 0.5.8
+
+### Patch Changes
+
+- bc28135: separated out content and caching strategies in order to support no cache
+- Updated dependencies [bc28135]
+  - @last-rev/app-config@0.4.0
+  - @last-rev/graphql-contentful-core@0.5.7
+
+## 0.5.7
+
+### Patch Changes
+
+- 6ea22ce: Extract all Redis client to file scope
+
+## 0.5.6
+
+### Patch Changes
+
+- ad87311: Update sync to fs version
+
+## 0.5.5
+
+### Patch Changes
+
+- 0639f30: adding queries to allow for more fine grained sitemap construction/generation
+- Updated dependencies [0639f30]
+  - @last-rev/app-config@0.3.1
+  - @last-rev/graphql-contentful-core@0.5.2
+
+## 0.5.4
+
+### Patch Changes
+
+- c62ce9d: bump version of core
+- Updated dependencies [c62ce9d]
+- Updated dependencies [c62ce9d]
+  - @last-rev/app-config@0.3.0
+  - @last-rev/graphql-contentful-core@0.5.1
+
+## 0.5.3
+
+### Patch Changes
+
+- 43124bd: Added update.sh script back; Added logic to open and edit patch file
+
+## 0.5.2
+
+### Patch Changes
+
+- 44f8245: bumped dependency versions
+
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies [a996010]
+- Updated dependencies [a996010]
+  - @last-rev/graphql-contentful-core@0.5.0
+  - @last-rev/contentful-sync-to-fs@0.3.4
+
+## 0.5.0
+
+### Minor Changes
+
+- 50e472d: Added automated creation of redis ACL user to CLI
+
+## 0.4.2
+
+### Patch Changes
+
+- Updated dependencies [fc0aab6]
+  - @last-rev/graphql-contentful-core@0.4.0
+  - @last-rev/contentful-sync-to-fs@0.3.3
+
+## 0.4.1
+
+### Patch Changes
+
+- 3ba98cd: Bump testing-library version
+- Updated dependencies [3ba98cd]
+- Updated dependencies [3ba98cd]
+  - @last-rev/app-config@0.2.1
+  - @last-rev/contentful-fragment-gen@0.2.1
+  - @last-rev/contentful-import-export@0.1.4
+  - @last-rev/contentful-sync-to-fs@0.3.2
+  - @last-rev/graphql-contentful-core@0.3.0
+  - @last-rev/testing-library@0.1.10
+
 ## 0.4.0
 
 ### Minor Changes

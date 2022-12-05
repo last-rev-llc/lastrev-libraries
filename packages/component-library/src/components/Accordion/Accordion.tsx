@@ -5,14 +5,14 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
-import sidekick from '../../utils/sidekick';
+import sidekick from '@last-rev/contentful-sidekick-util';
 import ContentModule from '../ContentModule';
 import { AccordionProps } from './Accordion.types';
 
-export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionProps) => {
+export const Accordion = ({ variant, title, body, sidekickLookup, ...props }: AccordionProps) => {
   return (
     <ErrorBoundary>
-      <AccordionRoot {...sidekick(sidekickLookup)} variant={variant} data-testid="Accordion">
+      <AccordionRoot {...sidekick(sidekickLookup)} variant={variant} data-testid="Accordion" {...props}>
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           <Typography variant="h4" data-testid="Accordion-title">
             {title}
@@ -33,10 +33,20 @@ export const Accordion = ({ variant, title, body, sidekickLookup }: AccordionPro
     </ErrorBoundary>
   );
 };
+export const shouldForwardProp = (prop: string) =>
+  prop !== 'sidekickLookup' &&
+  prop !== 'body' &&
+  prop !== 'subtitle' &&
+  prop !== 'actions' &&
+  prop !== 'media' &&
+  prop !== 'actions' &&
+  prop !== 'link' &&
+  prop != '__typename';
 
 const AccordionRoot = styled(MuiAccordion, {
   name: 'Accordion',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<MuiAccordionProps & {}>(() => ({}));
 

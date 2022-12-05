@@ -3,7 +3,7 @@ import { Entry, Asset, ContentType } from 'contentful';
 import logger from 'loglevel';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
-import { ItemKey, ContentfulLoaders } from '@last-rev/types';
+import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { LOG_PREFIX } from './constants';
 import { getKey, isError, isNil, parse, stringify } from './helpers';
@@ -17,6 +17,13 @@ const getOptions = (maxBatchSize: number): Options<ItemKey, any, string> => ({
     return key.preview ? `${key.id}-preview` : `${key.id}-prod`;
   }
 });
+
+const flvOptions: Options<FVLKey, any, string> = {
+  cacheKeyFn: (key: FVLKey) => {
+    const baseKey = `${key.contentType}-${key.field}-${key.value}`;
+    return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
+  }
+};
 
 const getClient = (config: LastRevAppConfig) => {
   const key = JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
@@ -33,6 +40,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
   const client = getClient(config);
 
   const maxBatchSize = config.redis.maxBatchSize || 1000;
+  const ttlSeconds = config.redis.ttlSeconds;
 
   logger.debug(`${LOG_PREFIX} createLoaders() maxBatchSize: ${maxBatchSize}`);
 
@@ -76,7 +84,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
       const sourceResults = await fallbackLoader.loadMany(cacheMissIds);
 
-      primeRedisEntriesOrAssets<T>(client, cacheMissIds, dirname, sourceResults, maxBatchSize);
+      primeRedisEntriesOrAssets<T>(client, cacheMissIds, dirname, sourceResults, maxBatchSize, ttlSeconds);
 
       keys.forEach((key, index) => {
         if (isNil(results[index])) {
@@ -179,7 +187,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         // Clean all errors and nulls
         const filtered = sourceResults.filter((result) => !isError(result) && !isNil(result));
 
-        primeRedisEntriesByContentType(client, filtered, cacheMissContentTypeIds, maxBatchSize);
+        primeRedisEntriesByContentType(client, filtered, cacheMissContentTypeIds, maxBatchSize, ttlSeconds);
 
         // Add all the fallback results in the out map
         (filtered as Entry<any>[][]).forEach((entryArray, idx) => {
@@ -192,6 +200,10 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       const outArray = keys.map(({ id: contentType }) => out[contentType] || []);
       return outArray;
     };
+
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+    return async (keys) => fallbackLoaders.entryByFieldValueLoader.loadMany(keys);
+  };
 
   const options = getOptions(maxBatchSize);
 
@@ -222,8 +234,11 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
           }
 
           // don't block
-          client
+          const hsetMulti = client.multi();
+          hsetMulti
             .hset(key, zipped)
+            .expire(key, ttlSeconds)
+            .exec()
             .catch((e: any) => {
               logger.error(`${LOG_PREFIX} error hsetting: ${e}`);
             })
@@ -238,11 +253,15 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     }
   };
 
+  const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), flvOptions);
+
   return {
     entryLoader,
     assetLoader,
     entriesByContentTypeLoader,
-    fetchAllContentTypes
+    entryByFieldValueLoader,
+    fetchAllContentTypes,
+    entriesRefByLoader: fallbackLoaders.entriesRefByLoader
   };
 };
 

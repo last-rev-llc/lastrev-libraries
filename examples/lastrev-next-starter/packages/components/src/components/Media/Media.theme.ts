@@ -4,12 +4,21 @@ import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVa
 export const defaultProps: ComponentsProps['Media'] = {
   nextImageOptimization: true,
   priority: false,
-  layout: 'responsive'
+  // All images are shown close to full bleed size
+  sizes: '100vw'
 };
 
 // https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
   // Set some static styles
+  root: () => ({
+    // img default display: inline introduces a line-height space at the bottom
+    display: 'block',
+    maxWidth: `100%`,
+    margin: 'auto',
+
+    height: 'auto'
+  })
   // root: {
   //   backgroundColor: 'red'
   // }

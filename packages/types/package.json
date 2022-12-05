@@ -1,13 +1,13 @@
 {
   "name": "@last-rev/types",
-  "version": "0.1.7",
+  "version": "0.3.2",
   "description": "",
   "main": "index.d.ts",
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "apollo-server-core": "^2.19.1",
+    "apollo-server-core": "^3.10.1",
     "contentful": "^8.4.2",
     "dataloader": "^2.0.0",
     "graphql": "^15.5.1"

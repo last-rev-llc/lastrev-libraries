@@ -28,6 +28,5 @@ export default (): CollectionAccordionProps => ({
       title: 'Unam incolunt Belgae, aliam Aquitani, tertiam.'
     }
   ],
-  itemsVariant: 'accordion-standard',
-  theme: [mockTheme]
+  itemsVariant: 'accordion-standard'
 });

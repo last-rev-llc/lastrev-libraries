@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint-disable no-return-assign */
+/* eslint-disable radix */
 const MurmurHash3 = require('imurmurhash');
 const TurndownService = require('turndown');
 const { richTextFromMarkdown } = require('@contentful/rich-text-from-markdown');
@@ -88,6 +91,55 @@ const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
         return value;
     }
   }
+  return value;
+};
+
+const getAssetType = (fileExtension) => {
+  switch (fileExtension) {
+    case 'jpg':
+    case 'jpeg':
+      return 'image/jpeg';
+    case 'png':
+      return 'image/png';
+    case 'gif':
+      return 'image/gif';
+    case 'svg':
+      return 'image/svg+xml';
+    case 'mp4':
+      return 'video/mp4';
+    case 'mov':
+      return 'video/quicktime';
+    case 'pdf':
+      return 'application/pdf';
+    case 'psd':
+      return 'image/vnd.adobe.photoshop';
+    case 'eps':
+      return 'application/postscript';
+    default:
+      return null;
+  }
+};
+
+const getMediaObject = (media) => {
+  let mediaObject = {};
+  if (media) {
+    mediaObject = media.length ? media[0] : media;
+  }
+  return mediaObject;
+};
+
+const cleanupId = (entryId) => {
+  // check if entyryId matches regex of /^[a-zA-Z0-9-_.]{1,64}$/
+  let cleanedId = entryId;
+  if (!entryId.match(/^[a-zA-Z0-9-_.]{1,64}$/)) {
+    // replace invalid characters with -
+    cleanedId = entryId.replace(/[^a-zA-Z0-9-_.]/g, '-');
+    // truncate from begining to 64 characters
+    if (entryId.length > 64) {
+      cleanedId = entryId.substring(0, 63);
+    }
+  }
+  return cleanedId;
 };
 
 module.exports = {
@@ -97,5 +149,8 @@ module.exports = {
     const id = MurmurHash3(string).result().toString();
     if (!id) console.log('Warning ID is empty for string: ', string);
     return id;
-  }
+  },
+  getAssetType,
+  cleanupId,
+  getMediaObject
 };

@@ -23,11 +23,14 @@ export type CreateAppConfig = {
     contentfulEnv?: string;
     repoName?: string;
     repoOwner?: string;
-    redisHost?: string;
-    redisPort?: number;
-    redisPassword?: string;
     devDomainUrl?: string;
     googleTagManagerId?: string;
+  };
+  redis?: {
+    host?: string;
+    port?: number;
+    password?: string;
+    username?: string;
   };
   netlify?: {
     accountSlug?: string;

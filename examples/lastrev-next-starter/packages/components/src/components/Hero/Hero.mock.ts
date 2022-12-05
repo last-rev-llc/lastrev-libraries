@@ -81,6 +81,5 @@ export default (): HeroProps => ({
   },
   backgroundColor: 'white',
   contentHeight: 'sm',
-  contentWidth: 'xl',
-  theme: [mockTheme]
+  contentWidth: 'xl'
 });

@@ -12,6 +12,20 @@ export interface PathStore {
   save: (pathDataMap: PathDataMap, site: string) => Promise<void>;
 }
 
+const clients: Record<string, Redis> = {};
+const getClient = (config: LastRevAppConfig) => {
+  const key = JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
+  if (!clients[key]) {
+    clients[key] = new Redis({
+      ...config.redis,
+      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:${
+        config.contentful.usePreview ? 'preview' : 'production'
+      }`
+    });
+  }
+  return clients[key];
+};
+
 export class FsPathStore implements PathStore {
   basePath: string;
 
@@ -46,15 +60,9 @@ export class FsPathStore implements PathStore {
 }
 
 export class RedisPathStore implements PathStore {
-  client: Redis.Redis;
-
+  client: Redis;
   constructor(config: LastRevAppConfig) {
-    this.client = new Redis({
-      ...config.redis,
-      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:${
-        config.contentful.usePreview ? 'preview' : 'production'
-      }`
-    });
+    this.client = getClient(config);
   }
 
   getKey(site: string) {
@@ -151,12 +159,27 @@ export class DynamoDbPathStore implements PathStore {
   };
 }
 
+export class DummyStore implements PathStore {
+  load = async () => {
+    return {};
+  };
+
+  save = async () => {};
+}
+
 export const createPathStore = (config: LastRevAppConfig) => {
-  switch (config.strategy) {
-    case 'redis':
-      return new RedisPathStore(config);
-    case 'dynamodb':
-      return new DynamoDbPathStore(config);
+  switch (config.contentStrategy) {
+    case 'cms': {
+      switch (config.cmsCacheStrategy) {
+        case 'redis':
+          return new RedisPathStore(config);
+        case 'dynamodb':
+          return new DynamoDbPathStore(config);
+        case 'none':
+          // path reader only works with pre-calculated paths in redis/dynamodb/fs
+          return new DummyStore();
+      }
+    }
     case 'fs':
       return new FsPathStore(config);
   }
