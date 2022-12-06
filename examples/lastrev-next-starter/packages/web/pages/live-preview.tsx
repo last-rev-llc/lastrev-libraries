@@ -20,7 +20,7 @@ const fetchPreview = async (id: string, locale: string, environment: string) => 
 const spaceId = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
 
 interface Action {
-  type: 'OVERRIDE_VALUES' | 'REFRESH_CONTENT';
+  type: 'OVERRIDE_VALUES' | 'REFRESH_CONTENT' | 'EDIT_CONTENT';
   payload: any;
 }
 export default function Preview({}: any) {
@@ -45,12 +45,14 @@ export default function Preview({}: any) {
       'message',
       (event) => {
         const action: Action = event.data;
-
         if (action.type === 'OVERRIDE_VALUES') {
           setOverride(action.payload);
         }
         if (action.type === 'REFRESH_CONTENT') {
           mutate();
+        }
+        if (action.type === 'EDIT_CONTENT') {
+          window.parent.postMessage(action, '*');
         }
       },
       false
