@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.10
+
+### Patch Changes
+
+- Add Preview extensions
+
 ## 0.1.9
 
 ### Patch Changes
