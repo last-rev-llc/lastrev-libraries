@@ -13,6 +13,7 @@ export * as Media from './Media';
 export * as Quote from './Quote';
 export * as RichText from './RichText';
 export * as Theme from './Theme';
+export * as Preview from './Preview';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
