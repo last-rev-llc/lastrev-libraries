@@ -10,12 +10,12 @@ import { Box } from '@mui/material';
 
 let client;
 
-const fetchPreview = async (id: string, locale: string, environment: string) => {
+const fetchPreview = async (id: string, locale: string, overrideContent: any, environment: string) => {
   const previewGqlClient = new GraphQLClient(
     `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/api/graphql'}?env=master`
   );
   const sdk = getSdk(previewGqlClient);
-  return sdk.Preview({ id, locale });
+  return sdk.Preview({ id, locale, overrideContent });
 };
 const spaceId = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
 
@@ -34,12 +34,16 @@ export default function Preview({}: any) {
     id: string;
     locale?: string;
   };
+  const [override, setOverride] = React.useState<any>();
+  const [content, setContent] = React.useState<any>();
+  const { data, error, mutate } = useSWR(
+    id ? [id, locale, override, environment, 'preview', spaceId] : null,
+    fetchPreview,
+    { onSuccess: ({ data }) => setContent(data?.content) }
+  );
 
-  const { data, error, mutate } = useSWR(id ? [id, locale, environment, 'preview', spaceId] : null, fetchPreview, {});
-  const content = data?.data?.content;
   const isLoadingInitialData = !data && !error;
 
-  const [override, setOverride] = React.useState<any>();
   React.useLayoutEffect(() => {
     window.addEventListener(
       'message',
@@ -65,7 +69,7 @@ export default function Preview({}: any) {
         <ContentPreview
           id={id}
           loading={isLoadingInitialData}
-          content={{ ...content, ...override }}
+          content={content}
           error={error}
           environment={environment as string}
           locale={locale as string}

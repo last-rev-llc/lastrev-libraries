@@ -58,7 +58,8 @@ const config = new LastRevAppConfig({
   logLevel: 'debug',
   fs: {
     contentDir: resolve(__dirname, './packages/graphql-runner/cms-sync')
-  }
+  },
+  paths: { version: 'v1' }
 });
 
 module.exports = config;

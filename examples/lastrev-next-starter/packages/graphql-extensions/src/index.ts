@@ -13,6 +13,7 @@ import {
   Media,
   NavigationItem,
   Page,
+  Preview,
   RichText,
   Section,
   Theme
@@ -41,6 +42,7 @@ const extensions: GraphQlExtension[] = [
   Media,
   NavigationItem,
   Page,
+  Preview,
   RichText,
   Section,
   Theme
