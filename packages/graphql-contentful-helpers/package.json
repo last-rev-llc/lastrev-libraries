@@ -23,7 +23,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/app-config": "^0.4.0",
+    "@last-rev/app-config": "^0.4.2",
     "@last-rev/contentful-cms-loader": "^0.4.0",
     "@last-rev/contentful-dynamodb-loader": "^0.3.0",
     "@last-rev/contentful-fs-loader": "^0.3.0",

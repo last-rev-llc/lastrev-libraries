@@ -14,7 +14,8 @@ const defaultConfig: LastRevAppConfigArgs = {
     port: 5000,
     host: 'localhost'
   },
-  sites: []
+  sites: [],
+  features: {}
 };
 
 export default class LastRevAppConfig implements LastRevAppConfiguration {
@@ -231,6 +232,17 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       indexRootPath: this.config.sitemap?.indexRootPath || '/',
       pagesRootPath: this.config.sitemap?.pagesRootPath || '/sitemap',
       excludePages: this.config.sitemap?.excludePages || []
+    };
+  }
+
+  get features() {
+    if (!this.config.features?.disableCoreSidekickLookup) {
+      console.warn(
+        'The SidekickLookupResolver in the core is being deprecated. See how to migrate: https://lastrev.atlassian.net/wiki/spaces/KB/pages/108167187/Sidekick+Lookup+Migration'
+      );
+    }
+    return {
+      disableCoreSidekickLookup: this.config.features?.disableCoreSidekickLookup
     };
   }
 }

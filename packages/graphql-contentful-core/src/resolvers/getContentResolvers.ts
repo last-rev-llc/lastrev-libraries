@@ -1,9 +1,10 @@
-import { sideKickLookupResolver } from './sideKickLookupResolver';
 import { ContentType } from 'contentful';
 import fieldsResolver from './fieldsResolver';
 import { Mappers, TypeMappings } from '@last-rev/types';
 import getTypeName from '../utils/getTypeName';
 import uniq from 'lodash/uniq';
+import LastRevAppConfig from '@last-rev/app-config';
+import { sideKickLookupResolver } from './sideKickLookupResolver';
 
 type ContentTypeRepresentation = {
   typeName: string;
@@ -65,13 +66,16 @@ const collectContentTypes = (
 
 const getContentResolvers = ({
   contentTypes,
-  mappers,
-  typeMappings
+
+  config
 }: {
   contentTypes: ContentType[];
-  mappers: Mappers;
-  typeMappings: TypeMappings;
+  config: LastRevAppConfig;
 }): { [typeName: string]: { [fieldName: string]: Function } } => {
+  const {
+    features,
+    extensions: { mappers, typeMappings }
+  } = config;
   const contentTypeReps = collectContentTypes(contentTypes, mappers, typeMappings);
   const virtualTypeReps = collectVirtualTypes(mappers, contentTypeReps);
 
@@ -80,7 +84,11 @@ const getContentResolvers = ({
       ...acc,
       [typeName]: {
         id: (content: any) => content?.sys?.id,
-        sidekickLookup: sideKickLookupResolver(typeName, typeMappings),
+        ...(features?.disableCoreSidekickLookup
+          ? {}
+          : {
+              sidekickLookup: sideKickLookupResolver(typeName, typeMappings)
+            }),
         ...fieldsResolver(typeName, fields)
       }
     };

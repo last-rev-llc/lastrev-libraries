@@ -11,12 +11,12 @@ The default export is a single function that takes 4 parameters:
 ```javascript
 import sidekick from '@last-rev/contentful-sidekick-util';
 
-const out = sidekick(contentId, field, type, displayText);
+const out = sidekick({ contentId, fieldName, contentTypeId, displayText });
 ```
 
 - `contentId` : The id of the contentful entry being rendered
-- `field`: The API name of the field from the contentful entry which is rendered
-- `type`: The content type ID of the entry being rendered
+- `fieldName`: The API name of the field from the contentful entry which is rendered
+- `contentTypeId`: The content type ID of the entry being rendered
 - `displayText`: A human-friendly text that will be seen in the Contentful Sidekick sidebar. This can be used to represent the content itself, or it can be used on its own to group content in the sidebar
 
 either one of `contentId` or `displayText` is required to output anything.
