@@ -23,7 +23,6 @@ export const sideKickLookupResolver = async (
     // not a real content item. return null
     return emptyLookup;
   }
-  console.log('SidekickLookup', info);
 
   const { mappers } = ctx;
   const typeName = getTypeName(content?.sys?.contentType);
