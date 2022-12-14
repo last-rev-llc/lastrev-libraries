@@ -66,7 +66,7 @@ export const Hero = (props: HeroProps) => {
               key={background?.id}
               testId="Hero-background"
               {...background}
-              {...sidekick(sidekickLookup, "background")}
+              {...sidekick(sidekickLookup, 'background')}
               priority
               layout="fill"
               sx={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -79,7 +79,11 @@ export const Hero = (props: HeroProps) => {
               <Grid item container direction="column" spacing={2} xs={12} md={6}>
                 <Grid item>
                   {overline ? (
-                    <Typography data-testid="Hero-overline" variant="overline" {...sidekick(sidekickLookup, "overline")}>
+                    <Typography
+                      data-testid="Hero-overline"
+                      variant="overline"
+                      {...sidekick(sidekickLookup, 'overline')}
+                    >
                       {overline}
                     </Typography>
                   ) : null}
@@ -88,7 +92,7 @@ export const Hero = (props: HeroProps) => {
                       data-testid="Hero-title"
                       variant="h1"
                       component="h1"
-                      {...sidekick(sidekickLookup, "title")}
+                      {...sidekick(sidekickLookup, 'title')}
                     >
                       {title}
                     </Typography>
@@ -98,7 +102,7 @@ export const Hero = (props: HeroProps) => {
                       data-testid="Hero-subtitle"
                       variant={!title ? 'h1' : 'h2'}
                       component={!title ? 'h1' : 'h2'}
-                      {...sidekick(sidekickLookup, "subtitle")}
+                      {...sidekick(sidekickLookup, 'subtitle')}
                     >
                       {subtitle}
                     </Typography>
@@ -109,11 +113,14 @@ export const Hero = (props: HeroProps) => {
                       variant="hero"
                       body={body}
                       data-testid="Hero-body"
-                      {...sidekick(sidekickLookup, "body")}
+                      {...sidekick(sidekickLookup, 'body')}
                     />
                   ) : null}
                   {actions ? (
-                    <ActionsRoot pt={title || subtitle || body ? 3 : undefined} {...sidekick(sidekickLookup, "actions")}>
+                    <ActionsRoot
+                      pt={title || subtitle || body ? 3 : undefined}
+                      {...sidekick(sidekickLookup, 'actions')}
+                    >
                       {actions?.map((link) => (
                         <ContentModule key={link.id} {...link} />
                       ))}
@@ -128,7 +135,7 @@ export const Hero = (props: HeroProps) => {
                   __typename="Media"
                   key={image?.id}
                   {...image}
-                  {...sidekick(sidekickLookup, "images")}
+                  {...sidekick(sidekickLookup, 'images')}
                   sizes="(max-width: 640px) 100vw, 50vw"
                   testId="Hero-image"
                   priority
@@ -138,7 +145,7 @@ export const Hero = (props: HeroProps) => {
           </Grid>
         </ContentContainer>
         {divider ? (
-          <MediaDivider {...divider} {...sidekick(sidekickLookup, "divider")} testId="Hero-divider" priority />
+          <MediaDivider {...divider} {...sidekick(sidekickLookup, 'divider')} testId="Hero-divider" priority />
         ) : null}
       </Root>
     </ErrorBoundary>

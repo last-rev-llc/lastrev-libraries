@@ -1,5 +1,14 @@
 # @last-rev/cli
 
+## 0.5.9
+
+### Patch Changes
+
+- ddc6e6e: Moved Sidekick to a extension, disable core sidekick with a feature flag
+- Updated dependencies [ddc6e6e]
+  - @last-rev/app-config@0.4.3
+  - @last-rev/graphql-contentful-core@0.5.9
+
 ## 0.5.8
 
 ### Patch Changes

@@ -42,7 +42,7 @@ export const Collection = ({
           )}
         >
           {introText && (
-            <IntroText {...introText} {...sidekick(sidekickLookup, "introText")} data-testid="Collection-introText" />
+            <IntroText {...introText} {...sidekick(sidekickLookup, 'introText')} data-testid="Collection-introText" />
           )}
           <Section
             testId="Collection-section"

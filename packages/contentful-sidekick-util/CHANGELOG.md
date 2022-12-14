@@ -1,5 +1,11 @@
 # @last-rev/contentful-sidekick-util
 
+## 0.1.2
+
+### Patch Changes
+
+- ddc6e6e: Added support for merging sidekickLookup and object plus displayText lookup
+
 ## 0.1.1
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @last-rev/component-library
 
+## 0.5.10
+
+### Patch Changes
+
+- ddc6e6e: Update component to new sidekick util usage
+- Updated dependencies [ddc6e6e]
+  - @last-rev/contentful-sidekick-util@0.1.2
+
 ## 0.5.9
 
 ### Patch Changes
