@@ -101,7 +101,7 @@ const CustomForm = ({
             ))}
           </FormControl>
         </SubmitContainer>
-        <FormImage __typename="Media" {...sidekick(sidekickLookup?.image)} {...getFirstOfArray(image)} />
+        <FormImage __typename="Media" {...sidekick(sidekickLookup, 'image')} {...getFirstOfArray(image)} />
         <Grid
           container
           sx={{
@@ -112,8 +112,7 @@ const CustomForm = ({
             height: '100%',
             opacity: status === 'success' ? 1 : 0,
             pointerEvents: status === 'success' ? 'initial' : 'none'
-          }}
-        >
+          }}>
           {successMessage ? (
             <ContentModule
               __typename="Text"
@@ -148,12 +147,12 @@ export const MailchimpForm = ({
         <Grid container>
           <Grid item xs={9} sm={7}>
             {title ? (
-              <Typography {...sidekick(sidekickLookup?.title)} variant="h3" data-testid="MailchimpForm-title">
+              <Typography {...sidekick(sidekickLookup, 'title')} variant="h3" data-testid="MailchimpForm-title">
                 {title}
               </Typography>
             ) : null}
             {subtitle ? (
-              <Typography {...sidekick(sidekickLookup?.subtitle)} variant="h4" data-testid="MailchimpForm-subtitle">
+              <Typography {...sidekick(sidekickLookup, 'subtitle')} variant="h4" data-testid="MailchimpForm-subtitle">
                 {subtitle}
               </Typography>
             ) : null}
@@ -161,7 +160,7 @@ export const MailchimpForm = ({
               <ContentModule
                 __typename="Text"
                 variant="MailchimpForm"
-                sidekickLookup={sidekickLookup?.body}
+                {...sidekick(sidekickLookup, 'body')}
                 body={body}
                 data-testid="MailchimpForm-body"
               />

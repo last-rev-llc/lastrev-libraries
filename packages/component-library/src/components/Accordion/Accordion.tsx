@@ -23,7 +23,7 @@ export const Accordion = ({ variant, title, body, sidekickLookup, ...props }: Ac
             <ContentModule
               __typename="Text"
               variant="accordion"
-              sidekickLookup={sidekickLookup?.body}
+              {...sidekick(sidekickLookup, 'body')}
               body={body}
               data-testid="Accordion-body"
             />

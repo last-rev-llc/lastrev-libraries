@@ -56,7 +56,7 @@ export const Header = (inProps: HeaderProps) => {
               <LogoRoot
                 href={logoUrl}
                 sx={{ height: '100%', py: 3 }}
-                {...sidekick(sidekickLookup?.logo)}
+                {...sidekick(sidekickLookup, "logo")}
                 aria-label={'Go to homepage'}
               >
                 <Logo {...logo} priority alt={logo?.title ?? 'Go to homepage'} />

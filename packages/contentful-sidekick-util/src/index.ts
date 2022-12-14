@@ -36,7 +36,7 @@ const getMergedSidekickInfo = (contentData: ContentData, displayText: string): S
     };
 
     const fieldName = data.fieldName ?? displayText;
-    return getSidekickInfo(data?.contentId, fieldName, data?.contentTypeId, displayText);
+    return getSidekickInfo(data?.contentId, fieldName, data?.contentTypeId, startCase(displayText));
   }
 };
 function sidekick(contentData?: ContentData): SidekickData | null;
