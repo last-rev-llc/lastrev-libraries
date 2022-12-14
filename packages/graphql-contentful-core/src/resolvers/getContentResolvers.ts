@@ -70,7 +70,7 @@ const getContentResolvers = ({
   config
 }: {
   contentTypes: ContentType[];
-  config: LastRevAppConfig;
+  config: LastRevAppConfig | { extensions: { mappers: Mappers; typeMappings: TypeMappings }; features?: any };
 }): { [typeName: string]: { [fieldName: string]: Function } } => {
   const {
     features,

@@ -67,7 +67,7 @@ describe('sidekick util', () => {
       expect(out['data-csk-entry-id']).toBe(mappedContentId);
       expect(out['data-csk-entry-field']).toBe(fieldName);
       expect(out['data-csk-entry-type']).toBe(contentTypeId);
-      expect(out['data-csk-entry-display-text']).toBe(displayText);
+      expect(out['data-csk-entry-display-text']).toBe(startCase(displayText));
     }
     // expect(out['data-csk-entry-uuid']).not.toBe(null);
   });
@@ -81,6 +81,7 @@ describe('sidekick util', () => {
     };
     const displayText = faker.random.words();
     const out = util(options, displayText);
+    console.log(displayText);
     expect(out).not.toBe(null);
 
     if (out) {
@@ -109,6 +110,7 @@ describe('sidekick util', () => {
     const field = camelCase(faker.random.words());
     const type = camelCase(`${faker.random.words()} hi}`);
     const out = util(faker.random.alphaNumeric(10), field, type);
+
     expect(out).not.toBe(null);
     expect(out ? out['data-csk-entry-display-text'] : null).toBe(startCase(field));
     // expect(out['data-csk-entry-uuid']).not.toBe(null);
