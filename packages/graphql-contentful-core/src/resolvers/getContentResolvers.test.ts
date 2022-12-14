@@ -43,8 +43,7 @@ describe('getContentResolvers.ts', () => {
     };
     const resolvers = getContentResolvers({
       contentTypes,
-      mappers,
-      typeMappings
+      config: { extensions: { mappers, typeMappings } }
     });
 
     expect(resolvers.Foo.id).toBeDefined();
@@ -62,8 +61,7 @@ describe('getContentResolvers.ts', () => {
     };
     const resolvers = getContentResolvers({
       contentTypes,
-      mappers,
-      typeMappings
+      config: { extensions: { mappers, typeMappings } }
     });
 
     expect(resolvers.Foo.id).toBeDefined();
@@ -81,8 +79,7 @@ describe('getContentResolvers.ts', () => {
     };
     const resolvers = getContentResolvers({
       contentTypes,
-      mappers,
-      typeMappings
+      config: { extensions: { mappers, typeMappings } }
     });
 
     expect(resolvers.Bar.id).toBeDefined();
@@ -100,8 +97,7 @@ describe('getContentResolvers.ts', () => {
     };
     const resolvers = getContentResolvers({
       contentTypes,
-      mappers,
-      typeMappings
+      config: { extensions: { mappers, typeMappings } }
     });
 
     expect(resolvers.Bar.id).toBeDefined();
@@ -119,8 +115,7 @@ describe('getContentResolvers.ts', () => {
     };
     const resolvers = getContentResolvers({
       contentTypes,
-      mappers,
-      typeMappings
+      config: { extensions: { mappers, typeMappings } }
     });
 
     expect(resolvers.Baz.id).toBeDefined();

@@ -36,13 +36,13 @@ export const Card = (inProps: CardProps) => {
             {!loading ? (
               <ContentModule
                 __typename="Media"
-                {...sidekick(sidekickLookup?.media)}
+                {...sidekick(sidekickLookup, 'media')}
                 {...getFirstOfArray(media)}
                 data-testid="Card-media"
               />
             ) : (
               <Skeleton>
-                <ContentModule {...sidekick(sidekickLookup?.media)} {...getFirstOfArray(media)} testId="Card-media" />
+                <ContentModule {...sidekick(sidekickLookup, 'media')} {...getFirstOfArray(media)} testId="Card-media" />
               </Skeleton>
             )}
           </CardMedia>
@@ -58,17 +58,16 @@ export const Card = (inProps: CardProps) => {
         {!loading && (title || subtitle || body || actions) ? (
           <CardContent>
             {title ? (
-              <Typography {...sidekick(sidekickLookup?.title)} variant="h3" component="h3" data-testid="Card-title">
+              <Typography {...sidekick(sidekickLookup, 'title')} variant="h3" component="h3" data-testid="Card-title">
                 {title}
               </Typography>
             ) : null}
             {subtitle ? (
               <Typography
-                {...sidekick(sidekickLookup?.subtitle)}
+                {...sidekick(sidekickLookup, 'subtitle')}
                 variant="h4"
                 component="h4"
-                data-testid="Card-subtitle"
-              >
+                data-testid="Card-subtitle">
                 {subtitle}
               </Typography>
             ) : null}
@@ -76,13 +75,13 @@ export const Card = (inProps: CardProps) => {
               <ContentModule
                 __typename="Text"
                 variant="card"
-                sidekickLookup={sidekickLookup?.body}
+                {...sidekick(sidekickLookup, 'body')}
                 body={body}
                 data-testid="Card-body"
               />
             ) : null}
             {actions?.length ? (
-              <CardActions {...sidekick(sidekickLookup?.actions)} data-testid="Card-actions">
+              <CardActions {...sidekick(sidekickLookup, 'actions')} data-testid="Card-actions">
                 {actions?.map((link) => (
                   <ContentModule __typename="Link" key={link.id} {...link} />
                 ))}
@@ -105,7 +104,7 @@ export const Card = (inProps: CardProps) => {
                 <ContentModule
                   __typename="Text"
                   variant="card"
-                  sidekickLookup={sidekickLookup?.body}
+                  {...sidekick(sidekickLookup, 'body')}
                   body={body}
                   data-testid="Card-body"
                 />

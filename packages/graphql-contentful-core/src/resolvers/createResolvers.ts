@@ -18,8 +18,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
   merge(
     getContentResolvers({
       contentTypes,
-      mappers: config.extensions.mappers,
-      typeMappings: config.extensions.typeMappings
+      config
     }),
     {
       Query: {
@@ -70,7 +69,10 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           ctx.locale = locale || ctx.defaultLocale;
           ctx.displayType = displayType;
           // not locale specific. fieldsResolver handles that
-          return ctx.loaders.entryLoader.load({ id, preview });
+          const content = await ctx.loaders.entryLoader.load({ id, preview });
+          // Add this to the content to be used by mappers and other resolvers
+          (content as any).displayType = displayType;
+          return content;
         },
         contents: async (
           _: never,

@@ -38,7 +38,7 @@
   "license": "ISC",
   "dependencies": {
     "@graphql-tools/merge": "^6.2.14",
-    "@last-rev/app-config": "^0.4.0",
+    "@last-rev/app-config": "^0.4.2",
     "@last-rev/contentful-fragment-gen": "^0.2.1",
     "@last-rev/contentful-import-export": "^0.1.4",
     "@last-rev/contentful-s3-sync": "^0.1.2",

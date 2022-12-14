@@ -13,7 +13,7 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@last-rev/app-config": "^0.4.0",
+    "@last-rev/app-config": "^0.4.2",
     "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/testing-library": "^0.1.10",
     "@types/fs-extra": "^9.0.11",

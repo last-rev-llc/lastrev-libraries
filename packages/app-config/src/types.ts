@@ -60,6 +60,9 @@ export interface LastRevAppConfiguration {
     pagesRootPath: string;
     excludePages: string[];
   };
+  features: {
+    disableCoreSidekickLookup?: boolean;
+  };
 }
 
 export type LastRevAppConfigArgs = {
@@ -117,5 +120,8 @@ export type LastRevAppConfigArgs = {
     indexRootPath?: string;
     pagesRootPath?: string;
     excludePages?: string[];
+  };
+  features?: {
+    disableCoreSidekickLookup?: boolean;
   };
 };

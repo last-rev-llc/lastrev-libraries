@@ -1,4 +1,4 @@
-import { SidekickData, ContentData } from './types';
+import { SidekickData, ContentData, ContentProps } from './types';
 import startCase from './startCase';
 
 const getSidekickInfo = (
@@ -26,6 +26,19 @@ const getSidekickInfo = (
   };
 };
 
+const getMergedSidekickInfo = (contentData: ContentData, displayText: string): SidekickData | null => {
+  if (!contentData) {
+    return getSidekickInfo(undefined, undefined, undefined, displayText);
+  } else {
+    const data: any = {
+      ...contentData,
+      ...(contentData as any)[displayText]
+    };
+
+    const fieldName = data.fieldName ?? displayText;
+    return getSidekickInfo(data?.contentId, fieldName, data?.contentTypeId, startCase(displayText));
+  }
+};
 function sidekick(contentData?: ContentData): SidekickData | null;
 
 function sidekick(
@@ -34,6 +47,8 @@ function sidekick(
   contentTypeId?: string,
   displayText?: string
 ): SidekickData | null;
+
+function sidekick(contentData?: ContentData, fieldName?: string): SidekickData | null;
 
 function sidekick(
   contentData?: string | ContentData,
@@ -45,7 +60,11 @@ function sidekick(
 
   if (!contentData) return getSidekickInfo(undefined, fieldName, contentTypeId, displayText);
 
-  const { contentId: id, fieldName: name, contentTypeId: typeId, displayText: text } = contentData;
+  if (contentData && fieldName) {
+    return getMergedSidekickInfo(contentData, fieldName);
+  }
+
+  const { contentId: id, fieldName: name, contentTypeId: typeId, displayText: text } = contentData as ContentProps;
 
   return getSidekickInfo(id, name, typeId, text);
 }
