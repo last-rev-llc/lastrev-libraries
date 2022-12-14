@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.4.3
+
+### Patch Changes
+
+- ddc6e6e: Moved Sidekick to a extension, disable core sidekick with a feature flag
+
 ## 0.4.2
 
 ### Patch Changes

@@ -62,7 +62,7 @@ const Section = (inProps: SectionProps) => {
           wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}
         >
           {introText && (
-            <IntroText {...introText} {...sidekick(sidekickLookup, "introText")} data-testid="Section-introText" />
+            <IntroText {...introText} {...sidekick(sidekickLookup, 'introText')} data-testid="Section-introText" />
           )}
           <GridContainer
             container
