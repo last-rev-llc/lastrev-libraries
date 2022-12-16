@@ -78,7 +78,6 @@ export default class PathUpdater {
           id: contentTypeId,
           preview: this.preview
         });
-        console.log('all items', allItems);
         const pathDatas = (
           await Promise.all(
             allItems.map(async (item) => {
