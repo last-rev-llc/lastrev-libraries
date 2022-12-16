@@ -6,6 +6,7 @@ import { DEFAULT_SITE_KEY } from './constants';
 import { createPathStore, PathStore } from './PathStore';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
+import { createContext } from '@last-rev/graphql-contentful-helpers';
 
 type PathVersion = 'v1' | 'v2';
 
@@ -177,7 +178,7 @@ type UpdatePathsProps = {
   sites?: string[];
 };
 
-export const updateAllPaths = async ({ config, updateForPreview, updateForProd, context }: UpdatePathsProps) => {
+export const updateAllPaths = async ({ config, updateForPreview, updateForProd }: UpdatePathsProps) => {
   if (!config.paths.generateFullPathTree) return;
 
   let promises = [];
@@ -190,7 +191,6 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
           updateForProd,
           site,
           pathsConfigs: config.extensions.pathsConfigs,
-          context,
           pathVersion: config.paths.version
         })
       )
@@ -205,7 +205,6 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
           updateForProd,
           site,
           pathsConfigs: config.extensions.pathsConfigs,
-          context,
           pathVersion: config.paths.version
         })
       )
@@ -221,7 +220,6 @@ const updatePathsForSite = async ({
   updateForProd,
   site,
   pathsConfigs,
-  context,
   pathVersion
 }: {
   config: LastRevAppConfig;
@@ -229,7 +227,6 @@ const updatePathsForSite = async ({
   updateForProd: boolean;
   site: string;
   pathsConfigs: ContentfulPathsConfigs;
-  context: ApolloContext;
   pathVersion: PathVersion;
 }) => {
   if (updateForPreview) {
@@ -241,6 +238,8 @@ const updatePathsForSite = async ({
         }
       })
     );
+    const context = await createContext({ config });
+    context.preview = true;
     const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: true, pathVersion });
     await updater.updatePaths();
   }
@@ -253,6 +252,8 @@ const updatePathsForSite = async ({
         }
       })
     );
+    const context = await createContext({ config });
+    context.preview = false;
     const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: false, pathVersion });
     await updater.updatePaths();
   }
