@@ -28,6 +28,15 @@ const entriesQuery = {
 const PUBLISH_ASSETS = true;
 let videos = 0;
 
+const getAllEntries = async (query) => {
+  let entries;
+  if (STEPS.getEntries) {
+    const environment = await environmentManagement;
+    entries = await importParser(async () => environment.getEntries(query));
+  }
+  return entries;
+};
+
 const createAssetWithId = async (environment, { entryId, assetEntry, url }, index) => {
   let asset;
   try {
@@ -51,15 +60,6 @@ const processAsset = async (asset, { entryId, url, linkingId }, isVideo) => {
     await deleteItem(asset, entryId);
   }
   return processedAsset;
-};
-
-const getAllEntries = async (query) => {
-  let entries;
-  if (STEPS.getEntries) {
-    const environment = await environmentManagement;
-    entries = await importParser(async () => environment.getEntries(query));
-  }
-  return entries;
 };
 
 const createFile = (format, url) => {

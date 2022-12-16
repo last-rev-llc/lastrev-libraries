@@ -7,8 +7,14 @@ const TurndownService = require('turndown');
 const { richTextFromMarkdown } = require('@contentful/rich-text-from-markdown');
 const { clientDelivery, environmentManagement } = require('../shared/contentful-init');
 const { csvToArray } = require('../shared/input-parsers');
-const { getAssetType, getContentfulIdFromString } = require('../shared/contentful-fields');
-const { publishItem, deleteItem, checkForExistingItem, getAllEntries } = require('../shared/contentful-actions');
+const {
+  getContentfulIdFromString,
+  createAssetObject,
+  getAssetDetails,
+  createAssetEntry,
+  createFile
+} = require('../shared/contentful-fields');
+const { checkForExistingItem, getAllEntries, createAssets } = require('../shared/contentful-actions');
 const { getDistinct } = require('../shared/helpers/getDistinct');
 const { image403s, image404s, notResolvedImages } = require('../shared/fixtures/brokenUrls');
 
@@ -30,7 +36,7 @@ const turndownService = new TurndownService();
 const unprocessableImages = [...image403s, ...image404s, ...notResolvedImages];
 const foundUnprocessableUrls = [];
 
-const createdAssets = [];
+// const createdAssets = [];
 const imageCollections = [];
 const mediaItems = [];
 const videos = [];
@@ -85,78 +91,6 @@ const createEntries = async (entries) => {
   return createdEntries;
 };
 
-const processAsset = async (asset, { id, url }, isVideo) => {
-  let processedAsset;
-  try {
-    console.log(`processing asset => ${id} for ${url}`);
-    processedAsset = await asset.processForAllLocales(
-      isVideo
-        ? { processingCheckWait: 5000, processingCheckRetries: 10 }
-        : { processingCheckWait: 5000, processingCheckRetries: 1 }
-    );
-  } catch (error) {
-    console.log(`error processing asset => ${id} for ${url} =>`, error);
-    foundUnprocessableUrls.push(url);
-    unprocessableImages.push(url);
-    await deleteItem(asset, id);
-  }
-  return processedAsset;
-};
-
-const processAndPublishAsset = async (createdAsset, { id, url }, index, isVideo) => {
-  if (createdAsset) {
-    console.log(`created assetId #${index + 1} => ${id} for ${url}`);
-    const processedAsset = await processAsset(createdAsset, { id, url }, isVideo);
-
-    if (processedAsset) {
-      await publishItem(processedAsset, id);
-      createdAssets.push({ id, asset: processedAsset });
-    }
-  }
-};
-
-const createAssetWithId = async (environment, { id, assetEntry, url }, index) => {
-  let asset;
-  try {
-    console.log(`creating asset #${index} => ${id} for ${url}`);
-    asset = await environment.createAssetWithId(id, assetEntry);
-  } catch (error) {
-    console.log(`error creating asset => ${id} for ${url} => `, error);
-  }
-  return asset;
-};
-
-const createAsset = async (environment, asset, index, isVideo) => {
-  const { id, url, assetEntry } = asset;
-
-  const existingAsset = await checkForExistingItem(id, async () => clientDelivery.getAsset(id));
-
-  if (!existingAsset) {
-    if (assetEntry.fields.file['en-US'].upload) {
-      const createdAsset = await createAssetWithId(environment, asset, index + 1);
-
-      await processAndPublishAsset(createdAsset, asset, index, isVideo);
-    }
-  } else {
-    console.log(`existing asset #${index} => ${id} for ${url}`);
-    createdAssets.push({ asset: existingAsset, id, url });
-  }
-};
-
-const createAssets = async (assets, isVideo) => {
-  const environment = await environmentManagement;
-  if (!environment) {
-    console.log('environment not found');
-    return [];
-  }
-
-  for (let index = 0; index < assets.length; index++) {
-    const asset = assets[index];
-    await createAsset(environment, asset, index, isVideo);
-  }
-  return createdAssets;
-};
-
 const query = (type) => ({
   content_type: type,
   limit: 1000
@@ -168,12 +102,6 @@ const getFileName = (url, title, uniqueId) => {
   }
   return (url && url.split('/').pop()?.replace(/%20/g, '-')) || 'Missing url';
 };
-
-const createFile = (format, url, title, imageNumber) => ({
-  contentType: getAssetType(format),
-  fileName: getFileName(url, title, imageNumber),
-  upload: url
-});
 
 const getAuthorEntry = (author) => {
   const authorId = getContentfulIdFromString(author);
@@ -762,33 +690,11 @@ const transformBlogs = async (blogs, authors, tagsList, existingBlogs) => {
   );
 };
 
-const buildImage = (imageUrl, title, format, imageNumber) => {
-  return {
-    id: getContentfulIdFromString(imageUrl),
-    url: imageUrl,
-    assetEntry: {
-      fields: {
-        title: {
-          'en-US': title?.replace(/%20/g, ' ')
-        },
-        file: {
-          'en-US': createFile(format, imageUrl, title, imageNumber)
-        }
-      }
-    }
-  };
-};
-
 const getTitle = (imageUrl, blogTitle, imageNumber) => {
   if (imageUrl?.split('.')?.pop()?.startsWith('com/')) {
     return `${blogTitle?.replace(/\s/g, '-')}-image-${imageNumber}`;
   }
   return imageUrl?.split('/').pop().split('.')[0] || imageUrl?.split('/').pop();
-};
-
-const getImage = (imageUrl, blogTitle, imageNumber) => {
-  const format = imageUrl?.split('.').pop();
-  return buildImage(imageUrl, getTitle(imageUrl, blogTitle, imageNumber), format, imageNumber);
 };
 
 const blogQuery = (skip) => ({
@@ -808,13 +714,21 @@ const getAllBlogs = async (result, limit) => {
   }
 };
 
+const createImageAsset = (url, title, uniqueId) => {
+  return createAssetObject(
+    getAssetDetails(url, true),
+    createAssetEntry(getTitle(url, title, uniqueId), createFile(url, getFileName(url, title, uniqueId)))
+  );
+};
+
 const processImageAssets = async (blogs) => {
   // create assets for blog images
   // console.log('first blog', blogs[0]);
   const imageAssets = [];
   blogs.forEach((blog) => {
     if (blog?.image) {
-      imageAssets.push(getImage(blog?.image));
+      // imageAssets.push(getImage(blog?.image));
+      imageAssets.push(createImageAsset(blog.image, blog.title, 'featured'));
     }
     const bodyLines = blog.body.split('\n');
     // console.log('bodyLines => ', bodyLines.length);
@@ -830,7 +744,8 @@ const processImageAssets = async (blogs) => {
         // console.log('imageUrls => ', imageUrls.length);
         if (imageUrls?.length) {
           imageUrls.forEach((imageUrl) => {
-            imageAssets.push(getImage(imageUrl, blog.title, imageCount));
+            // imageAssets.push(getImage(imageUrl, blog.title, imageCount));
+            imageAssets.push(createImageAsset(imageUrl, blog.title, imageCount));
           });
         }
       }
@@ -852,7 +767,7 @@ const processImageAssets = async (blogs) => {
   console.log('filtered image amount to be processed => ', filteredImages.length);
   // console.log('first image => ', images[0]);
 
-  await createAssets(filteredImages);
+  const createdAssets = await createAssets(filteredImages, environmentManagement, clientDelivery);
   console.log('createdAssets => ', createdAssets.length);
 };
 
@@ -893,11 +808,11 @@ const processImageAssets = async (blogs) => {
     .on('end', async () => {
       console.log('blogs length => ', blogs.length);
       // create all images as assets
-      // console.log('!!!!processImageAssets start!!!!');
-      // await processImageAssets(blogs);
-      // console.log('foundUnprocessableUrls => ', foundUnprocessableUrls.length);
-      // console.log('foundUnprocessableUrls => ', JSON.stringify(foundUnprocessableUrls, null, 2));
-      // console.log('!!!!processImageAssets end!!!!');
+      console.log('!!!!processImageAssets start!!!!');
+      await processImageAssets(blogs);
+      console.log('foundUnprocessableUrls => ', foundUnprocessableUrls.length);
+      console.log('foundUnprocessableUrls => ', JSON.stringify(foundUnprocessableUrls, null, 2));
+      console.log('!!!!processImageAssets end!!!!');
 
       console.log('!!!!processNewAuthors start!!!!');
       const createdAuthors = await createEntries(newAuthors.filter((author) => author));
@@ -972,6 +887,7 @@ const processImageAssets = async (blogs) => {
       console.log('transformedMediaItems => ', transformedMediaItems.length);
       console.log('filteredMediaItems => ', filteredMediaItems.length);
       console.log('createdMediaItems => ', createdMediaItems.length);
+
       console.log('imageLinks => ', imageLinks.length);
       console.log('transformedImageLinks => ', transformedImageLinks.length);
       console.log('filteredImageLinks => ', filteredImageLinks.length);
