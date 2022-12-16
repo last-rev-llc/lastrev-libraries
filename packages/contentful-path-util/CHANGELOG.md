@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.18
+
+### Patch Changes
+
+- 137e529: Added preview to the context used inside of the pathUpdater
+
 ## 0.1.17
 
 ### Patch Changes
