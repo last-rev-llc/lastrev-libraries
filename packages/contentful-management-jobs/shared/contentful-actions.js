@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+const { importParser } = require('./input-parsers');
+
 const publishItem = async (item, entryId) => {
   let publishedAsset;
   try {
@@ -34,8 +36,13 @@ const checkForExistingItem = async (entryId, getItem) => {
   return item;
 };
 
+const getAllEntries = async (api, query, callback) => {
+  return importParser(async () => api.getEntries(query), callback);
+};
+
 module.exports = {
   publishItem,
   deleteItem,
-  checkForExistingItem
+  checkForExistingItem,
+  getAllEntries
 };

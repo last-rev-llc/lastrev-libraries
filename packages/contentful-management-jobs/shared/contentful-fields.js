@@ -116,7 +116,8 @@ const getAssetType = (fileExtension) => {
     case 'eps':
       return 'application/postscript';
     default:
-      return null;
+      console.log('Warning: Unknown file extension: ', fileExtension);
+      return 'image/jpeg';
   }
 };
 

@@ -26,4 +26,7 @@ program
   .command('find-entries', 'find-entries', {
     executableFile: resolve(__dirname, './jobs/find-entries.js')
   })
+  .command('csv-contentful-import', 'csv-contentful-import', {
+    executableFile: resolve(__dirname, './jobs/csv-contentful-import.js')
+  })
   .parse(process.argv);
