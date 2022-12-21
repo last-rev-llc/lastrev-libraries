@@ -1,7 +1,7 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType, ContentfulClientApi } from 'contentful';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
-import { Context } from 'apollo-server-core';
+import { Context } from '@apollo/server';
 
 export type ItemKey = {
   id: string;

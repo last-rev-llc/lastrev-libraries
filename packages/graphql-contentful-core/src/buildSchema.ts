@@ -4,10 +4,10 @@ import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
 import { ContentfulLoaders } from '@last-rev/types';
 import { GraphQLSchema } from 'graphql';
-// TODO: Re-enable federation if needed
-import { buildFederatedSchema } from '@apollo/federation';
+
+import { buildSubgraphSchema } from '@apollo/federation';
+import { addResolversToSchema, makeExecutableSchema } from '@graphql-tools/schema';
 import LastRevAppConfig from '@last-rev/app-config';
-import { addResolversToSchema } from '@graphql-tools/schema';
 import { createLoaders } from '@last-rev/graphql-contentful-helpers';
 const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
   // may not have production content, if none there, use preview (only needed for filesystem builds)
@@ -39,7 +39,9 @@ const buildSchema = async (config: LastRevAppConfig): Promise<GraphQLSchema> => 
   const typeDefs = mergeTypeDefs([lastRevTypeDefs, baseTypeDefs, config.extensions.typeDefs]);
   const resolvers: Record<string, any> = mergeResolvers([defaultResolvers, config.extensions.resolvers]);
 
-  const schema = buildFederatedSchema({ typeDefs });
+  const schema = config.features.disableFederatedSchema
+    ? makeExecutableSchema({ typeDefs })
+    : buildSubgraphSchema({ typeDefs });
 
   return addResolversToSchema({
     schema,

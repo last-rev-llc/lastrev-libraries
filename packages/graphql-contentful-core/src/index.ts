@@ -1,4 +1,4 @@
-import { getServer } from './server';
+import { createServer } from './createServer';
 import { createHandler } from './handler';
 import { createVercelHandler } from './vercelHandler';
 import createRichText from './utils/createRichText';
@@ -8,10 +8,9 @@ import getTypeName from './utils/getTypeName';
 import capitalizeFirst from './utils/capitalizeFirst';
 import buildSchema from './buildSchema';
 import SchemaCache from './SchemaCache';
-import createPathReaders from './createPathReaders';
 
 export {
-  getServer,
+  createServer,
   getLocalizedField,
   createHandler,
   getDefaultFieldValue,
@@ -20,6 +19,5 @@ export {
   getTypeName,
   capitalizeFirst,
   buildSchema,
-  SchemaCache,
-  createPathReaders
+  SchemaCache
 };

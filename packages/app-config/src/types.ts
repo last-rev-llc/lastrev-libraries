@@ -1,4 +1,5 @@
-import { Extensions } from '@last-rev/types';
+import { ApolloContext, Extensions } from '@last-rev/types';
+import { ApolloServerOptions, ContextFunction } from '@apollo/server';
 import { LogLevelDesc } from 'loglevel';
 import { RedisOptions } from 'ioredis';
 
@@ -47,6 +48,7 @@ export interface LastRevAppConfiguration {
     port: number;
     host: string;
   };
+  apolloServerOptions?: LRApolloServerOptions;
   sites: string[];
   skipReferenceFields: boolean;
   paths: {
@@ -62,9 +64,13 @@ export interface LastRevAppConfiguration {
   };
   features: {
     disableCoreSidekickLookup?: boolean;
+    disableFederatedSchema?: boolean;
   };
 }
 
+type LRApolloServerOptions = Partial<ApolloServerOptions<ApolloContext>> & {
+  context?: ContextFunction<any, ApolloContext>;
+};
 export type LastRevAppConfigArgs = {
   cms?: 'Contentful';
   /*
@@ -108,6 +114,7 @@ export type LastRevAppConfigArgs = {
     port?: number;
     host?: string;
   };
+  apolloServerOptions?: LRApolloServerOptions;
   sites?: string[];
   skipReferenceFields?: boolean;
   paths?: {
@@ -123,5 +130,6 @@ export type LastRevAppConfigArgs = {
   };
   features?: {
     disableCoreSidekickLookup?: boolean;
+    disableFederatedSchema?: boolean;
   };
 };

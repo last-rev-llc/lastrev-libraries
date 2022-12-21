@@ -14,6 +14,7 @@ const defaultConfig: LastRevAppConfigArgs = {
     port: 5000,
     host: 'localhost'
   },
+  apolloServerOptions: {},
   sites: [],
   features: {}
 };
@@ -208,6 +209,9 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       host: this.config.graphql?.host!
     };
   }
+  get apolloServerOptions() {
+    return this.config.apolloServerOptions || {};
+  }
 
   get sites() {
     return this.config.sites!;
@@ -242,7 +246,8 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       );
     }
     return {
-      disableCoreSidekickLookup: this.config.features?.disableCoreSidekickLookup
+      disableCoreSidekickLookup: this.config.features?.disableCoreSidekickLookup,
+      disableFederatedSchema: this.config.features?.disableFederatedSchema
     };
   }
 }

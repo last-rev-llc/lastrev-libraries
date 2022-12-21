@@ -1,6 +1,6 @@
 import { Source, ConnectionParams } from '../types';
 import { DocumentNode } from 'graphql';
-import { gql } from 'apollo-server';
+import { gql } from 'graphql-tag';
 import contentfulFetcher, { generateContentfulSchema } from './contentful';
 import { ContentType } from 'contentful';
 import Timer from '@last-rev/timer';

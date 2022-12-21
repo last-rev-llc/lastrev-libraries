@@ -1,13 +1,11 @@
 import { find, get, map } from 'lodash';
 import { createClient } from 'contentful';
-import { ApolloContext, PathReaders } from '@last-rev/types';
-import { MicroRequest } from 'apollo-server-micro/dist/types';
+import { ApolloContext } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import createLoaders from './createLoaders';
-import express from 'express';
-import { PathToContentLoader, ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
+import createPathReaders from './createPathReaders';
 
-const isString = (value: any): value is string => typeof value === 'string' || value instanceof String;
+import { PathToContentLoader, ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
 
 const getLocales = async (space: string, environment: string, accessToken: string) => {
   const client = createClient({
@@ -21,37 +19,20 @@ const getLocales = async (space: string, environment: string, accessToken: strin
   return locales.items;
 };
 
-type CreateContextProps = {
+export type CreateContextProps = {
   config: LastRevAppConfig;
-  expressReq?: express.Request;
-  microReq?: MicroRequest;
-  pathReaders?: PathReaders;
+  environment?: string;
 };
 
-const createContext = async ({
-  config,
-  expressReq,
-  microReq,
-  pathReaders
-}: CreateContextProps): Promise<ApolloContext> => {
-  let overrideEnv: string | undefined;
+const createContext = async ({ config, environment }: CreateContextProps): Promise<ApolloContext> => {
+  const pathReaders = createPathReaders(config);
 
-  if (expressReq) {
-    const env = expressReq.query.environment;
-    overrideEnv = env && isString(env) ? env : undefined;
-  }
-
-  if (microReq) {
-    const env = (microReq as any).query?.environment;
-    overrideEnv = env && isString(env) ? env : undefined;
-  }
-
-  if (overrideEnv) {
+  if (environment) {
     config = new LastRevAppConfig({
       ...config,
       contentful: {
         ...config.contentful,
-        env: overrideEnv
+        env: environment
       }
     });
   }
@@ -93,7 +74,7 @@ const createContext = async ({
 
   return {
     contentful,
-    loadEntriesForPath: async (path, ctx, site) => {
+    loadEntriesForPath: async (path: any, ctx: any, site: any) => {
       if (pathToContentLoader) {
         return pathToContentLoader.getItemsForPath(path, ctx, site);
       } else if (pathReaders) {
@@ -103,7 +84,7 @@ const createContext = async ({
       }
       return [];
     },
-    loadPathsForContent: async (entry, ctx, site) => {
+    loadPathsForContent: async (entry: any, ctx: any, site: any) => {
       if (contentToPathsLoader) {
         return contentToPathsLoader.loadPathsFromContent(entry, ctx, site);
       } else if (pathReaders) {

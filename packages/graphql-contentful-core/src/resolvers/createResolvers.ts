@@ -36,7 +36,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
 
           if (pathEntries) {
             ctx.pathEntries = pathEntries;
-            return pathEntries.reduce((acc, curr) => (curr ? curr : acc), null as any);
+            return pathEntries.reduce((acc: any, curr: any) => (curr ? curr : acc), null as any);
           }
 
           return null;
@@ -98,7 +98,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           if (contentTypes.length) {
             const results = (
               await ctx.loaders.entriesByContentTypeLoader.loadMany(contentTypes.map((type) => ({ id: type, preview })))
-            ).filter((r) => !isError(r)) as unknown as Entry<any>[];
+            ).filter((r: any) => !isError(r)) as unknown as Entry<any>[];
 
             return results.flat();
           }
@@ -195,10 +195,10 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
               skip: (page - 1) * maxPageSize,
               order: 'sys.updatedAt'
             })
-          ).items.map((item) => item.sys.id);
+          ).items.map((item: Entry<any>) => item.sys.id);
 
-          const entries = (await ctx.loaders.entryLoader.loadMany(ids.map((id) => ({ id, preview })))).filter(
-            (e) => !!e && !isError(e)
+          const entries = (await ctx.loaders.entryLoader.loadMany(ids.map((id: string) => ({ id, preview })))).filter(
+            (e: any) => !!e && !isError(e)
           ) as Entry<any>[];
 
           const sitemapEntries = (
@@ -206,7 +206,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
               entries.map(async (entry) => {
                 const paths = await ctx.loadPathsForContent(entry, ctx, site);
 
-                return paths.map((p) => ({
+                return paths.map((p: any) => ({
                   loc: buildSitemapPath(p.path),
                   lastmod: entry.sys.updatedAt
                 }));
@@ -241,11 +241,13 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
       Date: new GraphQLScalarType({
         name: 'Date',
         description: 'Date custom scalar type',
-        parseValue(value: string) {
-          return new Date(value); // value from the client
+        parseValue(value) {
+          if (typeof value == 'string' || typeof value == 'number') return new Date(value); // value from the client
+          return null;
         },
-        serialize(value: Date) {
-          return value.toString(); // value sent to the client
+        serialize(value) {
+          if (value instanceof Date) return value.toString(); // value sent to the client
+          return null;
         },
         parseLiteral(ast: any) {
           if (ast.kind === Kind.INT) {
