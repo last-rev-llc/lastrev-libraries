@@ -166,7 +166,6 @@ const CardTags = styled(Box, {
 const CardLink = styled(ContentModule, {
   name: 'Card',
   slot: 'CardLink',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.cardLink]
 })<LinkProps & {}>`
   position: absolute;
