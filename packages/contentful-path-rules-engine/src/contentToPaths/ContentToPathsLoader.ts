@@ -1,8 +1,9 @@
 import { ApolloContext, PathFilterFunction, PathInfo, PathRuleConfig } from '@last-rev/types';
-import { PathRule } from '../types';
+import { InternalRootConfig, PathRule } from '../types';
 import PathRuleParser from '../core/PathRuleParser';
 import { Entry } from 'contentful';
 import ContentToPathsFetcher from './ContentToPathsFetcher';
+import { getRootConfig } from '../helpers';
 
 type ContentLookupObject = {
   rule: string;
@@ -38,12 +39,25 @@ const createContentLookupObjects = (config: PathRuleConfig): ContentLookupObject
  */
 export default class ContentToPathsLoader {
   private readonly _lookups: ContentLookupObject[];
+  private readonly _rootConfig: InternalRootConfig | undefined;
 
   constructor(config: PathRuleConfig) {
     this._lookups = createContentLookupObjects(config);
+    this._rootConfig = getRootConfig(config);
   }
 
   async loadPathsFromContent(entry: Entry<any>, ctx: ApolloContext, site?: string): Promise<PathInfo[]> {
+    if (this._rootConfig) {
+      const { field, value, contentType } = this._rootConfig;
+      if (entry.sys.contentType.sys.id === contentType && entry.fields[field]?.[ctx.defaultLocale] === value) {
+        return [
+          {
+            path: '/',
+            pathEntries: [entry]
+          }
+        ];
+      }
+    }
     return (
       await Promise.all(
         this._lookups

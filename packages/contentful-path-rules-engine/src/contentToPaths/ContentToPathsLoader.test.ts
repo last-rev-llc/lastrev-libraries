@@ -3,6 +3,7 @@ import { entryMocks, mockApolloContext } from '../testUtils';
 
 const pathLoader = new PathLoader({
   page: {
+    root: { field: 'slug', value: '/' },
     rules: [{ rule: '/:slug', isCanonical: true, allowFullPaths: true }],
     filter: async ({ pathEntries, ctx }) => {
       const item = pathEntries[pathEntries.length - 1];
@@ -40,6 +41,13 @@ const pathLoader = new PathLoader({
 });
 
 describe('ContentToPathsLoader', () => {
+  describe('root', () => {
+    it('loads correctly', async () => {
+      const loaded = await pathLoader.loadPathsFromContent(entryMocks.homepage, mockApolloContext());
+      expect(loaded).toEqual([{ path: '/', pathEntries: [entryMocks.homepage] }]);
+    });
+  });
+
   describe('simple slug', () => {
     it('loads when item exists', async () => {
       const loaded = await pathLoader.loadPathsFromContent(entryMocks.page, mockApolloContext());
