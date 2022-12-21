@@ -4,7 +4,7 @@ import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs';
 
 import Card from './Card';
 import { CardClasses } from './Card.types';
-import cardMock, { cardWithTags, baseMock } from './Card.mock';
+import cardMock, { cardWithTags, baseMock, cardWithLink, cardWithLinkButton } from './Card.mock';
 
 <Meta
   title="Components / Card"
@@ -86,6 +86,34 @@ These tags are `Link` so they can be clicked too.
     name="with-tags"
     args={{
       ...cardWithTags(),
+      actions: null
+    }}
+  />
+</Canvas>
+
+### Clickable Card
+
+Cards can have a link that will make the card clickable.
+
+<Canvas>
+  <Story
+    name="with-link"
+    args={{
+      ...cardWithLink(),
+      actions: null
+    }}
+  />
+</Canvas>
+
+### Clickable Button Card
+
+Cards can have a link that will make the card clickable.
+
+<Canvas>
+  <Story
+    name="with-link-button"
+    args={{
+      ...cardWithLinkButton(),
       actions: null
     }}
   />
