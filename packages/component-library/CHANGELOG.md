@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.12
+
+### Patch Changes
+
+- 9f2fd85: Fix CardLink
+
 ## 0.5.11
 
 ### Patch Changes
