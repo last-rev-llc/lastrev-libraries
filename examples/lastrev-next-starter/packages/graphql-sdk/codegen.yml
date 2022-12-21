@@ -11,25 +11,11 @@ generates:
       - 'typescript-operations'
       - 'typescript-graphql-request'
     config:
-      withHooks: true
-      withHOC: false
-      withComponent: false
-      rawRequest: true
-      withMutationFn: false
       maybeValue: T | undefined
-  # ./src/generated/apollo.tsx:
-  #   plugins:
-  #     - 'typescript'
-  #     - 'typescript-operations'
-  #     - 'typescript-react-apollo'
-  #   config:
-  #     withHooks: true
-  #     withHOC: false
-  #     withComponent: false
-  #     rawRequest: true
-  #     withMutationFn: false
-  #     reactApolloVersion: 3
-  #     maybeValue: T | null
+      inlineFragmentTypes: combine
+      preResolveTypes: true
+      enumsAsTypes: false
+      rawRequest: true
   ./src/generated/fragmentTypes.json:
     plugins:
       - fragment-matcher
