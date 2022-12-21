@@ -1,5 +1,18 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.10
+
+### Patch Changes
+
+- 165fc90: Updated apollo server to v4, enable configuration through LR config
+- 165fc90: Update dependencies
+- Updated dependencies [165fc90]
+- Updated dependencies [165fc90]
+  - @last-rev/app-config@0.4.4
+  - @last-rev/graphql-contentful-helpers@0.4.4
+  - @last-rev/types@0.3.3
+  - @last-rev/graphql-schema-gen@0.2.2
+
 ## 0.5.9
 
 ### Patch Changes

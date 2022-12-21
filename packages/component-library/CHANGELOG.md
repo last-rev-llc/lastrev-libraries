@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.13
+
+### Patch Changes
+
+- 165fc90: Update dependencies
+
 ## 0.5.12
 
 ### Patch Changes

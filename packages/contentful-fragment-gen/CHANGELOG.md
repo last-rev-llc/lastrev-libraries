@@ -1,5 +1,11 @@
 # @last-rev/contentful-fragment-gen
 
+## 0.2.2
+
+### Patch Changes
+
+- 165fc90: Update dependencies
+
 ## 0.2.1
 
 ### Patch Changes

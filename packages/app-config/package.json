@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/app-config",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
   "devDependencies": {
     "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/testing-library": "^0.1.10",
-    "@last-rev/types": "^0.3.2",
+    "@last-rev/types": "^0.3.3",
     "ioredis": "^5.0.4",
     "jest": "^26.6.3",
     "loglevel": "^1.7.1"
