@@ -1,5 +1,12 @@
 # @last-rev/app-config
 
+## 0.4.4
+
+### Patch Changes
+
+- 165fc90: Updated apollo server to v4, enable configuration through LR config
+- 165fc90: Update dependencies
+
 ## 0.4.3
 
 ### Patch Changes

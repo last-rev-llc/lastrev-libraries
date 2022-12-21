@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.19
+
+### Patch Changes
+
+- 165fc90: Update dependencies
+
 ## 0.1.18
 
 ### Patch Changes
