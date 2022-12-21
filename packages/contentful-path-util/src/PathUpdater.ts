@@ -6,7 +6,6 @@ import { DEFAULT_SITE_KEY } from './constants';
 import { createPathStore, PathStore } from './PathStore';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
-import { createContext } from '@last-rev/graphql-contentful-helpers';
 
 type PathVersion = 'v1' | 'v2';
 
@@ -178,7 +177,7 @@ type UpdatePathsProps = {
   sites?: string[];
 };
 
-export const updateAllPaths = async ({ config, updateForPreview, updateForProd }: UpdatePathsProps) => {
+export const updateAllPaths = async ({ config, updateForPreview, updateForProd, context }: UpdatePathsProps) => {
   if (!config.paths.generateFullPathTree) return;
 
   let promises = [];
@@ -191,7 +190,11 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd }
           updateForProd,
           site,
           pathsConfigs: config.extensions.pathsConfigs,
-          pathVersion: config.paths.version
+          pathVersion: config.paths.version,
+          context: {
+            ...context,
+            preview: true
+          }
         })
       )
     );
@@ -205,7 +208,11 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd }
           updateForProd,
           site,
           pathsConfigs: config.extensions.pathsConfigs,
-          pathVersion: config.paths.version
+          pathVersion: config.paths.version,
+          context: {
+            ...context,
+            preview: false
+          }
         })
       )
     );
@@ -220,7 +227,8 @@ const updatePathsForSite = async ({
   updateForProd,
   site,
   pathsConfigs,
-  pathVersion
+  pathVersion,
+  context
 }: {
   config: LastRevAppConfig;
   updateForPreview: boolean;
@@ -228,6 +236,7 @@ const updatePathsForSite = async ({
   site: string;
   pathsConfigs: ContentfulPathsConfigs;
   pathVersion: PathVersion;
+  context: ApolloContext;
 }) => {
   if (updateForPreview) {
     const pathStore = createPathStore(
@@ -238,7 +247,7 @@ const updatePathsForSite = async ({
         }
       })
     );
-    const context = await createContext({ config });
+
     context.preview = true;
     const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: true, pathVersion });
     await updater.updatePaths();
@@ -252,7 +261,7 @@ const updatePathsForSite = async ({
         }
       })
     );
-    const context = await createContext({ config });
+
     context.preview = false;
     const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: false, pathVersion });
     await updater.updatePaths();

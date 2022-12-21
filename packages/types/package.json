@@ -10,6 +10,6 @@
     "apollo-server-core": "^3.10.1",
     "contentful": "^8.4.2",
     "dataloader": "^2.0.0",
-    "graphql": "^15.5.1"
+    "graphql": "^16.6.0"
   }
 }

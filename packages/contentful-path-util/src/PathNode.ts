@@ -38,7 +38,7 @@ export class PathNode implements iPathNode {
     }
 
     const fetchedEntries = await ctx.loaders.entryLoader.loadMany(keysToFetch);
-    const entriesById = fetchedEntries.reduce((acc, entry) => {
+    const entriesById = fetchedEntries.reduce((acc: any, entry: any) => {
       if (entry) {
         acc[(entry as Entry<any>).sys.id] = entry as Entry<any>;
       }
