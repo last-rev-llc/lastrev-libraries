@@ -10,3 +10,11 @@ export default (): LinkProps => ({
   icon: 'chevron-right',
   iconPosition: 'Right'
 });
+
+export const basicLink = (): LinkProps => ({
+  id: lorem.word(),
+  __typename: 'Link',
+  variant: 'link',
+  href: `#${lorem.word()}`,
+  text: lorem.words(2)
+});

@@ -4,6 +4,7 @@ import { ThemeProvider, Theme, StyledEngineProvider } from '@mui/material';
 import Box from '@mui/material/Box';
 import Section from './Section';
 import { singlePanelMock, splitPanelMock } from './Section.mock';
+import mockTheme from '../../theme/mock.theme';
 
 export default {
   title: 'Components / Section',
