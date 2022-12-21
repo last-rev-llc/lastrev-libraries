@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.5.11
+
+### Patch Changes
+
+- 7a8ca6b: Update dep
+
 ## 0.5.10
 
 ### Patch Changes
