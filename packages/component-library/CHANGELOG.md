@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.11
+
+### Patch Changes
+
+- 484c864: Fix CardLink not clickable
+
 ## 0.5.10
 
 ### Patch Changes
