@@ -25,20 +25,16 @@ const cors = initMiddleware(
   })
 );
 
-export const config = {
-  api: {
-    bodyParser: false
-  }
-};
-
 const handler: NextApiHandler = async (req, res) => {
   await cors(req, res);
 
   return await createVercelHandler(
     lrConfig.clone({
-      strategy: 'redis' // always use redis strategy for live api
-    }),
-    '/api/graphql'
+      strategy: 'redis', // always use redis strategy for live api,
+      apolloServerOptions: {
+        introspection: false
+      }
+    })
   )(req, res);
 };
 
