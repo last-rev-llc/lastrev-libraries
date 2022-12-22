@@ -242,18 +242,13 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
         name: 'Date',
         description: 'Date custom scalar type',
         parseValue(value) {
-          if (typeof value == 'string' || typeof value == 'number') return new Date(value); // value from the client
-          return null;
+          return new Date(value as string); // value from the client
         },
         serialize(value) {
-          if (value instanceof Date) return value.toString(); // value sent to the client
-          return null;
+          return (value as Date).toString(); // value sent to the client
         },
         parseLiteral(ast: any) {
-          if (ast.kind === Kind.INT) {
-            return new Date(ast.value); // ast value is always in string format
-          }
-          return null;
+          return new Date(ast.value); // ast value is always in string format
         }
       })
     }
