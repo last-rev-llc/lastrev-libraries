@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.11
+
+### Patch Changes
+
+- 5427184: Fix Date scalar
+
 ## 0.5.10
 
 ### Patch Changes
