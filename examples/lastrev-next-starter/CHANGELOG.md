@@ -1,5 +1,24 @@
 # @last-rev/next-starter
 
+## 2.2.0
+
+Fixes:
+
+- Updated Netlify TOML included_files to be more explicit
+- Updated wait-on-config to use TCP (it would fail in production due to introspection not available)
+
+Update:
+
+- Replaced @apollo/rover with codegen configuration to download schema
+- Updated GraphQL to the latest version
+- Updated configuration to disable introspection in GraphQL API route
+- Updated configuration to enable introspection in GraphQL runner server
+- Updated LR dependencies to their latest versions
+
+Removed:
+
+- Removed cache-netlify-plugin because it was redundant with the existing plugin
+
 ## 2.1.0
 
 Added:
