@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-console */
+const { clientDelivery, environmentManagement } = require('./contentful-init');
 const { importParser } = require('./input-parsers');
 const { isVideo, getAssetDetails } = require('./contentful-fields');
 
@@ -38,8 +39,13 @@ const checkForExistingItem = async (entryId, getItem) => {
   return item;
 };
 
-const createAssetWithId = async (environment, { entryId, assetEntry, url }, index) => {
+const createAssetWithId = async ({ entryId, assetEntry, url }, index) => {
   let asset;
+  const environment = await environmentManagement;
+  if (!environment) {
+    console.log('environment not found');
+    return [];
+  }
   try {
     console.log(`creating asset #${index} => ${entryId} for ${url}`);
     asset = await environment.createAssetWithId(entryId, assetEntry);
@@ -79,15 +85,18 @@ const processAndPublishAsset = async (createdAsset, { entryId, url, linkingId, p
   return assetObject;
 };
 
-const createAsset = async (environment, asset, index, clientDelivery) => {
+const createAsset = async (asset, index, checkExisting) => {
   let assetObject;
   const { assetEntry, entryId, publish, url } = asset;
+  let existingAsset;
 
-  const existingAsset = await checkForExistingItem(entryId, async () => clientDelivery.getAsset(entryId));
+  if (checkExisting) {
+    existingAsset = await checkForExistingItem(entryId, async () => clientDelivery.getAsset(entryId));
+  }
 
   if (!existingAsset) {
     if (assetEntry.fields.file['en-US'].upload) {
-      const createdAsset = await createAssetWithId(environment, asset, index + 1);
+      const createdAsset = await createAssetWithId(asset, index + 1);
 
       assetObject = await processAndPublishAsset(createdAsset, asset, index);
     }
@@ -98,28 +107,70 @@ const createAsset = async (environment, asset, index, clientDelivery) => {
   return assetObject;
 };
 
-const createAssets = async (assets, environmentManagement, clientDelivery) => {
+const createAssets = async (assets, checkExisting) => {
   const createdAssets = [];
-  const environment = await environmentManagement;
-  if (!environment) {
-    console.log('environment not found');
-    return [];
-  }
   let videoCount = 0;
 
   for (let index = 0; index < assets.length; index++) {
     const asset = assets[index];
-    const createdAsset = await createAsset(environment, asset, index, clientDelivery);
+    const createdAsset = await createAsset(asset, index, checkExisting);
     createdAssets.push(createdAsset);
     const { entryId, videoStillImage } = asset;
     if (videoStillImage) {
       videoCount += 1;
       console.log(`creating video still #${videoCount} image for ${entryId}`);
-      const createVideoStillAsset = await createAsset(environment, videoStillImage, index, clientDelivery);
+      const createVideoStillAsset = await createAsset(videoStillImage, index, checkExisting);
       createdAssets.push(createVideoStillAsset);
     }
   }
   return createdAssets;
+};
+
+const createEntryWithId = async (entryId, entryObject, contentType) => {
+  let entry;
+  const environment = await environmentManagement;
+  if (!environment) {
+    console.log('environment not found');
+    return [];
+  }
+  try {
+    console.log(`creating entry => ${entryId}`);
+    entry = await environment.createEntryWithId(contentType, entryId, entryObject);
+  } catch (error) {
+    console.log(`error creating entry => ${entryId} => for ${entryObject?.fields?.slug?.['en-US']}`, error);
+  }
+  return entry;
+};
+
+const createEntries = async (entries, checkExisting) => {
+  const createdEntries = [];
+
+  for (let index = 0; index < entries.length; index++) {
+    const currentEntry = entries[index];
+    const { entry, entryId, publish, contentType } = currentEntry;
+    let existingAsset;
+
+    if (checkExisting) {
+      existingAsset = await checkForExistingItem(entryId, async () => clientDelivery.getEntry(entryId));
+    }
+
+    if (!existingAsset) {
+      const createdEntry = await createEntryWithId(entryId, entry, contentType);
+
+      if (createdEntry) {
+        console.log(`created entry => ${entryId}`);
+
+        if (publish) {
+          await publishItem(createdEntry, entryId);
+        }
+        createdEntries.push({ entryId, asset: createdEntry });
+      }
+    } else {
+      console.log(`existing entry => ${entryId}`);
+      createdEntries.push({ asset: existingAsset, entryId });
+    }
+  }
+  return createdEntries;
 };
 
 const getAllEntries = async (api, query, callback) => {
@@ -131,5 +182,6 @@ module.exports = {
   deleteItem,
   checkForExistingItem,
   getAllEntries,
-  createAssets
+  createAssets,
+  createEntries
 };

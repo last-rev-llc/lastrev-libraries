@@ -116,8 +116,11 @@ const getAssetType = (fileExtension) => {
     case 'eps':
       return 'application/postscript';
     default:
+      if (fileExtension.startsWith('com/')) {
+        return 'image/jpeg';
+      }
       console.log('Warning: Unknown file extension: ', fileExtension);
-      return 'image/jpeg';
+      return null;
   }
 };
 
@@ -146,11 +149,8 @@ const cleanupId = (entryId) => {
 const getFileExtension = (url) => url?.split('.').pop();
 
 const createFile = (url, fileName) => {
-  return {
-    contentType: getAssetType(getFileExtension(url)),
-    fileName,
-    upload: url
-  };
+  const contentType = getAssetType(getFileExtension(url));
+  return contentType ? { contentType, fileName, upload: url } : null;
 };
 
 const isVideo = (url) => {
