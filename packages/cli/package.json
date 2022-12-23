@@ -44,7 +44,7 @@
     "@last-rev/contentful-import-export": "^0.1.4",
     "@last-rev/contentful-s3-sync": "^0.1.2",
     "@last-rev/contentful-sync-to-fs": "^0.3.5",
-    "@last-rev/graphql-contentful-core": "^0.5.10",
+    "@last-rev/graphql-contentful-core": "^0.5.11",
     "@last-rev/testing-library": "^0.1.10",
     "@last-rev/graphql-contentful-helpers": "^0.4.4",
     "@octokit/rest": "^18.6.2",
