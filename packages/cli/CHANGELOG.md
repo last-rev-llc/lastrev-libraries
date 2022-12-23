@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.5.12
+
+### Patch Changes
+
+- f2abac0: Updated deps
+
 ## 0.5.11
 
 ### Patch Changes
