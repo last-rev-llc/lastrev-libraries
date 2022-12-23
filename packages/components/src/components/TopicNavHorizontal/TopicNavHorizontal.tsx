@@ -165,6 +165,18 @@ const NavList = styled(List, {
   [theme.breakpoints.up('md')]: {
     display: 'inline-flex',
     padding: theme.spacing(1, 0)
+  },
+
+  [theme.breakpoints.down('xl')]: {
+    '[class*="Header-navItem"]:first-child [class*=NavigationItem-menuRoot]': {
+      'left': '0',
+      'transform': 'none',
+
+      '.MuiMenuItem-root:first-child::after': {
+        left: '10%',
+        transform: 'none'
+      }
+    }
   }
 }));
 
@@ -211,12 +223,13 @@ const NavItem = styled(ListItem, {
     'zIndex': '10000',
     'display': 'none',
     'marginTop': theme.spacing(2),
-    'left': 0,
+    'left': '50%',
     'right': 'unset',
     'padding': 0,
     'overflow': 'visible',
     'backgroundColor': 'transparent',
     'boxShadow': `0px ${theme.spacing(0.25)} ${theme.spacing(1)} ${alpha(theme.palette.common.black, 0.25)}`,
+    'transform': 'translateX(-50%)',
 
     '&::before': {
       content: "''",
