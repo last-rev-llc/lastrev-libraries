@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.3.4
+
+### Patch Changes
+
+- 526e28f: Added the ability to add a root config for homepage configuration to the path rules engine
+
 ## 0.3.3
 
 ### Patch Changes
