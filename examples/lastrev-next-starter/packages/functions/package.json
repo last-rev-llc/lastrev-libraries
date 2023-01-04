@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {},
   "dependencies": {
-    "@last-rev/contentful-webhook-handler": "^0.4.10",
+    "@last-rev/contentful-webhook-handler": "^0.4.11",
     "@last-rev/graphql-algolia-integration": "^0.1.7",
-    "@last-rev/graphql-contentful-core": "^0.5.5",
+    "@last-rev/graphql-contentful-core": "^0.5.10",
     "@lrns/graphql-extensions": "^0.1.0",
     "dotenv": "^10.0.0"
   },

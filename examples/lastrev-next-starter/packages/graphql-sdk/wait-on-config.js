@@ -1,8 +1,10 @@
 require('dotenv').config();
-const resource = `${(process.env.GRAPHQL_SERVER || 'http://localhost:5000/graphql').replace(
+const URL = `${(process.env.GRAPHQL_SERVER || 'http://localhost:5000/graphql').replace(
   /^http:/,
   'http-get:'
 )}?query={__schema{types{name}}}`;
+
+const resource = `tcp:${URL?.split(':')?.pop()?.split('/')?.shift()}`;
 const timeout = process.env.GRAPHQL_SERVER_TIMEOUT ? parseInt(process.env.GRAPHQL_SERVER_TIMEOUT, 10) : 0;
 
 module.exports = {
