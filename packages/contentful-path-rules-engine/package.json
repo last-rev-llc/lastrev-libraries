@@ -25,6 +25,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "loglevel": "^1.7.1"
+    "@last-rev/logging": "^0.1.0"
   }
 }

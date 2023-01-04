@@ -81,7 +81,6 @@ describe('sidekick util', () => {
     };
     const displayText = faker.random.words();
     const out = util(options, displayText);
-    console.log(displayText);
     expect(out).not.toBe(null);
 
     if (out) {

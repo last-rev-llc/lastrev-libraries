@@ -1,13 +1,15 @@
 import DataLoader, { Options } from 'dataloader';
 import { Entry, Asset } from 'contentful';
 import { transform, omitBy, filter, negate, isEmpty, isError, isNil, map, some } from 'lodash';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import AWS from 'aws-sdk';
 import { keyBy, partition } from 'lodash';
 import { zipObject } from 'lodash';
+
+const logger = getWinstonLogger({ package: 'contentful-dynamodb-loader', module: 'index', strategy: 'dynamodb' });
 
 /*
 
@@ -69,7 +71,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     fallbackLoader: DataLoader<ItemKey, T>,
     dirname: string
   ): Promise<(T | null)[]> => {
-    let timer = new Timer(`Fetched ${keys.length} ${dirname} from dynamodb`);
+    let timer = new Timer();
 
     const results: (Entry<any> | Asset)[] = map(
       await Promise.all(
@@ -89,15 +91,19 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       ({ Item }) => Item?.data
     );
 
-    logger.trace(timer.end());
+    logger.debug(`Fetched ${dirname}`, {
+      caller: 'fetchAndSet',
+      elapsedMs: timer.end().millis,
+      itemsSuccessful: results.length,
+      itemsAttempted: keys.length
+    });
 
     let keyedResults = keyBy(results, 'sys.id');
 
     const cacheMissIds: ItemKey[] = filter(keys, (key) => !keyedResults[key.id]);
 
     if (cacheMissIds.length) {
-      logger.trace(`${dirname} cache misses: ${cacheMissIds.length}. Fetching from fallback`);
-      timer = new Timer(`set ${cacheMissIds.length} ${dirname} in dynamodb`);
+      timer = new Timer();
       const sourceResults = filter(await fallbackLoader.loadMany(cacheMissIds), (r) => {
         return r && !isError(r);
       }) as unknown as (Entry<any> | Asset)[];
@@ -106,9 +112,6 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         ...keyedResults,
         ...keyBy(sourceResults, 'sys.id')
       };
-
-      logger.trace('cacheMissIds', cacheMissIds);
-      logger.trace('sourceResults', sourceResults);
 
       await Promise.all(
         sourceResults.map((result, i) =>
@@ -126,7 +129,13 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
             // don't block
             .promise()
         )
-      ).then(() => logger.trace(timer.end()));
+      ).finally(() =>
+        logger.debug(`Primed ${dirname}`, {
+          caller: 'fetchAndSet',
+          elapsedMs: timer.end().millis,
+          itemsAttempted: cacheMissIds.length
+        })
+      );
     }
     return map(keys, (key) => {
       const result = keyedResults[key.id];
@@ -144,7 +153,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       );
 
   const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => async (keys) => {
-    let timer = new Timer(`Fetched ${keys.length} entries by contentType from dynamodb`);
+    let timer = new Timer();
 
     if (!keys.length) return [];
 
@@ -186,6 +195,13 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
       {} as Record<string, Entry<any>[]>
     );
 
+    logger.debug(`Fetch entries by contentType`, {
+      caller: 'getBatchEntriesByContentTypeFetcher',
+      elapsedMs: timer.end().millis,
+      itemsSuccessful: results.length,
+      itemsAttempted: keys.length
+    });
+
     const cacheMissIds = filter(keys, (key) => !keyedResults[`${key.id}::${key.preview}`]);
 
     if (cacheMissIds.length) {
@@ -195,7 +211,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         sourceResults
       );
 
-      timer = new Timer(`Set ${sourceResults.length} content type entry lists in dynamodb`);
+      timer = new Timer();
 
       const filtered = filter(sourceResults, negate(isError)) as Entry<any>[][];
 
@@ -219,7 +235,13 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
             )
           );
         })
-      ).then(() => logger.trace(timer.end()));
+      ).finally(() =>
+        logger.debug(`Primed content type entry lists`, {
+          caller: 'getBatchEntriesByContentTypeFetcher',
+          elapsedMs: timer.end().millis,
+          itemsAttempted: cacheMissIds.length
+        })
+      );
 
       keyedResults = {
         ...keyedResults,
@@ -239,7 +261,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
   const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
   const fetchAllContentTypes = async (preview: boolean) => {
     try {
-      let timer = new Timer('Fetched all content types from dynamodb');
+      let timer = new Timer();
 
       const itemList = await getAll({
         params: {
@@ -260,10 +282,14 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
       const results = map(itemList, 'data');
 
-      logger.trace(timer.end());
+      logger.debug('Fetched all content types', {
+        caller: 'fetchAllContentTypes',
+        elapsedMs: timer.end().millis,
+        itemsSuccessful: results.length
+      });
 
       if (isEmpty(results) || some(results, (result) => isNil(result))) {
-        timer = new Timer('Set all content types in dynamodb');
+        timer = new Timer();
         const contentTypes = await fallbackLoaders.fetchAllContentTypes(preview);
 
         if (contentTypes.length) {
@@ -280,13 +306,22 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
                 })
                 .promise()
             )
-          ).then(() => logger.trace(timer.end()));
+          ).finally(() =>
+            logger.debug('Prime all content types', {
+              caller: 'fetchAllContentTypes',
+              elapsedMs: timer.end().millis,
+              itemsAttempted: contentTypes.length
+            })
+          );
         }
         return contentTypes;
       }
       return results;
     } catch (err: any) {
-      logger.error('Unable to fetch content types using dynamodb loader:', err.message);
+      logger.error(`Unable to fetch content types: ${err.message}`, {
+        caller: 'fetchAllContentTypes',
+        stack: err.stack
+      });
       return [];
     }
   };

@@ -6,7 +6,12 @@ import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
 import { TypeMapper } from '@last-rev/types';
 import getLocalizedField from '../utils/getLocalizedField';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({
+  package: 'graphql-contentful-core',
+  module: 'fieldResolver'
+});
 
 export type Resolver<TSource, TContext> = (
   content: TSource,
@@ -38,13 +43,18 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
         fieldValue = await fieldMapper(content, args, ctx, info);
       } catch (err: any) {
         const scopedLoggingPrefix = `[${typeName}][${displayType}][${field}]`;
-        logger.error(`GQL Extension error: ${scopedLoggingPrefix} ${err.message}`);
+        logger.error(`GQL Extension error: ${scopedLoggingPrefix} ${err.message}`, {
+          caller: 'fieldResolver',
+          stack: err.stack
+        });
         throw err;
       }
     } else if (isString(fieldMapper)) {
       fieldValue = getLocalizedField(content.fields, fieldMapper as string, ctx);
     } else {
-      logger.error(`Unsupported mapper type for ${typeName}.${displayType}: ${typeof fieldMapper}`);
+      logger.error(`Unsupported mapper type for ${typeName}.${displayType}: ${typeof fieldMapper}`, {
+        caller: 'fieldResolver'
+      });
       return null;
     }
   } else {

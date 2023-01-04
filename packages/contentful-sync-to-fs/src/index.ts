@@ -7,10 +7,15 @@ import { join } from 'path';
 import { readFile, ensureDir, writeFile, createFile } from 'fs-extra';
 import { Asset, Entry, createClient, ContentfulClientApi, ContentType, SyncCollection } from 'contentful';
 import Timer from '@last-rev/timer';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import LastRevAppConfig from '@last-rev/app-config';
 import { updateAllPaths } from '@last-rev/contentful-path-util';
 import { createContext } from '@last-rev/graphql-contentful-helpers';
+
+const logger = getWinstonLogger({
+  package: 'contentful-sync-to-fs',
+  module: 'contentfulSyncToFs'
+});
 
 const ENTRIES_DIRNAME = 'entries';
 const ASSETS_DIRNAME = 'assets';
@@ -71,7 +76,9 @@ const writeContentfulSyncTokens = async (
 const readContentfulSyncTokens = async (root: string, dirname: string): Promise<ContentTypeIdToSyncTokensLookup> => {
   try {
     const filename = join(root, dirname, `sync_tokens.json`);
-    logger.info('Using sync tokens from:', filename);
+    logger.info(`Using sync tokens from: ${filename}`, {
+      caller: 'readContentfulSyncTokens'
+    });
     const syncTokens = JSON.parse(await readFile(filename, 'utf-8'));
 
     return syncTokens;
@@ -157,7 +164,7 @@ const syncAllEntries = async (
 };
 
 const sync = async (config: LastRevAppConfig, sites?: string[]) => {
-  const totalTimer = new Timer('Total elapsed time');
+  const totalTimer = new Timer();
 
   validateArg(config.fs.contentDir, 'fs.contentDir');
   validateArg(config.contentful.contentDeliveryToken, 'contentful.contentDeliveryToken');
@@ -182,16 +189,22 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
     config.contentful.usePreview ? 'preview' : 'production'
   );
 
-  let timer = new Timer(`fetched entries and assets`);
+  let timer = new Timer();
   const syncTokens = await readContentfulSyncTokens(root, SYNC_TOKEN_DIRNAME);
   const [entriesResults, assetsResult] = await Promise.all([
     syncAllEntries(client, contentTypes, syncTokens, config),
     syncAllAssets(client, syncTokens['asset'])
   ]);
-  logger.trace(timer.end());
 
   const entries = flatten(entriesResults.map((result) => result.entries));
   const assets = assetsResult.assets;
+
+  logger.debug(`fetched entries and assets`, {
+    caller: 'sync',
+    elapsedMs: timer.end().millis,
+    itemsSuccessful: entries.length + assets.length
+  });
+
   const entryIdsByContentTypeLookup = groupByContentTypeAndMapToIds(entries);
   const nextSyncTokens: ContentTypeIdToSyncTokensLookup = contentTypes.reduce(
     (accum, contentType, idx) => ({
@@ -202,7 +215,7 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
   );
   nextSyncTokens['asset'] = assetsResult.nextSyncToken;
 
-  timer = new Timer('wrote content files');
+  timer = new Timer();
   await Promise.all([
     writeContentfulItems(entries, root, ENTRIES_DIRNAME),
     writeContentfulItems(assets, root, ASSETS_DIRNAME),
@@ -210,9 +223,14 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
     writeEntriesByContentTypeFiles(entryIdsByContentTypeLookup, root),
     writeContentfulSyncTokens(nextSyncTokens, root, SYNC_TOKEN_DIRNAME)
   ]);
-  logger.trace(timer.end());
+  logger.debug('Wrote content files', {
+    caller: 'sync',
+    elapsedMs: timer.end().millis,
+    itemsSuccessful:
+      entries.length + assets.length + contentTypes.length + Object.keys(entryIdsByContentTypeLookup).length
+  });
 
-  timer = new Timer('wrote paths tree');
+  timer = new Timer();
 
   await updateAllPaths({
     config,
@@ -221,9 +239,15 @@ const sync = async (config: LastRevAppConfig, sites?: string[]) => {
     context: await createContext({ config }),
     sites
   });
-  logger.trace(timer.end());
+  logger.debug('wrote paths tree', {
+    caller: 'sync',
+    elapsedMs: timer.end().millis
+  });
 
-  logger.trace(totalTimer.end());
+  logger.debug('Sync to file system', {
+    caller: 'sync',
+    elapsedMs: totalTimer.end().millis
+  });
 };
 
 export default sync;

@@ -1,17 +1,24 @@
 import { GenerateSchemaParams } from './types';
 import fetch from './fetchers';
 import { DocumentNode } from 'graphql';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 
-export default async ({
+const logger = getWinstonLogger({
+  package: 'graphql-schema-gen',
+  module: 'index'
+});
+
+const generateSchema = async ({
   source = 'Contentful',
   typeMappings,
   connectionParams,
   contentTypes,
-  logLevel = 'warn',
   skipReferenceFields
 }: GenerateSchemaParams): Promise<DocumentNode> => {
-  logger.setLevel(logLevel);
-  logger.info(`generating schema from ${source}...`);
+  logger.info(`generating schema from ${source}...`, {
+    caller: 'generateSchema'
+  });
   return await fetch(source, typeMappings, skipReferenceFields, connectionParams, contentTypes);
 };
+
+export default generateSchema;

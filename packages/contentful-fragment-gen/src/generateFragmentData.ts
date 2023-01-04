@@ -2,7 +2,12 @@ import { FragmentDataMapping, MergedJsonRepresentationMap } from './types';
 import Node from './Node';
 import Timer from '@last-rev/timer';
 import { each } from 'lodash';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({
+  package: 'contentful-fragment-gen',
+  module: 'generateFragmentData'
+});
 
 const generateFragmentDataDfs = (root: Node, fragmentMapping: FragmentDataMapping) => {
   const stack: Node[] = [];
@@ -29,11 +34,14 @@ const generateFragmentData = (
   typeMappings: Record<string, string>
 ): FragmentDataMapping => {
   const fragmentDataMapping: FragmentDataMapping = {};
-  const timer = new Timer('Generated fragment data');
+  const timer = new Timer();
   each(mergedJsonRepresentationMap, (jsonRepresentation, contentTypeId) => {
     generateFragmentDataDfs(new Node(jsonRepresentation, contentTypeId, allStatics, typeMappings), fragmentDataMapping);
   });
-  logger.info(timer.end());
+  logger.debug('Generated fragment data', {
+    caller: 'generateFragmentData',
+    time: timer.end().millis
+  });
   return fragmentDataMapping;
 };
 

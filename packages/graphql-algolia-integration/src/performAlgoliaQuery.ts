@@ -3,14 +3,19 @@ import LastRevAppConfig from '@last-rev/app-config';
 import { algoliaQuery, avaliableLocalesQuery } from './queries';
 import { AlgoliaRecord, QueryConfig } from './types';
 import Timer from '@last-rev/timer';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({
+  package: 'graphql-algolia-integration',
+  module: 'performAlgoliaQuery'
+});
 
 const performAlgoliaQuery = async (
   client: ApolloClient<any>,
   config: LastRevAppConfig,
   envs: ('preview' | 'production')[]
 ): Promise<{ errors: any[]; results: AlgoliaRecord[][] }> => {
-  let timer = new Timer(`Performed Algolia query`);
+  let timer = new Timer();
   const {
     data: {
       availableLocales: { available: locales }
@@ -27,7 +32,6 @@ const performAlgoliaQuery = async (
     )
   );
 
-  logger.debug('queryConfigs', queryConfigs);
   const results = (
     await Promise.allSettled(
       queryConfigs.map(async (queryConfig) => {
@@ -35,14 +39,20 @@ const performAlgoliaQuery = async (
           displayType: 'AlgoliaRecord',
           ...queryConfig
         };
-        const timerQuery = new Timer('Query:' + JSON.stringify(filter));
+        const timerQuery = new Timer();
         const result = await client.query({
           query: algoliaQuery,
           variables: {
             filter
           }
         });
-        logger.debug(timerQuery.end());
+
+        logger.debug('Perform Algolia query', {
+          caller: 'performAlgoliaQuery',
+          emapsedMs: timerQuery.end().millis,
+          itemsSuccessful: result.data.contents.length,
+          query: filter
+        });
 
         const {
           data: { contents: algoliaResults }
@@ -53,7 +63,11 @@ const performAlgoliaQuery = async (
     )
   ).flat();
 
-  logger.debug(timer.end());
+  logger.debug('performAlgoliaQuery', {
+    caller: 'performAlgoliaQuery',
+    elapsedMs: timer.end().millis,
+    itemsSuccessful: results.length
+  });
 
   return {
     errors: (results.filter((result) => result.status === 'rejected') as PromiseRejectedResult[]).map((r) => r.reason),

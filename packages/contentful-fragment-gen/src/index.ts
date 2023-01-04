@@ -7,7 +7,7 @@ import generateFragmentData from './generateFragmentData';
 import { ContentTypeMap, FragmentDataMapping, MergedJsonRepresentationMap, QueryJson } from './types';
 import writeFragmentData from './writeFragmentData';
 import writePageQuery from './writePageQuery';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import writeStandardFragments from './writeStandardFragments';
 import writeLinkFragment from './writeLinkFragment';
@@ -16,6 +16,11 @@ import mergeContentTypeJsons from './mergeContentTypeJsons';
 import buildReferenceTree from './buildReferenceTree';
 import capitalizeFirst from './capitalizeFirst';
 import Handlebars from 'handlebars';
+
+const logger = getWinstonLogger({
+  package: 'contentful-fragment-gen',
+  module: 'index'
+});
 
 const fileMatcher = new FileMatcher();
 
@@ -105,12 +110,15 @@ const writeOutput = async (
   outputDir: string,
   typeMappings: Record<string, string>
 ) => {
-  const timer = new Timer('Wrote output files');
+  const timer = new Timer();
   await Promise.all([
     writeAllFragments(fragmentDataMapping, outputDir, typeMappings),
     writePageQuery(fragmentDataMapping, outputDir)
   ]);
-  logger.info(timer.end());
+  logger.debug('Wrote output files', {
+    caller: 'writeOutput',
+    elapsedMs: timer.end().millis
+  });
 };
 
 const run = async ({
@@ -129,7 +137,10 @@ const run = async ({
       const loadedExtensions = require(resolve(process.cwd(), extensions));
       typeMappings = loadedExtensions.typeMappings || {};
     } catch (error: any) {
-      logger.info(`Unable to load extensions from ${extensions}: ${error.message}`);
+      logger.error(`Unable to load extensions from ${extensions}: ${error.message}`, {
+        caller: 'run',
+        stack: error.stack
+      });
     }
   }
 

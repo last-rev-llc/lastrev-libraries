@@ -2,11 +2,12 @@ import { PathData, PathDataMap } from 'packages/types';
 import { join } from 'path';
 import { ensureDir, readFile, writeFile } from 'fs-extra';
 import AWS from 'aws-sdk';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import Redis from 'ioredis';
 import { mapValues } from 'lodash';
 import LastRevAppConfig from '@last-rev/app-config';
 
+const logger = getWinstonLogger({ package: 'contentful-path-util', module: 'PathStore' });
 export interface PathStore {
   load: (site: string) => Promise<PathDataMap>;
   save: (pathDataMap: PathDataMap, site: string) => Promise<void>;
@@ -48,7 +49,9 @@ export class FsPathStore implements PathStore {
       const data = await readFile(this.getFilePath(site), 'utf8');
       return JSON.parse(data);
     } catch (e) {
-      logger.info(`No path data found at ${this.getFilePath(site)}`);
+      logger.info(`No path data found at ${this.getFilePath(site)}`, {
+        caller: 'FsPathStore.load'
+      });
       return {};
     }
   }
@@ -75,7 +78,9 @@ export class RedisPathStore implements PathStore {
         return JSON.parse(s) as PathData;
       });
     } catch (e) {
-      logger.info(`No path data found in redis`);
+      logger.info(`No path data found in redis`, {
+        caller: 'RedisPathStore.load'
+      });
       return {};
     }
   };
@@ -137,7 +142,9 @@ export class DynamoDbPathStore implements PathStore {
         .promise();
       return Item?.data as PathDataMap;
     } catch (e) {
-      logger.info(`No path data found in dynamodb`);
+      logger.info(`No path data found in dynamodb`, {
+        caller: 'DynamoDbPathStore.load'
+      });
       return {};
     }
   };

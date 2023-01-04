@@ -3,8 +3,10 @@ import PathMatcher from './PathMatcher';
 import PathRuleParser from '../core/PathRuleParser';
 import PathToItemsFetcher from './PathToItemsFetcher';
 import { InternalRootConfig, PathRule, SlugArray } from '../types';
-import logger from 'loglevel';
 import { getRootConfig } from '../helpers';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({ package: 'contentful-path-rules-engine', module: 'PathToContentLoader' });
 
 export type PathLookupObject = {
   rule: string;
@@ -53,10 +55,6 @@ export default class PathLoader {
     this._lookups = createPathLookupObjects(config);
   }
 
-  get logPrefix() {
-    return `[${this.constructor.name}]`;
-  }
-
   async getItemsForPath(path: string, apolloContext: ApolloContext, site?: string): Promise<PathEntries | null> {
     if (path === '/' && this._rootConfig) {
       const { field, value, contentType } = this._rootConfig;
@@ -77,7 +75,9 @@ export default class PathLoader {
     }, [] as { slugs: SlugArray; lookup: PathLookupObject }[]);
 
     if (!matched.length) {
-      logger.debug(`${this.logPrefix} no matchers for path ${path}`);
+      logger.debug(`no matchers for path ${path}`, {
+        caller: 'PathLoader.getItemsForPath'
+      });
       return null;
     }
 
@@ -99,7 +99,9 @@ export default class PathLoader {
     const filtered = results.filter(isNotNull).flat();
 
     if (filtered.length === 0) {
-      logger.debug(`${this.logPrefix} no results fetched for path ${path}`);
+      logger.debug(`no results fetched for path ${path}`, {
+        caller: 'PathLoader.getItemsForPath'
+      });
       return null;
     }
 

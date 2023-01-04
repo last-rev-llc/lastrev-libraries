@@ -1,6 +1,7 @@
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import { ItemKey } from '@last-rev/types';
-import { LOG_PREFIX } from './constants';
+
+const logger = getWinstonLogger({ package: 'contentful-redis-loader', module: 'helpers' });
 
 export const isString = (x: any): x is string => typeof x === 'string' || x instanceof String;
 export const isError = (x: any): x is Error => x instanceof Error;
@@ -38,30 +39,29 @@ export const isContentfulError = (item: any) => {
 };
 
 export const stringify = (r: any, errorKey: string) => {
-  if (isNil(r)) {
-    logger.error(`${LOG_PREFIX} Error stringifying ${errorKey}: nil`);
-    return undefined;
-  }
-
-  if (isError(r)) {
-    logger.error(`${LOG_PREFIX} Error stringifying ${errorKey}: ${r.message}`);
-    return undefined;
-  }
-
-  if (isContentfulError(r)) {
-    logger.error(`${LOG_PREFIX} Error stringifying ${errorKey}: ${r.sys.id}`);
-    return undefined;
-  }
-
-  if (!isContentfulObject(r)) {
-    logger.error(`${LOG_PREFIX} Error stringifying ${errorKey}: Not contentful Object: ${typeof r}, ${r}`);
-    return undefined;
-  }
-
   try {
+    if (isNil(r)) {
+      throw Error('nil');
+    }
+
+    if (isError(r)) {
+      throw Error(r.message);
+    }
+
+    if (isContentfulError(r)) {
+      throw Error(`Contentful Error: ${r.sys.id}`);
+    }
+
+    if (!isContentfulObject(r)) {
+      throw Error(`Not contentful Object: ${r}`);
+    }
+
     return JSON.stringify(enhanceContentfulObjectWithMetadata(r));
   } catch (err: any) {
-    logger.error(`${LOG_PREFIX} Error stringifying ${errorKey}: ${err.message}`);
+    logger.error(`Error stringifying ${errorKey}: ${err.message}`, {
+      caller: 'stringify',
+      stack: err.stack
+    });
     return undefined;
   }
 };

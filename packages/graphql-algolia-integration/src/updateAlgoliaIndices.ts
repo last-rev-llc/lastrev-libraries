@@ -1,14 +1,19 @@
 import { SearchClient } from 'algoliasearch';
 import { AlgoliaObjectsByIndex } from './types';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
+
+const logger = getWinstonLogger({
+  package: 'graphql-algolia-integration',
+  module: 'updateAlgoliaIndices'
+});
 
 const updateAlgoliaIndices = async (
   algoliaClient: SearchClient,
   algoliaObjectsByIndex: AlgoliaObjectsByIndex,
   maxRecords?: number
 ): Promise<any[]> => {
-  const timer = new Timer(`Updated Algolia indices`);
+  const timer = new Timer();
   const toProcess = Object.keys(algoliaObjectsByIndex).map((index) => ({
     objects: algoliaObjectsByIndex[index],
     index
@@ -21,11 +26,17 @@ const updateAlgoliaIndices = async (
     })
   );
 
-  logger.trace(timer.end());
-
-  return finalResults
+  const successfulResults = finalResults
     .filter((result) => result.status === 'rejected')
     .map((result) => (result as PromiseRejectedResult).reason);
+
+  logger.debug(`Updated Algolia indices`, {
+    caller: 'updateAlgoliaIndices',
+    elapsedMs: timer.end().millis,
+    itemsSuccessful: successfulResults.length
+  });
+
+  return successfulResults;
 };
 
 export default updateAlgoliaIndices;

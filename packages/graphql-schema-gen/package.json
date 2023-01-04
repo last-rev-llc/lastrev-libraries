@@ -24,10 +24,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@last-rev/logging": "^0.1.0",
     "contentful": "^8.4.2",
     "graphql": "^16.6.0",
     "lodash": "^4.17.21",
-    "loglevel": "^1.7.1",
     "tslib": "^2.3.0"
   }
 }

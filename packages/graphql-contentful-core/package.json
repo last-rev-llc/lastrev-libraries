@@ -35,6 +35,7 @@
     "@last-rev/contentful-redis-loader": "^0.5.2",
     "@last-rev/graphql-contentful-helpers": "^0.4.4",
     "@last-rev/graphql-schema-gen": "^0.2.2",
+    "@last-rev/logging": "^0.1.0",
     "@last-rev/testing-library": "^0.1.10",
     "@last-rev/timer": "^0.1.3",
     "@last-rev/types": "^0.3.3",
@@ -42,7 +43,6 @@
     "graphql": "^16.6.0",
     "graphql-type-json": "^0.3.2",
     "lodash": "^4.17.21",
-    "loglevel": "^1.7.1",
     "micro": "^9.3.4"
   }
 }

@@ -11,7 +11,12 @@ import isError from 'lodash/isError';
 import { ApolloContext } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import buildSitemapFromEntries from '../utils/buildSitemapFromEntries';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({
+  package: 'graphql-contentful-core',
+  module: 'createResolvers'
+});
 
 const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]; config: LastRevAppConfig }) =>
   merge(
@@ -83,7 +88,9 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           ctx: ApolloContext
         ) => {
           if (!contentTypes.length && !ids.length) {
-            logger.error('contents query missing one of contentTypes or ids');
+            logger.error('Contents query missing one of contentTypes or ids', {
+              caller: 'conntents'
+            });
             return null;
           }
           ctx.preview = preview;

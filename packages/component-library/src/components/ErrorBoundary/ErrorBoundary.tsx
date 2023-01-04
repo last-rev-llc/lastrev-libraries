@@ -24,7 +24,7 @@ class BaseErrorBoundary extends React.Component<ErrorBoundaryProps> {
 
   componentDidCatch(error: any, errorInfo: any) {
     // You can also log the error to an error reporting service
-    console.log(error, errorInfo);
+    console.error(error, errorInfo);
   }
 
   render() {

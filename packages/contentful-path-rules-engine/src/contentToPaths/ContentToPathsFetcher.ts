@@ -163,10 +163,6 @@ export default class ContentToPathsFetcher {
     this._validator = new RelationShipValidator(pathRule);
   }
 
-  get logPrefix() {
-    return `[${this.constructor.name}]`;
-  }
-
   async fetch({ entry, apolloContext }: { entry: Entry<any>; apolloContext: ApolloContext }): Promise<PathInfo[]> {
     const pathInfos = await this._tree.fetch(entry, apolloContext);
     const validator = this._validator;
