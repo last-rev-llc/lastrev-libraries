@@ -1,10 +1,7 @@
 import { getSdk } from '@lrns/graphql-sdk';
 import { GraphQLClient } from 'graphql-request';
+import graphqlEndpoint from './graphqlEndpoint';
 
-const URL =
-  process.env.STAGE === 'build' || !process.env.DEPLOY_URL
-    ? 'http://localhost:5000/graphql'
-    : `${process.env.DEPLOY_URL}/api/graphql`;
-const sdk = getSdk(new GraphQLClient(URL));
+const sdk = getSdk(new GraphQLClient(graphqlEndpoint));
 
 export default sdk;
