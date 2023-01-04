@@ -83,7 +83,10 @@ export type PathFilerFunctionArgs = {
 
 export type PathFilterFunction = (args: PathFilerFunctionArgs) => Promise<boolean>;
 
+export type RootPathConfig = { field: string; value: string };
+
 export type ContentTypePathRuleConfig = {
+  root?: RootPathConfig;
   rules: PathRuleDefinition[];
   filter?: PathFilterFunction;
   allowFullPaths?: boolean;

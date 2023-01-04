@@ -86,3 +86,5 @@ export const isField = (node: AstNode): node is Field => {
 };
 
 export type SlugArray = (string | null)[];
+
+export type InternalRootConfig = { field: string; value: string; contentType: string };

@@ -2,8 +2,9 @@ import { ApolloContext, PathEntries, PathFilterFunction, PathRuleConfig } from '
 import PathMatcher from './PathMatcher';
 import PathRuleParser from '../core/PathRuleParser';
 import PathToItemsFetcher from './PathToItemsFetcher';
-import { PathRule, SlugArray } from '../types';
+import { InternalRootConfig, PathRule, SlugArray } from '../types';
 import logger from 'loglevel';
+import { getRootConfig } from '../helpers';
 
 export type PathLookupObject = {
   rule: string;
@@ -45,8 +46,10 @@ const isNotNull = <T>(x: T | null): x is T => x !== null;
  */
 export default class PathLoader {
   private readonly _lookups: PathLookupObject[];
+  private readonly _rootConfig: InternalRootConfig | undefined;
 
   constructor(config: PathRuleConfig) {
+    this._rootConfig = getRootConfig(config);
     this._lookups = createPathLookupObjects(config);
   }
 
@@ -55,6 +58,16 @@ export default class PathLoader {
   }
 
   async getItemsForPath(path: string, apolloContext: ApolloContext, site?: string): Promise<PathEntries | null> {
+    if (path === '/' && this._rootConfig) {
+      const { field, value, contentType } = this._rootConfig;
+      const rootItem = await apolloContext.loaders.entryByFieldValueLoader.load({
+        field,
+        value,
+        contentType,
+        preview: !!apolloContext.preview
+      });
+      return rootItem ? [rootItem] : null;
+    }
     const matched = this._lookups.reduce((acc, lookup) => {
       const slugs = lookup.matcher.match(path);
       if (slugs) {
