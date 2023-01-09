@@ -107,7 +107,7 @@ const createAsset = async (asset, index, checkExisting) => {
   return assetObject;
 };
 
-const createAssets = async (assets, checkExisting) => {
+const createAssets = async (assets, checkExisting = true) => {
   const createdAssets = [];
   let videoCount = 0;
 
@@ -142,7 +142,7 @@ const createEntryWithId = async (entryId, entryObject, contentType) => {
   return entry;
 };
 
-const createEntries = async (entries, checkExisting) => {
+const createEntries = async (entries, checkExisting = true) => {
   const createdEntries = [];
 
   for (let index = 0; index < entries.length; index++) {

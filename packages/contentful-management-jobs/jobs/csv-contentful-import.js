@@ -5,38 +5,38 @@
 const path = require('path');
 const TurndownService = require('turndown');
 const { richTextFromMarkdown } = require('@contentful/rich-text-from-markdown');
-const { clientDelivery, environmentManagement } = require('../shared/contentful-init');
-const { csvToArray } = require('../shared/input-parsers');
+const { clientDelivery } = require('../shared/contentful-init');
+const { csvToArray, arrayToCsv } = require('../shared/input-parsers');
 const {
   getContentfulIdFromString,
   createAssetObject,
   getAssetDetails,
   createAssetEntry,
-  createFile
+  createFile,
+  getFileExtension
 } = require('../shared/contentful-fields');
 const { getAllEntries, createAssets, createEntries } = require('../shared/contentful-actions');
 const { getDistinct } = require('../shared/helpers/getDistinct');
 const { image403s, image404s, notResolvedImages } = require('../shared/fixtures/brokenUrls');
 
 const BASE_FOLDER_PATH = '/Users/anthonywhitley/Documents/LASTREV/193';
-const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion.csv');
+const CSV_EMBEDDED_IMAGES_FILE_PATH = path.join(BASE_FOLDER_PATH, 'embeddedImages.csv');
+const CSV_UNPROCESSABLE_FILE_PATH = path.join(BASE_FOLDER_PATH, 'unprocessable.csv');
+const CSV_UPLOADED_VIDEOS_FILE_PATH = path.join(BASE_FOLDER_PATH, 'uploadedVideos.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_100.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_200.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_300.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_400.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_500.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_600.csv');
+const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_700.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_Single.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'finalPathmaticsBlogs.csv');
 const turndownService = new TurndownService();
 
-// CPG Published             = 75xBaDldTdeYovVrXwQ3fM
-// CPG Draft                 = 4WrJHEEoUhBVx6cUoj1iBx
-// Top Advertisers Published = 3iuSeI4GNTKmvLv38bGvsJ
-// Top Advertisers Draft     = 3O9facN1rWPNTqHtsnSVZR
-// Gaming & Mobile Games     = 1036366507
-
-// should have 700 images uploaded which would make the total 7669
-// TODO: need to add Gaming & Mobile Games to Blog with Gaming as tag
-
 const unprocessableImages = [...image403s, ...image404s, ...notResolvedImages];
-const foundUnprocessableUrls = [];
 
-// const createdAssets = [];
 const imageCollections = [];
 const mediaItems = [];
 const videos = [];
@@ -46,54 +46,8 @@ const newAuthors = [];
 const srcsetImages = [];
 const embeddedImages = [];
 const links = [];
-const cleanLineExamples = [];
 const changedLinks = [];
-const blogsWithBrokenImages = [];
-
-// const createEntryWithId = async (environment, entryId, entryObject, contentType) => {
-//   let entry;
-//   try {
-//     console.log(`creating entry => ${entryId}`);
-//     // console.log({ environment, entryId, entryObject, contentType });
-//     entry = await environment.createEntryWithId(contentType, entryId, entryObject);
-//   } catch (error) {
-//     console.log(`error creating entry => ${entryId} => for ${entryObject?.fields?.slug?.['en-US']}`, error);
-//   }
-//   return entry;
-// };
-
-// const createEntries = async (entries) => {
-//   const createdEntries = [];
-//   const environment = await environmentManagement;
-//   if (!environment) {
-//     console.log('environment not found');
-//     return [];
-//   }
-
-//   for (let index = 0; index < entries.length; index++) {
-//     const currentEntry = entries[index];
-//     const { entry, entryId, publish, contentType } = currentEntry;
-
-//     const existingAsset = await checkForExistingItem(entryId, async () => clientDelivery.getEntry(entryId));
-
-//     if (!existingAsset) {
-//       const createdEntry = await createEntryWithId(environment, entryId, entry, contentType);
-
-//       if (createdEntry) {
-//         console.log(`created entry => ${entryId}`);
-
-//         // if (publish) {
-//         //   await publishItem(createdEntry, entryId);
-//         // }
-//         createdEntries.push({ entryId, asset: createdEntry });
-//       }
-//     } else {
-//       console.log(`existing entry => ${entryId}`);
-//       createdEntries.push({ asset: existingAsset, entryId });
-//     }
-//   }
-//   return createdEntries;
-// };
+const blogsWithBrokenAssets = [];
 
 const query = (type) => ({
   content_type: type,
@@ -101,7 +55,7 @@ const query = (type) => ({
 });
 
 const getFileName = (url, title, uniqueId) => {
-  if (url.includes('googleusercontent.com/')) {
+  if (url.includes('googleusercontent.com/') || url.includes('video.tv.adobe.com/')) {
     return `${title}-${uniqueId}.jpg`;
   }
   return (url && url.split('/').pop()?.replace(/%20/g, '-')) || 'Missing url';
@@ -174,8 +128,6 @@ const getTags = (tagsList, tags) => {
     .filter((tag) => tag);
 };
 
-const getEmbeddedUrl = (line) => line.split('"').filter((l) => l.startsWith('http'))[0];
-
 const getEmbeddedAssetBlock = (id) => ({
   nodeType: 'embedded-asset-block',
   content: [],
@@ -216,6 +168,8 @@ const isEmptyHeadingLine = (line) => /^<h(1|2|3|4|5).*>&nbsp;<\/h(1|2|3|4|5)>$/.
 
 const isHeadingWithEmptySpanLine = (line) => /^<h(1|2|3|4|5)><span style=".*"><\/span><\/h(1|2|3|4|5)>$/.test(line);
 
+const onlyHasLineBreaks = (line) => /^<p>((?:<br>)+?)<\/p>$/.test(line);
+
 const filterAll = (line) =>
   line &&
   line !== '<div>' &&
@@ -225,6 +179,7 @@ const filterAll = (line) =>
   line !== '</ul>' &&
   !line.includes('<li>') &&
   !line.includes('<video ') &&
+  !onlyHasLineBreaks(line) &&
   !isCommentLine(line) &&
   !isDivLine(line) &&
   !isEmptyHeadingLine(line) &&
@@ -248,6 +203,17 @@ const filterOnlyLists = (line) =>
   line.includes('<li>') ||
   line.includes('</ul>') ||
   line.includes('</ol>');
+
+const replaceAllExceptText = (line) =>
+  line
+    ?.replace(/&nbsp;/g, '')
+    .replace(/<a.*?>/g, '')
+    .replace(/<\/a>/g, '')
+    .replace(/<span.*?>/g, '')
+    .replace(/<\/span>/g, '')
+    .replace(/<img.*?>/g, '')
+    .replace(/<br>/g, '')
+    .trim();
 
 const getImageUrls = (line) =>
   line
@@ -315,25 +281,38 @@ const getBody = async (body, postUrl, slug, postTitle) => {
   const iframeLines = [];
   const videoLines = [];
   const imageLinkLines = [];
-  // const embeddedImageLines = [];
   const filteredLines = bodyLines.filter(filterAll);
   const listStartIndex = getListStartIndex(filteredLines);
-  // console.log('listStartIndex => ', listStartIndex);
-  // console.log('filteredLines => ', filteredLines.length);
   let totalLines = filteredLines.length;
   const addedLines = [];
   const getImageBlock = async (node) => {
     if (node.type !== 'image') {
-      console.log('Type not image => ', postUrl, JSON.stringify(node, null, 2));
+      if (node.type === 'break') {
+        return {
+          nodeType: 'text',
+          value: '\n',
+          marks: [],
+          data: {}
+        };
+      }
+      console.log('Type not image or break => ', { postUrl, type: node.type });
       return null;
     }
     if (!node.url) {
       console.log('!!!!Image URL not found!!!! => ', postUrl, JSON.stringify(node, null, 2));
       return null;
     }
-    // console.log('Image URL found => ', node.type, node.url);
-    const unprocessable = !unprocessableImages.some((unprocessableImage) => unprocessableImage === node.url);
-    return unprocessable ? getEmbeddedAssetBlock(getContentfulIdFromString(node.url)) : null;
+    const processable = !unprocessableImages.some((unprocessableImage) => unprocessableImage === node.url);
+    if (!processable) {
+      console.log('!!!!Found unprocessable image!!!! => ', {
+        postId: getContentfulIdFromString(postUrl),
+        postUrl,
+        imageUrl: node.url,
+        unprocessable: !processable
+      });
+      totalLines -= 1;
+    }
+    return processable ? getEmbeddedAssetBlock(getContentfulIdFromString(node.url)) : null;
   };
   const listBlocks = bodyLines.filter(filterOnlyLists);
 
@@ -348,11 +327,17 @@ const getBody = async (body, postUrl, slug, postTitle) => {
 
   const removeEmbeddedImages = (line, lineNumber) => {
     const imageSrcs = getImageSrcs(line);
-    // console.log('imageSrcs => ', imageSrcs.length);
     let editedLine = line;
-    // console.log('editedLine => ', editedLine);
-    if (line.includes('<p>') && line.includes('<img') && /^<p>.*?<img.*?>.*?<\/p>$/.test(line)) {
+    const testLine = line.match(/^<p>(.*?)<img.*?>(.*?)<\/p>$/);
+    const textBefore = replaceAllExceptText(testLine?.[1]);
+    const textAfter = replaceAllExceptText(testLine?.[2]);
+    if (
+      line.includes('<p>') &&
+      line.includes('<img') &&
+      ((textBefore && textBefore !== '.') || (textAfter && textAfter !== '.'))
+    ) {
       embeddedImages.push({
+        postId: getContentfulIdFromString(postUrl),
         postUrl,
         line,
         count: imageSrcs.length,
@@ -382,9 +367,7 @@ const getBody = async (body, postUrl, slug, postTitle) => {
 
   const cleanLinks = (originalLine, editedLine) => {
     if (editedLine.includes('<a ')) {
-      // console.log('editedLine before => ', editedLine);
       editedLine = cleanLinksInLine(editedLine);
-      // console.log('editedLine after => ', editedLine);
       if (getLinkHrefs(originalLine).some((link, linkIndex) => link !== getLinkHrefs(editedLine)[linkIndex])) {
         changedLinks.push({
           postUrl,
@@ -393,12 +376,6 @@ const getBody = async (body, postUrl, slug, postTitle) => {
           linkAfter: getLinkHrefs(editedLine)
         });
       }
-      // cleanLineExamples.push({
-      //   postUrl,
-      //   postId: getContentfulIdFromString(postUrl),
-      //   linkBefore: getLinkHrefs(line),
-      //   linkAfter: getLinkHrefs(editedLine)
-      // });
       getAllLinks(editedLine);
     }
     return editedLine;
@@ -442,7 +419,7 @@ const getBody = async (body, postUrl, slug, postTitle) => {
     .map((line, index) => {
       let editedLine = removeEmbeddedImages(line, index);
       const imageCount = getMatches(editedLine, /<img /g);
-      const iframeCount = getMatches(editedLine, /<iframe /g);
+      const iframeCount = getMatches(editedLine, /<iframe |<script.*?src=/g);
       const videoCount = getMatches(editedLine, /<source /g);
       findSrcSets(editedLine, imageCount, index);
       editedLine = cleanLinks(line, editedLine);
@@ -479,36 +456,29 @@ const getBody = async (body, postUrl, slug, postTitle) => {
 
   imageCollectionLines.forEach((image) => {
     const collectionIndex = getStartIndex(image.lineNumber);
-    // console.log('collection lineNumber => ', image.lineNumber);
-    // console.log('collectionIndex => ', collectionIndex);
     rtfBody.content.splice(collectionIndex, 0, getEmbeddedEntryBlock(getCollectionId(slug, image.count))).join();
   });
   iframeLines.forEach((iframe) => {
     const iframeIndex = getStartIndex(iframe.lineNumber);
-    // console.log('iframe lineNumber => ', iframe.lineNumber);
-    // console.log('iframeIndex => ', iframeIndex);
     rtfBody.content.splice(iframeIndex, 0, getEmbeddedEntryBlock(getAssetId(iframe.line))).join();
   });
   videoLines.forEach((video) => {
     const videoIndex = getStartIndex(video.lineNumber);
-    // console.log('video lineNumber => ', video.lineNumber);
-    // console.log('videoIndex => ', videoIndex);
     rtfBody.content.splice(videoIndex, 0, getEmbeddedEntryBlock(getAssetId(video.line))).join();
   });
   imageLinkLines.forEach((link) => {
     const linkIndex = getStartIndex(link.lineNumber);
-    // console.log('imageLink lineNumber => ', link.lineNumber);
-    // console.log('linkIndex => ', linkIndex);
     rtfBody.content.splice(linkIndex, 0, getEmbeddedEntryBlock(getAssetId(link.line))).join();
   });
-  // if (postUrl === 'https://www.pathmatics.com/blog/the-auto-industrys-fight-to-accelerate-out-of-the-pandemic') {
-  // console.log('rtfBody => ', JSON.stringify(rtfBody, null, 2));
-  // console.log('bodyLines => ', JSON.stringify(bodyLines, null, 2));
-  // console.log('filteredBody => ', JSON.stringify(filteredLines, null, 2));
-  // console.log('totalLines => ', totalLines);
+  // if (postUrl === 'https://www.pathmatics.com/blog/2020-vision-digital-marketing-predictions-for-the-year-ahead') {
+  //   console.log('rtfBody => ', JSON.stringify(rtfBody, null, 2));
+  //   console.log('bodyLines => ', JSON.stringify(bodyLines, null, 2));
+  //   console.log('filteredBody => ', JSON.stringify(filteredLines, null, 2));
+  //   console.log('totalLines => ', totalLines);
   // }
   if (rtfBody.content.length !== totalLines) {
     console.log('!!!!Mismatching body lines!!!! => ', {
+      postId: getContentfulIdFromString(postUrl),
       postUrl,
       rtfLines: rtfBody.content.length,
       originalLines: bodyLines.length,
@@ -714,13 +684,13 @@ const transformBlogs = async (blogs, authors, tagsList, existingBlogs) => {
     blogs.map(async (blog) => {
       const { title, seoTitle, url, author, tags, description, publishDate, body, image, status, archived } = blog;
       const slug = url?.split('/').pop();
-      // const blogExists = existingBlogs.some(
-      //   (existingBlog) => existingBlog?.fields?.slug?.toLowerCase() === slug?.toLowerCase()
-      // );
-      // if (blogExists) {
-      //   console.log('existing blog => ', title);
-      //   return null;
-      // }
+      const blogExists = existingBlogs.some(
+        (existingBlog) => existingBlog?.fields?.slug?.toLowerCase() === slug?.toLowerCase()
+      );
+      if (blogExists) {
+        console.log('existing blog => ', title);
+        return null;
+      }
       return {
         entryId: getContentfulIdFromString(url),
         url,
@@ -817,43 +787,91 @@ const getAllBlogs = async (result, limit) => {
   for (let skip = 0; skip < result.total; skip += limit) {
     console.log(`processed blogs ${skip} to ${skip + limit}`);
     const entries = await getAllEntries(clientDelivery, blogQuery(skip));
-    allBlogs.push(entries.items);
+    allBlogs.push(entries?.items || []);
   }
 };
 
-const createImageAsset = (blogId, url, title, uniqueId) => {
+const createMediaAsset = (blogId, url, title, uniqueId) => {
   const file = createFile(url, getFileName(url, title, uniqueId));
   return file
     ? createAssetObject(getAssetDetails(url, true, blogId), createAssetEntry(getTitle(url, title, uniqueId), file))
     : null;
 };
 
+const getVideoData = (line) => {
+  const src = line.split('<source src="')[1]?.split('"')[0];
+  const width = line.split('width="')[1]?.split('"')[0];
+  const height = line.split('height="')[1]?.split('"')[0];
+  return {
+    assetId: getContentfulIdFromString(src),
+    src,
+    width,
+    height
+  };
+};
+
 const processImageAssets = async (blogs) => {
   // create assets for blog images
-  // console.log('first blog', blogs[0]);
   const imageAssets = [];
+  const videoAssets = [];
+  const uploadedVideos = [];
   blogs.forEach((blog) => {
     const blogId = getContentfulIdFromString(blog.url);
     if (blog?.image) {
-      // imageAssets.push(getImage(blog?.image));
-      imageAssets.push(createImageAsset(blogId, blog.image, blog.title, 'featured'));
+      const mediaAsset = createMediaAsset(blogId, blog.image, blog.title, 'featured');
+      if (mediaAsset) {
+        imageAssets.push(mediaAsset);
+      }
     }
     const bodyLines = blog.body.split('\n');
-    // console.log('bodyLines => ', bodyLines.length);
     let imageCount = 0;
+    let videoCount = 0;
 
-    bodyLines.forEach((line) => {
+    bodyLines.forEach((line, lineIndex) => {
       if (line.includes('<img ')) {
         const imageUrls = line
           .split('<img src="')
           .filter((l) => l.startsWith('http'))
           .map((l) => l.split('"')[0]);
-        // console.log('imageUrls => ', imageUrls.length);
         if (imageUrls?.length) {
           imageUrls.forEach((imageUrl) => {
             imageCount += 1;
-            // imageAssets.push(getImage(imageUrl, blog.title, imageCount));
-            imageAssets.push(createImageAsset(blogId, imageUrl, blog.title, imageCount));
+            if (!blogId) {
+              console.log('about to push => ', { blogId, imageUrl, title: blog.title, imageCount });
+            }
+            const mediaAsset = createMediaAsset(blogId, imageUrl, blog.title, imageCount);
+            if (mediaAsset) {
+              imageAssets.push(mediaAsset);
+            }
+          });
+        }
+      }
+      if (line.includes('<source ')) {
+        const videoUrls = line
+          .split('<source src="')
+          .filter((l) => l.startsWith('http'))
+          .map((l) => l.split('"')[0]);
+        const filteredVideoUrls = videoUrls.map((videoUrl) => {
+          console.log({ videoUrl, extension: getFileExtension(videoUrl) });
+          return videoUrl.endsWith('?autoplay=true') ? videoUrl.replace('?autoplay=true', '') : videoUrl;
+        });
+        if (filteredVideoUrls?.length) {
+          filteredVideoUrls.forEach((videoUrl) => {
+            videoCount += 1;
+            const mediaAsset = createMediaAsset(blogId, videoUrl, blog.title, videoCount);
+            if (mediaAsset) {
+              videoAssets.push(mediaAsset);
+              uploadedVideos.push({
+                postId: blogId,
+                postUrl: blog.url,
+                line,
+                count: 1,
+                lineNumber: lineIndex,
+                slug: blog.url?.split('/').pop(),
+                postTitle: blog.title,
+                imageData: getVideoData(line)
+              });
+            }
           });
         }
       }
@@ -863,27 +881,40 @@ const processImageAssets = async (blogs) => {
   const filteredImages = imageAssets.filter((image) => {
     const processable = image && !unprocessableImages.some((unprocessableImage) => unprocessableImage === image.url);
     if (!processable) {
-      blogsWithBrokenImages.push({ blogId: image.linkingId, imageUrl: image.url, blogTitle: image.title });
+      blogsWithBrokenAssets.push({ blogId: image.linkingId, imageUrl: image.url, blogTitle: image.title });
     }
     return processable;
   });
-  // console.log(
-  //   'images => ',
-  //   JSON.stringify(
-  //     filteredImages.map((image) => image.assetEntry.fields.file['en-US'].contentType),
-  //     null,
-  //     2
-  //   )
-  // );
-  // console.log('images => ', JSON.stringify(filteredImages, null, 2));
+  const filteredVideos = videoAssets.filter((video) => {
+    const processable = video && !unprocessableImages.some((unprocessableImage) => unprocessableImage === video.url);
+    if (!processable) {
+      blogsWithBrokenAssets.push({ blogId: video.linkingId, imageUrl: video.url, blogTitle: video.title });
+    }
+    return processable;
+  });
   console.log('filtered image amount to be processed => ', filteredImages.length);
-  // console.log('first image => ', images[0]);
+  console.log('filtered video amount to be processed => ', filteredVideos.length);
 
-  const createdAssets = await createAssets(filteredImages, environmentManagement, clientDelivery);
+  const createdAssets = await createAssets(filteredImages);
   console.log('createdAssets => ', createdAssets.length);
+
+  const createdVideoAssets = await createAssets(filteredVideos);
+  console.log('createdVideoAssets => ', createdVideoAssets.length);
+  arrayToCsv(uploadedVideos, CSV_UPLOADED_VIDEOS_FILE_PATH, [
+    'postId',
+    'postUrl',
+    'line',
+    'count',
+    'lineNumber',
+    'slug',
+    'postTitle',
+    'videoData'
+  ]);
+  arrayToCsv(blogsWithBrokenAssets, CSV_UNPROCESSABLE_FILE_PATH, ['postTitle', 'postId', 'assetUrl']);
 };
 
 (async () => {
+  const startTime = new Date().getTime();
   // Get Authors
   const authors = (await getAllEntries(clientDelivery, query('person')))?.items;
   console.log('authors => ', authors.length);
@@ -898,17 +929,136 @@ const processImageAssets = async (blogs) => {
       return item;
     });
   console.log('tags => ', tags.length);
-  // console.log('first tag => ', JSON.stringify(tags[0], null, 2));
 
   // Get Blogs
-  // await getAllEntries(clientDelivery, { content_type: 'blog', limit: 1 }, (items) => getAllBlogs(items, 200));
-  // const existingBlogs = allBlogs.flat();
-  // console.log('existingBlogs => ', existingBlogs.length);
-  // console.log('existingBlogs[0] => ', JSON.stringify(existingBlogs[1000]?.fields.pubDate, null, 2));
+  await getAllEntries(clientDelivery, { content_type: 'blog', limit: 1 }, (items) => getAllBlogs(items, 200));
+  const existingBlogs = allBlogs.flat();
+  console.log('existingBlogs => ', existingBlogs.length);
 
   // Get parse csv file into array of objects
   const blogs = [];
   const csvParser = csvToArray(CSV_FILE_PATH);
+  const runProcess = async (items) => {
+    // create all images as assets
+    console.log('!!!!processImageAssets start!!!!');
+    const assetStartTime = new Date().getTime();
+    await processImageAssets(items);
+    const assetEndTime = new Date().getTime();
+    const assetDuration = (assetEndTime - assetStartTime) / 1000;
+    console.log('assetDuration => ', `${assetDuration} seconds or ${assetDuration / 60} minutes`);
+    console.log('!!!!processImageAssets end!!!!');
+
+    console.log('!!!!processNewAuthors start!!!!');
+    const createdAuthors = await createEntries(newAuthors.filter((author) => author));
+    console.log('newAuthors => ', newAuthors.length);
+    console.log('createdAuthors => ', createdAuthors.length);
+    console.log('!!!!processNewAuthors end!!!!');
+
+    console.log('!!!!transformBlogs start!!!!');
+    const transformedBlogs = await transformBlogs(items, authors, tags, existingBlogs);
+    console.log('transformedBlogs length => ', transformedBlogs.length);
+    console.log('amount of images with srcsets => ', srcsetImages.length);
+    console.log('amount of paragraphs with images => ', embeddedImages.length);
+    const listOfBlogIdsWithEmbeddedImages = getDistinct(embeddedImages.map((image) => image.postId));
+    arrayToCsv(embeddedImages, CSV_EMBEDDED_IMAGES_FILE_PATH, [
+      'postId',
+      'postUrl',
+      'line',
+      'count',
+      'lineNumber',
+      'slug',
+      'postTitle',
+      'imageData'
+    ]);
+    console.log('listOfBlogIdsWithEmbeddedImages => ', listOfBlogIdsWithEmbeddedImages.length);
+    console.log('amount of links => ', links.length);
+    console.log('!!!!transformBlogs end!!!!');
+
+    console.log('!!!!MediaItems start!!!!');
+    const transformedMediaItems = transformMediaItems(mediaItems);
+    const filteredMediaItems = transformedMediaItems.filter((item) => item);
+    const createdMediaItems = await createEntries(filteredMediaItems);
+    console.log('mediaItems => ', mediaItems.length);
+    console.log('transformedMediaItems => ', transformedMediaItems.length);
+    console.log('filteredMediaItems => ', filteredMediaItems.length);
+    console.log('createdMediaItems => ', createdMediaItems.length);
+    console.log('!!!!MediaItems end!!!!');
+
+    console.log('!!!!ImageLinks start!!!!');
+    const transformedImageLinks = transformImageLinks(mediaItems);
+    const filteredImageLinks = transformedImageLinks.filter((link) => link);
+    const createdImageLinks = await createEntries(filteredImageLinks);
+    console.log('imageLinks => ', imageLinks.length);
+    console.log('transformedImageLinks => ', transformedImageLinks.length);
+    console.log('filteredImageLinks => ', filteredImageLinks.length);
+    console.log('createdImageLinks => ', createdImageLinks.length);
+    console.log('!!!!ImageLinks end!!!!');
+
+    console.log('!!!!ImageCollections start!!!!');
+    const transformedCollections = transformImageCollections(imageCollections);
+    const filteredCollections = transformedCollections.filter((collection) => collection);
+    const createdImageCollections = await createEntries(filteredCollections);
+    console.log('imageCollections => ', imageCollections.length);
+    console.log('transformedCollections => ', transformedCollections.length);
+    console.log('filteredCollections => ', filteredCollections.length);
+    console.log('createdImageCollections => ', createdImageCollections.length);
+    console.log('!!!!ImageCollections end!!!!');
+
+    console.log('!!!!Videos start!!!!');
+    const transformedVideos = transformVideos();
+    const filteredVideos = transformedVideos.filter((video) => video);
+    const createdVideos = await createEntries(filteredVideos);
+    console.log('videos => ', videos.length);
+    console.log('transformedVideos => ', transformedVideos.length);
+    console.log('filteredVideos => ', filteredVideos.length);
+    console.log('createdVideos => ', createdVideos.length);
+    console.log('!!!!Videos end!!!!');
+
+    console.log('!!!!IFrames start!!!!');
+    const transformedIFrames = transformIFrames(iframes);
+    const filteredIFrames = transformedIFrames.filter((iframe) => iframe);
+    const createdIFrames = await createEntries(filteredIFrames);
+    console.log('iframes => ', iframes.length);
+    console.log('transformedIFrames => ', transformedIFrames.length);
+    console.log('filteredIFrames => ', filteredIFrames.length);
+    console.log('createdIFrames => ', createdIFrames.length);
+    console.log('!!!!IFrames end!!!!');
+
+    console.log('transformedBlogs length => ', transformedBlogs.length);
+
+    console.log('mediaItems => ', mediaItems.length);
+    console.log('transformedMediaItems => ', transformedMediaItems.length);
+    console.log('filteredMediaItems => ', filteredMediaItems.length);
+    console.log('createdMediaItems => ', createdMediaItems.length);
+
+    console.log('imageLinks => ', imageLinks.length);
+    console.log('transformedImageLinks => ', transformedImageLinks.length);
+    console.log('filteredImageLinks => ', filteredImageLinks.length);
+    console.log('createdImageLinks => ', createdImageLinks.length);
+
+    console.log('imageCollections => ', imageCollections.length);
+    console.log('transformedCollections => ', transformedCollections.length);
+    console.log('filteredCollections => ', filteredCollections.length);
+    console.log('createdImageCollections => ', createdImageCollections.length);
+
+    console.log('videos => ', videos.length);
+    console.log('transformedVideos => ', transformedVideos.length);
+    console.log('filteredVideos => ', filteredVideos.length);
+    console.log('createdVideos => ', createdVideos.length);
+
+    console.log('iframes => ', iframes.length);
+    console.log('transformedIFrames => ', transformedIFrames.length);
+    console.log('filteredIFrames => ', filteredIFrames.length);
+    console.log('createdIFrames => ', createdIFrames.length);
+
+    console.log('!!!!createBlogs start!!!!');
+    const createdBlogs = await createEntries(transformedBlogs.filter((blog) => blog));
+    console.log('createdBlogs => ', createdBlogs.length);
+    console.log('!!!!createBlogs start!!!!');
+    const endTime = new Date().getTime();
+    const duration = (endTime - startTime) / 1000;
+    console.log('duration => ', `${duration} seconds or ${duration / 60} minutes`);
+  };
   csvParser
     .on('data', (row) => {
       findNewAuthor(row.author, getAuthorId(authors, row.author));
@@ -919,115 +1069,6 @@ const processImageAssets = async (blogs) => {
     })
     .on('end', async () => {
       console.log('blogs length => ', blogs.length);
-      // create all images as assets
-      console.log('!!!!processImageAssets start!!!!');
-      await processImageAssets(blogs);
-      // console.log('foundUnprocessableUrls => ', foundUnprocessableUrls.length);
-      // console.log('foundUnprocessableUrls => ', JSON.stringify(foundUnprocessableUrls, null, 2));
-      // console.log('!!!!processImageAssets end!!!!');
-
-      // console.log('!!!!processNewAuthors start!!!!');
-      // const createdAuthors = await createEntries(newAuthors.filter((author) => author));
-      // console.log('newAuthors => ', newAuthors.length);
-      // console.log('createdAuthors => ', createdAuthors.length);
-      // console.log('!!!!processNewAuthors end!!!!');
-
-      console.log('!!!!transformBlogs start!!!!');
-      // const transformedBlogs = await transformBlogs(blogs, authors, tags, existingBlogs);
-      const transformedBlogs = await transformBlogs(blogs, authors, tags);
-      // console.log('transformedBlogs => ', JSON.stringify(transformedBlogs, null, 2));
-      console.log('transformedBlogs length => ', transformedBlogs.length);
-      console.log('amount of images with srcsets => ', srcsetImages.length);
-      console.log('amount of paragraphs with images => ', embeddedImages.length);
-      console.log('paragraphs with images => ', JSON.stringify(embeddedImages, null, 2));
-      // console.log('paragraphs with images => ', JSON.stringify(cleanLineExamples, null, 2));
-      console.log('links => ', JSON.stringify(changedLinks, null, 2));
-      // console.log('images with srcsets => ', JSON.stringify(srcsetImages, null, 2));
-      // console.log('amount of links => ', links.length);
-      // console.log('links => ', JSON.stringify(getDistinct(links.map((l) => l.links).flat()), null, 2));
-      // console.log('!!!!transformBlogs end!!!!');
-
-      // console.log('!!!!MediaItems start!!!!');
-      // const transformedMediaItems = transformMediaItems(mediaItems);
-      // const filteredMediaItems = transformedMediaItems.filter((item) => item);
-      // const createdMediaItems = await createEntries(filteredMediaItems);
-      // console.log('mediaItems => ', mediaItems.length);
-      // console.log('transformedMediaItems => ', transformedMediaItems.length);
-      // console.log('filteredMediaItems => ', filteredMediaItems.length);
-      // console.log('createdMediaItems => ', createdMediaItems.length);
-      // console.log('!!!!MediaItems end!!!!');
-
-      // console.log('!!!!ImageLinks start!!!!');
-      // const transformedImageLinks = transformImageLinks(mediaItems);
-      // const filteredImageLinks = transformedImageLinks.filter((link) => link);
-      // const createdImageLinks = await createEntries(filteredImageLinks);
-      // console.log('imageLinks => ', imageLinks.length);
-      // console.log('transformedImageLinks => ', transformedImageLinks.length);
-      // console.log('filteredImageLinks => ', filteredImageLinks.length);
-      // console.log('createdImageLinks => ', createdImageLinks.length);
-      // console.log('!!!!ImageLinks end!!!!');
-
-      // console.log('!!!!ImageCollections start!!!!');
-      // const transformedCollections = transformImageCollections(imageCollections);
-      // const filteredCollections = transformedCollections.filter((collection) => collection);
-      // const createdImageCollections = await createEntries(filteredCollections);
-      // console.log('imageCollections => ', imageCollections.length);
-      // console.log('transformedCollections => ', transformedCollections.length);
-      // console.log('filteredCollections => ', filteredCollections.length);
-      // console.log('createdImageCollections => ', createdImageCollections.length);
-      // console.log('!!!!ImageCollections end!!!!');
-
-      // console.log('!!!!Videos start!!!!');
-      // const transformedVideos = transformVideos();
-      // const filteredVideos = transformedVideos.filter((video) => video);
-      // const createdVideos = await createEntries(filteredVideos, true);
-      // console.log('videos => ', videos.length);
-      // console.log('transformedVideos => ', transformedVideos.length);
-      // console.log('filteredVideos => ', filteredVideos.length);
-      // console.log('createdVideos => ', createdVideos.length);
-      // console.log('!!!!Videos end!!!!');
-
-      // console.log('!!!!IFrames start!!!!');
-      // const transformedIFrames = transformIFrames(iframes);
-      // const filteredIFrames = transformedIFrames.filter((iframe) => iframe);
-      // const createdIFrames = await createEntries(filteredIFrames);
-      // console.log('iframes => ', iframes.length);
-      // console.log('transformedIFrames => ', transformedIFrames.length);
-      // console.log('filteredIFrames => ', filteredIFrames.length);
-      // console.log('createdIFrames => ', createdIFrames.length);
-      // console.log('!!!!IFrames end!!!!');
-
-      // // console.log('transformedBlogs => ', JSON.stringify(transformedBlogs, null, 2));
-      // console.log('transformedBlogs length => ', transformedBlogs.length);
-
-      // console.log('mediaItems => ', mediaItems.length);
-      // console.log('transformedMediaItems => ', transformedMediaItems.length);
-      // console.log('filteredMediaItems => ', filteredMediaItems.length);
-      // console.log('createdMediaItems => ', createdMediaItems.length);
-
-      // console.log('imageLinks => ', imageLinks.length);
-      // console.log('transformedImageLinks => ', transformedImageLinks.length);
-      // console.log('filteredImageLinks => ', filteredImageLinks.length);
-      // console.log('createdImageLinks => ', createdImageLinks.length);
-
-      // console.log('imageCollections => ', imageCollections.length);
-      // console.log('transformedCollections => ', transformedCollections.length);
-      // console.log('filteredCollections => ', filteredCollections.length);
-      // console.log('createdImageCollections => ', createdImageCollections.length);
-
-      // console.log('videos => ', videos.length);
-      // console.log('transformedVideos => ', transformedVideos.length);
-      // console.log('filteredVideos => ', filteredVideos.length);
-      // console.log('createdVideos => ', createdVideos.length);
-
-      // console.log('iframes => ', iframes.length);
-      // console.log('transformedIFrames => ', transformedIFrames.length);
-      // console.log('filteredIFrames => ', filteredIFrames.length);
-      // console.log('createdIFrames => ', createdIFrames.length);
-
-      // console.log('!!!!createBlogs start!!!!');
-      // const createdBlogs = await createEntries(transformedBlogs);
-      // console.log('createdBlogs => ', createdBlogs.length);
-      // console.log('!!!!createBlogs start!!!!');
+      await runProcess(blogs);
     });
 })();

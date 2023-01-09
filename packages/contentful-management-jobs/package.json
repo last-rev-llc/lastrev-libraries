@@ -15,6 +15,7 @@
     "dotenv": "^10.0.0",
     "imurmurhash": "^0.1.4",
     "js-yaml": "^4.1.0",
+    "json2csv": "^5.0.7",
     "lodash": "^4.17.21",
     "turndown": "^7.1.1"
   },

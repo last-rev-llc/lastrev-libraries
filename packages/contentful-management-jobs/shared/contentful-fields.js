@@ -107,8 +107,12 @@ const getAssetType = (fileExtension) => {
       return 'image/svg+xml';
     case 'mp4':
       return 'video/mp4';
+    case 'webm':
+      return 'video/webm';
     case 'mov':
       return 'video/quicktime';
+    case 'flv':
+      return 'video/x-flv';
     case 'pdf':
       return 'application/pdf';
     case 'psd':
@@ -117,6 +121,9 @@ const getAssetType = (fileExtension) => {
       return 'application/postscript';
     default:
       if (fileExtension.startsWith('com/')) {
+        if (fileExtension.endsWith('?autoplay=true')) {
+          return 'video/webm';
+        }
         return 'image/jpeg';
       }
       console.log('Warning: Unknown file extension: ', fileExtension);
