@@ -75,7 +75,7 @@ export default class PathLoader {
     }, [] as { slugs: SlugArray; lookup: PathLookupObject }[]);
 
     if (!matched.length) {
-      logger.debug(`no matchers for path ${path}`, {
+      logger.debug(`Path ${path} not matched by any matchers`, {
         caller: 'PathLoader.getItemsForPath'
       });
       return null;

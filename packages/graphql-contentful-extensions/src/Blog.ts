@@ -2,8 +2,8 @@ import gql from 'graphql-tag';
 import { getLocalizedField, createRichText } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
 import kebabCase from 'lodash/kebabCase';
-import { createPath } from './Page';
 import { getThumbnailURL } from './getVideoEmbedUrl';
+import createPath from './utils/createPath';
 
 // Controls which site the Blogs gets it's global config from
 const BLOGS_SITE_ID = process.env.BLOGS_SITE_ID ?? (process.env.DEFAULT_SITE_ID || process.env.SITE_ID);

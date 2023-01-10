@@ -49,9 +49,7 @@ export interface LastRevAppConfiguration {
   };
   apolloServerOptions?: LRApolloServerOptions;
   sites: string[];
-  skipReferenceFields: boolean;
   paths: {
-    version: PathVersion;
     generateFullPathTree: boolean;
   };
   sitemap: {
@@ -62,8 +60,9 @@ export interface LastRevAppConfiguration {
     excludePages: string[];
   };
   features: {
-    disableCoreSidekickLookup?: boolean;
-    disableFederatedSchema?: boolean;
+    disableCoreSidekickLookup: boolean;
+    disableFederatedSchema: boolean;
+    enablePathsV2: boolean;
   };
 }
 
@@ -115,8 +114,10 @@ export type LastRevAppConfigArgs = {
   };
   apolloServerOptions?: LRApolloServerOptions;
   sites?: string[];
-  skipReferenceFields?: boolean;
   paths?: {
+    /*
+      @deprecated use features.enablePathsV2 instead
+    */
     version?: PathVersion;
     generateFullPathTree?: boolean;
   };
@@ -130,5 +131,6 @@ export type LastRevAppConfigArgs = {
   features?: {
     disableCoreSidekickLookup?: boolean;
     disableFederatedSchema?: boolean;
+    enablePathsV2?: boolean;
   };
 };

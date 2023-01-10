@@ -7,15 +7,13 @@ import { createPathStore, PathStore } from './PathStore';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
 
-type PathVersion = 'v1' | 'v2';
-
 type PathUpdaterProps = {
   pathsConfigs: ContentfulPathsConfigs;
   context: ApolloContext;
   preview: boolean;
   site?: string;
   pathStore: PathStore;
-  pathVersion?: PathVersion;
+  enablePathsV2: boolean;
 };
 
 export default class PathUpdater {
@@ -26,15 +24,15 @@ export default class PathUpdater {
   pathsConfigs: ContentfulPathsConfigs;
   typeMappings: TypeMappings = {};
   pathStore: PathStore;
-  pathVersion: PathVersion;
+  enablePathsV2: boolean;
 
-  constructor({ pathsConfigs, context, preview, site, pathStore, pathVersion = 'v1' }: PathUpdaterProps) {
+  constructor({ pathsConfigs, context, preview, site, pathStore, enablePathsV2 }: PathUpdaterProps) {
     this.pathsConfigs = pathsConfigs;
     this.context = context;
     this.preview = preview;
     this.site = site || DEFAULT_SITE_KEY;
     this.pathStore = pathStore;
-    this.pathVersion = pathVersion;
+    this.enablePathsV2 = enablePathsV2;
   }
 
   get reverseTypeMappings() {
@@ -49,10 +47,10 @@ export default class PathUpdater {
   }
 
   async updatePaths() {
-    if (this.pathVersion === 'v1') {
-      await this.loadFromV1Content();
-    } else if (this.pathVersion === 'v2') {
+    if (this.enablePathsV2) {
       await this.loadFromV2Content();
+    } else {
+      await this.loadFromV1Content();
     }
     await this.save();
   }
@@ -190,7 +188,6 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
           updateForProd,
           site,
           pathsConfigs: config.extensions.pathsConfigs,
-          pathVersion: config.paths.version,
           context: {
             ...context,
             preview: true
@@ -208,7 +205,6 @@ export const updateAllPaths = async ({ config, updateForPreview, updateForProd, 
           updateForProd,
           site,
           pathsConfigs: config.extensions.pathsConfigs,
-          pathVersion: config.paths.version,
           context: {
             ...context,
             preview: false
@@ -227,7 +223,6 @@ const updatePathsForSite = async ({
   updateForProd,
   site,
   pathsConfigs,
-  pathVersion,
   context
 }: {
   config: LastRevAppConfig;
@@ -235,7 +230,6 @@ const updatePathsForSite = async ({
   updateForProd: boolean;
   site: string;
   pathsConfigs: ContentfulPathsConfigs;
-  pathVersion: PathVersion;
   context: ApolloContext;
 }) => {
   if (updateForPreview) {
@@ -248,7 +242,14 @@ const updatePathsForSite = async ({
     );
 
     context.preview = true;
-    const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: true, pathVersion });
+    const updater = new PathUpdater({
+      pathStore,
+      site,
+      pathsConfigs,
+      context,
+      preview: true,
+      enablePathsV2: config.features.enablePathsV2
+    });
     await updater.updatePaths();
   }
   if (updateForProd) {
@@ -261,7 +262,14 @@ const updatePathsForSite = async ({
     );
 
     context.preview = false;
-    const updater = new PathUpdater({ pathStore, site, pathsConfigs, context, preview: false, pathVersion });
+    const updater = new PathUpdater({
+      pathStore,
+      site,
+      pathsConfigs,
+      context,
+      preview: false,
+      enablePathsV2: config.features.enablePathsV2
+    });
     await updater.updatePaths();
   }
 };

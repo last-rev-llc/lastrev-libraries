@@ -28,7 +28,7 @@ const buildSchema = async (config: LastRevAppConfig): Promise<GraphQLSchema> => 
     source: 'Contentful',
     typeMappings: config.extensions.typeMappings,
     contentTypes,
-    skipReferenceFields: config.skipReferenceFields
+    skipReferenceFields: true
   });
 
   const defaultResolvers = createResolvers({

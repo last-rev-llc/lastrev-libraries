@@ -1,7 +1,6 @@
 import gql from 'graphql-tag';
-import { getDefaultFieldValue, getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext, ContentfulPathsGenerator } from '@last-rev/types';
-import { ContentfulLoaders } from '@last-rev/types';
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import { ApolloContext } from '@last-rev/types';
 import { Entry } from 'contentful';
 import resolveLocalizedField from './utils/resolveLocalizedField';
 export const typeMappings = {};
@@ -28,17 +27,6 @@ const footerResolver = async (page: any, _args: any, ctx: ApolloContext) => {
 
   const footer: any = getLocalizedField(page?.fields, 'footer', ctx);
   return footer ?? siteFooter;
-};
-
-// Used to generate the path for Blog topics and blog posts
-const blogsLandingSlug = async (loaders: ContentfulLoaders, defaultLocale: string, preview?: boolean) => {
-  if (BLOGS_LANDING_ID) {
-    const blogsLanding = await loaders.entryLoader.load({ id: BLOGS_LANDING_ID, preview: !!preview });
-    if (blogsLanding) {
-      return getDefaultFieldValue(blogsLanding, 'slug', defaultLocale);
-    }
-  }
-  return 'blogs';
 };
 
 const createType = (type: string, content: any) => ({
@@ -124,109 +112,3 @@ export const typeDefs = gql`
     hero: Hero
   }
 `;
-// Path generation
-const validateSite = async (_args: {
-  item: Entry<any>;
-  loaders: ContentfulLoaders;
-  defaultLocale: string;
-  locales: string[];
-  preview: boolean;
-  site?: string;
-}) => {
-  // Uncomment to require siteRef
-  // const { item, loaders, preview, site, defaultLocale } = _args;
-
-  // const siteRef = getDefaultFieldValue(item, 'site', defaultLocale);
-  // if (!siteRef) {
-  //   // page not published to a site
-  //   return false;
-  // }
-
-  // const siteKey = { id: siteRef.sys.id, preview };
-  // const resolvedSite = await loaders.entryLoader.load(siteKey);
-
-  // if (!resolvedSite) {
-  //   // site item may have been deleted
-  //   return false;
-  // }
-
-  // const resolvedSiteName = getDefaultFieldValue(resolvedSite, 'internalTitle', defaultLocale);
-
-  // if (site !== resolvedSiteName) {
-  //   // page not published to this site
-  //   return false;
-  // }
-  return true;
-};
-// TODO: Move this function to utilities
-export const createPath = (...slug: string[]) => {
-  let path = slug.map((segment) => segment?.trim()).join('/');
-
-  if (path.startsWith('mailto://')) {
-    return path;
-  }
-  if (path.startsWith('http://')) {
-    return path.replace('http://', 'https://');
-  }
-  if (path.startsWith('https://')) {
-    return path;
-  }
-
-  path = path.replace(/\/\//g, '/');
-  if (path != '/' && path[0] !== '/') path = '/' + path;
-
-  if (path != '/' && path[path.length - 1] === '/') path = path.slice(0, -1);
-  return path;
-};
-
-const page: ContentfulPathsGenerator = async (pageItem, loaders, defaultLocale, locales, preview = false, site) => {
-  if (await validateSite({ item: pageItem, loaders, preview, site, defaultLocale, locales })) {
-    const slug = getDefaultFieldValue(pageItem, 'slug', defaultLocale);
-    const fullPath = createPath(slug);
-    return {
-      [fullPath]: {
-        fullPath,
-        isPrimary: true,
-        contentId: pageItem.sys.id,
-        excludedLocales: []
-      }
-    };
-  }
-  return {};
-};
-
-const blog: ContentfulPathsGenerator = async (blogItem, loaders, defaultLocale, _locales, preview) => {
-  const slug = getDefaultFieldValue(blogItem, 'slug', defaultLocale);
-  const blogLandingSlug = await blogsLandingSlug(loaders, defaultLocale, preview);
-  const fullPath = createPath(blogLandingSlug, slug);
-  return {
-    [fullPath]: {
-      fullPath,
-      isPrimary: true,
-      contentId: blogItem.sys.id,
-      excludedLocales: []
-    }
-  };
-};
-
-const categoryBlog: ContentfulPathsGenerator = async (categoryBlogItem, loaders, defaultLocale, _locales, preview) => {
-  const slug = getDefaultFieldValue(categoryBlogItem, 'slug', defaultLocale);
-  const blogLandingSlug = await blogsLandingSlug(loaders, defaultLocale, preview);
-
-  // Here you can change the base path of the Blog categoryBlogs
-  const fullPath = createPath(blogLandingSlug, slug);
-  return {
-    [fullPath]: {
-      fullPath,
-      isPrimary: true,
-      contentId: categoryBlogItem.sys.id,
-      excludedLocales: []
-    }
-  };
-};
-
-export const pathsConfigs = {
-  page,
-  blog,
-  categoryBlog
-};

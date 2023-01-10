@@ -1,7 +1,7 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { Mappers, ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
-import { createPath } from './Page';
+import createPath from './utils/createPath';
 
 const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
   const manualUrl = getLocalizedField(link.fields, 'manualUrl', ctx);
