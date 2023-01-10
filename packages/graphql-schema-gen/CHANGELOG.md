@@ -1,5 +1,13 @@
 # @last-rev/graphql-schema-gen
 
+## 0.2.3
+
+### Patch Changes
+
+- 86a8923: 'Switched to winston logger and added a remote datadog transport'
+- Updated dependencies [86a8923]
+  - @last-rev/logging@0.1.1
+
 ## 0.2.2
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @last-rev/contentful-fs-loader
 
+## 0.3.1
+
+### Patch Changes
+
+- 86a8923: 'Switched to winston logger and added a remote datadog transport'
+- Updated dependencies [86a8923]
+  - @last-rev/logging@0.1.1
+  - @last-rev/timer@0.2.0
+
 ## 0.3.0
 
 ### Minor Changes

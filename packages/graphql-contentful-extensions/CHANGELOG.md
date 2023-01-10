@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.1.13
+
+### Patch Changes
+
+- 86a8923: 'Switched to winston logger and added a remote datadog transport'
+- Updated dependencies [86a8923]
+  - @last-rev/graphql-contentful-core@0.5.12
+
 ## 0.1.12
 
 ### Patch Changes

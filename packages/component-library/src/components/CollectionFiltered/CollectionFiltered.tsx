@@ -185,7 +185,8 @@ export const CollectionFiltered = ({
                 <Button
                   variant="contained"
                   onClick={() => setSize(size + 1)}
-                  data-testid="CollectionFiltered-LoadMoreButton">
+                  data-testid="CollectionFiltered-LoadMoreButton"
+                >
                   {loadMoreText ?? 'LOAD MORE'}
                 </Button>
               </Grid>

@@ -1,5 +1,19 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.4.5
+
+### Patch Changes
+
+- Updated dependencies [86a8923]
+  - @last-rev/app-config@0.4.5
+  - @last-rev/contentful-cms-loader@0.4.1
+  - @last-rev/contentful-dynamodb-loader@0.3.1
+  - @last-rev/contentful-fs-loader@0.3.1
+  - @last-rev/contentful-path-rules-engine@0.1.4
+  - @last-rev/contentful-path-util@0.1.20
+  - @last-rev/contentful-redis-loader@0.5.3
+  - @last-rev/timer@0.2.0
+
 ## 0.4.4
 
 ### Patch Changes

@@ -1,5 +1,14 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.12
+
+### Patch Changes
+
+- 86a8923: 'Switched to winston logger and added a remote datadog transport'
+- Updated dependencies [86a8923]
+  - @last-rev/contentful-path-util@0.1.20
+  - @last-rev/graphql-contentful-helpers@0.4.5
+
 ## 0.4.11
 
 ### Patch Changes

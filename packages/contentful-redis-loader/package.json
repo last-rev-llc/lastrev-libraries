@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-redis-loader",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@last-rev/app-config": "^0.4.2",
+    "@last-rev/app-config": "^0.4.5",
     "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/testing-library": "^0.1.10",
     "@last-rev/types": "^0.3.2",
@@ -24,8 +24,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/logging": "^0.1.0",
-    "@last-rev/timer": "^0.1.3",
+    "@last-rev/logging": "^0.1.1",
+    "@last-rev/timer": "^0.2.0",
     "dataloader": "^2.0.0",
     "ioredis": "^5.0.4"
   }

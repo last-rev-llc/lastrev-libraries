@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-webhook-handler",
-  "version": "0.4.11",
+  "version": "0.4.12",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@last-rev/app-config": "^0.4.2",
+    "@last-rev/app-config": "^0.4.5",
     "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/testing-library": "^0.1.10",
     "@types/jsonwebtoken": "^8.5.9",
@@ -23,9 +23,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/contentful-path-util": "^0.1.17",
+    "@last-rev/contentful-path-util": "^0.1.20",
     "@last-rev/contentful-webhook-parser": "^0.1.1",
-    "@last-rev/graphql-contentful-helpers": "^0.4.3",
+    "@last-rev/graphql-contentful-helpers": "^0.4.5",
     "aws-sdk": "^2.1012.0",
     "contentful": "^9.0.0",
     "ioredis": "^5.0.4",

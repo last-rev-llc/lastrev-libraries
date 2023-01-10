@@ -1,5 +1,18 @@
 # @last-rev/cli
 
+## 0.5.13
+
+### Patch Changes
+
+- 86a8923: 'Switched to winston logger and added a remote datadog transport'
+- Updated dependencies [86a8923]
+  - @last-rev/app-config@0.4.5
+  - @last-rev/contentful-fragment-gen@0.2.3
+  - @last-rev/contentful-import-export@0.1.5
+  - @last-rev/contentful-sync-to-fs@0.3.10
+  - @last-rev/graphql-contentful-core@0.5.12
+  - @last-rev/graphql-contentful-helpers@0.4.5
+
 ## 0.5.12
 
 ### Patch Changes
