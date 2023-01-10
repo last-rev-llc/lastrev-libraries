@@ -4,16 +4,19 @@ import {
   ApolloServerPluginLandingPageProductionDefault,
   ApolloServerPluginLandingPageLocalDefault
 } from '@apollo/server/plugin/landingPage/default';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import LastRevAppConfig from '@last-rev/app-config';
 import SchemaCache from './SchemaCache';
 import merge from 'lodash/merge';
 
-export const createServer = async (config: LastRevAppConfig) => {
-  logger.setLevel(config.logLevel);
+const logger = getWinstonLogger({
+  package: 'graphql-contentful-core',
+  module: 'createServer'
+});
 
-  const timer = new Timer('Graphql server initialized');
+export const createServer = async (config: LastRevAppConfig) => {
+  const timer = new Timer();
 
   const schema = await SchemaCache.getInstance().getSchema(config);
 
@@ -39,7 +42,10 @@ export const createServer = async (config: LastRevAppConfig) => {
     )
   });
 
-  logger.trace(timer.end());
+  logger.debug('Graphql server initialized', {
+    caller: 'createServer',
+    elapsedMs: timer.end().millis
+  });
   return server;
 };
 

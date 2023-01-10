@@ -2,6 +2,9 @@ import { PathRule, RefByExpression, ReferenceExpression, SegmentReference } from
 import traversePathRule, { PathVisitor } from '../core/traversePathRule';
 import { Entry } from 'contentful';
 import { ApolloContext, PathEntries } from '@last-rev/types';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({ package: 'contentful-path-rules-engine', module: 'RelationshipValidator' });
 
 type SegmentValidator = (item: Entry<any>, pathEntries: PathEntries, ctx: ApolloContext) => Promise<string | null>;
 type ResolutionRootsResolver = (pathEntries: PathEntries, ctx: ApolloContext) => Promise<Entry<any>[]>;
@@ -35,7 +38,10 @@ const createRefResolutionRootsResolver = (
         return !!a?.sys?.id && a?.sys?.contentType?.sys?.id === contentType;
       }) as Entry<any>[];
     } catch (err: any) {
-      console.log('caught in ref roots', err, err.stack);
+      logger.error(`Error resolving referce resolution roots: ${err.message}`, {
+        caller: 'createRefResolutionRootsResolver',
+        stack: err.stack
+      });
       return [];
     }
   };
@@ -59,7 +65,10 @@ const createRefbyResolutionRootsResolver = (
         .map((s) => (s as PromiseFulfilledResult<Entry<any>[]>).value)
         .flat();
     } catch (err: any) {
-      console.log('caught in refBy roots', err, err.stack);
+      logger.error(`Error resolving refBy resolution roots: ${err.message}`, {
+        caller: 'createRefbyResolutionRootsResolver',
+        stack: err.stack
+      });
       return [];
     }
   };
@@ -83,7 +92,10 @@ const createSegmentValidator = (
       }
       return null;
     } catch (err: any) {
-      console.log('caught here', err, err.stack);
+      logger.error(`Error validating segment ${currentSegment}: ${err.message}`, {
+        caller: 'createSegmentValidator',
+        stack: err.stack
+      });
       return null;
     }
   };

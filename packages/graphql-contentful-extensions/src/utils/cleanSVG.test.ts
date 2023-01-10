@@ -35,8 +35,6 @@ describe('cleanSVG', () => {
 
     const styleText = svg[0].style[0]['#text'];
 
-    console.log(JSON.stringify(svg, null, 2));
-
     expect(styleText).toMatch(/^#[a-z0-9]{8}-[a-z0-9]{6}-smallRect/);
     expect(styleText).toMatch(/background: url\(#[a-z0-9]{8}-[a-z0-9]{6}-someId\)/);
     expect(svg[1][':@']['@_id']).toMatch(/^[a-z0-9]{8}-[a-z0-9]{6}-smallRect$/);

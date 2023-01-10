@@ -1,4 +1,4 @@
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { contextFunction } from '@last-rev/graphql-contentful-helpers';
@@ -7,10 +7,14 @@ import LastRevAppConfig from '@last-rev/app-config';
 
 import createServer from './createServer';
 
+const logger = getWinstonLogger({
+  package: 'graphql-contentful-core',
+  module: 'vercelHandler'
+});
+
 export const createVercelHandler = (config: LastRevAppConfig) => {
-  config.logLevel && logger.setLevel(config.logLevel);
   return async (req: NextApiRequest, res: NextApiResponse) => {
-    const timer = new Timer('Graphql handler created');
+    const timer = new Timer();
 
     const server = await createServer(config);
 
@@ -18,7 +22,10 @@ export const createVercelHandler = (config: LastRevAppConfig) => {
       context: contextFunction({ config, environment: req.query?.environment?.toString() })
     });
 
-    logger.trace(timer.end());
+    logger.debug('Graphql handler created', {
+      caller: 'createVercelHandler',
+      elapsedMs: timer.end().millis
+    });
     return handler(req, res);
   };
 };

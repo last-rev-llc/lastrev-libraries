@@ -74,9 +74,7 @@ export const CollectionFiltered = ({
       revalidateOnFocus: false
     }
   );
-  console.log('data => ', data);
   const options = data?.length ? data[0]?.options : defaultOptions;
-  console.log('options => ', options);
   const items = data?.reduce((accum: CardProps[], page: any) => [...accum, ...(page?.items || [])], []) ?? defaultItems;
   const isLoadingInitialData = !data && !error;
   const isLoadingMore = isLoadingInitialData || (size > 0 && data && typeof data[size - 1] === 'undefined');
@@ -109,7 +107,6 @@ export const CollectionFiltered = ({
     .filter((x) => !!x)
     .join(', ');
 
-  console.log('itemsWithVariant => ', { itemsWithVariant, error });
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} variant={variant} data-testid="CollectionFiltered">
@@ -188,8 +185,7 @@ export const CollectionFiltered = ({
                 <Button
                   variant="contained"
                   onClick={() => setSize(size + 1)}
-                  data-testid="CollectionFiltered-LoadMoreButton"
-                >
+                  data-testid="CollectionFiltered-LoadMoreButton">
                   {loadMoreText ?? 'LOAD MORE'}
                 </Button>
               </Grid>

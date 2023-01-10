@@ -1,6 +1,5 @@
 import { ApolloContext, Extensions } from '@last-rev/types';
 import { ApolloServerOptions, ContextFunction } from '@apollo/server';
-import { LogLevelDesc } from 'loglevel';
 import { RedisOptions } from 'ioredis';
 
 export type LastRevStrategy = 'fs' | 'redis' | 'dynamodb';
@@ -43,7 +42,7 @@ export interface LastRevAppConfiguration {
     indexDraftContent: boolean;
   };
   extensions: Extensions;
-  logLevel: LogLevelDesc;
+  logLevel: string;
   graphql: {
     port: number;
     host: string;
@@ -109,7 +108,7 @@ export type LastRevAppConfigArgs = {
     indexDraftContent?: boolean;
   };
   extensions?: Extensions;
-  logLevel?: LogLevelDesc;
+  logLevel?: string;
   graphql?: {
     port?: number;
     host?: string;

@@ -3,7 +3,9 @@ import { ApolloContext, ContentfulLoaders } from '@last-rev/types';
 import RelationShipValidator from '../core/RelationshipValidator';
 import traversePathRule, { PathVisitor } from '../core/traversePathRule';
 import { Field, PathRule, RefByExpression, ReferenceExpression } from '../types';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({ package: 'contentful-path-rules-engine', module: 'PathToItemsFetcher' });
 
 export type NoMatchFieldValueResult = {
   found: false;
@@ -95,10 +97,6 @@ export default class PathToItemsFetcher {
     this._relationshipValidator = new RelationShipValidator(pathRule);
   }
 
-  get logPrefix() {
-    return `[${this.constructor.name}]`;
-  }
-
   async fetch({ slugs, apolloContext }: { slugs: (string | null)[]; apolloContext: ApolloContext }) {
     const context: PathToItemsFetcherContext = {
       rootContentType: this._rootContentType,
@@ -125,7 +123,13 @@ export default class PathToItemsFetcher {
     const errors = await this._relationshipValidator.validate(results, apolloContext);
 
     if (errors.length > 0) {
-      errors.map((error) => logger.debug(`${this.logPrefix} ${error}`), this);
+      errors.map(
+        (error) =>
+          logger.error(error, {
+            caller: 'PathToItemsFetcher.fetch'
+          }),
+        this
+      );
       return null;
     }
 

@@ -1,7 +1,9 @@
 import { ApolloContext, ContentfulLoaders, Mappers, TypeMapper, TypeMappings } from '@last-rev/types';
 import content from './contentItem.mock';
 import fieldResolver from './fieldResolver';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger();
 
 logger.error = jest.fn();
 
@@ -77,7 +79,9 @@ describe('fieldResolver.ts', () => {
     const resolved = await resolver(content, {}, ctx, { fieldName: 'fieldTwo' } as any);
 
     expect(resolved).toBeNull();
-    expect(logger.error).toHaveBeenCalledWith('Unsupported mapper type for Foo.Foo: object');
+    expect(logger.error).toHaveBeenCalledWith('Unsupported mapper type for Foo.Foo: object', {
+      caller: 'fieldResolver'
+    });
   });
 
   it('should throw an error and log it with the correct prefix when function mapper throws', async () => {
@@ -88,7 +92,10 @@ describe('fieldResolver.ts', () => {
     } as unknown as TypeMapper);
 
     await expect(resolver(content, {}, ctx, { fieldName: 'fieldTwo' } as any)).rejects.toThrow();
-    expect(logger.error).toHaveBeenCalledWith('GQL Extension error: [Foo][Foo][fieldTwo] Oops');
+    expect(logger.error).toHaveBeenCalledWith('GQL Extension error: [Foo][Foo][fieldTwo] Oops', {
+      caller: 'fieldResolver',
+      stack: expect.any(String)
+    });
   });
 
   it('should resolve a string field when a string mapper exists', async () => {

@@ -9,6 +9,7 @@ import { buildSubgraphSchema } from '@apollo/federation';
 import { addResolversToSchema, makeExecutableSchema } from '@graphql-tools/schema';
 import LastRevAppConfig from '@last-rev/app-config';
 import { createLoaders } from '@last-rev/graphql-contentful-helpers';
+
 const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
   // may not have production content, if none there, use preview (only needed for filesystem builds)
   const contentTypes = await loaders.fetchAllContentTypes(false);
@@ -27,7 +28,6 @@ const buildSchema = async (config: LastRevAppConfig): Promise<GraphQLSchema> => 
     source: 'Contentful',
     typeMappings: config.extensions.typeMappings,
     contentTypes,
-    logLevel: config.logLevel,
     skipReferenceFields: config.skipReferenceFields
   });
 

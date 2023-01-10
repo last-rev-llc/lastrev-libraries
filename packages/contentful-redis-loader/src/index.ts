@@ -1,13 +1,14 @@
 import DataLoader, { Options } from 'dataloader';
 import { Entry, Asset, ContentType } from 'contentful';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
 import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
-import { LOG_PREFIX } from './constants';
 import { getKey, isError, isNil, parse, stringify } from './helpers';
 import { primeRedisEntriesByContentType, primeRedisEntriesOrAssets } from './primers';
+
+const logger = getWinstonLogger({ package: 'contentful-redis-loader', module: 'index', strategy: 'Redis' });
 
 const clients: Record<string, Redis> = {};
 
@@ -42,32 +43,34 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
   const maxBatchSize = config.redis.maxBatchSize || 1000;
   const ttlSeconds = config.redis.ttlSeconds;
 
-  logger.debug(`${LOG_PREFIX} createLoaders() maxBatchSize: ${maxBatchSize}`);
-
   const fetchAndSet = async <T>(
     keys: readonly ItemKey[],
     fallbackLoader: DataLoader<ItemKey, T>,
     dirname: string
   ): Promise<(T | null)[]> => {
-    let timer = new Timer(`Fetched ${keys.length} ${dirname} from redis`);
+    let timer = new Timer();
     const redisKeys = keys.map((key) => getKey(key, dirname));
 
     let unparsed: (string | null)[] = [];
 
-    logger.debug(`${LOG_PREFIX} fetchAndSet() Attempting to fetch ${redisKeys.length} ${dirname} from Redis`);
-
     try {
       unparsed = await client.mget(...redisKeys);
     } catch (err: any) {
-      logger.error(`${LOG_PREFIX} fetchAndSet(), mget()`, err.message || err);
+      logger.error(`mget() ${err.message}`, {
+        caller: 'fetchAndSet',
+        stack: err.stack
+      });
       unparsed = redisKeys.map(() => null);
     }
 
     const results = unparsed.map(parse);
 
-    logger.debug(`${LOG_PREFIX} fetchAndSet() Found ${results.length} ${dirname} in Redis`);
-
-    logger.trace(`${LOG_PREFIX} ${timer.end()}`);
+    logger.debug(`Fetched ${dirname}`, {
+      caller: 'fetchAndSet',
+      elapsedMs: timer.end().millis,
+      itemsSuccessful: results.length,
+      itemsAttempted: redisKeys.length
+    });
 
     const cacheMissIds: ItemKey[] = [];
 
@@ -78,10 +81,6 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     });
 
     if (cacheMissIds.length) {
-      logger.debug(
-        `${LOG_PREFIX} fetchAndSet() ${dirname} cache misses: ${cacheMissIds.length}. Fetching from fallback`
-      );
-
       const sourceResults = await fallbackLoader.loadMany(cacheMissIds);
 
       primeRedisEntriesOrAssets<T>(client, cacheMissIds, dirname, sourceResults, maxBatchSize, ttlSeconds);
@@ -113,10 +112,10 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     async (keys) => {
       // keys are content types [{ id: 'contentTypeId', preview: true}]
       if (!keys.length) return [];
-      logger.debug(
-        `${LOG_PREFIX} getBatchEntriesByContentTypeFetcher() attempting to load ${keys.length} content types`
-      );
-      let timer = new Timer(`Fetched ${keys.length} entry IDs by contentType from redis`);
+      logger.debug(`attempting to load ${keys.length} content types`, {
+        caller: 'getBatchEntriesByContentTypeFetcher'
+      });
+      let timer = new Timer();
 
       // Map of contentTypeId -> entries to be used as return
       const out: { [contentType: string]: Entry<any>[] } = {};
@@ -140,11 +139,14 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         // Array of arrays of ids for each contentType
         multiResults = (await multi.exec()) || [];
       } catch (err: any) {
-        logger.error(`${LOG_PREFIX} getBatchEntriesByContentTypeFetcher(), multi.exec()`, err.message || err);
+        logger.error(`multi.exec() ${err.message}`, {
+          caller: 'getBatchEntriesByContentTypeFetcher',
+          stack: err.stack
+        });
         return [];
       }
 
-      logger.trace(`${LOG_PREFIX} ${timer.end()}`);
+      timer.end();
 
       // Fill entryIdsToRequest with Redis data
       let successfulContentTypeCount = 0;
@@ -162,9 +164,12 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         }
       });
 
-      logger.debug(
-        `${LOG_PREFIX} getBatchEntriesByContentTypeFetcher() found ${successfulContentTypeCount} contentTypes in Redis`
-      );
+      logger.debug(`Fetched entry IDs by contentType`, {
+        caller: 'getBatchEntriesByContentTypeFetcher',
+        elapsedMs: timer.millis,
+        itemsAttempted: keys.length,
+        itemsSuccessful: successfulContentTypeCount
+      });
 
       // for every entry id that was found in Redis
       // Use loader to get the entries
@@ -212,15 +217,19 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
   const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher({ entryLoader }), options);
   const fetchAllContentTypes = async (preview: boolean) => {
     try {
-      let timer = new Timer('Fetched all content types from redis');
+      let timer = new Timer();
 
       const key = `${preview ? 'preview' : 'production'}:content_types`;
       const results: (ContentType | null)[] = Object.values(await client.hgetall(key)).map(parse);
 
-      logger.trace(`${LOG_PREFIX} ${timer.end()}`);
+      logger.debug('Fetched all content types', {
+        caller: 'fetchAllContentTypes',
+        elapsedMs: timer.end().millis,
+        itemsSuccessful: results.length
+      });
 
       if (!results.length || results.some(isNil)) {
-        timer = new Timer('Set all content types in redis');
+        timer = new Timer();
         const contentTypes = await fallbackLoaders.fetchAllContentTypes(preview);
         const contentTypeIds = contentTypes.map((v) => v?.sys?.id);
         if (contentTypeIds.length) {
@@ -240,15 +249,24 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
             .expire(key, ttlSeconds)
             .exec()
             .catch((e: any) => {
-              logger.error(`${LOG_PREFIX} error hsetting: ${e}`);
+              logger.error(`Error calling hset: ${e.message}`, { caller: 'fetchAllContentTypes', stack: e.stack });
             })
-            .then(() => logger.trace(`${LOG_PREFIX} ${timer.end()}`));
+            .finally(() =>
+              logger.debug('Primed all content types', {
+                caller: 'fetchAllContentTypes',
+                itemsAttempted: contentTypeIds.length,
+                elapsedMs: timer.end().millis
+              })
+            );
         }
         return contentTypes;
       }
       return results as ContentType[];
     } catch (err: any) {
-      logger.error(`${LOG_PREFIX} fetchAllContentTypes() Unable to fetch content types: ${err.message}`);
+      logger.error(`Unable to fetch content types: ${err.message}`, {
+        caller: 'fetchAllContentTypes',
+        stack: err.stack
+      });
       return [];
     }
   };

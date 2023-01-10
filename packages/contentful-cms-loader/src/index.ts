@@ -1,12 +1,13 @@
 import DataLoader, { Options } from 'dataloader';
 import { Entry, Asset, createClient, ContentfulClientApi } from 'contentful';
 import { find, map, partition } from 'lodash';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import { ItemKey, ContentfulLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { chunk, makeContentfulRequest } from './helpers';
-import { LOG_PREFIX } from './constants';
+
+const logger = getWinstonLogger({ package: 'contentful-cms-loader', module: 'index', strategy: 'Cms' });
 
 const options: Options<ItemKey, any, string> = {
   cacheKeyFn: (key: ItemKey) => {
@@ -49,16 +50,14 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
 
   const maxBatchSize = config.contentful.maxBatchSize || 1000;
 
-  logger.debug(`${LOG_PREFIX} createLoaders() maxBatchSize: ${maxBatchSize}`);
-
   const fetchBatchItems = async (
     ids: string[],
     command: 'getEntries' | 'getAssets',
     client: ContentfulClientApi,
     maxBatchSize: number
   ) => {
+    const timer = new Timer();
     const commandString = command.substring(3).toLowerCase();
-    logger.debug(`${LOG_PREFIX} fetchBatchItems() Attempting to fetch ${ids.length} ${commandString} from Contentful`);
     const chunks = chunk(ids, maxBatchSize);
     const settled = await Promise.allSettled(
       chunks.map(async (idz) => {
@@ -71,18 +70,22 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
       if (p.status === 'rejected') {
         const batchSize = chunks[idx].length;
         logger.error(
-          `${LOG_PREFIX} fetchBatchItems(). Unable to fetch ${batchSize} ${commandString}. Reason: ${
-            p.reason.message
-          } ${(p.reason.details?.errors || []).map((e: any) => `${e.name}: ${e.value}`)}`
+          `Unable to fetch ${batchSize} ${commandString}. Reason: ${p.reason.message} ${(
+            p.reason.details?.errors || []
+          ).map((e: any) => `${e.name}: ${e.value}`)}`,
+          { caller: 'fetchBatchItems' }
         );
         return [];
       }
       return p.value || [];
     });
 
-    logger.debug(
-      `${LOG_PREFIX} fetchBatchItems() Found ${results.length} ${command.substring(3).toLowerCase()} in Contentful`
-    );
+    logger.debug(`Fetched ${command.substring(3).toLowerCase()}`, {
+      caller: 'fetchBatchItems',
+      elapesedMs: timer.end().millis,
+      itemsAttempted: ids.length,
+      itemsSuccessful: results.length
+    });
     return results;
   };
 
@@ -90,7 +93,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<ItemKey, T | null> => {
     return async (keys): Promise<(T | null)[]> => {
-      const timer = new Timer(`Fetched ${dirname} from CMS`);
+      const timer = new Timer();
       const [previewKeys, prodKeys] = partition(keys, (k) => k.preview);
       const command = dirname === 'entries' ? 'getEntries' : 'getAssets';
       const [previewItems, prodItems] = await Promise.all([
@@ -111,13 +114,19 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
         );
       }) as T[];
 
-      logger.trace(`${LOG_PREFIX} ${timer.end()}`);
+      logger.debug(`Fetched ${dirname}`, {
+        caller: 'getBatchItemFetcher',
+        elapsedMs: timer.end().millis,
+        itemsAttempted: keys.length,
+        itemsSuccessful: items.length
+      });
       return items;
     };
   };
 
   const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
     return async (keys) => {
+      const timer = new Timer();
       const fvlRequests = keys.reduce((acc, { contentType, field, value, preview }) => {
         const clientType = preview ? 'preview' : 'prod';
         if (!acc[clientType]) {
@@ -184,11 +193,20 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
         )
       ]);
 
+      timer.end();
+
       const collectedPreview = collectedPreviewSettled.filter(isFulFilled);
       const collectedProd = collectedProdSettled.filter(isFulFilled);
 
       const prev = collectedPreview.flatMap((p) => p.value || []);
       const prod = collectedProd.flatMap((p) => p.value || []);
+
+      logger.debug('Fetched entries by field value', {
+        caller: 'getBatchEntriesByFieldValueFetcher',
+        elapsedMs: timer.millis,
+        itemsAttempted: keys.length,
+        itemsSuccessful: prev.length + prod.length
+      });
 
       const result = keys.map(({ preview, field, value, contentType }) => {
         const arr = preview ? prev : prod;
@@ -205,6 +223,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
 
   const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, Entry<any>[]> => {
     return async (keys) => {
+      const timer = new Timer();
       const refByRequests = keys.reduce((acc, { contentType, field, id, preview }) => {
         const clientType = preview ? 'preview' : 'prod';
         if (!acc[clientType]) {
@@ -271,6 +290,8 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
         )
       ]);
 
+      timer.end();
+
       const collectedPreview = collectedPreviewSettled.filter(isFulFilled);
       const collectedProd = collectedProdSettled.filter(isFulFilled);
 
@@ -297,16 +318,20 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
         }, [] as Entry<any>[]);
       });
 
+      logger.debug('Fetched entries by ref by', {
+        caller: 'getBatchEntriesRefByFetcher',
+        elapsedMs: timer.millis,
+        itemsAttempted: keys.length,
+        itemsSuccessful: prev.length + prod.length
+      });
+
       return result;
     };
   };
 
   const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
     return async (keys) => {
-      logger.debug(
-        `${LOG_PREFIX} getBatchEntriesByContentTypeFetcher() Attempting to fetch entries for ${keys.length} content types from Contentful`
-      );
-      const timer = new Timer(`Fetched entries by contentType from CMS`);
+      const timer = new Timer();
       const out = await Promise.allSettled(
         map(keys, (key) =>
           (async () => {
@@ -319,7 +344,8 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
           })()
         )
       );
-      logger.trace(`${LOG_PREFIX} ${timer.end()}`);
+
+      timer.end();
 
       let numSuccessfulTypes = 0;
       let numSuccessfulEntries = 0;
@@ -327,11 +353,12 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
       const finalOut = out.map((settledArrOfEntries, idx) => {
         if (settledArrOfEntries.status === 'rejected') {
           logger.error(
-            `${LOG_PREFIX} getBatchEntriesByContentTypeFetcher(). Unable to fetch content type ${
-              keys[idx].id
-            }. Reason: ${settledArrOfEntries.reason.message} ${(settledArrOfEntries.reason.details?.errors || []).map(
-              (e: any) => `${e.name}: ${e.value}`
-            )}`
+            `Unable to fetch content type ${keys[idx].id}. Reason: ${settledArrOfEntries.reason.message} ${(
+              settledArrOfEntries.reason.details?.errors || []
+            ).map((e: any) => `${e.name}: ${e.value}`)}`,
+            {
+              caller: 'getBatchEntriesByContentTypeFetcher'
+            }
           );
           return [];
         }
@@ -340,9 +367,18 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
         return settledArrOfEntries.value;
       });
 
-      logger.debug(
-        `${LOG_PREFIX} getBatchEntriesByContentTypeFetcher() Fetched ${numSuccessfulEntries} entries for ${numSuccessfulTypes} content types from Contentful`
-      );
+      logger.debug(`Fetched entries for contenttypes (types)`, {
+        caller: 'getBatchEntriesByContentTypeFetcher',
+        elapsedMs: timer.millis,
+        itemsSuccessful: numSuccessfulTypes,
+        itemsAttempted: keys.length
+      });
+
+      logger.debug(`Fetched entries by contentType (entries)`, {
+        caller: 'getBatchEntriesByContentTypeFetcher',
+        elapsedMs: timer.millis,
+        itemsSuccessful: numSuccessfulEntries
+      });
 
       return finalOut;
     };
@@ -353,12 +389,19 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
   const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
   const fetchAllContentTypes = async (preview: boolean) => {
     try {
-      const timer = new Timer('Fetched all content types from CMS');
+      const timer = new Timer();
       const result = await (preview ? previewClient : prodClient).getContentTypes();
-      logger.trace(`${LOG_PREFIX} ${timer.end()}`);
+      logger.debug('Fetched all content types', {
+        caller: 'fetchAllContentTypes',
+        elapsedMs: timer.end().millis,
+        itemsSuccessful: result.items.length
+      });
       return result.items;
     } catch (err: any) {
-      logger.error(`${LOG_PREFIX} Unable to fetch content types : ${err.message}`);
+      logger.error(`Unable to fetch content types : ${err.message}`, {
+        caller: 'fetchAllContentTypes',
+        stack: err.stack
+      });
       return [];
     }
   };

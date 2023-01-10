@@ -1,10 +1,11 @@
 import Redis from 'ioredis';
 import Timer from '@last-rev/timer';
 import { ItemKey } from '@last-rev/types';
-import { LOG_PREFIX } from './constants';
 import { getKey, isNil, isRejected, stringify } from './helpers';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import { Entry } from 'contentful';
+
+const logger = getWinstonLogger({ package: 'contentful-redis-loader', module: 'primers' });
 
 export const primeRedisEntriesOrAssets = async <T>(
   client: Redis,
@@ -15,7 +16,7 @@ export const primeRedisEntriesOrAssets = async <T>(
   ttlSeconds: number
 ) => {
   try {
-    const timer = new Timer(`set ${cacheMissIds.length} ${dirname} in redis`);
+    const timer = new Timer();
     const toSetArr: Record<string, any>[] = [];
     let toSet: Record<string, any> = {};
     let count = 0;
@@ -44,24 +45,32 @@ export const primeRedisEntriesOrAssets = async <T>(
       })
     );
 
-    logger.trace(`${LOG_PREFIX} ${timer.end()}`);
+    logger.debug(`Primed ${dirname} in redis`, {
+      caller: 'primeRedisEntriesOrAssets',
+      elapsedMs: timer.end().millis,
+      itemsAttempted: cacheMissIds.length,
+      itemsSuccessful: cacheMissIds.length - results.filter(isRejected).length
+    });
 
     let totalSuccessful = 0;
 
     results.forEach((r, i) => {
       if (isRejected(r)) {
         const numNotPrimed = Object.keys(toSetArr[i]).length;
-        logger.error(
-          `${LOG_PREFIX} primeRedisEntriesOrAssets(), mset() unable to prime ${numNotPrimed} ${dirname} in Redis. Reason: ${r.reason?.message}`
-        );
+        logger.error(`mset() unable to prime ${numNotPrimed} ${dirname} in Redis. Reason: ${r.reason?.message}`, {
+          caller: 'primeRedisEntriesOrAssets',
+          stack: r.reason?.stack
+        });
       } else {
         totalSuccessful += Object.keys(toSetArr[i]).length;
       }
     });
 
-    logger.debug(`${LOG_PREFIX} primeRedisEntriesOrAssets() Primed ${totalSuccessful} entries in Redis`);
+    logger.debug(`Primed ${totalSuccessful} entries in Redis`, {
+      caller: 'primeRedisEntriesOrAssets'
+    });
   } catch (err: any) {
-    logger.error(`${LOG_PREFIX} primeRedisEntriesOrAssets(), unexpected`, err.message);
+    logger.error(`unexpected: ${err.message}`, { caller: 'primeRedisEntriesOrAssets', stack: err.stack });
   }
 };
 
@@ -73,7 +82,7 @@ export const primeRedisEntriesByContentType = async (
   ttlSeconds: number
 ) => {
   try {
-    const timer = new Timer(`Set ${filtered.length} entries in redis`);
+    const timer = new Timer();
     const msetKeysArr: Record<string, string>[] = [];
     const saddKeys: Record<string, string[]> = {};
 
@@ -106,9 +115,9 @@ export const primeRedisEntriesByContentType = async (
     }
 
     const totalToPrime = msetKeysArr.reduce((acc, curr) => acc + Object.keys(curr).length, 0);
-    logger.debug(
-      `${LOG_PREFIX} primeRedisEntriesByContentType(), Attempting to prime ${totalToPrime} entries in Redis`
-    );
+    logger.debug(`Attempting to prime ${totalToPrime} entries in Redis`, {
+      caller: 'primeRedisEntriesByContentType'
+    });
 
     if (Object.keys(saddKeys).length) {
       // Wait to store entry ids by contenType
@@ -120,14 +129,14 @@ export const primeRedisEntriesByContentType = async (
 
       try {
         await multiSadd.exec();
-        logger.debug(
-          `${LOG_PREFIX} primeRedisEntriesByContentType(), Primed ${Object.keys(saddKeys).length} entry IDs in Redis}`
-        );
+        logger.debug(`Primed ${Object.keys(saddKeys).length} entry IDs in Redis`, {
+          caller: 'primeRedisEntriesByContentType'
+        });
       } catch (e: any) {
-        logger.error(
-          `${LOG_PREFIX} primeRedisEntriesByContentType(), multi.sadd().exec(), setting missed cache data: ${e.message}`
-        );
-        logger.trace(`${LOG_PREFIX} ${e.stack}`);
+        logger.error(`multi.sadd().exec(), setting missed cache data: ${e.message}`, {
+          caller: 'primeRedisEntriesByContentType',
+          stack: e.stack
+        });
       }
     }
 
@@ -144,11 +153,10 @@ export const primeRedisEntriesByContentType = async (
           Object.keys(msetKeys).forEach((key) => multi.expire(key, ttlSeconds));
 
           multi.exec().catch((e: any) => {
-            logger.error(
-              `${LOG_PREFIX} primeRedisEntriesByContentType(), multi.mset().exec(), setting missed cache data`,
-              e.message || e,
-              e.stack
-            );
+            logger.error(`multi.mset().exec(), setting missed cache data: ${e.message}`, {
+              caller: 'primeRedisEntriesByContentType',
+              stack: e.stack
+            });
           });
         })
       ).then((results) => {
@@ -157,18 +165,26 @@ export const primeRedisEntriesByContentType = async (
           if (isRejected(r)) {
             const numNotPrimed = Object.keys(msetKeysArr[i]).length;
             logger.error(
-              `${LOG_PREFIX} primeRedisEntriesByContentType(), multi.mset().exec(), Unable to prime ${numNotPrimed} entries in Redis. Reason: ${r.reason?.message}`
+              `multi.mset().exec(), Unable to prime ${numNotPrimed} entries in Redis. Reason: ${r.reason?.message}`,
+              {
+                caller: 'primeRedisEntriesByContentType',
+                stack: r.reason?.stack
+              }
             );
           } else {
             totalSuccessful += Object.keys(msetKeysArr[i]).length;
           }
         });
 
-        logger.debug(`${LOG_PREFIX} primeRedisEntriesByContentType(), Primed ${totalSuccessful} entries in Redis}`);
-        logger.trace(`${LOG_PREFIX} ${timer.end()}`);
+        logger.debug(`Primed Entries in Redis`, {
+          caller: 'primeRedisEntriesByContentType',
+          elapsedMs: timer.end().millis,
+          itemsAttempted: totalToPrime,
+          itemsSuccessful: totalSuccessful
+        });
       });
     }
   } catch (e: any) {
-    logger.error(`${LOG_PREFIX} primeRedisEntriesByContentType(), Unexpected error`, e.message || e, e.stack);
+    logger.error(`Unexpected error: ${e.message}`, { caller: 'primeRedisEntriesByContentType', stack: e.stack });
   }
 };

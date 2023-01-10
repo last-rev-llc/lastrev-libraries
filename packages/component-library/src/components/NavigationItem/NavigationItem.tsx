@@ -31,8 +31,6 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
     if (onRequestClose) onRequestClose();
   };
 
-  // console.log({ handleSubnavClick, onRequestClose });
-
   return (
     <ErrorBoundary>
       <Root sx={{ position: 'relative' }} open={open} data-testid="NavigationItem" menuBreakpoint={menuBreakpoint}>

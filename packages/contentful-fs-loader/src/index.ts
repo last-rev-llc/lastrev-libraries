@@ -3,10 +3,16 @@ import { Entry, Asset } from 'contentful';
 import { readJSON, readdir } from 'fs-extra';
 import { filter, identity, isNil } from 'lodash';
 import { join } from 'path';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
+
+const logger = getWinstonLogger({
+  package: 'contentful-fs-loader',
+  module: 'index',
+  strategy: 'Filesystem'
+});
 
 const options: Options<ItemKey, any, string> = {
   cacheKeyFn: (key: ItemKey) => {
@@ -30,8 +36,8 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<ItemKey, T | null> => {
     return async (keys): Promise<(T | null)[]> => {
-      const timer = new Timer(`Fetched ${dirname} from file system`);
-      const out = Promise.all(
+      const timer = new Timer();
+      const out = await Promise.all(
         keys.map((key) =>
           (async () => {
             const { id, preview } = key;
@@ -43,14 +49,19 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
           })()
         )
       );
-      logger.trace(timer.end());
+      logger.debug(`Fetched ${dirname}`, {
+        caller: 'getBatchItemFetcher',
+        elapsedMs: timer.end().millis,
+        itemsAttempted: keys.length,
+        itemsSuccessful: filter(out, identity).length
+      });
       return out;
     };
   };
 
   const getBatchEntryIdsByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, string[]> => {
     return async (keys) => {
-      const timer = new Timer(`Fetched entry IDs by contentType from file system`);
+      const timer = new Timer();
       const out = Promise.all(
         keys.map((key) =>
           (async () => {
@@ -64,7 +75,11 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
           })()
         )
       );
-      logger.trace(timer.end());
+      logger.debug(`Fetched entry IDs by contentType`, {
+        caller: 'getBatchEntryIdsByContentTypeFetcher',
+        elapsedMs: timer.end().millis,
+        count: keys.length
+      });
       return out;
     };
   };
@@ -104,7 +119,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
   );
   const fetchAllContentTypes = async (preview: boolean) => {
     try {
-      const timer = new Timer('Fetched all content types from file system');
+      const timer = new Timer();
       const dir = getUri(preview ? 'preview' : 'production', 'content_types');
       const contentTypeFilenames = await readdir(dir);
       const out = Promise.all(
@@ -116,10 +131,18 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
           }
         })
       );
-      logger.trace(timer.end());
+      logger.debug('Fetched all content types', {
+        caller: 'fetchAllContentTypes',
+        elapsedMs: timer.end().millis,
+        itemsAttempted: contentTypeFilenames.length,
+        itemsSuccessful: filter(out, identity).length
+      });
       return out;
     } catch (err: any) {
-      console.error('Unable to fetch content types using FS loader:', err.message, config.contentful.env);
+      logger.error(`Unable to fetch content types: ${err.message}`, {
+        caller: 'fetchAllContentTypes',
+        stack: err.stack
+      });
       return [];
     }
   };

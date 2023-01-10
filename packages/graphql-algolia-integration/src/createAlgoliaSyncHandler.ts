@@ -6,30 +6,30 @@ import fetch from 'cross-fetch';
 import groupAlgoliaObjectsByIndex from './groupAlgoliaObjectsByIndex';
 import performAlgoliaQuery from './performAlgoliaQuery';
 import updateAlgoliaIndices from './updateAlgoliaIndices';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
 import extractDomainUrlFromEvent from './extractDomainUrlFromEvent';
 import Timer from '@last-rev/timer';
 
-const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, maxRecords?: number) => {
-  const { algolia, logLevel } = config;
+const logger = getWinstonLogger({
+  package: 'graphql-algolia-integration',
+  module: 'createAlgoliaSyncHandler'
+});
 
-  logger.setLevel('TRACE');
+const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, maxRecords?: number) => {
+  const { algolia } = config;
 
   const algoliaClient = algoliasearch(algolia.applicationId, algolia.adminApiKey);
 
   return async (event: any) => {
-    const timer = new Timer('Algolia sync handler');
+    const timer = new Timer();
     try {
       if (!event) {
-        logger.error('no event object passed.');
-        return;
+        throw Error('no event object passed.');
       }
 
       const domainUrl = extractDomainUrlFromEvent(event);
 
       const uri = graphQlUrl.startsWith('/') ? `${domainUrl}${graphQlUrl}` : graphQlUrl;
-
-      logger.debug('requesting from URL:', uri);
 
       const apolloClient = new ApolloClient({
         link: new HttpLink({ uri, fetch }),
@@ -60,20 +60,25 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
         // manually triggered. ignore, and use the default envs.
       }
 
-      const performAlgoliaQueryTime = new Timer('performAlgoliaQuery');
       const { errors: queryErrors, results } = await performAlgoliaQuery(apolloClient, config, envs);
-      logger.debug(performAlgoliaQueryTime.end());
 
       const algoliaObjectsByIndex = groupAlgoliaObjectsByIndex(results);
-      const updateAlgoliaIndicesTime = new Timer('updateAlgoliaIndices');
+
       const updateErrors = await updateAlgoliaIndices(algoliaClient, algoliaObjectsByIndex, maxRecords);
-      logger.debug(updateAlgoliaIndicesTime.end());
 
       const allErrors = [...queryErrors, ...updateErrors];
-      logger.debug(timer.end());
+      logger.debug('Algolia sync handler', {
+        caller: 'createAlgoliaSyncHandler',
+        elapsedMs: timer.end().millis
+      });
 
       if (allErrors.length) {
-        allErrors.map((error) => logger.error(`Error syncing to Algolia: ${error.message || error}`));
+        allErrors.map((error) =>
+          logger.error(`Error syncing to Algolia: ${error.message}`, {
+            caller: 'createAlgoliaSyncHandler',
+            stack: error.stack
+          })
+        );
         throw Error('There were some errors while syncing to Algolia. Please check the function logs for details.');
       }
       return {
@@ -82,7 +87,6 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
         body: `Success`
       };
     } catch (err: any) {
-      logger.error('err', err.message, err.stack);
       return {
         statusCode: 400,
         headers: { 'Content-Type': 'text/plain' },

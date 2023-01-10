@@ -5,7 +5,12 @@ import { camelCase, toUpper } from 'lodash';
 
 import { collectOptions } from './utils/collectOptions';
 import { queryContentful } from './utils/queryContentful';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({
+  package: 'graphql-contentful-extensions',
+  module: 'Collection'
+});
 
 const pascalCase = (str: string) => camelCase(str).replace(/^(.)/, toUpper);
 const COLLECTION_ITEM_TYPES = ['Card', 'Link', 'Media', 'Section', 'NavigationItem'];
@@ -78,8 +83,11 @@ export const mappers: any = {
               items?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
             );
           }
-        } catch (error) {
-          logger.error('Collection:items:error', error);
+        } catch (error: any) {
+          logger.error(error.message, {
+            caller: 'Collection.items',
+            stack: error.stack
+          });
         }
         return items;
       },
@@ -117,8 +125,11 @@ export const mappers: any = {
                 : null
             };
           }
-        } catch (error) {
-          logger.error('error', error);
+        } catch (error: any) {
+          logger.error(error.message, {
+            caller: 'Collection.itemsConnection',
+            stack: error.stack
+          });
         }
 
         return items;

@@ -2,7 +2,12 @@ import { each, get, has, isNil, map, set } from 'lodash';
 import Timer from '@last-rev/timer';
 import getFieldTypeString from './getFieldTypeString';
 import { ContentTypeMap, MergedJsonRepresentationMap, QueryJson } from './types';
-import logger from 'loglevel';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({
+  package: 'contentful-fragment-gen',
+  module: 'mergeContentTypeJsons'
+});
 
 const recurseAndMerge = (
   json: QueryJson,
@@ -50,10 +55,15 @@ const recurseAndMerge = (
 };
 
 const mergeContentTypeJsons = (jsons: QueryJson[], contentTypes: ContentTypeMap): MergedJsonRepresentationMap => {
-  let timer = new Timer(`Merged ${jsons.length} JSON files`);
+  let timer = new Timer();
   const map: MergedJsonRepresentationMap = {};
   each(jsons, (json) => recurseAndMerge(json, json._contentTypeId, map, contentTypes));
-  logger.info(timer.end());
+  logger.debug(`Merged JSON files`, {
+    caller: 'mergeContentTypeJsons',
+    elapsedMs: timer.end().millis,
+    itemsAttempted: jsons.length,
+    itemsSuccessful: jsons.length
+  });
   return map;
 };
 

@@ -1,5 +1,4 @@
 import { ContentType, CreateClientParams } from 'contentful';
-import { LogLevelDesc } from 'loglevel';
 
 export type TypeName =
   | 'String'
@@ -40,5 +39,4 @@ export type GenerateSchemaParams = {
   skipReferenceFields: boolean;
   connectionParams?: ConnectionParams;
   contentTypes?: ContentType[];
-  logLevel?: LogLevelDesc;
 };

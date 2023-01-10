@@ -1,8 +1,12 @@
 import { each } from 'lodash';
 import { Asset, createClient, Entry, ContentType } from 'contentful';
 import LastRevAppConfig from '@last-rev/app-config';
-import logger from 'loglevel';
-import { LOG_PREFIX } from './constants';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({
+  package: 'contentful-webhook-handler',
+  module: 'helpers'
+});
 
 export const assetHasUrl = (asset: any): boolean => {
   const file = asset.fields.file;
@@ -64,30 +68,29 @@ export const enhanceContentfulObjectWithMetadata = (item: any) => {
 };
 
 export const stringify = (r: any, errorKey: string) => {
-  if (isNil(r)) {
-    logger.error(`${LOG_PREFIX} Error stringifying ${errorKey}: nil`);
-    return undefined;
-  }
-
-  if (isError(r)) {
-    logger.error(`${LOG_PREFIX} Error stringifying ${errorKey}: ${r.message}`);
-    return undefined;
-  }
-
-  if (isContentfulError(r)) {
-    logger.error(`${LOG_PREFIX} Error stringifying ${errorKey}: ${r.sys.id}`);
-    return undefined;
-  }
-
-  if (!isContentfulObject(r)) {
-    logger.error(`${LOG_PREFIX} Error stringifying ${errorKey}: Not contentful Object: ${r}`);
-    return undefined;
-  }
-
   try {
+    if (isNil(r)) {
+      throw Error('nil');
+    }
+
+    if (isError(r)) {
+      throw Error(r.message);
+    }
+
+    if (isContentfulError(r)) {
+      throw Error(`Contentful Error: ${r.sys.id}`);
+    }
+
+    if (!isContentfulObject(r)) {
+      throw Error(`Not contentful Object: ${r}`);
+    }
+
     return JSON.stringify(enhanceContentfulObjectWithMetadata(r));
   } catch (err: any) {
-    logger.error(`${LOG_PREFIX} Error stringifying ${errorKey}: ${err.message}`);
+    logger.error(`Error stringifying ${errorKey}: ${err.message}`, {
+      caller: 'stringify',
+      stack: err.stack
+    });
     return undefined;
   }
 };
