@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.4.5
+
+### Patch Changes
+
+- 86a8923: 'Switched to winston logger and added a remote datadog transport'
+
 ## 0.4.4
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @last-rev/contentful-path-util
 
+## 0.1.20
+
+### Patch Changes
+
+- 86a8923: 'Switched to winston logger and added a remote datadog transport'
+- Updated dependencies [86a8923]
+  - @last-rev/contentful-path-rules-engine@0.1.4
+  - @last-rev/logging@0.1.1
+  - @last-rev/timer@0.2.0
+
 ## 0.1.19
 
 ### Patch Changes

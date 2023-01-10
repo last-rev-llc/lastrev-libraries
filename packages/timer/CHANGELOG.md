@@ -1,5 +1,11 @@
 # @last-rev/timer
 
+## 0.2.0
+
+### Minor Changes
+
+- 86a8923: 'Switched to winston logger and added a remote datadog transport'
+
 ## 0.1.3
 
 ### Patch Changes

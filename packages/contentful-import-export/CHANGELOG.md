@@ -1,5 +1,11 @@
 # @last-rev/contentful-import-export
 
+## 0.1.5
+
+### Patch Changes
+
+- 86a8923: 'Switched to winston logger and added a remote datadog transport'
+
 ## 0.1.4
 
 ### Patch Changes
