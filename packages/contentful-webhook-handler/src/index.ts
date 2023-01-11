@@ -15,7 +15,12 @@ const logger = getWinstonLogger({
 const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Record<string, string>) => {
   const token = headers['authorization']?.split(' ')[1];
 
-  const { type, action, envs } = parseWebhook(config, body, headers);
+  const { type, action, contentStates, env } = parseWebhook(config, body, headers);
+
+  if (env !== config.contentful.env) {
+    config = config.clone({ contentful: { env } });
+  }
+
   const handlers = createHandlers(config);
 
   // if signing secret is provided, decode the token and verify it
@@ -36,7 +41,7 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
   }
 
   await Promise.all(
-    map(envs, async (env) => {
+    map(contentStates, async (env) => {
       try {
         const command = {
           isPreview: env === 'preview',
@@ -66,7 +71,7 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
     })
   );
 
-  await handlers.paths(envs.includes('preview'), envs.includes('production'));
+  await handlers.paths(contentStates.includes('preview'), contentStates.includes('production'));
 };
 
 export default handleWebhook;

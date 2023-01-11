@@ -33,8 +33,14 @@ const actionMappings: ActionMappings = {
 
 export type WebhookBody = (Entry<any> | Asset | ContentType) & HasEnv;
 export type WebhookHeaders = Record<string, string>;
+export type WebhookParserResult = {
+  action: 'update' | 'delete';
+  contentStates: ('preview' | 'production')[];
+  type: 'Entry' | 'Asset' | 'ContentType';
+  env: string;
+};
 
-const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeaders) => {
+const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeaders): WebhookParserResult => {
   const topics = headers['x-contentful-topic']?.split('.');
 
   if (!topics || topics.length < 3) {
@@ -48,19 +54,17 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
     throw Error('Space id in webhook does not match configuration.');
   }
 
-  if (environmentId !== config.contentful.env) {
-    throw Error('Environment in webhook does not match configuration.');
-  }
-
-  const type = topics[1];
+  const type = topics[1] as 'Entry' | 'Asset' | 'ContentType';
 
   if (!type) throw Error(`No type matched for ${headers['x-contentful-topic']}`);
 
   const contentfulAction: string = topics[2];
 
   return {
-    ...actionMappings[contentfulAction],
-    type
+    action: actionMappings[contentfulAction].action,
+    contentStates: actionMappings[contentfulAction].envs,
+    type,
+    env: environmentId
   };
 };
 

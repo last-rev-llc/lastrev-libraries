@@ -39,7 +39,9 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
       const body = event.body ? JSON.parse(event.body) : null;
       const headers = event?.headers;
 
-      let envs: ('preview' | 'production')[] = algolia.indexDraftContent ? ['preview', 'production'] : ['production'];
+      let contentStates: ('preview' | 'production')[] = algolia.indexDraftContent
+        ? ['preview', 'production']
+        : ['production'];
 
       try {
         const parsed = parseWebhook(config, body, headers);
@@ -47,8 +49,8 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
           // don't do anything if only content type changed.
           return;
         }
-        envs = parsed.envs;
-        if (algolia.indexDraftContent && !parsed.envs.includes('production')) {
+        contentStates = parsed.contentStates;
+        if (algolia.indexDraftContent && !contentStates.includes('production')) {
           // nothing to index
           return {
             statusCode: 200,
@@ -60,7 +62,7 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
         // manually triggered. ignore, and use the default envs.
       }
 
-      const { errors: queryErrors, results } = await performAlgoliaQuery(apolloClient, config, envs);
+      const { errors: queryErrors, results } = await performAlgoliaQuery(apolloClient, config, contentStates);
 
       const algoliaObjectsByIndex = groupAlgoliaObjectsByIndex(results);
 
