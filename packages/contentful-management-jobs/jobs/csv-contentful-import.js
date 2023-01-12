@@ -12,8 +12,7 @@ const {
   createAssetObject,
   getAssetDetails,
   createAssetEntry,
-  createFile,
-  getFileExtension
+  createFile
 } = require('../shared/contentful-fields');
 const { getAllEntries, createAssets, createEntries } = require('../shared/contentful-actions');
 const { getDistinct } = require('../shared/helpers/getDistinct');
@@ -23,7 +22,7 @@ const BASE_FOLDER_PATH = '/Users/anthonywhitley/Documents/LASTREV/193';
 const CSV_EMBEDDED_IMAGES_FILE_PATH = path.join(BASE_FOLDER_PATH, 'embeddedImages.csv');
 const CSV_UNPROCESSABLE_FILE_PATH = path.join(BASE_FOLDER_PATH, 'unprocessable.csv');
 const CSV_UPLOADED_VIDEOS_FILE_PATH = path.join(BASE_FOLDER_PATH, 'uploadedVideos.csv');
-// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion.csv');
+const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_100.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_200.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_300.csv');
@@ -31,7 +30,7 @@ const CSV_UPLOADED_VIDEOS_FILE_PATH = path.join(BASE_FOLDER_PATH, 'uploadedVideo
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_500.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_600.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_700.csv');
-const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_Single.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_Single.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_outliers.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'finalPathmaticsBlogs.csv');
 const turndownService = new TurndownService();
@@ -236,7 +235,8 @@ const getImageUrls = (line) =>
     .map((imagesLine) =>
       imagesLine.startsWith('http') || imagesLine.startsWith('//') ? imagesLine.split('"')[0] : null
     )
-    .filter((imageUrl) => imageUrl && cleanUrl(imageUrl));
+    .filter((imageUrl) => imageUrl)
+    .map((imageUrl) => cleanUrl(imageUrl));
 
 const cleanContent = (content) => {
   const assetNodes = [];
@@ -546,8 +546,8 @@ const transformMediaItems = (items) => {
 
 const getMediaItems = (imageUrls) => {
   return imageUrls.map((imageUrl) => {
-    const secureUrl = imageUrl.replace('http:', 'https:');
-    const imageId = getContentfulIdFromString(secureUrl);
+    // const secureUrl = imageUrl.replace('http:', 'https:');
+    const imageId = getContentfulIdFromString(imageUrl);
     return {
       sys: {
         type: 'Link',
@@ -618,19 +618,19 @@ const transformImageLinks = () => {
       });
     }
     const imageUrl = imageUrls[0];
-    const secureUrl = imageUrl.replace('http:', 'https:');
-    const imageId = getContentfulIdFromString(secureUrl);
+    // const secureUrl = imageUrl.replace('http:', 'https:');
+    const imageId = getContentfulIdFromString(imageUrl);
 
     return {
       entryId: imageId,
-      url: secureUrl,
+      url: imageUrl,
       slug,
       contentType: 'media',
       publish: true,
       entry: {
         fields: {
           internalTitle: {
-            'en-US': getFileName(secureUrl, postTitle, lineNumber)
+            'en-US': getFileName(imageUrl, postTitle, lineNumber)
           },
           media: {
             'en-US': {
