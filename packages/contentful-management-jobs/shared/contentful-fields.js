@@ -96,6 +96,7 @@ const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
 
 const getAssetType = (fileExtension) => {
   switch (fileExtension) {
+    case 'jpg?':
     case 'jpg':
     case 'jpeg':
       return 'image/jpeg';
@@ -123,6 +124,9 @@ const getAssetType = (fileExtension) => {
       if (fileExtension.startsWith('com/')) {
         if (fileExtension.endsWith('?autoplay=true')) {
           return 'video/webm';
+        }
+        if (fileExtension === 'png?width=945&amp;quality=low') {
+          return 'image/png';
         }
         return 'image/jpeg';
       }

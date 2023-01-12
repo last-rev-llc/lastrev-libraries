@@ -158,7 +158,7 @@ const createEntries = async (entries, checkExisting = true) => {
       const createdEntry = await createEntryWithId(entryId, entry, contentType);
 
       if (createdEntry) {
-        console.log(`created entry => ${entryId}`);
+        console.log(`created entry #${index + 1} => ${entryId}`);
 
         if (publish) {
           await publishItem(createdEntry, entryId);
@@ -166,7 +166,7 @@ const createEntries = async (entries, checkExisting = true) => {
         createdEntries.push({ entryId, asset: createdEntry });
       }
     } else {
-      console.log(`existing entry => ${entryId}`);
+      console.log(`existing entry #${index + 1} => ${entryId}`);
       createdEntries.push({ asset: existingAsset, entryId });
     }
   }

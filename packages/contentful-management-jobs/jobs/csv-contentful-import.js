@@ -30,8 +30,9 @@ const CSV_UPLOADED_VIDEOS_FILE_PATH = path.join(BASE_FOLDER_PATH, 'uploadedVideo
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_400.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_500.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_600.csv');
-const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_700.csv');
-// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_Single.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_700.csv');
+const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_Single.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_outliers.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'finalPathmaticsBlogs.csv');
 const turndownService = new TurndownService();
 
@@ -215,11 +216,27 @@ const replaceAllExceptText = (line) =>
     .replace(/<br>/g, '')
     .trim();
 
+const cleanUrl = (url) => {
+  let cleanedUrl = url;
+  if (url.startsWith('//')) {
+    cleanedUrl = `https:${url}`;
+  }
+  if (url.endsWith('png?width=945&amp;quality=low')) {
+    cleanedUrl = url.replace('png?width=945&amp;quality=low', 'png');
+  }
+  if (url.endsWith('?autoplay=true')) {
+    cleanedUrl = url.replace('?autoplay=true', '');
+  }
+  return cleanedUrl.replace(/&amp;/g, '&');
+};
+
 const getImageUrls = (line) =>
   line
-    .split('<img src="')
-    .map((imagesLine) => (imagesLine.startsWith('http') ? imagesLine.split('"')[0] : null))
-    .filter((imageUrl) => imageUrl);
+    .split('src="')
+    .map((imagesLine) =>
+      imagesLine.startsWith('http') || imagesLine.startsWith('//') ? imagesLine.split('"')[0] : null
+    )
+    .filter((imageUrl) => imageUrl && cleanUrl(imageUrl));
 
 const cleanContent = (content) => {
   const assetNodes = [];
@@ -302,24 +319,30 @@ const getBody = async (body, postUrl, slug, postTitle) => {
       console.log('!!!!Image URL not found!!!! => ', postUrl, JSON.stringify(node, null, 2));
       return null;
     }
-    const processable = !unprocessableImages.some((unprocessableImage) => unprocessableImage === node.url);
+    const imageUrl = cleanUrl(node.url);
+    const processable = !unprocessableImages.some((unprocessableImage) => unprocessableImage === imageUrl);
     if (!processable) {
       console.log('!!!!Found unprocessable image!!!! => ', {
         postId: getContentfulIdFromString(postUrl),
         postUrl,
-        imageUrl: node.url,
+        imageUrl,
         unprocessable: !processable
+      });
+      blogsWithBrokenAssets.push({
+        postId: getContentfulIdFromString(postUrl),
+        postTitle,
+        assetUrl: imageUrl
       });
       totalLines -= 1;
     }
-    return processable ? getEmbeddedAssetBlock(getContentfulIdFromString(node.url)) : null;
+    return processable ? getEmbeddedAssetBlock(getContentfulIdFromString(imageUrl)) : null;
   };
   const listBlocks = bodyLines.filter(filterOnlyLists);
 
   const getImageData = (line) => {
     return getImageSrcs(line).map((imageSrc, index) => ({
-      assetId: getContentfulIdFromString(imageSrc),
-      src: imageSrc,
+      assetId: getContentfulIdFromString(cleanUrl(imageSrc)),
+      src: cleanUrl(imageSrc),
       width: getImageWidths(line)[index],
       height: getImageHeights(line)[index]
     }));
@@ -500,6 +523,7 @@ const transformMediaItems = (items) => {
       entryId: imageId,
       url: imageUrl,
       contentType: 'media',
+      publish: true,
       entry: {
         fields: {
           internalTitle: {
@@ -522,7 +546,8 @@ const transformMediaItems = (items) => {
 
 const getMediaItems = (imageUrls) => {
   return imageUrls.map((imageUrl) => {
-    const imageId = getContentfulIdFromString(imageUrl);
+    const secureUrl = imageUrl.replace('http:', 'https:');
+    const imageId = getContentfulIdFromString(secureUrl);
     return {
       sys: {
         type: 'Link',
@@ -561,6 +586,7 @@ const transformImageCollections = () => {
       url: postUrl,
       slug,
       contentType: 'collection',
+      publish: true,
       entry: {
         fields: {
           internalTitle: {
@@ -592,17 +618,19 @@ const transformImageLinks = () => {
       });
     }
     const imageUrl = imageUrls[0];
-    const imageId = getContentfulIdFromString(imageUrl);
+    const secureUrl = imageUrl.replace('http:', 'https:');
+    const imageId = getContentfulIdFromString(secureUrl);
 
     return {
       entryId: imageId,
-      url: imageUrl,
+      url: secureUrl,
       slug,
       contentType: 'media',
+      publish: true,
       entry: {
         fields: {
           internalTitle: {
-            'en-US': getFileName(imageUrl, postTitle, lineNumber)
+            'en-US': getFileName(secureUrl, postTitle, lineNumber)
           },
           media: {
             'en-US': {
@@ -626,19 +654,21 @@ const transformVideos = () => {
   return videos.map((video) => {
     const { line, lineNumber, slug, postTitle } = video;
     const videoUrl = line.split('src="')[1]?.split('"')[0];
-    const entryId = getContentfulIdFromString(videoUrl);
+    const secureUrl = videoUrl.replace('http:', 'https:');
+    const entryId = getContentfulIdFromString(secureUrl);
     return {
       entryId,
-      url: videoUrl,
+      url: secureUrl,
       slug,
       contentType: 'media',
+      publish: true,
       entry: {
         fields: {
           internalTitle: {
             'en-US': `${postTitle} Video ${lineNumber}`
           },
           mediaUrl: {
-            'en-US': videoUrl
+            'en-US': secureUrl
           }
         }
       }
@@ -650,14 +680,16 @@ const transformIFrames = () => {
   return iframes.map((iframe) => {
     const { line, lineNumber, slug, postTitle } = iframe;
     const src = line.split('src="')[1]?.split('"')[0];
+    const secureSrc = src.replace('http:', 'https:');
     const width = line.split('width="')[1]?.split('"')[0];
     const height = line.split('height="')[1]?.split('"')[0];
-    const entryId = getContentfulIdFromString(src);
+    const entryId = getContentfulIdFromString(secureSrc);
     return {
       entryId,
-      url: src,
+      url: secureSrc,
       slug,
       contentType: 'moduleIntegration',
+      publish: true,
       entry: {
         fields: {
           internalTitle: {
@@ -668,7 +700,7 @@ const transformIFrames = () => {
           },
           settings: {
             'en-US': {
-              src,
+              src: secureSrc,
               width,
               height
             }
@@ -691,6 +723,17 @@ const transformBlogs = async (blogs, authors, tagsList, existingBlogs) => {
         console.log('existing blog => ', title);
         return null;
       }
+      const featuredMedia = !unprocessableImages.includes(image)
+        ? {
+            'en-US': {
+              sys: {
+                type: 'Link',
+                linkType: 'Asset',
+                id: getContentfulIdFromString(cleanUrl(image))
+              }
+            }
+          }
+        : null;
       return {
         entryId: getContentfulIdFromString(url),
         url,
@@ -709,15 +752,7 @@ const transformBlogs = async (blogs, authors, tagsList, existingBlogs) => {
             includedLocales: {
               'en-US': ['en-US']
             },
-            featuredMedia: {
-              'en-US': {
-                sys: {
-                  type: 'Link',
-                  linkType: 'Asset',
-                  id: getContentfulIdFromString(image)
-                }
-              }
-            },
+            featuredMedia,
             pubDate: {
               'en-US': new Date(`${publishDate.replace(' ', 'T')}Z`)
             },
@@ -818,7 +853,7 @@ const processImageAssets = async (blogs) => {
   blogs.forEach((blog) => {
     const blogId = getContentfulIdFromString(blog.url);
     if (blog?.image) {
-      const mediaAsset = createMediaAsset(blogId, blog.image, blog.title, 'featured');
+      const mediaAsset = createMediaAsset(blogId, cleanUrl(blog.image), blog.title, 'featured');
       if (mediaAsset) {
         imageAssets.push(mediaAsset);
       }
@@ -830,20 +865,22 @@ const processImageAssets = async (blogs) => {
     bodyLines.forEach((line, lineIndex) => {
       if (line.includes('<img ')) {
         const imageUrls = line
-          .split('<img src="')
-          .filter((l) => l.startsWith('http'))
+          .split('src="')
+          .filter((l) => l.startsWith('http') || l.startsWith('//'))
           .map((l) => l.split('"')[0]);
         if (imageUrls?.length) {
-          imageUrls.forEach((imageUrl) => {
-            imageCount += 1;
-            if (!blogId) {
-              console.log('about to push => ', { blogId, imageUrl, title: blog.title, imageCount });
-            }
-            const mediaAsset = createMediaAsset(blogId, imageUrl, blog.title, imageCount);
-            if (mediaAsset) {
-              imageAssets.push(mediaAsset);
-            }
-          });
+          imageUrls
+            .map((imageUrl) => cleanUrl(imageUrl))
+            .forEach((imageUrl) => {
+              imageCount += 1;
+              if (!blogId) {
+                console.log('about to push => ', { blogId, imageUrl, title: blog.title, imageCount });
+              }
+              const mediaAsset = createMediaAsset(blogId, imageUrl, blog.title, imageCount);
+              if (mediaAsset) {
+                imageAssets.push(mediaAsset);
+              }
+            });
         }
       }
       if (line.includes('<source ')) {
@@ -851,12 +888,9 @@ const processImageAssets = async (blogs) => {
           .split('<source src="')
           .filter((l) => l.startsWith('http'))
           .map((l) => l.split('"')[0]);
-        const filteredVideoUrls = videoUrls.map((videoUrl) => {
-          console.log({ videoUrl, extension: getFileExtension(videoUrl) });
-          return videoUrl.endsWith('?autoplay=true') ? videoUrl.replace('?autoplay=true', '') : videoUrl;
-        });
-        if (filteredVideoUrls?.length) {
-          filteredVideoUrls.forEach((videoUrl) => {
+        const cleanedVideoUrls = videoUrls.map((videoUrl) => cleanUrl(videoUrl));
+        if (cleanedVideoUrls?.length) {
+          cleanedVideoUrls.forEach((videoUrl) => {
             videoCount += 1;
             const mediaAsset = createMediaAsset(blogId, videoUrl, blog.title, videoCount);
             if (mediaAsset) {
@@ -877,21 +911,17 @@ const processImageAssets = async (blogs) => {
       }
     });
   });
+
+  const filterOutUnprocessables = (item) => {
+    const processable = item && !unprocessableImages.some((unprocessableImage) => unprocessableImage === item.url);
+    if (!processable) {
+      blogsWithBrokenAssets.push({ blogId: item.linkingId, imageUrl: item.url, blogTitle: item.title });
+    }
+    return processable;
+  };
   console.log('imageUrls amount to be processed => ', imageAssets.length);
-  const filteredImages = imageAssets.filter((image) => {
-    const processable = image && !unprocessableImages.some((unprocessableImage) => unprocessableImage === image.url);
-    if (!processable) {
-      blogsWithBrokenAssets.push({ blogId: image.linkingId, imageUrl: image.url, blogTitle: image.title });
-    }
-    return processable;
-  });
-  const filteredVideos = videoAssets.filter((video) => {
-    const processable = video && !unprocessableImages.some((unprocessableImage) => unprocessableImage === video.url);
-    if (!processable) {
-      blogsWithBrokenAssets.push({ blogId: video.linkingId, imageUrl: video.url, blogTitle: video.title });
-    }
-    return processable;
-  });
+  const filteredImages = imageAssets.filter(filterOutUnprocessables);
+  const filteredVideos = videoAssets.filter(filterOutUnprocessables);
   console.log('filtered image amount to be processed => ', filteredImages.length);
   console.log('filtered video amount to be processed => ', filteredVideos.length);
 
@@ -910,7 +940,6 @@ const processImageAssets = async (blogs) => {
     'postTitle',
     'videoData'
   ]);
-  arrayToCsv(blogsWithBrokenAssets, CSV_UNPROCESSABLE_FILE_PATH, ['postTitle', 'postId', 'assetUrl']);
 };
 
 (async () => {
@@ -1055,6 +1084,9 @@ const processImageAssets = async (blogs) => {
     const createdBlogs = await createEntries(transformedBlogs.filter((blog) => blog));
     console.log('createdBlogs => ', createdBlogs.length);
     console.log('!!!!createBlogs start!!!!');
+
+    arrayToCsv(blogsWithBrokenAssets, CSV_UNPROCESSABLE_FILE_PATH, ['postTitle', 'postId', 'assetUrl']);
+
     const endTime = new Date().getTime();
     const duration = (endTime - startTime) / 1000;
     console.log('duration => ', `${duration} seconds or ${duration / 60} minutes`);
