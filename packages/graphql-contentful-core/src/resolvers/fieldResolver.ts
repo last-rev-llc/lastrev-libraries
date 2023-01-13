@@ -75,12 +75,12 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
     // contentful cannot have mixed arrays, so it is okay to make assumptions based on the first item
     if (firstItem?.sys?.linkType === 'Entry') {
       return (await loaders.entryLoader.loadMany(fieldValue.map((x) => ({ id: x.sys.id, preview })))).filter(
-        (r: Entry<any>) => r !== null
+        (r) => r !== null
       );
     }
     if (firstItem?.sys?.linkType === 'Asset') {
       return (await loaders.assetLoader.loadMany(fieldValue.map((x) => ({ id: x.sys.id, preview })))).filter(
-        (r: Entry<any>) => r !== null
+        (r) => r !== null
       );
     }
   }
