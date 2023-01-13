@@ -1,7 +1,6 @@
 import DataLoader from 'dataloader';
 import { Entry, Asset, ContentType, ContentfulClientApi } from 'contentful';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
-import { Context } from '@apollo/server';
 
 export type ItemKey = {
   id: string;
@@ -126,7 +125,7 @@ export type LoadEntriesForPathFunction = (
 
 export type loadPathsForContentFunction = (entry: Entry<any>, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
 
-export type ApolloContext = Context<{
+export type ApolloContext = {
   loaders: ContentfulLoaders;
   mappers: Mappers;
   defaultLocale: string;
@@ -142,7 +141,7 @@ export type ApolloContext = Context<{
   displayType?: string;
 
   pathEntries?: PathEntries;
-}>;
+};
 
 export type TypeMapper = {
   [fieldName: string]: string | Function;

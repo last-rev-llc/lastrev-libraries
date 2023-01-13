@@ -19,7 +19,12 @@ export const createVercelHandler = (config: LastRevAppConfig) => {
     const server = await createServer(config);
 
     const handler = startServerAndCreateNextHandler(server, {
-      context: contextFunction({ config, environment: req.query?.environment?.toString() })
+      context: contextFunction({
+        config,
+        extractFromArgs: (req) => {
+          return req.query?.env && !Array.isArray(req.query?.env) ? { environment: req.query?.env } : {};
+        }
+      })
     });
 
     logger.debug('Graphql handler created', {

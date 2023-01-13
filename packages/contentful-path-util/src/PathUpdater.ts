@@ -242,7 +242,6 @@ const updatePathsForSite = async ({
     const pathStore = createPathStore(
       config.clone({
         contentful: {
-          ...config.contentful,
           usePreview: true
         }
       })
@@ -256,7 +255,6 @@ const updatePathsForSite = async ({
     const pathStore = createPathStore(
       config.clone({
         contentful: {
-          ...config.contentful,
           usePreview: false
         }
       })

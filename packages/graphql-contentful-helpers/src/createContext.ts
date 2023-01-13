@@ -19,23 +19,23 @@ const getLocales = async (space: string, environment: string, accessToken: strin
   return locales.items;
 };
 
-export type CreateContextProps = {
-  config: LastRevAppConfig;
+export type ExtraContextData = {
   environment?: string;
 };
 
-const createContext = async ({ config, environment }: CreateContextProps): Promise<ApolloContext> => {
-  const pathReaders = createPathReaders(config);
+export type ExtractFromArgs<T extends any[]> = (...args: T) => ExtraContextData;
 
-  if (environment) {
-    config = new LastRevAppConfig({
-      ...config,
-      contentful: {
-        ...config.contentful,
-        env: environment
-      }
-    });
-  }
+export type CreateContextFuncProps<T extends any[]> = {
+  config: LastRevAppConfig;
+  extractFromArgs: ExtractFromArgs<T>;
+};
+
+export type CreateContextProps = {
+  config: LastRevAppConfig;
+};
+
+const createContext = async ({ config }: CreateContextProps): Promise<ApolloContext> => {
+  const pathReaders = createPathReaders(config);
 
   const locales = await getLocales(
     config.contentful.spaceId,
