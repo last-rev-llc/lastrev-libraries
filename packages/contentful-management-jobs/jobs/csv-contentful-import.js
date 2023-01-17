@@ -1042,6 +1042,7 @@ const processImageAssets = async (blogs) => {
       ]);
       console.log('listOfBlogIdsWithEmbeddedImages => ', listOfBlogIdsWithEmbeddedImages.length);
       const listOfBlogIdsWithCtas = getDistinct(ctas.map((cta) => cta.postId));
+      console.log('listOfBlogIdsWithCtas => ', listOfBlogIdsWithCtas.length);
       arrayToCsv(ctas, CSV_CTAS_FILE_PATH, ['postId', 'postUrl', 'line', 'lineNumber', 'postTitle']);
       console.log('amount of links => ', links.length);
       console.log('!!!!transformBlogs end!!!!');
