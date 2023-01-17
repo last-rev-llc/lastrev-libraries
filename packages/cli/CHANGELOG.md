@@ -1,5 +1,14 @@
 # @last-rev/cli
 
+## 0.5.14
+
+### Patch Changes
+
+- c56decc: Supporting overriding the environment on graphql queries and webhook updates
+- Updated dependencies [c56decc]
+  - @last-rev/graphql-contentful-core@0.5.13
+  - @last-rev/graphql-contentful-helpers@0.4.6
+
 ## 0.5.13
 
 ### Patch Changes

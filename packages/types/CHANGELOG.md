@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.3.5
+
+### Patch Changes
+
+- c56decc: Supporting overriding the environment on graphql queries and webhook updates
+
 ## 0.3.4
 
 ### Patch Changes
