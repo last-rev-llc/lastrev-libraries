@@ -25,7 +25,8 @@ const BASE_FOLDER_PATH = '/Users/anthonywhitley/Documents/LASTREV/193';
 const CSV_EMBEDDED_IMAGES_FILE_PATH = path.join(BASE_FOLDER_PATH, 'embeddedImages.csv');
 const CSV_UNPROCESSABLE_FILE_PATH = path.join(BASE_FOLDER_PATH, 'unprocessable.csv');
 const CSV_UPLOADED_VIDEOS_FILE_PATH = path.join(BASE_FOLDER_PATH, 'uploadedVideos.csv');
-// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion.csv');
+const CSV_CTAS_FILE_PATH = path.join(BASE_FOLDER_PATH, 'ctas.csv');
+const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_100.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_200.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_300.csv');
@@ -35,7 +36,7 @@ const CSV_UPLOADED_VIDEOS_FILE_PATH = path.join(BASE_FOLDER_PATH, 'uploadedVideo
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_700.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_Single.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_outliers.csv');
-const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'finalPathmaticsBlogs.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'finalPathmaticsBlogs.csv');
 const turndownService = new TurndownService();
 
 const unprocessableImages = [...image403s, ...image404s, ...notResolvedImages];
@@ -51,6 +52,7 @@ const embeddedImages = [];
 const links = [];
 const changedLinks = [];
 const blogsWithBrokenAssets = [];
+const ctas = [];
 
 const query = (type) => ({
   content_type: type,
@@ -446,6 +448,12 @@ const getBody = async (body, postUrl, slug, postTitle) => {
     }
   };
 
+  const captureCtas = (line, lineNumber) => {
+    if (line.includes('cta(')) {
+      ctas.push({ postId: getContentfulIdFromString(postUrl), postUrl, line, lineNumber, postTitle });
+    }
+  };
+
   const filteredBody = bodyLines
     .filter(filterAllExceptLists)
     // .filter((line) => {
@@ -475,6 +483,7 @@ const getBody = async (body, postUrl, slug, postTitle) => {
       }
       captureIframes(editedLine, iframeCount, index);
       captureVideos(editedLine, videoCount, index);
+      captureCtas(editedLine, index);
       return editedLine;
     })
     .filter((line) => line)
@@ -1032,6 +1041,8 @@ const processImageAssets = async (blogs) => {
         'imageData'
       ]);
       console.log('listOfBlogIdsWithEmbeddedImages => ', listOfBlogIdsWithEmbeddedImages.length);
+      const listOfBlogIdsWithCtas = getDistinct(ctas.map((cta) => cta.postId));
+      arrayToCsv(ctas, CSV_CTAS_FILE_PATH, ['postId', 'postUrl', 'line', 'lineNumber', 'postTitle']);
       console.log('amount of links => ', links.length);
       console.log('!!!!transformBlogs end!!!!');
 
@@ -1115,7 +1126,7 @@ const processImageAssets = async (blogs) => {
       console.log('!!!!createBlogs start!!!!');
       const createdBlogs = await createEntries(transformedBlogs.filter((blog) => blog));
       console.log('createdBlogs => ', createdBlogs.length);
-      console.log('!!!!createBlogs start!!!!');
+      console.log('!!!!createBlogs end!!!!');
     }
 
     arrayToCsv(blogsWithBrokenAssets, CSV_UNPROCESSABLE_FILE_PATH, ['postTitle', 'postId', 'assetUrl']);
