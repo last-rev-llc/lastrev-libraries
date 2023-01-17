@@ -1,5 +1,15 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.13
+
+### Patch Changes
+
+- c56decc: Supporting overriding the environment on graphql queries and webhook updates
+- Updated dependencies [c56decc]
+  - @last-rev/contentful-path-util@0.1.21
+  - @last-rev/contentful-webhook-parser@0.1.2
+  - @last-rev/graphql-contentful-helpers@0.4.6
+
 ## 0.4.12
 
 ### Patch Changes

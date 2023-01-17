@@ -1,7 +1,7 @@
 {
   "name": "@last-rev/graphql-contentful-core",
   "private": false,
-  "version": "0.5.12",
+  "version": "0.5.13",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -33,12 +33,12 @@
     "@last-rev/contentful-cms-loader": "^0.4.1",
     "@last-rev/contentful-fs-loader": "^0.3.1",
     "@last-rev/contentful-redis-loader": "^0.5.3",
-    "@last-rev/graphql-contentful-helpers": "^0.4.5",
+    "@last-rev/graphql-contentful-helpers": "^0.4.6",
     "@last-rev/graphql-schema-gen": "^0.2.3",
     "@last-rev/logging": "^0.1.1",
     "@last-rev/testing-library": "^0.1.10",
     "@last-rev/timer": "^0.2.0",
-    "@last-rev/types": "^0.3.3",
+    "@last-rev/types": "^0.3.5",
     "contentful": "^8.4.2",
     "graphql": "^16.6.0",
     "graphql-type-json": "^0.3.2",

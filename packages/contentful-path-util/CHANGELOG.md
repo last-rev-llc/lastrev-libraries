@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.21
+
+### Patch Changes
+
+- c56decc: Supporting overriding the environment on graphql queries and webhook updates
+
 ## 0.1.20
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/contentful-webhook-handler",
-  "version": "0.4.12",
+  "version": "0.4.13",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -23,9 +23,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/contentful-path-util": "^0.1.20",
-    "@last-rev/contentful-webhook-parser": "^0.1.1",
-    "@last-rev/graphql-contentful-helpers": "^0.4.5",
+    "@last-rev/contentful-path-util": "^0.1.21",
+    "@last-rev/contentful-webhook-parser": "^0.1.2",
+    "@last-rev/graphql-contentful-helpers": "^0.4.6",
     "aws-sdk": "^2.1012.0",
     "contentful": "^9.0.0",
     "ioredis": "^5.0.4",

@@ -1,5 +1,13 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.9
+
+### Patch Changes
+
+- c56decc: Supporting overriding the environment on graphql queries and webhook updates
+- Updated dependencies [c56decc]
+  - @last-rev/contentful-webhook-parser@0.1.2
+
 ## 0.1.8
 
 ### Patch Changes
