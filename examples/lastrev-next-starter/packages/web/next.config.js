@@ -50,6 +50,17 @@ const securityHeaders = [
   }
 ];
 
+const disableSentry =
+  !process.env.SENTRY_PROJECT ||
+  !process.env.SENTRY_AUTH_TOKEN ||
+  !process.env.SENTRY_URL ||
+  !process.SENTRY_ORG ||
+  !process.env.NEXT_PUBLIC_SENTRY_DSN;
+
+if (disableSentry) {
+  console.warn('Sentry is disabled');
+}
+
 const nextConfig = {
   ...(process.env.NODE_ENV === 'production' && {
     async headers() {
@@ -97,7 +108,7 @@ const nextConfig = {
     // formats: ['image/avif', 'image/webp']
     formats: ['image/webp']
   },
-  ...(!process.env.SENTRY_PROJECT && {
+  ...(disableSentry && {
     sentry: {
       disableServerWebpackPlugin: true,
       disableClientWebpackPlugin: true
