@@ -5,6 +5,7 @@ import { resolve } from 'path';
 import program from 'commander';
 import LastRevAppConfig from '@last-rev/app-config';
 import { contextFunction } from '@last-rev/graphql-contentful-helpers';
+import { URL } from 'url';
 
 const run = async (configFile: string) => {
   let config: LastRevAppConfig;
@@ -18,7 +19,14 @@ const run = async (configFile: string) => {
 
   const server = await createServer(config);
   const { url } = await startStandaloneServer(server, {
-    context: contextFunction({ config }),
+    context: contextFunction({
+      config,
+      extractFromArgs: ({ req }) => {
+        if (!req.url) return {};
+        const environment = new URL(req.url, 'http://localhost').searchParams.get('env');
+        return environment ? { environment } : {};
+      }
+    }),
     listen: config?.graphql
   });
   console.log(`🚀  Server ready at ${url}`);

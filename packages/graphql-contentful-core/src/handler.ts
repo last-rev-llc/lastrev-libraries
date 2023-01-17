@@ -18,7 +18,16 @@ export const createHandler = (config: LastRevAppConfig) => {
     const server = await createServer(config);
 
     const handler = startServerAndCreateLambdaHandler(server, {
-      context: contextFunction({ config, environment: event.queryStringParameters?.environment })
+      context: contextFunction({
+        config,
+        extractFromArgs: (lambdaArg) => {
+          return lambdaArg.event.queryStringParameters?.env
+            ? {
+                environment: lambdaArg.event.queryStringParameters?.env
+              }
+            : {};
+        }
+      })
     });
 
     logger.debug('Graphql handler created', {

@@ -1,14 +1,17 @@
 import { ContextFunction } from '@apollo/server';
 import { ApolloContext } from '@last-rev/types';
-import createContext, { CreateContextProps } from './createContext';
+import createContext, { CreateContextFuncProps } from './createContext';
 
-const contextFunction: (options: CreateContextProps) => ContextFunction<ApolloContext> =
-  (createContextProps) =>
+const contextFunction: <T extends any[]>(options: CreateContextFuncProps<T>) => ContextFunction<T, ApolloContext> =
+  ({ config: origConfig, extractFromArgs }) =>
   async (...args) => {
-    let contextValue = await createContext(createContextProps);
+    const { environment } = extractFromArgs(...args);
+    // overrides the environment if it is passed in the query string
+    const config = environment ? origConfig.clone({ contentful: { env: environment } }) : origConfig;
+    let contextValue = await createContext({ config });
 
-    if (createContextProps.config.apolloServerOptions.context) {
-      const extraContextValue = await createContextProps.config.apolloServerOptions.context(...args);
+    if (config.apolloServerOptions.context) {
+      const extraContextValue = await config.apolloServerOptions.context(...args);
       contextValue = {
         ...contextValue,
         ...extraContextValue
