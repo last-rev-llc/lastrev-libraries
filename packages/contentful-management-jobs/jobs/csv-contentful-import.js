@@ -18,15 +18,16 @@ const { getAllEntries, createAssets, createEntries } = require('../shared/conten
 const { getDistinct } = require('../shared/helpers/getDistinct');
 const { image403s, image404s, notResolvedImages } = require('../shared/fixtures/brokenUrls');
 
-const onlyProcessAssets = false;
-const onlyProcessEntries = false;
+const onlyProcessAssets = true;
+const onlyProcessEntries = true;
+const getExistingBlogs = false;
 
 const BASE_FOLDER_PATH = '/Users/anthonywhitley/Documents/LASTREV/193';
 const CSV_EMBEDDED_IMAGES_FILE_PATH = path.join(BASE_FOLDER_PATH, 'embeddedImages.csv');
 const CSV_UNPROCESSABLE_FILE_PATH = path.join(BASE_FOLDER_PATH, 'unprocessable.csv');
 const CSV_UPLOADED_VIDEOS_FILE_PATH = path.join(BASE_FOLDER_PATH, 'uploadedVideos.csv');
 const CSV_CTAS_FILE_PATH = path.join(BASE_FOLDER_PATH, 'ctas.csv');
-const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion.csv');
+// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_100.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_200.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_300.csv');
@@ -36,7 +37,7 @@ const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion.
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_ShortVersion_700.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_Single.csv');
 // const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'pathmaticsBlogs_outliers.csv');
-// const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'finalPathmaticsBlogs.csv');
+const CSV_FILE_PATH = path.join(BASE_FOLDER_PATH, 'finalPathmaticsBlogs.csv');
 const turndownService = new TurndownService();
 
 const unprocessableImages = [...image403s, ...image404s, ...notResolvedImages];
@@ -746,6 +747,8 @@ const fixDateTime = (_, date, hour, min, sec) => {
   return `${date}T${hour}:${min}:${sec}Z`;
 };
 
+const cleanDate = (date) => date.replace(/(\d{4}-\d{2}-\d{2}) (\d{1,2}):(\d{2}):(\d{2})/, fixDateTime);
+
 const transformBlogs = async (blogs, authors, tagsList, existingBlogs) => {
   return Promise.all(
     blogs.map(async (blog) => {
@@ -769,7 +772,7 @@ const transformBlogs = async (blogs, authors, tagsList, existingBlogs) => {
             }
           }
         : null;
-      const pubDate = publishDate.replace(/(\d{4}-\d{2}-\d{2}) (\d{1,2}):(\d{2}):(\d{2})/, fixDateTime);
+      const pubDate = cleanDate(publishDate);
       console.log('publishDate => ', publishDate);
       console.log('pubDate => ', pubDate);
       return {
@@ -997,10 +1000,14 @@ const processImageAssets = async (blogs) => {
     });
   console.log('tags => ', tags.length);
 
-  // Get Blogs
-  await getAllEntries(clientDelivery, { content_type: 'blog', limit: 1 }, (items) => getAllBlogs(items, 200));
-  const existingBlogs = allBlogs.flat();
-  console.log('existingBlogs => ', existingBlogs.length);
+  let existingBlogs = [];
+
+  if (getExistingBlogs) {
+    // Get Blogs
+    await getAllEntries(clientDelivery, { content_type: 'blog', limit: 1 }, (items) => getAllBlogs(items, 200));
+    existingBlogs = allBlogs.flat();
+    console.log('existingBlogs => ', existingBlogs.length);
+  }
 
   // Get parse csv file into array of objects
   const blogs = [];
@@ -1147,6 +1154,37 @@ const processImageAssets = async (blogs) => {
     })
     .on('end', async () => {
       console.log('blogs length => ', blogs.length);
+      const blogsFrom2021 = blogs.filter((blog) => blog.publishDate.includes('2021'));
+      const blogsFrom2020 = blogs.filter((blog) => blog.publishDate.includes('2020'));
+      const blogsFrom2019 = blogs.filter((blog) => blog.publishDate.includes('2019'));
+      const blogsFrom2018 = blogs.filter((blog) => blog.publishDate.includes('2018'));
+      const blogsFrom2017 = blogs.filter((blog) => blog.publishDate.includes('2017'));
+      const blogsFrom2016 = blogs.filter((blog) => blog.publishDate.includes('2016'));
+      const blogsFrom2015 = blogs.filter((blog) => blog.publishDate.includes('2015'));
+      const blogsFrom2014 = blogs.filter((blog) => blog.publishDate.includes('2014'));
+      const otherBlogs = blogs.filter(
+        (blog) =>
+          !blog.publishDate.includes('2021') &&
+          !blog.publishDate.includes('2020') &&
+          !blog.publishDate.includes('2019') &&
+          !blog.publishDate.includes('2018') &&
+          !blog.publishDate.includes('2017') &&
+          !blog.publishDate.includes('2016') &&
+          !blog.publishDate.includes('2015') &&
+          !blog.publishDate.includes('2014')
+      );
+      console.log('blogsFrom2021 => ', blogsFrom2021.length);
+      console.log('blogsFrom2020 => ', blogsFrom2020.length);
+      console.log('blogsFrom2019 => ', blogsFrom2019.length);
+      console.log('blogsFrom2018 => ', blogsFrom2018.length);
+      console.log('blogsFrom2017 => ', blogsFrom2017.length);
+      console.log('blogsFrom2016 => ', blogsFrom2016.length);
+      console.log('blogsFrom2015 => ', blogsFrom2015.length);
+      console.log('blogsFrom2014 => ', blogsFrom2014.length);
+      console.log('otherBlogs => ', otherBlogs.length);
+      const sortedBlogs = blogs.sort((a, b) => new Date(cleanDate(b.publishDate)) - new Date(cleanDate(a.publishDate)));
+      console.log('sortedBlogs => ', sortedBlogs.length);
+      console.log('firstBlog pubDate => ', sortedBlogs[0].publishDate);
       await runProcess(blogs);
     });
 })();
