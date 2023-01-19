@@ -148,6 +148,7 @@ scalar Date
 type Header implements Content {
   animation: JSON
   color: String
+  colorScheme: String
   id: String
   internalTitle: String
   logo: Media
@@ -352,6 +353,15 @@ type Section implements Content {
   settings: JSON
   sidekickLookup: JSON
   styles: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type Settings implements Content {
+  animation: JSON
+  id: String
+  liveEditorSettings: JSON
+  sidekickLookup: JSON
   theme: [Theme]
   variant: String
 }
