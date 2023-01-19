@@ -3,6 +3,7 @@ import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
 import { Entry } from 'contentful';
 import resolveLocalizedField from './utils/resolveLocalizedField';
+import { blogV1, categoryBlogV1, pageV1 } from './PathsConfigs';
 export const typeMappings = {};
 
 // TODO: Move to env variables
@@ -112,3 +113,14 @@ export const typeDefs = gql`
     hero: Hero
   }
 `;
+
+/*
+@Deprecated
+PathsConfigs have been moved to the PathsConfigs.ts file and are now individually exported.
+Preserving this export for backwards compatibility.
+*/
+export const pathsConfigs = {
+  ...pageV1,
+  ...blogV1,
+  ...categoryBlogV1
+};
