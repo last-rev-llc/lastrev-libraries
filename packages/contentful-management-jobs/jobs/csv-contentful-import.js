@@ -18,9 +18,9 @@ const { getAllEntries, createAssets, createEntries } = require('../shared/conten
 const { getDistinct } = require('../shared/helpers/getDistinct');
 const { image403s, image404s, notResolvedImages } = require('../shared/fixtures/brokenUrls');
 
-const onlyProcessAssets = true;
-const onlyProcessEntries = true;
-const getExistingBlogs = false;
+const onlyProcessAssets = false;
+const onlyProcessEntries = false;
+const getExistingBlogs = true;
 
 const BASE_FOLDER_PATH = '/Users/anthonywhitley/Documents/LASTREV/193';
 const CSV_EMBEDDED_IMAGES_FILE_PATH = path.join(BASE_FOLDER_PATH, 'embeddedImages.csv');
