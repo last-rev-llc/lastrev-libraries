@@ -63,7 +63,7 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
         auth: pageData?.page?.auth ?? ''
       }
     };
-    let localizationLookup;
+    let localizationLookup = [];
     try {
       const { data: commonResources } = await client.CommonResources({ locale, preview });
       localizationLookup = (commonResources as any)?.contents || [];
