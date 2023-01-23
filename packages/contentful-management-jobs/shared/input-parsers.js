@@ -1,7 +1,9 @@
+/* eslint-disable no-loop-func */
 /* eslint-disable no-await-in-loop */
 const yaml = require('js-yaml');
 const fs = require('fs');
-const contentful = require('contentful');
+const { parse: csvParse } = require('csv-parse');
+const { parse: jsonParse } = require('json2csv');
 
 const yamlToJson = async (filePath) => {
   try {
@@ -14,8 +16,22 @@ const yamlToJson = async (filePath) => {
 
 const wait = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
+const csvToArray = (filePath, delimiter = ',') => {
+  return fs.createReadStream(filePath).pipe(
+    csvParse({
+      delimiter,
+      columns: true,
+      ltrim: true
+    })
+  );
+};
+
+const arrayToCsv = (array, filePath, fields) => {
+  const csv = jsonParse(array, { fields });
+  fs.writeFileSync(filePath, csv);
+};
+
 const importParser = async (getItems, callback) => {
-  // get items via delivery api
   let items;
   try {
     items = await getItems();
@@ -23,7 +39,7 @@ const importParser = async (getItems, callback) => {
     console.log('Error importing items => ', error);
   }
   if (callback) {
-    callback(items);
+    await callback(items);
   }
   return items;
 };
@@ -31,5 +47,7 @@ const importParser = async (getItems, callback) => {
 module.exports = {
   yamlToJson,
   importParser,
-  wait
+  wait,
+  csvToArray,
+  arrayToCsv
 };

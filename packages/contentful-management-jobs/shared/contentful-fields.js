@@ -96,6 +96,7 @@ const getContentfulFieldValue = async (value, fieldType, JOB, yamlObj) => {
 
 const getAssetType = (fileExtension) => {
   switch (fileExtension) {
+    case 'jpg?':
     case 'jpg':
     case 'jpeg':
       return 'image/jpeg';
@@ -107,8 +108,12 @@ const getAssetType = (fileExtension) => {
       return 'image/svg+xml';
     case 'mp4':
       return 'video/mp4';
+    case 'webm':
+      return 'video/webm';
     case 'mov':
       return 'video/quicktime';
+    case 'flv':
+      return 'video/x-flv';
     case 'pdf':
       return 'application/pdf';
     case 'psd':
@@ -116,6 +121,16 @@ const getAssetType = (fileExtension) => {
     case 'eps':
       return 'application/postscript';
     default:
+      if (fileExtension.startsWith('com/')) {
+        if (fileExtension.endsWith('?autoplay=true')) {
+          return 'video/webm';
+        }
+        if (fileExtension === 'png?width=945&amp;quality=low') {
+          return 'image/png';
+        }
+        return 'image/jpeg';
+      }
+      console.log('Warning: Unknown file extension: ', fileExtension);
       return null;
   }
 };
@@ -142,15 +157,84 @@ const cleanupId = (entryId) => {
   return cleanedId;
 };
 
+const getFileExtension = (url) => url?.split('.').pop();
+
+const createFile = (url, fileName) => {
+  const contentType = getAssetType(getFileExtension(url));
+  return contentType ? { contentType, fileName, upload: url } : null;
+};
+
+const isVideo = (url) => {
+  const fileExtension = getFileExtension(url);
+  return fileExtension === 'mp4' || fileExtension === 'mov';
+};
+
+const getContentfulIdFromString = (string) => {
+  const id = MurmurHash3(string).result().toString();
+  if (!id) console.log('Warning ID is empty for string: ', string);
+  return id;
+};
+
+const getAssetDetails = (url, publish, linkingId) => ({
+  entryId: getContentfulIdFromString(url),
+  url,
+  publish,
+  linkingId
+});
+
+const createAssetObject = ({ entryId, url, publish, linkingId }, assetEntry, videoStillImage) => ({
+  linkingId,
+  publish,
+  entryId,
+  url,
+  assetEntry,
+  videoStillImage
+});
+
+const createAssetEntry = (title, file) => ({
+  fields: {
+    title: {
+      'en-US': title
+    },
+    file: {
+      'en-US': file
+    }
+  }
+});
+
+const getVideoStillImage = ({ url, entryId, publish }, entry, title) => {
+  let videoStillImage;
+
+  if (isVideo(url)) {
+    console.log(`video => ${entryId} for ${url}`);
+    const stillImageUrl = url.split('.');
+    // remove the file extension
+    stillImageUrl.pop();
+    // add the still image extension
+    stillImageUrl.push('jpg');
+    // join the array back into a string
+    const imageUrl = stillImageUrl.join('.');
+
+    videoStillImage = createAssetObject(
+      getAssetDetails(entryId, imageUrl, publish, entry.sys.id),
+      createAssetEntry(`${title} - Video Still Image`, 'jpg', imageUrl)
+    );
+  }
+  return videoStillImage;
+};
+
 module.exports = {
   getSpaceFieldTypeLookup,
   getContentfulFieldValue,
-  getContentfulIdFromString: (string) => {
-    const id = MurmurHash3(string).result().toString();
-    if (!id) console.log('Warning ID is empty for string: ', string);
-    return id;
-  },
+  getContentfulIdFromString,
   getAssetType,
   cleanupId,
-  getMediaObject
+  getMediaObject,
+  isVideo,
+  createFile,
+  getAssetDetails,
+  createAssetObject,
+  createAssetEntry,
+  getVideoStillImage,
+  getFileExtension
 };
