@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-console */
 const { clientDelivery, environmentManagement } = require('./contentful-init');
@@ -177,11 +178,26 @@ const getAllEntries = async (api, query, callback) => {
   return importParser(async () => api.getEntries(query), callback);
 };
 
+const query = (options) => ({ ...options });
+
+const getAllItems = async (result, queryOptions) => {
+  const { limit } = queryOptions;
+  const allItems = [];
+  for (let skip = 0; skip < result.total; skip += limit) {
+    console.log(`processed items ${skip} to ${skip + limit}`);
+    const entries = await getAllEntries(clientDelivery, query({ ...queryOptions, skip }));
+    allItems.push(entries?.items || []);
+  }
+  return allItems.flat();
+};
+
 module.exports = {
   publishItem,
   deleteItem,
   checkForExistingItem,
   getAllEntries,
+  getAllItems,
+  query,
   createAssets,
   createEntries
 };
