@@ -1,57 +1,51 @@
 /* eslint-disable no-console */
-/* eslint-disable no-param-reassign */
 /* eslint-disable no-await-in-loop */
-const keys = require('lodash/keys');
-const { environmentManagement } = require('../shared/contentful-init');
-const { importParser } = require('../shared/input-parsers');
+const { clientDelivery } = require('../shared/contentful-init');
+const { getAllEntries } = require('../shared/contentful-actions');
 
-const STEPS = {
-  getEntries: true,
-  prepareItems: true,
-  getLinkedEntries: true,
-  removeDuplicates: true
+const limitAmount = 200;
+
+const query = (skip, limit) => ({
+  content_type: 'blog',
+  limit,
+  skip,
+  order: '-sys.createdAt'
+});
+
+const log = (items) => {
+  console.log(
+    'entries with og:title => ',
+    items
+      .filter((item) => item.fields.seo?.['og:title'])
+      .map((item) => {
+        if (item.sys.id === '5eMUbqDXpa2owgiPf2VeHj') {
+          console.log('item seo => ', JSON.stringify(item.fields.seo, null, 2));
+        }
+        return item.sys.id;
+      })
+      .join(',')
+  );
 };
 
-const entriesQuery = {
-  'content_type': 'pageLanding',
-  'limit': 1000,
-  'sys.archivedVersion[exists]': false
-};
+const allBlogs = [];
 
-const getAllEntries = async (query) => {
-  let entries = { items: [] };
-  if (STEPS.getEntries) {
-    const environment = await environmentManagement;
-    entries = await importParser(async () => environment.getEntries(query));
+const getAllBlogs = async (result, limit) => {
+  for (let skip = 0; skip < result.total; skip += limit) {
+    console.log(`processed blogs ${skip} to ${skip + limit}`);
+    const entries = await getAllEntries(clientDelivery, query(skip, limit));
+    allBlogs.push(entries?.items || []);
   }
-  return entries;
 };
 
 (async () => {
   // Step 1 - Get All Entries
-  const entries = await getAllEntries(entriesQuery);
-  console.log('entries => ', entries.items.length);
+  await getAllEntries(clientDelivery, { content_type: 'blog', limit: 1 }, (items) => getAllBlogs(items, limitAmount));
 
-  if (entries.items.length) {
-    console.log(
-      'entries without robots => ',
-      entries.items
-        .filter((item) => !item.fields.seo['en-US'].robots)
-        .map((item) => item.sys.id)
-        .join(',')
-    );
-    const searchedEntries = entries.items.filter((item) => {
-      if (keys(item.fields.seo).length !== 7 && !item.fields.internalTitle['en-US'].includes('DON"T PUBLISH!!!')) {
-        console.log(
-          `item => ${item.sys.id} => does not have all seo locales => ${JSON.stringify(keys(item.fields.seo), null, 2)}`
-        );
-      } else {
-        console.log(`item => ${item.sys.id} => has all seo locales`);
-      }
-      return keys(item.fields.seo).length !== 7 && !item.fields.internalTitle['en-US'].includes('DON"T PUBLISH!!!');
-    });
-    console.log('searchedEntries => ', searchedEntries.length);
-    console.log('searchedEntries ids => ', searchedEntries.map((item) => item.sys.id).join(','));
+  const entries = allBlogs.flat();
+
+  if (entries.length) {
+    console.log('entries => ', entries.length);
+    log(entries);
   } else {
     console.log('No entries found');
   }
