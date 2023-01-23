@@ -57,12 +57,6 @@ const securityHeaders = [
   }
 ];
 
-console.log('process.env.SENTRY_PROJECT', process.env.SENTRY_PROJECT);
-console.log('process.env.SENTRY_AUTH_TOKEN', process.env.SENTRY_AUTH_TOKEN);
-console.log('process.env.SENTRY_URL', process.env.SENTRY_URL);
-console.log('process.SENTRY_ORG', process.SENTRY_ORG);
-console.log('process.env.NEXT_PUBLIC_SENTRY_DSN', process.env.NEXT_PUBLIC_SENTRY_DSN);
-
 const disableSentry =
   !process.env.SENTRY_PROJECT ||
   !process.env.SENTRY_AUTH_TOKEN ||
