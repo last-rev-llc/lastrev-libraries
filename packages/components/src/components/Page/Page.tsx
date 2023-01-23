@@ -12,12 +12,11 @@ import useSearchState from '../../utils/useSearchState';
 
 const searchClient = algoliasearch(process.env.ALGOLIA_APP_ID as string, process.env.ALGOLIA_SEARCH_API_KEY as string);
 
-const indexName = 'articles';
-
-interface PageGeneralProps extends Omit<Page, '__typename'> {
+interface PageGeneralProps extends Omit<Page, '__typename' | 'indexName'> {
   __typename?: string | 'Page';
   breadcrumbs?: Array<LinkProps> | any;
   topicNavItems?: Array<LinkProps> | any;
+  indexName: string;
 }
 
 const PageGeneral = ({
@@ -27,7 +26,8 @@ const PageGeneral = ({
   footer,
   disableBackToTop,
   breadcrumbs,
-  topicNavItems
+  topicNavItems,
+  indexName
 }: PageGeneralProps) => {
   const { searchState, handleSearchStateChange } = useSearchState();
 

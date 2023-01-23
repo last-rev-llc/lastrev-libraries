@@ -8,15 +8,23 @@ let params: { [key: string]: string };
 interface SearchState {
   query: string;
   page: number;
+  refinementList: {
+    [key: string]: string[];
+  };
+}
+
+interface SearchParams {
+  query: string;
+  page: number;
 }
 
 interface UseSearchState {
-  searchState: SearchState;
+  searchState: SearchParams;
   handleSearchStateChange: (updatedSearchState: SearchState) => void;
 }
 
 export function useSearchState(): UseSearchState {
-  const [searchState, setSearchState] = useState<SearchState>({ query: '', page: 1 });
+  const [searchState, setSearchState] = useState<SearchParams>({ query: '', page: 1 });
   const setStateId = useRef<any>();
   const router = useRouter();
   const { query } = router;
@@ -32,6 +40,13 @@ export function useSearchState(): UseSearchState {
     setStateId.current = setTimeout(() => {
       router.query.query = updatedSearchState.query;
       router.query.page = String(updatedSearchState.page);
+      for (let key in updatedSearchState?.refinementList) {
+        if (updatedSearchState?.refinementList[key]) {
+          router.query[key] = updatedSearchState?.refinementList[key];
+        } else {
+          delete router.query[key];
+        }
+      }
       router.push(router, undefined, { shallow: true });
     }, DEBOUNCE_TIME);
 
@@ -45,7 +60,18 @@ export function useSearchState(): UseSearchState {
   }, [query]);
 
   useEffect(() => {
-    setSearchState((prev) => ({ ...prev, query: String(params.query ?? ''), page: Number(params.page ?? 1) }));
+    let refinementList = {};
+    for (let key in query) {
+      if (key !== 'query' && key !== 'page' && key !== 'slug') {
+        refinementList = { ...refinementList, [key]: query[key] };
+      }
+    }
+    setSearchState((prev) => ({
+      ...prev,
+      query: String(params.query ?? ''),
+      page: Number(params.page ?? 1),
+      refinementList
+    }));
   }, []);
 
   return { searchState, handleSearchStateChange };

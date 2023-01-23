@@ -23,7 +23,7 @@ type AlgoliaCategoryInfo = {
   relativeIds: string[];
 };
 
-const ROOT_CATEGORY_ID = '1d36wf7VTxu5K8BxjJHEY4';
+const ROOT_CATEGORY_ID = process.env.ROOT_CATEGORY_ID;
 
 const getAlgoliaCategoryMapping = (() => {
   let algoliaLocaleCategoryMappingsByState: AlgoliaLocaleCategoryMappingsByState = {
@@ -52,7 +52,7 @@ const getAlgoliaCategoryMapping = (() => {
 
     const result: AlgoliaCategoryMapping = {};
 
-    const root = categoriesById[ROOT_CATEGORY_ID];
+    const root = categoriesById[ROOT_CATEGORY_ID as string];
 
     if (!root) {
       currentStateMappingsByLocale[locale] = result;

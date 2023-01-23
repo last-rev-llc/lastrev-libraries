@@ -28,6 +28,7 @@ const ArticleEmbeded = dynamic(() => import('./components/Article/ArticleEmbeded
 const Table = dynamic(() => import('./components/Table'));
 const CollectionSearchFilters = dynamic(() => import('./components/CollectionSearchFilters'));
 const CollectionSearchResults = dynamic(() => import('./components/CollectionSearchResults'));
+const Document = dynamic(() => import('./components/Document'));
 
 const contentMapping: {
   [key: string]: any;
@@ -65,7 +66,8 @@ const contentMapping: {
   'CategoryArticle': PageTopic,
   Article,
   'Article:embeded': ArticleEmbeded,
-  Table
+  Table,
+  Document
 };
 
 export default contentMapping;

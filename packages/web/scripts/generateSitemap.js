@@ -8,6 +8,7 @@ const { client, parseBooleanEnvVar } = require('@ias/utils');
 const usePreview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 
 const run = async () => {
+  if (process.env.SITE === 'RESOURCE') return;
   const { data } = await client.Sitemap({
     root: process.env.DOMAIN,
     locales: ['en-US'],

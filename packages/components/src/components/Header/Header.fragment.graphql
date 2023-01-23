@@ -22,4 +22,5 @@ fragment Header_BaseFragment on Header {
   actions {
     ...Link_BaseFragment
   }
+  indexName
 }

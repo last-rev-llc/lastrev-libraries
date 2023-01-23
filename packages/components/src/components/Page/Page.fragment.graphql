@@ -21,4 +21,6 @@ fragment Page_BaseFragment on Page {
   breadcrumbs {
     ...Link_BaseFragment
   }
+  indexName
+  auth
 }

@@ -128,13 +128,13 @@ const StateResults = connectStateResults((props) => {
         </Typography>
       )}
       {isSearching && <LoadingItems hitsPerPage={searchResults?.hitsPerPage} />}
-      {!isSearching && searchResults.nbHits === 0 && (
+      {!isSearching && searchResults?.nbHits === 0 && (
         <Typography variant="body2" component="p" mb={5}>
           {/* @ts-ignore */}
           {props.noResultsLabel}
         </Typography>
       )}
-      <Box display={!isSearching && searchResults.nbHits !== 0 ? 'block' : 'none'}>
+      <Box display={!isSearching && searchResults?.nbHits !== 0 ? 'block' : 'none'}>
         <HitList hitComponent={Hit} />
         <Pagination />
       </Box>

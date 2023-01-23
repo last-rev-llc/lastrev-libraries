@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
-import { Configure, RefinementList, MenuSelect, connectRefinementList } from 'react-instantsearch-dom';
+import { Configure, RefinementList, MenuSelect, Panel, connectRefinementList } from 'react-instantsearch-dom';
 import { useRouter } from 'next/router';
 import aa from 'search-insights';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
-import { CollectionProps } from '@last-rev/component-library/dist/components/Collection';
+import { CollectionProps as LRCollectionProps } from '@last-rev/component-library/dist/components/Collection';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import { useLocalizationContext } from '../LocalizationContext';
@@ -17,7 +18,17 @@ interface FilterItem {
   count?: number;
 }
 
-const RefinementListTest = (props: any) => {
+interface CollectionProps extends LRCollectionProps {
+  settings?: {
+    attribute?: string;
+    limit?: number;
+    showMore?: boolean;
+    searchable?: boolean;
+    hideLocaleFilter?: boolean;
+  };
+}
+
+const ConnectedRefinementList = (props: any) => {
   React.useEffect(() => {
     if (props.currentRefinement.length === 2) {
       props.refine(['false']);
@@ -29,9 +40,9 @@ const RefinementListTest = (props: any) => {
   return <Filters {...props} />;
 };
 
-const CustomRefinementList = connectRefinementList(RefinementListTest);
+const CustomRefinementList = connectRefinementList(ConnectedRefinementList);
 
-export const CollectionSearchFilters = ({ introText, sidekickLookup, ...props }: CollectionProps) => {
+export const CollectionSearchFilters = ({ introText, sidekickLookup, settings, ...props }: CollectionProps) => {
   const router = useRouter();
   const localization = useLocalizationContext();
   const { locale, defaultLocale } = router;
@@ -110,20 +121,28 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup, ...props }:
             <MenuSelect attribute="categories.level-1" />
           </Box>
         </Box>
-        <Filters
-          attribute="categories.level-1"
-          transformItems={(items: Array<FilterItem>) =>
-            items.map((item) => {
-              return {
-                ...item,
-                'label': item.label,
-                'count': `(${item.count})`,
-                'data-insights-filter': `categories: ${item.label}`
-              };
-            })
-          }
-        />
-        {locale !== defaultLocale && (
+        <FilterWrapper>
+          <Filters
+            attribute={settings?.attribute}
+            limit={settings?.limit ?? 20}
+            showMore={settings?.showMore}
+            searchable={settings?.searchable}
+            transformItems={(items: Array<FilterItem>) =>
+              items.map((item) => {
+                return {
+                  ...item,
+                  'label': item.label,
+                  'count': `(${item.count})`,
+                  'data-insights-filter': `categories: ${item.label}`
+                };
+              })
+            }
+          />
+          <NoOptionsLabel variant="caption">
+            {localization['search.noOptions.label']?.shortTextValue ?? 'No Options Available'}
+          </NoOptionsLabel>
+        </FilterWrapper>
+        {locale !== defaultLocale && !settings?.hideLocaleFilter && (
           <CustomRefinementList
             attribute="translatedInLocale"
             defaultRefinement={['true']}
@@ -164,12 +183,62 @@ export const CollectionSearchFilters = ({ introText, sidekickLookup, ...props }:
   );
 };
 
+const FilterWrapper = styled(Panel, {
+  name: 'CollectionSearchFilters',
+  slot: 'FilterWrapper'
+})(() => ({
+  '&.ais-Panel--noRefinement': {
+    '[class*="CollectionSearchFilters-noOptionsLabel"]': {
+      display: 'block'
+    }
+  }
+}));
+
 const Filters = styled(RefinementList, {
   name: 'CollectionSearchFilters',
   slot: 'RefinementList'
 })(({ theme }) => ({
   [theme.breakpoints.down('md')]: {
     display: 'none'
+  },
+  '& .ais-RefinementList-searchBox': {
+    'marginBottom': theme.spacing(2),
+
+    '& input': {
+      padding: theme.spacing(0.5, 1, 0.5, 3.25),
+      border: `1px solid ${theme.palette.midnight.A30}`,
+      borderRadius: theme.spacing(2)
+    }
+  },
+  '& .ais-SearchBox-form': {
+    position: 'relative'
+  },
+  '& .ais-SearchBox-submit': {
+    position: 'absolute',
+    top: '50%',
+    left: '6px',
+    marginTop: '2px',
+    backgroundColor: 'transparent',
+    border: 0,
+    transform: 'translateY(-50%)'
+  },
+  '& .ais-SearchBox-reset': {
+    marginLeft: theme.spacing(-3),
+    backgroundColor: 'transparent',
+    border: 0,
+    opacity: 0.7,
+    transform: 'scale(.8)'
+  },
+  '& .ais-RefinementList-showMore': {
+    'padding': theme.spacing(0.5, 1),
+    'backgroundColor': theme.palette.midnight.A09,
+    'border': 0,
+    'borderRadius': theme.spacing(1),
+    'cursor': 'pointer',
+
+    '&:hover': {
+      backgroundColor: theme.palette.midnight.A12
+    }
   },
   '& .ais-RefinementList-list': {
     listStyle: 'none',
@@ -189,6 +258,9 @@ const Filters = styled(RefinementList, {
     marginLeft: 0,
     marginRight: theme.spacing(1),
     accentColor: theme.palette.midnight.A20
+  },
+  '& .ais-RefinementList-noResults': {
+    display: 'none'
   }
 }));
 
@@ -250,6 +322,14 @@ const LocaleSwitcher = styled(Box, {
       marginLeft: theme.spacing(0.5)
     }
   }
+}));
+
+const NoOptionsLabel = styled(Typography, {
+  name: 'CollectionSearchFilters',
+  slot: 'NoOptionsLabel'
+})(({ theme }) => ({
+  display: 'none', // block
+  marginBottom: theme.spacing(1)
 }));
 
 export default CollectionSearchFilters;

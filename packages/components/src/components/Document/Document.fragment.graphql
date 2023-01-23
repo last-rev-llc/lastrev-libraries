@@ -1,0 +1,6 @@
+fragment Document_BaseFragment on Document {
+  ...Content_BaseFragment
+  googleDocUrl
+  lastUpdatedDateOfGoogleDoc
+  downloadUrl
+}

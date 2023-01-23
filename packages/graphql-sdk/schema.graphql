@@ -160,6 +160,18 @@ type CommonResource implements Content {
   media: Media
   image: Media
 }
+type Document implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  variant: String
+  internalTitle: String
+  googleDocUrl: String
+  googleId: String
+  lastUpdatedDateOfGoogleDoc: Date
+  downloadUrl: String
+}
 type Footer implements Content {
   sidekickLookup: JSON
   id: String
@@ -187,6 +199,7 @@ type Header implements Content {
   leftNav: [NavigationItem]
   rightNav: [NavigationItem]
   actions: [Link]
+  indexName: String
 }
 type Hero implements Content {
   sidekickLookup: JSON
@@ -287,6 +300,8 @@ type Site implements Content {
   internalTitle: String
   siteKey: String
   seo: JSON
+  auth: String
+  themeMode: String
 }
 type SsoGroup implements Content {
   sidekickLookup: JSON
@@ -335,6 +350,7 @@ type Article implements Content {
   pubDate: Date
   summary: String
   body: RichText
+  excludeFromCategoryTopicPage: Boolean
   disableBackToTop: Boolean
   seo: JSON
   translatedInLocale: [String]
@@ -376,6 +392,16 @@ type CategoryArticle implements Content {
   link: Link
   level: Int
 }
+type CategoryTag implements Content {
+  sidekickLookup: JSON
+  id: String
+  theme: [Theme]
+  animation: JSON
+  slug: String
+  lr__path__: String
+  internalTitle: String
+  title: String
+}
 type Page implements Content {
   sidekickLookup: JSON
   id: String
@@ -396,6 +422,8 @@ type Page implements Content {
   contents: [Content]
   topicNavItems: [NavigationItem]
   breadcrumbs: [Link]
+  indexName: String
+  auth: Auth
 }
 type PageTopic implements Content {
   sidekickLookup: JSON
@@ -445,6 +473,11 @@ input CollectionFilterInput {
 }
 union CollectionItem = Card | Link | Media | Section | NavigationItem
 union SubnavigationItem = Link | NavigationItem
+enum Auth {
+  None
+  Legacy
+  Okta
+}
 type Blog {
   header: Header
   footer: Content

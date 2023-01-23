@@ -15,6 +15,7 @@ node_modules
 
 lerna-debug.log
 .env
+.env.*
 .netlify
 
 .DS_Store

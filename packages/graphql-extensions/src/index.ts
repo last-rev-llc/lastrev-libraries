@@ -24,6 +24,9 @@ import * as CategoryArticle from './CategoryArticle';
 import * as CategoryArticleLinkHierarchyNode from './CategoryArticleLinkHierarchyNode';
 import * as ModuleIntegration from './ModuleIntegration';
 import * as CommonResource from './CommonResource';
+import * as CustomCollection from './Collection';
+import * as CategoryTag from './CategoryTag';
+import * as Document from './Document';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -60,6 +63,7 @@ const extensions: GraphQlExtension[] = [
   { typeDefs: algoliaTypeDefs },
   Card,
   Collection,
+  CustomCollection,
   Header,
   Footer,
   Link,
@@ -80,7 +84,9 @@ const extensions: GraphQlExtension[] = [
   CategoryArticle,
   CategoryArticleLinkHierarchyNode,
   ModuleIntegration,
-  CommonResource
+  CommonResource,
+  CategoryTag,
+  Document
 ];
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));

@@ -225,6 +225,16 @@ export const mappers = {
         const title = getLocalizedField(article.fields, 'title', ctx) || '';
         const summary = await parseRichTextField(await articleSummaryResolver(article, args, ctx), ctx);
         const { categories, categoryLinks } = await getCategoriesForArticle(article, ctx);
+        const categoryTagsRef = getLocalizedField(article.fields, 'categoryTag', ctx);
+        const categoryTagsIds = categoryTagsRef?.map((tagRef: any) => {
+          return { id: tagRef?.sys.id, preview: !!ctx.preview };
+        });
+
+        const tags = !!categoryTagsIds?.length
+          ? (await ctx.loaders.entryLoader.loadMany(categoryTagsIds))
+              .filter(Boolean)
+              .map((tag: any) => getLocalizedField(tag.fields, 'title', ctx))
+          : [];
 
         const currentLocale = ctx.locale;
         const translatedLocales: string[] =
@@ -234,7 +244,7 @@ export const mappers = {
 
         return [
           {
-            index: 'articles',
+            index: process.env.ALGOLIA_INDEX_NAME,
             data: {
               objectID: constructObjectId(article, ctx),
               locale: ctx.locale || ctx.defaultLocale,
@@ -245,7 +255,8 @@ export const mappers = {
               path,
               categories,
               categoryLinks,
-              translatedInLocale
+              translatedInLocale,
+              tags
             }
           }
         ];

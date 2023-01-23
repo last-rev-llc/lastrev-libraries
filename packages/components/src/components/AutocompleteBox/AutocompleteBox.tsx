@@ -16,9 +16,7 @@ import { useLocalizationContext } from '../LocalizationContext';
 
 const algoliaOptions = {
   appId: process.env.ALGOLIA_APP_ID as string,
-  searchApiKey: process.env.ALGOLIA_SEARCH_API_KEY as string,
-  sourceId: 'articles',
-  indexName: 'articles'
+  searchApiKey: process.env.ALGOLIA_SEARCH_API_KEY as string
 };
 
 const searchClient = algoliasearch(algoliaOptions.appId, algoliaOptions.searchApiKey);
@@ -31,6 +29,7 @@ export interface SettingsProps {
   variant?: string;
   placeholder?: string;
   searchResultsUrl?: string;
+  indexName?: string;
 }
 
 export interface templatesItemsProps {
@@ -58,7 +57,7 @@ export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
   const localization = useLocalizationContext();
   const { locale, defaultLocale } = router;
 
-  const { variant, searchResultsUrl } = settings as SettingsProps;
+  const { variant, searchResultsUrl, indexName } = settings as SettingsProps;
   const matchesDesktop = useMediaQuery(theme.breakpoints.up('sm'));
 
   const placeholder = localization['header.search.placeholder']?.shortTextValue ?? 'Search our knowledge base';
@@ -80,6 +79,8 @@ export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
     });
   };
 
+  if (!indexName) return null;
+
   return (
     <Root variant={variant} data-testid="AutocompleteBox">
       <Autocomplete
@@ -89,13 +90,13 @@ export const AutocompleteBox = ({ settings }: AutocompleteBoxProps) => {
         components={{ SearchResultItem }}
         getSources={({ query }: any) => [
           {
-            sourceId: algoliaOptions.sourceId,
+            sourceId: indexName,
             getItems() {
               return getAlgoliaResults({
                 searchClient,
                 queries: [
                   {
-                    indexName: algoliaOptions.indexName,
+                    indexName: indexName,
                     query,
                     params: {
                       filters

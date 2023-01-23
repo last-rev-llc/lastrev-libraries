@@ -49,13 +49,18 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
     if (!pageData) {
       throw new Error('NoPageFound');
     }
-    const isProtected = ((pageData?.page?.__typename === 'Article' && pageData?.page?.requiredRoles) || []).includes(
-      process.env.PROTECTED_PAGE_REQUIRED_ROLE || 'loggedIn'
-    );
+
+    const isProtected =
+      ((pageData?.page?.__typename === 'Article' && pageData?.page?.requiredRoles) || []).includes(
+        process.env.PROTECTED_PAGE_REQUIRED_ROLE || 'loggedIn'
+        // @ts-ignore
+      ) || pageData?.page?.auth === 'Okta';
 
     const protectedPageData = {
       page: {
-        seo: (pageData.page as any)?.seo
+        seo: (pageData.page as any)?.seo,
+        // @ts-ignore
+        auth: pageData?.page?.auth ?? ''
       }
     };
     let localizationLookup;
@@ -66,7 +71,8 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
 
     return {
       props: {
-        params: { path, locale, preview, site },
+        // @ts-ignore
+        params: { path, locale, preview, site, auth: pageData?.page?.auth ?? 'None' },
         isProtected,
         pageData: isProtected ? protectedPageData : pageData,
         localizationLookup

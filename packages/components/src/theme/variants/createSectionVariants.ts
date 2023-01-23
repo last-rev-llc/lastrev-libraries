@@ -26,7 +26,7 @@ export const defaultSectionWhiteVariant = (theme: Theme) => ({
     '& [class*=Text-root] h5': {
       color: theme.palette.midnight,
 
-      'a': {
+      a: {
         color: theme.palette.primary.dark
       }
     }
@@ -44,7 +44,7 @@ export const fiftyFiftyVariant = (theme: Theme) => ({
       gap: theme.spacing(4),
 
       [theme.breakpoints.up('md')]: {
-        gridTemplateColumns: 'repeat(2, 1fr)',
+        gridTemplateColumns: 'repeat(2, 1fr)'
       }
     }
   }
@@ -72,20 +72,20 @@ export const statementWithIconVariant = (theme: Theme) => ({
     variant: 'statement w/ icon'
   },
   style: {
-    margin: theme.spacing(1, 0),
-    padding: theme.spacing(1.25),
-    backgroundColor: theme.palette.midnight.A06,
-    border: `1px solid ${theme.palette.midnight.A20}`,
+    'margin': theme.spacing(1, 0),
+    'padding': theme.spacing(1.25),
+    'backgroundColor': theme.palette.midnight.A06,
+    'border': `1px solid ${theme.palette.midnight.A20}`,
 
     '& [class*=Section-gridContainer]': {
       alignItems: 'center'
     },
 
     '& [class*=Section-gridItem]': {
-      display: 'flex',
+      'display': 'flex',
 
       '&:first-of-type': {
-        flex: 0,
+        'flex': 0,
 
         '& [class*=Media-root]': {
           width: 20,
@@ -103,12 +103,28 @@ export const statementWithIconVariant = (theme: Theme) => ({
   }
 });
 
+export const stackedVariant = (theme: Theme) => ({
+  props: {
+    variant: 'stacked'
+  },
+  style: {
+    '& [class*=Section-gridContainer]': {
+      display: 'grid',
+      gridTemplateColumns: '1fr 1fr',
+      [theme.breakpoints.up('md')]: {
+        gridTemplateColumns: '1fr'
+      }
+    }
+  }
+});
+
 const textVariants = [
   defaultSectionVariant,
   fiftyFiftyVariant,
   twoThirdsVariant,
   statementWithIconVariant,
-  defaultSectionWhiteVariant
+  defaultSectionWhiteVariant,
+  stackedVariant
 ];
 
 const createTextVariants = (theme: Theme) => {

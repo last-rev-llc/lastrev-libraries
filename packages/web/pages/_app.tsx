@@ -6,6 +6,8 @@ import aa from 'search-insights';
 import { ThemeProvider } from '@mui/system';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
+import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
 import '@algolia/autocomplete-theme-classic';
 import '@last-rev/component-library/dist/styles.css';
 import theme from '@ias/components/src/theme';
@@ -18,7 +20,7 @@ const AuthProvider = dynamic(() => import('@ias/components/src/components/AuthPr
 const SEO = dynamic(() => import('@last-rev/component-library/dist/components/SEO/SEO'));
 const clientSideEmotionCache = createEmotionCache();
 
-interface MyAppProps extends AppProps {
+interface MyAppProps extends AppProps<{ session: Session }> {
   emotionCache?: EmotionCache;
 }
 
@@ -29,23 +31,25 @@ declare global {
   }
 }
 
-function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: MyAppProps) {
+function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps: { session, ...pageProps } }: MyAppProps) {
   useEffect(() => {
-    aa('init', {
-      appId: process.env.ALGOLIA_APP_ID as string,
-      apiKey: process.env.ALGOLIA_SEARCH_API_KEY as string,
-      useCookie: true
-    });
-    aa(
-      'onUserTokenChange',
-      (userToken) => {
-        // @ts-ignore
-        window.dataLayer.push({
-          algoliaUserToken: userToken
-        });
-      },
-      { immediate: true }
-    );
+    if (process.env.ALGOLIA_APP_ID && process.env.ALGOLIA_SEARCH_API_KEY) {
+      aa('init', {
+        appId: process.env.ALGOLIA_APP_ID as string,
+        apiKey: process.env.ALGOLIA_SEARCH_API_KEY as string,
+        useCookie: true
+      });
+      aa(
+        'onUserTokenChange',
+        (userToken) => {
+          // @ts-ignore
+          window.dataLayer.push({
+            algoliaUserToken: userToken
+          });
+        },
+        { immediate: true }
+      );
+    }
   }, []);
 
   /**
@@ -59,7 +63,7 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
     }
   }, []);
 
-  return (
+  const content = (
     <CacheProvider value={emotionCache}>
       {pageProps.pageData?.page?.seo ? <SEO seo={pageProps.pageData.page.seo} /> : null}
       <Head>
@@ -80,6 +84,10 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps }: 
       </ThemeProvider>
     </CacheProvider>
   );
+
+  if (pageProps?.pageData?.page?.auth === 'Okta') return <SessionProvider session={session}>{content}</SessionProvider>;
+
+  return content;
 }
 
 export default MyApp;

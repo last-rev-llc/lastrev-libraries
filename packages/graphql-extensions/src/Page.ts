@@ -5,10 +5,20 @@ import topicNavHorizontalResolver from './resolvers/topicNavHorizontalResolver';
 import createPath from './utils/createPath';
 import createType from './utils/createType';
 
+const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
+
 export const typeDefs = gql`
+  enum Auth {
+    None
+    Legacy
+    Okta
+  }
+
   extend type Page {
     topicNavItems: [NavigationItem]
     breadcrumbs: [Link]
+    indexName: String
+    auth: Auth
   }
 `;
 
@@ -37,6 +47,15 @@ export const mappers: any = {
         }
         if (!links.length) return undefined;
         return links;
+      },
+      indexName: async () => {
+        return process.env.ALGOLIA_INDEX_NAME;
+      },
+      auth: async (page: any, _args: any, ctx: ApolloContext) => {
+        const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
+        const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? SITE_ID, preview: !!ctx.preview });
+        const auth: any = getLocalizedField(site?.fields, 'auth', ctx);
+        return auth;
       }
     }
   }

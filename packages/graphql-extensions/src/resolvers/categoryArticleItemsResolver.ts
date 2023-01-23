@@ -15,15 +15,19 @@ const categoryArticleItemsResolver = async (category: any, _args: any, ctx: Apol
     if (!categoryIds) return false;
     return categoryIds.includes(category.sys.id);
   });
+  return articles
+    .filter((a: Entry<any>) => {
+      const excludeFromCategoryTopicPage = getLocalizedField(a.fields, 'excludeFromCategoryTopicPage', ctx);
+      return !excludeFromCategoryTopicPage;
+    })
+    .sort((a: Entry<any>, b: Entry<any>) => {
+      // Turn your strings into dates, and then subtract them
+      // to get a value that is either negative, positive, or zero.
+      const aDate: Date = new Date(getLocalizedField(a.fields, 'pubDate', ctx));
+      const bDate: Date = new Date(getLocalizedField(b.fields, 'pubDate', ctx));
 
-  return articles.sort((a: Entry<any>, b: Entry<any>) => {
-    // Turn your strings into dates, and then subtract them
-    // to get a value that is either negative, positive, or zero.
-    const aDate: Date = new Date(getLocalizedField(a.fields, 'pubDate', ctx));
-    const bDate: Date = new Date(getLocalizedField(b.fields, 'pubDate', ctx));
-
-    return bDate.getTime() - aDate.getTime();
-  });
+      return bDate.getTime() - aDate.getTime();
+    });
 };
 
 export default categoryArticleItemsResolver;

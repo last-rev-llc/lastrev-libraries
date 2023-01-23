@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { client } from '@ias/utils';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
+import { useSession, signIn } from 'next-auth/react';
+
 import { useAuthContext } from '../AuthProvider';
 import { ArticleLoading } from '../ArticleLoading';
 
@@ -11,6 +13,7 @@ type PageParams = {
   preview: boolean;
   site?: string;
   title?: string;
+  auth?: string;
 };
 
 function AuthGuardContent({ params }: { params: PageParams }) {
@@ -42,18 +45,26 @@ function AuthGuardContent({ params }: { params: PageParams }) {
   return null;
 }
 
-export function AuthGuard({ params }: { params: PageParams }) {
+export function AuthGuard({ params: { auth, ...params } }: { params: PageParams }) {
   const { authenticated, initializing, setRedirect } = useAuthContext();
+  const session = useSession();
+  const status = session?.status;
   const router = useRouter();
 
   useEffect(() => {
-    if (!initializing && !authenticated) {
+    if (!initializing && !authenticated && auth !== 'Okta') {
       setRedirect(router.asPath);
       window.location.href = `${process.env.USER_AUTH_DOMAIN}/api/idp/sfCommunity`;
     }
-  }, [initializing, router, authenticated, setRedirect]);
+  }, [initializing, router, authenticated, setRedirect, auth]);
 
-  if (authenticated) {
+  useEffect(() => {
+    if (auth === 'Okta' && status === 'unauthenticated') {
+      signIn('okta');
+    }
+  }, [auth, status]);
+
+  if (authenticated || status === 'authenticated') {
     return <AuthGuardContent params={params} />;
   }
 

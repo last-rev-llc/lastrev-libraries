@@ -2,6 +2,7 @@ export default {
   settings: {
     variant: 'home',
     placeholder: 'Placeholder for AutocompleteBox',
-    searchResultsUrl: '/search'
+    searchResultsUrl: '/search',
+    indexName: 'resources'
   }
 };

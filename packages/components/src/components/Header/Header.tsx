@@ -29,6 +29,7 @@ export interface HeaderProps {
   leftNav?: NavigationItemProps[];
   rightNav?: NavigationItemProps[];
   actions?: LinkProps[];
+  indexName?: string;
   sidekickLookup: any;
 }
 
@@ -39,6 +40,7 @@ export const Header = ({
   leftNav,
   rightNav,
   actions,
+  indexName,
   sidekickLookup
 }: HeaderProps) => {
   const [open, setOpen] = React.useState(false);
@@ -163,7 +165,8 @@ export const Header = ({
                 }}>
                 <AutocompleteBox
                   settings={{
-                    searchResultsUrl: '/search'
+                    searchResultsUrl: '/search',
+                    indexName
                   }}
                 />
               </Box>
