@@ -1,5 +1,18 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.4.7
+
+### Patch Changes
+
+- 6d0abb0: 'Updated app config to use feature flag for enablePathsV2'
+- Updated dependencies [6d0abb0]
+- Updated dependencies [6d0abb0]
+- Updated dependencies [6d0abb0]
+  - @last-rev/contentful-path-rules-engine@0.1.5
+  - @last-rev/types@0.3.6
+  - @last-rev/app-config@0.5.0
+  - @last-rev/contentful-path-util@0.1.22
+
 ## 0.4.6
 
 ### Patch Changes

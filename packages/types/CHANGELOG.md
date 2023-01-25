@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.3.6
+
+### Patch Changes
+
+- 6d0abb0: Updated tyeps to fix issues from apollo server update
+
 ## 0.3.5
 
 ### Patch Changes

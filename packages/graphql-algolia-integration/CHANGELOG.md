@@ -1,5 +1,11 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.10
+
+### Patch Changes
+
+- 6d0abb0: Updated tyeps to fix issues from apollo server update
+
 ## 0.1.9
 
 ### Patch Changes

@@ -1,5 +1,15 @@
 # @last-rev/contentful-path-util
 
+## 0.1.22
+
+### Patch Changes
+
+- 6d0abb0: 'Updated app config to use feature flag for enablePathsV2'
+- Updated dependencies [6d0abb0]
+- Updated dependencies [6d0abb0]
+  - @last-rev/contentful-path-rules-engine@0.1.5
+  - @last-rev/logging@0.1.2
+
 ## 0.1.21
 
 ### Patch Changes

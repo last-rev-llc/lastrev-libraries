@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.5.0
+
+### Minor Changes
+
+- 6d0abb0: 'Updated app config to use feature flag for enablePathsV2'
+
 ## 0.4.5
 
 ### Patch Changes

@@ -1,5 +1,13 @@
 # @last-rev/contentful-path-rules-engine
 
+## 0.1.5
+
+### Patch Changes
+
+- 6d0abb0: Updated tyeps to fix issues from apollo server update
+- 6d0abb0: Moved pathsconfigs into its own file and added v2 paths
+  - @last-rev/logging@0.1.2
+
 ## 0.1.4
 
 ### Patch Changes

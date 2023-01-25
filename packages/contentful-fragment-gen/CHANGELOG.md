@@ -1,5 +1,12 @@
 # @last-rev/contentful-fragment-gen
 
+## 0.2.4
+
+### Patch Changes
+
+- 6d0abb0: Updated tyeps to fix issues from apollo server update
+  - @last-rev/logging@0.1.2
+
 ## 0.2.3
 
 ### Patch Changes
