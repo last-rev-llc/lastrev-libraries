@@ -1,5 +1,18 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.2.0
+
+### Minor Changes
+
+- 6d0abb0: Moved pathsconfigs into its own file and added v2 paths
+
+### Patch Changes
+
+- Updated dependencies [6d0abb0]
+- Updated dependencies [6d0abb0]
+  - @last-rev/types@0.3.6
+  - @last-rev/graphql-contentful-core@0.5.14
+
 ## 0.1.13
 
 ### Patch Changes

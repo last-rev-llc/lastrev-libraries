@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/logging",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@last-rev/app-config": "^0.4.5",
+    "@last-rev/app-config": "^0.5.0",
     "datadog-winston": "^1.5.1",
     "dotenv": "^10.0.0",
     "winston": "^3.8.2"
