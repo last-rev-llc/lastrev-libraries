@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
@@ -19,9 +19,6 @@ export const Quote = ({
   actions,
   ...props
 }: QuoteProps) => {
-  useEffect(() => {
-    throw new Error('TestErrorInQuote');
-  }, []);
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} {...props} data-testid="Quote">

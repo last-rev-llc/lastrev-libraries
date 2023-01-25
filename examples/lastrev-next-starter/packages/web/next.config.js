@@ -57,12 +57,13 @@ const securityHeaders = [
   }
 ];
 
-const hasAllSentryVars =
+const hasAllSentryVars = !!(
   process.env.SENTRY_PROJECT &&
   process.env.SENTRY_AUTH_TOKEN &&
   process.env.SENTRY_URL &&
   process.env.SENTRY_ORG &&
-  process.env.NEXT_PUBLIC_SENTRY_DSN;
+  process.env.NEXT_PUBLIC_SENTRY_DSN
+);
 
 if (!hasAllSentryVars) {
   logger.warn('Sentry is disabled.  Please check your environment variables.');
