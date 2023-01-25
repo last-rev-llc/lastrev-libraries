@@ -147,7 +147,7 @@ const links = [
   'https://disneyland.disney.go.com/destinations/downtown-disney-district/',
   'https://disneyparks.disney.go.com/blog/2021/02/commemorating-20-years-at-disney-california-adventure-park-at-disneyland-resort/?CMP=SOC-DPFY21Q2wo0204210210210004C',
   'https://disneyparks.disney.go.com/blog/2021/02/a-touch-of-disney-new-limited-capacity-ticketed-experience-coming-to-disney-california-adventure-park-beginning-march-18/',
-  'https://www.dailynews.com/2021/01/28/universal-theme-park-revenue-dropped-4-billion-in-2020/#:~:text=Comcast's%20annual%20report%20says%20Universal,to%20%241.8%20billion%20in%202020.',
+  `https://www.dailynews.com/2021/01/28/universal-theme-park-revenue-dropped-4-billion-in-2020/#:~:text=Comcast's%20annual%20report%20says%20Universal,to%20%241.8%20billion%20in%202020.`,
   'https://www.businesswire.com/news/home/20210219005112/en/',
   'https://www.freedoniafocusreports.com/Amusement-Parks-United-States-FF95017/?progid=91541',
   'https://turbotax.intuit.com/personal-taxes/online/e-file-taxes/',
@@ -1461,4 +1461,6 @@ const links = [
   '/pathmatics/top-mobile-advertisers-august-2014',
   '/blog/top-mobile-advertisers-august-2014',
   '/blog/top-desktop-advertisers-august-2014'
-]
+];
+
+export default links;
