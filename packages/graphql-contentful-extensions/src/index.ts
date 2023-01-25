@@ -15,6 +15,7 @@ export * as RichText from './RichText';
 export * as Theme from './Theme';
 export * as Preview from './Preview';
 export * as Sidekick from './Sidekick';
+export * as PathsConfigs from './PathsConfigs';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;

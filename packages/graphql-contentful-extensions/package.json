@@ -24,7 +24,7 @@
     "css": "^3.0.0",
     "fast-xml-parser": "^4.0.8",
     "graphql": "^16.6.0",
-    "graphql-tag": "^2.12.4",
+    "graphql-tag": "^2.12.5",
     "lodash": "^4.17.21",
     "tslib": "^2.3.0"
   },

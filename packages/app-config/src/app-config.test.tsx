@@ -3,9 +3,15 @@ import LastRevAppConfig from './';
 import mockConfig, { redisConfig } from './app-config.mock';
 
 let mockedConfig = mockConfig();
+let consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
 
 beforeEach(() => {
   mockedConfig = mockConfig();
+  consoleWarn = jest.spyOn(console, 'warn').mockImplementation(() => {});
+});
+
+afterEach(() => {
+  consoleWarn.mockRestore();
 });
 
 describe('LastRevAppConfig', () => {
@@ -52,10 +58,9 @@ describe('LastRevAppConfig', () => {
   });
 
   describe('paths', () => {
-    test('paths values default to v1 and generateFullPathTree:true', () => {
+    test('paths.generateFullPathTree defaults to true', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
       expect(appConfig.paths).toEqual({
-        version: 'v1',
         generateFullPathTree: true
       });
     });
@@ -359,26 +364,59 @@ describe('LastRevAppConfig', () => {
       expect(JSON.stringify(appConfig.sites)).toBe(JSON.stringify(mockedConfig.sites));
     });
 
-    test('skipReferenceFields returns skipReferenceFields', () => {
-      const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.skipReferenceFields).toBe(mockedConfig.skipReferenceFields);
-    });
-
-    test('skipReferenceFields defaults to true if not provided', () => {
-      mockedConfig.skipReferenceFields = undefined;
-      const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.skipReferenceFields).toBe(true);
-    });
-
     test('jwtSigningSecret defaults to nothing if not provided', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
       expect(appConfig.jwtSigningSecret).toBeUndefined();
     });
+  });
 
-    test('skipReferenceFields defaults to true if not provided', () => {
-      mockedConfig.jwtSigningSecret = 'test-token';
+  describe('feature flags', () => {
+    test('disableCoreSidekickLookup defaults to false and warns user', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.jwtSigningSecret).toBe('test-token');
+      expect(appConfig.features.disableCoreSidekickLookup).toBe(false);
+      expect(consoleWarn).toHaveBeenCalledWith(
+        'The SidekickLookupResolver in the core is being deprecated. See how to migrate: https://lastrev.atlassian.net/wiki/spaces/KB/pages/108167187/Sidekick+Lookup+Migration'
+      );
+    });
+    test('when disableCoreSidekickLookup is set to true, it returns true and no warning is logged', () => {
+      Object.assign(mockedConfig.features!, { disableCoreSidekickLookup: true });
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.features.disableCoreSidekickLookup).toBe(true);
+      expect(consoleWarn).not.toHaveBeenCalled();
+    });
+    test('disableFederatedSchema defaults to false', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.features.disableFederatedSchema).toBe(false);
+    });
+    test('when disableFederatedSchema is set to true, it returns true', () => {
+      Object.assign(mockedConfig.features!, { disableFederatedSchema: true });
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.features.disableFederatedSchema).toBe(true);
+    });
+    test('enablePathsV2 defaults to false', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.features.enablePathsV2).toBe(false);
+    });
+    test('enablePathsV2 set to true returns true', () => {
+      Object.assign(mockedConfig.features!, { enablePathsV2: true });
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.features.enablePathsV2).toBe(true);
+    });
+    test('deprecated paths.version=V1 enablePathsV2 feature flag to false and warns user', () => {
+      Object.assign(mockedConfig.paths!, { version: 'v1' });
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.features.enablePathsV2).toBe(false);
+      expect(consoleWarn).toHaveBeenCalledWith(
+        'The paths.version config option is deprecated. Use the features.enablePathsV2 option instead'
+      );
+    });
+    test('deprecated paths.version=V2 enablePathsV2 feature flag to true and warns user', () => {
+      Object.assign(mockedConfig.paths!, { version: 'v2' });
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.features.enablePathsV2).toBe(true);
+      expect(consoleWarn).toHaveBeenCalledWith(
+        'The paths.version config option is deprecated. Use the features.enablePathsV2 option instead'
+      );
     });
   });
 });

@@ -219,14 +219,8 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
 
   get paths() {
     return {
-      version: this.config.paths?.version || 'v1',
       generateFullPathTree: this.config.paths?.generateFullPathTree || true
     };
-  }
-
-  get skipReferenceFields() {
-    // defaults to true, to allow backwards compatibility
-    return isNil(this.config.skipReferenceFields) ? true : this.config.skipReferenceFields;
   }
 
   get sitemap() {
@@ -245,9 +239,15 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
         'The SidekickLookupResolver in the core is being deprecated. See how to migrate: https://lastrev.atlassian.net/wiki/spaces/KB/pages/108167187/Sidekick+Lookup+Migration'
       );
     }
+    if (this.config.paths?.version) {
+      console.warn('The paths.version config option is deprecated. Use the features.enablePathsV2 option instead');
+    }
     return {
-      disableCoreSidekickLookup: this.config.features?.disableCoreSidekickLookup,
-      disableFederatedSchema: this.config.features?.disableFederatedSchema
+      disableCoreSidekickLookup: !!this.config.features?.disableCoreSidekickLookup,
+      disableFederatedSchema: !!this.config.features?.disableFederatedSchema,
+      enablePathsV2: isNil(this.config.features?.enablePathsV2)
+        ? this.config.paths?.version === 'v2'
+        : !!this.config.features?.enablePathsV2
     };
   }
 }

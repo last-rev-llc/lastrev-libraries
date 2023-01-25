@@ -66,11 +66,13 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
     })
   };
 
-  const pathToContentLoader =
-    config.paths.version === 'v2' ? new PathToContentLoader(config.extensions.pathsConfigs) : null;
+  const pathToContentLoader = config.features.enablePathsV2
+    ? new PathToContentLoader(config.extensions.pathsConfigs)
+    : null;
 
-  const contentToPathsLoader =
-    config.paths.version === 'v2' ? new ContentToPathsLoader(config.extensions.pathsConfigs) : null;
+  const contentToPathsLoader = config.features.enablePathsV2
+    ? new ContentToPathsLoader(config.extensions.pathsConfigs)
+    : null;
 
   return {
     contentful,

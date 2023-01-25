@@ -45,5 +45,6 @@ export default (): LastRevAppConfigArgs => ({
     typeMappings: {},
     pathsConfigs: {}
   },
-  skipReferenceFields: false
+  paths: {},
+  features: {}
 });
