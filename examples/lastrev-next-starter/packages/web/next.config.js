@@ -16,6 +16,13 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: enableAnalyzer
 });
 
+const { getWinstonLogger } = require('@last-rev/logging');
+
+const logger = getWinstonLogger({
+  package: 'web',
+  module: 'next.config'
+});
+
 const ContentSecurityPolicy = `
   default-src 'self'  *.sentry.io  *.facebook.com;
   style-src 'self' 'unsafe-inline'  *.sentry.io  fonts.googleapis.com;
@@ -49,6 +56,18 @@ const securityHeaders = [
     value: 'camera=(), microphone=(), geolocation=()'
   }
 ];
+
+const hasAllSentryVars = !!(
+  process.env.SENTRY_PROJECT &&
+  process.env.SENTRY_AUTH_TOKEN &&
+  process.env.SENTRY_URL &&
+  process.env.SENTRY_ORG &&
+  process.env.NEXT_PUBLIC_SENTRY_DSN
+);
+
+if (!hasAllSentryVars) {
+  logger.warn('Sentry is disabled.  Please check your environment variables.');
+}
 
 const nextConfig = {
   ...(process.env.NODE_ENV === 'production' && {
@@ -97,12 +116,12 @@ const nextConfig = {
     // formats: ['image/avif', 'image/webp']
     formats: ['image/webp']
   },
-  ...(!process.env.SENTRY_PROJECT && {
-    sentry: {
-      disableServerWebpackPlugin: true,
-      disableClientWebpackPlugin: true
-    }
-  }),
+  sentry: {
+    disableServerWebpackPlugin: !hasAllSentryVars,
+    disableClientWebpackPlugin: !hasAllSentryVars,
+    hideSourceMaps: true,
+    widenClientFileUpload: true
+  },
   webpack: (config, { webpack }) => {
     // Important: return the modified config
     config.resolve.alias = {
