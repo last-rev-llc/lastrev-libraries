@@ -1,5 +1,11 @@
 # @last-rev/contentful-cms-loader
 
+## 0.4.2
+
+### Patch Changes
+
+- e7fb567: Fixed a bug iin the refby loader
+
 ## 0.4.1
 
 ### Patch Changes
