@@ -118,7 +118,9 @@ const nextConfig = {
   },
   sentry: {
     disableServerWebpackPlugin: !hasAllSentryVars,
-    disableClientWebpackPlugin: !hasAllSentryVars
+    disableClientWebpackPlugin: !hasAllSentryVars,
+    hideSourceMaps: true,
+    widenClientFileUpload: true
   },
   webpack: (config, { webpack }) => {
     // Important: return the modified config
