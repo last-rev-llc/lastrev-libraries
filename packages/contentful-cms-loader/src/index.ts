@@ -304,15 +304,12 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
           if (x.sys.contentType.sys.id === contentType) {
             const fieldValue = x.fields[field]?.[defaultLocale];
             if (Array.isArray(fieldValue)) {
-              if (fieldValue.some((f) => f?.type === 'Link' && f?.sys?.id === id)) {
+              if (fieldValue.some((f) => f?.sys?.type === 'Link' && f?.sys?.id === id)) {
                 acc.push(x);
               }
-            } else {
-              if (fieldValue?.type === 'Link' && fieldValue?.sys?.id === id) {
-                acc.push(x);
-              }
+            } else if (fieldValue?.sys?.type === 'Link' && fieldValue?.sys?.id === id) {
+              acc.push(x);
             }
-            acc.push(x);
           }
           return acc;
         }, [] as Entry<any>[]);
