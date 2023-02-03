@@ -38,6 +38,8 @@ export type WebhookParserResult = {
   contentStates: ('preview' | 'production')[];
   type: 'Entry' | 'Asset' | 'ContentType';
   env: string;
+  itemId: string;
+  isTruncated: boolean;
 };
 
 const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeaders): WebhookParserResult => {
@@ -47,8 +49,11 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
     throw Error('Invalid topics in x-contentful-topic header.');
   }
 
-  const spaceId = body.sys.space?.sys.id;
-  const environmentId = body.sys?.environment.sys.id;
+  const spaceId = body?.sys?.space?.sys?.id;
+  const environmentId = body?.sys?.environment?.sys?.id;
+  // body.fields is an object and is not an empty object
+  const isTruncated = !body.fields || Object.keys(body.fields).length === 0;
+  const itemId = body?.sys?.id;
 
   if (spaceId !== config.contentful.spaceId) {
     throw Error('Space id in webhook does not match configuration.');
@@ -64,7 +69,9 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
     action: actionMappings[contentfulAction].action,
     contentStates: actionMappings[contentfulAction].envs,
     type,
-    env: environmentId
+    env: environmentId,
+    itemId,
+    isTruncated
   };
 };
 
