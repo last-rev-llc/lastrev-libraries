@@ -1943,9 +1943,9 @@
     regenerator-runtime "^0.13.4"
 
 "@babel/runtime@^7.4.5":
-  version "7.20.7"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.7.tgz#fcb41a5a70550e04a7b708037c7c32f7f356d8fd"
-  integrity sha512-UF0tvkUtxwAgZ5W/KrkHf0Rn0fdnLDU9ScxBrEVNUprE/MzirjK4MJUX1/BVDv00Sv8cljtukVK1aky++X1SjQ==
+  version "7.20.13"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.20.13.tgz#7055ab8a7cff2b8f6058bf6ae45ff84ad2aded4b"
+  integrity sha512-gt3PKXs0DBoL9xCvOIIZ2NEqAGZqHjAnmVbfQtB620V0uReIQutpel14KcneZuer7UioY8ALKZ7iocavvzTNFA==
   dependencies:
     regenerator-runtime "^0.13.11"
 
@@ -3138,9 +3138,9 @@
     lodash.once "^4.1.1"
 
 "@dabh/diagnostics@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@dabh/diagnostics/-/diagnostics-2.0.2.tgz#290d08f7b381b8f94607dc8f471a12c675f9db31"
-  integrity sha512-+A1YivoVDNNVCdfozHSR8v/jyuuLTMXwjWuxPFlFlUapXoGc+Gj9mDlTDDfrwl7rXCl2tNZ0kE8sIBO6YOn96Q==
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@dabh/diagnostics/-/diagnostics-2.0.3.tgz#7f7e97ee9a725dffc7808d93668cc984e1dc477a"
+  integrity sha512-hrlQOIi7hAfzsMqlGSFyVucrx38O+j6wiGOf//H2ecvIEqYN4ADBSS2iLMh5UFyDunCNniUIPk/q3riFv45xRA==
   dependencies:
     colorspace "1.1.x"
     enabled "2.0.x"
@@ -4348,34 +4348,6 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@last-rev/app-config@^0.2.2":
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/@last-rev/app-config/-/app-config-0.2.3.tgz#ab3761b4ff1321dcf2a0fe51519c7406b80c4df6"
-  integrity sha512-inS0HUpMgIbQzfDaZCXKOsELjR2MbjAH0AWR6Ue1c9p99SbTbox6zAZLdXLFGXNdnHFFjoWerUn5L1wfcq0feA==
-  dependencies:
-    lodash "^4.17.21"
-
-"@last-rev/app-config@^0.3.0":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@last-rev/app-config/-/app-config-0.3.1.tgz#17a87576f044c7c0a59305eda9748d33b099e977"
-  integrity sha512-balEwccHJ2uRiz+NYvAM6Zds/1nsvfnMSQcnNWYa4GzLIFhNg9RBLUVr07+/QWpo6kxhkQt/iHD+WuNdG3/mZQ==
-  dependencies:
-    lodash "^4.17.21"
-
-"@last-rev/app-config@^0.4.0":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/app-config/-/app-config-0.4.2.tgz#9449780e10c890cef7b3243dc4f5264079300343"
-  integrity sha512-r1Uxzo6m0gzYRrOYIf1IPe8lyPNX+6SSPiPrkVq14pe0fVfzHQG3e/0JdSEBOxab/FqMEKwfT3k30wiN/YgjUw==
-  dependencies:
-    lodash "^4.17.21"
-
-"@last-rev/app-config@^0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@last-rev/app-config/-/app-config-0.4.4.tgz#f6a96896537215ea54023e23ed1ea7eb3efdd64e"
-  integrity sha512-fjQwaQRmCX/d8PUKA1qMM6lt9eSHVf2TGSAC/uSaCdUGw4+u2zibp2ut8g+Wu7FUEyEhfNsWY3lKG8/evgXm3A==
-  dependencies:
-    lodash "^4.17.21"
-
 "@last-rev/app-config@^0.4.5":
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/@last-rev/app-config/-/app-config-0.4.5.tgz#e17a25cde4516ec124673e3877dfb550b8ff97fd"
@@ -4383,20 +4355,27 @@
   dependencies:
     lodash "^4.17.21"
 
-"@last-rev/cli@^0.5.11":
-  version "0.5.11"
-  resolved "https://registry.yarnpkg.com/@last-rev/cli/-/cli-0.5.11.tgz#f654c6c2a05a3118801b5fec111784951a5e633e"
-  integrity sha512-E+Y9CGQ/j84C1QxjCq/b87jN4EYzuG59rzqtubtmwwwH8BG1rqHgInEsxzey2VDlrf8G6jPlR5pYMWo09NAlpw==
+"@last-rev/app-config@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/app-config/-/app-config-0.5.0.tgz#c0973b8f16ac3d78ae72158a898a88e8fffc087a"
+  integrity sha512-krAXIEdsnGpse9yH0n0MrfJVGAzFSIs1PDLlryFlCQ/ESUmAd3cFqKooo/CIY/E1o58iDu9TZyM5E0j3oe6ejQ==
+  dependencies:
+    lodash "^4.17.21"
+
+"@last-rev/cli@^0.5.15":
+  version "0.5.15"
+  resolved "https://registry.yarnpkg.com/@last-rev/cli/-/cli-0.5.15.tgz#8134e05f54d38209f9dd3a47d2054ed9cb60c215"
+  integrity sha512-oPcRFoOaPLDElZOHVAp4lGyAiM2ZTsxAVqpqaf0YNWYoxPmxsDPsA9RRW3r2Jho5PXfJHz20qs/I15dQhJ6jjA==
   dependencies:
     "@apollo/server" "^4.3.0"
     "@graphql-tools/merge" "^6.2.14"
-    "@last-rev/app-config" "^0.4.4"
-    "@last-rev/contentful-fragment-gen" "^0.2.2"
-    "@last-rev/contentful-import-export" "^0.1.4"
+    "@last-rev/app-config" "^0.5.0"
+    "@last-rev/contentful-fragment-gen" "^0.2.4"
+    "@last-rev/contentful-import-export" "^0.1.5"
     "@last-rev/contentful-s3-sync" "^0.1.2"
-    "@last-rev/contentful-sync-to-fs" "^0.3.5"
-    "@last-rev/graphql-contentful-core" "^0.5.10"
-    "@last-rev/graphql-contentful-helpers" "^0.4.4"
+    "@last-rev/contentful-sync-to-fs" "^0.3.10"
+    "@last-rev/graphql-contentful-core" "^0.5.14"
+    "@last-rev/graphql-contentful-helpers" "^0.4.7"
     "@last-rev/testing-library" "^0.1.10"
     "@octokit/rest" "^18.6.2"
     "@types/inquirer" "^7.3.2"
@@ -4478,130 +4457,98 @@
     yarn "^1.22.18"
     yup "^0.30.0"
 
-"@last-rev/contentful-cms-loader@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-cms-loader/-/contentful-cms-loader-0.4.0.tgz#1910f3055ce76d1a88a60d10fa9d0da4f4d849af"
-  integrity sha512-VKmD2STnyEQLCiwfB0RmVBNJSCJoPAzVsPL0/NWGIjL61lwCSqH3nPBk/O5s1zLX9wiOyImYvRKjQs8peOjHog==
+"@last-rev/contentful-cms-loader@^0.4.1":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-cms-loader/-/contentful-cms-loader-0.4.2.tgz#29afaae63d276fb0dbbe26528ba136b1bf6473c7"
+  integrity sha512-zy3dDhuKTFXHvCsbvVmlWOZ/4EdppPznSY5JLIsUj0/vcSF8u/u9Qbo59eez687R/4eB8EM40SDhgtVj6LBE3Q==
   dependencies:
-    "@last-rev/timer" "^0.1.3"
+    "@last-rev/logging" "^0.1.2"
+    "@last-rev/timer" "^0.2.0"
     dataloader "^2.0.0"
     lodash "^4.17.21"
-    loglevel "^1.7.1"
     tslib "^2.3.0"
 
-"@last-rev/contentful-dynamodb-loader@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-dynamodb-loader/-/contentful-dynamodb-loader-0.3.0.tgz#f2f1f84dfd87a11a0070db9bbd002b3835beeccb"
-  integrity sha512-gklJSWLHCoP7G1FQrU6BL7OHeGNCl7uh5QYZAK/UzDOeFyNpJjMJUYPH/IICfHSrvekTcNIaE0FaVGV+ef7/DQ==
+"@last-rev/contentful-dynamodb-loader@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-dynamodb-loader/-/contentful-dynamodb-loader-0.3.1.tgz#23beb55c699f7b9be4c86435acc7c9e12c1f9aa7"
+  integrity sha512-njrL4VoHdR4coaEZ8MI5yDpIYwxHqGi3oYEYVhCJcBbxgtyq2nW7YhxxdKM2JFrFpEmpXYLkyQjc9B1rYCinBQ==
   dependencies:
-    "@last-rev/timer" "^0.1.3"
+    "@last-rev/logging" "^0.1.1"
+    "@last-rev/timer" "^0.2.0"
     aws-sdk "^2.1012.0"
     dataloader "^2.0.0"
     lodash "^4.17.21"
-    loglevel "^1.7.1"
     tslib "^2.3.0"
 
-"@last-rev/contentful-fragment-gen@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-fragment-gen/-/contentful-fragment-gen-0.2.2.tgz#cf1f09af4ef3366c3e1e4ca0c4d9f6632751ba70"
-  integrity sha512-iPllu75bV3vggiZiBA/wqiLKgPxRV1ykf5917j/E1Dvl66nWURPum0ZkltX2yd9FBEpE0WUNWqwMkv0xnjOL+g==
+"@last-rev/contentful-fragment-gen@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-fragment-gen/-/contentful-fragment-gen-0.2.4.tgz#875b0ce4a01361a71e8b3f8dff103cc10b0ad666"
+  integrity sha512-47NxmuvTj6ufkislsaGOJTBOWTgkQqCEhQgcI8g68d54y5bklznF4TCsRw1QWSS5E1DnGZe7bLH8FSn1ZSL5pQ==
   dependencies:
-    "@last-rev/timer" "^0.1.3"
+    "@last-rev/logging" "^0.1.2"
+    "@last-rev/timer" "^0.2.0"
     contentful "^8.4.2"
     file-matcher "^1.3.0"
     fs-extra "^10.0.0"
     graphql "^16.6.0"
-    graphql-tag "^2.12.4"
+    graphql-tag "^2.12.5"
     handlebars "^4.7.7"
     lodash "^4.17.21"
-    loglevel "^1.7.1"
     tslib "^2.3.0"
 
-"@last-rev/contentful-fs-loader@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-fs-loader/-/contentful-fs-loader-0.3.0.tgz#1a191c9ffe6dee69fa68f7596a148460a3a212ce"
-  integrity sha512-QEUaVfiGwavs4A5UbbEhLaQwbvaqNKMRfpWPlxLFUHNpLczfvj1AxT21jV0yMThn16Y0C66dA7bQNPd+y5BwbQ==
+"@last-rev/contentful-fs-loader@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-fs-loader/-/contentful-fs-loader-0.3.1.tgz#fa2b47fd01c17eac89a100fc8c643080ce1f0071"
+  integrity sha512-4tPXREa2m7w1eqVDHz0qUHNny2Z4BTSoDcwzGxcYpDfIlrA/Iy/olnAagx6wBIOgbh67+PkVwUAy7A70b48PEA==
   dependencies:
-    "@last-rev/timer" "^0.1.3"
+    "@last-rev/logging" "^0.1.1"
+    "@last-rev/timer" "^0.2.0"
     dataloader "^2.0.0"
     fs-extra "^10.0.0"
     lodash "^4.17.21"
-    loglevel "^1.7.1"
     tslib "^2.3.0"
 
-"@last-rev/contentful-import-export@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-import-export/-/contentful-import-export-0.1.4.tgz#dac89790252bb139b56cacf4e60d88f23b741ebf"
-  integrity sha512-PmNKvU1UGHGmMz+xNaI/qQK2cuHNYlBlKF8+W9bPdmrX5EljmKbA39C9VE1Rnx62PuVykYSOEltQLBio/Hf1gw==
+"@last-rev/contentful-import-export@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-import-export/-/contentful-import-export-0.1.5.tgz#5476fd5a029e1deaf21001c76db2833951bc4496"
+  integrity sha512-BkK9saADeqp4PlAV9IsIO7iYZ9XNoz0qnXHWu3NXq7lR+GOathjZciJdXGvv51PxQriRxyuAaos0hV84mge1Jw==
   dependencies:
     contentful-export "^7.13.14"
     contentful-import "^8.2.9"
     lodash "^4.17.21"
 
-"@last-rev/contentful-path-rules-engine@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-path-rules-engine/-/contentful-path-rules-engine-0.1.2.tgz#892c7ee5b8d048f4f5b2304785c126906ef71f4a"
-  integrity sha512-5oryBXqaxjtCQORA6H+lCtJKkM94iGMFhu7RZ9JX3+/DTl1Yx8ZJ89fQX/ii80Z9WH8N59AKO7reUH95BkKYKg==
+"@last-rev/contentful-path-rules-engine@^0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-path-rules-engine/-/contentful-path-rules-engine-0.1.5.tgz#eefe69d52dd2c724770d59a41398699158758af2"
+  integrity sha512-FyN6p2/sAyuoGXxhnvVyfKXY3grzl0DERy7At59dAM9uG+8DE5H4HlG2di5hIAVO+4GgLPUNa01oewbGFEWh/g==
   dependencies:
-    loglevel "^1.7.1"
+    "@last-rev/logging" "^0.1.2"
 
-"@last-rev/contentful-path-util@^0.1.16":
-  version "0.1.16"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-path-util/-/contentful-path-util-0.1.16.tgz#93b09563c4d0b035bfd8c2b2f38118cd14ef107e"
-  integrity sha512-dWL+0+K0+oJY9euOwf+G44zgn80KAk+2gmUwtstETk47BJu9rSy7wS9ciow87E8NdsbD0K6MNJyqUOVuuJabHA==
+"@last-rev/contentful-path-util@^0.1.20", "@last-rev/contentful-path-util@^0.1.21", "@last-rev/contentful-path-util@^0.1.22":
+  version "0.1.22"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-path-util/-/contentful-path-util-0.1.22.tgz#c9a580083e0837e8bc5705da815e6188014795a6"
+  integrity sha512-3arMO/SLlpX2koRfqgjHlXq/ERbM/umYvLMCWV+JDRjhVycHNgu3I61bkbp7HEYBefSgJZatzvtmSHdd8chdxA==
   dependencies:
-    "@last-rev/contentful-path-rules-engine" "^0.1.2"
-    "@last-rev/timer" "^0.1.3"
+    "@last-rev/contentful-path-rules-engine" "^0.1.5"
+    "@last-rev/logging" "^0.1.2"
+    "@last-rev/timer" "^0.2.0"
     async-lock "^1.3.0"
     aws-sdk "^2.1012.0"
     contentful "^8.4.2"
     fs-extra "^10.0.0"
     ioredis "^5.0.4"
     lodash "^4.17.21"
-    loglevel "^1.7.1"
     tslib "^2.3.0"
 
-"@last-rev/contentful-path-util@^0.1.17":
-  version "0.1.17"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-path-util/-/contentful-path-util-0.1.17.tgz#815520012ee5f1bbfb5baea912e5980468a2f63b"
-  integrity sha512-xtsmw7Kt+H4z7wNgpUmmD7jw489cMjvnHqE9MsD0pWAbfwjJRhQszOesRKjPBRUR2PcDo2s+QIWhw3xzwkPQqw==
+"@last-rev/contentful-redis-loader@^0.5.3":
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-redis-loader/-/contentful-redis-loader-0.5.3.tgz#0abf12ea9f37e16412de50403243fe979ef5062d"
+  integrity sha512-4Muy6IeS5ZH01CJee9y1VD9ryfhB5dN0YMJN89SsiFfKO0DNbzTJRCzAPimYEfjqz0zP4NhGQqNRtEyBRpk4qA==
   dependencies:
-    "@last-rev/contentful-path-rules-engine" "^0.1.2"
-    "@last-rev/timer" "^0.1.3"
-    async-lock "^1.3.0"
-    aws-sdk "^2.1012.0"
-    contentful "^8.4.2"
-    fs-extra "^10.0.0"
-    ioredis "^5.0.4"
-    lodash "^4.17.21"
-    loglevel "^1.7.1"
-    tslib "^2.3.0"
-
-"@last-rev/contentful-path-util@^0.1.19":
-  version "0.1.19"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-path-util/-/contentful-path-util-0.1.19.tgz#595effd9c8aeb2faa92a605764a3960c9f563c62"
-  integrity sha512-7STWu0PDUw1dBLb3VH3fU/02k+PxMeprALAjv/uTYBEZxwDOUNB5Mw7WGRK3iW5MU1lekIwhRJfj7odaWivJ/A==
-  dependencies:
-    "@last-rev/contentful-path-rules-engine" "^0.1.2"
-    "@last-rev/timer" "^0.1.3"
-    async-lock "^1.3.0"
-    aws-sdk "^2.1012.0"
-    contentful "^8.4.2"
-    fs-extra "^10.0.0"
-    ioredis "^5.0.4"
-    lodash "^4.17.21"
-    loglevel "^1.7.1"
-    tslib "^2.3.0"
-
-"@last-rev/contentful-redis-loader@^0.5.0", "@last-rev/contentful-redis-loader@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-redis-loader/-/contentful-redis-loader-0.5.2.tgz#348ecdcf05c85703432a6c02f8d953873833b54d"
-  integrity sha512-d4PWmErA7wlcTKg87++26TFHhwZqeMtSRvloi7VWLrVdcUsuuDZSXQqx1xQ5E0YLHpGl3CVv/tObboxurQ7c9w==
-  dependencies:
-    "@last-rev/timer" "^0.1.3"
+    "@last-rev/logging" "^0.1.1"
+    "@last-rev/timer" "^0.2.0"
     dataloader "^2.0.0"
     ioredis "^5.0.4"
-    loglevel "^1.7.1"
 
 "@last-rev/contentful-s3-sync@^0.1.2":
   version "0.1.2"
@@ -4612,13 +4559,6 @@
     cross-spawn "^7.0.3"
     tslib "^2.3.0"
 
-"@last-rev/contentful-sidekick-util@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-sidekick-util/-/contentful-sidekick-util-0.1.1.tgz#8526ec906dec48b93f7ec19750512ed0d74ce8d0"
-  integrity sha512-PSU0sMIdWBGM1JbeCexK4RUIX5U6rAiyJKfbaqIJalVHmGzUVr6geH4qkh2+5QleQ3mDFIQDZiXc6WmCt1Bolw==
-  dependencies:
-    lodash "^4.17.20"
-
 "@last-rev/contentful-sidekick-util@^0.1.2":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@last-rev/contentful-sidekick-util/-/contentful-sidekick-util-0.1.2.tgz#942b61f4d0d5897ce98a6f5cf7130d1a1ad2ad76"
@@ -4626,38 +4566,45 @@
   dependencies:
     lodash "^4.17.20"
 
-"@last-rev/contentful-sync-to-fs@^0.3.5":
-  version "0.3.8"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-sync-to-fs/-/contentful-sync-to-fs-0.3.8.tgz#41c062e15f4cb42e5684ecc7636851ba2a2adea2"
-  integrity sha512-z+HvS3rOK1W5Qt5F6aNd+ZptuEQBqZ770a4Ozh3iLgc37uAdijH4JZiweMAw5LUh1Z0VpVurATmybHXgyaiMdA==
+"@last-rev/contentful-sidekick-util@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-sidekick-util/-/contentful-sidekick-util-0.1.3.tgz#59b911cd80a0d21d6e4ba0b9d9323331a7f59e55"
+  integrity sha512-+z7QSICvZ7VdLKPb/O7W2iq3k30CLAooqNooNoJfrY/TN4uQpsAsCfSDZ8Df6q0oB/yqNqen8cEx0O6+y5Nytw==
   dependencies:
-    "@last-rev/contentful-path-util" "^0.1.16"
-    "@last-rev/graphql-contentful-helpers" "^0.4.2"
-    "@last-rev/timer" "^0.1.3"
+    lodash "^4.17.20"
+
+"@last-rev/contentful-sync-to-fs@^0.3.10":
+  version "0.3.10"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-sync-to-fs/-/contentful-sync-to-fs-0.3.10.tgz#991bbd73e21214b2d66360d7838a801a131c58f1"
+  integrity sha512-cwxhFZtBYyKszTo+Tort7Ehcxdy9nt2vonnwOE/a9fFVRD3WUkwKZP9d1gtOYqC5gm8p996RVSDqsXB9WDLJNw==
+  dependencies:
+    "@last-rev/contentful-path-util" "^0.1.20"
+    "@last-rev/graphql-contentful-helpers" "^0.4.5"
+    "@last-rev/logging" "^0.1.1"
+    "@last-rev/timer" "^0.2.0"
     fs-extra "^10.0.0"
     lodash "^4.17.21"
-    loglevel "^1.7.1"
     ora "^5.4.1"
     tslib "^2.3.0"
 
 "@last-rev/contentful-webhook-handler@^0.4.11":
-  version "0.4.11"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-webhook-handler/-/contentful-webhook-handler-0.4.11.tgz#deabb3b59754d65c1125eacd0272d2b7f6207281"
-  integrity sha512-MxkwE9jTd4eMifeG1TPafecY7bUEd6V60ho/OdNDS+5cXpKfC8m2hxU2GunU9wP3uK85Z3W8Tg5ATKSOlofR/Q==
+  version "0.4.13"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-webhook-handler/-/contentful-webhook-handler-0.4.13.tgz#8f9a81fb6aeb2cf3b9acf43e2376c1198cfec807"
+  integrity sha512-iYbQx9/gyVwzTOTXfI74/gf6wQBUsKOlUuIUHjdzWfUEbn3/1K9LXSHfWpnyYyj2KWaAXuayFwEw6uhl5hb5pA==
   dependencies:
-    "@last-rev/contentful-path-util" "^0.1.17"
-    "@last-rev/contentful-webhook-parser" "^0.1.1"
-    "@last-rev/graphql-contentful-helpers" "^0.4.3"
+    "@last-rev/contentful-path-util" "^0.1.21"
+    "@last-rev/contentful-webhook-parser" "^0.1.2"
+    "@last-rev/graphql-contentful-helpers" "^0.4.6"
     aws-sdk "^2.1012.0"
     contentful "^9.0.0"
     ioredis "^5.0.4"
-    jsonwebtoken "^8.5.1"
+    jsonwebtoken "^9.0.0"
     lodash "^4.17.21"
 
-"@last-rev/contentful-webhook-parser@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@last-rev/contentful-webhook-parser/-/contentful-webhook-parser-0.1.1.tgz#6ce47f1335fc56b334497e087a23b1c55aa720ae"
-  integrity sha512-PLBUg8hjYAsMPLyCH9FXd5n+l2BLuvuItKyKgrslZ6gzaDZLZWym/FIWQ9bZx69Bk/6MkQ2X2riWmjC/G4uBEg==
+"@last-rev/contentful-webhook-parser@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@last-rev/contentful-webhook-parser/-/contentful-webhook-parser-0.1.2.tgz#ea6fa805af8717968b7c6610c453773b3c32e851"
+  integrity sha512-4xnk5owVe57IvCaD3IaK6bZRlws4E9NCZYb/ruUpG5TUjYbo4mThAJovS5Av8n7rLno0hNykWN+VR3XLTzwJHg==
   dependencies:
     contentful "^9.0.0"
 
@@ -4668,25 +4615,25 @@
   dependencies:
     eslint-plugin-json-es "^1.5.4"
 
-"@last-rev/graphql-algolia-integration@^0.1.7":
-  version "0.1.7"
-  resolved "https://registry.yarnpkg.com/@last-rev/graphql-algolia-integration/-/graphql-algolia-integration-0.1.7.tgz#e8f843219e3fd2f6db3a09c485fcb8ed6d5618c7"
-  integrity sha512-YJACgUqngcOGNRQzxxo0dxtdX2M+0ycCvNqgipE1TLObL6l6vNX3FHZkvzjG5jtRaei8up26cA693WOHWOPglA==
+"@last-rev/graphql-algolia-integration@^0.1.10":
+  version "0.1.10"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-algolia-integration/-/graphql-algolia-integration-0.1.10.tgz#63eebf57ab199a6bc6d71f1e8613f111f9f69bfd"
+  integrity sha512-5ItpmgdRMlBuonvDOPM7q8o9EzpgUbCJ7lhjRItfCVmgDZ93Nt02Tz21CxhGARL+lO7z1g5o+5ep9t7leZnQzw==
   dependencies:
     "@apollo/client" "^3.5.7"
     "@contentful/rich-text-plain-text-renderer" "^15.11.1"
     "@contentful/rich-text-types" "^15.11.1"
-    "@last-rev/contentful-webhook-parser" "^0.1.1"
+    "@last-rev/contentful-webhook-parser" "^0.1.2"
     algoliasearch "^4.12.0"
     axios "^0.25.0"
     cross-fetch "^3.1.5"
-    graphql-tag "^2.12.4"
+    graphql-tag "^2.12.5"
     lodash "^4.17.21"
 
-"@last-rev/graphql-contentful-core@^0.5.10":
-  version "0.5.10"
-  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-core/-/graphql-contentful-core-0.5.10.tgz#a26edfabe0d10b81b8e169868f26dfce6c4cf13c"
-  integrity sha512-acJ8rNbAvw5yskl5lejy52hSrbrqeHxXA2I0volH6er76gr2kGrEg8oxCbUFo0rxuD3Nfnq3LhkWxpV1RolSKg==
+"@last-rev/graphql-contentful-core@^0.5.14":
+  version "0.5.14"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-core/-/graphql-contentful-core-0.5.14.tgz#5f06b6d46ca22c5d3eafd5c308fd2b41d06eef78"
+  integrity sha512-OLfV4abnqUfsDFl8kEo0uC9/RjGz5DKySD/NbWEjjKRvIOEPzvT+J/rBKSK7kDptHbchb5NHEYGyo85+vPwM7g==
   dependencies:
     "@apollo/federation" "^0.38.1"
     "@apollo/server" "^4.3.0"
@@ -4694,100 +4641,66 @@
     "@as-integrations/next" "^1.2.0"
     "@graphql-tools/merge" "^6.2.14"
     "@graphql-tools/schema" "^8.3.1"
-    "@last-rev/app-config" "^0.4.4"
-    "@last-rev/contentful-cms-loader" "^0.4.0"
-    "@last-rev/contentful-fs-loader" "^0.3.0"
-    "@last-rev/contentful-redis-loader" "^0.5.2"
-    "@last-rev/graphql-contentful-helpers" "^0.4.4"
-    "@last-rev/graphql-schema-gen" "^0.2.2"
+    "@last-rev/app-config" "^0.5.0"
+    "@last-rev/contentful-cms-loader" "^0.4.1"
+    "@last-rev/contentful-fs-loader" "^0.3.1"
+    "@last-rev/contentful-redis-loader" "^0.5.3"
+    "@last-rev/graphql-contentful-helpers" "^0.4.7"
+    "@last-rev/graphql-schema-gen" "^0.2.3"
+    "@last-rev/logging" "^0.1.2"
     "@last-rev/testing-library" "^0.1.10"
-    "@last-rev/timer" "^0.1.3"
-    "@last-rev/types" "^0.3.3"
+    "@last-rev/timer" "^0.2.0"
+    "@last-rev/types" "^0.3.6"
     contentful "^8.4.2"
     graphql "^16.6.0"
     graphql-type-json "^0.3.2"
     lodash "^4.17.21"
-    loglevel "^1.7.1"
     micro "^9.3.4"
 
-"@last-rev/graphql-contentful-extensions@^0.1.12":
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-extensions/-/graphql-contentful-extensions-0.1.12.tgz#b4b037c534925a7501cffc906e78b51bbbc2fbd8"
-  integrity sha512-xy0FpubyY4B9B3q6dR/kBhxLkqAlwsXqE/A6WwSnbnn1/nWq392ctpAIg0MuG0DTrfW3ll5RgnvSp2eObbwf/w==
+"@last-rev/graphql-contentful-extensions@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-extensions/-/graphql-contentful-extensions-0.2.0.tgz#3b09aea7b0e54dc1f329f68f68d9f897555ae508"
+  integrity sha512-T9GGgKZvEFcYBMfCYtgyB3KAv8TjVpdVSs5uxoTqXRYFW/C6VWzG22cdKrV5j6LxLc1uP1UvQQuLua47Voz51g==
   dependencies:
     "@graphql-tools/merge" "^6.2.14"
-    "@last-rev/graphql-contentful-core" "^0.5.10"
+    "@last-rev/graphql-contentful-core" "^0.5.14"
     "@last-rev/rollup-config" "^0.1.4"
-    "@last-rev/types" "^0.3.3"
+    "@last-rev/types" "^0.3.6"
     contentful "^8.4.2"
     css "^3.0.0"
     fast-xml-parser "^4.0.8"
     graphql "^16.6.0"
-    graphql-tag "^2.12.4"
+    graphql-tag "^2.12.5"
     lodash "^4.17.21"
     tslib "^2.3.0"
 
-"@last-rev/graphql-contentful-helpers@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-helpers/-/graphql-contentful-helpers-0.4.2.tgz#f67a0d8ee9c9ea486ba78f20cdc58d6536635adb"
-  integrity sha512-JTqQBALFHnuTDDpSBnkZYTkVX05jWAO3j2HKV99+k9zNx4CtrCbzfpx3TjCs5L5e/+P+y/qgZff5x83jJTmu8A==
+"@last-rev/graphql-contentful-helpers@^0.4.5", "@last-rev/graphql-contentful-helpers@^0.4.6", "@last-rev/graphql-contentful-helpers@^0.4.7":
+  version "0.4.7"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-helpers/-/graphql-contentful-helpers-0.4.7.tgz#00f6e65b7516217eaafe69779df83bad04d47f9c"
+  integrity sha512-qgJ/D4Z2CaQDMNrY3NIs/gFRthQ1TzxjG1noH8NAWyXCNbFF8K82Y1QxJ9NIl496axVyx/PDFcCuvBhhzPSexA==
   dependencies:
-    "@last-rev/app-config" "^0.3.0"
-    "@last-rev/contentful-cms-loader" "^0.4.0"
-    "@last-rev/contentful-dynamodb-loader" "^0.3.0"
-    "@last-rev/contentful-fs-loader" "^0.3.0"
-    "@last-rev/contentful-path-rules-engine" "^0.1.2"
-    "@last-rev/contentful-redis-loader" "^0.5.0"
+    "@last-rev/app-config" "^0.5.0"
+    "@last-rev/contentful-cms-loader" "^0.4.1"
+    "@last-rev/contentful-dynamodb-loader" "^0.3.1"
+    "@last-rev/contentful-fs-loader" "^0.3.1"
+    "@last-rev/contentful-path-rules-engine" "^0.1.5"
+    "@last-rev/contentful-path-util" "^0.1.22"
+    "@last-rev/contentful-redis-loader" "^0.5.3"
     "@last-rev/testing-library" "^0.1.10"
-    "@last-rev/timer" "^0.1.3"
-    "@last-rev/types" "^0.3.2"
+    "@last-rev/timer" "^0.2.0"
+    "@last-rev/types" "^0.3.6"
     contentful "^8.4.2"
     lodash "^4.17.21"
 
-"@last-rev/graphql-contentful-helpers@^0.4.3":
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-helpers/-/graphql-contentful-helpers-0.4.3.tgz#7072dae59a42132fcbea3582956195b8dfe56a65"
-  integrity sha512-KSCZmHsL/TTPMeuGtmH/lgmzjvnqcUwh8G7lE72oP7VjCn1IGBkT+8CHO/EiT/T3W/j56w7j/gaQaCcd2PqezQ==
+"@last-rev/graphql-schema-gen@^0.2.3":
+  version "0.2.3"
+  resolved "https://registry.yarnpkg.com/@last-rev/graphql-schema-gen/-/graphql-schema-gen-0.2.3.tgz#34270c09b545f21502362aa063331656d71f2a68"
+  integrity sha512-oLfV9Nf08iql6JBjGntJnLhwebhXTZFYxs7MgqCkGWuwxjQXhMAMqnCwrLi4RbabKO6DgJpnG4DgwEDrHAvbxg==
   dependencies:
-    "@last-rev/app-config" "^0.4.0"
-    "@last-rev/contentful-cms-loader" "^0.4.0"
-    "@last-rev/contentful-dynamodb-loader" "^0.3.0"
-    "@last-rev/contentful-fs-loader" "^0.3.0"
-    "@last-rev/contentful-path-rules-engine" "^0.1.2"
-    "@last-rev/contentful-redis-loader" "^0.5.0"
-    "@last-rev/testing-library" "^0.1.10"
-    "@last-rev/timer" "^0.1.3"
-    "@last-rev/types" "^0.3.2"
-    contentful "^8.4.2"
-    lodash "^4.17.21"
-
-"@last-rev/graphql-contentful-helpers@^0.4.4":
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/@last-rev/graphql-contentful-helpers/-/graphql-contentful-helpers-0.4.4.tgz#4822e491954456d9b7c67cd1e04c779a4fa6c2d4"
-  integrity sha512-r4axLKuiZoaNSTCvhCWECdc3yDScyN87gDc2XqKKunyex/n03Ggx/K8p2acLHw6/FJFCttnCXnR6UYl/m4AAcA==
-  dependencies:
-    "@last-rev/app-config" "^0.4.4"
-    "@last-rev/contentful-cms-loader" "^0.4.0"
-    "@last-rev/contentful-dynamodb-loader" "^0.3.0"
-    "@last-rev/contentful-fs-loader" "^0.3.0"
-    "@last-rev/contentful-path-rules-engine" "^0.1.2"
-    "@last-rev/contentful-path-util" "^0.1.19"
-    "@last-rev/contentful-redis-loader" "^0.5.0"
-    "@last-rev/testing-library" "^0.1.10"
-    "@last-rev/timer" "^0.1.3"
-    "@last-rev/types" "^0.3.3"
-    contentful "^8.4.2"
-    lodash "^4.17.21"
-
-"@last-rev/graphql-schema-gen@^0.2.2":
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/graphql-schema-gen/-/graphql-schema-gen-0.2.2.tgz#111ac6b20f4fd81cdbe221e705c9c4e4db5f9155"
-  integrity sha512-jDCJcHvP0SUAfF1mJDFjoPnVjt+Z0R2wXBIFqzc6UNORacMAMqVh1xbA3uUJoXhvxxT6s/W5d2vEdlpZ4jWt2Q==
-  dependencies:
+    "@last-rev/logging" "^0.1.1"
     contentful "^8.4.2"
     graphql "^16.6.0"
     lodash "^4.17.21"
-    loglevel "^1.7.1"
     tslib "^2.3.0"
 
 "@last-rev/logging@^0.1.1":
@@ -4796,6 +4709,16 @@
   integrity sha512-tIdd0Iuh16Hyn3iqHzzS148IkuDXNPHw4z+RKWMcnvO4EhtvHP3m6I6EZGT4KgJ9jI1flVto9eISzztOoOjTwg==
   dependencies:
     "@last-rev/app-config" "^0.4.5"
+    datadog-winston "^1.5.1"
+    dotenv "^10.0.0"
+    winston "^3.8.2"
+
+"@last-rev/logging@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@last-rev/logging/-/logging-0.1.2.tgz#fa435eddcebec30d5420f3eae5e2a962cdab377d"
+  integrity sha512-wEohyCO+7fgrEQaMnp6busi0a39i6X1ZiiSoLm4jZpeF38f+YXTL/2wMFGsXQg88Ayu2ZXC0qx9SIwuTIe66UA==
+  dependencies:
+    "@last-rev/app-config" "^0.5.0"
     datadog-winston "^1.5.1"
     dotenv "^10.0.0"
     winston "^3.8.2"
@@ -4836,13 +4759,15 @@
     swc-plugin-transform-import "^1.2.0"
     typescript "^4.7.4"
 
-"@last-rev/sitemap-generator@^0.1.4":
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/@last-rev/sitemap-generator/-/sitemap-generator-0.1.4.tgz#15d727adaf70b0dbbc82fbd947f7ab823008cc68"
-  integrity sha512-rDtGAv8s+bLjX/eHKDrAIoMyeT4gy5Xtqb+lxL0bRvvNV0JeXRqSP+CSyo4y0QnyTUdvQa1yn+WitG0JBzmh2A==
+"@last-rev/sitemap-generator@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@last-rev/sitemap-generator/-/sitemap-generator-0.2.1.tgz#eddd07f47c40266591ec8954fee1fbcae4002451"
+  integrity sha512-g5OO25lOetoZWeH1xiBJWrl0H3O3Tqpm/JjV2SyTITCL99RTZ8i+ZYq5JPqurVxn5m4DArXcFKeLGEzACxkYFA==
   dependencies:
-    "@last-rev/types" "^0.3.0"
+    "@last-rev/app-config" "^0.5.0"
+    "@last-rev/types" "^0.3.6"
     fs-extra "^10.0.0"
+    graphql-request "^5.0.0"
     handlebars "^4.7.7"
     lodash "^4.17.21"
 
@@ -4853,20 +4778,15 @@
   dependencies:
     ts-jest "^26.5.4"
 
-"@last-rev/timer@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@last-rev/timer/-/timer-0.1.3.tgz#1bdb46dddbc55644c22c54cdd444dfc28be6c7d8"
-  integrity sha512-Ps7+r/Ukqn0mXTgldwwXx8Uq2qCA1GpTl9+ZVSUdpDKQ1/yxJIbcxvjPi6c7o2lTeJf2uyiz8X/YKIofOOD1GQ==
+"@last-rev/timer@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@last-rev/timer/-/timer-0.2.0.tgz#e2b2d6ff02ba40322ce5e3ad2760c68de9c65345"
+  integrity sha512-NzKyfRQJ2+YFe8SGe2xUtk6JGcwoE5wwKT+SYJa8RhYLQ7SlBY80a5DXmCAZ76znCBha9VcOBLGLbddvC1CxbA==
 
-"@last-rev/types@^0.3.0", "@last-rev/types@^0.3.1", "@last-rev/types@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@last-rev/types/-/types-0.3.2.tgz#fdb953280cdcaaf166c166e79b14123f51438ded"
-  integrity sha512-5sZuVTbM2Bbyd9PqIonFvlC2IRsMDMu1bkw5dfXaurJJl2NaQ/AgjMDxWuTs200AWlkfBNL8GjlrYmf6JWr4ZA==
-
-"@last-rev/types@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@last-rev/types/-/types-0.3.3.tgz#3547c8e64aafe0225dbcdec19a1ec4a3c51e91a7"
-  integrity sha512-/y3supVAkMf5KwiLeq/uGi9ID2D2U71Q7J+7CRlZ5/zoZWC1wo5QF9+AQH2iHlQDDcNSpIB8ZN6zg6B6M0jhew==
+"@last-rev/types@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@last-rev/types/-/types-0.3.6.tgz#dd54557a1c18a1dbc51343482683623472d36f1f"
+  integrity sha512-jX6F+lXsmdaNeg48N2KzBVveDpA9MeM2R5WJdbvXGYgw+zOWjuQLE05xKHsI7GGjBTLXwlUSXJGsSWQmwRSpvQ==
 
 "@lerna/add@3.21.0":
   version "3.21.0"
@@ -11224,10 +11144,15 @@ async@^2.6.2, async@^2.6.3, async@~2.6.1:
   dependencies:
     lodash "^4.17.14"
 
-async@^3.2.0, async@^3.2.3, async@~3.2.0:
+async@^3.2.0, async@~3.2.0:
   version "3.2.3"
   resolved "https://registry.yarnpkg.com/async/-/async-3.2.3.tgz#ac53dafd3f4720ee9e8a160628f18ea91df196c9"
   integrity sha512-spZRyzKL5l5BZQrr/6m/SqFdBN0q3OCI0f9rjfBzCMBIP4p75P620rR3gTmaksNOhmzgdxcaxdNfMy6anrbM0g==
+
+async@^3.2.3:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.2.4.tgz#2d22e00f8cddeb5fde5dd33522b56d1cf569a81c"
+  integrity sha512-iAB+JbDEGXhyIUavoDl9WP/Jj106Kz9DEn1DPgYw5ruDn0e3Wgi3sKFm55sASdGBNOQB8F59d9qQ7deqrHA8wQ==
 
 async@~1.5:
   version "1.5.2"
@@ -13020,14 +12945,22 @@ color-convert@^2.0.1:
 color-name@1.1.3:
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.3.tgz#a7d0558bd89c42f795dd42328f740831ca53bc25"
-  integrity sha1-p9BVi9icQveV3UIyj3QIMcpTvCU=
+  integrity sha512-72fSenhMw2HZMTVHeCA9KCmpEIbzWiQsjN+BHcBbS9vr1mtt+vJjPdksIBNUmKAW8TFUDPJK5SUU3QhE9NEXDw==
 
 color-name@^1.0.0, color-name@~1.1.4:
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/color-name/-/color-name-1.1.4.tgz#c2a09a87acbde69543de6f63fa3995c826c536a2"
   integrity sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==
 
-color-string@^1.6.0, color-string@^1.9.0:
+color-string@^1.6.0:
+  version "1.9.1"
+  resolved "https://registry.yarnpkg.com/color-string/-/color-string-1.9.1.tgz#4467f9146f036f855b764dfb5bf8582bf342c7a4"
+  integrity sha512-shrVawQFojnZv6xM40anx4CkoDP+fZsw/ZerEMsW/pyzsRbElpsL/DBVW7q3ExxwusdNXI3lXpuhEZkzs8p5Eg==
+  dependencies:
+    color-name "^1.0.0"
+    simple-swizzle "^0.2.2"
+
+color-string@^1.9.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/color-string/-/color-string-1.9.0.tgz#63b6ebd1bec11999d1df3a79a7569451ac2be8aa"
   integrity sha512-9Mrz2AQLefkH1UvASKj6v6hj/7eWgjnT/cVsR8CumieLoT+g900exWeNogqtweI8dxloXN9BDQTYro1oWu/5CQ==
@@ -16778,9 +16711,9 @@ fd-slicer@~1.1.0:
     pend "~1.2.0"
 
 fecha@^4.2.0:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/fecha/-/fecha-4.2.1.tgz#0a83ad8f86ef62a091e22bb5a039cd03d23eecce"
-  integrity sha512-MMMQ0ludy/nBs1/o0zVOiKTpG7qMbonKUzjJgQFEuvq6INZ1OraKPRAWkBq5vlKLOUMpmNYG1JoN3oDPUQ9m3Q==
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/fecha/-/fecha-4.2.3.tgz#4d9ccdbc61e8629b259fdca67e65891448d569fd"
+  integrity sha512-OP2IUU6HeYKJi3i0z4A19kHMQoLVs4Hc+DPqqxI2h/DPZHTm/vjsfC6P0b4jCMy14XizLBqvndQ+UilD7707Jw==
 
 fetch-node-website@^5.0.3:
   version "5.0.3"
@@ -18121,7 +18054,7 @@ graphql-request@^5.0.0:
     extract-files "^9.0.0"
     form-data "^3.0.0"
 
-graphql-tag@^2.11.0, graphql-tag@^2.12.3, graphql-tag@^2.12.4, graphql-tag@^2.12.5:
+graphql-tag@^2.11.0, graphql-tag@^2.12.3, graphql-tag@^2.12.5:
   version "2.12.6"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.12.6.tgz#d441a569c1d2537ef10ca3d1633b48725329b5f1"
   integrity sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==
@@ -20891,6 +20824,16 @@ jsonwebtoken@^8.5.1:
     ms "^2.1.1"
     semver "^5.6.0"
 
+jsonwebtoken@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-9.0.0.tgz#d0faf9ba1cc3a56255fe49c0961a67e520c1926d"
+  integrity sha512-tuGfYXxkQGDPnLJ7SibiQgVgeDgfbPq2k2ICcbgqW8WxWLBAxKQM/ZCu/IT8SOSwmaYl4dpTFCW5xZv7YbbWUw==
+  dependencies:
+    jws "^3.2.2"
+    lodash "^4.17.21"
+    ms "^2.1.1"
+    semver "^7.3.8"
+
 jsprim@^1.2.2:
   version "1.4.2"
   resolved "https://registry.yarnpkg.com/jsprim/-/jsprim-1.4.2.tgz#712c65533a15c878ba59e9ed5f0e26d5b77c5feb"
@@ -21967,18 +21910,7 @@ log-update@^5.0.0:
     slice-ansi "^5.0.0"
     wrap-ansi "^8.0.1"
 
-logform@^2.3.2:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/logform/-/logform-2.4.0.tgz#131651715a17d50f09c2a2c1a524ff1a4164bcfe"
-  integrity sha512-CPSJw4ftjf517EhXZGGvTHHkYobo7ZCc0kvwUoOYcjfR2UVrI66RHj8MCrfAdEitdmFqbu2BYdYs8FHHZSb6iw==
-  dependencies:
-    "@colors/colors" "1.5.0"
-    fecha "^4.2.0"
-    ms "^2.1.1"
-    safe-stable-stringify "^2.3.1"
-    triple-beam "^1.3.0"
-
-logform@^2.4.0:
+logform@^2.3.2, logform@^2.4.0:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/logform/-/logform-2.4.2.tgz#a617983ac0334d0c3b942c34945380062795b47c"
   integrity sha512-W4c9himeAwXEdZ05dQNerhFz2XG80P9Oj0loPUMV23VC2it0orMHQhJm4hdnnor3rd1HsGf6a2lPwBM1zeXHGw==
@@ -21997,7 +21929,7 @@ loglevel-colored-level-prefix@^1.0.0:
     chalk "^1.1.3"
     loglevel "^1.4.1"
 
-loglevel@^1.4.1, loglevel@^1.6.8, loglevel@^1.7.1:
+loglevel@^1.4.1, loglevel@^1.6.8:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/loglevel/-/loglevel-1.8.0.tgz#e7ec73a57e1e7b419cb6c6ac06bf050b67356114"
   integrity sha512-G6A/nJLRgWOuuwdNuA6koovfEV1YpqqAG4pRUlFaz3jj2QNZ8M4vBqnVA+HBTmU/AMNUtlOsMmSpF6NyOjztbA==
@@ -23529,10 +23461,17 @@ node-fetch-npm@^2.0.2:
     json-parse-better-errors "^1.0.0"
     safe-buffer "^5.1.1"
 
-node-fetch@2.6.7, node-fetch@^2.0.0, node-fetch@^2.3.0, node-fetch@^2.5.0, node-fetch@^2.6.0, node-fetch@^2.6.1, node-fetch@^2.6.5, node-fetch@^2.6.6, node-fetch@^2.6.7:
+node-fetch@2.6.7, node-fetch@^2.0.0, node-fetch@^2.3.0, node-fetch@^2.5.0, node-fetch@^2.6.1, node-fetch@^2.6.5, node-fetch@^2.6.6, node-fetch@^2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
+  dependencies:
+    whatwg-url "^5.0.0"
+
+node-fetch@^2.6.0:
+  version "2.6.9"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.9.tgz#7c7f744b5cc6eb5fd404e0c7a9fec630a55657e6"
+  integrity sha512-DJm/CJkZkRjKKj4Zi4BsKVZh3ValV5IR5s7LVZnW+6YMh0W1BfNA8XSs6DLMGYlId5F3KnA70uu2qepcR08Qqg==
   dependencies:
     whatwg-url "^5.0.0"
 
@@ -28489,9 +28428,9 @@ safe-regex@^1.1.0:
     ret "~0.1.10"
 
 safe-stable-stringify@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/safe-stable-stringify/-/safe-stable-stringify-2.3.1.tgz#ab67cbe1fe7d40603ca641c5e765cb942d04fc73"
-  integrity sha512-kYBSfT+troD9cDA85VDnHZ1rpHC50O0g1e6WlGHVCz/g+JS+9WKLj+XwFYyR8UbrZN8ll9HUpDAAddY58MGisg==
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/safe-stable-stringify/-/safe-stable-stringify-2.4.2.tgz#ec7b037768098bf65310d1d64370de0dc02353aa"
+  integrity sha512-gMxvPJYhP0O9n2pvcfYfIuYgbledAOJFcqRThtPRmjscaipiwcwPPKLytpVzMkG2HAN87Qmo2d4PtGiri1dSLA==
 
 "safer-buffer@>= 2.1.2 < 3", "safer-buffer@>= 2.1.2 < 3.0.0", safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@~2.1.0:
   version "2.1.2"
@@ -28715,6 +28654,13 @@ semver@^7.3.7:
   version "7.3.7"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.7.tgz#12c5b649afdbf9049707796e22a4028814ce523f"
   integrity sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==
+  dependencies:
+    lru-cache "^6.0.0"
+
+semver@^7.3.8:
+  version "7.3.8"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-7.3.8.tgz#07a78feafb3f7b32347d725e33de7e2a2df67798"
+  integrity sha512-NB1ctGL5rlHrPJtFDVIVzTyQylMLu9N9VICA6HSFJo8MCGVTMW6gfpicwKmmK/dAjTOrqu5l63JJOpDSrAis3A==
   dependencies:
     lru-cache "^6.0.0"
 
@@ -29020,7 +28966,7 @@ simple-git@^3.3.0:
 simple-swizzle@^0.2.2:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/simple-swizzle/-/simple-swizzle-0.2.2.tgz#a4da6b635ffcccca33f70d17cb92592de95e557a"
-  integrity sha1-pNprY1/8zMoz9w0Xy5JZLeleVXo=
+  integrity sha512-JA//kQgZtbuY83m+xT+tXJkmJncGMTFT+C+g2h2R9uxkYIrE2yy9sgmcLhCnw57/WSD+Eh3J97FPEDFnbXnDUg==
   dependencies:
     is-arrayish "^0.3.1"
 
@@ -29543,7 +29489,7 @@ stack-generator@^2.0.3:
 stack-trace@0.0.x:
   version "0.0.10"
   resolved "https://registry.yarnpkg.com/stack-trace/-/stack-trace-0.0.10.tgz#547c70b347e8d32b4e108ea1a2a159e5fdde19c0"
-  integrity sha1-VHxws0fo0ytOEI6hoqFZ5f3eGcA=
+  integrity sha512-KGzahc7puUKkzyMt+IqAep+TVNbKP+k2Lmwhub39m1AsTSkaDutx56aDCo+HLDzf/D26BIHTJWNiTG1KAJiQCg==
 
 stack-utils@^2.0.2:
   version "2.0.5"

@@ -1,4 +1,4 @@
-import { Entry, Asset, ContentType } from 'contentful';
+import { Entry, Asset, ContentType, createClient } from 'contentful';
 import { map } from 'lodash';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ProcessCommand } from './types';
@@ -12,10 +12,39 @@ const logger = getWinstonLogger({
   module: 'index'
 });
 
+const getData = async (
+  config: LastRevAppConfig,
+  type: 'Entry' | 'Asset' | 'ContentType',
+  env: string,
+  itemId: string
+) => {
+  const client = createClient({
+    space: config.contentful.spaceId,
+    accessToken: config.contentful.usePreview
+      ? config.contentful.contentPreviewToken
+      : config.contentful.contentDeliveryToken,
+    host: config.contentful.usePreview ? 'preview.contentful.com' : 'cdn.contentful.com',
+    environment: env,
+    resolveLinks: false
+  });
+
+  switch (type) {
+    case 'Entry':
+      return client.getEntry(itemId, {
+        include: 0,
+        locale: '*'
+      });
+    case 'Asset':
+      return client.getAsset(itemId);
+    case 'ContentType':
+      return client.getContentType(itemId);
+  }
+};
+
 const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Record<string, string>) => {
   const token = headers['authorization']?.split(' ')[1];
 
-  const { type, action, contentStates, env } = parseWebhook(config, body, headers);
+  const { type, action, contentStates, env, itemId, isTruncated } = parseWebhook(config, body, headers);
 
   if (env !== config.contentful.env) {
     config = config.clone({ contentful: { env } });
@@ -40,13 +69,15 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
     }
   }
 
+  const data = isTruncated ? await getData(config, type, env, itemId) : body;
+
   await Promise.all(
     map(contentStates, async (env) => {
       try {
         const command = {
           isPreview: env === 'preview',
           action: action,
-          data: body
+          data
         };
         switch (type) {
           case 'Asset':
