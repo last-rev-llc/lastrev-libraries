@@ -44,7 +44,7 @@ const getData = async (
 const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Record<string, string>) => {
   const token = headers['authorization']?.split(' ')[1];
 
-  const { type, action, contentStates, env, itemId: itemId, isTruncated } = parseWebhook(config, body, headers);
+  const { type, action, contentStates, env, itemId, isTruncated } = parseWebhook(config, body, headers);
 
   if (env !== config.contentful.env) {
     config = config.clone({ contentful: { env } });
