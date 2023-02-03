@@ -273,7 +273,7 @@ const createSchemeTheme = (schemeKey?: string) => {
 
   const schemeTheme = createAppTheme(
     merge({ scheme: camelCase(schemeKey) }, baseSchemeTheme, ...[NavigationItem(baseSchemeTheme)], {
-      createSchemeTheme,
+      // createSchemeTheme,
       components: {
         Header: {
           height: 100,
