@@ -6,8 +6,8 @@ import aa from 'search-insights';
 import { ThemeProvider } from '@mui/system';
 import CssBaseline from '@mui/material/CssBaseline';
 import { CacheProvider, EmotionCache } from '@emotion/react';
-import { SessionProvider } from 'next-auth/react';
 import { Session } from 'next-auth';
+import { SessionProviderProps } from 'next-auth/react';
 import '@algolia/autocomplete-theme-classic';
 import '@last-rev/component-library/dist/styles.css';
 import theme from '@ias/components/src/theme';
@@ -15,9 +15,14 @@ import getLanguageByLocale from '../../components/src/utils/getLanguageByLocale'
 import { createEmotionCache } from '../src/createEmotionCache';
 import '../styles/globals.css';
 
+const SessionProvider = dynamic<SessionProviderProps>(() =>
+  import('next-auth/react').then((mod) => mod.SessionProvider)
+);
+
 // LastRev components
 const AuthProvider = dynamic(() => import('@ias/components/src/components/AuthProvider'));
 const SEO = dynamic(() => import('@last-rev/component-library/dist/components/SEO/SEO'));
+
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps<{ session: Session }> {
@@ -85,7 +90,9 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps: { 
     </CacheProvider>
   );
 
-  if (pageProps?.pageData?.page?.auth === 'Okta') return <SessionProvider session={session}>{content}</SessionProvider>;
+  if (pageProps?.pageData?.page?.auth === 'Okta') {
+    return <SessionProvider session={session}>{content}</SessionProvider>;
+  }
 
   return content;
 }
