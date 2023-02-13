@@ -4,7 +4,7 @@ import { InstantSearch } from 'react-instantsearch-dom';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import BackToTop from '@last-rev/component-library/dist/components/BackToTop';
 import { LinkProps } from '@last-rev/component-library/dist/components/Link';
-import { Page } from '@ias/graphql-sdk/dist';
+import { Page } from '@ias/graphql-sdk';
 
 import Breadcrumbs from '../Breadcrumbs';
 import TopicNavHorizontal from '../TopicNavHorizontal';

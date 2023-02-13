@@ -5,8 +5,8 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { styled, alpha } from '@mui/material/styles';
-import { useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/system';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import useTheme from '@mui/system/useTheme';
 import { UrlObject } from 'url';
 
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';

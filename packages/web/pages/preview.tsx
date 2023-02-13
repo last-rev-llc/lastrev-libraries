@@ -1,13 +1,13 @@
 import React from 'react';
-import Head from 'next/head';
 import { getSdk } from '@ias/graphql-sdk';
 import { GraphQLClient } from 'graphql-request';
 import { useRouter } from 'next/dist/client/router';
-import { ContentPreview } from '@last-rev/component-library';
+import ContentPreview from '@last-rev/component-library/dist/components/ContentPreview';
 import useSWR from 'swr';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import { LocalizationProvider } from '@ias/components/src/components/LocalizationContext';
 import contentMapping from '@ias/components/src/contentMapping';
+import dynamic from 'next/dynamic';
 
 const previewGqlClient = new GraphQLClient(
   `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/.netlify/functions/graphql'}`
@@ -16,6 +16,8 @@ const spaceId = process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID;
 const sdk = getSdk(previewGqlClient);
 const fetchPreview = async (id: string, locale: string) => sdk.Preview({ id, locale });
 const fetchCommonResources = async (locale: string) => sdk.CommonResources({ locale, preview: true });
+
+const Head = dynamic(() => import('next/head'), { ssr: false });
 
 export default function Preview({}: any) {
   const { query } = useRouter();

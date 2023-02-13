@@ -1,16 +1,18 @@
 import React from 'react';
 import { join, sep, posix } from 'path';
 import { client, parseBooleanEnvVar } from '@ias/utils';
-import { ContentModule } from '@last-rev/component-library';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
-import AuthGuard from '@ias/components/src/components/AuthGuard';
 import { LocalizationProvider } from '@ias/components/src/components/LocalizationContext';
 import contentMapping from '@ias/components/src/contentMapping';
+import dynamic from 'next/dynamic';
 
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 const site = process.env.SITE;
 const pagesRevalidate = parseInt(process.env.PAGES_REVALIDATE as string, 10);
 const revalidate = !isNaN(pagesRevalidate) ? pagesRevalidate : false;
+
+const AuthGuard = dynamic(() => import('@ias/components/src/components/AuthGuard'));
+const ContentModule = dynamic(() => import('@last-rev/component-library/dist/components/ContentModule'));
 
 export type PageGetStaticPathsProps = {
   locales: string[];

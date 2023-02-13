@@ -1,6 +1,6 @@
 import React from 'react';
 import { client, parseBooleanEnvVar } from '@ias/utils';
-import { ContentModule } from '@last-rev/component-library';
+import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import contentMapping from '@ias/components/src/contentMapping';
 
@@ -35,9 +35,9 @@ export const getStaticProps = async ({ locale }: PageStaticPropsProps) => {
 export default function Page({ pageData }: any) {
   try {
     return (
-    <ContentModuleProvider contentMapping={contentMapping}>
-      <ContentModule {...pageData.page} />
-    </ContentModuleProvider>
+      <ContentModuleProvider contentMapping={contentMapping}>
+        <ContentModule {...pageData.page} />
+      </ContentModuleProvider>
     );
   } catch (err) {
     console.log('failed here', err, pageData);
