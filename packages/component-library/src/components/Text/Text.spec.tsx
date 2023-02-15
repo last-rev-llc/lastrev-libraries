@@ -6,6 +6,7 @@ import { TextProps } from './Text.types';
 import Text from './Text';
 
 import mockContent, {
+  formattedMock,
   dynamicMock,
   valueNode,
   contentNode,
@@ -52,6 +53,13 @@ describe('Text', () => {
         'have.text',
         mockedContent.body.json.content.map((c) => c.content[0].value).join('')
       );
+      cy.percySnapshot();
+    });
+
+    it('renders formatted text with correct information', () => {
+      const mockedContent: TextProps = formattedMock();
+      mount(<Text {...mockedContent} />);
+
       cy.percySnapshot();
     });
 

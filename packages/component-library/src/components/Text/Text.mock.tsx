@@ -1,6 +1,7 @@
 import React from 'react';
 import { lorem } from 'faker';
 import BLOCKS from './BLOCKS';
+import MARKS from './MARKS';
 
 import { TextProps, RichText } from './Text.types';
 
@@ -345,6 +346,14 @@ export const formattedMock = () => ({
     [BLOCKS.LIST_ITEM]: (_: any, children: any) => {
       return <li>{children}</li>;
     }
+  },
+  renderMark: {
+    [MARKS.BOLD]: (text: string) => <b style={{ color: 'red' }}>{text}</b>,
+    [MARKS.ITALIC]: (text: string) => <i>{text}</i>,
+    [MARKS.UNDERLINE]: (text: string) => <u>{text}</u>,
+    [MARKS.CODE]: (text: string) => <code>{text}</code>,
+    [MARKS.SUPERSCRIPT]: (text: string) => <sup>{text}</sup>,
+    [MARKS.SUBSCRIPT]: (text: string) => <sub>{text}</sub>
   }
 });
 
