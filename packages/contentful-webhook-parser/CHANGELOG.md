@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-parser
 
+## 0.1.3
+
+### Patch Changes
+
+- e0351a6: Added ability to use truncated payload in contentful webhook
+
 ## 0.1.2
 
 ### Patch Changes
