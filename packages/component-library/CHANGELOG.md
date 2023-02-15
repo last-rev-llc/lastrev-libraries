@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.14
+
+### Patch Changes
+
+- 28596ce: Added renderMark options for Contentful Rich Text
+
 ## 0.5.13
 
 ### Patch Changes

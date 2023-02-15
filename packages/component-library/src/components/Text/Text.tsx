@@ -114,7 +114,8 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
             href={entry?.file?.url}
             target="_blank"
             rel="noopener noreferrer"
-            data-testid="Text-asset-hyperlink">
+            data-testid="Text-asset-hyperlink"
+          >
             {children}
           </ContentModule>
         );
@@ -209,7 +210,8 @@ function Text({
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}>
+        {...props}
+      >
         {documentToReactComponents(
           body?.json,
           createRenderOptions({ links: body?.links, renderNode, renderMark, ...renderOptions })
