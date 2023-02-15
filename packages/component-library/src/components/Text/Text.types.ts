@@ -18,6 +18,7 @@ export interface TextProps {
   variant?: string;
   align?: 'left' | 'center' | 'right' | any;
   renderNode?: any;
+  renderMark?: any;
   renderOptions?: Options;
 }
 

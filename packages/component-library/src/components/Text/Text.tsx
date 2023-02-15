@@ -15,6 +15,7 @@ import TableCell from '@mui/material/TableCell';
 
 import BLOCKS from './BLOCKS';
 import INLINES from './INLINES';
+
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
@@ -84,7 +85,7 @@ const renderTypography =
     );
   };
 
-const createRenderOptions = ({ links, renderNode, renderText }: { links?: TextLinks } & Options) => {
+const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { links?: TextLinks } & Options) => {
   const entries = keyBy('id', links?.entries ?? []);
   const assets = keyBy('id', links?.assets ?? []);
 
@@ -113,8 +114,7 @@ const createRenderOptions = ({ links, renderNode, renderText }: { links?: TextLi
             href={entry?.file?.url}
             target="_blank"
             rel="noopener noreferrer"
-            data-testid="Text-asset-hyperlink"
-          >
+            data-testid="Text-asset-hyperlink">
             {children}
           </ContentModule>
         );
@@ -185,11 +185,23 @@ const createRenderOptions = ({ links, renderNode, renderText }: { links?: TextLi
       if (renderText) return renderText(text);
 
       return text;
-    }
+    },
+    renderMark
   };
 };
 
-function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, renderOptions, ...props }: TextProps) {
+function Text({
+  body,
+  align,
+  styles,
+  variant,
+  sidekickLookup,
+  sx,
+  renderNode,
+  renderMark,
+  renderOptions,
+  ...props
+}: TextProps) {
   return (
     <ErrorBoundary>
       <Root
@@ -197,11 +209,10 @@ function Text({ body, align, styles, variant, sidekickLookup, sx, renderNode, re
         variant={variant}
         sx={{ textAlign: align, ...sx, ...styles?.root }}
         data-testid="Text-root"
-        {...props}
-      >
+        {...props}>
         {documentToReactComponents(
           body?.json,
-          createRenderOptions({ links: body?.links, renderNode, ...renderOptions })
+          createRenderOptions({ links: body?.links, renderNode, renderMark, ...renderOptions })
         )}
       </Root>
     </ErrorBoundary>
