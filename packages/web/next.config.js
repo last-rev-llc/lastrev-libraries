@@ -58,6 +58,10 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: true
   },
+  experimental: {
+    workerThreads: false,
+    cpus: 4
+  },
   webpack: (config) => {
     // Important: return the modified config
     config.resolve.alias = {
