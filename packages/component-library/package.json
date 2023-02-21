@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/component-library",
-  "version": "0.5.14",
+  "version": "0.5.15",
   "description": "Last Rev Component Library",
   "main": "dist/index.js",
   "files": [

@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.15
+
+### Patch Changes
+
+- 10d3e3c: Remove future image, update next
+
 ## 0.5.14
 
 ### Patch Changes
