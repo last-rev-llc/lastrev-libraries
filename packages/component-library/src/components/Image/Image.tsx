@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import NextImage from 'next/future/image';
+import NextImage from 'next/image';
 import ErrorBoundary from '../ErrorBoundary';
 import getImgSrcTag from '../../utils/getImgSrcTag';
 import { ImageProps } from './Image.types';
