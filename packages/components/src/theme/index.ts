@@ -319,6 +319,24 @@ const createSchemeTheme = (schemeKey?: string) => {
                 }
               },
 
+              '.code-wrap': {
+                maxWidth: '100%',
+                overflowX: 'scroll',
+                backgroundColor: baseSchemeTheme.palette.common.black,
+                width: '100%',
+                margin: baseSchemeTheme.spacing(2, 0),
+                padding: baseSchemeTheme.spacing(2, 2),
+                overflowWrap: 'anywhere',
+
+                [baseSchemeTheme.breakpoints.up('md')]: {
+                  overflowWrap: 'unset'
+                }
+              },
+
+              'code': {
+                color: baseSchemeTheme.palette.common.white
+              },
+
               '& li::marker': {
                 fontSize: '1rem'
               },

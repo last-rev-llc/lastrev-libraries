@@ -43,6 +43,25 @@ const renderNodeOptions = ({ links }: { links?: any }) => {
     'markdown-image': (node: any) => {
       return <Media file={{ url: node?.data?.url }} title={node?.data?.alt} />;
     },
+    [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
+      if (
+        node.content.length === 1 &&
+        node.content[0].marks?.length &&
+        node.content[0].marks?.find((mark: any) => mark.type === 'code')
+      ) {
+        return (
+          <Box className="code-wrap">
+            <Box component="code">{node.content[0].value}</Box>
+          </Box>
+        );
+      }
+
+      return (
+        <Typography variant="body1" data-testid={`Text-body1`}>
+          {children}
+        </Typography>
+      );
+    },
     [BLOCKS.EMBEDDED_ENTRY]: (node: any) => {
       const id: string = node?.data?.target?.sys?.id;
       const entry = entries[id];
