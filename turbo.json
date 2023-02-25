@@ -79,6 +79,7 @@
       "outputs": ["out/**", ".next/**"]
     },
     "@ias/web#build": {
+      "cache": false,
       "dependsOn": ["@ias/graphql-runner#start", "^build"],
       "outputs": ["out/**", ".next/**"]
     }
