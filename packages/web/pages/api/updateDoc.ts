@@ -53,6 +53,9 @@ const handler: NextApiHandler = async (req, res) => {
     await Promise.all(
       items.map(async (item) => {
         try {
+          if (!item.fields.lastUpdatedDateOfGoogleDoc) {
+            item.fields.lastUpdatedDateOfGoogleDoc = {};
+          }
           if (item.fields.lastUpdatedDateOfGoogleDoc['en-US'] === lastUpdatedAt) {
             return;
           }
