@@ -20,4 +20,7 @@ program
   .command('framework-update', 'Updates repo to a specified version of the framework', {
     executableFile: resolve(__dirname, '../dist/framework-update.js')
   })
+  .command('reports', 'Runs reports', {
+    executableFile: resolve(__dirname, '../dist/reports.js')
+  })
   .parse(process.argv);

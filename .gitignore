@@ -25,6 +25,7 @@ lerna-debug.log
 **/cypress/screenshots
 **/coverage
 **/reports
+!packages/cli/**/reports
 
 .turbo
 # Local Netlify folder

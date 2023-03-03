@@ -1,0 +1,75 @@
+CREATE TABLE IF NOT EXISTS content_types (
+  id TEXT PRIMARY KEY,
+  display_field TEXT,
+  name TEXT NOT NULL,
+  description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS fields (
+  id TEXT NOT NULL,
+  content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  name TEXT NOT NULL,
+  type TEXT NOT NULL,
+  required BOOLEAN NOT NULL,
+  disabled BOOLEAN NOT NULL,
+  omitted BOOLEAN NOT NULL,
+  localized BOOLEAN NOT NULL,
+  link_type TEXT,
+  items_type TEXT,
+  items_link_type TEXT,
+  PRIMARY KEY (id, content_type_id)
+);
+
+CREATE TABLE IF NOT EXISTS field_content_type_validations (
+  field_id TEXT NOT NULL,
+  content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  link_content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  FOREIGN KEY (field_id, content_type_id) REFERENCES fields (id, content_type_id) PRIMARY KEY (field_id, content_type_id, link_content_type_id)
+);
+
+CREATE TABLE IF NOT EXISTS entries (
+  id TEXT PRIMARY KEY,
+  content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  created_date TEXT NOT NULL,
+  updated_date TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS entry_references (
+  entry_id TEXT NOT NULL REFERENCES entries (id),
+  array_index INTEGER NOT NULL,
+  field_id TEXT NOT NULL REFERENCES fields (id),
+  content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  locale TEXT NOT NULL,
+  reference_entry_id TEXT NOT NULL,
+  PRIMARY KEY (entry_id, array_index, field_id, locale),
+  FOREIGN KEY (field_id, content_type_id) REFERENCES fields (id, content_type_id)
+);
+
+CREATE TABLE IF NOT EXISTS assets (
+  id TEXT PRIMARY KEY,
+  created_date TEXT NOT NULL,
+  updated_date TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS asset_data (
+  asset_id TEXT NOT NULL REFERENCES assets (id),
+  locale TEXT NOT NULL,
+  title TEXT,
+  description TEXT,
+  file_name TEXT,
+  content_type TEXT,
+  size INTEGER,
+  url TEXT,
+  PRIMARY KEY (asset_id, locale)
+);
+
+CREATE TABLE IF NOT EXISTS asset_references (
+  entry_id TEXT NOT NULL REFERENCES entries (id),
+  array_index INTEGER NOT NULL,
+  field_id TEXT NOT NULL REFERENCES fields (id),
+  content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  locale TEXT NOT NULL,
+  reference_asset_id TEXT NOT NULL,
+  PRIMARY KEY (entry_id, array_index, field_id, locale),
+  FOREIGN KEY (field_id, content_type_id) REFERENCES fields (id, content_type_id)
+);

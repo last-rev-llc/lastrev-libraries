@@ -249,6 +249,28 @@ Commands:
 
 ```
 
+## reports
+
+### description
+
+Runs a set of reports on customer data in Contentful
+
+### usage
+
+```text
+Usage: reports [options]
+
+Options:
+  -s, --spaceId <spaceId>          Contentful space ID
+  -t, --accessToken <accessToken>  Contentful delivery access token
+  -e, --environment <environment>  Contentful environment (default: "master")
+  -o, --output-dir <outputDir>     Output directory
+  -r, --reports <reports>          Reports to run, comma separated. Leave blank for all. Available reports:
+                                   asset_report, content_type_ref_report, entry_ref_report, field_report
+  -h, --help                       display help for command
+
+```
+
 ## gen-fragments
 
 ### Description
