@@ -7,8 +7,18 @@ const run = async () => {
   const reportNames = await getReportNames();
 
   program
+    .description(
+      `Run reports on a Contentful export
+
+You must first have a file location of an existing contentful export, using the contentful-cli (https://www.npmjs.com/package/contentful-cli)
+Run the following steps to generate the export:
+    
+contentful login (make sure that you are logged into an account with access to the space you want to export)
+contentful space export --space-id {spaceId} --environment-id {envId} --export-dir {exportDir} --inlcude-drafts
+    `
+    )
     .requiredOption('-s, --spaceId <spaceId>', 'Contentful space ID')
-    .requiredOption('-t, --accessToken <accessToken>', 'Contentful delivery access token')
+    .requiredOption('-i, --input-file <inputFile>', 'Input file')
     .option('-e, --environment <environment>', 'Contentful environment', 'master')
     .option('-o, --output-dir <outputDir>', 'Output directory')
     .option(
@@ -22,8 +32,8 @@ const run = async () => {
   await runContentfulReports({
     spaceId: opts.spaceId,
     environment: opts.environment,
-    accessToken: opts.accessToken,
     outputDir: opts.outputDir ? resolve(process.cwd(), opts.outputDir) : process.cwd(),
+    inputFile: resolve(process.cwd(), opts.inputFile),
     reports: opts.reports ? opts.reports.split(',').map((r: string) => r.trim()) : reportNames
   });
 };

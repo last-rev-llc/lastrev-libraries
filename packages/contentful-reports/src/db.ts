@@ -3,7 +3,8 @@ import { ensureDir, readFile } from 'fs-extra';
 import { promisify } from 'util';
 import { join, resolve } from 'path';
 import { homedir } from 'os';
-import { ContentfulData } from './syncStore';
+import { ContentfulData } from './parseExport';
+import { getStatus } from './utils';
 
 const configDir = join(homedir(), '.config', 'lr-contentful-report');
 
@@ -14,31 +15,37 @@ type RunAsync = (sql: string, params?: any[]) => Promise<void>;
 const populateDb = async ({ entries, assets, contentTypes }: ContentfulData, db: sqlite3.Database) => {
   const run = promisify(db.run).bind(db) as RunAsync;
   console.log('Populating database...');
+
+  const promises = [];
   // populate the content_types table
   for (const contentType of contentTypes) {
-    await run('INSERT INTO content_types (id, display_field, name, description) VALUES (?, ?, ?, ?)', [
-      contentType.sys.id,
-      contentType.displayField,
-      contentType.name,
-      contentType.description
-    ]);
+    promises.push(
+      run('INSERT INTO content_types (id, display_field, name, description) VALUES (?, ?, ?, ?)', [
+        contentType.sys.id,
+        contentType.displayField,
+        contentType.name,
+        contentType.description
+      ])
+    );
     // populate the fields table
     for (const field of contentType.fields) {
-      await run(
-        'INSERT INTO fields (id, content_type_id, name, type, required, disabled, omitted, localized, link_type, items_type, items_link_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-        [
-          field.id,
-          contentType.sys.id,
-          field.name,
-          field.type,
-          field.required,
-          field.disabled,
-          field.omitted,
-          field.localized,
-          field.linkType,
-          field.items?.type,
-          field.items?.linkType
-        ]
+      promises.push(
+        run(
+          'INSERT INTO fields (id, content_type_id, name, type, required, disabled, omitted, localized, link_type, items_type, items_link_type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+          [
+            field.id,
+            contentType.sys.id,
+            field.name,
+            field.type,
+            field.required,
+            field.disabled,
+            field.omitted,
+            field.localized,
+            field.linkType,
+            field.items?.type,
+            field.items?.linkType
+          ]
+        )
       );
     }
   }
@@ -52,9 +59,11 @@ const populateDb = async ({ entries, assets, contentTypes }: ContentfulData, db:
       if (linkContentTypeValidation) {
         const linkContentTypes = linkContentTypeValidation.linkContentType!;
         for (const linkContentType of linkContentTypes) {
-          await run(
-            'INSERT INTO field_content_type_validations (field_id, content_type_id, link_content_type_id) VALUES (?, ?, ?)',
-            [field.id, contentType.sys.id, linkContentType]
+          promises.push(
+            run(
+              'INSERT INTO field_content_type_validations (field_id, content_type_id, link_content_type_id) VALUES (?, ?, ?)',
+              [field.id, contentType.sys.id, linkContentType]
+            )
           );
         }
       }
@@ -63,11 +72,14 @@ const populateDb = async ({ entries, assets, contentTypes }: ContentfulData, db:
 
   // populate the assets table
   for (const asset of assets) {
-    await run('INSERT INTO assets (id, created_date, updated_date) VALUES (?, ?, ?)', [
-      asset.sys.id,
-      asset.sys.createdAt,
-      asset.sys.updatedAt
-    ]);
+    promises.push(
+      run('INSERT INTO assets (id, created_date, updated_date, status) VALUES (?, ?, ?, ?)', [
+        asset.sys.id,
+        asset.sys.createdAt,
+        asset.sys.updatedAt,
+        getStatus(asset)
+      ])
+    );
     const dataByLocale = {} as Record<string, any>;
     for (const [fieldName, fieldVal] of Object.entries(asset.fields)) {
       for (const [locale, val] of Object.entries(fieldVal)) {
@@ -78,30 +90,40 @@ const populateDb = async ({ entries, assets, contentTypes }: ContentfulData, db:
       }
     }
     for (const [locale, data] of Object.entries(dataByLocale)) {
-      await run(
-        'INSERT INTO asset_data (asset_id, locale, title, description, file_name, content_type, size, url) VALUES (?, ?, ?, ?, ? ,?, ?, ?)',
-        [
-          asset.sys.id,
-          locale,
-          data.title,
-          data.description,
-          data.file?.fileName,
-          data.file?.contentType,
-          data.file?.details?.size,
-          data.file?.url
-        ]
+      promises.push(
+        run(
+          'INSERT INTO asset_data (asset_id, locale, title, description, file_name, content_type, size, url) VALUES (?, ?, ?, ?, ? ,?, ?, ?)',
+          [
+            asset.sys.id,
+            locale,
+            data.title,
+            data.description,
+            data.file?.fileName,
+            data.file?.contentType,
+            data.file?.details?.size,
+            data.file?.url
+          ]
+        )
       );
     }
   }
 
   // populate the entries table
   for (const entry of entries) {
-    await run('INSERT INTO entries (id, content_type_id, created_date, updated_date) VALUES (?, ?, ?, ?)', [
-      entry.sys.id,
-      entry.sys.contentType.sys.id,
-      entry.sys.createdAt,
-      entry.sys.updatedAt
-    ]);
+    promises.push(
+      run(
+        'INSERT INTO entries (id, content_type_id, created_date, updated_date, published_date, first_published_date, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [
+          entry.sys.id,
+          entry.sys.contentType.sys.id,
+          entry.sys.createdAt,
+          entry.sys.updatedAt,
+          entry.sys.publishedAt,
+          entry.sys.firstPublishedAt,
+          getStatus(entry)
+        ]
+      )
+    );
 
     for (const [fieldName, fieldVal] of Object.entries(entry.fields as any)) {
       for (const entries of Object.entries(fieldVal as any)) {
@@ -110,34 +132,43 @@ const populateDb = async ({ entries, assets, contentTypes }: ContentfulData, db:
           for (let i = 0; i < val.length; i++) {
             if (val[i]?.sys?.type === 'Link') {
               if (val[i].sys.linkType === 'Entry') {
-                await run(
-                  'INSERT INTO entry_references (entry_id, array_index, field_id, content_type_id, locale, reference_entry_id) VALUES (?, ?, ?, ?, ?, ?)',
-                  [entry.sys.id, i, fieldName, entry.sys.contentType.sys.id, locale, val[i].sys.id]
+                promises.push(
+                  run(
+                    'INSERT INTO entry_references (entry_id, array_index, field_id, content_type_id, locale, reference_entry_id) VALUES (?, ?, ?, ?, ?, ?)',
+                    [entry.sys.id, i, fieldName, entry.sys.contentType.sys.id, locale, val[i].sys.id]
+                  )
                 );
               } else if (val[i]?.sys?.linkType === 'Asset') {
-                await run(
-                  'INSERT INTO asset_references (entry_id, array_index, field_id, content_type_id, locale, reference_asset_id) VALUES (?, ?, ?, ?, ?, ?)',
-                  [entry.sys.id, i, fieldName, entry.sys.contentType.sys.id, locale, val[i].sys.id]
+                promises.push(
+                  run(
+                    'INSERT INTO asset_references (entry_id, array_index, field_id, content_type_id, locale, reference_asset_id) VALUES (?, ?, ?, ?, ?, ?)',
+                    [entry.sys.id, i, fieldName, entry.sys.contentType.sys.id, locale, val[i].sys.id]
+                  )
                 );
               }
             }
           }
         } else if (val?.sys?.type === 'Link') {
           if (val.sys.linkType === 'Entry') {
-            await run(
-              'INSERT INTO entry_references (entry_id, array_index, field_id, content_type_id, locale, reference_entry_id) VALUES (?, ?, ?, ?, ?, ?)',
-              [entry.sys.id, 0, fieldName, entry.sys.contentType.sys.id, locale, val.sys.id]
+            promises.push(
+              run(
+                'INSERT INTO entry_references (entry_id, array_index, field_id, content_type_id, locale, reference_entry_id) VALUES (?, ?, ?, ?, ?, ?)',
+                [entry.sys.id, 0, fieldName, entry.sys.contentType.sys.id, locale, val.sys.id]
+              )
             );
           } else if (val?.sys?.linkType === 'Asset') {
-            await run(
-              'INSERT INTO asset_references (entry_id, array_index, field_id, content_type_id, locale, reference_asset_id) VALUES (?, ?, ?, ?, ?, ?)',
-              [entry.sys.id, 0, fieldName, entry.sys.contentType.sys.id, locale, val.sys.id]
+            promises.push(
+              run(
+                'INSERT INTO asset_references (entry_id, array_index, field_id, content_type_id, locale, reference_asset_id) VALUES (?, ?, ?, ?, ?, ?)',
+                [entry.sys.id, 0, fieldName, entry.sys.contentType.sys.id, locale, val.sys.id]
+              )
             );
           }
         }
       }
     }
   }
+  await Promise.all(promises);
   console.log('done populating database!');
 };
 

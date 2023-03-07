@@ -31,7 +31,10 @@ CREATE TABLE IF NOT EXISTS entries (
   id TEXT PRIMARY KEY,
   content_type_id TEXT NOT NULL REFERENCES content_types (id),
   created_date TEXT NOT NULL,
-  updated_date TEXT NOT NULL
+  updated_date TEXT NOT NULL,
+  published_date TEXT,
+  first_published_date TEXT,
+  status TEXT
 );
 
 CREATE TABLE IF NOT EXISTS entry_references (
@@ -48,7 +51,10 @@ CREATE TABLE IF NOT EXISTS entry_references (
 CREATE TABLE IF NOT EXISTS assets (
   id TEXT PRIMARY KEY,
   created_date TEXT NOT NULL,
-  updated_date TEXT NOT NULL
+  updated_date TEXT NOT NULL,
+  published_date TEXT,
+  first_published_date TEXT,
+  status Text
 );
 
 CREATE TABLE IF NOT EXISTS asset_data (

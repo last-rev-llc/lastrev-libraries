@@ -1,9 +1,8 @@
-import { createClient } from 'contentful';
 import { initDb, runReport } from './db';
 import { resolve } from 'path';
-import { updateStore } from './syncStore';
 import { ensureDir, readdir } from 'fs-extra';
 import { toCsv } from './formatter';
+import parseExport from './parseExport';
 
 export const getReportNames = async () =>
   await readdir(resolve(__dirname, '../sql')).then((files) =>
@@ -13,33 +12,23 @@ export const getReportNames = async () =>
 export const runContentfulReports = async ({
   spaceId,
   environment,
-  accessToken,
   reports,
+  inputFile,
   outputDir
 }: {
   spaceId: string;
   environment: string;
-  accessToken: string;
   reports: string[];
+  inputFile: string;
   outputDir: string;
 }) => {
-  const client = createClient({
-    space: spaceId,
-    accessToken,
-    environment,
-    host: 'cdn.contentful.com',
-    resolveLinks: false
-  });
-
-  const space = await client.getSpace();
-
-  console.log(`Running report for environment: ${environment} in space: ${space.name} (${space.sys.id}).`);
+  console.log(`Running report for environment: ${environment} in space: ${spaceId}.`);
   console.log();
   console.log(`Running the following reports: ${reports.join(', ')}.`);
   console.log();
   console.log(`Writing reports to: ${outputDir}.`);
 
-  const store = await updateStore(spaceId, environment, client);
+  const store = await parseExport(inputFile);
 
   const db = await initDb(store);
 
