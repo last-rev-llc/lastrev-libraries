@@ -6,7 +6,7 @@ Only using published content right now, so the updated/created dates apply to wh
 
 In order to use draft content too, we would need to do two syncs, one to the preview API and one to the delivery API. This would require having two API keys.
 
-In order to run reports that require us knowin about draft vs published items, the above changes would be required.
+In order to run reports that require us knowing about draft vs published items, the above changes would be required.
 
 ### Adding a report
 
