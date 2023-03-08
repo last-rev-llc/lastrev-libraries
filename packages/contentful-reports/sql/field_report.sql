@@ -11,8 +11,8 @@ SELECT
     ELSE f.type
   END AS 'Field Type',
   f.required AS 'Field is Required',
-  f.disabled AS 'Field is Disabled',
-  f.omitted AS 'Field is Omitted',
+  f.disabled AS 'Field is Disabled from Editing',
+  f.omitted AS 'Field is Diabled in Response',
   COALESCE(
     GROUP_CONCAT(DISTINCT v.link_content_type_id),
     ''
