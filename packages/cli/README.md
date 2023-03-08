@@ -273,7 +273,7 @@ Options:
   -s, --spaceId <spaceId>          Contentful space ID
   -i, --input-file <inputFile>     Input file
   -e, --environment <environment>  Contentful environment (default: "master")
-  -o, --output-dir <outputDir>     Output directory
+  -o, --output-dir <outputDir>     Output directory (defaults to current working directory)
   -r, --reports <reports>          Reports to run, comma separated. Leave blank for all. Available reports:
                                    asset_report, content_type_ref_report, content_type_status_report,
                                    entry_ref_report, entry_ref_status_report, field_report
