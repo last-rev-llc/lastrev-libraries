@@ -1,481 +1,549 @@
-"Exposes a URL that specifies the behaviour of this scalar."
-directive @specifiedBy("The URL that specifies the behaviour of this scalar." url: String!) on SCALAR
-directive @key(fields: String!) on OBJECT | INTERFACE
-directive @extends on OBJECT | INTERFACE
-directive @external on OBJECT | FIELD_DEFINITION
-directive @requires(fields: String!) on FIELD_DEFINITION
+directive @extends on INTERFACE | OBJECT
+
+directive @external on FIELD_DEFINITION | OBJECT
+
+directive @key(fields: String!) on INTERFACE | OBJECT
+
 directive @provides(fields: String!) on FIELD_DEFINITION
-"Date custom scalar type"
-scalar Date
-"The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf)."
-scalar JSON
-type Asset {
-  id: String
-  url: String
-  fileName: String
-  extension: String
-  title: String
-  width: String
-  height: String
-  description: String
+
+directive @requires(fields: String!) on FIELD_DEFINITION
+
+type AlgoliaObject {
+  data: JSON!
+  index: String!
 }
-type Media implements Content {
-  source: String
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
+
+type AlgoliaRecord implements Content {
+  algoliaObjects: [AlgoliaObject]
   animation: JSON
-  title: String
-  description: String
-  file: Asset
-  variant: String
-  internalTitle: String
-  asset: Media
-  assetURL: String
-  placeholder: Media
-  fileTablet: Asset
-  fileMobile: Asset
-  controls: Boolean
+  id: String
+  sidekickLookup: JSON
+  theme: [Theme]
 }
+
+type Article implements Content {
+  animation: JSON
+  body: RichText
+  breadcrumbs: [Link]
+  breadcrumbsRoot: String
+  categories: [Link]
+  disableBackToTop: Boolean
+  driftTags: [String]
+  featuredMedia: Media
+  footer: Content
+  footerItems: [Content]
+  header: Header
+  id: String
+  link: Link
+  lr__path__: String
+  pubDate: Date
+  relatedLinks: [Link]
+  requiredRoles: [String]
+  seo: JSON
+  sideNav: [Link]
+  sidekickLookup: JSON
+  slug: String
+  summary: String
+  theme: [Theme]
+  title: String
+  topicNavItems: [NavigationItem]
+  translatedInLocale: [String]
+  variant: String
+}
+
+type Asset {
+  description: String
+  extension: String
+  fileName: String
+  height: String
+  id: String
+  svgContent: String
+  title: String
+  url: String
+  width: String
+}
+
+enum Auth {
+  Legacy
+  None
+  Okta
+}
+
+type Blog {
+  footer: Content
+  header: Header
+}
+
+type Card implements Content {
+  actions: [Link]
+  animation: JSON
+  body: RichText
+  id: String
+  internalTitle: String
+  link: Link
+  media: [Media]
+  pubDate: Date
+  sidekickLookup: JSON
+  subtitle: String
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type CategoryArticle implements Content {
+  allowMultipleSections: Boolean
+  animation: JSON
+  articles: [Card]
+  categoryHierarchyLinks: [NavigationItem]
+  categoryItems: [CategoryArticle]
+  disableBackToTop: Boolean
+  disableSelection: Boolean
+  featuredArticles: [Card]
+  footer: Content
+  header: Header
+  hero: Hero
+  id: String
+  internalTitle: String
+  level: Int
+  link: Link
+  lr__path__: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  subCategories: [CategoryArticle]
+  theme: [Theme]
+  title: String
+  topicNavItems: [NavigationItem]
+}
+
+type CategoryArticleLinkHierarchyNode {
+  href: String
+  id: String
+  subCategories: [CategoryArticleLinkHierarchyNode]
+  text: String
+}
+
+type CategoryBlog {
+  contents: [Content]
+  footer: Content
+  header: Header
+  hero: Hero
+}
+
+type Collection implements Content {
+  animation: JSON
+  backgroundColor: String
+  id: String
+  internalTitle: String
+  introText: Text
+  items: [CollectionItem]
+  itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
+  itemsSpacing: Int
+  itemsVariant: String
+  itemsWidth: String
+  settings: JSON
+  sidekickLookup: JSON
+  styles: JSON
+  theme: [Theme]
+  variant: String
+}
+
+input CollectionFilterInput {
+  body: String
+  tags: [String]
+  topics: [String]
+}
+
+union CollectionItem = Card | Link | Media | NavigationItem | Section
+
+type CollectionItemConnection {
+  items: [CollectionItem]
+  pageInfo: ConnectionPageInfo
+}
+
+type CollectionOptions {
+  tags: [Option]
+  topics: [Option]
+}
+
+type CommonResource implements Content {
+  animation: JSON
+  id: String
+  image: Media
+  internalTitle: String
+  key: String
+  media: Media
+  shortTextValue: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type ConnectionPageInfo {
+  allOptions: CollectionOptions
+  options: CollectionOptions
+  total: Int
+}
+
+interface Content {
+  animation: JSON
+  id: String
+  sidekickLookup: JSON
+  theme: [Theme]
+}
+
+type ContentfulAppSettings implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  settings: JSON
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+input ContentsFilter {
+  contentTypes: [String]
+  displayType: String
+  ids: [String]
+  locale: String
+  preview: Boolean
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Document implements Content {
+  animation: JSON
+  downloadUrl: String
+  googleDocUrl: String
+  id: String
+  lastUpdatedDateOfGoogleDoc: Date
+  sidekickLookup: JSON
+  theme: [Theme]
+}
+
+type Footer implements Content {
+  actions: [Link]
+  animation: JSON
+  disclaimerText: RichText
+  id: String
+  internalTitle: String
+  logoLink: Link
+  media: [Media]
+  navigationItems: [NavigationItem]
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type Header implements Content {
+  actions: [Link]
+  animation: JSON
+  colorScheme: String
+  id: String
+  indexName: String
+  internalTitle: String
+  leftNav: [NavigationItem]
+  logo: Media
+  logoLink: Link
+  logoUrl: String
+  rightNav: [NavigationItem]
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type Hero implements Content {
+  actions: [Link]
+  animation: JSON
+  background: Media
+  backgroundColor: String
+  body: RichText
+  contentHeight: String
+  contentWidth: String
+  id: String
+  image: [Media]
+  internalTitle: String
+  sidekickLookup: JSON
+  subtitle: String
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Link implements Content {
+  animation: JSON
+  buttonColor: String
+  href: String!
+  icon: String
+  iconPosition: String
+  id: String
+  internalTitle: String
+  isActive: Boolean
+  linkColor: String
+  manualUrl: String
+  requireLogin: Boolean
+  sidekickLookup: JSON
+  text: String
+  theme: [Theme]
+  variant: String
+}
+
+type Locales {
+  available: [String!]!
+  default: String!
+}
+
 type Location {
   lat: String
   lon: String
 }
+
+type Media implements Content {
+  animation: JSON
+  asset: Media
+  assetURL: String
+  controls: Boolean
+  description: String
+  file: Asset
+  fileMobile: Asset
+  fileTablet: Asset
+  id: String
+  internalTitle: String
+  placeholder: Media
+  sidekickLookup: JSON
+  source: String
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type ModuleIntegration implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  settings: JSON
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type NavigationItem implements Content {
+  animation: JSON
+  className: String
+  href: String!
+  id: String
+  image: Media
+  internalTitle: String
+  manualUrl: String
+  media: Media
+  requireLogin: Boolean
+  sidekickLookup: JSON
+  subNavigation: [SubnavigationItem]
+  summary: String
+  text: String
+  theme: [Theme]
+  variant: String
+}
+
+type Option {
+  label: String
+  value: String
+}
+
+type Page implements Content {
+  animation: JSON
+  auth: Auth
+  breadcrumbs: [Link]
+  colorScheme: String
+  contents: [Content]
+  disableBackToTop: Boolean
+  disableBreadcrumbs: Boolean
+  disableTopicNav: Boolean
+  footer: Content
+  header: Header
+  hero: Hero
+  id: String
+  indexName: String
+  internalTitle: String
+  lr__path__: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+  title: String
+  topicNavItems: [NavigationItem]
+}
+
+type PagePathParam {
+  slug: [String!]
+}
+
+type PagePathParams {
+  locale: String
+  params: PagePathParam!
+}
+
+type PageTopic implements Content {
+  animation: JSON
+  colorScheme: String
+  disableBackToTop: Boolean
+  id: String
+  internalTitle: String
+  lr__path__: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+  title: String
+}
+
+type Query {
+  _service: _Service!
+  availableLocales: Locales
+  content(displayType: String, id: String!, locale: String, preview: Boolean): Content
+  contents(filter: ContentsFilter!): [Content]
+  page(locale: String, path: String!, preview: Boolean, site: String): Content
+  paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
+  sitemap(locales: [String!], preview: Boolean, root: String!, site: String): Sitemap
+  sitemapIndex(preview: Boolean, site: String): Sitemap
+  sitemapPage(contentType: String!, locale: String, page: Int, preview: Boolean, site: String): SitemapPage
+}
+
 type RichText {
   id: String
   json: JSON
   links: RichTextLinks
 }
+
 type RichTextLinks {
-  entries: [Content]
   assets: [Media]
+  entries: [Content]
 }
-type Theme implements Content {
-  variant: String
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
+
+type Section implements Content {
+  anchorName: String
   animation: JSON
+  background: Media
+  backgroundColor: String
+  contentAlignment: String
+  contentDirection: String
+  contentSpacing: Int
+  contentWidth: String
+  contents: [Content]
+  id: String
   internalTitle: String
-  description: String
-  components: JSON
-  typography: JSON
-}
-type Locales {
-  default: String!
-  available: [String!]!
-}
-input ContentsFilter {
-  contentTypes: [String]
-  ids: [String]
-  locale: String
-  preview: Boolean
-  displayType: String
-}
-type Query {
-  _service: _Service!
-  page(path: String!, locale: String, preview: Boolean, site: String): Content
-  paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
-  content(id: String!, locale: String, preview: Boolean, displayType: String): Content
-  contents(filter: ContentsFilter!): [Content]
-  sitemap(root: String!, locales: [String!], preview: Boolean, site: String): Sitemap
-  sitemapIndex(preview: Boolean, site: String): Sitemap
-  sitemapPage(contentType: String!, locale: String, preview: Boolean, site: String, page: Int): SitemapPage
-  availableLocales: Locales
-}
-type _Service {
-  "The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied"
-  sdl: String
-}
-type PagePathParam {
-  slug: [String!]
-}
-type PagePathParams {
-  params: PagePathParam!
-  locale: String
-}
-interface Content {
-  id: String
-  theme: [Theme]
-  animation: JSON
   sidekickLookup: JSON
+  styles: JSON
+  theme: [Theme]
+  variant: String
 }
-type SitemapEntry {
-  loc: String
-  lastmod: String
+
+type Seo implements Content {
+  animation: JSON
+  description: String
+  id: String
+  keywords: [String]
+  name: String
+  no_follow: Boolean
+  no_index: Boolean
+  sidekickLookup: JSON
+  theme: [Theme]
+  title: String
+  variant: String
 }
-type SitemapPage {
-  entries: [SitemapEntry]
-  contentType: String
-  page: Int
-  locale: String
-  loc: String
-  lastmod: String
-  filename: String
+
+type Site implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  seo: JSON
+  sidekickLookup: JSON
+  siteKey: String
+  theme: [Theme]
+  variant: String
 }
+
 type Sitemap {
   pages: [SitemapPage]
 }
-type Card implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  media: [Media]
-  title: String
-  subtitle: String
-  body: RichText
-  actions: [Link]
-  link: Link
-  pubDate: Date
+
+type SitemapEntry {
+  lastmod: String
+  loc: String
 }
-type Collection implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  itemsVariant: String
-  backgroundColor: String
-  itemsWidth: String
-  itemsSpacing: Int
-  settings: JSON
-  styles: JSON
-  items: [CollectionItem]
-  introText: Text
-  itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
+
+type SitemapPage {
+  contentType: String
+  entries: [SitemapEntry]
+  filename: String
+  lastmod: String
+  loc: String
+  locale: String
+  page: Int
 }
-type CommonResource implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  key: String
-  shortTextValue: String
-  media: Media
-  image: Media
-}
-type Footer implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  disclaimerText: RichText
-  media: [Media]
-  navigationItems: [NavigationItem]
-  logoLink: Link
-  actions: [Link]
-}
-type Header implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  logo: Media
-  logoUrl: String
-  colorScheme: String
-  logoLink: Link
-  leftNav: [NavigationItem]
-  rightNav: [NavigationItem]
-  actions: [Link]
-  indexName: String
-}
-type Hero implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  title: String
-  subtitle: String
-  body: RichText
-  image: [Media]
-  backgroundColor: String
-  contentWidth: String
-  contentHeight: String
-  background: Media
-  actions: [Link]
-}
-type Link implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  manualUrl: String
-  text: String
-  icon: String
-  iconPosition: String
-  linkColor: String
-  buttonColor: String
-  requireLogin: Boolean
-  href: String!
-  isActive: Boolean
-}
-type ModuleIntegration implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  settings: JSON
-}
-type NavigationItem implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  manualUrl: String
-  requireLogin: Boolean
-  text: String
-  summary: String
-  media: Media
-  href: String!
-  className: String
-  subNavigation: [SubnavigationItem]
-  image: Media
-}
-type Section implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  anchorName: String
-  backgroundColor: String
-  contentDirection: String
-  contentAlignment: String
-  contentSpacing: Int
-  contentWidth: String
-  styles: JSON
-  contents: [Content]
-  background: Media
-}
-type Seo implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  name: String
-  title: String
-  description: String
-  keywords: [String]
-  no_index: Boolean
-  no_follow: Boolean
-}
-type Site implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  variant: String
-  internalTitle: String
-  siteKey: String
-  seo: JSON
-}
+
 type SsoGroup implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
   animation: JSON
-  variant: String
-  internalTitle: String
   groupId: String
+  id: String
+  internalTitle: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
 }
+
+union SubnavigationItem = Link | NavigationItem
+
 type Table implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
   animation: JSON
-  variant: String
+  id: String
   internalTitle: String
-  table: String
   richText: RichText
-}
-type Text implements Content {
   sidekickLookup: JSON
-  id: String
+  table: String
   theme: [Theme]
-  animation: JSON
   variant: String
-  internalTitle: String
-  body: RichText
+}
+
+type Text implements Content {
   align: String
-  styles: JSON
+  animation: JSON
+  body: RichText
   color: String
+  colorScheme: String
+  id: String
+  internalTitle: String
+  sidekickLookup: JSON
+  styles: JSON
+  textActions: [Link]
   textHeader: String
   textSubheader: String
-  textActions: [Link]
-  colorScheme: String
-}
-type Article implements Content {
-  sidekickLookup: JSON
-  id: String
   theme: [Theme]
-  animation: JSON
-  slug: String
-  lr__path__: String
-  title: String
-  featuredMedia: Media
-  pubDate: Date
-  summary: String
-  body: RichText
-  disableBackToTop: Boolean
-  seo: JSON
-  translatedInLocale: [String]
-  driftTags: [String]
-  header: Header
-  footer: Content
-  topicNavItems: [NavigationItem]
-  categories: [Link]
-  relatedLinks: [Link]
-  breadcrumbs: [Link]
-  breadcrumbsRoot: String
-  footerItems: [Content]
-  sideNav: [Link]
   variant: String
-  link: Link
-  requiredRoles: [String]
 }
-type CategoryArticle implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
+
+type Theme implements Content {
   animation: JSON
-  slug: String
-  lr__path__: String
+  components: JSON
+  description: String
+  id: String
   internalTitle: String
-  title: String
-  disableSelection: Boolean
-  disableBackToTop: Boolean
-  seo: JSON
-  allowMultipleSections: Boolean
-  header: Header
-  footer: Content
-  hero: Hero
-  topicNavItems: [NavigationItem]
-  categoryItems: [CategoryArticle]
-  categoryHierarchyLinks: [NavigationItem]
-  subCategories: [CategoryArticle]
-  articles: [Card]
-  featuredArticles: [Card]
-  link: Link
-  level: Int
-}
-type Page implements Content {
   sidekickLookup: JSON
-  id: String
   theme: [Theme]
-  animation: JSON
-  slug: String
-  lr__path__: String
-  internalTitle: String
-  title: String
-  seo: JSON
-  colorScheme: String
-  disableTopicNav: Boolean
-  disableBreadcrumbs: Boolean
-  disableBackToTop: Boolean
-  header: Header
-  footer: Content
-  hero: Hero
-  contents: [Content]
-  topicNavItems: [NavigationItem]
-  breadcrumbs: [Link]
-  indexName: String
-  auth: Auth
+  typography: JSON
+  variant: String
 }
-type PageTopic implements Content {
-  sidekickLookup: JSON
-  id: String
-  theme: [Theme]
-  animation: JSON
-  slug: String
-  lr__path__: String
-  internalTitle: String
-  title: String
-  seo: JSON
-  colorScheme: String
-  disableBackToTop: Boolean
-}
-type AlgoliaObject {
-  index: String!
-  data: JSON!
-}
-type AlgoliaRecord implements Content {
-  id: String
-  theme: [Theme]
-  animation: JSON
-  sidekickLookup: JSON
-  algoliaObjects: [AlgoliaObject]
-}
-type CollectionOptions {
-  tags: [Option]
-  topics: [Option]
-}
-type Option {
-  label: String
-  value: String
-}
-type ConnectionPageInfo {
-  options: CollectionOptions
-  allOptions: CollectionOptions
-  total: Int
-}
-type CollectionItemConnection {
-  pageInfo: ConnectionPageInfo
-  items: [CollectionItem]
-}
-input CollectionFilterInput {
-  topics: [String]
-  tags: [String]
-  body: String
-}
-union CollectionItem = Card | Link | Media | Section | NavigationItem
-union SubnavigationItem = Link | NavigationItem
-enum Auth {
-  None
-  Legacy
-  Okta
-}
-type Document implements Content {
-  id: String
-  sidekickLookup: JSON
-  animation: JSON
-  theme: [Theme]
-  googleDocUrl: String
-  lastUpdatedDateOfGoogleDoc: Date
-  downloadUrl: String
-}
-type Blog {
-  header: Header
-  footer: Content
-}
-type CategoryBlog {
-  header: Header
-  footer: Content
-  contents: [Content]
-  hero: Hero
-}
-type CategoryArticleLinkHierarchyNode {
-  id: String
-  text: String
-  href: String
-  subCategories: [CategoryArticleLinkHierarchyNode]
+
+type _Service {
+  """
+  The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied
+  """
+  sdl: String
 }
