@@ -14,7 +14,7 @@ You must first have a file location of an existing contentful export, using the 
 Run the following steps to generate the export:
     
 contentful login (make sure that you are logged into an account with access to the space you want to export)
-contentful space export --space-id {spaceId} --environment-id {envId} --export-dir {exportDir} --inlcude-drafts
+contentful space export --space-id {spaceId} --environment-id {envId} --export-dir {exportDir} --include-drafts
     `
     )
     .requiredOption('-s, --spaceId <spaceId>', 'Contentful space ID')
