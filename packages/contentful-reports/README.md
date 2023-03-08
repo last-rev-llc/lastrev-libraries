@@ -1,4 +1,4 @@
-> ⚠️ Reports are run against an in-memory sqlite3 database that is populated form the synced entries/assets and content types from Contentful
+> ⚠️ Reports are run against an in-memory sqlite3 database that is populated from the synced entries/assets and content types from Contentful
 
 ## Requirements
 
