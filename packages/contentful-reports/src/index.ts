@@ -22,10 +22,8 @@ export const runContentfulReports = async ({
   inputFile: string;
   outputDir: string;
 }) => {
-  console.log(`Running report for environment: ${environment} in space: ${spaceId}.`);
-  console.log();
-  console.log(`Running the following reports: ${reports.join(', ')}.`);
-  console.log();
+  console.log(`Running report for environment: ${environment} in space: ${spaceId}.\n`);
+  console.log(`Running the following reports: ${reports.join(', ')}.\n`);
   console.log(`Writing reports to: ${outputDir}.`);
 
   const store = await parseExport(inputFile);
