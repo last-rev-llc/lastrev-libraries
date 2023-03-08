@@ -24,7 +24,8 @@ CREATE TABLE IF NOT EXISTS field_content_type_validations (
   field_id TEXT NOT NULL,
   content_type_id TEXT NOT NULL REFERENCES content_types (id),
   link_content_type_id TEXT NOT NULL REFERENCES content_types (id),
-  FOREIGN KEY (field_id, content_type_id) REFERENCES fields (id, content_type_id) PRIMARY KEY (field_id, content_type_id, link_content_type_id)
+PRIMARY KEY (field_id, content_type_id, link_content_type_id),
+FOREIGN KEY (field_id, content_type_id) REFERENCES fields (id, content_type_id)
 );
 
 CREATE TABLE IF NOT EXISTS entries (
