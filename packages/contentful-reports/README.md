@@ -12,5 +12,6 @@ contentful space export --space-id {spaceId} --environment-id {envId} --export-d
 
 ## Adding a report
 
-Take a look at the schema at `sql/db.schema`.
-Create a new report under `sql/{reportname}.sql`
+The file `sql/db.schema` has all the data we can build reports from.
+Each report lives on a separate SQL query under `sql/{reportName}.sql`.
+In we want to capture more data from Contentful to build new reports, we can add new tables or add columns to the already existing ones and then create a new report file with the query for it.
