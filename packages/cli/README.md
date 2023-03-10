@@ -249,6 +249,39 @@ Commands:
 
 ```
 
+## reports
+
+### description
+
+Runs a set of reports on customer data in Contentful
+
+### usage
+
+```text
+Usage: reports [options]
+
+Run reports on a Contentful export
+
+You must first have a file location of an existing contentful export, using the contentful-cli (https://www.npmjs.com/package/contentful-cli)
+Run the following steps to generate the export:
+
+contentful login (make sure that you are logged into an account with access to the space you want to export)
+contentful space export --space-id {spaceId} --environment-id {envId} --export-dir {exportDir} --inlcude-drafts
+
+
+Options:
+  -s, --spaceId <spaceId>          Contentful space ID
+  -i, --input-file <inputFile>     Input file
+  -e, --environment <environment>  Contentful environment (default: "master")
+  -o, --output-dir <outputDir>     Output directory (defaults to current working directory)
+  -r, --reports <reports>          Reports to run, comma separated. Leave blank for all. Available reports:
+                                   asset_report, content_type_ref_report, content_type_status_report,
+                                   entry_ref_report, entry_ref_status_report, field_report
+  -h, --help                       display help for command
+
+
+```
+
 ## gen-fragments
 
 ### Description

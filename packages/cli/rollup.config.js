@@ -8,7 +8,8 @@ export default config({
     './src/commands/gql-serve/gql-serve.ts',
     './src/commands/gen-fragments/gen-fragments.ts',
     './src/commands/develop/develop.ts',
-    './src/commands/framework-update/framework-update.ts'
+    './src/commands/framework-update/framework-update.ts',
+    './src/commands/reports/reports.ts'
   ],
   babelHelpers: 'runtime'
 });
