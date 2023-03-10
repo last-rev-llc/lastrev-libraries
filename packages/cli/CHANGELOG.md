@@ -1,5 +1,13 @@
 # @last-rev/cli
 
+## 0.5.16
+
+### Patch Changes
+
+- 2e7e0c1: Added reports to CLI
+- Updated dependencies [2e7e0c1]
+  - @last-rev/contentful-reports@0.1.1
+
 ## 0.5.15
 
 ### Patch Changes
