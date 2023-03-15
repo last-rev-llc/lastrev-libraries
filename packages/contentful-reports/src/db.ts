@@ -8,7 +8,7 @@ import { getStatus } from './utils';
 
 const configDir = join(homedir(), '.config', 'lr-contentful-report');
 
-const schemaFile = resolve(__dirname, '../sql/db.schema');
+const schemaFile = resolve(__dirname, '../sql/db.schema.sql');
 
 type RunAsync = (sql: string, params?: any[]) => Promise<void>;
 
@@ -194,9 +194,8 @@ export const initDb = async (data: ContentfulData) => {
   return db;
 };
 
-export const runReport = async (report: string, db: sqlite3.Database): Promise<any[]> => {
-  console.log(`running report: ${report}...`);
-  const reportSql = await readFile(resolve(__dirname, `../sql/${report}.sql`), 'utf8');
+export const runReport = async (reportSql: string, db: sqlite3.Database, report?: string): Promise<any[]> => {
+  console.log(`running report: ${report || 'External Report'}...`);
 
   return new Promise((resolve, reject) => {
     const results: any[] = [];

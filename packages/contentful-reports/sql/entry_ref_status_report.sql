@@ -3,6 +3,7 @@ SELECT
   ct.name AS 'Referred Type Name',
   e.id as 'Entry ID',
   e.status as 'Entry Status',
+  e.published_date as 'Entry Last Published Date',
   -- count number of references to entries in draft status
   COUNT(
     CASE
