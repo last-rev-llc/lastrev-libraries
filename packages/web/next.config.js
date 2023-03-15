@@ -1,7 +1,11 @@
 require('dotenv').config();
 const path = require('path');
 const withPlugins = require('next-compose-plugins');
-const withTM = require('next-transpile-modules')(['@ias/components', '@last-rev/component-library']);
+const withTM = require('next-transpile-modules')([
+  '@ias/components',
+  '@last-rev/component-library',
+  '@last-rev/contentful-app-components'
+]);
 const { withSentryConfig } = require('@sentry/nextjs');
 
 // Allow bundle analysis via ANALYZE_BUNDLE env variable

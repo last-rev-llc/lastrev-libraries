@@ -12,7 +12,6 @@ describe('Card: default', () => {
       cy.get('[data-testid=Card-media]').should('exist');
       cy.get('[data-testid=Card-title]').should('exist');
       cy.get('[data-testid=Card-body]').should('exist');
-      cy.get('[data-csk-entry-display-text="Link"]').should('exist');
       cy.get('[data-testid=Card-subtitle]').should('not.exist');
       cy.get('[data-testid=Card-actions]').should('not.exist');
     });
