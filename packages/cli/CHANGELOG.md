@@ -1,5 +1,13 @@
 # @last-rev/cli
 
+## 0.5.17
+
+### Patch Changes
+
+- d9175f8: Updated reports CLI to add a field to one report and allow for custom reports and dumping of existing reports'
+- Updated dependencies [d9175f8]
+  - @last-rev/contentful-reports@0.1.2
+
 ## 0.5.16
 
 ### Patch Changes
