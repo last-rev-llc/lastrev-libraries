@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 require('dotenv').config();
 
-const generate = require('@last-rev/sitemap-generator');
+const { generateSitemap } = require('@last-rev/sitemap-generator');
 const { resolve } = require('path');
 const { client, parseBooleanEnvVar } = require('@ias/utils');
 
@@ -16,7 +16,7 @@ const run = async () => {
     site: process.env.SITE
   });
 
-  await generate(data.sitemap, resolve(__dirname, '../public'));
+  await generateSitemap(data.sitemap, resolve(__dirname, '../public'));
 };
 
 run()
