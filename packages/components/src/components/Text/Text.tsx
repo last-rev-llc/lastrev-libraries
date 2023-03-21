@@ -56,7 +56,7 @@ const renderNodeOptions = ({ links }: { links?: any }) => {
         );
       }
 
-      return (
+      return children?.length === 1 && children[0] === '' ? <br /> : (
         <Typography variant="body1" data-testid={`Text-body1`}>
           {children}
         </Typography>
