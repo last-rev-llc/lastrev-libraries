@@ -36,7 +36,7 @@ const HEADINGS: Heading = {
 
 export const typeMappings = {};
 
-const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
+const SITE_ID = process.env.DEFAULT_SITE_ID;
 
 const footerItemsResolver = async (article: any, _args: any, ctx: ApolloContext) => {
   // TODO Improve redirecting to a field inside a referenced field

@@ -1,7 +1,7 @@
 import { ApolloContext } from '@last-rev/types';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 
-const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
+const SITE_ID = process.env.DEFAULT_SITE_ID;
 
 const footerResolver = async (page: any, _args: any, ctx: ApolloContext) => {
     const footer: any = getLocalizedField(page?.fields, 'footer', ctx);

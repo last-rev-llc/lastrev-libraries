@@ -5,7 +5,7 @@ import topicNavHorizontalResolver from './resolvers/topicNavHorizontalResolver';
 import createPath from './utils/createPath';
 import createType from './utils/createType';
 
-const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
+const SITE_ID = process.env.DEFAULT_SITE_ID;
 
 export const typeDefs = gql`
   enum Auth {
