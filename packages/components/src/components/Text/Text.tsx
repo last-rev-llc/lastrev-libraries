@@ -22,6 +22,31 @@ export type { TextProps, TextClassKey, TextClasses } from '@last-rev/component-l
  * - Parse MUI Table elements
  */
 
+const getTextMarkClass = (marks: any) => {
+  return (marks || [])
+    .filter((mark: any) => mark.type !== 'code')
+    .map((mark: any) => `${mark.type}-text`)
+    .join(' ');
+};
+
+const renderCodeText = (node: any) => {
+  const lines = node?.value?.split('\n');
+  return (lines || []).filter((text: any) => text).map((text: any, index: number) => (
+    <>
+      <Box component="code" className={getTextMarkClass(node.marks)}>{text}</Box>
+      {index < lines.length - 1 ? <br /> : null}
+    </>
+  ));
+};
+
+const renderCodeBlock = (content: any) => {
+  return (
+    <Box className="code-wrap">
+      {content.map((text: any) => renderCodeText(text))}
+    </Box>
+  );
+};
+
 const renderNodeOptions = ({ links }: { links?: any }) => {
   const entries = keyBy(links?.entries ?? [], 'id');
   const assets = keyBy(links?.assets ?? [], 'id');
@@ -45,20 +70,20 @@ const renderNodeOptions = ({ links }: { links?: any }) => {
     },
     [BLOCKS.PARAGRAPH]: (node: any, children: any) => {
       if (
-        node.content.length === 1 &&
-        node.content[0].marks?.length &&
-        node.content[0].marks?.find((mark: any) => mark.type === 'code')
+        node.content?.length &&
+        node.content.every((text: any) => text.marks?.find((mark: any) => mark.type === 'code'))
       ) {
-        return (
-          <Box className="code-wrap">
-            <Box component="code">{node.content[0].value}</Box>
-          </Box>
-        );
+        return renderCodeBlock(node.content);
       }
 
       return children?.length === 1 && children[0] === '' ? <br /> : (
         <Typography variant="body1" data-testid={`Text-body1`}>
-          {children}
+          {node.content.map(
+            (text: any, index: number) => 
+              text?.marks?.length && text.marks.find((mark: any) => mark.type === 'code') 
+                ? renderCodeText(text)
+                : children[index]
+          )}
         </Typography>
       );
     },

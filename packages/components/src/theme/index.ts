@@ -334,7 +334,21 @@ const createSchemeTheme = (schemeKey?: string) => {
               },
 
               'code': {
-                color: baseSchemeTheme.palette.common.white
+                color: baseSchemeTheme.palette.common.white,
+                backgroundColor: baseSchemeTheme.palette.common.black,
+                textDecorationColor: baseSchemeTheme.palette.common.white,
+
+                '&.bold-text': {
+                  fontWeight: 'bold'
+                },
+
+                '&.italic-text': {
+                  fontStyle: 'italic'
+                },
+
+                '&.underline-text': {
+                  textDecoration: 'underline'
+                }
               },
 
               '& li::marker': {
