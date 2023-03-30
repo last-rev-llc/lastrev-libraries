@@ -85,9 +85,9 @@ const nextConfig = {
    * @type {import('next').NextConfig}
    */
   experimental: {
-    // images: {
-    //   allowFutureImage: true
-    // }
+    images: {
+      allowFutureImage: true
+    }
   },
   i18n: {
     // TODO: generate these and read from that
