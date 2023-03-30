@@ -71,7 +71,7 @@
     },
     "@lrns/graphql-sdk#build": {
       "dependsOn": ["@lrns/graphql-sdk#gql:healthcheck", "^build"],
-      "outputs": ["dist/**", "schema.graphql"]
+      "outputs": ["dist/**", "schema.graphql", "src/generated/**"]
     },
     "@lrns/web#dev": {
       "cache": false,
