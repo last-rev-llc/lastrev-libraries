@@ -27,3 +27,5 @@ lerna-debug.log
 **/.turbo
 
 create-app.json
+
+packages/web/cypress/integration/__generated/**

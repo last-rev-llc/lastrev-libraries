@@ -1,0 +1,48 @@
+{
+  "minWordSizefor1Typo": 4,
+  "minWordSizefor2Typos": 8,
+  "hitsPerPage": 20,
+  "maxValuesPerFacet": 100,
+  "version": 1,
+  "attributesToIndex": null,
+  "numericAttributesToIndex": null,
+  "attributesToRetrieve": null,
+  "unretrievableAttributes": null,
+  "optionalWords": null,
+  "attributesForFaceting": [
+    "searchable(categories.level-1)",
+    "searchable(categories.level-2)",
+    "searchable(categories.level-3)",
+    "searchable(locale)",
+    "preview",
+    "searchable(translatedInLocale)"
+  ],
+  "attributesToSnippet": null,
+  "attributesToHighlight": null,
+  "paginationLimitedTo": 1000,
+  "attributeForDistinct": null,
+  "exactOnSingleWordQuery": "attribute",
+  "ranking": ["typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"],
+  "customRanking": null,
+  "separatorsToIndex": "",
+  "removeWordsIfNoResults": "none",
+  "queryType": "prefixLast",
+  "highlightPreTag": "<em>",
+  "highlightPostTag": "</em>",
+  "alternativesAsExact": ["ignorePlurals", "singleWordSynonym"],
+  "renderingContent": {
+    "facetOrdering": {
+      "facets": {
+        "order": ["categories", "locale"]
+      },
+      "values": {
+        "categories": {
+          "sortRemainingBy": "count"
+        },
+        "locale": {
+          "sortRemainingBy": "count"
+        }
+      }
+    }
+  }
+}

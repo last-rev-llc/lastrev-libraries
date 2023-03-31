@@ -1,0 +1,75 @@
+{
+  "minWordSizefor1Typo": 4,
+  "minWordSizefor2Typos": 8,
+  "hitsPerPage": 20,
+  "maxValuesPerFacet": 100,
+  "version": 1,
+  "attributesToIndex": null,
+  "numericAttributesToIndex": null,
+  "attributesToRetrieve": null,
+  "unretrievableAttributes": null,
+  "optionalWords": null,
+  "attributesForFaceting": [
+    "searchable(categories.level-1)",
+    "searchable(categories.level-2)",
+    "searchable(categories.level-3)",
+    "searchable(categoryLinks)",
+    "searchable(categoryLinks.href)",
+    "searchable(contentBody)",
+    "searchable(locale)",
+    "preview",
+    "searchable(tags)"
+  ],
+  "attributesToSnippet": null,
+  "attributesToHighlight": null,
+  "paginationLimitedTo": 1000,
+  "attributeForDistinct": null,
+  "exactOnSingleWordQuery": "attribute",
+  "ranking": ["typo", "geo", "words", "filters", "proximity", "attribute", "exact", "custom"],
+  "customRanking": null,
+  "separatorsToIndex": "",
+  "removeWordsIfNoResults": "none",
+  "queryType": "prefixLast",
+  "highlightPreTag": "<em>",
+  "highlightPostTag": "</em>",
+  "alternativesAsExact": ["ignorePlurals", "singleWordSynonym"],
+  "renderingContent": {
+    "facetOrdering": {
+      "facets": {
+        "order": [
+          "categories",
+          "categories.level-1",
+          "categories.level-2",
+          "categories.level-3",
+          "locale",
+          "categoryLinks",
+          "categoryLinks.href",
+          "contentBody"
+        ]
+      },
+      "values": {
+        "categories": {
+          "sortRemainingBy": "count"
+        },
+        "categories.level-1": {
+          "sortRemainingBy": "count"
+        },
+        "categories.level-2": {
+          "sortRemainingBy": "count"
+        },
+        "categories.level-3": {
+          "sortRemainingBy": "count"
+        },
+        "categoryLinks": {
+          "sortRemainingBy": "count"
+        },
+        "categoryLinks.href": {
+          "sortRemainingBy": "count"
+        },
+        "locale": {
+          "sortRemainingBy": "count"
+        }
+      }
+    }
+  }
+}

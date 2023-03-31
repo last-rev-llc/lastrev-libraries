@@ -51,7 +51,8 @@ const nextConfig = {
     USER_AUTH_DOMAIN: process.env.USER_AUTH_DOMAIN,
     ALGOLIA_APP_ID: process.env.ALGOLIA_APP_ID,
     ALGOLIA_SEARCH_API_KEY: process.env.ALGOLIA_SEARCH_API_KEY,
-    PROTECTED_PAGE_REQUIRED_ROLE: process.env.PROTECTED_PAGE_REQUIRED_ROLE
+    PROTECTED_PAGE_REQUIRED_ROLE: process.env.PROTECTED_PAGE_REQUIRED_ROLE,
+    DEPLOY_URL: process.env.DEPLOY_URL
   },
   eslint: {
     // Warning: Dangerously allow production builds to successfully complete even if
