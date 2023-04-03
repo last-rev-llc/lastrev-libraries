@@ -21,10 +21,8 @@ Configuring the Algolia integration consists of two steps:
    - `adminApiKey` (`string`) - The Algolia admin API key.
    - `contentTypeIds` (`string[]`) - An array of Contentful content type IDs representing the types to index.
    - `indices` (`string[]`) - An array of the names of all the Algolia indices this implementation will use.
-   - `hitsPerPage` (`number`) - Number of hits per page when querying for algolia recoreds referencing a particular ID
-2. Add urls configuration to your site's `AppConfig`
-   - `graphql` (`string`) - The full URL to a luve instance of the graphql endpoint for your app
-3. Create `mappers` to map your content types to Algolia fields.
+   - `hitsPerPage` (`number`) - Number of hits per page when querying for algolia records referencing a particular ID
+2. Create `mappers` to map your content types to Algolia fields.
 
 ## Implementing the Algolia Integration
 

@@ -37,12 +37,13 @@ const reindexFull = async ({
 
   const stateTypes: StateType[] = config.algolia.indexDraftContent ? ['preview', 'production'] : ['production'];
 
-  const algoliaRecords = await queryGqlForAllObjects(apolloClient, config, stateTypes);
-
-  const stringifiedToObjectIdMap = await queryAlgoliaForAllObjects({
-    algoliaClient,
-    config
-  });
+  const [algoliaRecords, stringifiedToObjectIdMap] = await Promise.all([
+    queryGqlForAllObjects(apolloClient, config, stateTypes),
+    queryAlgoliaForAllObjects({
+      algoliaClient,
+      config
+    })
+  ]);
 
   const instructions = generateAlgoliaInstructions(stringifiedToObjectIdMap, algoliaRecords);
 
