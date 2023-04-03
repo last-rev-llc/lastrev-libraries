@@ -1,5 +1,13 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.15
+
+### Patch Changes
+
+- 9e8d80c: Updated to the latest aws sdk libraries
+- Updated dependencies [9e8d80c]
+  - @last-rev/contentful-path-util@0.1.23
+
 ## 0.4.14
 
 ### Patch Changes

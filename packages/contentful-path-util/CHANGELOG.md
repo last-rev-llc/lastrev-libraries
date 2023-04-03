@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.1.23
+
+### Patch Changes
+
+- 9e8d80c: Updated to the latest aws sdk libraries
+
 ## 0.1.22
 
 ### Patch Changes
