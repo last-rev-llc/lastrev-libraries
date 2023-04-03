@@ -1,7 +1,8 @@
 import { PathData, PathDataMap } from 'packages/types';
 import { join } from 'path';
 import { ensureDir, readFile, writeFile } from 'fs-extra';
-import AWS from 'aws-sdk';
+import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
+import { DynamoDB } from '@aws-sdk/client-dynamodb';
 import { getWinstonLogger } from '@last-rev/logging';
 import Redis from 'ioredis';
 import { mapValues } from 'lodash';
@@ -103,25 +104,25 @@ export class RedisPathStore implements PathStore {
 }
 
 export class DynamoDbPathStore implements PathStore {
-  dynamoDB: AWS.DynamoDB.DocumentClient;
+  dynamoDB: DynamoDBDocument;
   tableName: string;
   pk: string;
 
   constructor(config: LastRevAppConfig) {
-    AWS.config.update({
-      region: config.dynamodb.region,
-      accessKeyId: config.dynamodb.accessKeyId,
-      secretAccessKey: config.dynamodb.secretAccessKey
-    });
-
     this.tableName = config.dynamodb.tableName;
     this.pk = `${config.contentful.spaceId}:${config.contentful.env}:${
       config.contentful.usePreview ? 'preview' : 'production'
     }`;
 
-    this.dynamoDB = new AWS.DynamoDB.DocumentClient({
-      region: config.dynamodb.region
-    });
+    this.dynamoDB = DynamoDBDocument.from(
+      new DynamoDB({
+        region: config.dynamodb.region,
+        credentials: {
+          accessKeyId: config.dynamodb.accessKeyId,
+          secretAccessKey: config.dynamodb.secretAccessKey
+        }
+      })
+    );
   }
 
   sk(site: string) {
@@ -130,16 +131,14 @@ export class DynamoDbPathStore implements PathStore {
 
   load = async (site: string) => {
     try {
-      const { Item } = await this.dynamoDB
-        .get({
-          TableName: this.tableName,
-          Key: {
-            pk: this.pk,
-            sk: this.sk(site)
-          },
-          AttributesToGet: ['data']
-        })
-        .promise();
+      const { Item } = await this.dynamoDB.get({
+        TableName: this.tableName,
+        Key: {
+          pk: this.pk,
+          sk: this.sk(site)
+        },
+        AttributesToGet: ['data']
+      });
       return Item?.data as PathDataMap;
     } catch (e) {
       logger.info(`No path data found in dynamodb`, {
@@ -153,16 +152,14 @@ export class DynamoDbPathStore implements PathStore {
     if (Object.keys(pathDataMap).length === 0) {
       return;
     }
-    await this.dynamoDB
-      .put({
-        TableName: this.tableName,
-        Item: {
-          pk: this.pk,
-          sk: this.sk(site),
-          data: pathDataMap
-        }
-      })
-      .promise();
+    await this.dynamoDB.put({
+      TableName: this.tableName,
+      Item: {
+        pk: this.pk,
+        sk: this.sk(site),
+        data: pathDataMap
+      }
+    });
   };
 }
 

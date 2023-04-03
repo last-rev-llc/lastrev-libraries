@@ -1,11 +1,12 @@
 import DataLoader, { Options } from 'dataloader';
-import { Entry, Asset } from 'contentful';
+import { Entry, Asset, ContentType } from 'contentful';
 import { transform, omitBy, filter, negate, isEmpty, isError, isNil, map, some } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
-import AWS from 'aws-sdk';
+import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
+import { DynamoDB, QueryCommandOutput } from '@aws-sdk/client-dynamodb';
 import { keyBy, partition } from 'lodash';
 import { zipObject } from 'lodash';
 
@@ -36,15 +37,15 @@ const flvOptions: Options<FVLKey, any, string> = {
 };
 
 const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoaders): ContentfulLoaders => {
-  AWS.config.update({
-    region: config.dynamodb.region,
-    accessKeyId: config.dynamodb.accessKeyId,
-    secretAccessKey: config.dynamodb.secretAccessKey
-  });
-
-  const dynamoDB = new AWS.DynamoDB.DocumentClient({
-    region: config.dynamodb.region
-  });
+  const dynamoDB = DynamoDBDocument.from(
+    new DynamoDB({
+      region: config.dynamodb.region,
+      credentials: {
+        accessKeyId: config.dynamodb.accessKeyId,
+        secretAccessKey: config.dynamodb.secretAccessKey
+      }
+    })
+  );
 
   const pk = (preview: boolean) =>
     `${config.contentful.spaceId}:${config.contentful.env}:${preview ? 'preview' : 'production'}`;
@@ -55,15 +56,15 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
   }: {
     params: any;
     results?: any[];
-  }): Promise<AWS.DynamoDB.DocumentClient.ItemList> => {
-    const data = await dynamoDB.query(params).promise();
+  }): Promise<QueryCommandOutput['Items']> => {
+    const data = await dynamoDB.query(params);
     if (data.LastEvaluatedKey) {
       return await getAll({
         params: { ...params, ExclusiveStartKey: data.LastEvaluatedKey },
         results: [...results, ...(data.Items || [])]
       });
     }
-    return [...results, ...(data.Items as [])];
+    return [...results, ...(data.Items || [])];
   };
 
   const fetchAndSet = async <T>(
@@ -76,16 +77,14 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
     const results: (Entry<any> | Asset)[] = map(
       await Promise.all(
         keys.map(({ preview, id }) =>
-          dynamoDB
-            .get({
-              TableName: config.dynamodb.tableName,
-              AttributesToGet: ['data'],
-              Key: {
-                pk: pk(preview),
-                sk: `${dirname}:${id}`
-              }
-            })
-            .promise()
+          dynamoDB.get({
+            TableName: config.dynamodb.tableName,
+            AttributesToGet: ['data'],
+            Key: {
+              pk: pk(preview),
+              sk: `${dirname}:${id}`
+            }
+          })
         )
       ),
       ({ Item }) => Item?.data
@@ -115,19 +114,16 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
 
       await Promise.all(
         sourceResults.map((result, i) =>
-          dynamoDB
-            .put({
-              TableName: config.dynamodb.tableName,
-              Item: {
-                // items returned from fallback loader are guaranteed to be in the same order as the keys
-                pk: pk(cacheMissIds[i].preview),
-                sk: `${dirname}:${result.sys.id}`,
-                ...(result.sys.type === 'Entry' ? { type: result.sys.contentType.sys.id } : {}),
-                data: result
-              }
-            })
-            // don't block
-            .promise()
+          dynamoDB.put({
+            TableName: config.dynamodb.tableName,
+            Item: {
+              // items returned from fallback loader are guaranteed to be in the same order as the keys
+              pk: pk(cacheMissIds[i].preview),
+              sk: `${dirname}:${result.sys.id}`,
+              ...(result.sys.type === 'Entry' ? { type: result.sys.contentType.sys.id } : {}),
+              data: result
+            }
+          })
         )
       ).finally(() =>
         logger.debug(`Primed ${dirname}`, {
@@ -175,7 +171,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
           IndexName: 'pkTypeIndex'
         }
       });
-      const entries: Entry<any>[] = map(itemList, 'data');
+      const entries = map(itemList, 'data') as unknown as Entry<any>[];
       return {
         entries,
         key
@@ -220,18 +216,16 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
           const key = cacheMissIds[i];
           return await Promise.all(
             map(entries, async (entry) =>
-              dynamoDB
-                .put({
-                  TableName: config.dynamodb.tableName,
-                  Item: {
-                    // items returned from fallback loader are guaranteed to be in the same order as the keys
-                    pk: pk(key.preview),
-                    sk: `entries:${entry.sys.id}`,
-                    type: entry.sys.contentType.sys.id,
-                    data: entry
-                  }
-                })
-                .promise()
+              dynamoDB.put({
+                TableName: config.dynamodb.tableName,
+                Item: {
+                  // items returned from fallback loader are guaranteed to be in the same order as the keys
+                  pk: pk(key.preview),
+                  sk: `entries:${entry.sys.id}`,
+                  type: entry.sys.contentType.sys.id,
+                  data: entry
+                }
+              })
             )
           );
         })
@@ -259,7 +253,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
   const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
   const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
   const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
-  const fetchAllContentTypes = async (preview: boolean) => {
+  const fetchAllContentTypes = async (preview: boolean): Promise<ContentType[]> => {
     try {
       let timer = new Timer();
 
@@ -295,16 +289,14 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         if (contentTypes.length) {
           await Promise.all(
             map(contentTypes, async (contentType) =>
-              dynamoDB
-                .put({
-                  TableName: config.dynamodb.tableName,
-                  Item: {
-                    pk: pk(preview),
-                    sk: `content_types:${contentType.sys.id}`,
-                    data: contentType
-                  }
-                })
-                .promise()
+              dynamoDB.put({
+                TableName: config.dynamodb.tableName,
+                Item: {
+                  pk: pk(preview),
+                  sk: `content_types:${contentType.sys.id}`,
+                  data: contentType
+                }
+              })
             )
           ).finally(() =>
             logger.debug('Prime all content types', {
@@ -316,7 +308,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoad
         }
         return contentTypes;
       }
-      return results;
+      return results as unknown as ContentType[];
     } catch (err: any) {
       logger.error(`Unable to fetch content types: ${err.message}`, {
         caller: 'fetchAllContentTypes',

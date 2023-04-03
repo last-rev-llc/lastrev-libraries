@@ -1,6 +1,7 @@
 import LastRevAppConfig from '@last-rev/app-config';
 import { Handlers } from './types';
-import AWS from 'aws-sdk';
+import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
+import { DynamoDB, QueryCommandOutput } from '@aws-sdk/client-dynamodb';
 import { updateAllPaths } from '@last-rev/contentful-path-util';
 import { createContext } from '@last-rev/graphql-contentful-helpers';
 import { assetHasUrl, createContentfulClients } from './helpers';
@@ -8,18 +9,18 @@ import { Entry } from 'contentful';
 import { map } from 'lodash';
 
 export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
-  AWS.config.update({
-    region: config.dynamodb.region,
-    accessKeyId: config.dynamodb.accessKeyId,
-    secretAccessKey: config.dynamodb.secretAccessKey
-  });
-
   const pk = (preview: boolean) =>
     `${config.contentful.spaceId}:${config.contentful.env}:${preview ? 'preview' : 'production'}`;
 
-  const dynamoDB = new AWS.DynamoDB.DocumentClient({
-    region: config.dynamodb.region
-  });
+  const dynamoDB = DynamoDBDocument.from(
+    new DynamoDB({
+      region: config.dynamodb.region,
+      credentials: {
+        accessKeyId: config.dynamodb.accessKeyId,
+        secretAccessKey: config.dynamodb.secretAccessKey
+      }
+    })
+  );
 
   const { contentfulPreviewClient, contentfulProdClient } = createContentfulClients(config);
 
@@ -29,8 +30,8 @@ export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
   }: {
     params: any;
     results?: any[];
-  }): Promise<AWS.DynamoDB.DocumentClient.ItemList> => {
-    const data = await dynamoDB.query(params).promise();
+  }): Promise<QueryCommandOutput['Items']> => {
+    const data = await dynamoDB.query(params);
     if (data.LastEvaluatedKey) {
       return await getAll({
         params: { ...params, ExclusiveStartKey: data.LastEvaluatedKey },
@@ -65,28 +66,24 @@ export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
     // delete all content models
     await Promise.all(
       map(itemsToDelete, async (item) =>
-        dynamoDB
-          .delete({
-            TableName: config.dynamodb.tableName,
-            Key: { pk: item.pk, sk: item.sk }
-          })
-          .promise()
+        dynamoDB.delete({
+          TableName: config.dynamodb.tableName,
+          Key: { pk: item.pk, sk: item.sk }
+        })
       )
     );
 
     // refresh content models
     await Promise.all(
       map(contentTypes, async (data) =>
-        dynamoDB
-          .put({
-            TableName: config.dynamodb.tableName,
-            Item: {
-              pk: pk(isPreview),
-              sk: `content_types:${data.sys.id}`,
-              data
-            }
-          })
-          .promise()
+        dynamoDB.put({
+          TableName: config.dynamodb.tableName,
+          Item: {
+            pk: pk(isPreview),
+            sk: `content_types:${data.sys.id}`,
+            data
+          }
+        })
       )
     );
   };
@@ -135,12 +132,10 @@ export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
     // delete all items of existing content type
     await Promise.all(
       map(itemsToDelete, async (item) =>
-        dynamoDB
-          .delete({
-            TableName: config.dynamodb.tableName,
-            Key: { pk: item.pk, sk: item.sk }
-          })
-          .promise()
+        dynamoDB.delete({
+          TableName: config.dynamodb.tableName,
+          Key: { pk: item.pk, sk: item.sk }
+        })
       )
     );
 
@@ -155,45 +150,39 @@ export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
             }
           }
         } = data;
-        await dynamoDB
-          .put({
-            TableName: config.dynamodb.tableName,
-            Item: {
-              pk: pk(isPreview),
-              sk: `entries:${id}`,
-              type,
-              data
-            }
-          })
-          .promise();
+        await dynamoDB.put({
+          TableName: config.dynamodb.tableName,
+          Item: {
+            pk: pk(isPreview),
+            sk: `entries:${id}`,
+            type,
+            data
+          }
+        });
       })
     );
   };
 
   const putData = async (data: any, isPreview: boolean, sk: string, type?: string) => {
-    return await dynamoDB
-      .put({
-        TableName: config.dynamodb.tableName,
-        Item: {
-          pk: pk(isPreview),
-          sk,
-          type,
-          data
-        }
-      })
-      .promise();
+    return await dynamoDB.put({
+      TableName: config.dynamodb.tableName,
+      Item: {
+        pk: pk(isPreview),
+        sk,
+        type,
+        data
+      }
+    });
   };
 
   const delData = async (isPreview: boolean, sk: string) => {
-    return await dynamoDB
-      .delete({
-        TableName: config.dynamodb.tableName,
-        Key: {
-          pk: pk(isPreview),
-          sk
-        }
-      })
-      .promise();
+    return await dynamoDB.delete({
+      TableName: config.dynamodb.tableName,
+      Key: {
+        pk: pk(isPreview),
+        sk
+      }
+    });
   };
 
   return {

@@ -25,9 +25,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.303.0",
+    "@aws-sdk/lib-dynamodb": "^3.303.0",
     "@last-rev/logging": "^0.1.2",
     "@last-rev/timer": "^0.2.0",
-    "aws-sdk": "^2.1012.0",
     "dataloader": "^2.0.0",
     "lodash": "^4.17.21",
     "tslib": "^2.3.0"
