@@ -1,5 +1,11 @@
 # @last-rev/contentful-dynamodb-loader
 
+## 0.3.2
+
+### Patch Changes
+
+- 9e8d80c: Updated to the latest aws sdk libraries
+
 ## 0.3.1
 
 ### Patch Changes

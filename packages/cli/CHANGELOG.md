@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.5.18
+
+### Patch Changes
+
+- 9e8d80c: Updated to the latest aws sdk libraries
+
 ## 0.5.17
 
 ### Patch Changes
