@@ -45,7 +45,13 @@ export const runAlgoliaStatusChecks = async (): Promise<StatusNode> => {
       const indexSettings: any = await index.getSettings();
       const indexSnapshot = require(`./snapshots/${INDEX_NAME}_index.json`);
 
-      const mismatchedKeys = compareObjects(indexSettings, indexSnapshot, ['version']);
+      let mismatchedKeys: any[] = [];
+      try {
+        mismatchedKeys = compareObjects(indexSettings, indexSnapshot, ['version']);
+      } catch (err: any) {
+        indexSettingsNode.status = 'Down';
+        indexSettingsNode.message = `Algolia index compare settings error: ${err.message}`;
+      }
 
       // check that it matches the snapshot json
       if (mismatchedKeys.length) {
