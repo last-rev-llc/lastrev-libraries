@@ -32,7 +32,7 @@
     "@lrns/utils": "^0.1.0",
     "@mui/icons-material": "^5.2.4",
     "@mui/material": "^5.4.4",
-    "@sentry/nextjs": "^7.34.0",
+    "@sentry/nextjs": "^7.47.0",
     "@types/react": "^17.0.37",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",

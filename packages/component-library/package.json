@@ -44,7 +44,7 @@
     "@mui/material": "^5.4.4",
     "@mui/styles": "^5.4.4",
     "@mui/system": "^5.4.4",
-    "@sentry/react": "^6.7.1",
+    "@sentry/react": "^7.47.0",
     "next": "^13.1.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
@@ -59,7 +59,7 @@
     "@mui/system": "^5.4.4",
     "@percy/cli": "^1.5.1",
     "@percy/cypress": "^3.1.1",
-    "@sentry/react": "^6.7.1",
+    "@sentry/react": "^7.47.0",
     "@storybook/addon-a11y": "^6.4.9",
     "@storybook/addon-actions": "^6.4.9",
     "@storybook/addon-docs": "^6.4.9",
