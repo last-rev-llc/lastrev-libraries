@@ -1,10 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
 import xss from 'xss';
+
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
+
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
 import BackToTop from '@last-rev/component-library/dist/components/BackToTop';
 import { MediaProps } from '@last-rev/component-library/dist/components/Media';
@@ -80,13 +82,11 @@ export const Article = ({
         <meta name="content_type" content="article" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `${xss(JSON.stringify(schemaData))}` }} />
       </Head>
-
       {header && <ContentModule {...(header as any)} />}
-
       {topicNavItems && <TopicNavHorizontal navItems={topicNavItems} />}
-
-      {breadcrumbs &&  <Breadcrumbs breadcrumbs={breadcrumbs} sidekickLookup={sidekickLookup} data-testid="Article-breadcrumbs" />}
-
+      {breadcrumbs && (
+        <Breadcrumbs breadcrumbs={breadcrumbs} sidekickLookup={sidekickLookup} data-testid="Article-breadcrumbs" />
+      )}
       <Container>
         <Grid container spacing={{ xs: 2, lg: 4 }}>
           <Grid item xs={2} sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -123,20 +123,19 @@ export const Article = ({
           </Grid>
           <Grid item lg={3} sx={{ margin: { md: '0 auto' } }}>
             {relatedLinks && (
-                <Box data-testid="Article-relatedLinks" {...sidekick(sidekickLookup?.relatedLinks)}>
-                  <RelatedLinks
-                    title={
-                      localization['article.relatedLinks.label']?.shortTextValue ??
-                      'For more information, see the related articles:'
-                    }
-                    links={relatedLinks}
-                  />
-                </Box>
-              )}
+              <Box data-testid="Article-relatedLinks" {...sidekick(sidekickLookup?.relatedLinks)}>
+                <RelatedLinks
+                  title={
+                    localization['article.relatedLinks.label']?.shortTextValue ??
+                    'For more information, see the related articles:'
+                  }
+                  links={relatedLinks}
+                />
+              </Box>
+            )}
           </Grid>
         </Grid>
       </Container>
-
       {footerItems?.map((item) => (
         <ContentModule
           key={item?.id}
@@ -147,7 +146,6 @@ export const Article = ({
       ))}
 
       {!disableBackToTop && <BackToTop />}
-
       {footer && <ContentModule {...(footer as any)} />}
     </ErrorBoundary>
   );

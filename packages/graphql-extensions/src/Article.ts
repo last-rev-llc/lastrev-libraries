@@ -235,6 +235,7 @@ export const mappers = {
               .filter(Boolean)
               .map((tag: any) => getLocalizedField(tag.fields, 'title', ctx))
           : [];
+        const driftTags = getLocalizedField(article.fields, 'driftTags', ctx) || [];
 
         const currentLocale = ctx.locale;
         const translatedLocales: string[] =
@@ -256,7 +257,8 @@ export const mappers = {
               categories,
               categoryLinks,
               translatedInLocale,
-              tags
+              tags,
+              driftTags: driftTags.join(',')
             }
           }
         ];

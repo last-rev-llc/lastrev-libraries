@@ -22,7 +22,7 @@ const SessionProvider = dynamic<SessionProviderProps>(() =>
 // LastRev components
 const AuthProvider = dynamic(() => import('@ias/components/src/components/AuthProvider'));
 const SEO = dynamic(() => import('@last-rev/component-library/dist/components/SEO/SEO'));
-
+const Drift = dynamic(() => import('@ias/components/src/components/Drift'));
 const clientSideEmotionCache = createEmotionCache();
 
 interface MyAppProps extends AppProps<{ session: Session }> {
@@ -84,7 +84,9 @@ function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps: { 
         <CssBaseline />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css" />
         <AuthProvider>
-          <Component {...pageProps} />
+          <Drift>
+            <Component {...pageProps} />
+          </Drift>
         </AuthProvider>
       </ThemeProvider>
     </CacheProvider>

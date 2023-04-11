@@ -8,7 +8,8 @@
     "@last-rev/contentful-webhook-handler": "^0.4.14",
     "@last-rev/graphql-algolia-integration": "^0.1.10",
     "@last-rev/graphql-contentful-core": "^0.5.14",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "algoliasearch": "^4.14.2"
   },
   "devDependencies": {}
 }
