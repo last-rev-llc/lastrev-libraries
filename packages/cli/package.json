@@ -38,7 +38,7 @@
   "license": "ISC",
   "dependencies": {
     "@apollo/server": "^4.3.0",
-    "@graphql-tools/merge": "^6.2.14",
+    "@graphql-tools/merge": "^8.4.0",
     "@last-rev/app-config": "^0.5.0",
     "@last-rev/contentful-fragment-gen": "^0.2.4",
     "@last-rev/contentful-import-export": "^0.1.5",
