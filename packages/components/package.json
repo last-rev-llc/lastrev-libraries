@@ -29,7 +29,7 @@
     "@last-rev/testing-library": "^0.1.10",
     "@mui/styles": "^5.4.4",
     "@rollup/plugin-typescript": "^8.3.0",
-    "@sentry/react": "^6.7.1",
+    "@sentry/react": "^7.47.0",
     "algoliasearch": "^4.12.0",
     "axios": "^0.26.0",
     "dayjs": "^1.10.7",

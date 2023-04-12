@@ -30,7 +30,7 @@
     "@mui/icons-material": "^5.2.4",
     "@mui/material": "^5.4.4",
     "@mui/system": "^5.4.4",
-    "@sentry/nextjs": "^6.19.6",
+    "@sentry/nextjs": "^7.47.0",
     "@types/react": "^17.0.37",
     "contentful-management": "^10.26.0",
     "dotenv": "^10.0.0",
