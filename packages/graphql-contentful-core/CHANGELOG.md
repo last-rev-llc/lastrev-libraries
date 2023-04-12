@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.15
+
+### Patch Changes
+
+- 5ce8193: Bumped versions of graphql-tools
+
 ## 0.5.14
 
 ### Patch Changes

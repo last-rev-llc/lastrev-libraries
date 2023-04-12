@@ -1,5 +1,13 @@
 # @last-rev/cli
 
+## 0.5.19
+
+### Patch Changes
+
+- 5ce8193: Bumped versions of graphql-tools
+- Updated dependencies [5ce8193]
+  - @last-rev/graphql-contentful-core@0.5.15
+
 ## 0.5.18
 
 ### Patch Changes
