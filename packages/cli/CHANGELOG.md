@@ -1,5 +1,13 @@
 # @last-rev/cli
 
+## 0.5.20
+
+### Patch Changes
+
+- 1888152: switched @apollo/federation to @apollo/subgraph
+- Updated dependencies [1888152]
+  - @last-rev/graphql-contentful-core@0.5.16
+
 ## 0.5.19
 
 ### Patch Changes
