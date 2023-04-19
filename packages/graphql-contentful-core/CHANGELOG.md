@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.16
+
+### Patch Changes
+
+- 1888152: switched @apollo/federation to @apollo/subgraph
+
 ## 0.5.15
 
 ### Patch Changes
