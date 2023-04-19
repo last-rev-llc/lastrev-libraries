@@ -5,7 +5,7 @@ import createResolvers from './resolvers/createResolvers';
 import { ContentfulLoaders } from '@last-rev/types';
 import { GraphQLSchema } from 'graphql';
 
-import { buildSubgraphSchema } from '@apollo/federation';
+import { buildSubgraphSchema } from '@apollo/subgraph';
 import { addResolversToSchema, makeExecutableSchema } from '@graphql-tools/schema';
 import LastRevAppConfig from '@last-rev/app-config';
 import { createLoaders } from '@last-rev/graphql-contentful-helpers';

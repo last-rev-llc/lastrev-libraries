@@ -23,8 +23,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/federation": "^0.38.1",
     "@apollo/server": "^4.3.0",
+    "@apollo/subgraph": "^2.4.1",
     "@as-integrations/aws-lambda": "^1.1.0",
     "@as-integrations/next": "^1.2.0",
     "@graphql-tools/merge": "^8.4.0",
