@@ -9,6 +9,14 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: !!(process.env.ANALYZE_BUNDLE && process.env.ANALYZE_BUNDLE.toLowerCase() === 'true')
 });
 
+const hasAllSentryVars = !!(
+  process.env.SENTRY_PROJECT &&
+  process.env.SENTRY_AUTH_TOKEN &&
+  process.env.SENTRY_URL &&
+  process.env.SENTRY_ORG &&
+  process.env.NEXT_PUBLIC_SENTRY_DSN
+);
+
 const nextConfig = {
   /**
    * @type {import('next').NextConfig}
@@ -62,6 +70,12 @@ const nextConfig = {
   experimental: {
     workerThreads: false,
     cpus: 4
+  },
+  sentry: {
+    disableServerWebpackPlugin: !hasAllSentryVars,
+    disableClientWebpackPlugin: !hasAllSentryVars,
+    hideSourceMaps: true,
+    widenClientFileUpload: true
   },
   webpack: (config) => {
     // Important: return the modified config
