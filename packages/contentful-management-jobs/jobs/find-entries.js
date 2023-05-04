@@ -4,19 +4,23 @@
 const { clientDelivery } = require('../shared/contentful-init');
 const { getAllEntries, getAllItems } = require('../shared/contentful-actions');
 
-const limit = 200;
-const content_type = 'blog';
+const limit = 100;
+const content_type = 'aaShopifyProduct';
 const order = '-sys.createdAt';
+
+const logMessage = 'entries with category => ';
+const itemFilter = (item) => item.fields.category;
+const displayItem = (item) => {
+  console.log('item category => ', { id: item.sys.id, category: item.fields.category });
+};
 
 const log = (items) => {
   console.log(
-    'entries with og:title => ',
+    logMessage,
     items
-      .filter((item) => item.fields.seo?.['og:title'])
+      .filter(itemFilter)
       .map((item) => {
-        if (item.sys.id === '5eMUbqDXpa2owgiPf2VeHj') {
-          console.log('item seo => ', JSON.stringify(item.fields.seo, null, 2));
-        }
+        displayItem(item);
         return item.sys.id;
       })
       .join(',')
@@ -25,7 +29,7 @@ const log = (items) => {
 
 (async () => {
   // Step 1 - Get All Entries
-  const entries = await getAllEntries(clientDelivery, { content_type: 'blog', limit: 1 }, (items) =>
+  const entries = await getAllEntries(clientDelivery, { content_type, limit: 1 }, (items) =>
     getAllItems(items, { limit, content_type, order })
   );
 

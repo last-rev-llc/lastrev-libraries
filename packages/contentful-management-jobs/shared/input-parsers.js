@@ -39,7 +39,7 @@ const importParser = async (getItems, callback) => {
     console.log('Error importing items => ', error);
   }
   if (callback) {
-    await callback(items);
+    items = await callback(items);
   }
   return items;
 };
