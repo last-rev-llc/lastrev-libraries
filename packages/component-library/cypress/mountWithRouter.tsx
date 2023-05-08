@@ -1,9 +1,9 @@
 import React from 'react';
 import { NextRouter } from 'next/router';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
-import mount from '../../cypress/mount';
+import mount from './mount';
 
-const createRouter = (params: Partial<NextRouter>) => ({
+export const mockRouter = {
   pathname: '',
   route: '',
   query: {},
@@ -21,14 +21,19 @@ const createRouter = (params: Partial<NextRouter>) => ({
   isLocaleDomain: false,
   beforePopState: cy.spy(),
   forward: cy.spy(),
-  refresh: cy.spy(),
+  refresh: cy.spy()
+};
+
+const createRouter = (params: Partial<NextRouter>) => ({
+  ...mockRouter,
   ...params
 });
 
-const mountWithRouter = (children: React.ReactNode, routerOptions: NextRouter = {} as NextRouter) => {
-  const router = createRouter(routerOptions);
+export const routerProvider = (children: React.ReactNode, routerOptions: NextRouter = {} as NextRouter) => (
+  <RouterContext.Provider value={createRouter(routerOptions)}>{children}</RouterContext.Provider>
+);
 
-  return mount(<RouterContext.Provider value={router}>{children}</RouterContext.Provider>);
-};
+const mountWithRouter = (children: React.ReactNode, routerOptions: NextRouter = {} as NextRouter) =>
+  mount(routerProvider(children, createRouter(routerOptions)));
 
 export default mountWithRouter;
