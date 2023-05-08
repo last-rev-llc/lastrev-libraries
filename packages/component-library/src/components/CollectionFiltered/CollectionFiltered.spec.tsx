@@ -1,5 +1,6 @@
 import * as React from 'react';
 import swrMount from '../../../cypress/swrMount';
+import { routerProvider } from '../../../cypress/mountWithRouter';
 import CollectionFiltered from './CollectionFiltered';
 import { CollectionFilteredProps } from './CollectionFiltered.types';
 import mockContent, { collectionFilteredMock, noOptionalPropsMock, allOptions } from './CollectionFiltered.mock';
@@ -15,7 +16,7 @@ beforeEach(() => {
 describe('CollectionFiltered', () => {
   context('renders correctly', () => {
     it('renders an CollectionFiltered with all options added', () => {
-      swrMount(<CollectionFiltered {...mockedContent} />);
+      swrMount(routerProvider(<CollectionFiltered {...mockedContent} />));
       cy.get('[data-testid=CollectionFiltered]').should('exist');
       cy.get('[data-testid=CollectionFiltered-LoadMoreButton]').should('have.text', mockContent.loadMoreText);
       cy.percySnapshot();
@@ -23,7 +24,7 @@ describe('CollectionFiltered', () => {
 
     it('renders an CollectionFiltered with no options added', () => {
       mockedContent = { ...noOptionalPropsMock };
-      swrMount(<CollectionFiltered {...mockedContent} />);
+      swrMount(routerProvider(<CollectionFiltered {...mockedContent} />));
       cy.get('[data-testid=CollectionFiltered]').should('exist');
       cy.get('[data-testid=CollectionFiltered-LoadMoreButton]').should('have.text', 'LOAD MORE');
       cy.percySnapshot();
@@ -38,12 +39,12 @@ describe('CollectionFiltered', () => {
         })
       };
       mockedContent.items = undefined;
-      swrMount(<CollectionFiltered {...mockedContent} />);
+      swrMount(routerProvider(<CollectionFiltered {...mockedContent} />));
       cy.get('[data-testid=CollectionFiltered-TryAgainButton]').should('have.text', 'TRY AGAIN');
     });
 
     it('loads more items when load more button is clicked', () => {
-      swrMount(<CollectionFiltered {...mockedContent} />);
+      swrMount(routerProvider(<CollectionFiltered {...mockedContent} />));
       cy.get('[data-testid=Section-ContentItem]').should('have.length', mockContent.items?.length);
       cy.get('[data-testid=CollectionFiltered-LoadMoreButton]').click();
       cy.get('[data-testid=Section-ContentItem]').should(
@@ -53,7 +54,7 @@ describe('CollectionFiltered', () => {
     });
 
     it('it fetches items when select filter item is selected', () => {
-      swrMount(<CollectionFiltered {...mockedContent} />);
+      swrMount(routerProvider(<CollectionFiltered {...mockedContent} />));
       cy.get('[data-testid=Section-ContentItem]').should('have.length', mockedContent?.items?.length);
       // click select
       cy.get('[data-testid=CollectionFilters-select]').click();
@@ -66,7 +67,7 @@ describe('CollectionFiltered', () => {
     });
 
     it('it fetches items when autocomplete filter item is selected', () => {
-      swrMount(<CollectionFiltered {...mockedContent} />);
+      swrMount(routerProvider(<CollectionFiltered {...mockedContent} />));
       cy.get('[data-testid=Section-ContentItem]').should('have.length', mockedContent.items?.length);
       // click autocomplete
       cy.get('[data-testid=CollectionFilters-autocomplete]').click();
@@ -79,7 +80,7 @@ describe('CollectionFiltered', () => {
     });
 
     it('it fetches items when typing in the search box', () => {
-      swrMount(<CollectionFiltered {...mockedContent} />);
+      swrMount(routerProvider(<CollectionFiltered {...mockedContent} />));
       cy.get('[data-testid=Section-ContentItem]').should('have.length', mockedContent?.items?.length);
       // type in search
       cy.get('[data-testid=CollectionFilters-text]').type('test');
@@ -90,7 +91,7 @@ describe('CollectionFiltered', () => {
     });
 
     it('it clears select when clear button is clicked', () => {
-      swrMount(<CollectionFiltered {...mockedContent} />);
+      swrMount(routerProvider(<CollectionFiltered {...mockedContent} />));
       cy.get('[data-testid=CollectionFiltered-ResultsDisplay]').contains('All');
       // click select
       cy.get('[data-testid=CollectionFilters-select]').click();
@@ -110,7 +111,7 @@ describe('CollectionFiltered', () => {
     });
 
     it('it clears autocomplete when clear button is clicked', () => {
-      swrMount(<CollectionFiltered {...mockedContent} />);
+      swrMount(routerProvider(<CollectionFiltered {...mockedContent} />));
       cy.get('[data-testid=CollectionFiltered-ResultsDisplay]').contains('All');
       // click autocomplete
       cy.get('[data-testid=CollectionFilters-autocomplete]').click();
@@ -128,7 +129,7 @@ describe('CollectionFiltered', () => {
     });
 
     it('it clears search box when clear button is clicked', () => {
-      swrMount(<CollectionFiltered {...mockedContent} />);
+      swrMount(routerProvider(<CollectionFiltered {...mockedContent} />));
       cy.get('[data-testid=CollectionFiltered-ResultsDisplay]').contains('All');
       // type in search
       cy.get(`[data-testid=CollectionFilters-text]`).type('test');

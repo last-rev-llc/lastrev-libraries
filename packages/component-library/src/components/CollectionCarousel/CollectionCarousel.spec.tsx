@@ -1,6 +1,7 @@
 import * as React from 'react';
-import mount from '../../../cypress/mount';
-import CollectionCarousel, { CollectionCarouselProps } from './CollectionCarousel';
+import mountWithRouter from '../../../cypress/mountWithRouter';
+import CollectionCarousel from './CollectionCarousel';
+import { CollectionCarouselProps } from './CollectionCarousel.types';
 import defaultContent, { smallCarouselMock } from './CollectionCarousel.mock';
 
 let mockedContent: CollectionCarouselProps = { theme: {}, sidekickLookup: '', variant: '' };
@@ -12,16 +13,18 @@ const runTestByVariant = (variantContent: CollectionCarouselProps, expectedLengt
 
   context('renders correctly', () => {
     it('renders a collection carousel', () => {
-      mount(<CollectionCarousel {...mockedContent} />);
+      mountWithRouter(<CollectionCarousel {...mockedContent} />);
       cy.get('[data-testid=CollectionCarousel]').should('exist');
-      cy.get('[data-testid=Card]').should('have.length', expectedLength(mockedContent.items.length));
+      cy.get('[data-testid=Card]').should('have.length', expectedLength(mockedContent.items?.length));
       cy.percySnapshot();
     });
 
     it('renders correct content', () => {
-      mount(<CollectionCarousel {...mockedContent} />);
-      mockedContent.items.forEach((item) => {
-        cy.get('[data-testid=Card]').contains(item.title).should('exist');
+      mountWithRouter(<CollectionCarousel {...mockedContent} />);
+      mockedContent.items?.forEach((item) => {
+        cy.get('[data-testid=Card]')
+          .contains(item?.title as string | number | RegExp)
+          .should('exist');
       });
       cy.percySnapshot();
     });
@@ -29,7 +32,7 @@ const runTestByVariant = (variantContent: CollectionCarouselProps, expectedLengt
 
   context('functions correctly', () => {
     it('previous and next buttons work correctly', () => {
-      mount(<CollectionCarousel {...mockedContent} />);
+      mountWithRouter(<CollectionCarousel {...mockedContent} />);
       cy.get('.swiper-pagination-bullet.swiper-pagination-bullet-active').as('activeBullet');
 
       cy.get('.swiper-button-next').then((button) => {

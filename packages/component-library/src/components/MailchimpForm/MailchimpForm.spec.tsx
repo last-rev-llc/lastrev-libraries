@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { lorem } from 'faker';
-import mount from '../../../cypress/mount';
+import mountWithRouter from '../../../cypress/mountWithRouter';
 import MailchimpForm from './MailchimpForm';
 import { MailchimpFormProps } from './MailchimpForm.types';
 import mockContent from './MailchimpForm.mock';
@@ -17,7 +17,7 @@ beforeEach(() => {
 
 const testOptionalField = (fieldName: 'FNAME' | 'LNAME') => {
   it(`form will submit when ${fieldName === 'FNAME' ? 'first' : 'last'} name is filled out`, () => {
-    mount(<MailchimpForm {...mockedContent} />);
+    mountWithRouter(<MailchimpForm {...mockedContent} />);
     // Show that success message is not visible yet
     cy.get('[data-testid=MailchimpForm-successMessage]').should('not.be.visible');
 
@@ -38,7 +38,7 @@ const testOptionalField = (fieldName: 'FNAME' | 'LNAME') => {
   });
 
   it(`form will submit when ${fieldName === 'FNAME' ? 'first' : 'last'} name is not filled out`, () => {
-    mount(<MailchimpForm {...mockedContent} />);
+    mountWithRouter(<MailchimpForm {...mockedContent} />);
     // Show that success message is not visible yet
     cy.get('[data-testid=MailchimpForm-successMessage]').should('not.be.visible');
 
@@ -59,7 +59,7 @@ const testOptionalField = (fieldName: 'FNAME' | 'LNAME') => {
 describe('MailchimpForm', () => {
   context('renders correctly', () => {
     it('renders a mailchimp form', () => {
-      mount(<MailchimpForm {...mockedContent} />);
+      mountWithRouter(<MailchimpForm {...mockedContent} />);
       cy.get('[data-testid=MailchimpForm]').should('exist');
       cy.get('[data-testid=MailchimpForm-title]').should('exist');
       cy.get('[data-testid=MailchimpForm-subtitle]').should('exist');
@@ -71,14 +71,14 @@ describe('MailchimpForm', () => {
     describe('MailchimpForm sections', () => {
       context('title', () => {
         it('renders a mailchimp form with correct title', () => {
-          mount(<MailchimpForm {...mockedContent} />);
+          mountWithRouter(<MailchimpForm {...mockedContent} />);
           cy.get('[data-testid=MailchimpForm]').should('exist');
           cy.get('[data-testid=MailchimpForm-title]').should('exist').and('have.text', mockedContent.title);
           cy.get('form[id^=form_]').should('exist');
         });
 
         it('renders a mailchimp form without title provided', () => {
-          mount(<MailchimpForm {...mockedContent} title={undefined} />);
+          mountWithRouter(<MailchimpForm {...mockedContent} title={undefined} />);
           cy.get('[data-testid=MailchimpForm]').should('exist');
           cy.get('[data-testid=MailchimpForm-title]').should('not.exist');
           cy.get('form[id^=form_]').should('exist');
@@ -88,14 +88,14 @@ describe('MailchimpForm', () => {
 
       context('subtitle', () => {
         it('renders a mailchimp form with correct subtitle', () => {
-          mount(<MailchimpForm {...mockedContent} />);
+          mountWithRouter(<MailchimpForm {...mockedContent} />);
           cy.get('[data-testid=MailchimpForm]').should('exist');
           cy.get('[data-testid=MailchimpForm-subtitle]').should('exist').and('have.text', mockedContent.subtitle);
           cy.get('form[id^=form_]').should('exist');
         });
 
         it('renders a mailchimp form without subtitle provided', () => {
-          mount(<MailchimpForm {...mockedContent} subtitle={undefined} />);
+          mountWithRouter(<MailchimpForm {...mockedContent} subtitle={undefined} />);
           cy.get('[data-testid=MailchimpForm]').should('exist');
           cy.get('[data-testid=MailchimpForm-subtitle]').should('not.exist');
           cy.get('form[id^=form_]').should('exist');
@@ -105,7 +105,7 @@ describe('MailchimpForm', () => {
 
       context('body', () => {
         it('renders a mailchimp form with correct body', () => {
-          mount(<MailchimpForm {...mockedContent} />);
+          mountWithRouter(<MailchimpForm {...mockedContent} />);
           cy.get('[data-testid=MailchimpForm]').should('exist');
           cy.get('[data-testid=MailchimpForm-body]')
             .should('exist')
@@ -114,7 +114,7 @@ describe('MailchimpForm', () => {
         });
 
         it('renders a mailchimp form without body provided', () => {
-          mount(<MailchimpForm {...mockedContent} body={undefined} />);
+          mountWithRouter(<MailchimpForm {...mockedContent} body={undefined} />);
           cy.get('[data-testid=MailchimpForm]').should('exist');
           cy.get('[data-testid=MailchimpForm-body]').should('not.exist');
           cy.get('form[id^=form_]').should('exist');
@@ -123,14 +123,14 @@ describe('MailchimpForm', () => {
 
         context('image', () => {
           it('renders a mailchimp form with correct image', () => {
-            mount(<MailchimpForm {...mockedContent} />);
+            mountWithRouter(<MailchimpForm {...mockedContent} />);
             cy.get('[data-testid=MailchimpForm]').should('exist');
             cy.get('[data-testid=Media]').should('exist');
             cy.get('form[id^=form_]').should('exist');
           });
 
           it('renders a mailchimp form without image provided', () => {
-            mount(<MailchimpForm {...mockedContent} image={undefined} />);
+            mountWithRouter(<MailchimpForm {...mockedContent} image={undefined} />);
             cy.get('[data-testid=MailchimpForm]').should('exist');
             cy.get('[data-testid=Media]').should('not.exist');
             cy.get('form[id^=form_]').should('exist');
@@ -140,7 +140,7 @@ describe('MailchimpForm', () => {
 
         context('success message', () => {
           it('renders a mailchimp form with correct success message when provided', () => {
-            mount(<MailchimpForm {...mockedContent} />);
+            mountWithRouter(<MailchimpForm {...mockedContent} />);
             cy.get('[data-testid=MailchimpForm]').should('exist');
             cy.get('[data-testid=MailchimpForm-successMessage]')
               .should('exist')
@@ -149,7 +149,7 @@ describe('MailchimpForm', () => {
           });
 
           it('renders a mailchimp form without a success message provided', () => {
-            mount(<MailchimpForm {...mockedContent} successMessage={undefined} />);
+            mountWithRouter(<MailchimpForm {...mockedContent} successMessage={undefined} />);
             cy.get('[data-testid=MailchimpForm]').should('exist');
             cy.get('[data-testid=MailchimpForm-successMessage]').should('not.exist');
             cy.get('form[id^=form_]').should('exist');
@@ -161,7 +161,7 @@ describe('MailchimpForm', () => {
 
     describe('MailchimpForm form', () => {
       it('renders a mailchimp form with correct fields', () => {
-        mount(<MailchimpForm {...mockedContent} />);
+        mountWithRouter(<MailchimpForm {...mockedContent} />);
         cy.get('[data-testid=MailchimpForm]').should('exist');
         cy.get('form[id^=form_]').should('exist');
         cy.get('input[name=FNAME]').should('exist');
@@ -171,7 +171,7 @@ describe('MailchimpForm', () => {
       });
 
       it('renders a mailchimp form without action controls', () => {
-        mount(<MailchimpForm {...mockedContent} actions={undefined} />);
+        mountWithRouter(<MailchimpForm {...mockedContent} actions={undefined} />);
         cy.get('[data-testid=MailchimpForm]').should('exist');
         cy.get('form[id^=form_]').should('exist');
         cy.get('[type=submit]').should('not.exist');
@@ -195,7 +195,7 @@ describe('MailchimpForm', () => {
       context('required fields', () => {
         describe('Email', () => {
           it('submits form when an email in correct format is provided', () => {
-            mount(<MailchimpForm {...mockedContent} />);
+            mountWithRouter(<MailchimpForm {...mockedContent} />);
             // Show that success message is not visible yet
             cy.get('[data-testid=MailchimpForm-successMessage]').should('not.be.visible');
 
@@ -210,7 +210,7 @@ describe('MailchimpForm', () => {
           });
 
           it('does not submit form when email provided is not in correct format', () => {
-            mount(<MailchimpForm {...mockedContent} />);
+            mountWithRouter(<MailchimpForm {...mockedContent} />);
             // Show that success message is not visible yet
             cy.get('[data-testid=MailchimpForm-successMessage]').should('not.be.visible');
 
@@ -225,7 +225,7 @@ describe('MailchimpForm', () => {
           });
 
           it('does not submit form when email is not provided', () => {
-            mount(<MailchimpForm {...mockedContent} />);
+            mountWithRouter(<MailchimpForm {...mockedContent} />);
             // Show that success message is not visible yet
             cy.get('[data-testid=MailchimpForm-successMessage]').should('not.be.visible');
 

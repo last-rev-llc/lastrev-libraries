@@ -1,5 +1,5 @@
 import * as React from 'react';
-import mount from '../../../cypress/mount';
+import mountWithRouter from '../../../cypress/mountWithRouter';
 import NavigationItem from './NavigationItem';
 import { NavigationItemProps } from './NavigationItem.types';
 import mockContent from './NavigationItem.mock';
@@ -13,15 +13,15 @@ beforeEach(() => {
 describe('NavigationItem', () => {
   context('renders correctly', () => {
     it('renders a navigation item and its subnav links', () => {
-      mount(<NavigationItem {...mockedContent} />);
+      mountWithRouter(<NavigationItem {...mockedContent} />);
       cy.get('[data-testid=NavigationItem]').should('exist');
       cy.get('a')
-        .should('have.length', mockedContent.subNavigation.length + 1)
+        .should('have.length', (mockedContent.subNavigation?.length || 0) + 1)
         .each((item, index) => {
           if (index !== 0) {
             cy.wrap(item)
-              .should('have.attr', 'href', `/${mockedContent.subNavigation[index - 1].href}`)
-              .and('have.text', mockedContent.subNavigation[index - 1].text);
+              .should('have.attr', 'href', `/${mockedContent.subNavigation?.[index - 1].href}`)
+              .and('have.text', mockedContent.subNavigation?.[index - 1].text);
           } else {
             cy.wrap(item).should('have.attr', 'href', `/${mockedContent.href}`).and('have.text', mockedContent.text);
           }
@@ -30,7 +30,7 @@ describe('NavigationItem', () => {
     });
 
     it('renders a navigation item without subnav links', () => {
-      mount(<NavigationItem {...mockedContent} subNavigation={undefined} />);
+      mountWithRouter(<NavigationItem {...mockedContent} subNavigation={undefined} />);
       cy.get('[data-testid=NavigationItem]').should('exist');
       cy.get('a')
         .should('have.length', 1)
