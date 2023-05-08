@@ -3,7 +3,7 @@ import { NextRouter } from 'next/router';
 import { RouterContext } from 'next/dist/shared/lib/router-context';
 import mount from './mount';
 
-export const mockRouter = {
+export const mockRouter = () => ({
   pathname: '',
   route: '',
   query: {},
@@ -22,10 +22,10 @@ export const mockRouter = {
   beforePopState: cy.spy(),
   forward: cy.spy(),
   refresh: cy.spy()
-};
+});
 
 const createRouter = (params: Partial<NextRouter>) => ({
-  ...mockRouter,
+  ...mockRouter(),
   ...params
 });
 
