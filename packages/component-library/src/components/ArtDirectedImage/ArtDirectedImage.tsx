@@ -36,7 +36,7 @@ const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProp
             columns={6}
             height={fileMobile?.height}
             media={getImageMedia('mobile', { file, fileMobile, fileTablet })}
-            alt={description || title}
+            alt={description || title || ''}
             {...props}
           />
         </>
@@ -48,7 +48,7 @@ const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProp
             columns={8}
             height={fileTablet?.height}
             media={getImageMedia('tablet', { file, fileMobile, fileTablet })}
-            alt={description || title}
+            alt={description || title || ''}
             {...props}
           />
         </>
@@ -61,7 +61,7 @@ const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProp
             columns={12}
             height={file?.height}
             media={getImageMedia('desktop', { file, fileMobile, fileTablet })}
-            alt={description || title}
+            alt={description || title || ''}
             {...props}
           />
         </>

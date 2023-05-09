@@ -23,7 +23,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
     props;
   // TODO: Add support for video
   const image = file;
-  const alt = title;
+  const alt = title || '';
 
   if (variant === 'embed' && isAmp) {
     return (
@@ -63,8 +63,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           preload="auto"
           data-testid={testId || 'Media'}
           {...(props as MediaVideoProps)}
-          sx={{ width: '100%', height: '100%', ...props.sx }}
-        >
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>

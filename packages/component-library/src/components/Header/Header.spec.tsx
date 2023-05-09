@@ -1,5 +1,5 @@
 import * as React from 'react';
-import mount from '../../../cypress/mount';
+import mountWithRouter from '../../../cypress/mountWithRouter';
 import Header from './Header';
 import { HeaderProps } from './Header.types';
 import mockContent, { collectionWithItems } from './Header.mock';
@@ -15,7 +15,7 @@ const getSumReducer = (previous: number, current: number): number => previous + 
 describe('Header', () => {
   context('renders correctly', () => {
     it('renders a header', () => {
-      mount(<Header {...mockedContent} />);
+      mountWithRouter(<Header {...mockedContent} />);
       cy.get('a').should('exist').and('have.attr', 'href', mockedContent.logoUrl);
       cy.get('img').should('exist').and('have.attr', 'src', mockedContent.logo?.file?.url);
       cy.get('[data-testid=NavigationBar]:first')
@@ -30,7 +30,7 @@ describe('Header', () => {
 
     it('supports multiple navigation items/bars', () => {
       mockedContent.navigationItems?.push(collectionWithItems);
-      mount(<Header {...mockedContent} />);
+      mountWithRouter(<Header {...mockedContent} />);
       cy.get('[data-testid=NavigationBar]').each((navBar, index, $list) => {
         if (index !== $list.length - 1) {
           cy.wrap(navBar)
@@ -59,7 +59,7 @@ describe('Header', () => {
 
     it('mobile when menu is closed', () => {
       mockedContent.navigationItems?.push(collectionWithItems);
-      mount(<Header {...mockedContent} />);
+      mountWithRouter(<Header {...mockedContent} />);
       cy.viewport(550, 750);
       cy.get('[data-testid=NavigationBar]').should('exist');
       cy.get('[data-testid=NavigationItem]').should('not.be.visible');
@@ -70,7 +70,7 @@ describe('Header', () => {
 
     it('mobile when menu is open', () => {
       mockedContent.navigationItems?.push(collectionWithItems);
-      mount(<Header {...mockedContent} />);
+      mountWithRouter(<Header {...mockedContent} />);
       cy.viewport(550, 750);
       cy.get('button[type="button"]').click();
       cy.get('[data-testid=MenuIcon]').should('exist').and('not.be.visible');
