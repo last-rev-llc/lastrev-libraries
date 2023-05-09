@@ -7,7 +7,7 @@ export const mockRouter = () => ({
   pathname: '',
   route: '',
   query: {},
-  asPath: 'test#tab1',
+  asPath: '#tab1',
   isFallback: false,
   basePath: '',
   events: { emit: cy.spy(), off: cy.spy(), on: cy.spy() },
