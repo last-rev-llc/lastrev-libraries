@@ -54,8 +54,7 @@ describe('Card', () => {
     mountWithRouter(<Card {...cardWithLinkButton()} body={undefined} />);
     cy.get('[data-testid=Card]').should('exist');
     cy.get('[data-testid=Card-body]').should('not.exist');
-    cy.get('[data-testid=Card] > a > [data-testid=Card-link]').should('exist');
-    cy.get('[data-testid=Card] > a').should('have.attr', 'href');
+    cy.get('[data-testid=Card-link]').should('have.attr', 'href');
     cy.percySnapshot();
   });
 
@@ -63,8 +62,7 @@ describe('Card', () => {
     mountWithRouter(<Card {...cardWithLink()} body={undefined} />);
     cy.get('[data-testid=Card]').should('exist');
     cy.get('[data-testid=Card-body]').should('not.exist');
-    cy.get('[data-testid=Card] > a > [data-testid=Card-link]').should('exist');
-    cy.get('[data-testid=Card] > a').should('have.attr', 'href');
+    cy.get('[data-testid=Card-link]').should('have.attr', 'href');
     cy.percySnapshot();
   });
 });
