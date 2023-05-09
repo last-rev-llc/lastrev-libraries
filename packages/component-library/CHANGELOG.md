@@ -1,5 +1,11 @@
 # @last-rev/component-library
 
+## 0.5.16
+
+### Patch Changes
+
+- ce14f1c: Fixed tests and added legacyBehavior to next/link component
+
 ## 0.5.15
 
 ### Patch Changes
