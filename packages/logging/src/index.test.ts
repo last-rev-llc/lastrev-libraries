@@ -3,6 +3,11 @@ import { transports, loggers, Logger } from 'winston';
 import DatadogWinston from 'datadog-winston';
 
 describe('getWinstonConfig', () => {
+  beforeEach(() => {
+    delete process.env.LOG_LEVEL;
+    delete process.env.LOG_TRANSPORT;
+    delete process.env.DATADOG_API_KEY;
+  });
   it('should return a LoggerOptions object with the correct log level', () => {
     process.env.LOG_LEVEL = 'info';
     const config = getWinstonConfig();
@@ -10,7 +15,6 @@ describe('getWinstonConfig', () => {
   });
 
   it('should return a LoggerOptions object with a console transport by default', () => {
-    delete process.env.LOG_LEVEL;
     const config = getWinstonConfig();
     expect(config.transports).toHaveLength(1);
     expect((config.transports as any[])[0]).toBeInstanceOf(transports.Console);
@@ -21,6 +25,13 @@ describe('getWinstonConfig', () => {
     const config = getWinstonConfig();
     expect(config.transports).toHaveLength(2);
     expect((config.transports as any[])[1]).toBeInstanceOf(DatadogWinston);
+  });
+
+  it('should return a LoggerOptions object with a console transport if the LOG_TRANSPORT is set to "console-one-line"', () => {
+    process.env.LOG_TRANSPORT = 'console-one-line';
+    const config = getWinstonConfig();
+    expect(config.transports).toHaveLength(1);
+    expect((config.transports as any[])[0]).toBeInstanceOf(transports.Console);
   });
 });
 
