@@ -62,7 +62,7 @@ export const getWinstonConfig = (): LoggerOptions => {
       apiKey: process.env.DATADOG_API_KEY,
       level: process.env.DATADOG_LOG_LEVEL || logLevel,
       format: jsonFormatter,
-      hostname: process.env.VERCEL_URL, // VERCEL_URL is set by Vercel, URL is set by Netlify
+      hostname: process.env.VERCEL_URL, // VERCEL_URL is set by Vercel
       service: process.env.SITE_NAME || process.env.DOMAIN, // SITE_NAME is set by Netlify, DOMAIN is used for Vercel
       ddsource: 'last-rev'
       // ddtags: 'foo:bar,boo:baz'
