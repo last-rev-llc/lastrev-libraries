@@ -1,5 +1,11 @@
 # @last-rev/logging
 
+## 0.1.3
+
+### Patch Changes
+
+- 4e2c8e8: Added host, service, and source to logger
+
 ## 0.1.2
 
 ### Patch Changes
