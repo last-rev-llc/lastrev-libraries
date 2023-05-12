@@ -4739,6 +4739,16 @@
     dotenv "^10.0.0"
     winston "^3.8.2"
 
+"@last-rev/logging@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@last-rev/logging/-/logging-0.1.3.tgz#31ef969c57645be7ab77c8f562249155df50af24"
+  integrity sha512-MkbxdCxO+3JNWR8ts2QxnsVFtQ+2OTl0thtgJtBpDQPlonftxh9GKT7WPdPgyRf1JewKGQhw9RhTRDE7QX7+Zw==
+  dependencies:
+    "@last-rev/app-config" "^0.5.0"
+    datadog-winston "^1.5.1"
+    dotenv "^10.0.0"
+    winston "^3.8.2"
+
 "@last-rev/rollup-config@^0.1.4":
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/@last-rev/rollup-config/-/rollup-config-0.1.4.tgz#e6159a79bcc7fc5693225e9444c0fbeb5a7909b1"
