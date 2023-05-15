@@ -5,6 +5,8 @@ dotenv.config();
 import { loggers, transport, LoggerOptions, format, Logger, transports } from 'winston';
 import DatadogWinston from 'datadog-winston';
 
+type LogTransport = 'console' | 'console-one-line' | 'datadog';
+
 const green = (text: string) => `\x1b[32m${text}\x1b[0m`;
 const yellow = (text: string) => `\x1b[33m${text}\x1b[0m`;
 const red = (text: string) => `\x1b[31m${text}\x1b[0m`;
@@ -21,13 +23,18 @@ const wrap = (text: string, level: string) => {
 };
 
 export const getWinstonConfig = (): LoggerOptions => {
+  const logTransport: LogTransport = (process.env.LOG_TRANSPORT ?? 'console') as LogTransport;
   const logLevel = process.env.LOG_LEVEL || 'debug';
 
   const customConsoleFormatter = ({ level, message, ...rest }: any) => {
     let output = wrap(`[${level}] ${message}`, level);
     if (rest) {
       for (const key in rest) {
-        output += `\n\t${key}: ${rest[key]}`;
+        if (logTransport === 'console-one-line') {
+          output += ` ${key}: ${rest[key]}`;
+        } else {
+          output += `\n\t${key}: ${rest[key]}`;
+        }
       }
     }
     return output;
