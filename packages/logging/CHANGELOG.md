@@ -1,5 +1,11 @@
 # @last-rev/logging
 
+## 0.1.4
+
+### Patch Changes
+
+- 685e53d: Add LOG_TRANSPORT variable for customizing the transport used
+
 ## 0.1.3
 
 ### Patch Changes
