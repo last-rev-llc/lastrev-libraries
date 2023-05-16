@@ -1,5 +1,11 @@
 # @last-rev/contentful-fs-loader
 
+## 0.3.2
+
+### Patch Changes
+
+- 69551c0: Updated @last-rev/logging package
+
 ## 0.3.1
 
 ### Patch Changes

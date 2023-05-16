@@ -1,5 +1,16 @@
 # @last-rev/graphql-contentful-core
 
+## 0.5.17
+
+### Patch Changes
+
+- 69551c0: Updated @last-rev/logging package
+- Updated dependencies [69551c0]
+  - @last-rev/contentful-cms-loader@0.4.3
+  - @last-rev/contentful-fs-loader@0.3.2
+  - @last-rev/contentful-redis-loader@0.5.4
+  - @last-rev/graphql-schema-gen@0.2.4
+
 ## 0.5.16
 
 ### Patch Changes
