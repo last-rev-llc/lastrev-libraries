@@ -27,7 +27,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/logging": "^0.1.2",
+    "@last-rev/logging": "^0.1.3",
     "@last-rev/contentful-path-util": "^0.1.22",
     "@last-rev/graphql-contentful-helpers": "^0.4.7",
     "@last-rev/timer": "^0.2.0",
