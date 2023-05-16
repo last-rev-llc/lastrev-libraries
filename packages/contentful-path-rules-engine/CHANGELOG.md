@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-rules-engine
 
+## 0.1.6
+
+### Patch Changes
+
+- 69551c0: Updated @last-rev/logging package
+
 ## 0.1.5
 
 ### Patch Changes

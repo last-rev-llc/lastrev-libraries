@@ -1,5 +1,11 @@
 # @last-rev/graphql-schema-gen
 
+## 0.2.4
+
+### Patch Changes
+
+- 69551c0: Updated @last-rev/logging package
+
 ## 0.2.3
 
 ### Patch Changes

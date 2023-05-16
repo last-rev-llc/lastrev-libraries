@@ -1,5 +1,11 @@
 # @last-rev/contentful-cms-loader
 
+## 0.4.3
+
+### Patch Changes
+
+- 69551c0: Updated @last-rev/logging package
+
 ## 0.4.2
 
 ### Patch Changes

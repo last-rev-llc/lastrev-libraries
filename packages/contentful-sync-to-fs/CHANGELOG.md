@@ -1,5 +1,13 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.11
+
+### Patch Changes
+
+- 69551c0: Updated @last-rev/logging package
+- Updated dependencies [69551c0]
+  - @last-rev/contentful-path-util@0.1.24
+
 ## 0.3.10
 
 ### Patch Changes

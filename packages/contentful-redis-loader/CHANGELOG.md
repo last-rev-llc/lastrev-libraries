@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.5.4
+
+### Patch Changes
+
+- 69551c0: Updated @last-rev/logging package
+
 ## 0.5.3
 
 ### Patch Changes

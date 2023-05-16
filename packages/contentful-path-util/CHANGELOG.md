@@ -1,5 +1,13 @@
 # @last-rev/contentful-path-util
 
+## 0.1.24
+
+### Patch Changes
+
+- 69551c0: Updated @last-rev/logging package
+- Updated dependencies [69551c0]
+  - @last-rev/contentful-path-rules-engine@0.1.6
+
 ## 0.1.23
 
 ### Patch Changes

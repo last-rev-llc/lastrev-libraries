@@ -1,5 +1,11 @@
 # @last-rev/contentful-fragment-gen
 
+## 0.2.5
+
+### Patch Changes
+
+- 69551c0: Updated @last-rev/logging package
+
 ## 0.2.4
 
 ### Patch Changes
