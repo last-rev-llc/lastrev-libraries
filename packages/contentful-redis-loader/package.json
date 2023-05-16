@@ -24,7 +24,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/logging": "^0.1.2",
+    "@last-rev/logging": "^0.1.3",
     "@last-rev/timer": "^0.2.0",
     "dataloader": "^2.0.0",
     "ioredis": "^5.0.4"
