@@ -192,6 +192,15 @@ interface Content {
   theme: [Theme]
 }
 
+type ContentOwner implements Content {
+  animation: JSON
+  contentOwnerName: String
+  id: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
 type ContentfulAppSettings implements Content {
   animation: JSON
   id: String

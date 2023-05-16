@@ -9,6 +9,13 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: !!(process.env.ANALYZE_BUNDLE && process.env.ANALYZE_BUNDLE.toLowerCase() === 'true')
 });
 
+const { getWinstonLogger } = require('@last-rev/logging');
+
+const logger = getWinstonLogger({
+  package: 'web',
+  module: 'next.config'
+});
+
 const hasAllSentryVars = !!(
   process.env.SENTRY_PROJECT &&
   process.env.SENTRY_AUTH_TOKEN &&
@@ -16,6 +23,10 @@ const hasAllSentryVars = !!(
   process.env.SENTRY_ORG &&
   process.env.NEXT_PUBLIC_SENTRY_DSN
 );
+
+if (!hasAllSentryVars) {
+  logger.warn('Sentry is disabled.  Please check your environment variables.');
+}
 
 const nextConfig = {
   /**
