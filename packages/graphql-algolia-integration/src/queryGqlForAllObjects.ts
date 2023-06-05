@@ -1,7 +1,7 @@
 import { ApolloClient } from '@apollo/client';
 import LastRevAppConfig from '@last-rev/app-config';
-import { algoliaQuery, avaliableLocalesQuery } from './queries';
-import { AlgoliaRecord, QueryConfig } from './types';
+import { algoliaQuery, avaliableLocalesQuery } from './gql/queries';
+import { AlgoliaRecord, QueryConfig, StateType } from './types';
 import Timer from '@last-rev/timer';
 import { getWinstonLogger } from '@last-rev/logging';
 
@@ -10,11 +10,11 @@ const logger = getWinstonLogger({
   module: 'performAlgoliaQuery'
 });
 
-const performAlgoliaQuery = async (
+const queryGqlForAllObjects = async (
   client: ApolloClient<any>,
   config: LastRevAppConfig,
-  envs: ('preview' | 'production')[]
-): Promise<{ errors: any[]; results: AlgoliaRecord[][] }> => {
+  stateTypes: StateType[]
+): Promise<AlgoliaRecord[]> => {
   let timer = new Timer();
   const {
     data: {
@@ -23,7 +23,7 @@ const performAlgoliaQuery = async (
   } = await client.query({ query: avaliableLocalesQuery });
 
   const queryConfigs: QueryConfig[] = (locales as string[]).flatMap((locale) =>
-    envs.flatMap((env) =>
+    stateTypes.flatMap((env) =>
       config.algolia.contentTypeIds.flatMap((contentType) => ({
         preview: env === 'preview',
         locale,
@@ -47,11 +47,11 @@ const performAlgoliaQuery = async (
           }
         });
 
-        logger.debug('Perform Algolia query', {
-          caller: 'performAlgoliaQuery',
+        logger.debug('queryGqlForAllObjects (query)', {
+          caller: 'queryGqlForAllObjects',
           emapsedMs: timerQuery.end().millis,
           itemsSuccessful: result.data.contents.length,
-          query: filter
+          query: JSON.stringify(filter)
         });
 
         const {
@@ -63,18 +63,22 @@ const performAlgoliaQuery = async (
     )
   ).flat();
 
-  logger.debug('performAlgoliaQuery', {
-    caller: 'performAlgoliaQuery',
+  logger.debug('queryGqlForAllObjects', {
+    caller: 'queryGqlForAllObjects',
     elapsedMs: timer.end().millis,
     itemsSuccessful: results.length
   });
 
-  return {
-    errors: (results.filter((result) => result.status === 'rejected') as PromiseRejectedResult[]).map((r) => r.reason),
-    results: (results.filter((result) => result.status === 'fulfilled') as PromiseFulfilledResult<any>[]).map(
-      (r) => r.value
-    )
-  };
+  (results.filter((result) => result.status === 'rejected') as PromiseRejectedResult[]).forEach((r) => {
+    logger.error(r.reason.message, {
+      caller: 'queryGqlForAllObjects',
+      stack: r.reason.stack
+    });
+  });
+
+  return (results.filter((result) => result.status === 'fulfilled') as PromiseFulfilledResult<AlgoliaRecord[]>[])
+    .map((r) => r.value)
+    .flat();
 };
 
-export default performAlgoliaQuery;
+export default queryGqlForAllObjects;

@@ -139,8 +139,10 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
     return {
       applicationId: this.config.algolia?.applicationId!,
       adminApiKey: this.config.algolia?.adminApiKey!,
-      contentTypeIds: this.config.algolia?.contentTypeIds!,
-      indexDraftContent: !!this.config.algolia?.indexDraftContent
+      contentTypeIds: this.config.algolia?.contentTypeIds || [],
+      indexDraftContent: !!this.config.algolia?.indexDraftContent || false,
+      hitsPerPage: this.config.algolia?.hitsPerPage || 100,
+      indices: this.config.algolia?.indices || []
     };
   }
 

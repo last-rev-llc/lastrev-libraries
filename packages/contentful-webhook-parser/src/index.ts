@@ -56,7 +56,7 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
   const itemId = body?.sys?.id;
 
   if (spaceId !== config.contentful.spaceId) {
-    throw Error('Space id in webhook does not match configuration.');
+    throw Error(`Space id (${spaceId}) in webhook does not match configuration (${config.contentful.spaceId}).`);
   }
 
   const type = topics[1] as 'Entry' | 'Asset' | 'ContentType';

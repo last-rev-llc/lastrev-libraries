@@ -4,9 +4,12 @@ export const algoliaQuery = gql`
   query AlgoliaQuery($filter: ContentsFilter!) {
     contents(filter: $filter) {
       ... on AlgoliaRecord {
+        id
         algoliaObjects {
           index
-          data
+          objectId
+          referencedIds
+          additionalFields
         }
       }
     }
