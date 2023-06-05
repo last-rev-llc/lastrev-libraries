@@ -15,7 +15,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020
   },
-  ignorePatterns: ['out/', 'storybook-static'],
+  ignorePatterns: ['out/', 'storybook-static', 'node_modules/', 'dist/'],
   rules: {
     'react/jsx-props-no-spreading': 0,
     'react/jsx-filename-extension': 0,

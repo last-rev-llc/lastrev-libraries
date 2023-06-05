@@ -6,8 +6,8 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "run-s clean build:prod",
-    "dev": "cross-env NODE_ENV=development rollup -cw",
-    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "dev": "cross-env NODE_ENV=development tsc --watch",
+    "build:prod": "cross-env NODE_ENV=production tsc",
     "lint": "tslint --project tsconfig.json",
     "test": "jest",
     "test:watch": "jest --watch"
@@ -17,7 +17,6 @@
   },
   "devDependencies": {
     "@last-rev/app-config": "^0.5.0",
-    "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/testing-library": "^0.1.10",
     "@last-rev/timer": "^0.2.0",
     "@last-rev/types": "^0.3.6",
@@ -30,7 +29,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/client": "^3.5.7",
+    "@apollo/client": "^3.7.12",
     "@contentful/rich-text-plain-text-renderer": "^15.11.1",
     "@contentful/rich-text-types": "^15.11.1",
     "@last-rev/contentful-webhook-parser": "^0.1.2",
