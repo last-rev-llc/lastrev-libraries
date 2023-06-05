@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/graphql-algolia-integration",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
