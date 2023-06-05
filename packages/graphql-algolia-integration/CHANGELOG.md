@@ -1,5 +1,11 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.11
+
+### Patch Changes
+
+- 15d1995: bumped version of apollo client and switched to tsc compilation
+
 ## 0.1.10
 
 ### Patch Changes
