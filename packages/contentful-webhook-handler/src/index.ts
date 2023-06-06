@@ -90,6 +90,7 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
             await handlers.contentType(command as ProcessCommand<ContentType>);
             break;
           default:
+            console.debug(`Unsupported type! ${type}`);
         }
       } catch (err: any) {
         logger.error(`Error handling webhook: ${err.message}`, {
