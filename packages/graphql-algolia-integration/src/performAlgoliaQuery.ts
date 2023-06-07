@@ -115,7 +115,7 @@ const performAlgoliaQuery = async (
   logger.debug('performAlgoliaQuery', {
     caller: 'performAlgoliaQuery',
     elapsedMs: timer.end().millis,
-    itemsSuccessful: idsResults.length
+    itemsSuccessful: results.length
   });
 
   return {
