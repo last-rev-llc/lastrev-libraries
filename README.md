@@ -1,5 +1,5 @@
 # Contenful Libraries
-
+ 
 This repo holds all the code for our LastRev Libraries to be used for client projects.
 
 It is built using [Yarn workspaces](https://classic.yarnpkg.com/en/docs/workspaces/) and [Lerna](https://lerna.js.org/).
@@ -13,6 +13,7 @@ $ git clone git@github.com:last-rev-llc/lastrev-libraries.git
 $ cd lastrev-libraries
 $ nvm use
 $ yarn
+
 ```
 
 ## Commands
