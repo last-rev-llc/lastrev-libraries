@@ -1,5 +1,11 @@
 # @last-rev/app-config
 
+## 0.5.1
+
+### Patch Changes
+
+- 57c80cb: 'Added batching by IDs to algolia integration'
+
 ## 0.5.0
 
 ### Minor Changes

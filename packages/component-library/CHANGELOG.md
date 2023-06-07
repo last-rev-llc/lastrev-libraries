@@ -1,5 +1,13 @@
 # @last-rev/component-library
 
+## 0.5.17
+
+### Patch Changes
+
+- 57c80cb: Fixed some type issues in component library
+- Updated dependencies [57c80cb]
+  - @last-rev/rollup-config@0.1.5
+
 ## 0.5.16
 
 ### Patch Changes

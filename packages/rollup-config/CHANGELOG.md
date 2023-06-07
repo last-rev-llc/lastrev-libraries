@@ -1,5 +1,11 @@
 # @last-rev/rollup-config
 
+## 0.1.5
+
+### Patch Changes
+
+- 57c80cb: Added some sensible defaults to rollup config
+
 ## 0.1.4
 
 ### Patch Changes
