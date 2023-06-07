@@ -14,6 +14,7 @@ export default (): HeroProps => ({
     file: {
       url: 'https://images.ctfassets.net/m1b67l45sk9z/4Oj0gAEf0wFiPfg0R3QHqG/b1f835f3e380670cd6484e486c9816b1/it-gets-better.png?h=800'
     },
+    alt: lorem.sentence(),
     title: lorem.sentence()
   },
   body: {
@@ -73,6 +74,7 @@ export default (): HeroProps => ({
   },
   actions: [{ ...mockLink(), text: 'Hero CTA' }],
   background: {
+    alt: lorem.sentence(),
     file: {
       url: 'https://i.picsum.photos/id/327/2800/800.jpg?hmac=lqhEpkLvfvBfoZSxszEf8pOTbitkmHpJmZsoQYcrWkI'
     },

@@ -9,9 +9,9 @@ import { mediaMock } from './Media.mock';
 //   await preloadAll();
 // });
 
-const { file, title } = mediaMock();
+const { file, title, alt } = mediaMock();
 
-const renderComponent = () => render(<Media file={file} title={title} />);
+const renderComponent = () => render(<Media alt={alt} file={file} title={title} />);
 
 describe('<Media />', () => {
   test('Media renders correctly', () => {

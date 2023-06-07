@@ -2,16 +2,12 @@ import { lorem } from 'faker';
 import mockLink, { basicLink } from '../Link/Link.mock';
 import { CardProps } from './Card.types';
 import { staticRichTextMock } from '../Text/Text.mock';
+import { mediaMock } from '../Media/Media.mock';
 
 export default (): CardProps => ({
   id: lorem.slug(),
   __typename: 'Card',
-  media: {
-    file: {
-      url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
-    },
-    title: lorem.sentence()
-  },
+  media: mediaMock(),
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',
   body: staticRichTextMock(),
@@ -26,22 +22,12 @@ export const baseMock = (): CardProps => ({
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',
   body: staticRichTextMock(),
-  media: {
-    file: {
-      url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
-    },
-    title: lorem.sentence()
-  }
+  media: mediaMock()
 });
 
 export const cardWithTags = (): CardProps => ({
   __typename: 'Card',
-  media: {
-    file: {
-      url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
-    },
-    title: lorem.sentence()
-  },
+  media: mediaMock(),
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',
   body: staticRichTextMock(),
@@ -52,12 +38,7 @@ export const cardWithTags = (): CardProps => ({
 
 export const cardWithLink = (): CardProps => ({
   __typename: 'Card',
-  media: {
-    file: {
-      url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
-    },
-    title: lorem.sentence()
-  },
+  media: mediaMock(),
   link: { ...basicLink(), variant: 'link', text: '' },
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',
@@ -69,12 +50,7 @@ export const cardWithLink = (): CardProps => ({
 
 export const cardWithLinkButton = (): CardProps => ({
   __typename: 'Card',
-  media: {
-    file: {
-      url: 'https://i.picsum.photos/id/237/690/388.jpg?hmac=Zuv-CcXEfzBDJlr7G8wx67jMiWLssNTUppetu6ohvLc'
-    },
-    title: lorem.sentence()
-  },
+  media: mediaMock(),
   link: { ...basicLink(), variant: 'button-contained', text: '' },
   title: 'This is a card title',
   subtitle: 'And this is the subtitle',

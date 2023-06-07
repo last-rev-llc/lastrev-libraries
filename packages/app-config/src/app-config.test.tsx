@@ -370,6 +370,23 @@ describe('LastRevAppConfig', () => {
     });
   });
 
+  describe('Algolia', () => {
+    test('defaults max batch size to 1000', () => {
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.algolia.maxBatchSize).toBe(1000);
+    });
+
+    test('honors max batch size', () => {
+      const appConfig = new LastRevAppConfig({
+        ...mockedConfig,
+        algolia: {
+          maxBatchSize: 500
+        }
+      });
+      expect(appConfig.algolia.maxBatchSize).toBe(500);
+    });
+  });
+
   describe('feature flags', () => {
     test('disableCoreSidekickLookup defaults to false and warns user', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);

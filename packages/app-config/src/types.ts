@@ -40,6 +40,7 @@ export interface LastRevAppConfiguration {
     adminApiKey: string;
     contentTypeIds: string[];
     indexDraftContent: boolean;
+    maxBatchSize: number;
   };
   extensions: Extensions;
   logLevel: string;
@@ -105,6 +106,7 @@ export type LastRevAppConfigArgs = {
     adminApiKey?: string;
     contentTypeIds?: string[];
     indexDraftContent?: boolean;
+    maxBatchSize?: number;
   };
   extensions?: Extensions;
   logLevel?: string;

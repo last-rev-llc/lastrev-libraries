@@ -18,7 +18,6 @@ export interface MediaProps extends Omit<ImageProps, 'src'> {
   variant?: string;
   title?: string;
   description?: string;
-  alt?: string;
   desktop?: Asset;
   tablet?: Asset;
   mobile?: Asset;

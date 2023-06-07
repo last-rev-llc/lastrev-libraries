@@ -3,6 +3,7 @@ import { MediaProps, MediaVideoProps, Asset, File } from './Media.types';
 
 export const mediaMock = (): MediaProps => ({
   id: 'mediaMock',
+  alt: lorem.word(),
   __typename: 'Media',
   file: {
     url: './flower-large.jpg',
