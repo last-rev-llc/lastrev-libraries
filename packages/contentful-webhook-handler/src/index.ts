@@ -3,7 +3,7 @@ import { map } from 'lodash';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ProcessCommand } from './types';
 import { createHandlers } from './handlers';
-import parseWebhook from '@last-rev/contentful-webhook-parser';
+import parseWebhook, { supportedTypes, supportedActions } from '@last-rev/contentful-webhook-parser';
 import { getWinstonLogger } from '@last-rev/logging';
 import jwt from 'jsonwebtoken';
 
@@ -45,6 +45,8 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
   const token = headers['authorization']?.split(' ')[1];
 
   const { type, action, contentStates, env, itemId, isTruncated } = parseWebhook(config, body, headers);
+
+  if (!supportedActions.includes(action) || !contentStates.length || !supportedTypes.includes(type)) return;
 
   if (env !== config.contentful.env) {
     config = config.clone({ contentful: { env } });
