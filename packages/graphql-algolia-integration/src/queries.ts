@@ -13,6 +13,14 @@ export const algoliaQuery = gql`
   }
 `;
 
+export const idsQuery = gql`
+  query AlgoliaQuery($filter: ContentsFilter!) {
+    contents(filter: $filter) {
+      id
+    }
+  }
+`;
+
 export const avaliableLocalesQuery = gql`
   query AvailableLocales {
     availableLocales {

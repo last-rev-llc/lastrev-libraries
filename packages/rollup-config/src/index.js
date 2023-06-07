@@ -166,6 +166,8 @@ const createOutput = (dir = `dist`, defaultOpts) => {
   ];
 
   return {
+    preserveModules: true,
+    disableTerser: true,
     ...opts,
     external: external || defaultExternal,
     plugins: defaultPlugins.filter(Boolean).concat(plugins),

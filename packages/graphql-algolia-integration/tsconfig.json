@@ -4,7 +4,7 @@
     "declaration": true,
     "outDir": "dist",
     "declarationDir": "dist",
-    "module": "CommonJS",
+    "module": "ESNext",
     "target": "ESNext",
     "lib": ["ESNext"],
     "jsx": "react",
