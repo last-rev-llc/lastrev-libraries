@@ -108,11 +108,14 @@ const populateDb = async ({ entries, assets, contentTypes }: ContentfulData, db:
     }
   }
 
+  const foundLocales = new Set<string>();
+
   // populate the entries table
   for (const entry of entries) {
+    const entryDisplayTitle = entry?.fields?.internalTitle?.['en-US'] || entry?.fields?.title?.['en-US'] || 'Unknown';
     promises.push(
       run(
-        'INSERT INTO entries (id, content_type_id, created_date, updated_date, published_date, first_published_date, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        'INSERT INTO entries (id, content_type_id, created_date, updated_date, published_date, first_published_date, display_title, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
         [
           entry.sys.id,
           entry.sys.contentType.sys.id,
@@ -120,14 +123,16 @@ const populateDb = async ({ entries, assets, contentTypes }: ContentfulData, db:
           entry.sys.updatedAt,
           entry.sys.publishedAt,
           entry.sys.firstPublishedAt,
+          entryDisplayTitle,
           getStatus(entry)
         ]
       )
     );
 
     for (const [fieldName, fieldVal] of Object.entries(entry.fields as any)) {
-      for (const entries of Object.entries(fieldVal as any)) {
-        const [locale, val]: [string, any] = entries;
+      for (const localeValues of Object.entries(fieldVal as any)) {
+        const [locale, val]: [string, any] = localeValues;
+        foundLocales.add(locale); // add to our found locales set
         if (Array.isArray(val)) {
           for (let i = 0; i < val.length; i++) {
             if (val[i]?.sys?.type === 'Link') {
@@ -145,7 +150,7 @@ const populateDb = async ({ entries, assets, contentTypes }: ContentfulData, db:
                     [entry.sys.id, i, fieldName, entry.sys.contentType.sys.id, locale, val[i].sys.id]
                   )
                 );
-              }
+              } // Check for non entry array values
             }
           }
         } else if (val?.sys?.type === 'Link') {
@@ -165,10 +170,88 @@ const populateDb = async ({ entries, assets, contentTypes }: ContentfulData, db:
             );
           }
         }
+        promises.push(
+          run('INSERT INTO entry_fields_has_value (entry_id, field_id, content_type_id, locale) VALUES (?, ?, ?, ?)', [
+            entry.sys.id,
+            fieldName,
+            entry.sys.contentType.sys.id,
+            locale
+          ])
+        );
       }
     }
   }
+
+  // Populates all the unique found locales
+  for (const locale of foundLocales) {
+    promises.push(run('INSERT INTO locales (locale) VALUES (?)', [locale]));
+  }
+
   await Promise.all(promises);
+
+  // This was much more efficient to run after the initial tables were populated.
+  // It's run before the postInsertPromises as there are queries that relay on this one.
+  await run(
+    `INSERT OR IGNORE INTO entry_parent_references (entry_id, content_type_id, parent_reference_entry_id, parent_content_type_id)
+      SELECT DISTINCT e2.id, e2.content_type_id, e1.id, e1.content_type_id
+      FROM entry_references er
+      JOIN entries e1 ON e1.id = er.entry_id
+      JOIN entries e2 ON e2.id = er.reference_entry_id
+      ORDER BY e2.id;`
+  );
+
+  // Any queries here are reliant on the queries run above
+  const postInsertPromises = [];
+
+  /* Developer Notes:
+  *
+  The provided SQL code block performs several operations. It first identifies
+  the content types associated with slugs and stores them in a temporary table.
+  Then, it recursively retrieves the parent-child relationships between entries,
+  applying depth limits and excluding entries related to slug content types. The
+  resulting relationships are stored in another temporary table. Next, it
+  identifies the top-level parents of entries that have slug content types and
+  stores them in yet another temporary table. Finally, it inserts or ignores
+  records into the target table, including entry IDs, content type IDs, and the
+  top-level parent information obtained from the join between the entry parent
+  references and the top slug parent tables. Overall, this code block populates
+  the target table with the top parent references for entries, considering the
+  specific relationships and constraints related to slug content types.
+  */
+  postInsertPromises.push(
+    run(
+      `WITH RECURSIVE slug_content_types AS (
+        SELECT DISTINCT content_type_id 
+        FROM fields 
+        WHERE id = 'slug'
+      ),
+      parent_of(id, parent_id, content_type_id, depth, parent_content_type_id) AS (
+        SELECT entry_id, parent_reference_entry_id, content_type_id, 1, parent_content_type_id 
+        FROM entry_parent_references
+        WHERE content_type_id NOT IN (SELECT * FROM slug_content_types)
+        UNION ALL
+        SELECT parent_of.id, epr.parent_reference_entry_id, epr.content_type_id, parent_of.depth + 1, epr.parent_content_type_id
+        FROM parent_of
+        JOIN entry_parent_references epr ON parent_of.parent_id = epr.entry_id
+        WHERE (parent_of.depth < 5) 
+              AND (epr.content_type_id NOT IN (SELECT * FROM slug_content_types) OR epr.content_type_id != parent_of.content_type_id)
+              AND (epr.parent_content_type_id NOT IN (SELECT * FROM slug_content_types) OR epr.parent_content_type_id != epr.content_type_id)
+      ),
+      top_slug_parent AS (
+        SELECT id, parent_id, parent_content_type_id
+        FROM parent_of
+        WHERE parent_content_type_id IN (SELECT * FROM slug_content_types)
+      )
+      
+      INSERT OR IGNORE INTO entry_top_parent_references_slug (entry_id, content_type_id, top_parent_reference_entry_id, top_parent_content_type_id)
+      SELECT epr.entry_id, epr.content_type_id, tsp.parent_id AS parent_reference_entry_id, tsp.parent_content_type_id
+      FROM entry_parent_references epr
+      LEFT JOIN top_slug_parent tsp ON epr.entry_id = tsp.id
+      WHERE tsp.parent_id IS NOT NULL
+      GROUP BY epr.entry_id, epr.content_type_id, parent_reference_entry_id, tsp.parent_content_type_id;`
+    )
+  );
+  await Promise.all(postInsertPromises);
   console.log('done populating database!');
 };
 
@@ -198,22 +281,15 @@ export const runReport = async (reportSql: string, db: sqlite3.Database, report?
   console.log(`running report: ${report || 'External Report'}...`);
 
   return new Promise((resolve, reject) => {
-    const results: any[] = [];
-    db.each(
-      reportSql,
-      (err, row) => {
-        if (err) {
-          reject(err);
-        }
-        results.push(row);
-      },
-      (err) => {
-        if (err) {
-          reject(err);
-        }
+    db.all(reportSql, [], (err, rows) => {
+      if (err) {
+        console.log(`Error running report: ${report}!`);
+        reject(err);
+      } else {
         console.log(`done running report: ${report}!`);
-        resolve(results);
+        if (!rows.length) reject('No data found');
+        else resolve(rows);
       }
-    );
+    });
   });
 };
