@@ -1,5 +1,11 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.13
+
+### Patch Changes
+
+- aa93d0d: Fixed a bug where we were looping through locales and generating way too many lists of IDs
+
 ## 0.1.12
 
 ### Patch Changes
