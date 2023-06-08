@@ -13,5 +13,5 @@ export type AlgoliaObjectsByIndex = {
 
 export type QueryConfig = {
   preview: boolean;
-  locale: string;
+  locale?: string;
 };

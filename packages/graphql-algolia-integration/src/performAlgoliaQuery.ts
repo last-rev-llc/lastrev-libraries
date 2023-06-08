@@ -22,42 +22,37 @@ const performAlgoliaQuery = async (
     }
   } = await client.query<{ availableLocales: { available: string[] } }>({ query: avaliableLocalesQuery });
 
-  const idsQueryConfigs: QueryConfig[] = (locales as string[]).flatMap((locale) =>
-    envs.flatMap((env) =>
-      config.algolia.contentTypeIds.flatMap((contentType) => ({
-        preview: env === 'preview',
-        locale,
-        contentTypes: [contentType]
-      }))
-    )
+  const idsQueryFilters: QueryConfig[] = envs.flatMap((env) =>
+    config.algolia.contentTypeIds.flatMap((contentType: string) => ({
+      preview: env === 'preview',
+      contentTypes: [contentType]
+    }))
   );
 
-  const idsResults = (
-    await Promise.allSettled(
-      idsQueryConfigs.map(async (filter) => {
-        const timerQuery = new Timer();
-        const result = await client.query({
-          query: idsQuery,
-          variables: {
-            filter
-          }
-        });
+  const idsResults = await Promise.allSettled(
+    idsQueryFilters.map(async (filter) => {
+      const timerQuery = new Timer();
+      const result = await client.query({
+        query: idsQuery,
+        variables: {
+          filter
+        }
+      });
 
-        logger.debug('Query for Ids', {
-          caller: 'performAlgoliaQuery',
-          emapsedMs: timerQuery.end().millis,
-          itemsSuccessful: result.data.contents.length,
-          query: filter
-        });
+      logger.debug('Query for Ids', {
+        caller: 'performAlgoliaQuery',
+        emapsedMs: timerQuery.end().millis,
+        itemsSuccessful: result.data.contents.length,
+        query: filter
+      });
 
-        const {
-          data: { contents: algoliaResults }
-        } = result;
+      const {
+        data: { contents: algoliaResults }
+      } = result;
 
-        return algoliaResults;
-      })
-    )
-  ).flat();
+      return algoliaResults;
+    })
+  );
 
   const idsErrors = (idsResults.filter((result) => result.status === 'rejected') as PromiseRejectedResult[]).map(
     (r) => r.reason
@@ -70,7 +65,7 @@ const performAlgoliaQuery = async (
   const batches = ids.reduce(
     (acc, id) => {
       const lastBatch = acc[acc.length - 1];
-      if (lastBatch.length < config.algolia.maxBatchSize || 1000) {
+      if (lastBatch.length < (config.algolia.maxBatchSize || 1000)) {
         return [...acc.slice(0, acc.length - 1), [...lastBatch, id]];
       }
       return [...acc, [id]];
@@ -78,7 +73,7 @@ const performAlgoliaQuery = async (
     [[]] as string[][]
   );
 
-  const queryConfigs = locales.flatMap((locale) =>
+  const queryFilters = locales.flatMap((locale) =>
     envs.flatMap((env) =>
       batches.map((batch) => ({
         displayType: 'AlgoliaRecord',
@@ -89,28 +84,26 @@ const performAlgoliaQuery = async (
     )
   );
 
-  const results = (
-    await Promise.allSettled(
-      queryConfigs.map(async (filter) => {
-        const timerQuery = new Timer();
-        const result = await client.query({
-          query: algoliaQuery,
-          variables: {
-            filter
-          }
-        });
-        logger.debug('Query for algolia objects by ids', {
-          caller: 'performAlgoliaQuery',
-          emapsedMs: timerQuery.end().millis,
-          itemsSuccessful: result.data.contents.length
-        });
-        const {
-          data: { contents: algoliaResults }
-        } = result;
-        return algoliaResults;
-      })
-    )
-  ).flat();
+  const results = await Promise.allSettled(
+    queryFilters.map(async (filter) => {
+      const timerQuery = new Timer();
+      const result = await client.query({
+        query: algoliaQuery,
+        variables: {
+          filter
+        }
+      });
+      logger.debug('Query for algolia objects by ids', {
+        caller: 'performAlgoliaQuery',
+        emapsedMs: timerQuery.end().millis,
+        itemsSuccessful: result.data.contents.length
+      });
+      const {
+        data: { contents: algoliaResults }
+      } = result;
+      return algoliaResults;
+    })
+  );
 
   logger.debug('performAlgoliaQuery', {
     caller: 'performAlgoliaQuery',
