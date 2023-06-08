@@ -1,5 +1,11 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.1.12
+
+### Patch Changes
+
+- 57c80cb: 'Added batching by IDs to algolia integration'
+
 ## 0.1.11
 
 ### Patch Changes
