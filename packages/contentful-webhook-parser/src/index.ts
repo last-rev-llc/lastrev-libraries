@@ -1,5 +1,11 @@
 import { Entry, Asset, ContentType } from 'contentful';
 import LastRevAppConfig from '@last-rev/app-config';
+import { getWinstonLogger } from '@last-rev/logging';
+
+const logger = getWinstonLogger({
+  package: 'contentful-webhook-parser',
+  module: 'index'
+});
 
 type HasEnv = {
   sys: {
@@ -42,6 +48,9 @@ export type WebhookParserResult = {
   isTruncated: boolean;
 };
 
+export const supportedTypes = ['Entry', 'Asset', 'ContentType'];
+export const supportedActions = ['update', 'delete'];
+
 const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeaders): WebhookParserResult => {
   const topics = headers['x-contentful-topic']?.split('.');
 
@@ -63,11 +72,16 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
 
   if (!type) throw Error(`No type matched for ${headers['x-contentful-topic']}`);
 
+  if (!supportedTypes.includes(type)) logger.debug(`Unsupported type! ${type}`, { caller: 'parseWebhook' });
+
   const contentfulAction: string = topics[2];
 
+  if (!actionMappings[contentfulAction])
+    logger.debug(`Unsupported action! ${contentfulAction}`, { caller: 'parseWebhook' });
+
   return {
-    action: actionMappings[contentfulAction].action,
-    contentStates: actionMappings[contentfulAction].envs,
+    action: actionMappings[contentfulAction]?.action || contentfulAction,
+    contentStates: actionMappings[contentfulAction]?.envs || [],
     type,
     env: environmentId,
     itemId,
