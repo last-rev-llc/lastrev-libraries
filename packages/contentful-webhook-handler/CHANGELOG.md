@@ -1,5 +1,13 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.4.16
+
+### Patch Changes
+
+- 459d5c8: Removed unsupported type errors and added logs
+- Updated dependencies [459d5c8]
+  - @last-rev/contentful-webhook-parser@0.1.4
+
 ## 0.4.15
 
 ### Patch Changes
