@@ -4,11 +4,14 @@
 const { clientDelivery } = require('../shared/contentful-init');
 const { getAllEntries, getAllItems } = require('../shared/contentful-actions');
 
-const limit = 100;
-const content_type = 'aaShopifyProduct';
-const order = '-sys.createdAt';
+const content_type = 'aaCard';
 
-const logMessage = 'entries with category => ';
+const queryOptions = {
+  limit: 100,
+  content_type,
+  order: '-sys.createdAt'
+};
+
 const itemFilter = (item) => item.fields.category;
 const displayItem = (item) => {
   console.log('item category => ', { id: item.sys.id, category: item.fields.category });
@@ -16,11 +19,11 @@ const displayItem = (item) => {
 
 const log = (items) => {
   console.log(
-    logMessage,
+    'entry ids => ',
     items
       .filter(itemFilter)
       .map((item) => {
-        displayItem(item);
+        if (displayItem) displayItem(item);
         return item.sys.id;
       })
       .join(',')
@@ -30,11 +33,11 @@ const log = (items) => {
 (async () => {
   // Step 1 - Get All Entries
   const entries = await getAllEntries(clientDelivery, { content_type, limit: 1 }, (items) =>
-    getAllItems(items, { limit, content_type, order })
+    getAllItems(items, queryOptions)
   );
 
   if (entries.length) {
-    console.log('entries => ', entries.length);
+    console.log('number of entries => ', entries.length);
     log(entries);
   } else {
     console.log('No entries found');
