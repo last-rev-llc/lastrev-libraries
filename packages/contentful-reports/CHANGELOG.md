@@ -1,5 +1,11 @@
 # @last-rev/contentful-reports
 
+## 0.1.3
+
+### Patch Changes
+
+- 5272c3c: Added new reports for localized content, locales, and parent/child references
+
 ## 0.1.2
 
 ### Patch Changes
