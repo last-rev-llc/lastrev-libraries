@@ -1,3 +1,9 @@
+
+-- This is the table for the base content types
+CREATE TABLE IF NOT EXISTS locales (
+  locale TEXT PRIMARY KEY
+);
+
 -- This is the table for the base content types
 CREATE TABLE IF NOT EXISTS content_types (
   id TEXT PRIMARY KEY,
@@ -42,6 +48,7 @@ CREATE TABLE IF NOT EXISTS entries (
   updated_date TEXT NOT NULL,
   published_date TEXT,
   first_published_date TEXT,
+  display_title TEXT,
   status TEXT
 );
 
@@ -56,6 +63,35 @@ CREATE TABLE IF NOT EXISTS entry_references (
   locale TEXT NOT NULL,
   reference_entry_id TEXT NOT NULL,
   PRIMARY KEY (entry_id, array_index, field_id, locale),
+  FOREIGN KEY (field_id, content_type_id) REFERENCES fields (id, content_type_id)
+);
+
+-- this table is a collection of references from a child to it's top level parent with a slug field.
+CREATE TABLE IF NOT EXISTS entry_top_parent_references_slug (
+  entry_id TEXT NOT NULL REFERENCES entries (id),
+  content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  top_parent_reference_entry_id TEXT NOT NULL REFERENCES entries (id),
+  top_parent_content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  PRIMARY KEY (entry_id, top_parent_reference_entry_id)
+);
+
+-- this table is a collection of references from a child to it's parents.
+CREATE TABLE IF NOT EXISTS entry_parent_references (
+  entry_id TEXT NOT NULL REFERENCES entries (id),
+  content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  parent_reference_entry_id TEXT NOT NULL REFERENCES entries (id),
+  parent_content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  PRIMARY KEY (entry_id, parent_reference_entry_id)
+);
+
+-- this table is a collection of fields for a content item.   
+-- Records in this table are only added if they have a value for the specified locale
+CREATE TABLE IF NOT EXISTS entry_fields_has_value (
+  entry_id TEXT NOT NULL REFERENCES entries (id),
+  field_id TEXT NOT NULL REFERENCES fields (id),
+  content_type_id TEXT NOT NULL REFERENCES content_types (id),
+  locale TEXT NOT NULL REFERENCES locales (locale),
+  PRIMARY KEY (entry_id, field_id, locale),
   FOREIGN KEY (field_id, content_type_id) REFERENCES fields (id, content_type_id)
 );
 
@@ -74,7 +110,7 @@ CREATE TABLE IF NOT EXISTS assets (
 -- so there is a reference to the asset ID as well as to the locale
 CREATE TABLE IF NOT EXISTS asset_data (
   asset_id TEXT NOT NULL REFERENCES assets (id),
-  locale TEXT NOT NULL,
+  locale TEXT NOT NULL REFERENCES locales (locale),
   title TEXT,
   description TEXT,
   file_name TEXT,
