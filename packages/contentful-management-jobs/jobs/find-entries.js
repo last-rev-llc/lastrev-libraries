@@ -4,7 +4,7 @@
 const { clientDelivery } = require('../shared/contentful-init');
 const { getAllEntries, getAllItems } = require('../shared/contentful-actions');
 
-const content_type = 'aaCard';
+const content_type = 'aaShopifyProduct';
 
 const queryOptions = {
   limit: 100,
@@ -12,7 +12,7 @@ const queryOptions = {
   order: '-sys.createdAt'
 };
 
-const itemFilter = (item) => item.fields.category;
+const itemFilter = (item) => !item.fields.shopifyRaw?.image;
 const displayItem = (item) => {
   console.log('item category => ', { id: item.sys.id, category: item.fields.category });
 };
@@ -23,7 +23,7 @@ const log = (items) => {
     items
       .filter(itemFilter)
       .map((item) => {
-        if (displayItem) displayItem(item);
+        displayItem(item);
         return item.sys.id;
       })
       .join(',')
