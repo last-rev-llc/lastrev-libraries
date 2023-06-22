@@ -9,6 +9,7 @@ export const typeDefs = gql`
     sidekickLookup: JSON
     animation: JSON
     theme: [Theme]
+    googleId: String
     googleDocUrl: String
     lastUpdatedDateOfGoogleDoc: Date
     downloadUrl: String

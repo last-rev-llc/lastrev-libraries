@@ -28,7 +28,7 @@ type Article implements Content {
   breadcrumbsRoot: String
   categories: [Link]
   disableBackToTop: Boolean
-  driftTags: [String]
+  excludeFromCategoryTopicPage: Boolean
   featuredMedia: Media
   footer: Content
   footerItems: [Content]
@@ -130,6 +130,17 @@ type CategoryBlog {
   hero: Hero
 }
 
+type CategoryTag implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  lr__path__: String
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+  title: String
+}
+
 type Collection implements Content {
   animation: JSON
   backgroundColor: String
@@ -201,16 +212,6 @@ type ContentOwner implements Content {
   variant: String
 }
 
-type ContentfulAppSettings implements Content {
-  animation: JSON
-  id: String
-  internalTitle: String
-  settings: JSON
-  sidekickLookup: JSON
-  theme: [Theme]
-  variant: String
-}
-
 input ContentsFilter {
   contentTypes: [String]
   displayType: String
@@ -226,10 +227,13 @@ type Document implements Content {
   animation: JSON
   downloadUrl: String
   googleDocUrl: String
+  googleId: String
   id: String
+  internalTitle: String
   lastUpdatedDateOfGoogleDoc: Date
   sidekickLookup: JSON
   theme: [Theme]
+  variant: String
 }
 
 type Footer implements Content {
@@ -470,12 +474,14 @@ type Seo implements Content {
 
 type Site implements Content {
   animation: JSON
+  auth: String
   id: String
   internalTitle: String
   seo: JSON
   sidekickLookup: JSON
   siteKey: String
   theme: [Theme]
+  themeMode: String
   variant: String
 }
 

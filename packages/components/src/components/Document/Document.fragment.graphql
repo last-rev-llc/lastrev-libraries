@@ -1,5 +1,6 @@
 fragment Document_BaseFragment on Document {
   ...Content_BaseFragment
+  googleId
   googleDocUrl
   lastUpdatedDateOfGoogleDoc
   downloadUrl
