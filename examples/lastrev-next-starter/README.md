@@ -300,3 +300,7 @@ In order to use visual testing to verify that the page has not changed you need 
 | DEFAULT_SITE_ID                 | This is the content ID of the `Site` content entry. Use this when you only have one Site                                                                                                                                    |
 | SITE_SETTINGS                   | ID of the site settings content (in Contentful)                                                                                                                                                                             |
 | DOMAIN                          | Base domain of the web app, this is to be able to build the sitemap.                                                                                                                                                        |
+
+## Troubleshooting
+
+- If the app crashes locally, make sure you don't have NODE_ENV as 'production' in the .env file. If it's the case then comment it and try it to run again.
