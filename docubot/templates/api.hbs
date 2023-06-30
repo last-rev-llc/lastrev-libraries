@@ -1,0 +1,41 @@
+{{prompt}}
+{{fileContents}}
+API Summary:
+<brief overview of the api endpoint and its endpoints>
+
+Import statements:
+<describe the imports and dependencies>
+
+Internal Functions:
+<list of functions with descriptions, parameters and what is retunred>
+
+External Services:
+<list of external services this api endpoint works with>
+
+API Endponts:
+<list out all api endpoints in the file and document them with the following template>
+METHOD /api/route
+Summary: <brief summary of the endpoint>
+Example Usage:
+```
+curl -X GET \
+  http://localhost:3000/api/route \
+  -H 'Content-Type: application/json' \
+  -H 'cache-control: no-cache' \
+  -d '{
+  "data": "data"
+}'
+```
+
+Example Response:
+```json
+{
+  "response": "data"
+}
+```
+
+Interaction Summary:
+
+
+Developer Questions:
+

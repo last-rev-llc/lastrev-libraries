@@ -25,7 +25,7 @@ declare module '@mui/material/styles/createPalette' {
     yellow: string;
     neutralGrey: string;
     coolGrey: string;
-    integralOrange: string;
+    darkGreen: string;
     aquaPearl: string;
     greenishBlue: string;
     platinum: string;
@@ -113,7 +113,7 @@ const baseTheme = {
   },
   typography: {
     fontSize: 16,
-    fontFamily: "'Inter', 'sans-serif'",
+    fontFamily: "'Outfit', 'sans-serif'",
     fontStyle: 'normal',
     fontWeight: {
       regular: 400,
@@ -194,38 +194,44 @@ const baseTheme = {
   palette: {
     mode: 'light',
     primary: {
-      main: '#FF574A',
-      light: '#FF685C',
-      dark: '#DC2D1F',
-      contrastText: '#FFFFFF'
+      main: '#6EFF29',
+      light: '#6EFF29',
+      dark: '#2D5E4A',
+      contrastText: '#000'
+    },
+    secondary: {
+      main: '#2D5E4A',
+      dark: '#000',
+      contrastText: '#FFF'
     },
     text: {
-      primary: '#00324A',
-      secondary: '#335B6E',
+      primary: '#000',
+      secondary: '#2D5E4A                     ',
       disabled: '#CCC'
     },
     common: {
       black: '#00030B',
       white: '#FFFFFF',
-      contrastText: '#00324A'
+      contrastText: '#000'
     },
     background: {
       default: '#FFFFFF',
       paper: '#EFF0F1',
-      dark: '#00324A',
-      yellow: '#FFD12B',
-      neutralGrey: '#E0E6E9',
+      dark: '#000',
+      yellow: '#D3F7B0',
+      neutralGrey: '#EAEBEC',
       coolGrey: '#E3F1F2',
-      integralOrange: '#FF574A',
+      darkGreen: '#2C5E4A',
       aquaPearl: '#68ABDD',
-      greenishBlue: '#1264A3'
+      greenishBlue: '#1264A3',
+      brightGreen: '#6EFF29'
     },
     midnight: {
-      main: '#00324A',
-      A100: '#00324A',
-      A90: '#1A475C',
-      A80: '#335B6E',
-      A70: '#4D7080',
+      main: '#000',
+      A100: '#000',
+      A90: '#2C5E4A',
+      A80: '#2C5E4A',
+      A70: '#2C5E4A',
       A60: '#668492',
       A50: '#8099A5',
       A40: '#99ADB7',
@@ -259,11 +265,11 @@ const baseTheme = {
       main: '#C3DCDE',
       light: '#D3EBED',
       lighter: '#E3F1F2',
-      contrastText: '#00324A'
+      contrastText: '#000'
     },
     platinum: {
       main: '#E0E6E9',
-      contrastText: '#00324A'
+      contrastText: '#000'
     }
   }
 };
@@ -334,9 +340,9 @@ const createSchemeTheme = (schemeKey?: string) => {
               },
 
               'code': {
-                color: baseSchemeTheme.palette.common.white,
-                backgroundColor: baseSchemeTheme.palette.common.black,
-                textDecorationColor: baseSchemeTheme.palette.common.white,
+                'color': baseSchemeTheme.palette.common.white,
+                'backgroundColor': baseSchemeTheme.palette.common.black,
+                'textDecorationColor': baseSchemeTheme.palette.common.white,
 
                 '&.bold-text': {
                   fontWeight: 'bold'
@@ -571,35 +577,13 @@ const createSchemeTheme = (schemeKey?: string) => {
             contained: {
               'padding': baseSchemeTheme.spacing(2, 5),
               'borderRadius': 50,
-              'color': baseSchemeTheme.palette.text.primary,
-
               '&:hover': {
                 color: baseSchemeTheme.palette.common.white
               }
             },
-
-            containedPrimary: {
-              'backgroundColor': baseSchemeTheme.palette.primary.light,
-
-              '&:hover': {
-                backgroundColor: baseSchemeTheme.palette.primary.dark
-              }
-            },
-
-            containedSecondary: {
-              'backgroundColor': baseSchemeTheme.palette.common.white,
-              'color': baseSchemeTheme.palette.text.primary,
-
-              '&:hover': {
-                backgroundColor: baseSchemeTheme.palette.midnight.main,
-                color: baseSchemeTheme.palette.common.white
-              }
-            },
-
             outlined: {
               'padding': baseSchemeTheme.spacing(2, 5),
               'borderRadius': 50,
-
               '&:hover': {
                 color: baseSchemeTheme.palette.common.white
               }

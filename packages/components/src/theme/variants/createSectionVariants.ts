@@ -24,8 +24,6 @@ export const defaultSectionWhiteVariant = (theme: Theme) => ({
   },
   style: {
     '& [class*=Text-root] h5': {
-      color: theme.palette.midnight,
-
       a: {
         color: theme.palette.primary.dark
       }

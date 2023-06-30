@@ -27,6 +27,7 @@ import * as CommonResource from './CommonResource';
 import * as CustomCollection from './Collection';
 import * as CategoryTag from './CategoryTag';
 import * as Document from './Document';
+import * as Theme from './Theme';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -86,7 +87,8 @@ const extensions: GraphQlExtension[] = [
   ModuleIntegration,
   CommonResource,
   CategoryTag,
-  Document
+  Document,
+Theme
 ];
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));

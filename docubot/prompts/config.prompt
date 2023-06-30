@@ -1,0 +1,10 @@
+Explain the purpose and functionality of a configuration file in a larger application.
+The provided file is one such configuration file.
+"""
+{{fileContents}}
+"""
+Describe the contents of the file and how it relates to the application.
+If the configuration is specific to a known service, provide an overview of the service and how it could integrate with the application.
+Additionally, list out the common questions that developers working in this code base may have with regards to this file.
+Template:
+{{templates.config}}

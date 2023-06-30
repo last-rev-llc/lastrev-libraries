@@ -83,7 +83,7 @@ const NavLink = styled(Typography, {
   'lineHeight': 1.2,
 
   '& a': {
-    'color': theme.palette.midnight.A70,
+    'color': theme.palette.secondary.main,
     'fontWeight': 500,
 
     '&:hover': {
@@ -93,7 +93,7 @@ const NavLink = styled(Typography, {
   },
 
   '&.active': {
-    'borderLeftColor': theme.palette.background.integralOrange,
+    'borderLeftColor': theme.palette.background.darkGreen,
 
     '& a': {
       color: theme.palette.text.primary,

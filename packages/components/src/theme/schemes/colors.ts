@@ -15,26 +15,27 @@ export type ColorScheme = {
 // Add colors here for reference in schemes below
 const defaultColors = {
   white: '#FFFFFF',
-  light: '#E5E5E5',
-  dark: '#091635',
+  light: '#EAEBEC',
+  dark: '#000',
   black: '#00030B',
-  primary: '#091635',
-  secondary: '#0000FF',
+  primary: '#000',
+  secondary: '#2D5E4A',
   lightBlue: '#add8e6',
-  deepSkyBlue: '#00bfff',
+  brightGreen: '#6EFF29',
   navy: '#000080'
 };
 
 // All of the defaults for the site
+// TODO: These need changed to the new scheme format
 export const baseScheme = {
   palette: {
     primary: defaultColors.primary,
     primaryLight: defaultColors.light,
     primaryDark: defaultColors.dark,
     primaryContrastText: defaultColors.white,
-    secondary: defaultColors.deepSkyBlue,
-    secondaryLight: '#AB0074',
-    secondaryDark: '#FF0000',//defaultColors.navy,
+    secondary: defaultColors.brightGreen,
+    secondaryLight: '#5C9877',
+    secondaryDark: '#2D5E4A',
     secondaryContrastText: defaultColors.navy,
     grey100: '#091635',
     grey200: '#19294F',
@@ -48,10 +49,10 @@ export const baseScheme = {
     errorColor: red.A400,
     commonBlack: defaultColors.black,
     commonWhite: defaultColors.white,
-    backgroundDefault: defaultColors.white, // TODO: Explore if this auto uses contrast text
-    backgroundLight: defaultColors.white, // TODO: Explore if this auto uses contrast text
-    backgroundDark: defaultColors.white, // TODO: Explore if this auto uses contrast text
-    backgroundPaper: defaultColors.white // TODO: Explore if this auto uses contrast text
+    backgroundDefault: defaultColors.white,
+    backgroundLight: defaultColors.white,
+    backgroundDark: defaultColors.white,
+    backgroundPaper: defaultColors.white
   }
 };
 
@@ -84,12 +85,11 @@ const black = {
     primaryTextColor: defaultColors.white,
     secondary: defaultColors.white,
     secondaryLight: defaultColors.lightBlue,
-    backgroundDefault: defaultColors.black,
+    backgroundDefault: defaultColors.black
   }
 };
 
-
-const colorSchemes: { [key: string]: any; } = {
+const colorSchemes: { [key: string]: any } = {
   white,
   black
 };

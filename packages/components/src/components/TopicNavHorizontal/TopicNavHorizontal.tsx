@@ -207,7 +207,7 @@ const NavItem = styled(ListItem, {
 
     '&:hover': {
       backgroundColor: 'transparent',
-      color: theme.palette.background.integralOrange,
+      color: theme.palette.background.darkGreen,
       textDecoration: 'none',
       transition: 'color 0.18s ease'
     },
@@ -215,7 +215,7 @@ const NavItem = styled(ListItem, {
     '&.active, &.sub-path-active': {
       cursor: 'default',
       borderBottom: '2px solid',
-      borderBottomColor: theme.palette.background.integralOrange
+      borderBottomColor: theme.palette.background.darkGreen
     }
   },
 

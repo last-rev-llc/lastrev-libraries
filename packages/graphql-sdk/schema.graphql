@@ -293,13 +293,13 @@ scalar JSON
 type Link implements Content {
   animation: JSON
   buttonColor: String
+  color: String
   href: String!
   icon: String
   iconPosition: String
   id: String
   internalTitle: String
   isActive: Boolean
-  linkColor: String
   manualUrl: String
   requireLogin: Boolean
   sidekickLookup: JSON

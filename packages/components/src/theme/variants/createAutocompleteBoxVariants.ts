@@ -5,8 +5,8 @@ export const homeVariant = (theme: Theme) => ({
     variant: 'home'
   },
   style: {
-    marginTop: theme.spacing(1),
-    marginBottom: theme.spacing(1),
+    'marginTop': theme.spacing(1),
+    'marginBottom': theme.spacing(1),
 
     '& .aa-Autocomplete[aria-expanded=true]': {
       '& .aa-Form': {
@@ -21,15 +21,15 @@ export const homeVariant = (theme: Theme) => ({
     },
 
     '& .aa-Form': {
-      display: 'flex',
-      alignItems: 'center',
-      flexDirection: 'row-reverse',
-      minHeight: theme.spacing(7),
-      paddingLeft: theme.spacing(3),
-      paddingRight: theme.spacing(1),
-      border: 'transparent',
-      backgroundColor: theme.palette.common.white,
-      borderRadius: theme.spacing(3.75),
+      'display': 'flex',
+      'alignItems': 'center',
+      'flexDirection': 'row-reverse',
+      'minHeight': theme.spacing(7),
+      'paddingLeft': theme.spacing(3),
+      'paddingRight': theme.spacing(1),
+      'border': 'transparent',
+      'backgroundColor': theme.palette.common.white,
+      'borderRadius': theme.spacing(3.75),
 
       '&:focus-within': {
         border: 'transparent',
@@ -53,7 +53,7 @@ export const homeVariant = (theme: Theme) => ({
       maxWidth: theme.spacing(5),
       maxHeight: theme.spacing(5),
       padding: 0,
-      backgroundColor: theme.palette.background.integralOrange,
+      backgroundColor: theme.palette.background.darkGreen,
       border: 0,
       borderRadius: 25
     },
@@ -62,7 +62,7 @@ export const homeVariant = (theme: Theme) => ({
       height: theme.spacing(3),
       width: theme.spacing(3),
       color: theme.palette.common.white
-    },
+    }
   }
 });
 

@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Outfit';
+  src: url('../public/Outfit.ttf') format('truetype');
+  /* Add additional font formats if necessary */
+}
 html {
   scroll-behavior: smooth;
 }
@@ -6,7 +11,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
+  font-family: Outfit, Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans,
     Droid Sans, Helvetica Neue, sans-serif;
 }
 

@@ -1,0 +1,125 @@
+const path = require('path');
+
+const config = (CODE_BASE_PATH) => {
+  const PACKAGE_JSON_PATH = path.join(CODE_BASE_PATH, 'package.json');
+  const PINECONE_INDEX_NAME = process.env.PINECONE_INDEX_NAME || 'answers-development';
+  const PINECONE_NAMESPACE = process.env.PINECONE_NAMESPACE || 'answerai';
+  const DOCUBOT_DIRECTORY_NAME = process.env.DOCUBOT_DIRECTORY_NAME || 'docubot';
+  const DOCUBOT_DIRECTORY = path.join(CODE_BASE_PATH, DOCUBOT_DIRECTORY_NAME);
+  const MARKDOWN_DIRECTORY =
+    process.env.MARKDOWN_DIRECTORY || path.join(DOCUBOT_DIRECTORY, 'markdown');
+  const PROMPTS_FILE_PATH =
+    process.env.PROMPTS_FILE_PATH || path.join(DOCUBOT_DIRECTORY, 'prompts');
+
+  const TEMPLATE_FILE_PATH =
+    process.env.TEMPLATE_FILE_PATH || path.join(DOCUBOT_DIRECTORY, 'templates');
+  return {
+    codeBasePath: CODE_BASE_PATH,
+    pineconeIndexName: PINECONE_INDEX_NAME,
+    pineconeNamespace: PINECONE_NAMESPACE,
+    docubotDirectoryName: DOCUBOT_DIRECTORY_NAME,
+    docubotDirectory: DOCUBOT_DIRECTORY,
+    markdownDirectory: MARKDOWN_DIRECTORY,
+    promptsFilePath: PROMPTS_FILE_PATH,
+    templateFilePath: TEMPLATE_FILE_PATH,
+    packageJsonPath: PACKAGE_JSON_PATH,
+    invalidPaths: [
+      'node_modules',
+      'dist',
+      'build',
+      'coverage',
+      'public',
+      'static',
+      'assets',
+      'images',
+      'img',
+      '.nextjs',
+      '.next',
+      '.git',
+      'generated',
+      '.yarn',
+      'patches',
+      "docubot/templates",
+      "docubot/markdown",
+      "docubot/prompts",
+    ],
+    invalidFileTypes: [
+      '.prompt',
+      '.hbs',
+      '.csv',
+      '.tsv',
+      '.log',
+      '.docx',
+      '.xls',
+      '.xlsx',
+      '.ppt',
+      '.pptx',
+      '.svg',
+      '.png',
+      '.jpg',
+      '.jpeg',
+      '.gif',
+      '.bmp',
+      '.tiff',
+      '.tif',
+      '.ico',
+      '.mp3',
+      '.mp4',
+      '.wav',
+      '.wma',
+      '.avi',
+      '.mov',
+      '.mpg',
+      '.mpeg',
+      '.zip',
+      '.rar',
+      '.7z',
+      '.tar',
+      '.gz',
+      '.dmg',
+      '.iso',
+      '.exe',
+      '.bin',
+      '.pkg',
+      '.deb',
+      '.rpm',
+      '.env',
+      '.lock'
+    ],
+    invalidFileNames: [
+      'pnpm-lock.yaml',
+      'package-lock.json',
+      'app_pairs.yml', '.env',
+      'cypress.config.js', 'cypress.env.json',
+      'docker-compose.yml', 'docker', 'Dockerfile',
+      '.DS_STORE', '.DS_Store',
+      '.npmrc', '.gitignore', '.gitattributes',
+      '.eslintignore', '.eslintrc', '.eslintrc.js',
+      'vite-env.d.ts', 'vite.config.ts',
+      'pnpm-workspace.yaml', '.prettierrc',
+      '.nvmrc' 
+    ],
+    fileTypes: {
+      docs: {
+        fileTypes: ['.md', '.mdx', '.txt', 'LICENSE.md', 'LICENSE'],
+        skipCompletion: true
+      },
+      react: {
+        fileTypes: ['.jsx', '.tsx'],
+        prompt: 'react.prompt',
+        template: 'react.md'
+      },
+      api: {
+        pathIncludes: ['/api/', '/routes/', '/controllers/', '/services/'],
+        prompt: 'api.prompt',
+        template: 'api.md'
+      },
+      default: {
+        prompt: 'default.prompt',
+        template: 'default.md'
+      }
+    }
+  };
+};
+
+module.exports = config;

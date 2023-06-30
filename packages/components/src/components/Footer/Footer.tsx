@@ -60,7 +60,7 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
                           paddingBottom: 2,
                           marginBottom: 1,
                           borderBottom: 'solid 1px',
-                          borderBottomColor: 'background.aquaPearl',
+                          borderBottomColor: 'background.darkGreen',
                           color: 'common.white',
                           display: 'block',
                           width: '100%',
@@ -127,7 +127,8 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
 
                           '&:hover': {
                             backgroundColor: 'midnight.main',
-                            borderColor: 'common.white'
+                            borderColor: 'common.white',
+                            color: 'common.white'
                           }
                         }
                       }}>
@@ -141,7 +142,7 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
 
           {disclaimerText && (
             <>
-              <Divider sx={{ my: 6, backgroundColor: 'background.aquaPearl' }} />
+              <Divider sx={{ my: 6, backgroundColor: 'background.darkGreen' }} />
               <Box>
                 <ContentModule
                   __typename="Text"
@@ -150,7 +151,7 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
                   data-testid="Footer-DisclaimerText"
                   sx={{
                     '.MuiTypography-root': {
-                      color: 'background.aquaPearl',
+                      color: 'common.white',
                       fontSize: '12px',
                       lineHeight: '18px'
                     }

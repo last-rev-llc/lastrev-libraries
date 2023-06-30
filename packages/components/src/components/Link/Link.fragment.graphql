@@ -5,7 +5,7 @@ fragment Link_BaseFragment on Link {
   variant
   icon
   iconPosition
-
+  color
   #Custom
   requireLogin
 }
@@ -14,6 +14,7 @@ fragment Link_CardFragment on Link {
   ...Content_BaseFragment
   #text
   href
+  color
   #variant
   #icon
   #iconPosition

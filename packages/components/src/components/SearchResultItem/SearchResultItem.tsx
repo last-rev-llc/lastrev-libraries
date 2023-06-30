@@ -93,13 +93,6 @@ const Root = styled(Box, {
     backgroundColor: '#FFE173'
   },
 
-  '& .MuiTypography-root': {
-    // TODO: currently throwing: "TypeError: Cannot read properties of undefined"
-    // https://lastrev.atlassian.net/browse/IAS-249
-    // color: theme.palette.midnight.A80
-    color: '#335B6E'
-  },
-
   '& .MuiChip-root': {
     'height': 'auto',
     'padding': theme.spacing(0.5, 0),

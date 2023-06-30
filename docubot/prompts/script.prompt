@@ -1,0 +1,10 @@
+Document how the code in the following file is working
+"""
+{{fileContents}}
+"""
+Provide a detailed breakdown of how it interacts with the larger application. 
+If this script interacts with a third party, briefly describe what the third party is. 
+List out any questions developers may have while working on this codebase that relate to this file.
+List out any known issues or bugs with the component and any todo items that need to be addressed.
+Template:
+{{templates.script}}

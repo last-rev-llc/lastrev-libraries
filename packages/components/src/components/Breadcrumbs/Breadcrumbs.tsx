@@ -82,7 +82,7 @@ const Root = styled(MuiBreadcrumbs, {
     },
 
     '& svg': {
-      fill: theme.palette.background.integralOrange
+      fill: theme.palette.background.darkGreen
     }
   },
 

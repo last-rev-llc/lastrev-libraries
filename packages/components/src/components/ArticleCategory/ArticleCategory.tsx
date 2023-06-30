@@ -144,7 +144,16 @@ const ArticleCategory = ({
         {!isNested && (
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
             {level !== 1 && (
-              <Box display="flex" ml={-0.75} {...sidekick(sidekickLookup?.title)}>
+              <Box
+                display="flex"
+                ml={-0.75}
+                {...sidekick(sidekickLookup?.title)}
+                sx={{
+                  '& svg': {
+                    width: (theme: Theme) => theme.spacing(4),
+                    height: (theme: Theme) => theme.spacing(4)
+                  }
+                }}>
                 <DocumentIcon />
                 <ArticleCategoryTitle variant="h3" component="h3" ml={2} data-testid="ArticleCategory-title">
                   {title}
@@ -200,7 +209,7 @@ const ArticleCategory = ({
             )}
             {article.body && (
               <ContentModule
-                sx={{ color: 'midnight.A80', mt: 1 }}
+                sx={{ mt: 1 }}
                 data-testid={`ArticleCategory-${isNested ? 'SubCategory-' : ''}Article-${article.id}-summary`}
                 body={article.body}
                 __typename="Text"
@@ -253,7 +262,8 @@ const ArticleCategory = ({
                     <Box
                       sx={{
                         '& svg': {
-                          width: (theme: Theme) => theme.spacing(5),
+                          width: (theme: Theme) => theme.spacing(4),
+                          height: (theme: Theme) => theme.spacing(4),
                           ml: -1
                         }
                       }}>

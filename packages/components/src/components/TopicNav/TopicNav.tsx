@@ -173,21 +173,22 @@ const NavLink = styled(Link, {
   ...theme.typography.smallText,
   'fontWeight': 500,
   'borderLeft': '2px solid transparent',
-  'color': theme.palette.midnight.A70,
+
+  'color': theme.palette.midnight.A100,
 
   '&:hover': {
-    color: theme.palette.midnight.A100,
+    color: theme.palette.secondary.main,
     textDecoration: 'none'
   },
 
   '&.active': {
-    borderLeftColor: theme.palette.background.integralOrange,
-    color: theme.palette.midnight.A100,
+    borderLeftColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.main,
     fontWeight: 600
   },
 
   '&.subnav-active': {
-    color: theme.palette.midnight.A100,
+    color: theme.palette.secondary.main,
     fontWeight: 600
   }
 }));
