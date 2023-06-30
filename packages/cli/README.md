@@ -3,13 +3,13 @@
 NPM:
 
 ```bash
-npm install @last-rev/cli
+npm install @last-rev/cli -g
 ```
 
 Yarn:
 
 ```bash
-yarn add @last-rev/cli
+yarn global add @last-rev/cli
 ```
 
 ## Known Issues:
