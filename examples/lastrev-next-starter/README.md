@@ -300,3 +300,14 @@ In order to use visual testing to verify that the page has not changed you need 
 | DEFAULT_SITE_ID                 | This is the content ID of the `Site` content entry. Use this when you only have one Site                                                                                                                                    |
 | SITE_SETTINGS                   | ID of the site settings content (in Contentful)                                                                                                                                                                             |
 | DOMAIN                          | Base domain of the web app, this is to be able to build the sitemap.                                                                                                                                                        |
+
+## Troubleshooting
+
+### The app crashes locally
+
+If the app crashes locally showing the following error:
+
+> Server Error
+> TypeError: (0 , react_jsx_dev_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxDEV) is not a function
+
+Make sure you don't have NODE_ENV as 'production' in the .env file. If it's the case then comment it and try to run it again.
