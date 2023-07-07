@@ -1,27 +1,50 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
-const { clientDelivery } = require('../shared/contentful-init');
+const { environmentManagement, clientDelivery } = require('../shared/contentful-init');
 const { getAllEntries, getAllItems } = require('../shared/contentful-actions');
 
-const content_type = 'aaShopifyProduct';
+const content_type = 'pageVideoLanding';
 
 const queryOptions = {
-  limit: 100,
+  'limit': 100,
   content_type,
-  order: '-sys.createdAt'
+  'order': '-sys.createdAt',
+  'sys.archivedAt[exists]': false
 };
 
-const itemFilter = (item) => !item.fields.shopifyRaw?.image;
+const itemFilter = (item) => {
+  let found = false;
+  ['de', 'en-US', 'es', 'fr', 'it', 'ja', 'pt-BR'].forEach((locale) => {
+    found = found || (item.fields.seo && !item.fields.seo?.[locale]?.robots?.name);
+  });
+  return found;
+};
 const displayItem = (item) => {
-  console.log('item category => ', { id: item.sys.id, category: item.fields.category });
+  console.log(
+    'page => ',
+    JSON.stringify(
+      {
+        id: item.sys.id,
+        seo: item.fields.seo,
+        fields: (!item.fields.seo && item.fields) || 'has seo'
+      },
+      null,
+      2
+    )
+  );
 };
 
 const log = (items) => {
+  const filteredItems = items.filter(itemFilter);
+  if (filteredItems.length === 0) {
+    console.log('No items found to log');
+    return;
+  }
+  console.log('number of items found => ', filteredItems.length);
   console.log(
     'entry ids => ',
-    items
-      .filter(itemFilter)
+    filteredItems
       .map((item) => {
         displayItem(item);
         return item.sys.id;
@@ -31,9 +54,12 @@ const log = (items) => {
 };
 
 (async () => {
+  const environment = await environmentManagement;
+  // const environment = clientDelivery;
+
   // Step 1 - Get All Entries
-  const entries = await getAllEntries(clientDelivery, { content_type, limit: 1 }, (items) =>
-    getAllItems(items, queryOptions)
+  const entries = await getAllEntries(environment, { content_type, limit: 1 }, (items) =>
+    getAllItems(environment, items, queryOptions)
   );
 
   if (entries.length) {
