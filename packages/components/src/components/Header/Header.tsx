@@ -119,7 +119,7 @@ export const Header = ({
             </NavItems>
           )}
 
-          <NavItems sx={{ display: { xs: 'none', md: 'flex' } }}>
+          <NavItems displayPrint="none" sx={{ display: { xs: 'none', md: 'flex' } }}>
             {showSearchForm && (
               <Box
                 sx={{
@@ -213,13 +213,13 @@ export const Header = ({
             aria-haspopup="true"
             disableRipple
             onClick={toggleDrawer(!open)}
-            sx={{ marginLeft: 'auto', display: { xs: 'flex', md: 'none' } }}>
+            sx={{ marginLeft: 'auto', display: { xs: 'flex', md: 'none' }, displayPrint: 'none' }}>
             {open ? <CloseIcon /> : <MenuIcon />}
           </IconButton>
 
           <Drawer
             anchor="top"
-            sx={{ zIndex: 900, display: { xs: 'block', md: 'none' } }}
+            sx={{ zIndex: 900, display: { xs: 'block', md: 'none' }, displayPrint: 'none' }}
             elevation={0}
             open={open}
             onClose={toggleDrawer(false)}>
@@ -262,7 +262,11 @@ const Root = styled(AppBar, {
   shouldForwardProp: (prop) => prop !== 'menuVisible',
   overridesResolver: (_, styles) => [styles.root]
 })<{ menuVisible: boolean }>(({ theme }) => ({
-  backgroundColor: theme.palette.background.dark
+  'backgroundColor': theme.palette.background.dark,
+
+  '@media print': {
+    display: 'none'
+  }
 }));
 
 const NavItems = styled(Box, {

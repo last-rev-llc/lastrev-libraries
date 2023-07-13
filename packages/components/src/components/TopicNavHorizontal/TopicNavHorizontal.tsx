@@ -30,6 +30,7 @@ const TopicNavHorizontal = ({ navItems }: TopicNavHorizontalProps) => {
         px={2}
         py={{ xs: 1.345, md: 1.85 }}
         sx={{ backgroundColor: 'background.neutralGrey', position: 'relative', zIndex: 1000 }}
+        displayPrint="none"
         data-testid="TopicNav-Horizontal">
         <Container maxWidth="xl">
           <Grid container>

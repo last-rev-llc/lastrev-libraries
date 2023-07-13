@@ -24,7 +24,7 @@ export const Breadcrumbs = ({ breadcrumbs, breadcrumbsRoot, sidekickLookup }: Br
   return (
     <ErrorBoundary>
       {breadcrumbs ? (
-        <Box p={2} sx={{ display: { xs: 'none', md: 'block' } }}>
+        <Box p={2} sx={{ display: { xs: 'none', md: 'block' } }} displayPrint="none">
           <Container maxWidth="xl">
             <Grid container>
               <Grid item xs={12}>

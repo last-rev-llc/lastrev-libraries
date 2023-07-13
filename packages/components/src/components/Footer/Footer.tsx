@@ -28,9 +28,9 @@ export interface FooterProps {
 export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, actions, sidekickLookup }: FooterProps) => {
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} sx={{ paddingTop: 12.5, paddingBottom: 12.5 }}>
+      <Root {...sidekick(sidekickLookup)} sx={{ paddingTop: 12.5, paddingBottom: 12.5 }} component="footer">
         <Container maxWidth="xl">
-          <Grid container spacing={{ xs: 6, md: 2 }} sx={{ width: '100%' }}>
+          <Grid container spacing={{ xs: 6, md: 2 }} sx={{ width: '100%' }} displayPrint="none">
             <Grid item xs={12} md={2} sx={{ order: '1' }} data-testid="Footer-Logo">
               {media && !!media.length && (
                 <Link
@@ -44,7 +44,14 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
             <Grid item xs={1} sx={{ order: '1', display: { xs: 'none', md: 'block' } }} /> {/* spacer */}
             {navigationItems &&
               navigationItems?.map((navigationItem) => (
-                <Grid item xs={12} md={2} sx={{ order: '3' }} data-testid="Footer-Links-Column" key={navigationItem.id}>
+                <Grid
+                  item
+                  xs={12}
+                  md={2}
+                  sx={{ order: '3' }}
+                  displayPrint="none"
+                  data-testid="Footer-Links-Column"
+                  key={navigationItem.id}>
                   <List
                     data-testid="Footer-Navigation"
                     sx={{ width: '100%', display: 'flex', flexDirection: 'row', p: 0 }}>
@@ -141,8 +148,8 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
           </Grid>
 
           {disclaimerText && (
-            <>
-              <Divider sx={{ my: 6, backgroundColor: 'background.darkGreen' }} />
+            <Box displayPrint="none">
+              <Divider sx={{ my: 6, backgroundColor: 'background.aquaPearl' }} />
               <Box>
                 <ContentModule
                   __typename="Text"
@@ -158,9 +165,25 @@ export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, action
                   }}
                 />
               </Box>
-            </>
+            </Box>
           )}
         </Container>
+        <Box sx={{ display: 'none', displayPrint: 'block' }}>
+          <Grid container justifyContent="space-between" alignItems="center">
+            <Grid item>
+              {!!media?.length && (
+                <Media
+                  {...media[0]}
+                  file={{
+                    url: 'https://images.ctfassets.net/huigsvblbo3y/6BCOaREwhseaz9hucUuzez/85a55243d1c73ea8b058e52174870d0e/IAS_Product_Resource_Center_Footer_1590x496.png?h=250'
+                  }}
+                  sx={{ '@media print': { maxWidth: 150 } }}
+                />
+              )}
+            </Grid>
+            <Grid item>Integralads.com | @integralads</Grid>
+          </Grid>
+        </Box>
       </Root>
     </ErrorBoundary>
   );
@@ -171,7 +194,17 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })(({ theme }) => ({
-  backgroundColor: theme.palette.background.dark
+  'backgroundColor': theme.palette.background.dark,
+
+  '@media print': {
+    position: 'relative',
+    marginTop: '40px',
+    width: '100%',
+    padding: '8px 0.5cm',
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+    fontSize: 14
+  }
 }));
 
 export default Footer;

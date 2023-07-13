@@ -307,6 +307,9 @@ const createSchemeTheme = (schemeKey?: string) => {
               '& .MuiLink-root': {
                 'textDecoration': 'none',
                 '&.MuiLink-selected': { fontWeight: 'bold' }
+              },
+              '@media print': {
+                display: 'none'
               }
             }
           }
@@ -492,6 +495,9 @@ const createSchemeTheme = (schemeKey?: string) => {
 
               '&:hover': {
                 backgroundColor: baseSchemeTheme.palette.midnight.A12
+              },
+              '@media print': {
+                display: 'none'
               }
             }
           }

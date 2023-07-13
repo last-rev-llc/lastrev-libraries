@@ -81,7 +81,7 @@ const TopicNav = ({ navItems, currentCategoryId = '' }: TopicNavProps) => {
 
   return (
     <ErrorBoundary>
-      <Root data-testid="TopicNav">
+      <Root data-testid="TopicNav" displayPrint="none">
         <ScrollSpy handleScroll={onScrollUpdate} />
         <List data-testid="TopicNav-list" sx={{ p: 0, listStyle: 'none' }}>
           {navItems &&

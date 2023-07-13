@@ -1,13 +1,13 @@
 import React from 'react';
-import { getSdk } from '@ias/graphql-sdk';
-import { GraphQLClient } from 'graphql-request';
-import { useRouter } from 'next/dist/client/router';
-import ContentPreview from '@last-rev/component-library/dist/components/ContentPreview';
 import useSWR from 'swr';
+import dynamic from 'next/dynamic';
+import { getSdk } from '@ias/graphql-sdk';
+import { useRouter } from 'next/dist/client/router';
+import { GraphQLClient } from 'graphql-request';
 import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
 import { LocalizationProvider } from '@ias/components/src/components/LocalizationContext';
 import contentMapping from '@ias/components/src/contentMapping';
-import dynamic from 'next/dynamic';
+import ContentPreview from '../../components/src/components/ContentPreview';
 
 const previewGqlClient = new GraphQLClient(
   `${process.env.NODE_ENV === 'development' ? 'http://localhost:5000/graphql' : '/.netlify/functions/graphql'}`

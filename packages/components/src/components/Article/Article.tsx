@@ -82,71 +82,74 @@ export const Article = ({
         <meta name="content_type" content="article" />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: `${xss(JSON.stringify(schemaData))}` }} />
       </Head>
-      {header && <ContentModule {...(header as any)} />}
-      {topicNavItems && <TopicNavHorizontal navItems={topicNavItems} />}
-      {breadcrumbs && (
-        <Breadcrumbs breadcrumbs={breadcrumbs} sidekickLookup={sidekickLookup} data-testid="Article-breadcrumbs" />
-      )}
-      <Container>
-        <Grid container spacing={{ xs: 2, lg: 4 }}>
-          <Grid item xs={2} sx={{ display: { xs: 'none', md: 'flex' } }}>
-            {sideNav && (
-              <Box>
-                <ArticleNav sideNav={sideNav} data-testid="Article-sideNav" />
-              </Box>
-            )}
-          </Grid>
-          <Grid item sm={12} md={10} lg={7}>
-            <ArticleWrap
-              {...sidekick(sidekickLookup)}
-              itemScope
-              itemType="https://schema.org/Article"
-              data-testid="Article">
-              {(title || pubDate || summary) && (
-                <Box data-testid="Article-head" mt={{ xs: 0, md: 1 }}>
-                  <ArticleHead title={title} pubDate={pubDate} summary={summary} sidekickLookup={sidekickLookup} />
+      <Box position="relative">
+        {header && <ContentModule {...(header as any)} />}
+        {topicNavItems && <TopicNavHorizontal navItems={topicNavItems} />}
+        {breadcrumbs && (
+          <Breadcrumbs breadcrumbs={breadcrumbs} sidekickLookup={sidekickLookup} data-testid="Article-breadcrumbs" />
+        )}
+        <Container sx={{ flex: '1 0 auto' }}>
+          <Grid container spacing={{ xs: 2, lg: 4 }}>
+            <Grid item xs={2} sx={{ display: { xs: 'none', md: 'flex' } }}>
+              {sideNav && (
+                <Box displayPrint="none">
+                  <ArticleNav sideNav={sideNav} data-testid="Article-sideNav" />
                 </Box>
               )}
+            </Grid>
+            <Grid item sm={12} md={10} lg={7} width="100%">
+              <ArticleWrap
+                {...sidekick(sidekickLookup)}
+                itemScope
+                itemType="https://schema.org/Article"
+                data-testid="Article">
+                {(title || pubDate || summary) && (
+                  <ArticleHeadWrap data-testid="Article-head" mt={{ xs: 0, md: 1 }}>
+                    <ArticleHead title={title} pubDate={pubDate} summary={summary} sidekickLookup={sidekickLookup} />
+                  </ArticleHeadWrap>
+                )}
 
-              {body && (
-                <Box data-testid="Article-body" my={5}>
-                  <ArticleBody body={body} sidekickLookup={sidekickLookup} />
+                {body && (
+                  <Box data-testid="Article-body" my={5}>
+                    <ArticleBody body={body} sidekickLookup={sidekickLookup} />
+                  </Box>
+                )}
+
+                {categories && (
+                  <Box data-testid="Article-categories" displayPrint="none" {...sidekick(sidekickLookup?.categories)}>
+                    <CategoryLinks links={categories} />
+                  </Box>
+                )}
+              </ArticleWrap>
+            </Grid>
+            <Grid item lg={3} sx={{ margin: { md: '0 auto' } }}>
+              {relatedLinks && (
+                <Box displayPrint="none" data-testid="Article-relatedLinks" {...sidekick(sidekickLookup?.relatedLinks)}>
+                  <RelatedLinks
+                    title={
+                      localization['article.relatedLinks.label']?.shortTextValue ??
+                      'For more information, see the related articles:'
+                    }
+                    links={relatedLinks}
+                  />
                 </Box>
               )}
-
-              {categories && (
-                <Box data-testid="Article-categories" {...sidekick(sidekickLookup?.categories)}>
-                  <CategoryLinks links={categories} />
-                </Box>
-              )}
-            </ArticleWrap>
+            </Grid>
           </Grid>
-          <Grid item lg={3} sx={{ margin: { md: '0 auto' } }}>
-            {relatedLinks && (
-              <Box data-testid="Article-relatedLinks" {...sidekick(sidekickLookup?.relatedLinks)}>
-                <RelatedLinks
-                  title={
-                    localization['article.relatedLinks.label']?.shortTextValue ??
-                    'For more information, see the related articles:'
-                  }
-                  links={relatedLinks}
-                />
-              </Box>
-            )}
-          </Grid>
-        </Grid>
-      </Container>
-      {footerItems?.map((item) => (
-        <ContentModule
-          key={item?.id}
-          {...item}
-          data-testid={`Article-footerItems-${item.__typename}`}
-          component="section"
-        />
-      ))}
+        </Container>
+        {footerItems?.map((item) => (
+          <ContentModule
+            key={item?.id}
+            {...item}
+            data-testid={`Article-footerItems-${item.__typename}`}
+            component="section"
+            displayPrint="none"
+          />
+        ))}
 
-      {!disableBackToTop && <BackToTop />}
-      {footer && <ContentModule {...(footer as any)} />}
+        {!disableBackToTop && <BackToTop />}
+        {footer && <ContentModule {...(footer as any)} />}
+      </Box>
     </ErrorBoundary>
   );
 };
@@ -155,10 +158,54 @@ const ArticleWrap = styled(Box, {
   name: 'Article',
   slot: 'wrap'
 })<{}>(({ theme }) => ({
-  paddingBottom: theme.spacing(5),
-  backgroundColor: theme.palette.background.default,
+  'paddingBottom': theme.spacing(5),
+  'backgroundColor': theme.palette.background.default,
   [theme.breakpoints.down('md')]: {
     paddingTop: theme.spacing(5)
+  },
+
+  '@media print': {
+    'width': '92.5%',
+    'marginTop': '1cm',
+    'marginBottom': '2cm',
+    'paddingLeft': '1cm',
+    'paddingRight': '1cm',
+
+    'code': {
+      backgroundColor: '#eee',
+      color: 'black'
+    },
+
+    '[class*="code-wrap"]': {
+      backgroundColor: '#eee',
+      border: '3px solid black',
+      color: 'black'
+    },
+
+    'table': { pageBreakInside: 'auto' },
+    'thead': { display: 'table-header-group' },
+    'tr': {
+      pageBreakInside: 'avoid',
+      pageBreakAfter: 'auto'
+    },
+
+    '@page': { size: 'auto', margin: 0, height: '100%' }
+  }
+}));
+
+const ArticleHeadWrap = styled(Box, {
+  name: 'Article',
+  slot: 'ArticleHeadWrap'
+})<{}>(({ theme }) => ({
+  '@media print': {
+    position: 'relative',
+    top: 0,
+    left: 0,
+    right: 0,
+    width: 'calc(100% + 6cm)',
+    margin: '-2.25cm 0 0 -2cm',
+    padding: '60px 80px 40px',
+    backgroundColor: theme.palette.primary.light
   }
 }));
 

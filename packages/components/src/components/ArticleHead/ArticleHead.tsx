@@ -1,5 +1,6 @@
 import React from 'react';
 import dayjs from 'dayjs';
+import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import ErrorBoundary from '@last-rev/component-library/dist/components/ErrorBoundary';
@@ -28,7 +29,7 @@ export const ArticleHead = ({ title, pubDate, summary, sidekickLookup }: Article
       ) : null}
 
       {pubDate ? (
-        <>
+        <Box displayPrint="none">
           <AccessTimeIcon
             fontSize="small"
             sx={{
@@ -47,7 +48,7 @@ export const ArticleHead = ({ title, pubDate, summary, sidekickLookup }: Article
             data-testid="ArticleHead-pubDate">
             {dayjs(pubDate).format('MMM D, YYYY')}
           </Typography>
-        </>
+        </Box>
       ) : null}
 
       {summary ? (
