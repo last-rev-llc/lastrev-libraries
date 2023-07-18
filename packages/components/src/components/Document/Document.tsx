@@ -69,7 +69,11 @@ const Document = ({
           </Stack>
         </Box>
       )}
-      <iframe src={`https://docs.google.com/file/d/${googleId}/preview?usp=drivesdk`} width="100%" height="500px" />{' '}
+      {googleId ? (
+        <iframe src={`https://docs.google.com/file/d/${googleId}/preview?usp=drivesdk`} width="100%" height="500px" />
+      ) : (
+        <iframe src={googleDocUrl} width="100%" height="500px" />
+      )}
     </Box>
   );
 };
