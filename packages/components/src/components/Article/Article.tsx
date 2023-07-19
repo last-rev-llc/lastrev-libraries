@@ -88,14 +88,10 @@ export const Article = ({
         {breadcrumbs && (
           <Breadcrumbs breadcrumbs={breadcrumbs} sidekickLookup={sidekickLookup} data-testid="Article-breadcrumbs" />
         )}
-        <Container sx={{ flex: '1 0 auto' }}>
+        <Container>
           <Grid container spacing={{ xs: 2, lg: 4 }}>
-            <Grid item xs={2} sx={{ display: { xs: 'none', md: 'flex' } }}>
-              {sideNav && (
-                <Box displayPrint="none">
-                  <ArticleNav sideNav={sideNav} data-testid="Article-sideNav" />
-                </Box>
-              )}
+            <Grid item xs={2} sx={{ display: { xs: 'none', md: 'flex' } }} displayPrint="none">
+              {sideNav && <ArticleNav sideNav={sideNav} data-testid="Article-sideNav" />}
             </Grid>
             <Grid item sm={12} md={10} lg={7} width="100%">
               <ArticleWrap
@@ -110,9 +106,9 @@ export const Article = ({
                 )}
 
                 {body && (
-                  <Box data-testid="Article-body" my={5}>
+                  <ArticlBodydWrap data-testid="Article-body" my={5}>
                     <ArticleBody body={body} sidekickLookup={sidekickLookup} />
-                  </Box>
+                  </ArticlBodydWrap>
                 )}
 
                 {categories && (
@@ -122,9 +118,9 @@ export const Article = ({
                 )}
               </ArticleWrap>
             </Grid>
-            <Grid item lg={3} sx={{ margin: { md: '0 auto' } }}>
+            <Grid item lg={3} sx={{ margin: { md: '0 auto' } }} displayPrint="none">
               {relatedLinks && (
-                <Box displayPrint="none" data-testid="Article-relatedLinks" {...sidekick(sidekickLookup?.relatedLinks)}>
+                <Box data-testid="Article-relatedLinks" {...sidekick(sidekickLookup?.relatedLinks)}>
                   <RelatedLinks
                     title={
                       localization['article.relatedLinks.label']?.shortTextValue ??
@@ -160,6 +156,7 @@ const ArticleWrap = styled(Box, {
 })<{}>(({ theme }) => ({
   'paddingBottom': theme.spacing(5),
   'backgroundColor': theme.palette.background.default,
+
   [theme.breakpoints.down('md')]: {
     paddingTop: theme.spacing(5)
   },
@@ -167,29 +164,14 @@ const ArticleWrap = styled(Box, {
   '@media print': {
     'width': '92.5%',
     'marginTop': '1cm',
-    'marginBottom': '2cm',
-    'paddingLeft': '1cm',
-    'paddingRight': '1cm',
+    'marginBottom': '1.5cm',
+    'paddingLeft': '0.75cm',
+    'paddingRight': '0.75cm',
 
-    'code': {
-      backgroundColor: '#eee',
-      color: 'black'
-    },
-
-    '[class*="code-wrap"]': {
-      backgroundColor: '#eee',
-      border: '3px solid black',
-      color: 'black'
-    },
-
-    'table': { pageBreakInside: 'auto' },
-    'thead': { display: 'table-header-group' },
-    'tr': {
-      pageBreakInside: 'avoid',
-      pageBreakAfter: 'auto'
-    },
-
-    '@page': { size: 'auto', margin: 0, height: '100%' }
+    '@page': {
+      size: 'auto',
+      margin: 0
+    }
   }
 }));
 
@@ -205,7 +187,83 @@ const ArticleHeadWrap = styled(Box, {
     width: 'calc(100% + 6cm)',
     margin: '-2.25cm 0 0 -2cm',
     padding: '60px 80px 40px',
-    backgroundColor: theme.palette.primary.light
+    backgroundColor: theme.palette.primary.light,
+
+    h1: {
+      marginBottom: '1rem',
+      fontSize: '2.15rem'
+    },
+
+    p: {
+      margin: 0
+    }
+  }
+}));
+
+const ArticlBodydWrap = styled(Box, {
+  name: 'Article',
+  slot: 'ArticlBodydWrap'
+})<{}>(({ theme }) => ({
+  '@media print': {
+    'marginBottom': 0,
+    'overflow': 'hidden',
+
+    '[class*="Text-root"]': {
+      'h1': {
+        fontSize: '2rem'
+      },
+
+      'h2': {
+        fontSize: '1.4rem'
+      },
+
+      'h3': {
+        fontSize: '1.25rem'
+      },
+
+      'h4': {
+        fontSize: '1.2rem'
+      },
+
+      'h5': {
+        fontSize: '1.15rem'
+      },
+
+      'h6': {
+        fontSize: '1.1rem'
+      },
+
+      'code': {
+        backgroundColor: theme.palette.background.paper,
+        color: 'black',
+        fontSize: 14,
+        wordBreak: 'break-all'
+      },
+
+      '[class*="code-wrap"]': {
+        'margin': 0,
+        'backgroundColor': theme.palette.background.paper,
+        'color': 'black',
+        'fontSize': 14,
+
+        '& + hr': {
+          marginTop: 0,
+          marginBottom: 24
+        }
+      }
+    },
+
+    'table': { pageBreakInside: 'auto', pageBreakAfter: 'auto' },
+    'thead': { display: 'table-header-group' },
+    'tfoot': { display: 'table-footer-group' },
+    'tr': {
+      pageBreakInside: 'avoid',
+      pageBreakAfter: 'auto'
+    },
+    'td': {
+      fontSize: '0.5rem',
+      wordBreak: 'break-all'
+    }
   }
 }));
 

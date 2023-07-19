@@ -28,7 +28,7 @@ export interface FooterProps {
 export const Footer = ({ media, logoUrl, navigationItems, disclaimerText, actions, sidekickLookup }: FooterProps) => {
   return (
     <ErrorBoundary>
-      <Root {...sidekick(sidekickLookup)} sx={{ paddingTop: 12.5, paddingBottom: 12.5 }} component="footer">
+      <Root {...sidekick(sidekickLookup)} component="footer" className="footer">
         <Container maxWidth="xl">
           <Grid container spacing={{ xs: 6, md: 2 }} sx={{ width: '100%' }} displayPrint="none">
             <Grid item xs={12} md={2} sx={{ order: '1' }} data-testid="Footer-Logo">
@@ -194,12 +194,17 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })(({ theme }) => ({
+  'paddingTop': 12.5,
+  'paddingBottom': 12.5,
   'backgroundColor': theme.palette.background.dark,
 
   '@media print': {
+    breakBefore: 'page',
     position: 'relative',
-    marginTop: '40px',
     width: '100%',
+    height: 68,
+    paddingTop: '100%',
+    marginTop: '-68px',
     padding: '8px 0.5cm',
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
