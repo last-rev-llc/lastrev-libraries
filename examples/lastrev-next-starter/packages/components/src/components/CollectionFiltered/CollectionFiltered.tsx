@@ -5,8 +5,9 @@ export type {
   CollectionFilteredClasses
 } from '@last-rev/component-library/dist/components/CollectionFiltered';
 import CollectionFiltered from '@last-rev/component-library/dist/components/CollectionFiltered';
+import { parseBooleanEnvVar } from '@lrns/utils';
 
-const preview = !!process.env.CONTENTFUL_USE_PREVIEW;
+const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 
 const withFetchItems = (Wrapped: any) => (props: any) => {
   const fetchItems = async ({ filter, limit, offset }: { filter: any; limit?: number; offset?: number }) => {
