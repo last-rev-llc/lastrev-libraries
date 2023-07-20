@@ -99,6 +99,7 @@ fragment RichText_RichTextFragment on RichText {
       ...Media_BaseFragment
       ...Article_EmbedFragment
       ...Document_BaseFragment
+      ...Text_ArticleRichTextFragment
     }
     assets {
       ...Media_BaseFragment

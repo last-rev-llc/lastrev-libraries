@@ -47,3 +47,21 @@ fragment Text_RichTextFragment on Text {
     }
   }
 }
+
+fragment Text_ArticleRichTextFragment on Text {
+  ...Text_FieldsFragment
+  body {
+    ...RichText_RichTextArticleEmbedFragment
+    links {
+      entries {
+        ...Content_BaseFragment
+        ... on Text {
+          ...Text_FieldsFragment
+          body {
+            ...RichText_RichTextArticleEmbedFragment
+          }
+        }
+      }
+    }
+  }
+}

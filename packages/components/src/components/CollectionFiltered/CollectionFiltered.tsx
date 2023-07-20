@@ -7,8 +7,9 @@ export type {
 import CollectionFiltered from '@last-rev/component-library/dist/components/CollectionFiltered';
 
 import { useLocalizationContext } from '../LocalizationContext';
+import { parseBooleanEnvVar } from '@ias/utils';
 
-const preview = !!process.env.CONTENTFUL_USE_PREVIEW;
+const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 
 const withFetchItems = (Wrapped: any) => (props: any) => {
   const localization = useLocalizationContext();
