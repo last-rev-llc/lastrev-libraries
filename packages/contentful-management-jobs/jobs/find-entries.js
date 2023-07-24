@@ -16,7 +16,7 @@ const queryOptions = {
 const itemFilter = (item) => {
   let found = false;
   ['de', 'en-US', 'es', 'fr', 'it', 'ja', 'pt-BR'].forEach((locale) => {
-    found = found || (item.fields.seo && !item.fields.seo?.[locale]?.robots?.name);
+    found = found || (item.fields.seo && item.fields.seo?.[locale]?.robots?.value === 'noindex,nofollow');
   });
   return found;
 };
