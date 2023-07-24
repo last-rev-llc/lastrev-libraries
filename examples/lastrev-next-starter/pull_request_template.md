@@ -21,8 +21,7 @@ Briefly describe the purpose and context of this PR.
 Please list detailed steps for how to test this PR, including any relevant context or preconditions.
 
 1.
-2.
-...
+2. ...
 
 ---
 
@@ -61,4 +60,3 @@ Please classify the type of change introduced by this PR:
 ### 📚 Additional Context (if any)
 
 Please include any other relevant information or context about this PR.
-
