@@ -38,7 +38,8 @@ export const mappers: Mappers = {
           if (node?.content?.length) {
             node.content.forEach(traverseRichText);
           }
-          if (node?.value?.includes('<')) {
+          const htmlRegex = /<[^>]*>/g;
+          if (htmlRegex.test(node?.value)) {
             node.value = bodyXSS.process(node.value);
           }
         };
