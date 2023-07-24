@@ -180,12 +180,12 @@ const getAllEntries = async (api, query, callback) => {
 
 const query = (options) => ({ ...options });
 
-const getAllItems = async (result, queryOptions) => {
+const getAllItems = async (api, result, queryOptions) => {
   const { limit } = queryOptions;
   const allItems = [];
   for (let skip = 0; skip < result.total; skip += limit) {
     console.log(`processed items ${skip} to ${skip + limit}`);
-    const entries = await getAllEntries(clientDelivery, query({ ...queryOptions, skip }));
+    const entries = await getAllEntries(api, query({ ...queryOptions, skip }));
     allItems.push(entries?.items || []);
   }
   return allItems.flat();

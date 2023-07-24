@@ -1,22 +1,52 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 /* eslint-disable no-await-in-loop */
-const { clientDelivery } = require('../shared/contentful-init');
+const { environmentManagement, clientDelivery } = require('../shared/contentful-init');
 const { getAllEntries, getAllItems } = require('../shared/contentful-actions');
 
-const limit = 200;
-const content_type = 'blog';
-const order = '-sys.createdAt';
+const content_type = 'pageVideoLanding';
+
+const queryOptions = {
+  'limit': 100,
+  content_type,
+  'order': '-sys.createdAt',
+  'sys.archivedAt[exists]': false
+};
+
+const itemFilter = (item) => {
+  let found = false;
+  ['de', 'en-US', 'es', 'fr', 'it', 'ja', 'pt-BR'].forEach((locale) => {
+    found = found || (item.fields.seo && !item.fields.seo?.[locale]?.robots?.name);
+  });
+  return found;
+};
+const displayItem = (item) => {
+  console.log(
+    'page => ',
+    JSON.stringify(
+      {
+        id: item.sys.id,
+        seo: item.fields.seo,
+        fields: (!item.fields.seo && item.fields) || 'has seo'
+      },
+      null,
+      2
+    )
+  );
+};
 
 const log = (items) => {
+  const filteredItems = items.filter(itemFilter);
+  if (filteredItems.length === 0) {
+    console.log('No items found to log');
+    return;
+  }
+  console.log('number of items found => ', filteredItems.length);
   console.log(
-    'entries with og:title => ',
-    items
-      .filter((item) => item.fields.seo?.['og:title'])
+    'entry ids => ',
+    filteredItems
       .map((item) => {
-        if (item.sys.id === '5eMUbqDXpa2owgiPf2VeHj') {
-          console.log('item seo => ', JSON.stringify(item.fields.seo, null, 2));
-        }
+        displayItem(item);
         return item.sys.id;
       })
       .join(',')
@@ -24,13 +54,16 @@ const log = (items) => {
 };
 
 (async () => {
+  const environment = await environmentManagement;
+  // const environment = clientDelivery;
+
   // Step 1 - Get All Entries
-  const entries = await getAllEntries(clientDelivery, { content_type: 'blog', limit: 1 }, (items) =>
-    getAllItems(items, { limit, content_type, order })
+  const entries = await getAllEntries(environment, { content_type, limit: 1 }, (items) =>
+    getAllItems(environment, items, queryOptions)
   );
 
   if (entries.length) {
-    console.log('entries => ', entries.length);
+    console.log('number of entries => ', entries.length);
     log(entries);
   } else {
     console.log('No entries found');
