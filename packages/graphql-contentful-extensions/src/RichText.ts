@@ -1,6 +1,7 @@
 import { ApolloContext, Mappers } from '@last-rev/types';
 import { Entry, RichTextContent } from 'contentful';
 import { FilterXSS } from 'xss';
+import isHTML from './utils/isHTML';
 
 const ALLOWED_TAGS = ['div', 'span'];
 const ALLOWED_ATTRIBUTES = ['id', 'style'];
@@ -38,7 +39,7 @@ export const mappers: Mappers = {
           if (node?.content?.length) {
             node.content.forEach(traverseRichText);
           }
-          if (node?.value?.includes('<')) {
+          if (isHTML(node?.value)) {
             node.value = bodyXSS.process(node.value);
           }
         };
