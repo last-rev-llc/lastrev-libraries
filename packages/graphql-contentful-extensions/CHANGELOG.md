@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.2.2
+
+### Patch Changes
+
+- 7f4e0b7: Updated html check to be more specific
+
 ## 0.2.1
 
 ### Patch Changes
