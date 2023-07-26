@@ -20,6 +20,16 @@ export const typeDefs = gql`
     indexName: String
     auth: Auth
   }
+
+  type AuthPage {
+    auth: Auth
+    seo: JSON
+    isProtected: Boolean
+  }
+
+  extend type Query {
+    authPage(path: String!, locale: String, preview: Boolean, site: String): AuthPage
+  }
 `;
 
 export const mappers: any = {
@@ -56,6 +66,57 @@ export const mappers: any = {
         const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? SITE_ID, preview: !!ctx.preview });
         const auth: any = getLocalizedField(site?.fields, 'auth', ctx);
         return auth;
+      }
+    }
+  },
+  Query: {
+    Query: {
+      authPage: async (
+        _: any,
+        { path, locale, preview = false, site }: { path?: string; locale?: string; preview?: boolean; site?: string },
+        ctx: ApolloContext
+      ) => {
+        if (!path) throw new Error('MissingArgumentPath');
+        ctx.locale = locale || ctx.defaultLocale;
+        ctx.preview = preview;
+        ctx.path = path;
+
+        if (!ctx.pathReaders) return null;
+
+        const pathReader = ctx.pathReaders[preview ? 'preview' : 'prod'];
+
+        const node = await pathReader.getNodeByPath(path, site);
+        if (!node || !node.data) return null;
+
+        if (node.data.excludedLocales.includes(locale ?? '')) return null;
+
+        const id = node.data.contentId;
+
+        const page = await ctx.loaders.entryLoader.load({ id, preview });
+
+        const siteRef: any = getLocalizedField(page?.fields, 'site', ctx);
+        const siteEntry = await ctx.loaders.entryLoader.load({
+          id: siteRef?.sys?.id ?? SITE_ID,
+          preview: !!ctx.preview
+        });
+
+        const auth: any = getLocalizedField(siteEntry?.fields, 'auth', ctx);
+
+        const contentTypeId = page?.sys?.contentType?.sys?.id;
+        const requiredRoles = getLocalizedField(page?.fields, 'requiredRoles', ctx);
+        const seo = getLocalizedField(page?.fields, 'seo', ctx);
+
+        const isProtected =
+          ((contentTypeId === 'article' && requiredRoles) || []).includes(
+            process.env.PROTECTED_PAGE_REQUIRED_ROLE || 'loggedIn'
+            // @ts-ignore
+          ) || auth === 'Okta';
+
+        return {
+          auth,
+          isProtected,
+          seo
+        };
       }
     }
   }
