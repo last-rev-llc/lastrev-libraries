@@ -51,7 +51,8 @@ const nextConfig = {
       'th-TH',
       'vi-VN'
     ],
-    defaultLocale: 'en-US'
+    defaultLocale: 'en-US',
+    localeDetection: false
   },
   reactStrictMode: true,
   env: {
