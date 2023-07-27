@@ -9,7 +9,6 @@ import dynamic from 'next/dynamic';
 const preview = parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW);
 const site = process.env.SITE;
 const pagesRevalidate = parseInt(process.env.PAGES_REVALIDATE as string, 10);
-const revalidate = !isNaN(pagesRevalidate) ? pagesRevalidate : false;
 
 const AuthGuard = dynamic(() => import('@ias/components/src/components/AuthGuard'));
 const ContentModule = dynamic(() => import('@last-rev/component-library/dist/components/ContentModule'));
@@ -20,11 +19,9 @@ export type PageGetStaticPathsProps = {
 
 export const getStaticPaths = async ({ locales }: PageGetStaticPathsProps) => {
   try {
-    const { data } = await client.Paths({ locales, preview, site });
-
     return {
-      paths: data?.paths,
-      fallback: revalidate ? 'blocking' : false
+      paths: [],
+      fallback: 'blocking'
     };
   } catch (error) {
     return {
@@ -47,7 +44,26 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
       .split(sep)
       .join(posix.sep);
 
+    const { data: authPageData } = await client.AuthPage({ path, locale, preview, site });
+    if (authPageData?.authPage?.isProtected) {
+      return {
+        props: {
+          // @ts-ignore
+          params: { path, locale, preview, site, auth: authPageData?.authPage?.auth ?? 'None' },
+          isProtected: authPageData?.authPage?.isProtected,
+          pageData: {
+            page: {
+              seo: (authPageData?.authPage as any)?.seo,
+              // @ts-ignore
+              auth: authPageData?.authPage?.auth ?? ''
+            }
+          }
+        },
+        revalidate: pagesRevalidate
+      };
+    }
     const { data: pageData } = await client.Page({ path, locale, preview, site });
+
     if (!pageData) {
       throw new Error('NoPageFound');
     }
@@ -79,9 +95,7 @@ export const getStaticProps = async ({ params, locale }: PageStaticPropsProps) =
         pageData: isProtected ? protectedPageData : pageData,
         localizationLookup
       },
-      // Re-generate the page at most once per second
-      // if a request comes in
-      revalidate: false
+      revalidate: pagesRevalidate
     };
   } catch (err) {
     console.log('Error', err);
