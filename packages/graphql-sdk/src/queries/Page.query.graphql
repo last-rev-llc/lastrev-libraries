@@ -1,7 +1,0 @@
-query AuthPage($path: String!, $locale: String, $preview: Boolean, $site: String) {
-  authPage(path: $path, locale: $locale, preview: $preview, site: $site) {
-    auth
-    isProtected
-    seo
-  }
-}

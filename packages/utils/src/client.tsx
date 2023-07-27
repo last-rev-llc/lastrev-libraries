@@ -1,14 +1,9 @@
 import { getSdk } from '@ias/graphql-sdk';
 import { GraphQLClient } from 'graphql-request';
 
-// DEPLOY_URL
-const URL =
-  process.env.NEXT_PHASE === 'phase-production-build'
-    ? 'http://localhost:5000/graphql'
-    : process.env.DEPLOY_URL
-    ? `${process.env.DEPLOY_URL}/api/graphql`
-    : 'http://localhost:3000/api/graphql';
-
+const URL = process.env.NETLIFY
+  ? 'http://localhost:5000/graphql'
+  : process.env.GRAPHQL_SERVER_URL ?? 'http://localhost:5000/graphql';
 const sdk = getSdk(new GraphQLClient(URL));
 
 export default sdk;

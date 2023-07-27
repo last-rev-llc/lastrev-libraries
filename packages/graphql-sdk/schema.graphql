@@ -69,12 +69,6 @@ enum Auth {
   Okta
 }
 
-type AuthPage {
-  auth: Auth
-  isProtected: Boolean
-  seo: JSON
-}
-
 type Blog {
   footer: Content
   header: Header
@@ -425,7 +419,6 @@ type PageTopic implements Content {
 
 type Query {
   _service: _Service!
-  authPage(locale: String, path: String!, preview: Boolean, site: String): AuthPage
   availableLocales: Locales
   content(displayType: String, id: String!, locale: String, preview: Boolean): Content
   contents(filter: ContentsFilter!): [Content]
