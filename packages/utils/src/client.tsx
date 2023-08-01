@@ -8,7 +8,7 @@ const URL =
     : process.env.DEPLOY_URL
     ? `${process.env.DEPLOY_URL}/api/graphql`
     : 'http://localhost:3000/api/graphql';
-
+console.log(`URL => ${URL}`);
 const sdk = getSdk(new GraphQLClient(URL));
 
 export default sdk;

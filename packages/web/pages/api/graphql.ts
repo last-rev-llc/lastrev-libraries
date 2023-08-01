@@ -19,6 +19,7 @@ function initMiddleware(middleware: any) {
 }
 
 const whitelist: string[] = [
+  'http://localhost:3000',
   'ias-rc-develop.netlify.app',
   'prc.integralads.com',
   'ias-rc-prod.netlify.app',
