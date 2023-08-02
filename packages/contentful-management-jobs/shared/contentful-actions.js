@@ -144,7 +144,6 @@ const updateEntries = async (entries) => {
   for (let index = 0; index < entries.length; index += 1) {
     const entry = entries[index];
     console.log(`updating entry => ${entry.sys.id}`);
-    // console.log(`updating entry => `, JSON.stringify(entry, null, 2));
     const updatedEntry = await updateEntry(prepareEntry(entry));
     if (updatedEntry) {
       updatedEntries.push(updatedEntry);

@@ -1,22 +1,24 @@
+/* eslint-disable no-console */
 /* eslint-disable camelcase */
 /* eslint-disable no-param-reassign */
-const content_type = 'pageVideo';
+const content_type = 'pageCourseTopic';
 
 const queryOptions = {
   'limit': 100,
   content_type,
-  // 'sys.id[in]': '1TTZ5SSaafhymeokZ4HSdZ,1nYwXPRMcPg8c3nVPJt7nx',
+  // 'sys.id[in]': 'ExampleSysIdOne,ExampleSysIdTwo',
   'order': '-sys.createdAt',
   'sys.archivedAt[exists]': false
 };
+
+const locales = ['pt-BR'];
 
 const findCondition = (item, locale) =>
   item.fields.canonicalUrl && item.fields.canonicalUrl[locale] && item.fields.canonicalUrl[locale].includes('pt-BR');
 
 const itemFilter = (item) => {
   let found = false;
-  // ['de', 'en-US', 'es', 'fr', 'it', 'ja', 'pt-BR'].forEach((locale) => {
-  ['pt-BR'].forEach((locale) => {
+  locales.forEach((locale) => {
     found = found || findCondition(item, locale);
   });
   return found;
@@ -29,7 +31,6 @@ const displayItem = (item) => {
       {
         id: item.sys.id,
         canonicalUrl: item.fields.canonicalUrl['pt-BR']
-        // fields: (!item.fields.seo && item.fields) || 'has seo'
       },
       null,
       2
@@ -57,7 +58,7 @@ const log = (items) => {
 
 const prepareEntry = (entry) => {
   const { canonicalUrl } = entry.fields;
-  ['pt-BR'].forEach((locale) => {
+  locales.forEach((locale) => {
     if (canonicalUrl?.[locale]) {
       entry.fields.canonicalUrl[locale] = canonicalUrl[locale].replace('/pt-BR', '/pt-br');
       console.log('prepared entry => ', entry.fields.canonicalUrl[locale]);

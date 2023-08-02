@@ -6,7 +6,6 @@ const { content_type, queryOptions, log } = require('../shared/fixtures/bulkActi
 
 (async () => {
   const environment = await environmentManagement;
-  // const environment = clientDelivery;
 
   // Step 1 - Get All Entries
   const entries = await getAllEntries(environment, { content_type, limit: 1 }, (items) =>
