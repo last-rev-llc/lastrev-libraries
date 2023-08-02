@@ -4,6 +4,7 @@
 const { clientDelivery, environmentManagement } = require('./contentful-init');
 const { importParser } = require('./input-parsers');
 const { isVideo, getAssetDetails } = require('./contentful-fields');
+const { prepareEntry } = require('./fixtures/bulkActionConfig');
 
 const publishItem = async (item, entryId) => {
   let publishedAsset;
@@ -127,6 +128,31 @@ const createAssets = async (assets, checkExisting = true) => {
   return createdAssets;
 };
 
+const updateEntry = async (entry) => {
+  let updatedEntry;
+  try {
+    console.log(`updating entry => ${entry.sys.id}`);
+    updatedEntry = await entry.update();
+  } catch (error) {
+    console.log(`error updating entry => ${entry.sys.id} => `, error);
+  }
+  return updatedEntry;
+};
+
+const updateEntries = async (entries) => {
+  const updatedEntries = [];
+  for (let index = 0; index < entries.length; index += 1) {
+    const entry = entries[index];
+    console.log(`updating entry => ${entry.sys.id}`);
+    // console.log(`updating entry => `, JSON.stringify(entry, null, 2));
+    const updatedEntry = await updateEntry(prepareEntry(entry));
+    if (updatedEntry) {
+      updatedEntries.push(updatedEntry);
+    }
+  }
+  return updatedEntries;
+};
+
 const createEntryWithId = async (entryId, entryObject, contentType) => {
   let entry;
   const environment = await environmentManagement;
@@ -199,5 +225,6 @@ module.exports = {
   getAllItems,
   query,
   createAssets,
-  createEntries
+  createEntries,
+  updateEntries
 };
