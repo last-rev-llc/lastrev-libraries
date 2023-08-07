@@ -190,7 +190,7 @@ export const mappers = {
           }
           return requiredRoles;
         }
-        return [];
+        return ['loggedIn'];
       }
     },
     Card: {
