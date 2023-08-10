@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 const { environmentManagement, clientDelivery } = require('../shared/contentful-init');
 const { getAllEntries, getAllItems } = require('../shared/contentful-actions');
-const { content_type, queryOptions, log } = require('../shared/fixtures/bulkActionConfig');
+const { content_type, queryOptions, log, itemFilter } = require('../shared/fixtures/bulkActionConfig');
 
 (async () => {
   const environment = await environmentManagement;
@@ -15,7 +15,7 @@ const { content_type, queryOptions, log } = require('../shared/fixtures/bulkActi
 
   if (entries.length) {
     console.log(`number of ${content_type} entries => `, entries.length);
-    log(entries);
+    log(entries.filter(itemFilter));
   } else {
     console.log('No entries found');
   }

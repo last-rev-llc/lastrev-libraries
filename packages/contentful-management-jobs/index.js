@@ -29,6 +29,9 @@ program
   .command('update-entries', 'update-entries', {
     executableFile: resolve(__dirname, './jobs/update-entries.js')
   })
+  .command('create-duplicates', 'create-duplicates', {
+    executableFile: resolve(__dirname, './jobs/create-duplicates.js')
+  })
   .command('csv-contentful-import', 'csv-contentful-import', {
     executableFile: resolve(__dirname, './jobs/csv-contentful-import.js')
   })

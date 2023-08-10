@@ -4,7 +4,6 @@
 const { clientDelivery, environmentManagement } = require('./contentful-init');
 const { importParser } = require('./input-parsers');
 const { isVideo, getAssetDetails } = require('./contentful-fields');
-const { prepareEntry } = require('./fixtures/bulkActionConfig');
 
 const publishItem = async (item, entryId) => {
   let publishedAsset;
@@ -143,8 +142,7 @@ const updateEntries = async (entries) => {
   const updatedEntries = [];
   for (let index = 0; index < entries.length; index += 1) {
     const entry = entries[index];
-    console.log(`updating entry => ${entry.sys.id}`);
-    const updatedEntry = await updateEntry(prepareEntry(entry));
+    const updatedEntry = await updateEntry(entry);
     if (updatedEntry) {
       updatedEntries.push(updatedEntry);
     }
@@ -208,6 +206,7 @@ const query = (options) => ({ ...options });
 const getAllItems = async (api, result, queryOptions) => {
   const { limit } = queryOptions;
   const allItems = [];
+  console.log('total items found => ', result.total);
   for (let skip = 0; skip < result.total; skip += limit) {
     console.log(`processed items ${skip} to ${skip + limit}`);
     const entries = await getAllEntries(api, query({ ...queryOptions, skip }));

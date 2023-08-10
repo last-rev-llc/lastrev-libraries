@@ -1,13 +1,13 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-console */
 const { environmentManagement, clientDelivery } = require('../shared/contentful-init');
-const { getAllEntries, getAllItems, updateEntries } = require('../shared/contentful-actions');
+const { getAllEntries, getAllItems, createEntries } = require('../shared/contentful-actions');
 const {
   content_type,
   queryOptions,
   log,
   itemFilter,
-  prepareEntryForUpdate,
+  prepareEntryForDuplication,
   prepareOnly
 } = require('../shared/fixtures/bulkActionConfig');
 
@@ -23,12 +23,12 @@ const {
     console.log(`number of ${content_type} entries => `, entries.length);
     const filteredEntries = entries.filter(itemFilter);
     log(filteredEntries);
-    const preparedEntries = filteredEntries.map(prepareEntryForUpdate).filter((x) => x);
+    const preparedEntries = filteredEntries.map(prepareEntryForDuplication).filter((x) => x);
     if (preparedEntries.length) {
       if (!prepareOnly) {
-        console.log('updating new entries => ', preparedEntries.length);
-        const updatedEntries = await updateEntries(filteredEntries);
-        console.log('number of updated entries => ', updatedEntries.filter((entry) => entry).length);
+        console.log('creating new entries => ', preparedEntries.length);
+        const createdEntries = await createEntries(preparedEntries);
+        console.log('number of created entries => ', createdEntries.filter((entry) => entry).length);
       }
     } else {
       console.log('No entries were prepared for duplication');
