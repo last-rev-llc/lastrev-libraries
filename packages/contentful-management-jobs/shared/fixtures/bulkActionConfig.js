@@ -3,7 +3,7 @@
 /* eslint-disable no-param-reassign */
 const { getContentfulIdFromString } = require('../contentful-fields');
 
-const content_type = 'redirect';
+const content_type = 'pageCourseTopic';
 
 const queryOptions = {
   'limit': 100,
@@ -34,13 +34,15 @@ const findSEO = (item, locale) => {
   // SEO
   const { slug, seo } = item.fields;
   const hasCanonicalUrl = seo && seo[locale] && seo[locale].canonical && seo[locale].canonical.value;
-  return hasCanonicalUrl;
-  // (!seo[locale].includes(slug['en-US']) ||
-  //   (locale !== 'en-US' && !canonicalUrl[locale].includes(locale.toLowerCase())))
+  return (
+    hasCanonicalUrl &&
+    (!seo[locale].canonical.value.startsWith('https://') || !seo[locale].canonical.value.includes(slug['en-US']))
+  );
 };
 
 const findBody = (item, locale) => {
   // Body
+  // console.log('item => ', item.sys.id, JSON.stringify(item.fields.body, null, 2));
   const { body } = item.fields;
   const hasInternalHyperlink = (content) =>
     content.data && content.data.uri && content.data.uri.includes('impossiblefoods.com');
@@ -60,14 +62,12 @@ const findRedirect = (item, locale) => {
   return hasTopics(sourcePath);
 };
 
-const findCondition = (item, locale) => {
-  // console.log('item => ', item.sys.id, JSON.stringify(item.fields.body, null, 2));
-  return findRedirect(item, locale);
-};
+const findCondition = (item, locale) => findSEO(item, locale);
 
 const displayObject = (item) => ({
   id: item.sys.id,
-  sourcePath: item.fields.sourcePath
+  slug: item.fields.slug,
+  seo: item.fields.seo
   // destinationPath: item.fields.destinationPath
   // body: item.fields.body['en-US'].content
   //   .map(displayHyperlink)
