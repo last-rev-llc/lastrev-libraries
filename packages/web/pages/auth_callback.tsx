@@ -4,12 +4,9 @@ import { ArticleLoading } from '@ias/components/src/components/ArticleLoading';
 import { useEffect } from 'react';
 
 export default function AuthCallback({}: any) {
-  const { authenticated, getRedirect, clearRedirect, setSuperUser } = useAuthContext();
+  const { authenticated, getRedirect, clearRedirect } = useAuthContext();
   const router = useRouter();
-  const { isSuperUser } = router.query;
   const url = getRedirect();
-
-  useEffect(() => setSuperUser(isSuperUser === 'true'), [setSuperUser, isSuperUser]);
 
   useEffect(() => {
     if (authenticated) {
