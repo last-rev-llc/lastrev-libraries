@@ -26,7 +26,8 @@ const whitelist: string[] = [
   'develop.helpcenter.integralads.com',
   'ias-kb-develop.netlify.app',
   'helpcenter.integralads.com',
-  'ias-kb-prod.netlify.app'
+  'ias-kb-prod.netlify.app',
+  'reporting.integralads.com'
 ];
 
 const cors = initMiddleware(
