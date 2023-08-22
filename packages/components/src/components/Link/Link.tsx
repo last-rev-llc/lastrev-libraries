@@ -7,20 +7,23 @@ export type { LinkProps, LinkClassKey, LinkClasses } from '@last-rev/component-l
 
 const withSubActivePath = (WrappedLink: any) => (props: any) => {
   const router = useRouter();
-  const { authenticated, setRedirect } = useAuthContext();
+  // const { authenticated, setRedirect } = useAuthContext();
+  const { setRedirect } = useAuthContext();
 
   // Check if the current path is a descendant of the href
   let className = router?.asPath.startsWith(props.href) ? props.subPathActiveClassName : '';
   className = `${props?.className} ${className}`;
 
   const handleClick = () => {
-    if (authenticated) {
-      window.location.href = props.href;
-      return;
-    } else {
-      setRedirect(props.href);
-      window.location.href = `${process.env.USER_AUTH_DOMAIN}/api/idp/sfCommunity`;
-    }
+    // if (authenticated) {
+    //   window.location.href = props.href;
+    //   return;
+    // } else {
+    //   setRedirect(props.href);
+    //   window.location.href = `${process.env.USER_AUTH_DOMAIN}/api/idp/sfCommunity`;
+    // }
+    setRedirect(props.href);
+    window.location.href = `${process.env.USER_AUTH_DOMAIN}/api/idp/sfCommunity`;
   };
 
   if (props.requireLogin) {
