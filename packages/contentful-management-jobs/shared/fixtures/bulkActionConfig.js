@@ -3,18 +3,21 @@
 /* eslint-disable no-param-reassign */
 const { getContentfulIdFromString } = require('../contentful-fields');
 
-const content_type = 'pageCourseTopic';
+const content_type = 'cardList';
 
 const queryOptions = {
   'limit': 100,
   content_type,
-  // 'sys.id[in]': 'ExampleSysIdOne,ExampleSysIdTwo',
+  'sys.id[in]': '4rECnuLOSbnJafPL9g3hdU',
   'order': '-sys.createdAt',
   // 'sys.publishedVersion[exists]': false,
   'sys.archivedAt[exists]': false
 };
 
-const locales = ['en-US', 'de', 'es', 'fr', 'it', 'ja', 'pt-BR'];
+const dropboxLocales = ['en-US', 'de', 'es', 'fr', 'it', 'ja', 'pt-BR'];
+const ifLocales = ['en-US', 'hk', 'hk-en', 'ca', 'cn', 'cn-en', 'fr-ca', 'me-en', 'au-en', 'gb-en', 'nz-en'];
+
+const locales = ifLocales;
 
 const displayHyperlink = (content) => {
   if (content.nodeType === 'hyperlink') {
@@ -33,11 +36,16 @@ const displayHyperlink = (content) => {
 const findSEO = (item, locale) => {
   // SEO
   const { slug, seo } = item.fields;
-  const hasCanonicalUrl = seo && seo[locale] && seo[locale].canonical && seo[locale].canonical.value;
-  return (
-    hasCanonicalUrl &&
-    (!seo[locale].canonical.value.startsWith('https://') || !seo[locale].canonical.value.includes(slug['en-US']))
-  );
+  const found =
+    seo &&
+    seo[locale] &&
+    seo[locale].robots &&
+    seo[locale].robots.value &&
+    (!seo[locale].robots.value.includes('follow') || seo[locale].robots.value.includes(', nofollow')) &&
+    seo[locale].robots.name &&
+    !seo[locale].robots.name === 'robots';
+
+  return found;
 };
 
 const findBody = (item, locale) => {
@@ -62,12 +70,21 @@ const findRedirect = (item, locale) => {
   return hasTopics(sourcePath);
 };
 
-const findCondition = (item, locale) => findSEO(item, locale);
+const findCardListByType = (item, locale, type) => {
+  // Card List
+  const { cards, listType } = item.fields;
+  const hasType = (card) => card?.sys?.contentType?.sys?.id !== 'card';
+  return listType === type && cards && cards[locale] && cards[locale].some((card) => hasType(card));
+};
+
+const findCondition = (item, locale) => true; // findCardListByType(item, locale, 'Timeline');
 
 const displayObject = (item) => ({
   id: item.sys.id,
-  slug: item.fields.slug,
-  seo: item.fields.seo
+  // sys: item.sys,
+  cards: item.fields.cards
+  // slug: item.fields.slug,
+  // seo: item.fields.seo
   // destinationPath: item.fields.destinationPath
   // body: item.fields.body['en-US'].content
   //   .map(displayHyperlink)
