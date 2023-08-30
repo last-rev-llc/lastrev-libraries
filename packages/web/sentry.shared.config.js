@@ -6,7 +6,12 @@ import * as Sentry from '@sentry/nextjs';
 
 const lrns = require('../../lastrev.json');
 
-const knownErrors = ['Redirect', 'ChunkLoadError'];
+const knownErrors = [
+  'Redirect',
+  'ChunkLoadError',
+  ['asyncConditionHandler', 'https://js.driftt.com'],
+  ['postrobot_method', 'https://js.driftt.com/core']
+];
 
 const sharedSentrySetup = () => {
   Sentry.setTag('lrns_version', lrns.app.version);
@@ -20,8 +25,15 @@ const sharedSentrySetup = () => {
     // that it will also get attached to your source maps
     beforeSend(event, hint) {
       let returnedEvent = event;
+      console.log('event', event);
+      console.log('hint', hint);
       if (
-        (hint?.originalException?.message && knownErrors.includes(hint.originalException.message)) ||
+        (hint?.originalException?.message &&
+          knownErrors.some((error) =>
+            Array.isArray(error)
+              ? error.every((e) => hint.originalException.message.includes(e))
+              : hint.originalException.message.includes(e)
+          )) ||
         (event?.exception?.values?.[0]?.type && event.exception.values[0].type === 'ChunkLoadError')
       ) {
         console.log(`Handle ${hint.originalException.message} error on path ${event?.request?.url}`);
