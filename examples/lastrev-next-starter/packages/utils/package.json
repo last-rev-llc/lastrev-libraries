@@ -7,7 +7,7 @@
   ],
   "scripts": {
     "clean": "rimraf dist",
-    "watch": "yarn build:dev",
+    "watch": "pnpm build:dev",
     "build": "run-s clean build:prod",
     "dev": "cross-env NODE_ENV=development rollup -cw",
     "build:prod": "cross-env NODE_ENV=production rollup -c",
@@ -17,10 +17,10 @@
     "test:watch": "jest --watch",
     "format": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint",
-    "prepublishOnly": "yarn run lint && yarn run build",
-    "prepare": "yarn run build",
-    "preversion": "yarn run lint",
-    "version": "yarn run format && git add -A src",
+    "prepublishOnly": "pnpm run lint && pnpm run build",
+    "prepare": "pnpm run build",
+    "preversion": "pnpm run lint",
+    "version": "pnpm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
   "peerDependencies": {},
@@ -35,7 +35,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "pre-push": "yarn run test"
+      "pre-push": "pnpm run test"
     }
   },
   "lint-staged": {

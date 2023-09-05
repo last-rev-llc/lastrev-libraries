@@ -1,9 +1,9 @@
 [build]
   publish = "packages/web/.next"
-  command = "yarn build"
+  command = "pnpm build"
 
 [dev]
-  command = "yarn dev"
+  command = "pnpm dev"
 
 [functions]
   directory = "packages/functions/src"
@@ -19,5 +19,5 @@
 #  package = "netlify-plugin-cypress"
 #  [plugins.inputs]
 #    record = true 
-#    start = "yarn percy exec:start"
+#    start = "pnpm percy exec:start"
 #    configFile = "packages/web/cypress.netlify.json"

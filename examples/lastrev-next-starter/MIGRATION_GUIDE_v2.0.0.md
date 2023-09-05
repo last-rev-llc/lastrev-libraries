@@ -29,8 +29,8 @@
 - Ensure that all changes to the .env.template are merged into the project as this is the latest list of available env variables
 - All package.json should be the exact same across all projects\* so accept all changes and ensure that the scripts are using customer packages and not @lrns
   - Some customers could have a unique script or package to them, merge those changes in as well on a per customer basis if the script is still needed.
-- yarn.lock accept all incoming changes (you will rerun this later to rebuild this file)
-  - Except for graphql-extensions/yarn.lock file, which needs to be deleted
+- pnpm.lock accept all incoming changes (you will rerun this later to rebuild this file)
+  - Except for graphql-extensions/pnpm.lock file, which needs to be deleted
 - package.lock can be deleted if it is in the merge
 - run-tests.yml should be the exact same across all customer and should always take the incoming change in
 - If you come across a file that was removed from the starter i.e Blog make sure you choose "keep our version"
@@ -107,7 +107,7 @@ Some components may have `createComponentVariants` file being used. This variant
   - It's ok and encouraged if the new fragment has more fields, just make sure that the mininmum requirements are met.
   - Delete the fragment from the old query file
 - Repeat this process until every fragment is migrated.
-- After migrating all the files, run `yarn gql:dev` from the root of the project to verify that everything is working correctly.
+- After migrating all the files, run `pnpm gql:dev` from the root of the project to verify that everything is working correctly.
 - Review the output of the GQL code generation for errors and fix them (also use apollo vscode extension to see and fix gql errors)
 - Common issues:
   - `Error: Field is not present in type`
@@ -124,9 +124,9 @@ Some components may have `createComponentVariants` file being used. This variant
 
 # Verifying everything works as expected
 
-- Make sure the `yarn build` commands runs correctly without any error messages
-- Make sure the `yarn dev` commands runs and you can access the website locally
-- Run `yarn start` and then run the `PERCY_TOKEN=xxx yarn test:e2e` to generate a Percy report
+- Make sure the `pnpm build` commands runs correctly without any error messages
+- Make sure the `pnpm dev` commands runs and you can access the website locally
+- Run `pnpm start` and then run the `PERCY_TOKEN=xxx pnpm test:e2e` to generate a Percy report
 - Check the Percy report for any visual issues that may be present.
 - When everything looks good, create a PR and add the label `qa-ready` this will run the CI E2E tests and make sure everything is working as expected.
 
@@ -145,13 +145,13 @@ Some components may have `createComponentVariants` file being used. This variant
     - check file(s) in node_modules to see if changes were made correctly
       - If changes are not made correctly
         - Make changes in file(s) and save
-        - Run `yarn patch-package <package_name>`
+        - Run `pnpm patch-package <package_name>`
 
 # Schema generation
 
-- Run `yarn propagate:env` to update the packages `.env` file
-- Run `yarn sync:cms` to sync the content from the CMS to the local file system
-- Run `yarn gql:dev` to get the grapqhl server running, generate the schema and the sdk.
+- Run `pnpm propagate:env` to update the packages `.env` file
+- Run `pnpm sync:cms` to sync the content from the CMS to the local file system
+- Run `pnpm gql:dev` to get the grapqhl server running, generate the schema and the sdk.
 - Check the `schema.graphql` to see the new changes
 - Check the logs to see if there are any errors during either the SDK, schema generation or extensions building.
 

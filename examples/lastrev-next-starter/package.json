@@ -4,11 +4,6 @@
   "main": "index.js",
   "author": "LastRev",
   "license": "MIT",
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
-  },
   "scripts": {
     "algolia:update": "lr-algolia-updater https://starter.lastrev.com/.netlify/functions/algolia-background",
     "algolia:update:local": "lr-algolia-updater http://localhost:8888/.netlify/functions/algolia-background",
@@ -21,24 +16,24 @@
     "deps:check": "echo \"-- depcheck for root --\"; depcheck . --specials=babel,eslint,prettier,webpack,bin,jest; for d in ./packages/*/ ; do (echo \"-- depcheck for $d --\"; depcheck \"$d\" --specials=babel,eslint,prettier,webpack,bin,jest); done;manypkg check",
     "deps:fix": "manypkg fix",
     "gql:dev": "turbo run dev --scope=*graphql-runner* --no-deps --include-dependencies",
-    "gql:pm2:kill": "pm2 delete gql-serve",
-    "gql:start": "turbo run start --scope=*graphql-runner*  --no-deps --include-dependencies && echo 'GQL server started, kill with `yarn gql:pm2:kill`'",
-    "nuclear": "lerna exec 'rm -rf node_modules/ dist/'; rm -rf node_modules/; yarn install",
-    "postinstall": "patch-package",
+    "gql:pm2:kill": "pm2 kill",
+    "gql:start": "turbo run start --scope=*graphql-runner*  --no-deps --include-dependencies && echo 'GQL server started, kill with `pnpm gql:pm2:kill`'",
+    "nuclear": "lerna exec 'rm -rf node_modules/ dist/'; rm -rf node_modules/; pnpm install",
+    "preinstall": "npx only-allow pnpm",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
     "propagate:env": "node scripts/propagateEnv.js",
-    "serve:site": "yarn workspace @lrns/web serve",
+    "serve:site": "pnpm --filter @lrns/web serve",
     "start": "turbo run start --output-logs=new-only",
     "storybook": "turbo run storybook",
-    "sync:cms": "yarn workspace @lrns/graphql-runner sync:cms",
+    "sync:cms": "pnpm --filter @lrns/graphql-runner sync:cms",
     "lint": "turbo run lint",
     "lint:prod": "cross-env NODE_ENV=production eslint ./package.json",
     "test": "turbo run test",
     "test:watch": "turbo run test:watch -- --passWithNoTests",
     "test:unit": "turbo run test -- --passWithNoTests",
     "test:e2e": "turbo run test:e2e",
-    "version-packages": "changeset version && yarn prettier",
-    "posttest": "yarn combine:reports",
+    "version-packages": "changeset version && pnpm prettier",
+    "posttest": "pnpm combine:reports",
     "combine:reports": "node scripts/combineCoverage.js"
   },
   "private": true,
@@ -46,8 +41,8 @@
     "@types/react": "^17.0.37",
     "lodash-es": "^4.17.21",
     "lodash": "^4.17.21",
-    "**/react": "^17.0.2",
-    "**/react-dom": "^17.0.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "@sentry/react": "^7.47.0",
     "@sentry/nextjs": "^7.47.0"
   },
@@ -82,20 +77,17 @@
     "lerna": "^3.22.1",
     "netlify-cli": "^8.1.8",
     "npm-run-all": "^4.1.5",
-    "patch-package": "^6.4.7",
     "pm2": "^5.2.0",
-    "postinstall-postinstall": "^2.1.0",
     "prettier": "^2.5.1",
     "prettier-eslint": "^13.0.0",
     "tslib": "^2.3.1",
     "turbo": "1.2.0-canary.5",
-    "typescript": "^4.7.4",
-    "wait-on": "^5.3.0"
+    "typescript": "^4.7.4"
   },
-  "packageManager": "yarn@1.22.17",
+  "packageManager": "pnpm@8.6.11",
   "husky": {
     "hooks": {
-      "pre-push": "yarn lint:prod"
+      "pre-push": "pnpm lint:prod"
     }
   }
 }

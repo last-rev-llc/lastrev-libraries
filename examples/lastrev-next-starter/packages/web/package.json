@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "build:static": "next build && next export && rm -rf out/404 && yarn build:post",
-    "build:post": "yarn gen:sitemap",
+    "build:static": "next build && next export && rm -rf out/404 && pnpm build:post",
+    "build:post": "pnpm gen:sitemap",
     "gen:sitemap": "node scripts/generateSitemap.js",
     "lint": "next lint",
     "start": "next start",

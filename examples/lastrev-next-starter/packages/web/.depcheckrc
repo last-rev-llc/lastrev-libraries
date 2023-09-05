@@ -1,2 +1,2 @@
-# "@lrns/graphql-extensions", "@lrns/graphql-runner" needed for lerna build order when running "yarn dev"
+# "@lrns/graphql-extensions", "@lrns/graphql-runner" needed for lerna build order when running "pnpm dev"
 ignores: ['@lrns/graphql-extensions', '@lrns/graphql-runner']

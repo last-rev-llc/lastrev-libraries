@@ -4,7 +4,7 @@ node_modules
 **/dist/**
 **/build/**
 **/.next/**
-**/yarn-error.log
+**/pnpm-error.log
 **/.env
 **/out
 
