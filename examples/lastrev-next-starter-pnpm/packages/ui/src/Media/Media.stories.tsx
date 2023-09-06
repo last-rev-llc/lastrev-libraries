@@ -5,6 +5,7 @@ export default {
   title: '2. Components/ Media',
   component: Media,
 
+  tags: ['autodocs'],
   argTypes: {
     file: { name: 'File URL' },
     title: { name: 'Title' },

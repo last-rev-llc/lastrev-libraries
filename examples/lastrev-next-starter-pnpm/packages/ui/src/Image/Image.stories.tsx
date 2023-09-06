@@ -4,6 +4,7 @@ import mockContent from './Image.mock';
 export default {
   title: '2. Components/Media/Image',
   component: Image,
+  tags: ['autodocs'],
   argTypes: {
     alt: { name: 'Alt' },
     src: { name: 'Src' },

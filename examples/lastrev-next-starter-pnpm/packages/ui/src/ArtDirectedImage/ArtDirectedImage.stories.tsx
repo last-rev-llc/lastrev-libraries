@@ -3,6 +3,7 @@ import mockContent from './ArtDirectedImage.mock';
 
 export default {
   title: '2. Components/Media/ArtDirectedImage',
+  tags: ['autodocs'],
   component: ArtDirectedImage
 };
 
