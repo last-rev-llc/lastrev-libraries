@@ -1,0 +1,22 @@
+fragment Block_BaseFragment on Block {
+  ...Content_BaseFragment
+  variant
+  introText {
+    ...Text_IntroTextFragment
+  }
+  eyebrow
+  title
+  subtitle
+  body {
+    ...RichText_BaseFragment
+  }
+  mediaItems {
+    ...Media_BaseFragment
+  }
+  actions {
+    ...Link_BaseFragment
+  }
+  link {
+    ...Link_BaseFragment
+  }
+}
