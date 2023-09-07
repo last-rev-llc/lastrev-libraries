@@ -16,6 +16,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "node-fetch": "^3.3.2",
     "@babel/plugin-transform-runtime": "^7.16.5",
     "@contentful/rich-text-from-markdown": "^15.10.0",
     "@contentful/rich-text-types": "^15.11.1",
