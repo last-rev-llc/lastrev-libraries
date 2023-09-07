@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "dotenv -- turbo build",
-    "dev": "dotenv -- turbo dev --no-cache  --continue --concurrency 15",
+    "dev": "dotenv -- turbo gql:sync dev gql:dev --no-cache  --continue --concurrency 15",
     "gql:dev": "dotenv -- turbo gql:sync gql:dev --no-cache  --continue --concurrency 15",
     "gql:sync": "dotenv -- turbo gql:sync",
     "gql:logs": "dotenv -- turbo gql:logs",

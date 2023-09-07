@@ -16,11 +16,11 @@ function loadFiles() {
   const dirPath = __dirname;
   const files = fs.readdirSync(dirPath);
   const modules: any[] = [];
-  console.log('Files', files);
   for (const file of files) {
     if (/\.extension\.js$/.test(file)) {
       const modulePath = path.join(dirPath, file);
       try {
+        console.log('Loading extension:', modulePath);
         const module = require(modulePath);
         modules.push(module);
       } catch (error) {
@@ -33,8 +33,6 @@ function loadFiles() {
 }
 
 const extensions: GraphQlExtension[] = loadFiles();
-console.log('========Extensions========');
-console.log(extensions);
 
 export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));
 export const resolvers = mergeResolvers(compact(map(extensions, 'resolvers'))) as Record<string, any>;

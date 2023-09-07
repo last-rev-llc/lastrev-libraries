@@ -1,3 +1,4 @@
+'use client';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 export type {
   ContentModuleProps,

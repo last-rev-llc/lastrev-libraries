@@ -1,1 +1,1 @@
-export * from './generated/sdk';
+export { client } from './client';

@@ -1,15 +1,17 @@
-import dynamic from 'next/dynamic';
+import Hero from './Hero';
+import Link from './Link';
+import Media from './Media';
+import Page from './Page';
+import Text from './Text';
 
-const Link = dynamic(() => import('./Link'));
-const Media = dynamic(() => import('./Media'));
-const Text = dynamic(() => import('./Text'));
-
-const contentMapping: {
+export const contentMapping: {
   [key: string]: any;
 } = {
-  Text,
+  Hero,
+  Link,
   Media,
-  Link
+  Page,
+  Text
 };
 
 export default contentMapping;

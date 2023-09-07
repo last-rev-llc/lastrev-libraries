@@ -1,7 +1,9 @@
+'use client';
 import * as React from 'react';
 import ThemeRegistry from '../ThemeRegistry/ThemeRegistry';
-import { ContentModuleProvider } from '@last-rev/component-library/dist/components/ContentModule/ContentModuleContext';
+
 import contentMapping from '../contentMapping';
+import { ContentModuleProvider } from '../ContentModule/ContentModuleProvider';
 
 export const AppProvider = ({ children }: { children: any }) => {
   return (

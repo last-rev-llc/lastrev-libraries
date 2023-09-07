@@ -1,10 +1,9 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["PORT"],
+  "globalEnv": ["PORT", "SITE", "CONTENTFUL_USE_PREVIEW", "PAGES_REVALIDATE"],
   "pipeline": {
     "build": {
-      // "outputs" are defined in Workspace Configurations: https://turbo.build/repo/docs/core-concepts/monorepos/configuring-workspaces
       "dependsOn": ["^build"]
     },
     "test": {

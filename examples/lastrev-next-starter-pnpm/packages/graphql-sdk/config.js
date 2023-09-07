@@ -66,6 +66,9 @@ const config = new LastRevAppConfig({
   },
   apolloServerOptions: {
     introspection: true
+  },
+  features: {
+    disableCoreSidekickLookup: true
   }
 });
 

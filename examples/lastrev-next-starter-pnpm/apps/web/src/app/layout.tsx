@@ -1,5 +1,3 @@
-import './styles.css';
-
 import AppProvider from '@ui/AppProvider/AppProvider';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

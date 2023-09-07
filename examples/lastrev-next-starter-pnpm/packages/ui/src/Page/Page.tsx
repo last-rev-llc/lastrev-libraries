@@ -2,7 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import ContentModule from '@last-rev/component-library/dist/components/ContentModule';
 const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop/BackToTop'));
-import { Page as PageContent } from '@lrns/graphql-sdk/dist';
+import { Page as PageContent } from '@lrns/graphql-sdk';
 import { styled } from '@mui/material/styles';
 import sidekick from '@last-rev/contentful-sidekick-util';
 

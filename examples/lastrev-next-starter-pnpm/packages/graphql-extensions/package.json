@@ -9,7 +9,7 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "dev": "tsc -w",
-    "gql:dev": "tsc -w",
+    "gq l:dev": "tsc -w",
     "test": "jest --passWithNoTests",
     "test:watch": "jest --watch",
     "format": "prettier --write \"src/**/*.ts\"",
