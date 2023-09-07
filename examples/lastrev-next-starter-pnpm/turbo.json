@@ -25,7 +25,9 @@
       "dependsOn": ["build"]
     },
     "build": {
-      "dependsOn": ["^build"]
+      "dependsOn": ["^build"],
+
+      "outputs": ["dist/**", ".next/**"]
     },
     "test": {
       "outputs": ["coverage/**"],
