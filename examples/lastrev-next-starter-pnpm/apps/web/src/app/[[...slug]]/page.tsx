@@ -2,15 +2,17 @@ import ContentModule from '@ui/ContentModule/ContentModule';
 import { join } from 'path';
 import { client } from '@graphql-sdk/client';
 
+// Only render static pages (a.k.a no fallback)
+export const dynamicParams = false;
+const preview = process.env.CONTENTFUL_USE_PREVIEW === 'true';
+const site = process.env.SITE;
+
 export async function generateStaticParams() {
   const locales = ['en-US', 'es-ES'];
   const paths = (await client.Paths({ locales, preview, site }))?.data?.paths;
   return paths?.map((p) => ({ slug: p.params.slug }));
 }
 
-const preview = process.env.CONTENTFUL_USE_PREVIEW === 'true';
-const site = process.env.SITE;
-const pagesRevalidate = Number.parseInt(process.env.PAGES_REVALIDATE as string, 10);
 // TODO: Add support for locale
 // TODO: Add support for SEO
 // TODO: Add support for GTM and other analytics

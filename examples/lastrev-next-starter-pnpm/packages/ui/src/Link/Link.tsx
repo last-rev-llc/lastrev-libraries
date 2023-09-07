@@ -5,7 +5,7 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 import * as React from 'react';
 import clsx from 'clsx';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 import styled from '@mui/system/styled';
 import Box from '@mui/material/Box';
@@ -95,11 +95,11 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   // Color prop fails if it's null
   if (!other.color) delete other.color;
 
-  const router = useRouter();
+  // const router = useRouter();
   const pathname = href ?? '';
   // const pathname = typeof href === 'string' ? href : href.pathname;
   const className = clsx(classNameProps, {
-    [activeClassName]: (router?.asPath === pathname || router?.asPath === `${pathname}/`) && activeClassName
+    // [activeClassName]: (router?.asPath === pathname || router?.asPath === `${pathname}/`) && activeClassName
   });
 
   const isExternal = typeof href === 'string' && (href.indexOf('http') === 0 || href.indexOf('mailto:') === 0);

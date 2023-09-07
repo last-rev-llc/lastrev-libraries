@@ -19,6 +19,11 @@
     "NEXT_PUBLIC_SENTRY_DSN"
   ],
   "pipeline": {
+    "start": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": ["build"]
+    },
     "build": {
       "dependsOn": ["^build"]
     },
@@ -34,12 +39,12 @@
       "cache": false,
       "persistent": true
     },
-    "gql:sync": {
+    "sync:cms": {
       "dependsOn": ["^build"],
       "cache": false
     },
     "gql:dev": {
-      "dependsOn": ["^build", "gql:sync"],
+      "dependsOn": ["^build", "sync:cms"],
       "cache": false,
       "persistent": true
     },
@@ -50,8 +55,15 @@
     "clean": {
       "cache": false
     },
+
+    "graphql-sdk#gql:start": {
+      "cache": false
+    },
+    "graphql-sdk#sync:cms": {
+      "cache": false
+    },
     "web#build": {
-      "dependsOn": ["@graphql-sdk#gql:start", "^build"],
+      "dependsOn": ["graphql-sdk#sync:cms", "graphql-sdk#gql:start", "^build"],
       "outputs": ["out/**", ".next/**"]
     }
   }

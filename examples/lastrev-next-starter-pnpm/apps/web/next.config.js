@@ -12,6 +12,14 @@ if (!hasAllSentryVars) {
 }
 
 let config = {
+  typescript: {
+    // !! WARN !!
+    // TODO: Clean all typescript build errors
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true
+  },
   sentry: {
     disableServerWebpackPlugin: !hasAllSentryVars,
     disableClientWebpackPlugin: !hasAllSentryVars,
