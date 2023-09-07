@@ -1,6 +1,6 @@
 # TODO
 
-[] Implement 404
+[x] Implement 404 for non generated pages
 [] Implement Sitemap
 [] Implement Preview
 [] Implement \_error page
@@ -9,6 +9,7 @@
 [] Implement Live Editor and other UIEs
 [] Implement Analytics
 [] Implement Algolia
+[] Implement Custom 404
 
 ## Components
 
