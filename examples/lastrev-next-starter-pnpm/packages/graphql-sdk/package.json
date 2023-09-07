@@ -58,6 +58,7 @@
     "graphql-extensions": "workspace:*",
     "graphql": "^16.6.0",
     "nodemon": "^2.0.15",
+    "pm2": "^5.3.0",
     "react-scripts": "^4.0.1",
     "tsc-watch": "^4.2.9",
     "react": "^17.0.2",
