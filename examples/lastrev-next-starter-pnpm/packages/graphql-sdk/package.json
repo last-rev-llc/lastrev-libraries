@@ -1,0 +1,70 @@
+{
+  "name": "@lrns/graphql-sdk",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "license": "MIT",
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "gql:start": "last-rev gql-serve -c ./config",
+    "gql:dev": "run-s gql:pm2:kill 'gql:pm2 --watch' sdk:dev",
+    "gql:sync": "last-rev cms-sync -c ./config.js",
+    "gql:pm2": "pm2 start pm2.json",
+    "gql:pm2:kill": "pm2 kill",
+    "gql:logs": "pm2 logs",
+    "gql:healthcheck": "wait-on -c wait-on-config.js || echo 'GraphQL Server is not available'",
+    "build": "run-s clean download:schema codegen build:prod",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "clean": "rimraf dist",
+    "download:schema:dev": "nodemon -x \"pnpm download:schema\" -w ../graphql-extensions/dist",
+    "download:schema": "npm run gql:healthcheck && graphql-codegen --config codegen.schema.yml || echo 'GraphQL Server is not available'",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "codegen:watch": "graphql-codegen --config codegen.yml --watch",
+    "sdk:dev": "concurrently \"pnpm download:schema:dev\" \"cross-env NODE_ENV=development rollup -cw\" \"pnpm codegen:watch\"",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch"
+  },
+  "peerDependencies": {
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "@types/react-router-dom": "^5.3.2",
+    "graphql": "^16.6.0",
+    "nodemon": "^2.0.15",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.1",
+    "react-scripts": "^4.0.1",
+    "tsc-watch": "^4.2.9"
+  },
+  "dependencies": {
+    "@graphql-codegen/fragment-matcher": "^3.3.3",
+    "@graphql-codegen/cli": "2.16.1",
+    "@graphql-codegen/schema-ast": "2.6.0",
+    "@graphql-codegen/typescript-graphql-request": "4.5.8",
+    "@graphql-codegen/typescript-operations": "2.5.10",
+    "@last-rev/app-config": "^0.5.0",
+    "@last-rev/cli": "^0.5.15",
+    "concurrently": "^5.3.0",
+    "dotenv": "^10.0.0",
+    "graphql-tag": "^2.12.5",
+    "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.37",
+    "@types/react-dom": "^17.0.11",
+    "@types/react-router-dom": "^5.3.2",
+    "@lrns/graphql-extensions": "workspace:*",
+    "graphql": "^16.6.0",
+    "nodemon": "^2.0.15",
+    "react-scripts": "^4.0.1",
+    "rollup": "^2.75.7",
+    "tsc-watch": "^4.2.9",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.1",
+    "wait-on": "^5.3.0",
+    "tsconfig": "workspace:*"
+  }
+}

@@ -1,0 +1,71 @@
+fragment RichText_BaseFragment on RichText {
+  id
+  __typename
+  json
+  links {
+    entries {
+      ...Content_BaseFragment
+      ...Link_BaseFragment
+      #   ...Collection_RichTextFragment
+      #   ...Card_RichTextFragment
+      #   ...Section_RichTextFragment
+      ...Text_RichTextFragment
+      ...Media_BaseFragment
+    }
+    assets {
+      ...Media_BaseFragment
+    }
+  }
+}
+
+fragment RichText_CardFragment on RichText {
+  id
+  __typename
+  json
+  links {
+    entries {
+      ...Content_BaseFragment
+      ...Link_BaseFragment
+      ...Media_BaseFragment
+    }
+    assets {
+      ...Media_BaseFragment
+    }
+  }
+}
+
+fragment RichText_IntroTextFragment on RichText {
+  id
+  __typename
+  json
+  links {
+    entries {
+      ...Content_BaseFragment
+      ...Link_BaseFragment
+      ...Media_BaseFragment
+    }
+    assets {
+      ...Media_BaseFragment
+    }
+  }
+}
+
+fragment RichText_RichTextFragment on RichText {
+  id
+  __typename
+  json
+  links {
+    entries {
+      ...Content_BaseFragment
+      ...Link_BaseFragment
+      #      ...Section_BaseFieldsFragment
+      #      ...Card_RichTextFragment
+      #      ...Collection_RichTextFragment
+      #      ...Section_RichTextFragment
+      ...Media_BaseFragment
+    }
+    assets {
+      ...Media_BaseFragment
+    }
+  }
+}

@@ -19,6 +19,19 @@
       "cache": false,
       "persistent": true
     },
+    "gql:sync": {
+      "dependsOn": ["^build"],
+      "cache": false
+    },
+    "gql:dev": {
+      "dependsOn": ["^build", "gql:sync"],
+      "cache": false,
+      "persistent": true
+    },
+    "gql:logs": {
+      "cache": false,
+      "persistent": true
+    },
     "clean": {
       "cache": false
     }

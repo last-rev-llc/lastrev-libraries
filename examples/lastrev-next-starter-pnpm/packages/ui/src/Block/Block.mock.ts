@@ -16,3 +16,5 @@ export const baseMock = () => ({
   ],
   link: linkMock({ text: 'Block Link', variant: 'button-contained' })
 });
+
+export default baseMock;

@@ -1,3 +1,4 @@
+'use client';
 // Next/link:
 // https://github.com/mui-org/material-ui/blob/next/examples/nextjs-with-typescript/src/Link.tsx
 

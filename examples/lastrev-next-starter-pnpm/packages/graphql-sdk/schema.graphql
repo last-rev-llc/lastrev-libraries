@@ -1,0 +1,474 @@
+directive @extends on INTERFACE | OBJECT
+
+directive @external(reason: String) on FIELD_DEFINITION | OBJECT
+
+directive @key(fields: _FieldSet!, resolvable: Boolean = true) on INTERFACE | OBJECT
+
+directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @tag(name: String!) on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
+
+type Asset {
+  description: String
+  extension: String
+  fileName: String
+  height: String
+  id: String
+  svgContent: String
+  title: String
+  url: String
+  width: String
+}
+
+type Block implements Content {
+  actions: [Link]
+  animation: JSON
+  body: RichText
+  eyebrow: String
+  id: String
+  internalTitle: String
+  introText: Text
+  link: Link
+  mediaAsset: Media
+  mediaItems: [Media]
+  sidekickLookup: JSON
+  subtitle: String
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type Blog implements Content {
+  animation: JSON
+  author: Person
+  body: RichText
+  categories: [CategoryBlog]
+  contents: [Content]
+  disableBackToTop: Boolean
+  featuredMedia: Media
+  footer: Content
+  header: Header
+  id: String
+  lr__path__: String
+  promoImage: Media
+  pubDate: Date
+  relatedLinks: [Link]
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  summary: String
+  tags: [String]
+  theme: [Theme]
+  title: String
+}
+
+type Card implements Content {
+  actions: [Link]
+  animation: JSON
+  body: RichText
+  bodyRte: JSON
+  id: String
+  internalTitle: String
+  link: Link
+  media: [Media]
+  sidekickLookup: JSON
+  subtitle: String
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type CategoryBlog implements Content {
+  animation: JSON
+  contents: [Content]
+  footer: Content
+  header: Header
+  hero: Hero
+  id: String
+  lr__path__: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+  title: String
+}
+
+type Collection implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  introText: Text
+  items: [CollectionItem]
+  itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
+  itemsSpacing: Int
+  itemsVariant: String
+  itemsWidth: String
+  numberOfItemsToPull: String
+  pullFromContentType: String
+  settings: JSON
+  sidekickLookup: JSON
+  styles: JSON
+  theme: [Theme]
+  variant: String
+}
+
+input CollectionFilterInput {
+  body: String
+  tags: [String]
+  topics: [String]
+}
+
+union CollectionItem = Card | Link | Media | NavigationItem | Section
+
+type CollectionItemConnection {
+  items: [CollectionItem]
+  pageInfo: ConnectionPageInfo
+}
+
+type CollectionOptions {
+  tags: [Option]
+  topics: [Option]
+}
+
+type ConnectionPageInfo {
+  allOptions: CollectionOptions
+  options: CollectionOptions
+  total: Int
+}
+
+interface Content {
+  animation: JSON
+  id: String
+  sidekickLookup: JSON
+  theme: [Theme]
+}
+
+input ContentsFilter {
+  contentTypes: [String]
+  displayType: String
+  ids: [String]
+  locale: String
+  preview: Boolean
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type Footer implements Content {
+  animation: JSON
+  copyrightDisclaimer: RichText
+  disclaimerText: RichText
+  id: String
+  internalTitle: String
+  logo: Media
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type Header implements Content {
+  animation: JSON
+  color: String
+  colorScheme: String
+  id: String
+  internalTitle: String
+  logo: Media
+  logoUrl: String
+  navigationItems: [Collection]
+  sidekickLookup: JSON
+  supernavText: RichText
+  theme: [Theme]
+  variant: String
+}
+
+type Hero implements Content {
+  actions: [Link]
+  animation: JSON
+  background: Media
+  backgroundAsset: Media
+  backgroundColor: String
+  body: RichText
+  contentHeight: String
+  contentWidth: String
+  id: String
+  image: [Media]
+  internalTitle: String
+  overline: String
+  sidekickLookup: JSON
+  subtitle: String
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Link implements Content {
+  animation: JSON
+  color: String
+  href: String!
+  icon: String
+  iconPosition: String
+  id: String
+  internalTitle: String
+  manualUrl: String
+  sidekickLookup: JSON
+  text: String
+  theme: [Theme]
+  variant: String
+}
+
+type Locales {
+  available: [String!]!
+  default: String!
+}
+
+type Location {
+  lat: String
+  lon: String
+}
+
+type Media implements Content {
+  animation: JSON
+  asset: Media
+  assetURL: String
+  description: String
+  file: Asset
+  fileMobile: Asset
+  fileTablet: Asset
+  id: String
+  internalTitle: String
+  mobile: Media
+  placeholder: Media
+  sidekickLookup: JSON
+  source: String
+  tablet: Media
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type ModuleIntegration implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  settings: JSON
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type NavigationItem implements Content {
+  animation: JSON
+  href: String!
+  id: String
+  image: Media
+  internalTitle: String
+  manualUrl: String
+  media: Media
+  megaNavTitle: String
+  meganavImage: Media
+  sidekickLookup: JSON
+  subNavigation: [SubnavigationItem]
+  summary: String
+  text: String
+  theme: [Theme]
+  variant: String
+}
+
+type Option {
+  label: String
+  value: String
+}
+
+type Page implements Content {
+  animation: JSON
+  colorScheme: String
+  contents: [Content]
+  disableBackToTop: Boolean
+  footer: Content
+  header: Header
+  hero: Hero
+  id: String
+  internalTitle: String
+  lr__path__: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+  title: String
+}
+
+type PagePathParam {
+  slug: [String!]
+}
+
+type PagePathParams {
+  locale: String
+  params: PagePathParam!
+}
+
+type Person implements Content {
+  animation: JSON
+  id: String
+  image: Media
+  jobTitle: String
+  name: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type Query {
+  _service: _Service!
+  availableLocales: Locales
+  content(displayType: String, id: String!, locale: String, preview: Boolean): Content
+  contentPreview(displayType: String, id: String!, locale: String, overrideContent: JSON): Content
+  contents(filter: ContentsFilter!): [Content]
+  page(locale: String, path: String!, preview: Boolean, site: String): Content
+  paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
+  sitemap(locales: [String!], preview: Boolean, root: String!, site: String): Sitemap
+  sitemapIndex(preview: Boolean, site: String): Sitemap
+  sitemapPage(contentType: String!, locale: String, page: Int, preview: Boolean, site: String): SitemapPage
+}
+
+type Quote implements Content {
+  animation: JSON
+  authorName: String
+  authorTitle: String
+  body: RichText
+  id: String
+  image: Media
+  internalTitle: String
+  media: [Media]
+  quote: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type RichText {
+  id: String
+  json: JSON
+  links: RichTextLinks
+}
+
+type RichTextLinks {
+  assets: [Media]
+  entries: [Content]
+}
+
+type Section implements Content {
+  anchorName: String
+  animation: JSON
+  background: Media
+  backgroundColor: String
+  contentAlignment: String
+  contentDirection: String
+  contentSpacing: Int
+  contentWidth: String
+  contents: [Content]
+  id: String
+  internalTitle: String
+  paddingBottom: Int
+  paddingLeft: Int
+  paddingRight: Int
+  paddingTop: Int
+  settings: JSON
+  sidekickLookup: JSON
+  styles: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type Settings implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  liveEditorSettings: JSON
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type Site implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  seo: JSON
+  sidekickLookup: JSON
+  siteKey: String
+  theme: [Theme]
+  variant: String
+}
+
+type Sitemap {
+  pages: [SitemapPage]
+}
+
+type SitemapEntry {
+  lastmod: String
+  loc: String
+}
+
+type SitemapPage {
+  contentType: String
+  entries: [SitemapEntry]
+  filename: String
+  lastmod: String
+  loc: String
+  locale: String
+  page: Int
+}
+
+union SubnavigationItem = Link | NavigationItem
+
+type Template implements Content {
+  animation: JSON
+  category: String
+  id: String
+  image: Media
+  sidekickLookup: JSON
+  templateName: String
+  theme: [Theme]
+  variant: String
+}
+
+type Text implements Content {
+  align: String
+  animation: JSON
+  body: RichText
+  color: String
+  id: String
+  internalTitle: String
+  sidekickLookup: JSON
+  styles: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type Theme implements Content {
+  animation: JSON
+  components: JSON
+  description: String
+  id: String
+  internalTitle: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  typography: JSON
+  variant: String
+}
+
+scalar _Any
+
+scalar _FieldSet
+
+type _Service {
+  sdl: String
+}

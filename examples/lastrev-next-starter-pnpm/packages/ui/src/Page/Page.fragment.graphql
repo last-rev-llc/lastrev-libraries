@@ -1,0 +1,17 @@
+fragment Page_BaseFragment on Page {
+  ...Content_BaseFragment
+  seo
+  slug
+  header {
+    ...ContentModule_BaseFragment
+  }
+  footer {
+    ...ContentModule_BaseFragment
+  }
+  hero {
+    ...ContentModule_BaseFragment
+  }
+  contents {
+    ...ContentModule_BaseFragment
+  }
+}

@@ -1,9 +1,12 @@
 {
   "private": true,
   "scripts": {
-    "build": "turbo build",
+    "build": "dotenv -- turbo build",
+    "dev": "dotenv -- turbo dev --no-cache  --continue --concurrency 15",
+    "gql:dev": "dotenv -- turbo gql:sync gql:dev --no-cache  --continue --concurrency 15",
+    "gql:sync": "dotenv -- turbo gql:sync",
+    "gql:logs": "dotenv -- turbo gql:logs",
     "clean": "turbo clean",
-    "dev": "turbo dev --no-cache  --continue --concurrency 15",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "lint": "turbo lint",
     "test": "turbo test",
@@ -13,6 +16,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.22.15",
     "@babel/preset-react": "^7.22.15",
+    "dotenv-cli": "latest",
     "@storybook/addon-essentials": "^7.4.0",
     "@storybook/addon-interactions": "^7.4.0",
     "@storybook/addon-links": "^7.4.0",
