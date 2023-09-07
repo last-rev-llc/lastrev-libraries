@@ -60,7 +60,8 @@
       "cache": false
     },
     "graphql-sdk#sync:cms": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["graphql-extensions#build"]
     },
     "web#build": {
       "dependsOn": ["graphql-sdk#sync:cms", "graphql-sdk#gql:start", "^build"],
