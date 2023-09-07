@@ -1,7 +1,6 @@
 import gql from 'graphql-tag';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
-import fetch from 'node-fetch';
 import { getVideoEmbedUrl } from './utils/getVideoEmbedUrl';
 import { cleanSVG } from './utils/cleanSVG';
 
