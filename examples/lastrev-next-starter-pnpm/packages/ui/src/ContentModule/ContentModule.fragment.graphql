@@ -15,6 +15,10 @@ fragment ContentModule_BaseFragment on Content {
   #...Text_BaseFragment
 }
 
+fragment ContentModule_PageFragment on Content {
+  ...Page_BaseFragment
+}
+
 fragment ContentModule_SectionFragment on Content {
   ...Content_BaseFragment
   #...Card_BaseFragment

@@ -1,4 +1,5 @@
-// import { Block_BaseFragmentFragment } from '@graphql-sdk';
+import { Block_BaseFragmentFragment } from '@graphql-sdk/types';
+import { ComponentsOverrides, ComponentsVariants } from '@mui/material';
 
 export enum BlockVariants {
   default = 'default',
@@ -12,8 +13,7 @@ export enum BlockVariants {
   mediaCircleBelow = 'mediaCircleBelow'
 }
 
-// export interface BlockProps extends Block_BaseFragmentFragment {}
-export interface BlockProps {}
+export interface BlockProps extends Block_BaseFragmentFragment {}
 
 export interface BlockClasses {
   root: string;
@@ -36,3 +36,27 @@ export interface BlockClasses {
 }
 
 export declare type BlockClassKey = keyof BlockClasses;
+
+declare module '@mui/material/styles' {
+  export interface ComponentNameToClassKey {
+    Block: BlockClassKey;
+  }
+  export interface ComponentsPropsList {
+    Block: BlockProps;
+  }
+}
+declare module '@mui/material/styles' {
+  type ComponentsProps = {
+    [Name in keyof ComponentsPropsList]?: Partial<ComponentsPropsList[Name]>;
+  };
+  interface Components {
+    Block?: {
+      defaultProps?: ComponentsProps['Block'];
+      styleOverrides?: ComponentsOverrides<Theme>['Block'];
+      /**
+       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
+       */
+      variants?: ComponentsVariants['Block'];
+    };
+  }
+}

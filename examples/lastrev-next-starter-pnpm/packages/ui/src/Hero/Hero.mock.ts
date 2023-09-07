@@ -1,7 +1,7 @@
 import { lorem } from 'faker';
 import { capitalize } from 'lodash';
 import { HeroProps } from './Hero.types';
-import mockLink from '../Link/Link.mock';
+import { linkMock } from '../Link/Link.mock';
 
 export default (): HeroProps => ({
   id: 'hero',
@@ -72,7 +72,7 @@ export default (): HeroProps => ({
       assets: []
     }
   },
-  actions: [{ ...mockLink(), text: 'Hero CTA' }],
+  actions: [{ ...linkMock(), text: 'Hero CTA' }],
   background: {
     alt: lorem.sentence(),
     file: {

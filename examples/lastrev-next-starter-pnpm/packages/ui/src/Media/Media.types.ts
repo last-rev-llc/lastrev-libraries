@@ -1,27 +1,6 @@
-import { ImageProps } from '../Image';
+import { Media_BaseFragmentFragment } from '@graphql-sdk/types';
 
-export interface File {
-  url?: string;
-  width?: number;
-  height?: number;
-}
-export interface Asset {
-  file: File;
-  title?: string;
-  description?: string;
-}
-export interface MediaProps extends Omit<ImageProps, 'src'> {
-  __typename?: any;
-  file?: File;
-  fileTablet?: File;
-  fileMobile?: File;
-  variant?: string;
-  title?: string;
-  description?: string;
-  desktop?: Asset;
-  tablet?: Asset;
-  mobile?: Asset;
-  sidekickLookup?: any;
+export interface MediaProps extends Media_BaseFragmentFragment {
   sx?: any;
   testId?: string;
   priority?: boolean;
@@ -29,14 +8,8 @@ export interface MediaProps extends Omit<ImageProps, 'src'> {
   q?: number;
   unoptimized?: boolean;
 }
-export interface MediaVideoProps {
-  variant?: string;
-  file?: File;
-  title?: string;
-  sidekickLookup?: any;
-  sx?: any;
-  testId?: string;
-  controls?: boolean;
+export interface MediaVideoProps extends MediaProps {
+  controls: boolean;
 }
 
 export interface MediaClasses {

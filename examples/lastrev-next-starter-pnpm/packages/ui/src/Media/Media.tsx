@@ -16,8 +16,7 @@ import { MediaProps, MediaVideoProps } from './Media.types';
 const Media = (props: MediaProps & MediaVideoProps) => {
   const isAmp = useAmp();
 
-  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup, nextImageOptimization, ...other } =
-    props;
+  const { variant, file, title, fileMobile, fileTablet, testId, sidekickLookup, ...other } = props;
   // TODO: Add support for video
   const image = file;
   const alt = title || '';
@@ -84,15 +83,7 @@ const Media = (props: MediaProps & MediaVideoProps) => {
   }
   return (
     <ErrorBoundary>
-      <Root
-        {...sidekick(sidekickLookup)}
-        {...image}
-        {...other}
-        nextImageOptimization={nextImageOptimization}
-        src={image?.url}
-        alt={alt}
-        testId={testId || 'Media'}
-      />
+      <Root {...sidekick(sidekickLookup)} {...image} {...other} src={image?.url} alt={alt} testId={testId || 'Media'} />
     </ErrorBoundary>
   );
 };

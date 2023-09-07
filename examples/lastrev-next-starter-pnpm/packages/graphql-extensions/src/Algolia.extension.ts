@@ -7,6 +7,7 @@
 // import parseRichTextField from './utils/parseRichTextField';
 
 export const mappers = {
+  //
   // Blog: {
   //   AlgoliaRecord: {
   //     algoliaObjects: async (blog: any, _args: any, ctx: ApolloContext) => {

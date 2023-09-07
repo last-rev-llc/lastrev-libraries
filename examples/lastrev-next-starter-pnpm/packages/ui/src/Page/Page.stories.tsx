@@ -4,7 +4,7 @@ import Page from './Page';
 import mockContent from './Page.mock';
 
 export default {
-  title: '1. LR Components / Page',
+  title: '4. Pages/Page General',
   component: Page,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

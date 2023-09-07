@@ -5,7 +5,6 @@ import { client } from '@graphql-sdk/client';
 export async function generateStaticParams() {
   const locales = ['en-US', 'es-ES'];
   const paths = (await client.Paths({ locales, preview, site }))?.data?.paths;
-  console.log('Paths');
   return paths?.map((p) => ({ slug: p.params.slug }));
 }
 

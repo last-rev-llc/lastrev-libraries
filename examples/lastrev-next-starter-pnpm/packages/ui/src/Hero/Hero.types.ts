@@ -1,39 +1,36 @@
-import { MediaProps } from '../Media';
-import { Breakpoint, SystemCssProperties } from '@mui/system';
+import { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
 import { Palette } from '@mui/material/styles';
-
-import { RichText } from '../Text';
 
 type Color = keyof Palette;
 
-export interface HeroProps {
-  variant?: any;
-  id: string;
-  __typename?: string;
-  overline?: string;
-  title?: string;
-  subtitle?: string;
-  body?: RichText;
-  actions?: any[];
-  /**
-   * @deprecated use `images` instead
-   */
-  image?: MediaProps | MediaProps[];
-  images?: MediaProps[];
-  background?: MediaProps;
-  backgroundColor?: Color | 'white' | 'black';
-  divider?: MediaProps;
-  contentWidth?: false | Breakpoint | undefined;
-  contentHeight?: 'sm' | 'md' | 'lg' | 'xl';
-  theme?: any;
-  styles?: {
-    root?: SystemCssProperties;
-    gridContainer?: SystemCssProperties & { spacing: any };
-    gridItem?: SystemCssProperties & { xs: any; sm: any; md: any };
-    gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
-  };
-  sidekickLookup?: any;
-  disableGutters?: boolean;
+export interface HeroProps extends Hero_BaseFragmentFragment {
+  // variant?: any;
+  // id: string;
+  // __typename?: string;
+  // overline?: string;
+  // title?: string;
+  // subtitle?: string;
+  // body?: RichText;
+  // actions?: any[];
+  // /**
+  //  * @deprecated use `images` instead
+  //  */
+  // image?: MediaProps | MediaProps[];
+  // images?: MediaProps[];
+  // background?: MediaProps;
+  // backgroundColor?: Color | 'white' | 'black';
+  // divider?: MediaProps;
+  // contentWidth?: false | Breakpoint | undefined;
+  // contentHeight?: 'sm' | 'md' | 'lg' | 'xl';
+  // theme?: any;
+  // styles?: {
+  //   root?: SystemCssProperties;
+  //   gridContainer?: SystemCssProperties & { spacing: any };
+  //   gridItem?: SystemCssProperties & { xs: any; sm: any; md: any };
+  //   gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
+  // };
+  // sidekickLookup?: any;
+  // disableGutters?: boolean;
 }
 
 export interface HeroClasses {

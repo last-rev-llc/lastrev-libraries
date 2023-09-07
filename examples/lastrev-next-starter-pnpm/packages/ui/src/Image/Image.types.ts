@@ -1,5 +1,5 @@
 import { ImageProps as NextImageProps } from 'next/image';
-export interface ImageProps extends Omit<NextImageProps, 'src'> {
+export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'height'> {
   src?: string;
   className?: string;
   columns?: number;
@@ -7,7 +7,8 @@ export interface ImageProps extends Omit<NextImageProps, 'src'> {
   itemProp?: string;
   testId?: string;
   media?: string;
-  width?: number;
+  width?: number | string | `${number}` | undefined;
+  height?: number | string | `${number}` | undefined;
   disableInlineSVG?: boolean;
   nextImageOptimization?: boolean;
   sizes?: string;

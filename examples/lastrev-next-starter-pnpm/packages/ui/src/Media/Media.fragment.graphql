@@ -1,10 +1,25 @@
 fragment Media_BaseFragment on Media {
-  # ...Content_BaseFragment
-  id
-  __typename
+  ...Content_BaseFragment
   title
   variant
+  alt
   file {
+    url
+    extension
+    fileName
+    width
+    height
+    svgContent
+  }
+  fileMobile {
+    url
+    extension
+    fileName
+    width
+    height
+    svgContent
+  }
+  fileTablet {
     url
     extension
     fileName

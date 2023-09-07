@@ -4,7 +4,7 @@ import Hero from './Hero';
 import heroMock from './Hero.mock';
 
 export default {
-  title: 'Components / Hero',
+  title: '3. Modules/Hero',
   component: Hero,
   decorators: [(storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => storyFn()],
   argTypes: {

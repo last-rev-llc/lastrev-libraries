@@ -6,69 +6,8 @@ import {
   ComponentsOverrides,
   ComponentsVariants
 } from '@mui/material/styles';
-import { Mixins } from '@mui/material/styles/createMixins';
 
-import { BlockClassKey, BlockProps } from './Block.types';
-
-declare module '@mui/material/styles' {
-  interface BreakpointOverrides {
-    xxl: true; // adds the `xxl` breakpoint
-  }
-  interface Theme {
-    mixins: Mixins;
-  }
-
-  interface TypographyVariants {
-    bodySmall: TypographyStyle;
-    bodyLarge: TypographyStyle;
-  }
-
-  interface TypographyVariantsOptions {
-    bodySmall?: TypographyStyle;
-    bodyLarge?: TypographyStyle;
-  }
-}
-
-declare module '@mui/material/styles/createMixins' {
-  interface Mixins {
-    gridContainer: (theme: Theme, options?: any) => CSSProperties;
-  }
-}
-
-// Update the Typography's variant prop options
-declare module '@mui/material/Typography' {
-  interface TypographyPropsVariantOverrides {
-    bodySmall: true;
-    bodyLarge: true;
-  }
-}
-
-declare module '@mui/material/styles' {
-  export interface ComponentNameToClassKey {
-    Block: BlockClassKey;
-  }
-  export interface ComponentsPropsList {
-    Bock: BlockProps;
-  }
-}
-declare module '@mui/material/styles' {
-  type ComponentsProps = {
-    [Name in keyof ComponentsPropsList]?: Partial<ComponentsPropsList[Name]>;
-  };
-  interface Components {
-    Block?: {
-      defaultProps?: ComponentsProps['Block'];
-      styleOverrides?: ComponentsOverrides<Theme>['Block'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
-      variants?: ComponentsVariants['Block'];
-    };
-  }
-}
-
-// https://mui.com/customization/theme-components/#default-props
-export const defaultProps: ComponentsProps['Block'] = {};
+export const defaultProps = {};
 
 // https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
@@ -332,7 +271,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
   }
 ];
 
-export default (theme: Theme): ThemeOptions => ({
+export const blockTheme = (theme: Theme): ThemeOptions => ({
   components: {
     Block: {
       defaultProps,
@@ -341,3 +280,5 @@ export default (theme: Theme): ThemeOptions => ({
     }
   }
 });
+
+export default blockTheme;

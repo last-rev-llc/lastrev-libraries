@@ -17,23 +17,18 @@ export const Hero = (props: HeroProps) => {
   const theme = useTheme();
 
   const {
-    divider,
     variant,
     background,
     backgroundColor,
-    contentWidth,
     contentHeight = 'lg',
-    overline,
     title,
     subtitle,
     body,
     actions,
-    image: deprecatedImage,
     images,
-    sidekickLookup,
-    disableGutters = true
+    sidekickLookup
   } = props;
-  const image = (images ?? deprecatedImage)[0];
+  const image = images?.[0];
   return (
     <ErrorBoundary>
       <Root
@@ -59,7 +54,6 @@ export const Hero = (props: HeroProps) => {
               height: '100%'
             }}>
             <ContentModule
-              __typename="Media"
               key={background?.id}
               testId="Hero-background"
               {...background}
@@ -70,19 +64,19 @@ export const Hero = (props: HeroProps) => {
             />
           </BackgroundRoot>
         ) : null}
-        <ContentContainer maxWidth={contentWidth} disableGutters={disableGutters}>
+        <ContentContainer>
           <Grid container rowSpacing={5} columnSpacing={variant === 'centered' ? 0 : 5}>
             {title || subtitle || body || actions ? (
               <Grid item container direction="column" spacing={2} xs={12} md={6}>
                 <Grid item>
-                  {overline ? (
+                  {/* {overline ? (
                     <Typography
                       data-testid="Hero-overline"
                       variant="overline"
                       {...sidekick(sidekickLookup, 'overline')}>
                       {overline}
                     </Typography>
-                  ) : null}
+                  ) : null} */}
                   {title ? (
                     <Typography
                       data-testid="Hero-title"
@@ -114,9 +108,7 @@ export const Hero = (props: HeroProps) => {
                     <ActionsRoot
                       pt={title || subtitle || body ? 3 : undefined}
                       {...sidekick(sidekickLookup, 'actions')}>
-                      {actions?.map((link) => (
-                        <ContentModule key={link.id} {...link} />
-                      ))}
+                      {actions?.map((link) => (link ? <ContentModule key={link.id} {...link} /> : null))}
                     </ActionsRoot>
                   ) : null}
                 </Grid>
@@ -125,7 +117,6 @@ export const Hero = (props: HeroProps) => {
             {image ? (
               <MediaRoot item xs={12} md={6}>
                 <ContentModule
-                  __typename="Media"
                   key={image?.id}
                   {...image}
                   {...sidekick(sidekickLookup, 'images')}
@@ -137,9 +128,6 @@ export const Hero = (props: HeroProps) => {
             ) : null}
           </Grid>
         </ContentContainer>
-        {divider ? (
-          <MediaDivider {...divider} {...sidekick(sidekickLookup, 'divider')} testId="Hero-divider" priority />
-        ) : null}
       </Root>
     </ErrorBoundary>
   );
@@ -189,7 +177,7 @@ const Root = styled(Box, {
   ]
 })<{ variant?: string; contentHeight: string }>(({ contentHeight }) => ({
   width: '100%',
-  minHeight: CONTENT_HEIGHT[contentHeight] ?? 'auto',
+  minHeight: '100%',
   display: 'flex',
   justifyContent: 'center',
   alignContent: 'center'

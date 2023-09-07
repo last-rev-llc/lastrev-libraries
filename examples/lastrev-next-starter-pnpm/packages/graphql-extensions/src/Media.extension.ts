@@ -122,6 +122,7 @@ export const mappers = {
 
 export const typeDefs = gql`
   extend type Media {
+    alt: String
     variant: String
     fileTablet: Asset
     fileMobile: Asset

@@ -234,6 +234,7 @@ type Location {
 }
 
 type Media implements Content {
+  alt: String
   animation: JSON
   asset: Media
   assetURL: String
