@@ -187,6 +187,9 @@ importers:
         specifier: ^1.0.14
         version: 1.0.14
     devDependencies:
+      '@types/css':
+        specifier: ^0.0.34
+        version: 0.0.34
       '@types/lodash':
         specifier: ^4.14.178
         version: 4.14.198
@@ -8619,6 +8622,10 @@ packages:
     resolution: {integrity: sha512-BDAkU7WHHRHnvBf5z89lcvACsvkz/n7Tv+HyD/uW76O29HoH1Tk/W6iQrepaZVbisvlEek4ygwT8IW7ow9XLAA==}
     dependencies:
       '@types/node': 17.0.45
+    dev: true
+
+  /@types/css@0.0.34:
+    resolution: {integrity: sha512-nyZiWXt6gBG7Jj7BYB4zdHXyrhcAjJH8qv+BUsO8FMJR5be7H5ETOaibB3uvXeX5lc57LWkecNJv03q0+JpbXA==}
     dev: true
 
   /@types/detect-port@1.3.3:
