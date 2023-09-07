@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "start": "dotenv -- turbo start",
-    "build": "dotenv -- turbo build",
+    "build": "STAGE=build dotenv -- turbo build",
     "dev": "dotenv -- turbo sync:cms dev gql:dev --no-cache  --continue --concurrency 15",
     "gql:dev": "dotenv -- turbo sync:cms gql:dev --no-cache  --continue --concurrency 15",
     "sync:cms": "dotenv -- turbo sync:cms",
