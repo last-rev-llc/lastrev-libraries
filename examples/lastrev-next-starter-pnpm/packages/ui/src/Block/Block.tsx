@@ -68,37 +68,37 @@ export const Block = (props: BlockProps) => {
   );
 };
 
-const shouldForwardProp = (prop: string) =>
-  prop !== 'variant' &&
-  prop !== 'sidekickLookup' &&
-  prop !== 'body' &&
-  prop !== 'subtitle' &&
-  prop !== 'actions' &&
-  prop !== 'media' &&
-  prop !== 'introText' &&
-  prop !== 'eyebrow' &&
-  prop !== 'ownerState' &&
-  prop !== 'title' &&
-  prop !== 'blockVariant';
+// const shouldForwardProp = (prop: string) =>
+//   prop !== 'variant' &&
+//   prop !== 'sidekickLookup' &&
+//   prop !== 'body' &&
+//   prop !== 'subtitle' &&
+//   prop !== 'actions' &&
+//   prop !== 'media' &&
+//   prop !== 'introText' &&
+//   prop !== 'eyebrow' &&
+//   prop !== 'ownerState' &&
+//   prop !== 'title' &&
+//   prop !== 'blockVariant';
 
 const Root = styled(Box, {
   name: 'Block',
   slot: 'Root',
-  shouldForwardProp: (prop) => shouldForwardProp(prop as string) && prop !== 'id',
+  // shouldForwardProp: (prop) => shouldForwardProp(prop as string) && prop !== 'id',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; colorScheme?: string }>(() => ({}));
 
 const ContentOuterWrapper = styled(Container, {
   name: 'Block',
   slot: 'ContentOuterWrapper',
-  shouldForwardProp,
+  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.contentOuterWrapper]
 })<{ styleVariant?: string }>(() => ({}));
 
 const IntroTextWrapper = styled(Box, {
   name: 'Block',
   slot: 'IntroTextWrapper',
-  shouldForwardProp,
+  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.introTextWrapper]
 })(() => ({}));
 
@@ -111,14 +111,14 @@ const IntroText = styled(ContentModule, {
 const ContentWrapper = styled(Box, {
   name: 'Block',
   slot: 'ContentWrapper',
-  shouldForwardProp,
+  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.contentWrapper]
 })<BoxProps<React.ElementType>>(() => ({}));
 
 const Content = styled(Box, {
   name: 'Block',
   slot: 'Content',
-  shouldForwardProp,
+  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.content]
 })<BoxProps<React.ElementType>>(() => ({}));
 
@@ -149,7 +149,7 @@ const Body = styled(ContentModule, {
 const MediaWrapper = styled(Box, {
   name: 'Block',
   slot: 'MediaWrapper',
-  shouldForwardProp,
+  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.mediaWrapper]
 })<BoxProps<React.ElementType>>(() => ({}));
 
@@ -162,7 +162,7 @@ const Media = styled(ContentModule, {
 const ActionsWrapper = styled(Box, {
   name: 'Block',
   slot: 'ActionsWrapper',
-  shouldForwardProp,
+  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.actionsWrapper]
 })<BoxProps<React.ElementType>>(() => ({}));
 

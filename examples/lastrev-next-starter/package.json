@@ -22,7 +22,7 @@
     "preinstall": "npx only-allow pnpm",
     "prettier": "prettier --write \"**/*.{js,ts,tsx,md,json}\"",
     "propagate:env": "node scripts/propagateEnv.js",
-    "serve:site": "pnpm --filter @lrns/web serve",
+    "serve:site": "pnpm --filter web serve",
     "start": "turbo run start --output-logs=new-only",
     "storybook": "turbo run storybook",
     "sync:cms": "pnpm --filter @lrns/graphql-runner sync:cms",

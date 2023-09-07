@@ -1,7 +1,23 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["PORT", "SITE", "CONTENTFUL_USE_PREVIEW", "PAGES_REVALIDATE"],
+  "globalEnv": [
+    "ANALYZE_BUNDLE",
+    "CONTENTFUL_DELIVERY_TOKEN",
+    "CONTENTFUL_ENV",
+    "CONTENTFUL_PREVIEW_TOKEN",
+    "CONTENTFUL_SPACE_ID",
+    "CONTENTFUL_USE_PREVIEW",
+    "DEFAULT_SITE_ID",
+    "DEPLOY_URL",
+    "GRAPHQL_SERVER_URL",
+    "PAGES_REVALIDATE",
+    "PORT",
+    "SITE_SETTINGS",
+    "SITE",
+    "CONTENTFUL_SETTINGS_ID",
+    "NEXT_PUBLIC_SENTRY_DSN"
+  ],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"]
@@ -33,6 +49,10 @@
     },
     "clean": {
       "cache": false
+    },
+    "web#build": {
+      "dependsOn": ["@graphql-sdk#gql:start", "^build"],
+      "outputs": ["out/**", ".next/**"]
     }
   }
 }

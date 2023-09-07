@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const LastRevAppConfig = require('@last-rev/app-config');
-const extensions = require('@lrns/graphql-extensions');
+const extensions = require('graphql-extensions');
 const { resolve } = require('path');
 
 const testForEnvVar = (name) => {

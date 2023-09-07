@@ -12,10 +12,6 @@ const preview = process.env.CONTENTFUL_USE_PREVIEW === 'true';
 const site = process.env.SITE;
 const pagesRevalidate = Number.parseInt(process.env.PAGES_REVALIDATE as string, 10);
 // TODO: Add support for locale
-// TODO: Add support for SEO
-// TODO: Add support for GTM and other analytics
-// TODO: Add support for fonts
-
 const locale = 'en-US';
 
 export default async function Page({ params }: { params: { slug: string[] } }) {

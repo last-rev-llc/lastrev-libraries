@@ -170,12 +170,12 @@ const CONTENT_HEIGHT: { [key: string]: string } = {
 const Root = styled(Box, {
   name: 'Hero',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant',
+  shouldForwardProp: (prop) => prop !== 'variant' || prop !== 'contentWidth' || prop !== 'contentHeight',
   overridesResolver: ({ contentHeight }, styles) => [
     styles.root,
     styles[`contentHeight${contentHeight?.toUpperCase()}`]
   ]
-})<{ variant?: string; contentHeight: string }>(({ contentHeight }) => ({
+})<HeroProps>(({ contentHeight }) => ({
   width: '100%',
   minHeight: '100%',
   display: 'flex',
