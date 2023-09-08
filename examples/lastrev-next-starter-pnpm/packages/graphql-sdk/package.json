@@ -39,8 +39,8 @@
     "tsc-watch": "^4.2.9"
   },
   "dependencies": {
-    "@graphql-codegen/fragment-matcher": "^3.3.3",
     "@graphql-codegen/cli": "2.16.1",
+    "@graphql-codegen/fragment-matcher": "^3.3.3",
     "@graphql-codegen/schema-ast": "2.6.0",
     "@graphql-codegen/typescript-graphql-request": "4.5.8",
     "@graphql-codegen/typescript-operations": "2.5.10",
@@ -55,15 +55,16 @@
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.2",
-    "graphql-extensions": "workspace:*",
+    "encoding": "^0.1.13",
     "graphql": "^16.6.0",
+    "graphql-extensions": "workspace:*",
     "nodemon": "^2.0.15",
     "pm2": "^5.3.0",
-    "react-scripts": "^4.0.1",
-    "tsc-watch": "^4.2.9",
     "react": "^17.0.2",
     "react-dom": "^17.0.1",
-    "wait-on": "^5.3.0",
-    "tsconfig": "workspace:*"
+    "react-scripts": "^4.0.1",
+    "tsc-watch": "^4.2.9",
+    "tsconfig": "workspace:*",
+    "wait-on": "^5.3.0"
   }
 }
