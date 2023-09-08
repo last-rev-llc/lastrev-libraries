@@ -3,7 +3,7 @@ import { capitalize } from 'lodash';
 import { HeroProps } from './Hero.types';
 import { linkMock } from '../Link/Link.mock';
 
-export default (): HeroProps => ({
+const baseMock = (): HeroProps => ({
   id: 'hero',
   __typename: 'Hero',
   variant: 'default',
@@ -84,3 +84,5 @@ export default (): HeroProps => ({
   // contentHeight: 'xl',
   // contentWidth: 'xl'
 });
+
+export default heroMock;

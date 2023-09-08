@@ -44,6 +44,7 @@
     "@mui/icons-material": "^5.14.8",
     "@mui/material": "^5.14.8",
     "faker": "^6.6.6",
+    "lodash": "^4.17.21",
     "next": "^13.4.19",
     "react-dom": "^18.2.0"
   }
