@@ -4,6 +4,7 @@ import { paragraphMock, richTextMock } from '../Text/Text.mock';
 import { BlockProps } from './Block.types';
 
 export const baseMock = (): BlockProps => ({
+  __typename: 'Block',
   variant: 'default',
   introText: paragraphMock({ text: 'This is the intro text' }),
   eyebrow: 'This is the eyebrow',

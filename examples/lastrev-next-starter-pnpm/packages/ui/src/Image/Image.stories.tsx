@@ -2,7 +2,7 @@ import Image from './Image';
 import mockContent from './Image.mock';
 
 export default {
-  title: '2. Components/Media/Image',
+  title: '2. Components/Image',
   component: Image,
   tags: ['autodocs'],
   argTypes: {

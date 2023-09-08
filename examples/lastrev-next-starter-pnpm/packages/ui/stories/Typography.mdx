@@ -1,8 +1,9 @@
 {/* Typography.mdx */}
 
-import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import { Meta, Story, Canvas, Typeset } from '@storybook/blocks';
 import { linkTo } from '@storybook/addon-links';
-import * as TextStories from '../src/Text/Text.stories';
+import theme from '../src/ThemeRegistry/theme';
+export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
 <Meta
   title="1. Brand/Typography"
@@ -14,9 +15,17 @@ import * as TextStories from '../src/Text/Text.stories';
   }}
 />
 
-# Typography
+## Typography
 
-Currently working on enabling referencing stories.
+{Object.keys(theme.typography)
+.filter(t => theme.typography[t]?.fontFamily)
+.map(t => ({ name:t, ...theme.typography[t] }) )
+.map(t => (
+
+<>
+  <h3>{t?.name}</h3>
+  <Typeset fontSizes={[t?.fontSize]} sampleText={SampleText} fontWeight={t?.fontWeight} fontFamily={t?.fontFamily} />
+</>
+))}
 
 <a onClick={linkTo('2. Components/Text')}>Go to Text component</a>
-{/* <Story of={TextStories.Base} /> */}

@@ -74,8 +74,8 @@ export const mappers = {
         };
       },
       header: headerResolver,
-      footer: footerResolver,
-      contents: pageContentsResolver
+      footer: footerResolver
+      // contents: pageContentsResolver
     }
   },
   Blog: {
