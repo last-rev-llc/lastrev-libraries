@@ -12,6 +12,7 @@ if (!hasAllSentryVars) {
 }
 
 let config = {
+  productionBrowserSourceMaps: true,
   typescript: {
     // !! WARN !!
     // TODO: Clean all typescript build errors
@@ -23,7 +24,7 @@ let config = {
   sentry: {
     disableServerWebpackPlugin: !hasAllSentryVars,
     disableClientWebpackPlugin: !hasAllSentryVars,
-    hideSourceMaps: true,
+    hideSourceMaps: false,
     widenClientFileUpload: true
   },
   reactStrictMode: true,

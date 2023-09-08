@@ -3,7 +3,7 @@ import { getPageMetadata } from '@ui/utils/getPageMetadata';
 import { join } from 'path';
 import { client } from '@graphql-sdk/client';
 import type { Metadata, ResolvingMetadata } from 'next';
-
+import { AppProvider } from '@ui/AppProvider/AppProvider';
 // Only render static pages (a.k.a no fallback)
 // export const dynamicParams = true;
 const preview = process.env.CONTENTFUL_USE_PREVIEW === 'true';
@@ -20,11 +20,10 @@ export async function generateMetadata({ params, searchParams }: Props, parent: 
   const { data: pageData } = await client.Page({ path, locale, preview, site });
 
   // optionally access and extend (rather than replace) parent metadata
-  const previousSEO = await parent;
+  const parentSEO = await parent;
 
   const seo = (pageData?.page as any)?.seo;
-  console.log(seo);
-  return getPageMetadata({ previousSEO, seo });
+  return getPageMetadata({ parentSEO, seo });
 }
 
 export async function generateStaticParams() {
@@ -48,7 +47,11 @@ export default async function Page({ params }: Props) {
     if (!pageData?.page) {
       throw new Error(`Page not found: ${path}`);
     }
-    return <ContentModule {...pageData.page} />;
+    return (
+      <AppProvider>
+        <ContentModule {...pageData.page} />
+      </AppProvider>
+    );
   } catch (error) {
     console.log('FetchPageError'), error;
     throw error;
