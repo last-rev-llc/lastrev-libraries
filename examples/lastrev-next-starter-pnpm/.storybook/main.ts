@@ -23,7 +23,7 @@ const config = {
     config.resolve.alias = {
       ...config.resolve.alias,
       'react': getAbsolutePath('react'),
-      '@emotion/react': getAbsolutePath('@emotion/react')
+      '@mui/styled-engine': getAbsolutePath('@mui/styled-engine-sc')
     };
     return config;
   },

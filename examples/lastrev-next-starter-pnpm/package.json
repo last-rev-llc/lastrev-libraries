@@ -1,6 +1,9 @@
 {
   "name": "lastrev-next-starter",
   "private": true,
+  "resolutions": {
+    "@mui/styled-engine": "@mui/styled-engine-sc@latest"
+  },
   "scripts": {
     "start": "dotenv -- turbo start",
     "build": "STAGE=build dotenv -- turbo build",

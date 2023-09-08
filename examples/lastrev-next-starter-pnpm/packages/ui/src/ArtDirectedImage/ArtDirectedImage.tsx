@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import styled from '@mui/system/styled';
-import { css } from '@emotion/react';
+// import { css } from '@emotion/react';
 import Image from '../Image';
 import { File } from '../Media/Media.types';
 import { ArtDirectedImageProps } from './ArtDirectedImage.types';
@@ -84,7 +84,7 @@ const ResponsiveImage = styled(Image, {
 }>`
   ${({ media }) =>
     media
-      ? css`
+      ? `
           display: none !important;
 
           @media ${media} {
