@@ -1,8 +1,9 @@
 import { linkMock } from '../Link/Link.mock';
 import { mediaMock } from '../Media/Media.mock';
 import { paragraphMock, richTextMock } from '../Text/Text.mock';
+import { BlockProps } from './Block.types';
 
-export const baseMock = () => ({
+export const baseMock = (): BlockProps => ({
   variant: 'default',
   introText: paragraphMock({ text: 'This is the intro text' }),
   eyebrow: 'This is the eyebrow',

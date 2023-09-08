@@ -67,9 +67,11 @@ export const dynamicMock = (content: any[], entries: any[] = [], assets: any[] =
   }
 });
 
-export const complexMock = ({ text } = {}): TextProps => ({
+export const complexMock = ({ text }: { text?: string } = {}): TextProps => ({
   __typename: 'Text',
   body: {
+    __typename: 'RichText',
+
     json: {
       nodeType: 'document',
       data: {},
@@ -208,7 +210,8 @@ export const complexMock = ({ text } = {}): TextProps => ({
   }
 });
 
-export const richTextMock = ({ text } = {}): RichText => ({
+export const richTextMock = ({ text }: { text?: string } = {}): RichText => ({
+  __typename: 'RichText',
   json: {
     nodeType: 'document',
     data: {},
@@ -233,9 +236,11 @@ export const richTextMock = ({ text } = {}): RichText => ({
   }
 });
 
-export const withLinksMock = ({ text } = {}): TextProps => ({
+export const withLinksMock = ({ text }: { text?: string } = {}): TextProps => ({
   __typename: 'Text',
   body: {
+    __typename: 'RichText',
+
     json: {
       nodeType: 'document',
       data: {},
@@ -313,6 +318,7 @@ export const withLinksMock = ({ text } = {}): TextProps => ({
 });
 
 export const staticRichTextMock = (): RichText => ({
+  __typename: 'RichText',
   json: {
     nodeType: 'document',
     data: {},
@@ -357,9 +363,10 @@ export const formattedMock = () => ({
   }
 });
 
-export const paragraphMock = ({ text } = {}): TextProps => ({
+export const paragraphMock = ({ text }: { text?: string } = {}): TextProps => ({
   __typename: 'Text',
   body: {
+    __typename: 'RichText',
     json: {
       nodeType: 'document',
       data: {},
@@ -387,6 +394,8 @@ export const paragraphMock = ({ text } = {}): TextProps => ({
 export const baseMock = (): TextProps => ({
   __typename: 'Text',
   body: {
+    __typename: 'RichText',
+
     json: {
       nodeType: 'document',
       data: {},
