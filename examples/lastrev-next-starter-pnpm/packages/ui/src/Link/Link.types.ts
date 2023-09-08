@@ -1,5 +1,6 @@
 import { LinkProps as NextLinkProps } from 'next/link';
 import React from 'react';
+import { Link_BaseFragmentFragment } from '@graphql-sdk/types';
 export interface NextLinkComposedProps {
   linkAs?: NextLinkProps['as'];
   to?: NextLinkProps['href'];
@@ -14,29 +15,22 @@ export interface NextLinkComposedProps {
   children: React.ReactNode;
 }
 
-export type LinkProps = {
+export interface LinkProps extends Link_BaseFragmentFragment {
   variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
-  id?: string;
-  __typename?: string;
   activeClassName?: string;
   className?: string;
   as?: React.ElementType;
-  href?: NextLinkProps['href'];
   noLinkStyle?: boolean;
   role?: React.AriaRole;
-  icon?: string;
-  iconPosition?: string;
   children?: any;
   onClick?: any;
   type?: 'button' | 'submit' | 'reset';
-  text?: string;
-  sidekickLookup?: any;
   color?: any;
   target?: string;
   rel?: string;
   // sx?: SxProps<Theme>;
   sx?: any;
-};
+}
 
 export interface LinkClasses {
   // TODO: Add root styled to Link for every variant

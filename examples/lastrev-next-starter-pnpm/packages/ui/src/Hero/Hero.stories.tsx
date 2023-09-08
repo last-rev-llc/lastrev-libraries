@@ -6,7 +6,12 @@ import heroMock from './Hero.mock';
 export default {
   title: '3. Modules/Hero',
   component: Hero,
-  decorators: [(storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => storyFn()],
+  parameters: {
+    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
+    layout: 'centered'
+  },
+  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
+  tags: ['autodocs'],
   argTypes: {
     variant: {
       name: 'Variant',
@@ -59,23 +64,25 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <Hero id={''} __typename={''} theme={undefined} {...args} />;
-export const Default = Template.bind({});
-Default.args = { ...heroMock(), background: undefined };
-
-export const BackgroundImage = Template.bind({});
-BackgroundImage.args = {
-  ...heroMock(),
-  backgroundColor: null,
-  contentHeight: 'xl',
-  contentWidth: 'xl'
+export const Default = {
+  args: { ...heroMock(), background: undefined }
 };
 
-export const ResponsiveBackgroundImage = Template.bind({});
-ResponsiveBackgroundImage.args = {
-  ...heroMock,
-  backgroundColor: null,
-  contentHeight: 'xl',
-  contentWidth: 'xl',
-  background: responsiveMediaMock
+export const BackgroundImage = {
+  args: {
+    ...heroMock(),
+    backgroundColor: null,
+    contentHeight: 'xl',
+    contentWidth: 'xl'
+  }
+};
+
+export const ResponsiveBackgroundImage = {
+  args: {
+    ...heroMock,
+    backgroundColor: null,
+    contentHeight: 'xl',
+    contentWidth: 'xl',
+    background: responsiveMediaMock
+  }
 };
