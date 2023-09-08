@@ -1,4 +1,5 @@
 {
+  "name": "lastrev-next-starter",
   "private": true,
   "scripts": {
     "start": "dotenv -- turbo start",
