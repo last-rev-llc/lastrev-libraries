@@ -41,10 +41,6 @@
       "cache": false,
       "persistent": true
     },
-    "sync:cms": {
-      "dependsOn": ["^build"],
-      "cache": false
-    },
     "gql:dev": {
       "dependsOn": ["^build", "sync:cms"],
       "cache": false,
@@ -57,10 +53,13 @@
     "clean": {
       "cache": false
     },
-
+    "graphql-sdk#build": {
+      "cache": false,
+      "dependsOn": ["graphql-sdk#sync:cms", "^build"]
+    },
     "graphql-sdk#gql:start": {
       "cache": false,
-      "dependsOn": ["graphql-extensions#build", "^build"]
+      "dependsOn": ["graphql-extensions#build", "graphql-sdk#sync:cms", "^build"]
     },
     "graphql-sdk#sync:cms": {
       "cache": false,
