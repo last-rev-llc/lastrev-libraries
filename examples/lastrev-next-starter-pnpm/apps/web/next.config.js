@@ -51,6 +51,13 @@ let config = {
     CONTENTFUL_PREVIEW_TOKEN: process.env.CONTENTFUL_PREVIEW_TOKEN,
     CONTENTFUL_ENV: process.env.CONTENTFUL_ENV,
     DEPLOY_URL: process.env.DEPLOY_URL
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@mui/styled-engine': '@mui/styled-engine-sc'
+    };
+    return config;
   }
 };
 

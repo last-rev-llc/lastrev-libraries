@@ -3,13 +3,10 @@ import React from 'react';
 import styled from '@mui/system/styled';
 // import { css } from '@emotion/react';
 import Image from '../Image';
-import { File } from '../Media/Media.types';
+import { MediaProps } from '../Media/Media.types';
 import { ArtDirectedImageProps } from './ArtDirectedImage.types';
 
-const getImageMedia = (
-  breakpoint: string,
-  { fileMobile, fileTablet }: { file?: File; fileTablet?: File; fileMobile?: File }
-) => {
+const getImageMedia = (breakpoint: string, { fileMobile, fileTablet }: Partial<MediaProps>) => {
   switch (breakpoint) {
     case 'mobile':
       return '(max-width: 768px)';
@@ -27,8 +24,11 @@ const getImageMedia = (
   return '';
 };
 
-const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProps>(
-  ({ title, description, file, fileMobile, fileTablet, ...props }, ref) => (
+const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProps>(function ArtDirectedImage(
+  { title, description, file, fileMobile, fileTablet, ...props },
+  ref
+) {
+  return (
     <>
       {fileMobile?.url ? (
         <>
@@ -71,8 +71,8 @@ const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProp
         </>
       ) : null}
     </>
-  )
-);
+  );
+});
 const shouldForwardProp = (prop: string) => prop !== 'displaymedia';
 
 const ResponsiveImage = styled(Image, {
