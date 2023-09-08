@@ -3,7 +3,7 @@ import { join } from 'path';
 import { client } from '@graphql-sdk/client';
 
 // Only render static pages (a.k.a no fallback)
-export const dynamicParams = false;
+// export const dynamicParams = true;
 const preview = process.env.CONTENTFUL_USE_PREVIEW === 'true';
 const site = process.env.SITE;
 
