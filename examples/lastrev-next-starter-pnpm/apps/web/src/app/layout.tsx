@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 
+// TODO: Pull the SEO metadata from the Site settings in Contentful
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.DOMAIN!),
   title: {

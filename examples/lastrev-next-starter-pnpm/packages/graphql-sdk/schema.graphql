@@ -51,6 +51,7 @@ type Blog implements Content {
   footer: Content
   header: Header
   id: String
+  jsonLd: JSON
   lr__path__: String
   promoImage: Media
   pubDate: Date
@@ -71,6 +72,7 @@ type Card implements Content {
   bodyRte: JSON
   id: String
   internalTitle: String
+  jsonLd: JSON
   link: Link
   media: [Media]
   sidekickLookup: JSON
@@ -297,6 +299,7 @@ type Page implements Content {
   hero: Hero
   id: String
   internalTitle: String
+  jsonLd: JSON
   lr__path__: String
   seo: JSON
   sidekickLookup: JSON

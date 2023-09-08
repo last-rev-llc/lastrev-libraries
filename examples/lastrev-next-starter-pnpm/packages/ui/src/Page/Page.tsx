@@ -8,9 +8,12 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 
 export interface PageProps extends PageContent {}
 
-const Page = ({ header, hero, contents, footer, disableBackToTop, sidekickLookup }: PageProps) => {
+const Page = ({ header, hero, contents, footer, disableBackToTop, sidekickLookup, jsonLd }: PageProps) => {
   return (
     <>
+      {jsonLd ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      ) : null}
       {header ? <ContentModule {...(header as any)} /> : null}
       {hero ? <ContentModule {...(hero as any)} /> : null}
       <Main {...sidekick({ ...sidekickLookup, fieldName: 'contents' })}>

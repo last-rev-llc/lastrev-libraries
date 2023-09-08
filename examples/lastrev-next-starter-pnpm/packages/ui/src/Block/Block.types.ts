@@ -1,5 +1,5 @@
 import { Block_BaseFragmentFragment } from '@graphql-sdk/types';
-import { ComponentsOverrides, ComponentsVariants } from '@mui/material';
+import { ComponentsOverrides, ComponentsProps, ComponentsVariants } from '@mui/material';
 
 export enum BlockVariants {
   default = 'default',
@@ -46,9 +46,6 @@ declare module '@mui/material/styles' {
   }
 }
 declare module '@mui/material/styles' {
-  type ComponentsProps = {
-    [Name in keyof ComponentsPropsList]?: Partial<ComponentsPropsList[Name]>;
-  };
   interface Components {
     Block?: {
       defaultProps?: ComponentsProps['Block'];

@@ -1,11 +1,4 @@
-import {
-  TypographyStyle,
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import { Theme, ThemeOptions, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
 export const defaultProps = {};
 

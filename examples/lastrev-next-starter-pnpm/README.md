@@ -5,6 +5,7 @@
 [x] Deploy Storybook to Vercel
 [x] Implement Sitemap
 [x] Implement Robots
+[] Implement path v2 resolution
 [] Implement Preview
 [] Implement \_error page
 [] Implement CSP policies

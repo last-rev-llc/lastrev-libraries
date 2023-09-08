@@ -1,6 +1,7 @@
 fragment Page_BaseFragment on Page {
   ...Content_BaseFragment
   seo
+  jsonLd
   slug
   header {
     ...ContentModule_BaseFragment
