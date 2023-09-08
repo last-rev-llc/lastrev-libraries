@@ -21,8 +21,16 @@ export async function generateStaticParams() {
 const locale = 'en-US';
 
 export default async function Page({ params }: { params: { slug: string[] } }) {
-  const path = join('/', (params.slug || ['/']).join('/'));
-  const { data: pageData } = await client.Page({ path, locale, preview, site });
-  console.log('Page', { path, pageData });
-  return <ContentModule {...pageData.page} />;
+  try {
+    const path = join('/', (params.slug || ['/']).join('/'));
+    const { data: pageData } = await client.Page({ path, locale, preview, site });
+    console.log('Page', { path, pageData });
+    if (!pageData?.page) {
+      throw new Error(`Page not found: ${path}`);
+    }
+    return <ContentModule {...pageData.page} />;
+  } catch (error) {
+    console.log('FetchPageError'), error;
+    throw error;
+  }
 }
