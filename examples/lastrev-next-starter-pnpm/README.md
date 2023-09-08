@@ -2,8 +2,8 @@
 
 [x] Implement 404 for non generated pages
 [x] Deploy to Vercel
-[] Deploy Storybook to Vercel
-[] Implement Sitemap
+[x] Deploy Storybook to Vercel
+[x] Implement Sitemap
 [] Implement Preview
 [] Implement \_error page
 [] Implement GraphQL preview endpoint

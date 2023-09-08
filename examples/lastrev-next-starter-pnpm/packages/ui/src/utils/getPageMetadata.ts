@@ -1,4 +1,4 @@
-import { Metadata } from 'next/types';
+import { Metadata, ResolvedMetadata } from 'next/types';
 // import theme from '../ThemeRegistry/theme';
 
 interface ImageSettingEntry {
@@ -30,11 +30,16 @@ interface SEOValue {
   [key: string]: SettingEntry | ImageSettingEntry;
 }
 
-export const getPageMetadata = ({ seo, parentSEO }: { seo: SEOValue | undefined; parentSEO: Metadata }): Metadata => {
+export const getPageMetadata = ({
+  seo,
+  parentSEO
+}: {
+  seo: SEOValue | undefined;
+  parentSEO: ResolvedMetadata;
+}): Metadata => {
   if (!seo) return {} as Metadata;
   const canonical = seo['canonical']?.value;
   return {
-    ...parentSEO,
     referrer: 'origin-when-cross-origin',
     title: seo['title']?.value,
     authors: [{ name: 'Max' }, { name: 'Adam', url: 'https://lastrev.com' }],
