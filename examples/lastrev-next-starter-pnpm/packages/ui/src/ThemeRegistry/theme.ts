@@ -9,7 +9,7 @@ const roboto = Roboto({
   display: 'swap'
 });
 
-const theme = createTheme({
+export const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {

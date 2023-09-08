@@ -67,6 +67,12 @@ export const mappers = {
       text: 'title'
     },
     Page: {
+      seo: async (page: any, _args: any, ctx: ApolloContext) => {
+        const seo: any = getLocalizedField(page.fields, 'seo', ctx);
+        return {
+          ...seo
+        };
+      },
       header: headerResolver,
       footer: footerResolver,
       contents: pageContentsResolver

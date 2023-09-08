@@ -42,7 +42,7 @@
       "persistent": true
     },
     "gql:dev": {
-      "dependsOn": ["^build", "sync:cms"],
+      "dependsOn": ["^build", "graphql-sdk#sync:cms"],
       "cache": false,
       "persistent": true
     },
