@@ -14,20 +14,19 @@ export type GraphQlExtension = {
 
 function loadFiles() {
   const dirPath = __dirname;
-  const files = fs.readdirSync(dirPath);
   const modules: any[] = [];
-  for (const file of files) {
-    if (/\.extension\.js$/.test(file)) {
-      const modulePath = path.join(dirPath, file);
-      try {
-        console.log('Loading extension:', modulePath);
-        const module = require(modulePath);
-        modules.push(module);
-      } catch (error) {
-        console.error(`Failed to load module: ${modulePath}`, error);
-      }
+  const extensionFiles = fs.readdirSync(dirPath).filter((file) => /\.extension\.js$/.test(file));
+
+  console.log('Loading extension:', extensionFiles);
+  extensionFiles.forEach((file) => {
+    const modulePath = path.join(dirPath, file);
+    try {
+      const module = require(modulePath);
+      modules.push(module);
+    } catch (error) {
+      console.error(`Failed to load module: ${modulePath}`, error);
     }
-  }
+  });
 
   return modules;
 }

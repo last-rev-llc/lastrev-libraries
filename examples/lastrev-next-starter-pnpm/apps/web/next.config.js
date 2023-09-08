@@ -29,7 +29,7 @@ let config = {
   },
   reactStrictMode: true,
   swcMinify: true,
-  transpilePackages: ['ui', 'graphql-sdk'],
+  transpilePackages: ['ui', 'graphql-sdk', '@mui/material', '@mui/system', '@mui/icons-material'],
   modularizeImports: {
     '@mui/icons-material': {
       transform: '@mui/icons-material/{{member}}'

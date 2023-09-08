@@ -4,8 +4,10 @@
 [x] Deploy to Vercel
 [x] Deploy Storybook to Vercel
 [x] Implement Sitemap
+[x] Implement Robots
 [] Implement Preview
 [] Implement \_error page
+[] Implement CSP policies
 [] Implement GraphQL preview endpoint
 [] Implement Theme api endpoint
 [] Implement Live Editor and other UIEs
