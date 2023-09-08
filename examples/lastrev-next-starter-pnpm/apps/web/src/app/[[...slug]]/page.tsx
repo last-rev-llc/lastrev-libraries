@@ -4,24 +4,20 @@ import { join } from 'path';
 import { client } from '@graphql-sdk/client';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { AppProvider } from '@ui/AppProvider/AppProvider';
-// Only render static pages (a.k.a no fallback)
-// export const dynamicParams = true;
+import { notFound } from 'next/navigation';
+
 const preview = process.env.CONTENTFUL_USE_PREVIEW === 'true';
 const site = process.env.SITE;
+
 type Props = {
   params: { slug: string[] };
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
-  // fetch data
   const path = join('/', (params.slug || ['/']).join('/'));
-
   const { data: pageData } = await client.Page({ path, locale, preview, site });
-
-  // optionally access and extend (rather than replace) parent metadata
   const parentSEO = await parent;
-
   const seo = (pageData?.page as any)?.seo;
   return getPageMetadata({ parentSEO, seo });
 }
@@ -40,20 +36,15 @@ export async function generateStaticParams() {
 const locale = 'en-US';
 
 export default async function Page({ params }: Props) {
-  try {
-    const path = join('/', (params.slug || ['/']).join('/'));
-    const { data: pageData } = await client.Page({ path, locale, preview, site });
-    console.log('Page', { path, pageData });
-    if (!pageData?.page) {
-      throw new Error(`Page not found: ${path}`);
-    }
-    return (
-      <AppProvider>
-        <ContentModule {...pageData.page} />
-      </AppProvider>
-    );
-  } catch (error) {
-    console.log('FetchPageError'), error;
-    throw error;
+  const path = join('/', (params.slug || ['/']).join('/'));
+  const { data: pageData } = await client.Page({ path, locale, preview, site });
+  console.log('Page', { path, pageData });
+  if (!pageData?.page) {
+    return notFound();
   }
+  return (
+    <AppProvider>
+      <ContentModule {...pageData.page} />
+    </AppProvider>
+  );
 }

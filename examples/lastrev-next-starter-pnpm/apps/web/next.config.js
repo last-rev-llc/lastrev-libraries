@@ -21,12 +21,14 @@ let config = {
     // !! WARN !!
     ignoreBuildErrors: true
   },
-  sentry: {
-    disableServerWebpackPlugin: !hasAllSentryVars,
-    disableClientWebpackPlugin: !hasAllSentryVars,
-    hideSourceMaps: false,
-    widenClientFileUpload: true
-  },
+  ...(hasAllSentryVars && {
+    sentry: {
+      disableServerWebpackPlugin: !hasAllSentryVars,
+      disableClientWebpackPlugin: !hasAllSentryVars,
+      hideSourceMaps: false,
+      widenClientFileUpload: true
+    }
+  }),
   reactStrictMode: true,
   swcMinify: true,
   transpilePackages: ['ui', 'graphql-sdk', '@mui/material', '@mui/system', '@mui/icons-material'],
@@ -58,6 +60,13 @@ let config = {
       '@mui/styled-engine': '@mui/styled-engine-sc'
     };
     return config;
+  },
+  experimental: {
+    turbo: {
+      resolveAlias: {
+        '@mui/styled-engine': '@mui/styled-engine-sc'
+      }
+    }
   }
 };
 
