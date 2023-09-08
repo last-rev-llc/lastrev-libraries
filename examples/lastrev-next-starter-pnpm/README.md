@@ -1,6 +1,8 @@
 # TODO
 
 [x] Implement 404 for non generated pages
+[x] Deploy to Vercel
+[] Deploy Storybook to Vercel
 [] Implement Sitemap
 [] Implement Preview
 [] Implement \_error page
