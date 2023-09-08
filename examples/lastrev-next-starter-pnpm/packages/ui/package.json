@@ -39,10 +39,11 @@
     "@contentful/rich-text-react-renderer": "^15.17.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@last-rev/contentful-sidekick-util": "^0.1.3",
     "@last-rev/component-library": "^0.5.17",
+    "@last-rev/contentful-sidekick-util": "^0.1.3",
     "@mui/icons-material": "^5.14.8",
     "@mui/material": "^5.14.8",
+    "faker": "^6.6.6",
     "next": "^13.4.19",
     "react-dom": "^18.2.0"
   }
