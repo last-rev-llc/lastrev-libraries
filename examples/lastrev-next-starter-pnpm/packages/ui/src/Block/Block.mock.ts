@@ -1,22 +1,35 @@
-import { linkMock } from '../Link/Link.mock';
-import { mediaMock } from '../Media/Media.mock';
-import { paragraphMock, richTextMock } from '../Text/Text.mock';
+import { lorem } from 'faker';
+
+import { linkButtonMock } from '../Link/Link.mock';
+import { mediaBaseImageMock } from '../Media/Media.mock';
+import { richTextMock } from '../RichText/RichText.mock';
+import { introTextMock } from '../Text/Text.mock';
+
 import { BlockProps } from './Block.types';
 
-export const baseMock = (): BlockProps => ({
+const blockDefaultMock: BlockProps = {
+  id: lorem.word(),
   __typename: 'Block',
   variant: 'default',
-  introText: paragraphMock({ text: 'This is the intro text' }),
-  eyebrow: 'This is the eyebrow',
-  title: 'This is the title',
-  subtitle: 'This is the subtitle',
-  body: richTextMock({ text: 'This is the body' }),
-  mediaItems: [mediaMock({ title: 'Media 1' }), mediaMock({ title: 'Media 2' })],
-  actions: [
-    linkMock({ text: 'Action 1', variant: 'button-contained' }),
-    linkMock({ text: 'Action 2', variant: 'button-outlined' })
+  introText: introTextMock(),
+  eyebrow: 'This is the Block eyebrow',
+  title: 'This is the Block title',
+  subtitle: 'This is the Block subtitle',
+  body: richTextMock({ text: 'This is the Block body' }),
+  mediaItems: [
+    mediaBaseImageMock({ title: 'This is the Block Media 1' }),
+    mediaBaseImageMock({ title: 'This is the Block Media 2' })
   ],
-  link: linkMock({ text: 'Block Link', variant: 'button-contained' })
+  actions: [
+    linkButtonMock({ text: 'This is the Block Action 1', variant: 'button-contained' }),
+    linkButtonMock({ text: 'This is the Block Action 2', variant: 'button-outlined' })
+  ],
+  link: linkButtonMock({ text: 'This is the Block Link', variant: 'button-contained' })
+};
+
+export const blockBaseMock = ({ ...override } = {}) => ({
+  ...blockDefaultMock,
+  ...override
 });
 
-export default baseMock;
+export default blockBaseMock;

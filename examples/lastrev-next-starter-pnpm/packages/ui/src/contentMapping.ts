@@ -4,6 +4,8 @@ import Link from './Link';
 import Media from './Media';
 import Page from './Page';
 import Text from './Text';
+import Block from './Block';
+import Accordion from './Accordion';
 
 export const contentMapping: {
   [key: string]: any;
@@ -13,7 +15,9 @@ export const contentMapping: {
   Link,
   Media,
   Page,
-  Text
+  Text,
+  Block,
+  Accordion // TODO: Enhance accordion with expandable
 };
 
 export default contentMapping;

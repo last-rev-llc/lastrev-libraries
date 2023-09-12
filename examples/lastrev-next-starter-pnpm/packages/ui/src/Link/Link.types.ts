@@ -1,6 +1,10 @@
-import { LinkProps as NextLinkProps } from 'next/link';
 import React from 'react';
+
+import { LinkProps as NextLinkProps } from 'next/link';
+import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+
 import { Link_BaseFragmentFragment } from '@graphql-sdk/types';
+
 export interface NextLinkComposedProps {
   linkAs?: NextLinkProps['as'];
   to?: NextLinkProps['href'];
@@ -41,5 +45,24 @@ export interface LinkClasses {
 }
 
 export declare type LinkClassKey = keyof LinkClasses;
-declare const accordionClasses: LinkClasses;
-export default accordionClasses;
+
+declare module '@mui/material/styles' {
+  export interface ComponentNameToClassKey {
+    Link: LinkClassKey;
+  }
+  export interface ComponentsPropsList {
+    Link: LinkProps;
+  }
+}
+declare module '@mui/material/styles' {
+  interface Components {
+    Link?: {
+      defaultProps?: ComponentsProps['Link'];
+      styleOverrides?: ComponentsOverrides<Theme>['Link'];
+      /**
+       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
+       */
+      variants?: ComponentsVariants['Link'];
+    };
+  }
+}

@@ -1,3 +1,6 @@
+import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+// TODO: Needed?
+//import { Image_BaseFragmentFragment } from '@graphql-sdk/types';
 import { ImageProps as NextImageProps } from 'next/image';
 export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'height'> {
   src?: string;
@@ -18,11 +21,27 @@ export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'heig
 }
 
 //TODO: Use styled for Image
-export interface ImageClasses {
-  /** Styles applied to the root element. */
-  // root: string;
-}
+export interface ImageClasses {}
 
 export declare type ImageClassKey = keyof ImageClasses;
-declare const accordionClasses: ImageClasses;
-export default accordionClasses;
+
+declare module '@mui/material/styles' {
+  export interface ComponentNameToClassKey {
+    Image: ImageClassKey;
+  }
+  export interface ComponentsPropsList {
+    Image: ImageProps;
+  }
+}
+declare module '@mui/material/styles' {
+  interface Components {
+    Image?: {
+      defaultProps?: ComponentsProps['Image'];
+      styleOverrides?: ComponentsOverrides<Theme>['Image'];
+      /**
+       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
+       */
+      variants?: ComponentsVariants['Image'];
+    };
+  }
+}

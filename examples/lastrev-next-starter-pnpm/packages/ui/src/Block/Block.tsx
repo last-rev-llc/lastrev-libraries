@@ -1,15 +1,19 @@
 import React from 'react';
+
 import { styled } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
-import sidekick from '@last-rev/contentful-sidekick-util';
-import ContentModule from '../ContentModule';
-import { BlockProps } from './Block.types';
-import Link, { LinkProps } from '../Link';
 import Container from '@mui/material/Container';
 
-export const Block = (props: BlockProps) => {
+import sidekick from '@last-rev/contentful-sidekick-util';
+
+import ContentModule from '../ContentModule';
+
+import Link, { LinkProps } from '../Link';
+import { BlockProps } from './Block.types';
+
+const Block = (props: BlockProps) => {
   const { variant, introText, eyebrow, title, subtitle, body, mediaItems, actions, link, sidekickLookup } = props;
 
   const extraProps = link
@@ -23,7 +27,7 @@ export const Block = (props: BlockProps) => {
     <Root data-testid="Block" {...sidekick(sidekickLookup)} {...props} variant={variant}>
       {!!introText && (
         <IntroTextWrapper>
-          <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} />
+          <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
         </IntroTextWrapper>
       )}
 
@@ -33,13 +37,13 @@ export const Block = (props: BlockProps) => {
             {!!eyebrow && <Eyebrow label={eyebrow} />}
 
             {!!title && (
-              <Title {...sidekick(sidekickLookup, 'title')} data-testid="Block-title" component="h2">
+              <Title {...sidekick(sidekickLookup, 'title')} data-testid="Block-title" variant="h2">
                 {title}
               </Title>
             )}
 
             {!!subtitle && (
-              <Subtitle {...sidekick(sidekickLookup, 'subtitle')} data-testid="Block-subtitle">
+              <Subtitle {...sidekick(sidekickLookup, 'subtitle')} data-testid="Block-subtitle" variant="h3">
                 {subtitle}
               </Subtitle>
             )}

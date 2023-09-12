@@ -1,8 +1,9 @@
 import React from 'react';
-import { responsiveMediaMock } from '../Media/Media.mock';
+import { responsivemediaBaseImageMock } from '../Media/Media.mock';
 import Hero from './Hero';
-import heroMock from './Hero.mock';
+import { heroBaseMock } from './Hero.mock';
 
+//TODO: Cleanup
 export default {
   title: '3. Modules/Hero',
   component: Hero,
@@ -64,25 +65,23 @@ export default {
   }
 };
 
-export const Default = {
-  args: { ...heroMock(), background: undefined }
+const Template = (args: JSX.IntrinsicAttributes) => <Hero id={''} __typename={''} theme={undefined} {...args} />;
+export const Default = Template.bind({});
+Default.args = { ...heroBaseMock(), background: undefined };
+
+export const BackgroundImage = Template.bind({});
+BackgroundImage.args = {
+  ...heroBaseMock(),
+  backgroundColor: null,
+  contentHeight: 'xl',
+  contentWidth: 'xl'
 };
 
-export const BackgroundImage = {
-  args: {
-    ...heroMock(),
-    backgroundColor: null,
-    contentHeight: 'xl',
-    contentWidth: 'xl'
-  }
-};
-
-export const ResponsiveBackgroundImage = {
-  args: {
-    ...heroMock,
-    backgroundColor: null,
-    contentHeight: 'xl',
-    contentWidth: 'xl',
-    background: responsiveMediaMock
-  }
+export const ResponsiveBackgroundImage = Template.bind({});
+ResponsiveBackgroundImage.args = {
+  ...heroBaseMock,
+  backgroundColor: null,
+  contentHeight: 'xl',
+  contentWidth: 'xl',
+  background: responsivemediaBaseImageMock
 };

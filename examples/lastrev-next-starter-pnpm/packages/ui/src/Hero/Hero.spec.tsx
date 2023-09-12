@@ -3,7 +3,7 @@ import mountWithRouter from '../../../cypress/mountWithRouter';
 import Hero from './Hero';
 import { HeroProps } from './Hero.types';
 import mockContent from './Hero.mock';
-import getFirstOfArray from '../../utils/getFirstOfArray';
+import getFirstOfArray from '../utils/getFirstOfArray';
 
 let mockedContent: HeroProps = { __typename: 'Hero', id: 'hero', title: 'test', theme: {} };
 

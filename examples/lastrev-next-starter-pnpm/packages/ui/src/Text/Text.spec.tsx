@@ -15,9 +15,9 @@ import mockContent, {
   embeddedAssetBlockNode,
   hyperlinkNode,
   withLinksMock
-} from './Text.mock';
-import { mediaMock } from '../Media/Media.mock';
-import linkMock from '../Link/Link.mock';
+} from '../RichText/RichText.mock';
+import { mediaBaseImageMock } from '../Media/Media.mock';
+import linkButtonMock from '../Link/Link.mock';
 
 const variantNodeTypeMapper = {
   [BLOCKS.PARAGRAPH]: 'body1',
@@ -70,7 +70,7 @@ describe('Text', () => {
 
       context('other node types', () => {
         it('renders text with embedded inline entry', () => {
-          const mockedEntry = linkMock();
+          const mockedEntry = linkButtonMock();
           const mockedContent: TextProps = dynamicMock(
             [contentNode([embeddedEntryInlineNode(mockedEntry.id || '')])],
             [mockedEntry]
@@ -83,7 +83,7 @@ describe('Text', () => {
         });
 
         it('renders text with embedded entry block', () => {
-          const mockedEntry = linkMock();
+          const mockedEntry = linkButtonMock();
           const mockedContent: TextProps = dynamicMock([embeddedEntryBlockNode(mockedEntry.id || '')], [mockedEntry]);
           mountWithRouter(<Text {...mockedContent} />);
           cy.get('[data-testid=Text-embedded-entry-block]')
@@ -93,7 +93,7 @@ describe('Text', () => {
         });
 
         it('renders text with embedded asset block', () => {
-          const mockedMedia = mediaMock();
+          const mockedMedia = mediaBaseImageMock();
           const mockedContent: TextProps = dynamicMock(
             [embeddedAssetBlockNode(mockedMedia.id || '')],
             [],
@@ -107,7 +107,7 @@ describe('Text', () => {
         });
 
         it('renders text with hyperlink', () => {
-          const mockedLink = linkMock();
+          const mockedLink = linkButtonMock();
           const mockedContent: TextProps = dynamicMock(
             [hyperlinkNode(mockedLink.text || '', mockedLink.href as string)],
             [],

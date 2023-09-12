@@ -1,5 +1,5 @@
 import Text from './Text';
-import { baseMock, complexMock, formattedMock } from './Text.mock';
+import { baseMock, complexMock, formattedMock } from '../RichText/RichText.mock';
 
 const meta = {
   title: '2. Components/ Text',

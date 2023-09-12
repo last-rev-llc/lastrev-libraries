@@ -1,77 +1,35 @@
+import { linkButtonMock } from '../Link/Link.mock';
 import { lorem } from 'faker';
-import { capitalize } from 'lodash';
+import { mediaBaseImageMock } from '../Media/Media.mock';
+import { richTextMock } from '../RichText/RichText.mock';
 import { HeroProps } from './Hero.types';
-import { linkMock } from '../Link/Link.mock';
-import { mediaMock } from '../Media/Media.mock';
 
-export const baseMock = (): HeroProps => ({
+const heroDefaultMock: HeroProps = {
   id: 'hero',
   __typename: 'Hero',
   variant: 'default',
-  // overline: capitalize(lorem.words(3)),
-  title: capitalize(lorem.words(3)),
-  subtitle: lorem.sentence(),
-  images: [mediaMock()],
-  body: {
-    __typename: 'RichText',
-    json: {
-      nodeType: 'document',
-      data: {},
-      content: [
-        {
-          nodeType: 'ordered-list',
-          data: {},
-          content: [
-            {
-              data: {},
-              content: [
-                {
-                  data: {},
-                  content: [
-                    {
-                      data: {},
-                      marks: [],
-                      value: 'Item One',
-                      nodeType: 'text'
-                    }
-                  ],
-                  nodeType: 'paragraph'
-                }
-              ],
-              nodeType: 'list-item'
-            },
-            {
-              data: {},
-              content: [
-                {
-                  data: {},
-                  content: [
-                    {
-                      data: {},
-                      marks: [],
-                      value: 'Item One',
-                      nodeType: 'text'
-                    }
-                  ],
-                  nodeType: 'paragraph'
-                }
-              ],
-              nodeType: 'list-item'
-            }
-          ]
-        }
-      ]
+  overline: 'This is the overline',
+  title: 'This is the title',
+  subtitle: 'This is the subtitle',
+  image: mediaBaseImageMock({ title: 'Media 1' }),
+  body: richTextMock({ text: 'This is the body' }),
+  actions: [
+    linkButtonMock({ text: 'Action 1', variant: 'button-contained' }),
+    linkButtonMock({ text: 'Action 2', variant: 'button-outlined' })
+  ],
+  background: {
+    alt: lorem.sentence(),
+    file: {
+      url: 'https://i.picsum.photos/id/327/2800/800.jpg?hmac=lqhEpkLvfvBfoZSxszEf8pOTbitkmHpJmZsoQYcrWkI'
     },
-    links: {
-      entries: [],
-      assets: []
-    }
+    title: lorem.sentence()
   },
-  actions: [linkMock({ text: 'Hero CTA' })],
-  background: mediaMock(),
   backgroundColor: 'white'
-  // contentHeight: 'xl',
-  // contentWidth: 'xl'
+};
+
+export const heroBaseMock = ({ ...override } = {}) => ({
+  ...heroDefaultMock,
+  ...override
 });
 
-export default baseMock;
+export default heroBaseMock;

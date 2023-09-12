@@ -1,0 +1,29 @@
+fragment CollectionExpanding_FieldsFragment on CollectionExpanding {
+  ...Content_BaseFragment
+  variant
+  introText {
+    ...Text_IntroTextFragment
+  }
+  itemsVariant
+  itemsWidth
+}
+
+# Base fragment used everywhere there's a CollectionExpanding
+fragment CollectionExpanding_BaseFragment on CollectionExpanding {
+  ...CollectionExpanding_FieldsFragment
+  items {
+    ...Card_BaseFragment
+    ...Blog_CardFragment
+    ...Link_CardFragment
+    ...Media_BaseFragment
+  }
+}
+
+# Specific fragment used for the RichText embedded entries
+fragment CollectionExpanding_RichTextFragment on CollectionExpanding {
+  ...CollectionExpanding_FieldsFragment
+  items {
+    ...Card_RichTextFragment
+    ...Link_CardFragment
+  }
+}

@@ -1,59 +1,48 @@
-import { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
+import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 import { Palette } from '@mui/material/styles';
+
+import { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
 
 type Color = keyof Palette;
 
-export interface HeroProps extends Hero_BaseFragmentFragment {
-  // variant?: any;
-  // id: string;
-  // __typename?: string;
-  // overline?: string;
-  // title?: string;
-  // subtitle?: string;
-  // body?: RichText;
-  // actions?: any[];
-  // /**
-  //  * @deprecated use `images` instead
-  //  */
-  // image?: MediaProps | MediaProps[];
-  // images?: MediaProps[];
-  // background?: MediaProps;
-  // backgroundColor?: Color | 'white' | 'black';
-  // divider?: MediaProps;
-  // contentWidth?: false | Breakpoint | undefined;
-  // contentHeight?: 'sm' | 'md' | 'lg' | 'xl';
-  // theme?: any;
-  // styles?: {
-  //   root?: SystemCssProperties;
-  //   gridContainer?: SystemCssProperties & { spacing: any };
-  //   gridItem?: SystemCssProperties & { xs: any; sm: any; md: any };
-  //   gridItems?: Array<SystemCssProperties & { xs: any; sm: any; md: any }>;
-  // };
-  // sidekickLookup?: any;
-  // disableGutters?: boolean;
+//TODO
+export enum HeroVariants {
+  default = 'default'
 }
 
+export interface HeroProps extends Hero_BaseFragmentFragment {}
+
 export interface HeroClasses {
-  /** Styles applied to the root element. */
   root: string;
-  /** Styles applied to the mediaRoot element. */
   mediaRoot: string;
-  /** Styles applied to the backgroundRoot element. */
   backgroundRoot: string;
-  /** Styles applied to the actionsRoot element. */
   actionsRoot: string;
-  /** Styles applied to the contentContainer element. */
   contentContainer: string;
-  /** Styles applied to the root element when contentHeigh is sm. */
   contentHeightSM: string;
-  /** Styles applied to the root element when contentHeigh is md. */
   contentHeightMD: string;
-  /** Styles applied to the root element when contentHeigh is lg. */
   contentHeightLG: string;
-  /** Styles applied to the root element when contentHeigh is xl. */
   contentHeightXL: string;
 }
 
 export declare type HeroClassKey = keyof HeroClasses;
-declare const accordionClasses: HeroClasses;
-export default accordionClasses;
+
+declare module '@mui/material/styles' {
+  export interface ComponentNameToClassKey {
+    Hero: HeroClassKey;
+  }
+  export interface ComponentsPropsList {
+    Hero: HeroProps;
+  }
+}
+declare module '@mui/material/styles' {
+  interface Components {
+    Hero?: {
+      defaultProps?: ComponentsProps['Hero'];
+      styleOverrides?: ComponentsOverrides<Theme>['Hero'];
+      /**
+       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
+       */
+      variants?: ComponentsVariants['Hero'];
+    };
+  }
+}

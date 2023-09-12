@@ -1,5 +1,6 @@
+import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+
 import { Block_BaseFragmentFragment } from '@graphql-sdk/types';
-import { ComponentsOverrides, ComponentsProps, ComponentsVariants } from '@mui/material';
 
 export enum BlockVariants {
   default = 'default',

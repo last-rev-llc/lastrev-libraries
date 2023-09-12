@@ -1,0 +1,46 @@
+fragment Blog_BaseFragment on Blog {
+  ...Content_BaseFragment
+  title
+  slug
+  header {
+    ...Header_BaseFragment
+  }
+  footer {
+    ...ContentModule_BaseFragment
+  }
+  featuredMedia {
+    ...Media_BaseFragment
+  }
+  summary
+  pubDate
+  body {
+    ...RichText_BaseFragment
+  }
+  author {
+    ...Person_Card_Fragment
+  }
+  relatedItems {
+    ...Link_BaseFragment
+  }
+  breadcrumbs {
+    ...Link_BaseFragment
+  }
+  contents {
+    ...ContentModule_BaseFragment
+  }
+  seo
+  modelUsed
+  promptedBy
+  imagesGeneratedBy
+}
+
+fragment Blog_CardFragment on Blog {
+  ...Content_BaseFragment
+  title
+  slug
+  featuredMedia {
+    ...Media_BaseFragment
+  }
+  summary
+  pubDate
+}

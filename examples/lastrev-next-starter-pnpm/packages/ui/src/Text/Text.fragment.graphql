@@ -3,6 +3,9 @@ fragment Text_FieldsFragment on Text {
   variant
   align
   styles
+  eyebrow
+  title
+  subtitle
 }
 
 fragment Text_BaseFragment on Text {

@@ -1,5 +1,16 @@
 import { Media_BaseFragmentFragment } from '@graphql-sdk/types';
 
+export interface FileProps {
+  url?: string;
+  width?: number;
+  height?: number;
+}
+export interface Asset {
+  file: FileProps;
+  title?: string;
+  description?: string;
+}
+
 export interface MediaProps extends Media_BaseFragmentFragment {
   sx?: any;
   testId?: string;

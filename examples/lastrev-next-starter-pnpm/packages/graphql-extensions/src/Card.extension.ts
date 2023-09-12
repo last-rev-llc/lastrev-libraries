@@ -13,6 +13,7 @@ export const typeDefs = gql`
     # media: [Media]
     actions: [Link]
     link: Link
+    variant: String
   }
 `;
 

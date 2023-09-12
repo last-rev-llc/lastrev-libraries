@@ -1,15 +1,16 @@
 import * as React from 'react';
-import mount from '../../../cypress/mount';
+import { mount } from '@cypress/react18';
 import Image from './Image';
-import mockContent from './Image.mock';
+import { imageBaseMock } from './Image.mock';
 import { ImageProps } from './Image.types';
 
-let mockedContent: ImageProps = {};
+let mockedContent: ImageProps = imageBaseMock;
 
 beforeEach(() => {
-  mockedContent = { ...mockContent() };
+  mockedContent = { ...imageBaseMock() };
 });
 
+// TODO: Fix alt text types issue
 describe('Image', () => {
   context('renders correctly', () => {
     it('renders an image', () => {

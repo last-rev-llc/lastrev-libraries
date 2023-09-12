@@ -1,2 +1,2 @@
+export type { TextProps, TextClassKey, TextClasses } from './Text.types';
 export { default } from './Text';
-export type { RichText, TextProps, TextClassKey, TextClasses } from './Text.types';

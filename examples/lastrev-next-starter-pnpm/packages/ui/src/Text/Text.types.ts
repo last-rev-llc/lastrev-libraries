@@ -1,6 +1,6 @@
 import { Options } from '@contentful/rich-text-react-renderer';
-import { MediaProps } from '../Media';
-import { RichText_BaseFragmentFragment, Text_BaseFragmentFragment } from '../../../graphql-sdk/src/types';
+
+import { Text_BaseFragmentFragment } from '@graphql-sdk/types';
 
 interface Content {
   __typename?: string;
@@ -13,23 +13,22 @@ export interface TextProps extends Text_BaseFragmentFragment {
   };
   sx?: any;
   variant?: string;
-  align?: 'left' | 'center' | 'right' | any;
+  align?: 'left' | 'center' | 'right' | 'justified' | any;
   renderNode?: any;
   renderMark?: any;
   renderOptions?: Options;
 }
 
-export interface TextLinks {
-  entries?: Array<Content>;
-  assets?: Array<MediaProps>;
-}
-export interface RichText extends RichText_BaseFragmentFragment {}
-
 export interface TextClasses {
   /** Styles applied to the root element. */
   root: string;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
 }
 
 export declare type TextClassKey = keyof TextClasses;
-declare const accordionClasses: TextClasses;
-export default accordionClasses;
+
+declare const textClasses: TextClasses;
+
+export default textClasses;

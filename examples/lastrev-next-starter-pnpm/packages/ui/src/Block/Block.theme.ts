@@ -1,6 +1,6 @@
 import { Theme, ThemeOptions, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
-export const defaultProps = {};
+export const defaultProps: ComponentsProps['Block'] = {};
 
 // https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
@@ -62,7 +62,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
 
   title: ({ theme }) => ({
     ...theme.typography.h3,
-    textAlign: 'center',
+    textAlign: 'right',
     marginBottom: theme.spacing(2),
 
     [theme.breakpoints.up('md')]: {

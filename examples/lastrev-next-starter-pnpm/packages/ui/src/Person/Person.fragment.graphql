@@ -1,0 +1,49 @@
+# TOO): Update
+fragment Person_BaseFragment on Person {
+  ...Content_BaseFragment
+  header {
+    ...Header_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+  slug
+  name
+  jobTitle
+  email
+  image {
+    ...Media_BaseFragment
+  }
+  # featuredMedia {
+  #   ...Media_BaseFragment
+  # }
+  body {
+    ...RichText_BaseFragment
+  }
+  socialLinks {
+    ...Link_BaseFragment
+  }
+}
+
+fragment Person_Card_Fragment on Person {
+  ...Content_BaseFragment
+  header {
+    ...Header_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+  slug
+  name
+  jobTitle
+  email
+  image {
+    ...Media_BaseFragment
+  }
+  socialLinks {
+    ...Link_BaseFragment
+  }
+  body {
+    ...RichText_BaseFragment
+  }
+}

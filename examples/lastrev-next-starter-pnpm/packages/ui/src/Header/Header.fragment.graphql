@@ -1,0 +1,27 @@
+# TODO: Update to content model
+fragment Header_BaseFragment on Header {
+  ...Content_BaseFragment
+  logo {
+    ...Media_BaseFragment
+  }
+  logoUrl {
+    ...Link_BaseFragment
+  }
+  navigationItems {
+    ...NavigationItem_BaseFragment
+  }
+  colorScheme
+  ctAs {
+    ...Link_BaseFragment
+  }
+  mobileCtAs {
+    ...Link_BaseFragment
+  }
+  supernavIcon {
+    ...Media_BaseFragment
+  }
+  supernavText
+  supernavLink {
+    ...Link_BaseFragment
+  }
+}
