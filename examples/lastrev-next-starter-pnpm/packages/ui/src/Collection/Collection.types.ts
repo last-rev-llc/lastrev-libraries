@@ -2,26 +2,26 @@ import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/m
 
 import { Collection_BaseFragmentFragment } from '@graphql-sdk/types';
 
+import { CardVariants } from '../Card/Card.types';
+
 type CollectionVariants =
   | 'default'
-  | 'defaultCircleImage'
   | 'onePerRow'
   | 'twoPerRow'
-  | 'twoPerRowOffset'
   | 'threePerRow'
   | 'fourPerRow'
-  | 'customerLogos'
-  | 'contentGrid'
-  | 'pricing'
+  | 'fivePerRow'
   | undefined;
 
 export interface CollectionProps extends Collection_BaseFragmentFragment {
   variant?: CollectionVariants;
+  itemsVariant?: CardVariants;
 }
 
 export interface CollectionClasses {
   root: string;
   contentContainer: string;
+  introTextWrapper: string;
   introText: string;
   itemsContainer: string;
   item: string;
@@ -39,6 +39,7 @@ declare module '@mui/material/styles' {
     Collection: CollectionProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     Collection?: {

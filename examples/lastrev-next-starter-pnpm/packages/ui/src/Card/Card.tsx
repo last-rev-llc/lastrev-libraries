@@ -2,7 +2,7 @@ import React from 'react';
 
 import { styled } from '@mui/material/styles';
 import MuiCard from '@mui/material/Card';
-import CardMedia from '@mui/material/CardMedia';
+import { default as MuiCardMedia } from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardActionArea from '@mui/material/CardActionArea';
@@ -12,9 +12,9 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
+import Link from '../Link';
 
 import { CardProps } from './Card.types';
-import Link from '../Link';
 import { LinkProps } from '../Link/Link.types';
 
 import getFirstOfArray from '../utils/getFirstOfArray';
@@ -25,7 +25,7 @@ export const Card = (inProps: CardProps) => {
     name: 'Card',
     props: inProps
   });
-  const { id, media, eyebrow, title, subtitle, body, link, actions, variant, loading, position, sidekickLookup } =
+  const { id, media, overline, title, subtitle, body, link, actions, variant, loading, position, sidekickLookup } =
     props;
 
   const image = getFirstOfArray(media);
@@ -43,44 +43,38 @@ export const Card = (inProps: CardProps) => {
         {!!link ? <CardLink component={Link} noLinkStyle {...(link as any)} /> : null}
         {image || loading ? (
           // @ts-ignore: TODO
-          <Media ownerState={ownerState}>
-            {eyebrow ? (
-              <Eyebrow
-                {...sidekick(sidekickLookup, 'eyebrow')}
-                data-testid="Card-eyebrow"
-                // @ts-ignore: TODO
-                ownerState={ownerState}>
-                {eyebrow}
-              </Eyebrow>
-            ) : null}
-            {!loading && media?.length !== 2 && (
-              <ContentModule {...sidekick(sidekickLookup, 'media')} {...image} data-testid="Card-media" />
+          <CardMedia ownerState={ownerState}>
+            {!loading && (
+              <ContentModule
+                __typename="Media"
+                {...sidekick(sidekickLookup, 'media')}
+                {...image}
+                data-testid="Card-media"
+              />
             )}
-            {loading && (
-              <Skeleton>
-                <ContentModule {...sidekick(sidekickLookup, 'media')} {...image} testId="Card-media" />
-              </Skeleton>
-            )}
-          </Media>
+
+            {loading && <Skeleton>TODO Image Placeholder</Skeleton>}
+          </CardMedia>
         ) : null}
 
-        {!loading && (title || subtitle || body || actions) ? (
+        {!loading && (overline || title || subtitle || body || actions) ? (
           // @ts-ignore: TODO
           <Content ownerState={ownerState}>
-            {eyebrow ? (
-              <Eyebrow
-                {...sidekick(sidekickLookup, 'eyebrow')}
-                data-testid="Card-eyebrow"
+            {overline ? (
+              <Overline
+                {...sidekick(sidekickLookup, 'overline')}
+                variant="overline"
+                data-testid="Card-overline"
                 // @ts-ignore: TODO
                 ownerState={ownerState}>
-                {eyebrow}
-              </Eyebrow>
+                {overline}
+              </Overline>
             ) : null}
 
             {title ? (
               <Title
                 {...sidekick(sidekickLookup, 'title')}
-                variant="h3"
+                variant="display5"
                 data-testid="Card-title"
                 // @ts-ignore: TODO
                 ownerState={ownerState}>
@@ -91,7 +85,7 @@ export const Card = (inProps: CardProps) => {
             {subtitle ? (
               <Subtitle
                 {...sidekick(sidekickLookup, 'subtitle')}
-                variant="h4"
+                variant="display6"
                 data-testid="Card-subtitle"
                 // @ts-ignore: TODO
                 ownerState={ownerState}>
@@ -102,7 +96,7 @@ export const Card = (inProps: CardProps) => {
             {body ? (
               <Body
                 __typename="Text"
-                variant="card"
+                variant="bodySmall"
                 {...sidekick(sidekickLookup, 'body')}
                 body={body}
                 ownerState={ownerState}
@@ -127,37 +121,28 @@ export const Card = (inProps: CardProps) => {
             ) : null}
           </Content>
         ) : null}
+
         {loading ? (
           <Content data-testid="Card-ContentSkeleton">
-            <Typography>
+            <Overline variant="overline">
               <Skeleton width="100%" />
-            </Typography>
+            </Overline>
 
-            <Typography variant="h3" component="h3">
+            <Title variant="display5">
               <Skeleton width="100%" />
-            </Typography>
+            </Title>
 
-            <Typography variant="h4" component="h4">
+            <Subtitle variant="display6">
               <Skeleton width="100%" />
-              <br />
+            </Subtitle>
+
+            <Body variant="bodySmall">
               <Skeleton width="100%" />
-            </Typography>
+            </Body>
 
-            <Skeleton>
-              {body ? (
-                <ContentModule
-                  __typename="Text"
-                  variant="card"
-                  {...sidekick(sidekickLookup, 'body')}
-                  body={body}
-                  data-testid="Card-body"
-                />
-              ) : null}
-            </Skeleton>
-
-            <CardActions>
-              <Skeleton width={50} />
-            </CardActions>
+            <Actions>
+              <Skeleton width="100%" />
+            </Actions>
           </Content>
         ) : null}
       </Root>
@@ -173,7 +158,7 @@ const shouldForwardProp = (prop: string) =>
   prop !== 'media' &&
   prop !== 'actions' &&
   prop !== 'link' &&
-  prop !== 'eyebrow' &&
+  prop !== 'overline' &&
   prop !== 'ownerState' &&
   prop !== 'noLinkStyle' &&
   prop !== 'title' &&
@@ -191,40 +176,40 @@ const CardLink = styled(CardActionArea, {
   name: 'Card',
   slot: 'CardLink',
 
-  overridesResolver: (_, styles) => [styles.cardLink]
+  overridesResolver: (_, styles) => [styles.link]
 })(() => ({}));
 
-const Media = styled(CardMedia, {
+const CardMedia = styled(MuiCardMedia, {
   name: 'Card',
   slot: 'CardMedia',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardMedia]
+  overridesResolver: (_, styles) => [styles.media]
 })(() => ({}));
 
 const Actions = styled(CardActions, {
   name: 'Card',
-  slot: 'CardActions',
+  slot: 'Actions',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardActions]
+  overridesResolver: (_, styles) => [styles.actions]
 })(() => ({}));
 
 const Action = styled(ContentModule, {
   name: 'Card',
   slot: 'CardAction',
-  overridesResolver: (_, styles) => [styles.cardAction]
+  overridesResolver: (_, styles) => [styles.action]
 })(() => ({}));
 
 const Content = styled(CardContent, {
   name: 'Card',
-  slot: 'CardContent',
+  slot: 'Content',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.cardContent]
+  overridesResolver: (_, styles) => [styles.content]
 })(() => ({}));
 
-const Eyebrow = styled(Typography, {
+const Overline = styled(Typography, {
   name: 'Card',
-  slot: 'Eyebrow',
-  overridesResolver: (_, styles) => [styles.eyebrow]
+  slot: 'Overline',
+  overridesResolver: (_, styles) => [styles.overline]
 })(() => ({}));
 
 const Title = styled(Typography, {

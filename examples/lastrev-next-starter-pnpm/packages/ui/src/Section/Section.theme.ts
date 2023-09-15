@@ -7,10 +7,8 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-// https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['Section'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
   root: ({ theme, hasBackground }) => {
     return {
@@ -109,7 +107,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
   // }
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['Section'] => [];
 
 export const sectionTheme = (theme: Theme): ThemeOptions => ({

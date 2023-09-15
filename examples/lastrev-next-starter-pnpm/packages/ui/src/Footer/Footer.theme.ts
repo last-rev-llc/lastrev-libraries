@@ -7,10 +7,8 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-// https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['Footer'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme }) => ({
     padding: theme.spacing(4, 2)
@@ -107,7 +105,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   legalLink: () => ({})
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['Footer'] => [];
 
 export const footerTheme = (theme: Theme): ThemeOptions => ({

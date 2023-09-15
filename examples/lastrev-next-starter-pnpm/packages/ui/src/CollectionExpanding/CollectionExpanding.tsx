@@ -4,6 +4,10 @@ import styled from '@mui/system/styled';
 
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -13,6 +17,7 @@ import ContentModule from '../ContentModule';
 import { CollectionExpandingProps } from './CollectionExpanding.types';
 
 export const CollectionExpanding = ({
+  id,
   items,
   itemsWidth,
   variant,
@@ -21,6 +26,12 @@ export const CollectionExpanding = ({
   introText,
   ...props
 }: CollectionExpandingProps) => {
+  const [value, setValue] = React.useState('0');
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setValue(newValue);
+  };
+
   return (
     <ErrorBoundary>
       <Root
@@ -30,28 +41,38 @@ export const CollectionExpanding = ({
         {...props}
         {...sidekick(sidekickLookup)}>
         {introText && (
-          <Container>
-            <IntroText
-              {...introText}
-              {...sidekick(sidekickLookup, 'introText')}
-              data-testid="CollectionExpanding-introText"
-            />
-          </Container>
+          <IntroTextWrapper>
+            <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
+          </IntroTextWrapper>
         )}
         <ContentContainer>
           {!!items?.length && (
-            <ItemsContainer id="items">
-              {items?.map((item, index) => (
-                <Item
-                  // @ts-ignore: TODO: ID not recognized
-                  key={item?.id}
-                  {...item}
-                  // @ts-ignore: TODO: Variant does not exist on Section
-                  variant={itemsVariant ?? item?.variant}
-                  position={index + 1}
-                />
-              ))}
-            </ItemsContainer>
+            <TabContext value={value}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                {/* TODO: Add "orientation" to the expanding content type */}
+                <TabList onChange={handleChange} orientation="horizontal" aria-label="TODO">
+                  {items?.map(
+                    (
+                      item: any,
+                      index: number // TODO: Fix type
+                    ) => (
+                      <Tab label={item.title} value={index.toString()} key={`${!id}-tab-${item?.id}-${index}`} />
+                    )
+                  )}
+                </TabList>
+              </Box>
+
+              {items?.map(
+                (
+                  item: any,
+                  index: number // TODO: Fix type
+                ) => (
+                  <TabPanel value={index.toString()} key={`${!id}-tab-panel-${item?.id}-${index}`}>
+                    <Item {...item} variant={itemsVariant ?? item?.variant} />
+                  </TabPanel>
+                )
+              )}
+            </TabContext>
           )}
         </ContentContainer>
       </Root>
@@ -75,18 +96,17 @@ const ContentContainer = styled(Container, {
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>``;
 
+const IntroTextWrapper = styled(Box, {
+  name: 'CollectionExpanding',
+  slot: 'IntroTextWrapper',
+  overridesResolver: (_, styles) => [styles.introTextWrapper]
+})(() => ({}));
+
 const IntroText = styled(ContentModule, {
   name: 'CollectionExpanding',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
-})<{ variant?: string }>``;
-
-const ItemsContainer = styled(Box, {
-  name: 'CollectionExpanding',
-  slot: 'ItemsContainer',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.itemsContainer]
-})<{ variant?: string }>``;
+})(() => ({}));
 
 const Item = styled(ContentModule, {
   name: 'CollectionExpanding',

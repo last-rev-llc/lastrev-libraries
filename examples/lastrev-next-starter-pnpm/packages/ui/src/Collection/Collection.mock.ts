@@ -17,4 +17,46 @@ export const collectionBaseMock = ({ ...override } = {}) => ({
   ...override
 });
 
+export const collectionIconMock = ({ ...override } = {}) => ({
+  ...collectionDefaultMock,
+  ...override,
+  itemsVariant: 'icon'
+});
+
+export const collectionLogoMock = ({ ...override } = {}) => ({
+  ...collectionDefaultMock,
+  ...override,
+  itemsVariant: 'logo'
+});
+
+export const collectionMediaMock = ({ ...override } = {}) => ({
+  ...collectionDefaultMock,
+  ...override,
+  itemsVariant: 'media'
+});
+
+export const collectionPricingMock = ({ ...override } = {}) => ({
+  ...collectionDefaultMock,
+  ...override,
+  itemsVariant: 'pricing'
+});
+
+export const collectionPersonMock = ({ ...override } = {}) => ({
+  ...collectionDefaultMock,
+  ...override,
+  itemsVariant: 'person'
+});
+
+export const collectionQuoteMock = ({ ...override } = {}) => ({
+  ...collectionDefaultMock,
+  ...override,
+  itemsVariant: 'quote'
+});
+
+export const collectionBlogMock = ({ ...override } = {}) => ({
+  ...collectionDefaultMock,
+  ...override,
+  itemsVariant: 'blog'
+});
+
 export default collectionBaseMock;

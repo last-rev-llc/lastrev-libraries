@@ -7,10 +7,8 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-// https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['Blog'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   root: ({}) => ({}),
 
@@ -104,7 +102,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   relatedItems: ({}) => ({})
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['Blog'] => [];
 
 export const blogTheme = (theme: Theme): ThemeOptions => ({

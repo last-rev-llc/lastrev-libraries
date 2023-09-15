@@ -8,10 +8,8 @@ import {
   alpha
 } from '@mui/material/styles';
 
-// https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['Form'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
   root: ({ theme, ownerState }) => ({
     'width': '100%',
@@ -317,7 +315,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
   })
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['Form'] => [];
 
 export const formTheme = (theme: Theme): ThemeOptions => ({

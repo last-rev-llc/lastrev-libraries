@@ -20,8 +20,10 @@ export default {
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Default = {
-  args: {
-    ...blockBaseMock()
-  }
-};
+export const Default = { args: { ...blockBaseMock() } };
+export const ContentOnRight = { args: { ...blockBaseMock({ variant: 'mediaAbove' }) } };
+export const ContentOnRightFullBleed = { args: { ...blockBaseMock({ variant: 'contentOnRightFullBleed' }) } };
+export const ContentOnLeft = { args: { ...blockBaseMock({ variant: 'contentOnLeft' }) } };
+export const ContentOnLeftFullBleed = { args: { ...blockBaseMock({ variant: 'contentOnLeftFullBleed' }) } };
+export const ContentBelow = { args: { ...blockBaseMock({ variant: 'contentBelow' }) } };
+export const ContentAbove = { args: { ...blockBaseMock({ variant: 'contentAbove' }) } };

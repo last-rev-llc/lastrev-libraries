@@ -3,7 +3,7 @@ fragment Text_FieldsFragment on Text {
   variant
   align
   styles
-  eyebrow
+  overline
   title
   subtitle
 }

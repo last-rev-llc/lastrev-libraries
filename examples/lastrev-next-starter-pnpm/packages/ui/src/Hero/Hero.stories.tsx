@@ -1,5 +1,5 @@
 import React from 'react';
-import { responsivemediaBaseImageMock } from '../Media/Media.mock';
+import { responsiveMediaBaseImageMock } from '../Media/Media.mock';
 import Hero from './Hero';
 import { heroBaseMock } from './Hero.mock';
 
@@ -83,5 +83,5 @@ ResponsiveBackgroundImage.args = {
   backgroundColor: null,
   contentHeight: 'xl',
   contentWidth: 'xl',
-  background: responsivemediaBaseImageMock
+  background: responsiveMediaBaseImageMock
 };

@@ -22,6 +22,7 @@ export interface CollectionExpandingProps extends CollectionExpanding_BaseFragme
 export interface CollectionExpandingClasses {
   root: string;
   contentContainer: string;
+  introTextWrapper: string;
   introText: string;
   itemsContainer: string;
   item: string;

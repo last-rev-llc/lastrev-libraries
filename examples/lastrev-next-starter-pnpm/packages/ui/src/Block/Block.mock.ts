@@ -12,14 +12,11 @@ const blockDefaultMock: BlockProps = {
   __typename: 'Block',
   variant: 'default',
   introText: introTextMock(),
-  eyebrow: 'This is the Block eyebrow',
+  overline: 'This is the Block overline',
   title: 'This is the Block title',
   subtitle: 'This is the Block subtitle',
   body: richTextMock({ text: 'This is the Block body' }),
-  mediaItems: [
-    mediaBaseImageMock({ title: 'This is the Block Media 1' }),
-    mediaBaseImageMock({ title: 'This is the Block Media 2' })
-  ],
+  mediaItems: [mediaBaseImageMock({ title: 'This is the Block Media 1' })],
   actions: [
     linkButtonMock({ text: 'This is the Block Action 1', variant: 'button-contained' }),
     linkButtonMock({ text: 'This is the Block Action 2', variant: 'button-outlined' })
@@ -30,6 +27,42 @@ const blockDefaultMock: BlockProps = {
 export const blockBaseMock = ({ ...override } = {}) => ({
   ...blockDefaultMock,
   ...override
+});
+
+export const blockContentOnRightMock = ({ ...override } = {}) => ({
+  ...blockDefaultMock,
+  ...override,
+  variant: 'contentOnRight'
+});
+
+export const blockContentOnRightFullBleedMock = ({ ...override } = {}) => ({
+  ...blockDefaultMock,
+  ...override,
+  variant: 'contentOnRightFullBleed'
+});
+
+export const blockContentOnLeftMock = ({ ...override } = {}) => ({
+  ...blockDefaultMock,
+  ...override,
+  variant: 'contentOnLeft'
+});
+
+export const blockContentOnLeftFullBleedMock = ({ ...override } = {}) => ({
+  ...blockDefaultMock,
+  ...override,
+  variant: 'contentOnLeftFullBleed'
+});
+
+export const blockContentBelowMock = ({ ...override } = {}) => ({
+  ...blockDefaultMock,
+  ...override,
+  variant: 'contentBelow'
+});
+
+export const blockContentAboveMock = ({ ...override } = {}) => ({
+  ...blockDefaultMock,
+  ...override,
+  variant: 'contentAbove'
 });
 
 export default blockBaseMock;

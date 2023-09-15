@@ -9,10 +9,8 @@ import {
 
 const SUPERNAV_TIMEOUT = '15s';
 
-// https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['Header'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   root: ({ theme, elevation }) => ({
     padding: theme.spacing(0, 2),
@@ -282,7 +280,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   })
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['Header'] => [];
 
 export const headerTheme = (theme: Theme): ThemeOptions => ({

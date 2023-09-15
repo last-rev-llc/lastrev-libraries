@@ -4,7 +4,6 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import Chip, { ChipProps } from '@mui/material/Chip';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -13,26 +12,24 @@ import RichText from '../RichText';
 
 import { TextProps } from './Text.types';
 
-const Text = ({ body, align, eyebrow, title, subtitle, variant, sidekickLookup, sx, ...props }: TextProps) => {
+const Text = ({ body, align, overline, title, subtitle, variant, sidekickLookup, sx, ...props }: TextProps) => {
   return (
     <ErrorBoundary>
-      <Root
-        data-testid="Text-root"
-        variant={variant}
-        // sx={{ textAlign: align, ...sx, ...styles?.root }} // TODO
-
-        {...sidekick(sidekickLookup)}
-        {...props}>
-        {!!eyebrow && <Eyebrow data-testid="Text-eyebrow" label={eyebrow} {...sidekick(sidekickLookup, 'eyebrow')} />}
+      <Root data-testid="Text-root" variant={variant} {...sidekick(sidekickLookup)} {...props}>
+        {!!overline && (
+          <Overline data-testid="Text-overline" {...sidekick(sidekickLookup, 'overline')} variant="overline">
+            {overline}
+          </Overline>
+        )}
 
         {!!title && (
-          <Title data-testid="Text-title" component="h2" {...sidekick(sidekickLookup, 'title')}>
+          <Title data-testid="Text-title" variant="h2" {...sidekick(sidekickLookup, 'title')}>
             {title}
           </Title>
         )}
 
         {!!subtitle && (
-          <Subtitle data-testid="Text-subtitle" {...sidekick(sidekickLookup, 'subtitle')}>
+          <Subtitle data-testid="Text-subtitle" {...sidekick(sidekickLookup, 'subtitle')} variant="h3">
             {subtitle}
           </Subtitle>
         )}
@@ -51,11 +48,11 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string }>(() => ({}));
 
-const Eyebrow = styled(Chip, {
+const Overline = styled(Typography, {
   name: 'Text',
-  slot: 'Eyebrow',
-  overridesResolver: (_, styles) => [styles.eyebrow]
-})<ChipProps<React.ElementType>>(() => ({}));
+  slot: 'Overline',
+  overridesResolver: (_, styles) => [styles.overline]
+})<TypographyProps<React.ElementType>>(() => ({}));
 
 const Title = styled(Typography, {
   name: 'Text',

@@ -2,7 +2,7 @@ import Media from './Media';
 import {
   mediaBaseImageMock,
   mediaVideoMock,
-  responsivemediaBaseImageMock,
+  responsiveMediaBaseImageMock,
   mediaSVGMock,
   mediaExternalSVGMock
 } from './Media.mock';
@@ -27,6 +27,6 @@ export const InlineSVG = { args: { ...mediaSVGMock } };
 
 export const SVG = { args: { ...mediaExternalSVGMock } };
 
-export const Responsive = { args: { ...responsivemediaBaseImageMock } };
+export const Responsive = { args: { ...responsiveMediaBaseImageMock } };
 
 export const Video = { args: { ...mediaVideoMock() } };

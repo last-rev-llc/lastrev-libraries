@@ -9,30 +9,26 @@ import {
 
 export const defaultProps: ComponentsProps['Accordion'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
   root: () => ({}),
 
-  title: ({}) => ({}),
+  contentContainer: ({ theme }) => ({}),
 
-  accordionSummary: ({}) => ({}),
+  introTextWrapper: ({ theme }) => ({}),
 
-  accordionDegtails: ({}) => ({})
+  introText: ({}) => ({})
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (theme: Theme): ComponentsVariants['Accordion'] => [
-  //   {
-  //     props: {
-  //       variant: 'default'
-  //     },
-  //     // @ts-ignore: TODO
-  //     style: () => ({
-  //     })
-  //   },
+  {
+    props: {
+      variant: 'default'
+    },
+    style: {}
+  }
 ];
 
-export const accordionTheme = (theme: Theme): ThemeOptions => ({
+export const AccordionTheme = (theme: Theme): ThemeOptions => ({
   components: {
     Accordion: {
       defaultProps,
@@ -42,4 +38,4 @@ export const accordionTheme = (theme: Theme): ThemeOptions => ({
   }
 });
 
-export default accordionTheme;
+export default AccordionTheme;

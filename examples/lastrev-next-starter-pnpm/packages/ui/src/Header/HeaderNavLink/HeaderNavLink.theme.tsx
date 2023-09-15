@@ -1,9 +1,7 @@
 import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
-// https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['HeaderNavLink'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
   root: ({ theme, open }) => ({
     'height': '100%',
@@ -195,7 +193,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
   })
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['HeaderNavLink'] => [];
 
 export default (theme: Theme): ThemeOptions => ({

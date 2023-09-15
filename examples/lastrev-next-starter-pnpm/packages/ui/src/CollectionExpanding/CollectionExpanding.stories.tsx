@@ -1,46 +1,30 @@
-import React from 'react';
 import CollectionExpanding from './CollectionExpanding';
-import { CollectionExpandingBaseMock } from './CollectionExpanding.mock';
+import {
+  collectionExpandingBaseMock,
+  collectionExpandingBlocksMock,
+  collectionExpandingCardsMock,
+  collectionExpandingQuotesMock
+} from './CollectionExpanding.mock';
 
 export default {
-  title: '3. Modules/CollectionExpanding',
+  title: '3. Modules/Collection Expanding',
   component: CollectionExpanding,
-
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ['autodocs'],
-
   argTypes: {
     variant: {
-      name: 'Variant',
+      name: 'LayoutStyle',
       control: {
         type: 'select',
-        options: []
-      },
-      table: {
-        defaultValue: { summary: '' }
+        options: ['onePerRow', 'twoPerRow', 'threePerRow', 'fourPerRow']
       }
     },
-    itemsVariant: {
-      name: 'Items Variant',
-      control: {
-        type: 'select',
-        options: []
-      },
-      table: {
-        defaultValue: { summary: '' }
-      }
-    },
-    items: { name: 'Items' },
-    background: { name: 'Background' },
-    contentWidth: { name: 'Content Width' },
-    theme: { name: 'Theme' },
-    sidekickLookup: { table: { disable: true } }
+    background: { name: 'Background' }
   }
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Default = {
-  args: {
-    ...CollectionExpandingBaseMock()
-  }
-};
+export const Default = { args: { ...collectionExpandingBaseMock() } };
+export const Blocks = { args: { ...collectionExpandingBlocksMock() } };
+export const Cards = { args: { ...collectionExpandingCardsMock() } };
+export const Quotes = { args: { ...collectionExpandingQuotesMock() } };

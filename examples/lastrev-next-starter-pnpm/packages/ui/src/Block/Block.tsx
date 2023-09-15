@@ -3,8 +3,7 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import Box, { BoxProps } from '@mui/material/Box';
 import Typography, { TypographyProps } from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
-import Container from '@mui/material/Container';
+import Container, { ContainerProps } from '@mui/material/Container';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -14,7 +13,7 @@ import Link, { LinkProps } from '../Link';
 import { BlockProps } from './Block.types';
 
 const Block = (props: BlockProps) => {
-  const { variant, introText, eyebrow, title, subtitle, body, mediaItems, actions, link, sidekickLookup } = props;
+  const { variant, introText, overline, title, subtitle, body, mediaItems, actions, link, sidekickLookup } = props;
 
   const extraProps = link
     ? {
@@ -22,6 +21,9 @@ const Block = (props: BlockProps) => {
         href: link.href
       }
     : {};
+
+  // TODO: Better way?
+  const isFullBleed = variant?.indexOf('FullBleed') > -1;
 
   return (
     <Root data-testid="Block" {...sidekick(sidekickLookup)} {...props} variant={variant}>
@@ -31,19 +33,22 @@ const Block = (props: BlockProps) => {
         </IntroTextWrapper>
       )}
 
-      <ContentOuterWrapper styleVariant={variant}>
-        <ContentWrapper>
+      <ContentOuterWrapper
+        styleVariant={variant}
+        maxWidth={isFullBleed ? false : undefined}
+        disableGutters={isFullBleed}>
+        <MainContentWrapper variant={variant} maxWidth={false} sx={{ p: 0 }}>
           <Content>
-            {!!eyebrow && <Eyebrow label={eyebrow} />}
+            {!!overline && <Overline variant="overline">{overline}</Overline>}
 
             {!!title && (
-              <Title {...sidekick(sidekickLookup, 'title')} data-testid="Block-title" variant="h2">
+              <Title {...sidekick(sidekickLookup, 'title')} data-testid="Block-title" variant="display3">
                 {title}
               </Title>
             )}
 
             {!!subtitle && (
-              <Subtitle {...sidekick(sidekickLookup, 'subtitle')} data-testid="Block-subtitle" variant="h3">
+              <Subtitle {...sidekick(sidekickLookup, 'subtitle')} data-testid="Block-subtitle" variant="display4">
                 {subtitle}
               </Subtitle>
             )}
@@ -53,19 +58,19 @@ const Block = (props: BlockProps) => {
 
           {!!actions?.length && (
             <ActionsWrapper {...sidekick(sidekickLookup, 'actions')} data-testid="Block-actions">
-              {actions.map((action) => (
+              {actions.map((action: LinkProps) => (
                 <Action key={action?.id} {...(action as LinkProps)} />
               ))}
             </ActionsWrapper>
           )}
-        </ContentWrapper>
+        </MainContentWrapper>
 
         {!!mediaItems && (
-          <MediaWrapper {...extraProps} variant={variant}>
+          <SideContentWrapper {...extraProps} variant={variant} maxWidth={false} disableGutters={isFullBleed}>
             {mediaItems.map((media) => (
               <Media key={media?.id} {...sidekick(sidekickLookup, 'mediaItems')} {...media} />
             ))}
-          </MediaWrapper>
+          </SideContentWrapper>
         )}
       </ContentOuterWrapper>
     </Root>
@@ -80,7 +85,7 @@ const Block = (props: BlockProps) => {
 //   prop !== 'actions' &&
 //   prop !== 'media' &&
 //   prop !== 'introText' &&
-//   prop !== 'eyebrow' &&
+//   prop !== 'overline' &&
 //   prop !== 'ownerState' &&
 //   prop !== 'title' &&
 //   prop !== 'blockVariant';
@@ -95,14 +100,12 @@ const Root = styled(Box, {
 const ContentOuterWrapper = styled(Container, {
   name: 'Block',
   slot: 'ContentOuterWrapper',
-  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.contentOuterWrapper]
-})<{ styleVariant?: string }>(() => ({}));
+})<ContainerProps<React.ElementType>>(() => ({}));
 
 const IntroTextWrapper = styled(Box, {
   name: 'Block',
   slot: 'IntroTextWrapper',
-  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.introTextWrapper]
 })(() => ({}));
 
@@ -112,25 +115,23 @@ const IntroText = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.introText]
 })(() => ({}));
 
-const ContentWrapper = styled(Box, {
+const MainContentWrapper = styled(Container, {
   name: 'Block',
-  slot: 'ContentWrapper',
-  // shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.contentWrapper]
-})<BoxProps<React.ElementType>>(() => ({}));
+  slot: 'MainContentWrapper',
+  overridesResolver: (_, styles) => [styles.mainContentWrapper]
+})<ContainerProps<React.ElementType>>(() => ({}));
 
 const Content = styled(Box, {
   name: 'Block',
   slot: 'Content',
-  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.content]
 })<BoxProps<React.ElementType>>(() => ({}));
 
-const Eyebrow = styled(Chip, {
+const Overline = styled(Typography, {
   name: 'Block',
-  slot: 'Eyebrow',
-  overridesResolver: (_, styles) => [styles.eyebrow]
-})(() => ({}));
+  slot: 'Overline',
+  overridesResolver: (_, styles) => [styles.overline]
+})<TypographyProps<React.ElementType>>(() => ({}));
 
 const Title = styled(Typography, {
   name: 'Block',
@@ -150,12 +151,12 @@ const Body = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.body]
 })(() => ({}));
 
-const MediaWrapper = styled(Box, {
+const SideContentWrapper = styled(Container, {
   name: 'Block',
-  slot: 'MediaWrapper',
-  // shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.mediaWrapper]
-})<BoxProps<React.ElementType>>(() => ({}));
+  slot: 'SideContentWrapper',
+
+  overridesResolver: (_, styles) => [styles.sideContentWrapper]
+})<ContainerProps<React.ElementType>>(() => ({}));
 
 const Media = styled(ContentModule, {
   name: 'Block',
@@ -166,7 +167,7 @@ const Media = styled(ContentModule, {
 const ActionsWrapper = styled(Box, {
   name: 'Block',
   slot: 'ActionsWrapper',
-  // shouldForwardProp,
+
   overridesResolver: (_, styles) => [styles.actionsWrapper]
 })<BoxProps<React.ElementType>>(() => ({}));
 

@@ -1,9 +1,7 @@
 import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
-// https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['HeaderNavGroup'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
   root: ({ theme }) => ({
     [theme.breakpoints.up('md')]: {
@@ -70,7 +68,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
   })
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['HeaderNavGroup'] => [];
 
 export default (theme: Theme): ThemeOptions => ({

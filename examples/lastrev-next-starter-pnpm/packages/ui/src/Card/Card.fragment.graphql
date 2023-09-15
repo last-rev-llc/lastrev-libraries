@@ -3,7 +3,7 @@ fragment Card_FieldsFragment on Card {
   media {
     ...Media_BaseFragment
   }
-  eyebrow
+  overline
   title
   subtitle
   actions {

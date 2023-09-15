@@ -5,6 +5,8 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiAvatar from '@mui/material/Avatar';
 import ButtonBase from '@mui/material/ButtonBase';
+import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 

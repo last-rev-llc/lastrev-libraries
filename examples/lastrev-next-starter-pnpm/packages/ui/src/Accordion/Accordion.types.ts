@@ -1,30 +1,36 @@
-import { RichText } from '../Text';
 import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-export interface AccordionProps {
-  __typename?: string;
-  internalTitle?: string;
-  variant?: any;
-  title?: string;
-  body?: RichText;
-  sidekickLookup?: any;
-  children?: any;
-  expanded?: boolean;
-  onClick?: (event?: any) => void;
+import { Accordion_BaseFragmentFragment } from '@graphql-sdk/types';
+
+type AccordionVariants =
+  | 'default'
+  | 'defaultCircleImage'
+  | 'onePerRow'
+  | 'twoPerRow'
+  | 'twoPerRowOffset'
+  | 'threePerRow'
+  | 'fourPerRow'
+  | 'customerLogos'
+  | 'contentGrid'
+  | 'pricing'
+  | undefined;
+
+export interface AccordionProps extends Accordion_BaseFragmentFragment {
+  variant?: AccordionVariants;
 }
 
 export interface AccordionClasses {
   root: string;
-  rounded: string;
-  expanded: string;
-  disabled: string;
-  gutters: string;
-  region: string;
+  contentContainer: string;
+  introTextWrapper: string;
+  introText: string;
+  itemsContainer: string;
+  item: string;
+  actionsContainer: string;
+  action: string;
 }
 
 export declare type AccordionClassKey = keyof AccordionClasses;
-declare const accordionClasses: AccordionClasses;
-export default accordionClasses;
 
 declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
@@ -35,7 +41,6 @@ declare module '@mui/material/styles' {
   }
 }
 declare module '@mui/material/styles' {
-  
   interface Components {
     Accordion?: {
       defaultProps?: ComponentsProps['Accordion'];

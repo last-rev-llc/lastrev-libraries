@@ -4,8 +4,21 @@ import Link from './Link';
 import Media from './Media';
 import Page from './Page';
 import Text from './Text';
-import Block from './Block';
+import Collection from './Collection';
+import Card from './Card';
+import Person from './Person';
+import Quote from './Quote';
+import Blog from './Blog';
 import Accordion from './Accordion';
+
+import Section from './Section';
+import NavigationBar from './NavigationBar';
+import NavigationItem from './NavigationItem';
+import HeaderNavLink from './Header/HeaderNavLink';
+import HeaderNavGroup from './Header/HeaderNavGroup';
+import HeaderNavLinkNested from './Header/HeaderNavLinkNested';
+import FooterNavigationItem from './FooterNavigationItem';
+import FooterNavigationItemGroup from './FooterNavigationItemGroup';
 
 export const contentMapping: {
   [key: string]: any;
@@ -16,8 +29,20 @@ export const contentMapping: {
   Media,
   Page,
   Text,
-  Block,
-  Accordion // TODO: Enhance accordion with expandable
+  Collection,
+  Card,
+  Person,
+  Blog,
+  Quote,
+  Accordion, // TODO: Enhance accordion with expandable
+  Section,
+  NavigationBar,
+  NavigationItem,
+  HeaderNavLink,
+  HeaderNavGroup,
+  HeaderNavLinkNested,
+  FooterNavigationItem,
+  FooterNavigationItemGroup
 };
 
 export default contentMapping;

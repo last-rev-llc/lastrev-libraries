@@ -5,7 +5,7 @@ import { richTextMock } from '../RichText/RichText.mock';
 const textDefaultMock: TextProps = {
   id: lorem.word(),
   __typename: 'Text',
-  eyebrow: 'This is the eyebrow',
+  overline: 'This is the overline',
   title: 'This is the title',
   subtitle: 'This is the subtitle',
   body: richTextMock({ text: 'This is the body' })
@@ -14,14 +14,14 @@ const textDefaultMock: TextProps = {
 export const bodyOnlyMock = ({ ...override } = {}): TextProps => ({
   ...textDefaultMock,
   ...override,
-  eyebrow: undefined,
+  overline: undefined,
   title: undefined,
   subtitle: undefined
 });
 
 export const introTextMock = ({ ...override } = {}) => ({
   ...textDefaultMock,
-  eyebrow: 'This is the intro text eyebrow',
+  overline: 'This is the intro text overline',
   title: 'This is the intro text title',
   subtitle: 'This is the intro text subtitle',
   body: richTextMock({ text: 'This is the intro text body' }),

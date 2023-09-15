@@ -1,0 +1,29 @@
+fragment Accordion_FieldsFragment on Accordion {
+  ...Content_BaseFragment
+  variant
+  introText {
+    ...Text_IntroTextFragment
+  }
+  itemsVariant
+  itemsWidth
+}
+
+# Base fragment used everywhere there's a Accordion
+fragment Accordion_BaseFragment on Accordion {
+  ...Accordion_FieldsFragment
+  items {
+    ...Card_BaseFragment
+    ...Blog_CardFragment
+    ...Link_CardFragment
+    ...Media_BaseFragment
+  }
+}
+
+# Specific fragment used for the RichText embedded entries
+fragment Accordion_RichTextFragment on Accordion {
+  ...Accordion_FieldsFragment
+  items {
+    ...Card_RichTextFragment
+    ...Link_CardFragment
+  }
+}

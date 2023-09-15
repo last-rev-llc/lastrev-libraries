@@ -1,46 +1,39 @@
-import React from 'react';
 import Collection from './Collection';
-import { collectionBaseMock } from './Collection.mock';
+import {
+  collectionBaseMock,
+  collectionIconMock,
+  collectionLogoMock,
+  collectionMediaMock,
+  collectionPricingMock,
+  collectionPersonMock,
+  collectionQuoteMock,
+  collectionBlogMock
+} from './Collection.mock';
 
 export default {
   title: '3. Modules/Collection',
   component: Collection,
-
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ['autodocs'],
 
   argTypes: {
     variant: {
-      name: 'Variant',
+      name: 'LayoutStyle',
       control: {
         type: 'select',
-        options: []
-      },
-      table: {
-        defaultValue: { summary: '' }
+        options: ['onePerRow', 'twoPerRow', 'threePerRow', 'fourPerRow']
       }
     },
-    itemsVariant: {
-      name: 'Items Variant',
-      control: {
-        type: 'select',
-        options: []
-      },
-      table: {
-        defaultValue: { summary: '' }
-      }
-    },
-    items: { name: 'Items' },
-    background: { name: 'Background' },
-    contentWidth: { name: 'Content Width' },
-    theme: { name: 'Theme' },
-    sidekickLookup: { table: { disable: true } }
+    background: { name: 'Background' }
   }
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Default = {
-  args: {
-    ...collectionBaseMock()
-  }
-};
+export const Default = { args: { ...collectionBaseMock() } };
+export const Icons = { args: { ...collectionIconMock() } };
+export const Logos = { args: { ...collectionLogoMock() } };
+export const Media = { args: { ...collectionMediaMock() } };
+export const Pricing = { args: { ...collectionPricingMock() } };
+export const Person = { args: { ...collectionPersonMock() } };
+export const Quote = { args: { ...collectionQuoteMock() } };
+export const Blog = { args: { ...collectionBlogMock() } };

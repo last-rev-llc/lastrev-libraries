@@ -1,9 +1,7 @@
 import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
-// https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['Quote'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
   // Set some static styles
   // root: {
@@ -18,7 +16,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
   // }
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['Quote'] => [
   // Use prop matching to set variant styles
   // {

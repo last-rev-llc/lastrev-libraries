@@ -9,7 +9,6 @@ import {
 
 export const defaultProps: ComponentsProps['NavigationBar'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['NavigationBar'] = {
   root: {
     '& .MuiLink-root': {
@@ -19,7 +18,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['NavigationBar'] = {
   }
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['NavigationBar'] => [
   {
     props: {

@@ -30,9 +30,9 @@ export const Collection = ({
         {...props}
         {...sidekick(sidekickLookup)}>
         {introText && (
-          <Container>
-            <IntroText {...introText} {...sidekick(sidekickLookup, 'introText')} data-testid="Collection-introText" />
-          </Container>
+          <IntroTextWrapper>
+            <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
+          </IntroTextWrapper>
         )}
         <ContentContainer>
           {!!items?.length && (
@@ -71,11 +71,17 @@ const ContentContainer = styled(Container, {
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>``;
 
+const IntroTextWrapper = styled(Box, {
+  name: 'Collection',
+  slot: 'IntroTextWrapper',
+  overridesResolver: (_, styles) => [styles.introTextWrapper]
+})(() => ({}));
+
 const IntroText = styled(ContentModule, {
   name: 'Collection',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
-})<{ variant?: string }>``;
+})(() => ({}));
 
 const ItemsContainer = styled(Box, {
   name: 'Collection',

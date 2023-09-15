@@ -5,7 +5,7 @@ export interface FileProps {
   width?: number;
   height?: number;
 }
-export interface Asset {
+export interface AssetProps {
   file: FileProps;
   title?: string;
   description?: string;

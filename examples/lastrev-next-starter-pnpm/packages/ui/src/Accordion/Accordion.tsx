@@ -1,11 +1,13 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
-import { AccordionProps as MuiAccordionProps } from '@mui/material/Accordion';
+
+import styled from '@mui/system/styled';
+
+import Container from '@mui/material/Container';
+import Box from '@mui/material/Box';
 import MuiAccordion from '@mui/material/Accordion';
-import Typography, {TypographyProps} from '@mui/material/Typography';
-import {default as MuiAccordionSummary, AccordionSummaryProps } from '@mui/material/AccordionSummary';
-import {default as MuiAccordionDetails, AccordionDetailsProps} from '@mui/material/AccordionDetails';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MuiAccordionSummary from '@mui/material/AccordionSummary';
+import MuiAccordionDetails from '@mui/material/AccordionDetails';
+import Typography from '@mui/material/Typography';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -14,64 +16,114 @@ import ContentModule from '../ContentModule';
 
 import { AccordionProps } from './Accordion.types';
 
-export const Accordion = ({ variant, title, body, sidekickLookup, ...props }: AccordionProps) => {
+export const Accordion = ({
+  id,
+  items,
+  itemsWidth,
+  variant,
+  itemsVariant,
+  sidekickLookup,
+  introText,
+  ...props
+}: AccordionProps) => {
+  const [expanded, setExpanded] = React.useState<string | false>('panel1');
+
+  const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    setExpanded(newExpanded ? panel : false);
+  };
+
   return (
     <ErrorBoundary>
-      <Root data-testid="Accordion" {...sidekick(sidekickLookup)} {...props} variant={variant}>
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Title variant="h4" data-testid="Accordion-title">
-            {title}
-          </Title>
-        </AccordionSummary>
-        {body ? (
-          <AccordionDetails>
-            <ContentModule
-              __typename="Text"
-              variant="accordion"
-              {...sidekick(sidekickLookup, 'body')}
-              body={body}
-              data-testid="Accordion-body"
-            />
-          </AccordionDetails>
-        ) : null}
+      <Root
+        variant={variant}
+        itemsVariant={itemsVariant}
+        data-testid={`Accordion-${variant}`}
+        {...props}
+        {...sidekick(sidekickLookup)}>
+        {introText && (
+          <IntroTextWrapper>
+            <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
+          </IntroTextWrapper>
+        )}
+        <ContentContainer>
+          {!!items?.length && (
+            <Box>
+              {items?.map(
+                (
+                  item: any,
+                  index: number // TODO: Fix type
+                ) => (
+                  <AccordionItem
+                    expanded={expanded === `${!id}-tab-panel-${item?.id}-${index}`}
+                    onChange={handleChange(`${!id}-tab-panel-${item?.id}-${index}`)}
+                    key={`${!id}-tab-panel-${item?.id}-${index}`}>
+                    <AccordionItemSummary aria-controls="panel1d-content" id="panel1d-header">
+                      <Typography>{item.title}</Typography>
+                    </AccordionItemSummary>
+                    <AccordionItemDetails>
+                      <Item {...item} />
+                    </AccordionItemDetails>
+                  </AccordionItem>
+                )
+              )}
+            </Box>
+          )}
+        </ContentContainer>
       </Root>
     </ErrorBoundary>
   );
 };
 
-export const shouldForwardProp = (prop: string) =>
-  prop !== 'sidekickLookup' &&
-  prop !== 'body' &&
-  prop !== 'subtitle' &&
-  prop !== 'actions' &&
-  prop !== 'media' &&
-  prop !== 'actions' &&
-  prop !== 'link' &&
-  prop != '__typename';
+const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'itemsVariant';
 
-const Root = styled(MuiAccordion, {
+const Root = styled(Box, {
   name: 'Accordion',
   slot: 'Root',
-  shouldForwardProp: (prop) => shouldForwardProp(prop as string) && prop !== 'id',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string; colorScheme?: string }>(() => ({}));
+})<{ variant?: string; itemsVariant?: string }>``;
 
-const Title = styled(Typography, {
+const ContentContainer = styled(Container, {
   name: 'Accordion',
-  slot: 'Title',
-  overridesResolver: (_, styles) => [styles.title]
-})<TypographyProps<React.ElementType>>(() => ({}));
+  slot: 'ContentContainer',
+  shouldForwardProp,
+  overridesResolver: (_, styles) => [styles.contentContainer]
+})<{ variant?: string }>``;
 
-const AccordionSummary = styled(MuiAccordionSummary, {
+const IntroTextWrapper = styled(Box, {
   name: 'Accordion',
-  slot: 'AccordionSummary',
+  slot: 'IntroTextWrapper',
+  overridesResolver: (_, styles) => [styles.introTextWrapper]
+})(() => ({}));
+
+const IntroText = styled(ContentModule, {
+  name: 'Accordion',
+  slot: 'IntroText',
+  overridesResolver: (_, styles) => [styles.introText]
+})(() => ({}));
+
+const AccordionItem = styled(MuiAccordion, {
+  name: 'Accordion',
+  slot: 'AccordionItem',
+  overridesResolver: (_, styles) => [styles.accordionItem]
+})(() => ({}));
+
+const AccordionItemSummary = styled(MuiAccordionSummary, {
+  name: 'Accordion',
+  slot: 'AccordionItemSummary',
   overridesResolver: (_, styles) => [styles.accordionSummary]
-})<AccordionSummaryProps<React.ElementType>>(() => ({}));
+})(() => ({}));
 
-const AccordionDetails = styled(MuiAccordionDetails, {
+const AccordionItemDetails = styled(MuiAccordionDetails, {
   name: 'Accordion',
-  slot: 'AccordionDetails',
+  slot: 'AccordionItemDetails',
   overridesResolver: (_, styles) => [styles.accordionDetails]
-})<AccordionDetailsProps>(() => ({}));
+})(() => ({}));
+
+const Item = styled(ContentModule, {
+  name: 'Accordion',
+  slot: 'Item',
+  overridesResolver: (_, styles) => [styles.item]
+})<{ variant?: string }>``;
 
 export default Accordion;
