@@ -1,13 +1,13 @@
-import ContentModule from '@ui/ContentModule/ContentModule';
-import { getPageMetadata } from '@ui/utils/getPageMetadata';
-import { join } from 'path';
 import { client } from '@graphql-sdk/client';
-import type { Metadata, ResolvingMetadata } from 'next';
-import { AppProvider } from '@ui/AppProvider/AppProvider';
+import { join } from 'path';
 import { notFound } from 'next/navigation';
-import { isPreview } from '@ui/utils/isPreview';
+import type { Metadata, ResolvingMetadata } from 'next';
 
-const preview = process.env.CONTENTFUL_USE_PREVIEW === 'true';
+import { AppProvider } from '@ui/AppProvider/AppProvider';
+import { getPageMetadata } from '@ui/utils/getPageMetadata';
+import { isPreview } from '@ui/utils/isPreview';
+import ContentModule from '@ui/ContentModule/ContentModule';
+
 const site = process.env.SITE;
 
 type Props = {
