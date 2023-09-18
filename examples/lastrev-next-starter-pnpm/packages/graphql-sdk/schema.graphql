@@ -25,13 +25,13 @@ type Asset {
 type Block implements Content {
   actions: [Link]
   animation: JSON
+  asset: Media
   body: RichText
   eyebrow: String
   id: String
   internalTitle: String
   introText: Text
   link: Link
-  mediaAsset: Media
   mediaItems: [Media]
   sidekickLookup: JSON
   subtitle: String
@@ -52,9 +52,9 @@ type Blog implements Content {
   header: Header
   id: String
   jsonLd: JSON
+  listImage: Media
   lr__path__: String
   path: String
-  promoImage: Media
   pubDate: Date
   relatedLinks: [Link]
   seo: JSON
@@ -71,6 +71,7 @@ type Card implements Content {
   animation: JSON
   body: RichText
   bodyRte: JSON
+  eyebrow: String
   id: String
   internalTitle: String
   jsonLd: JSON
@@ -85,6 +86,7 @@ type Card implements Content {
 
 type CategoryBlog implements Content {
   animation: JSON
+  body: RichText
   contents: [Content]
   footer: Content
   header: Header
@@ -92,29 +94,72 @@ type CategoryBlog implements Content {
   id: String
   lr__path__: String
   path: String
+  promoImage: Media
   seo: JSON
   sidekickLookup: JSON
   slug: String
+  summary: String
   theme: [Theme]
   title: String
 }
 
 type Collection implements Content {
   animation: JSON
+  backgroundColor: String
+  backgroundImage: Media
   id: String
   internalTitle: String
   introText: Text
   items: [CollectionItem]
   itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
-  itemsSpacing: Int
   itemsVariant: String
-  itemsWidth: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type CollectionCarousel implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  itemsVariant: String
   numberOfItemsToPull: String
   pullFromContentType: String
-  settings: JSON
   sidekickLookup: JSON
-  styles: JSON
   theme: [Theme]
+  variant: String
+}
+
+type CollectionDynamic implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  itemsVariant: String
+  numberOfItemsToPull: String
+  pullFromContentType: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type CollectionExpandable implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type CollectionExpandableItem implements Content {
+  animation: JSON
+  body: RichText
+  bodyRte: JSON
+  id: String
+  internalTitle: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  title: String
   variant: String
 }
 
@@ -160,6 +205,32 @@ input ContentsFilter {
 """Date custom scalar type"""
 scalar Date
 
+type ElementForm implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type ElementVideo implements Content {
+  altText: String
+  animation: JSON
+  asset: Media
+  assetURL: String
+  autoplay: Boolean
+  id: String
+  internalTitle: String
+  mobile: Media
+  placeholder: Media
+  sidekickLookup: JSON
+  tablet: Media
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
 type Footer implements Content {
   animation: JSON
   copyrightDisclaimer: RichText
@@ -174,14 +245,13 @@ type Footer implements Content {
 
 type Header implements Content {
   animation: JSON
-  color: String
-  colorScheme: String
   id: String
   internalTitle: String
   logo: Media
-  logoUrl: String
   navigationItems: [Collection]
   sidekickLookup: JSON
+  supernavIcon: Media
+  supernavMobileText: String
   supernavText: RichText
   theme: [Theme]
   variant: String
@@ -191,15 +261,13 @@ type Hero implements Content {
   actions: [Link]
   animation: JSON
   background: Media
-  backgroundAsset: Media
   backgroundColor: String
   body: RichText
   contentHeight: String
-  contentWidth: String
+  eyebrow: String
   id: String
-  image: [Media]
   internalTitle: String
-  overline: String
+  sideImageItems: [Media]
   sidekickLookup: JSON
   subtitle: String
   theme: [Theme]
@@ -213,6 +281,7 @@ The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://
 scalar JSON
 
 type Link implements Content {
+  altText: String
   animation: JSON
   color: String
   href: String!
@@ -222,6 +291,7 @@ type Link implements Content {
   internalTitle: String
   manualUrl: String
   sidekickLookup: JSON
+  target: String
   text: String
   theme: [Theme]
   variant: String
@@ -239,9 +309,9 @@ type Location {
 
 type Media implements Content {
   alt: String
+  altText: String
   animation: JSON
   asset: Media
-  assetURL: String
   description: String
   file: Asset
   fileMobile: Asset
@@ -249,7 +319,6 @@ type Media implements Content {
   id: String
   internalTitle: String
   mobile: Media
-  placeholder: Media
   sidekickLookup: JSON
   source: String
   tablet: Media
@@ -269,6 +338,7 @@ type ModuleIntegration implements Content {
 }
 
 type NavigationItem implements Content {
+  altText: String
   animation: JSON
   href: String!
   id: String
@@ -276,11 +346,9 @@ type NavigationItem implements Content {
   internalTitle: String
   manualUrl: String
   media: Media
-  megaNavTitle: String
-  meganavImage: Media
   sidekickLookup: JSON
   subNavigation: [SubnavigationItem]
-  summary: String
+  summary: RichText
   text: String
   theme: [Theme]
   variant: String
@@ -293,7 +361,6 @@ type Option {
 
 type Page implements Content {
   animation: JSON
-  colorScheme: String
   contents: [Content]
   disableBackToTop: Boolean
   footer: Content
@@ -302,11 +369,13 @@ type Page implements Content {
   id: String
   internalTitle: String
   jsonLd: JSON
+  listImage: Media
   lr__path__: String
   path: String
   seo: JSON
   sidekickLookup: JSON
   slug: String
+  summary: String
   theme: [Theme]
   title: String
 }
@@ -322,13 +391,20 @@ type PagePathParams {
 
 type Person implements Content {
   animation: JSON
+  body: RichText
+  email: String
   id: String
   image: Media
   jobTitle: String
+  listImage: Media
+  lr__path__: String
+  mainImage: Media
   name: String
+  rolloverImage: Media
   sidekickLookup: JSON
+  slug: String
+  summary: String
   theme: [Theme]
-  variant: String
 }
 
 type Query {
@@ -376,20 +452,10 @@ type Section implements Content {
   animation: JSON
   background: Media
   backgroundColor: String
-  contentAlignment: String
-  contentDirection: String
-  contentSpacing: Int
-  contentWidth: String
   contents: [Content]
   id: String
   internalTitle: String
-  paddingBottom: Int
-  paddingLeft: Int
-  paddingRight: Int
-  paddingTop: Int
-  settings: JSON
   sidekickLookup: JSON
-  styles: JSON
   theme: [Theme]
   variant: String
 }
@@ -451,24 +517,17 @@ type Text implements Content {
   align: String
   animation: JSON
   body: RichText
-  color: String
+  eyebrow: String
   id: String
   internalTitle: String
   sidekickLookup: JSON
-  styles: JSON
+  subtitle: String
   theme: [Theme]
+  title: String
   variant: String
 }
 
-type Theme implements Content {
-  animation: JSON
-  components: JSON
-  description: String
-  id: String
-  internalTitle: String
-  sidekickLookup: JSON
-  theme: [Theme]
-  typography: JSON
+type Theme {
   variant: String
 }
 

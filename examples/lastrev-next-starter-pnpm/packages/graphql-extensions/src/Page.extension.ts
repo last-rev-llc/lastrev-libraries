@@ -5,7 +5,7 @@ import { ApolloContext } from '@last-rev/types';
 import pathResolver from './utils/pathResolver';
 import pageHeaderResolver from './utils/pageHeaderResolver';
 import pageFooterResolver from './utils/pageFooterResolver';
-import createType from './utils/createType';
+import resolveField from './utils/resolveField';
 
 export const typeMappings = {};
 
@@ -24,13 +24,7 @@ export const mappers = {
     Page: {
       path: pathResolver,
       header: pageHeaderResolver,
-      footer: pageFooterResolver,
-      seo: async (page: any, _args: any, ctx: ApolloContext) => {
-        const seo: any = getLocalizedField(page.fields, 'seo', ctx);
-        return {
-          ...seo
-        };
-      }
+      footer: pageFooterResolver
     },
 
     Link: {
@@ -42,12 +36,7 @@ export const mappers = {
       body: async (page: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(page.fields, 'promoSummary', ctx)),
 
-      media: async (page: any, _args: any, ctx: ApolloContext) => {
-        const promoImageRef: any = getLocalizedField(page?.fields, 'promoImage', ctx);
-        if (promoImageRef) return promoImageRef;
-
-        return getLocalizedField(page?.fields, 'featuredMedia', ctx);
-      },
+      media: resolveField(['promoImage', 'featuredMedia']),
 
       variant: () => 'default',
 

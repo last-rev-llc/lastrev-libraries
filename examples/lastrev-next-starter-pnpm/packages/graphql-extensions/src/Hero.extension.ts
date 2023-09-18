@@ -4,7 +4,7 @@ export const typeDefs = gql`
   extend type Hero {
     actions: [Link]
     # Uncomment if using Media reference
-    # image: [Media]
+    sideImageItems: [Media]
 
     # Comment this fields if added in Contentful
     contentHeight: String

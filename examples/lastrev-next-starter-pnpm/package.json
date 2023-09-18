@@ -13,7 +13,8 @@
     "lint": "turbo lint",
     "test": "turbo test",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.15",
@@ -28,6 +29,7 @@
     "@storybook/react": "^7.4.2",
     "@storybook/react-webpack5": "^7.4.2",
     "@storybook/testing-library": "^0.2.1",
+    "chromatic": "^7.1.0",
     "cypress": "^13.1.0",
     "next": "^13.4.19",
     "prettier": "^2.7.1",
