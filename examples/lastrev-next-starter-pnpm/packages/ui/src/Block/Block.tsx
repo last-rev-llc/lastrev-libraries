@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { styled } from '@mui/material/styles';
+
 import Box, { BoxProps } from '@mui/material/Box';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import Container, { ContainerProps } from '@mui/material/Container';
@@ -33,37 +34,36 @@ const Block = (props: BlockProps) => {
         </IntroTextWrapper>
       )}
 
-      <ContentOuterWrapper
-        styleVariant={variant}
-        maxWidth={isFullBleed ? false : undefined}
-        disableGutters={isFullBleed}>
-        <MainContentWrapper variant={variant} maxWidth={false} sx={{ p: 0 }}>
-          <Content>
-            {!!overline && <Overline variant="overline">{overline}</Overline>}
+      <ContentOuterWrapper maxWidth={isFullBleed ? false : undefined} disableGutters={isFullBleed}>
+        {overline || title || subtitle || body || actions ? (
+          <MainContentWrapper variant={variant} maxWidth={false} sx={{ p: 0 }}>
+            <Content>
+              {!!overline && <Overline variant="overline">{overline}</Overline>}
 
-            {!!title && (
-              <Title {...sidekick(sidekickLookup, 'title')} data-testid="Block-title" variant="display3">
-                {title}
-              </Title>
+              {!!title && (
+                <Title {...sidekick(sidekickLookup, 'title')} data-testid="Block-title" variant="display3">
+                  {title}
+                </Title>
+              )}
+
+              {!!subtitle && (
+                <Subtitle {...sidekick(sidekickLookup, 'subtitle')} data-testid="Block-subtitle" variant="display4">
+                  {subtitle}
+                </Subtitle>
+              )}
+
+              {!!body && <Body {...sidekick(sidekickLookup, 'body')} __typename="Text" body={body} />}
+            </Content>
+
+            {!!actions?.length && (
+              <ActionsWrapper {...sidekick(sidekickLookup, 'actions')} data-testid="Block-actions">
+                {actions.map((action: LinkProps) => (
+                  <Action key={action?.id} {...(action as LinkProps)} />
+                ))}
+              </ActionsWrapper>
             )}
-
-            {!!subtitle && (
-              <Subtitle {...sidekick(sidekickLookup, 'subtitle')} data-testid="Block-subtitle" variant="display4">
-                {subtitle}
-              </Subtitle>
-            )}
-
-            {!!body && <Body {...sidekick(sidekickLookup, 'body')} __typename="Text" body={body} />}
-          </Content>
-
-          {!!actions?.length && (
-            <ActionsWrapper {...sidekick(sidekickLookup, 'actions')} data-testid="Block-actions">
-              {actions.map((action: LinkProps) => (
-                <Action key={action?.id} {...(action as LinkProps)} />
-              ))}
-            </ActionsWrapper>
-          )}
-        </MainContentWrapper>
+          </MainContentWrapper>
+        ) : null}
 
         {!!mediaItems && (
           <SideContentWrapper {...extraProps} variant={variant} maxWidth={false} disableGutters={isFullBleed}>

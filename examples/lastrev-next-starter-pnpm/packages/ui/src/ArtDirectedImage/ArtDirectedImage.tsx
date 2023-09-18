@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import styled from '@mui/system/styled';
+import { styled } from '@mui/material/styles';
 // import { css } from '@emotion/react';
 import Image from '../Image';
 import { MediaProps } from '../Media/Media.types';

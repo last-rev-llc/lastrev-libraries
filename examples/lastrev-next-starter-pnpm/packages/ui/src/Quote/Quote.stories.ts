@@ -29,12 +29,12 @@ export const Default = {
 
 export const Large = {
   args: {
-    ...quoteLargeMock()
+    ...quoteLargeMock({ quote: 'Default Large Quote' })
   }
 };
 
 export const Inline = {
   args: {
-    ...quoteInlineMock()
+    ...quoteInlineMock({ quote: 'Default Inline Quote' })
   }
 };

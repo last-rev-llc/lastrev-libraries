@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styled from '@mui/system/styled';
+import { styled } from '@mui/material/styles';
 import useTheme from '@mui/system/useTheme';
 import { Theme } from '@mui/system';
 

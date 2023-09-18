@@ -4,40 +4,14 @@ export const defaultProps: ComponentsProps['Quote'] = {};
 
 export const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
   // Set some static styles
-  // root: {
-  //   backgroundColor: 'red'
-  // }
-  //
-  // Use the ownerState to set dynamic styles
-  // root: ({ ownerState, theme }) => {
-  //   return {
-  //     backgroundColor: ownerState.variant === 'example' ? 'red' : theme.palette.background.paper
-  //   };
-  // }
+  root: {
+    backgroundColor: 'red'
+  }
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['Quote'] => [
-  // Use prop matching to set variant styles
-  // {
-  //   props: {
-  //     variant: 'example'
-  //   },
-  //   style: {
-  //     backgroundColor: theme.palette.primary.main
-  //   }
-  // }
-  // Other props are also valid
-  // {
-  //   props: {
-  //     backgroundColor: 'primary.main',
-  //   },
-  //   style: {
-  //     color: theme.palette.primary.contrastText
-  //   }
-  // }
-];
+const createVariants = (_theme: Theme): ComponentsVariants['Quote'] => [];
 
-export default (theme: Theme): ThemeOptions => ({
+export const quoteTheme = (theme: Theme): ThemeOptions => ({
   components: {
     Quote: {
       defaultProps,
@@ -46,3 +20,5 @@ export default (theme: Theme): ThemeOptions => ({
     }
   }
 });
+
+export default quoteTheme;

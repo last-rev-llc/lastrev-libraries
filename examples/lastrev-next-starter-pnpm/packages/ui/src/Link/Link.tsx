@@ -7,7 +7,7 @@ import * as React from 'react';
 import clsx from 'clsx';
 // import { useRouter } from 'next/router';
 import NextLink from 'next/link';
-import styled from '@mui/system/styled';
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';

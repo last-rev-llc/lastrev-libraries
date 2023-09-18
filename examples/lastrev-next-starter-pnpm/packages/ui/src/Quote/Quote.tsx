@@ -21,6 +21,7 @@ export const Quote = ({
   authorTitle,
   authorImage,
   actions,
+  variant,
   ...props
 }: QuoteProps) => {
   return (

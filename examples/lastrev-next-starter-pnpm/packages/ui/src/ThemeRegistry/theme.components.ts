@@ -6,7 +6,9 @@ function importAll(r: __WebpackModuleApi.RequireContext) {
 
 const themesArray = importAll(require.context('../', true, /\.theme\.ts$/));
 
+console.log({ themesArray });
 const themes = themesArray.reduce((acc, current) => {
+  console.log({ current });
   return { ...acc, ...current };
 }, {});
 

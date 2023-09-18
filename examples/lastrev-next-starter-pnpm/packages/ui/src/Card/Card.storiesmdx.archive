@@ -1,6 +1,7 @@
 <!-- Card.stories.mdx -->
 
-import { Canvas, Meta, Story, ArgsTable } from '@storybook/addon-docs';
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import { ArgsTable } from '@storybook/blocks';
 
 import Card from './Card';
 import cardBaseMock, { cardWithTags } from './Card.mock';

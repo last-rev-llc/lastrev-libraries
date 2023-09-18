@@ -1,5 +1,7 @@
 import Block from './Block';
 
+import { BlockVariants } from './Block.types';
+
 import { blockBaseMock } from './Block.mock';
 
 export default {
@@ -13,7 +15,7 @@ export default {
     variant: {
       control: {
         type: 'select',
-        options: ['default']
+        options: BlockVariants
       }
     }
   }
