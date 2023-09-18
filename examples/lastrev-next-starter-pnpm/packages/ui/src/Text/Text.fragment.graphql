@@ -2,7 +2,6 @@ fragment Text_FieldsFragment on Text {
   ...Content_BaseFragment
   variant
   align
-  styles
 }
 
 fragment Text_BaseFragment on Text {

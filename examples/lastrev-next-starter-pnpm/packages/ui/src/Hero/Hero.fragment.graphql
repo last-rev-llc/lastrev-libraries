@@ -5,15 +5,13 @@ fragment Hero_BaseFragment on Hero {
   title
   subtitle
   backgroundColor
-  contentWidth
-  contentHeight
   background {
     ...Media_BaseFragment
   }
   body {
     ...RichText_BaseFragment
   }
-  images: image {
+  sideImageItems {
     ...Media_BaseFragment
   }
   actions {
