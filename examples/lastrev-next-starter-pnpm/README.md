@@ -5,16 +5,18 @@
 [x] Deploy Storybook to Vercel
 [x] Implement Sitemap
 [x] Implement Robots
-[] Implement path v2 resolution
 [] Implement Preview
-[] Implement \_error page
-[] Implement CSP policies
 [] Implement GraphQL preview endpoint
+[] Implement Custom 404
+[] Implement CSP policies
+[] Implement content Redirect
 [] Implement Theme api endpoint
 [] Implement Live Editor and other UIEs
+[] Implement \_error page
 [] Implement Analytics
+[] Implement Contentful Sidekick
 [] Implement Algolia
-[] Implement Custom 404
+[] Implement path v2 resolution
 
 ## Components
 

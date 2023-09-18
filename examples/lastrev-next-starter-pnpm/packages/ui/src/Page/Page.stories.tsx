@@ -10,4 +10,8 @@ export default {
   // tags: ['autodocs']
 };
 
-export const Default = { args: { ...mockContent() } };
+export const Default = {
+  args: {
+    ...mockContent()
+  }
+};

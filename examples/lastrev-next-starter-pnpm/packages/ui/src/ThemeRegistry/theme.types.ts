@@ -28,7 +28,10 @@ declare module '@mui/material/styles/createMixins' {
 // Update the Typography's variant prop options
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    bodySmall: true;
+    display1: true;
     bodyLarge: true;
   }
+  type TypographyOptions = {
+    display1: TypographyStyle;
+  };
 }

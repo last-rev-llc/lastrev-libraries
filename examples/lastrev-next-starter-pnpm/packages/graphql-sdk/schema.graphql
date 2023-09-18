@@ -53,6 +53,7 @@ type Blog implements Content {
   id: String
   jsonLd: JSON
   lr__path__: String
+  path: String
   promoImage: Media
   pubDate: Date
   relatedLinks: [Link]
@@ -90,6 +91,7 @@ type CategoryBlog implements Content {
   hero: Hero
   id: String
   lr__path__: String
+  path: String
   seo: JSON
   sidekickLookup: JSON
   slug: String
@@ -301,6 +303,7 @@ type Page implements Content {
   internalTitle: String
   jsonLd: JSON
   lr__path__: String
+  path: String
   seo: JSON
   sidekickLookup: JSON
   slug: String

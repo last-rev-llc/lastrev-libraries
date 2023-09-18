@@ -1,5 +1,5 @@
 query Preview($id: String!, $locale: String) {
-  content(id: $id, locale: $locale, preview: true) {
+  content: contentPreview(id: $id, locale: $locale) {
     ...ContentModule_BaseFragment
     ...ContentModule_PageFragment
   }

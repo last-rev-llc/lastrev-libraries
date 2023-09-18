@@ -5,8 +5,6 @@ import { Roboto } from 'next/font/google';
 import themeComponents from './theme.components';
 import merge from 'lodash/merge';
 
-console.log(themeComponents);
-
 export const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
@@ -22,18 +20,9 @@ const baseTheme = createTheme({
     }
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
-    display1: {
-      fontFamily: 'Roboto',
-      fontWeight: 400,
-      fontSize: '2.5rem'
-    }
-  },
-  components: {
-    // TODO: Dynamically import all the theme files from the components
+    fontFamily: roboto.style.fontFamily
   }
 });
 export const theme = merge(baseTheme, ...Object.values(themeComponents).map((t) => t(baseTheme)));
-console.log('Theme', theme);
 
 export default theme;
