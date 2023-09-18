@@ -4,13 +4,10 @@ import createRichText from '@last-rev/graphql-contentful-core/dist/utils/createR
 import getLocalizedField from '@last-rev/graphql-contentful-core/dist/utils/getLocalizedField';
 import { ApolloContext } from '@last-rev/types';
 
-import { getThumbnailURL } from './utils/getVideoEmbedUrl';
-import createPath from './utils/createPath';
-import { createType } from './utils/createType';
-import { getSlug } from './utils/getSlug';
 import pageFooterResolver from './utils/pageFooterResolver';
 import pageHeaderResolver from './utils/pageHeaderResolver';
 import pathResolver from './utils/pathResolver';
+import resolveField from './utils/resolveField';
 
 const BLOGS_LANDING_ID = process.env.BLOGS_LANDING_ID;
 
@@ -36,12 +33,6 @@ export const mappers: any = {
           const blogsLanding = await ctx.loaders.entryLoader.load({ id: BLOGS_LANDING_ID, preview: !!ctx.preview });
           return getLocalizedField(blogsLanding?.fields, 'contents', ctx);
         }
-      },
-      seo: async (page: any, _args: any, ctx: ApolloContext) => {
-        const seo: any = getLocalizedField(page.fields, 'seo', ctx);
-        return {
-          ...seo
-        };
       }
     },
 
@@ -55,12 +46,7 @@ export const mappers: any = {
       body: async (categoryBlog: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(categoryBlog.fields, 'promoSummary', ctx)),
 
-      media: async (page: any, _args: any, ctx: ApolloContext) => {
-        const promoImageRef: any = getLocalizedField(page?.fields, 'promoImage', ctx);
-        if (promoImageRef) return promoImageRef;
-
-        return getLocalizedField(page?.fields, 'featuredMedia', ctx);
-      },
+      media: resolveField(['promoImage', 'featuredMedia']),
 
       variant: () => 'default',
 
