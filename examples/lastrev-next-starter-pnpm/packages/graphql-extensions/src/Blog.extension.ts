@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
-import { getLocalizedField, createRichText } from '@last-rev/graphql-contentful-core';
+import createRichText from '@last-rev/graphql-contentful-core/dist/utils/createRichText';
+import getLocalizedField from '@last-rev/graphql-contentful-core/dist/utils/getLocalizedField';
 import { ApolloContext } from '@last-rev/types';
 import { getThumbnailURL } from './utils/getVideoEmbedUrl';
 import createPath from './utils/createPath';

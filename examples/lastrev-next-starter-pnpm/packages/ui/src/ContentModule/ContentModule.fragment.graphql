@@ -8,11 +8,11 @@ fragment ContentModule_BaseFragment on Content {
   ...Hero_BaseFragment
   #...Link_BaseFragment
   #...Media_BaseFragment
-  #...ModuleIntegration_BaseFragment
+  ...ModuleIntegration_BaseFragment
   #...NavigationItem_BaseFragment
   #...Quote_BaseFragment
   #...Section_BaseFragment
-  #...Text_BaseFragment
+  ...Text_BaseFragment
 }
 
 fragment ContentModule_PageFragment on Content {
@@ -26,14 +26,14 @@ fragment ContentModule_SectionFragment on Content {
   #...Collection_BaseFragment
   #...Footer_BaseFragment
   #...Header_BaseFragment
-  #...Hero_BaseFragment
-  #...Link_BaseFragment
+  ...Hero_BaseFragment
+  ...Link_BaseFragment
   #...Media_BaseFragment
   #...ModuleIntegration_BaseFragment
   #...NavigationItem_BaseFragment
   #...Quote_BaseFragment
   #...Section_BaseFragment
-  #...Text_BaseFragment
+  ...Text_BaseFragment
 }
 
 fragment ContentModule_RichTextFragment on Content {
@@ -44,11 +44,11 @@ fragment ContentModule_RichTextFragment on Content {
   #...Footer_BaseFragment
   #...Header_BaseFragment
   #...Hero_BaseFragment
-  #...Link_BaseFragment
+  ...Link_BaseFragment
   #...Media_BaseFragment
   #...ModuleIntegration_BaseFragment
   #...NavigationItem_BaseFragment
   #...Quote_BaseFragment
   #...Section_BaseFragment
-  #...Text_BaseFragment
+  ...Text_BaseFragment
 }
