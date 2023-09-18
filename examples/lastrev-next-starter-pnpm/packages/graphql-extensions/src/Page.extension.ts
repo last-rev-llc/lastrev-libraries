@@ -1,11 +1,33 @@
 import gql from 'graphql-tag';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
-import { Entry } from 'contentful';
-import resolveLocalizedField from './utils/resolveLocalizedField';
 import { blogV1, categoryBlogV1, pageV1 } from './PathsConfigs.extension';
+import pathResolver from './utils/pathResolver';
 export const typeMappings = {};
 
+export const typeDefs = gql`
+  extend type Page {
+    header: Header
+    footer: Content
+    hero: Hero
+    contents: [Content]
+    path: String
+  }
+
+  extend type Blog {
+    header: Header
+    footer: Content
+    path: String
+  }
+
+  extend type CategoryBlog {
+    header: Header
+    footer: Content
+    contents: [Content]
+    hero: Hero
+    path: String
+  }
+`;
 // TODO: Move to env variables
 const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
 const BLOGS_LANDING_ID = process.env.BLOGS_LANDING_ID;
@@ -43,23 +65,6 @@ const createType = (type: string, content: any) => ({
   )
 });
 
-const pageContentsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
-  // Get the PAge contents
-  const contents = (await resolveLocalizedField(page.fields, 'contents', ctx)) as Entry<any>[];
-
-  // Map the Page contents (if not a Section wrap it)
-  return contents?.map((content) => {
-    const variant = getLocalizedField(content.fields, 'variant', ctx);
-    const contentType = content?.sys?.contentType?.sys?.id;
-    return contentType === 'section'
-      ? content
-      : createType('Section', {
-          contents: [content],
-          variant: `${contentType}_${variant ?? 'default'}_section-wrapper`
-        });
-  });
-};
-
 export const mappers = {
   Page: {
     Link: {
@@ -67,6 +72,7 @@ export const mappers = {
       text: 'title'
     },
     Page: {
+      path: pathResolver,
       seo: async (page: any, _args: any, ctx: ApolloContext) => {
         const seo: any = getLocalizedField(page.fields, 'seo', ctx);
         return {
@@ -80,12 +86,14 @@ export const mappers = {
   },
   Blog: {
     Blog: {
+      path: pathResolver,
       header: headerResolver,
       footer: footerResolver
     }
   },
   CategoryBlog: {
     CategoryBlog: {
+      path: pathResolver,
       header: headerResolver,
       footer: footerResolver,
       contents: async (_: any, _args: any, ctx: ApolloContext) => {
@@ -98,27 +106,6 @@ export const mappers = {
     }
   }
 };
-
-export const typeDefs = gql`
-  extend type Page {
-    header: Header
-    footer: Content
-    hero: Hero
-    contents: [Content]
-  }
-
-  extend type Blog {
-    header: Header
-    footer: Content
-  }
-
-  extend type CategoryBlog {
-    header: Header
-    footer: Content
-    contents: [Content]
-    hero: Hero
-  }
-`;
 
 /*
 @Deprecated

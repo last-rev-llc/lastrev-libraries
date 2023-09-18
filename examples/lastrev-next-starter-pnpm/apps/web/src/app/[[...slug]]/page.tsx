@@ -5,6 +5,7 @@ import { client } from '@graphql-sdk/client';
 import type { Metadata, ResolvingMetadata } from 'next';
 import { AppProvider } from '@ui/AppProvider/AppProvider';
 import { notFound } from 'next/navigation';
+import { isPreview } from '@ui/utils/isPreview';
 
 const preview = process.env.CONTENTFUL_USE_PREVIEW === 'true';
 const site = process.env.SITE;
@@ -14,19 +15,19 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const path = join('/', (params.slug || ['/']).join('/'));
-  const { data: pageData } = await client.Page({ path, locale, preview, site });
+  const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
   const parentSEO = await parent;
   const seo = (pageData?.page as any)?.seo;
   return getPageMetadata({ parentSEO, seo });
 }
 
-export async function generateStaticParams() {
-  const locales = ['en-US', 'es-ES'];
-  const paths = (await client.Paths({ locales, preview, site }))?.data?.paths;
-  return paths?.map((p) => ({ slug: p.params.slug }));
-}
+// export async function generateStaticParams() {
+//   const locales = ['en-US', 'es-ES'];
+//   const paths = (await client.Paths({ locales, preview, site }))?.data?.paths;
+//   return paths?.map((p) => ({ slug: p.params.slug }));
+// }
 
 // TODO: Add support for locale
 // TODO: Add support for GTM and other analytics
@@ -35,8 +36,9 @@ const locale = 'en-US';
 
 export default async function Page({ params }: Props) {
   const path = join('/', (params.slug || ['/']).join('/'));
-  const { data: pageData } = await client.Page({ path, locale, preview, site });
-  console.log('Page', { path, pageData });
+
+  const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
+
   if (!pageData?.page) {
     return notFound();
   }

@@ -8,7 +8,7 @@ function getAbsolutePath(value) {
   return dirname(require.resolve(join(value, 'package.json')));
 }
 const config = {
-  stories: ['../**/*.mdx', '../**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../packages/ui/(src|stories)/**/*.mdx', '../packages/ui/(src|stories)/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     getAbsolutePath('@storybook/addon-links'),
     getAbsolutePath('@storybook/addon-essentials'),

@@ -1,6 +1,7 @@
 import { compact, map, merge } from 'lodash';
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { Source, DocumentNode, GraphQLSchema } from 'graphql';
+
 import fs from 'fs';
 import path from 'path';
 
@@ -13,22 +14,63 @@ export type GraphQlExtension = {
 };
 
 function loadFiles() {
-  const dirPath = __dirname;
-  const modules: any[] = [];
-  const extensionFiles = fs.readdirSync(dirPath).filter((file) => /\.extension\.js$/.test(file));
+  let dirPath = '';
+  const modules: { [key: string]: any } = {};
 
-  console.log('Loading extension:', extensionFiles);
-  extensionFiles.forEach((file) => {
-    const modulePath = path.join(dirPath, file);
-    try {
-      const module = require(modulePath);
-      modules.push(module);
-    } catch (error) {
-      console.error(`Failed to load module: ${modulePath}`, error);
-    }
-  });
+  if (__dirname.includes('.next')) {
+    dirPath = path.resolve(process.cwd(), '../../packages/graphql-extensions/src');
+    console.warn('Dynamic Extension Files are not supported in NextJS');
+    console.warn('Update graphql-extensions/src/index.ts to load ALL extension files manually');
+    modules['Algolia'] = require('./Algolia.extension');
+    modules['Block'] = require('./Block.extension');
+    modules['Blog'] = require('./Blog.extension');
+    modules['Card'] = require('./Card.extension');
+    modules['Collection'] = require('./Collection.extension');
+    modules['Header'] = require('./Header.extension');
+    modules['Hero'] = require('./Hero.extension');
+    modules['Link'] = require('./Link.extension');
+    modules['Media'] = require('./Media.extension');
+    modules['NavigationItem'] = require('./NavigationItem.extension');
+    modules['Page'] = require('./Page.extension');
+    modules['PathsConfigs'] = require('./PathsConfigs.extension');
+    modules['Preview'] = require('./Preview.extension');
+    modules['Quote'] = require('./Quote.extension');
+    modules['RichText'] = require('./RichText.extension');
+    modules['SEO'] = require('./SEO.extension');
+    modules['Section'] = require('./Section.extension');
+    modules['Sidekick'] = require('./Sidekick.extension');
+    modules['Theme'] = require('./Theme.extension');
 
-  return modules;
+    //TODO: Find out a way to do dynamic imports in nextjs
+    // console.log('Loading files from', dirPath);
+    // const extensionFiles = fs.readdirSync(dirPath).filter((file) => /\.extension\.ts$/.test(file));
+    // extensionFiles.forEach((file) => {
+    // const modulePath = path.join(dirPath, file);
+    //   const modulePath = `./${file.replace('.ts', '')}`;
+    //   try {
+    //     const module = require(modulePath);
+    //     console.log({ module });
+    //     modules.push(module);
+    //   } catch (error) {
+    //     console.error(`Failed to load module: ${modulePath}`, error);
+    //   }
+    // });
+  } else {
+    dirPath = path.join(__dirname);
+    console.log('Loading files from', dirPath);
+    const extensionFiles = fs.readdirSync(dirPath).filter((file) => /\.extension\.js$/.test(file));
+    extensionFiles.forEach((file) => {
+      const modulePath = path.join(dirPath, file);
+      try {
+        const module = require(modulePath);
+        modules[file.replace('.extension.js', '')] = module;
+      } catch (error) {
+        console.error(`Failed to load module: ${modulePath}`, error);
+      }
+    });
+  }
+  // console.log(`Loaded ${Object.keys(modules)?.length} modules`, Object.keys(modules));
+  return Object.values(modules);
 }
 
 const extensions: GraphQlExtension[] = loadFiles();
@@ -38,3 +80,5 @@ export const resolvers = mergeResolvers(compact(map(extensions, 'resolvers'))) a
 export const mappers = merge({}, ...compact(map(extensions, 'mappers')));
 export const typeMappings = merge({}, ...compact(map(extensions, 'typeMappings')));
 export const pathsConfigs = merge({}, ...compact(map(extensions, 'pathsConfigs')));
+
+console.log(typeMappings);
