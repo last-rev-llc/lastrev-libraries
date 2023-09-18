@@ -4,8 +4,6 @@ import { Header_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface HeaderProps extends Header_BaseFragmentFragment {
   variant?: 'elevation' | 'outlined' | undefined;
-  color?: any;
-  colorScheme?: string;
   sidekickLookup?: any;
   menuVisible?: boolean;
   menuBreakpoint?: string;
@@ -24,8 +22,6 @@ export interface HeaderClasses {
   headerMenuNav: string;
   headerMenuNavItems: string;
   headerMenuNavItem: string;
-  headerMenuMobileCtas: string;
-  headerMenuMobileCtaItem: string;
   headerMenuCtas: string;
   headerMenuCtaItem: string;
 }

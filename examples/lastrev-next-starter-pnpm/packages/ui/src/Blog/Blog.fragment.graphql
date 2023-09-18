@@ -2,6 +2,10 @@ fragment Blog_BaseFragment on Blog {
   ...Content_BaseFragment
   title
   slug
+  pubDate
+  author {
+    ...Person_Card_Fragment
+  }
   header {
     ...Header_BaseFragment
   }
@@ -12,26 +16,21 @@ fragment Blog_BaseFragment on Blog {
     ...Media_BaseFragment
   }
   summary
-  pubDate
   body {
     ...RichText_BaseFragment
   }
-  author {
-    ...Person_Card_Fragment
-  }
   relatedItems {
-    ...Link_BaseFragment
+    ...Collection_BaseFragment
+    #...LinkNavigation_BaseFragment
   }
-  breadcrumbs {
-    ...Link_BaseFragment
-  }
+  ## TODO
+  # breadcrumbs {
+  #  ...Link_BaseFragment
+  #}
   contents {
     ...ContentModule_BaseFragment
   }
   seo
-  modelUsed
-  promptedBy
-  imagesGeneratedBy
 }
 
 fragment Blog_CardFragment on Blog {

@@ -1,14 +1,34 @@
 import gql from 'graphql-tag';
+
 import createRichText from '@last-rev/graphql-contentful-core/dist/utils/createRichText';
 import getLocalizedField from '@last-rev/graphql-contentful-core/dist/utils/getLocalizedField';
 import { ApolloContext } from '@last-rev/types';
+
 import { getThumbnailURL } from './utils/getVideoEmbedUrl';
 import createPath from './utils/createPath';
 import { createType } from './utils/createType';
 import { getSlug } from './utils/getSlug';
+import pageFooterResolver from './utils/pageFooterResolver';
+import pageHeaderResolver from './utils/pageHeaderResolver';
+import pathResolver from './utils/pathResolver';
+
+export const typeDefs = gql`
+  extend type Blog {
+    header: Header
+    footer: Content
+    path: String
+    relatedItems: Content
+    categories: [CategoryBlog]
+    author: Person
+    contents: [Content]
+    # Uncomment next line if using Media references instead
+    # featuredMedia: [Media]
+  }
+`;
 
 // Controls which site the Blogs gets it's global config from
 const BLOGS_SITE_ID = process.env.BLOGS_SITE_ID ?? (process.env.DEFAULT_SITE_ID || process.env.SITE_ID);
+
 const blogGlobalContentsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
   // TODO: Make getting a localized resolved link a single function
   const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
@@ -20,14 +40,31 @@ const blogGlobalContentsResolver = async (page: any, _args: any, ctx: ApolloCont
 export const mappers: any = {
   Blog: {
     Blog: {
-      contents: blogGlobalContentsResolver
+      path: pathResolver,
+      header: pageHeaderResolver,
+      footer: pageFooterResolver,
+      contents: blogGlobalContentsResolver,
+      relatedItems: async (blog: any, _args: any, ctx: ApolloContext) =>
+        createType('Collection', {
+          items: getLocalizedField(blog.fields, 'relatedItems', ctx),
+          variant: 'Three Per Row',
+          itemsVariant: 'Blog'
+        }),
+      seo: async (page: any, _args: any, ctx: ApolloContext) => {
+        const seo: any = getLocalizedField(page.fields, 'seo', ctx);
+        return {
+          ...seo
+        };
+      }
     },
+
     Link: {
       // TODO: When pathLookup is implemented remove this in favour of Link generic resolver
       text: 'title',
       href: async (blog: any, _args: any, ctx: ApolloContext) =>
         createPath('blogs', getLocalizedField(blog.fields, 'slug', ctx))
     },
+
     Card: {
       body: async (blog: any, _args: any, ctx: ApolloContext) => {
         // TODO: Maybe abstract this two steps into one i.e mapFieldToType
@@ -36,6 +73,7 @@ export const mappers: any = {
         (cardBody as any).__fieldName__ = 'summary';
         return cardBody;
       },
+
       media: async (blog: any, _args: any, ctx: ApolloContext) => {
         // When resolving the Blog card media we need to consider video and images
         // If the featuredMedia is a video we'll us the video thumbnail or generate one
@@ -91,8 +129,11 @@ export const mappers: any = {
           }
         ];
       },
+
       variant: () => 'default-blog',
+
       link: async (blog: any) => blog,
+
       actions: async (blog: any, _args: any, ctx: ApolloContext) => {
         // Get all categoryBlogs from this blog and convert them into links
         const categoriesLinks: any = getLocalizedField(blog.fields, 'categories', ctx);
@@ -117,14 +158,3 @@ export const mappers: any = {
     }
   }
 };
-
-export const typeDefs = gql`
-  extend type Blog {
-    relatedLinks: [Link]
-    categories: [CategoryBlog]
-    author: Person
-    contents: [Content]
-    # Uncomment next line if using Media references instead
-    # featuredMedia: [Media]
-  }
-`;

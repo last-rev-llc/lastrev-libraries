@@ -1,4 +1,3 @@
-# TODO: Update to content model
 fragment Header_BaseFragment on Header {
   ...Content_BaseFragment
   logo {
@@ -10,17 +9,14 @@ fragment Header_BaseFragment on Header {
   navigationItems {
     ...NavigationItem_BaseFragment
   }
-  colorScheme
-  ctAs {
-    ...Link_BaseFragment
-  }
-  mobileCtAs {
+  ctaItems {
     ...Link_BaseFragment
   }
   supernavIcon {
     ...Media_BaseFragment
   }
   supernavText
+  supernavMobileText
   supernavLink {
     ...Link_BaseFragment
   }

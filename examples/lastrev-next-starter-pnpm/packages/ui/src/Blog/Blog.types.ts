@@ -30,6 +30,7 @@ declare module '@mui/material/styles' {
     Blog: BlogProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     Blog?: {

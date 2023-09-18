@@ -26,6 +26,8 @@ function loadFiles() {
     modules['Blog'] = require('./Blog.extension');
     modules['Card'] = require('./Card.extension');
     modules['Collection'] = require('./Collection.extension');
+    modules['CollectionExpandable'] = require('./CollectionExpandable.extension');
+    modules['CollectionExpandableItem'] = require('./CollectionExpandableItem.extension');
     modules['Header'] = require('./Header.extension');
     modules['Hero'] = require('./Hero.extension');
     modules['Link'] = require('./Link.extension');

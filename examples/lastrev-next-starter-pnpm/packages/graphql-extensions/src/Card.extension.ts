@@ -26,6 +26,7 @@ export const mappers: any = {
     },
     variant: () => 'media'
   },
+
   Blog: {
     body: async (blog: any, _args: any, ctx: ApolloContext) => {
       // TODO: Maybe abstract this two steps into one i.e mapFieldToType

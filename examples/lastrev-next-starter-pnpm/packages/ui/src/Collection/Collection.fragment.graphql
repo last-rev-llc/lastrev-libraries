@@ -1,11 +1,12 @@
 fragment Collection_FieldsFragment on Collection {
   ...Content_BaseFragment
-  variant
   introText {
     ...Text_IntroTextFragment
   }
+  variant
   itemsVariant
-  itemsWidth
+  backgroundImage
+  backgroundColor
 }
 
 # Base fragment used everywhere there's a Collection
@@ -14,6 +15,7 @@ fragment Collection_BaseFragment on Collection {
   items {
     ...Card_BaseFragment
     ...Blog_CardFragment
+    ...Page_CardFragment
     ...Link_CardFragment
     ...Media_BaseFragment
   }
