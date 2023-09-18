@@ -7,6 +7,7 @@ import { join, dirname, resolve } from 'path';
 function getAbsolutePath(value) {
   return dirname(require.resolve(join(value, 'package.json')));
 }
+
 const config = {
   stories: ['../packages/ui/(src|stories)/**/*.mdx', '../packages/ui/(src|stories)/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
@@ -31,4 +32,5 @@ const config = {
     autodocs: 'tag'
   }
 };
+
 export default config;

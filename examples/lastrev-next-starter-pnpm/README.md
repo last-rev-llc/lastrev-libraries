@@ -5,7 +5,13 @@
 [x] Deploy Storybook to Vercel
 [x] Implement Sitemap
 [x] Implement Robots
+[x] Implement CSP policies
 [] Implement Preview
+[ ] Implement Test pipeline
+[ ] Implement E2E pipeline
+[ ] Implement Chromatic pipeline
+[] Implement path resolution for href
+[] Implement \_error page
 [] Implement GraphQL preview endpoint
 [] Implement Custom 404
 [] Implement CSP policies
