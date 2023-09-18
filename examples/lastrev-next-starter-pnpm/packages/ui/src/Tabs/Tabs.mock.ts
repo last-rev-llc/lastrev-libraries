@@ -1,14 +1,14 @@
 import { lorem } from 'faker';
-import { CollectionExpandingProps } from './CollectionExpanding.types';
+import { TabsProps } from './Tabs.types';
 import { cardBaseMock } from '../Card/Card.mock';
 import { blockContentOnLeftMock } from '../Block/Block.mock';
 import { collectionBaseMock } from '../Collection/Collection.mock';
 import { quoteBaseMock } from '../Quote/Quote.mock';
 import { introTextMock } from '../Text/Text.mock';
 
-const collectionExpandingDefaultMock: CollectionExpandingProps = {
+const TabsDefaultMock: TabsProps = {
   id: lorem.word(),
-  __typename: 'collectionExpanding',
+  __typename: 'Tabs',
   items: [
     cardBaseMock({ title: 'Card 1 - Title' }),
     cardBaseMock({ title: 'Card 2 - Title' }),
@@ -18,13 +18,13 @@ const collectionExpandingDefaultMock: CollectionExpandingProps = {
   introText: introTextMock()
 };
 
-export const collectionExpandingBaseMock = ({ ...override } = {}) => ({
-  ...collectionExpandingDefaultMock,
+export const TabsBaseMock = ({ ...override } = {}) => ({
+  ...TabsDefaultMock,
   ...override
 });
 
-export const collectionExpandingCardsMock = ({ ...override } = {}) => ({
-  ...collectionExpandingDefaultMock,
+export const TabsCardsMock = ({ ...override } = {}) => ({
+  ...TabsDefaultMock,
   items: [
     collectionBaseMock({ introText: undefined, title: 'Collection 1 - Title' }),
     collectionBaseMock({ introText: undefined, title: 'Collection 2 - Title' })
@@ -32,8 +32,8 @@ export const collectionExpandingCardsMock = ({ ...override } = {}) => ({
   ...override
 });
 
-export const collectionExpandingBlocksMock = ({ ...override } = {}) => ({
-  ...collectionExpandingDefaultMock,
+export const TabsBlocksMock = ({ ...override } = {}) => ({
+  ...TabsDefaultMock,
   ...override,
   items: [
     blockContentOnLeftMock({ introText: undefined, title: 'Block 1 - Title' }),
@@ -43,8 +43,8 @@ export const collectionExpandingBlocksMock = ({ ...override } = {}) => ({
   ]
 });
 
-export const collectionExpandingQuotesMock = ({ ...override } = {}) => ({
-  ...collectionExpandingDefaultMock,
+export const TabsQuotesMock = ({ ...override } = {}) => ({
+  ...TabsDefaultMock,
   ...override,
   items: [
     quoteBaseMock({ quote: 'Quote 1' }),
@@ -54,4 +54,4 @@ export const collectionExpandingQuotesMock = ({ ...override } = {}) => ({
   ]
 });
 
-export default collectionExpandingBaseMock;
+export default TabsBaseMock;

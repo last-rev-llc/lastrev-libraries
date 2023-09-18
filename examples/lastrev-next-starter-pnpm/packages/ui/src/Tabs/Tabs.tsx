@@ -14,9 +14,9 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import { CollectionExpandingProps } from './CollectionExpanding.types';
+import { TabsProps } from './Tabs.types';
 
-export const CollectionExpanding = ({
+export const Tabs = ({
   id,
   items,
   itemsWidth,
@@ -25,7 +25,7 @@ export const CollectionExpanding = ({
   sidekickLookup,
   introText,
   ...props
-}: CollectionExpandingProps) => {
+}: TabsProps) => {
   const [value, setValue] = React.useState('0');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -37,7 +37,7 @@ export const CollectionExpanding = ({
       <Root
         variant={variant}
         itemsVariant={itemsVariant}
-        data-testid={`CollectionExpanding-${variant}`}
+        data-testid={`Tabs-${variant}`}
         {...props}
         {...sidekick(sidekickLookup)}>
         {introText && (
@@ -83,35 +83,35 @@ export const CollectionExpanding = ({
 const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'itemsVariant';
 
 const Root = styled(Box, {
-  name: 'CollectionExpanding',
+  name: 'Tabs',
   slot: 'Root',
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; itemsVariant?: string }>``;
 
 const ContentContainer = styled(Container, {
-  name: 'CollectionExpanding',
+  name: 'Tabs',
   slot: 'ContentContainer',
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.contentContainer]
 })<{ variant?: string }>``;
 
 const IntroTextWrapper = styled(Box, {
-  name: 'CollectionExpanding',
+  name: 'Tabs',
   slot: 'IntroTextWrapper',
   overridesResolver: (_, styles) => [styles.introTextWrapper]
 })(() => ({}));
 
 const IntroText = styled(ContentModule, {
-  name: 'CollectionExpanding',
+  name: 'Tabs',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
 })(() => ({}));
 
 const Item = styled(ContentModule, {
-  name: 'CollectionExpanding',
+  name: 'Tabs',
   slot: 'Item',
   overridesResolver: (_, styles) => [styles.item]
 })<{ variant?: string }>``;
 
-export default CollectionExpanding;
+export default Tabs;

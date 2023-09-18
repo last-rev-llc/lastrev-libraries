@@ -1,8 +1,8 @@
 import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { CollectionExpanding_BaseFragmentFragment } from '@graphql-sdk/types';
+import { Tabs_BaseFragmentFragment } from '@graphql-sdk/types';
 
-type CollectionExpandingVariants =
+type TabsVariants =
   | 'default'
   | 'defaultCircleImage'
   | 'onePerRow'
@@ -15,11 +15,11 @@ type CollectionExpandingVariants =
   | 'pricing'
   | undefined;
 
-export interface CollectionExpandingProps extends CollectionExpanding_BaseFragmentFragment {
-  variant?: CollectionExpandingVariants;
+export interface TabsProps extends Tabs_BaseFragmentFragment {
+  variant?: TabsVariants;
 }
 
-export interface CollectionExpandingClasses {
+export interface TabsClasses {
   root: string;
   contentContainer: string;
   introTextWrapper: string;
@@ -30,25 +30,25 @@ export interface CollectionExpandingClasses {
   action: string;
 }
 
-export declare type CollectionExpandingClassKey = keyof CollectionExpandingClasses;
+export declare type TabsClassKey = keyof TabsClasses;
 
 declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
-    CollectionExpanding: CollectionExpandingClassKey;
+    Tabs: TabsClassKey;
   }
   export interface ComponentsPropsList {
-    CollectionExpanding: CollectionExpandingProps;
+    Tabs: TabsProps;
   }
 }
 declare module '@mui/material/styles' {
   interface Components {
-    CollectionExpanding?: {
-      defaultProps?: ComponentsProps['CollectionExpanding'];
-      styleOverrides?: ComponentsOverrides<Theme>['CollectionExpanding'];
+    Tabs?: {
+      defaultProps?: ComponentsProps['Tabs'];
+      styleOverrides?: ComponentsOverrides<Theme>['Tabs'];
       /**
        * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
        */
-      variants?: ComponentsVariants['CollectionExpanding'];
+      variants?: ComponentsVariants['Tabs'];
     };
   }
 }

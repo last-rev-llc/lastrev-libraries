@@ -5,6 +5,7 @@ import Media from './Media';
 import Page from './Page';
 import Text from './Text';
 import Collection from './Collection';
+import Tabs from './Tabs';
 import Card from './Card';
 import Person from './Person';
 import Quote from './Quote';
@@ -30,11 +31,15 @@ export const contentMapping: {
   Page,
   Text,
   Collection,
+  'CollectionExpandable:Tabs': Tabs,
+  'CollectionExpandable:Accordion': Accordion,
+  'CollectionExpandable': Tabs,
   Card,
   Person,
   Blog,
   Quote,
-  Accordion, // TODO: Enhance accordion with expandable
+  Accordion,
+  Tabs,
   Section,
   NavigationBar,
   NavigationItem,

@@ -7,9 +7,9 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['CollectionExpanding'] = {};
+export const defaultProps: ComponentsProps['Tabs'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['CollectionExpanding'] = {
+export const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
   root: () => ({}),
 
   contentContainer: ({ theme }) => ({}),
@@ -19,7 +19,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['CollectionExpanding'] =
   introText: ({}) => ({})
 };
 
-const createVariants = (theme: Theme): ComponentsVariants['CollectionExpanding'] => [
+const createVariants = (theme: Theme): ComponentsVariants['Tabs'] => [
   {
     props: {
       variant: 'default'
@@ -28,9 +28,9 @@ const createVariants = (theme: Theme): ComponentsVariants['CollectionExpanding']
   }
 ];
 
-export const CollectionExpandingTheme = (theme: Theme): ThemeOptions => ({
+export const TabsTheme = (theme: Theme): ThemeOptions => ({
   components: {
-    CollectionExpanding: {
+    Tabs: {
       defaultProps,
       styleOverrides,
       variants: createVariants(theme)
@@ -38,4 +38,4 @@ export const CollectionExpandingTheme = (theme: Theme): ThemeOptions => ({
   }
 });
 
-export default CollectionExpandingTheme;
+export default TabsTheme;

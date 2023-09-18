@@ -52,15 +52,15 @@ type Blog implements Content {
   header: Header
   id: String
   jsonLd: JSON
-  listImage: Media
   lr__path__: String
   path: String
+  promoImage: Media
+  promoSummary: String
   pubDate: Date
-  relatedLinks: [Link]
+  relatedItems: Content
   seo: JSON
   sidekickLookup: JSON
   slug: String
-  summary: String
   tags: [String]
   theme: [Theme]
   title: String
@@ -95,10 +95,10 @@ type CategoryBlog implements Content {
   lr__path__: String
   path: String
   promoImage: Media
+  promoSummary: String
   seo: JSON
   sidekickLookup: JSON
   slug: String
-  summary: String
   theme: [Theme]
   title: String
 }
@@ -146,6 +146,8 @@ type CollectionExpandable implements Content {
   animation: JSON
   id: String
   internalTitle: String
+  introText: Text
+  items: [CollectionExpandableItem]
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
@@ -155,6 +157,7 @@ type CollectionExpandableItem implements Content {
   animation: JSON
   body: RichText
   bodyRte: JSON
+  content: [Content]
   id: String
   internalTitle: String
   sidekickLookup: JSON
@@ -169,7 +172,7 @@ input CollectionFilterInput {
   topics: [String]
 }
 
-union CollectionItem = Card | Link | Media | NavigationItem | Section
+union CollectionItem = Card
 
 type CollectionItemConnection {
   items: [CollectionItem]
@@ -245,12 +248,15 @@ type Footer implements Content {
 
 type Header implements Content {
   animation: JSON
+  ctaItems: [Link]
   id: String
   internalTitle: String
   logo: Media
-  navigationItems: [Collection]
+  logoUrl: Link
+  navigationItems: [NavigationItem]
   sidekickLookup: JSON
   supernavIcon: Media
+  supernavLink: Link
   supernavMobileText: String
   supernavText: RichText
   theme: [Theme]
@@ -369,13 +375,13 @@ type Page implements Content {
   id: String
   internalTitle: String
   jsonLd: JSON
-  listImage: Media
   lr__path__: String
   path: String
+  promoImage: Media
+  promoSummary: String
   seo: JSON
   sidekickLookup: JSON
   slug: String
-  summary: String
   theme: [Theme]
   title: String
 }
@@ -396,14 +402,14 @@ type Person implements Content {
   id: String
   image: Media
   jobTitle: String
-  listImage: Media
   lr__path__: String
   mainImage: Media
   name: String
+  promoImage: Media
+  promoSummary: String
   rolloverImage: Media
   sidekickLookup: JSON
   slug: String
-  summary: String
   theme: [Theme]
 }
 

@@ -1,4 +1,4 @@
-fragment CollectionExpanding_FieldsFragment on CollectionExpanding {
+fragment CollectionExpandable_FieldsFragment on CollectionExpandable {
   ...Content_BaseFragment
   variant
   introText {
@@ -8,9 +8,9 @@ fragment CollectionExpanding_FieldsFragment on CollectionExpanding {
   itemsWidth
 }
 
-# Base fragment used everywhere there's a CollectionExpanding
-fragment CollectionExpanding_BaseFragment on CollectionExpanding {
-  ...CollectionExpanding_FieldsFragment
+# Base fragment used everywhere there's a CollectionExpandable
+fragment CollectionExpandable_BaseFragment on CollectionExpandable {
+  ...CollectionExpandable_FieldsFragment
   items {
     ...Card_BaseFragment
     ...Blog_CardFragment
@@ -20,8 +20,8 @@ fragment CollectionExpanding_BaseFragment on CollectionExpanding {
 }
 
 # Specific fragment used for the RichText embedded entries
-fragment CollectionExpanding_RichTextFragment on CollectionExpanding {
-  ...CollectionExpanding_FieldsFragment
+fragment CollectionExpandable_RichTextFragment on CollectionExpandable {
+  ...CollectionExpandable_FieldsFragment
   items {
     ...Card_RichTextFragment
     ...Link_CardFragment
