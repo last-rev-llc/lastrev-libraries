@@ -3,6 +3,7 @@ import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
 import { blogV1, categoryBlogV1, pageV1 } from './PathsConfigs.extension';
 import pathResolver from './utils/pathResolver';
+import resolveField from './utils/resolveField';
 export const typeMappings = {};
 
 export const typeDefs = gql`
@@ -32,38 +33,23 @@ export const typeDefs = gql`
 const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
 const BLOGS_LANDING_ID = process.env.BLOGS_LANDING_ID;
 
-const headerResolver = async (page: any, _args: any, ctx: ApolloContext) => {
-  // TODO: Make getting a localized resolved link a single function
-  const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
-  const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? SITE_ID, preview: !!ctx.preview });
-  const siteHeader: any = getLocalizedField(site?.fields, 'header', ctx);
+const headerResolver = resolveField([
+  'header',
+  'site.header',
+  (_root: any, _args: any, ctx: ApolloContext) =>
+    ctx.loaders.entryLoader
+      .load({ id: SITE_ID!, preview: !!ctx.preview })
+      .then((site: any) => getLocalizedField(site?.fields, 'header', ctx))
+]);
 
-  const header: any = getLocalizedField(page?.fields, 'header', ctx);
-  return header ?? siteHeader;
-};
-
-const footerResolver = async (page: any, _args: any, ctx: ApolloContext) => {
-  // TODO Improve redirecting to a field inside a referenced field
-  const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
-  const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? SITE_ID, preview: !!ctx.preview });
-  const siteFooter: any = getLocalizedField(site?.fields, 'footer', ctx);
-
-  const footer: any = getLocalizedField(page?.fields, 'footer', ctx);
-  return footer ?? siteFooter;
-};
-
-const createType = (type: string, content: any) => ({
-  sys: { id: content?.id, contentType: { sys: { id: type } } },
-  fields: Object.keys(content).reduce(
-    (accum, key) => ({
-      ...accum,
-      [key]: {
-        'en-US': content[key]
-      }
-    }),
-    {}
-  )
-});
+const footerResolver = resolveField([
+  'footer',
+  'site.footer',
+  (_root: any, _args: any, ctx: ApolloContext) =>
+    ctx.loaders.entryLoader
+      .load({ id: SITE_ID!, preview: !!ctx.preview })
+      .then((site: any) => getLocalizedField(site?.fields, 'footer', ctx))
+]);
 
 export const mappers = {
   Page: {
@@ -73,15 +59,8 @@ export const mappers = {
     },
     Page: {
       path: pathResolver,
-      seo: async (page: any, _args: any, ctx: ApolloContext) => {
-        const seo: any = getLocalizedField(page.fields, 'seo', ctx);
-        return {
-          ...seo
-        };
-      },
       header: headerResolver,
       footer: footerResolver
-      // contents: pageContentsResolver
     }
   },
   Blog: {
