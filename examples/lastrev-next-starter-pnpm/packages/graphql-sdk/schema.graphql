@@ -414,12 +414,14 @@ type Person implements Content {
   mainImage: Media
   name: String
   path: String
+
   promoImage: Media
   promoSummary: String
   rolloverImage: Media
   sidekickLookup: JSON
   slug: String
   socialLinks: [Link]
+
   theme: [Theme]
 }
 
