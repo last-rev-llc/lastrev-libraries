@@ -1,6 +1,5 @@
 import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
-// https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['Media'] = {
   nextImageOptimization: true,
   priority: false,
@@ -8,7 +7,6 @@ export const defaultProps: ComponentsProps['Media'] = {
   sizes: '100vw'
 };
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
   // Set some static styles
   root: () => ({
@@ -31,7 +29,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
   // }
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['Media'] => [
   // Use prop matching to set variant styles
   // {

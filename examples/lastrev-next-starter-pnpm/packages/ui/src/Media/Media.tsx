@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '@mui/system/styled';
+import { styled } from '@mui/material/styles';
 import { useAmp } from 'next/amp';
 import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';

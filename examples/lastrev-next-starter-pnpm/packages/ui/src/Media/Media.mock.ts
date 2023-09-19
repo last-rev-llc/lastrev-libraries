@@ -1,91 +1,119 @@
 import { lorem } from 'faker';
-import { MediaProps, MediaVideoProps } from './Media.types';
+import { MediaProps, MediaVideoProps, AssetProps, FileProps } from './Media.types';
 
-export const mediaMock = ({ width = '1920', height = '1080', ...override } = {}): Partial<MediaProps> & {
-  width?: number;
-  height?: number;
-} => ({
-  id: 'mediaMock',
-  alt: lorem.word(),
-  __typename: 'Media',
-  file: {
-    url: `https://source.unsplash.com/random/${width}x${height}`,
-    width,
-    height
-  },
+import { cleanSVG } from '../../../graphql-extensions/src/utils/cleanSVG';
+const getSvgContent = (url: string) =>
+  fetch(url)
+    .then((res) => res.text())
+    .then((svgContent) => {
+      return cleanSVG(svgContent);
+    });
+
+export const defaultFileImageMock = ({ ...override } = {}): FileProps => ({
+  url: `https://source.unsplash.com/random/180x180`,
+  width: 1920,
+  height: 1080,
+  ...override
+});
+
+export const defaultFileSvgMock = ({ ...override } = {}): FileProps => ({
+  url: 'https://images.ctfassets.net/imglmb3xms7o/5iTzPfXcBEhIM68upyDSxS/406045a76146d3dbc4ee1c89682abd76/whiteLastRev.svg',
+  width: 1280,
+  height: 720,
+  ...override
+});
+
+export const defaultFileVideoMock = ({ ...override } = {}): FileProps => ({
+  url: './LastRev.mp4',
+  width: 1280,
+  height: 720,
+  ...override
+});
+
+const defaultAssetFileMock = ({ ...override } = {}): AssetProps => ({
+  file: defaultFileImageMock(),
   title: lorem.sentence(),
   ...override
 });
 
-export const mediaVideoMock = (): MediaVideoProps => ({
-  __typename: 'Media',
-  file: {
-    url: './LastRev.mp4',
-    width: '1280',
-    height: '720'
-  },
-  variant: 'video',
+const defaultAssetSvgMock = async ({ ...override } = {}): Promise<AssetProps> => {
+  const svgContent = await getSvgContent(
+    'https://images.ctfassets.net/imglmb3xms7o/5iTzPfXcBEhIM68upyDSxS/406045a76146d3dbc4ee1c89682abd76/whiteLastRev.svg'
+  );
+
+  return {
+    file: defaultFileSvgMock(),
+    svgContent,
+    title: lorem.sentence(),
+    ...override
+  };
+};
+
+const defaultAssetVideoMock = ({ ...override } = {}): AssetProps => ({
+  file: defaultFileVideoMock(),
   title: lorem.sentence(),
-  controls: true
+  ...override
 });
 
-export const assetMock = () => ({
-  file: {
-    url: `https://source.unsplash.com/random/1920x1080`,
-    width: '1920',
-    height: '1080'
-  },
-  title: lorem.sentence(),
-  description: lorem.sentence()
-});
-
-export const fileMock = () => ({
-  url: `https://source.unsplash.com/random/180x180`,
-  width: '180',
-  height: '180'
-});
-
-export const responsiveMediaMock = {
+export const mediaSVGMock = {
   __typename: 'Media',
-  file: {
-    url: 'https://source.unsplash.com/random/1920x1080',
-    width: '1920',
-    height: '1080'
-  },
-  fileTablet: {
-    url: 'https://source.unsplash.com/random/920x620',
-    width: '920',
-    height: '613'
-  },
-  fileMobile: {
-    url: 'https://source.unsplash.com/random/540x540',
-    width: '540',
-    height: '540'
-  },
+  file: defaultFileSvgMock(),
   title: lorem.sentence(),
   description: lorem.sentence()
 };
 
-export const SVGMediaMock = {
+export const mediaExternalSVGMock = {
   __typename: 'Media',
-  file: {
-    url: './logo.svg',
-    width: '1728',
-    height: '1152'
-  },
-
-  title: lorem.sentence(),
-  description: lorem.sentence()
-};
-
-export const ExternalSVGMediaMock = {
-  __typename: 'Media',
-  file: {
-    url: './logo.svg',
-    width: '1728',
-    height: '1152'
-  },
+  file: defaultFileSvgMock(),
   disableInlineSVG: true,
   title: lorem.sentence(),
   description: lorem.sentence()
 };
+
+const mediaDefaultMock: MediaProps = {
+  id: 'mediaBaseImageMock',
+  __typename: 'Media',
+  alt: lorem.word()
+};
+
+const imageDefaultMock: MediaProps = {
+  ...mediaDefaultMock,
+  ...defaultAssetFileMock()
+};
+
+const svgDefaultMock: MediaProps = {
+  ...mediaDefaultMock,
+  ...defaultAssetSvgMock()
+};
+
+const videoDefaultMock: MediaProps = {
+  ...mediaDefaultMock,
+  ...defaultFileVideoMock(),
+  variant: 'video',
+  controls: true
+};
+
+export const mediaBaseVideoMock = ({ ...override } = {}): MediaProps => ({
+  ...videoDefaultMock,
+  ...override
+});
+
+export const mediaBaseImageMock = ({ ...override } = {}): MediaProps => ({
+  ...imageDefaultMock,
+  ...override
+});
+
+export const mediaBaseSvgMock = ({ ...override } = {}): MediaProps => ({
+  ...svgDefaultMock,
+  ...override
+});
+
+export const mediaVideoMock = (): MediaVideoProps => ({});
+
+export const responsiveMediaBaseImageMock = ({ ...override } = {}): MediaProps => ({
+  ...mediaDefaultMock,
+  file: defaultFileImageMock(),
+  fileTablet: defaultFileImageMock({ width: 920, height: 613 }),
+  fileMobile: defaultFileImageMock({ width: 540, height: 540 }),
+  ...override
+});

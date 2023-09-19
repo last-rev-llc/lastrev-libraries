@@ -14,7 +14,7 @@ const locale = 'en-US';
 export default async function Preview({ params }: Props) {
   const { id } = params;
   const { data } = await client.Preview({ id, locale });
-  console.log('Preview', { id, data });
+
   if (!data?.content) {
     return notFound();
   }

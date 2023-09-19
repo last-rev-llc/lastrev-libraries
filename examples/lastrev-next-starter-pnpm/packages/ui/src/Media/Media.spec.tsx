@@ -1,14 +1,14 @@
 import * as React from 'react';
-import mount from '../../../cypress/mount';
+import { mount } from '@cypress/react18';
 import Media, { MediaProps, File } from './Media';
-import { mediaMock, mediaVideoMock, fileMock } from './Media.mock';
+import { mediaBaseImageMock, mediaVideoMock, fileMock } from './Media.mock';
 
 let mockedContent: MediaProps = {};
 let mockedFile: File = { url: '' };
 let mockedVideo: MediaProps = {};
 
 beforeEach(() => {
-  mockedContent = { ...mediaMock() };
+  mockedContent = { ...mediaBaseImageMock() };
   mockedFile = { ...fileMock() };
   mockedVideo = { ...mediaVideoMock() };
 });

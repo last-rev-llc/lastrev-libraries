@@ -1,14 +1,12 @@
-import { Block } from './Block';
-import { baseMock } from './Block.mock';
-// More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+import Block from './Block';
+
+import { BlockVariants } from './Block.types';
+
+import { blockBaseMock } from './Block.mock';
+
 export default {
   title: '3. Modules/Block',
   component: Block,
-  parameters: {
-    // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/react/configure/story-layout
-    layout: 'centered'
-  },
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ['autodocs'],
   argTypes: {
     // Props should follow this schema: https://storybook.js.org/docs/react/writing-stories/args#args-schema
@@ -17,15 +15,17 @@ export default {
     variant: {
       control: {
         type: 'select',
-        options: ['default']
+        options: BlockVariants
       }
     }
   }
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Default = {
-  args: {
-    ...baseMock()
-  }
-};
+export const Default = { args: { ...blockBaseMock() } };
+export const ContentOnRight = { args: { ...blockBaseMock({ variant: 'mediaAbove' }) } };
+export const ContentOnRightFullBleed = { args: { ...blockBaseMock({ variant: 'contentOnRightFullBleed' }) } };
+export const ContentOnLeft = { args: { ...blockBaseMock({ variant: 'contentOnLeft' }) } };
+export const ContentOnLeftFullBleed = { args: { ...blockBaseMock({ variant: 'contentOnLeftFullBleed' }) } };
+export const ContentBelow = { args: { ...blockBaseMock({ variant: 'contentBelow' }) } };
+export const ContentAbove = { args: { ...blockBaseMock({ variant: 'contentAbove' }) } };

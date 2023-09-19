@@ -1,9 +1,7 @@
 import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
-// https://mui.com/customization/theme-components/#default-props
 export const defaultProps: ComponentsProps['Text'] = {};
 
-// https://mui.com/customization/theme-components/#global-style-overrides
 export const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
   root: {
@@ -22,29 +20,48 @@ export const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // }
 };
 
-// https://mui.com/customization/theme-components/#adding-new-component-variants
 const createVariants = (_theme: Theme): ComponentsVariants['Text'] => [
   // Use prop matching to set variant styles
-  // {
-  //   props: {
-  //     variant: 'example'
-  //   },
-  //   style: {
-  //     backgroundColor: theme.palette.primary.main
-  //   }
-  // }
-  // Other props are also valid
-  // {
-  //   props: {
-  //     backgroundColor: 'primary.main',
-  //   },
-  //   style: {
-  //     color: theme.palette.primary.contrastText
-  //   }
-  // }
+  {
+    props: {
+      variant: 'inline'
+    },
+    style: {
+      // TODO: Pulled from Text, but adds default padding around elements.   Classes may be wrong
+      '& > [class*=Text-root] > *:not(:first-child)': {
+        '&:not(:is(ul, ol, li))': {
+          marginTop: '1em',
+          marginBottom: '2em'
+        },
+
+        '&:is(ul, ol)': {
+          marginTop: '-1em',
+          marginBottom: '3em'
+        }
+      },
+
+      '& > [class*=Text-root] > *:first-child': {
+        marginTop: '0'
+      },
+
+      '[class*=MuiTypography-h]': {
+        marginBottom: '.5em',
+        marginTop: '2em'
+      }
+    }
+  },
+
+  {
+    props: {
+      variant: 'introText'
+    },
+    style: ({ theme }: { theme: Theme }) => ({
+      marginBottom: theme.spacing(4)
+    })
+  }
 ];
 
-export default (theme: Theme): ThemeOptions => ({
+export const textTheme = (theme: Theme): ThemeOptions => ({
   components: {
     Text: {
       defaultProps,
@@ -53,3 +70,5 @@ export default (theme: Theme): ThemeOptions => ({
     }
   }
 });
+
+export default textTheme;

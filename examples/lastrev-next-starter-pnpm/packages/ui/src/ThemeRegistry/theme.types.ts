@@ -1,4 +1,5 @@
-import { Mixins, Theme, TypographyStyle } from '@mui/material/styles';
+import { Mixins } from '@mui/material/styles/createMixins';
+import { TypographyStyle, Theme } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
   interface BreakpointOverrides {
@@ -11,11 +12,23 @@ declare module '@mui/material/styles' {
   interface TypographyVariants {
     bodySmall: TypographyStyle;
     bodyLarge: TypographyStyle;
+    display1: TypographyStyle;
+    display2: TypographyStyle;
+    display3: TypographyStyle;
+    display4: TypographyStyle;
+    display5: TypographyStyle;
+    display6: TypographyStyle;
   }
 
   interface TypographyVariantsOptions {
     bodySmall?: TypographyStyle;
     bodyLarge?: TypographyStyle;
+    display1?: TypographyStyle;
+    display2?: TypographyStyle;
+    display3?: TypographyStyle;
+    display4?: TypographyStyle;
+    display5?: TypographyStyle;
+    display6?: TypographyStyle;
   }
 }
 

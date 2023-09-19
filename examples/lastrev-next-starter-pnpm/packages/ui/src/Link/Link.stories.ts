@@ -1,11 +1,10 @@
 import React from 'react';
 import LinkComponent from './Link';
-import { basicLink } from './Link.mock';
+import { linkTextMock } from './Link.mock';
 
 export default {
   title: '2. Components/Link',
   component: LinkComponent,
-
   tags: ['autodocs'],
   argTypes: {
     sx: { table: { disable: true } },
@@ -45,7 +44,7 @@ export default {
   }
 };
 
-export const Link = { args: { ...basicLink() } };
+export const Link = { args: { ...linkTextMock() } };
 export const ButtonContained = { args: { ...Link.args, variant: 'button-contained' } };
 export const ButtonOutlined = { args: { ...Link.args, variant: 'button-outlined' } };
 export const ButtonText = { args: { ...Link.args, variant: 'button-text' } };

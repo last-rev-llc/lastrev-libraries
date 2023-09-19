@@ -1,5 +1,5 @@
 import Page from './Page';
-import mockContent from './Page.mock';
+import { pageBaseMock } from './Page.mock';
 
 export default {
   title: '4. Pages/Page General',
@@ -10,8 +10,9 @@ export default {
   // tags: ['autodocs']
 };
 
+// More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Default = {
   args: {
-    ...mockContent()
+    ...pageBaseMock()
   }
 };

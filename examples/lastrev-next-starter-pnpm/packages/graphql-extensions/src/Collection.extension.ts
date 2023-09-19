@@ -1,7 +1,8 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
+import { ApolloContext, Mappers } from '@last-rev/types';
 import gql from 'graphql-tag';
-import { camelCase, toUpper } from 'lodash';
+import camelCase from 'lodash/camelCase';
+import toUpper from 'lodash/toUpper';
 
 import { collectOptions } from './utils/collectOptions';
 import { queryContentful } from './utils/queryContentful';
@@ -13,23 +14,28 @@ const logger = getWinstonLogger({
 });
 
 const pascalCase = (str: string) => camelCase(str).replace(/^(.)/, toUpper);
-const COLLECTION_ITEM_TYPES = ['Card', 'Link', 'Media', 'Section', 'NavigationItem'];
+
+// Note: If you want anything other than the below, this is where you will add it
+const COLLECTION_ITEM_TYPES = ['Card'];
 
 export const typeDefs = gql`
   extend type Collection {
     items: [CollectionItem]
     introText: Text
     itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
+    backgroundImage: Media
   }
 
   type CollectionOptions {
     tags: [Option]
     topics: [Option]
   }
+
   type Option {
     label: String
     value: String
   }
+  
   type ConnectionPageInfo {
     options: CollectionOptions
     allOptions: CollectionOptions
@@ -68,11 +74,12 @@ interface CollectionSettings {
   }>;
 }
 
-export const mappers: any = {
+export const mappers: Mappers = {
   Collection: {
     Collection: {
       items: async (collection: any, _args: any, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
+        const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
         try {
           const { contentType, limit, offset, order, filter } =
             (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
@@ -89,8 +96,12 @@ export const mappers: any = {
             stack: error.stack
           });
         }
-        return items;
+
+        const returnItems = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
+
+        return returnItems;
       },
+
       itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
         try {
@@ -113,16 +124,24 @@ export const mappers: any = {
               items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
             }
 
+            let fullItemsWithVariant = [];
+
+            if (!!items?.length) {
+              const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
+
+              const fullItems = await ctx.loaders.entryLoader.loadMany(
+                items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+              );
+
+              fullItemsWithVariant = fullItems?.map((x: any) => ({ ...x, variant: itemsVariant }));
+            }
+
             return {
               pageInfo: {
                 options,
                 allOptions
               },
-              items: items?.length
-                ? await ctx.loaders.entryLoader.loadMany(
-                    items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-                  )
-                : null
+              items: fullItemsWithVariant
             };
           }
         } catch (error: any) {
@@ -140,9 +159,10 @@ export const mappers: any = {
 
 // TODO: support variant for resolving the CollectionItem type
 const ITEM_MAPPING: { [key: string]: string } = {
-  Page: 'Link',
+  Page: 'Card',
   Blog: 'Card',
-  Media: 'Card'
+  Media: 'Card',
+  Person: 'Card'
 };
 
 export const resolvers = {

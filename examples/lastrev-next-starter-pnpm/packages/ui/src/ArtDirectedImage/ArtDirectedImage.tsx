@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import styled from '@mui/system/styled';
+import { styled } from '@mui/material/styles';
 // import { css } from '@emotion/react';
 import Image from '../Image';
 import { MediaProps } from '../Media/Media.types';
@@ -10,8 +10,10 @@ const getImageMedia = (breakpoint: string, { fileMobile, fileTablet }: Partial<M
   switch (breakpoint) {
     case 'mobile':
       return '(max-width: 768px)';
+
     case 'tablet':
       return '(min-width: 768.1px) and (max-width: 1024px)';
+
     case 'desktop':
       if (!fileTablet && !fileMobile) {
         return '';
@@ -43,6 +45,7 @@ const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProp
           />
         </>
       ) : null}
+
       {fileTablet?.url ? (
         <>
           <ResponsiveImage
@@ -56,6 +59,7 @@ const ArtDirectedImage = React.forwardRef<HTMLImageElement, ArtDirectedImageProp
           />
         </>
       ) : null}
+
       {file?.url ? (
         <>
           <ResponsiveImage

@@ -1,5 +1,4 @@
 import React from 'react';
-import Head from 'next/head';
 import NextImage from 'next/image';
 import ErrorBoundary from '../ErrorBoundary';
 

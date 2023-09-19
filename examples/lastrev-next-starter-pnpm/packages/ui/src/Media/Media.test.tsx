@@ -3,13 +3,13 @@ import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 // import preloadAll from 'jest-next-dynamic';
 import Media from './Media';
-import { mediaMock } from './Media.mock';
+import { mediaBaseImageMock } from './Media.mock';
 
 // beforeAll(async () => {
 //   await preloadAll();
 // });
 
-const { file, title, alt } = mediaMock();
+const { file, title, alt } = mediaBaseImageMock();
 
 const renderComponent = () => render(<Media alt={alt} file={file} title={title} />);
 

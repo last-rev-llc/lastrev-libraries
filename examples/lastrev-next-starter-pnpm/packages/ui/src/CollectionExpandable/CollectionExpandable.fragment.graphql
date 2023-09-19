@@ -1,0 +1,28 @@
+fragment CollectionExpandable_FieldsFragment on CollectionExpandable {
+  ...Content_BaseFragment
+  variant
+  introText {
+    ...Text_IntroTextFragment
+  }
+}
+
+# Base fragment used everywhere there's a CollectionExpandable
+fragment CollectionExpandable_BaseFragment on CollectionExpandable {
+  ...CollectionExpandable_FieldsFragment
+  items {
+    ...CollectionExpandableItem_BaseFragment
+  }
+}
+
+# Base fragment used everywhere there's a CollectionExpandable
+fragment CollectionExpandableItem_BaseFragment on CollectionExpandableItem {
+  title
+  body {
+    ...RichText_BaseFragment
+  }
+  content {
+    ...Block_BaseFragment
+    ...Text_BaseFragment
+    ...Quote_BaseFragment
+  }
+}

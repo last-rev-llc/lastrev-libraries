@@ -1,4 +1,7 @@
-import { compact, map, merge } from 'lodash';
+import compact from 'lodash/compact';
+import map from 'lodash/map';
+import merge from 'lodash/merge';
+
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { Source, DocumentNode, GraphQLSchema } from 'graphql';
 
@@ -25,7 +28,11 @@ function loadFiles() {
     modules['Block'] = require('./Block.extension');
     modules['Blog'] = require('./Blog.extension');
     modules['Card'] = require('./Card.extension');
+    modules['CategoryBlog'] = require('./CategoryBlog.extension');
     modules['Collection'] = require('./Collection.extension');
+    modules['CollectionExpandable'] = require('./CollectionExpandable.extension');
+    modules['CollectionExpandableItem'] = require('./CollectionExpandableItem.extension');
+    modules['Footer'] = require('./Footer.extension');
     modules['Header'] = require('./Header.extension');
     modules['Hero'] = require('./Hero.extension');
     modules['Link'] = require('./Link.extension');
@@ -33,12 +40,14 @@ function loadFiles() {
     modules['NavigationItem'] = require('./NavigationItem.extension');
     modules['Page'] = require('./Page.extension');
     modules['PathsConfigs'] = require('./PathsConfigs.extension');
+    modules['Person'] = require('./Person.extension');
     modules['Preview'] = require('./Preview.extension');
     modules['Quote'] = require('./Quote.extension');
     modules['RichText'] = require('./RichText.extension');
-    modules['SEO'] = require('./SEO.extension');
     modules['Section'] = require('./Section.extension');
+    modules['SEO'] = require('./SEO.extension');
     modules['Sidekick'] = require('./Sidekick.extension');
+    modules['Text'] = require('./Text.extension');
     modules['Theme'] = require('./Theme.extension');
 
     //TODO: Find out a way to do dynamic imports in nextjs
@@ -80,5 +89,3 @@ export const resolvers = mergeResolvers(compact(map(extensions, 'resolvers'))) a
 export const mappers = merge({}, ...compact(map(extensions, 'mappers')));
 export const typeMappings = merge({}, ...compact(map(extensions, 'typeMappings')));
 export const pathsConfigs = merge({}, ...compact(map(extensions, 'pathsConfigs')));
-
-console.log(typeMappings);

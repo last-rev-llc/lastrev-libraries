@@ -156,6 +156,6 @@ const pageGeneral: ContentfulPathsGenerator = async (
 
 export const pathsConfigs = {
   pageGeneral,
-  pageBlog: '/blogs' // this will autmoatically create the path config for each blog with this path: /blogs/{blog.fields.slug['en-US']}
+  Blog: '/blogs' // this will autmoatically create the path config for each blog with this path: /blogs/{blog.fields.slug['en-US']}
 };
 ```

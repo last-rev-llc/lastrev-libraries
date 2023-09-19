@@ -1,16 +1,15 @@
+import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+
 import { Block_BaseFragmentFragment } from '@graphql-sdk/types';
-import { ComponentsOverrides, ComponentsProps, ComponentsVariants } from '@mui/material';
 
 export enum BlockVariants {
   default = 'default',
-  mediaAbove = 'mediaAbove',
-  mediaOnRight = 'mediaOnRight',
-  mediaOnLeft = 'mediaOnLeft',
-  mediaBelow = 'mediaBelow',
-  mediaCircleAbove = 'mediaCircleAbove',
-  mediaCircleOnRight = 'mediaCircleOnRight',
-  mediaCircleOnLeft = 'mediaCircleOnLeft',
-  mediaCircleBelow = 'mediaCircleBelow'
+  contentOnRight = 'contentOnRight',
+  contentOnRightFullBleed = 'contentOnRightFullBleed',
+  contentOnLeft = 'contentOnLeft',
+  contentOnLeftFullBleed = 'contentOnLeftFullBleed',
+  contentBelow = 'contentBelow',
+  contentAbove = 'contentAbove'
 }
 
 export interface BlockProps extends Block_BaseFragmentFragment {}
@@ -21,14 +20,14 @@ export interface BlockClasses {
   introText: string;
   contentOuterWrapper: string;
   categoriesWrapper: string;
-  contentWrapper: string;
+  mainContentWrapper: string;
   content: string;
   angledArrowIcon: string;
-  eyebrow: string;
+  overline: string;
   title: string;
   subtitle: string;
   body: string;
-  mediaWrapper: string;
+  sideContentWrapper: string;
   mediaItems: string;
   actionsWrapper: string;
   action: string;

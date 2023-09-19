@@ -1,0 +1,25 @@
+fragment Header_BaseFragment on Header {
+  ...Content_BaseFragment
+  logo {
+    ...Media_BaseFragment
+  }
+  logoUrl {
+    ...Link_BaseFragment
+  }
+  navigationItems {
+    ...NavigationItem_BaseFragment
+  }
+  ctaItems {
+    ...Link_BaseFragment
+  }
+  supernavIcon {
+    ...Media_BaseFragment
+  }
+  supernavText {
+    ...RichText_BaseFragment
+  }
+  supernavMobileText
+  supernavLink {
+    ...Link_BaseFragment
+  }
+}

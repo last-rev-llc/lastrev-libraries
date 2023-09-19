@@ -3,7 +3,7 @@ fragment ContentModule_BaseFragment on Content {
   #...Card_BaseFragment
   ...Block_BaseFragment
   #...Collection_BaseFragment
-  #...GlobalFooter_BaseFragment
+  #...Footer_BaseFragment
   #...Header_BaseFragment
   ...Hero_BaseFragment
   #...Link_BaseFragment
@@ -24,7 +24,7 @@ fragment ContentModule_SectionFragment on Content {
   #...Card_BaseFragment
   ...Block_BaseFragment
   #...Collection_BaseFragment
-  #...GlobalFooter_BaseFragment
+  #...Footer_BaseFragment
   #...Header_BaseFragment
   ...Hero_BaseFragment
   ...Link_BaseFragment
@@ -41,7 +41,7 @@ fragment ContentModule_RichTextFragment on Content {
   #...Card_BaseFragment
   ...Block_BaseFragment
   #...Collection_BaseFragment
-  #...GlobalFooter_BaseFragment
+  #...Footer_BaseFragment
   #...Header_BaseFragment
   #...Hero_BaseFragment
   ...Link_BaseFragment

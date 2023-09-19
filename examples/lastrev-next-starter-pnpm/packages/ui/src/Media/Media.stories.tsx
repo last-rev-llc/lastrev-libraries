@@ -1,5 +1,11 @@
 import Media from './Media';
-import { mediaMock, mediaVideoMock, responsiveMediaMock, SVGMediaMock, ExternalSVGMediaMock } from './Media.mock';
+import {
+  mediaBaseImageMock,
+  mediaVideoMock,
+  responsiveMediaBaseImageMock,
+  mediaSVGMock,
+  mediaExternalSVGMock
+} from './Media.mock';
 
 export default {
   title: '2. Components/ Media',
@@ -15,12 +21,12 @@ export default {
   }
 };
 
-export const Default = { args: { ...mediaMock() } };
+export const Default = { args: { ...mediaBaseImageMock() } };
 
-export const InlineSVG = { args: { ...SVGMediaMock } };
+export const InlineSVG = { args: { ...mediaSVGMock } };
 
-export const SVG = { args: { ...ExternalSVGMediaMock } };
+export const SVG = { args: { ...mediaExternalSVGMock } };
 
-export const Responsive = { args: { ...responsiveMediaMock } };
+export const Responsive = { args: { ...responsiveMediaBaseImageMock } };
 
 export const Video = { args: { ...mediaVideoMock() } };
