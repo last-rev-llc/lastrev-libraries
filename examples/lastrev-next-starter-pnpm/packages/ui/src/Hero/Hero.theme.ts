@@ -18,7 +18,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     // Assuming ownerState has a type defined
     let bgColorStyles: React.CSSProperties = {};
     let bgColor: Partial<Color> | string | undefined = ownerState?.backgroundColor;
-    console.log('theme', { ownerState });
+
     if (bgColor?.includes('gradient') && bgColor) {
       // Make sure to specify the property name explicitly, as it's dynamic
       // Fix TS issues
@@ -30,7 +30,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
         color: themeBgColorContrastText
       };
     } else if (bgColor) {
-      console.log('has bg color');
       // Ensure the correct property is accessed
       const parsedBgColorString = bgColor?.includes('.') ? bgColor : theme?.palette?.[bgColor]?.main;
 

@@ -89,5 +89,3 @@ export const resolvers = mergeResolvers(compact(map(extensions, 'resolvers'))) a
 export const mappers = merge({}, ...compact(map(extensions, 'mappers')));
 export const typeMappings = merge({}, ...compact(map(extensions, 'typeMappings')));
 export const pathsConfigs = merge({}, ...compact(map(extensions, 'pathsConfigs')));
-
-console.log({ typeMappings });

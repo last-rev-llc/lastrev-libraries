@@ -42,7 +42,7 @@ export const Hero = (props: HeroProps) => {
 
   // TODO: Better way?
   const isFullBleed = variant?.indexOf('FullBleed') > -1;
-  console.log('comp', ownerState);
+
   return (
     // <ErrorBoundary>
     <HeroRoot data-testid="Hero" variant={variant} ownerState={ownerState} {...sidekick(sidekickLookup)}>

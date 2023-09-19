@@ -1,19 +1,24 @@
 // route handler with secret and slug
 import { draftMode } from 'next/headers';
-import { redirect } from 'next/navigation';
+// import { redirect } from 'next/navigation';
 import client from '../../../../../../packages/graphql-sdk/src/client';
+import { notFound } from 'next/navigation';
 
 export async function GET(request: Request) {
   // Parse query string parameters
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get('secret');
   const locale = searchParams.get('locale');
-  const environment = searchParams.get('environment');
+  // const environment = searchParams.get('environment');
   const id = searchParams.get('id');
+
+  if (!id) {
+    return notFound();
+  }
 
   // Check the secret and next parameters
   // This secret should only be known to this route handler and the CMS
-  if (secret !== (process.env.PREVIEW_TOKEN || 'MY_SECRET_TOKEN') && process.env.NODE_ENV !== 'development' && !!id) {
+  if ((secret !== process.env.PREVIEW_TOKEN || 'MY_SECRET_TOKEN') && process.env.NODE_ENV !== 'development' && !!id) {
     return new Response('Invalid token', { status: 401 });
   }
 
@@ -22,8 +27,6 @@ export async function GET(request: Request) {
   const {
     data: { content }
   } = await client.Preview({ id, locale: locale ?? 'en-US' });
-
-  console.log('content preview', { id, content });
 
   // If the slug doesn't exist prevent draft mode from being enabled
   if (!content) {

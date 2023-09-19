@@ -34,7 +34,6 @@ type Setting = string | Setting[] | { [key: string]: string } | ((root: any, arg
 export const resolveField =
   (setting: Setting): any =>
   async (root: any, args: any, ctx: ApolloContext) => {
-    console.log('resolveField', { setting, root, args, ctx });
     if (typeof setting === 'string') {
       // If the settings is a string, resolve to that field
       // IF there are multiple segments, resolve each segment from the previous value
