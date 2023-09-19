@@ -360,6 +360,7 @@ type NavigationItem implements Content {
   manualUrl: String
   navMedia: Media
   sidekickLookup: JSON
+  subNavigation: [SubNavigationItem]
   summary: RichText
   text: String
   theme: [Theme]
@@ -516,6 +517,8 @@ type SitemapPage {
   locale: String
   page: Int
 }
+
+union SubNavigationItem = Link | NavigationItem
 
 type Template implements Content {
   animation: JSON

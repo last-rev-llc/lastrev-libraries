@@ -1,10 +1,7 @@
 import { NavigationItem_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface NavigationItemProps extends NavigationItem_BaseFragmentFragment {
-  id?: string;
-  sidekickLookup?: any;
   onRequestClose?: any;
-  variant?: string;
 }
 
 export interface NavigationItemClasses {
