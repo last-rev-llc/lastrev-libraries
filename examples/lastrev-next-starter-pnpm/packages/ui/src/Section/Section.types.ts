@@ -2,7 +2,7 @@ import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/m
 
 import { Section_BaseFragmentFragment } from '@graphql-sdk/types';
 
-import { Breakpoint } from '@mui/material/Breakpoint';
+import { Breakpoint } from '@mui/material';
 
 import { MediaProps } from '../Media/Media.types';
 import { TextProps } from '../Text/Text.types';

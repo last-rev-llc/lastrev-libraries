@@ -5,7 +5,9 @@ fragment Collection_FieldsFragment on Collection {
   }
   variant
   itemsVariant
-  backgroundImage
+  backgroundImage {
+    ...Media_BaseFragment
+  }
   backgroundColor
 }
 
@@ -14,10 +16,6 @@ fragment Collection_BaseFragment on Collection {
   ...Collection_FieldsFragment
   items {
     ...Card_BaseFragment
-    ...Blog_CardFragment
-    ...Page_CardFragment
-    ...Link_CardFragment
-    ...Media_BaseFragment
   }
 }
 
@@ -26,6 +24,5 @@ fragment Collection_RichTextFragment on Collection {
   ...Collection_FieldsFragment
   items {
     ...Card_RichTextFragment
-    ...Link_CardFragment
   }
 }

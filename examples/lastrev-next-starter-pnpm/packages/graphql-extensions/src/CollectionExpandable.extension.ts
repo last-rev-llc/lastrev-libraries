@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { Mappers } from '@last-rev/types';
 
 export const typeDefs = gql`
   extend type CollectionExpandable {
@@ -7,7 +8,7 @@ export const typeDefs = gql`
   }
 `;
 
-export const mappers: any = {
+export const mappers: Mappers = {
   CollectionExpandable: {
     CollectionExpandable: {}
   }

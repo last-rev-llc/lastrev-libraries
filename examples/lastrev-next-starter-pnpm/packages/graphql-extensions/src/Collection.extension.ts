@@ -1,5 +1,5 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
+import { ApolloContext, Mappers } from '@last-rev/types';
 import gql from 'graphql-tag';
 import { camelCase, toUpper } from 'lodash';
 
@@ -22,6 +22,7 @@ export const typeDefs = gql`
     items: [CollectionItem]
     introText: Text
     itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
+    backgroundImage: Media
   }
 
   type CollectionOptions {
@@ -72,7 +73,7 @@ interface CollectionSettings {
   }>;
 }
 
-export const mappers: any = {
+export const mappers: Mappers = {
   Collection: {
     Collection: {
       items: async (collection: any, _args: any, ctx: ApolloContext) => {
@@ -159,7 +160,8 @@ export const mappers: any = {
 const ITEM_MAPPING: { [key: string]: string } = {
   Page: 'Card',
   Blog: 'Card',
-  Media: 'Card'
+  Media: 'Card',
+  Person: 'Card'
 };
 
 export const resolvers = {

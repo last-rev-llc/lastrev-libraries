@@ -1,4 +1,5 @@
 import gql from 'graphql-tag';
+import { Mappers } from '@last-rev/types';
 
 import createRichText from '@last-rev/graphql-contentful-core/dist/utils/createRichText';
 import getLocalizedField from '@last-rev/graphql-contentful-core/dist/utils/getLocalizedField';
@@ -35,7 +36,7 @@ const blogGlobalContentsResolver = async (page: any, _args: any, ctx: ApolloCont
   return siteblogGlobalContents;
 };
 
-export const mappers: any = {
+export const mappers: Mappers = {
   Blog: {
     Blog: {
       path: pathResolver,
@@ -56,8 +57,8 @@ export const mappers: any = {
     },
 
     Card: {
-      body: async (categoryBlog: any, _args: any, ctx: ApolloContext) =>
-        createRichText(getLocalizedField(categoryBlog.fields, 'promoSummary', ctx)),
+      body: async (blog: any, _args: any, ctx: ApolloContext) =>
+        createRichText(getLocalizedField(blog.fields, 'promoSummary', ctx)),
 
       media: resolveField(['promoImage', 'featuredMedia']),
 

@@ -13,9 +13,9 @@ export const typeDefs = gql`
   extend type Page {
     header: Header
     footer: Content
+    path: String
     hero: Hero
     contents: [Content]
-    path: String
   }
 `;
 
@@ -36,7 +36,7 @@ export const mappers = {
       body: async (page: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(page.fields, 'promoSummary', ctx)),
 
-      media: resolveField(['promoImage', 'featuredMedia']),
+      media: resolveField(['promoImage']),
 
       variant: () => 'default',
 

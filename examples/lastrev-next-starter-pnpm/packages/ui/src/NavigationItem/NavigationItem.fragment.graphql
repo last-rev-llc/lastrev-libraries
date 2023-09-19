@@ -31,14 +31,11 @@ fragment NavigationItem_BaseFieldsFragment on NavigationItem {
   variant
   text
   href
-  title
-  summary
-  navMedia {
+  summary {
+    ...RichText_BaseFragment
+  }
+  media {
     ...Media_BaseFragment
-    ...MediaVideo_BaseFragment
+    #...MediaVideo_BaseFragment
   }
-  actions {
-    ...Link_NavItemFragment
-  }
-  tag
 }

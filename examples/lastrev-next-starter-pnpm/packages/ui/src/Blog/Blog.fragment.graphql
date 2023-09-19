@@ -15,7 +15,6 @@ fragment Blog_BaseFragment on Blog {
   featuredMedia {
     ...Media_BaseFragment
   }
-  summary
   body {
     ...RichText_BaseFragment
   }
@@ -40,6 +39,6 @@ fragment Blog_CardFragment on Blog {
   featuredMedia {
     ...Media_BaseFragment
   }
-  summary
+  promoSummary
   pubDate
 }

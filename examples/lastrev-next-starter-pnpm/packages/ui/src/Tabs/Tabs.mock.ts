@@ -8,7 +8,7 @@ import { introTextMock } from '../Text/Text.mock';
 
 const TabsDefaultMock: TabsProps = {
   id: lorem.word(),
-  __typename: 'Tabs',
+  __typename: 'CollectionExpandable',
   items: [
     cardBaseMock({ title: 'Card 1 - Title' }),
     cardBaseMock({ title: 'Card 2 - Title' }),

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import { getLocalizedField, createRichText } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
+import { ApolloContext, Mappers } from '@last-rev/types';
 
 export const typeDefs = gql`
   extend type Quote {
@@ -11,7 +11,7 @@ export const typeDefs = gql`
   }
 `;
 
-export const mappers: any = {
+export const mappers: Mappers = {
   Quote: {
     Quote: {
       title: 'source',

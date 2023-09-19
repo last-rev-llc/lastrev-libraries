@@ -27,12 +27,12 @@ type Block implements Content {
   animation: JSON
   asset: Media
   body: RichText
-  eyebrow: String
   id: String
   internalTitle: String
   introText: Text
   link: Link
   mediaItems: [Media]
+  overline: String
   sidekickLookup: JSON
   subtitle: String
   theme: [Theme]
@@ -71,12 +71,12 @@ type Card implements Content {
   animation: JSON
   body: RichText
   bodyRte: JSON
-  eyebrow: String
   id: String
   internalTitle: String
   jsonLd: JSON
   link: Link
   media: [Media]
+  overline: String
   sidekickLookup: JSON
   subtitle: String
   theme: [Theme]
@@ -237,11 +237,18 @@ type ElementVideo implements Content {
 type Footer implements Content {
   animation: JSON
   copyrightDisclaimer: RichText
+  disclaimer: RichText
   disclaimerText: RichText
   id: String
   internalTitle: String
+  introContents: [Content]
+  legalLinks: [Link]
+  localeLinks: [Link]
   logo: Media
+  logoUrl: Link
+  navigationItems: [NavigationItem]
   sidekickLookup: JSON
+  socialLinks: [Link]
   theme: [Theme]
   variant: String
 }
@@ -270,9 +277,9 @@ type Hero implements Content {
   backgroundColor: String
   body: RichText
   contentHeight: String
-  eyebrow: String
   id: String
   internalTitle: String
+  overline: String
   sideImageItems: [Media]
   sidekickLookup: JSON
   subtitle: String
@@ -346,14 +353,11 @@ type ModuleIntegration implements Content {
 type NavigationItem implements Content {
   altText: String
   animation: JSON
-  href: String!
   id: String
-  image: Media
   internalTitle: String
   manualUrl: String
   media: Media
   sidekickLookup: JSON
-  subNavigation: [SubnavigationItem]
   summary: RichText
   text: String
   theme: [Theme]
@@ -399,12 +403,14 @@ type Person implements Content {
   animation: JSON
   body: RichText
   email: String
+  footer: Content
+  header: Header
   id: String
-  image: Media
   jobTitle: String
   lr__path__: String
   mainImage: Media
   name: String
+  path: String
   promoImage: Media
   promoSummary: String
   rolloverImage: Media
@@ -461,6 +467,7 @@ type Section implements Content {
   contents: [Content]
   id: String
   internalTitle: String
+  introText: Text
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
@@ -506,8 +513,6 @@ type SitemapPage {
   page: Int
 }
 
-union SubnavigationItem = Link | NavigationItem
-
 type Template implements Content {
   animation: JSON
   category: String
@@ -523,9 +528,9 @@ type Text implements Content {
   align: String
   animation: JSON
   body: RichText
-  eyebrow: String
   id: String
   internalTitle: String
+  overline: String
   sidekickLookup: JSON
   subtitle: String
   theme: [Theme]

@@ -1,3 +1,4 @@
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
 
 export const pathResolver = async (content: any, _args: any, ctx: ApolloContext) => {
@@ -8,6 +9,9 @@ export const pathResolver = async (content: any, _args: any, ctx: ApolloContext)
     // TODO: Do we need to support more paths?
     if (!!path?.length) return path[0];
   }
+
+  const manualUrl = getLocalizedField(content.fields, 'manualUrl', ctx);
+  if (manualUrl) return manualUrl;
 };
 
 export default pathResolver;

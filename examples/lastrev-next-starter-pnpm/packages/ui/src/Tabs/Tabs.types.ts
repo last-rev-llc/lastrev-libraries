@@ -1,6 +1,6 @@
 import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Tabs_BaseFragmentFragment } from '@graphql-sdk/types';
+import { CollectionExpandable } from '@graphql-sdk/types';
 
 type TabsVariants =
   | 'default'
@@ -15,7 +15,7 @@ type TabsVariants =
   | 'pricing'
   | undefined;
 
-export interface TabsProps extends Tabs_BaseFragmentFragment {
+export interface TabsProps extends CollectionExpandable {
   variant?: TabsVariants;
 }
 

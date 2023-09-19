@@ -32,6 +32,7 @@ export const blockBaseMock = ({ ...override } = {}) => ({
 export const blockContentOnRightMock = ({ ...override } = {}) => ({
   ...blockDefaultMock,
   ...override,
+  title: 'This is the block title for "Content on Right" variant"',
   variant: 'contentOnRight'
 });
 

@@ -15,7 +15,9 @@ fragment Header_BaseFragment on Header {
   supernavIcon {
     ...Media_BaseFragment
   }
-  supernavText
+  supernavText {
+    ...RichText_BaseFragment
+  }
   supernavMobileText
   supernavLink {
     ...Link_BaseFragment

@@ -25,9 +25,11 @@ function loadFiles() {
     modules['Block'] = require('./Block.extension');
     modules['Blog'] = require('./Blog.extension');
     modules['Card'] = require('./Card.extension');
+    modules['CategoryBlog'] = require('./CategoryBlog.extension');
     modules['Collection'] = require('./Collection.extension');
     modules['CollectionExpandable'] = require('./CollectionExpandable.extension');
     modules['CollectionExpandableItem'] = require('./CollectionExpandableItem.extension');
+    modules['Footer'] = require('./Footer.extension');
     modules['Header'] = require('./Header.extension');
     modules['Hero'] = require('./Hero.extension');
     modules['Link'] = require('./Link.extension');
@@ -35,12 +37,14 @@ function loadFiles() {
     modules['NavigationItem'] = require('./NavigationItem.extension');
     modules['Page'] = require('./Page.extension');
     modules['PathsConfigs'] = require('./PathsConfigs.extension');
+    modules['Person'] = require('./Person.extension');
     modules['Preview'] = require('./Preview.extension');
     modules['Quote'] = require('./Quote.extension');
     modules['RichText'] = require('./RichText.extension');
-    modules['SEO'] = require('./SEO.extension');
     modules['Section'] = require('./Section.extension');
+    modules['SEO'] = require('./SEO.extension');
     modules['Sidekick'] = require('./Sidekick.extension');
+    modules['Text'] = require('./Text.extension');
     modules['Theme'] = require('./Theme.extension');
 
     //TODO: Find out a way to do dynamic imports in nextjs

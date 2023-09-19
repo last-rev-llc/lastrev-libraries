@@ -15,17 +15,9 @@ import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
 import { TabsProps } from './Tabs.types';
+import RichText from '../RichText';
 
-export const Tabs = ({
-  id,
-  items,
-  itemsWidth,
-  variant,
-  itemsVariant,
-  sidekickLookup,
-  introText,
-  ...props
-}: TabsProps) => {
+export const Tabs = ({ id, items, variant, sidekickLookup, introText, ...props }: TabsProps) => {
   const [value, setValue] = React.useState('0');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -34,17 +26,13 @@ export const Tabs = ({
 
   return (
     <ErrorBoundary>
-      <Root
-        variant={variant}
-        itemsVariant={itemsVariant}
-        data-testid={`Tabs-${variant}`}
-        {...props}
-        {...sidekick(sidekickLookup)}>
+      <Root variant={variant} data-testid={`Tabs-${variant}`} {...props} {...sidekick(sidekickLookup)}>
         {introText && (
           <IntroTextWrapper>
             <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
           </IntroTextWrapper>
         )}
+
         <ContentContainer>
           {!!items?.length && (
             <TabContext value={value}>
@@ -68,7 +56,7 @@ export const Tabs = ({
                   index: number // TODO: Fix type
                 ) => (
                   <TabPanel value={index.toString()} key={`${!id}-tab-panel-${item?.id}-${index}`}>
-                    <Item {...item} variant={itemsVariant ?? item?.variant} />
+                    {item.body ? <RichText body={item.body} /> : <Item {...item.content} />}
                   </TabPanel>
                 )
               )}
@@ -80,14 +68,14 @@ export const Tabs = ({
   );
 };
 
-const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'itemsVariant';
+const shouldForwardProp = (prop: string) => prop !== 'variant';
 
 const Root = styled(Box, {
   name: 'Tabs',
   slot: 'Root',
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string; itemsVariant?: string }>``;
+})<{ variant?: string }>``;
 
 const ContentContainer = styled(Container, {
   name: 'Tabs',

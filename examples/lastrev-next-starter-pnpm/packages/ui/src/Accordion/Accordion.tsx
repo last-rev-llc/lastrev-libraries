@@ -15,17 +15,9 @@ import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
 import { AccordionProps } from './Accordion.types';
+import RichText from '../RichText';
 
-export const Accordion = ({
-  id,
-  items,
-  itemsWidth,
-  variant,
-  itemsVariant,
-  sidekickLookup,
-  introText,
-  ...props
-}: AccordionProps) => {
+export const Accordion = ({ id, items, variant, sidekickLookup, introText, ...props }: AccordionProps) => {
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -34,12 +26,7 @@ export const Accordion = ({
 
   return (
     <ErrorBoundary>
-      <Root
-        variant={variant}
-        itemsVariant={itemsVariant}
-        data-testid={`Accordion-${variant}`}
-        {...props}
-        {...sidekick(sidekickLookup)}>
+      <Root variant={variant} data-testid={`Accordion-${variant}`} {...props} {...sidekick(sidekickLookup)}>
         {introText && (
           <IntroTextWrapper>
             <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
@@ -54,14 +41,14 @@ export const Accordion = ({
                   index: number // TODO: Fix type
                 ) => (
                   <AccordionItem
-                    expanded={expanded === `${!id}-tab-panel-${item?.id}-${index}`}
-                    onChange={handleChange(`${!id}-tab-panel-${item?.id}-${index}`)}
-                    key={`${!id}-tab-panel-${item?.id}-${index}`}>
+                    expanded={expanded === `${!id}-accordion-panel-${item?.id}-${index}`}
+                    onChange={handleChange(`${!id}-accordion-panel-${item?.id}-${index}`)}
+                    key={`${!id}-accordion-panel-${item?.id}-${index}`}>
                     <AccordionItemSummary aria-controls="panel1d-content" id="panel1d-header">
                       <Typography>{item.title}</Typography>
                     </AccordionItemSummary>
                     <AccordionItemDetails>
-                      <Item {...item} />
+                      {item.body ? <RichText body={item.body} /> : <Item {...item.content} />}
                     </AccordionItemDetails>
                   </AccordionItem>
                 )
@@ -74,14 +61,14 @@ export const Accordion = ({
   );
 };
 
-const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'itemsVariant';
+const shouldForwardProp = (prop: string) => prop !== 'variant';
 
 const Root = styled(Box, {
   name: 'Accordion',
   slot: 'Root',
   shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string; itemsVariant?: string }>``;
+})<{ variant?: string }>``;
 
 const ContentContainer = styled(Container, {
   name: 'Accordion',

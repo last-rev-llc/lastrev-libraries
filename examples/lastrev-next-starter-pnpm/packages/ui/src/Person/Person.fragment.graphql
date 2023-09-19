@@ -1,4 +1,3 @@
-# TOO): Update
 fragment Person_BaseFragment on Person {
   ...Content_BaseFragment
   header {
@@ -11,7 +10,7 @@ fragment Person_BaseFragment on Person {
   name
   jobTitle
   email
-  image {
+  mainImage {
     ...Media_BaseFragment
   }
   # featuredMedia {
@@ -27,23 +26,14 @@ fragment Person_BaseFragment on Person {
 
 fragment Person_Card_Fragment on Person {
   ...Content_BaseFragment
-  header {
-    ...Header_BaseFragment
-  }
-  footer {
-    ...Footer_BaseFragment
-  }
   slug
   name
   jobTitle
   email
-  image {
+  mainImage {
     ...Media_BaseFragment
   }
   socialLinks {
     ...Link_BaseFragment
-  }
-  body {
-    ...RichText_BaseFragment
   }
 }

@@ -18,13 +18,12 @@ fragment Page_BaseFragment on Page {
   }
 }
 
-fragment Page_CardFragment on Blog {
+fragment Page_CardFragment on Page {
   ...Content_BaseFragment
   title
   slug
-  featuredMedia {
+  promoImage {
     ...Media_BaseFragment
   }
-  summary
-  pubDate
+  promoSummary
 }

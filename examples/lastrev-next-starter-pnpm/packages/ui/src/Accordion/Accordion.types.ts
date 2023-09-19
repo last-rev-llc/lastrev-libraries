@@ -1,6 +1,6 @@
 import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Accordion_BaseFragmentFragment } from '@graphql-sdk/types';
+import { CollectionExpandable_BaseFragment } from '@graphql-sdk/types';
 
 type AccordionVariants =
   | 'default'
@@ -15,7 +15,7 @@ type AccordionVariants =
   | 'pricing'
   | undefined;
 
-export interface AccordionProps extends Accordion_BaseFragmentFragment {
+export interface AccordionProps extends CollectionExpandable_BaseFragment {
   variant?: AccordionVariants;
 }
 

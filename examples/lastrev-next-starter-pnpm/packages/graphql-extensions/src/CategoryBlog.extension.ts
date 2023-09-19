@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 import createRichText from '@last-rev/graphql-contentful-core/dist/utils/createRichText';
 import getLocalizedField from '@last-rev/graphql-contentful-core/dist/utils/getLocalizedField';
-import { ApolloContext } from '@last-rev/types';
+import { ApolloContext, Mappers } from '@last-rev/types';
 
 import pageFooterResolver from './utils/pageFooterResolver';
 import pageHeaderResolver from './utils/pageHeaderResolver';
@@ -21,7 +21,7 @@ export const typeDefs = gql`
   }
 `;
 
-export const mappers: any = {
+export const mappers: Mappers = {
   CategoryBlog: {
     CategoryBlog: {
       path: pathResolver,

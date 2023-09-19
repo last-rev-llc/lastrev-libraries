@@ -4,8 +4,9 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
 import SEO from './SEO';
-import mockContent from './SEO.mock';
+import { seoBaseMock, seoWithAntiFlickerMock, seoWithoutAntiFlickerMock } from './SEO.mock';
 
+const mockedBase = seoBaseMock();
 export default {
   title: '1. Global / SEO',
   component: SEO,
@@ -26,7 +27,7 @@ export default {
               Title
             </TableCell>
             <TableCell component="td" scope="row">
-              {mockContent.title.value}
+              {mockedBase.seo.title.value}
             </TableCell>
           </TableRow>
           <TableRow>
@@ -34,7 +35,7 @@ export default {
               Keywords
             </TableCell>
             <TableCell component="td" scope="row">
-              {mockContent.keywords.value}
+              {mockedBase.seo.keywords.value}
             </TableCell>
           </TableRow>
           <TableRow>
@@ -42,7 +43,7 @@ export default {
               Description
             </TableCell>
             <TableCell component="td" scope="row">
-              {mockContent.description.value}
+              {mockedBase.seo.description.value}
             </TableCell>
           </TableRow>
           <TableRow>
@@ -50,7 +51,7 @@ export default {
               Canonical
             </TableCell>
             <TableCell component="td" scope="row">
-              {mockContent.canonical.value}
+              {mockedBase.seo.canonical.value}
             </TableCell>
           </TableRow>
           <TableRow>
@@ -58,7 +59,7 @@ export default {
               Robots
             </TableCell>
             <TableCell component="td" scope="row">
-              {mockContent.robots.value}
+              {mockedBase.seo.robots.value}
             </TableCell>
           </TableRow>
         </TableBody>
@@ -68,6 +69,6 @@ export default {
   argTypes: {}
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <SEO {...args} />;
-export const Default = Template.bind({});
-Default.args = { ...mockContent };
+export const Default = { args: { ...seoBaseMock() } };
+export const WithAntiFlicker = { args: { ...seoWithAntiFlickerMock() } };
+export const WithoutAntiFlicker = { args: { ...seoWithoutAntiFlickerMock() } };

@@ -17,3 +17,9 @@ fragment Link_CardFragment on Link {
   iconPosition
   color
 }
+
+fragment Link_NavItemFragment on Link {
+  id
+  __typename
+  ...Link_BaseFragment
+}

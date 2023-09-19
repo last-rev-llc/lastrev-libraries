@@ -1,44 +1,44 @@
-import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { Mappers, ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
-import createPath from './utils/createPath';
+import { camelCase, toUpper } from 'lodash';
 
-const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
-  const manualUrl = getLocalizedField(link.fields, 'manualUrl', ctx);
-  if (manualUrl) return createPath(manualUrl) ?? '#';
+import defaultResolver from './utils/defaultResolver';
+import pathResolver from './utils/pathResolver';
 
-  const contentRef = getLocalizedField(link.fields, 'linkedContent', ctx);
-  if (contentRef) {
-    const content = await ctx.loaders.entryLoader.load({ id: contentRef.sys.id, preview: !!ctx.preview });
-    return content && createPath(getLocalizedField(content?.fields, 'slug', ctx));
+const pascalCase = (str: string) => camelCase(str).replace(/^(.)/, toUpper);
+
+export const typeDefs = gql`
+  extend type NavigationItem {
+    actions: [Link]
+    media: [Media]
+    subNavigation: [Content]
+    href: String
+    summary: RichText
   }
+`;
 
-  return '#';
-};
-
-export const mappers: Mappers = {
+export const mappers = {
   NavigationItem: {
     NavigationItem: {
-      href: hrefUrlResolver,
-      image: 'media'
+      variant: defaultResolver('variant'),
+      // image: (item: any, _args: any, ctx: ApolloContext) => {
+      //   const mediaRef: any = getLocalizedField(item.fields, 'media', ctx);
+      //   return mediaRef;
+      // },
+      href: pathResolver,
+      subNavigation: 'subNavigation'
     }
   }
 };
 
-export const typeDefs = gql`
-  union SubnavigationItem = Link | NavigationItem
-  extend type NavigationItem {
-    href: String!
-    subNavigation: [SubnavigationItem]
-    image: Media
-  }
-`;
+const ITEM_MAPPING: { [key: string]: string } = {
+  media: 'Media',
+  mediaVideo: 'MediaVideo'
+};
 
 export const resolvers = {
-  SubnavigationItem: {
+  NavMediaItem: {
     __resolveType: (item: any) => {
-      if (item?.sys?.contentType?.sys?.id === 'navigationItem') return 'NavigationItem';
-      return 'Link';
+      return ITEM_MAPPING[pascalCase(item?.sys?.contentType?.sys?.id)];
     }
   }
 };
