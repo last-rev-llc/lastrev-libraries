@@ -18,8 +18,8 @@ export async function GET(request: Request) {
 
   // Check the secret and next parameters
   // This secret should only be known to this route handler and the CMS
-  if ((secret !== process.env.PREVIEW_TOKEN || 'MY_SECRET_TOKEN') && process.env.NODE_ENV !== 'development' && !!id) {
-    return new Response('Invalid token', { status: 401 });
+  if ((secret !== process.env.PREVIEW_TOKEN || 'MY_SECRET_TOKEN') && process.env.NODE_ENV !== 'development') {
+    return new Response(`Invalid token sec:${secret} - tok:${process.env.PREVIEW_TOKEN}`, { status: 401 });
   }
 
   // Fetch the headless CMS to check if the provided `id` exists
