@@ -6,21 +6,20 @@
 [x] Implement Sitemap
 [x] Implement Robots
 [x] Implement CSP policies
-[] Implement Preview
+[x] Implement GraphQL preview endpoint
+[x] Implement Preview
 [ ] Implement Test pipeline
 [ ] Implement E2E pipeline
 [ ] Implement Chromatic pipeline
 [] Implement path resolution for href
-[] Implement \_error page
-[] Implement GraphQL preview endpoint
 [] Implement Custom 404
-[] Implement CSP policies
-[] Implement content Redirect
-[] Implement Theme api endpoint
-[] Implement Live Editor and other UIEs
-[] Implement \_error page
+[] Implement theme on Storybook
 [] Implement Analytics
 [] Implement Contentful Sidekick
+[] Implement Live Editor and other UIEs
+[] Implement Theme api endpoint
+[] Implement Content Redirect
+[] Implement \_error page
 [] Implement Algolia
 [] Implement path v2 resolution
 
