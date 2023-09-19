@@ -1,15 +1,19 @@
 import gql from 'graphql-tag';
 import { Mappers } from '@last-rev/types';
-
 import createRichText from '@last-rev/graphql-contentful-core/dist/utils/createRichText';
 import getLocalizedField from '@last-rev/graphql-contentful-core/dist/utils/getLocalizedField';
 import { ApolloContext } from '@last-rev/types';
 
+import { blogV1 } from './PathsConfigs.extension';
 import { createType } from './utils/createType';
 import pageFooterResolver from './utils/pageFooterResolver';
 import pageHeaderResolver from './utils/pageHeaderResolver';
 import pathResolver from './utils/pathResolver';
 import resolveField from './utils/resolveField';
+
+export const pathsConfigs = {
+  ...blogV1
+};
 
 export const typeDefs = gql`
   extend type Blog {

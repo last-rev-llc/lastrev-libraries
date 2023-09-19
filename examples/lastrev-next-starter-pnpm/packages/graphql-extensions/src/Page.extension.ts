@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '@last-rev/types';
 
+import { pageV1 } from './PathsConfigs.extension';
 import pathResolver from './utils/pathResolver';
 import pageHeaderResolver from './utils/pageHeaderResolver';
 import pageFooterResolver from './utils/pageFooterResolver';
@@ -45,4 +46,8 @@ export const mappers = {
       }
     }
   }
+};
+
+export const pathsConfigs = {
+  ...pageV1
 };

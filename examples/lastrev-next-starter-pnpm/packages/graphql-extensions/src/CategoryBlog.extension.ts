@@ -4,6 +4,7 @@ import createRichText from '@last-rev/graphql-contentful-core/dist/utils/createR
 import getLocalizedField from '@last-rev/graphql-contentful-core/dist/utils/getLocalizedField';
 import { ApolloContext, Mappers } from '@last-rev/types';
 
+import { categoryBlogV1 } from './PathsConfigs.extension';
 import pageFooterResolver from './utils/pageFooterResolver';
 import pageHeaderResolver from './utils/pageHeaderResolver';
 import pathResolver from './utils/pathResolver';
@@ -11,6 +12,9 @@ import resolveField from './utils/resolveField';
 
 const BLOGS_LANDING_ID = process.env.BLOGS_LANDING_ID;
 
+export const pathsConfigs = {
+  ...categoryBlogV1
+};
 export const typeDefs = gql`
   extend type CategoryBlog {
     header: Header
