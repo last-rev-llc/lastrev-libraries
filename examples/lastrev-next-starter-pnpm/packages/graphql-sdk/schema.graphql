@@ -27,12 +27,12 @@ type Block implements Content {
   animation: JSON
   asset: Media
   body: RichText
-  eyebrow: String
   id: String
   internalTitle: String
   introText: Text
   link: Link
   mediaItems: [Media]
+  overline: String
   sidekickLookup: JSON
   subtitle: String
   theme: [Theme]
@@ -52,15 +52,15 @@ type Blog implements Content {
   header: Header
   id: String
   jsonLd: JSON
-  listImage: Media
   lr__path__: String
   path: String
+  promoImage: Media
+  promoSummary: String
   pubDate: Date
   relatedLinks: [Link]
   seo: JSON
   sidekickLookup: JSON
   slug: String
-  summary: String
   tags: [String]
   theme: [Theme]
   title: String
@@ -71,12 +71,12 @@ type Card implements Content {
   animation: JSON
   body: RichText
   bodyRte: JSON
-  eyebrow: String
   id: String
   internalTitle: String
   jsonLd: JSON
   link: Link
   media: [Media]
+  overline: String
   sidekickLookup: JSON
   subtitle: String
   theme: [Theme]
@@ -95,10 +95,10 @@ type CategoryBlog implements Content {
   lr__path__: String
   path: String
   promoImage: Media
+  promoSummary: String
   seo: JSON
   sidekickLookup: JSON
   slug: String
-  summary: String
   theme: [Theme]
   title: String
 }
@@ -264,9 +264,9 @@ type Hero implements Content {
   backgroundColor: String
   body: RichText
   contentHeight: String
-  eyebrow: String
   id: String
   internalTitle: String
+  overline: String
   sideImageItems: [Media]
   sidekickLookup: JSON
   subtitle: String
@@ -345,7 +345,7 @@ type NavigationItem implements Content {
   image: Media
   internalTitle: String
   manualUrl: String
-  media: Media
+  navMedia: Media
   sidekickLookup: JSON
   subNavigation: [SubnavigationItem]
   summary: RichText
@@ -369,13 +369,13 @@ type Page implements Content {
   id: String
   internalTitle: String
   jsonLd: JSON
-  listImage: Media
   lr__path__: String
   path: String
+  promoImage: Media
+  promoSummary: String
   seo: JSON
   sidekickLookup: JSON
   slug: String
-  summary: String
   theme: [Theme]
   title: String
 }
@@ -394,16 +394,15 @@ type Person implements Content {
   body: RichText
   email: String
   id: String
-  image: Media
   jobTitle: String
-  listImage: Media
   lr__path__: String
   mainImage: Media
   name: String
+  promoImage: Media
+  promoSummary: String
   rolloverImage: Media
   sidekickLookup: JSON
   slug: String
-  summary: String
   theme: [Theme]
 }
 
@@ -517,9 +516,9 @@ type Text implements Content {
   align: String
   animation: JSON
   body: RichText
-  eyebrow: String
   id: String
   internalTitle: String
+  overline: String
   sidekickLookup: JSON
   subtitle: String
   theme: [Theme]

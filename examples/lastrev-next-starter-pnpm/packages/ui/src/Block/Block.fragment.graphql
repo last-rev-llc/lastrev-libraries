@@ -4,7 +4,7 @@ fragment Block_BaseFragment on Block {
   introText {
     ...Text_IntroTextFragment
   }
-  eyebrow
+  overline
   title
   subtitle
   body {
