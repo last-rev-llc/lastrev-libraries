@@ -1,6 +1,6 @@
 import { ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
-import { merge } from 'lodash';
+import merge from 'lodash/merge';
 import { createType } from './utils/createType';
 
 export const typeMappings = {};

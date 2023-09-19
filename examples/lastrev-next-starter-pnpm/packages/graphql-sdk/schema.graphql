@@ -351,12 +351,14 @@ type ModuleIntegration implements Content {
 }
 
 type NavigationItem implements Content {
+  actions: [Link]
   altText: String
   animation: JSON
+  href: String!
   id: String
   internalTitle: String
   manualUrl: String
-  media: Media
+  navMedia: Media
   sidekickLookup: JSON
   summary: RichText
   text: String
@@ -403,7 +405,7 @@ type Person implements Content {
   animation: JSON
   body: RichText
   email: String
-  footer: Content
+  footer: Footer
   header: Header
   id: String
   jobTitle: String
@@ -416,6 +418,7 @@ type Person implements Content {
   rolloverImage: Media
   sidekickLookup: JSON
   slug: String
+  socialLinks: [Link]
   theme: [Theme]
 }
 
@@ -465,6 +468,7 @@ type Section implements Content {
   background: Media
   backgroundColor: String
   contents: [Content]
+  hasBackground: Boolean
   id: String
   internalTitle: String
   introText: Text

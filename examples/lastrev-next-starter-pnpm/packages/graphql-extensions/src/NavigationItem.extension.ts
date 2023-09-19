@@ -1,19 +1,25 @@
 import gql from 'graphql-tag';
-import { camelCase, toUpper } from 'lodash';
+
+import camelCase from 'lodash/camelCase';
+import toUpper from 'lodash/toUpper';
 
 import defaultResolver from './utils/defaultResolver';
 import pathResolver from './utils/pathResolver';
 
 const pascalCase = (str: string) => camelCase(str).replace(/^(.)/, toUpper);
 
+const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem'];
+
 export const typeDefs = gql`
   extend type NavigationItem {
     actions: [Link]
-    media: [Media]
-    subNavigation: [Content]
-    href: String
+    navMedia: Media
+    #subNavigation: [SubNavigationItem]
+    href: String!
     summary: RichText
   }
+
+  #union SubNavigationItem = ${SUB_NAVIGATION_ITEM_TYPES.join('| ')}
 `;
 
 export const mappers = {
@@ -24,21 +30,7 @@ export const mappers = {
       //   const mediaRef: any = getLocalizedField(item.fields, 'media', ctx);
       //   return mediaRef;
       // },
-      href: pathResolver,
-      subNavigation: 'subNavigation'
-    }
-  }
-};
-
-const ITEM_MAPPING: { [key: string]: string } = {
-  media: 'Media',
-  mediaVideo: 'MediaVideo'
-};
-
-export const resolvers = {
-  NavMediaItem: {
-    __resolveType: (item: any) => {
-      return ITEM_MAPPING[pascalCase(item?.sys?.contentType?.sys?.id)];
+      href: pathResolver
     }
   }
 };

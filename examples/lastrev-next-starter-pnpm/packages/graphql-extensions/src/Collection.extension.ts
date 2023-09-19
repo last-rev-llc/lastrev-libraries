@@ -1,7 +1,8 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext, Mappers } from '@last-rev/types';
 import gql from 'graphql-tag';
-import { camelCase, toUpper } from 'lodash';
+import camelCase from 'lodash/camelCase';
+import toUpper from 'lodash/toUpper';
 
 import { collectOptions } from './utils/collectOptions';
 import { queryContentful } from './utils/queryContentful';

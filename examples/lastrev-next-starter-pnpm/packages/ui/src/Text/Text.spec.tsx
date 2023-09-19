@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { each } from 'lodash';
+import each from 'lodash/each';
+
 import { BLOCKS } from '@contentful/rich-text-types';
+
 import mountWithRouter from '../../../cypress/mountWithRouter';
+
 import { TextProps } from './Text.types';
 import Text from './Text';
 
@@ -16,6 +19,7 @@ import mockContent, {
   hyperlinkNode,
   withLinksMock
 } from '../RichText/RichText.mock';
+
 import { mediaBaseImageMock } from '../Media/Media.mock';
 import linkButtonMock from '../Link/Link.mock';
 

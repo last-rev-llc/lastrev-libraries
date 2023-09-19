@@ -7,7 +7,7 @@ export const typeDefs = gql`
     contents: [Content]
     background: Media
     introText: Text
-    hasBackground: boolean
+    hasBackground: Boolean
   }
 `;
 

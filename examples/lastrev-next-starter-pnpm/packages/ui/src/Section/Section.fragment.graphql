@@ -31,7 +31,7 @@ fragment Section_BaseFieldsFragment on Section {
   introText {
     ...Text_IntroTextFragment
   }
-  hasBackground
+  #hasBackground
 }
 
 # This will go 3 levels deep recursive

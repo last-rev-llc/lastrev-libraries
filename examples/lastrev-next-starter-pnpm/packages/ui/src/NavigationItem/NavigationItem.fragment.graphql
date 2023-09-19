@@ -1,28 +1,6 @@
 fragment NavigationItem_BaseFragment on NavigationItem {
   ...NavigationItem_BaseFieldsFragment
   sidekickLookup
-  subNavigation {
-    ... on Content {
-      id
-      __typename
-    }
-    ...Link_NavItemFragment
-
-    ... on NavigationItem {
-      ...NavigationItem_BaseFieldsFragment
-      subNavigation {
-        ... on Content {
-          id
-          __typename
-        }
-        ...Link_NavItemFragment
-
-        ... on NavigationItem {
-          ...NavigationItem_BaseFieldsFragment
-        }
-      }
-    }
-  }
 }
 
 fragment NavigationItem_BaseFieldsFragment on NavigationItem {
@@ -34,7 +12,7 @@ fragment NavigationItem_BaseFieldsFragment on NavigationItem {
   summary {
     ...RichText_BaseFragment
   }
-  media {
+  navMedia {
     ...Media_BaseFragment
     #...MediaVideo_BaseFragment
   }

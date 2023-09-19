@@ -1,5 +1,5 @@
 import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import { Color } from '@mui/material';
+import type { Color } from '@mui/material';
 
 export const defaultProps: ComponentsProps['Hero'] = {
   contentWidth: 'xl',

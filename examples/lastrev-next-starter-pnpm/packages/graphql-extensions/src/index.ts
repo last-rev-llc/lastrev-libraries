@@ -1,4 +1,7 @@
-import { compact, map, merge } from 'lodash';
+import compact from 'lodash/compact';
+import map from 'lodash/map';
+import merge from 'lodash/merge';
+
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { Source, DocumentNode, GraphQLSchema } from 'graphql';
 
@@ -87,4 +90,4 @@ export const mappers = merge({}, ...compact(map(extensions, 'mappers')));
 export const typeMappings = merge({}, ...compact(map(extensions, 'typeMappings')));
 export const pathsConfigs = merge({}, ...compact(map(extensions, 'pathsConfigs')));
 
-console.log(typeMappings);
+console.log({ typeMappings });
