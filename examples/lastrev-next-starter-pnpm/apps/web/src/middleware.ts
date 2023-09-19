@@ -2,9 +2,9 @@ import { NextResponse } from 'next/server';
 
 export function middleware() {
   const cspHeader = `
-    default-src 'self'  *.sentry.io  *.facebook.com;
-    style-src 'self' 'unsafe-inline'  *.sentry.io  fonts.googleapis.com;
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' *.sentry.io  *.google-analytics.com *.googletagmanager.com;
+    default-src 'self'  *.sentry.io  *.facebook.com vitals.vercel-insights.com;
+    style-src 'self' 'unsafe-inline'  *.sentry.io  fonts.googleapis.com vitals.vercel-insights.com;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' *.sentry.io  *.google-analytics.com *.googletagmanager.com vitals.vercel-insights.com;
     font-src 'self'  *.sentry.io  fonts.gstatic.com data:;
     img-src * data:;
     media-src * data:;
