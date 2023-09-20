@@ -2,6 +2,12 @@ import { Mixins } from '@mui/material/styles/createMixins';
 import { TypographyStyle, Theme } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
+  interface TypeBackground {
+    default: string;
+    paper: string;
+    contrastText: string;
+  }
+
   interface BreakpointOverrides {
     xxl: true; // adds the `xxl` breakpoint
   }

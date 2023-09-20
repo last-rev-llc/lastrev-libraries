@@ -1,8 +1,8 @@
 import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Block_BaseFragmentFragment } from '@graphql-sdk/types';
+import { Grid_BaseFragmentFragment } from '@graphql-sdk/types';
 
-export enum BlockVariants {
+export enum GridVariants {
   default = 'default',
   contentOnRight = 'contentOnRight',
   contentOnRightFullBleed = 'contentOnRightFullBleed',
@@ -12,11 +12,11 @@ export enum BlockVariants {
   contentAbove = 'contentAbove'
 }
 
-export interface BlockProps extends Block_BaseFragmentFragment {}
+export interface GridProps extends Grid_BaseFragmentFragment {}
 
-export interface BlockClasses {
+export interface GridClasses {
   root: string;
-  introTextGrid: string;
+  introTextWrapper: string;
   introText: string;
   contentOuterGrid: string;
   categoriesWrapper: string;
@@ -34,25 +34,25 @@ export interface BlockClasses {
   common: string;
 }
 
-export declare type BlockClassKey = keyof BlockClasses;
+export declare type GridClassKey = keyof GridClasses;
 
 declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
-    Block: BlockClassKey;
+    Grid: GridClassKey;
   }
   export interface ComponentsPropsList {
-    Block: BlockProps;
+    Grid: GridProps;
   }
 }
 declare module '@mui/material/styles' {
   interface Components {
-    Block?: {
-      defaultProps?: ComponentsProps['Block'];
-      styleOverrides?: ComponentsOverrides<Theme>['Block'];
+    Grid?: {
+      defaultProps?: ComponentsProps['Grid'];
+      styleOverrides?: ComponentsOverrides<Theme>['Grid'];
       /**
        * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
        */
-      variants?: ComponentsVariants['Block'];
+      variants?: ComponentsVariants['Grid'];
     };
   }
 }

@@ -4,22 +4,22 @@ import { styled } from '@mui/material/styles';
 
 import Box, { BoxProps } from '@mui/material/Box';
 import Typography, { TypographyProps } from '@mui/material/Typography';
-import Container, { ContainerProps } from '@mui/material/Container';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
 
-import Link, { LinkProps } from '../Link';
+// import Link, { LinkProps } from '../Link';
 import { BlockProps } from './Block.types';
+import Grid from '../Grid';
 
 const Block = (props: BlockProps) => {
   const { variant, introText, overline, title, subtitle, body, mediaItems, actions, link, sidekickLookup } = props;
 
   const extraProps = link
     ? {
-        component: Link,
-        href: link.href
+        component: (props: any) => <ContentModule {...sidekick(sidekickLookup, 'mediaItems')} {...link} />
+        // href: link.href
       }
     : {};
 
@@ -27,14 +27,14 @@ const Block = (props: BlockProps) => {
   const isFullBleed = variant?.indexOf('FullBleed') > -1;
 
   return (
-    <Root data-testid="Block" {...sidekick(sidekickLookup)} {...props} variant={variant}>
+    <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={{ ...props }} variant={variant}>
       {!!introText && (
-        <IntroTextWrapper>
+        <IntroTextGrid>
           <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
-        </IntroTextWrapper>
+        </IntroTextGrid>
       )}
 
-      <ContentOuterWrapper maxWidth={isFullBleed ? false : undefined} disableGutters={isFullBleed}>
+      <ContentOuterGrid>
         {overline || title || subtitle || body || actions ? (
           <MainContentWrapper variant={variant} maxWidth={false} sx={{ p: 0 }}>
             <Content>
@@ -72,7 +72,7 @@ const Block = (props: BlockProps) => {
             ))}
           </SideContentWrapper>
         )}
-      </ContentOuterWrapper>
+      </ContentOuterGrid>
     </Root>
   );
 };
@@ -97,16 +97,16 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; colorScheme?: string }>(() => ({}));
 
-const ContentOuterWrapper = styled(Container, {
+const ContentOuterGrid = styled(Grid, {
   name: 'Block',
-  slot: 'ContentOuterWrapper',
-  overridesResolver: (_, styles) => [styles.contentOuterWrapper]
-})<ContainerProps<React.ElementType>>(() => ({}));
+  slot: 'ContentOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentOuterGrid]
+})(() => ({}));
 
-const IntroTextWrapper = styled(Box, {
+const IntroTextGrid = styled(Grid, {
   name: 'Block',
-  slot: 'IntroTextWrapper',
-  overridesResolver: (_, styles) => [styles.introTextWrapper]
+  slot: 'IntroTextGrid',
+  overridesResolver: (_, styles) => [styles.introTextGrid]
 })(() => ({}));
 
 const IntroText = styled(ContentModule, {
@@ -115,11 +115,11 @@ const IntroText = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.introText]
 })(() => ({}));
 
-const MainContentWrapper = styled(Container, {
+const MainContentWrapper = styled('div', {
   name: 'Block',
   slot: 'MainContentWrapper',
   overridesResolver: (_, styles) => [styles.mainContentWrapper]
-})<ContainerProps<React.ElementType>>(() => ({}));
+})(() => ({}));
 
 const Content = styled(Box, {
   name: 'Block',
@@ -151,12 +151,12 @@ const Body = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.body]
 })(() => ({}));
 
-const SideContentWrapper = styled(Container, {
+const SideContentWrapper = styled('div', {
   name: 'Block',
   slot: 'SideContentWrapper',
 
   overridesResolver: (_, styles) => [styles.sideContentWrapper]
-})<ContainerProps<React.ElementType>>(() => ({}));
+})(() => ({}));
 
 const Media = styled(ContentModule, {
   name: 'Block',

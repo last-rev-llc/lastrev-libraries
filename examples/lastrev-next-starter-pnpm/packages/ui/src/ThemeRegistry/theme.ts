@@ -1,11 +1,11 @@
 import { Roboto } from 'next/font/google';
 import merge from 'lodash/merge';
-
 import { ThemeOptions, createTheme } from '@mui/material/styles';
 
-import createGridMixin from './mixins/createGridMixin';
-import themeComponents from './theme.components';
 import './theme.types';
+import createGridMixin from './mixins/createGridMixin';
+import backgroundColor from './mixins/backgroundColor';
+import themeComponents from './theme.components';
 
 export const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -17,7 +17,72 @@ export const mainColors = ['primary', 'secondary', 'tertiary'];
 
 const defaultSpacing = 8;
 const defaultBorderRadius = 0;
-
+const muiTheme = createTheme();
+const paletteTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    ...{
+      white: {
+        main: '#FFF',
+        contrastText: 'rgba(0, 0, 0, 0.87)'
+      },
+      black: {
+        main: '#000',
+        contrastText: '#FFF'
+      }
+    },
+    primary: muiTheme.palette.augmentColor({
+      color: {
+        main: '#00fff2'
+      },
+      name: 'primary'
+    }),
+    secondary: muiTheme.palette.augmentColor({
+      color: {
+        main: '#fba62d'
+      },
+      name: 'secondary'
+    }),
+    // text: {
+    //   primary: '#ffffff',
+    //   secondary: '#E5E5E5',
+    //   disabled: 'rgba(0, 0, 0, 0.38)'
+    // },
+    background: {
+      // default: '#121212',
+      // paper: '#1E1E1E'
+      // contrastText: '#FFF'
+    },
+    error: {
+      main: '#ff1744',
+      light: 'rgb(255, 69, 105)',
+      dark: 'rgb(178, 16, 47)',
+      contrastText: '#fff'
+    },
+    common: {
+      black: '#00030B',
+      white: '#FFFFFF'
+    },
+    warning: {
+      main: '#ed6c02',
+      light: '#ff9800',
+      dark: '#e65100',
+      contrastText: '#fff'
+    },
+    info: {
+      main: '#0288d1',
+      light: '#03a9f4',
+      dark: '#01579b',
+      contrastText: '#fff'
+    },
+    success: {
+      main: '#2e7d32',
+      light: '#4caf50',
+      dark: '#1b5e20',
+      contrastText: '#fff'
+    }
+  }
+});
 const baseTheme: ThemeOptions = {
   spacing: defaultSpacing,
   shape: {
@@ -35,7 +100,8 @@ const baseTheme: ThemeOptions = {
     }
   },
   mixins: {
-    gridContainer: createGridMixin // this gives your mixin the name `gridContainer`
+    gridContainer: createGridMixin, // this gives your mixin the name `gridContainer`,
+    backgroundColor
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
@@ -71,7 +137,7 @@ const baseTheme: ThemeOptions = {
       lineHeight: 1.375,
       fontWeight: 700,
       fontStyle: 'normal',
-      color: '#fba62d'
+      color: paletteTheme.palette.secondary.main
     },
     h2: {
       fontFamily: roboto.style.fontFamily,
@@ -79,7 +145,7 @@ const baseTheme: ThemeOptions = {
       lineHeight: 1.25,
       fontWeight: 700,
       fontStyle: 'normal',
-      color: '#fba62d'
+      color: paletteTheme.palette.secondary.main
     },
     h3: {
       fontFamily: roboto.style.fontFamily,
@@ -87,7 +153,7 @@ const baseTheme: ThemeOptions = {
       lineHeight: 1.375,
       fontWeight: 700,
       fontStyle: 'normal',
-      color: '#fba62d'
+      color: paletteTheme.palette.secondary.main
     },
     h4: {
       fontFamily: roboto.style.fontFamily,
@@ -161,60 +227,6 @@ const baseTheme: ThemeOptions = {
       fontSize: '.75rem',
       textTransform: 'uppercase',
       marginBottom: `${defaultSpacing}px` // TODO: Check on this approach
-    }
-  },
-  palette: {
-    mode: 'dark',
-    ...{
-      white: {
-        main: '#FFF',
-        contrastText: 'rgba(0, 0, 0, 0.87)'
-      },
-      black: {
-        main: '#000',
-        contrastText: '#FFF'
-      }
-    },
-    primary: {
-      main: '#00fff2',
-      contrastText: '#000000'
-    },
-    secondary: {
-      main: '#EDF0FF',
-      contrastText: '#000000'
-    },
-    text: {
-      primary: '#ffffff',
-      secondary: '#E5E5E5',
-      disabled: 'rgba(0, 0, 0, 0.38)'
-    },
-    error: {
-      main: '#ff1744',
-      light: 'rgb(255, 69, 105)',
-      dark: 'rgb(178, 16, 47)',
-      contrastText: '#fff'
-    },
-    common: {
-      black: '#00030B',
-      white: '#FFFFFF'
-    },
-    warning: {
-      main: '#ed6c02',
-      light: '#ff9800',
-      dark: '#e65100',
-      contrastText: '#fff'
-    },
-    info: {
-      main: '#0288d1',
-      light: '#03a9f4',
-      dark: '#01579b',
-      contrastText: '#fff'
-    },
-    success: {
-      main: '#2e7d32',
-      light: '#4caf50',
-      dark: '#1b5e20',
-      contrastText: '#fff'
     }
   }
 };

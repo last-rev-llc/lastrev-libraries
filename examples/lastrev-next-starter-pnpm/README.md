@@ -22,6 +22,7 @@
 [] Implement \_error page
 [] Implement Algolia
 [] Implement path v2 resolution
+[] Implement Localization
 
 ## Components
 
