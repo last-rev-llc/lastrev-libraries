@@ -8,6 +8,7 @@
 [x] Implement CSP policies
 [x] Implement GraphQL preview endpoint
 [x] Implement Preview
+[x] Implement Content Redirect
 [ ] Implement Test pipeline
 [ ] Implement E2E pipeline
 [ ] Implement Chromatic pipeline
@@ -18,7 +19,6 @@
 [] Implement Contentful Sidekick
 [] Implement Live Editor and other UIEs
 [] Implement Theme api endpoint
-[] Implement Content Redirect
 [] Implement \_error page
 [] Implement Algolia
 [] Implement path v2 resolution

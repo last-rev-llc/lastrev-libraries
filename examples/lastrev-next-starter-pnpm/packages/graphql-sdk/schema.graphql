@@ -414,14 +414,12 @@ type Person implements Content {
   mainImage: Media
   name: String
   path: String
-
   promoImage: Media
   promoSummary: String
   rolloverImage: Media
   sidekickLookup: JSON
   slug: String
   socialLinks: [Link]
-
   theme: [Theme]
 }
 
@@ -433,6 +431,8 @@ type Query {
   contents(filter: ContentsFilter!): [Content]
   page(locale: String, path: String!, preview: Boolean, site: String): Content
   paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
+  redirects(preview: Boolean!): [SiteRedirect]
+  rewrites(preview: Boolean!): [SiteRedirect]
   sitemap(locales: [String!], preview: Boolean, root: String!, site: String): Sitemap
   sitemapIndex(preview: Boolean, site: String): Sitemap
   sitemapPage(contentType: String!, locale: String, page: Int, preview: Boolean, site: String): SitemapPage
@@ -497,6 +497,17 @@ type Site implements Content {
   seo: JSON
   sidekickLookup: JSON
   siteKey: String
+  theme: [Theme]
+  variant: String
+}
+
+type SiteRedirect implements Content {
+  animation: JSON
+  destination: String
+  id: String
+  permanent: Boolean
+  sidekickLookup: JSON
+  source: String
   theme: [Theme]
   variant: String
 }

@@ -1,6 +1,10 @@
 // TODO: Add CSP policies and security headers
 // TODO: Add support for localization (i18n)
 const { withSentryConfig } = require('@sentry/nextjs');
+const { client } = require('graphql-sdk/dist/client');
+
+const preview = process.env.CONTENTFUL_USE_PREVIEW === 'true';
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE_BUNDLE?.toLowerCase() === 'true'
 });
@@ -67,6 +71,14 @@ let config = {
         '@mui/styled-engine': '@mui/styled-engine-sc'
       }
     }
+  },
+  async redirects() {
+    const { data } = await client.Redirects({ preview });
+    return data?.redirects ?? [];
+  },
+  async rewrites() {
+    const { data } = await client.Rewrites({ preview });
+    return data?.rewrites ?? [];
   }
 };
 
