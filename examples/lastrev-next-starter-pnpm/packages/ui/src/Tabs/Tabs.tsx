@@ -15,7 +15,6 @@ import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
 import { TabsProps } from './Tabs.types';
-import RichText from '../RichText';
 
 export const Tabs = ({ id, items, variant, sidekickLookup, introText, ...props }: TabsProps) => {
   const [value, setValue] = React.useState('0');
@@ -56,7 +55,7 @@ export const Tabs = ({ id, items, variant, sidekickLookup, introText, ...props }
                   index: number // TODO: Fix type
                 ) => (
                   <TabPanel value={index.toString()} key={`${!id}-tab-panel-${item?.id}-${index}`}>
-                    {item.body ? <RichText body={item.body} /> : <Item {...item.content} />}
+                    {item.body ? <ContentModule __typename="RichText" body={item.body} /> : <Item {...item.content} />}
                   </TabPanel>
                 )
               )}

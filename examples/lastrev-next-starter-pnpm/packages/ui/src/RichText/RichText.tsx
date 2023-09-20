@@ -1,15 +1,16 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-
+import dynamic from 'next/dynamic';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
 import Box from '@mui/material/Box';
+
+const TableContainer = dynamic(() => import('@mui/material/TableContainer'));
+const Table = dynamic(() => import('@mui/material/Table'));
+const TableHead = dynamic(() => import('@mui/material/TableHead'));
+const TableBody = dynamic(() => import('@mui/material/TableBody'));
+const TableRow = dynamic(() => import('@mui/material/TableRow'));
+const TableCell = dynamic(() => import('@mui/material/TableCell'));
 
 import { documentToReactComponents, Options } from '@contentful/rich-text-react-renderer';
 import BLOCKS from './BLOCKS';

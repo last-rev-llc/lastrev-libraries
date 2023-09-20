@@ -1,14 +1,16 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-
+import dynamic from 'next/dynamic';
 import Box, { BoxProps } from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Chip from '@mui/material/Chip';
+
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import Link from '../Link';
 
 import { FooterNavigationItemProps } from './FooterNavigationItem.types';
+
+const Chip = dynamic(() => import('@mui/material/Chip'));
 
 const FooterNavigationItem = ({ text, href, variant, tag, sidekickLookup }: FooterNavigationItemProps) => {
   const rootProps = !!href && { href, component: Link };

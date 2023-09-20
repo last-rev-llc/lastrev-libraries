@@ -47,7 +47,7 @@ export const Hero = (props: HeroProps) => {
     // <ErrorBoundary>
     <HeroRoot data-testid="Hero" variant={variant} ownerState={ownerState} {...sidekick(sidekickLookup)}>
       {background ? (
-        <BackgroundRoot sx={{}}>
+        <BackgroundRoot>
           <BackgroundRootContent
             key={background?.id}
             testId="Hero-background"
@@ -55,7 +55,6 @@ export const Hero = (props: HeroProps) => {
             {...sidekick(sidekickLookup, 'background')}
             priority
             layout="fill"
-            sx={{}}
           />
         </BackgroundRoot>
       ) : null}

@@ -1,25 +1,26 @@
-import Block from './Block';
-import Hero from './Hero';
-import Link from './Link';
-import Media from './Media';
-import Page from './Page';
-import Text from './Text';
-import Collection from './Collection';
-import Tabs from './Tabs';
-import Card from './Card';
-import Person from './Person';
-import Quote from './Quote';
-import Blog from './Blog';
-import Accordion from './Accordion';
-
-import Section from './Section';
-import NavigationBar from './NavigationBar';
-import NavigationItem from './NavigationItem';
-import HeaderNavLink from './Header/HeaderNavLink';
-import HeaderNavGroup from './Header/HeaderNavGroup';
-import HeaderNavLinkNested from './Header/HeaderNavLinkNested';
-import FooterNavigationItem from './FooterNavigationItem';
-import FooterNavigationItemGroup from './FooterNavigationItemGroup';
+import dynamic from 'next/dynamic';
+const Block = dynamic(() => import('./Block'));
+const Hero = dynamic(() => import('./Hero'));
+const Link = dynamic(() => import('./Link'));
+const Media = dynamic(() => import('./Media'));
+const Page = dynamic(() => import('./Page'));
+const Text = dynamic(() => import('./Text'));
+const RichText = dynamic(() => import('./RichText'));
+const Collection = dynamic(() => import('./Collection'));
+const Tabs = dynamic(() => import('./Tabs'));
+const Card = dynamic(() => import('./Card'));
+const Person = dynamic(() => import('./Person'));
+const Quote = dynamic(() => import('./Quote'));
+const Blog = dynamic(() => import('./Blog'));
+const Accordion = dynamic(() => import('./Accordion'));
+const Section = dynamic(() => import('./Section'));
+const NavigationBar = dynamic(() => import('./NavigationBar'));
+const NavigationItem = dynamic(() => import('./NavigationItem'));
+const HeaderNavLink = dynamic(() => import('./Header/HeaderNavLink'));
+const HeaderNavGroup = dynamic(() => import('./Header/HeaderNavGroup'));
+const HeaderNavLinkNested = dynamic(() => import('./Header/HeaderNavLinkNested'));
+const FooterNavigationItem = dynamic(() => import('./FooterNavigationItem'));
+const FooterNavigationItemGroup = dynamic(() => import('./FooterNavigationItemGroup'));
 
 export const contentMapping: {
   [key: string]: any;
@@ -30,6 +31,7 @@ export const contentMapping: {
   Media,
   Page,
   Text,
+  RichText,
   Collection,
   'CollectionExpandable:Tabs': Tabs,
   'CollectionExpandable:Accordion': Accordion,
