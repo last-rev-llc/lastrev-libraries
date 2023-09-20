@@ -48,7 +48,7 @@
     "@graphql-codegen/typescript-operations": "2.5.10",
     "@last-rev/app-config": "^0.5.1",
     "@last-rev/cli": "^0.5.20",
-    "graphql-request": "^6.1.0",
+    "graphql-request": "^4.0.0",
     "concurrently": "^5.3.0",
     "dotenv": "^10.0.0",
     "graphql-tag": "^2.12.5",
