@@ -18,7 +18,11 @@ export const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
   return (
     <ErrorBoundary>
-      <Root data-testid={`Collection-${variant}`} ownerState={ownerState} {...sidekick(sidekickLookup)}>
+      <Root
+        // sx={{ containerType: 'inline-size' }}
+        data-testid={`Collection-${variant}`}
+        ownerState={ownerState}
+        {...sidekick(sidekickLookup)}>
         {introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText

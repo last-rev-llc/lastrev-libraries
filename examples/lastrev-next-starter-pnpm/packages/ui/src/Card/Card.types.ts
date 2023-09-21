@@ -2,9 +2,18 @@ import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/m
 
 import { Card_BaseFragmentFragment } from '@graphql-sdk/types';
 
-export type CardVariants = 'default' | 'icon' | 'logo' | 'media' | 'pricing' | 'person' | 'quote' | 'blog' | undefined;
+export enum CardVariants {
+  default = 'default',
+  icon = 'icon',
+  logo = 'logo',
+  media = 'media',
+  pricing = 'pricing',
+  person = 'person',
+  quote = 'quote',
+  blog = 'blog'
+}
 
-export interface CardProps extends Card_BaseFragmentFragment {
+export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant'> {
   loading?: boolean;
   variant?: CardVariants;
   colorScheme?: string;

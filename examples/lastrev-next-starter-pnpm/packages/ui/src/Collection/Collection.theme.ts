@@ -4,26 +4,29 @@ export const defaultProps: ComponentsProps['Collection'] = {};
 
 export const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   root: ({ theme, ownerState }) => ({
+    containerType: 'inline-size',
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     padding: theme.spacing(12, 0),
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    width: '100%',
+    background: 'red'
   }),
   itemsGrid: ({ theme }) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-    [`@container (min-width: ${theme.breakpoints.values.md})`]: {
+    [`@container (max-width: ${theme.breakpoints.values.md}px)`]: {
       gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
     },
-    [`@container (min-width: ${theme.breakpoints.values.sm})`]: {
+    [`@container (max-width: ${theme.breakpoints.values.sm}px)`]: {
       gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
     },
-    [theme.breakpoints.down('md')]: {
-      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-    },
-    [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
-    },
+    // [theme.breakpoints.down('md')]: {
+    //   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
+    // },
+    // [theme.breakpoints.down('sm')]: {
+    //   gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
+    // },
     gap: theme.spacing(3, 3)
   })
 };

@@ -29,7 +29,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'position': 'absolute',
     'top': 0,
     'left': 0,
-    'zIndex': 10,
+    'zIndex': -1,
     'width': '100%',
     'height': '100%',
     '&:hover': {
@@ -39,37 +39,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     }
   }),
 
-  media: () => ({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    margin: 0,
-    img: {
-      objectFit: 'cover',
-      aspectRatio: '16/9'
-    }
-  }),
-
-  actions: ({ theme }: any) => ({}),
-
-  action: () => ({
-    justifyContent: 'flex-end'
-  }),
-
-  content: () => ({ flex: 1 }),
-
-  overline: () => ({}),
-
-  title: () => ({}),
-
-  subtitle: () => ({}),
-
-  body: () => ({
-    flex: 1
-    // '& *': {
-    //   ...theme.typography.bodySmall
-    // },
-  })
+  content: () => ({ flex: 1 })
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Card'] => [

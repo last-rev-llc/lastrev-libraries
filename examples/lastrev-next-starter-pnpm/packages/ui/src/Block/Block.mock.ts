@@ -10,7 +10,7 @@ import { BlockProps } from './Block.types';
 const blockDefaultMock: BlockProps = {
   id: lorem.word(),
   __typename: 'Block',
-  backgroundColor: 'secondary',
+  backgroundColor: 'background',
   variant: 'default',
   introText: introTextMock(),
   overline: 'This is the Block overline',

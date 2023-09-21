@@ -9,6 +9,7 @@
 [x] Implement GraphQL preview endpoint
 [x] Implement Preview
 [x] Implement Content Redirect
+[ ] Create Grid documentation and working with Block, Collection
 [ ] Implement Test pipeline
 [ ] Implement E2E pipeline
 [ ] Implement Chromatic pipeline

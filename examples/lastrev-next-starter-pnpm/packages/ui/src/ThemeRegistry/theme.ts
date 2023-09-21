@@ -34,16 +34,17 @@ const paletteTheme = createTheme({
     },
     primary: muiTheme.palette.augmentColor({
       color: {
-        main: '#00fff2'
+        main: '#fba62d'
       },
       name: 'primary'
     }),
     secondary: muiTheme.palette.augmentColor({
       color: {
-        main: '#fba62d'
+        main: '#00fff2'
       },
       name: 'secondary'
     }),
+
     // text: {
     //   primary: '#ffffff',
     //   secondary: '#E5E5E5',
@@ -137,40 +138,35 @@ const baseTheme: ThemeOptions = {
       fontSize: '4.5rem',
       lineHeight: 1.375,
       fontWeight: 700,
-      fontStyle: 'normal',
-      color: paletteTheme.palette.secondary.main
+      fontStyle: 'normal'
     },
     h2: {
       fontFamily: roboto.style.fontFamily,
       fontSize: '4rem',
       lineHeight: 1.25,
       fontWeight: 700,
-      fontStyle: 'normal',
-      color: paletteTheme.palette.secondary.main
+      fontStyle: 'normal'
     },
     h3: {
       fontFamily: roboto.style.fontFamily,
       fontSize: '3rem',
       lineHeight: 1.375,
       fontWeight: 700,
-      fontStyle: 'normal',
-      color: paletteTheme.palette.secondary.main
+      fontStyle: 'normal'
     },
     h4: {
       fontFamily: roboto.style.fontFamily,
       fontSize: '2.25rem',
       lineHeight: 1.5,
       fontWeight: 700,
-      fontStyle: 'normal',
-      color: '#00fff2'
+      fontStyle: 'normal'
     },
     h5: {
       fontFamily: roboto.style.fontFamily,
       fontSize: '1.5rem',
       lineHeight: 1.2,
       fontWeight: 700,
-      fontStyle: 'normal',
-      color: '#00fff2'
+      fontStyle: 'normal'
     },
     h6: {
       fontFamily: roboto.style.fontFamily,
