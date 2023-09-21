@@ -1,64 +1,72 @@
 import React from 'react';
-
 import { styled } from '@mui/material/styles';
-
-import Box, { BoxProps } from '@mui/material/Box';
-import Typography, { TypographyProps } from '@mui/material/Typography';
-
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
-
-// import Link, { LinkProps } from '../Link';
-import { BlockProps } from './Block.types';
 import Grid from '../Grid';
+import { BlockProps, BlockOwnerState } from './Block.types';
 
 const Block = (props: BlockProps) => {
-  const { variant, introText, overline, title, subtitle, body, mediaItems, actions, link, sidekickLookup } = props;
-
-  const extraProps = link
-    ? {
-        component: (props: any) => <ContentModule {...sidekick(sidekickLookup, 'mediaItems')} {...link} />
-        // href: link.href
-      }
-    : {};
-
-  // TODO: Better way?
-  const isFullBleed = variant?.indexOf('FullBleed') > -1;
+  const ownerState = { ...props };
+  const { introText, overline, title, subtitle, body, mediaItems, actions, sidekickLookup } = props;
 
   return (
-    <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={{ ...props }} variant={variant}>
+    <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState}>
       {!!introText && (
-        <IntroTextGrid>
-          <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
+        <IntroTextGrid ownerState={ownerState}>
+          <IntroText
+            ownerState={ownerState}
+            {...sidekick(sidekickLookup, 'introText')}
+            {...introText}
+            variant="introText"
+          />
         </IntroTextGrid>
       )}
 
-      <ContentOuterGrid>
+      <ContentOuterGrid ownerState={ownerState}>
         {overline || title || subtitle || body || actions ? (
-          <MainContentWrapper variant={variant} maxWidth={false} sx={{ p: 0 }}>
-            <Content>
-              {!!overline && <Overline variant="overline">{overline}</Overline>}
+          <MainContentWrapper ownerState={ownerState}>
+            <Content ownerState={ownerState}>
+              {!!overline && (
+                <Overline ownerState={ownerState} variant="overline">
+                  {overline}
+                </Overline>
+              )}
 
               {!!title && (
-                <Title {...sidekick(sidekickLookup, 'title')} data-testid="Block-title" variant="display3">
+                <Title
+                  ownerState={ownerState}
+                  {...sidekick(sidekickLookup, 'title')}
+                  data-testid="Block-title"
+                  variant="display3">
                   {title}
                 </Title>
               )}
 
               {!!subtitle && (
-                <Subtitle {...sidekick(sidekickLookup, 'subtitle')} data-testid="Block-subtitle" variant="display4">
+                <Subtitle
+                  ownerState={ownerState}
+                  {...sidekick(sidekickLookup, 'subtitle')}
+                  data-testid="Block-subtitle"
+                  variant="display4">
                   {subtitle}
                 </Subtitle>
               )}
 
-              {!!body && <Body {...sidekick(sidekickLookup, 'body')} __typename="Text" body={body} />}
+              {!!body && (
+                <Body ownerState={ownerState} {...sidekick(sidekickLookup, 'body')} __typename="Text" body={body} />
+              )}
             </Content>
 
             {!!actions?.length && (
-              <ActionsWrapper {...sidekick(sidekickLookup, 'actions')} data-testid="Block-actions">
-                {actions.map((action: LinkProps) => (
-                  <Action key={action?.id} {...(action as LinkProps)} />
+              <ActionsWrapper
+                ownerState={ownerState}
+                {...sidekick(sidekickLookup, 'actions')}
+                data-testid="Block-actions">
+                {actions.map((action) => (
+                  <Action ownerState={ownerState} key={action?.id} {...action} />
                 ))}
               </ActionsWrapper>
             )}
@@ -66,9 +74,9 @@ const Block = (props: BlockProps) => {
         ) : null}
 
         {!!mediaItems && (
-          <SideContentWrapper {...extraProps} variant={variant} maxWidth={false} disableGutters={isFullBleed}>
+          <SideContentWrapper ownerState={ownerState}>
             {mediaItems.map((media) => (
-              <Media key={media?.id} {...sidekick(sidekickLookup, 'mediaItems')} {...media} />
+              <Media ownerState={ownerState} key={media?.id} {...sidekick(sidekickLookup, 'mediaItems')} {...media} />
             ))}
           </SideContentWrapper>
         )}
@@ -77,104 +85,90 @@ const Block = (props: BlockProps) => {
   );
 };
 
-// const shouldForwardProp = (prop: string) =>
-//   prop !== 'variant' &&
-//   prop !== 'sidekickLookup' &&
-//   prop !== 'body' &&
-//   prop !== 'subtitle' &&
-//   prop !== 'actions' &&
-//   prop !== 'media' &&
-//   prop !== 'introText' &&
-//   prop !== 'overline' &&
-//   prop !== 'ownerState' &&
-//   prop !== 'title' &&
-//   prop !== 'blockVariant';
-
 const Root = styled(Box, {
   name: 'Block',
   slot: 'Root',
-  // shouldForwardProp: (prop) => shouldForwardProp(prop as string) && prop !== 'id',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string; colorScheme?: string }>(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const ContentOuterGrid = styled(Grid, {
   name: 'Block',
   slot: 'ContentOuterGrid',
   overridesResolver: (_, styles) => [styles.contentOuterGrid]
-})(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const IntroTextGrid = styled(Grid, {
   name: 'Block',
   slot: 'IntroTextGrid',
   overridesResolver: (_, styles) => [styles.introTextGrid]
-})(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const IntroText = styled(ContentModule, {
   name: 'Block',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
-})(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const MainContentWrapper = styled('div', {
   name: 'Block',
   slot: 'MainContentWrapper',
   overridesResolver: (_, styles) => [styles.mainContentWrapper]
-})(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const Content = styled(Box, {
   name: 'Block',
   slot: 'Content',
   overridesResolver: (_, styles) => [styles.content]
-})<BoxProps<React.ElementType>>(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const Overline = styled(Typography, {
   name: 'Block',
   slot: 'Overline',
   overridesResolver: (_, styles) => [styles.overline]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const Title = styled(Typography, {
   name: 'Block',
   slot: 'Title',
   overridesResolver: (_, styles) => [styles.title]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const Subtitle = styled(Typography, {
   name: 'Block',
   slot: 'Subtitle',
   overridesResolver: (_, styles) => [styles.subtitle]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const Body = styled(ContentModule, {
   name: 'Block',
   slot: 'Body',
   overridesResolver: (_, styles) => [styles.body]
-})(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const SideContentWrapper = styled('div', {
   name: 'Block',
   slot: 'SideContentWrapper',
 
   overridesResolver: (_, styles) => [styles.sideContentWrapper]
-})(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const Media = styled(ContentModule, {
   name: 'Block',
   slot: 'Media',
   overridesResolver: (_, styles) => [styles.media]
-})(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const ActionsWrapper = styled(Box, {
   name: 'Block',
   slot: 'ActionsWrapper',
 
   overridesResolver: (_, styles) => [styles.actionsWrapper]
-})<BoxProps<React.ElementType>>(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 const Action = styled(ContentModule, {
   name: 'Block',
   slot: 'Action',
   overridesResolver: (_, styles) => [styles.action]
-})(() => ({}));
+})<{ ownerState: BlockOwnerState }>``;
 
 export default Block;

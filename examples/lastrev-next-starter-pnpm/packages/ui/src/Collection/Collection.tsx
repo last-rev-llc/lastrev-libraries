@@ -10,35 +10,31 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import { CollectionProps } from './Collection.types';
+import { CollectionProps, CollectionOwnerState } from './Collection.types';
+import Grid from '../Grid';
 
-export const Collection = ({
-  items,
-  itemsWidth,
-  variant,
-  itemsVariant,
-  sidekickLookup,
-  introText,
-  ...props
-}: CollectionProps) => {
+export const Collection = (props: CollectionProps) => {
+  const { items, variant, itemsVariant, sidekickLookup, introText } = props;
+  const ownerState = { ...props };
   return (
     <ErrorBoundary>
-      <Root
-        variant={variant}
-        itemsVariant={itemsVariant}
-        data-testid={`Collection-${variant}`}
-        {...props}
-        {...sidekick(sidekickLookup)}>
+      <Root data-testid={`Collection-${variant}`} ownerState={ownerState} {...sidekick(sidekickLookup)}>
         {introText && (
-          <IntroTextWrapper>
-            <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
-          </IntroTextWrapper>
+          <IntroTextGrid ownerState={ownerState}>
+            <IntroText
+              ownerState={ownerState}
+              {...sidekick(sidekickLookup, 'introText')}
+              {...introText}
+              variant="introText"
+            />
+          </IntroTextGrid>
         )}
-        <ContentContainer>
+        <ContentGrid ownerState={ownerState}>
           {!!items?.length && (
-            <ItemsContainer id="items">
+            <ItemsGrid ownerState={ownerState} id="items">
               {items?.map((item, index) => (
                 <Item
+                  ownerState={ownerState}
                   // @ts-ignore: TODO: ID not recognized
                   key={item?.id}
                   {...item}
@@ -47,55 +43,48 @@ export const Collection = ({
                   position={index + 1}
                 />
               ))}
-            </ItemsContainer>
+            </ItemsGrid>
           )}
-        </ContentContainer>
+        </ContentGrid>
       </Root>
     </ErrorBoundary>
   );
 };
 
-const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'itemsVariant';
-
-const generateVariantStyleOverrides = () => {};
-
 const Root = styled(Box, {
   name: 'Collection',
   slot: 'Root',
-  shouldForwardProp,
   overridesResolver: ({ ownerState }, styles) => [styles.root, styles[`${ownerState?.variant}`]]
-})<{ variant?: string; itemsVariant?: string }>``;
+})<{ ownerState: CollectionOwnerState }>``;
 
-const ContentContainer = styled(Container, {
+const ContentGrid = styled(Grid, {
   name: 'Collection',
-  slot: 'ContentContainer',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.contentContainer]
-})<{ variant?: string }>``;
+  slot: 'ContentGrid',
+  overridesResolver: (_, styles) => [styles.contentGrid]
+})<{ ownerState: CollectionOwnerState }>``;
 
-const IntroTextWrapper = styled(Box, {
+const IntroTextGrid = styled(Grid, {
   name: 'Collection',
-  slot: 'IntroTextWrapper',
-  overridesResolver: (_, styles) => [styles.introTextWrapper]
-})(() => ({}));
+  slot: 'IntroTextGrid',
+  overridesResolver: (_, styles) => [styles.introTextGrid]
+})<{ ownerState: CollectionOwnerState }>``;
 
 const IntroText = styled(ContentModule, {
   name: 'Collection',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
-})(() => ({}));
+})<{ ownerState: CollectionOwnerState }>``;
 
-const ItemsContainer = styled(Box, {
+const ItemsGrid = styled(Box, {
   name: 'Collection',
-  slot: 'ItemsContainer',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.itemsContainer, styles.itemsContainerOnePerRow]
-})<{ variant?: string }>``;
+  slot: 'ItemsGrid',
+  overridesResolver: (_, styles) => [styles.itemsGrid, styles.itemsContainerOnePerRow]
+})<{ ownerState: CollectionOwnerState }>``;
 
 const Item = styled(ContentModule, {
   name: 'Collection',
   slot: 'Item',
   overridesResolver: (_, styles) => [styles.item]
-})<{ variant?: string }>``;
+})<{ ownerState: CollectionOwnerState }>``;
 
 export default Collection;

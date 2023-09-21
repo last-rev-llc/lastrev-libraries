@@ -14,6 +14,8 @@ export interface CardProps extends Card_BaseFragmentFragment {
   isMultipleOfThree?: Boolean;
 }
 
+export interface CardOwnerState extends CardProps {}
+
 export interface CardClasses {
   root: string;
   link: string;

@@ -2,6 +2,7 @@ import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVa
 
 export const defaultProps: ComponentsProps['Grid'] = {};
 
+// TODO: Expose these values in the theme
 const smMargin = 8;
 const mdMargin = 56;
 const lgMargin = 96;
@@ -15,12 +16,12 @@ export const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
     'display': 'grid',
     'width': '100%',
     'gridGap': lgGap,
-    '>*': {
+    '> *': {
       gridColumn: 'content-start / content-end'
     },
     // '&:before': {
     //   content: '""',
-    //   // background: 'blue',
+    //   background: 'blue',
     //   display: 'block',
     //   height: '100%',
     //   gridColumn: 'full-start / span 1',
@@ -28,7 +29,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
     // },
     // '&:after': {
     //   content: '""',
-    //   // background: 'red',
+    //   background: 'red',
     //   display: 'block',
     //   height: '100%',
     //   gridColumn: 'content-end / span 1',

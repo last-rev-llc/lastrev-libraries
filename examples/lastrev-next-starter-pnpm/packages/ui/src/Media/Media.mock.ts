@@ -10,7 +10,7 @@ const getSvgContent = (url: string) =>
     });
 
 export const defaultFileImageMock = ({ ...override } = {}): FileProps => ({
-  url: `https://source.unsplash.com/random/500x500`,
+  url: `https://source.unsplash.com/random/500x500?rnd=${Math.random()}`,
   width: 1920,
   height: 1080,
   ...override

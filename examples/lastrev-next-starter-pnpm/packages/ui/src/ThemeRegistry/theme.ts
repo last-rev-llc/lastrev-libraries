@@ -4,7 +4,7 @@ import { ThemeOptions, createTheme } from '@mui/material/styles';
 
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
-import backgroundColor from './mixins/backgroundColor';
+import applyBackgroundColor from './mixins/applyBackgroundColor';
 import themeComponents from './theme.components';
 
 export const roboto = Roboto({
@@ -16,7 +16,8 @@ export const roboto = Roboto({
 export const mainColors = ['primary', 'secondary', 'tertiary'];
 
 const defaultSpacing = 8;
-const defaultBorderRadius = 0;
+const defaultBorderRadius = 10;
+
 const muiTheme = createTheme();
 const paletteTheme = createTheme({
   palette: {
@@ -101,7 +102,7 @@ const baseTheme: ThemeOptions = {
   },
   mixins: {
     gridContainer: createGridMixin, // this gives your mixin the name `gridContainer`,
-    backgroundColor
+    applyBackgroundColor
   },
   typography: {
     fontFamily: roboto.style.fontFamily,

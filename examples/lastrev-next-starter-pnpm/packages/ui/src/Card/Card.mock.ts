@@ -6,8 +6,8 @@ import { linkButtonMock, linkBaseMock } from '../Link/Link.mock';
 
 import { CardProps } from './Card.types';
 
-const cardDefaultMock: CardProps = {
-  id: lorem.word(),
+const cardDefaultMock = (override?: Partial<CardProps>) => ({
+  id: lorem.slug(),
   __typename: 'Card',
   variant: 'default',
   media: [mediaBaseImageMock()],
@@ -16,64 +16,61 @@ const cardDefaultMock: CardProps = {
   subtitle: 'And this is the subtitle',
   body: staticRichTextMock(), // TODO: Match to options in card
   actions: [{ ...linkButtonMock(), text: 'Card link' }],
-  link: [{ ...linkBaseMock() }],
+  link: { ...linkBaseMock() },
   sidekickLookup: {},
-  loading: false
-};
-
-export const cardBaseMock = ({ ...override } = {}): CardProps => ({
-  ...cardDefaultMock,
+  loading: false,
   ...override
 });
 
-export const cardIconMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
+export const cardBaseMock = (override: Partial<CardProps>) => ({
+  ...cardDefaultMock(override)
+});
+
+export const cardIconMock = (override: Partial<CardProps>) => ({
+  ...cardDefaultMock(override),
   variant: 'icon'
 });
 
-export const cardLogoMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
+export const cardLogoMock = (override: Partial<CardProps>) => ({
+  ...cardDefaultMock(override),
   media: [mediaBaseSvgMock(), mediaBaseImageMock()],
-  ...override,
   variant: 'logo'
 });
 
-export const cardMediaMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
+export const cardMediaMock = (override: Partial<CardProps>) => ({
+  ...cardDefaultMock(override),
+
   variant: 'media'
 });
 
-export const cardPricingMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
+export const cardPricingMock = (override: Partial<CardProps>) => ({
+  ...cardDefaultMock(override),
+
   variant: 'pricing',
   overline: 'Plan 1',
   title: '$69.99',
   subtitle: 'Our best deal!'
 });
 
-export const cardPersonMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
+export const cardPersonMock = (override: Partial<CardProps>) => ({
+  ...cardDefaultMock(override),
+
   variant: 'person'
 });
 
-export const cardQuoteMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
+export const cardQuoteMock = (override: Partial<CardProps>) => ({
+  ...cardDefaultMock(override),
+
   variant: 'quote'
 });
 
-export const cardBlogMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
+export const cardBlogMock = (override: Partial<CardProps>) => ({
+  ...cardDefaultMock(override),
   variant: 'blog'
 });
 
-export const cardWithTagsBaseMock = (): CardProps => ({
-  ...cardBaseMock()
+export const cardWithTagsBaseMock = (override: Partial<CardProps>) => ({
+  ...cardBaseMock(override)
 });
 
 export default cardBaseMock;

@@ -18,12 +18,13 @@ export interface CollectionProps extends Collection_BaseFragmentFragment {
   itemsVariant?: CardVariants;
 }
 
+export interface CollectionOwnerState extends CollectionProps {}
 export interface CollectionClasses {
   root: string;
   contentContainer: string;
   introTextWrapper: string;
   introText: string;
-  itemsContainer: string;
+  itemsGrid: string;
   item: string;
   actionsContainer: string;
   action: string;

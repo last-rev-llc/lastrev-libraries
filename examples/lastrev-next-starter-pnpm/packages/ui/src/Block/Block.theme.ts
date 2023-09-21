@@ -3,8 +3,10 @@ import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVa
 export const defaultProps: ComponentsProps['Block'] = {};
 export const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.backgroundColor({ backgroundColor: ownerState?.backgroundColor, theme }),
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
     padding: theme.spacing(12, 0)
   }),
 

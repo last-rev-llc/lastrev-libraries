@@ -1,7 +1,14 @@
 import { Theme } from '@mui/material/styles';
+import { CSSProperties } from '@mui/material/styles/createMixins';
 import get from 'lodash/get';
-
-export const backgroundColor = ({ backgroundColor, theme }: { backgroundColor?: string; theme: Theme }) => {
+type ApplyBackgroundColor = (args: { theme: Theme; ownerState: any }) => CSSProperties;
+declare module '@mui/material/styles/createMixins' {
+  interface Mixins {
+    applyBackgroundColor: ApplyBackgroundColor;
+  }
+}
+export const applyBackgroundColor: ApplyBackgroundColor = ({ ownerState, theme }) => {
+  const backgroundColor = ownerState?.backgroundColor as string | undefined;
   if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
     return {
       background: get(theme.palette, backgroundColor)?.main,
@@ -20,4 +27,4 @@ export const backgroundColor = ({ backgroundColor, theme }: { backgroundColor?: 
   return {};
 };
 
-export default backgroundColor;
+export default applyBackgroundColor;

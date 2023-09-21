@@ -13,6 +13,7 @@ export enum BlockVariants {
 }
 
 export interface BlockProps extends Block_BaseFragmentFragment {}
+export interface BlockOwnerState extends BlockProps {}
 
 export interface BlockClasses {
   root: string;

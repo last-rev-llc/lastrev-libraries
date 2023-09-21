@@ -29,11 +29,9 @@ export default {
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Default = { args: { ...collectionBaseMock() } };
-export const Icons = { args: { ...collectionIconMock() } };
-export const Logos = { args: { ...collectionLogoMock() } };
-export const Media = { args: { ...collectionMediaMock() } };
-export const Pricing = { args: { ...collectionPricingMock() } };
-export const Person = { args: { ...collectionPersonMock() } };
-export const Quote = { args: { ...collectionQuoteMock() } };
-export const Blog = { args: { ...collectionBlogMock() } };
+export const Default = { args: { ...collectionBaseMock(), variant: 'default' } };
+export const OnePerRow = { args: { ...collectionBaseMock(), variant: 'onePerRow' } };
+export const TwoPerRow = { args: { ...collectionBaseMock(), variant: 'twoPerRow' } };
+export const ThreePerRow = { args: { ...collectionBaseMock(), variant: 'threePerRow' } };
+export const FourPerRow = { args: { ...collectionBaseMock(), variant: 'fourPerRow' } };
+export const FivePerRow = { args: { ...collectionBaseMock(), variant: 'fivePerRow' } };

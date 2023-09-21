@@ -1,7 +1,5 @@
 import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Grid_BaseFragmentFragment } from '@graphql-sdk/types';
-
 export enum GridVariants {
   default = 'default',
   contentOnRight = 'contentOnRight',
@@ -12,7 +10,9 @@ export enum GridVariants {
   contentAbove = 'contentAbove'
 }
 
-export interface GridProps extends Grid_BaseFragmentFragment {}
+export interface GridProps {
+  children: React.ReactNode;
+}
 
 export interface GridClasses {
   root: string;

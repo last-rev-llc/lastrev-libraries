@@ -18,7 +18,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'display': 'flex',
     'flexDirection': 'column',
     'height': '100%',
-    'maxWidth': '300px',
+    'maxWidth': '640px',
 
     '&:hover': {
       transform: 'scale(1.05)'
@@ -50,26 +50,13 @@ export const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     }
   }),
 
-  actions: ({ theme }: any) => ({
-    padding: 0,
-    marginTop: theme.spacing(4),
-    justifyContent: 'space-between',
-    flexDirection: 'column',
-    gap: theme.spacing(2),
-
-    [theme.breakpoints.up('md')]: {
-      flexDirection: 'column'
-    }
-  }),
+  actions: ({ theme }: any) => ({}),
 
   action: () => ({
-    paddingRight: 0,
-    whiteSpace: 'nowrap',
-    justifyContent: 'flex-end',
-    marginLeft: 'auto'
+    justifyContent: 'flex-end'
   }),
 
-  content: () => ({}),
+  content: () => ({ flex: 1 }),
 
   overline: () => ({}),
 
@@ -111,13 +98,13 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       '[class*=Card-media]': {
-        padding: theme.spacing(0),
+        // padding: theme.spacing(0),
         maxWidth: 96,
         marginLeft: 'auto',
         marginRight: 'auto',
 
         [theme.breakpoints.up('lg')]: {
-          'padding': theme.spacing(1),
+          // 'padding': theme.spacing(1),
           '& > img': {
             objectFit: 'contain'
           }
@@ -173,12 +160,12 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
 
       '[class*=cardMedia]': {
         // TODO: Margin and padding here should match the content.   Mixin?
-        'marginBottom': theme.spacing(-2),
+        // 'marginBottom': theme.spacing(-2),
         '& > *': {
           borderRadius: '50%',
           aspectRatio: '1 / 1',
           width: '100%',
-          padding: theme.spacing(2),
+          // padding: theme.spacing(2),
 
           display: 'inline-block',
           overflow: 'hidden'
