@@ -348,6 +348,9 @@ importers:
       '@mui/styled-engine-sc':
         specifier: ^5.14.8
         version: 5.14.8(styled-components@6.0.0)
+      '@mui/system':
+        specifier: ^5.14.8
+        version: 5.14.8(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
       faker:
         specifier: ^5.5.3
         version: 5.5.3
@@ -5192,7 +5195,7 @@ packages:
       '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.5)(react@18.2.0)
       '@mui/base': 5.0.0-beta.14(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
       '@mui/core-downloads-tracker': 5.14.8
-      '@mui/system': 5.14.9(patch_hash=vcbin7hequ7fzhrbzdnbfhsg2a)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/system': 5.14.9(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
       '@mui/types': 7.2.4(@types/react@18.2.5)
       '@mui/utils': 5.14.8(react@18.2.0)
       '@types/react': 18.2.5
@@ -5281,8 +5284,8 @@ packages:
       '@babel/runtime': 7.22.15
       '@emotion/react': 11.11.1(@types/react@18.2.5)(react@18.2.0)
       '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.5)(react@18.2.0)
-      '@mui/private-theming': 5.14.8(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
-      '@mui/styled-engine': 5.14.8(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(react@18.2.0)
+      '@mui/private-theming': 5.14.9(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
+      '@mui/styled-engine': 5.14.9(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(react@18.2.0)
       '@mui/types': 7.2.4(@types/react@18.2.5)
       '@mui/utils': 5.14.9(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.5
