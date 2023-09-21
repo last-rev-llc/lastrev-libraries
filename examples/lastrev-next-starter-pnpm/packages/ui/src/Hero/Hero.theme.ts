@@ -70,7 +70,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     height: '100%'
   }),
 
-  contentOuterWrapper: ({ theme }) => {
+  contentOuterGrid: ({ theme }) => {
     return {
       ...theme.mixins.gridContainer(theme),
       alignSelf: 'center',

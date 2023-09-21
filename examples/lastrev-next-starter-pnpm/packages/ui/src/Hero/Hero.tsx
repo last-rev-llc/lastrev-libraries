@@ -59,7 +59,7 @@ export const Hero = (props: HeroProps) => {
         </BackgroundRoot>
       ) : null}
 
-      <ContentOuterWrapper maxWidth={isFullBleed ? false : undefined} disableGutters={isFullBleed}>
+      <contentOuterGrid maxWidth={isFullBleed ? false : undefined} disableGutters={isFullBleed}>
         {overline || title || subtitle || body || actions ? (
           <MainContentWrapper variant={variant} maxWidth={false} sx={{ p: 0 }}>
             <Content>
@@ -104,7 +104,7 @@ export const Hero = (props: HeroProps) => {
             />
           </SideContentWrapper>
         ) : null}
-      </ContentOuterWrapper>
+      </contentOuterGrid>
     </HeroRoot>
     // </ErrorBoundary>
   );
@@ -123,10 +123,10 @@ const HeroRoot = styled(Box, {
   overridesResolver: (_, styles) => [styles.heroRoot]
 })<BoxProps>(() => ({}));
 
-const ContentOuterWrapper = styled(Container, {
+const contentOuterGrid = styled(Container, {
   name: 'Hero',
-  slot: 'ContentOuterWrapper',
-  overridesResolver: (_, styles) => [styles.contentOuterWrapper]
+  slot: 'contentOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentOuterGrid]
 })<ContainerProps<React.ElementType>>(() => ({}));
 
 const MainContentWrapper = styled(Container, {

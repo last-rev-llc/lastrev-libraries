@@ -6,6 +6,8 @@ export interface FooterNavigationItemProps extends NavigationItem_BaseFragmentFr
 
 export interface FooterNavigationItemClasses {
   root: string;
+  rootLinkButton: string;
+  rootLink: string;
   tag: string;
 }
 

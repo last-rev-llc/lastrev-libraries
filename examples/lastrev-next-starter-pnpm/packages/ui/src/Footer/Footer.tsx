@@ -7,7 +7,7 @@ import MuiContainer from '@mui/material/Container';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
-import Link from '../Link';
+// import Link from '../Link';
 
 import { FooterProps } from './Footer.types';
 import { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
@@ -118,7 +118,7 @@ const Logo = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.logo]
 })(() => ({}));
 
-const LogoUrl = styled(Link, {
+const LogoUrl = styled(ContentModule, {
   name: 'Footer',
   slot: 'LogoUrl',
   overridesResolver: (_, styles) => [styles.logoUrl]

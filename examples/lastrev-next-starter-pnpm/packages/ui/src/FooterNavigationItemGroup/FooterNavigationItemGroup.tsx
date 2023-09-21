@@ -5,15 +5,15 @@ import Typography from '@mui/material/Typography';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import { FooterNavigationItemGroupProps } from './FooterNavigationItemGroup.types';
-import Link, { LinkProps } from '../Link';
+import { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
 import { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
 
 const FooterNavigationItemGroup = ({ text, href, subNavigation, sidekickLookup }: FooterNavigationItemGroupProps) => {
-  const labelProps = !!href && { href, component: Link };
+  const labelProps = !!href && { href, component: ContentModule };
   return (
     <Root {...sidekick(sidekickLookup)}>
-      <Label component={Typography} {...labelProps}>
+      <Label component={Typography} {...labelProps} __typename="Link">
         {text}
       </Label>
       {!!subNavigation?.length && (

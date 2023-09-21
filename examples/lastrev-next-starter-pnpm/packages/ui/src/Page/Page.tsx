@@ -3,8 +3,8 @@ import dynamic from 'next/dynamic';
 
 import { styled } from '@mui/material/styles';
 
-import ContentModule from '@ui/ContentModule';
-const BackToTop = dynamic(() => import('@ui/BackToTop'));
+import ContentModule from '../ContentModule';
+const BackToTop = dynamic(() => import('../BackToTop'));
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import { PageProps } from './Page.types';

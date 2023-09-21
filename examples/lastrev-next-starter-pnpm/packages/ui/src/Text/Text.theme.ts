@@ -5,6 +5,7 @@ export const defaultProps: ComponentsProps['Text'] = {};
 export const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
   root: {
+    'width': '100%',
     'ol, ul, li': {
       /* Revert padding reset is what gives the indentation to list */
 

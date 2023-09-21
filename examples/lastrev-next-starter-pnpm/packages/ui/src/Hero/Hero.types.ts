@@ -44,7 +44,7 @@ export interface HeroProps extends Hero_BaseFragmentFragment {
 export interface HeroClasses {
   heroRoot: string;
   mainContentWrapper: string;
-  contentOuterWrapper: string;
+  contentOuterGrid: string;
   content: string;
   backgroundRoot: string;
   backgroundRootContent: string;
