@@ -9,24 +9,17 @@ export const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     padding: theme.spacing(12, 0),
     display: 'flex',
     flexDirection: 'column',
-    width: '100%',
-    background: 'red'
+    width: '100%'
   }),
   itemsGrid: ({ theme }) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-    [`@container (max-width: ${theme.breakpoints.values.md}px)`]: {
+    [theme.breakpoints.down('md')]: {
       gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
     },
-    [`@container (max-width: ${theme.breakpoints.values.sm}px)`]: {
+    [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
     },
-    // [theme.breakpoints.down('md')]: {
-    //   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-    // },
-    // [theme.breakpoints.down('sm')]: {
-    //   gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
-    // },
     gap: theme.spacing(3, 3)
   })
 };

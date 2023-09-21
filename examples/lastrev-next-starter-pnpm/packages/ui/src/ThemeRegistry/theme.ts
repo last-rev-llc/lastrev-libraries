@@ -20,6 +20,14 @@ const defaultBorderRadius = 10;
 
 const muiTheme = createTheme();
 const paletteTheme = createTheme({
+  values: {
+    xs: 0,
+    sm: 600,
+    md: 900,
+    lg: 1200,
+    xl: 1536,
+    xxl: 3840
+  },
   palette: {
     mode: 'dark',
     ...{
@@ -89,17 +97,6 @@ const baseTheme: ThemeOptions = {
   spacing: defaultSpacing,
   shape: {
     borderRadius: defaultBorderRadius
-  },
-  breakpoints: {
-    // Add any custom breakpoints here
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-      xxl: 3840
-    }
   },
   mixins: {
     gridContainer: createGridMixin, // this gives your mixin the name `gridContainer`,
@@ -229,6 +226,16 @@ const baseTheme: ThemeOptions = {
 };
 
 const coreTheme = createTheme(baseTheme);
-export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)));
+export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
+  breakpoints: {
+    up(key) {
+      return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
+    },
+    down(key) {
+      return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
+    }
+    // Add any custom breakpoints here
+  }
+});
 
 export default theme;
