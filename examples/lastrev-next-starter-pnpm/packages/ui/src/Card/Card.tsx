@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { styled } from '@mui/material/styles';
 import MuiCard from '@mui/material/Card';
 import { default as MuiCardMedia } from '@mui/material/CardMedia';
@@ -10,37 +9,31 @@ import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
-import ErrorBoundary from '../ErrorBoundary';
-import ContentModule from '../ContentModule';
-import Link from '../Link';
-
-import { CardProps } from './Card.types';
-import { LinkProps } from '../Link/Link.types';
-
 import getFirstOfArray from '../utils/getFirstOfArray';
 import useThemeProps from '../utils/useThemeProps';
+import ErrorBoundary from '../ErrorBoundary';
+import ContentModule from '../ContentModule';
+import { CardProps, CardOwnerState } from './Card.types';
+import { LinkProps } from '../Link/Link.types';
 
-export const Card = (inProps: CardProps) => {
-  const props: CardProps = useThemeProps({
-    name: 'Card',
-    props: inProps
-  });
+export const Card = (props: CardProps) => {
   const { id, media, overline, title, subtitle, body, link, actions, variant, loading, position, sidekickLookup } =
     props;
 
-  const image = getFirstOfArray(media);
-
   const ownerState = {
+    ...props,
     variant,
     isFirst: position === 1,
-    isMultipleOfTwo: position && position > 1 && position % 2 === 0,
-    isMultipleOfThree: position && position > 1 && position % 3 === 0
+    isMultipleOfTwo: !!position && position > 1 && position % 2 === 0,
+    isMultipleOfThree: !!position && position > 1 && position % 3 === 0
   };
+
+  const image = getFirstOfArray(media);
 
   return (
     <ErrorBoundary>
-      <Root ownerState={ownerState} data-testid="Card" {...sidekick(sidekickLookup)} {...(props as any)}>
-        {!!link ? <CardLink component={Link} noLinkStyle {...(link as any)} /> : null}
+      <Root ownerState={ownerState} data-testid="Card" {...sidekick(sidekickLookup)}>
+        {!!link ? <CardLink component={CardActionArea} {...(link as any)} /> : null}
         {image || loading ? (
           // @ts-ignore: TODO
           <CardMedia ownerState={ownerState}>
@@ -103,44 +96,38 @@ export const Card = (inProps: CardProps) => {
                 data-testid="Card-body"
               />
             ) : null}
-
-            {actions?.length ? (
-              <Actions
-                {...sidekick(sidekickLookup, 'actions')}
-                data-testid="Card-actions"
-                // @ts-ignore: TODO
-                ownerState={ownerState}>
-                {actions?.map((link: any, index: number) => (
-                  <Action
-                    key={`card-${id}-link-${link?.id || index}`}
-                    {...(link as LinkProps)}
-                    ownerState={ownerState}
-                  />
-                ))}
-              </Actions>
-            ) : null}
           </Content>
         ) : null}
-
+        {actions?.length ? (
+          <Actions
+            {...sidekick(sidekickLookup, 'actions')}
+            data-testid="Card-actions"
+            // @ts-ignore: TODO
+            ownerState={ownerState}>
+            {actions?.map((link: any, index: number) => (
+              <Action key={`card-${id}-link-${link?.id || index}`} {...(link as LinkProps)} ownerState={ownerState} />
+            ))}
+          </Actions>
+        ) : null}
         {loading ? (
-          <Content data-testid="Card-ContentSkeleton">
-            <Overline variant="overline">
+          <Content ownerState={ownerState} data-testid="Card-ContentSkeleton">
+            <Overline ownerState={ownerState} variant="overline">
               <Skeleton width="100%" />
             </Overline>
 
-            <Title variant="display5">
+            <Title ownerState={ownerState} variant="display5">
               <Skeleton width="100%" />
             </Title>
 
-            <Subtitle variant="display6">
+            <Subtitle ownerState={ownerState} variant="display6">
               <Skeleton width="100%" />
             </Subtitle>
 
-            <Body variant="bodySmall">
+            <Body ownerState={ownerState} variant="bodySmall">
               <Skeleton width="100%" />
             </Body>
 
-            <Actions>
+            <Actions ownerState={ownerState}>
               <Skeleton width="100%" />
             </Actions>
           </Content>
@@ -150,84 +137,64 @@ export const Card = (inProps: CardProps) => {
   );
 };
 
-const shouldForwardProp = (prop: string) =>
-  prop !== 'variant' &&
-  prop !== 'sidekickLookup' &&
-  prop !== 'body' &&
-  prop !== 'subtitle' &&
-  prop !== 'media' &&
-  prop !== 'actions' &&
-  prop !== 'link' &&
-  prop !== 'overline' &&
-  prop !== 'ownerState' &&
-  prop !== 'noLinkStyle' &&
-  prop !== 'title' &&
-  prop !== 'colorScheme' &&
-  prop !== 'categories';
-
 const Root = styled(MuiCard, {
   name: 'Card',
   slot: 'Root',
-  shouldForwardProp: (prop) => shouldForwardProp(prop as string) && prop !== 'id',
   overridesResolver: (_, styles) => [styles.root]
-})<CardProps>(() => ({}));
+})<{ ownerState: CardOwnerState }>``;
 
 const CardLink = styled(CardActionArea, {
   name: 'Card',
   slot: 'CardLink',
-
   overridesResolver: (_, styles) => [styles.link]
-})(() => ({}));
+})<{ ownerState: CardOwnerState }>``;
 
 const CardMedia = styled(MuiCardMedia, {
   name: 'Card',
   slot: 'CardMedia',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.media]
-})(() => ({}));
+})<{ ownerState: CardOwnerState }>``;
 
 const Actions = styled(CardActions, {
   name: 'Card',
   slot: 'Actions',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.actions]
-})(() => ({}));
+})<{ ownerState: CardOwnerState }>``;
 
 const Action = styled(ContentModule, {
   name: 'Card',
   slot: 'CardAction',
   overridesResolver: (_, styles) => [styles.action]
-})(() => ({}));
+})<{ ownerState: CardOwnerState }>``;
 
 const Content = styled(CardContent, {
   name: 'Card',
   slot: 'Content',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.content]
-})(() => ({}));
+})<{ ownerState: CardOwnerState }>``;
 
 const Overline = styled(Typography, {
   name: 'Card',
   slot: 'Overline',
   overridesResolver: (_, styles) => [styles.overline]
-})(() => ({}));
+})<{ ownerState: CardOwnerState }>``;
 
 const Title = styled(Typography, {
   name: 'Card',
   slot: 'Title',
   overridesResolver: (_, styles) => [styles.title]
-})(() => ({}));
+})<{ ownerState: CardOwnerState }>``;
 
 const Subtitle = styled(Typography, {
   name: 'Card',
   slot: 'Subtitle',
   overridesResolver: (_, styles) => [styles.subtitle]
-})(() => ({}));
+})<{ ownerState: CardOwnerState }>``;
 
 const Body = styled(ContentModule, {
   name: 'Card',
   slot: 'Body',
   overridesResolver: (_, styles) => [styles.body]
-})(() => ({}));
+})<{ ownerState: CardOwnerState }>``;
 
 export default Card;

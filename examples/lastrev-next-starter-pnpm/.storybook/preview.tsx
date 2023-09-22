@@ -4,9 +4,11 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 const preview = {
   decorators: [
     (Story) => (
-      <AppProvider>
-        <Story />
-      </AppProvider>
+      <>
+        <AppProvider>
+          <Story />
+        </AppProvider>
+      </>
     )
   ],
   parameters: {
@@ -25,7 +27,7 @@ const preview = {
         }
       }
     },
-    layout: 'centered',
+    // layout: 'centered',
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {

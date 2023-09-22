@@ -4,26 +4,27 @@ import { Collection_BaseFragmentFragment } from '@graphql-sdk/types';
 
 import { CardVariants } from '../Card/Card.types';
 
-type CollectionVariants =
-  | 'default'
-  | 'onePerRow'
-  | 'twoPerRow'
-  | 'threePerRow'
-  | 'fourPerRow'
-  | 'fivePerRow'
-  | undefined;
+export enum CollectionVariants {
+  default = 'default',
+  onePerRow = 'onePerRow',
+  twoPerRow = 'twoPerRow',
+  threePerRow = 'threePerRow',
+  fourPerRow = 'fourPerRow',
+  fivePerRow = 'fivePerRow'
+}
 
-export interface CollectionProps extends Collection_BaseFragmentFragment {
+export interface CollectionProps extends Omit<Collection_BaseFragmentFragment, 'variant' | 'itemsVariant'> {
   variant?: CollectionVariants;
   itemsVariant?: CardVariants;
 }
 
+export interface CollectionOwnerState extends CollectionProps {}
 export interface CollectionClasses {
   root: string;
   contentContainer: string;
   introTextWrapper: string;
   introText: string;
-  itemsContainer: string;
+  itemsGrid: string;
   item: string;
   actionsContainer: string;
   action: string;

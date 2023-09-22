@@ -1,15 +1,7 @@
 import Card from './Card';
 
-import {
-  cardBaseMock,
-  cardBlogMock,
-  cardIconMock,
-  cardLogoMock,
-  cardMediaMock,
-  cardPersonMock,
-  cardPricingMock,
-  cardQuoteMock
-} from './Card.mock';
+import { cardBaseMock } from './Card.mock';
+import { CardVariants } from './Card.types';
 
 export default {
   title: '3. Modules/Card',
@@ -29,11 +21,10 @@ export default {
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Default = { args: { ...cardBaseMock() } };
-
-export const Icon = { args: { ...cardIconMock() } };
-export const Logo = { args: { ...cardLogoMock() } };
-export const Media = { args: { ...cardMediaMock() } };
-export const Pricing = { args: { ...cardPricingMock() } };
-export const Person = { args: { ...cardPersonMock() } };
-export const Quote = { args: { ...cardQuoteMock() } };
-export const Blog = { args: { ...cardBlogMock() } };
+export const Icon = { args: { ...cardBaseMock({ variant: CardVariants.icon }) } };
+export const Logo = { args: { ...cardBaseMock({ variant: CardVariants.logo }) } };
+export const Media = { args: { ...cardBaseMock({ variant: CardVariants.media }) } };
+export const Pricing = { args: { ...cardBaseMock({ variant: CardVariants.pricing }) } };
+export const Person = { args: { ...cardBaseMock({ variant: CardVariants.person }) } };
+export const Quote = { args: { ...cardBaseMock({ variant: CardVariants.quote }) } };
+export const Blog = { args: { ...cardBaseMock({ variant: CardVariants.blog }) } };

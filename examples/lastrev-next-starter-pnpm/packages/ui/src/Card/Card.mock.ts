@@ -4,76 +4,51 @@ import { staticRichTextMock } from '../RichText/RichText.mock';
 import { mediaBaseImageMock, mediaBaseSvgMock } from '../Media/Media.mock';
 import { linkButtonMock, linkBaseMock } from '../Link/Link.mock';
 
-import { CardProps } from './Card.types';
+import { CardProps, CardVariants } from './Card.types';
 
-const cardDefaultMock: CardProps = {
-  id: lorem.word(),
-  __typename: 'Card',
-  variant: 'default',
-  media: [mediaBaseImageMock()],
-  overline: 'This is a card overline',
-  title: 'This is a card title',
-  subtitle: 'And this is the subtitle',
-  body: staticRichTextMock(), // TODO: Match to options in card
-  actions: [{ ...linkButtonMock(), text: 'Card link' }],
-  link: [{ ...linkBaseMock() }],
-  sidekickLookup: {},
-  loading: false
+export const cardBaseMock = (override?: Partial<CardProps>) => {
+  const baseMock: Partial<CardProps> = {
+    id: lorem.slug(),
+    __typename: 'Card',
+    variant: 'default',
+    media: [mediaBaseImageMock()],
+    overline: 'This is a card overline',
+    title: 'This is a card title',
+    subtitle: 'And this is the subtitle',
+    body: staticRichTextMock(), // TODO: Match to options in card
+    actions: [
+      { ...linkButtonMock(), text: 'Card link' },
+      { ...linkButtonMock(), text: 'Card link 2' }
+    ],
+    link: { ...linkBaseMock() },
+    sidekickLookup: {},
+    loading: false
+  };
+  let variantOverride: Partial<CardProps>;
+  switch (override?.variant) {
+    case CardVariants.pricing:
+      variantOverride = {
+        overline: 'Plan 1',
+        title: '$69.99',
+        subtitle: 'Our best deal!'
+      };
+      break;
+    case CardVariants.media:
+      variantOverride = {
+        overline: undefined,
+        title: undefined,
+        subtitle: undefined,
+        actions: undefined,
+        body: undefined
+      };
+      break;
+    default:
+      variantOverride = {};
+  }
+  Object.keys(variantOverride)?.forEach((key) => {
+    baseMock[key] = variantOverride[key];
+  });
+  return { ...baseMock, ...variantOverride, ...override };
 };
-
-export const cardBaseMock = ({ ...override } = {}): CardProps => ({
-  ...cardDefaultMock,
-  ...override
-});
-
-export const cardIconMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
-  variant: 'icon'
-});
-
-export const cardLogoMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  media: [mediaBaseSvgMock(), mediaBaseImageMock()],
-  ...override,
-  variant: 'logo'
-});
-
-export const cardMediaMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
-  variant: 'media'
-});
-
-export const cardPricingMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
-  variant: 'pricing',
-  overline: 'Plan 1',
-  title: '$69.99',
-  subtitle: 'Our best deal!'
-});
-
-export const cardPersonMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
-  variant: 'person'
-});
-
-export const cardQuoteMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
-  variant: 'quote'
-});
-
-export const cardBlogMock = ({ ...override } = {}) => ({
-  ...cardDefaultMock,
-  ...override,
-  variant: 'blog'
-});
-
-export const cardWithTagsBaseMock = (): CardProps => ({
-  ...cardBaseMock()
-});
 
 export default cardBaseMock;

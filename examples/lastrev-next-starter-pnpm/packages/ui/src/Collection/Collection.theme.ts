@@ -1,68 +1,26 @@
-import {
-  TypographyStyle,
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import { Theme, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
 export const defaultProps: ComponentsProps['Collection'] = {};
 
 export const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
-  root: () => ({}),
-
-  contentContainer: ({ theme }) => ({
-    'display': 'grid',
-    'gridTemplateColumns': 'repeat(2,1fr)',
-    'gap': theme.spacing(2, 2),
-
-    'section[id] &': {
-      padding: 0
-    },
-
-    [theme.breakpoints.up('md')]: {
-      gridTemplateColumns: 'repeat(6,1fr)',
-      gap: theme.spacing(8, 3)
-    },
-
-    [theme.breakpoints.up('md')]: {
-      gridTemplateColumns: 'repeat(12,1fr)',
-      gap: theme.spacing(8, 3)
-    }
+  root: ({ theme, ownerState }) => ({
+    containerType: 'inline-size',
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    padding: theme.spacing(12, 0),
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%'
   }),
-
-  itemsContainer: ({ theme }) => ({
-    gridColumn: '1 / span 2',
+  itemsGrid: ({ theme }) => ({
     display: 'grid',
-    gap: theme.spacing(3, 3),
-
-    [theme.breakpoints.up('md')]: {
-      gridColumn: '1 / span 6'
-      // gap: theme.spacing(6, 3)
+    gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+    [theme.breakpoints.down('md')]: {
+      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
     },
-
-    [theme.breakpoints.up('md')]: {
-      gridColumn: '1 / span 12'
-      // gap: theme.spacing(3, 3)
-    }
-  }),
-
-  introText: ({ theme, align }) => ({
-    'gridColumn': '1 / span 2',
-    'position': 'relative',
-    'marginBottom': theme.spacing(4),
-    [theme.breakpoints.up('md')]: {
-      gridColumn: '1 / span 5',
-
-      ...(align === 'center' && {
-        gridColumn: '1 / -1'
-      })
+    [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
     },
-
-    '& + [class*=contentContainer]': {
-      marginTop: theme.spacing(4)
-    }
+    gap: theme.spacing(3, 3)
   })
 };
 
@@ -72,10 +30,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
       variant: 'onePerRow'
     },
     style: {
-      '&': {
-        '[class*="Collection-itemsContainer"]': {
-          display: 'grid',
-          gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
+      [theme.breakpoints.up('sm')]: {
+        '[class*="Collection-itemsGrid"]': {
+          '&': {
+            gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
+          }
         }
       }
     }
@@ -85,52 +44,34 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
       variant: 'twoPerRow'
     },
     style: {
-      '&': {
-        '[class*="Collection-itemsContainer"]': {
-          display: 'grid',
-          gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
-
-          [theme.breakpoints.up('md')]: {
+      [theme.breakpoints.up('sm')]: {
+        '[class*="Collection-itemsGrid"]': {
+          '&': {
             gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
           }
         }
       }
     }
   },
-
   {
     props: {
       variant: 'threePerRow'
     },
-    style: {
-      '&': {
-        '[class*="Collection-itemsContainer"]': {
-          display: 'grid',
-          gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
-
-          [theme.breakpoints.up('md')]: {
-            gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
-          }
-        }
-      }
-    }
+    style: {}
   },
   {
     props: {
       variant: 'fourPerRow'
     },
     style: {
-      '&': {
-        '[class*="Collection-itemsContainer"]': {
-          display: 'grid',
-          gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
-
-          [theme.breakpoints.up('md')]: {
-            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
+      '[class*="Collection-itemsGrid"]': {
+        '&': {
+          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
+          [theme.breakpoints.down('sm')]: {
+            gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
           },
-
-          [theme.breakpoints.up('lg')]: {
-            gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
+          [theme.breakpoints.down('xs')]: {
+            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
           }
         }
       }
@@ -141,17 +82,14 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
       variant: 'fivePerRow'
     },
     style: {
-      '&': {
-        '[class*="Collection-itemsContainer"]': {
-          display: 'grid',
-          gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
-
-          [theme.breakpoints.up('sm')]: {
-            gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
+      '[class*="Collection-itemsGrid"]': {
+        '&': {
+          gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
+          [theme.breakpoints.down('sm')]: {
+            gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
           },
-
-          [theme.breakpoints.up('lg')]: {
-            gridTemplateColumns: 'repeat(5, minmax(0, 1fr))'
+          [theme.breakpoints.down('xs')]: {
+            gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
           }
         }
       }
@@ -159,7 +97,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
   }
 ];
 
-export const collectionTheme = (theme: Theme): ThemeOptions => ({
+export const collectionTheme = (theme: Theme) => ({
   components: {
     Collection: {
       defaultProps,

@@ -1,11 +1,11 @@
 import { Roboto } from 'next/font/google';
 import merge from 'lodash/merge';
-
 import { ThemeOptions, createTheme } from '@mui/material/styles';
 
-import createGridMixin from './mixins/createGridMixin';
-import themeComponents from './theme.components';
 import './theme.types';
+import createGridMixin from './mixins/createGridMixin';
+import applyBackgroundColor from './mixins/applyBackgroundColor';
+import themeComponents from './theme.components';
 
 export const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -16,26 +16,91 @@ export const roboto = Roboto({
 export const mainColors = ['primary', 'secondary', 'tertiary'];
 
 const defaultSpacing = 8;
-const defaultBorderRadius = 0;
+const defaultBorderRadius = 10;
 
+const muiTheme = createTheme();
+const paletteTheme = createTheme({
+  values: {
+    xs: 0,
+    sm: 600,
+    md: 900,
+    lg: 1200,
+    xl: 1536,
+    xxl: 3840
+  },
+  palette: {
+    mode: 'dark',
+    ...{
+      white: {
+        main: '#FFF',
+        contrastText: 'rgba(0, 0, 0, 0.87)'
+      },
+      black: {
+        main: '#000',
+        contrastText: '#FFF'
+      }
+    },
+    primary: muiTheme.palette.augmentColor({
+      color: {
+        main: '#fba62d'
+      },
+      name: 'primary'
+    }),
+    secondary: muiTheme.palette.augmentColor({
+      color: {
+        main: '#00fff2'
+      },
+      name: 'secondary'
+    }),
+
+    // text: {
+    //   primary: '#ffffff',
+    //   secondary: '#E5E5E5',
+    //   disabled: 'rgba(0, 0, 0, 0.38)'
+    // },
+    background: {
+      // default: '#121212',
+      // paper: '#1E1E1E'
+      // contrastText: '#FFF'
+    },
+    error: {
+      main: '#ff1744',
+      light: 'rgb(255, 69, 105)',
+      dark: 'rgb(178, 16, 47)',
+      contrastText: '#fff'
+    },
+    common: {
+      black: '#00030B',
+      white: '#FFFFFF'
+    },
+    warning: {
+      main: '#ed6c02',
+      light: '#ff9800',
+      dark: '#e65100',
+      contrastText: '#fff'
+    },
+    info: {
+      main: '#0288d1',
+      light: '#03a9f4',
+      dark: '#01579b',
+      contrastText: '#fff'
+    },
+    success: {
+      main: '#2e7d32',
+      light: '#4caf50',
+      dark: '#1b5e20',
+      contrastText: '#fff'
+    }
+  }
+});
 const baseTheme: ThemeOptions = {
   spacing: defaultSpacing,
   shape: {
     borderRadius: defaultBorderRadius
   },
-  breakpoints: {
-    // Add any custom breakpoints here
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-      xxl: 3840
-    }
-  },
   mixins: {
-    gridContainer: createGridMixin // this gives your mixin the name `gridContainer`
+    gridContainer: createGridMixin, // this gives your mixin the name `gridContainer`,
+    applyBackgroundColor
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
@@ -70,40 +135,35 @@ const baseTheme: ThemeOptions = {
       fontSize: '4.5rem',
       lineHeight: 1.375,
       fontWeight: 700,
-      fontStyle: 'normal',
-      color: '#fba62d'
+      fontStyle: 'normal'
     },
     h2: {
       fontFamily: roboto.style.fontFamily,
       fontSize: '4rem',
       lineHeight: 1.25,
       fontWeight: 700,
-      fontStyle: 'normal',
-      color: '#fba62d'
+      fontStyle: 'normal'
     },
     h3: {
       fontFamily: roboto.style.fontFamily,
       fontSize: '3rem',
       lineHeight: 1.375,
       fontWeight: 700,
-      fontStyle: 'normal',
-      color: '#fba62d'
+      fontStyle: 'normal'
     },
     h4: {
       fontFamily: roboto.style.fontFamily,
       fontSize: '2.25rem',
       lineHeight: 1.5,
       fontWeight: 700,
-      fontStyle: 'normal',
-      color: '#00fff2'
+      fontStyle: 'normal'
     },
     h5: {
       fontFamily: roboto.style.fontFamily,
       fontSize: '1.5rem',
       lineHeight: 1.2,
       fontWeight: 700,
-      fontStyle: 'normal',
-      color: '#00fff2'
+      fontStyle: 'normal'
     },
     h6: {
       fontFamily: roboto.style.fontFamily,
@@ -162,64 +222,20 @@ const baseTheme: ThemeOptions = {
       textTransform: 'uppercase',
       marginBottom: `${defaultSpacing}px` // TODO: Check on this approach
     }
-  },
-  palette: {
-    mode: 'dark',
-    ...{
-      white: {
-        main: '#FFF',
-        contrastText: 'rgba(0, 0, 0, 0.87)'
-      },
-      black: {
-        main: '#000',
-        contrastText: '#FFF'
-      }
-    },
-    primary: {
-      main: '#00fff2',
-      contrastText: '#000000'
-    },
-    secondary: {
-      main: '#EDF0FF',
-      contrastText: '#000000'
-    },
-    text: {
-      primary: '#ffffff',
-      secondary: '#E5E5E5',
-      disabled: 'rgba(0, 0, 0, 0.38)'
-    },
-    error: {
-      main: '#ff1744',
-      light: 'rgb(255, 69, 105)',
-      dark: 'rgb(178, 16, 47)',
-      contrastText: '#fff'
-    },
-    common: {
-      black: '#00030B',
-      white: '#FFFFFF'
-    },
-    warning: {
-      main: '#ed6c02',
-      light: '#ff9800',
-      dark: '#e65100',
-      contrastText: '#fff'
-    },
-    info: {
-      main: '#0288d1',
-      light: '#03a9f4',
-      dark: '#01579b',
-      contrastText: '#fff'
-    },
-    success: {
-      main: '#2e7d32',
-      light: '#4caf50',
-      dark: '#1b5e20',
-      contrastText: '#fff'
-    }
   }
 };
 
 const coreTheme = createTheme(baseTheme);
-export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)));
+export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
+  breakpoints: {
+    up(key) {
+      return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
+    },
+    down(key) {
+      return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
+    }
+    // Add any custom breakpoints here
+  }
+});
 
 export default theme;

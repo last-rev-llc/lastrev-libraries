@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material/styles';
 
 export interface ContentModuleProps {
-  __typename?: string;
+  __typename?: string | undefined;
   theme?: Array<Theme>;
   variant?: string;
   animation?: string;

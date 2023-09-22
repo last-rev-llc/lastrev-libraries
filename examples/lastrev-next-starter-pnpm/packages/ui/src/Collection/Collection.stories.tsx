@@ -1,14 +1,8 @@
+import React from 'react';
 import Collection from './Collection';
-import {
-  collectionBaseMock,
-  collectionIconMock,
-  collectionLogoMock,
-  collectionMediaMock,
-  collectionPricingMock,
-  collectionPersonMock,
-  collectionQuoteMock,
-  collectionBlogMock
-} from './Collection.mock';
+import { collectionBaseMock } from './Collection.mock';
+import { CollectionProps, CollectionVariants } from './Collection.types';
+import { CardVariants } from '../Card/Card.types';
 
 export default {
   title: '3. Modules/Collection',
@@ -18,22 +12,63 @@ export default {
 
   argTypes: {
     variant: {
-      name: 'LayoutStyle',
-      control: {
-        type: 'select',
-        options: ['onePerRow', 'twoPerRow', 'threePerRow', 'fourPerRow']
+      table: {
+        disable: true
       }
-    },
-    background: { name: 'Background' }
+      // name: 'LayoutStyle',
+      // control: {
+      //   type: 'select',
+      //   options: ['onePerRow', 'twoPerRow', 'threePerRow', 'fourPerRow']
+      // }
+    }
+    // background: { name: 'Background' }
+  }
+};
+
+const CollectionTemplate = {
+  render: ({ variant, itemsVariant: argItemsVariant, ...args }: { variant: CollectionVariants }) => {
+    if (argItemsVariant) {
+      return <Collection {...collectionBaseMock({ variant, itemsVariant: argItemsVariant })} />;
+    }
+    const itemsVariants = Object.values(CardVariants).filter((v) => isNaN(Number(v)));
+    return (
+      <div>
+        {itemsVariants?.map((itemsVariant: CardVariants) => (
+          <>
+            ## {itemsVariant}
+            <Collection key={`${variant}_${itemsVariant}`} {...collectionBaseMock({ variant, itemsVariant })} />
+          </>
+        ))}
+      </div>
+    );
   }
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Default = { args: { ...collectionBaseMock() } };
-export const Icons = { args: { ...collectionIconMock() } };
-export const Logos = { args: { ...collectionLogoMock() } };
-export const Media = { args: { ...collectionMediaMock() } };
-export const Pricing = { args: { ...collectionPricingMock() } };
-export const Person = { args: { ...collectionPersonMock() } };
-export const Quote = { args: { ...collectionQuoteMock() } };
-export const Blog = { args: { ...collectionBlogMock() } };
+export const Default = {
+  ...CollectionTemplate,
+  args: {
+    variant: CollectionVariants.default
+  }
+};
+
+export const OnePerRow = {
+  ...CollectionTemplate,
+  args: { variant: CollectionVariants.onePerRow }
+};
+export const TwoPerRow = {
+  ...CollectionTemplate,
+  args: { variant: CollectionVariants.twoPerRow }
+};
+export const ThreePerRow = {
+  ...CollectionTemplate,
+  args: { variant: CollectionVariants.threePerRow }
+};
+export const FourPerRow = {
+  ...CollectionTemplate,
+  args: { variant: CollectionVariants.fourPerRow }
+};
+export const FivePerRow = {
+  ...CollectionTemplate,
+  args: { variant: CollectionVariants.fivePerRow }
+};

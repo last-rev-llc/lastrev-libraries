@@ -1,5 +1,9 @@
 import { Theme } from '@mui/material/styles';
-
+declare module '@mui/material/styles/createMixins' {
+  interface Mixins {
+    gridContainer: (theme: Theme, options?: any) => CSSProperties;
+  }
+}
 export default function gridMixin(theme: Theme) {
   return {
     display: 'grid',

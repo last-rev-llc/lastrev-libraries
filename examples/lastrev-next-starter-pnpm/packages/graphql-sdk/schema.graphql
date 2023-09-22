@@ -26,6 +26,7 @@ type Block implements Content {
   actions: [Link]
   animation: JSON
   asset: Media
+  backgroundColor: String
   body: RichText
   id: String
   internalTitle: String

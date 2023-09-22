@@ -4,17 +4,17 @@ import React from 'react';
 import { useContentModuleContext } from './ContentModuleContext';
 import { ContentModuleProps } from './ContentModule.types';
 
-function ContentModule({ __typename, theme, ...fields }: ContentModuleProps) {
+const ContentModule = React.forwardRef(function ContentModule(
+  { __typename, theme, ...fields }: ContentModuleProps,
+  ref: any
+) {
   const contentMapping = useContentModuleContext();
   const contentType =
     fields?.variant && contentMapping[`${__typename}:${fields?.variant}`]
       ? `${__typename}:${fields?.variant}`
       : __typename;
 
-  const Main = React.useMemo(
-    () => (contentType ? contentMapping[contentType] : null),
-    [contentType, contentMapping, __typename, fields?.variant]
-  );
+  const Main = React.useMemo(() => (contentType ? contentMapping[contentType] : null), [contentType, contentMapping]);
 
   if (!Main) {
     // eslint-disable-next-line no-console
@@ -28,7 +28,7 @@ function ContentModule({ __typename, theme, ...fields }: ContentModuleProps) {
 
   Main.displayName = `Content_${contentType}:${fields?.variant}`;
 
-  return <Main {...fields} />;
-}
+  return <Main {...fields} ref={ref} />;
+});
 
 export default ContentModule;
