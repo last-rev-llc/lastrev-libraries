@@ -57,11 +57,13 @@ export const Collection = ({
 
 const shouldForwardProp = (prop: string) => prop !== 'variant' && prop !== 'itemsVariant';
 
+const generateVariantStyleOverrides = () => {};
+
 const Root = styled(Box, {
   name: 'Collection',
   slot: 'Root',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.root]
+  overridesResolver: ({ ownerState }, styles) => [styles.root, styles[`${ownerState?.variant}`]]
 })<{ variant?: string; itemsVariant?: string }>``;
 
 const ContentContainer = styled(Container, {
@@ -87,7 +89,7 @@ const ItemsContainer = styled(Box, {
   name: 'Collection',
   slot: 'ItemsContainer',
   shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.itemsContainer]
+  overridesResolver: (_, styles) => [styles.itemsContainer, styles.itemsContainerOnePerRow]
 })<{ variant?: string }>``;
 
 const Item = styled(ContentModule, {

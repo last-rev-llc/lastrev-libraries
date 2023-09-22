@@ -51,39 +51,13 @@ export const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   introText: ({ theme, align }) => ({
     'gridColumn': '1 / span 2',
     'position': 'relative',
-
     'marginBottom': theme.spacing(4),
-
-    '[class$=Text-title]': {
-      ...theme.typography.h4,
-      textAlign: `${align === 'center' ? 'center' : 'left'}`
-    },
-
-    '[class$=Text-subtitle]': {
-      ...theme.typography.h5,
-      textAlign: `${align === 'center' ? 'center' : 'left'}`,
-      marginTop: theme.spacing(2)
-    },
-
-    '[class$=Text-root]': {
-      marginTop: theme.spacing(3),
-      textAlign: `${align === 'center' ? 'center' : 'left'}`
-    },
-
     [theme.breakpoints.up('md')]: {
-      'gridColumn': '1 / span 5',
+      gridColumn: '1 / span 5',
 
       ...(align === 'center' && {
         gridColumn: '1 / -1'
-      }),
-
-      '[class$=Text-title]': {
-        ...theme.typography.h3
-      },
-
-      '[class$=Text-root] > *': {
-        ...theme.typography.body2
-      }
+      })
     },
 
     '& + [class*=contentContainer]': {

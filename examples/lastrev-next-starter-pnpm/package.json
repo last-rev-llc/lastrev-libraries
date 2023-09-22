@@ -19,7 +19,6 @@
   "devDependencies": {
     "@babel/preset-env": "^7.22.15",
     "@babel/preset-react": "^7.22.15",
-    "dotenv-cli": "latest",
     "@storybook/addon-essentials": "^7.4.2",
     "@storybook/addon-interactions": "^7.4.2",
     "@storybook/addon-links": "^7.4.2",
@@ -31,6 +30,7 @@
     "@storybook/testing-library": "^0.2.1",
     "chromatic": "^7.1.0",
     "cypress": "^13.1.0",
+    "dotenv-cli": "latest",
     "next": "^13.4.19",
     "prettier": "^2.7.1",
     "prop-types": "^15.8.1",
@@ -42,5 +42,10 @@
   "packageManager": "pnpm@8.6.10",
   "version": "",
   "readme": "ERROR: No README data found!",
-  "_id": "lastrev-next-starter@"
+  "_id": "lastrev-next-starter@",
+  "pnpm": {
+    "patchedDependencies": {
+      "@mui/system@5.14.9": "patches/@mui__system@5.14.9.patch"
+    }
+  }
 }

@@ -1,15 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-
+import dynamic from 'next/dynamic';
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableHead from '@mui/material/TableHead';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import Box from '@mui/material/Box';
+
+const TableContainer = dynamic(() => import('@mui/material/TableContainer'));
+const Table = dynamic(() => import('@mui/material/Table'));
+const TableHead = dynamic(() => import('@mui/material/TableHead'));
+const TableBody = dynamic(() => import('@mui/material/TableBody'));
+const TableRow = dynamic(() => import('@mui/material/TableRow'));
+const TableCell = dynamic(() => import('@mui/material/TableCell'));
 
 import { documentToReactComponents, Options } from '@contentful/rich-text-react-renderer';
 import BLOCKS from './BLOCKS';
@@ -127,7 +127,7 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
         return (
-          <EmbeddedRoot component="span" sx={{ display: 'block' }} data-testid={`Text-${BLOCKS.EMBEDDED_ENTRY}`}>
+          <EmbeddedRoot data-testid={`Text-${BLOCKS.EMBEDDED_ENTRY}`}>
             <ContentModule {...entry} />
           </EmbeddedRoot>
         );
@@ -136,7 +136,7 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
         return (
-          <InlineRoot component="span" sx={{ display: 'inline' }} data-testid={`Text-${INLINES.EMBEDDED_ENTRY}`}>
+          <InlineRoot data-testid={`Text-${INLINES.EMBEDDED_ENTRY}`}>
             <ContentModule {...entry} />
           </InlineRoot>
         );
@@ -217,7 +217,7 @@ const RichText = ({
   );
 };
 
-const Root = styled(Box, {
+const Root = styled('div', {
   name: 'RichText',
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
@@ -226,14 +226,14 @@ const Root = styled(Box, {
   white-space: pre-wrap;
 `;
 
-const EmbeddedRoot = styled(Box, {
+const EmbeddedRoot = styled('span', {
   name: 'RichText',
   slot: 'EmbeddedRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.embeddedRoot]
 })<{ variant?: string }>(() => ({}));
 
-const InlineRoot = styled(Box, {
+const InlineRoot = styled('span', {
   name: 'RichText',
   slot: 'InlineRoot',
   shouldForwardProp: (prop) => prop !== 'variant',

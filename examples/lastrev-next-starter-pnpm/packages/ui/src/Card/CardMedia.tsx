@@ -10,7 +10,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
 import { CardProps } from './Card.types';
-import Link from '../Link';
+// import Link from '../Link';
 
 import getFirstOfArray from '../utils/getFirstOfArray';
 import useThemeProps from '../utils/useThemeProps';
@@ -29,7 +29,7 @@ export const Card = (inProps: CardProps) => {
   return (
     <ErrorBoundary>
       <Root data-testid="Card" {...sidekick(sidekickLookup)} {...(props as any)}>
-        {!!link ? <CardLink component={Link} noLinkStyle {...(link as any)} /> : null}
+        {!!link ? <CardLink noLinkStyle {...(link as any)} /> : null}
         <Media>
           <ContentModule {...sidekick(sidekickLookup, 'media')} {...image} data-testid="Card-media" />
         </Media>
@@ -54,7 +54,7 @@ const Root = styled(MuiCard, {
   overridesResolver: (_, styles) => [styles.root]
 })<CardProps>(() => ({}));
 
-const CardLink = styled(CardActionArea, {
+const CardLink = styled(ContentModule, {
   name: 'Card',
   slot: 'CardLink',
 

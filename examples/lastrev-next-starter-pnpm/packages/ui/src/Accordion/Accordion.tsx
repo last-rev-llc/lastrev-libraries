@@ -15,7 +15,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
 import { AccordionProps } from './Accordion.types';
-import RichText from '../RichText';
+
 
 export const Accordion = ({ id, items, variant, sidekickLookup, introText, ...props }: AccordionProps) => {
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
@@ -48,7 +48,7 @@ export const Accordion = ({ id, items, variant, sidekickLookup, introText, ...pr
                       <Typography>{item.title}</Typography>
                     </AccordionItemSummary>
                     <AccordionItemDetails>
-                      {item.body ? <RichText body={item.body} /> : <Item {...item.content} />}
+                      {item.body ? <ContentModule __typename="RichText" body={item.body} /> : <Item {...item.content} />}
                     </AccordionItemDetails>
                   </AccordionItem>
                 )

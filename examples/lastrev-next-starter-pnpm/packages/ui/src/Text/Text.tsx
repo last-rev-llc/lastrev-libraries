@@ -1,6 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
-
 import { styled } from '@mui/material/styles';
 import Typography, { TypographyProps } from '@mui/material/Typography';
 import Box from '@mui/material/Box';
@@ -8,7 +7,7 @@ import Box from '@mui/material/Box';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ErrorBoundary from '../ErrorBoundary';
-import RichText from '../RichText';
+import ContentModule from '../ContentModule';
 
 import { TextProps } from './Text.types';
 
@@ -34,7 +33,16 @@ const Text = ({ body, align, overline, title, subtitle, variant, sidekickLookup,
           </Subtitle>
         )}
 
-        {!!body && <RichText body={body} sidekickLookup={sidekickLookup} variant={variant} align={align} {...props} />}
+        {!!body && (
+          <ContentModule
+            body={body}
+            sidekickLookup={sidekickLookup}
+            variant={variant}
+            align={align}
+            {...props}
+            __typename="RichText"
+          />
+        )}
       </Root>
     </ErrorBoundary>
   );

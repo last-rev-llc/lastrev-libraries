@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouter } from 'next/router';
+import { usePathname, useRouter } from 'next/navigation';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -35,14 +35,14 @@ const Blog = ({
   summary,
   contents
 }: BlogProps) => {
-  const { asPath } = useRouter();
+  const pathname = usePathname();
   const [shareUrl, setShareUrl] = React.useState('');
   const encodedShareUrl = encodeURIComponent(shareUrl);
 
   React.useEffect(() => {
     const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
-    setShareUrl(`${origin}${asPath}`);
-  }, [asPath]);
+    setShareUrl(`${origin}${pathname}`);
+  }, [pathname]);
 
   return (
     <>

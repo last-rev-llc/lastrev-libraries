@@ -19,8 +19,12 @@ export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] 
       fontWeight: 600
     })
   }),
-  tag: ({ theme }) => ({
-    marginLeft: theme.spacing(0.5)
+  tag: ({ theme, ownerState }) => ({
+    marginLeft: theme.spacing(0.5),
+    ...(ownerState?.variant === 'linkBoldedFooter' && {
+      fontFamily: '"Inter", sans-serif',
+      fontWeight: 600
+    })
   })
 };
 
