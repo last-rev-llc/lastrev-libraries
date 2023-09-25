@@ -5,8 +5,7 @@ import useTheme from '@mui/system/useTheme';
 import { Theme } from '@mui/system';
 
 import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
+
 // TODO: Remove need for Lodash
 import get from 'lodash/get';
 
@@ -19,6 +18,7 @@ import ConditionalWrapper from '../ConditionalWrapper';
 import useThemeProps from '../utils/useThemeProps';
 
 import { SectionProps } from './Section.types';
+import Grid from '../Grid';
 
 // TODO: Cleanup
 const VARIANTS_GRID_ITEM: Record<string, any> = {
@@ -60,41 +60,12 @@ const Section = (inProps: SectionProps) => {
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
         {...props}>
         {background ? <BackgroundMedia {...background} /> : null}
-        <ConditionalWrapper
-          condition={!!contentWidth}
-          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}>
-          {introText && (
-            <IntroText {...introText} {...sidekick(sidekickLookup, 'introText')} data-testid="Section-introText" />
-          )}
-          <GridContainer
-            container
-            sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-            {...(contentSpacing && { spacing: contentSpacing })}>
-            {contents?.map((content, idx) => {
-              const itemStyle = get(styles?.gridItems, idx);
-              if (!content) return null;
-              return (
-                <GridItem
-                  item
-                  key={content.id}
-                  {...(contentDirection === 'column'
-                    ? { width: '100%' }
-                    : {
-                        xs: gridItemStyle?.xs ?? itemStyle?.xs ?? true,
-                        md: gridItemStyle?.md ?? itemStyle?.md ?? false,
-                        sm: gridItemStyle?.sm ?? itemStyle?.sm ?? false
-                      })}
-                  sx={{
-                    ...styles?.gridItem,
-                    ...itemStyle
-                  }}
-                  data-testid="Section-ContentItem">
-                  <ContentModule {...content} />
-                </GridItem>
-              );
-            })}
-          </GridContainer>
-        </ConditionalWrapper>
+
+        <ContentGrid className={`section-grid-${variant === 'onePerRow' ? 'single' : 'columns'}`}>
+          {contents?.map((content) => (
+            <GridItem key={content.id} {...content} />
+          ))}
+        </ContentGrid>
       </Root>
     </ErrorBoundary>
   );
@@ -126,16 +97,13 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; backgroundColor?: string }>(() => ({
-  width: '100%',
-  display: 'flex',
-  justifyContent: 'center',
-  position: 'relative'
+  width: '100%'
 }));
 
-const ContentContainer = styled(Container, {
+const ContentGrid = styled(Grid, {
   name: 'Section',
-  slot: 'ContentContainer',
-  overridesResolver: (_, styles) => [styles.contentContainer]
+  slot: 'ContentGrid',
+  overridesResolver: (_, styles) => [styles.contentGrid]
 })<{ variant?: string }>(() => ({
   zIndex: 1
 }));
@@ -155,24 +123,10 @@ const BackgroundMedia = styled(ContentModule, {
   objectFit: 'cover'
 }));
 
-const GridContainer = styled(Grid, {
-  name: 'Section',
-  slot: 'GridContainer',
-  overridesResolver: (_, styles) => [styles.gridContainer]
-})(() => ({
-  zIndex: 1
-}));
-
-const GridItem = styled(Grid, {
+const GridItem = styled(ContentModule, {
   name: 'Section',
   slot: 'GridItem',
   overridesResolver: (_, styles) => [styles.gridItem]
-})(() => ({}));
-
-const IntroText = styled(ContentModule, {
-  name: 'Section',
-  slot: 'IntroText',
-  overridesResolver: (_, styles) => [styles.introText]
 })(() => ({}));
 
 export default Section;

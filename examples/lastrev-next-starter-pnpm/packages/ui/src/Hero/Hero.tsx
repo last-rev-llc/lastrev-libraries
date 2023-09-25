@@ -15,6 +15,7 @@ import getFirstOfArray from '../utils/getFirstOfArray';
 
 import { HeroProps } from './Hero.types';
 import { LinkProps } from '../Link/Link.types';
+import Grid from '../Grid';
 
 export const Hero = (props: HeroProps) => {
   const {
@@ -118,13 +119,13 @@ const HeroRoot = styled(Box, {
   overridesResolver: (_, styles) => [styles.heroRoot]
 })<BoxProps>(() => ({}));
 
-const ContentOuterGrid = styled(Container, {
+const ContentOuterGrid = styled(Grid, {
   name: 'Hero',
   slot: 'ContentOuterGrid',
   overridesResolver: (_, styles) => [styles.ContentOuterGrid]
 })<ContainerProps<React.ElementType>>(() => ({}));
 
-const MainContentWrapper = styled(Container, {
+const MainContentWrapper = styled(Grid, {
   name: 'Hero',
   slot: 'MainContentWrapper',
   overridesResolver: (_, styles) => [styles.mainContentWrapper]
@@ -166,7 +167,7 @@ const Body = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.body]
 })(() => ({}));
 
-const SideContentWrapper = styled(Container, {
+const SideContentWrapper = styled(Grid, {
   name: 'Hero',
   slot: 'SideContentWrapper',
 

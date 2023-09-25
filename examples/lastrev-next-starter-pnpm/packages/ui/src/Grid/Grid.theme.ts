@@ -19,6 +19,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
     '> *': {
       gridColumn: 'content-start / content-end'
     },
+
     // '&:before': {
     //   content: '""',
     //   background: 'blue',
@@ -53,9 +54,26 @@ export const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
       [twelve-end content-end] minmax(${lgMargin - lgGap}px, calc(50vw - calc((1440px / 2) - ${lgGap}px)))
       [full-end]
     `,
-    [theme.breakpoints.down('md')]: {
-      gridGap: mdGap,
+    '.section-grid-columns &': {
       gridTemplateColumns: `
+      [full-start one-start content-start] minmax(0,1fr)
+      [one-end two-start] minmax(0,1fr)
+      [two-end three-start] minmax(0,1fr)
+      [three-end four-start] minmax(0,1fr)
+      [four-end five-start] minmax(0,1fr)
+      [five-end six-start] minmax(0,1fr)
+      [six-end seven-start content-half] minmax(0,1fr)
+      [seven-end eight-start] minmax(0,1fr)
+      [eight-end nine-start] minmax(0,1fr)
+      [nine-end ten-start] minmax(0,1fr)
+      [ten-end eleven-start] minmax(0,1fr)
+      [eleven-end twelve-start] minmax(0,1fr)
+      [twelve-end content-end full-end]
+    `
+    },
+    [theme.breakpoints.down('md')]: {
+      'gridGap': mdGap,
+      'gridTemplateColumns': `
         [full-start] minmax(${mdMargin}px,calc(50vw - calc((1472px / 2) - ${mdMargin}px)))
       [one-start content-start] minmax(0,1fr)
       [one-end two-start] minmax(0,1fr)
@@ -66,12 +84,25 @@ export const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
       [six-end seven-start ] minmax(0,1fr)
       [seven-end eight-start] minmax(0,1fr)
       [eight-end content-end] minmax(${mdMargin}px,calc(50vw - calc((1472px / 2) - ${mdMargin}px)))
-      [full-end]
+      
+    `,
+      '.section-grid-columns &': {
+        gridTemplateColumns: `
+      [one-start full-start content-start] minmax(0,1fr)
+      [one-end two-start] minmax(0,1fr)
+      [two-end three-start] minmax(0,1fr)
+      [three-end four-start] minmax(0,1fr)
+      [four-end five-start content-half] minmax(0,1fr)
+      [five-end six-start] minmax(0,1fr)
+      [six-end seven-start ] minmax(0,1fr)
+      [seven-end eight-start] minmax(0,1fr)
+      [eight-end content-end full-end]
     `
+      }
     },
     [theme.breakpoints.down('sm')]: {
-      gridGap: smGap,
-      gridTemplateColumns: `
+      'gridGap': smGap,
+      'gridTemplateColumns': `
         [full-start] minmax(${smMargin}px,calc(50vw - calc((1472px / 2) - ${smMargin}px)))
         [one-start content-start] minmax(0,1fr)
         [one-end two-start] minmax(0,1fr)
@@ -79,7 +110,16 @@ export const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
         [three-end four-start] minmax(0,1fr)
         [four-end content-end] minmax(${smMargin}px,calc(50vw - calc((1472px / 2) - ${smMargin}px)))
         [full-end]
+    `,
+      '.section-grid-columns &': {
+        gridTemplateColumns: `
+        [one-start content-start full-start] minmax(0,1fr)
+        [one-end two-start] minmax(0,1fr)
+        [two-end three-start content-half] minmax(0,1fr)
+        [three-end four-start] minmax(0,1fr)
+        [four-end content-end full-end]
     `
+      }
     }
   })
 };

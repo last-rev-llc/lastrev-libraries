@@ -6,7 +6,7 @@ import { richTextMock } from '../RichText/RichText.mock';
 
 import { HeroProps } from './Hero.types';
 
-const heroDefaultMock: HeroProps = {
+const heroDefaultMock = (): HeroProps => ({
   id: lorem.word(),
   __typename: 'Hero',
   variant: 'default',
@@ -16,55 +16,55 @@ const heroDefaultMock: HeroProps = {
   body: richTextMock({ text: 'This is the Hero body' }),
   images: [mediaBaseImageMock({ title: 'This is the Hero Media 1' })],
   actions: [
-    linkButtonMock({ text: 'This is the Hero Action 1', variant: 'button-contained' })
-    // linkButtonMock({ text: 'This is the Hero Action 2', variant: 'button-outlined' })
+    linkButtonMock({ text: 'This is the Hero Action 1', variant: 'button-contained' }),
+    linkButtonMock({ text: 'This is the Hero Action 2', variant: 'button-outlined' })
   ],
-  // background: mediaBaseImageMock(),
+  background: mediaBaseImageMock(),
   backgroundColor: 'white'
-};
+});
 
 export const heroBaseMock = ({ ...override } = {}) => ({
-  ...heroDefaultMock,
+  ...heroDefaultMock(),
   ...override
 });
 
 export const heroMediaOnRightMock = ({ ...override } = {}) => ({
-  ...heroDefaultMock,
+  ...heroDefaultMock(),
   title: 'This is the "Hero Media on Right" title',
   ...override,
   variant: 'mediaOnRight'
 });
 
 export const heroMediaOnRightFullBleedMock = ({ ...override } = {}) => ({
-  ...heroDefaultMock,
+  ...heroDefaultMock(),
   title: 'This is the "Hero Media on Right Full Bleed" title',
   ...override,
   variant: 'mediaOnRightFullBleed'
 });
 
 export const heroMediaOnLeftMock = ({ ...override } = {}) => ({
-  ...heroDefaultMock,
+  ...heroDefaultMock(),
   title: 'This is the "Hero Media on Left" title',
   ...override,
   variant: 'mediaOnLeft'
 });
 
 export const heroMediaOnLeftFullBleedMock = ({ ...override } = {}) => ({
-  ...heroDefaultMock,
+  ...heroDefaultMock(),
   title: 'This is the "Hero Media on Left Full Bleed" title',
   ...override,
   variant: 'mediaOnLeftFullBleed'
 });
 
 export const heroMediaBelowMock = ({ ...override } = {}) => ({
-  ...heroDefaultMock,
+  ...heroDefaultMock(),
   title: 'This is the "Hero Media Below" title',
   ...override,
   variant: 'mediaBelow'
 });
 
 export const heroMediaAboveMock = ({ ...override } = {}) => ({
-  ...heroDefaultMock,
+  ...heroDefaultMock(),
   title: 'This is the "Hero Media Above" title',
   ...override,
   variant: 'mediaAbove'

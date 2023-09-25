@@ -9,55 +9,14 @@ export const defaultProps: ComponentsProps['Hero'] = {
 };
 
 export const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
-  heroRoot: ({ ownerState, theme }) => {
-    const baseStyles = {
-      width: '100%',
-      contentHeight: 'lg'
-    };
-
-    // Assuming ownerState has a type defined
-    let bgColorStyles: React.CSSProperties = {};
-    let bgColor: Partial<Color> | string | undefined = ownerState?.backgroundColor;
-
-    if (bgColor?.includes('gradient') && bgColor) {
-      // Make sure to specify the property name explicitly, as it's dynamic
-      // Fix TS issues
-      const themeBgColor = theme?.palette?.[bgColor]?.main;
-      const themeBgColorContrastText = theme?.palette?.[bgColor]?.contrastText;
-
-      bgColorStyles = {
-        background: themeBgColor,
-        color: themeBgColorContrastText
-      };
-    } else if (bgColor) {
-      // Ensure the correct property is accessed
-      const parsedBgColorString = bgColor?.includes('.') ? bgColor : theme?.palette?.[bgColor]?.main;
-
-      const paletteColorString = bgColor?.includes('.')
-        ? theme?.palette?.[bgColor.split('.')[0]]?.contrastText
-        : bgColor;
-
-      const parsedBgColor = theme?.palette?.[parsedBgColorString];
-
-      if (parsedBgColor) {
-        bgColorStyles = {
-          backgroundColor: parsedBgColor.main,
-          color: paletteColorString
-        };
-      }
-    }
-
-    return {
-      ...baseStyles,
-      ...bgColorStyles
-    };
-  },
-
+  heroRoot: ({ ownerState, theme }) => ({
+    width: '100%',
+    contentHeight: 'lg',
+    ...theme.mixins.applyBackgroundColor({ theme, ownerState })
+  }),
   backgroundRoot: () => ({
-    gridColumn: '1/-1',
-    gridRow: '1/-1',
     position: 'absolute',
-    zIndex: 0,
+    zIndex: -1,
     top: 0,
     left: 0,
     width: '100%',

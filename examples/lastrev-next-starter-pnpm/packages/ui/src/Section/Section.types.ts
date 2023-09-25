@@ -30,7 +30,7 @@ export interface SectionProps {
 
 export interface SectionClasses {
   root: string;
-  contentContainer: string;
+  contentGrid: string;
   backgroundImage: string;
   gridContainer: string;
   gridItem: string;

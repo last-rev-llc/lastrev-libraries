@@ -12,7 +12,7 @@ const blockDefaultMock: BlockProps = {
   __typename: 'Block',
   backgroundColor: 'background',
   variant: 'default',
-  introText: introTextMock(),
+  // introText: introTextMock(),
   overline: 'This is the Block overline',
   title: 'This is the Block title',
   subtitle: 'This is the Block subtitle',

@@ -76,30 +76,30 @@ const mediaDefaultMock: MediaProps = {
   alt: lorem.word()
 };
 
-const imageDefaultMock: MediaProps = {
+const imageDefaultMock = (): MediaProps => ({
   ...mediaDefaultMock,
   ...defaultAssetFileMock()
-};
+});
 
 const svgDefaultMock: MediaProps = {
   ...mediaDefaultMock,
   ...defaultAssetSvgMock()
 };
 
-const videoDefaultMock: MediaProps = {
+const videoDefaultMock = (): MediaProps => ({
   ...mediaDefaultMock,
   ...defaultFileVideoMock(),
   variant: 'video',
   controls: true
-};
+});
 
 export const mediaBaseVideoMock = ({ ...override } = {}): MediaProps => ({
-  ...videoDefaultMock,
+  ...videoDefaultMock(),
   ...override
 });
 
 export const mediaBaseImageMock = ({ ...override } = {}): MediaProps => ({
-  ...imageDefaultMock,
+  ...imageDefaultMock(),
   ...override
 });
 

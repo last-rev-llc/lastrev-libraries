@@ -4,30 +4,32 @@ import { baseMock } from '../RichText/RichText.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
 
 import { SectionProps } from './Section.types';
+import blockBaseMock from '../Block/Block.mock';
+import collectionBaseMock from '../Collection/Collection.mock';
 
-const sectionDefaultMock: SectionProps = {
+const sectionDefaultMock = () => ({
   id: lorem.word(),
   __typename: 'Section',
   variant: 'onePerRow',
-  contents: [baseMock()]
-};
+  backgroundColor: 'secondary',
+  contents: [blockBaseMock(), blockBaseMock(), collectionBaseMock(), collectionBaseMock()]
+});
 
 export const sectionBaseMock = ({ ...override } = {}) => ({
-  ...sectionDefaultMock,
+  ...sectionDefaultMock(),
   ...override
 });
 
 export const sectionOnePerRowMock = ({ ...override } = {}) => ({
-  ...sectionDefaultMock,
+  ...sectionDefaultMock(),
   ...override,
   variant: 'onePerRow'
 });
 
 export const sectionTwoPerRowMock = ({ ...override } = {}) => ({
-  ...sectionDefaultMock,
+  ...sectionDefaultMock(),
   ...override,
-  variant: 'twoPerRow',
-  contents: [baseMock(), mediaBaseImageMock()]
+  variant: 'twoPerRow'
 });
 
 export default sectionBaseMock;

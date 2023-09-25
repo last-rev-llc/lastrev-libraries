@@ -4,6 +4,7 @@ export const defaultProps: ComponentsProps['Block'] = {};
 export const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    containerType: 'inline-size',
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
