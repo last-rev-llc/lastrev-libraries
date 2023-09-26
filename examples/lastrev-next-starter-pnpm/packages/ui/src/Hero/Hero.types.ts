@@ -25,21 +25,23 @@ export enum HeroHeightVariants {
 }
 
 // TODO: Check these types, but might be needed for owner state in themes
-export interface HeroProps extends Hero_BaseFragmentFragment {
-  backgroundColor?: string;
-  contentHeight?: string;
-  contentWidth?: string;
-  disableGutters?: boolean;
-  variant: string;
-  background?: MediaProps;
-  overline?: string;
-  title?: string;
-  subtitle?: string;
-  body?: RichText;
-  images?: [MediaProps];
-  actions?: [LinkProps];
-  sidekickLookup?: any;
+export interface HeroProps extends Omit<Hero_BaseFragmentFragment, 'variant'> {
+  // backgroundColor?: string;
+  // contentHeight?: string;
+  // contentWidth?: string;
+  // disableGutters?: boolean;
+  variant: HeroVariants;
+  // background?: MediaProps;
+  // overline?: string;
+  // title?: string;
+  // subtitle?: string;
+  // body?: RichText;
+  // images?: MediaProps[];
+  // actions?: LinkProps[];
+  // sidekickLookup?: any;
 }
+
+export interface HeroOwnerState extends HeroProps {}
 
 export interface HeroClasses {
   heroRoot: string;

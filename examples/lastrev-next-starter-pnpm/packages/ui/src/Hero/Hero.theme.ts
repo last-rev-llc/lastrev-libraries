@@ -1,74 +1,49 @@
 import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import type { Color } from '@mui/material';
 
-export const defaultProps: ComponentsProps['Hero'] = {
-  contentWidth: 'xl',
-  contentHeight: 'lg',
-  disableGutters: false,
-  variant: 'default'
-};
+export const defaultProps: ComponentsProps['Hero'] = {};
 
 export const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   heroRoot: ({ ownerState, theme }) => ({
-    width: '100%',
-    contentHeight: 'lg',
-    ...theme.mixins.applyBackgroundColor({ theme, ownerState })
+    ...theme.mixins.applyBackgroundColor({ theme, ownerState }),
+    position: 'relative',
+    padding: theme.spacing(12, 0)
   }),
-  backgroundRoot: () => ({
-    position: 'absolute',
-    zIndex: -1,
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%'
-  }),
-
+  backgroundRoot: () => ({}),
   backgroundRootContent: () => ({
     objectFit: 'cover',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    position: 'absolute',
+    zIndex: 0,
+    top: 0,
+    left: 0
   }),
-
-  contentOuterGrid: ({ theme }) => {
-    return {
-      ...theme.mixins.gridContainer(theme),
-      alignSelf: 'center',
-      justifySelf: 'center',
-      position: 'relative',
-      zIndex: 2
-    };
-  },
-
-  content: () => ({
-    display: 'flex',
-    flexDirection: 'column'
+  contentOuterGrid: ({ theme }) => ({
+    position: 'relative'
   }),
-
-  mainContentWrapper: () => ({
-    gridColumn: '1/7',
-    gridRow: '1',
-    display: 'flex',
-    flexDirection: 'column',
-    alignSelf: 'center'
+  content: () => ({}),
+  mainContentWrapper: ({ theme }) => ({
+    alignSelf: 'center',
+    gridRow: 1,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-half',
+    [theme.breakpoints.down('sm')]: {
+      gridColumnEnd: 'span 4',
+      gridRow: 2
+    }
   }),
-
   overline: ({ theme }) => ({
     marginBottom: theme.spacing(1)
   }),
-
   title: () => ({}),
-
   subtitle: () => ({}),
-
   body: () => ({}),
-
-  sideContentWrapper: () => ({
-    gridColumn: '7/-1',
-    gridRow: '1',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
+  sideContentWrapper: ({ theme }) => ({
+    gridColumnStart: 'content-half',
+    gridColumnEnd: 'content-end',
+    [theme.breakpoints.down('sm')]: {
+      gridColumnStart: 'content-start'
+    }
   }),
 
   images: () => ({}),

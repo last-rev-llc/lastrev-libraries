@@ -12,7 +12,9 @@ export enum BlockVariants {
   contentAbove = 'contentAbove'
 }
 
-export interface BlockProps extends Block_BaseFragmentFragment {}
+export interface BlockProps extends Omit<Block_BaseFragmentFragment, 'variant'> {
+  variant: BlockVariants;
+}
 export interface BlockOwnerState extends BlockProps {}
 
 export interface BlockClasses {

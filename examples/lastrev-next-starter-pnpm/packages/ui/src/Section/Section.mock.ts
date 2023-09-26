@@ -4,7 +4,7 @@ import { baseMock } from '../RichText/RichText.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
 
 import { SectionProps } from './Section.types';
-import blockBaseMock from '../Block/Block.mock';
+import blockBaseMock, { blockContentOnRightFullBleedMock } from '../Block/Block.mock';
 import collectionBaseMock from '../Collection/Collection.mock';
 
 const sectionDefaultMock = () => ({
@@ -12,7 +12,7 @@ const sectionDefaultMock = () => ({
   __typename: 'Section',
   variant: 'onePerRow',
   backgroundColor: 'secondary',
-  contents: [blockBaseMock(), blockBaseMock(), collectionBaseMock(), collectionBaseMock()]
+  contents: [blockBaseMock(), blockBaseMock({ variant: '' }), collectionBaseMock(), collectionBaseMock()]
 });
 
 export const sectionBaseMock = ({ ...override } = {}) => ({

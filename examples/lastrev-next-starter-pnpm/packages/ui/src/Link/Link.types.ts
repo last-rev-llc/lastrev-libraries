@@ -19,8 +19,15 @@ export interface NextLinkComposedProps {
   children: React.ReactNode;
 }
 
-export interface LinkProps extends Link_BaseFragmentFragment {
-  variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
+export enum LinkVariants {
+  'button-contained' = 'button-contained',
+  'button-outlined' = 'button-outlined',
+  'button-text' = 'button-text',
+  text = 'text',
+  default = 'default'
+}
+export interface LinkProps extends Omit<Link_BaseFragmentFragment, 'variant'> {
+  variant: LinkVariants;
   activeClassName?: string;
   className?: string;
   as?: React.ElementType;

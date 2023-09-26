@@ -208,7 +208,8 @@ export const complexMock = ({ text } = {}): TextProps => ({
   }
 });
 
-export const richTextMock = ({ text } = {}): RichText => ({
+export const richTextMock = ({ text } = { text: '' }): RichText => ({
+  __typename: 'RichText',
   json: {
     nodeType: 'document',
     data: {},

@@ -31,10 +31,10 @@ export interface RichTextLinks {
   assets?: Array<MediaProps>;
 }
 
-export interface RichText {
-  json: any;
-  links?: RichTextLinks;
-}
+// export interface RichText {
+//   json: any;
+//   links?: RichTextLinks;
+// }
 
 export interface RichTextClasses {
   /** Styles applied to the root element. */

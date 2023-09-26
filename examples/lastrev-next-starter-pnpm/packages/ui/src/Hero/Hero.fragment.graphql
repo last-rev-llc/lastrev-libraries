@@ -2,6 +2,7 @@ fragment Hero_BaseFragment on Hero {
   ...Content_BaseFragment
   variant
   internalTitle
+  overline
   title
   subtitle
   backgroundColor

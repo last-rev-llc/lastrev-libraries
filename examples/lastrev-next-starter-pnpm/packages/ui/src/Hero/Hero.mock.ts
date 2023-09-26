@@ -1,26 +1,24 @@
 import { lorem } from 'faker';
 
-import { linkButtonMock } from '../Link/Link.mock';
+import { linkBaseMock } from '../Link/Link.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
 import { richTextMock } from '../RichText/RichText.mock';
 
-import { HeroProps } from './Hero.types';
+import { HeroProps, HeroVariants } from './Hero.types';
+import { LinkVariants } from '../Link/Link.types';
 
 const heroDefaultMock = (): HeroProps => ({
   id: lorem.word(),
   __typename: 'Hero',
-  variant: 'default',
+  variant: HeroVariants['default'],
   overline: 'This is the Hero overline',
   title: 'This is the Hero title',
   subtitle: 'This is the Hero subtitle',
   body: richTextMock({ text: 'This is the Hero body' }),
-  images: [mediaBaseImageMock({ title: 'This is the Hero Media 1' })],
-  actions: [
-    linkButtonMock({ text: 'This is the Hero Action 1', variant: 'button-contained' }),
-    linkButtonMock({ text: 'This is the Hero Action 2', variant: 'button-outlined' })
-  ],
+  sideImageItems: [mediaBaseImageMock({ title: 'This is the Hero Media 1' })],
+  actions: [linkBaseMock({ text: 'This is the Hero Action 1', variant: LinkVariants['button-contained'] })],
   background: mediaBaseImageMock(),
-  backgroundColor: 'white'
+  backgroundColor: 'primary'
 });
 
 export const heroBaseMock = ({ ...override } = {}) => ({
