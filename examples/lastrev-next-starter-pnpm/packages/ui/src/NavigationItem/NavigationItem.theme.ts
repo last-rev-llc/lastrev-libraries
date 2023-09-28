@@ -1,10 +1,16 @@
-import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type {
+  Theme,
+  ThemeOptions,
+  ComponentsProps,
+  ComponentsOverrides,
+  ComponentsVariants
+} from '@mui/material/styles';
 
 export const defaultProps: ComponentsProps['NavigationItem'] = {};
 
 export const styleOverrides: ComponentsOverrides<Theme>['NavigationItem'] = {
   // Set some static styles
-  // root: {
+  // root: ({ theme, elevation }) => ({
   //   backgroundColor: 'red'
   // }
   //
@@ -37,7 +43,7 @@ const createVariants = (_theme: Theme): ComponentsVariants['NavigationItem'] => 
   // }
 ];
 
-export default (theme: Theme): ThemeOptions => ({
+export const navigationItemTheme = (theme: Theme): ThemeOptions => ({
   components: {
     NavigationItem: {
       defaultProps,
@@ -46,3 +52,5 @@ export default (theme: Theme): ThemeOptions => ({
     }
   }
 });
+
+export default navigationItemTheme;

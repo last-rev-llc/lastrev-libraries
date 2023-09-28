@@ -1,4 +1,10 @@
-import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type {
+  Theme,
+  ThemeOptions,
+  ComponentsProps,
+  ComponentsOverrides,
+  ComponentsVariants
+} from '@mui/material/styles';
 
 export const defaultProps: ComponentsProps['HeaderNavLink'] = {};
 
@@ -11,26 +17,22 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     'flexDirection': 'column',
     'flexGrow': '1',
     'position': 'relative',
-    'transition': 'border-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    // 'transition': 'border-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
-    '& [class$=HeaderNavLink-navItemLink]': {
-      ...theme.typography.body2,
-      fontSize: '0.875rem',
-
+    '[class$=HeaderNavLink-navItemLink]': {
+      ...theme.typography.body1,
       ...(!!open && {
         fontWeight: 800
       })
     },
 
     '&:is(:hover, :focus-within):not(:focus-visible)': {
-      [theme.breakpoints.up('lg')]: {
-        'borderBottomColor': '#fba62d',
+      [theme.breakpoints.up('md')]: {
+        // 'borderBottomColor': theme.palette.primary.main,
 
         '[class*="HeaderNavLink-navItemLink"]': {
-          'color': theme.palette.primary.main,
-
           '.MuiSvgIcon-root': {
-            fill: theme.palette.primary.main,
+            // fill: 'currentcolor',
             transform: 'rotate(-90deg)'
           }
         },
@@ -44,20 +46,21 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
   }),
 
   navItemLink: ({ theme, open }) => ({
-    'padding': theme.spacing(0, 2),
-    'color': theme.palette.text.primary,
     'flexGrow': '1',
     'alignItems': 'center',
     'display': 'flex',
+    'borderTop': `solid 1px ${theme.palette.grey[200]}`,
     'width': '100%',
     'justifyContent': 'space-between',
     'cursor': 'pointer',
-    'transition': 'color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    'fontSize': '0.875rem',
-    'whiteSpace': 'nowrap',
 
-    [theme.breakpoints.up('lg')]: {
-      justifyContent: 'flex-start'
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(2, 5)
+    },
+
+    [theme.breakpoints.up('md')]: {
+      justifyContent: 'flex-start',
+      borderTop: 'none'
     },
 
     '.MuiSvgIcon-root': {
@@ -69,12 +72,12 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
       transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
       ...(!!open && {
-        [theme.breakpoints.down('lg')]: {
+        [theme.breakpoints.down('md')]: {
           transform: 'rotate(-90deg)'
         }
       }),
 
-      [theme.breakpoints.up('lg')]: {
+      [theme.breakpoints.up('md')]: {
         height: '10px',
         fill: theme.palette.primary.main
       }
@@ -87,12 +90,12 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     display: 'none',
 
     ...(!!open && {
-      [theme.breakpoints.down('lg')]: {
+      [theme.breakpoints.down('md')]: {
         display: 'block'
       }
     }),
 
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up('sm')]: {
       visibility: 'hidden',
       opacity: 0,
       display: 'block',
@@ -102,7 +105,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
       transform: 'translateY(100%)',
       flexDirection: 'row',
       padding: 0,
-      paddingTop: theme.spacing(0.5),
+      paddingTop: theme.spacing(3),
       transition: 'visibility 0s, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
       ...(numOfCols === 2 && {
@@ -121,52 +124,45 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     }
   }),
 
-  navItemSubMenu: ({ theme }) => ({
+  navItemSubMenu: ({ theme, numOfCols }) => ({
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(3, 3),
       display: 'flex',
       flexDirection: 'column',
-      gap: theme.spacing(1)
+      gap: theme.spacing(6)
     },
 
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up('md')]: {
       'display': 'grid',
       'gap': theme.spacing(0),
-      'padding': theme.spacing(1, 0),
-      'borderBottomLeftRadius': theme.spacing(4),
-      'borderTopRightRadius': theme.spacing(4),
+      'padding': 0,
+      'borderRadius': theme.spacing(2),
       'overflow': 'hidden',
-      'backgroundColor': '#1e2145', //theme.palette.primary.main,
       'width': 'fit-content',
       // @ts-ignore: TODO: items not recognized
-      'gridTemplateColumns': `repeat(1, auto)`,
+      'gridTemplateColumns': `repeat(${(numOfCols ?? 0) + 1}, auto)`,
       'boxShadow': theme.shadows[1],
 
       '> li': {
-        padding: theme.spacing(1, 2)
-      },
-
-      '> li:last-of-type': {
-        borderColor: 'transparent'
+        borderRight: `solid 1px ${theme.palette.grey[200]}`,
+        padding: theme.spacing(3, 1, 4.5, 4)
       }
     }
   }),
 
   navItemSubMenuItem: ({ theme }) => ({
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start'
     }
   }),
 
   megaNavContainer: ({ theme }) => ({
     display: 'none',
-
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'space-between',
       juistifyContent: 'space-between',
-      backgroundColor: theme.palette.grey[100],
       // TODO: Is there a better way to define this?
       width: 324
     }
@@ -195,7 +191,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
 
 const createVariants = (_theme: Theme): ComponentsVariants['HeaderNavLink'] => [];
 
-export default (theme: Theme): ThemeOptions => ({
+export const headerNavLinkTheme = (theme: Theme): ThemeOptions => ({
   components: {
     HeaderNavLink: {
       defaultProps,
@@ -204,3 +200,5 @@ export default (theme: Theme): ThemeOptions => ({
     }
   }
 });
+
+export default headerNavLinkTheme;

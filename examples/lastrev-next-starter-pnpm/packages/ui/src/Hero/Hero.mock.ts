@@ -4,7 +4,7 @@ import { linkButtonMock } from '../Link/Link.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
 import { richTextMock } from '../RichText/RichText.mock';
 
-import { HeroProps } from './Hero.types';
+import type { HeroProps } from './Hero.types';
 
 const heroDefaultMock: HeroProps = {
   id: lorem.word(),

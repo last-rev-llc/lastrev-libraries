@@ -5,7 +5,7 @@ import Header from './Header';
 
 import headerBaseMock from './Header.mock';
 
-import { HeaderProps } from './Header.types';
+import type { HeaderProps } from './Header.types';
 
 let mockedContent: HeaderProps = { sidekickLookup: {} };
 

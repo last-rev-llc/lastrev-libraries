@@ -1,4 +1,5 @@
 import React from 'react';
+
 import MenuItem from '@mui/material/MenuItem';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -6,17 +7,20 @@ import styled from '@mui/system/styled';
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
 
-import ErrorBoundary from '../ErrorBoundary';
-import { LinkProps } from '../Link';
-import ContentModule from '../ContentModule';
 import sidekick from '@last-rev/contentful-sidekick-util';
-import { NavigationItemProps } from './NavigationItem.types';
+
+import ErrorBoundary from '../ErrorBoundary';
+import ContentModule from '../ContentModule';
+
+import type { NavigationItemProps } from './NavigationItem.types';
+import type { LinkProps } from '../Link';
 
 export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, ...props }: NavigationItemProps) => {
   const [open, setOpen] = React.useState<boolean>(false);
   const theme = useTheme();
   const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
   const isMobile = useMediaQuery(theme.breakpoints.down(menuBreakpoint), { defaultMatches: true });
+
   const handleClick = (evt: any) => {
     if (isMobile && subNavigation?.length) {
       evt.preventDefault();
@@ -26,6 +30,7 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
       if (onRequestClose) onRequestClose();
     }
   };
+
   const handleSubnavClick = () => {
     setOpen(false);
     if (onRequestClose) onRequestClose();
@@ -67,6 +72,7 @@ const visibleStyles = (open: boolean) => `
   max-height: ${open ? 300 : 0}px;
   box-shadow: ${open ? 'inset 0 0 16px -8px rgb(0 0 0 / 30%)' : 'inset 0 0 0 0 rgb(0 0 0 / 0%)'};
 `;
+
 const shouldForwardProp = (prop: string) =>
   prop !== 'variant' && prop !== 'onRequestClose' && prop !== 'menuBreakpoint';
 

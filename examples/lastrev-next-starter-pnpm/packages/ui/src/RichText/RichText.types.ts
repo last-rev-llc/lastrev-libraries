@@ -3,7 +3,7 @@ import { RichText_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface RichText extends RichText_BaseFragmentFragment {}
 
-import { MediaProps } from '../Media/Media.types';
+import type { MediaProps } from '../Media/Media.types';
 
 interface Content {
   __typename?: string;

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import Typography, { TypographyProps } from '@mui/material/Typography';
+import Typography, { type TypographyProps } from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
@@ -9,7 +9,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import { TextProps } from './Text.types';
+import type { TextProps } from './Text.types';
 
 const Text = ({ body, align, overline, title, subtitle, variant, sidekickLookup, sx, ...props }: TextProps) => {
   return (

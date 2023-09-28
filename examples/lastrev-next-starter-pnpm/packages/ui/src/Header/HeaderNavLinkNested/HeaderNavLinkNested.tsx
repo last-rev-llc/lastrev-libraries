@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
+
 import Box from '@mui/material/Box';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
@@ -7,7 +8,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../../ErrorBoundary';
 import ContentModule from '../../ContentModule';
 
-import { HeaderNavLinkNestedProps } from './HeaderNavLinkNested.types';
+import { type HeaderNavLinkNestedProps } from './HeaderNavLinkNested.types';
 
 export const HeaderNavLinkNested = ({
   variant,

@@ -11,15 +11,15 @@ import Typography from '@mui/material/Typography';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
-
-import { BlogProps } from './Blog.types';
-import { MediaProps } from '../Media/Media.types';
-import { LinkProps } from '../Link/Link.types';
 import TwitterIcon from '../Icons/TwitterIcon';
 import FacebookIcon from '../Icons/FacebookIcon';
 import LinkedinIcon from '../Icons/LinkedinIcon';
 import EmailIcon from '../Icons/EmailIcon';
 import CopyLinkIcon from '../Icons/CopyLinkIcon';
+
+import type { BlogProps } from './Blog.types';
+import type { MediaProps } from '../Media/Media.types';
+import type { LinkProps } from '../Link/Link.types';
 
 const Blog = ({
   header,

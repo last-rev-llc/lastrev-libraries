@@ -1,9 +1,9 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
 import { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
-import { RichText } from '../RichText/RichText.types';
-import { MediaProps } from '../Media/Media.types';
-import { LinkProps } from '../Link/Link.types';
+import type { RichText } from '../RichText/RichText.types';
+import type { MediaProps } from '../Media/Media.types';
+import type { LinkProps } from '../Link/Link.types';
 
 // TODO Review
 export enum HeroVariants {
@@ -69,18 +69,17 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Hero: HeroClassKey;
   }
+
   export interface ComponentsPropsList {
     Hero: HeroProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     Hero?: {
       defaultProps?: ComponentsProps['Hero'];
       styleOverrides?: ComponentsOverrides<Theme>['Hero'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Hero'];
     };
   }

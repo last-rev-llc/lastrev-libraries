@@ -1,9 +1,17 @@
 import React from 'react';
 
-import { LinkProps as NextLinkProps } from 'next/link';
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { LinkProps as NextLinkProps } from 'next/link';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
 import { Link_BaseFragmentFragment } from '@graphql-sdk/types';
+
+export enum LinkVariants {
+  default = 'default',
+  buttonContained = 'button-contained',
+  buttonOutlined = 'button-outlined',
+  buttonText = 'button-text',
+  text = 'text'
+}
 
 export interface NextLinkComposedProps {
   linkAs?: NextLinkProps['as'];
@@ -20,7 +28,7 @@ export interface NextLinkComposedProps {
 }
 
 export interface LinkProps extends Link_BaseFragmentFragment {
-  variant?: 'button-contained' | 'button-outlined' | 'button-text' | 'text' | any;
+  variant?: LinkVariants | any;
   activeClassName?: string;
   className?: string;
   as?: React.ElementType;
@@ -50,18 +58,17 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Link: LinkClassKey;
   }
+
   export interface ComponentsPropsList {
     Link: LinkProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     Link?: {
       defaultProps?: ComponentsProps['Link'];
       styleOverrides?: ComponentsOverrides<Theme>['Link'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Link'];
     };
   }

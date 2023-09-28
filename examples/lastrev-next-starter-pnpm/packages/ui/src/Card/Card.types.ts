@@ -1,4 +1,4 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
 import { Card_BaseFragmentFragment } from '@graphql-sdk/types';
 
@@ -46,6 +46,7 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Card: CardClassKey;
   }
+
   export interface ComponentsPropsList {
     Card: CardProps;
   }
@@ -56,9 +57,6 @@ declare module '@mui/material/styles' {
     Card?: {
       defaultProps?: ComponentsProps['Card'];
       styleOverrides?: ComponentsOverrides<Theme>['Card'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Card'];
     };
   }

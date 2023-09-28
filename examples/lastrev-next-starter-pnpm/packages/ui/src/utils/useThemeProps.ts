@@ -1,5 +1,5 @@
 import { useTheme } from '@mui/system';
-import { ThemedProps, ThemeWithProps } from '@mui/system/useThemeProps';
+import type { ThemedProps, ThemeWithProps } from '@mui/system/useThemeProps';
 
 type UseThemeProps = <Theme extends ThemeWithProps, Props, Name extends keyof any>(params: {
   props: Props;

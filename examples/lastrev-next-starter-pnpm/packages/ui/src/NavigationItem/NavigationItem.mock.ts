@@ -1,23 +1,41 @@
 import { lorem } from 'faker';
-import { NavigationItemProps } from './NavigationItem.types';
+import { type NavigationItemProps, NavigationLinkVariants } from './NavigationItem.types';
 
-const navigationItemDefaultMock: NavigationItemProps = {
+const navigationItemDefaultMock = (): NavigationItemProps => ({
   id: lorem.word(),
   __typename: 'NavigationItem',
-  variant: 'default',
+  variant: NavigationLinkVariants.link,
   href: `#${lorem.word()}`,
   text: lorem.words(2),
   icon: 'chevron-right',
   iconPosition: 'Right'
-};
+});
 
 export const navigationItemTextMock = ({ ...override } = {}): NavigationItemProps => ({
-  ...navigationItemDefaultMock,
-  variant: 'navigationitem'
+  ...navigationItemDefaultMock(),
+  variant: NavigationLinkVariants.link,
+  ...override
 });
 
 export const navigationItemBaseMock = ({ ...override } = {}): NavigationItemProps => ({
-  ...navigationItemDefaultMock
+  ...navigationItemDefaultMock(),
+  ...override
+});
+
+export const navigationItemWithChildrenMock = ({ ...override } = {}): NavigationItemProps => ({
+  ...navigationItemDefaultMock(),
+  variant: NavigationLinkVariants.group,
+  subNavigation: [navigationItemBaseMock(), navigationItemBaseMock(), navigationItemBaseMock()]
+});
+
+export const navigationItemWithChildrenNestedMock = ({ ...override } = {}): NavigationItemProps => ({
+  ...navigationItemDefaultMock(),
+  variant: NavigationLinkVariants.group,
+  subNavigation: [
+    navigationItemWithChildrenMock({ variant: NavigationLinkVariants.group }),
+    navigationItemWithChildrenMock({ variant: NavigationLinkVariants.group }),
+    navigationItemWithChildrenMock({ variant: NavigationLinkVariants.group })
+  ]
 });
 
 export default navigationItemBaseMock;

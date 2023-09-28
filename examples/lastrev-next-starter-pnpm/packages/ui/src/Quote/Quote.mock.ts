@@ -1,6 +1,6 @@
 import { lorem } from 'faker';
 import { mediaBaseImageMock } from '../Media/Media.mock';
-import { QuoteProps } from './Quote.types';
+import type { QuoteProps } from './Quote.types';
 
 const quoteDefaultMock: QuoteProps = {
   id: lorem.word(),

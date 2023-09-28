@@ -12,7 +12,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ErrorBoundary from '../ErrorBoundary';
 
-import { NavigationBarProps } from './NavigationBar.types';
+import type { NavigationBarProps } from './NavigationBar.types';
 
 export const NavigationBar = ({
   items,

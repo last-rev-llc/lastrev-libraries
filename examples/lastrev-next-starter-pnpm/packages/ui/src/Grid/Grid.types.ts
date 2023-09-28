@@ -1,4 +1,4 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
 export enum GridVariants {
   default = 'default',
@@ -40,18 +40,17 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Grid: GridClassKey;
   }
+
   export interface ComponentsPropsList {
     Grid: GridProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     Grid?: {
       defaultProps?: ComponentsProps['Grid'];
       styleOverrides?: ComponentsOverrides<Theme>['Grid'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Grid'];
     };
   }

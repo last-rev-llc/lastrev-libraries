@@ -7,10 +7,12 @@ import Typography from '@mui/material/Typography';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
-import { HeaderNavLinkProps } from './HeaderNavLink.types';
 import ErrorBoundary from '../../ErrorBoundary';
 import ContentModule from '../../ContentModule';
+
 import getFirstOfArray from '../../utils/getFirstOfArray';
+
+import type { HeaderNavLinkProps } from './HeaderNavLink.types';
 
 export const HeaderNavLink = ({
   title,
@@ -73,7 +75,7 @@ export const HeaderNavLink = ({
                 <NavItemSubMenuItem key={`${navItemId}-nav-item-${item.id}-${index}`}>
                   <NavItemGroup
                     {...item}
-                    variant="headerGroup"
+                    variant="group"
                     __typename="NavigationItem"
                     onClick={onSubNavItemClick}
                     onRequestClose={onRequestClose}

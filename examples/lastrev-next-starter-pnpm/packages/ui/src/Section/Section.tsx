@@ -18,7 +18,7 @@ import ConditionalWrapper from '../ConditionalWrapper';
 
 import useThemeProps from '../utils/useThemeProps';
 
-import { SectionProps } from './Section.types';
+import type { SectionProps } from './Section.types';
 
 // TODO: Cleanup
 const VARIANTS_GRID_ITEM: Record<string, any> = {

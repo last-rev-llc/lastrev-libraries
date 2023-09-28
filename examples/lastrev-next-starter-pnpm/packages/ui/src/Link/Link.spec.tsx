@@ -3,7 +3,7 @@ import { mount } from '@cypress/react18';
 
 import Link from './Link';
 
-import { LinkProps } from './Link.types';
+import type { LinkProps } from './Link.types';
 import { linkBaseMock, linkButtonMock } from './Link.mock';
 
 let mockedLinkContent: LinkProps = {};

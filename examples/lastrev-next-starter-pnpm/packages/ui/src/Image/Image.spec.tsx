@@ -2,7 +2,7 @@ import * as React from 'react';
 import { mount } from '@cypress/react18';
 import Image from './Image';
 import { imageBaseMock } from './Image.mock';
-import { ImageProps } from './Image.types';
+import type { ImageProps } from './Image.types';
 
 let mockedContent: ImageProps = imageBaseMock;
 

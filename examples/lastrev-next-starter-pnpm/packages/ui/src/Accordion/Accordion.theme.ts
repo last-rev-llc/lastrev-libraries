@@ -1,5 +1,4 @@
-import {
-  TypographyStyle,
+import type {
   Theme,
   ThemeOptions,
   ComponentsProps,
@@ -12,14 +11,14 @@ export const defaultProps: ComponentsProps['Accordion'] = {};
 export const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
   root: () => ({}),
 
-  contentContainer: ({ theme }) => ({}),
+  contentContainer: () => ({}),
 
-  introTextWrapper: ({ theme }) => ({}),
+  introTextWrapper: () => ({}),
 
   introText: ({}) => ({})
 };
 
-const createVariants = (theme: Theme): ComponentsVariants['Accordion'] => [
+const createVariants = (_theme: Theme): ComponentsVariants['Accordion'] => [
   {
     props: {
       variant: 'default'

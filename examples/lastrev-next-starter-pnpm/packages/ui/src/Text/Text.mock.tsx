@@ -1,5 +1,5 @@
 import { lorem } from 'faker';
-import { TextProps } from './Text.types';
+import type { TextProps } from './Text.types';
 import { richTextMock } from '../RichText/RichText.mock';
 
 const textDefaultMock: TextProps = {
@@ -32,6 +32,14 @@ export const introTextMock = ({ ...override } = {}) => ({
 export const textBaseMock = ({ ...override } = {}) => ({
   ...textDefaultMock,
   ...override
+});
+
+export const textTitleMock = ({ ...override } = {}) => ({
+  ...textDefaultMock,
+  ...override,
+  overline: undefined,
+  subtitle: undefined,
+  body: undefined
 });
 
 export default textBaseMock;

@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 
-import { FormProps } from './Form.types';
+import type { FormProps } from './Form.types';
 
 // TODO: Remove hubspot form or make new component?
 // @ts-ignore

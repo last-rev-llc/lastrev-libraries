@@ -1,7 +1,9 @@
 import { lorem } from 'faker';
-import { CollectionProps, CollectionVariants } from './Collection.types';
+
 import { cardBaseMock } from '../Card/Card.mock';
 import { introTextMock } from '../Text/Text.mock';
+
+import type { CollectionProps } from './Collection.types';
 
 export const collectionBaseMock = (override?: Partial<CollectionProps>) => {
   const baseMock = {

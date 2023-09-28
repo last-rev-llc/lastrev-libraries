@@ -238,18 +238,11 @@ type ElementVideo implements Content {
 type Footer implements Content {
   animation: JSON
   copyrightDisclaimer: RichText
-  disclaimer: RichText
   disclaimerText: RichText
   id: String
   internalTitle: String
-  introContents: [Content]
-  legalLinks: [Link]
-  localeLinks: [Link]
   logo: Media
-  logoUrl: Link
-  navigationItems: [NavigationItem]
   sidekickLookup: JSON
-  socialLinks: [Link]
   theme: [Theme]
   variant: String
 }
@@ -257,6 +250,7 @@ type Footer implements Content {
 type Header implements Content {
   animation: JSON
   ctaItems: [Link]
+  hasCtaItems: Boolean
   id: String
   internalTitle: String
   logo: Media
@@ -356,6 +350,8 @@ type NavigationItem implements Content {
   altText: String
   animation: JSON
   href: String!
+  icon: String
+  iconPosition: String
   id: String
   internalTitle: String
   manualUrl: String

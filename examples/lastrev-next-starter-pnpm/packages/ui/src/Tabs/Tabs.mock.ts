@@ -1,5 +1,5 @@
 import { lorem } from 'faker';
-import { TabsProps } from './Tabs.types';
+import type { TabsProps } from './Tabs.types';
 import { cardBaseMock } from '../Card/Card.mock';
 import { blockContentOnLeftMock } from '../Block/Block.mock';
 import { collectionBaseMock } from '../Collection/Collection.mock';

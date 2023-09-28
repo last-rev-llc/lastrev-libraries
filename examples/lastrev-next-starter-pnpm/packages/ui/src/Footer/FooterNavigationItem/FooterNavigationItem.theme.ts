@@ -1,5 +1,4 @@
-import {
-  TypographyStyle,
+import type {
   Theme,
   ThemeOptions,
   ComponentsProps,
@@ -11,26 +10,25 @@ export const defaultProps: ComponentsProps['FooterNavigationItem'] = {};
 
 export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
   root: ({ theme, ownerState }) => ({
-    color: theme.palette.secondary.main,
-    textDecoration: 'none',
     ...theme.typography.body2,
+
     ...(ownerState?.variant === 'linkBoldedFooter' && {
       fontFamily: '"Inter", sans-serif',
       fontWeight: 600
-    })
+    }),
+
+    color: theme.palette.secondary.main,
+    textDecoration: 'none'
   }),
-  tag: ({ theme, ownerState }) => ({
-    marginLeft: theme.spacing(0.5),
-    ...(ownerState?.variant === 'linkBoldedFooter' && {
-      fontFamily: '"Inter", sans-serif',
-      fontWeight: 600
-    })
-  })
+
+  rootLinkButton: () => ({}),
+
+  rootLink: () => ({})
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['FooterNavigationItem'] => [];
 
-export default (theme: Theme): ThemeOptions => ({
+export const footerNavigationItemTheme = (theme: Theme): ThemeOptions => ({
   components: {
     FooterNavigationItem: {
       defaultProps,
@@ -39,3 +37,5 @@ export default (theme: Theme): ThemeOptions => ({
     }
   }
 });
+
+export default footerNavigationItemTheme;

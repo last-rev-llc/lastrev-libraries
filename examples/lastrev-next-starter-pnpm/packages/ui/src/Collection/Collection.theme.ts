@@ -1,4 +1,4 @@
-import { Theme, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type { Theme, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
 export const defaultProps: ComponentsProps['Collection'] = {};
 

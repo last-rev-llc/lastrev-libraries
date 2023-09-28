@@ -5,7 +5,7 @@ import { mediaBaseImageMock } from '../Media/Media.mock';
 import { richTextMock } from '../RichText/RichText.mock';
 import { introTextMock } from '../Text/Text.mock';
 
-import { BlockProps } from './Block.types';
+import type { BlockProps } from './Block.types';
 
 const blockDefaultMock: BlockProps = {
   id: lorem.word(),

@@ -5,7 +5,7 @@ import { BLOCKS } from '@contentful/rich-text-types';
 
 import mountWithRouter from '../../../cypress/mountWithRouter';
 
-import { TextProps } from './Text.types';
+import type { TextProps } from './Text.types';
 import Text from './Text';
 
 import mockContent, {

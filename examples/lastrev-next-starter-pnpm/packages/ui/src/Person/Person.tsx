@@ -1,12 +1,13 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
-import Box, { BoxProps } from '@mui/material/Box';
-import Typography, { TypographyProps } from '@mui/material/Typography';
+
+import Box from '@mui/material/Box';
+import Typography, { type TypographyProps } from '@mui/material/Typography';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
-import { PersonProps } from './Person.types';
+import type { PersonProps } from './Person.types';
 
 const Person = ({ header, footer, name, jobTitle, email, body, sidekickLookup }: PersonProps) => {
   return (

@@ -1,10 +1,10 @@
 'use client';
 import React from 'react';
 import { styled } from '@mui/material/styles';
-// import { css } from '@emotion/react';
+
 import Image from '../Image';
-import { MediaProps } from '../Media/Media.types';
-import { ArtDirectedImageProps } from './ArtDirectedImage.types';
+import type { MediaProps } from '../Media/Media.types';
+import type { ArtDirectedImageProps } from './ArtDirectedImage.types';
 
 const getImageMedia = (breakpoint: string, { fileMobile, fileTablet }: Partial<MediaProps>) => {
   switch (breakpoint) {

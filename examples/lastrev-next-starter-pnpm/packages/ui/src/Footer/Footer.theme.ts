@@ -1,5 +1,4 @@
-import {
-  TypographyStyle,
+import type {
   Theme,
   ThemeOptions,
   ComponentsProps,
@@ -11,54 +10,103 @@ export const defaultProps: ComponentsProps['Footer'] = {};
 
 export const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme }) => ({
-    padding: theme.spacing(4, 2)
+    padding: theme.spacing(4, 2) // Update
   }),
 
-  footerContent: ({ theme }) => ({
-    // backgroundImage: `url('https://images.ctfassets.net/e4vn8tcbbhts/7hTKCRbU98AKt7nKX5vGnd/245e49383d82f8074e32f768e7856dd6/footer-background.svg')`,
-    // backgroundSize: 'cover',
-    // backgroundPosition: 'top center',
-    paddingTop: theme.spacing(20),
-    paddingBottom: theme.spacing(20)
+  introContentsWrap: () => ({}),
+
+  introContent: () => ({}),
+
+  contentOuterGrid: () => ({
+    '& > *': {
+      border: 'solid 2px blue'
+    }
   }),
 
-  container: ({ theme }) => ({
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: theme.spacing(4)
-  }),
+  logoRoot: ({ theme }) => ({
+    gridColumn: 'two-start / three-end',
+    gridRow: 1,
+    alignSelf: 'center',
 
-  mainSection: ({ theme }) => ({
-    gridColumn: '1 / span 2',
-
-    [theme.breakpoints.up('md')]: {
-      gridColumn: '1 / span 6',
-      gridTemplateColumns: 'repeat(6, 1fr)',
-      gap: theme.spacing(2.5, 3)
+    [theme.breakpoints.up('sm')]: {
+      gridColumn: 'three-start / six-end'
     },
 
-    [theme.breakpoints.up('lg')]: {
-      gridColumn: '1 / span 4',
-      gridTemplateColumns: 'repeat(4, 1fr)',
-      gap: theme.spacing(3.5, 3)
+    [theme.breakpoints.up('md')]: {
+      gridColumn: 'content-start / span 2',
+      alignSelf: 'center'
     }
   }),
 
-  logoUrl: () => ({}),
-
-  logo: ({}) => ({
-    margin: 'initial',
-    width: 161,
-    height: 'auto',
+  logo: () => ({
+    width: 'auto',
+    height: 40,
+    margin: 0,
 
     svg: {
-      fill: '#fba62d'
+      fill: '#ffffff'
     }
   }),
 
-  disclaimer: () => ({}),
+  footerMenuNav: ({ theme, ownerState }) => ({
+    gridRow: 2,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
 
-  socialLinks: () => ({}),
+    [theme.breakpoints.up('md')]: {
+      gridRow: 1,
+      gridColumnStart: 'three-start',
+      gridColumnEnd: ownerState?.hasSocialLinks ? 'ten-end' : 'content-end'
+    }
+  }),
+
+  footerMenuNavItems: ({ theme, ownerState }) => ({
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: 0,
+    position: 'unset',
+    flexDirection: 'column',
+    width: '100%',
+    margin: 'auto',
+
+    [theme.breakpoints.up('md')]: {
+      height: '100%',
+      flexDirection: 'row',
+      width: 'auto'
+    }
+  }),
+
+  footerMenuNavItem: ({ theme }) => ({
+    padding: 0,
+    position: 'unset',
+
+    [theme.breakpoints.up('md')]: {
+      height: '100%'
+    }
+  }),
+
+  socialLinks: ({ theme }) => ({
+    gridRow: 3,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+
+    display: 'inline-flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    height: '100%',
+    justifySelf: 'center',
+    gap: theme.spacing(2),
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'eleven-start',
+      gridColumnEnd: 'content-end',
+      justifyContent: 'flex-end',
+      justifySelf: 'flex-end',
+      width: '100%',
+      gap: theme.spacing(4),
+      gridRow: 1
+    }
+  }),
 
   socialLink: ({ theme }) => ({
     'backgroundColor': theme.palette.primary.main,
@@ -72,35 +120,50 @@ export const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  navigationItems: ({ theme }) => ({
-    gridColumn: '1 / 2',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: theme.spacing(4),
+  disclaimer: ({ theme }) => ({
+    gridRow: 4,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
 
     [theme.breakpoints.up('md')]: {
-      gridColumn: '2 / -1',
-      display: 'grid',
-      gridTemplateColumns: 'repeat(2, 1fr)'
+      gridRow: 2,
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-half'
     }
   }),
 
-  navigationItem: () => ({}),
-
-  introContents: () => ({}),
-
-  introContent: () => ({}),
-
-  legalSection: () => ({}),
+  legalSection: () => ({
+    display: 'contents' // take out of flow
+  }),
 
   copyrightDisclaimer: ({ theme }) => ({
-    'color': theme.palette.primary.main,
-    '*': {
-      ...theme.typography.body2
+    gridRow: 5,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridRow: 2,
+      gridColumnStart: 'content-half',
+      gridColumnEnd: 'content-end'
     }
   }),
 
-  legalLinks: () => ({}),
+  legalLinks: ({ theme }) => ({
+    gridRow: 6,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+    display: 'inline-flex',
+    alignItems: 'center',
+    height: '100%',
+    justifySelf: 'flex-end',
+    gap: theme.spacing(2),
+
+    [theme.breakpoints.up('md')]: {
+      gridColumn: 'content-start / content-end',
+      gridRow: 3,
+      marginLeft: 'auto'
+    }
+  }),
 
   legalLink: () => ({})
 };

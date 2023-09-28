@@ -15,7 +15,7 @@ import MuiLink from '@mui/material/Link';
 import Button from '@mui/material/Button';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
-import { NextLinkComposedProps, LinkProps } from './Link.types';
+import type { NextLinkComposedProps, LinkProps } from './Link.types';
 
 export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComposedProps & { onClick?: any }>(
   function NextLinkComposed(props, ref) {
@@ -47,7 +47,7 @@ export const NextLinkComposed = React.forwardRef<HTMLAnchorElement, NextLinkComp
         legacyBehavior={passHref}
         locale={locale}>
         <RootLink ref={ref} {...other} onClick={onClick}>
-          {text || children}
+          {children || text}
         </RootLink>
       </NextLink>
     );

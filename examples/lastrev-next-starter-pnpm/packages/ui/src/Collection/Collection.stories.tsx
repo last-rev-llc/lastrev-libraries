@@ -1,8 +1,8 @@
 import React from 'react';
 import Collection from './Collection';
 import { collectionBaseMock } from './Collection.mock';
-import { CollectionProps, CollectionVariants } from './Collection.types';
-import { CardVariants } from '../Card/Card.types';
+import type { CollectionProps, CollectionVariants } from './Collection.types';
+import type { CardVariants } from '../Card/Card.types';
 
 export default {
   title: '3. Modules/Collection',

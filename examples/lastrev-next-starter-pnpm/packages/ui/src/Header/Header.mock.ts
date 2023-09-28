@@ -1,24 +1,68 @@
 import { lorem } from 'faker';
 
-import { linkBaseMock } from '../Link/Link.mock';
+import { linkBaseMock, linkButtonMock } from '../Link/Link.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
-import navigationItemMock from '../NavigationItem/NavigationItem.mock';
+import {
+  navigationItemBaseMock,
+  navigationItemWithChildrenMock,
+  navigationItemWithChildrenNestedMock
+} from '../NavigationItem/NavigationItem.mock';
 
-import { HeaderProps } from './Header.types';
+import { type HeaderProps, HeaderVariants } from './Header.types';
+import siteMessageBaseMock from '../SiteMessage/SiteMessage.mock';
 
-const headerDefaultMock: HeaderProps = {
-  id: lorem.word(),
-  __typename: 'Header',
-  variant: 'elevation',
-  logo: mediaBaseImageMock(),
-  logoUrl: linkBaseMock(),
-  navigationItems: [navigationItemMock(), navigationItemMock(), navigationItemMock()],
-  sidekickLookup: {} // TODO: Mock
+const headerDefaultMock = (): HeaderProps => {
+  const siteMessageMock = siteMessageBaseMock();
+  return {
+    id: lorem.word(),
+    __typename: 'Header',
+    variant: HeaderVariants.elevation,
+    logo: mediaBaseImageMock(),
+    ctaItems: [linkButtonMock({ text: lorem.words(1) }), linkButtonMock({ text: lorem.words(1) })],
+    logoUrl: linkBaseMock(),
+    navigationItems: [navigationItemBaseMock(), navigationItemBaseMock(), navigationItemBaseMock()],
+    siteMessageIcon: siteMessageMock.icon,
+    siteMessageLink: siteMessageMock.link,
+    siteMessageText: siteMessageMock.text,
+    sidekickLookup: {} // TODO: Mock
+  };
 };
 
-export const headerBaseMock = ({ ...override } = {}) => ({
-  ...headerDefaultMock,
-  ...override
-});
+export const headerBaseMock = ({ ...override } = {}) => {
+  const mock = {
+    ...headerDefaultMock(),
+    ...override
+  };
+
+  return { ...mock, hasCtaItems: !!mock?.ctaItems?.length };
+};
+
+export const headerChildrenMock = ({ ...override } = {}) => {
+  const mock = {
+    ...headerDefaultMock(),
+    navigationItems: [
+      navigationItemWithChildrenMock(),
+      navigationItemWithChildrenMock(),
+      navigationItemWithChildrenMock()
+    ],
+    ...override
+  };
+
+  return { ...mock, hasCtaItems: !!mock?.ctaItems?.length };
+};
+
+export const headerChildrenNestedMock = ({ ...override } = {}) => {
+  const mock = {
+    ...headerDefaultMock(),
+    navigationItems: [
+      navigationItemWithChildrenNestedMock(),
+      navigationItemWithChildrenNestedMock(),
+      navigationItemWithChildrenNestedMock()
+    ],
+    ...override
+  };
+
+  return { ...mock, hasCtaItems: !!mock?.ctaItems?.length };
+};
 
 export default headerBaseMock;

@@ -1,4 +1,4 @@
-import { FabProps as MuiFabProps } from '@mui/material';
+import type { FabProps as MuiFabProps } from '@mui/material';
 
 export interface BackToTopProps {
   FabProps?: MuiFabProps;

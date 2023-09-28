@@ -1,5 +1,5 @@
 import { lorem } from 'faker';
-import { ImageProps } from './Image.types';
+import type { ImageProps } from './Image.types';
 
 // TODO: Use Media Mock
 const imageDefaultMock: ImageProps = {

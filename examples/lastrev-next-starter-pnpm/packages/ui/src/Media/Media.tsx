@@ -1,12 +1,15 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
 import { useAmp } from 'next/amp';
+
+import { styled } from '@mui/material/styles';
+
+import sidekick from '@last-rev/contentful-sidekick-util';
+
 import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 import ArtDirectedImage from '../ArtDirectedImage';
-import sidekick from '@last-rev/contentful-sidekick-util';
 
-import { MediaProps, MediaVideoProps } from './Media.types';
+import type { MediaProps, MediaVideoProps } from './Media.types';
 
 // import dynamic from 'next/dynamic';
 

@@ -1,18 +1,50 @@
-import { LinkProps } from '../Link';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-export interface NavigationItemProps extends LinkProps {
+import type { LinkProps } from '../Link';
+
+import { NavigationItem_BaseFragmentFragment } from '@graphql-sdk/types';
+
+export enum NavigationLinkVariants {
+  default = 'default',
+  link = 'link',
+  linkBolded = 'linkBolded',
+  group = 'group',
+  label = 'label',
+  localeList = 'localeList',
+  buttonOutlined = 'button-outlined',
+  buttonContainer = 'button-container',
+  featured = 'featured'
+}
+
+export interface NavigationItemProps extends NavigationItem_BaseFragmentFragment {
   subNavigation?: Array<LinkProps | NavigationItemProps>;
   sidekickLookup?: any;
   onRequestClose?: any;
+  variant?: NavigationLinkVariants;
 }
 
 export interface NavigationItemClasses {
-  /** Styles applied to the root element. */
   root: string;
-  /** Styles applied to the menuRoot element. */
   menuRoot: string;
 }
 
 export declare type NavigationItemClassKey = keyof NavigationItemClasses;
-declare const accordionClasses: NavigationItemClasses;
-export default accordionClasses;
+declare module '@mui/material/styles' {
+  export interface ComponentNameToClassKey {
+    NavigationItem: NavigationItemClassKey;
+  }
+
+  export interface ComponentsPropsList {
+    NavigationItem: NavigationItemProps;
+  }
+}
+
+declare module '@mui/material/styles' {
+  interface Components {
+    NavigationItem?: {
+      defaultProps?: ComponentsProps['NavigationItem'];
+      styleOverrides?: ComponentsOverrides<Theme>['NavigationItem'];
+      variants?: ComponentsVariants['NavigationItem'];
+    };
+  }
+}

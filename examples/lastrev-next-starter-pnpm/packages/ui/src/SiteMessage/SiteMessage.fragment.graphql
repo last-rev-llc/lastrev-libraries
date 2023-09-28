@@ -1,0 +1,13 @@
+fragment SiteMessage_BaseFragment on SiteMessage {
+  ...Content_BaseFragment
+  icon {
+    ...Media_BaseFragment
+  }
+  text {
+    ...RichText_BaseFragment
+  }
+
+  link {
+    ...Link_BaseFragment
+  }
+}

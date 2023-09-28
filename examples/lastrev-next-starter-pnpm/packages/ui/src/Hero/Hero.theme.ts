@@ -1,4 +1,10 @@
-import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type {
+  Theme,
+  ThemeOptions,
+  ComponentsProps,
+  ComponentsOverrides,
+  ComponentsVariants
+} from '@mui/material/styles';
 import type { Color } from '@mui/material';
 
 export const defaultProps: ComponentsProps['Hero'] = {

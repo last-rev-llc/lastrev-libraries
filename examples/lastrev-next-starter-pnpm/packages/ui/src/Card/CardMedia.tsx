@@ -9,7 +9,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import { CardProps } from './Card.types';
+import type { CardProps } from './Card.types';
 // import Link from '../Link';
 
 import getFirstOfArray from '../utils/getFirstOfArray';

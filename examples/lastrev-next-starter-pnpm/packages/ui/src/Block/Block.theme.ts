@@ -1,6 +1,13 @@
-import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type {
+  Theme,
+  ThemeOptions,
+  ComponentsProps,
+  ComponentsOverrides,
+  ComponentsVariants
+} from '@mui/material/styles';
 
 export const defaultProps: ComponentsProps['Block'] = {};
+
 export const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),

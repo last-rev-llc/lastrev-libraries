@@ -1,89 +1,114 @@
 import React from 'react';
+
 import { styled } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
-import MuiContainer from '@mui/material/Container';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
-// import Link from '../Link';
+import Grid from '../Grid';
 
-import { FooterProps } from './Footer.types';
-import { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
-import { MediaProps } from '../Media/Media.types';
-import { LinkProps } from '../Link/Link.types';
+import type { FooterProps, FooterOwnerState } from './Footer.types';
+import type { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
+import type { LinkProps } from '../Link/Link.types';
 
-const Footer = ({
-  logo,
-  logoUrl,
-  disclaimer,
-  socialLinks,
-  navigationItems,
-  introContents,
-  copyrightDisclaimer,
-  legalLinks,
-  sidekickLookup
-}: FooterProps) => {
+const Footer = (props: FooterProps) => {
+  const ownerState = { ...props };
+
+  const {
+    logo,
+    logoUrl,
+    disclaimer,
+    socialLinks,
+    navigationItems,
+    introContents,
+    copyrightDisclaimer,
+    legalLinks,
+    sidekickLookup
+  } = props;
+
   return (
-    <Root {...sidekick(sidekickLookup)} component="footer">
+    <Root {...sidekick(sidekickLookup)} component="footer" ownerState={ownerState}>
       {!!introContents?.length && (
-        <IntroContents>
+        <IntroContentsWrap ownerState={ownerState}>
           {introContents?.map((content, index) => (
-            // @ts-ignore: TODO: ContentModule doesn't work with custom components (can we extend props?)
             <IntroContent key={`footer-intro-contents-${index}-${content?.id}`} {...(content as any)} />
           ))}
-        </IntroContents>
+        </IntroContentsWrap>
       )}
 
-      <FooterContent>
-        <Container>
-          <MainSection>
-            {!!logo && !!logoUrl && (
-              <LogoUrl noLinkStyle {...(logoUrl as LinkProps)}>
-                <Logo {...(logo as MediaProps)} />
-              </LogoUrl>
-            )}
-            {!!disclaimer && (
-              <Disclaimer {...sidekick(sidekickLookup, 'disclaimer')} __typename="Text" body={disclaimer} />
-            )}
-            {!!socialLinks?.length && (
-              <SocialLinks>
-                {socialLinks.map((link) => (
-                  <SocialLink key={link?.id} {...sidekick(sidekickLookup, 'sidekickLookup')} {...(link as LinkProps)} />
-                ))}
-              </SocialLinks>
-            )}
-          </MainSection>
+      <ContentOuterGrid ownerState={ownerState}>
+        {logo ? (
+          <LogoRoot {...logoUrl} aria-label={'Go to homepage'} ownerState={ownerState} text={undefined}>
+            <Logo {...logo} __typename="Media" priority alt={logo?.title ?? 'Go to homepage'} ownerState={ownerState} />
+          </LogoRoot>
+        ) : null}
 
-          {!!navigationItems?.length && (
-            <NavigationItems>
-              {navigationItems.map((item) => (
-                <NavigationItem key={item?.id} {...(item as NavigationItemProps)} variant={`${item?.variant}Footer`} />
+        {!!navigationItems?.length && (
+          <FooterMenuNav component="nav" ownerState={ownerState}>
+            <FooterMenuNavItems ownerState={ownerState}>
+              {navigationItems.map((navItem: any, index: number) => (
+                <FooterMenuNavItem key={`${navItem.id}-${index}`} ownerState={ownerState}>
+                  <ContentModule
+                    {...(navItem as NavigationItemProps)}
+                    variant={`${navItem?.variant}Footer`}
+                    __typename="NavigationItem"
+                  />
+                </FooterMenuNavItem>
               ))}
-            </NavigationItems>
-          )}
-        </Container>
+            </FooterMenuNavItems>
+          </FooterMenuNav>
+        )}
 
-        <Container>
-          <LegalSection>
-            {!!copyrightDisclaimer && (
-              <CopyrightDisclaimer
-                {...sidekick(sidekickLookup, 'copyrightDisclaimer')}
-                __typename="Text"
-                body={copyrightDisclaimer}
+        {!!socialLinks?.length && (
+          <SocialLinks ownerState={ownerState}>
+            {socialLinks.map((link) => (
+              <SocialLink
+                key={link?.id}
+                {...sidekick(sidekickLookup, 'sidekickLookup')}
+                {...(link as LinkProps)}
+                ownerState={ownerState}
               />
-            )}
-            {!!legalLinks?.length && (
-              <LegalLinks>
-                {legalLinks.map((link?: LinkProps) => (
-                  <LegalLink key={link?.id} {...sidekick(sidekickLookup, 'sidekickLookup')} {...(link as LinkProps)} />
-                ))}
-              </LegalLinks>
-            )}
-          </LegalSection>
-        </Container>
-      </FooterContent>
+            ))}
+          </SocialLinks>
+        )}
+
+        <LegalSection ownerState={ownerState}>
+          {!!disclaimer && (
+            <Disclaimer
+              {...sidekick(sidekickLookup, 'disclaimer')}
+              __typename="Text"
+              body={disclaimer}
+              ownerState={ownerState}
+            />
+          )}
+
+          {!!copyrightDisclaimer && (
+            <CopyrightDisclaimer
+              {...sidekick(sidekickLookup, 'copyrightDisclaimer')}
+              __typename="Text"
+              body={copyrightDisclaimer}
+              ownerState={ownerState}
+            />
+          )}
+
+          {!!legalLinks?.length && (
+            <LegalLinks ownerState={ownerState}>
+              {legalLinks.map((link?: LinkProps) => (
+                <LegalLink
+                  key={link?.id}
+                  {...sidekick(sidekickLookup, 'sidekickLookup')}
+                  {...(link as LinkProps)}
+                  ownerState={ownerState}
+                />
+              ))}
+            </LegalLinks>
+          )}
+        </LegalSection>
+      </ContentOuterGrid>
     </Root>
   );
 };
@@ -92,102 +117,96 @@ const Root = styled(Box, {
   name: 'Footer',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
-})(() => ({}));
+})<{ ownerState: FooterOwnerState }>``;
 
-const FooterContent = styled(Box, {
+const ContentOuterGrid = styled(Grid, {
   name: 'Footer',
-  slot: 'FooterContent',
-  overridesResolver: (_, styles) => [styles.footerContent]
-})(() => ({}));
+  slot: 'ContentOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentOuterGrid]
+})<{ ownerState: FooterOwnerState }>``;
 
-const Container = styled(MuiContainer, {
+const LogoRoot = styled(ContentModule, {
   name: 'Footer',
-  slot: 'Container',
-  overridesResolver: (_, styles) => [styles.container]
-})(() => ({}));
-
-const MainSection = styled(Box, {
-  name: 'Footer',
-  slot: 'MainSection',
-  overridesResolver: (_, styles) => [styles.mainSection]
-})(() => ({}));
+  slot: 'LogoRoot',
+  overridesResolver: (_, styles) => [styles.logoRoot]
+})<{ ownerState: FooterOwnerState }>``;
 
 const Logo = styled(ContentModule, {
   name: 'Footer',
   slot: 'Logo',
   overridesResolver: (_, styles) => [styles.logo]
-})(() => ({}));
-
-const LogoUrl = styled(ContentModule, {
-  name: 'Footer',
-  slot: 'LogoUrl',
-  overridesResolver: (_, styles) => [styles.logoUrl]
-})(() => ({}));
+})<{ ownerState: FooterOwnerState }>``;
 
 const Disclaimer = styled(ContentModule, {
   name: 'Footer',
   slot: 'Disclaimer',
   overridesResolver: (_, styles) => [styles.disclaimer]
-})(() => ({}));
+})<{ ownerState: FooterOwnerState }>``;
 
 const SocialLinks = styled(Box, {
   name: 'Footer',
   slot: 'SocialLinks',
   overridesResolver: (_, styles) => [styles.socialLinks]
-})(() => ({}));
+})<{ ownerState: FooterOwnerState }>``;
 
 const SocialLink = styled(ContentModule, {
   name: 'Footer',
   slot: 'SocialLink',
   overridesResolver: (_, styles) => [styles.socialLink]
-})(() => ({}));
+})<{ ownerState: FooterOwnerState }>``;
 
-const NavigationItems = styled(Box, {
+const FooterMenuNav = styled(Box, {
   name: 'Footer',
-  slot: 'NavigationItems',
-  overridesResolver: (_, styles) => [styles.navigationItems]
-})(() => ({}));
+  slot: 'FooterMenuNav',
+  overridesResolver: (_, styles) => [styles.footerMenuNav]
+})<{ ownerState: FooterOwnerState }>``;
 
-const NavigationItem = styled(ContentModule, {
+const FooterMenuNavItems = styled(List, {
   name: 'Footer',
-  slot: 'NavigationItem',
-  overridesResolver: (_, styles) => [styles.navigationItem]
-})(() => ({}));
+  slot: 'footerMenuNavItems',
+  overridesResolver: (_, styles) => [styles.footerMenuNavItems]
+})<{ ownerState: FooterOwnerState }>``;
 
-const IntroContents = styled(Box, {
+const FooterMenuNavItem = styled(ListItem, {
   name: 'Footer',
-  slot: 'IntroContents',
-  overridesResolver: (_, styles) => [styles.introContents]
-})(() => ({}));
+  slot: 'FooterMenuNavItem',
+  overridesResolver: (_, styles) => [styles.footerMenuNavItem]
+})<{ ownerState: FooterOwnerState }>``;
+
+const IntroContentsWrap = styled(Box, {
+  name: 'Footer',
+  slot: 'IntroContentsWrap',
+  overridesResolver: (_, styles) => [styles.introContentsWrap]
+})<{ ownerState: FooterOwnerState }>``;
 
 const IntroContent = styled(ContentModule, {
   name: 'Footer',
   slot: 'IntroContent',
   overridesResolver: (_, styles) => [styles.introContent]
-})(() => ({}));
+})<{ ownerState: FooterOwnerState }>``;
 
 const LegalSection = styled(Box, {
   name: 'Footer',
   slot: 'LegalSection',
   overridesResolver: (_, styles) => [styles.legalSection]
-})(() => ({}));
+})<{ ownerState: FooterOwnerState }>``;
 
 const CopyrightDisclaimer = styled(ContentModule, {
   name: 'Footer',
   slot: 'CopyrightDisclaimer',
   overridesResolver: (_, styles) => [styles.copyrightDisclaimer]
-})(() => ({}));
+})<{ ownerState: FooterOwnerState }>``;
 
 const LegalLinks = styled(Box, {
   name: 'Footer',
   slot: 'LegalLinks',
   overridesResolver: (_, styles) => [styles.legalLinks]
-})(() => ({}));
+})<{ ownerState: FooterOwnerState }>``;
 
 const LegalLink = styled(ContentModule, {
   name: 'Footer',
   slot: 'LegalLink',
   overridesResolver: (_, styles) => [styles.legalLink]
-})(() => ({}));
+})<{ ownerState: FooterOwnerState }>``;
 
 export default Footer;

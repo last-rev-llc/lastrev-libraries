@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { styled } from '@mui/material/styles';
 import MuiCard from '@mui/material/Card';
 import { default as MuiCardMedia } from '@mui/material/CardMedia';
@@ -7,14 +8,14 @@ import CardContent from '@mui/material/CardContent';
 import CardActionArea from '@mui/material/CardActionArea';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
+
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import getFirstOfArray from '../utils/getFirstOfArray';
-import useThemeProps from '../utils/useThemeProps';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import { CardProps, CardOwnerState } from './Card.types';
-import { LinkProps } from '../Link/Link.types';
+import type { CardProps, CardOwnerState } from './Card.types';
+import type { LinkProps } from '../Link/Link.types';
 
 export const Card = (props: CardProps) => {
   const { id, media, overline, title, subtitle, body, link, actions, variant, loading, position, sidekickLookup } =

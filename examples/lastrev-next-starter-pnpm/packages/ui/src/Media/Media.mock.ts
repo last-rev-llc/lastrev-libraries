@@ -1,5 +1,5 @@
 import { lorem } from 'faker';
-import { MediaProps, MediaVideoProps, AssetProps, FileProps } from './Media.types';
+import type { MediaProps, MediaVideoProps, AssetProps, FileProps } from './Media.types';
 
 import { cleanSVG } from '../../../graphql-extensions/src/utils/cleanSVG';
 const getSvgContent = (url: string) =>
@@ -10,7 +10,7 @@ const getSvgContent = (url: string) =>
     });
 
 export const defaultFileImageMock = ({ ...override } = {}): FileProps => ({
-  url: `https://source.unsplash.com/random/500x500?rnd=${Math.random()}`,
+  url: `https://source.unsplash.com/random/1280x500?rnd=${Math.random()}`,
   width: 1920,
   height: 1080,
   ...override

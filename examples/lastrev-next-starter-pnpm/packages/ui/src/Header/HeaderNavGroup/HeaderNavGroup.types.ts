@@ -1,3 +1,5 @@
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+
 import { NavigationItem_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface HeaderNavGroupProps extends NavigationItem_BaseFragmentFragment {
@@ -20,3 +22,23 @@ export interface HeaderNavGroupClasses {
 }
 
 export declare type HeaderNavGroupClassKey = keyof HeaderNavGroupClasses;
+
+declare module '@mui/material/styles' {
+  export interface ComponentNameToClassKey {
+    HeaderNavGroup: HeaderNavGroupClassKey;
+  }
+
+  export interface ComponentsPropsList {
+    HeaderNavGroup: HeaderNavGroupProps;
+  }
+}
+
+declare module '@mui/material/styles' {
+  interface Components {
+    HeaderNavGroup?: {
+      defaultProps?: ComponentsProps['HeaderNavGroup'];
+      styleOverrides?: ComponentsOverrides<Theme>['HeaderNavGroup'];
+      variants?: ComponentsVariants['HeaderNavGroup'];
+    };
+  }
+}

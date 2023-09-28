@@ -1,6 +1,8 @@
 import React from 'react';
+
 import { styled } from '@mui/material/styles';
-import { GridProps } from './Grid.types';
+
+import type { GridProps } from './Grid.types';
 
 const Grid = ({ children, ...props }: GridProps) => {
   return <Root {...props}>{children}</Root>;

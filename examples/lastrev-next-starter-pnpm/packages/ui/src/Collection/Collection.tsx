@@ -10,7 +10,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import { CollectionProps, CollectionOwnerState } from './Collection.types';
+import type { CollectionProps, CollectionOwnerState } from './Collection.types';
 import Grid from '../Grid';
 
 export const Collection = (props: CollectionProps) => {

@@ -1,6 +1,8 @@
 import { lorem } from 'faker';
+
 import { introTextMock } from '../Text/Text.mock';
-import { FormProps } from './Form.types';
+
+import type { FormProps } from './Form.types';
 
 // TODO
 const formDefaultMock: FormProps = {

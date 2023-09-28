@@ -16,11 +16,14 @@ const Accordion = dynamic(() => import('./Accordion'));
 const Section = dynamic(() => import('./Section'));
 const NavigationBar = dynamic(() => import('./NavigationBar'));
 const NavigationItem = dynamic(() => import('./NavigationItem'));
-const HeaderNavLink = dynamic(() => import('./Header/HeaderNavLink'));
-const HeaderNavGroup = dynamic(() => import('./Header/HeaderNavGroup'));
-const HeaderNavLinkNested = dynamic(() => import('./Header/HeaderNavLinkNested'));
-const FooterNavigationItem = dynamic(() => import('./FooterNavigationItem'));
-const FooterNavigationItemGroup = dynamic(() => import('./FooterNavigationItemGroup'));
+const Header = dynamic(() => import('./Header/Header'));
+const Footer = dynamic(() => import('./Footer/Footer'));
+const HeaderNavLink = dynamic(() => import('./Header/HeaderNavLink/HeaderNavLink'));
+const HeaderNavGroup = dynamic(() => import('./Header/HeaderNavGroup/HeaderNavGroup'));
+const HeaderNavLinkNested = dynamic(() => import('./Header/HeaderNavLinkNested/HeaderNavLinkNested'));
+const FooterNavigationItem = dynamic(() => import('./Footer/FooterNavigationItem'));
+const FooterNavigationItemGroup = dynamic(() => import('./Footer/FooterNavigationItemGroup'));
+const SiteMessage = dynamic(() => import('./SiteMessage'));
 
 export const contentMapping: {
   [key: string]: any;
@@ -29,6 +32,8 @@ export const contentMapping: {
   Hero,
   Link,
   Media,
+  Header,
+  Footer,
   Page,
   Text,
   RichText,
@@ -44,12 +49,16 @@ export const contentMapping: {
   Tabs,
   Section,
   NavigationBar,
-  NavigationItem,
-  HeaderNavLink,
-  HeaderNavGroup,
-  HeaderNavLinkNested,
   FooterNavigationItem,
-  FooterNavigationItemGroup
+  FooterNavigationItemGroup,
+  NavigationItem,
+  'NavigationItem:link': HeaderNavLink,
+  'NavigationItem:linkNested': HeaderNavLinkNested,
+  'NavigationItem:group': HeaderNavGroup,
+  'NavigationItem:linkFooter': FooterNavigationItem,
+  'NavigationItem:linkBoldedFooter': FooterNavigationItem,
+  'NavigationItem:groupFooter': FooterNavigationItemGroup,
+  SiteMessage
 };
 
 export default contentMapping;

@@ -1,6 +1,6 @@
 import { navigationItemBaseMock } from '../NavigationItem/NavigationItem.mock';
 
-import { NavigationBarProps } from './NavigationBar.types';
+import type { NavigationBarProps } from './NavigationBar.types';
 
 const navigationBarDefaultMock: NavigationBarProps = {
   variant: 'NavigationBar-three-per-row',

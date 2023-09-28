@@ -3,7 +3,7 @@ import { lorem } from 'faker';
 import BLOCKS from './BLOCKS';
 import MARKS from './MARKS';
 
-import { TextProps, RichText } from './RichText.types';
+import type { TextProps, RichText } from './RichText.types';
 
 export const valueNode = (type: string = 'text') => ({
   data: {},

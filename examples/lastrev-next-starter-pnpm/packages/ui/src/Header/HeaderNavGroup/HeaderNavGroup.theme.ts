@@ -1,31 +1,35 @@
-import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type {
+  Theme,
+  ThemeOptions,
+  ComponentsProps,
+  ComponentsOverrides,
+  ComponentsVariants
+} from '@mui/material/styles';
 
 export const defaultProps: ComponentsProps['HeaderNavGroup'] = {};
 
 export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
   root: ({ theme }) => ({
+    [theme.breakpoints.up('sm')]: {
+      width: 231
+    },
+
     [theme.breakpoints.up('md')]: {
       width: '100%'
-    },
-    [theme.breakpoints.up('lg')]: {
-      width: 231
     }
   }),
 
   navItemLink: ({ theme }) => ({
-    ...theme.typography.bodySmall,
+    ...theme.typography.body2,
     'padding': 0,
     'border': 'none',
-    'color': theme.palette.common.white,
     'flexGrow': '1',
     'alignItems': 'center',
     'display': 'flex',
     'width': '100%',
     'cursor': 'pointer',
-
     '&:is(:hover, :focus-within):not(:focus-visible)': {
-      textDecoration: 'none',
-      color: '#00fff2'
+      textDecoration: 'none'
     },
 
     '.MuiSvgIcon-root': {
@@ -43,13 +47,12 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
   }),
 
   navItemSubMenu: ({ theme }) => ({
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(1, 1fr)',
-      gap: theme.spacing(1)
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gap: theme.spacing(2, 3)
     },
-
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'block'
     }
   }),
@@ -70,7 +73,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
 
 const createVariants = (_theme: Theme): ComponentsVariants['HeaderNavGroup'] => [];
 
-export default (theme: Theme): ThemeOptions => ({
+export const headerNavGroupTheme = (theme: Theme): ThemeOptions => ({
   components: {
     HeaderNavGroup: {
       defaultProps,
@@ -79,3 +82,5 @@ export default (theme: Theme): ThemeOptions => ({
     }
   }
 });
+
+export default headerNavGroupTheme;

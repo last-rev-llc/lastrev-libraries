@@ -2,6 +2,7 @@ import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { Mappers, ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
 import createPath from './utils/createPath';
+import defaultResolver from './utils/defaultResolver';
 
 type TargetMapping = {
   'New Window': string;
@@ -46,10 +47,12 @@ export const mappers: Mappers = {
     Link: {
       href: hrefUrlResolver,
       target: targetResolver
+      // variant: defaultResolver
     },
     NavigationItem: {
       link: (x: any) => ({ ...x, fieldName: 'link' }),
       children: () => []
+      // variant: defaultResolver
     }
   }
 };

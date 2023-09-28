@@ -9,7 +9,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../../ErrorBoundary';
 import ContentModule from '../../ContentModule';
 
-import { HeaderNavGroupProps } from './HeaderNavGroup.types';
+import type { HeaderNavGroupProps } from './HeaderNavGroup.types';
 
 export const HeaderNavGroup = ({
   variant,
@@ -60,7 +60,7 @@ export const HeaderNavGroup = ({
                 <NavItemSubMenuItem key={`${navItemId}-nav-item-${item.id}-${index}`}>
                   <NavItemGroup
                     {...item}
-                    variant="headerLinkNested"
+                    variant="linkNested"
                     __typename="NavigationItem"
                     onClick={onSubNavItemClick}
                     onRequestClose={onRequestClose}

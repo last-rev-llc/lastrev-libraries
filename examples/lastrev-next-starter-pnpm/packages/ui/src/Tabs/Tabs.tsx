@@ -14,7 +14,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import { TabsProps } from './Tabs.types';
+import type { TabsProps } from './Tabs.types';
 
 export const Tabs = ({ id, items, variant, sidekickLookup, introText, ...props }: TabsProps) => {
   const [value, setValue] = React.useState('0');

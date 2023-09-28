@@ -1,7 +1,7 @@
 import * as React from 'react';
 import mount from '../../../cypress/mount';
 import BackToTop from './BackToTop';
-import { BackToTopProps } from './BackToTop.types';
+import type { BackToTopProps } from './BackToTop.types';
 import mockContent from './BackToTop.mock';
 
 let mockedContent: BackToTopProps = {};

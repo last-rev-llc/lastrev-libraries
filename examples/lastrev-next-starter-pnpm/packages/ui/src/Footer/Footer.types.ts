@@ -1,22 +1,25 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Footer_BaseFragmentFragment } from '@graphql-sdk/types';
+import { Footer_BaseFragmentFragment, Link_BaseFragmentFragment } from '@graphql-sdk/types';
 
-export interface FooterProps extends Footer_BaseFragmentFragment {}
+export interface FooterProps extends Footer_BaseFragmentFragment {
+  socialLinks?: [Link_BaseFragmentFragment];
+}
+
+export interface FooterOwnerState extends FooterProps {}
 
 export interface FooterClasses {
   root: string;
-  footerContent: string;
-  container: string;
-  mainSection: string;
+  contentOuterGrid: string;
+  logoRoot: string;
   logo: string;
-  logoUrl: string;
   disclaimer: string;
   socialLinks: string;
   socialLink: string;
-  navigationItems: string;
-  navigationItem: string;
-  introContents: string;
+  footerMenuNav: string;
+  footerMenuNavItems: string;
+  footerMenuNavItem: string;
+  introContentsWrap: string;
   introContent: string;
   divider: string;
   legalSection: string;
@@ -31,18 +34,17 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Footer: FooterClassKey;
   }
+
   export interface ComponentsPropsList {
     Footer: FooterProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     Footer?: {
       defaultProps?: ComponentsProps['Footer'];
       styleOverrides?: ComponentsOverrides<Theme>['Footer'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Footer'];
     };
   }

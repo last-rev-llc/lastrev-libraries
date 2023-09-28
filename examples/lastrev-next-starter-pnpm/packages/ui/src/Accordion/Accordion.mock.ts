@@ -1,10 +1,12 @@
 import { lorem } from 'faker';
-import { AccordionProps } from './Accordion.types';
+
 import { cardBaseMock } from '../Card/Card.mock';
 import { blockContentOnLeftMock } from '../Block/Block.mock';
 import { collectionBaseMock } from '../Collection/Collection.mock';
 import { quoteBaseMock } from '../Quote/Quote.mock';
 import { introTextMock } from '../Text/Text.mock';
+
+import type { AccordionProps } from './Accordion.types';
 
 const accordionDefaultMock: AccordionProps = {
   id: lorem.word(),

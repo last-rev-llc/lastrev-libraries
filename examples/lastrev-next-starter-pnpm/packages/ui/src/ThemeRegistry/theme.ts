@@ -226,12 +226,13 @@ const baseTheme: ThemeOptions = {
 };
 
 const coreTheme = createTheme(baseTheme);
+
 export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
-  breakpoints: {
-    up(key) {
+  containerBreakpoints: {
+    up(key: any) {
       return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
     },
-    down(key) {
+    down(key: any) {
       return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
     }
     // Add any custom breakpoints here

@@ -1,10 +1,10 @@
 import { lorem } from 'faker';
 
 import { staticRichTextMock } from '../RichText/RichText.mock';
-import { mediaBaseImageMock, mediaBaseSvgMock } from '../Media/Media.mock';
+import { mediaBaseImageMock } from '../Media/Media.mock';
 import { linkButtonMock, linkBaseMock } from '../Link/Link.mock';
 
-import { CardProps, CardVariants } from './Card.types';
+import { type CardProps, CardVariants } from './Card.types';
 
 export const cardBaseMock = (override?: Partial<CardProps>) => {
   const baseMock: Partial<CardProps> = {

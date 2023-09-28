@@ -1,5 +1,4 @@
-import {
-  TypographyStyle,
+import type {
   Theme,
   ThemeOptions,
   ComponentsProps,
@@ -7,7 +6,7 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['FooterNavigationGroup'] = {};
+export const defaultProps: ComponentsProps['FooterNavigationItemGroup'] = {};
 
 export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGroup'] = {
   root: ({ theme }) => ({
@@ -18,11 +17,13 @@ export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGro
       gap: theme.spacing(3)
     }
   }),
+
   label: ({ theme }) => ({
     color: theme.palette.secondary.main,
     textDecoration: 'none',
     ...theme.typography.body2
   }),
+
   navigationItems: ({ theme }) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
@@ -35,6 +36,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGro
       gap: theme.spacing(2)
     }
   }),
+
   navigationItem: ({ theme }) => ({
     color: theme.palette.secondary.main,
     textDecoration: 'none',
@@ -44,7 +46,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGro
 
 const createVariants = (_theme: Theme): ComponentsVariants['FooterNavigationItemGroup'] => [];
 
-export const footernavigationitemgroupTheme = (theme: Theme): ThemeOptions => ({
+export const footerNavigationItemGroupTheme = (theme: Theme): ThemeOptions => ({
   components: {
     FooterNavigationItemGroup: {
       defaultProps,
@@ -54,4 +56,4 @@ export const footernavigationitemgroupTheme = (theme: Theme): ThemeOptions => ({
   }
 });
 
-export default footernavigationitemgroupTheme;
+export default footerNavigationItemGroupTheme;

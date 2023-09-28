@@ -5,7 +5,7 @@ import { mediaBaseImageMock } from '../Media/Media.mock';
 import { richTextMock } from '../RichText/RichText.mock';
 import { introTextMock } from '../Text/Text.mock';
 
-import { GridProps } from './Grid.types';
+import type { GridProps } from './Grid.types';
 
 const gridDefaultMock: GridProps = {
   id: lorem.word(),

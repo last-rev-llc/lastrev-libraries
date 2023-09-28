@@ -10,8 +10,8 @@ import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import Link from '../Link';
 
-import { QuoteProps } from './Quote.types';
-import { MediaProps } from '../Media/Media.types';
+import type { QuoteProps } from './Quote.types';
+import type { MediaProps } from '../Media/Media.types';
 
 export const Quote = ({
   sidekickLookup,

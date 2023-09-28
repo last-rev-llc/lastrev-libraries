@@ -3,7 +3,7 @@ import { lorem } from 'faker';
 import { baseMock } from '../RichText/RichText.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
 
-import { SectionProps } from './Section.types';
+import type { SectionProps } from './Section.types';
 
 const sectionDefaultMock: SectionProps = {
   id: lorem.word(),

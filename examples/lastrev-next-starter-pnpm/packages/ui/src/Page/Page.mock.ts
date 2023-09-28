@@ -1,5 +1,5 @@
 import { lorem } from 'faker';
-import { PageProps } from './Page.types';
+import type { PageProps } from './Page.types';
 import { blockBaseMock } from '../Block/Block.mock';
 
 const pageDefaultMock: PageProps = {

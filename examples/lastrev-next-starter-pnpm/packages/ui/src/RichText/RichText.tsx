@@ -18,7 +18,7 @@ import INLINES from './INLINES';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import { RichTextProps } from './RichText.types';
+import type { RichTextProps } from './RichText.types';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 const keyBy = (key: string, xs: any[]) => xs.filter(Boolean).reduce((acc, x) => ({ ...acc, [x[key]]: x }), {});
