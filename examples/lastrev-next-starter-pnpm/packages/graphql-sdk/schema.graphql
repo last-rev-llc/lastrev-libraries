@@ -8,9 +8,7 @@ directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
 
 directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
 
-directive @tag(
-  name: String!
-) on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
+directive @tag(name: String!) on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
 
 type Asset {
   description: String
@@ -208,9 +206,7 @@ input ContentsFilter {
   preview: Boolean
 }
 
-"""
-Date custom scalar type
-"""
+"""Date custom scalar type"""
 scalar Date
 
 type ElementForm implements Content {
@@ -243,10 +239,16 @@ type Footer implements Content {
   animation: JSON
   copyrightDisclaimer: RichText
   disclaimerText: RichText
+  hasSocialLinks: Boolean
   id: String
   internalTitle: String
+  introContents: [Content]
+  legalLinks: [Link]
   logo: Media
+  logoUrl: Link
+  navigationItems: [NavigationItem]
   sidekickLookup: JSON
+  socialLinks: [Link]
   theme: [Theme]
   variant: String
 }
@@ -443,15 +445,13 @@ type Quote implements Content {
   animation: JSON
   authorName: String
   authorTitle: String
-  body: RichText
   id: String
   image: Media
   internalTitle: String
-  media: [Media]
+  logo: Media
   quote: String
   sidekickLookup: JSON
   theme: [Theme]
-  title: String
   variant: String
 }
 
