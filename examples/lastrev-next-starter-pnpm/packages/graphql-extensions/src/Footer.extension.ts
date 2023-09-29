@@ -7,11 +7,11 @@ export const typeDefs = gql`
     introContents: [Content]
     logo: Media
     logoUrl: Link
-    navigationItems?: [NavigationItem]
-    socialLinks?: [Link]
-    disclaimerText?: RichText
-    copyrightDisclaimer?: RichText
-    legalLinks?: [Link]
+    navigationItems: [NavigationItem]
+    socialLinks: [Link]
+    disclaimerText: RichText
+    copyrightDisclaimer: RichText
+    legalLinks: [Link]
     hasSocialLinks: Boolean
   }
 `;
