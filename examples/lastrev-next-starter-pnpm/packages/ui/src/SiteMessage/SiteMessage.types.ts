@@ -1,17 +1,15 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import type {
-  Media_BaseFragmentFragment,
-  Link_BaseFragmentFragment,
-  Text_BaseFragmentFragment
-} from '@graphql-sdk/types';
+import type { MediaProps } from '../Media/Media.types';
+import type { RichText } from '../RichText/RichText.types';
+import type { LinkProps } from '../Link/Link.types';
 
 export interface SiteMessageProps {
   sidekickLookup?: any;
   isElevated?: boolean;
-  text?: Text_BaseFragmentFragment;
-  link?: Link_BaseFragmentFragment;
-  icon?: Media_BaseFragmentFragment;
+  text?: RichText;
+  link?: LinkProps;
+  icon?: MediaProps;
 }
 
 export interface SiteMessageOwnerState extends SiteMessageProps {}
