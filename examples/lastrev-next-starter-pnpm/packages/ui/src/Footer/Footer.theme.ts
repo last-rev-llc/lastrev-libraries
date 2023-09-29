@@ -17,11 +17,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   introContent: () => ({}),
 
-  contentOuterGrid: () => ({
-    '& > *': {
-      border: 'solid 2px blue'
-    }
-  }),
+  contentOuterGrid: () => ({}),
 
   logoRoot: ({ theme }) => ({
     gridColumn: 'two-start / three-end',

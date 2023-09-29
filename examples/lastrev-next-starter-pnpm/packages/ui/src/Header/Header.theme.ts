@@ -11,17 +11,13 @@ const SUPERNAV_TIMEOUT = '15s';
 const defaultProps: ComponentsProps['Header'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
-  root: ({ theme, elevation }) => ({
+  root: () => ({
     '& *': {
       whiteSpace: 'nowrap'
     }
   }),
 
-  contentOuterGrid: ({ theme, elevation }) => ({
-    '& > *': {
-      border: 'solid 2px blue'
-    }
-  }),
+  contentOuterGrid: () => ({}),
 
   logoRoot: ({ theme }) => ({
     gridColumn: 'content-start / span 2',
