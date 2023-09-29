@@ -1,23 +1,19 @@
 import React from 'react';
-import { styled } from '@mui/material/styles';
 
-import Box from '@mui/material/Box';
+import { styled } from '@mui/material/styles';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ErrorBoundary from '../../ErrorBoundary';
 import ContentModule from '../../ContentModule';
 
-import { type HeaderNavLinkNestedProps } from './HeaderNavLinkNested.types';
+import type { HeaderNavLinkNestedProps, HeaderNavLinkNestedOwnerState } from './HeaderNavLinkNested.types';
 
-export const HeaderNavLinkNested = ({
-  variant,
-  subNavigation,
-  sidekickLookup,
-  onRequestClose,
-  id: navItemId,
-  ...props
-}: HeaderNavLinkNestedProps) => {
+const HeaderNavLinkNested = (props: HeaderNavLinkNestedProps) => {
+  const ownerState = { ...props };
+
+  const { sidekickLookup, onRequestClose } = props;
+
   const [open, setOpen] = React.useState<boolean>(false);
 
   const onNavItemClick = () => {
@@ -32,34 +28,27 @@ export const HeaderNavLinkNested = ({
 
   return (
     <ErrorBoundary>
-      <Root data-testid="HeaderNavLinkNested">
-        <NavItemLink
-          {...props}
-          {...sidekick(sidekickLookup)}
-          icon="chevron"
-          onKeyDown={onKeyDown}
-          onClick={onNavItemClick}
-          __typename="Link"
-        />
-      </Root>
+      <NavItemLink
+        data-testid="HeaderNavLinkNested"
+        {...props}
+        {...sidekick(sidekickLookup)}
+        icon="chevron"
+        onKeyDown={onKeyDown}
+        onClick={onNavItemClick}
+        __typename="Link"
+        ownerState={ownerState}
+      />
     </ErrorBoundary>
   );
 };
 
-const shouldForwardProp = (prop: string) =>
-  prop !== 'variant' && prop !== 'onRequestClose' && prop !== 'menuBreakpoint';
-
-const Root = styled(Box, {
-  name: 'HeaderNavLinkNested',
-  slot: 'Root',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.root]
-})<{}>``;
+// const shouldForwardProp = (prop: string) =>
+//   prop !== 'variant' && prop !== 'onRequestClose' && prop !== 'menuBreakpoint';
 
 const NavItemLink = styled(ContentModule, {
   name: 'HeaderNavLinkNested',
-  slot: 'NavItemLink',
+  slot: 'Root',
   overridesResolver: (_, styles) => [styles.navItemLink]
-})<{}>``;
+})<{ ownerState: HeaderNavLinkNestedOwnerState }>``;
 
 export default HeaderNavLinkNested;

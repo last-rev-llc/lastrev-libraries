@@ -2,27 +2,24 @@ import React from 'react';
 
 import { styled } from '@mui/material/styles';
 
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
+import Grid from '../Grid';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
 import type { CollectionProps, CollectionOwnerState } from './Collection.types';
-import Grid from '../Grid';
 
 export const Collection = (props: CollectionProps) => {
-  const { items, variant, itemsVariant, sidekickLookup, introText } = props;
   const ownerState = { ...props };
+
+  const { items, variant, itemsVariant, sidekickLookup, introText } = props;
+
   return (
     <ErrorBoundary>
-      <Root
-        // sx={{ containerType: 'inline-size' }}
-        data-testid={`Collection-${variant}`}
-        ownerState={ownerState}
-        {...sidekick(sidekickLookup)}>
+      <Root ownerState={ownerState} {...sidekick(sidekickLookup)} data-testid={`Collection-${variant}`}>
         {introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText
@@ -33,6 +30,7 @@ export const Collection = (props: CollectionProps) => {
             />
           </IntroTextGrid>
         )}
+
         <ContentGrid ownerState={ownerState}>
           {!!items?.length && (
             <ItemsGrid ownerState={ownerState} id="items">

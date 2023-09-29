@@ -1,6 +1,10 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Media_BaseFragmentFragment, Link_BaseFragmentFragment, Text_BaseFragmentFragment } from '@graphql-sdk/types';
+import type {
+  Media_BaseFragmentFragment,
+  Link_BaseFragmentFragment,
+  Text_BaseFragmentFragment
+} from '@graphql-sdk/types';
 
 export interface SiteMessageProps {
   sidekickLookup?: any;
@@ -12,7 +16,7 @@ export interface SiteMessageProps {
 
 export interface SiteMessageOwnerState extends SiteMessageProps {}
 
-export interface SiteMessageClasses {
+interface SiteMessageClasses {
   root: string;
   contentOuterGrid: string;
   contentWrap: string;

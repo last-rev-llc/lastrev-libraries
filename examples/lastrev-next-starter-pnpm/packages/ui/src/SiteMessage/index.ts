@@ -1,2 +1,2 @@
-export type { SiteMessageProps, SiteMessageClassKey, SiteMessageClasses } from './SiteMessage.types';
+export type { SiteMessageProps, SiteMessageClassKey } from './SiteMessage.types';
 export { default } from './SiteMessage';

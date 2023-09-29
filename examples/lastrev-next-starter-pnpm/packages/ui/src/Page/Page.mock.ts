@@ -1,11 +1,13 @@
-import { lorem } from 'faker';
-import type { PageProps } from './Page.types';
 import { blockBaseMock } from '../Block/Block.mock';
 
+import randomId from '../utils/randomId';
+
+import type { PageProps } from './Page.types';
+
 const pageDefaultMock: PageProps = {
-  id: lorem.word(),
+  id: randomId(),
   __typename: 'Page',
-  title: lorem.words(2),
+  title: 'This is the Page Title',
   contents: [blockBaseMock(), blockBaseMock(), blockBaseMock()]
 };
 

@@ -8,9 +8,9 @@ import type {
 
 const SITEMESSAGE_TIMEOUT = '200s';
 
-export const defaultProps: ComponentsProps['SiteMessage'] = {};
+const defaultProps: ComponentsProps['SiteMessage'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
+const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
   root: ({ theme, ownerState }) => ({
     'backgroundColor': theme.palette.primary.main,
 

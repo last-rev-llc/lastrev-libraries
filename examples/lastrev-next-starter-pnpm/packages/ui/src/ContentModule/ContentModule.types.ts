@@ -10,7 +10,7 @@ export interface ContentModuleProps {
   [key: string]: any;
 }
 
-export interface ContentModuleClasses {
+interface ContentModuleClasses {
   // /** Styles applied to the root element. */
   // root: string;
 }

@@ -24,5 +24,6 @@ fragment CollectionExpandableItem_BaseFragment on CollectionExpandableItem {
     ...Block_BaseFragment
     ...Text_BaseFragment
     ...Quote_BaseFragment
+    ...Collection_BaseFragment
   }
 }

@@ -1,14 +1,12 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Footer_BaseFragmentFragment, Link_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Footer_BaseFragmentFragment } from '@graphql-sdk/types';
 
-export interface FooterProps extends Footer_BaseFragmentFragment {
-  socialLinks?: [Link_BaseFragmentFragment];
-}
+export interface FooterProps extends Footer_BaseFragmentFragment {}
 
 export interface FooterOwnerState extends FooterProps {}
 
-export interface FooterClasses {
+interface FooterClasses {
   root: string;
   contentOuterGrid: string;
   logoRoot: string;

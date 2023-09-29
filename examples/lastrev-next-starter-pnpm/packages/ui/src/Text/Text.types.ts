@@ -2,7 +2,7 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 
 import { Options } from '@contentful/rich-text-react-renderer';
 
-import { Text_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Text_BaseFragmentFragment } from '@graphql-sdk/types';
 
 interface Content {
   __typename?: string;
@@ -21,7 +21,7 @@ export interface TextProps extends Text_BaseFragmentFragment {
   renderOptions?: Options;
 }
 
-export interface TextClasses {
+interface TextClasses {
   /** Styles applied to the root element. */
   root: string;
   overline: string;

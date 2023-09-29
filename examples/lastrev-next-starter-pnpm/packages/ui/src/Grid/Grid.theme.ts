@@ -6,7 +6,7 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Grid'] = {};
+const defaultProps: ComponentsProps['Grid'] = {};
 
 // TODO: Expose these values in the theme
 const smMargin = 8;
@@ -17,7 +17,7 @@ const smGap = 16;
 const mdGap = 24;
 const lgGap = 24;
 
-export const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
   root: ({ theme }) => ({
     'display': 'grid',
     'width': '100%',

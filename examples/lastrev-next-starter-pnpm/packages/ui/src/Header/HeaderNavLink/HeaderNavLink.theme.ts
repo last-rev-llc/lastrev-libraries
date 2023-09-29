@@ -6,9 +6,9 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['HeaderNavLink'] = {};
+const defaultProps: ComponentsProps['HeaderNavLink'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
+const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
   root: ({ theme, open }) => ({
     'height': '100%',
     'borderBottom': `solid ${theme.spacing(0.5)} transparent`,
@@ -20,7 +20,6 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     // 'transition': 'border-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
     '[class$=HeaderNavLink-navItemLink]': {
-      ...theme.typography.body1,
       ...(!!open && {
         fontWeight: 800
       })
@@ -28,9 +27,8 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
 
     '&:is(:hover, :focus-within):not(:focus-visible)': {
       [theme.breakpoints.up('md')]: {
-        // 'borderBottomColor': theme.palette.primary.main,
-
         '[class*="HeaderNavLink-navItemLink"]': {
+          // TODO: Standardizxe this across the header links if they're the same
           '.MuiSvgIcon-root': {
             // fill: 'currentcolor',
             transform: 'rotate(-90deg)'
@@ -46,23 +44,23 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
   }),
 
   navItemLink: ({ theme, open }) => ({
+    // TODO: Custom Styles
+    'borderTop': `solid 1px ${theme.palette.primary.main}`,
+
     'flexGrow': '1',
     'alignItems': 'center',
     'display': 'flex',
-    'borderTop': `solid 1px ${theme.palette.grey[200]}`,
     'width': '100%',
     'justifyContent': 'space-between',
     'cursor': 'pointer',
 
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(2, 5)
-    },
-
-    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(1),
       justifyContent: 'flex-start',
       borderTop: 'none'
     },
 
+    // TODO: Standardizxe this across the header links if they're the same
     '.MuiSvgIcon-root': {
       fill: theme.palette.primary.main,
       width: 'auto',
@@ -84,7 +82,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     }
   }),
 
-  navItemSubMenuWrapper: ({ theme, open, numOfCols, hasMegaNav }) => ({
+  navItemSubMenuWrapper: ({ theme, open, ownerState }) => ({
     visibility: 'visible',
     opacity: 1,
     display: 'none',
@@ -108,45 +106,42 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
       paddingTop: theme.spacing(3),
       transition: 'visibility 0s, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
-      ...(numOfCols === 2 && {
-        right: hasMegaNav ? -578 : -252
+      ...(ownerState.numOfCols === 2 && {
+        // TODO: Check variant here instead?
+        right: ownerState.hasMegaNav ? -578 : -252
       }),
 
-      ...(numOfCols === 1 &&
-        !!hasMegaNav && {
-          right: -304
-        }),
+      ...(ownerState.numOfCols === 1 && {
+        left: 0
+      })
 
-      ...(numOfCols === 1 &&
-        !hasMegaNav && {
-          left: 0
-        })
+      // TODO: Check variant here instead?
+      // ...(numOfCols === 1 &&
+      //   !!hasMegaNav && {
+      //     right: -304
+      //   }),
+
+      // ...(numOfCols === 1 &&
+      //   !hasMegaNav && {
+      //     left: 0
+      //   })
     }
   }),
 
-  navItemSubMenu: ({ theme, numOfCols }) => ({
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(3, 3),
+  navItemSubMenu: ({ theme, ownerState }) => ({
+    [theme.breakpoints.up('sm')]: {
       display: 'flex',
-      flexDirection: 'column',
-      gap: theme.spacing(6)
+      flexDirection: 'column'
     },
 
     [theme.breakpoints.up('md')]: {
-      'display': 'grid',
-      'gap': theme.spacing(0),
-      'padding': 0,
-      'borderRadius': theme.spacing(2),
-      'overflow': 'hidden',
-      'width': 'fit-content',
+      display: 'grid',
+      gap: theme.spacing(0),
+      overflow: 'hidden',
+      width: 'fit-content',
       // @ts-ignore: TODO: items not recognized
-      'gridTemplateColumns': `repeat(${(numOfCols ?? 0) + 1}, auto)`,
-      'boxShadow': theme.shadows[1],
-
-      '> li': {
-        borderRight: `solid 1px ${theme.palette.grey[200]}`,
-        padding: theme.spacing(3, 1, 4.5, 4)
-      }
+      gridTemplateColumns: `repeat(${(ownerState.numOfCols ?? 0) + 1}, auto)`,
+      border: `solid 1px ${theme.palette.primary.contrastText}`
     }
   }),
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import { lorem } from 'faker';
 import BLOCKS from './BLOCKS';
 import MARKS from './MARKS';
 
@@ -8,7 +7,7 @@ import type { TextProps, RichText } from './RichText.types';
 export const valueNode = (type: string = 'text') => ({
   data: {},
   marks: [],
-  value: lorem.sentence(),
+  value: 'This is some default text content',
   nodeType: type
 });
 
@@ -51,7 +50,7 @@ export const hyperlinkEntryNode = (id: string) => ({
   data: {
     target: { sys: { id, type: 'Link', linkType: 'Entry' } }
   },
-  content: [{ marks: [], value: lorem.words(2), nodeType: 'text' }],
+  content: [{ marks: [], value: 'This is link text', nodeType: 'text' }],
   nodeType: 'entry-hyperlink'
 });
 
@@ -80,7 +79,7 @@ export const complexMock = ({ text } = {}): TextProps => ({
             {
               data: {},
               marks: [],
-              value: text ?? lorem.sentence(),
+              value: text ?? 'This is default text',
               nodeType: 'text'
             },
             {
@@ -197,7 +196,7 @@ export const complexMock = ({ text } = {}): TextProps => ({
             {
               data: {},
               marks: [],
-              value: lorem.paragraph(),
+              value: 'This is longer paragraph text',
               nodeType: 'text'
             }
           ],
@@ -219,7 +218,7 @@ export const richTextMock = ({ text } = {}): RichText => ({
         content: [
           {
             nodeType: 'text',
-            value: text ?? lorem.sentences(2),
+            value: text ?? 'This is longer paragraph text.  This is the second part of the text',
             marks: [],
             data: {}
           }
@@ -297,7 +296,7 @@ export const withLinksMock = ({ text } = {}): TextProps => ({
           content: [
             {
               nodeType: 'text',
-              value: text ?? lorem.sentences(2),
+              value: text ?? 'This is longer paragraph text.  This is the second part of the text',
               data: {},
               marks: []
             }
@@ -370,7 +369,7 @@ export const paragraphMock = ({ text } = {}): TextProps => ({
           content: [
             {
               nodeType: 'text',
-              value: text ?? lorem.sentences(2),
+              value: text ?? 'This is longer paragraph text.  This is the second part of the text',
               marks: [],
               data: {}
             }

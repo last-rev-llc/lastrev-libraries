@@ -1,6 +1,6 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 // TODO: Needed?
-import { Page_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Page_BaseFragmentFragment } from '@graphql-sdk/types';
 
 //TODO
 export enum PageVariants {
@@ -9,7 +9,7 @@ export enum PageVariants {
 
 export interface PageProps extends Page_BaseFragmentFragment {}
 
-export interface PageClasses {
+interface PageClasses {
   root: string;
 }
 

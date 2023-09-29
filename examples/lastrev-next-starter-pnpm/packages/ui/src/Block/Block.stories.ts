@@ -1,17 +1,22 @@
 import Block from './Block';
 
-import { BlockVariants } from './Block.types';
+import {
+  blockBaseMock,
+  blockContentAboveMock,
+  blockContentBelowMock,
+  blockContentOnLeftFullBleedMock,
+  blockContentOnLeftMock,
+  blockContentOnRightFullBleedMock,
+  blockContentOnRightMock
+} from './Block.mock';
 
-import { blockBaseMock } from './Block.mock';
+import { BlockVariants } from './Block.types';
 
 export default {
   title: '3. Modules/Block',
   component: Block,
   tags: ['autodocs'],
   argTypes: {
-    // Props should follow this schema: https://storybook.js.org/docs/react/writing-stories/args#args-schema
-    // More info on args: https://storybook.js.org/docs/react/writing-stories/args
-    // More info on control types: https://storybook.js.org/docs/react/essentials/controls#annotation
     variant: {
       control: {
         type: 'select',
@@ -23,9 +28,9 @@ export default {
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
 export const Default = { args: { ...blockBaseMock() } };
-export const ContentOnRight = { args: { ...blockBaseMock({ variant: 'mediaAbove' }) } };
-export const ContentOnRightFullBleed = { args: { ...blockBaseMock({ variant: 'contentOnRightFullBleed' }) } };
-export const ContentOnLeft = { args: { ...blockBaseMock({ variant: 'contentOnLeft' }) } };
-export const ContentOnLeftFullBleed = { args: { ...blockBaseMock({ variant: 'contentOnLeftFullBleed' }) } };
-export const ContentBelow = { args: { ...blockBaseMock({ variant: 'contentBelow' }) } };
-export const ContentAbove = { args: { ...blockBaseMock({ variant: 'contentAbove' }) } };
+export const ContentOnRight = { args: { ...blockContentOnRightMock() } };
+export const ContentOnRightFullBleed = { args: { ...blockContentOnRightFullBleedMock() } };
+export const ContentOnLeft = { args: { ...blockContentOnLeftMock() } };
+export const ContentOnLeftFullBleed = { args: { ...blockContentOnLeftFullBleedMock() } };
+export const ContentBelow = { args: { ...blockContentBelowMock() } };
+export const ContentAbove = { args: { ...blockContentAboveMock() } };

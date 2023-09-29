@@ -6,9 +6,9 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Text'] = {};
+const defaultProps: ComponentsProps['Text'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
   root: {
     'width': '100%',

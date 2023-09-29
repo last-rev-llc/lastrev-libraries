@@ -6,14 +6,14 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Media'] = {
+const defaultProps: ComponentsProps['Media'] = {
   nextImageOptimization: true,
   priority: false,
   // All images are shown close to full bleed size
   sizes: '100vw'
 };
 
-export const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
   // Set some static styles
   root: () => ({
     // img default display: inline introduces a line-height space at the bottom

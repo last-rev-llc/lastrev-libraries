@@ -24,13 +24,13 @@ export const Default = {
   }
 };
 
-export const MegaNavOne = {
+export const Dropdown = {
   args: {
     ...headerChildrenMock()
   }
 };
 
-export const MegaNavTwo = {
+export const MegaNav = {
   args: {
     ...headerChildrenNestedMock()
   }

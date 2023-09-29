@@ -1,6 +1,6 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Section_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Section_BaseFragmentFragment } from '@graphql-sdk/types';
 
 import { Breakpoint } from '@mui/material';
 
@@ -28,7 +28,7 @@ export interface SectionProps {
   sidekickLookup?: any;
 }
 
-export interface SectionClasses {
+interface SectionClasses {
   root: string;
   contentContainer: string;
   backgroundImage: string;

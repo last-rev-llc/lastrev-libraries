@@ -1,7 +1,7 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
 // TODO: Needed?
-import { NavigationBar_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { NavigationBar_BaseFragmentFragment } from '@graphql-sdk/types';
 
 import type { LinkProps } from '../Link/Link.types';
 import type { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
@@ -15,7 +15,7 @@ export interface NavigationBarProps {
   sidekickLookup: string;
   onRequestClose?: any;
 }
-export interface NavigationBarClasses {
+interface NavigationBarClasses {
   /** Styles applied to the root element. */
   root: string;
 }

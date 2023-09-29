@@ -1,6 +1,6 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
 import type { RichText } from '../RichText/RichText.types';
 import type { MediaProps } from '../Media/Media.types';
 import type { LinkProps } from '../Link/Link.types';
@@ -41,7 +41,7 @@ export interface HeroProps extends Hero_BaseFragmentFragment {
   sidekickLookup?: any;
 }
 
-export interface HeroClasses {
+interface HeroClasses {
   heroRoot: string;
   mainContentWrapper: string;
   contentOuterGrid: string;

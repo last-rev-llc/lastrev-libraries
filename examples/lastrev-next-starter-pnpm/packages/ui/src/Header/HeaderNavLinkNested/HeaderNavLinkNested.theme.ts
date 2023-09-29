@@ -6,17 +6,18 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['HeaderNavLinkNested'] = {};
+const defaultProps: ComponentsProps['HeaderNavLinkNested'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLinkNested'] = {
+const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLinkNested'] = {
   root: () => ({}),
 
   navItemLink: ({ theme }) => ({
-    ...theme.typography.body2,
+    // TODO: Check if this is needed
     'padding': theme.spacing(0.625, 1),
     'marginLeft': theme.spacing(-3), // Offsets hover padding background
     'cursor': 'pointer',
 
+    // TODO: Standardizxe this across the header links if they're the same
     '.MuiSvgIcon-root': {
       fill: theme.palette.primary.main,
       width: 'auto',

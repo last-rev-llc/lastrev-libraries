@@ -1,6 +1,6 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Block_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Block_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum BlockVariants {
   default = 'default',
@@ -15,7 +15,7 @@ export enum BlockVariants {
 export interface BlockProps extends Block_BaseFragmentFragment {}
 export interface BlockOwnerState extends BlockProps {}
 
-export interface BlockClasses {
+interface BlockClasses {
   root: string;
   introTextGrid: string;
   introText: string;

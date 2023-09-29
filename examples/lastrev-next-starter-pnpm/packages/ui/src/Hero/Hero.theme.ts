@@ -7,14 +7,14 @@ import type {
 } from '@mui/material/styles';
 import type { Color } from '@mui/material';
 
-export const defaultProps: ComponentsProps['Hero'] = {
+const defaultProps: ComponentsProps['Hero'] = {
   contentWidth: 'xl',
   contentHeight: 'lg',
   disableGutters: false,
   variant: 'default'
 };
 
-export const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   heroRoot: ({ ownerState, theme }) => {
     const baseStyles = {
       width: '100%',

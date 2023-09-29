@@ -18,7 +18,7 @@ export const pathsConfigs = {
 export const typeDefs = gql`
   extend type Blog {
     header: Header
-    footer: Content
+    footer: Footer
     path: String
     relatedItems: Content
     categories: [CategoryBlog]

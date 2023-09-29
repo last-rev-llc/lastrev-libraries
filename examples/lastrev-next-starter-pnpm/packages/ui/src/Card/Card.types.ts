@@ -1,6 +1,6 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Card_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Card_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum CardVariants {
   default = 'default',
@@ -25,7 +25,7 @@ export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant'> {
 
 export interface CardOwnerState extends CardProps {}
 
-export interface CardClasses {
+interface CardClasses {
   root: string;
   link: string;
   media: string;

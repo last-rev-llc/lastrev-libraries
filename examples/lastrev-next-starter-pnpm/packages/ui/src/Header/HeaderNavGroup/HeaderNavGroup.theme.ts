@@ -6,21 +6,19 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['HeaderNavGroup'] = {};
+const defaultProps: ComponentsProps['HeaderNavGroup'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
+const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
   root: ({ theme }) => ({
-    [theme.breakpoints.up('sm')]: {
-      width: 231
-    },
-
-    [theme.breakpoints.up('md')]: {
-      width: '100%'
-    }
+    // [theme.breakpoints.up('sm')]: {
+    //   width: 231
+    // },
+    // [theme.breakpoints.up('md')]: {
+    //   width: '100%'
+    // }
   }),
 
   navItemLink: ({ theme }) => ({
-    ...theme.typography.body2,
     'padding': 0,
     'border': 'none',
     'flexGrow': '1',
@@ -29,9 +27,12 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
     'width': '100%',
     'cursor': 'pointer',
     '&:is(:hover, :focus-within):not(:focus-visible)': {
-      textDecoration: 'none'
+      // TODO: ADA recommends all links are underlined, so we should not do the below, but we can add custom styles here
+      // textDecoration: 'none',
+      fontWeight: 800
     },
 
+    // TODO: Standardizxe this across the header links if they're the same
     '.MuiSvgIcon-root': {
       fill: theme.palette.primary.main,
       width: 'auto',
@@ -49,9 +50,10 @@ export const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
   navItemSubMenu: ({ theme }) => ({
     [theme.breakpoints.up('sm')]: {
       display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)',
-      gap: theme.spacing(2, 3)
+      gridTemplateColumns: 'repeat(3, 1fr)', // Change this to however many columns they'd like
+      gap: theme.spacing(1)
     },
+
     [theme.breakpoints.up('md')]: {
       display: 'block'
     }

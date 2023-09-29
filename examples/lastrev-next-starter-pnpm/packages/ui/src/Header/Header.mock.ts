@@ -1,5 +1,3 @@
-import { lorem } from 'faker';
-
 import { linkBaseMock, linkButtonMock } from '../Link/Link.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
 import {
@@ -10,16 +8,17 @@ import {
 
 import { type HeaderProps, HeaderVariants } from './Header.types';
 import siteMessageBaseMock from '../SiteMessage/SiteMessage.mock';
+import randomId from '../utils/randomId';
 
 const headerDefaultMock = (): HeaderProps => {
   const siteMessageMock = siteMessageBaseMock();
   return {
-    id: lorem.word(),
+    id: randomId(),
     __typename: 'Header',
     variant: HeaderVariants.elevation,
     logo: mediaBaseImageMock(),
-    ctaItems: [linkButtonMock({ text: lorem.words(1) }), linkButtonMock({ text: lorem.words(1) })],
     logoUrl: linkBaseMock(),
+    ctaItems: [linkButtonMock({ text: 'Header CTA 1' }), linkButtonMock({ text: 'Header CTA 1' })],
     navigationItems: [navigationItemBaseMock(), navigationItemBaseMock(), navigationItemBaseMock()],
     siteMessageIcon: siteMessageMock.icon,
     siteMessageLink: siteMessageMock.link,

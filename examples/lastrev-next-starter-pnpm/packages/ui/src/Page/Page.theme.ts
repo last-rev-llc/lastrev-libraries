@@ -7,9 +7,9 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Page'] = {};
+const defaultProps: ComponentsProps['Page'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Page'] = {};
+const styleOverrides: ComponentsOverrides<Theme>['Page'] = {};
 
 const createVariants = (_theme: Theme): ComponentsVariants['Page'] => [];
 

@@ -1,24 +1,24 @@
-import { lorem } from 'faker';
-
 import { linkBaseMock, linkSocialMock } from '../Link/Link.mock';
 import {
   navigationItemWithChildrenMock,
   navigationItemWithChildrenNestedMock
 } from '../NavigationItem/NavigationItem.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
-import { richTextMock } from '../RichText/RichText.mock';
+import { complexMock, richTextMock } from '../RichText/RichText.mock';
+import blockBaseMock from '../Block/Block.mock';
+
+import randomId from '../utils/randomId';
 
 import type { FooterProps } from './Footer.types';
-import blockBaseMock from '../Block/Block.mock';
 
 // TODO: Update
 const footerDefaultMock = (): FooterProps => {
   return {
-    id: lorem.word(),
+    id: randomId(),
     __typename: 'Footer',
     logo: mediaBaseImageMock(), // TODO;
     logoUrl: linkBaseMock(),
-    disclaimer: richTextMock({ text: 'This is the disclaimer' }),
+    disclaimerText: complexMock({ text: 'This is the disclaimer' }),
     socialLinks: [linkSocialMock(), linkSocialMock(), linkSocialMock()],
     navigationItems: [
       navigationItemWithChildrenMock(),
@@ -34,7 +34,7 @@ const footerDefaultMock = (): FooterProps => {
         subtitle: undefined
       })
     ],
-    copyrightDisclaimer: richTextMock({ text: 'This is the copyright disclaimer' }),
+    copyrightDisclaimer: complexMock({ text: 'This is the copyright disclaimer' }),
     legalLinks: [linkBaseMock(), linkBaseMock(), linkBaseMock()]
   };
 };

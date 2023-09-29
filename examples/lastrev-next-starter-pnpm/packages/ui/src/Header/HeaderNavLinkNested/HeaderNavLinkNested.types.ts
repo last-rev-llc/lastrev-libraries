@@ -1,6 +1,6 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { NavigationItem_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { NavigationItem_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface HeaderNavLinkNestedProps extends NavigationItem_BaseFragmentFragment {
   id?: string;
@@ -9,7 +9,9 @@ export interface HeaderNavLinkNestedProps extends NavigationItem_BaseFragmentFra
   variant?: string;
 }
 
-export interface HeaderNavLinkNestedClasses {
+export interface HeaderNavLinkNestedOwnerState extends HeaderNavLinkNestedProps {}
+
+interface HeaderNavLinkNestedClasses {
   root: string;
   menuRoot: string;
   menuItem: string;

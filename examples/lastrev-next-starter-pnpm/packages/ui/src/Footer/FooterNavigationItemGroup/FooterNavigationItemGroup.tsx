@@ -3,10 +3,10 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
+import ErrorBoundary from '../../ErrorBoundary';
 import ContentModule from '../../ContentModule';
 
 import type {
@@ -21,26 +21,33 @@ const FooterNavigationItemGroup = (props: FooterNavigationItemGroupProps) => {
 
   const { text, href, subNavigation, sidekickLookup } = props;
 
-  const labelProps = !!href && { href, component: ContentModule };
   return (
-    <Root {...sidekick(sidekickLookup)} ownerState={ownerState}>
-      <Label component={Typography} {...labelProps} __typename="Link" ownerState={ownerState}>
-        {text}
-      </Label>
+    <ErrorBoundary>
+      {!!subNavigation?.length ? (
+        <Root ownerState={ownerState}>
+          <NavGroupItem
+            {...sidekick(sidekickLookup)}
+            text={text}
+            href={href}
+            __typename="Link"
+            ownerState={ownerState}
+          />
 
-      {!!subNavigation?.length && (
-        <NavigationItems ownerState={ownerState}>
-          {subNavigation?.map((item) => (
-            <NavigationItem
-              key={item?.id}
-              {...(item as NavigationItemProps | LinkProps)}
-              variant={!!item?.variant ? `${item?.variant}Footer` : null}
-              ownerState={ownerState}
-            />
-          ))}
-        </NavigationItems>
+          <NavigationItems ownerState={ownerState}>
+            {subNavigation?.map((item) => (
+              <NavigationItem
+                key={item?.id}
+                {...(item as NavigationItemProps | LinkProps)}
+                variant={!!item?.variant ? `${item?.variant}Footer` : null}
+                ownerState={ownerState}
+              />
+            ))}
+          </NavigationItems>
+        </Root>
+      ) : (
+        <NavGroupItem {...sidekick(sidekickLookup)} text={text} href={href} __typename="Link" ownerState={ownerState} />
       )}
-    </Root>
+    </ErrorBoundary>
   );
 };
 
@@ -50,10 +57,10 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: FooterNavigationItemGroupOwnerState }>``;
 
-const Label = styled(Box, {
+const NavGroupItem = styled(ContentModule, {
   name: 'FooterNavigationItemGroup',
-  slot: 'Label',
-  overridesResolver: (_, styles) => [styles.label]
+  slot: 'NavGroupItem',
+  overridesResolver: (_, styles) => [styles.navGroupItem]
 })<{ ownerState: FooterNavigationItemGroupOwnerState }>``;
 
 const NavigationItems = styled(Box, {

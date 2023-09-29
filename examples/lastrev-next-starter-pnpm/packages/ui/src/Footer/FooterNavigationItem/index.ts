@@ -1,6 +1,2 @@
-export type {
-  FooterNavigationItemProps,
-  FooterNavigationItemClassKey,
-  FooterNavigationItemClasses
-} from './FooterNavigationItem.types';
+export type { FooterNavigationItemProps, FooterNavigationItemClassKey } from './FooterNavigationItem.types';
 export { default } from './FooterNavigationItem';

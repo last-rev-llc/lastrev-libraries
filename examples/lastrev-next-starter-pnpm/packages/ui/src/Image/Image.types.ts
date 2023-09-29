@@ -1,6 +1,6 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 // TODO: Needed?
-//import { Image_BaseFragmentFragment } from '@graphql-sdk/types';
+//import type { Image_BaseFragmentFragment } from '@graphql-sdk/types';
 import type { ImageProps as NextImageProps } from 'next/image';
 export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'height'> {
   src?: string;
@@ -21,7 +21,7 @@ export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'heig
 }
 
 //TODO: Use styled for Image
-export interface ImageClasses {}
+interface ImageClasses {}
 
 export declare type ImageClassKey = keyof ImageClasses;
 

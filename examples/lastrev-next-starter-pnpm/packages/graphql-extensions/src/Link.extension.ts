@@ -46,13 +46,13 @@ export const mappers: Mappers = {
   Link: {
     Link: {
       href: hrefUrlResolver,
-      target: targetResolver
-      // variant: defaultResolver
+      target: targetResolver,
+      variant: defaultResolver
     },
     NavigationItem: {
       link: (x: any) => ({ ...x, fieldName: 'link' }),
-      children: () => []
-      // variant: defaultResolver
+      children: () => [],
+      variant: defaultResolver
     }
   }
 };

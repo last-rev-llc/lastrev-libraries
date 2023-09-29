@@ -7,7 +7,7 @@ import headerBaseMock from './Header.mock';
 
 import type { HeaderProps } from './Header.types';
 
-let mockedContent: HeaderProps = { sidekickLookup: {} };
+let mockedContent: Partial<HeaderProps> = { sidekickLookup: {} };
 
 beforeEach(() => {
   mockedContent = { ...headerBaseMock() };

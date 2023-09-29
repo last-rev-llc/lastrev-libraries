@@ -6,9 +6,9 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['FooterNavigationItem'] = {};
+const defaultProps: ComponentsProps['FooterNavigationItem'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
+const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.typography.body2,
 
@@ -17,8 +17,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] 
       fontWeight: 600
     }),
 
-    color: theme.palette.secondary.main,
-    textDecoration: 'none'
+    color: theme.palette.secondary.main
   }),
 
   rootLinkButton: () => ({}),

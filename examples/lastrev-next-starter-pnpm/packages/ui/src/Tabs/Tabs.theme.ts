@@ -7,9 +7,9 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Tabs'] = {};
+const defaultProps: ComponentsProps['Tabs'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
   root: () => ({}),
 
   contentContainer: ({ theme }) => ({}),

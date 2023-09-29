@@ -8,9 +8,9 @@ import {
   alpha
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Form'] = {};
+const defaultProps: ComponentsProps['Form'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
   root: ({ theme, ownerState }) => ({
     'width': '100%',
 

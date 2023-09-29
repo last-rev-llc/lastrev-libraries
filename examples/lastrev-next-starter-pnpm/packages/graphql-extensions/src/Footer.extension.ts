@@ -5,15 +5,13 @@ import gql from 'graphql-tag';
 export const typeDefs = gql`
   extend type Footer {
     introContents: [Content]
-    navigationItems: [NavigationItem]
-    socialLinks?: [Link]
     logo: Media
     logoUrl: Link
-    disclaimer?: RichText
-    introContents: [Content]
+    navigationItems?: [NavigationItem]
+    socialLinks?: [Link]
+    disclaimerText?: RichText
     copyrightDisclaimer?: RichText
     legalLinks?: [Link]
-    localeLinks?: [Link]
     hasSocialLinks: Boolean
   }
 `;

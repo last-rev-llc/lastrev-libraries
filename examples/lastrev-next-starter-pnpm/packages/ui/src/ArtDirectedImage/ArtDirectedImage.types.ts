@@ -13,7 +13,7 @@ export interface ArtDirectedImageProps {
   testId?: any;
 }
 
-export interface ArtDirectedImageClasses {
+interface ArtDirectedImageClasses {
   /** Styles applied to the root element. */
   root: string;
 }

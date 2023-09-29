@@ -1,12 +1,12 @@
-import { lorem } from 'faker';
-
 import { introTextMock } from '../Text/Text.mock';
+
+import randomId from '../utils/randomId';
 
 import type { FormProps } from './Form.types';
 
 // TODO
 const formDefaultMock: FormProps = {
-  id: lorem.word(),
+  id: randomId(),
   __typename: 'Form',
   variant: 'hubspotFormFooter',
   introText: introTextMock()

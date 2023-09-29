@@ -2,7 +2,7 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 
 import type { LinkProps } from '../Link';
 
-import { NavigationItem_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { NavigationItem_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum NavigationLinkVariants {
   default = 'default',
@@ -23,9 +23,13 @@ export interface NavigationItemProps extends NavigationItem_BaseFragmentFragment
   variant?: NavigationLinkVariants;
 }
 
-export interface NavigationItemClasses {
+export interface NavigationItemOwnerState extends NavigationItemProps {}
+
+interface NavigationItemClasses {
   root: string;
   menuRoot: string;
+  navItemSubMenu: string;
+  navItemSubMenuItem: string;
 }
 
 export declare type NavigationItemClassKey = keyof NavigationItemClasses;

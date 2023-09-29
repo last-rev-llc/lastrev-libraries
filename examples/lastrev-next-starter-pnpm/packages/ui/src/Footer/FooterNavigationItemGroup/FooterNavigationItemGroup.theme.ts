@@ -6,9 +6,9 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['FooterNavigationItemGroup'] = {};
+const defaultProps: ComponentsProps['FooterNavigationItemGroup'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGroup'] = {
+const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGroup'] = {
   root: ({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
@@ -18,7 +18,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGro
     }
   }),
 
-  label: ({ theme }) => ({
+  navGroupItem: ({ theme }) => ({
     color: theme.palette.secondary.main,
     textDecoration: 'none',
     ...theme.typography.body2
@@ -37,11 +37,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGro
     }
   }),
 
-  navigationItem: ({ theme }) => ({
-    color: theme.palette.secondary.main,
-    textDecoration: 'none',
-    ...theme.typography.body2
-  })
+  navigationItem: ({ theme }) => ({})
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['FooterNavigationItemGroup'] => [];

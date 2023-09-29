@@ -1,2 +1,2 @@
-export type { MediaProps, MediaClassKey, MediaClasses } from './Media.types';
+export type { MediaProps, MediaClassKey } from './Media.types';
 export { default } from './Media';

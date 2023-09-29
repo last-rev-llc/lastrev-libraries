@@ -7,9 +7,9 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Blog'] = {};
+const defaultProps: ComponentsProps['Blog'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   root: ({}) => ({}),
 
   featuredMedia: () => ({}),

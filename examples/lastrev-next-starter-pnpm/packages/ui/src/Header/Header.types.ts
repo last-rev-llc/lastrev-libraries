@@ -1,11 +1,9 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import {
-  Header_BaseFragmentFragment,
-  Link_BaseFragmentFragment,
-  Media_BaseFragmentFragment,
-  Text_BaseFragmentFragment
-} from '@graphql-sdk/types';
+import { Header_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { RichText } from '../RichText/RichText.types';
+import type { MediaProps } from '../Media/Media.types';
+import type { LinkProps } from '../Link/Link.types';
 
 export enum HeaderVariants {
   elevation = 'elevation',
@@ -17,15 +15,15 @@ export interface HeaderProps extends Header_BaseFragmentFragment {
   sidekickLookup?: any;
   menuVisible?: boolean;
   menuBreakpoint?: string;
-  ctaItems?: [Link_BaseFragmentFragment];
-  siteMessageIcon?: Media_BaseFragmentFragment;
-  siteMessageText?: Text_BaseFragmentFragment;
-  siteMessageLink?: Link_BaseFragmentFragment;
+  ctaItems?: [LinkProps];
+  siteMessageIcon?: MediaProps;
+  siteMessageText?: RichText;
+  siteMessageLink?: LinkProps;
 }
 
 export interface HeaderOwnerState extends HeaderProps {}
 
-export interface HeaderClasses {
+interface HeaderClasses {
   root: string;
   siteMessageWrap: string;
   logo: string;

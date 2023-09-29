@@ -1,13 +1,15 @@
-import { lorem } from 'faker';
-import type { TabsProps } from './Tabs.types';
 import { cardBaseMock } from '../Card/Card.mock';
 import { blockContentOnLeftMock } from '../Block/Block.mock';
 import { collectionBaseMock } from '../Collection/Collection.mock';
 import { quoteBaseMock } from '../Quote/Quote.mock';
 import { introTextMock } from '../Text/Text.mock';
 
+import randomId from '../utils/randomId';
+
+import type { TabsProps } from './Tabs.types';
+
 const TabsDefaultMock: TabsProps = {
-  id: lorem.word(),
+  id: randomId(),
   __typename: 'CollectionExpandable',
   items: [
     cardBaseMock({ title: 'Card 1 - Title' }),

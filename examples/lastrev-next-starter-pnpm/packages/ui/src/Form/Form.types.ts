@@ -1,5 +1,5 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
-import { ModuleIntegration_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { ModuleIntegration_BaseFragmentFragment } from '@graphql-sdk/types';
 
 // TODO
 export enum FormVariants {
@@ -11,7 +11,7 @@ export interface FormProps extends ModuleIntegration_BaseFragmentFragment {
   hasSuccessMessage?: boolean;
 }
 
-export interface FormClasses {
+interface FormClasses {
   root: string;
   formContainer: string;
   formOuterContainer: string;

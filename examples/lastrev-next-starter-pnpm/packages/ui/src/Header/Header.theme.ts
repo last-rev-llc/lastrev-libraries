@@ -8,9 +8,9 @@ import type {
 
 const SUPERNAV_TIMEOUT = '15s';
 
-export const defaultProps: ComponentsProps['Header'] = {};
+const defaultProps: ComponentsProps['Header'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   root: ({ theme, elevation }) => ({
     '& *': {
       whiteSpace: 'nowrap'

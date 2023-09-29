@@ -1,3 +1,5 @@
+// TODO: Fix TS Errors
+// @ts-nocheck
 import React from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
@@ -6,16 +8,16 @@ import Box from '@mui/material/Box';
 import MuiAvatar from '@mui/material/Avatar';
 import ButtonBase from '@mui/material/ButtonBase';
 import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
+import Typography, { type TypographyProps } from '@mui/material/Typography';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
-import TwitterIcon from '../Icons/TwitterIcon';
-import FacebookIcon from '../Icons/FacebookIcon';
-import LinkedinIcon from '../Icons/LinkedinIcon';
-import EmailIcon from '../Icons/EmailIcon';
-import CopyLinkIcon from '../Icons/CopyLinkIcon';
+// import TwitterIcon from '../Icons/TwitterIcon';
+// import FacebookIcon from '../Icons/FacebookIcon';
+// import LinkedinIcon from '../Icons/LinkedinIcon';
+// import EmailIcon from '../Icons/EmailIcon';
+// import CopyLinkIcon from '../Icons/CopyLinkIcon';
 
 import type { BlogProps } from './Blog.types';
 import type { MediaProps } from '../Media/Media.types';
@@ -30,19 +32,19 @@ const Blog = ({
   body,
   author,
   relatedItems,
-  breadcrumbs,
+  // breadcrumbs,
   sidekickLookup,
-  summary,
+  // summary,
   contents
 }: BlogProps) => {
   const pathname = usePathname();
-  const [shareUrl, setShareUrl] = React.useState('');
-  const encodedShareUrl = encodeURIComponent(shareUrl);
+  // const [shareUrl, setShareUrl] = React.useState('');
+  // const encodedShareUrl = encodeURIComponent(shareUrl);
 
-  React.useEffect(() => {
-    const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
-    setShareUrl(`${origin}${pathname}`);
-  }, [pathname]);
+  // React.useEffect(() => {
+  //   const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : '';
+  //   setShareUrl(`${origin}${pathname}`);
+  // }, [pathname]);
 
   return (
     <>
@@ -51,26 +53,18 @@ const Blog = ({
       <Root component="main" {...sidekick(sidekickLookup)}>
         <HeaderContainer>
           {/* TODO: Move Breadcrumb to its own component */}
-          {!!breadcrumbs?.length && (
+          {/* {!!breadcrumbs?.length && (
             <Breadcrumb>
               {breadcrumbs.map((breadcrumb) => (
                 <BreadcrumbItem key={breadcrumb?.id} {...breadcrumb} />
               ))}
             </Breadcrumb>
-          )}
+          )} */}
 
           {!!title && <Title component="h1">{title}</Title>}
           {!!pubDate && <PubDate variant="body1">Published: {pubDate}</PubDate>}
-          {!!author && (
-            <AAIListWrap>
-              Written By:
-              <AAIList>
-                <AAIListItem sx={{ display: 'inline' }}>{author.name}</AAIListItem>
-              </AAIList>
-            </AAIListWrap>
-          )}
 
-          {!!summary && <Summary variant="body1">{summary}</Summary>}
+          {/* {!!summary && <Summary variant="body1">{summary}</Summary>} */}
         </HeaderContainer>
 
         <ContentContainer>
@@ -91,7 +85,7 @@ const Blog = ({
             <ShareLinksWrapper>
               <ShareLinksLabel variant="body1">Share</ShareLinksLabel>
 
-              <ShareLinks>
+              {/* <ShareLinks>
                 <ShareLink href={`http://www.twitter.com/share?url=${encodedShareUrl}`} target="_blank">
                   <TwitterIcon />
                   <Typography>Twitter</Typography>
@@ -117,7 +111,7 @@ const Blog = ({
                   <CopyLinkIcon />
                   <Typography>Copy Link</Typography>
                 </ShareLink>
-              </ShareLinks>
+              </ShareLinks> */}
             </ShareLinksWrapper>
           </ContentWrap>
 
@@ -157,8 +151,8 @@ const Blog = ({
 
               {!!author.socialLinks?.length && (
                 <AuthorSocialLinks>
-                  {author.socialLinks.map((link) => (
-                    <AuthorSocialLink {...(link as LinkProps)} />
+                  {author.socialLinks.map((link, index) => (
+                    <AuthorSocialLink key={`author-social-link-${index}=${link?.href}`} {...(link as LinkProps)} />
                   ))}
                 </AuthorSocialLinks>
               )}
@@ -234,7 +228,6 @@ const BreadcrumbItem = styled(ContentModule, {
   slot: 'BreadcrumbItem',
   overridesResolver: (_, styles) => [styles.breadcrumbItem]
 })(({ theme }) => ({
-  textDecoration: 'none',
   borderLeft: `1px solid ${theme.palette.secondary.main}`,
   paddingLeft: theme.spacing(0.5),
   ...theme.typography.bodySmall,

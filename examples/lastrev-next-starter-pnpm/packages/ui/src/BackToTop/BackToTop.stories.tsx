@@ -1,10 +1,11 @@
-import React from 'react';
 import BackToTop from './BackToTop';
-import mockContent from './BackToTop.mock';
+
+import backToTopBaseMock from './BackToTop.mock';
 
 export default {
-  title: 'Components / BackToTop',
+  title: '3. Modules/Back To Top',
   component: BackToTop,
+  tags: ['autodocs'],
   argTypes: {
     size: {
       name: 'Size',
@@ -29,6 +30,4 @@ export default {
   }
 };
 
-const Template = (args: JSX.IntrinsicAttributes) => <BackToTop {...args} />;
-export const Default = Template.bind({});
-Default.args = { ...mockContent() };
+export const Default = { args: { ...backToTopBaseMock() } };

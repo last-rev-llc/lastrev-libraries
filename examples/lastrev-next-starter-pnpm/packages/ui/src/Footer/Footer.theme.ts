@@ -6,9 +6,9 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Footer'] = {};
+const defaultProps: ComponentsProps['Footer'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme }) => ({
     padding: theme.spacing(4, 2) // Update
   }),

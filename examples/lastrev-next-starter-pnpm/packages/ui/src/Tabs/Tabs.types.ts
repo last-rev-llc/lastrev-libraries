@@ -19,7 +19,7 @@ export interface TabsProps extends CollectionExpandable {
   variant?: TabsVariants;
 }
 
-export interface TabsClasses {
+interface TabsClasses {
   root: string;
   contentContainer: string;
   introTextWrapper: string;

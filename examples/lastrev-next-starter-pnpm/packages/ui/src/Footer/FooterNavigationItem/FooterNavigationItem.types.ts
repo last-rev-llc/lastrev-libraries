@@ -1,12 +1,12 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { NavigationItem_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { NavigationItem_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface FooterNavigationItemProps extends NavigationItem_BaseFragmentFragment {}
 
 export interface FooterNavigationItemOwnerState extends FooterNavigationItemProps {}
 
-export interface FooterNavigationItemClasses {
+interface FooterNavigationItemClasses {
   root: string;
   rootLinkButton: string;
   rootLink: string;

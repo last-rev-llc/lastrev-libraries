@@ -1,2 +1,2 @@
-export type { FormProps, FormClassKey, FormClasses } from './Form.types';
+export type { FormProps, FormClassKey } from './Form.types';
 export { default } from './Form';

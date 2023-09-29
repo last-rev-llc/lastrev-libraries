@@ -1,9 +1,11 @@
-import { lorem } from 'faker';
-import type { TextProps } from './Text.types';
 import { richTextMock } from '../RichText/RichText.mock';
 
+import randomId from '../utils/randomId';
+
+import type { TextProps } from './Text.types';
+
 const textDefaultMock: TextProps = {
-  id: lorem.word(),
+  id: randomId(),
   __typename: 'Text',
   overline: 'This is the overline',
   title: 'This is the title',

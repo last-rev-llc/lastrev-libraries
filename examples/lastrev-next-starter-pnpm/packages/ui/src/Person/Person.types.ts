@@ -1,5 +1,5 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
-import { Person_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Person_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum PersonVariants {
   default = 'default'
@@ -7,7 +7,7 @@ export enum PersonVariants {
 
 export interface PersonProps extends Person_BaseFragmentFragment {}
 
-export interface PersonClasses {
+interface PersonClasses {
   root: string;
   featuredMedia: string;
   name: string;

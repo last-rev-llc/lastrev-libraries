@@ -13,7 +13,7 @@ export const typeMappings = {};
 export const typeDefs = gql`
   extend type Page {
     header: Header
-    footer: Content
+    footer: Footer
     path: String
     hero: Hero
     contents: [Content]

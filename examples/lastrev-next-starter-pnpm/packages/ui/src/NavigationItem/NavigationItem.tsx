@@ -1,9 +1,12 @@
 import React from 'react';
 
-import MenuItem from '@mui/material/MenuItem';
+import styled from '@mui/system/styled';
+
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import styled from '@mui/system/styled';
+
 import { useMediaQuery } from '@mui/material';
 import { useTheme } from '@mui/system';
 
@@ -12,10 +15,17 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import type { NavigationItemProps } from './NavigationItem.types';
+import type { NavigationItemProps, NavigationItemOwnerState } from './NavigationItem.types';
 import type { LinkProps } from '../Link';
 
-export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, ...props }: NavigationItemProps) => {
+export const NavigationItem = (props: NavigationItemProps) => {
+  const ownerState = {
+    ...props,
+    numOfCols: props.subNavigation?.length || 1
+  };
+
+  const { subNavigation, sidekickLookup, onRequestClose } = props;
+
   const [open, setOpen] = React.useState<boolean>(false);
   const theme = useTheme();
   const menuBreakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
@@ -44,11 +54,12 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
           {...sidekick(sidekickLookup)}
           onClick={handleClick}
           __typename="Link"
+          ownerState={ownerState}
         />
         {subNavigation?.length ? (
-          <MenuRoot menuBreakpoint={menuBreakpoint} component={'ul'}>
+          <NavItemSubMenu menuBreakpoint={menuBreakpoint} component={'ul'} ownerState={ownerState}>
             {subNavigation?.map((item) => (
-              <MenuItem key={item.id}>
+              <NavItemSubMenuItem key={item.id} ownerState={ownerState}>
                 <ContentModule
                   {...item}
                   variant={'link'}
@@ -58,101 +69,76 @@ export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, 
                         onRequestClose: handleSubnavClick
                       }
                     : {})}
+                  ownerState={ownerState}
                 />
-              </MenuItem>
+              </NavItemSubMenuItem>
             ))}
-          </MenuRoot>
+          </NavItemSubMenu>
         ) : null}
       </Root>
     </ErrorBoundary>
   );
 };
 
-const visibleStyles = (open: boolean) => `
-  max-height: ${open ? 300 : 0}px;
-  box-shadow: ${open ? 'inset 0 0 16px -8px rgb(0 0 0 / 30%)' : 'inset 0 0 0 0 rgb(0 0 0 / 0%)'};
-`;
+// const visibleStyles = (open: boolean) => `
+//   max-height: ${open ? 300 : 0}px;
+//   box-shadow: ${open ? 'inset 0 0 16px -8px rgb(0 0 0 / 30%)' : 'inset 0 0 0 0 rgb(0 0 0 / 0%)'};
+// `;
 
-const shouldForwardProp = (prop: string) =>
-  prop !== 'variant' && prop !== 'onRequestClose' && prop !== 'menuBreakpoint';
+// const shouldForwardProp = (prop: string) =>
+//   prop !== 'variant' && prop !== 'onRequestClose' && prop !== 'menuBreakpoint';
 
 const Root = styled(Box, {
   name: 'NavigationItem',
   slot: 'Root',
-  shouldForwardProp,
+  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; open: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
-  ${({ open, theme, menuBreakpoint }) => `
-    @media (max-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
-      [class$=NavigationItem-menuRoot] {
-        ${visibleStyles(open)}
-      }
-    }
-    @media (min-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
-      [class$=NavigationItem-menuRoot] {
-        max-height: 0px;
-      }
-      &:hover {
-        background: rgba(0,0,0,0.05);
-        [class$=NavigationItem-menuRoot] {
-          max-height: 300px;
-        }
-      }
-   }
-  `}
+  // ${({ open, theme, menuBreakpoint }) => `
+  //   @media (max-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
+  //     [class$=NavigationItem-menuRoot] {
+  //       ${visibleStyles(open)}
+  //     }
+  //   }
+  //   @media (min-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
+  //     [class$=NavigationItem-menuRoot] {
+  //       max-height: 0px;
+  //     }
+  //     &:hover {
+  //       background: rgba(0,0,0,0.05);
+  //       [class$=NavigationItem-menuRoot] {
+  //         max-height: 300px;
+  //       }
+  //     }
+  //  }
+  // `}
 `;
+
+const NavItemSubMenu = styled(List, {
+  name: 'NavigationItem',
+  slot: 'NavItemSubMenu',
+  // shouldForwardProp: (prop: string) => prop !== 'numOfCols',
+  overridesResolver: (_, styles) => [styles.navItemSubMenu]
+})<{ ownerState: NavigationItemOwnerState }>``;
+
+const NavItemSubMenuItem = styled(ListItem, {
+  name: 'NavigationItem',
+  slot: 'NavItemSubMenuItem',
+  overridesResolver: (_, styles) => [styles.navItemSubMenuItem]
+})<{ ownerState: NavigationItemOwnerState }>``;
 
 const NavigationItemLink = styled(ContentModule, {
   name: 'NavigationItem',
   slot: 'Link',
-  shouldForwardProp,
+  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.link]
-})<LinkProps>``;
+})<{ ownerState: NavigationItemOwnerState }>``;
 
 const MenuRoot = styled(Paper, {
   name: 'NavigationItem',
   slot: 'MenuRoot',
-  shouldForwardProp,
+  // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.menuRoot]
-})<{ variant?: string; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl'; component?: string }>`
-  ${({ theme, menuBreakpoint }) => `
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: 0.3s ease-in-out;
-    background: rgb(242 242 242);
-
-    // Desktop
-    @media (min-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
-      box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 10px -10px 0px rgb(0 0 0 / 12%);
-      position: absolute;
-      right: 0;
-      .MuiMenuItem-root {
-        padding: 0;
-        display:block;
-        width: 100%;
-        * {
-          width: 100%;
-        }
-      }
-    }
-
-    // Mobile
-    @media (max-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
-      width: 100%;
-      && { // Needed to override Paper styles
-       box-shadow: inset 0 0 16px -8px rgb(0 0 0 / 30%)
-      }
-      .MuiMenuItem-root{
-        width: 100%;
-        display: block;
-        // padding: 0;
-        > div {
-          width: 100%;
-        }
-      }
-    }
-  `}
-`;
+})<{ ownerState: NavigationItemOwnerState }>``;
 
 export default NavigationItem;

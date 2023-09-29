@@ -1,2 +1,2 @@
+export type { BackToTopProps, BackToTopClassKey } from './BackToTop.types';
 export { default } from './BackToTop';
-export type { BackToTopProps, BackToTopClasses, BackToTopClassKey } from './BackToTop.types';

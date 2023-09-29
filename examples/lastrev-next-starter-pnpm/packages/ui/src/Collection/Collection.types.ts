@@ -1,6 +1,6 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Collection_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Collection_BaseFragmentFragment } from '@graphql-sdk/types';
 
 import { CardVariants } from '../Card/Card.types';
 
@@ -19,7 +19,8 @@ export interface CollectionProps extends Omit<Collection_BaseFragmentFragment, '
 }
 
 export interface CollectionOwnerState extends CollectionProps {}
-export interface CollectionClasses {
+
+interface CollectionClasses {
   root: string;
   contentContainer: string;
   introTextWrapper: string;

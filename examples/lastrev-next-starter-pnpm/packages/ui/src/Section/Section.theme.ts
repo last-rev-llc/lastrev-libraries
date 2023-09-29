@@ -7,9 +7,9 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Section'] = {};
+const defaultProps: ComponentsProps['Section'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
   root: ({ theme, hasBackground }) => {
     return {
       'marginTop': hasBackground ? 0 : theme.spacing(15),

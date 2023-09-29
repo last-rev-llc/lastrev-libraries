@@ -11,7 +11,6 @@ const Grid = ({ children, ...props }: GridProps) => {
 const Root = styled('div', {
   name: 'Grid',
   slot: 'Root',
-  // shouldForwardProp: (prop) => shouldForwardProp(prop as string) && prop !== 'id',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; colorScheme?: string }>``;
 

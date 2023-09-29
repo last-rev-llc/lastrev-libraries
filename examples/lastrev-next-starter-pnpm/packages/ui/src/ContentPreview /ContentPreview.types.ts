@@ -10,7 +10,7 @@ export interface ContentPreviewProps {
   livePreview?: boolean;
 }
 
-export interface ContentPreviewClasses {
+interface ContentPreviewClasses {
   // /** Styles applied to the root element. */
   // root: string;
 }

@@ -21,7 +21,7 @@ const Footer = (props: FooterProps) => {
   const {
     logo,
     logoUrl,
-    disclaimer,
+    disclaimerText,
     socialLinks,
     navigationItems,
     introContents,
@@ -77,11 +77,11 @@ const Footer = (props: FooterProps) => {
         )}
 
         <LegalSection ownerState={ownerState}>
-          {!!disclaimer && (
+          {!!disclaimerText && (
             <Disclaimer
-              {...sidekick(sidekickLookup, 'disclaimer')}
+              {...sidekick(sidekickLookup, 'disclaimerText')}
               __typename="Text"
-              body={disclaimer}
+              body={disclaimerText}
               ownerState={ownerState}
             />
           )}

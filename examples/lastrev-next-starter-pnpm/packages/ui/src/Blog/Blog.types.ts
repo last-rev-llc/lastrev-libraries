@@ -1,10 +1,10 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Blog_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Blog_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface BlogProps extends Blog_BaseFragmentFragment {}
 
-export interface BlogClasses {
+interface BlogClasses {
   root: string;
   featuredMedia: string;
   featuredMediaWrap: string;

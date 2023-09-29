@@ -1,5 +1,5 @@
 import { Options } from '@contentful/rich-text-react-renderer';
-import { RichText_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { RichText_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface RichText extends RichText_BaseFragmentFragment {}
 
@@ -36,7 +36,7 @@ export interface RichText {
   links?: RichTextLinks;
 }
 
-export interface RichTextClasses {
+interface RichTextClasses {
   /** Styles applied to the root element. */
   root: string;
 }

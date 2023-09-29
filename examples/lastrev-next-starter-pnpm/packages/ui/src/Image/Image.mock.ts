@@ -1,13 +1,12 @@
-import { lorem } from 'faker';
 import type { ImageProps } from './Image.types';
 
 // TODO: Use Media Mock
 const imageDefaultMock: ImageProps = {
   src: 'https://source.unsplash.com/random/300×300',
-  alt: lorem.words(3),
+  alt: 'This is the image alt text',
   width: 180,
   height: 180,
-  className: lorem.word(),
+  className: 'image-class-name',
   testId: 'Image'
   // lazy: false
 };

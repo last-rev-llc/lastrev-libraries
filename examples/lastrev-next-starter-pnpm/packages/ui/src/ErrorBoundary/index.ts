@@ -1,2 +1,2 @@
 export { default } from './ErrorBoundary';
-export type { ErrorBoundaryProps, ErrorBoundaryClassKey, ErrorBoundaryClasses } from './ErrorBoundary.types';
+export type { ErrorBoundaryProps, ErrorBoundaryClassKey } from './ErrorBoundary.types';
