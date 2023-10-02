@@ -23,7 +23,6 @@ interface HeaderNavGroupClasses {
   navItemGroup: string;
   navItemSubMenu: string;
   navItemSubMenuItem: string;
-  navItemSubMenuWrapper: string;
 }
 
 export declare type HeaderNavGroupClassKey = keyof HeaderNavGroupClasses;

@@ -17,8 +17,8 @@ import ContentModule from '../ContentModule';
 import SiteMessage from '../SiteMessage';
 
 import type { HeaderProps, HeaderOwnerState } from './Header.types';
-import type { LinkProps } from '../Link/Link.types';
-import type { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
+import type { LinkProps } from '../Link';
+import type { NavigationItemProps } from '../NavigationItem';
 
 export const Header = (props: HeaderProps) => {
   const ownerState = { ...props };
@@ -116,6 +116,7 @@ export const Header = (props: HeaderProps) => {
 const Root = styled(Box, {
   name: 'Header',
   slot: 'Root',
+  shouldForwardProp: (prop: string) => prop !== 'menuVisible',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: HeaderOwnerState; menuVisible: boolean }>(() => ({}));
 

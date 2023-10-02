@@ -1,5 +1,5 @@
 import { cardBaseMock } from '../Card/Card.mock';
-import { CardVariants } from '../Card/Card.types';
+import { CardVariants } from '../Card';
 import { introTextMock } from '../Text/Text.mock';
 
 import randomId from '../utils/randomId';
@@ -7,7 +7,7 @@ import randomId from '../utils/randomId';
 import { type CollectionProps, CollectionVariants } from './Collection.types';
 
 export const collectionBaseMock = (override?: Partial<CollectionProps>): CollectionProps => {
-  const baseMock = {
+  const baseMock: CollectionProps = {
     id: randomId(),
     __typename: 'Collection',
     variant: CollectionVariants.threePerRow,
@@ -31,7 +31,7 @@ export const collectionBaseMock = (override?: Partial<CollectionProps>): Collect
       variantOverride = {};
   }
 
-  return { ...baseMock, ...variantOverride, ...override };
+  return { ...baseMock, ...variantOverride, ...override } as CollectionProps;
 };
 
 export default collectionBaseMock;

@@ -1,33 +1,21 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { CollectionExpandable } from '@graphql-sdk/types';
+import type { CollectionExpandable_BaseFragmentFragment } from '@graphql-sdk/types';
 
-type TabsVariants =
-  | 'default'
-  | 'defaultCircleImage'
-  | 'onePerRow'
-  | 'twoPerRow'
-  | 'twoPerRowOffset'
-  | 'threePerRow'
-  | 'fourPerRow'
-  | 'customerLogos'
-  | 'contentGrid'
-  | 'pricing'
-  | undefined;
+export interface TabsProps extends CollectionExpandable_BaseFragmentFragment {}
 
-export interface TabsProps extends CollectionExpandable {
-  variant?: TabsVariants;
-}
+export interface TabsOwnerState extends TabsProps {}
 
 interface TabsClasses {
   root: string;
-  contentContainer: string;
-  introTextWrapper: string;
+  contentGrid: string;
+  introTextGrid: string;
   introText: string;
   itemsContainer: string;
-  item: string;
-  actionsContainer: string;
-  action: string;
+  tabContext: string;
+  tabListWrap: string;
+  detailsWrap: string;
+  details: string;
 }
 
 export declare type TabsClassKey = keyof TabsClasses;

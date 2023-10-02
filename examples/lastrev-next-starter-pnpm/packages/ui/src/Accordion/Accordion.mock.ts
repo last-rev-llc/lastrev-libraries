@@ -7,7 +7,7 @@ import {
 
 import randomId from '../utils/randomId';
 
-import type { AccordionProps } from './Accordion.types';
+import { AccordionProps } from './Accordion.types';
 
 export const accordionBaseMock = (override?: Partial<AccordionProps>): AccordionProps => {
   return {
@@ -16,8 +16,8 @@ export const accordionBaseMock = (override?: Partial<AccordionProps>): Accordion
     items: [
       collectionExpandableItemBaseMock({ title: 'Collection 1 - Title' }),
       collectionExpandableItemBaseMock({ title: 'Collection 2 - Title' })
-    ]
-    // introText: introTextMock()
+    ],
+    introText: introTextMock()
   };
 };
 

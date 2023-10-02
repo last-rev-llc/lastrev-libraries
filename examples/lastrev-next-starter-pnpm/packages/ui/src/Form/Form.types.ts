@@ -1,12 +1,13 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
-import type { ModuleIntegration_BaseFragmentFragment } from '@graphql-sdk/types';
 
-// TODO
+import type { Form_BaseFragmentFragment } from '@graphql-sdk/types';
+
 export enum FormVariants {
+  default = 'default',
   hubspotFormFooter = 'hubspotFormFooter'
 }
 
-export interface FormProps extends ModuleIntegration_BaseFragmentFragment {
+export interface FormProps extends Form_BaseFragmentFragment {
   submitted?: boolean;
   hasSuccessMessage?: boolean;
 }

@@ -14,7 +14,7 @@ import type {
   FooterNavigationItemGroupOwnerState
 } from './FooterNavigationItemGroup.types';
 import type { LinkProps } from '../../Link';
-import type { NavigationItemProps } from '../../NavigationItem/NavigationItem.types';
+import type { NavigationItemProps } from '../../NavigationItem';
 
 const FooterNavigationItemGroup = (props: FooterNavigationItemGroupProps) => {
   const ownerState = { ...props };

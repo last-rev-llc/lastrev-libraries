@@ -11,12 +11,17 @@ import TabPanel from '@mui/lab/TabPanel';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
+import Grid from '../Grid';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import type { TabsProps } from './Tabs.types';
+import type { TabsProps, TabsOwnerState } from './Tabs.types';
 
-export const Tabs = ({ id, items, variant, sidekickLookup, introText, ...props }: TabsProps) => {
+const Tabs = (props: TabsProps) => {
+  const ownerState = { ...props };
+
+  const { id, items, variant, sidekickLookup, introText } = props;
+
   const [value, setValue] = React.useState('0');
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -25,17 +30,22 @@ export const Tabs = ({ id, items, variant, sidekickLookup, introText, ...props }
 
   return (
     <ErrorBoundary>
-      <Root variant={variant} data-testid={`Tabs-${variant}`} {...props} {...sidekick(sidekickLookup)}>
+      <Root data-testid={`Tabs-${variant}`} {...sidekick(sidekickLookup)} ownerState={ownerState}>
         {introText && (
-          <IntroTextWrapper>
-            <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
-          </IntroTextWrapper>
+          <IntroTextGrid ownerState={ownerState}>
+            <IntroText
+              ownerState={ownerState}
+              {...sidekick(sidekickLookup, 'introText')}
+              {...introText}
+              variant="introText"
+            />
+          </IntroTextGrid>
         )}
 
-        <ContentContainer>
-          {!!items?.length && (
-            <TabContext value={value}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        {!!items?.length && (
+          <ContentGrid ownerState={ownerState}>
+            <TabsContext value={value} ownerState={ownerState}>
+              <TabListWrap sx={{ borderBottom: 1, borderColor: 'divider' }} ownerState={ownerState}>
                 {/* TODO: Add "orientation" to the expanding content type */}
                 <TabList onChange={handleChange} orientation="horizontal" aria-label="TODO">
                   {items?.map(
@@ -47,58 +57,80 @@ export const Tabs = ({ id, items, variant, sidekickLookup, introText, ...props }
                     )
                   )}
                 </TabList>
-              </Box>
+              </TabListWrap>
 
               {items?.map(
                 (
                   item: any,
                   index: number // TODO: Fix type
                 ) => (
-                  <TabPanel value={index.toString()} key={`${!id}-tab-panel-${item?.id}-${index}`}>
-                    {item.body ? <ContentModule __typename="RichText" body={item.body} /> : <Item {...item.content} />}
-                  </TabPanel>
+                  <DetailsWrap
+                    value={index.toString()}
+                    key={`${!id}-tab-panel-${item?.id}-${index}`}
+                    ownerState={ownerState}>
+                    {item.body ? (
+                      <Details __typename="RichText" body={item.body} ownerState={ownerState} />
+                    ) : (
+                      <Details {...item.content} ownerState={ownerState} />
+                    )}
+                  </DetailsWrap>
                 )
               )}
-            </TabContext>
-          )}
-        </ContentContainer>
+            </TabsContext>
+          </ContentGrid>
+        )}
       </Root>
     </ErrorBoundary>
   );
 };
 
-const shouldForwardProp = (prop: string) => prop !== 'variant';
-
 const Root = styled(Box, {
   name: 'Tabs',
   slot: 'Root',
-  shouldForwardProp,
+
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>``;
+})<{ ownerState: TabsOwnerState }>``;
 
-const ContentContainer = styled(Container, {
+const ContentGrid = styled(Grid, {
   name: 'Tabs',
-  slot: 'ContentContainer',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.contentContainer]
-})<{ variant?: string }>``;
+  slot: 'ContentGrid',
+  overridesResolver: (_, styles) => [styles.contentGrid]
+})<{ ownerState: TabsOwnerState }>``;
 
-const IntroTextWrapper = styled(Box, {
+const IntroTextGrid = styled(Grid, {
   name: 'Tabs',
-  slot: 'IntroTextWrapper',
-  overridesResolver: (_, styles) => [styles.introTextWrapper]
-})(() => ({}));
+  slot: 'IntroTextGrid',
+  overridesResolver: (_, styles) => [styles.introTextGrid]
+})<{ ownerState: TabsOwnerState }>``;
 
 const IntroText = styled(ContentModule, {
-  name: 'Tabs',
+  name: 'Collection',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
-})(() => ({}));
+})<{ ownerState: TabsOwnerState }>``;
 
-const Item = styled(ContentModule, {
+const TabsContext = styled(TabContext, {
   name: 'Tabs',
-  slot: 'Item',
-  overridesResolver: (_, styles) => [styles.item]
-})<{ variant?: string }>``;
+  slot: 'TabsContext',
+  overridesResolver: (_, styles) => [styles.tabContext]
+})<{ ownerState: TabsOwnerState }>``;
+
+const TabListWrap = styled(Box, {
+  name: 'Tabs',
+  slot: 'TabListWrap',
+  overridesResolver: (_, styles) => [styles.tabListWrap]
+})<{ ownerState: TabsOwnerState }>``;
+
+const DetailsWrap = styled(TabPanel, {
+  name: 'Tabs',
+  slot: 'DetailsWrap',
+  overridesResolver: (_, styles) => [styles.detailsWrap]
+})<{ ownerState: TabsOwnerState }>``;
+
+const Details = styled(ContentModule, {
+  name: 'Tabs',
+  slot: 'Details',
+  overridesResolver: (_, styles) => [styles.details]
+})<{ ownerState: TabsOwnerState }>``;
 
 export default Tabs;

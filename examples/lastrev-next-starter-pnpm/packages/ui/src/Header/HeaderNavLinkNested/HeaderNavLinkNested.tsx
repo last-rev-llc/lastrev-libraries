@@ -12,18 +12,10 @@ import type { HeaderNavLinkNestedProps, HeaderNavLinkNestedOwnerState } from './
 const HeaderNavLinkNested = (props: HeaderNavLinkNestedProps) => {
   const ownerState = { ...props };
 
-  const { sidekickLookup, onRequestClose } = props;
-
-  const [open, setOpen] = React.useState<boolean>(false);
+  const { sidekickLookup, onRequestClose, id: navItemId } = props;
 
   const onNavItemClick = () => {
     if (onRequestClose) onRequestClose();
-  };
-
-  const onKeyDown = (evt: any) => {
-    if (evt.key === 'Tab' && !open) {
-      setOpen(true);
-    }
   };
 
   return (
@@ -33,7 +25,6 @@ const HeaderNavLinkNested = (props: HeaderNavLinkNestedProps) => {
         {...props}
         {...sidekick(sidekickLookup)}
         icon="chevron"
-        onKeyDown={onKeyDown}
         onClick={onNavItemClick}
         __typename="Link"
         ownerState={ownerState}
@@ -41,9 +32,6 @@ const HeaderNavLinkNested = (props: HeaderNavLinkNestedProps) => {
     </ErrorBoundary>
   );
 };
-
-// const shouldForwardProp = (prop: string) =>
-//   prop !== 'variant' && prop !== 'onRequestClose' && prop !== 'menuBreakpoint';
 
 const NavItemLink = styled(ContentModule, {
   name: 'HeaderNavLinkNested',

@@ -15,18 +15,14 @@ import getFirstOfArray from '../utils/getFirstOfArray';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import type { CardProps, CardOwnerState } from './Card.types';
-import type { LinkProps } from '../Link/Link.types';
+import { type LinkProps } from '../Link';
 
 export const Card = (props: CardProps) => {
-  const { id, media, overline, title, subtitle, body, link, actions, variant, loading, position, sidekickLookup } =
-    props;
+  const { id, media, overline, title, subtitle, body, link, actions, variant, loading, sidekickLookup } = props;
 
   const ownerState = {
     ...props,
-    variant,
-    isFirst: position === 1,
-    isMultipleOfTwo: !!position && position > 1 && position % 2 === 0,
-    isMultipleOfThree: !!position && position > 1 && position % 3 === 0
+    variant
   };
 
   const image = getFirstOfArray(media);

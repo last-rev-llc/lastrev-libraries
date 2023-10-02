@@ -13,6 +13,7 @@ const Person = dynamic(() => import('./Person'));
 const Quote = dynamic(() => import('./Quote'));
 const Blog = dynamic(() => import('./Blog'));
 const Accordion = dynamic(() => import('./Accordion'));
+const Form = dynamic(() => import('./Form'));
 const Section = dynamic(() => import('./Section'));
 const NavigationBar = dynamic(() => import('./NavigationBar'));
 const NavigationItem = dynamic(() => import('./NavigationItem'));
@@ -51,6 +52,7 @@ export const contentMapping: {
   NavigationBar,
   FooterNavigationItem,
   FooterNavigationItemGroup,
+  'ElementForm': Form,
   NavigationItem,
   'NavigationItem:link': HeaderNavLink,
   'NavigationItem:linkNested': HeaderNavLinkNested,

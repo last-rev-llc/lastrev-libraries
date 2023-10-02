@@ -1,5 +1,6 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import sidekick from '@last-rev/contentful-sidekick-util';

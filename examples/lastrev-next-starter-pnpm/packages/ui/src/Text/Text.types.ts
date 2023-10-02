@@ -4,11 +4,6 @@ import { Options } from '@contentful/rich-text-react-renderer';
 
 import type { Text_BaseFragmentFragment } from '@graphql-sdk/types';
 
-interface Content {
-  __typename?: string;
-  id: string;
-}
-
 export interface TextProps extends Text_BaseFragmentFragment {
   styles?: {
     root?: any;

@@ -1,9 +1,9 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
 import type { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
-import type { RichText } from '../RichText/RichText.types';
-import type { MediaProps } from '../Media/Media.types';
-import type { LinkProps } from '../Link/Link.types';
+import { type RichTextProps } from '../RichText';
+import { type MediaProps } from '../Media';
+import { type LinkProps } from '../Link';
 
 // TODO Review
 export enum HeroVariants {
@@ -35,7 +35,7 @@ export interface HeroProps extends Hero_BaseFragmentFragment {
   overline?: string;
   title?: string;
   subtitle?: string;
-  body?: RichText;
+  body?: RichTextProps;
   images?: [MediaProps];
   actions?: [LinkProps];
   sidekickLookup?: any;

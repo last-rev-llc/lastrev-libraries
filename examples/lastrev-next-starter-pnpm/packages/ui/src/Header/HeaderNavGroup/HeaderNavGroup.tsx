@@ -21,25 +21,12 @@ const HeaderNavGroup = (props: HeaderNavGroupProps) => {
 
   const { variant, subNavigation, sidekickLookup, onRequestClose, id: navItemId } = props;
 
-  const [open, setOpen] = React.useState<boolean>(false);
-
   const onNavItemClick = () => {
-    if (subNavigation?.length) {
-      setOpen(!open);
-    }
-
     if (onRequestClose) onRequestClose();
   };
 
   const onSubNavItemClick = () => {
-    setOpen(false);
     if (onRequestClose) onRequestClose();
-  };
-
-  const onKeyDown = (evt: any) => {
-    if (evt.key === 'Tab' && !open && !!subNavigation?.length) {
-      setOpen(true);
-    }
   };
 
   return (
@@ -50,36 +37,32 @@ const HeaderNavGroup = (props: HeaderNavGroupProps) => {
             {...props}
             variant={variant}
             {...sidekick(sidekickLookup)}
-            onKeyDown={onKeyDown}
             onClick={onNavItemClick}
             onRequestClose={onRequestClose}
             __typename="Link"
             subNavigation={undefined}
             ownerState={ownerState}
           />
-          <NavItemSubMenuWrapper open={open} ownerState={ownerState}>
-            <NavItemSubMenu ownerState={ownerState}>
-              {subNavigation?.map((subNavItem: any, index: number) => (
-                <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
-                  <NavItemGroup
-                    {...subNavItem}
-                    variant="linkNested"
-                    __typename="NavigationItem"
-                    onClick={onSubNavItemClick}
-                    onRequestClose={onRequestClose}
-                    ownerState={ownerState}
-                  />
-                </NavItemSubMenuItem>
-              ))}
-            </NavItemSubMenu>
-          </NavItemSubMenuWrapper>
+          <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState}>
+            {subNavigation?.map((subNavItem: any, index: number) => (
+              <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
+                <NavItemGroup
+                  {...subNavItem}
+                  variant="linkNested"
+                  __typename="NavigationItem"
+                  onClick={onSubNavItemClick}
+                  onRequestClose={onRequestClose}
+                  ownerState={ownerState}
+                />
+              </NavItemSubMenuItem>
+            ))}
+          </NavItemSubMenu>
         </Root>
       ) : (
         <NavItemLink
           {...props}
           variant={variant}
           {...sidekick(sidekickLookup)}
-          onKeyDown={onKeyDown}
           onClick={onNavItemClick}
           onRequestClose={onRequestClose}
           __typename="Link"
@@ -95,12 +78,6 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: HeaderNavGroupOwnerState }>``;
-
-const NavItemSubMenuWrapper = styled(Box, {
-  name: 'HeaderNavGroup',
-  slot: 'NavItemSubMenuWrapper',
-  overridesResolver: (_, styles) => [styles.navItemSubMenuWrapper]
-})<{ open?: boolean; ownerState: HeaderNavGroupOwnerState }>``;
 
 const NavItemSubMenu = styled(List, {
   name: 'HeaderNavGroup',

@@ -4,7 +4,7 @@ import {
   navigationItemWithChildrenNestedMock
 } from '../NavigationItem/NavigationItem.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
-import { complexMock, richTextMock } from '../RichText/RichText.mock';
+import { complexMock } from '../RichText/RichText.mock';
 import blockBaseMock from '../Block/Block.mock';
 
 import randomId from '../utils/randomId';

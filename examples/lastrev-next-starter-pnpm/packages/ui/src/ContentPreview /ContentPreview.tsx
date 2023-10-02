@@ -1,10 +1,11 @@
 import React from 'react';
+import Box from '@mui/material/Link';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import ContentModule from '../ContentModule';
-import capitalize from 'lodash/capitalize';
 import { CircularProgress } from '@mui/material';
+
+import ContentModule from '../ContentModule';
 import type { ContentPreviewProps } from './ContentPreview.types';
 
 const ContentPreview = ({
@@ -59,7 +60,11 @@ const ContentPreview = ({
               <Link
                 target="_blank"
                 href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
-                {`Edit ${capitalize(content?.__typename)}#${id} in Contentful`}
+                Edit{' '}
+                <Box component="span" sx={{ textTransform: 'capitalize' }}>
+                  {content?.__typename}
+                </Box>{' '}
+                ID:${id} in Contentful
               </Link>
               <br />
             </Typography>
@@ -72,7 +77,10 @@ const ContentPreview = ({
           <Link
             target="_blank"
             href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
-            {`${capitalize(content?.__typename)}#${id} in Contentful`}
+            <Box component="span" sx={{ textTransform: 'capitalize' }}>
+              {content?.__typename}
+            </Box>{' '}
+            ID:${id} in Contentful
           </Link>
           <br />
           {pageURL && (

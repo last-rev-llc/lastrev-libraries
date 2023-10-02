@@ -213,6 +213,7 @@ type ElementForm implements Content {
   animation: JSON
   id: String
   internalTitle: String
+  introText: Text
   sidekickLookup: JSON
   theme: [Theme]
   variant: String

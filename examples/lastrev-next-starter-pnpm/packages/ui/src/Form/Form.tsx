@@ -1,11 +1,11 @@
 import React from 'react';
 
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+// import CircularProgress from '@mui/material/CircularProgress';
 
 import type { FormProps } from './Form.types';
 
@@ -20,7 +20,7 @@ const Form = ({ settings, variant }: FormProps) => {
     setSubmitted(true);
   };
 
-  const { portalId, formId } = settings;
+  // const { portalId, formId } = settings;
 
   return (
     <Root ownerState={ownerState}>

@@ -5,7 +5,6 @@ fragment CollectionExpandableItem_BaseFragment on CollectionExpandableItem {
   }
   content {
     ...Block_BaseFragment
-    ...Text_BaseFragment
     ...Quote_BaseFragment
     ...Collection_BaseFragment
   }

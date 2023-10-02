@@ -20,7 +20,6 @@ interface HeaderNavLinkClasses {
   navItemLink: string;
   navItemSubMenu: string;
   navItemSubMenuItem: string;
-  navItemSubMenuWrapper: string;
   megaNavContainer: string;
   megaNavContent: string;
   megaNavTitle: string;

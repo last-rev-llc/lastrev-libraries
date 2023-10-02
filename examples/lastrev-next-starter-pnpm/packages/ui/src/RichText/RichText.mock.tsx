@@ -2,7 +2,7 @@ import React from 'react';
 import BLOCKS from './BLOCKS';
 import MARKS from './MARKS';
 
-import type { TextProps, RichText } from './RichText.types';
+import { type RichTextProps } from './RichText.types';
 
 export const valueNode = (type: string = 'text') => ({
   data: {},
@@ -54,160 +54,237 @@ export const hyperlinkEntryNode = (id: string) => ({
   nodeType: 'entry-hyperlink'
 });
 
-export const dynamicMock = (content: any[], entries: any[] = [], assets: any[] = []) => ({
-  __typename: 'Text',
-  body: {
-    json: {
-      nodeType: 'document',
-      data: {},
-      content
-    },
-    links: { entries, assets }
+// TODO: Should be in Text and cleanup other mocks
+export const dynamicMock = (content: any[], entries: any[] = [], assets: any[] = []): RichTextProps => ({
+  __typename: 'RichText',
+  json: {
+    nodeType: 'document',
+    data: {},
+    content
+  },
+  links: { entries, assets }
+});
+
+// TODO: Should be in Text and cleanup other mocks
+export const complexMock = ({ text } = { text: 'Default complex mock' }): RichTextProps => ({
+  __typename: 'RichText',
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        data: {},
+        content: [
+          {
+            data: {},
+            marks: [],
+            value: text ?? 'This is default text',
+            nodeType: 'text'
+          },
+          {
+            data: {},
+            marks: [
+              {
+                type: 'bold'
+              }
+            ],
+            value: ' Bold, ',
+            nodeType: 'text'
+          },
+          {
+            data: {},
+            marks: [
+              {
+                type: 'italic'
+              }
+            ],
+            value: 'italic and ',
+            nodeType: 'text'
+          },
+          {
+            data: {},
+            marks: [
+              {
+                type: 'italic'
+              },
+              {
+                type: 'underline'
+              }
+            ],
+            value: 'underline.',
+            nodeType: 'text'
+          }
+        ],
+        nodeType: 'paragraph'
+      },
+      {
+        data: {},
+        content: [
+          {
+            data: {},
+            marks: [],
+            value: 'This is a list:',
+            nodeType: 'text'
+          }
+        ],
+        nodeType: 'paragraph'
+      },
+      {
+        data: {},
+        content: [
+          {
+            data: {},
+            content: [
+              {
+                data: {},
+                content: [
+                  {
+                    data: {},
+                    marks: [],
+                    value: 'Item One',
+                    nodeType: 'text'
+                  }
+                ],
+                nodeType: 'paragraph'
+              }
+            ],
+            nodeType: 'list-item'
+          },
+          {
+            data: {},
+            content: [
+              {
+                data: {},
+                content: [
+                  {
+                    data: {},
+                    marks: [],
+                    value: 'Item Two',
+                    nodeType: 'text'
+                  }
+                ],
+                nodeType: 'paragraph'
+              }
+            ],
+            nodeType: 'list-item'
+          },
+          {
+            data: {},
+            content: [
+              {
+                data: {},
+                content: [
+                  {
+                    data: {},
+                    marks: [],
+                    value: 'Item Three',
+                    nodeType: 'text'
+                  }
+                ],
+                nodeType: 'paragraph'
+              }
+            ],
+            nodeType: 'list-item'
+          }
+        ],
+        nodeType: 'unordered-list'
+      },
+      {
+        data: {},
+        content: [
+          {
+            data: {},
+            marks: [],
+            value: 'This is longer paragraph text',
+            nodeType: 'text'
+          }
+        ],
+        nodeType: 'paragraph'
+      }
+    ]
   }
 });
 
-export const complexMock = ({ text } = {}): TextProps => ({
-  __typename: 'Text',
-  body: {
-    json: {
-      nodeType: 'document',
-      data: {},
-      content: [
-        {
-          data: {},
-          content: [
-            {
-              data: {},
-              marks: [],
-              value: text ?? 'This is default text',
-              nodeType: 'text'
+// TODO: Should be in Text and cleanup other mocks
+export const withLinksMock = ({ text } = { text: 'Default with links mock' }): RichTextProps => ({
+  __typename: 'RichText',
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        nodeType: 'heading-5',
+        data: {},
+        marks: [],
+        content: [
+          {
+            nodeType: 'hyperlink',
+            data: {
+              uri: '/blog?category=1'
             },
-            {
-              data: {},
-              marks: [
-                {
-                  type: 'bold'
-                }
-              ],
-              value: ' Bold, ',
-              nodeType: 'text'
+            marks: [],
+            content: [
+              {
+                nodeType: 'text',
+                value: 'Example Project',
+                data: {},
+                marks: []
+              }
+            ]
+          },
+          {
+            nodeType: 'text',
+            value: ' • June 2022',
+            data: {},
+            marks: []
+          }
+        ]
+      },
+      {
+        nodeType: 'heading-6',
+        data: {},
+        marks: [],
+        content: [
+          {
+            nodeType: 'hyperlink',
+            data: {
+              uri: '/blog/a-blog-link'
             },
-            {
-              data: {},
-              marks: [
-                {
-                  type: 'italic'
-                }
-              ],
-              value: 'italic and ',
-              nodeType: 'text'
-            },
-            {
-              data: {},
-              marks: [
-                {
-                  type: 'italic'
-                },
-                {
-                  type: 'underline'
-                }
-              ],
-              value: 'underline.',
-              nodeType: 'text'
-            }
-          ],
-          nodeType: 'paragraph'
-        },
-        {
-          data: {},
-          content: [
-            {
-              data: {},
-              marks: [],
-              value: 'This is a list:',
-              nodeType: 'text'
-            }
-          ],
-          nodeType: 'paragraph'
-        },
-        {
-          data: {},
-          content: [
-            {
-              data: {},
-              content: [
-                {
-                  data: {},
-                  content: [
-                    {
-                      data: {},
-                      marks: [],
-                      value: 'Item One',
-                      nodeType: 'text'
-                    }
-                  ],
-                  nodeType: 'paragraph'
-                }
-              ],
-              nodeType: 'list-item'
-            },
-            {
-              data: {},
-              content: [
-                {
-                  data: {},
-                  content: [
-                    {
-                      data: {},
-                      marks: [],
-                      value: 'Item Two',
-                      nodeType: 'text'
-                    }
-                  ],
-                  nodeType: 'paragraph'
-                }
-              ],
-              nodeType: 'list-item'
-            },
-            {
-              data: {},
-              content: [
-                {
-                  data: {},
-                  content: [
-                    {
-                      data: {},
-                      marks: [],
-                      value: 'Item Three',
-                      nodeType: 'text'
-                    }
-                  ],
-                  nodeType: 'paragraph'
-                }
-              ],
-              nodeType: 'list-item'
-            }
-          ],
-          nodeType: 'unordered-list'
-        },
-        {
-          data: {},
-          content: [
-            {
-              data: {},
-              marks: [],
-              value: 'This is longer paragraph text',
-              nodeType: 'text'
-            }
-          ],
-          nodeType: 'paragraph'
-        }
-      ]
-    }
+            marks: [],
+            content: [
+              {
+                nodeType: 'text',
+                value: 'Project grows and expands with customer success',
+                data: {},
+                marks: []
+              }
+            ]
+          }
+        ]
+      },
+      {
+        nodeType: 'paragraph',
+        data: {},
+        marks: [],
+        content: [
+          {
+            nodeType: 'text',
+            value: text ?? 'This is longer paragraph text.  This is the second part of the text',
+            data: {},
+            marks: []
+          }
+        ]
+      }
+    ]
+  },
+  links: {
+    entries: [],
+    assets: []
   }
 });
 
-export const richTextMock = ({ text } = {}): RichText => ({
+export const richTextMock = ({ text } = { text: 'Default rich text' }): RichTextProps => ({
+  __typename: 'RichText',
   json: {
     nodeType: 'document',
     data: {},
@@ -232,86 +309,8 @@ export const richTextMock = ({ text } = {}): RichText => ({
   }
 });
 
-export const withLinksMock = ({ text } = {}): TextProps => ({
-  __typename: 'Text',
-  body: {
-    json: {
-      nodeType: 'document',
-      data: {},
-      content: [
-        {
-          nodeType: 'heading-5',
-          data: {},
-          marks: [],
-          content: [
-            {
-              nodeType: 'hyperlink',
-              data: {
-                uri: '/blog?category=1'
-              },
-              marks: [],
-              content: [
-                {
-                  nodeType: 'text',
-                  value: 'Example Project',
-                  data: {},
-                  marks: []
-                }
-              ]
-            },
-            {
-              nodeType: 'text',
-              value: ' • June 2022',
-              data: {},
-              marks: []
-            }
-          ]
-        },
-        {
-          nodeType: 'heading-6',
-          data: {},
-          marks: [],
-          content: [
-            {
-              nodeType: 'hyperlink',
-              data: {
-                uri: '/blog/a-blog-link'
-              },
-              marks: [],
-              content: [
-                {
-                  nodeType: 'text',
-                  value: 'Project grows and expands with customer success',
-                  data: {},
-                  marks: []
-                }
-              ]
-            }
-          ]
-        },
-        {
-          nodeType: 'paragraph',
-          data: {},
-          marks: [],
-          content: [
-            {
-              nodeType: 'text',
-              value: text ?? 'This is longer paragraph text.  This is the second part of the text',
-              data: {},
-              marks: []
-            }
-          ]
-        }
-      ]
-    },
-    links: {
-      entries: [],
-      assets: []
-    }
-  }
-});
-
-export const staticRichTextMock = (): RichText => ({
+export const staticRichTextMock = (): RichTextProps => ({
+  __typename: 'RichText',
   json: {
     nodeType: 'document',
     data: {},
@@ -336,7 +335,7 @@ export const staticRichTextMock = (): RichText => ({
   }
 });
 
-export const formattedMock = () => ({
+export const formattedMock = (): RichTextProps => ({
   ...complexMock(),
   renderNode: {
     [BLOCKS.UL_LIST]: (_: any, children: any) => {
@@ -356,88 +355,86 @@ export const formattedMock = () => ({
   }
 });
 
-export const paragraphMock = ({ text } = {}): TextProps => ({
-  __typename: 'Text',
-  body: {
-    json: {
-      nodeType: 'document',
-      data: {},
-      content: [
-        {
-          nodeType: 'paragraph',
-          data: {},
-          content: [
-            {
-              nodeType: 'text',
-              value: text ?? 'This is longer paragraph text.  This is the second part of the text',
-              marks: [],
-              data: {}
-            }
-          ]
-        }
-      ]
-    },
-    links: {
-      entries: [],
-      assets: []
-    }
+export const paragraphMock = ({ text } = { text: 'Default paragraph mock' }): RichTextProps => ({
+  __typename: 'RichText',
+
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        nodeType: 'paragraph',
+        data: {},
+        content: [
+          {
+            nodeType: 'text',
+            value: text ?? 'This is longer paragraph text.  This is the second part of the text',
+            marks: [],
+            data: {}
+          }
+        ]
+      }
+    ]
+  },
+  links: {
+    entries: [],
+    assets: []
   }
 });
-export const baseMock = (): TextProps => ({
-  __typename: 'Text',
-  body: {
-    json: {
-      nodeType: 'document',
-      data: {},
-      content: [
-        ...[1, 2, 3, 4, 5, 6].map((level) => ({
-          nodeType: `heading-${level}`,
-          data: {},
-          content: [
-            {
-              nodeType: 'text',
-              value: `Heading ${level}`,
-              marks: [],
-              data: {}
-            }
-          ]
-        })),
 
-        {
-          nodeType: 'paragraph',
-          data: {},
-          content: [
-            {
-              nodeType: 'text',
-              value: `Paragraph`,
-              marks: [],
-              data: {}
+export const baseMock = (): RichTextProps => ({
+  __typename: 'RichText',
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      ...[1, 2, 3, 4, 5, 6].map((level) => ({
+        nodeType: `heading-${level}`,
+        data: {},
+        content: [
+          {
+            nodeType: 'text',
+            value: `Heading ${level}`,
+            marks: [],
+            data: {}
+          }
+        ]
+      })),
+
+      {
+        nodeType: 'paragraph',
+        data: {},
+        content: [
+          {
+            nodeType: 'text',
+            value: `Paragraph`,
+            marks: [],
+            data: {}
+          }
+        ]
+      },
+      {
+        nodeType: 'hyperlink',
+        data: {
+          uri: 'https://url.org',
+          target: {
+            sys: {
+              id: '12345',
+              type: 'Link',
+              linkType: 'Entry'
             }
-          ]
+          }
         },
-        {
-          nodeType: 'hyperlink',
-          data: {
-            uri: 'https://url.org',
-            target: {
-              sys: {
-                id: '12345',
-                type: 'Link',
-                linkType: 'Entry'
-              }
-            }
-          },
-          content: [
-            {
-              nodeType: 'text',
-              value: 'Hyperlink',
-              marks: [],
-              data: {}
-            }
-          ]
-        }
-      ]
-    }
+        content: [
+          {
+            nodeType: 'text',
+            value: 'Hyperlink',
+            marks: [],
+            data: {}
+          }
+        ]
+      }
+    ]
   }
 });
 

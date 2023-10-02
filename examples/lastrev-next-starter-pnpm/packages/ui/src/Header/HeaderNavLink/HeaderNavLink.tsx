@@ -23,8 +23,6 @@ const HeaderNavLink = (props: HeaderNavLinkProps) => {
 
   const { navMedia, variant, subNavigation, sidekickLookup, onRequestClose, id: navItemId } = props;
 
-  const [open, setOpen] = React.useState<boolean>(false);
-
   const onNavItemClick = (evt: any) => {
     if (subNavigation?.length) {
       evt.preventDefault();
@@ -32,67 +30,51 @@ const HeaderNavLink = (props: HeaderNavLinkProps) => {
       if (document.activeElement instanceof HTMLElement) {
         evt?.target?.blur();
       }
-      setOpen(!open);
     } else {
       if (onRequestClose) onRequestClose();
     }
   };
 
   const onSubNavItemClick = () => {
-    setOpen(false);
     if (onRequestClose) onRequestClose();
   };
-
-  const onKeyDown = (evt: any) => {
-    if (evt.key === 'Tab' && !open && !!subNavigation?.length) {
-      setOpen(true);
-    }
-  };
-
-  // const image = getFirstOfArray(navMedia);
 
   return (
     <ErrorBoundary>
       {!!subNavigation?.length ? (
-        <Root data-testid="HeaderNavLink" open={open} ownerState={ownerState}>
+        <Root data-testid="HeaderNavLink" ownerState={ownerState}>
           <NavItemLink
             {...props}
             variant={variant}
             {...sidekick(sidekickLookup)}
-            onKeyDown={onKeyDown}
             onClick={onNavItemClick}
             icon="chevron"
-            open={open}
             __typename="Link"
             subNavigation={undefined}
             ownerState={ownerState}
           />
 
-          <NavItemSubMenuWrapper open={open} ownerState={ownerState}>
-            <NavItemSubMenu ownerState={ownerState}>
-              {subNavigation?.map((subNavItem: any, index: number) => (
-                <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
-                  <NavItemGroup
-                    {...subNavItem}
-                    variant="group"
-                    __typename="NavigationItem"
-                    onClick={onSubNavItemClick}
-                    onRequestClose={onRequestClose}
-                    ownerState={ownerState}
-                  />
-                </NavItemSubMenuItem>
-              ))}
-            </NavItemSubMenu>
-          </NavItemSubMenuWrapper>
+          <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState}>
+            {subNavigation?.map((subNavItem: any, index: number) => (
+              <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
+                <NavItemGroup
+                  {...subNavItem}
+                  variant="group"
+                  __typename="NavigationItem"
+                  onClick={onSubNavItemClick}
+                  onRequestClose={onRequestClose}
+                  ownerState={ownerState}
+                />
+              </NavItemSubMenuItem>
+            ))}
+          </NavItemSubMenu>
         </Root>
       ) : (
         <NavItemLink
           {...props}
           variant={variant}
           {...sidekick(sidekickLookup)}
-          onKeyDown={onKeyDown}
           onClick={onNavItemClick}
-          open={open}
           __typename="Link"
           ownerState={ownerState}
           data-testid="HeaderNavLink"
@@ -108,17 +90,11 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ open?: boolean; ownerState: HeaderNavLinkOwnerState }>``;
 
-const NavItemSubMenuWrapper = styled(Box, {
-  name: 'HeaderNavLink',
-  slot: 'NavItemSubMenuWrapper',
-  overridesResolver: (_, styles) => [styles.navItemSubMenuWrapper]
-})<{ open?: boolean; ownerState: HeaderNavLinkOwnerState }>``;
-
 const NavItemSubMenu = styled(List, {
   name: 'HeaderNavLink',
   slot: 'NavItemSubMenu',
   overridesResolver: (_, styles) => [styles.navItemSubMenu]
-})<{ ownerState: HeaderNavLinkOwnerState }>``;
+})<{ open?: boolean; ownerState: HeaderNavLinkOwnerState }>``;
 
 const NavItemSubMenuItem = styled(ListItem, {
   name: 'HeaderNavLink',

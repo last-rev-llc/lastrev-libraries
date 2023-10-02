@@ -16,7 +16,7 @@ import ContentModule from '../ContentModule';
 
 import type { AccordionProps, AccordionOwnerState } from './Accordion.types';
 
-export const Accordion = (props: AccordionProps) => {
+const Accordion = (props: AccordionProps) => {
   const ownerState = { ...props };
 
   const { id, items, variant, sidekickLookup, introText } = props;
@@ -73,12 +73,9 @@ export const Accordion = (props: AccordionProps) => {
   );
 };
 
-const shouldForwardProp = (prop: string) => prop !== 'variant';
-
 const Root = styled(Box, {
   name: 'Accordion',
   slot: 'Root',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: AccordionOwnerState }>``;
 

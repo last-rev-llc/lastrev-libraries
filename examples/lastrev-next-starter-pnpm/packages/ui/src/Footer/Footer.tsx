@@ -12,8 +12,8 @@ import ContentModule from '../ContentModule';
 import Grid from '../Grid';
 
 import type { FooterProps, FooterOwnerState } from './Footer.types';
-import type { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
-import type { LinkProps } from '../Link/Link.types';
+import type { NavigationItemProps } from '../NavigationItem';
+import type { LinkProps } from '../Link';
 
 const Footer = (props: FooterProps) => {
   const ownerState = { ...props };

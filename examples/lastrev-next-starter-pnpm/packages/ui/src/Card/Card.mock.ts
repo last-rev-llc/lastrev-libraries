@@ -6,8 +6,8 @@ import randomId from '../utils/randomId';
 
 import { type CardProps, CardVariants } from './Card.types';
 
-export const cardBaseMock = (override?: Partial<CardProps>) => {
-  const baseMock: Partial<CardProps> = {
+export const cardBaseMock = (override?: Partial<CardProps>): CardProps => {
+  const baseMock: CardProps = {
     id: randomId(),
     __typename: 'Card',
     variant: CardVariants.default,
@@ -15,7 +15,7 @@ export const cardBaseMock = (override?: Partial<CardProps>) => {
     overline: 'This is a card overline',
     title: 'This is a card title',
     subtitle: 'And this is the subtitle',
-    body: complexMock(), // TODO: Match to options in card
+    body: complexMock(),
     actions: [linkButtonMock({ text: 'Card Link 1' }), linkButtonMock({ text: 'Card Link 2' })],
     link: { ...linkBaseMock() },
     sidekickLookup: {},

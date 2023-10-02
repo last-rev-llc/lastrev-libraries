@@ -9,14 +9,7 @@ import type {
 const defaultProps: ComponentsProps['HeaderNavGroup'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
-  root: ({ theme }) => ({
-    // [theme.breakpoints.up('sm')]: {
-    //   width: 231
-    // },
-    // [theme.breakpoints.up('md')]: {
-    //   width: '100%'
-    // }
-  }),
+  root: () => ({}),
 
   navItemLink: ({ theme }) => ({
     'padding': 0,
@@ -38,12 +31,6 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
       width: 'auto',
       height: '16px',
       paddingLeft: theme.spacing(0.625)
-    }
-  }),
-
-  navItemSubMenuWrapper: ({ theme }) => ({
-    [theme.breakpoints.only('md')]: {
-      paddingLeft: theme.spacing(1)
     }
   }),
 

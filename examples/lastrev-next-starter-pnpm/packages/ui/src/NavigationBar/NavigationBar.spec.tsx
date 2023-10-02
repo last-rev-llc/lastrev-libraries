@@ -9,7 +9,7 @@ import NavigationBar from './NavigationBar';
 import mockContent, { mockWithNavigationItems } from './NavigationBar.mock';
 
 import type { NavigationBarProps } from './NavigationBar.types';
-import type { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
+import type { NavigationItemProps } from '../NavigationItem';
 
 let mockedContent: NavigationBarProps = { theme: {}, sidekickLookup: '' };
 let mockedContentWithNavigationItems: NavigationBarProps = { theme: {}, sidekickLookup: '' };

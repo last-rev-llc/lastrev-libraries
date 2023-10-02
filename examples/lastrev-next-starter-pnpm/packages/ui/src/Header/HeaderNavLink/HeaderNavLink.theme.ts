@@ -17,7 +17,6 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     'flexDirection': 'column',
     'flexGrow': '1',
     'position': 'relative',
-    // 'transition': 'border-color 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
     '[class$=HeaderNavLink-navItemLink]': {
       ...(!!open && {
@@ -25,20 +24,19 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
       })
     },
 
-    '&:is(:hover, :focus-within):not(:focus-visible)': {
-      [theme.breakpoints.up('md')]: {
-        '[class*="HeaderNavLink-navItemLink"]': {
-          // TODO: Standardizxe this across the header links if they're the same
-          '.MuiSvgIcon-root': {
-            // fill: 'currentcolor',
-            transform: 'rotate(-90deg)'
-          }
-        },
-
-        '[class*="HeaderNavLink-navItemSubMenuWrapper"]': {
-          visibility: 'visible',
-          opacity: 1
+    '&:is(:hover, :focus, :focus-within):not(:focus-visible)': {
+      '[class*="HeaderNavLink-navItemLink"]': {
+        // TODO: Standardize this across the header links if they're the same
+        '.MuiSvgIcon-root': {
+          // fill: 'currentcolor',
+          transform: 'rotate(-90deg)'
         }
+      },
+
+      '[class*="HeaderNavLink-navItemSubMenu"]': {
+        display: 'flex',
+        visibility: 'visible',
+        opacity: 1
       }
     }
   }),
@@ -82,29 +80,30 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     }
   }),
 
-  navItemSubMenuWrapper: ({ theme, open, ownerState }) => ({
-    visibility: 'visible',
-    opacity: 1,
+  navItemSubMenu: ({ theme, open, ownerState }) => ({
     display: 'none',
+    transition: 'visibility 0s, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
-    ...(!!open && {
-      [theme.breakpoints.down('md')]: {
-        display: 'block'
-      }
-    }),
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column'
+    },
 
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       visibility: 'hidden',
       opacity: 0,
-      display: 'block',
+
+      display: 'grid',
+      gap: theme.spacing(0),
+      overflow: 'hidden',
+      width: 'fit-content',
+      // @ts-ignore: TODO: items not recognized
+      gridTemplateColumns: `repeat(${(ownerState.numOfCols ?? 0) + 1}, auto)`,
+      border: `solid 1px ${theme.palette.primary.contrastText}`,
       position: 'absolute',
       zIndex: 1,
       bottom: 0,
       transform: 'translateY(100%)',
-      flexDirection: 'row',
-      padding: 0,
-      paddingTop: theme.spacing(3),
-      transition: 'visibility 0s, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+      padding: theme.spacing(3, 0, 0, 0),
 
       ...(ownerState.numOfCols === 2 && {
         // TODO: Check variant here instead?
@@ -114,34 +113,6 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
       ...(ownerState.numOfCols === 1 && {
         left: 0
       })
-
-      // TODO: Check variant here instead?
-      // ...(numOfCols === 1 &&
-      //   !!hasMegaNav && {
-      //     right: -304
-      //   }),
-
-      // ...(numOfCols === 1 &&
-      //   !hasMegaNav && {
-      //     left: 0
-      //   })
-    }
-  }),
-
-  navItemSubMenu: ({ theme, ownerState }) => ({
-    [theme.breakpoints.up('sm')]: {
-      display: 'flex',
-      flexDirection: 'column'
-    },
-
-    [theme.breakpoints.up('md')]: {
-      display: 'grid',
-      gap: theme.spacing(0),
-      overflow: 'hidden',
-      width: 'fit-content',
-      // @ts-ignore: TODO: items not recognized
-      gridTemplateColumns: `repeat(${(ownerState.numOfCols ?? 0) + 1}, auto)`,
-      border: `solid 1px ${theme.palette.primary.contrastText}`
     }
   }),
 

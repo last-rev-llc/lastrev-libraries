@@ -20,8 +20,8 @@ import ContentModule from '../ContentModule';
 // import CopyLinkIcon from '../Icons/CopyLinkIcon';
 
 import type { BlogProps } from './Blog.types';
-import type { MediaProps } from '../Media/Media.types';
-import type { LinkProps } from '../Link/Link.types';
+import { type MediaProps } from '../Media';
+import { type LinkProps } from '../Link';
 
 const Blog = ({
   header,

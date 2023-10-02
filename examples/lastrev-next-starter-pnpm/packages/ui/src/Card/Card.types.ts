@@ -16,11 +16,6 @@ export enum CardVariants {
 export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant'> {
   loading?: boolean;
   variant?: CardVariants;
-  colorScheme?: string;
-  position?: number;
-  isFirst?: Boolean;
-  isMultipleOfTwo?: Boolean;
-  isMultipleOfThree?: Boolean;
 }
 
 export interface CardOwnerState extends CardProps {}

@@ -2,8 +2,7 @@
 // @ts-nocheck
 import * as React from 'react';
 import { mount } from '@cypress/react18';
-import BackToTop from './BackToTop';
-import type { BackToTopProps } from './BackToTop.types';
+import BackToTop, { type BackToTopProps } from './BackToTop';
 import mockContent from './BackToTop.mock';
 
 let mockedContent: BackToTopProps = {};

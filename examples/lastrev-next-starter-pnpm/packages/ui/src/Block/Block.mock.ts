@@ -7,8 +7,8 @@ import randomId from '../utils/randomId';
 
 import type { BlockProps } from './Block.types';
 
-const blockDefaultMock = (override?: Partial<BlockProps>) => {
-  const baseMock = {
+const blockDefaultMock = (override?: Partial<BlockProps>): BlockProps => {
+  const baseMock: BlockProps = {
     id: randomId(),
     __typename: 'Block',
     backgroundColor: 'background',
@@ -35,44 +35,56 @@ const blockDefaultMock = (override?: Partial<BlockProps>) => {
   return { ...baseMock, ...variantOverride, ...override };
 };
 
-export const blockBaseMock = ({ ...override } = {}) => ({
-  ...blockDefaultMock(override)
-});
+export const blockBaseMock = (override?: Partial<BlockProps>): BlockProps => {
+  return { ...blockDefaultMock(override) };
+};
 
-export const blockContentOnRightMock = ({ ...override } = {}) => ({
-  ...blockDefaultMock(override),
-  title: 'This is the block title for the "Content on Right" variant',
-  variant: 'contentOnRight'
-});
+export const blockContentOnRightMock = (override?: Partial<BlockProps>): BlockProps => {
+  return {
+    ...blockDefaultMock(override),
+    title: 'This is the block title for the "Content on Right" variant',
+    variant: 'contentOnRight'
+  };
+};
 
-export const blockContentOnRightFullBleedMock = ({ ...override } = {}) => ({
-  ...blockDefaultMock(override),
-  title: 'This is the block title for the "Content on Right Full Bleed" variant',
-  variant: 'contentOnRightFullBleed'
-});
+export const blockContentOnRightFullBleedMock = (override?: Partial<BlockProps>): BlockProps => {
+  return {
+    ...blockDefaultMock(override),
+    title: 'This is the block title for the "Content on Right Full Bleed" variant',
+    variant: 'contentOnRightFullBleed'
+  };
+};
 
-export const blockContentOnLeftMock = ({ ...override } = {}) => ({
-  ...blockDefaultMock(override),
-  title: 'This is the block title for the "Content on Left" variant',
-  variant: 'contentOnLeft'
-});
+export const blockContentOnLeftMock = (override?: Partial<BlockProps>): BlockProps => {
+  return {
+    ...blockDefaultMock(override),
+    title: 'This is the block title for the "Content on Left" variant',
+    variant: 'contentOnLeft'
+  };
+};
 
-export const blockContentOnLeftFullBleedMock = ({ ...override } = {}) => ({
-  ...blockDefaultMock(override),
-  title: 'This is the block title for the "Content on Left Full Bleed" variant',
-  variant: 'contentOnLeftFullBleed'
-});
+export const blockContentOnLeftFullBleedMock = (override?: Partial<BlockProps>): BlockProps => {
+  return {
+    ...blockDefaultMock(override),
+    title: 'This is the block title for the "Content on Left Full Bleed" variant',
+    variant: 'contentOnLeftFullBleed'
+  };
+};
 
-export const blockContentBelowMock = ({ ...override } = {}) => ({
-  ...blockDefaultMock(override),
-  title: 'This is the block title for the "Content Below" variant',
-  variant: 'contentBelow'
-});
+export const blockContentBelowMock = (override?: Partial<BlockProps>): BlockProps => {
+  return {
+    ...blockDefaultMock(override),
+    title: 'This is the block title for the "Content Below" variant',
+    variant: 'contentBelow'
+  };
+};
 
-export const blockContentAboveMock = ({ ...override } = {}) => ({
-  ...blockDefaultMock(override),
-  title: 'This is the block title for the "Content Above" variant',
-  variant: 'contentAbove'
-});
+export const blockContentAboveMock = (override?: Partial<BlockProps>): BlockProps => {
+  return {
+    ...blockDefaultMock(override),
+    title: 'This is the block title for the "Content Above" variant',
+    variant: 'contentAbove'
+  };
+};
 
 export default blockBaseMock;

@@ -5,8 +5,8 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 
 import Image from '../Image';
-import type { MediaProps } from '../Media/Media.types';
-import type { ArtDirectedImageProps } from './ArtDirectedImage.types';
+import { type MediaProps } from '../Media';
+import { type ArtDirectedImageProps } from './ArtDirectedImage';
 
 const getImageMedia = (breakpoint: string, { fileMobile, fileTablet }: Partial<MediaProps>) => {
   switch (breakpoint) {

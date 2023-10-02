@@ -21,7 +21,7 @@ export const bodyOnlyMock = ({ ...override } = {}): TextProps => ({
   subtitle: undefined
 });
 
-export const introTextMock = ({ ...override } = {}) => ({
+export const introTextMock = ({ ...override } = {}): TextProps => ({
   ...textDefaultMock,
   overline: 'This is the intro text overline',
   title: 'This is the intro text title',
@@ -31,12 +31,12 @@ export const introTextMock = ({ ...override } = {}) => ({
   variant: 'introText'
 });
 
-export const textBaseMock = ({ ...override } = {}) => ({
+export const textBaseMock = ({ ...override } = {}): TextProps => ({
   ...textDefaultMock,
   ...override
 });
 
-export const textTitleMock = ({ ...override } = {}) => ({
+export const textTitleMock = ({ ...override } = {}): TextProps => ({
   ...textDefaultMock,
   ...override,
   overline: undefined,

@@ -14,7 +14,7 @@ import ContentModule from '../ContentModule';
 import getFirstOfArray from '../utils/getFirstOfArray';
 
 import type { HeroProps } from './Hero.types';
-import type { LinkProps } from '../Link/Link.types';
+import type { LinkProps } from '../Link';
 
 export const Hero = (props: HeroProps) => {
   const {

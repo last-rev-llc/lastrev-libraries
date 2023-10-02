@@ -5,7 +5,7 @@ import randomId from '../utils/randomId';
 import type { QuoteProps } from './Quote.types';
 
 export const quoteDefaultMock = (override?: Partial<QuoteProps>): QuoteProps => {
-  return {
+  const baseMock: QuoteProps = {
     id: randomId(),
     __typename: 'Quote',
     variant: 'default',
@@ -15,6 +15,8 @@ export const quoteDefaultMock = (override?: Partial<QuoteProps>): QuoteProps => 
     logo: mediaBaseImageMock(),
     image: mediaBaseImageMock()
   };
+
+  return baseMock;
 };
 
 export const quoteBaseMock = ({ ...override } = {}): QuoteProps => ({
