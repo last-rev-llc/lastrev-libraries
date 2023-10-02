@@ -11,6 +11,9 @@ generates:
       - 'typescript-operations'
       - 'typescript-graphql-request'
     config:
+      documentMode: 'string'
+      dedupeFragments: true
+      pureMagicComment: true
       maybeValue: T | undefined
       inlineFragmentTypes: combine
       preResolveTypes: true

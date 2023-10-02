@@ -447,6 +447,7 @@ type Quote implements Content {
   id: String
   image: Media
   internalTitle: String
+  logo: Media
   media: [Media]
   quote: String
   sidekickLookup: JSON
