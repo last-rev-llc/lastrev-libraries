@@ -1,4 +1,5 @@
 import { introTextMock } from '../Text/Text.mock';
+
 import {
   collectionExpandableItemBaseMock,
   collectionExpandableItemQuotesMock,
@@ -14,8 +15,9 @@ export const accordionBaseMock = (override?: Partial<AccordionProps>): Accordion
     id: randomId(),
     __typename: 'CollectionExpandable',
     items: [
-      collectionExpandableItemBaseMock({ title: 'Collection 1 - Title' }),
-      collectionExpandableItemBaseMock({ title: 'Collection 2 - Title' })
+      collectionExpandableItemBlocksMock({ title: 'Block - Title' }),
+      collectionExpandableItemBaseMock({ title: 'Collection - Title' }),
+      collectionExpandableItemQuotesMock({ title: 'Quote - Title' })
     ],
     introText: introTextMock()
   };
@@ -38,6 +40,14 @@ export const accordionQuotesMock = ({ ...override } = {}) => ({
     collectionExpandableItemQuotesMock({ title: 'Quote 2' }),
     collectionExpandableItemQuotesMock({ title: 'Quote 3' }),
     collectionExpandableItemQuotesMock({ title: 'Quote 4' })
+  ]
+});
+
+export const accordionCollectionsMock = ({ ...override } = {}) => ({
+  ...accordionBaseMock(override),
+  items: [
+    collectionExpandableItemBaseMock({ title: 'Collection 1 - Title' }),
+    collectionExpandableItemBaseMock({ title: 'Collection 2 - Title' })
   ]
 });
 

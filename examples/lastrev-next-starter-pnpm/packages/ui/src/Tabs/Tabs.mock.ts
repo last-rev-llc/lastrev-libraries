@@ -15,8 +15,9 @@ export const tabsBaseMock = (override?: Partial<TabsProps>): TabsProps => {
     id: randomId(),
     __typename: 'CollectionExpandable',
     items: [
-      collectionExpandableItemBaseMock({ title: 'Collection 1 - Title' }),
-      collectionExpandableItemBaseMock({ title: 'Collection 2 - Title' })
+      collectionExpandableItemBlocksMock({ title: 'Block - Title' }),
+      collectionExpandableItemBaseMock({ title: 'Collection - Title' }),
+      collectionExpandableItemQuotesMock({ title: 'Quote - Title' })
     ],
     introText: introTextMock()
   };
@@ -29,6 +30,14 @@ export const tabsBlocksMock = ({ ...override } = {}) => ({
     collectionExpandableItemBlocksMock({ title: 'Block 2 - Title' }),
     collectionExpandableItemBlocksMock({ title: 'Block 3 - Title' }),
     collectionExpandableItemBlocksMock({ title: 'Block 4 - Title' })
+  ]
+});
+
+export const tabsCollectionMock = ({ ...override } = {}) => ({
+  ...tabsBaseMock(override),
+  items: [
+    collectionExpandableItemBaseMock({ title: 'Collection 1 - Title' }),
+    collectionExpandableItemBaseMock({ title: 'Collection 2 - Title' })
   ]
 });
 
