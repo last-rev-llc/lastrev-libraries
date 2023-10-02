@@ -12,7 +12,7 @@ import { CardVariants } from '../Card/Card.types';
 import theme from '../ThemeRegistry/theme';
 
 export default {
-  title: '3. Modules/Collection',
+  title: 'Components/Collection',
   component: Collection,
   tags: ['autodocs'],
   argTypes: {

@@ -3,7 +3,7 @@ import BackToTop from './BackToTop';
 import backToTopBaseMock from './BackToTop.mock';
 
 export default {
-  title: '3. Modules/Back To Top',
+  title: 'Elements/Back To Top',
   component: BackToTop,
   tags: ['autodocs'],
   argTypes: {

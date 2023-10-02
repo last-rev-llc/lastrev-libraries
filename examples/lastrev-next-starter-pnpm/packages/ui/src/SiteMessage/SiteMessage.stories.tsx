@@ -3,7 +3,7 @@ import SiteMessage from './SiteMessage';
 import { siteMessageBaseMock } from './SiteMessage.mock';
 
 export default {
-  title: '1. Global / Site Message',
+  title: 'Global/Site Message',
   component: SiteMessage,
   tags: ['autodocs'],
   argTypes: {

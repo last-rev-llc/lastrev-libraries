@@ -3,7 +3,7 @@ import LinkComponent from './Link';
 import { linkTextMock } from './Link.mock';
 
 export default {
-  title: '2. Components/Link',
+  title: 'Elements/Link',
   component: LinkComponent,
   tags: ['autodocs'],
   argTypes: {

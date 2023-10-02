@@ -7,8 +7,7 @@ import { Breakpoint } from '@mui/material';
 import type { MediaProps } from '../Media/Media.types';
 import type { TextProps } from '../Text/Text.types';
 
-export interface SectionProps {
-  __typename?: string;
+export interface SectionProps extends Section_BaseFragmentFragment {
   introText?: TextProps;
   contents?: Array<{ __typename?: string; id?: string; file?: any }>;
   background?: MediaProps;

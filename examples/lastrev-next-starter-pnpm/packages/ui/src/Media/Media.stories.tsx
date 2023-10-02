@@ -8,7 +8,7 @@ import {
 } from './Media.mock';
 
 export default {
-  title: '2. Components/ Media',
+  title: 'Elements/Media',
   component: Media,
 
   tags: ['autodocs'],

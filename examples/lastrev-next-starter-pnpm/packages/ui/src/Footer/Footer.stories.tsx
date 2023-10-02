@@ -2,7 +2,7 @@ import Footer from './Footer';
 
 import { footerBaseMock, footerChildrenNestedMock } from './Footer.mock';
 export default {
-  title: '3. Modules/Footer',
+  title: 'Global/Footer',
   component: Footer,
   tags: ['autodocs'],
   argTypes: {

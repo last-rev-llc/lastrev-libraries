@@ -2,7 +2,7 @@ import Page from './Page';
 import { pageBaseMock } from './Page.mock';
 
 export default {
-  title: '4. Pages/Page General',
+  title: 'Pages/Page General',
   component: Page,
   parameters: {
     layout: 'responsive'

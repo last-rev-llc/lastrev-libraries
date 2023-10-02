@@ -8,7 +8,7 @@ import {
 } from './Accordion.mock';
 
 export default {
-  title: '3. Modules/Accordion',
+  title: 'Components/Accordion',
   component: Accordion,
   tags: ['autodocs'],
   argTypes: {}

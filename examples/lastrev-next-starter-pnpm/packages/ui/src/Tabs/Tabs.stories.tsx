@@ -2,7 +2,7 @@ import Tabs from './Tabs';
 import { tabsBaseMock, tabsBlocksMock, tabsCollectionMock, tabsQuotesMock } from './Tabs.mock';
 
 export default {
-  title: '3. Modules/Tabs',
+  title: 'Components/Tabs',
   component: Tabs,
   tags: ['autodocs'],
   argTypes: {}

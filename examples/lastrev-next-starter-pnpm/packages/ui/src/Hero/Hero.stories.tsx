@@ -11,7 +11,7 @@ import {
 } from './Hero.mock';
 
 export default {
-  title: '3. Modules/Hero',
+  title: 'Components/Hero',
   component: Hero,
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
   tags: ['autodocs'],

@@ -3,7 +3,7 @@ import Header from './Header';
 import { headerBaseMock, headerChildrenMock, headerChildrenNestedMock } from './Header.mock';
 
 export default {
-  title: '1. Global / Header',
+  title: 'Global/Header',
   component: Header,
   tags: ['autodocs'],
   argTypes: {

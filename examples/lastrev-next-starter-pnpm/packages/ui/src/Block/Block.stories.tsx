@@ -13,7 +13,7 @@ import {
 import { BlockVariants } from './Block.types';
 
 export default {
-  title: '3. Modules/Block',
+  title: 'Components/Block',
   component: Block,
   tags: ['autodocs'],
   argTypes: {

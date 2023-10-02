@@ -2,7 +2,7 @@ import Section from './Section';
 import { sectionBaseMock, sectionOnePerRowMock, sectionTwoPerRowMock } from './Section.mock';
 
 export default {
-  title: '1. Components / Section',
+  title: 'Components/Section',
   component: Section,
 
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
