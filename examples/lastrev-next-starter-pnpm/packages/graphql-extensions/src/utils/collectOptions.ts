@@ -1,6 +1,6 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
-import uniqBy from 'lodash/uniqBy';
+import type { ApolloContext } from '@last-rev/types';
+import { uniqBy } from './uniqBy';
 export interface Option {
   label: string;
   value: string;
@@ -41,14 +41,15 @@ export const collectOptions = async ({
   // Remove duplicates
   await Promise.all(
     Object.keys(optionsSets).map(async (key: string) => {
-      options[key] = uniqBy(
-        await Promise.all(Array.from(optionsSets[key].values()).map(toOption(ctx))).then((items) =>
-          items?.sort((a, b) => (a.label.toString().toLowerCase() < b.label.toString().toLowerCase() ? -1 : 1))
-        ),
-        (x) => x.value
+      options[key] = await Promise.all(Array.from(optionsSets[key].values()).map(toOption(ctx))).then((items) =>
+        uniqBy(
+          items?.sort((a, b) => (a.label.toString().toLowerCase() < b.label.toString().toLowerCase() ? -1 : 1)),
+          (x) => x.value
+        )
       );
     })
   );
+
   return options;
 };
 

@@ -2,7 +2,7 @@ import { cardBaseMock } from '../Card/Card.mock';
 import { CardVariants } from '../Card';
 import { introTextMock } from '../Text/Text.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import { type CollectionProps, CollectionVariants } from './Collection.types';
 

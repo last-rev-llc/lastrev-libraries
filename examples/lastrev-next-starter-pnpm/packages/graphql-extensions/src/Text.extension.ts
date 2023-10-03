@@ -1,4 +1,4 @@
-// import { Mappers } from '@last-rev/types';
+// import type { Mappers } from '@last-rev/types';
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`

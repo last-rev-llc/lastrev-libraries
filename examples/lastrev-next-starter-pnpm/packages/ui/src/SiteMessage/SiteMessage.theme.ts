@@ -52,7 +52,7 @@ const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
     }
   }),
 
-  contentOuterGrid: () => ({}),
+  // contentOuterGrid: : {},
 
   contentWrap: ({ theme }) => ({
     '& > *': {
@@ -75,11 +75,11 @@ const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
       width: 'inherit',
       height: 'inherit'
     }
-  }),
+  })
 
-  link: () => ({}),
+  // link: : {},
 
-  text: () => ({})
+  // text: : {}
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['SiteMessage'] => [];

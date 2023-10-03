@@ -1,9 +1,5 @@
-import compact from 'lodash/compact';
-import map from 'lodash/map';
-import merge from 'lodash/merge';
-
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
-import { Source, DocumentNode, GraphQLSchema } from 'graphql';
+import type { Source, DocumentNode, GraphQLSchema } from 'graphql';
 
 import fs from 'fs';
 import path from 'path';
@@ -14,6 +10,7 @@ export type GraphQlExtension = {
   mappers?: {};
   typeMappings?: {};
   pathsConfigs?: {};
+  [key: string]: any;
 };
 
 function loadFiles() {
@@ -67,7 +64,7 @@ function loadFiles() {
     // });
   } else {
     dirPath = path.join(__dirname);
-    console.log('Loading files from', dirPath);
+    // console.log('Loading files from', dirPath);
     const extensionFiles = fs.readdirSync(dirPath).filter((file) => /\.extension\.js$/.test(file));
     extensionFiles.forEach((file) => {
       const modulePath = path.join(dirPath, file);
@@ -85,8 +82,13 @@ function loadFiles() {
 
 const extensions: GraphQlExtension[] = loadFiles();
 
-export const typeDefs = mergeTypeDefs(compact(map(extensions, 'typeDefs')));
-export const resolvers = mergeResolvers(compact(map(extensions, 'resolvers'))) as Record<string, any>;
-export const mappers = merge({}, ...compact(map(extensions, 'mappers')));
-export const typeMappings = merge({}, ...compact(map(extensions, 'typeMappings')));
-export const pathsConfigs = merge({}, ...compact(map(extensions, 'pathsConfigs')));
+const getNonNullPropertiesFromExtensions = (property: any) =>
+  extensions.map((ext: GraphQlExtension) => ext[property]).filter(Boolean);
+
+export const typeDefs = mergeTypeDefs(getNonNullPropertiesFromExtensions('typeDefs'));
+
+// Assuming mergeResolvers can handle an array input. If it doesn't, consider using reduce like below for mappers, typeMappings, and pathsConfigs.
+export const resolvers = mergeResolvers(getNonNullPropertiesFromExtensions('resolvers')) as Record<string, any>;
+export const mappers = Object.assign({}, ...getNonNullPropertiesFromExtensions('mappers'));
+export const typeMappings = Object.assign({}, ...getNonNullPropertiesFromExtensions('typeMappings'));
+export const pathsConfigs = Object.assign({}, ...getNonNullPropertiesFromExtensions('pathsConfigs'));

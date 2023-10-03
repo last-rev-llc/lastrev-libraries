@@ -142,17 +142,17 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     gap: theme.spacing(1.5)
   }),
 
-  megaNavTitle: () => ({}),
+  // megaNavTitle: : {},
 
-  megaNavActions: () => ({}),
+  // megaNavActions: : {},
 
-  megaNavAction: () => ({}),
+  // megaNavAction: : {},
 
-  megaNavMedia: () => ({
+  megaNavMedia: {
     // TODO: Is there a better way to define this?
     maxHeight: 190,
     margin: 0
-  })
+  }
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['HeaderNavLink'] => [];

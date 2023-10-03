@@ -9,23 +9,15 @@ import type {
 const defaultProps: ComponentsProps['Tabs'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
-  root: () => ({}),
-
-  contentGrid: () => ({}),
-
-  introTextGrid: () => ({}),
-
-  introText: () => ({}),
-
-  itemsContainer: () => ({}),
-
-  tabContext: () => ({}),
-
-  tabListWrap: () => ({}),
-
-  detailsWrap: () => ({}),
-
-  details: () => ({})
+  // root: : {},
+  // contentGrid: : {},
+  // introTextGrid: : {},
+  // introText: : {},
+  // itemsContainer: : {},
+  // tabContext: : {},
+  // tabListWrap: : {},
+  // detailsWrap: : {},
+  // details: : {}
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Tabs'] => [

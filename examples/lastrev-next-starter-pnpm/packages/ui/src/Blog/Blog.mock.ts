@@ -5,7 +5,7 @@ import { mediaBaseImageMock } from '../Media/Media.mock';
 import { blogMock } from '../RichText/RichText.mock';
 import { textTitleMock } from '../Text/Text.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import { BlogVariants, type BlogProps } from './Blog.types';
 

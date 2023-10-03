@@ -3,7 +3,7 @@ import { mediaBaseImageMock } from '../Media/Media.mock';
 import { richTextMock } from '../RichText/RichText.mock';
 import { introTextMock } from '../Text/Text.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import type { BlockProps } from './Block.types';
 

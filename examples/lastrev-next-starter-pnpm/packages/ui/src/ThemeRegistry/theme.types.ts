@@ -14,11 +14,10 @@ declare module '@mui/material/styles' {
 
   interface Theme {
     mixins: Mixins;
-    containerBreakpoints: Breakpoints;
   }
 
   interface ThemeOptions extends MuiThemeOptions {
-    containerBreakpoints: Breakpoints;
+    containerBreakpoints?: Breakpoints;
   }
 
   interface TypographyVariants {

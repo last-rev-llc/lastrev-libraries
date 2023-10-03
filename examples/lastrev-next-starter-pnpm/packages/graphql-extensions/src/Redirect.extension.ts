@@ -1,9 +1,9 @@
 import gql from 'graphql-tag';
-import { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from '@last-rev/types';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 
-import processRedirects from './utils/processRedirects';
-import processRewrites from './utils/processRewrites';
+import { processRedirects } from './utils/processRedirects';
+import { processRewrites } from './utils/processRewrites';
 
 export const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
 

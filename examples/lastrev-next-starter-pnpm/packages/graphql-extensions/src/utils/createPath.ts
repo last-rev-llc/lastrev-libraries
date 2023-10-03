@@ -1,5 +1,5 @@
 // TODO: use built in path functions
-const createPath = (...slug: string[]) => {
+export const createPath = (...slug: string[]) => {
   let path = slug.map((segment) => segment?.trim()).join('/');
 
   if (path.startsWith('mailto://')) {
@@ -18,5 +18,3 @@ const createPath = (...slug: string[]) => {
   if (path != '/' && path[path.length - 1] === '/') path = path.slice(0, -1);
   return path;
 };
-
-export default createPath;

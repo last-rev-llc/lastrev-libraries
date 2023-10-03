@@ -13,11 +13,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     padding: theme.spacing(4, 2) // Update
   }),
 
-  introContentsWrap: () => ({}),
+  // introContentsWrap: : {},
 
-  introContent: () => ({}),
+  // introContent: : {},
 
-  contentOuterGrid: () => ({}),
+  // contentOuterGrid: : {},
 
   logoRoot: ({ theme }) => ({
     gridColumn: 'two-start / three-end',
@@ -34,7 +34,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  logo: () => ({
+  logo: {
     width: 'auto',
     height: 40,
     margin: 0,
@@ -42,7 +42,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     svg: {
       fill: '#ffffff'
     }
-  }),
+  },
 
   footerMenuNav: ({ theme, ownerState }) => ({
     gridRow: 2,
@@ -128,9 +128,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  legalSection: () => ({
+  legalSection: {
     display: 'contents' // take out of flow
-  }),
+  },
 
   copyrightDisclaimer: ({ theme }) => ({
     gridRow: 5,
@@ -159,9 +159,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
       gridRow: 3,
       marginLeft: 'auto'
     }
-  }),
+  })
 
-  legalLink: () => ({})
+  // legalLink: : {}
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Footer'] => [];

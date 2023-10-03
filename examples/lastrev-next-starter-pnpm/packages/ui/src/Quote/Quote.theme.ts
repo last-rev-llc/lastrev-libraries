@@ -11,7 +11,7 @@ const defaultProps: ComponentsProps['Quote'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
   root: {},
 
-  contentGrid: () => ({}),
+  // contentGrid: : {},
 
   logo: ({ theme }) => ({
     gridRow: 1,
@@ -41,11 +41,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
     }
   }),
 
-  quoteSymbol: () => ({}),
+  // quoteSymbol: : {},
 
-  authorRoot: () => ({
+  authorRoot: {
     display: 'contents'
-  }),
+  },
 
   image: ({ theme }) => ({
     gridRow: '3/5',

@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
-import defaultResolver from './utils/defaultResolver';
-import pathResolver from './utils/pathResolver';
+import { defaultResolver } from './utils/defaultResolver';
+import { pathResolver } from './utils/pathResolver';
 
 const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem'];
 

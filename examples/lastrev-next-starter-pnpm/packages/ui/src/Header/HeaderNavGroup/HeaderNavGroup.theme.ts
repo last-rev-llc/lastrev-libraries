@@ -9,7 +9,7 @@ import type {
 const defaultProps: ComponentsProps['HeaderNavGroup'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
-  root: () => ({}),
+  // root: : {},
 
   navItemLink: ({ theme }) => ({
     'padding': 0,

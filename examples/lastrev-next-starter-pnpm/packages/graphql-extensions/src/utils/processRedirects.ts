@@ -1,10 +1,3 @@
-import mapValues from 'lodash/mapValues';
-import values from 'lodash/values';
-import set from 'lodash/set';
-import keyBy from 'lodash/keyBy';
-import get from 'lodash/get';
-import last from 'lodash/last';
-
 interface Redirect {
   source: string;
   destination: string;
@@ -17,11 +10,14 @@ interface Dictionary<T> {
 
 const filter = /^(api|\/api|_next\/static|favicon\.ico)/;
 
-const processRedirects = (redirects: Redirect[]): Redirect[] => {
-  const edges: Dictionary<Redirect> = keyBy(redirects, 'source');
+export const processRedirects = (redirects: Redirect[]): Redirect[] => {
+  const edges: Dictionary<Redirect> = redirects.reduce((acc, redirect) => {
+    acc[redirect.source] = redirect;
+    return acc;
+  }, {} as Dictionary<Redirect>);
 
-  const findPaths = (obj: Dictionary<Redirect>, fromPath: string, visitedPaths: string[] = []): any => {
-    const toPath = get(obj, `[${fromPath}['destination']`) as unknown as string;
+  const findPaths = (obj: Dictionary<Redirect>, fromPath: string, visitedPaths: string[] = []): string[] => {
+    const toPath: string = obj[fromPath]?.destination || '';
     const isCircular = visitedPaths.includes(toPath);
     if (!toPath || toPath === fromPath || isCircular) {
       if (isCircular) {
@@ -32,14 +28,15 @@ const processRedirects = (redirects: Redirect[]): Redirect[] => {
     visitedPaths.push(toPath);
     return findPaths(obj, toPath, visitedPaths);
   };
-  return values(
-    mapValues(edges, (r) => {
+
+  return Object.values(
+    Object.keys(edges).reduce((acc, key) => {
+      const r = edges[key];
       const allPaths = findPaths(edges, r.source);
-      set(r, 'source', r.source.endsWith('/') ? `${r.source}index.html` : r.source);
-      set(r, 'destination', last(allPaths) || '/');
-      return r;
-    })
+      r.source = r.source.endsWith('/') ? `${r.source}index.html` : r.source;
+      r.destination = allPaths[allPaths.length - 1] || '/';
+      acc[key] = r;
+      return acc;
+    }, {} as Dictionary<Redirect>)
   ).filter((o) => !o.source?.match(filter) && !o.destination?.match(filter));
 };
-
-export default processRedirects;

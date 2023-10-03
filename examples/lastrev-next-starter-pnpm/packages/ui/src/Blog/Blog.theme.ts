@@ -11,28 +11,28 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     }
   }),
 
-  headerWrap: () => ({
+  headerWrap: {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end'
-  }),
+  },
 
-  contentWrap: () => ({
+  contentWrap: {
     display: 'contents'
-  }),
+  },
 
-  featuredMedia: () => ({}),
+  // featuredMedia: : {},
 
-  featuredMediaWrap: ({ theme }) => ({
+  featuredMediaWrap: {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end'
-  }),
+  },
 
-  pubDate: ({}) => ({}),
+  // pubDate: ({}) => ({}),
 
-  shareLinksWrap: () => ({
+  shareLinksWrap: {
     gridColumnStart: 'three-start',
     gridColumnEnd: 'ten-end'
-  }),
+  },
 
   shareLinks: ({ theme }) => ({
     display: 'flex',
@@ -61,12 +61,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     }
   }),
 
-  authorWrap: () => ({
+  authorWrap: {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end'
-  }),
+  },
 
-  author: ({}) => ({}),
+  // author: ({}) => ({}),
 
   title: ({ theme }) => ({
     ...theme.typography.h5,
@@ -80,7 +80,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     }
   }),
 
-  body: ({ theme }) => ({
+  body: {
     '& > *:not(div)': {
       gridColumnStart: 'three-start',
       gridColumnEnd: 'ten-end',
@@ -92,22 +92,22 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
       gridColumnEnd: 'full-end',
       backgroundColor: '#cccccc'
     }
-  }),
+  },
 
-  blogCategories: ({}) => ({}),
+  // blogCategories: ({}) => ({}),
 
-  blogCategory: ({}) => ({}),
+  // blogCategory: ({}) => ({}),
 
-  tags: ({}) => ({}),
+  // tags: ({}) => ({}),
 
-  tag: ({}) => ({}),
+  // tag: ({}) => ({}),
 
-  relatedItemsWrap: () => ({
+  relatedItemsWrap: {
     gridColumnStart: 'full-start',
     gridColumnEnd: 'full-end'
-  }),
+  }
 
-  relatedItems: ({}) => ({})
+  // relatedItems: ({}) => ({})
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Blog'] => [];

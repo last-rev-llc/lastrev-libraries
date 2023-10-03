@@ -1,7 +1,7 @@
 import { getDefaultFieldValue } from '@last-rev/graphql-contentful-core';
-import { ContentfulLoaders, ContentTypePathRuleConfig, LegacyContentfulPathsConfigs } from '@last-rev/types';
-import { Entry } from 'contentful';
-import createPath from './utils/createPath';
+import { type ContentfulLoaders, ContentTypePathRuleConfig, LegacyContentfulPathsConfigs } from '@last-rev/types';
+import { type Entry } from 'contentful';
+import { createPath } from './utils/createPath';
 
 const BLOGS_LANDING_ID = process.env.BLOGS_LANDING_ID;
 

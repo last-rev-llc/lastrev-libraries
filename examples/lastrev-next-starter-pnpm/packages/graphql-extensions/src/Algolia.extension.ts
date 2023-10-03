@@ -1,6 +1,6 @@
 // Uncomment if using Algolia
 // import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-// import { ApolloContext } from '@last-rev/types';
+// import type { ApolloContext } from '@last-rev/types';
 // import { constructObjectId } from '@last-rev/graphql-algolia-integration';
 // import { BLOCKS } from '@contentful/rich-text-types';
 // import createPermaLink from './utils/createPermaLink';

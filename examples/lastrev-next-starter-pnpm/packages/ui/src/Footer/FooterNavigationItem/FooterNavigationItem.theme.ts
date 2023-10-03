@@ -18,11 +18,11 @@ const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
     }),
 
     color: theme.palette.secondary.main
-  }),
+  })
 
-  rootLinkButton: () => ({}),
+  // rootLinkButton: : {},
 
-  rootLink: () => ({})
+  // rootLink: : {}
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['FooterNavigationItem'] => [];

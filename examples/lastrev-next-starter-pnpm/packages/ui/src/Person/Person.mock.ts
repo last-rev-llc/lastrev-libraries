@@ -1,7 +1,7 @@
 import { richTextMock } from '../RichText/RichText.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import type { PersonProps } from './Person.types';
 

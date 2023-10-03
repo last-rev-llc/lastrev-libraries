@@ -8,7 +8,7 @@ import {
 
 import { type HeaderProps, HeaderVariants } from './Header.types';
 import siteMessageBaseMock from '../SiteMessage/SiteMessage.mock';
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 const headerDefaultMock = (): HeaderProps => {
   const siteMessageMock = siteMessageBaseMock();

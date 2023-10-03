@@ -10,7 +10,7 @@ import { CardVariants } from './Card.types';
 const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
-  root: ({ theme }) => ({
+  root: {
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
     'willChange': 'transform',
@@ -23,9 +23,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     '&:hover': {
       transform: 'scale(1.05)'
     }
-  }),
+  },
 
-  link: () => ({
+  link: {
     'position': 'absolute',
     'top': 0,
     'left': 0,
@@ -37,9 +37,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
         opacity: 0
       }
     }
-  }),
+  },
 
-  content: () => ({ flex: 1 })
+  content: { flex: 1 }
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
@@ -123,7 +123,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     props: {
       variant: CardVariants.person
     },
-    style: () => ({
+    style: {
       '[class*=Card-content]': {
         containerType: 'inline-size'
       },
@@ -148,7 +148,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         //   backgroundColor: 'blue'
         // }
       }
-    })
+    }
   }
 ];
 

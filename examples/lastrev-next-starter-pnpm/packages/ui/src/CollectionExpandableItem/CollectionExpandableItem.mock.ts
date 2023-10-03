@@ -3,7 +3,7 @@ import { collectionBaseMock } from '../Collection/Collection.mock';
 import { quoteBaseMock } from '../Quote/Quote.mock';
 import { complexMock } from '../RichText/RichText.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import type { CollectionExpandableItemProps } from './CollectionExpandableItem.types';
 

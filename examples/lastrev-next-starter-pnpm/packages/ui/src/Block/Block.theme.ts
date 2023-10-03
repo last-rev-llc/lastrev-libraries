@@ -17,30 +17,30 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     padding: theme.spacing(12, 0)
   }),
 
-  introTextGrid: ({ theme }) => ({}),
+  // introTextGrid: : {},
 
-  introText: ({}) => ({}),
+  // introText: : {},
 
-  contentOuterGrid: ({ theme }) => ({
+  contentOuterGrid: {
     '> *': {
       gridColumnStart: 'auto'
     }
-  }),
+  },
 
   overline: ({ theme }) => ({
     marginBottom: theme.spacing(1)
   }),
 
-  title: () => ({}),
+  // title: : {},
 
-  subtitle: () => ({}),
+  // subtitle: : {},
 
-  body: () => ({}),
+  // body: : {},
 
-  content: ({ theme }) => ({
+  content: {
     display: 'flex',
     flexDirection: 'column'
-  }),
+  },
 
   mainContentWrapper: ({ theme }) => ({
     display: 'flex',
@@ -54,6 +54,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
       gridRow: 2
     }
   }),
+
   sideContentWrapper: ({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
@@ -67,7 +68,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     }
   }),
 
-  mediaItems: () => ({}),
+  // mediaItems: : {},
 
   actionsWrapper: ({ theme }) => ({
     marginTop: theme.spacing(2),
@@ -78,36 +79,36 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     [theme.breakpoints.up('md')]: {
       flexDirection: 'row'
     }
-  }),
+  })
 
-  action: () => ({})
+  // action: : {}
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
-  {
-    props: {
-      variant: 'contentOnRight'
-    },
-    style: () => ({})
-  },
+  // {
+  //   props: {
+  //     variant: 'contentOnRight'
+  //   },
+  //   style: {}
+  // },
   {
     props: {
       variant: 'contentOnRightFullBleed'
     },
-    style: () => ({
+    style: {
       '[class*=sideContentWrapper]': {
         gridColumnEnd: '-1',
         [theme.breakpoints.down('sm')]: {
           gridColumnStart: '1'
         }
       }
-    })
+    }
   },
   {
     props: {
       variant: 'contentOnLeft'
     },
-    style: () => ({
+    style: {
       '[class*=mainContentWrapper]': {
         gridColumnStart: 'content-half',
         gridColumnEnd: 'content-end',
@@ -122,13 +123,13 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
           gridColumnEnd: 'content-end'
         }
       }
-    })
+    }
   },
   {
     props: {
       variant: 'contentOnLeftFullBleed'
     },
-    style: () => ({
+    style: {
       '[class*=mainContentWrapper]': {
         gridColumnStart: 'content-half',
         gridColumnEnd: 'content-end',
@@ -143,7 +144,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
           gridColumnEnd: '-1'
         }
       }
-    })
+    }
   },
 
   {

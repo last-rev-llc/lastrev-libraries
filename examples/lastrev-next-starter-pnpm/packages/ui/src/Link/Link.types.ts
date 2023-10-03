@@ -29,12 +29,14 @@ export interface LinkProps extends Link_BaseFragmentFragment {
 export interface LinkOwnerState extends LinkProps {}
 
 interface LinkClasses {
+  root: string;
   rootButton: string;
   rootIconButton: string;
   rootLink: string;
   rootLinkChildren: string;
   rootLinkIcon: string;
   rootLinkText: string;
+  noLinkStyleIcon: string;
 }
 
 export declare type LinkClassKey = keyof LinkClasses;

@@ -19,7 +19,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     }
   }),
 
-  contentOuterGrid: () => ({}),
+  // contentOuterGrid: : {},
 
   logoRoot: ({ theme }) => ({
     gridColumn: 'content-start / span 2',
@@ -117,7 +117,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     }
   }),
 
-  iconButton: () => ({}),
+  // iconButton: : {},
 
   menuIcon: ({ menuVisible }) => ({
     display: menuVisible ? 'none' : 'block',

@@ -5,7 +5,7 @@ import { footerBaseMock } from '../Footer/Footer.mock';
 import { headerBaseMock } from '../Header/Header.mock';
 import { tabsBaseMock } from '../Tabs/Tabs.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import { PageVariants, type PageProps } from './Page.types';
 

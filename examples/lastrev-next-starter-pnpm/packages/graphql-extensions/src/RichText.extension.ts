@@ -1,7 +1,7 @@
-import { ApolloContext, Mappers } from '@last-rev/types';
-import { Entry, RichTextContent } from 'contentful';
+import type { ApolloContext, Mappers } from '@last-rev/types';
+import type { Entry, RichTextContent } from 'contentful';
 import { FilterXSS } from 'xss';
-import isHTML from './utils/isHTML';
+import { isHTML } from './utils/isHTML';
 
 const ALLOWED_TAGS = ['div', 'span'];
 const ALLOWED_ATTRIBUTES = ['id', 'style'];

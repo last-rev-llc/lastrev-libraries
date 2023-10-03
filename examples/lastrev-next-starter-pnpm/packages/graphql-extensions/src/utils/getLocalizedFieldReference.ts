@@ -1,5 +1,5 @@
-import { ApolloContext } from '@last-rev/types';
-import { Entry, Asset } from 'contentful';
+import type { ApolloContext } from '@last-rev/types';
+import type { Entry, Asset } from 'contentful';
 
 const { getLocalizedField } = require('@last-rev/graphql-contentful-core');
 
@@ -21,5 +21,3 @@ export const getLocalizedFieldReference = async (fields: any, fieldName: string,
     preview: !!ctx.preview
   });
 };
-
-export default getLocalizedFieldReference;

@@ -1,8 +1,10 @@
-import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { Mappers, ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
-import createPath from './utils/createPath';
-import defaultResolver from './utils/defaultResolver';
+
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import type { Mappers, ApolloContext } from '@last-rev/types';
+
+import { createPath } from './utils/createPath';
+import { defaultResolver } from './utils/defaultResolver';
 
 type TargetMapping = {
   'New Window': string;

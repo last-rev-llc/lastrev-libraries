@@ -6,7 +6,7 @@ import {
   collectionExpandableItemBlocksMock
 } from '../CollectionExpandableItem/CollectionExpandableItem.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import type { TabsProps } from './Tabs.types';
 

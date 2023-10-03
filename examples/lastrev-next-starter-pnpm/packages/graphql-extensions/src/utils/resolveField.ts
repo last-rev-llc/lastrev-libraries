@@ -1,8 +1,8 @@
-import { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from '@last-rev/types';
 
-import isEmpty from 'lodash/isEmpty';
+import { isEmpty } from './isEmpty';
 import { pruneEmpty } from './pruneEmpty';
-import getLocalizedFieldReference from './getLocalizedFieldReference';
+import { getLocalizedFieldReference } from './getLocalizedFieldReference';
 
 /*
  * @param { string | string[] | { [key: string]: string }} setting
@@ -72,5 +72,3 @@ export const resolveField =
       return setting(root, args, ctx);
     }
   };
-
-export default resolveField;

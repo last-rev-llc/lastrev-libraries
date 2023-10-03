@@ -21,9 +21,9 @@ const createVariants = (_theme: Theme): ComponentsVariants['NavigationBar'] => [
     props: {
       variant: 'default'
     },
-    style: () => ({
+    style: {
       backgroundColor: 'transparent'
-    })
+    }
   }
 ];
 

@@ -11,5 +11,3 @@ export const createType = (type: string, content: any, locale: string = 'en-US')
     return accum;
   }, {})
 });
-
-export default createType;
