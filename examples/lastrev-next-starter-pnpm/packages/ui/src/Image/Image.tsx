@@ -2,7 +2,7 @@ import React from 'react';
 import NextImage from 'next/image';
 import ErrorBoundary from '../ErrorBoundary';
 
-import { ImageProps } from './Image.types';
+import type { ImageProps } from './Image.types';
 
 const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
   const {

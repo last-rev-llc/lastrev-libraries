@@ -11,7 +11,9 @@ export const typeDefs = gql`
     navMedia: Media
     subNavigation: [SubNavigationItem]
     href: String!
-    summary: RichText
+    summary: RichText,
+    icon: String
+    iconPosition: String
   }
 
   union SubNavigationItem = ${SUB_NAVIGATION_ITEM_TYPES.join('| ')}

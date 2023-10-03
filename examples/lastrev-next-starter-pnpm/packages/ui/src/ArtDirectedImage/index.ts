@@ -1,6 +1,2 @@
+export type { ArtDirectedImageProps, ArtDirectedImageClassKey } from './ArtDirectedImage.types';
 export { default } from './ArtDirectedImage';
-export type {
-  ArtDirectedImageProps,
-  ArtDirectedImageClasses,
-  ArtDirectedImageClassKey
-} from './ArtDirectedImage.types';

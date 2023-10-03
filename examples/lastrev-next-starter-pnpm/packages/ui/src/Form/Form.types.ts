@@ -1,17 +1,18 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
-import { ModuleIntegration_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-// TODO
+import type { Form_BaseFragmentFragment } from '@graphql-sdk/types';
+
 export enum FormVariants {
+  default = 'default',
   hubspotFormFooter = 'hubspotFormFooter'
 }
 
-export interface FormProps extends ModuleIntegration_BaseFragmentFragment {
+export interface FormProps extends Form_BaseFragmentFragment {
   submitted?: boolean;
   hasSuccessMessage?: boolean;
 }
 
-export interface FormClasses {
+interface FormClasses {
   root: string;
   formContainer: string;
   formOuterContainer: string;
@@ -23,18 +24,17 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Form: FormClassKey;
   }
+
   export interface ComponentsPropsList {
     Form: FormProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     Form?: {
       defaultProps?: ComponentsProps['Form'];
       styleOverrides?: ComponentsOverrides<Theme>['Form'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Form'];
     };
   }

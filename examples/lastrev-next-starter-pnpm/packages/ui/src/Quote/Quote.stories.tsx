@@ -2,7 +2,7 @@ import Quote from './Quote';
 import { quoteBaseMock, quoteLargeMock, quoteInlineMock } from './Quote.mock';
 
 export default {
-  title: '3. Modules/Quote',
+  title: 'Components/Quote',
   component: Quote,
 
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs

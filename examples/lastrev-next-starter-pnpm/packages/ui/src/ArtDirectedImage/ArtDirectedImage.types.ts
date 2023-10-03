@@ -1,6 +1,6 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { FileProps } from '../Media/Media.types';
+import type { FileProps } from '../Media/Media.types';
 
 export interface ArtDirectedImageProps {
   file?: FileProps;
@@ -13,7 +13,7 @@ export interface ArtDirectedImageProps {
   testId?: any;
 }
 
-export interface ArtDirectedImageClasses {
+interface ArtDirectedImageClasses {
   /** Styles applied to the root element. */
   root: string;
 }
@@ -24,18 +24,17 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     ArtDirectedImage: ArtDirectedImageClassKey;
   }
+
   export interface ComponentsPropsList {
     ArtDirectedImage: ArtDirectedImageProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     ArtDirectedImage?: {
       defaultProps?: ComponentsProps['ArtDirectedImage'];
       styleOverrides?: ComponentsOverrides<Theme>['ArtDirectedImage'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['ArtDirectedImage'];
     };
   }

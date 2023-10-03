@@ -1,6 +1,6 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Card_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Card_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum CardVariants {
   default = 'default',
@@ -16,16 +16,11 @@ export enum CardVariants {
 export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant'> {
   loading?: boolean;
   variant?: CardVariants;
-  colorScheme?: string;
-  position?: number;
-  isFirst?: Boolean;
-  isMultipleOfTwo?: Boolean;
-  isMultipleOfThree?: Boolean;
 }
 
 export interface CardOwnerState extends CardProps {}
 
-export interface CardClasses {
+interface CardClasses {
   root: string;
   link: string;
   media: string;
@@ -46,6 +41,7 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Card: CardClassKey;
   }
+
   export interface ComponentsPropsList {
     Card: CardProps;
   }
@@ -56,9 +52,6 @@ declare module '@mui/material/styles' {
     Card?: {
       defaultProps?: ComponentsProps['Card'];
       styleOverrides?: ComponentsOverrides<Theme>['Card'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Card'];
     };
   }

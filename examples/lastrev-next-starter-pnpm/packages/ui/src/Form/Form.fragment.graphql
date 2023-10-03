@@ -1,0 +1,6 @@
+fragment Form_BaseFragment on ElementForm {
+  ...Content_BaseFragment
+  introText {
+    ...Text_IntroTextFragment
+  }
+}

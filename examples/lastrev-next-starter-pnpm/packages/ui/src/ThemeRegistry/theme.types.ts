@@ -1,5 +1,5 @@
 import { Mixins } from '@mui/material/styles/createMixins';
-import { TypographyStyle, Theme } from '@mui/material/styles';
+import { type ThemeOptions as MuiThemeOptions, type TypographyStyle, type Breakpoints } from '@mui/material/styles';
 
 declare module '@mui/material/styles' {
   interface TypeBackground {
@@ -11,8 +11,14 @@ declare module '@mui/material/styles' {
   interface BreakpointOverrides {
     xxl: true; // adds the `xxl` breakpoint
   }
+
   interface Theme {
     mixins: Mixins;
+    containerBreakpoints: Breakpoints;
+  }
+
+  interface ThemeOptions extends MuiThemeOptions {
+    containerBreakpoints: Breakpoints;
   }
 
   interface TypographyVariants {

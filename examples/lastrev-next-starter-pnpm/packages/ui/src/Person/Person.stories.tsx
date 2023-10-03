@@ -3,7 +3,7 @@ import Person from './Person';
 import { personBaseMock } from './Person.mock';
 
 export default {
-  title: '4. Pages/Person',
+  title: 'Pages/Person',
   component: Person,
   tags: ['autodocs'],
   argTypes: {

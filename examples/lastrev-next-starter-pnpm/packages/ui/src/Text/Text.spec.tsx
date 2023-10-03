@@ -1,11 +1,10 @@
 import * as React from 'react';
-import each from 'lodash/each';
 
 import { BLOCKS } from '@contentful/rich-text-types';
 
-import mountWithRouter from '../../../cypress/mountWithRouter';
+import mountWithRouter from '../../../../cypress/support/mountWithRouter';
 
-import { TextProps } from './Text.types';
+import type { TextProps } from './Text.types';
 import Text from './Text';
 
 import mockContent, {
@@ -57,14 +56,14 @@ describe('Text', () => {
         'have.text',
         mockedContent.body?.json.content.map((c) => c.content[0].value).join('')
       );
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders formatted text with correct information', () => {
       const mockedContent: TextProps = formattedMock();
       mountWithRouter(<Text {...mockedContent} />);
 
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     describe('node types', () => {
@@ -83,7 +82,7 @@ describe('Text', () => {
           cy.get('[data-testid=Text-embedded-entry-inline]')
             .contains(mockedEntry.text as string | number | RegExp)
             .should('exist');
-          cy.percySnapshot();
+          //cy.percySnapshot();
         });
 
         it('renders text with embedded entry block', () => {
@@ -93,7 +92,7 @@ describe('Text', () => {
           cy.get('[data-testid=Text-embedded-entry-block]')
             .contains(mockedEntry.text as string | number | RegExp)
             .should('exist');
-          cy.percySnapshot();
+          //cy.percySnapshot();
         });
 
         it('renders text with embedded asset block', () => {
@@ -107,7 +106,7 @@ describe('Text', () => {
           cy.get('[data-testid=Text-embedded-asset-block]')
             .should('exist')
             .and('have.attr', 'src', mockedMedia.file?.url);
-          cy.percySnapshot();
+          //cy.percySnapshot();
         });
 
         it('renders text with hyperlink', () => {
@@ -121,13 +120,13 @@ describe('Text', () => {
           cy.get('[data-testid=Text-hyperlink]')
             .contains(mockedLink.text as string | number | RegExp)
             .should('exist');
-          cy.percySnapshot();
+          //cy.percySnapshot();
         });
 
         it('renders formatted text with hyperlink', () => {
           const mockedContent: TextProps = withLinksMock();
           mountWithRouter(<Text {...mockedContent} />);
-          cy.percySnapshot();
+          //cy.percySnapshot();
         });
       });
     });

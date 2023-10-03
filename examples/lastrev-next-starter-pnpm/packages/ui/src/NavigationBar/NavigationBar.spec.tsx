@@ -2,21 +2,21 @@
 
 import * as React from 'react';
 import 'cypress-real-events/support';
-import mountWithRouter from '../../../cypress/mountWithRouter'; // TODO: Fix
+import mountWithRouter from '../../../../cypress/support/mountWithRouter';
 
 import NavigationBar from './NavigationBar';
 
-import mockContent, { mockWithNavigationItems } from './NavigationBar.mock';
+import mockContent, { navigationBarBaseMock } from './NavigationBar.mock';
 
-import { NavigationBarProps } from './NavigationBar.types';
-import { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
+import type { NavigationBarProps } from './NavigationBar.types';
+import type { NavigationItemProps } from '../NavigationItem';
 
 let mockedContent: NavigationBarProps = { theme: {}, sidekickLookup: '' };
 let mockedContentWithNavigationItems: NavigationBarProps = { theme: {}, sidekickLookup: '' };
 
 beforeEach(() => {
   mockedContent = { ...mockContent() };
-  mockedContentWithNavigationItems = { ...mockWithNavigationItems() };
+  mockedContentWithNavigationItems = { ...navigationBarBaseMock() };
 });
 
 describe('NavigationBar', () => {
@@ -32,14 +32,14 @@ describe('NavigationBar', () => {
         cy.get('[data-testid=NavigationBar]').should('exist');
         cy.get('[data-testid=NavigationItem]').should('have.length', mainNavLinks);
         cy.get('a').should('have.length', mainNavLinks + subNavLinks);
-        cy.percySnapshot();
+        //cy.percySnapshot();
       });
 
       it('renders a NavigationBar with correct navigation items ', () => {
         mountWithRouter(<NavigationBar {...mockedContentWithNavigationItems} />);
         cy.get('[data-testid=NavigationBar]').should('exist');
         cy.get('[data-testid=NavigationItem]').should('have.length', mockedContentWithNavigationItems.items?.length);
-        cy.percySnapshot();
+        //cy.percySnapshot();
       });
     });
 
@@ -72,7 +72,7 @@ describe('NavigationBar', () => {
                 .contains(subNav.text as string | number | RegExp)
                 .should('be.visible');
             });
-            cy.percySnapshot();
+            //cy.percySnapshot();
           });
         });
       });

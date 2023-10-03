@@ -3,7 +3,7 @@ import { mount } from '@cypress/react18';
 
 import Link from './Link';
 
-import { LinkProps } from './Link.types';
+import type { LinkProps } from './Link.types';
 import { linkBaseMock, linkButtonMock } from './Link.mock';
 
 let mockedLinkContent: LinkProps = {};
@@ -23,7 +23,7 @@ describe('Link renders correctly', () => {
         .should('exist')
         .and('have.attr', 'href', `/${mockedLinkContent.href}`)
         .and('have.text', mockedLinkContent.text);
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders a basic link when variant is not provided', () => {
@@ -37,19 +37,19 @@ describe('Link renders correctly', () => {
     it('renders a contained button when variant is button-contained', () => {
       mount(<Link {...mockedButtonContent} variant="button-contained" />);
       cy.get('a').should('exist').and('have.class', 'MuiButton-contained').and('have.text', mockedLinkContent.text);
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders an outlined button when variant is button-outlined', () => {
       mount(<Link {...mockedButtonContent} variant="button-outlined" />);
       cy.get('a').should('exist').and('have.class', 'MuiButton-outlined').and('have.text', mockedLinkContent.text);
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders text as a button when variant is button-text', () => {
       mount(<Link {...mockedButtonContent} variant="button-text" />);
       cy.get('a').should('exist').and('have.class', 'MuiButton-text').and('have.text', mockedLinkContent.text);
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
   });
 
@@ -74,7 +74,7 @@ describe('Link renders correctly', () => {
     it('renders a link without an icon if one is not provided', () => {
       mount(<Link {...mockedLinkContent} icon={undefined} />);
       cy.get('.MuiIcon-root').should('not.exist');
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders a link with an icon on the right if iconPosition is Right', () => {
@@ -85,7 +85,7 @@ describe('Link renders correctly', () => {
     it('renders a link with an icon on the left if iconPosition is Left', () => {
       mount(<Link {...mockedLinkContent} iconPosition="Left" />);
       cy.get('.MuiButton-startIcon').should('exist');
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
   });
 });

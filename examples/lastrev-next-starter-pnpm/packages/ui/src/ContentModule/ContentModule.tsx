@@ -2,7 +2,7 @@
 'use client';
 import React from 'react';
 import { useContentModuleContext } from './ContentModuleContext';
-import { ContentModuleProps } from './ContentModule.types';
+import type { ContentModuleProps } from './ContentModule.types';
 
 const ContentModule = React.forwardRef(function ContentModule(
   { __typename, theme, ...fields }: ContentModuleProps,

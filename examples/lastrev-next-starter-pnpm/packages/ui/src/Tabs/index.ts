@@ -1,2 +1,2 @@
-export type { TabsProps, TabsClassKey, TabsClasses } from './Tabs.types';
+export type { TabsProps, TabsClassKey } from './Tabs.types';
 export { default } from './Tabs';

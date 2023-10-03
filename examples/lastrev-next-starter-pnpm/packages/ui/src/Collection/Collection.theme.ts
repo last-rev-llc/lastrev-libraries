@@ -1,8 +1,15 @@
-import { Theme, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type {
+  Theme,
+  ThemeOptions,
+  ComponentsProps,
+  ComponentsOverrides,
+  ComponentsVariants
+} from '@mui/material/styles';
+import { CollectionVariants } from './Collection.types';
 
-export const defaultProps: ComponentsProps['Collection'] = {};
+const defaultProps: ComponentsProps['Collection'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   root: ({ theme, ownerState }) => ({
     containerType: 'inline-size',
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
@@ -27,7 +34,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
 const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
   {
     props: {
-      variant: 'onePerRow'
+      variant: CollectionVariants.onePerRow
     },
     style: {
       [theme.breakpoints.up('sm')]: {
@@ -41,7 +48,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
   },
   {
     props: {
-      variant: 'twoPerRow'
+      variant: CollectionVariants.twoPerRow
     },
     style: {
       [theme.breakpoints.up('sm')]: {
@@ -55,13 +62,13 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
   },
   {
     props: {
-      variant: 'threePerRow'
+      variant: CollectionVariants.threePerRow
     },
     style: {}
   },
   {
     props: {
-      variant: 'fourPerRow'
+      variant: CollectionVariants.fourPerRow
     },
     style: {
       '[class*="Collection-itemsGrid"]': {
@@ -79,7 +86,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
   },
   {
     props: {
-      variant: 'fivePerRow'
+      variant: CollectionVariants.fivePerRow
     },
     style: {
       '[class*="Collection-itemsGrid"]': {
@@ -97,7 +104,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
   }
 ];
 
-export const collectionTheme = (theme: Theme) => ({
+const collectionTheme = (theme: Theme): ThemeOptions => ({
   components: {
     Collection: {
       defaultProps,

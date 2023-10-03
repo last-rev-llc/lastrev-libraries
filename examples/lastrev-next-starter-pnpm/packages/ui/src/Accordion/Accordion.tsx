@@ -2,7 +2,6 @@ import React from 'react';
 
 import { styled } from '@mui/material/styles';
 
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
@@ -11,13 +10,17 @@ import Typography from '@mui/material/Typography';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
+import Grid from '../Grid';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import { AccordionProps } from './Accordion.types';
+import type { AccordionProps, AccordionOwnerState } from './Accordion.types';
 
+const Accordion = (props: AccordionProps) => {
+  const ownerState = { ...props };
 
-export const Accordion = ({ id, items, variant, sidekickLookup, introText, ...props }: AccordionProps) => {
+  const { id, items, variant, sidekickLookup, introText } = props;
+
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -26,91 +29,102 @@ export const Accordion = ({ id, items, variant, sidekickLookup, introText, ...pr
 
   return (
     <ErrorBoundary>
-      <Root variant={variant} data-testid={`Accordion-${variant}`} {...props} {...sidekick(sidekickLookup)}>
+      <Root {...sidekick(sidekickLookup)} ownerState={ownerState} data-testid={`Accordion-${variant}`}>
         {introText && (
-          <IntroTextWrapper>
-            <IntroText {...sidekick(sidekickLookup, 'introText')} {...introText} variant="introText" />
-          </IntroTextWrapper>
+          <IntroTextGrid ownerState={ownerState}>
+            <IntroText
+              ownerState={ownerState}
+              {...sidekick(sidekickLookup, 'introText')}
+              {...introText}
+              variant="introText"
+            />
+          </IntroTextGrid>
         )}
-        <ContentContainer>
-          {!!items?.length && (
-            <Box>
-              {items?.map(
-                (
-                  item: any,
-                  index: number // TODO: Fix type
-                ) => (
-                  <AccordionItem
-                    expanded={expanded === `${!id}-accordion-panel-${item?.id}-${index}`}
-                    onChange={handleChange(`${!id}-accordion-panel-${item?.id}-${index}`)}
-                    key={`${!id}-accordion-panel-${item?.id}-${index}`}>
-                    <AccordionItemSummary aria-controls="panel1d-content" id="panel1d-header">
-                      <Typography>{item.title}</Typography>
-                    </AccordionItemSummary>
-                    <AccordionItemDetails>
-                      {item.body ? <ContentModule __typename="RichText" body={item.body} /> : <Item {...item.content} />}
-                    </AccordionItemDetails>
-                  </AccordionItem>
-                )
-              )}
-            </Box>
-          )}
-        </ContentContainer>
+
+        {!!items?.length && (
+          <ContentGrid ownerState={ownerState}>
+            {items?.map(
+              (
+                item: any,
+                index: number // TODO: Fix type
+              ) => (
+                <AccordionItem
+                  expanded={expanded === `${!id}-accordion-panel-${item?.id}-${index}`}
+                  onChange={handleChange(`${!id}-accordion-panel-${item?.id}-${index}`)}
+                  key={`${!id}-accordion-panel-${item?.id}-${index}`}
+                  ownerState={ownerState}>
+                  <SummaryWrap aria-controls="panel1d-content" id="panel1d-header" ownerState={ownerState}>
+                    <Summary ownerState={ownerState}>{item.title}</Summary>
+                  </SummaryWrap>
+                  <DetailsWrap ownerState={ownerState}>
+                    {item.body ? (
+                      <Details __typename="RichText" body={item.body} ownerState={ownerState} />
+                    ) : (
+                      <Details {...item.content} ownerState={ownerState} />
+                    )}
+                  </DetailsWrap>
+                </AccordionItem>
+              )
+            )}
+          </ContentGrid>
+        )}
       </Root>
     </ErrorBoundary>
   );
 };
 
-const shouldForwardProp = (prop: string) => prop !== 'variant';
-
 const Root = styled(Box, {
   name: 'Accordion',
   slot: 'Root',
-  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>``;
+})<{ ownerState: AccordionOwnerState }>``;
 
-const ContentContainer = styled(Container, {
+const ContentGrid = styled(Grid, {
   name: 'Accordion',
-  slot: 'ContentContainer',
-  shouldForwardProp,
-  overridesResolver: (_, styles) => [styles.contentContainer]
-})<{ variant?: string }>``;
+  slot: 'ContentGrid',
+  overridesResolver: (_, styles) => [styles.contentGrid]
+})<{ ownerState: AccordionOwnerState }>``;
 
-const IntroTextWrapper = styled(Box, {
+const IntroTextGrid = styled(Grid, {
   name: 'Accordion',
-  slot: 'IntroTextWrapper',
-  overridesResolver: (_, styles) => [styles.introTextWrapper]
-})(() => ({}));
+  slot: 'IntroTextGrid',
+  overridesResolver: (_, styles) => [styles.introTextGrid]
+})<{ ownerState: AccordionOwnerState }>``;
 
 const IntroText = styled(ContentModule, {
-  name: 'Accordion',
+  name: 'Collection',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
-})(() => ({}));
+})<{ ownerState: AccordionOwnerState }>``;
 
 const AccordionItem = styled(MuiAccordion, {
   name: 'Accordion',
   slot: 'AccordionItem',
   overridesResolver: (_, styles) => [styles.accordionItem]
-})(() => ({}));
+})<{ ownerState: AccordionOwnerState }>``;
 
-const AccordionItemSummary = styled(MuiAccordionSummary, {
+const SummaryWrap = styled(MuiAccordionSummary, {
   name: 'Accordion',
-  slot: 'AccordionItemSummary',
-  overridesResolver: (_, styles) => [styles.accordionSummary]
-})(() => ({}));
+  slot: 'SummaryWrap',
+  overridesResolver: (_, styles) => [styles.summaryWrap]
+})<{ ownerState: AccordionOwnerState }>``;
 
-const AccordionItemDetails = styled(MuiAccordionDetails, {
+const Summary = styled(Typography, {
   name: 'Accordion',
-  slot: 'AccordionItemDetails',
-  overridesResolver: (_, styles) => [styles.accordionDetails]
-})(() => ({}));
+  slot: 'Summary',
+  overridesResolver: (_, styles) => [styles.summary]
+})<{ ownerState: AccordionOwnerState }>``;
 
-const Item = styled(ContentModule, {
+const DetailsWrap = styled(MuiAccordionDetails, {
   name: 'Accordion',
-  slot: 'Item',
-  overridesResolver: (_, styles) => [styles.item]
-})<{ variant?: string }>``;
+  slot: 'DetailsWrap',
+  overridesResolver: (_, styles) => [styles.detailsWrap]
+})<{ ownerState: AccordionOwnerState }>``;
+
+const Details = styled(ContentModule, {
+  name: 'Accordion',
+  slot: 'Details',
+  overridesResolver: (_, styles) => [styles.details]
+})<{ ownerState: AccordionOwnerState }>``;
 
 export default Accordion;

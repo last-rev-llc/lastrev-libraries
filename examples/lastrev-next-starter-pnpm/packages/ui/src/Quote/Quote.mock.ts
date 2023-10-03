@@ -1,32 +1,36 @@
-import { lorem } from 'faker';
 import { mediaBaseImageMock } from '../Media/Media.mock';
-import { QuoteProps } from './Quote.types';
 
-const quoteDefaultMock: QuoteProps = {
-  id: lorem.word(),
-  __typename: 'Quote',
-  variant: 'default',
-  authorImage: mediaBaseImageMock(),
-  quote: 'Get in touch and learn how our services can help you!',
-  authorName: `Adam Harris`,
-  authorTitle: `Co-Founder`,
-  logo: mediaBaseImageMock()
+import randomId from '../utils/randomId';
+
+import type { QuoteProps } from './Quote.types';
+
+export const quoteDefaultMock = (override?: Partial<QuoteProps>): QuoteProps => {
+  const baseMock: QuoteProps = {
+    id: randomId(),
+    __typename: 'Quote',
+    variant: 'default',
+    quote: 'Get in touch and learn how our services can help you!',
+    authorName: `Adam Harris`,
+    authorTitle: `Co-Founder`,
+    logo: mediaBaseImageMock(),
+    image: mediaBaseImageMock()
+  };
+
+  return baseMock;
 };
 
-export const quoteBaseMock = ({ ...override } = {}) => ({
-  ...quoteDefaultMock,
-  ...override
+export const quoteBaseMock = ({ ...override } = {}): QuoteProps => ({
+  ...quoteDefaultMock(override)
 });
 
-export const quoteLargeMock = ({ ...override } = {}) => ({
-  ...quoteDefaultMock,
-  ...override,
+export const quoteLargeMock = ({ ...override } = {}): QuoteProps => ({
+  ...quoteDefaultMock(override),
   variant: 'large'
 });
 
-export const quoteInlineMock = ({ ...override } = {}) => ({
-  ...quoteDefaultMock,
-  ...override,
+export const quoteInlineMock = ({ ...override } = {}): QuoteProps => ({
+  ...quoteDefaultMock(override),
+
   variant: 'inline'
 });
 

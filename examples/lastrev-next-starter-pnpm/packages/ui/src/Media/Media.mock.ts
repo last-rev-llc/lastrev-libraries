@@ -1,5 +1,4 @@
-import { lorem } from 'faker';
-import { MediaProps, MediaVideoProps, AssetProps, FileProps } from './Media.types';
+import type { MediaProps, MediaVideoProps, AssetProps, FileProps } from './Media.types';
 
 import { cleanSVG } from '../../../graphql-extensions/src/utils/cleanSVG';
 const getSvgContent = (url: string) =>
@@ -10,7 +9,7 @@ const getSvgContent = (url: string) =>
     });
 
 export const defaultFileImageMock = ({ ...override } = {}): FileProps => ({
-  url: `https://source.unsplash.com/random/500x500?rnd=${Math.random()}`,
+  url: `https://source.unsplash.com/random/1280x500?rnd=${Math.random()}`,
   width: 1920,
   height: 1080,
   ...override
@@ -32,7 +31,7 @@ export const defaultFileVideoMock = ({ ...override } = {}): FileProps => ({
 
 const defaultAssetFileMock = ({ ...override } = {}): AssetProps => ({
   file: defaultFileImageMock(),
-  title: lorem.sentence(),
+  title: 'This is an asset title',
   ...override
 });
 
@@ -44,36 +43,36 @@ const defaultAssetSvgMock = async ({ ...override } = {}): Promise<AssetProps> =>
   return {
     file: defaultFileSvgMock(),
     svgContent,
-    title: lorem.sentence(),
+    title: 'This is an asset title',
     ...override
   };
 };
 
 const defaultAssetVideoMock = ({ ...override } = {}): AssetProps => ({
   file: defaultFileVideoMock(),
-  title: lorem.sentence(),
+  title: 'This is an asset title',
   ...override
 });
 
 export const mediaSVGMock = {
   __typename: 'Media',
   file: defaultFileSvgMock(),
-  title: lorem.sentence(),
-  description: lorem.sentence()
+  title: 'This is a media  SVG title',
+  description: 'This is a media SVG  description'
 };
 
 export const mediaExternalSVGMock = {
   __typename: 'Media',
   file: defaultFileSvgMock(),
   disableInlineSVG: true,
-  title: lorem.sentence(),
-  description: lorem.sentence()
+  title: 'This is an external SVG  title',
+  description: 'This is an external SVG  description'
 };
 
 const mediaDefaultMock: MediaProps = {
   id: 'mediaBaseImageMock',
   __typename: 'Media',
-  alt: lorem.word()
+  alt: 'This is the default media alt text'
 };
 
 const imageDefaultMock: MediaProps = {

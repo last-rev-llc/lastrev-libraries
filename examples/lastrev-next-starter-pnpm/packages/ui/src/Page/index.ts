@@ -1,2 +1,2 @@
-export type { PageProps, PageClassKey, PageClasses } from './Page.types';
+export type { PageProps, PageClassKey } from './Page.types';
 export { default } from './Page';

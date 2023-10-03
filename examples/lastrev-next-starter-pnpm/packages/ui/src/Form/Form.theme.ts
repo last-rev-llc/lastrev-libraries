@@ -1,16 +1,15 @@
 import {
-  TypographyStyle,
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants,
+  type Theme,
+  type ThemeOptions,
+  type ComponentsProps,
+  type ComponentsOverrides,
+  type ComponentsVariants,
   alpha
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Form'] = {};
+const defaultProps: ComponentsProps['Form'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
   root: ({ theme, ownerState }) => ({
     'width': '100%',
 

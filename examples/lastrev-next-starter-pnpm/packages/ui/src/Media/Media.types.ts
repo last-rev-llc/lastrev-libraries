@@ -1,4 +1,4 @@
-import { Media_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Media_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface FileProps {
   url?: string;
@@ -23,7 +23,7 @@ export interface MediaVideoProps extends MediaProps {
   controls: boolean;
 }
 
-export interface MediaClasses {
+interface MediaClasses {
   /** Styles applied to the root element. */
   root: string;
 }

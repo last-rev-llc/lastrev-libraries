@@ -1,6 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import dynamic from 'next/dynamic';
+
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
@@ -18,7 +19,7 @@ import INLINES from './INLINES';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import { RichTextProps } from './RichText.types';
+import type { RichTextProps } from './RichText.types';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 const keyBy = (key: string, xs: any[]) => xs.filter(Boolean).reduce((acc, x) => ({ ...acc, [x[key]]: x }), {});
@@ -135,6 +136,7 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
       [INLINES.EMBEDDED_ENTRY]: (node: any) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
+        console.log({ entry });
         return (
           <InlineRoot data-testid={`Text-${INLINES.EMBEDDED_ENTRY}`}>
             <ContentModule {...entry} />
@@ -224,9 +226,10 @@ const Root = styled('div', {
   overridesResolver: (_, styles) => [styles.root, styles.richTextContent]
 })<{ variant?: string }>`
   white-space: pre-wrap;
+  display: contents;
 `;
 
-const EmbeddedRoot = styled('span', {
+const EmbeddedRoot = styled('div', {
   name: 'RichText',
   slot: 'EmbeddedRoot',
   shouldForwardProp: (prop) => prop !== 'variant',

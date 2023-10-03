@@ -1,12 +1,13 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
+
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
 import Grid from '../Grid';
-import { BlockProps, BlockOwnerState } from './Block.types';
+import type { BlockProps, BlockOwnerState } from './Block.types';
 
 const Block = (props: BlockProps) => {
   const ownerState = { ...props };

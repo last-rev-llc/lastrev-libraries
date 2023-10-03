@@ -3,10 +3,11 @@ fragment Footer_BaseFragment on Footer {
   logo {
     ...Media_BaseFragment
   }
+
   logoUrl {
     ...Link_BaseFragment
   }
-  disclaimer {
+  disclaimerText {
     ...RichText_BaseFragment
   }
   socialLinks {
@@ -24,7 +25,7 @@ fragment Footer_BaseFragment on Footer {
   legalLinks {
     ...Link_BaseFragment
   }
-  localeLinks {
-    ...Link_BaseFragment
-  }
+  # localeLinks {
+  #  ...Link_BaseFragment
+  #}
 }

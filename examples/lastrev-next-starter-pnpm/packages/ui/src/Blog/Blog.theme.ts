@@ -1,36 +1,70 @@
-import {
-  TypographyStyle,
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Blog'] = {};
+const defaultProps: ComponentsProps['Blog'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   root: ({}) => ({}),
+
+  contentOuterGrid: ({ theme }) => ({
+    '> *': {
+      gridColumnStart: 'auto'
+    }
+  }),
+
+  headerWrap: () => ({
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end'
+  }),
+
+  contentWrap: () => ({
+    display: 'contents'
+  }),
 
   featuredMedia: () => ({}),
 
   featuredMediaWrap: ({ theme }) => ({
-    gridColumn: '1 / span 2',
-    gridRow: '2',
-    width: '100%',
-    margin: theme.spacing(0, 0, 4),
-    [theme.breakpoints.up('md')]: {
-      gridRow: '4',
-      gridColumn: '1 / span 6'
-    },
-    [theme.breakpoints.up('lg')]: {
-      gridColumn: '1 / span 8'
-    }
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end'
   }),
 
   pubDate: ({}) => ({}),
 
-  summary: ({}) => ({}),
+  shareLinksWrap: () => ({
+    gridColumnStart: 'three-start',
+    gridColumnEnd: 'ten-end'
+  }),
+
+  shareLinks: ({ theme }) => ({
+    display: 'flex',
+    alignItems: 'flex-start',
+    gap: theme.spacing(1)
+  }),
+
+  shareLink: ({ theme }) => ({
+    'gap': theme.spacing(1),
+
+    '& svg': {
+      width: theme.spacing(2),
+      height: theme.spacing(2)
+    },
+
+    '& .MuiTypography-root': {
+      display: 'none'
+    },
+
+    [theme.breakpoints.up('md')]: {
+      'gap': theme.spacing(1),
+      '& .MuiTypography-root': {
+        ...theme.typography.bodySmall,
+        display: 'block'
+      }
+    }
+  }),
+
+  authorWrap: () => ({
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end'
+  }),
 
   author: ({}) => ({}),
 
@@ -47,47 +81,16 @@ export const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   }),
 
   body: ({ theme }) => ({
-    '& > [class*=Text-root] > *:not(:first-child)': {
-      '&:not(:is(ul, ol, li))': {
-        marginTop: '1em',
-        marginBottom: '1em'
-      },
-
-      '&:is(ul, ol)': {
-        marginTop: '-1em',
-        marginBottom: '2em'
-      },
-
-      '&:is(span)': {
-        // Image Wrappers
-        marginTop: '2em !important',
-        marginBottom: '2em !important'
-      },
-
-      '&[class*=MuiTypography-h]': {
-        marginBottom: '.5em',
-        marginTop: '1em'
-      },
-
-      '&[class*=-h1]': {
-        ...theme.typography.h3
-      },
-
-      '&[class*=-h2]': {
-        ...theme.typography.h4
-      },
-
-      '&[class*=-h3]': {
-        ...theme.typography.h5
-      },
-
-      '&[class*=-h4]': {
-        ...theme.typography.h5
-      }
+    '& > *:not(div)': {
+      gridColumnStart: 'three-start',
+      gridColumnEnd: 'ten-end',
+      backgroundColor: '#eeeeee'
     },
 
-    '& > [class*=Text-root] > *:first-child': {
-      marginTop: '0'
+    '& > div': {
+      gridColumnStart: 'full-start',
+      gridColumnEnd: 'full-end',
+      backgroundColor: '#cccccc'
     }
   }),
 
@@ -98,6 +101,11 @@ export const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   tags: ({}) => ({}),
 
   tag: ({}) => ({}),
+
+  relatedItemsWrap: () => ({
+    gridColumnStart: 'full-start',
+    gridColumnEnd: 'full-end'
+  }),
 
   relatedItems: ({}) => ({})
 };

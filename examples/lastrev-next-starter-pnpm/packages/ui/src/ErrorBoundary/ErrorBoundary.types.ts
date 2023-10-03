@@ -4,7 +4,7 @@ export interface ErrorBoundaryProps {
   children?: React.ReactNode;
 }
 
-export interface ErrorBoundaryClasses {
+interface ErrorBoundaryClasses {
   // /** Styles applied to the root element. */
   // root: string;
 }

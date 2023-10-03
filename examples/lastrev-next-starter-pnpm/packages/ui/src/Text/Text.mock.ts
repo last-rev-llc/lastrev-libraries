@@ -1,9 +1,11 @@
-import { lorem } from 'faker';
-import { TextProps } from './Text.types';
 import { richTextMock } from '../RichText/RichText.mock';
 
+import randomId from '../utils/randomId';
+
+import type { TextProps } from './Text.types';
+
 const textDefaultMock: TextProps = {
-  id: lorem.word(),
+  id: randomId(),
   __typename: 'Text',
   overline: 'This is the overline',
   title: 'This is the title',
@@ -19,7 +21,7 @@ export const bodyOnlyMock = ({ ...override } = {}): TextProps => ({
   subtitle: undefined
 });
 
-export const introTextMock = ({ ...override } = {}) => ({
+export const introTextMock = ({ ...override } = {}): TextProps => ({
   ...textDefaultMock,
   overline: 'This is the intro text overline',
   title: 'This is the intro text title',
@@ -29,9 +31,17 @@ export const introTextMock = ({ ...override } = {}) => ({
   variant: 'introText'
 });
 
-export const textBaseMock = ({ ...override } = {}) => ({
+export const textBaseMock = ({ ...override } = {}): TextProps => ({
   ...textDefaultMock,
   ...override
+});
+
+export const textTitleMock = ({ ...override } = {}): TextProps => ({
+  ...textDefaultMock,
+  ...override,
+  overline: undefined,
+  subtitle: undefined,
+  body: undefined
 });
 
 export default textBaseMock;

@@ -1,2 +1,2 @@
-export type { HeaderNavGroupProps, HeaderNavGroupClassKey, HeaderNavGroupClasses } from './HeaderNavGroup.types';
+export type { HeaderNavGroupProps, HeaderNavGroupClassKey } from './HeaderNavGroup.types';
 export { default } from './HeaderNavGroup';

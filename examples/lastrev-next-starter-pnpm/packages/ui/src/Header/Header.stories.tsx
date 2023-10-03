@@ -1,10 +1,9 @@
-import React from 'react';
-import Box from '@mui/material/Box';
 import Header from './Header';
-import { headerBaseMock } from './Header.mock';
+
+import { headerBaseMock, headerChildrenMock, headerChildrenNestedMock } from './Header.mock';
 
 export default {
-  title: '1. Global / Header',
+  title: 'Global/Header',
   component: Header,
   tags: ['autodocs'],
   argTypes: {
@@ -22,5 +21,17 @@ export default {
 export const Default = {
   args: {
     ...headerBaseMock()
+  }
+};
+
+export const Dropdown = {
+  args: {
+    ...headerChildrenMock()
+  }
+};
+
+export const MegaNav = {
+  args: {
+    ...headerChildrenNestedMock()
   }
 };

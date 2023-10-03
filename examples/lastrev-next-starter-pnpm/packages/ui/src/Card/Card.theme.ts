@@ -1,15 +1,15 @@
-import {
-  TypographyStyle,
+import type {
   Theme,
   ThemeOptions,
   ComponentsProps,
   ComponentsOverrides,
   ComponentsVariants
 } from '@mui/material/styles';
+import { CardVariants } from './Card.types';
 
-export const defaultProps: ComponentsProps['Card'] = {};
+const defaultProps: ComponentsProps['Card'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme }) => ({
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
@@ -45,7 +45,7 @@ export const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   {
     props: {
-      variant: 'media'
+      variant: CardVariants.media
     },
     style: {
       '[class*=Card-media]': {
@@ -64,7 +64,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: 'icon'
+      variant: CardVariants.icon
     },
     style: {
       '[class*=Card-media]': {
@@ -84,7 +84,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: 'logo'
+      variant: CardVariants.logo
     },
     style: {
       '[class*=Card-media]': {
@@ -98,7 +98,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: 'pricing'
+      variant: CardVariants.pricing
     },
     style: {
       '& [class*=Card-content] > *': {
@@ -121,7 +121,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: 'person'
+      variant: CardVariants.person
     },
     style: () => ({
       '[class*=Card-content]': {

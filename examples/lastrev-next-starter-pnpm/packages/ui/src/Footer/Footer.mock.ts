@@ -1,34 +1,62 @@
-import { lorem } from 'faker';
-
-import { linkTextMock } from '../Link/Link.mock';
-import { navigationItemBaseMock } from '../NavigationItem/NavigationItem.mock';
+import { linkBaseMock, linkSocialMock } from '../Link/Link.mock';
+import {
+  navigationItemWithChildrenMock,
+  navigationItemWithChildrenNestedMock
+} from '../NavigationItem/NavigationItem.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
-import { richTextMock } from '../RichText/RichText.mock';
+import { complexMock } from '../RichText/RichText.mock';
+import blockBaseMock from '../Block/Block.mock';
 
-import { FooterProps } from './Footer.types';
+import randomId from '../utils/randomId';
+
+import type { FooterProps } from './Footer.types';
 
 // TODO: Update
-const footerDefaultMock: FooterProps = {
-  id: lorem.word(),
-  __typename: 'Footer',
-  logo: mediaBaseImageMock(), // TODO;
-  logoUrl: linkTextMock(),
-  disclaimer: richTextMock({ text: 'This is the disclaimer' }),
-  socialLinks: [linkTextMock(), linkTextMock(), linkTextMock()],
-  navigationItems: [
-    navigationItemBaseMock(),
-    navigationItemBaseMock(),
-    navigationItemBaseMock(),
-    navigationItemBaseMock()
-  ],
-  introContents: richTextMock({ text: 'This is the intro content' }),
-  copyrightDisclaimer: richTextMock({ text: 'This is the copyright disclaimer' }),
-  legalLinks: [linkTextMock(), linkTextMock(), linkTextMock()]
+const footerDefaultMock = (): FooterProps => {
+  return {
+    id: randomId(),
+    __typename: 'Footer',
+    logo: mediaBaseImageMock(), // TODO;
+    logoUrl: linkBaseMock(),
+    disclaimerText: complexMock({ text: 'This is the disclaimer' }),
+    socialLinks: [linkSocialMock(), linkSocialMock(), linkSocialMock()],
+    navigationItems: [
+      navigationItemWithChildrenMock(),
+      navigationItemWithChildrenMock(),
+      navigationItemWithChildrenMock(),
+      navigationItemWithChildrenMock()
+    ],
+    introContents: [
+      blockBaseMock({
+        introText: undefined,
+        title: 'Intro Block title above footer',
+        overline: undefined,
+        subtitle: undefined
+      })
+    ],
+    copyrightDisclaimer: complexMock({ text: 'This is the copyright disclaimer' }),
+    legalLinks: [linkBaseMock(), linkBaseMock(), linkBaseMock()]
+  };
 };
 
-export const footerBaseMock = ({ ...override } = {}) => ({
-  ...footerDefaultMock,
-  ...override
-});
+export const footerBaseMock = ({ ...override } = {}) => {
+  const mock = { ...footerDefaultMock(), ...override };
+
+  return { ...mock, hasSocialLinks: !!mock?.socialLinks?.length };
+};
+
+export const footerChildrenNestedMock = ({ ...override } = {}) => {
+  const mock = {
+    ...footerDefaultMock(),
+    navigationItems: [
+      navigationItemWithChildrenNestedMock(),
+      navigationItemWithChildrenNestedMock(),
+      navigationItemWithChildrenNestedMock()
+    ],
+    ...override
+  };
+
+  return { ...mock, hasSocialLinks: !!mock?.socialLinks?.length };
+};
 
 export default footerBaseMock;

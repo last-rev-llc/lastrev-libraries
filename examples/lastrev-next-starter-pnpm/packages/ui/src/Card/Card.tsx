@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { styled } from '@mui/material/styles';
 import MuiCard from '@mui/material/Card';
 import { default as MuiCardMedia } from '@mui/material/CardMedia';
@@ -7,25 +8,21 @@ import CardContent from '@mui/material/CardContent';
 import CardActionArea from '@mui/material/CardActionArea';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
+
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import getFirstOfArray from '../utils/getFirstOfArray';
-import useThemeProps from '../utils/useThemeProps';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import { CardProps, CardOwnerState } from './Card.types';
-import { LinkProps } from '../Link/Link.types';
+import type { CardProps, CardOwnerState } from './Card.types';
+import { type LinkProps } from '../Link';
 
 export const Card = (props: CardProps) => {
-  const { id, media, overline, title, subtitle, body, link, actions, variant, loading, position, sidekickLookup } =
-    props;
+  const { id, media, overline, title, subtitle, body, link, actions, variant, loading, sidekickLookup } = props;
 
   const ownerState = {
     ...props,
-    variant,
-    isFirst: position === 1,
-    isMultipleOfTwo: !!position && position > 1 && position % 2 === 0,
-    isMultipleOfThree: !!position && position > 1 && position % 3 === 0
+    variant
   };
 
   const image = getFirstOfArray(media);

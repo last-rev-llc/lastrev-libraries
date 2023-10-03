@@ -1,13 +1,8 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
 import { Options } from '@contentful/rich-text-react-renderer';
 
-import { Text_BaseFragmentFragment } from '@graphql-sdk/types';
-
-interface Content {
-  __typename?: string;
-  id: string;
-}
+import type { Text_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface TextProps extends Text_BaseFragmentFragment {
   styles?: {
@@ -21,7 +16,7 @@ export interface TextProps extends Text_BaseFragmentFragment {
   renderOptions?: Options;
 }
 
-export interface TextClasses {
+interface TextClasses {
   /** Styles applied to the root element. */
   root: string;
   overline: string;
@@ -35,6 +30,7 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Text: TextClassKey;
   }
+
   export interface ComponentsPropsList {
     Text: TextProps;
   }
@@ -45,9 +41,6 @@ declare module '@mui/material/styles' {
     Text?: {
       defaultProps?: ComponentsProps['Text'];
       styleOverrides?: ComponentsOverrides<Theme>['Text'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Text'];
     };
   }

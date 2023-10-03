@@ -1,24 +1,28 @@
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import { ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   extend type Footer {
     introContents: [Content]
-    navigationItems: [NavigationItem]
-    socialLinks: [Link]
-    disclaimer: RichText
     logo: Media
     logoUrl: Link
-    disclaimer: RichText
     navigationItems: [NavigationItem]
-    introContents: [Content]
+    socialLinks: [Link]
+    disclaimerText: RichText
     copyrightDisclaimer: RichText
     legalLinks: [Link]
-    localeLinks: [Link]
+    hasSocialLinks: Boolean
   }
 `;
 
 export const mappers = {
   Footer: {
-    Footer: {}
+    Footer: {
+      hasSocialLinks: async (footer: any, _args: any, ctx: ApolloContext) => {
+        const socialLinks: any = getLocalizedField(footer.fields, 'socialLinks', ctx);
+        return !!socialLinks.length;
+      }
+    }
   }
 };

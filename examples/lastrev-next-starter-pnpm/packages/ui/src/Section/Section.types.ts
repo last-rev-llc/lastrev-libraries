@@ -1,14 +1,13 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Section_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { Section_BaseFragmentFragment } from '@graphql-sdk/types';
 
 import { Breakpoint } from '@mui/material';
 
-import { MediaProps } from '../Media/Media.types';
-import { TextProps } from '../Text/Text.types';
+import type { MediaProps } from '../Media/Media.types';
+import type { TextProps } from '../Text/Text.types';
 
-export interface SectionProps {
-  __typename?: string;
+export interface SectionProps extends Section_BaseFragmentFragment {
   introText?: TextProps;
   contents?: Array<{ __typename?: string; id?: string; file?: any }>;
   background?: MediaProps;
@@ -28,7 +27,7 @@ export interface SectionProps {
   sidekickLookup?: any;
 }
 
-export interface SectionClasses {
+interface SectionClasses {
   root: string;
   contentContainer: string;
   backgroundImage: string;
@@ -43,18 +42,17 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Section: SectionClassKey;
   }
+
   export interface ComponentsPropsList {
     Section: SectionProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     Section?: {
       defaultProps?: ComponentsProps['Section'];
       styleOverrides?: ComponentsOverrides<Theme>['Section'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Section'];
     };
   }

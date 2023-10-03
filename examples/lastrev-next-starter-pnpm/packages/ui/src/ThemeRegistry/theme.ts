@@ -1,7 +1,6 @@
 import { Roboto } from 'next/font/google';
-import merge from 'lodash/merge';
-import { ThemeOptions, createTheme } from '@mui/material/styles';
-
+import { type Breakpoint, type ThemeOptions, createTheme } from '@mui/material/styles';
+import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
 import applyBackgroundColor from './mixins/applyBackgroundColor';
@@ -93,13 +92,14 @@ const paletteTheme = createTheme({
     }
   }
 });
+
 const baseTheme: ThemeOptions = {
   spacing: defaultSpacing,
   shape: {
     borderRadius: defaultBorderRadius
   },
   mixins: {
-    gridContainer: createGridMixin, // this gives your mixin the name `gridContainer`,
+    gridContainer: createGridMixin,
     applyBackgroundColor
   },
   typography: {
@@ -222,20 +222,39 @@ const baseTheme: ThemeOptions = {
       textTransform: 'uppercase',
       marginBottom: `${defaultSpacing}px` // TODO: Check on this approach
     }
+  },
+  containerBreakpoints: {
+    ...paletteTheme.breakpoints,
+    up(key: number | Breakpoint) {
+      return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
+    },
+    down(key: number | Breakpoint) {
+      return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
+    }
   }
 };
 
 const coreTheme = createTheme(baseTheme);
-export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
-  breakpoints: {
-    up(key) {
-      return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
-    },
-    down(key) {
-      return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
-    }
-    // Add any custom breakpoints here
-  }
-});
+
+const theme = createTheme(
+  deepmerge(coreTheme, {
+    components: Object.values(themeComponents)
+      .map((t) => t(coreTheme))
+      .reduce((acc, current) => {
+        return { ...acc, ...current.components };
+      }, {})
+  })
+);
+
+// export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
+//   containerBreakpoints: {
+//     up(key: any) {
+//       return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
+//     },
+//     down(key: any) {
+//       return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
+//     }
+//   }
+// });
 
 export default theme;

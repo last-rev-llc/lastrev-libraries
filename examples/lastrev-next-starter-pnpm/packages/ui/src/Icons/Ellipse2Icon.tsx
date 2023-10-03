@@ -1,5 +1,5 @@
 import React from 'react';
-import { SvgIcon, SvgIconProps } from '@mui/material';
+import { SvgIcon, type SvgIconProps } from '@mui/material';
 
 function Ellipse2Icon({ setRef, ...props }: SvgIconProps & { setRef: React.LegacyRef<SVGCircleElement> | undefined }) {
   return (

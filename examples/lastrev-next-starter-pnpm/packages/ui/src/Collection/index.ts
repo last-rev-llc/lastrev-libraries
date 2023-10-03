@@ -1,2 +1,2 @@
-export type { CollectionProps, CollectionClassKey, CollectionClasses } from './Collection.types';
+export type { CollectionProps, CollectionClassKey } from './Collection.types';
 export { default } from './Collection';

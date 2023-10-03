@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
+import { Mappers, ApolloContext } from '@last-rev/types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
 
 import { pageV1 } from './PathsConfigs.extension';
 import pathResolver from './utils/pathResolver';
@@ -13,14 +13,14 @@ export const typeMappings = {};
 export const typeDefs = gql`
   extend type Page {
     header: Header
-    footer: Content
+    footer: Footer
     path: String
     hero: Hero
     contents: [Content]
   }
 `;
 
-export const mappers = {
+export const mappers: Mappers = {
   Page: {
     Page: {
       path: pathResolver,

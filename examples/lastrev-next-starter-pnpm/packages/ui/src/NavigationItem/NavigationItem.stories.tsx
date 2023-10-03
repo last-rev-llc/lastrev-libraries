@@ -4,7 +4,7 @@ import NavigationItem from './NavigationItem';
 import mockContent from './NavigationItem.mock';
 
 export default {
-  title: '1. Components / NavigationItem',
+  title: 'Navigation/NavigationItem',
   component: NavigationItem,
   decorators: [
     (storyFn: () => boolean | React.ReactChild | React.ReactFragment | React.ReactPortal) => (

@@ -1,4 +1,6 @@
-import { FabProps as MuiFabProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+
+import type { FabProps as MuiFabProps } from '@mui/material';
 
 export interface BackToTopProps {
   FabProps?: MuiFabProps;
@@ -6,11 +8,31 @@ export interface BackToTopProps {
   sidekickLookup?: any;
 }
 
-export interface BackToTopClasses {
+export interface BackToTopOwnerState extends BackToTopProps {}
+
+interface BackToTopClasses {
   /** Styles applied to the root element. */
   root: string;
 }
 
 export declare type BackToTopClassKey = keyof BackToTopClasses;
-declare const accordionClasses: BackToTopClasses;
-export default accordionClasses;
+
+declare module '@mui/material/styles' {
+  export interface ComponentNameToClassKey {
+    BackToTop: BackToTopClassKey;
+  }
+
+  export interface ComponentsPropsList {
+    BackToTop: BackToTopProps;
+  }
+}
+
+declare module '@mui/material/styles' {
+  interface Components {
+    BackToTop?: {
+      defaultProps?: ComponentsProps['BackToTop'];
+      styleOverrides?: ComponentsOverrides<Theme>['BackToTop'];
+      variants?: ComponentsVariants['BackToTop'];
+    };
+  }
+}

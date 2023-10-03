@@ -1,13 +1,13 @@
 import React from 'react';
 
-import dynamic from 'next/dynamic';
+// import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import CircularProgress from '@mui/material/CircularProgress';
+// import CircularProgress from '@mui/material/CircularProgress';
 
-import { FormProps } from './Form.types';
+import type { FormProps } from './Form.types';
 
 // TODO: Remove hubspot form or make new component?
 // @ts-ignore
@@ -20,7 +20,7 @@ const Form = ({ settings, variant }: FormProps) => {
     setSubmitted(true);
   };
 
-  const { portalId, formId } = settings;
+  // const { portalId, formId } = settings;
 
   return (
     <Root ownerState={ownerState}>
@@ -35,11 +35,9 @@ const Form = ({ settings, variant }: FormProps) => {
             portalId={portalId}
             formId={formId}
             onSubmit={() => {
-              /**
-               * react-hubspot-form expects this callback to
-               * be here and will throw an error if not found
-               */
-            }}
+              // react-hubspot-form expects this callback to  be here and will throw an error if not found
+               
+             }}
             onFormSubmitted={handleSubmit}
             inlineMessage={'Thanks for submitting!'}
             loading={<CircularProgress />}

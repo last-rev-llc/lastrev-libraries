@@ -46,10 +46,9 @@ type Blog implements Content {
   author: Person
   body: RichText
   categories: [CategoryBlog]
-  contents: [Content]
   disableBackToTop: Boolean
   featuredMedia: Media
-  footer: Content
+  footer: Footer
   header: Header
   id: String
   jsonLd: JSON
@@ -89,7 +88,7 @@ type CategoryBlog implements Content {
   animation: JSON
   body: RichText
   contents: [Content]
-  footer: Content
+  footer: Footer
   header: Header
   hero: Hero
   id: String
@@ -213,6 +212,7 @@ type ElementForm implements Content {
   animation: JSON
   id: String
   internalTitle: String
+  introText: Text
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
@@ -238,13 +238,12 @@ type ElementVideo implements Content {
 type Footer implements Content {
   animation: JSON
   copyrightDisclaimer: RichText
-  disclaimer: RichText
   disclaimerText: RichText
+  hasSocialLinks: Boolean
   id: String
   internalTitle: String
   introContents: [Content]
   legalLinks: [Link]
-  localeLinks: [Link]
   logo: Media
   logoUrl: Link
   navigationItems: [NavigationItem]
@@ -257,6 +256,7 @@ type Footer implements Content {
 type Header implements Content {
   animation: JSON
   ctaItems: [Link]
+  hasCtaItems: Boolean
   id: String
   internalTitle: String
   logo: Media
@@ -356,6 +356,8 @@ type NavigationItem implements Content {
   altText: String
   animation: JSON
   href: String!
+  icon: String
+  iconPosition: String
   id: String
   internalTitle: String
   manualUrl: String
@@ -377,7 +379,7 @@ type Page implements Content {
   animation: JSON
   contents: [Content]
   disableBackToTop: Boolean
-  footer: Content
+  footer: Footer
   header: Header
   hero: Hero
   id: String
@@ -443,16 +445,13 @@ type Quote implements Content {
   animation: JSON
   authorName: String
   authorTitle: String
-  body: RichText
   id: String
   image: Media
   internalTitle: String
   logo: Media
-  media: [Media]
   quote: String
   sidekickLookup: JSON
   theme: [Theme]
-  title: String
   variant: String
 }
 

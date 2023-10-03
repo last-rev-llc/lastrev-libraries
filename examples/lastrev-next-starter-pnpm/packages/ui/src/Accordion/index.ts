@@ -1,2 +1,2 @@
-export type { AccordionProps, AccordionClassKey, AccordionClasses } from './Accordion.types';
+export type { AccordionProps, AccordionClassKey } from './Accordion.types';
 export { default } from './Accordion';

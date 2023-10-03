@@ -1,5 +1,5 @@
 import React from 'react';
-import { ErrorBoundaryProps } from './ErrorBoundary.types';
+import type { ErrorBoundaryProps } from './ErrorBoundary.types';
 
 function FallbackComponent() {
   return <div>An error has occured</div>;

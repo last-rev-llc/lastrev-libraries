@@ -1,32 +1,38 @@
 import React from 'react';
+
+import Box from '@mui/material/Box';
+
 import Collection from './Collection';
+
 import { collectionBaseMock } from './Collection.mock';
-import { CollectionProps, CollectionVariants } from './Collection.types';
+
+import { CollectionVariants } from './Collection.types';
 import { CardVariants } from '../Card/Card.types';
 
-export default {
-  title: '3. Modules/Collection',
-  component: Collection,
-  // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
-  tags: ['autodocs'],
+import theme from '../ThemeRegistry/theme';
 
+export default {
+  title: 'Components/Collection',
+  component: Collection,
+  tags: ['autodocs'],
   argTypes: {
     variant: {
       table: {
         disable: true
       }
-      // name: 'LayoutStyle',
-      // control: {
-      //   type: 'select',
-      //   options: ['onePerRow', 'twoPerRow', 'threePerRow', 'fourPerRow']
-      // }
     }
-    // background: { name: 'Background' }
   }
 };
 
 const CollectionTemplate = {
-  render: ({ variant, itemsVariant: argItemsVariant, ...args }: { variant: CollectionVariants }) => {
+  render: ({
+    variant,
+    itemsVariant: argItemsVariant,
+    ...args
+  }: {
+    variant: CollectionVariants;
+    itemsVariant: CardVariants;
+  }) => {
     if (argItemsVariant) {
       return <Collection {...collectionBaseMock({ variant, itemsVariant: argItemsVariant })} />;
     }
@@ -35,7 +41,18 @@ const CollectionTemplate = {
       <div>
         {itemsVariants?.map((itemsVariant: CardVariants) => (
           <>
-            ## {itemsVariant}
+            <Box
+              sx={{
+                position: 'sticky',
+                top: 0,
+                backgroundColor: theme.palette.primary.main,
+                color: theme.palette.primary.contrastText,
+                ...theme.typography.display6,
+                zIndex: 500,
+                p: 1
+              }}>
+              Collection :: Variant :: &quot;{itemsVariant}&quot;
+            </Box>
             <Collection key={`${variant}_${itemsVariant}`} {...collectionBaseMock({ variant, itemsVariant })} />
           </>
         ))}

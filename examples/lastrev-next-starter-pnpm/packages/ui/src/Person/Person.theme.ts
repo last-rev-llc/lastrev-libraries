@@ -1,5 +1,4 @@
-import {
-  TypographyStyle,
+import type {
   Theme,
   ThemeOptions,
   ComponentsProps,
@@ -7,9 +6,9 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Person'] = {};
+const defaultProps: ComponentsProps['Person'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   root: ({}) => ({}),
   featuredMedia: ({}) => ({}),
   name: ({}) => ({}),

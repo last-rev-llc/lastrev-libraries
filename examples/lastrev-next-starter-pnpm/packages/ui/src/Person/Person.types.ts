@@ -1,5 +1,5 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
-import { Person_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { Person_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum PersonVariants {
   default = 'default'
@@ -7,7 +7,7 @@ export enum PersonVariants {
 
 export interface PersonProps extends Person_BaseFragmentFragment {}
 
-export interface PersonClasses {
+interface PersonClasses {
   root: string;
   featuredMedia: string;
   name: string;
@@ -22,6 +22,7 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Person: PersonClassKey;
   }
+
   export interface ComponentsPropsList {
     Person: PersonProps;
   }
@@ -32,9 +33,6 @@ declare module '@mui/material/styles' {
     Person?: {
       defaultProps?: ComponentsProps['Person'];
       styleOverrides?: ComponentsOverrides<Theme>['Person'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Person'];
     };
   }

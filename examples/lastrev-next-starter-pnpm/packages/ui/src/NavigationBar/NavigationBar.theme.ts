@@ -1,5 +1,4 @@
-import {
-  TypographyStyle,
+import type {
   Theme,
   ThemeOptions,
   ComponentsProps,
@@ -7,13 +6,12 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['NavigationBar'] = {};
+const defaultProps: ComponentsProps['NavigationBar'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['NavigationBar'] = {
+const styleOverrides: ComponentsOverrides<Theme>['NavigationBar'] = {
   root: {
     '& .MuiLink-root': {
-      'textDecoration': 'none',
-      '&.MuiLink-selected': { fontWeight: 'bold' }
+      '&.MuiLink-selected': { fontWeight: 900 }
     }
   }
 };

@@ -1,5 +1,4 @@
-import {
-  TypographyStyle,
+import type {
   Theme,
   ThemeOptions,
   ComponentsProps,
@@ -7,19 +6,29 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Accordion'] = {};
+const defaultProps: ComponentsProps['Accordion'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
   root: () => ({}),
 
-  contentContainer: ({ theme }) => ({}),
+  contentGrid: () => ({}),
 
-  introTextWrapper: ({ theme }) => ({}),
+  introTextGrid: () => ({}),
 
-  introText: ({}) => ({})
+  introText: ({}) => ({}),
+
+  accordionItem: ({}) => ({}),
+
+  summaryWrap: ({}) => ({}),
+
+  summary: ({}) => ({}),
+
+  detailsWrap: ({}) => ({}),
+
+  details: ({}) => ({})
 };
 
-const createVariants = (theme: Theme): ComponentsVariants['Accordion'] => [
+const createVariants = (_theme: Theme): ComponentsVariants['Accordion'] => [
   {
     props: {
       variant: 'default'

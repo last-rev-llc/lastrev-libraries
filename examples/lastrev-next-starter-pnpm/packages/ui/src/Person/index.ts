@@ -1,2 +1,2 @@
-export type { PersonProps, PersonClassKey, PersonClasses } from './Person.types';
+export type { PersonProps, PersonClassKey } from './Person.types';
 export { default } from './Person';

@@ -1,12 +1,13 @@
-import { BackToTopProps } from './BackToTop.types';
+import type { BackToTopProps } from './BackToTop.types';
 
-const mockContent = (): BackToTopProps => {
+export const backToTopBaseMock = (override?: Partial<BackToTopProps>): BackToTopProps => {
   return {
     FabProps: {
       size: 'large',
       color: 'primary'
-    }
+    },
+    sidekickLookup: ''
   };
 };
 
-export default mockContent;
+export default backToTopBaseMock;

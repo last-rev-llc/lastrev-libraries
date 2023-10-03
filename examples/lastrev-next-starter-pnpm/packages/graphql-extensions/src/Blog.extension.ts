@@ -1,8 +1,6 @@
 import gql from 'graphql-tag';
-import { Mappers } from '@last-rev/types';
-import createRichText from '@last-rev/graphql-contentful-core/dist/utils/createRichText';
-import getLocalizedField from '@last-rev/graphql-contentful-core/dist/utils/getLocalizedField';
-import { ApolloContext } from '@last-rev/types';
+import { Mappers, ApolloContext } from '@last-rev/types';
+import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
 import { blogV1 } from './PathsConfigs.extension';
 import { createType } from './utils/createType';
@@ -11,19 +9,14 @@ import pageHeaderResolver from './utils/pageHeaderResolver';
 import pathResolver from './utils/pathResolver';
 import resolveField from './utils/resolveField';
 
-export const pathsConfigs = {
-  ...blogV1
-};
-
 export const typeDefs = gql`
   extend type Blog {
     header: Header
-    footer: Content
+    footer: Footer
     path: String
     relatedItems: Content
     categories: [CategoryBlog]
     author: Person
-    contents: [Content]
     # Uncomment next line if using Media references instead
     # featuredMedia: [Media]
   }
@@ -32,13 +25,13 @@ export const typeDefs = gql`
 // Controls which site the Blogs gets it's global config from
 const BLOGS_SITE_ID = process.env.BLOGS_SITE_ID ?? (process.env.DEFAULT_SITE_ID || process.env.SITE_ID);
 
-const blogGlobalContentsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
-  // TODO: Make getting a localized resolved link a single function
-  const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
-  const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? BLOGS_SITE_ID, preview: !!ctx.preview });
-  const siteblogGlobalContents: any = getLocalizedField(site?.fields, 'blogGlobalContents', ctx);
-  return siteblogGlobalContents;
-};
+// const blogGlobalContentsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
+//   // TODO: Make getting a localized resolved link a single function
+//   const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
+//   const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? BLOGS_SITE_ID, preview: !!ctx.preview });
+//   const siteblogGlobalContents: any = getLocalizedField(site?.fields, 'blogGlobalContents', ctx);
+//   return siteblogGlobalContents;
+// };
 
 export const mappers: Mappers = {
   Blog: {
@@ -46,7 +39,7 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      contents: blogGlobalContentsResolver,
+      // contents: blogGlobalContentsResolver,
       relatedItems: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('Collection', {
           items: getLocalizedField(blog.fields, 'relatedItems', ctx),
@@ -75,4 +68,8 @@ export const mappers: Mappers = {
       }
     }
   }
+};
+
+export const pathsConfigs = {
+  ...blogV1
 };

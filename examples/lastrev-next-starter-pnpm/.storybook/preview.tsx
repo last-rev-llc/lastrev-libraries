@@ -12,6 +12,7 @@ const preview = {
     )
   ],
   parameters: {
+    layout: 'fullscreen',
     viewport: {
       viewports: {
         ...INITIAL_VIEWPORTS,

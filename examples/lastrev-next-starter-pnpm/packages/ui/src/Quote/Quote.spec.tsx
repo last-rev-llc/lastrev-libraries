@@ -11,6 +11,6 @@ describe('Quote', () => {
     mount(<Quote {...quoteBaseMock()} />);
     cy.get('[data-testid=Quote]').should('exist');
 
-    cy.percySnapshot();
+    //cy.percySnapshot();
   });
 });

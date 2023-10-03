@@ -1,5 +1,4 @@
-import {
-  TypographyStyle,
+import type {
   Theme,
   ThemeOptions,
   ComponentsProps,
@@ -7,16 +6,26 @@ import {
   ComponentsVariants
 } from '@mui/material/styles';
 
-export const defaultProps: ComponentsProps['Tabs'] = {};
+const defaultProps: ComponentsProps['Tabs'] = {};
 
-export const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
+const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
   root: () => ({}),
 
-  contentContainer: ({ theme }) => ({}),
+  contentGrid: () => ({}),
 
-  introTextWrapper: ({ theme }) => ({}),
+  introTextGrid: () => ({}),
 
-  introText: ({}) => ({})
+  introText: () => ({}),
+
+  itemsContainer: () => ({}),
+
+  tabContext: () => ({}),
+
+  tabListWrap: () => ({}),
+
+  detailsWrap: () => ({}),
+
+  details: () => ({})
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Tabs'] => [

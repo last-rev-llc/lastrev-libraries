@@ -2,9 +2,9 @@ import React from 'react';
 
 import { styled } from '@mui/material/styles';
 
-import Box, { BoxProps } from '@mui/material/Box';
-import Typography, { TypographyProps } from '@mui/material/Typography';
-import Container, { ContainerProps } from '@mui/material/Container';
+import Box, { type BoxProps } from '@mui/material/Box';
+import Typography, { type TypographyProps } from '@mui/material/Typography';
+import Container, { type ContainerProps } from '@mui/material/Container';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -13,8 +13,8 @@ import ContentModule from '../ContentModule';
 
 import getFirstOfArray from '../utils/getFirstOfArray';
 
-import { HeroProps } from './Hero.types';
-import { LinkProps } from '../Link/Link.types';
+import type { HeroProps } from './Hero.types';
+import type { LinkProps } from '../Link';
 
 export const Hero = (props: HeroProps) => {
   const {

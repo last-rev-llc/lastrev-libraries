@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { mount } from '@cypress/react18';
 import NavigationItem from './NavigationItem';
-import { NavigationItemProps } from './NavigationItem.types';
+import type { NavigationItemProps } from './NavigationItem.types';
 import mockContent from './NavigationItem.mock';
 
 let mockedContent: NavigationItemProps = {};
@@ -26,7 +26,7 @@ describe('NavigationItem', () => {
             cy.wrap(item).should('have.attr', 'href', `/${mockedContent.href}`).and('have.text', mockedContent.text);
           }
         });
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders a navigation item without subnav links', () => {

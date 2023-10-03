@@ -1,33 +1,21 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { CollectionExpandable_BaseFragment } from '@graphql-sdk/types';
+import type { CollectionExpandable_BaseFragmentFragment } from '@graphql-sdk/types';
 
-type AccordionVariants =
-  | 'default'
-  | 'defaultCircleImage'
-  | 'onePerRow'
-  | 'twoPerRow'
-  | 'twoPerRowOffset'
-  | 'threePerRow'
-  | 'fourPerRow'
-  | 'customerLogos'
-  | 'contentGrid'
-  | 'pricing'
-  | undefined;
+export interface AccordionProps extends CollectionExpandable_BaseFragmentFragment {}
 
-export interface AccordionProps extends CollectionExpandable_BaseFragment {
-  variant?: AccordionVariants;
-}
+export interface AccordionOwnerState extends AccordionProps {}
 
-export interface AccordionClasses {
+interface AccordionClasses {
   root: string;
-  contentContainer: string;
-  introTextWrapper: string;
+  contentGrid: string;
+  introTextGrid: string;
   introText: string;
-  itemsContainer: string;
-  item: string;
-  actionsContainer: string;
-  action: string;
+  accordionItem: string;
+  summaryWrap: string;
+  summary: string;
+  detailsWrap: string;
+  details: string;
 }
 
 export declare type AccordionClassKey = keyof AccordionClasses;
@@ -36,18 +24,17 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     Accordion: AccordionClassKey;
   }
+
   export interface ComponentsPropsList {
     Accordion: AccordionProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     Accordion?: {
       defaultProps?: ComponentsProps['Accordion'];
       styleOverrides?: ComponentsOverrides<Theme>['Accordion'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['Accordion'];
     };
   }

@@ -1,10 +1,10 @@
-import { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
 // TODO: Needed?
-import { NavigationBar_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { NavigationBar_BaseFragmentFragment } from '@graphql-sdk/types';
 
-import { LinkProps } from '../Link/Link.types';
-import { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
+import type { LinkProps } from '../Link/Link.types';
+import type { NavigationItemProps } from '../NavigationItem/NavigationItem.types';
 
 export interface NavigationBarProps {
   color?: string;
@@ -15,7 +15,7 @@ export interface NavigationBarProps {
   sidekickLookup: string;
   onRequestClose?: any;
 }
-export interface NavigationBarClasses {
+interface NavigationBarClasses {
   /** Styles applied to the root element. */
   root: string;
 }
@@ -26,18 +26,17 @@ declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
     NavigationBar: NavigationBarClassKey;
   }
+
   export interface ComponentsPropsList {
     NavigationBar: NavigationBarProps;
   }
 }
+
 declare module '@mui/material/styles' {
   interface Components {
     NavigationBar?: {
       defaultProps?: ComponentsProps['NavigationBar'];
       styleOverrides?: ComponentsOverrides<Theme>['NavigationBar'];
-      /**
-       * @deprecated pass a callback to the slot in `styleOverrides` instead. [See example](https://mui.com/customization/theme-components/#overrides-based-on-props)
-       */
       variants?: ComponentsVariants['NavigationBar'];
     };
   }

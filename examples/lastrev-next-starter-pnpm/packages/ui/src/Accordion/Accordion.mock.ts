@@ -1,56 +1,53 @@
-import { lorem } from 'faker';
-import { AccordionProps } from './Accordion.types';
-import { cardBaseMock } from '../Card/Card.mock';
-import { blockContentOnLeftMock } from '../Block/Block.mock';
-import { collectionBaseMock } from '../Collection/Collection.mock';
-import { quoteBaseMock } from '../Quote/Quote.mock';
 import { introTextMock } from '../Text/Text.mock';
 
-const accordionDefaultMock: AccordionProps = {
-  id: lorem.word(),
-  __typename: 'accordion',
-  items: [
-    cardBaseMock({ title: 'Card 1 - Title' }),
-    cardBaseMock({ title: 'Card 2 - Title' }),
-    cardBaseMock({ title: 'Card 3 - Title' }),
-    cardBaseMock({ title: 'Card 4 - Title' })
-  ],
-  introText: introTextMock()
+import {
+  collectionExpandableItemBaseMock,
+  collectionExpandableItemQuotesMock,
+  collectionExpandableItemBlocksMock
+} from '../CollectionExpandableItem/CollectionExpandableItem.mock';
+
+import randomId from '../utils/randomId';
+
+import { AccordionProps } from './Accordion.types';
+
+export const accordionBaseMock = (override?: Partial<AccordionProps>): AccordionProps => {
+  return {
+    id: randomId(),
+    __typename: 'CollectionExpandable',
+    items: [
+      collectionExpandableItemBlocksMock({ title: 'Block - Title' }),
+      collectionExpandableItemBaseMock({ title: 'Collection - Title' }),
+      collectionExpandableItemQuotesMock({ title: 'Quote - Title' })
+    ],
+    introText: introTextMock()
+  };
 };
 
-export const accordionBaseMock = ({ ...override } = {}) => ({
-  ...accordionDefaultMock,
-  ...override
-});
-
-export const accordionCardsMock = ({ ...override } = {}) => ({
-  ...accordionDefaultMock,
-  items: [
-    collectionBaseMock({ introText: undefined, title: 'Collection 1 - Title' }),
-    collectionBaseMock({ introText: undefined, title: 'Collection 2 - Title' })
-  ],
-  ...override
-});
-
 export const accordionBlocksMock = ({ ...override } = {}) => ({
-  ...accordionDefaultMock,
-  ...override,
+  ...accordionBaseMock(override),
   items: [
-    blockContentOnLeftMock({ introText: undefined, title: 'Block 1 - Title' }),
-    blockContentOnLeftMock({ introText: undefined, title: 'Block 2 - Title' }),
-    blockContentOnLeftMock({ introText: undefined, title: 'Block 3 - Title' }),
-    blockContentOnLeftMock({ introText: undefined, title: 'Block 4 - Title' })
+    collectionExpandableItemBlocksMock({ title: 'Block 1 - Title' }),
+    collectionExpandableItemBlocksMock({ title: 'Block 2 - Title' }),
+    collectionExpandableItemBlocksMock({ title: 'Block 3 - Title' }),
+    collectionExpandableItemBlocksMock({ title: 'Block 4 - Title' })
   ]
 });
 
 export const accordionQuotesMock = ({ ...override } = {}) => ({
-  ...accordionDefaultMock,
-  ...override,
+  ...accordionBaseMock(override),
   items: [
-    quoteBaseMock({ quote: 'Quote 1' }),
-    quoteBaseMock({ quote: 'Quote 2' }),
-    quoteBaseMock({ quote: 'Quote 3' }),
-    quoteBaseMock({ quote: 'Quote 4' })
+    collectionExpandableItemQuotesMock({ title: 'Quote 1' }),
+    collectionExpandableItemQuotesMock({ title: 'Quote 2' }),
+    collectionExpandableItemQuotesMock({ title: 'Quote 3' }),
+    collectionExpandableItemQuotesMock({ title: 'Quote 4' })
+  ]
+});
+
+export const accordionCollectionsMock = ({ ...override } = {}) => ({
+  ...accordionBaseMock(override),
+  items: [
+    collectionExpandableItemBaseMock({ title: 'Collection 1 - Title' }),
+    collectionExpandableItemBaseMock({ title: 'Collection 2 - Title' })
   ]
 });
 

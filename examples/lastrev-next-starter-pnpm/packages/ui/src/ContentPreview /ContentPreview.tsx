@@ -1,11 +1,12 @@
 import React from 'react';
+import Box from '@mui/material/Link';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import ContentModule from '../ContentModule';
-import capitalize from 'lodash/capitalize';
 import { CircularProgress } from '@mui/material';
-import { ContentPreviewProps } from './ContentPreview.types';
+
+import ContentModule from '../ContentModule';
+import type { ContentPreviewProps } from './ContentPreview.types';
 
 const ContentPreview = ({
   id,
@@ -37,8 +38,7 @@ const ContentPreview = ({
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center'
-          }}
-        >
+          }}>
           {error ? (
             <Typography>
               <br />
@@ -59,9 +59,12 @@ const ContentPreview = ({
               <br />
               <Link
                 target="_blank"
-                href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}
-              >
-                {`Edit ${capitalize(content?.__typename)}#${id} in Contentful`}
+                href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
+                Edit{' '}
+                <Box component="span" sx={{ textTransform: 'capitalize' }}>
+                  {content?.__typename}
+                </Box>{' '}
+                ID:${id} in Contentful
               </Link>
               <br />
             </Typography>
@@ -73,9 +76,11 @@ const ContentPreview = ({
         <div style={{ position: 'fixed', bottom: 16, right: 16, background: '#fff', padding: 8, zIndex: 10 }}>
           <Link
             target="_blank"
-            href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}
-          >
-            {`${capitalize(content?.__typename)}#${id} in Contentful`}
+            href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
+            <Box component="span" sx={{ textTransform: 'capitalize' }}>
+              {content?.__typename}
+            </Box>{' '}
+            ID:${id} in Contentful
           </Link>
           <br />
           {pageURL && (

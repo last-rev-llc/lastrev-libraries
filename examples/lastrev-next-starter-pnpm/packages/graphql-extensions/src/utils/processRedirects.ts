@@ -4,12 +4,15 @@ import set from 'lodash/set';
 import keyBy from 'lodash/keyBy';
 import get from 'lodash/get';
 import last from 'lodash/last';
-import { Dictionary } from 'lodash';
 
 interface Redirect {
   source: string;
   destination: string;
   permanent: boolean;
+}
+
+interface Dictionary<T> {
+  [index: string]: T;
 }
 
 const filter = /^(api|\/api|_next\/static|favicon\.ico)/;

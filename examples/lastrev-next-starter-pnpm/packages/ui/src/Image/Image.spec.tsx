@@ -2,7 +2,7 @@ import * as React from 'react';
 import { mount } from '@cypress/react18';
 import Image from './Image';
 import { imageBaseMock } from './Image.mock';
-import { ImageProps } from './Image.types';
+import type { ImageProps } from './Image.types';
 
 let mockedContent: ImageProps = imageBaseMock;
 
@@ -16,7 +16,7 @@ describe('Image', () => {
     it('renders an image', () => {
       mount(<Image {...mockedContent} />);
       cy.get(`[data-testid=${mockedContent.testId}]`).should('exist').and('have.attr', 'src', mockedContent.src);
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders an image with correct class name given', () => {

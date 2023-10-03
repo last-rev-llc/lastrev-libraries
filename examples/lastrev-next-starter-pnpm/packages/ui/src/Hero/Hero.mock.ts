@@ -1,13 +1,13 @@
-import { lorem } from 'faker';
-
 import { linkButtonMock } from '../Link/Link.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
 import { richTextMock } from '../RichText/RichText.mock';
 
-import { HeroProps } from './Hero.types';
+import type { HeroProps } from './Hero.types';
+
+import randomId from '../utils/randomId';
 
 const heroDefaultMock: HeroProps = {
-  id: lorem.word(),
+  id: randomId(),
   __typename: 'Hero',
   variant: 'default',
   overline: 'This is the Hero overline',

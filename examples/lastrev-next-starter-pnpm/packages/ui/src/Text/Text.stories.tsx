@@ -2,25 +2,8 @@ import Text from './Text';
 import { baseMock, complexMock, formattedMock } from '../RichText/RichText.mock';
 
 const meta = {
-  title: '2. Components/ Text',
+  title: 'Elements/Text',
   component: Text
-  // tags: ['autodocs'],
-  // argTypes: {
-  //   variant: {
-  //     options: []
-  //   },
-  //   align: {
-  //     options: ['left', 'center', 'right'],
-  //     defaultValue: 'left'
-  //   },
-  //   __typename: { table: { disable: true } },
-  //   id: { table: { disable: true } },
-  //   sidekickLookup: { table: { disable: true } },
-  //   sx: { table: { disable: true } },
-  //   ref: { table: { disable: true } },
-  //   styles: { table: { disable: true } },
-  //   renderNode: { table: { disable: true } }
-  // }
 };
 
 export default meta;

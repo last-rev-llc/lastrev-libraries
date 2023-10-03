@@ -1,2 +1,2 @@
-export type { RichTextProps, RichTextClassKey, RichTextClasses } from './RichText.types';
+export type { RichTextProps, RichTextClassKey } from './RichText.types';
 export { default } from './RichText';

@@ -44,8 +44,6 @@
     "@mui/system": "^5.14.8",
     "@mui/lab": "^5.0.0-alpha.144",
     "@mui/styled-engine-sc": "^5.14.8",
-    "faker": "^5.5.3",
-    "lodash": "^4.17.21",
     "next": "^13.4.19",
     "react-dom": "^18.2.0"
   }

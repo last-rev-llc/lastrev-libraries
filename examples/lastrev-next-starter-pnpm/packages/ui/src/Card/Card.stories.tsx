@@ -4,7 +4,7 @@ import { cardBaseMock } from './Card.mock';
 import { CardVariants } from './Card.types';
 
 export default {
-  title: '3. Modules/Card',
+  title: 'Components/Collection/Card',
   component: Card,
 
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/react/writing-docs/autodocs
