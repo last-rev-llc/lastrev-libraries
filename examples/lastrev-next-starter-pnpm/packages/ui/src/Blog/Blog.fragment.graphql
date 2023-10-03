@@ -26,9 +26,9 @@ fragment Blog_BaseFragment on Blog {
   # breadcrumbs {
   #  ...Link_BaseFragment
   #}
-  contents {
-    ...ContentModule_BaseFragment
-  }
+  #contents {
+  #  ...ContentModule_BaseFragment
+  #}
   seo
 }
 
