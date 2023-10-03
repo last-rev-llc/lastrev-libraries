@@ -1,6 +1,6 @@
 import { Roboto } from 'next/font/google';
 import { type Breakpoint, type ThemeOptions, createTheme } from '@mui/material/styles';
-import merge from 'lodash/merge';
+import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
 import applyBackgroundColor from './mixins/applyBackgroundColor';
@@ -99,7 +99,7 @@ const baseTheme: ThemeOptions = {
     borderRadius: defaultBorderRadius
   },
   mixins: {
-    gridContainer: createGridMixin, // this gives your mixin the name `gridContainer`,
+    gridContainer: createGridMixin,
     applyBackgroundColor
   },
   typography: {
@@ -222,35 +222,39 @@ const baseTheme: ThemeOptions = {
       textTransform: 'uppercase',
       marginBottom: `${defaultSpacing}px` // TODO: Check on this approach
     }
+  },
+  containerBreakpoints: {
+    ...paletteTheme.breakpoints,
+    up(key: number | Breakpoint) {
+      return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
+    },
+    down(key: number | Breakpoint) {
+      return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
+    }
   }
 };
 
 const coreTheme = createTheme(baseTheme);
 
-// export const theme = {
-//   ...coreTheme,
-//   ...Object.values(themeComponents).reduce((acc, t) => ({ ...acc, ...t(coreTheme) }), {}),
+const theme = createTheme(
+  deepmerge(coreTheme, {
+    components: Object.values(themeComponents)
+      .map((t) => t(coreTheme))
+      .reduce((acc, current) => {
+        return { ...acc, ...current.components };
+      }, {})
+  })
+);
+
+// export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
 //   containerBreakpoints: {
-//     up(key: number | Breakpoint) {
+//     up(key: any) {
 //       return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
 //     },
-//     down(key: number | Breakpoint) {
+//     down(key: any) {
 //       return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
 //     }
-//     // Add any custom breakpoints here
 //   }
-// };
-
-export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
-  containerBreakpoints: {
-    up(key: any) {
-      return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
-    },
-    down(key: any) {
-      return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
-    }
-    // Add any custom breakpoints here
-  }
-});
+// });
 
 export default theme;
