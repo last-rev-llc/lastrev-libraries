@@ -1,27 +1,37 @@
-import { Theme } from '@mui/material/styles';
-import { CSSProperties } from '@mui/material/styles/createMixins';
-import get from 'lodash/get';
+import { type Theme } from '@mui/system';
+import { type CSSProperties } from '@mui/material/styles/createMixins';
+
 type ApplyBackgroundColor = (args: { theme: Theme; ownerState: any }) => CSSProperties;
+
 declare module '@mui/material/styles/createMixins' {
   interface Mixins {
     applyBackgroundColor: ApplyBackgroundColor;
   }
 }
-export const applyBackgroundColor: ApplyBackgroundColor = ({ ownerState, theme }) => {
-  const backgroundColor = ownerState?.backgroundColor as string | undefined;
-  if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
+
+export const applyBackgroundColor: ApplyBackgroundColor = ({
+  ownerState,
+  theme
+}: {
+  ownerState?: any;
+  theme: Theme;
+}) => {
+  const backgroundColor: string = ownerState?.backgroundColor as any;
+
+  if (backgroundColor?.includes('gradient') && theme.palette?.[backgroundColor]) {
     return {
-      background: get(theme.palette, backgroundColor)?.main,
+      background: theme.palette?.[backgroundColor]?.main,
       color: `${backgroundColor}.contrastText`
     };
   }
+
   const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
   const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
 
-  if (backgroundColor && get(theme.palette, parsedBGColor)) {
+  if (backgroundColor && theme.palette?.[parsedBGColor]) {
     return {
-      backgroundColor: get(theme.palette, parsedBGColor),
-      color: get(theme.palette, `${paletteColor}.contrastText`)
+      bgcolor: parsedBGColor,
+      color: `${paletteColor}.contrastText`
     };
   }
   return {};

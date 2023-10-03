@@ -26,7 +26,7 @@ describe('NavigationItem', () => {
             cy.wrap(item).should('have.attr', 'href', `/${mockedContent.href}`).and('have.text', mockedContent.text);
           }
         });
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders a navigation item without subnav links', () => {

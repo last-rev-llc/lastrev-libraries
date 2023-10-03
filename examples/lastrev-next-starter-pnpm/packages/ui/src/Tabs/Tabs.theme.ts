@@ -1,5 +1,4 @@
-import {
-  TypographyStyle,
+import type {
   Theme,
   ThemeOptions,
   ComponentsProps,
@@ -12,11 +11,21 @@ const defaultProps: ComponentsProps['Tabs'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
   root: () => ({}),
 
-  contentContainer: ({ theme }) => ({}),
+  contentGrid: () => ({}),
 
-  introTextWrapper: ({ theme }) => ({}),
+  introTextGrid: () => ({}),
 
-  introText: ({}) => ({})
+  introText: () => ({}),
+
+  itemsContainer: () => ({}),
+
+  tabContext: () => ({}),
+
+  tabListWrap: () => ({}),
+
+  detailsWrap: () => ({}),
+
+  details: () => ({})
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Tabs'] => [

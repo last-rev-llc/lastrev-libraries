@@ -1,9 +1,10 @@
 import React from 'react';
 import clsx from 'clsx';
 
+import { usePathname } from 'next/navigation';
 import NextLink from 'next/link';
-import { styled } from '@mui/material/styles';
 
+import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Icon from '@mui/material/Icon';
 import IconButton from '@mui/material/IconButton';
@@ -13,13 +14,21 @@ import Button from '@mui/material/Button';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import type { LinkProps, LinkOwnerState } from './Link.types';
-import { usePathname } from 'next/navigation';
+
+const isReactComponent = (value: any): value is React.ComponentType<any> => {
+  return typeof value === 'function' && value.prototype && typeof value.prototype.render === 'function';
+};
 
 // Icon component using FontAwesome
 // TODO: Clean this up
-const getIcon = (icon: string) => {
+const getIcon = (LinkIcon: string | React.ComponentType<any>) => {
+  if (isReactComponent(LinkIcon)) {
+    return <LinkIcon />;
+  }
+
   const brandIcons = ['google', 'twitter', 'facebook', 'github', 'linkedin', 'pinterest', 'instagram', 'youtube'];
-  return <Icon className={`fa${brandIcons.includes(icon.toLowerCase()) ? 'b' : 's'} fa-${icon.toLowerCase()}`} />;
+  const iconString = LinkIcon.toString().toLowerCase();
+  return <Icon className={`fa${brandIcons.includes(iconString) ? 'b' : 's'} fa-${iconString}`} />;
 };
 
 // A styled version of the Next.js Link component:

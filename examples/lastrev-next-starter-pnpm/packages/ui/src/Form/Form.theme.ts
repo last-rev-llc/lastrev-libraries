@@ -1,10 +1,9 @@
 import {
-  TypographyStyle,
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants,
+  type Theme,
+  type ThemeOptions,
+  type ComponentsProps,
+  type ComponentsOverrides,
+  type ComponentsVariants,
   alpha
 } from '@mui/material/styles';
 

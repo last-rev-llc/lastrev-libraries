@@ -46,7 +46,6 @@ type Blog implements Content {
   author: Person
   body: RichText
   categories: [CategoryBlog]
-  contents: [Content]
   disableBackToTop: Boolean
   featuredMedia: Media
   footer: Footer

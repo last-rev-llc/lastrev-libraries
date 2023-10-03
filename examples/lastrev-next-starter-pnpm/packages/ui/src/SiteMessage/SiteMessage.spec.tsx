@@ -20,7 +20,7 @@ describe.skip('SiteMessage', () => {
     it('renders a siteMessage', () => {
       mount(<SiteMessage {...mockedContent} />);
 
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
   });
 });

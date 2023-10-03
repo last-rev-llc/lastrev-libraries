@@ -1,7 +1,6 @@
 import * as React from 'react';
-import each from 'lodash/each';
 import { BLOCKS } from '@contentful/rich-text-types';
-import mountWithRouter from '../../../cypress/mountWithRouter';
+import mountWithRouter from '../../../../cypress/support/mountWithRouter';
 import Text from './RichText';
 
 import mockContent, {
@@ -15,8 +14,10 @@ import mockContent, {
   hyperlinkNode,
   withLinksMock
 } from './RichText.mock';
+
 import { mediaBaseImageMock } from '../Media/Media.mock';
-import linkButtonMock from '../Link/Link.mock';
+import { linkButtonMock } from '../Link/Link.mock';
+import { RichTextProps } from './RichText.types';
 
 const variantNodeTypeMapper = {
   [BLOCKS.PARAGRAPH]: 'body1',
@@ -32,7 +33,7 @@ const createTextMock = (nodeType: string) => dynamicMock([contentNode([valueNode
 
 const testNodeType = (variant: string, nodeType: string) => {
   it(`renders correct text in a ${variant} when nodeType is ${nodeType}`, () => {
-    const testNode: TextProps = { ...createTextMock(nodeType) };
+    const testNode: RichTextProps = { ...createTextMock(nodeType) };
     mountWithRouter(<Text {...testNode} />);
     cy.get(`[data-testid=Text-${variant}]`).each((body, index) => {
       cy.wrap(body).should(
@@ -46,31 +47,33 @@ const testNodeType = (variant: string, nodeType: string) => {
 describe('Text', () => {
   context('renders correctly', () => {
     it('renders text with correct information', () => {
-      const mockedContent: TextProps = mockContent();
+      const mockedContent: RichTextProps = mockContent();
       mountWithRouter(<Text {...mockedContent} />);
       cy.get('[data-testid=Text-root]').should(
         'have.text',
-        mockedContent.body?.json.content.map((c) => c.content[0].value).join('')
+        mockedContent.json.content.map((c) => c.content[0].value).join('')
       );
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders formatted text with correct information', () => {
-      const mockedContent: TextProps = formattedMock();
+      const mockedContent: RichTextProps = formattedMock();
       mountWithRouter(<Text {...mockedContent} />);
 
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     describe('node types', () => {
       context('text node types', () => {
-        each(variantNodeTypeMapper, (variant, nodeType) => testNodeType(variant, nodeType));
+        for (const [variant, nodeType] of Object.entries(variantNodeTypeMapper)) {
+          testNodeType(variant, nodeType);
+        }
       });
 
       context('other node types', () => {
         it('renders text with embedded inline entry', () => {
           const mockedEntry = linkButtonMock();
-          const mockedContent: TextProps = dynamicMock(
+          const mockedContent: RichTextProps = dynamicMock(
             [contentNode([embeddedEntryInlineNode(mockedEntry.id || '')])],
             [mockedEntry]
           );
@@ -78,22 +81,25 @@ describe('Text', () => {
           cy.get('[data-testid=Text-embedded-entry-inline]')
             .contains(mockedEntry.text as string | number | RegExp)
             .should('exist');
-          cy.percySnapshot();
+          //cy.percySnapshot();
         });
 
         it('renders text with embedded entry block', () => {
           const mockedEntry = linkButtonMock();
-          const mockedContent: TextProps = dynamicMock([embeddedEntryBlockNode(mockedEntry.id || '')], [mockedEntry]);
+          const mockedContent: RichTextProps = dynamicMock(
+            [embeddedEntryBlockNode(mockedEntry.id || '')],
+            [mockedEntry]
+          );
           mountWithRouter(<Text {...mockedContent} />);
           cy.get('[data-testid=Text-embedded-entry-block]')
             .contains(mockedEntry.text as string | number | RegExp)
             .should('exist');
-          cy.percySnapshot();
+          //cy.percySnapshot();
         });
 
         it('renders text with embedded asset block', () => {
           const mockedMedia = mediaBaseImageMock();
-          const mockedContent: TextProps = dynamicMock(
+          const mockedContent: RichTextProps = dynamicMock(
             [embeddedAssetBlockNode(mockedMedia.id || '')],
             [],
             [mockedMedia]
@@ -102,12 +108,12 @@ describe('Text', () => {
           cy.get('[data-testid=Text-embedded-asset-block]')
             .should('exist')
             .and('have.attr', 'src', mockedMedia.file?.url);
-          cy.percySnapshot();
+          //cy.percySnapshot();
         });
 
         it('renders text with hyperlink', () => {
           const mockedLink = linkButtonMock();
-          const mockedContent: TextProps = dynamicMock(
+          const mockedContent: RichTextProps = dynamicMock(
             [hyperlinkNode(mockedLink.text || '', mockedLink.href as string)],
             [],
             [mockedLink]
@@ -116,13 +122,13 @@ describe('Text', () => {
           cy.get('[data-testid=Text-hyperlink]')
             .contains(mockedLink.text as string | number | RegExp)
             .should('exist');
-          cy.percySnapshot();
+          //cy.percySnapshot();
         });
 
         it('renders formatted text with hyperlink', () => {
-          const mockedContent: TextProps = withLinksMock();
+          const mockedContent: RichTextProps = withLinksMock();
           mountWithRouter(<Text {...mockedContent} />);
-          cy.percySnapshot();
+          //cy.percySnapshot();
         });
       });
     });

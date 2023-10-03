@@ -9,7 +9,13 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 
 import type { PageProps } from './Page.types';
 
-const Page = ({ header, hero, contents, footer, disableBackToTop, sidekickLookup, jsonLd }: PageProps) => {
+const Page = (props: PageProps) => {
+  const { header, hero, contents, footer, disableBackToTop, sidekickLookup, jsonLd } = props;
+
+  const ownerState = {
+    ...props
+  };
+
   return (
     <>
       {jsonLd ? (
@@ -20,7 +26,7 @@ const Page = ({ header, hero, contents, footer, disableBackToTop, sidekickLookup
 
       {hero ? <ContentModule {...(hero as any)} /> : null}
 
-      <Main {...sidekick({ ...sidekickLookup, fieldName: 'contents' })}>
+      <Main {...sidekick(sidekickLookup, 'contents')}>
         {contents?.map((content: any) => (
           <ContentModule key={content?.id} {...content} component="section" />
         ))}

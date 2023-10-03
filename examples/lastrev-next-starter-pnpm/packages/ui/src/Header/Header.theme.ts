@@ -11,9 +11,11 @@ const SUPERNAV_TIMEOUT = '15s';
 const defaultProps: ComponentsProps['Header'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
-  root: () => ({
+  root: ({ theme }) => ({
     '& *': {
-      whiteSpace: 'nowrap'
+      whiteSpace: 'nowrap',
+      // TODO: Update
+      backgroundColor: theme.palette.common.white
     }
   }),
 

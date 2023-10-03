@@ -1,8 +1,13 @@
 import React from 'react';
-import BLOCKS from './BLOCKS';
-import MARKS from './MARKS';
+// import BLOCKS from './BLOCKS';
+// import MARKS from './MARKS';
 
 import { type RichTextProps } from './RichText.types';
+import { type BlockProps } from '../Block';
+import { type CollectionProps } from '../Collection';
+import BLOCKS from './BLOCKS';
+import MARKS from './MARKS';
+import { Collection } from '../../../graphql-sdk/src/types';
 
 export const valueNode = (type: string = 'text') => ({
   data: {},
@@ -54,7 +59,6 @@ export const hyperlinkEntryNode = (id: string) => ({
   nodeType: 'entry-hyperlink'
 });
 
-// TODO: Should be in Text and cleanup other mocks
 export const dynamicMock = (content: any[], entries: any[] = [], assets: any[] = []): RichTextProps => ({
   __typename: 'RichText',
   json: {
@@ -65,7 +69,6 @@ export const dynamicMock = (content: any[], entries: any[] = [], assets: any[] =
   links: { entries, assets }
 });
 
-// TODO: Should be in Text and cleanup other mocks
 export const complexMock = ({ text } = { text: 'Default complex mock' }): RichTextProps => ({
   __typename: 'RichText',
   json: {
@@ -205,7 +208,160 @@ export const complexMock = ({ text } = { text: 'Default complex mock' }): RichTe
   }
 });
 
-// TODO: Should be in Text and cleanup other mocks
+export const blogMock = ({ text } = { text: 'Default blog mock' }): RichTextProps => {
+  const blockMock: BlockProps = require('../Block/Block.mock').default();
+  const collectionMock: CollectionProps = require('../Collection/Collection.mock').default();
+
+  return {
+    __typename: 'RichText',
+    json: {
+      nodeType: 'document',
+      data: {},
+      content: [
+        {
+          data: {},
+          content: [
+            {
+              data: {},
+              marks: [],
+              value: text ?? 'This is default text',
+              nodeType: 'text'
+            },
+            {
+              data: {},
+              marks: [
+                {
+                  type: 'bold'
+                }
+              ],
+              value: ' Bold, ',
+              nodeType: 'text'
+            },
+            {
+              data: {},
+              marks: [
+                {
+                  type: 'italic'
+                }
+              ],
+              value: 'italic and ',
+              nodeType: 'text'
+            },
+            {
+              data: {},
+              marks: [
+                {
+                  type: 'italic'
+                },
+                {
+                  type: 'underline'
+                }
+              ],
+              value: 'underline.',
+              nodeType: 'text'
+            }
+          ],
+          nodeType: 'paragraph'
+        },
+        {
+          data: {},
+          content: [
+            {
+              data: {},
+              marks: [],
+              value: 'This is a list:',
+              nodeType: 'text'
+            }
+          ],
+          nodeType: 'paragraph'
+        },
+        {
+          data: {},
+          content: [
+            {
+              data: {},
+              content: [
+                {
+                  data: {},
+                  content: [
+                    {
+                      data: {},
+                      marks: [],
+                      value: 'Item One',
+                      nodeType: 'text'
+                    }
+                  ],
+                  nodeType: 'paragraph'
+                }
+              ],
+              nodeType: 'list-item'
+            },
+
+            {
+              data: {},
+              content: [
+                {
+                  data: {},
+                  content: [
+                    {
+                      data: {},
+                      marks: [],
+                      value: 'Item Two',
+                      nodeType: 'text'
+                    }
+                  ],
+                  nodeType: 'paragraph'
+                }
+              ],
+              nodeType: 'list-item'
+            },
+            {
+              data: {},
+              content: [
+                {
+                  data: {},
+                  content: [
+                    {
+                      data: {},
+                      marks: [],
+                      value: 'Item Three',
+                      nodeType: 'text'
+                    }
+                  ],
+                  nodeType: 'paragraph'
+                }
+              ],
+              nodeType: 'list-item'
+            }
+          ],
+          nodeType: 'unordered-list'
+        },
+        embeddedEntryBlockNode(blockMock.id || ''),
+        {
+          data: {},
+          content: [
+            {
+              data: {},
+              marks: [],
+              value: 'This is longer paragraph text',
+              nodeType: 'text'
+            }
+          ],
+          nodeType: 'paragraph'
+        },
+        embeddedEntryBlockNode(collectionMock.id || '')
+      ]
+    },
+    links: {
+      entries: [
+        { ...blockMock, introText: undefined } as BlockProps,
+        { ...collectionMock, introText: undefined } as CollectionProps
+      ],
+      assets: []
+    }
+  };
+};
+
 export const withLinksMock = ({ text } = { text: 'Default with links mock' }): RichTextProps => ({
   __typename: 'RichText',
   json: {

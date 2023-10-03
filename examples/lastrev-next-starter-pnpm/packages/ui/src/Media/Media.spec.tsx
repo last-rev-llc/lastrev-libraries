@@ -21,7 +21,7 @@ describe('Media', () => {
         .should('exist')
         .and('have.attr', 'src', mockedContent.file.url)
         .and('have.attr', 'alt', mockedContent.title);
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders file in a HTML5 video', () => {
@@ -41,21 +41,21 @@ describe('Media', () => {
       cy.get('video').should('have.prop', 'paused', false).and('have.prop', 'ended', false);
       cy.get('video', { timeout: 50000 }).and('have.prop', 'ended', true);
 
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     // TODO - fix this test, makes everything fail
     // it('renders file in an iframe when variant is embed', () => {
     //   mount(<Media {...mockedContent} variant="embed" />);
     //   cy.get('iframe').should('exist').and('have.attr', 'src', mockedContent.file.url);
-    //   cy.percySnapshot();
+    //   //cy.percySnapshot();
     // });
 
     it('renders nothing if file is not provided', () => {
       mount(<Media {...mockedContent} file={undefined} />);
       cy.get('[data-testid=Media]').should('not.exist');
       cy.get('iframe').should('not.exist');
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
   });
 });

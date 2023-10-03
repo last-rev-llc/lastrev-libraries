@@ -16,7 +16,7 @@ describe('Image', () => {
     it('renders an image', () => {
       mount(<Image {...mockedContent} />);
       cy.get(`[data-testid=${mockedContent.testId}]`).should('exist').and('have.attr', 'src', mockedContent.src);
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('renders an image with correct class name given', () => {

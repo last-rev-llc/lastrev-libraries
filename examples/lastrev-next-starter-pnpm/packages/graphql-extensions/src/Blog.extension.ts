@@ -1,8 +1,6 @@
 import gql from 'graphql-tag';
-import { Mappers } from '@last-rev/types';
-import createRichText from '@last-rev/graphql-contentful-core/dist/utils/createRichText';
-import getLocalizedField from '@last-rev/graphql-contentful-core/dist/utils/getLocalizedField';
-import { ApolloContext } from '@last-rev/types';
+import { Mappers, ApolloContext } from '@last-rev/types';
+import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
 import { blogV1 } from './PathsConfigs.extension';
 import { createType } from './utils/createType';
@@ -10,10 +8,6 @@ import pageFooterResolver from './utils/pageFooterResolver';
 import pageHeaderResolver from './utils/pageHeaderResolver';
 import pathResolver from './utils/pathResolver';
 import resolveField from './utils/resolveField';
-
-export const pathsConfigs = {
-  ...blogV1
-};
 
 export const typeDefs = gql`
   extend type Blog {
@@ -23,7 +17,6 @@ export const typeDefs = gql`
     relatedItems: Content
     categories: [CategoryBlog]
     author: Person
-    contents: [Content]
     # Uncomment next line if using Media references instead
     # featuredMedia: [Media]
   }
@@ -75,4 +68,8 @@ export const mappers: Mappers = {
       }
     }
   }
+};
+
+export const pathsConfigs = {
+  ...blogV1
 };

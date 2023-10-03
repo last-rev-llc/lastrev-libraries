@@ -8,7 +8,7 @@ import type { PersonProps } from './Person.types';
 const personDefaultMock: PersonProps = {
   id: randomId(),
   __typename: 'Person',
-  featuredMedia: mediaBaseImageMock(),
+  mainImage: mediaBaseImageMock(),
   name: 'This is the name',
   jobTitle: 'This is the job title',
   email: 'This is the email',

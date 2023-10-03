@@ -5,6 +5,7 @@ import type {
   ComponentsOverrides,
   ComponentsVariants
 } from '@mui/material/styles';
+
 import type { Color } from '@mui/material';
 
 const defaultProps: ComponentsProps['Hero'] = {

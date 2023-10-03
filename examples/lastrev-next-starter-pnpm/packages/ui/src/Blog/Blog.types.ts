@@ -2,22 +2,37 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 
 import type { Blog_BaseFragmentFragment } from '@graphql-sdk/types';
 
-export interface BlogProps extends Blog_BaseFragmentFragment {}
+export enum BlogVariants {
+  default = 'default'
+}
+
+export interface BlogProps extends Blog_BaseFragmentFragment {
+  variant: BlogVariants;
+  jsonLd?: any;
+}
+export interface BlogOwnerState extends BlogProps {}
 
 interface BlogClasses {
   root: string;
+  contentOuterGrid: string;
+  headerWrap: string;
+  contentWrap: string;
+  title: string;
+  pubDate: string;
   featuredMedia: string;
   featuredMediaWrap: string;
-  pubDate: string;
-  title: string;
-  summary: string;
+  authorWrap: string;
   author: string;
   body: string;
   blogCategories: string;
   blogCategory: string;
   tags: string;
   tag: string;
+  relatedItemsWrap: string;
   relatedItems: string;
+  shareLinksWrap: string;
+  shareLinks: string;
+  shareLink: string;
 }
 
 export declare type BlogClassKey = keyof BlogClasses;

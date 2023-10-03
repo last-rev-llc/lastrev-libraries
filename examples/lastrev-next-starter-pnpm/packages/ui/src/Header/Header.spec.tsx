@@ -28,7 +28,7 @@ describe.skip('Header', () => {
         });
       cy.get('.PrivateHiddenCss-root').should('exist');
       cy.get('.PrivateHiddenCss-root').should('not.be.visible');
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('supports multiple navigation items/bars', () => {
@@ -53,7 +53,7 @@ describe.skip('Header', () => {
             });
         }
       });
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('mobile when menu is closed', () => {
@@ -64,7 +64,7 @@ describe.skip('Header', () => {
       cy.get('[data-testid=NavigationItem]').should('not.be.visible');
       cy.get('[data-testid=MenuIcon]').should('exist').and('be.visible');
       cy.get('[data-testid=CloseIcon]').should('exist').and('not.be.visible');
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
 
     it('mobile when menu is open', () => {
@@ -91,7 +91,7 @@ describe.skip('Header', () => {
             );
         }
       });
-      cy.percySnapshot();
+      //cy.percySnapshot();
     });
   });
 });

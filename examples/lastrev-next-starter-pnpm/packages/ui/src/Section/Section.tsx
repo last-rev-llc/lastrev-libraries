@@ -2,13 +2,11 @@ import React from 'react';
 
 import { styled } from '@mui/material/styles';
 import useTheme from '@mui/system/useTheme';
-import { Theme } from '@mui/system';
+import { type Theme } from '@mui/system';
 
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-// TODO: Remove need for Lodash
-import get from 'lodash/get';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -71,7 +69,7 @@ const Section = (inProps: SectionProps) => {
             sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
             {...(contentSpacing && { spacing: contentSpacing })}>
             {contents?.map((content, idx) => {
-              const itemStyle = get(styles?.gridItems, idx);
+              const itemStyle = styles?.gridItems?.[idx] ?? {};
               if (!content) return null;
               return (
                 <GridItem
@@ -101,16 +99,16 @@ const Section = (inProps: SectionProps) => {
 };
 
 const rootStyles = ({ backgroundColor, theme }: { backgroundColor?: string; theme: Theme }) => {
-  if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
+  if (backgroundColor?.includes('gradient') && theme.palette?.[backgroundColor]) {
     return {
-      background: get(theme.palette, backgroundColor)?.main,
+      background: theme.palette?.[backgroundColor]?.main,
       color: `${backgroundColor}.contrastText`
     };
   }
   const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
   const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
 
-  if (backgroundColor && get(theme.palette, parsedBGColor)) {
+  if (backgroundColor && theme.palette?.[parsedBGColor]) {
     return {
       bgcolor: parsedBGColor,
       color: `${paletteColor}.contrastText`

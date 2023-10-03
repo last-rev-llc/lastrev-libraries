@@ -1,7 +1,6 @@
 import { Roboto } from 'next/font/google';
+import { type Breakpoint, type ThemeOptions, createTheme } from '@mui/material/styles';
 import merge from 'lodash/merge';
-import { ThemeOptions, createTheme } from '@mui/material/styles';
-
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
 import applyBackgroundColor from './mixins/applyBackgroundColor';
@@ -93,6 +92,7 @@ const paletteTheme = createTheme({
     }
   }
 });
+
 const baseTheme: ThemeOptions = {
   spacing: defaultSpacing,
   shape: {
@@ -226,6 +226,20 @@ const baseTheme: ThemeOptions = {
 };
 
 const coreTheme = createTheme(baseTheme);
+
+// export const theme = {
+//   ...coreTheme,
+//   ...Object.values(themeComponents).reduce((acc, t) => ({ ...acc, ...t(coreTheme) }), {}),
+//   containerBreakpoints: {
+//     up(key: number | Breakpoint) {
+//       return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
+//     },
+//     down(key: number | Breakpoint) {
+//       return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
+//     }
+//     // Add any custom breakpoints here
+//   }
+// };
 
 export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
   containerBreakpoints: {
