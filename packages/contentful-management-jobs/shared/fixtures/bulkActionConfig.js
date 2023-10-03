@@ -3,12 +3,12 @@
 /* eslint-disable no-param-reassign */
 const { getContentfulIdFromString } = require('../contentful-fields');
 
-const content_type = 'cardList';
+const content_type = 'featuresListItem';
 
 const queryOptions = {
   'limit': 100,
   content_type,
-  'sys.id[in]': '4rECnuLOSbnJafPL9g3hdU',
+  // 'sys.id[in]': '4rECnuLOSbnJafPL9g3hdU',
   'order': '-sys.createdAt',
   // 'sys.publishedVersion[exists]': false,
   'sys.archivedAt[exists]': false
@@ -16,8 +16,9 @@ const queryOptions = {
 
 const dropboxLocales = ['en-US', 'de', 'es', 'fr', 'it', 'ja', 'pt-BR'];
 const ifLocales = ['en-US', 'hk', 'hk-en', 'ca', 'cn', 'cn-en', 'fr-ca', 'me-en', 'au-en', 'gb-en', 'nz-en'];
+const englishOnly = ['en-US'];
 
-const locales = ifLocales;
+const locales = englishOnly;
 
 const displayHyperlink = (content) => {
   if (content.nodeType === 'hyperlink') {
@@ -36,14 +37,12 @@ const displayHyperlink = (content) => {
 const findSEO = (item, locale) => {
   // SEO
   const { slug, seo } = item.fields;
-  const found =
-    seo &&
-    seo[locale] &&
-    seo[locale].robots &&
-    seo[locale].robots.value &&
-    (!seo[locale].robots.value.includes('follow') || seo[locale].robots.value.includes(', nofollow')) &&
-    seo[locale].robots.name &&
-    !seo[locale].robots.name === 'robots';
+  const found = seo && seo[locale] && seo[locale].canonical && seo[locale].canonical.value;
+  // seo[locale].title.value &&
+  // seo[locale].title.value.includes('Strong 365');
+  // (!seo[locale].robots.value.includes('follow') || seo[locale].robots.value.includes(', nofollow')) &&
+  // seo[locale].robots.name &&
+  // !seo[locale].robots.name === 'robots';
 
   return found;
 };
@@ -77,14 +76,25 @@ const findCardListByType = (item, locale, type) => {
   return listType === type && cards && cards[locale] && cards[locale].some((card) => hasType(card));
 };
 
-const findCondition = (item, locale) => true; // findCardListByType(item, locale, 'Timeline');
+const findDescription = (item, locale) => {
+  // Description
+  const { description, descriptionRichText } = item.fields;
+  const desc = description && description[locale];
+  const descRichText =
+    descriptionRichText &&
+    descriptionRichText[locale].content.map((data) => data.content.map((c) => c.value).join('')).join('');
+  return desc && descRichText && desc !== descRichText; // && (!descriptionRichText || !descriptionRichText[locale]);
+};
+
+const findCondition = (item, locale) => findDescription(item, locale); // findCardListByType(item, locale, 'Timeline');
 
 const displayObject = (item) => ({
   id: item.sys.id,
   // sys: item.sys,
-  cards: item.fields.cards
+  // cards: item.fields.cards,
   // slug: item.fields.slug,
-  // seo: item.fields.seo
+  description: item.fields.description,
+  descriptionRichText: item.fields.descriptionRichText
   // destinationPath: item.fields.destinationPath
   // body: item.fields.body['en-US'].content
   //   .map(displayHyperlink)
