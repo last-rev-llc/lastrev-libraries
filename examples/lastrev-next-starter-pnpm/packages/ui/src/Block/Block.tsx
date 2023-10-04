@@ -8,13 +8,26 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ContentModule from '../ContentModule';
 import Grid from '../Grid';
 import type { BlockProps, BlockOwnerState } from './Block.types';
+import Background from '../Background';
 
 const Block = (props: BlockProps) => {
   const ownerState = { ...props };
-  const { introText, overline, title, subtitle, body, mediaItems, actions, sidekickLookup } = props;
+  const {
+    background,
+    backgroundColor,
+    introText,
+    overline,
+    title,
+    subtitle,
+    body,
+    mediaItems,
+    actions,
+    sidekickLookup
+  } = props;
 
   return (
     <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+      <BlockBackground background={background} backgroundColor={backgroundColor} testId="Block-background" />
       {!!introText && (
         <IntroTextGrid ownerState={ownerState}>
           <IntroText
@@ -91,6 +104,12 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: BlockOwnerState }>``;
+
+const BlockBackground = styled(Background, {
+  name: 'Block',
+  slot: 'Background',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
 
 const ContentOuterGrid = styled(Grid, {
   name: 'Block',

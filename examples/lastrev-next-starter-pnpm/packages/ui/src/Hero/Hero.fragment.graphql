@@ -2,6 +2,7 @@ fragment Hero_BaseFragment on Hero {
   ...Content_BaseFragment
   variant
   internalTitle
+  overline
   title
   subtitle
   backgroundColor
@@ -11,7 +12,7 @@ fragment Hero_BaseFragment on Hero {
   body {
     ...RichText_BaseFragment
   }
-  sideImageItems {
+  images: sideImageItems {
     ...Media_BaseFragment
   }
   actions {

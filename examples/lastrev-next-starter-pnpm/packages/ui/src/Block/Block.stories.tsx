@@ -1,3 +1,4 @@
+import theme from '../ThemeRegistry/theme';
 import Block from './Block';
 
 import {
@@ -17,12 +18,7 @@ export default {
   component: Block,
   tags: ['autodocs'],
   argTypes: {
-    variant: {
-      control: {
-        type: 'select',
-        options: BlockVariants
-      }
-    }
+    // TODO: Setup Block controls
   }
 };
 

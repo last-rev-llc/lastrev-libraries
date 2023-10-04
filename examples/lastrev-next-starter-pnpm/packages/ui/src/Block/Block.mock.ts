@@ -11,7 +11,6 @@ const blockDefaultMock = (override?: Partial<BlockProps>): BlockProps => {
   const baseMock: BlockProps = {
     id: randomId(),
     __typename: 'Block',
-    backgroundColor: undefined,
     variant: BlockVariants.default,
     introText: introTextMock(),
     overline: 'This is the Block overline',

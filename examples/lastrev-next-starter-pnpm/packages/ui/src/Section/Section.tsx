@@ -10,6 +10,7 @@ import ContentModule from '../ContentModule';
 import Grid from '../Grid';
 
 import type { SectionProps, SectionOwnerState } from './Section.types';
+import Background from '../Background';
 
 const Section = (props: SectionProps) => {
   const ownerState = { ...props };
@@ -17,11 +18,10 @@ const Section = (props: SectionProps) => {
   const {
     introText,
     contents,
-    // styles,
+
     background,
-    // contentWidth,
-    contentDirection,
-    // contentSpacing,
+    backgroundColor,
+    // TODO: Ensure test id is propagated correctly
     // testId,
     sidekickLookup
   } = props;
@@ -29,13 +29,8 @@ const Section = (props: SectionProps) => {
   return (
     <ErrorBoundary>
       <Root component="section" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+        <SectionBackground background={background} backgroundColor={backgroundColor} />
         <ContentOuterGrid ownerState={ownerState}>
-          {background ? (
-            <BackgroundMediaWrap ownerState={ownerState}>
-              <BackgroundMedia {...background} ownerState={ownerState} />
-            </BackgroundMediaWrap>
-          ) : null}
-
           <ContentWrap ownerState={ownerState}>
             {!!introText && (
               <IntroTextGrid ownerState={ownerState}>
@@ -68,6 +63,12 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState?: SectionOwnerState }>``;
 
+const SectionBackground = styled(Background, {
+  name: 'Section',
+  slot: 'Background',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
+
 const ContentOuterGrid = styled(Grid, {
   name: 'Section',
   slot: 'ContentOuterGrid',
@@ -90,18 +91,6 @@ const IntroText = styled(ContentModule, {
   name: 'Section',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
-})<{ ownerState: SectionOwnerState }>``;
-
-const BackgroundMedia = styled(ContentModule, {
-  name: 'Section',
-  slot: 'BackgroundMedia',
-  overridesResolver: (_, styles) => [styles.backgroundMedia]
-})<{ ownerState: SectionOwnerState }>``;
-
-const BackgroundMediaWrap = styled(Box, {
-  name: 'Section',
-  slot: 'BackgroundMediaWrap',
-  overridesResolver: (_, styles) => [styles.backgroundMediaWrap]
 })<{ ownerState: SectionOwnerState }>``;
 
 const ItemsGrid = styled(Box, {

@@ -93,7 +93,8 @@ const paletteTheme = createTheme({
   }
 });
 
-const baseTheme: ThemeOptions = {
+const coreTheme = createTheme({
+  ...paletteTheme,
   spacing: defaultSpacing,
   shape: {
     borderRadius: defaultBorderRadius
@@ -232,10 +233,7 @@ const baseTheme: ThemeOptions = {
       return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
     }
   }
-};
-console.log(baseTheme);
-
-const coreTheme = createTheme(baseTheme);
+});
 
 const theme: Theme = createTheme(
   deepmerge(coreTheme, {

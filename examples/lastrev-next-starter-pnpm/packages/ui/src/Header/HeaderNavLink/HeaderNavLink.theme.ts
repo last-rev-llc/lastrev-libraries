@@ -98,7 +98,7 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
       width: 'fit-content',
       // @ts-ignore: TODO: items not recognized
       gridTemplateColumns: `repeat(${(ownerState.numOfCols ?? 0) + 1}, auto)`,
-      border: `solid 1px ${theme.palette.primary.contrastText}`,
+      // border: `solid 1px ${theme.palette.primary.contrastText}`,
       position: 'absolute',
       zIndex: 1,
       bottom: 0,

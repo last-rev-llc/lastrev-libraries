@@ -1,196 +1,175 @@
 import React from 'react';
-
 import { styled } from '@mui/material/styles';
-
-import Box, { type BoxProps } from '@mui/material/Box';
-import Typography, { type TypographyProps } from '@mui/material/Typography';
-import Container, { type ContainerProps } from '@mui/material/Container';
-
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
-// import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-
-import { getFirstOfArray } from '../utils/getFirstOfArray';
-
-import type { HeroProps } from './Hero.types';
-import type { LinkProps } from '../Link';
+import Grid from '../Grid';
+import type { HeroProps, HeroOwnerState } from './Hero.types';
+import Background from '../Background';
 
 export const Hero = (props: HeroProps) => {
-  const {
-    variant,
-    background,
-    backgroundColor,
-    contentHeight,
-    overline,
-    title,
-    subtitle,
-    body,
-    actions,
-    images,
-    sidekickLookup
-  } = props;
-
-  const image = getFirstOfArray(images);
-
-  const ownerState = {
-    variant,
-    backgroundColor,
-    background,
-    contentHeight
-  };
-
-  // TODO: Better way?
-  const isFullBleed = variant?.indexOf('FullBleed') > -1;
+  const ownerState = { ...props };
+  const { background, backgroundColor, overline, title, subtitle, body, actions, images, sidekickLookup } = props;
 
   return (
-    // <ErrorBoundary>
-    <HeroRoot data-testid="Hero" variant={variant} ownerState={ownerState} {...sidekick(sidekickLookup)}>
-      {background ? (
-        <BackgroundRoot>
-          <BackgroundRootContent
-            key={background?.id}
-            testId="Hero-background"
+    <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
+      <HeroBackground
+        background={{ ...background, priority: true }}
+        backgroundColor={backgroundColor}
+        testId="Hero-background"
+      />
+
+      {/* {background ? (
+
+        <BackgroundGrid ownerState={ownerState}>
+          <Background
             {...background}
             {...sidekick(sidekickLookup, 'background')}
+            fill
+            key={background?.id}
+            ownerState={ownerState}
             priority
-            layout="fill"
+            testId="Hero-background"
           />
-        </BackgroundRoot>
-      ) : null}
-
-      <ContentOuterGrid maxWidth={isFullBleed ? false : undefined} disableGutters={isFullBleed}>
+        </BackgroundGrid>
+      ) : null} */}
+      <ContentGrid ownerState={ownerState}>
         {overline || title || subtitle || body || actions ? (
-          <MainContentWrapper variant={variant} maxWidth={false} sx={{ p: 0 }}>
-            <Content>
-              {!!overline && <Overline variant="overline">{overline}</Overline>}
+          <Content ownerState={ownerState}>
+            {!!overline && (
+              <Overline ownerState={ownerState} variant="overline">
+                {overline}
+              </Overline>
+            )}
 
-              {!!title && (
-                <Title
-                  {...sidekick(sidekickLookup, 'title')}
-                  data-testid="Hero-title"
-                  component="h1"
-                  variant="display3">
-                  {title}
-                </Title>
-              )}
+            {!!title && (
+              <Title
+                {...sidekick(sidekickLookup, 'title')}
+                // @ts-expect-error TODO: Fix this
+                component="h1"
+                data-testid="Hero-title"
+                ownerState={ownerState}
+                variant="display3">
+                {title}
+              </Title>
+            )}
 
-              {!!subtitle && (
-                <Subtitle {...sidekick(sidekickLookup, 'subtitle')} data-testid="Hero-subtitle" variant="display2">
-                  {subtitle}
-                </Subtitle>
-              )}
+            {!!subtitle && (
+              <Subtitle
+                {...sidekick(sidekickLookup, 'subtitle')}
+                data-testid="Hero-subtitle"
+                ownerState={ownerState}
+                variant="display2">
+                {subtitle}
+              </Subtitle>
+            )}
 
-              {!!body && <Body {...sidekick(sidekickLookup, 'body')} __typename="Text" body={body} />}
-            </Content>
-
+            {!!body && (
+              <Body __typename="Text" {...sidekick(sidekickLookup, 'body')} ownerState={ownerState} body={body} />
+            )}
             {!!actions?.length && (
-              <ActionsWrapper {...sidekick(sidekickLookup, 'actions')} data-testid="Hero-actions">
-                {actions.map((action: LinkProps) => (
-                  <Action key={action?.id} {...(action as LinkProps)} />
+              <ActionsWrapper
+                {...sidekick(sidekickLookup, 'actions')}
+                data-testid="Hero-actions"
+                ownerState={ownerState}>
+                {actions.map((action) => (
+                  <Action ownerState={ownerState} key={action?.id} {...action} />
                 ))}
               </ActionsWrapper>
             )}
-          </MainContentWrapper>
+          </Content>
         ) : null}
 
-        {image ? (
-          <SideContentWrapper variant={variant} maxWidth={false} disableGutters={isFullBleed}>
-            <ContentModule {...sidekick(sidekickLookup, 'images')} {...image} data-testid="Hero-media" />
-          </SideContentWrapper>
+        {images?.length ? (
+          <MediaWrap>
+            {images?.map((image) => (
+              <Media
+                key={image?.id}
+                ownerState={ownerState}
+                {...sidekick(sidekickLookup, 'images')}
+                {...image}
+                data-testid="Hero-media"
+              />
+            ))}
+          </MediaWrap>
         ) : null}
-      </ContentOuterGrid>
-    </HeroRoot>
-    // </ErrorBoundary>
+      </ContentGrid>
+    </Root>
   );
 };
 
-const HeroRoot = styled(Box, {
+const Root = styled(Box, {
   name: 'Hero',
-  slot: 'HeroRoot',
-  shouldForwardProp: (prop) =>
-    prop !== 'variant' &&
-    prop !== 'contentWidth' &&
-    prop !== 'ownerState' &&
-    prop !== 'contentHeight' &&
-    prop !== 'sidekickLookup' &&
-    prop !== 'internalTitle',
-  overridesResolver: (_, styles) => [styles.heroRoot]
-})<BoxProps>(() => ({}));
+  slot: 'Root',
+  overridesResolver: (_, styles) => [styles.root]
+})<{ ownerState: HeroOwnerState }>``;
 
-const ContentOuterGrid = styled(Container, {
+const ContentGrid = styled(Grid, {
   name: 'Hero',
-  slot: 'ContentOuterGrid',
-  overridesResolver: (_, styles) => [styles.ContentOuterGrid]
-})<ContainerProps<React.ElementType>>(() => ({}));
-
-const MainContentWrapper = styled(Container, {
-  name: 'Hero',
-  slot: 'MainContentWrapper',
-  overridesResolver: (_, styles) => [styles.mainContentWrapper]
-})<ContainerProps<React.ElementType>>(() => ({}));
+  slot: 'ContentGrid',
+  overridesResolver: (_, styles) => [styles.contentGrid]
+})<{ ownerState: HeroOwnerState }>``;
 
 const Content = styled(Box, {
   name: 'Hero',
   slot: 'Content',
   overridesResolver: (_, styles) => [styles.content]
-})<BoxProps<React.ElementType>>(() => ({}));
+})<{ ownerState: HeroOwnerState }>``;
 
-const BackgroundRootContent = styled(ContentModule, {
+const HeroBackground = styled(Background, {
   name: 'Hero',
-  slot: 'BackgroundRootContent',
-  overridesResolver: (_, styles) => [styles.backgroundRootContent]
-})(() => ({}));
+  slot: 'Background',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
 
 const Overline = styled(Typography, {
   name: 'Hero',
   slot: 'Overline',
   overridesResolver: (_, styles) => [styles.overline]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<{ ownerState: HeroOwnerState }>``;
 
 const Title = styled(Typography, {
   name: 'Hero',
   slot: 'Title',
   overridesResolver: (_, styles) => [styles.title]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<{ ownerState: HeroOwnerState }>``;
 
 const Subtitle = styled(Typography, {
   name: 'Hero',
   slot: 'Subtitle',
   overridesResolver: (_, styles) => [styles.subtitle]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<{ ownerState: HeroOwnerState }>``;
 
 const Body = styled(ContentModule, {
   name: 'Hero',
   slot: 'Body',
   overridesResolver: (_, styles) => [styles.body]
-})(() => ({}));
+})<{ ownerState: HeroOwnerState }>``;
 
-const SideContentWrapper = styled(Container, {
+const Media = styled(ContentModule, {
   name: 'Hero',
-  slot: 'SideContentWrapper',
+  slot: 'Media ',
+  overridesResolver: (_, styles) => [styles.media]
+})<{ ownerState: HeroOwnerState }>``;
 
-  overridesResolver: (_, styles) => [styles.sideContentWrapper]
-})<ContainerProps<React.ElementType>>(() => ({}));
-
-const BackgroundRoot = styled(Box, {
+const MediaWrap = styled(Box, {
   name: 'Hero',
-  slot: 'BackgroundRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
-  overridesResolver: (_, styles) => [styles.backgroundRoot]
+  slot: 'MediaWrap ',
+  overridesResolver: (_, styles) => [styles.mediaWrap]
 })``;
-
 const ActionsWrapper = styled(Box, {
   name: 'Hero',
   slot: 'ActionsWrapper',
 
   overridesResolver: (_, styles) => [styles.actionsWrapper]
-})<BoxProps<React.ElementType>>(() => ({}));
+})<{ ownerState: HeroOwnerState }>``;
 
 const Action = styled(ContentModule, {
   name: 'Hero',
   slot: 'Action',
   overridesResolver: (_, styles) => [styles.action]
-})(() => ({}));
+})<{ ownerState: HeroOwnerState }>``;
 
 export default Hero;

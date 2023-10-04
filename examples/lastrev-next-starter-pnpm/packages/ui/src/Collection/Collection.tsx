@@ -11,15 +11,21 @@ import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
 import type { CollectionProps, CollectionOwnerState } from './Collection.types';
+import Background from '../Background';
 
 export const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
 
-  const { items, variant, itemsVariant, sidekickLookup, introText } = props;
+  const { background, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;
 
   return (
     <ErrorBoundary>
       <Root ownerState={ownerState} {...sidekick(sidekickLookup)} data-testid={`Collection-${variant}`}>
+        <CollectionBackground
+          background={background}
+          backgroundColor={backgroundColor}
+          testId="Collection-background"
+        />
         {introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText
@@ -58,6 +64,12 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: ({ ownerState }, styles) => [styles.root, styles[`${ownerState?.variant}`]]
 })<{ ownerState: CollectionOwnerState }>``;
+
+const CollectionBackground = styled(Background, {
+  name: 'Collection',
+  slot: 'Background',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
 
 const ContentGrid = styled(Grid, {
   name: 'Collection',

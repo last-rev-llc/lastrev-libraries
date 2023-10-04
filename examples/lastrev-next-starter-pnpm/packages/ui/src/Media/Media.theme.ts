@@ -15,14 +15,12 @@ const defaultProps: ComponentsProps['Media'] = {
 
 const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
   // Set some static styles
-  root: () => ({
+  root: {
     // img default display: inline introduces a line-height space at the bottom
     display: 'block',
     maxWidth: `100%`,
-    margin: 'auto',
-
     height: 'auto'
-  })
+  }
   // root: {
   //   backgroundColor: 'red'
   // }

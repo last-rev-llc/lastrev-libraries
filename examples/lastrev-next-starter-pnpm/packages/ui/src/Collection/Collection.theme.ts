@@ -13,7 +13,6 @@ const defaultProps: ComponentsProps['Collection'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   root: ({ theme, ownerState }) => ({
     containerType: 'inline-size',
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
@@ -66,13 +65,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
     },
     style: {
       [theme.containerBreakpoints.up('sm')]: {
-        'border': 'solid 10px yellow',
         '[class*=itemsGrid]': { gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }
       },
 
       [theme.containerBreakpoints.up('lg')]: {
-        'border': 'solid 10px orange',
-        '[class*=itemsGrid]': { border: 'solid 10px black', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }
+        '[class*=itemsGrid]': { gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }
       }
     }
   },
