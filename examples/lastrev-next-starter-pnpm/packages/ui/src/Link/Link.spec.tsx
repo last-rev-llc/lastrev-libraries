@@ -34,15 +34,15 @@ describe('Link renders correctly', () => {
         .and('have.text', mockedLinkContent.text);
     });
 
-    it('renders a contained button when variant is button-contained', () => {
-      mount(<Link {...mockedButtonContent} variant="button-contained" />);
-      cy.get('a').should('exist').and('have.class', 'MuiButton-contained').and('have.text', mockedLinkContent.text);
+    it('renders a contained button when variant is buttonContained', () => {
+      mount(<Link {...mockedButtonContent} variant="buttonContained" />);
+      cy.get('a').should('exist').and('have.class', 'MuibuttonContained').and('have.text', mockedLinkContent.text);
       //cy.percySnapshot();
     });
 
-    it('renders an outlined button when variant is button-outlined', () => {
-      mount(<Link {...mockedButtonContent} variant="button-outlined" />);
-      cy.get('a').should('exist').and('have.class', 'MuiButton-outlined').and('have.text', mockedLinkContent.text);
+    it('renders an outlined button when variant is buttonOutlined', () => {
+      mount(<Link {...mockedButtonContent} variant="buttonOutlined" />);
+      cy.get('a').should('exist').and('have.class', 'MuibuttonOutlined').and('have.text', mockedLinkContent.text);
       //cy.percySnapshot();
     });
 

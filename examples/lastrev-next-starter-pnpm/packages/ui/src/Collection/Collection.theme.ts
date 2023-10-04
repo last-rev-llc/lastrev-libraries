@@ -11,15 +11,13 @@ import { CollectionVariants } from './Collection.types';
 const defaultProps: ComponentsProps['Collection'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
-  root: ({ theme, ownerState }) => ({
+  root: ({ theme }) => ({
     containerType: 'inline-size',
+    padding: theme.spacing(12, 0),
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    gridColumn: 'content-start/content-end'
-
-    // TODO: Update to check if within a section
-    // padding: theme.spacing(12, 0)
+    position: 'relative'
   }),
 
   itemsGrid: ({ theme }) => ({
