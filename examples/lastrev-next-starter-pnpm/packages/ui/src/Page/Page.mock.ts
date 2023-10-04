@@ -4,6 +4,7 @@ import { collectionBaseMock } from '../Collection/Collection.mock';
 import { footerBaseMock } from '../Footer/Footer.mock';
 import { headerBaseMock } from '../Header/Header.mock';
 import heroBaseMock from '../Hero/Hero.mock';
+import sectionBaseMock from '../Section/Section.mock';
 import { tabsBaseMock } from '../Tabs/Tabs.mock';
 
 import { randomId } from '../utils/randomId';
@@ -19,9 +20,16 @@ const pageDefaultMock: PageProps = {
   hero: heroBaseMock(),
   title: 'This is the Page Title',
   contents: [
-    collectionBaseMock(),
-    blockBaseMock(),
+    blockBaseMock({}),
     blockBaseMock({ backgroundColor: 'secondary' }),
+    blockBaseMock({ backgroundColor: 'primary' }),
+    sectionBaseMock({
+      variant: 'twoPerRow',
+      backgroundColor: null,
+      background: null,
+      contents: [blockBaseMock({ backgroundColor: 'secondary' }), blockBaseMock({ backgroundColor: 'secondary' })]
+    }),
+    collectionBaseMock(),
     accordionBaseMock(),
     tabsBaseMock()
   ]

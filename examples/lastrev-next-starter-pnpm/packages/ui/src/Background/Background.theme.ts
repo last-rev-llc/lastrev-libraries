@@ -18,10 +18,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Background'] = {
     'width': '100%',
     'height': '100%',
     '> *': {
-      // TODO: Get rid of &&
-      '&&': {
-        gridColumn: '1/-1',
-        height: '100%',
+      'gridColumn': '1/-1',
+      'height': '100%',
+      '&:is(img)': {
         objectFit: 'cover'
       }
     }

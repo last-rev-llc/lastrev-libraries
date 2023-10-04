@@ -11,13 +11,12 @@ const defaultProps: ComponentsProps['Block'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   root: ({ theme, ownerState }) => ({
     containerType: 'inline-size',
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     position: 'relative',
     width: '100%',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
     // TODO: Update to check if within a section
-    // padding: theme.spacing(12, 0)
+    padding: theme.spacing(12, 0)
   }),
 
   // introTextGrid: : {},

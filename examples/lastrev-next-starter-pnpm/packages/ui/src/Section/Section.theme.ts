@@ -12,12 +12,9 @@ const defaultProps: ComponentsProps['Section'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
   root: ({ theme, ownerState }) => {
-    const background = theme.mixins.applyBackgroundColor({ ownerState, theme });
-
-    // const hasBackground = !!Object.keys(background).length || ownerState.background;
+    // const hasBackground = !!Object.keys(background).length || ownerState?.background;
 
     return {
-      ...background,
       'containerType': 'inline-size',
       'width': '100%',
       'position': 'relative',
@@ -48,9 +45,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
   },
 
   contentWrap: ({ theme, ownerState }) => {
-    const background = theme.mixins.applyBackgroundColor({ ownerState, theme });
-    const hasBackground = !!Object.keys(background).length || ownerState.background;
-
     return {
       zIndex: 2,
       // 'containerType': 'inline-size',
@@ -67,23 +61,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
     };
   },
 
-  backgroundMediaWrap: {
-    '&&': {
-      gridColumn: '1/-1',
-      gridRow: '1/-1',
-      zIndex: 1,
-      position: 'relative'
-    }
-  },
-
-  backgroundMedia: {
-    '&&': {
-      minWidth: '100%',
-      minHeight: '100%',
-      objectFit: 'cover'
-    }
-  },
-
   introTextGrid: { gridColumn: 'content-start/content-end' },
 
   // introText: { },
@@ -95,13 +72,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
       gridGap: 'inherit',
       gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
 
-      ...((ownerState.variant === SectionVariants.twoPerRow || ownerState.variant === SectionVariants.threePerRow) && {
+      ...((ownerState?.variant === SectionVariants.twoPerRow ||
+        ownerState?.variant === SectionVariants.threePerRow) && {
         [theme.containerBreakpoints.up('md')]: {
           gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
         }
       }),
 
-      ...(ownerState.variant === SectionVariants.threePerRow && {
+      ...(ownerState?.variant === SectionVariants.threePerRow && {
         [theme.containerBreakpoints.up('lg')]: {
           gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
         }

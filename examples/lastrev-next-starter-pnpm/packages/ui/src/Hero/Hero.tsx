@@ -106,12 +106,6 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: HeroOwnerState }>``;
 
-const BackgroundGrid = styled(Grid, {
-  name: 'Hero',
-  slot: 'BackgroundGrid',
-  overridesResolver: (_, styles) => [styles.backgroundGrid]
-})<{ ownerState: HeroOwnerState }>``;
-
 const ContentGrid = styled(Grid, {
   name: 'Hero',
   slot: 'ContentGrid',
