@@ -12,7 +12,7 @@ const defaultProps: ComponentsProps['Hero'] = {
 
 const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   root: ({ theme }) => ({
-     position: 'relative',
+    position: 'relative',
     padding: theme.spacing(12, 0)
   }),
   contentGrid: {

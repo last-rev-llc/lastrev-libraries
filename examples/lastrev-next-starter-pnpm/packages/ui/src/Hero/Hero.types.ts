@@ -12,9 +12,7 @@ export enum HeroVariants {
   mediaAbove = 'mediaAbove'
 }
 
-
-export interface HeroProps extends Hero_BaseFragmentFragment {
-}
+export interface HeroProps extends Hero_BaseFragmentFragment {}
 
 export interface HeroOwnerState extends HeroProps {}
 interface HeroClasses {
