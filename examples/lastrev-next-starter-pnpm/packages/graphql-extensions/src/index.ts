@@ -3,6 +3,7 @@ import type { Source, DocumentNode, GraphQLSchema } from 'graphql';
 
 import fs from 'fs';
 import path from 'path';
+import { deepMerge } from './utils/deepMerge';
 
 export type GraphQlExtension = {
   typeDefs?: string | DocumentNode | Source | GraphQLSchema;
@@ -89,6 +90,6 @@ export const typeDefs = mergeTypeDefs(getNonNullPropertiesFromExtensions('typeDe
 
 // Assuming mergeResolvers can handle an array input. If it doesn't, consider using reduce like below for mappers, typeMappings, and pathsConfigs.
 export const resolvers = mergeResolvers(getNonNullPropertiesFromExtensions('resolvers')) as Record<string, any>;
-export const mappers = Object.assign({}, ...getNonNullPropertiesFromExtensions('mappers'));
-export const typeMappings = Object.assign({}, ...getNonNullPropertiesFromExtensions('typeMappings'));
-export const pathsConfigs = Object.assign({}, ...getNonNullPropertiesFromExtensions('pathsConfigs'));
+export const mappers = deepMerge({}, ...getNonNullPropertiesFromExtensions('mappers'));
+export const typeMappings = deepMerge({}, ...getNonNullPropertiesFromExtensions('typeMappings'));
+export const pathsConfigs = deepMerge({}, ...getNonNullPropertiesFromExtensions('pathsConfigs'));

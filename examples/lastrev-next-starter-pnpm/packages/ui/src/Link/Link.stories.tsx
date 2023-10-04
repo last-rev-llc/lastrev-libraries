@@ -16,7 +16,7 @@ export default {
       control: {
         // type: { type: 'select' },
       },
-      options: ['link', 'button-contained', 'button-outlined', 'button-text', '']
+      options: ['link', 'buttonContained', 'buttonOutlined', 'button-text', '']
     },
     icon: {
       name: 'Icon',
@@ -45,6 +45,6 @@ export default {
 };
 
 export const Link = { args: { ...linkTextMock() } };
-export const ButtonContained = { args: { ...Link.args, variant: 'button-contained' } };
-export const ButtonOutlined = { args: { ...Link.args, variant: 'button-outlined' } };
+export const ButtonContained = { args: { ...Link.args, variant: 'buttonContained' } };
+export const ButtonOutlined = { args: { ...Link.args, variant: 'buttonOutlined' } };
 export const ButtonText = { args: { ...Link.args, variant: 'button-text' } };

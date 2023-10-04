@@ -81,7 +81,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   }
 
   if (variant?.includes('button')) {
-    const buttonVariant = variant.replace('button', '') as 'text' | 'outlined' | 'contained' | undefined;
+    const buttonVariant = variant.replace('button', '').toLowerCase() as 'text' | 'outlined' | 'contained' | undefined;
 
     return (
       <RootButton

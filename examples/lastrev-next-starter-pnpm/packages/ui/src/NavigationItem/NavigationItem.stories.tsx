@@ -16,7 +16,7 @@ export default {
       name: 'Variant',
       control: {
         type: 'select',
-        options: ['NavigationItem', 'button-contained', 'button-outlined', 'button-text']
+        options: ['NavigationItem', 'buttonContained', 'buttonOutlined', 'button-text']
       },
       table: {
         defaultValue: { summary: 'NavigationItem' }

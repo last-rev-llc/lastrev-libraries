@@ -11,7 +11,7 @@ export enum NavigationLinkVariants {
   group = 'group',
   label = 'label',
   localeList = 'localeList',
-  buttonOutlined = 'button-outlined',
+  buttonOutlined = 'buttonOutlined',
   buttonContainer = 'button-container',
   featured = 'featured'
 }

@@ -19,10 +19,10 @@ const blockDefaultMock = (override?: Partial<BlockProps>): BlockProps => {
     body: richTextMock({ text: 'This is the Block body' }),
     mediaItems: [mediaBaseImageMock({ title: 'This is the Block Media 1' })],
     actions: [
-      linkButtonMock({ text: 'This is the Block Action 1', variant: 'button-contained' }),
-      linkButtonMock({ text: 'This is the Block Action 2', variant: 'button-outlined' })
+      linkButtonMock({ text: 'This is the Block Action 1', variant: 'buttonContained' }),
+      linkButtonMock({ text: 'This is the Block Action 2', variant: 'buttonOutlined' })
     ],
-    link: linkButtonMock({ text: 'This is the Block Link', variant: 'button-contained' })
+    link: linkButtonMock({ text: 'This is the Block Link', variant: 'buttonContained' })
   };
 
   let variantOverride;
