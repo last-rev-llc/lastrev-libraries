@@ -175,53 +175,60 @@ const coreTheme = createTheme({
       color: '#000000'
     },
     display1: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '2.5rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: roboto.style.fontFamily,
+      fontWeight: 'var(--display1-font-weight)',
+      fontSize: 'var(--display1-font-size)',
+      lineHeight: 'var(--display1-line-height)',
+      margin: 'var(--display1-margin)'
     },
     display2: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '2.25rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: roboto.style.fontFamily,
+      fontWeight: 'var(--display2-font-weight)',
+      fontSize: 'var(--display2-font-size)',
+      lineHeight: 'var(--display2-line-height)',
+      margin: 'var(--display2-margin)'
     },
     display3: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '2rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: roboto.style.fontFamily,
+      fontWeight: 'var(--display3-font-weight)',
+      fontSize: 'var(--display3-font-size)',
+      lineHeight: 'var(--display3-line-height)',
+      margin: 'var(--display3-margin)'
     },
     display4: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '1.75rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: roboto.style.fontFamily,
+      fontWeight: 'var(--display4-font-weight)',
+      fontSize: 'var(--display4-font-size)',
+      lineHeight: 'var(--display4-line-height)',
+      margin: 'var(--display4-margin)'
     },
     display5: {
+      display: 'block',
       fontFamily: roboto.style.fontFamily,
       fontWeight: 500,
-      fontSize: '1.5rem',
-      display: 'block',
-      marginBottom: ' .25em'
+      fontSize: 'var(--display5-font-size)',
+      lineHeight: 'var(--display5-line-height)',
+      margin: 'var(--display5-margin)'
     },
     display6: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '1.25rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: roboto.style.fontFamily,
+      fontWeight: 'var(--overline-font-weight)',
+      fontSize: 'var(--display6-font-size)',
+      lineHeight: 'var(--display6-line-height)',
+      margin: 'var(--display6-margin)'
     },
     overline: {
       fontFamily: roboto.style.fontFamily,
-      fontWeight: 900,
-      fontSize: '.75rem',
+      fontWeight: 'var(--overline-font-weight)',
+      fontSize: 'var(--overline-font-size)',
+      lineHeight: 'var(--overline-line-height)',
       textTransform: 'uppercase',
-      marginBottom: `${defaultSpacing}px` // TODO: Check on this approach
+      margin: 'var(--overline-margin)'
     }
   },
   containerBreakpoints: {
@@ -235,7 +242,7 @@ const coreTheme = createTheme({
   }
 });
 
-const theme: Theme = createTheme(
+export const theme: Theme = createTheme(
   deepmerge(coreTheme, {
     components: Object.values(themeComponents)
       .map((t) => t(coreTheme))
@@ -255,5 +262,3 @@ const theme: Theme = createTheme(
 //     }
 //   }
 // });
-
-export default theme;

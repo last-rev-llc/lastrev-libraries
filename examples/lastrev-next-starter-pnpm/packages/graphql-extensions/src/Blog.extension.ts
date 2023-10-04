@@ -8,6 +8,7 @@ import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
 import { resolveField } from './utils/resolveField';
+import { pageBreadcrumbsResolver } from './utils/pageBreadcrumbsResolver';
 
 export const typeDefs = gql`
   extend type Blog {
@@ -17,6 +18,8 @@ export const typeDefs = gql`
     relatedItems: Content
     categories: [CategoryBlog]
     author: Person
+    breadcrumbs: pageBreadcrumbsResolver
+
     # Uncomment next line if using Media references instead
     # featuredMedia: [Media]
   }

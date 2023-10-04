@@ -22,13 +22,13 @@ const Text = ({ body, align, overline, title, subtitle, variant, sidekickLookup,
         )}
 
         {!!title && (
-          <Title data-testid="Text-title" variant="h2" {...sidekick(sidekickLookup, 'title')}>
+          <Title data-testid="Text-title" variant="display1" {...sidekick(sidekickLookup, 'title')}>
             {title}
           </Title>
         )}
 
         {!!subtitle && (
-          <Subtitle data-testid="Text-subtitle" {...sidekick(sidekickLookup, 'subtitle')} variant="h3">
+          <Subtitle data-testid="Text-subtitle" {...sidekick(sidekickLookup, 'subtitle')} variant="display2">
             {subtitle}
           </Subtitle>
         )}

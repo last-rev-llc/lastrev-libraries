@@ -7,6 +7,7 @@ import { pathResolver } from './utils/pathResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { resolveField } from './utils/resolveField';
+import { pageBreadcrumbsResolver } from './utils/pageBreadcrumbsResolver';
 
 export const typeMappings = {};
 
@@ -25,7 +26,8 @@ export const mappers: Mappers = {
     Page: {
       path: pathResolver,
       header: pageHeaderResolver,
-      footer: pageFooterResolver
+      footer: pageFooterResolver,
+      breadcrumbs: pageBreadcrumbsResolver
     },
 
     Link: {
