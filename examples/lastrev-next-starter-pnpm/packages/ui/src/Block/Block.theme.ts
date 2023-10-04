@@ -12,6 +12,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   root: ({ theme, ownerState }) => ({
     containerType: 'inline-size',
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    position: 'relative',
     width: '100%',
     display: 'flex',
     flexDirection: 'column'

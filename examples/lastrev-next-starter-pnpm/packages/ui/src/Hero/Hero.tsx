@@ -7,14 +7,22 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ContentModule from '../ContentModule';
 import Grid from '../Grid';
 import type { HeroProps, HeroOwnerState } from './Hero.types';
+import Background from '../Background';
 
 export const Hero = (props: HeroProps) => {
   const ownerState = { ...props };
-  const { background, overline, title, subtitle, body, actions, images, sidekickLookup } = props;
+  const { background, backgroundColor, overline, title, subtitle, body, actions, images, sidekickLookup } = props;
 
   return (
     <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
-      {background ? (
+      <HeroBackground
+        background={{ ...background, priority: true }}
+        backgroundColor={backgroundColor}
+        testId="Hero-background"
+      />
+
+      {/* {background ? (
+
         <BackgroundGrid ownerState={ownerState}>
           <Background
             {...background}
@@ -26,7 +34,7 @@ export const Hero = (props: HeroProps) => {
             testId="Hero-background"
           />
         </BackgroundGrid>
-      ) : null}
+      ) : null} */}
       <ContentGrid ownerState={ownerState}>
         {overline || title || subtitle || body || actions ? (
           <Content ownerState={ownerState}>
@@ -116,11 +124,11 @@ const Content = styled(Box, {
   overridesResolver: (_, styles) => [styles.content]
 })<{ ownerState: HeroOwnerState }>``;
 
-const Background = styled(ContentModule, {
+const HeroBackground = styled(Background, {
   name: 'Hero',
   slot: 'Background',
   overridesResolver: (_, styles) => [styles.background]
-})<{ ownerState: HeroOwnerState }>``;
+})<{}>``;
 
 const Overline = styled(Typography, {
   name: 'Hero',

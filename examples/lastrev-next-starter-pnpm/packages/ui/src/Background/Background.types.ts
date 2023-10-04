@@ -1,8 +1,8 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
-import type { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { ContentModule_BaseFragmentFragment } from '@graphql-sdk/types';
 
 // TODO Review
-export enum HeroVariants {
+export enum BackgroundVariants {
   default = 'default',
   mediaOnRight = 'mediaOnRight',
   mediaOnRightFullBleed = 'mediaOnRightFullBleed',
@@ -12,12 +12,13 @@ export enum HeroVariants {
   mediaAbove = 'mediaAbove'
 }
 
-
-export interface HeroProps extends Hero_BaseFragmentFragment {
+export interface BackgroundProps {
+  background?: ContentModule_BaseFragmentFragment;
+  backgroundColor?: string;
 }
 
-export interface HeroOwnerState extends HeroProps {}
-interface HeroClasses {
+export interface BackgroundOwnerState extends BackgroundProps {}
+interface BackgroundClasses {
   root: string;
   backgroundGrid: string;
   contentGrid: string;
@@ -33,24 +34,24 @@ interface HeroClasses {
   action: string;
 }
 
-export declare type HeroClassKey = keyof HeroClasses;
+export declare type BackgroundClassKey = keyof BackgroundClasses;
 
 declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
-    Hero: HeroClassKey;
+    Background: BackgroundClassKey;
   }
 
   export interface ComponentsPropsList {
-    Hero: HeroProps;
+    Background: BackgroundProps;
   }
 }
 
 declare module '@mui/material/styles' {
   interface Components {
-    Hero?: {
-      defaultProps?: ComponentsProps['Hero'];
-      styleOverrides?: ComponentsOverrides<Theme>['Hero'];
-      variants?: ComponentsVariants['Hero'];
+    Background?: {
+      defaultProps?: ComponentsProps['Background'];
+      styleOverrides?: ComponentsOverrides<Theme>['Background'];
+      variants?: ComponentsVariants['Background'];
     };
   }
 }

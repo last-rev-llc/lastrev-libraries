@@ -3,6 +3,7 @@ import { blockBaseMock } from '../Block/Block.mock';
 import { collectionBaseMock } from '../Collection/Collection.mock';
 import { footerBaseMock } from '../Footer/Footer.mock';
 import { headerBaseMock } from '../Header/Header.mock';
+import heroBaseMock from '../Hero/Hero.mock';
 import { tabsBaseMock } from '../Tabs/Tabs.mock';
 
 import { randomId } from '../utils/randomId';
@@ -15,8 +16,15 @@ const pageDefaultMock: PageProps = {
   variant: PageVariants.default,
   header: headerBaseMock(),
   footer: footerBaseMock(),
+  hero: heroBaseMock(),
   title: 'This is the Page Title',
-  contents: [blockBaseMock(), collectionBaseMock(), accordionBaseMock(), tabsBaseMock()]
+  contents: [
+    collectionBaseMock(),
+    blockBaseMock(),
+    blockBaseMock({ backgroundColor: 'secondary' }),
+    accordionBaseMock(),
+    tabsBaseMock()
+  ]
 };
 
 export const pageBaseMock = ({ ...override } = {}) => ({
