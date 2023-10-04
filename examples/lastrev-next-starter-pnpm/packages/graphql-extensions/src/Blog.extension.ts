@@ -1,13 +1,13 @@
 import gql from 'graphql-tag';
-import { Mappers, ApolloContext } from '@last-rev/types';
+import type { Mappers, ApolloContext } from '@last-rev/types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
 import { blogV1 } from './PathsConfigs.extension';
 import { createType } from './utils/createType';
-import pageFooterResolver from './utils/pageFooterResolver';
-import pageHeaderResolver from './utils/pageHeaderResolver';
-import pathResolver from './utils/pathResolver';
-import resolveField from './utils/resolveField';
+import { pageFooterResolver } from './utils/pageFooterResolver';
+import { pageHeaderResolver } from './utils/pageHeaderResolver';
+import { pathResolver } from './utils/pathResolver';
+import { resolveField } from './utils/resolveField';
 
 export const typeDefs = gql`
   extend type Blog {
@@ -23,7 +23,7 @@ export const typeDefs = gql`
 `;
 
 // Controls which site the Blogs gets it's global config from
-const BLOGS_SITE_ID = process.env.BLOGS_SITE_ID ?? (process.env.DEFAULT_SITE_ID || process.env.SITE_ID);
+// const BLOGS_SITE_ID = process.env.BLOGS_SITE_ID ?? (process.env.DEFAULT_SITE_ID || process.env.SITE_ID);
 
 // const blogGlobalContentsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
 //   // TODO: Make getting a localized resolved link a single function

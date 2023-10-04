@@ -10,64 +10,72 @@ const defaultProps: ComponentsProps['Block'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   root: ({ theme, ownerState }) => ({
+    containerType: 'inline-size',
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
-    padding: theme.spacing(12, 0)
+    flexDirection: 'column'
+    // TODO: Update to check if within a section
+    // padding: theme.spacing(12, 0)
   }),
 
-  introTextGrid: ({ theme }) => ({}),
+  // introTextGrid: : {},
 
-  introText: ({}) => ({}),
+  // introText: : {},
 
-  contentOuterGrid: ({ theme }) => ({
+  contentOuterGrid: {
     '> *': {
       gridColumnStart: 'auto'
     }
-  }),
+  },
 
   overline: ({ theme }) => ({
     marginBottom: theme.spacing(1)
   }),
 
-  title: () => ({}),
+  // title: : {},
 
-  subtitle: () => ({}),
+  // subtitle: : {},
 
-  body: () => ({}),
+  // body: : {},
 
-  content: ({ theme }) => ({
+  content: {
     display: 'flex',
     flexDirection: 'column'
-  }),
+  },
 
   mainContentWrapper: ({ theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     alignSelf: 'center',
-    gridRow: 1,
     gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-half',
-    [theme.breakpoints.down('sm')]: {
-      gridColumnEnd: 'span 4',
-      gridRow: 2
+    gridColumnEnd: 'content-end',
+    gridRow: 2,
+
+    [theme.containerBreakpoints.up('md')]: {
+      gridRow: 1,
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-half'
     }
   }),
+
   sideContentWrapper: ({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
     gridRow: 1,
-    gridColumnStart: 'content-half',
+    gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
-    [theme.breakpoints.down('sm')]: {
-      gridColumnStart: 'content-start'
+
+    [theme.containerBreakpoints.up('md')]: {
+      gridRow: 1,
+      gridColumnStart: 'content-half',
+      gridColumnEnd: 'content-end'
     }
   }),
 
-  mediaItems: () => ({}),
+  // mediaItems: : {},
 
   actionsWrapper: ({ theme }) => ({
     marginTop: theme.spacing(2),
@@ -75,75 +83,82 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     flexDirection: 'column',
     gap: theme.spacing(2),
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('lg')]: {
       flexDirection: 'row'
     }
-  }),
+  })
 
-  action: () => ({})
+  // action: : {}
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
-  {
-    props: {
-      variant: 'contentOnRight'
-    },
-    style: () => ({})
-  },
+  // {
+  //   props: {
+  //     variant: 'contentOnRight'
+  //   },
+  //   style: {}
+  // },
   {
     props: {
       variant: 'contentOnRightFullBleed'
     },
-    style: () => ({
+    style: {
       '[class*=sideContentWrapper]': {
-        gridColumnEnd: '-1',
-        [theme.breakpoints.down('sm')]: {
-          gridColumnStart: '1'
+        gridColumnStart: '1',
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnEnd: '-1'
         }
       }
-    })
+    }
   },
   {
     props: {
       variant: 'contentOnLeft'
     },
-    style: () => ({
+    style: {
       '[class*=mainContentWrapper]': {
-        gridColumnStart: 'content-half',
+        gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
-        [theme.breakpoints.down('sm')]: {
-          gridColumnStart: 'content-start'
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnStart: 'content-half'
         }
       },
+
       '[class*=sideContentWrapper]': {
         gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-half',
-        [theme.breakpoints.down('sm')]: {
-          gridColumnEnd: 'content-end'
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnEnd: 'content-half'
         }
       }
-    })
+    }
   },
   {
     props: {
       variant: 'contentOnLeftFullBleed'
     },
-    style: () => ({
+    style: {
       '[class*=mainContentWrapper]': {
-        gridColumnStart: 'content-half',
+        gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
-        [theme.breakpoints.down('sm')]: {
-          gridColumnStart: 'content-start'
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnStart: 'content-half'
         }
       },
+
       '[class*=sideContentWrapper]': {
         gridColumnStart: '1',
-        gridColumnEnd: 'content-half',
-        [theme.breakpoints.down('sm')]: {
-          gridColumnEnd: '-1'
+        gridColumnEnd: '-1',
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnEnd: 'content-half'
         }
       }
-    })
+    }
   },
 
   {

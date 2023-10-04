@@ -26,5 +26,3 @@ const resolveProps = (defaultProps: any, props: any) => {
   });
   return output;
 };
-
-export default useThemeProps;

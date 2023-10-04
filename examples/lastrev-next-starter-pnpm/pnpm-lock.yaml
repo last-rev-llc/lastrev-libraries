@@ -205,9 +205,6 @@ importers:
       graphql-tag:
         specifier: ^2.12.5
         version: 2.12.5(graphql@16.6.0)
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
       xss:
         specifier: ^1.0.14
         version: 1.0.14
@@ -215,9 +212,6 @@ importers:
       '@types/css':
         specifier: ^0.0.34
         version: 0.0.34
-      '@types/lodash':
-        specifier: ^4.14.178
-        version: 4.14.198
       tsconfig:
         specifier: workspace:*
         version: link:../tsconfig

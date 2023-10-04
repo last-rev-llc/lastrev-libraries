@@ -3,16 +3,16 @@ import { mediaBaseImageMock } from '../Media/Media.mock';
 import { richTextMock } from '../RichText/RichText.mock';
 import { introTextMock } from '../Text/Text.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
-import type { BlockProps } from './Block.types';
+import { type BlockProps, BlockVariants } from './Block.types';
 
 const blockDefaultMock = (override?: Partial<BlockProps>): BlockProps => {
   const baseMock: BlockProps = {
     id: randomId(),
     __typename: 'Block',
-    backgroundColor: 'background',
-    variant: 'default',
+    backgroundColor: undefined,
+    variant: BlockVariants.default,
     introText: introTextMock(),
     overline: 'This is the Block overline',
     title: 'This is the Block title',
@@ -43,7 +43,7 @@ export const blockContentOnRightMock = (override?: Partial<BlockProps>): BlockPr
   return {
     ...blockDefaultMock(override),
     title: 'This is the block title for the "Content on Right" variant',
-    variant: 'contentOnRight'
+    variant: BlockVariants.contentOnRight
   };
 };
 
@@ -51,7 +51,7 @@ export const blockContentOnRightFullBleedMock = (override?: Partial<BlockProps>)
   return {
     ...blockDefaultMock(override),
     title: 'This is the block title for the "Content on Right Full Bleed" variant',
-    variant: 'contentOnRightFullBleed'
+    variant: BlockVariants.contentOnRightFullBleed
   };
 };
 
@@ -59,7 +59,7 @@ export const blockContentOnLeftMock = (override?: Partial<BlockProps>): BlockPro
   return {
     ...blockDefaultMock(override),
     title: 'This is the block title for the "Content on Left" variant',
-    variant: 'contentOnLeft'
+    variant: BlockVariants.contentOnLeft
   };
 };
 
@@ -67,7 +67,7 @@ export const blockContentOnLeftFullBleedMock = (override?: Partial<BlockProps>):
   return {
     ...blockDefaultMock(override),
     title: 'This is the block title for the "Content on Left Full Bleed" variant',
-    variant: 'contentOnLeftFullBleed'
+    variant: BlockVariants.contentOnLeftFullBleed
   };
 };
 
@@ -75,7 +75,7 @@ export const blockContentBelowMock = (override?: Partial<BlockProps>): BlockProp
   return {
     ...blockDefaultMock(override),
     title: 'This is the block title for the "Content Below" variant',
-    variant: 'contentBelow'
+    variant: BlockVariants.contentBelow
   };
 };
 
@@ -83,7 +83,7 @@ export const blockContentAboveMock = (override?: Partial<BlockProps>): BlockProp
   return {
     ...blockDefaultMock(override),
     title: 'This is the block title for the "Content Above" variant',
-    variant: 'contentAbove'
+    variant: BlockVariants.contentAbove
   };
 };
 

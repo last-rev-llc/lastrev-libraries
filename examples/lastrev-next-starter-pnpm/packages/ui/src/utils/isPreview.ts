@@ -6,5 +6,3 @@ export const isPreview = () => {
   // console.log('ISPreview?', { preview, isEnabled });
   return preview || isEnabled;
 };
-
-export default isPreview;

@@ -1,11 +1,12 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
-import { Asset, Entry } from 'contentful';
+import type { ApolloContext } from '@last-rev/types';
+import type { Asset, Entry } from 'contentful';
 
 interface FieldReferenceValue {
   sys: { linkType: string };
 }
 type ResolvedValue = Asset | Entry<any> | null | Array<Asset | Entry<any> | null>;
+
 export const resolveLocalizedField = async (fields: any, field: string, ctx: ApolloContext): Promise<ResolvedValue> => {
   const { loaders, preview } = ctx;
   let value: FieldReferenceValue | any = getLocalizedField(fields, field, ctx);
@@ -36,5 +37,3 @@ export const resolveLocalizedField = async (fields: any, field: string, ctx: Apo
 
   return value;
 };
-
-export default resolveLocalizedField;

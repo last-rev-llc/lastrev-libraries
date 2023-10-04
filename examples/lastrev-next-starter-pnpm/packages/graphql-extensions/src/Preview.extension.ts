@@ -1,6 +1,6 @@
-import { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
-import merge from 'lodash/merge';
+import { deepMerge } from './utils/deepMerge';
 import { createType } from './utils/createType';
 
 export const typeMappings = {};
@@ -25,7 +25,7 @@ export const resolvers = {
       const content = await ctx.loaders.entryLoader.load({ id, preview: true });
 
       if (content && overrideContent) {
-        return merge(content, createType(content.sys.contentType.sys.id, overrideContent, ctx.locale));
+        return deepMerge(content, createType(content.sys.contentType.sys.id, overrideContent, ctx.locale));
       }
       return content;
     }

@@ -1,4 +1,4 @@
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import { type NavigationItemProps, NavigationLinkVariants } from './NavigationItem.types';
 

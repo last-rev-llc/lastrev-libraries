@@ -1,9 +1,8 @@
-import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext, Mappers } from '@last-rev/types';
 import gql from 'graphql-tag';
-import camelCase from 'lodash/camelCase';
-import toUpper from 'lodash/toUpper';
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import type { ApolloContext, Mappers } from '@last-rev/types';
 
+import { pascalCase } from './utils/pascalCase';
 import { collectOptions } from './utils/collectOptions';
 import { queryContentful } from './utils/queryContentful';
 import { getWinstonLogger } from '@last-rev/logging';
@@ -12,8 +11,6 @@ const logger = getWinstonLogger({
   package: 'graphql-contentful-extensions',
   module: 'Collection'
 });
-
-const pascalCase = (str: string) => camelCase(str).replace(/^(.)/, toUpper);
 
 // Note: If you want anything other than the below, this is where you will add it
 const COLLECTION_ITEM_TYPES = ['Card'];

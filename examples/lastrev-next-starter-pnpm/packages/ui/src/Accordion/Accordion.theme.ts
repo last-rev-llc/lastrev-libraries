@@ -9,23 +9,15 @@ import type {
 const defaultProps: ComponentsProps['Accordion'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
-  root: () => ({}),
-
-  contentGrid: () => ({}),
-
-  introTextGrid: () => ({}),
-
-  introText: ({}) => ({}),
-
-  accordionItem: ({}) => ({}),
-
-  summaryWrap: ({}) => ({}),
-
-  summary: ({}) => ({}),
-
-  detailsWrap: ({}) => ({}),
-
-  details: ({}) => ({})
+  // root: : {},
+  // contentGrid: : {},
+  // introTextGrid: : {},
+  // introText: ({}) => ({}),
+  // accordionItem: ({}) => ({}),
+  // summaryWrap: ({}) => ({}),
+  // summary: ({}) => ({}),
+  // detailsWrap: ({}) => ({}),
+  // details: ({}) => ({})
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Accordion'] => [

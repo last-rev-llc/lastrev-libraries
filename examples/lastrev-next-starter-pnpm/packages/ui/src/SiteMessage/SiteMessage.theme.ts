@@ -18,7 +18,7 @@ const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
       color: theme.palette.common.white
     },
 
-    [theme.breakpoints.down('md')]: {
+    [theme.containerBreakpoints.down('md')]: {
       margin: theme.spacing(0, -2),
       transform: 'scaleY(1)',
       transformOrigin: 'top',
@@ -41,7 +41,7 @@ const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
       // })
     },
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       margin: theme.spacing(0, -5),
 
       ...(!!ownerState.isElevated && {
@@ -52,7 +52,7 @@ const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
     }
   }),
 
-  contentOuterGrid: () => ({}),
+  // contentOuterGrid: : {},
 
   contentWrap: ({ theme }) => ({
     '& > *': {
@@ -75,11 +75,11 @@ const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
       width: 'inherit',
       height: 'inherit'
     }
-  }),
+  })
 
-  link: () => ({}),
+  // link: : {},
 
-  text: () => ({})
+  // text: : {}
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['SiteMessage'] => [];

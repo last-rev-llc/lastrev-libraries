@@ -1,5 +1,5 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from '@last-rev/types';
 
 // This is a example of a extension to normalize the color values from the CMS
 // Lowercase the color and remove anything after the first _

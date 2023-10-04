@@ -16,11 +16,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
     ...((ownerState?.variant === 'hubspotFormDefault' || ownerState?.variant === 'hubspotFormDefaultThin') && {
       padding: theme.spacing(2),
 
-      [theme.breakpoints.up('md')]: {
+      [theme.containerBreakpoints.up('md')]: {
         padding: theme.spacing(10, 4, 8, 0)
       },
 
-      [theme.breakpoints.up('lg')]: {
+      [theme.containerBreakpoints.up('lg')]: {
         padding: theme.spacing(18, 4, 16, 0)
       }
     }),
@@ -36,12 +36,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
       ...(ownerState?.variant === 'hubspotFormFooter' && {
         gap: theme.spacing(2),
 
-        [theme.breakpoints.up('md')]: {
+        [theme.containerBreakpoints.up('md')]: {
           gridTemplateColumns: 'auto min-content',
           gap: theme.spacing(0.5)
         },
 
-        [theme.breakpoints.up('lg')]: {
+        [theme.containerBreakpoints.up('lg')]: {
           gridTemplateColumns: 'repeat(auto-fit, minmax(0, min-content))',
           gap: theme.spacing(5.75)
         }
@@ -60,7 +60,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
           grid: 'none',
           gap: theme.spacing(3),
 
-          [theme.breakpoints.up('lg')]: {
+          [theme.containerBreakpoints.up('lg')]: {
             gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))',
 
             ...(ownerState?.variant === 'hubspotFormDefaultThin' && {
@@ -73,7 +73,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
           grid: 'none',
           gap: theme.spacing(2),
 
-          [theme.breakpoints.up('md')]: {
+          [theme.containerBreakpoints.up('md')]: {
             gridTemplateColumns: 'initial'
           }
         }),
@@ -82,14 +82,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
           grid: 'none',
           gap: theme.spacing(2),
 
-          [theme.breakpoints.up('md')]: {
+          [theme.containerBreakpoints.up('md')]: {
             grid: 'initial',
             gridTemplateColumns: 'minmax(150px, max-content) minmax(150px, max-content)',
 
             gap: theme.spacing(0.5)
           },
 
-          [theme.breakpoints.up('lg')]: {
+          [theme.containerBreakpoints.up('lg')]: {
             gridTemplateColumns: 'minmax(250px, max-content) minmax(250px, max-content)',
             gap: theme.spacing(1)
           }
@@ -263,7 +263,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
             borderColor: theme.palette.common.black
           },
 
-          [theme.breakpoints.up('md')]: {
+          [theme.containerBreakpoints.up('md')]: {
             ...(ownerState?.variant === 'hubspotFormFooter' && {
               width: 'auto%'
             })

@@ -1,6 +1,6 @@
 import { ApolloContext } from '@last-rev/types';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import camelCase from 'lodash/camelCase';
+import { camelCase } from './camelCase';
 
 interface DefaultResolverParams {
   defaultValue?: string;
@@ -10,7 +10,7 @@ interface DefaultResolverParams {
   noCamelCase?: boolean;
 }
 
-const defaultResolver =
+export const defaultResolver =
   (field: string, params: DefaultResolverParams = {}) =>
   (ref: any, _args: any, ctx: ApolloContext) => {
     const item = getLocalizedField(ref?.fields, field, ctx);
@@ -19,5 +19,3 @@ const defaultResolver =
     if (params.defaultValue) return params.noCamelCase ? params.defaultValue : camelCase(params.defaultValue);
     return;
   };
-
-export default defaultResolver;

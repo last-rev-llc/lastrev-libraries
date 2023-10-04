@@ -5,6 +5,7 @@ import type {
   ComponentsOverrides,
   ComponentsVariants
 } from '@mui/material/styles';
+
 import { CollectionVariants } from './Collection.types';
 
 const defaultProps: ComponentsProps['Collection'] = {};
@@ -13,22 +14,31 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   root: ({ theme, ownerState }) => ({
     containerType: 'inline-size',
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    padding: theme.spacing(12, 0),
     display: 'flex',
     flexDirection: 'column',
-    width: '100%'
+    width: '100%',
+    gridColumn: 'content-start/content-end'
+
+    // TODO: Update to check if within a section
+    // padding: theme.spacing(12, 0)
   }),
+
   itemsGrid: ({ theme }) => ({
+    gridColumn: 'content-start/content-end',
     display: 'grid',
-    gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-    [theme.breakpoints.down('md')]: {
-      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-    },
-    [theme.breakpoints.down('sm')]: {
-      gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
-    },
-    gap: theme.spacing(3, 3)
-  })
+    gap: 'inherit',
+    gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
+
+    // [theme.containerBreakpoints.up('sm')]: {
+    //   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
+    // },
+
+    // [theme.containerBreakpoints.up('lg')]: {
+    //   gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
+    // }
+  }),
+
+  contentGrid: {}
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
@@ -37,13 +47,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
       variant: CollectionVariants.onePerRow
     },
     style: {
-      [theme.breakpoints.up('sm')]: {
-        '[class*="Collection-itemsGrid"]': {
-          '&': {
-            gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
-          }
-        }
-      }
+      gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
     }
   },
   {
@@ -51,12 +55,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
       variant: CollectionVariants.twoPerRow
     },
     style: {
-      [theme.breakpoints.up('sm')]: {
-        '[class*="Collection-itemsGrid"]': {
-          '&': {
-            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-          }
-        }
+      [theme.containerBreakpoints.up('sm')]: {
+        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
       }
     }
   },
@@ -64,7 +64,17 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
     props: {
       variant: CollectionVariants.threePerRow
     },
-    style: {}
+    style: {
+      [theme.containerBreakpoints.up('sm')]: {
+        'border': 'solid 10px yellow',
+        '[class*=itemsGrid]': { gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }
+      },
+
+      [theme.containerBreakpoints.up('lg')]: {
+        'border': 'solid 10px orange',
+        '[class*=itemsGrid]': { border: 'solid 10px black', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }
+      }
+    }
   },
   {
     props: {
@@ -72,14 +82,14 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
     },
     style: {
       '[class*="Collection-itemsGrid"]': {
-        '&': {
-          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
-          [theme.breakpoints.down('sm')]: {
-            gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
-          },
-          [theme.breakpoints.down('xs')]: {
-            gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-          }
+        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+
+        [theme.containerBreakpoints.up('sm')]: {
+          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
         }
       }
     }
@@ -91,12 +101,14 @@ const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
     style: {
       '[class*="Collection-itemsGrid"]': {
         '&': {
-          gridTemplateColumns: 'repeat(5, minmax(0, 1fr))',
-          [theme.breakpoints.down('sm')]: {
+          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+
+          [theme.containerBreakpoints.up('sm')]: {
             gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
           },
-          [theme.breakpoints.down('xs')]: {
-            gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
+
+          [theme.containerBreakpoints.up('lg')]: {
+            gridTemplateColumns: 'repeat(5, minmax(0, 1fr))'
           }
         }
       }

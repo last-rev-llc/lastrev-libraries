@@ -4,7 +4,7 @@ import { richTextMock } from '../RichText/RichText.mock';
 
 import type { HeroProps } from './Hero.types';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 const heroDefaultMock: HeroProps = {
   id: randomId(),

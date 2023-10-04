@@ -1,6 +1,6 @@
 import { introTextMock } from '../Text/Text.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import { type FormProps, FormVariants } from './Form.types';
 

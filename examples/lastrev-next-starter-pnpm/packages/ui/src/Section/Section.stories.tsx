@@ -1,5 +1,5 @@
 import Section from './Section';
-import { sectionBaseMock, sectionOnePerRowMock, sectionTwoPerRowMock } from './Section.mock';
+import { sectionBaseMock, sectionOnePerRowMock, sectionTwoPerRowMock, sectionThreePerRowMock } from './Section.mock';
 
 export default {
   title: 'Components/Section',
@@ -17,3 +17,4 @@ export default {
 export const Default = { args: { ...sectionBaseMock() } };
 export const OnePerRow = { args: { ...sectionOnePerRowMock() } };
 export const TwoPerRow = { args: { ...sectionTwoPerRowMock() } };
+export const ThreePerRow = { args: { ...sectionThreePerRowMock() } };

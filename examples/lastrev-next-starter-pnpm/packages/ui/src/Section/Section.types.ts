@@ -2,38 +2,49 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 
 import type { Section_BaseFragmentFragment } from '@graphql-sdk/types';
 
-import { Breakpoint } from '@mui/material';
+// import { Breakpoint } from '@mui/material';
 
-import type { MediaProps } from '../Media/Media.types';
-import type { TextProps } from '../Text/Text.types';
+// import type { MediaProps } from '../Media/Media.types';
+// import type { TextProps } from '../Text/Text.types';
+
+export enum SectionContentDirections {
+  row = 'row',
+  column = 'column'
+}
+
+export enum SectionVariants {
+  default = 'default',
+  onePerRow = 'onePerRow',
+  twoPerRow = 'twoPerRow',
+  threePerRow = 'threePerRow'
+}
 
 export interface SectionProps extends Section_BaseFragmentFragment {
-  introText?: TextProps;
-  contents?: Array<{ __typename?: string; id?: string; file?: any }>;
-  background?: MediaProps;
-  backgroundColor?: string;
-  variant?: string;
-  testId?: string;
-  contentWidth?: false | Breakpoint | undefined;
-  contentDirection?: 'row' | 'column' | undefined;
-  contentSpacing?: number;
-  // Enables exposing inner `sx` prop through content
-  styles?: {
-    root?: any;
-    gridContainer?: any & { spacing: any };
-    gridItem?: any & { xs: any; sm: any; md: any };
-    gridItems?: Array<any & { xs: any; sm: any; md: any }>;
-  };
-  sidekickLookup?: any;
+  // introText?: TextProps;
+  // contents?: Array<{ __typename?: string; id?: string; file?: any }>;
+  // background?: MediaProps;
+  // backgroundColor?: string;
+  variant?: SectionVariants;
+  // testId?: string;
+  // contentWidth?: false | Breakpoint | undefined;
+  contentDirection?: SectionContentDirections;
+  // contentSpacing?: number;
+  // sidekickLookup?: any;
 }
+
+export interface SectionOwnerState extends SectionProps {}
 
 interface SectionClasses {
   root: string;
-  contentContainer: string;
-  backgroundImage: string;
-  gridContainer: string;
-  gridItem: string;
+  contentOuterGrid: string;
+  contentWrap: string;
+  contentInnerGrid: string;
+  backgroundMediaWrap: string;
+  backgroundMedia: string;
+  introTextGrid: string;
   introText: string;
+  itemsGrid: string;
+  sectionItem: string;
 }
 
 export declare type SectionClassKey = keyof SectionClasses;

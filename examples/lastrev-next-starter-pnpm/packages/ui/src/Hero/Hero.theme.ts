@@ -60,7 +60,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     };
   },
 
-  backgroundRoot: () => ({
+  backgroundRoot: {
     gridColumn: '1/-1',
     gridRow: '1/-1',
     position: 'absolute',
@@ -69,13 +69,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     left: 0,
     width: '100%',
     height: '100%'
-  }),
+  },
 
-  backgroundRootContent: () => ({
+  backgroundRootContent: {
     objectFit: 'cover',
     width: '100%',
     height: '100%'
-  }),
+  },
 
   contentOuterGrid: ({ theme }) => {
     return {
@@ -87,39 +87,39 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     };
   },
 
-  content: () => ({
+  content: {
     display: 'flex',
     flexDirection: 'column'
-  }),
+  },
 
-  mainContentWrapper: () => ({
+  mainContentWrapper: {
     gridColumn: '1/7',
     gridRow: '1',
     display: 'flex',
     flexDirection: 'column',
     alignSelf: 'center'
-  }),
+  },
 
   overline: ({ theme }) => ({
     marginBottom: theme.spacing(1)
   }),
 
-  title: () => ({}),
+  // title: : {},
 
-  subtitle: () => ({}),
+  // subtitle: : {},
 
-  body: () => ({}),
+  // body: : {},
 
-  sideContentWrapper: () => ({
+  sideContentWrapper: {
     gridColumn: '7/-1',
     gridRow: '1',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column'
-  }),
+  },
 
-  images: () => ({}),
+  // images: : {},
 
   actionsWrapper: ({ theme }) => ({
     marginTop: theme.spacing(2),
@@ -127,12 +127,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     flexDirection: 'column',
     gap: theme.spacing(2),
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       flexDirection: 'row'
     }
-  }),
+  })
 
-  action: () => ({})
+  // action: : {}
 };
 
 // const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
@@ -140,7 +140,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 //     props: {
 //       variant: 'mediaOnLeft'
 //     },
-//     style: () => ({
+//     style: {
 //       '[class*=mainContentWrapper]': {
 //         gridColumn: '7/-1',
 //         gridRow: 1
@@ -150,13 +150,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 //         gridColumn: '1/7',
 //         gridRow: 1
 //       }
-//     })
+//     }
 //   },
 //   {
 //     props: {
 //       variant: 'mediaOnLeftFullBleed'
 //     },
-//     style: () => ({
+//     style: {
 //       '[class*=mainContentWrapper]': {
 //         gridColumn: '7/-1',
 //         gridRow: 1
@@ -166,13 +166,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 //         gridColumn: '1/7',
 //         gridRow: 1
 //       }
-//     })
+//     }
 //   },
 //   {
 //     props: {
 //       variant: 'mediaOnRight'
 //     },
-//     style: () => ({
+//     style: {
 //       'border': 'solid 10px blue',
 //       '[class*=mainContentWrapper]': {
 //         gridColumn: '1/7',
@@ -183,13 +183,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 //         gridColumn: '7/-1',
 //         gridRow: 1
 //       }
-//     })
+//     }
 //   },
 //   {
 //     props: {
 //       variant: 'mediaOnRightFullBleed'
 //     },
-//     style: () => ({
+//     style: {
 //       '[class*=mainContentWrapper]': {
 //         gridColumn: '1/7',
 //         gridRow: 1
@@ -199,7 +199,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 //         gridColumn: '7/-1',
 //         gridRow: 1
 //       }
-//     })
+//     }
 //   },
 //   {
 //     props: {

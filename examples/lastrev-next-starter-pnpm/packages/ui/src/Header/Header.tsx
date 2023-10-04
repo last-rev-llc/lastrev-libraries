@@ -118,7 +118,7 @@ const Root = styled(Box, {
   slot: 'Root',
   shouldForwardProp: (prop: string) => prop !== 'menuVisible',
   overridesResolver: (_, styles) => [styles.root]
-})<{ ownerState: HeaderOwnerState; menuVisible: boolean }>(() => ({}));
+})<{ ownerState: HeaderOwnerState; menuVisible: boolean }>``;
 
 const ContentOuterGrid = styled(Grid, {
   name: 'Header',

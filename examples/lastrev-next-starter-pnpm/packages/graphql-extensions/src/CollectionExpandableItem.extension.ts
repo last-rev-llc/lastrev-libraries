@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-import { ApolloContext, Mappers } from '@last-rev/types';
+import type { ApolloContext, Mappers } from '@last-rev/types';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 
 export const typeDefs = gql`

@@ -1,6 +1,6 @@
 import { mediaBaseImageMock } from '../Media/Media.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import type { QuoteProps } from './Quote.types';
 

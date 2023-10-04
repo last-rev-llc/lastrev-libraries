@@ -1,33 +1,45 @@
-import forOwn from 'lodash/forOwn';
-import isUndefined from 'lodash/isUndefined';
-import isNull from 'lodash/isNull';
-import isNaN from 'lodash/isNaN';
-import isString from 'lodash/isString';
-import isEmpty from 'lodash/isEmpty';
-import isObject from 'lodash/isObject';
-import isArray from 'lodash/isArray';
-import pull from 'lodash/pull';
-import cloneDeep from 'lodash/cloneDeep';
+export const pruneEmpty = (obj: any): any => {
+  return (function prune(current: any): any {
+    Object.keys(current).forEach((key) => {
+      const value = current[key];
 
-export function pruneEmpty(obj: any) {
-  return (function prune(current) {
-    forOwn(current, function (value, key) {
       if (
-        isUndefined(value) ||
-        isNull(value) ||
-        isNaN(value) ||
-        (isString(value) && isEmpty(value)) ||
-        (isObject(value) && key !== 'json' && isEmpty(prune(value)))
+        value === undefined ||
+        value === null ||
+        Number.isNaN(value) ||
+        (typeof value === 'string' && value.trim() === '') ||
+        (isObjectLike(value) && key !== 'json' && isEmpty(prune(value)))
       ) {
         delete current[key];
       }
     });
-    // remove any leftover undefined values from the delete
-    // operation on an array
-    if (isArray(current)) pull(current, undefined);
+
+    if (Array.isArray(current)) {
+      for (let i = current.length - 1; i >= 0; i--) {
+        if (current[i] === undefined) {
+          current.splice(i, 1);
+        }
+      }
+    }
 
     return current;
-  })(cloneDeep(obj)); // Do not modify the original object, create a clone instead
-}
+  })(cloneDeep(obj));
+};
 
-export default pruneEmpty;
+const isObjectLike = (value: any): boolean => {
+  return typeof value === 'object' && value !== null;
+};
+
+const isEmpty = (obj: any): boolean => {
+  if (Array.isArray(obj)) {
+    return obj.length === 0;
+  } else if (isObjectLike(obj)) {
+    return Object.keys(obj).length === 0;
+  } else {
+    return false;
+  }
+};
+
+const cloneDeep = (obj: any): any => {
+  return JSON.parse(JSON.stringify(obj));
+};

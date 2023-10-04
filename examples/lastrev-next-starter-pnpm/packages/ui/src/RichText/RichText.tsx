@@ -234,20 +234,20 @@ const EmbeddedRoot = styled('div', {
   slot: 'EmbeddedRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.embeddedRoot]
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>``;
 
 const InlineRoot = styled('span', {
   name: 'RichText',
   slot: 'InlineRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.inlineRoot]
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>``;
 
 const TableRoot = styled(TableContainer, {
   name: 'RichText',
   slot: 'TableRoot',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.tableRoot]
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>``;
 
 export default RichText;

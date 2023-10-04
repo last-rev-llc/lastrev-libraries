@@ -1,4 +1,4 @@
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import { type LinkProps, LinkVariants } from './Link.types';
 

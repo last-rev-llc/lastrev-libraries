@@ -9,7 +9,7 @@ import type {
 const defaultProps: ComponentsProps['HeaderNavLinkNested'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLinkNested'] = {
-  root: () => ({}),
+  // root: : {},
 
   navItemLink: ({ theme }) => ({
     // TODO: Check if this is needed

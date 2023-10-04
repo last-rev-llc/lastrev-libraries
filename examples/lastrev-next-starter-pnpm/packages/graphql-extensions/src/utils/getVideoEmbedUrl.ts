@@ -28,6 +28,7 @@ export const getVideoEmbedUrl = (assetURL: string) => {
   }
   return null;
 };
+
 export const getThumbnailURL = (assetURL: string) => {
   if (typeof assetURL !== 'string') {
     return null;

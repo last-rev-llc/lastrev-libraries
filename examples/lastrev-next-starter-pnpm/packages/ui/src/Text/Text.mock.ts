@@ -1,6 +1,6 @@
 import { richTextMock } from '../RichText/RichText.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import type { TextProps } from './Text.types';
 

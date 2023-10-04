@@ -1,12 +1,12 @@
 import gql from 'graphql-tag';
-import { Mappers, ApolloContext } from '@last-rev/types';
+import type { Mappers, ApolloContext } from '@last-rev/types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
 import { pageV1 } from './PathsConfigs.extension';
-import pathResolver from './utils/pathResolver';
-import pageHeaderResolver from './utils/pageHeaderResolver';
-import pageFooterResolver from './utils/pageFooterResolver';
-import resolveField from './utils/resolveField';
+import { pathResolver } from './utils/pathResolver';
+import { pageHeaderResolver } from './utils/pageHeaderResolver';
+import { pageFooterResolver } from './utils/pageFooterResolver';
+import { resolveField } from './utils/resolveField';
 
 export const typeMappings = {};
 

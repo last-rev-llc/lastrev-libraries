@@ -1,4 +1,4 @@
-import getTypeName from './getTypeName';
+import { getTypeName } from './getTypeName';
 
 type SideKickLookup = {
   contentId: string;

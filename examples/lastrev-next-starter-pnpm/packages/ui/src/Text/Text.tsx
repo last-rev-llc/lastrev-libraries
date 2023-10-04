@@ -54,7 +54,7 @@ const Root = styled(Box, {
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>(() => ({}));
+})<{ variant?: string }>``;
 
 const Overline = styled(Typography, {
   name: 'Text',

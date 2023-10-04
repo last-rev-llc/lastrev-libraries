@@ -1,9 +1,9 @@
-import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { ApolloContext } from '@last-rev/types';
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import type { ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
-import { createType } from './utils/createType';
-import { getSlug } from './utils/getSlug';
-import { getThumbnailURL } from './utils/getVideoEmbedUrl';
+// import { createType } from './utils/createType';
+// import { getSlug } from './utils/getSlug';
+// import { getThumbnailURL } from './utils/getVideoEmbedUrl';
 
 export const typeMappings = {};
 

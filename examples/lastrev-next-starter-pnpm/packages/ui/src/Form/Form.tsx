@@ -52,13 +52,13 @@ const Root = styled(Box, {
   name: 'Form',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
-})<{ ownerState?: any }>(() => ({}));
+})<{ ownerState?: any }>``;
 
 const FormOuterContainer = styled(Box, {
   name: 'Form',
   slot: 'FormOuterContainer',
   overridesResolver: (_, styles) => [styles.formOuterContainer]
-})<{ ownerState?: any }>(() => ({}));
+})<{ ownerState?: any }>``;
 
 const FormContainer = styled(Box, {
   name: 'Form',

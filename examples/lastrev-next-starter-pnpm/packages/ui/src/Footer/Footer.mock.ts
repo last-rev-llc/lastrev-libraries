@@ -7,7 +7,7 @@ import { mediaBaseImageMock } from '../Media/Media.mock';
 import { complexMock } from '../RichText/RichText.mock';
 import blockBaseMock from '../Block/Block.mock';
 
-import randomId from '../utils/randomId';
+import { randomId } from '../utils/randomId';
 
 import type { FooterProps } from './Footer.types';
 
