@@ -203,7 +203,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
           ...theme.typography.bodySmall,
           display: 'block !important',
           padding: theme.spacing(0.25, 0, 0),
-          color: theme.palette.error.main,
+          color: theme.vars.palette.error.main,
           textAlign: 'left'
         }
       }

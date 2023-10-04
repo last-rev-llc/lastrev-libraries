@@ -60,9 +60,9 @@ const Block = (props: BlockProps) => {
                     ownerState={ownerState}
                     {...sidekick(sidekickLookup, 'title')}
                     data-testid="Block-title"
-                    variant="h1">
-                    {title}
-                  </Title>
+                    variant="h1"
+                    dangerouslySetInnerHTML={{ __html: title }}
+                  />
                 )}
 
                 {!!subtitle && (

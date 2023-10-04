@@ -162,6 +162,7 @@ type CollectionDynamic implements Content {
   itemsVariant: String
   numberOfItemsToPull: String
   pullFromContentType: String
+  settings: JSON
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
@@ -237,6 +238,7 @@ input ContentsFilter {
 scalar Date
 
 type ElementForm implements Content {
+  allowPersonalEmailAddresses: Boolean
   animation: JSON
   breadcrumbs: [Link]
   confirmationPath: String
@@ -246,6 +248,7 @@ type ElementForm implements Content {
   footerDisclaimerOverride: RichText
   header: Header
   hero: Hero
+  hideRecaptcha: Boolean
   hubspotFormId: String
   hubspotPortalId: String
   id: String
@@ -462,6 +465,7 @@ type PageResource implements Content {
   disableBackToTop: Boolean
   footerDisclaimerOverride: RichText
   id: String
+  includeTocTableOfContents: Boolean
   internalTitle: String
   lr__path__: String
   persona: [String]
@@ -503,10 +507,13 @@ type Person implements Content {
 type PricingPlan implements Content {
   animation: JSON
   body: String
+  disclaimerText: String
   id: String
+  internalTitle: String
   overline: String
   price: String
   sidekickLookup: JSON
+  textBelowPrice: String
   theme: [Theme]
   variant: String
 }
