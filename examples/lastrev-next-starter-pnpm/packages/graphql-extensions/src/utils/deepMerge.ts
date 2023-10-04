@@ -1,17 +1,23 @@
-export const deepMerge = (obj1: any, obj2: any): any => {
-  const output = { ...obj1 };
-  if (typeof obj1 === 'object' && obj1 !== null && typeof obj2 === 'object' && obj2 !== null) {
-    Object.keys(obj2).forEach((key) => {
-      if (typeof obj2[key] === 'object' && obj2[key] !== null) {
-        if (key in obj1) {
-          output[key] = deepMerge(obj1[key], obj2[key]);
+export const deepMerge = (...objects: any[]): any => {
+  const output: any = {};
+
+  const isObject = (obj: any) => typeof obj === 'object' && obj !== null;
+
+  objects.forEach((obj) => {
+    if (isObject(obj)) {
+      Object.keys(obj).forEach((key) => {
+        if (isObject(obj[key])) {
+          if (key in output) {
+            output[key] = deepMerge(output[key], obj[key]);
+          } else {
+            output[key] = obj[key];
+          }
         } else {
-          output[key] = obj2[key];
+          output[key] = obj[key];
         }
-      } else {
-        output[key] = obj2[key];
-      }
-    });
-  }
+      });
+    }
+  });
+
   return output;
 };
