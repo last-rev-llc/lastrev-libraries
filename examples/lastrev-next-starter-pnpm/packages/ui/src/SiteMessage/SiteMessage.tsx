@@ -35,7 +35,7 @@ const Root = styled(Box, {
   name: 'SiteMessage',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
-})<{ ownerState: SiteMessageOwnerState }>(() => ({}));
+})<{ ownerState: SiteMessageOwnerState }>``;
 
 const ContentOuterGrid = styled(Grid, {
   name: 'SiteMessage',

@@ -13,7 +13,7 @@ const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGroup'] = 
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(3.5),
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       gap: theme.spacing(3)
     }
   }),
@@ -30,7 +30,7 @@ const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGroup'] = 
     gridTemplateAreas: '"first second"',
     gap: theme.spacing(2),
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       display: 'flex',
       flexDirection: 'column',
       gap: theme.spacing(2)

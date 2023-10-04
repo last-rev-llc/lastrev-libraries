@@ -1,5 +1,4 @@
-import { Metadata, ResolvedMetadata } from 'next/types';
-// import theme from '../ThemeRegistry/theme';
+import type { Metadata, ResolvedMetadata } from 'next/types';
 
 interface ImageSettingEntry {
   name: string;
@@ -80,5 +79,3 @@ export const getPageMetadata = ({
     }
   };
 };
-
-export default getPageMetadata;

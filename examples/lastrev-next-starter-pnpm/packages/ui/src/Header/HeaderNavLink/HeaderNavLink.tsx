@@ -11,7 +11,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../../ErrorBoundary';
 import ContentModule from '../../ContentModule';
 
-// import getFirstOfArray from '../../utils/getFirstOfArray';
+// import { getFirstOfArray } from '../../utils/getFirstOfArray';
 
 import type { HeaderNavLinkProps, HeaderNavLinkOwnerState } from './HeaderNavLink.types';
 

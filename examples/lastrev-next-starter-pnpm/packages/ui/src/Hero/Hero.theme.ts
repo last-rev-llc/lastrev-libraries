@@ -127,7 +127,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     flexDirection: 'column',
     gap: theme.spacing(2),
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       flexDirection: 'row'
     }
   })

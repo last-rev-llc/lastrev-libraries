@@ -1,5 +1,5 @@
 import { Roboto } from 'next/font/google';
-import { type Breakpoint, type ThemeOptions, createTheme } from '@mui/material/styles';
+import { type Breakpoint, type ThemeOptions, type Theme, createTheme } from '@mui/material/styles';
 import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
@@ -233,10 +233,11 @@ const baseTheme: ThemeOptions = {
     }
   }
 };
+console.log(baseTheme);
 
 const coreTheme = createTheme(baseTheme);
 
-const theme = createTheme(
+const theme: Theme = createTheme(
   deepmerge(coreTheme, {
     components: Object.values(themeComponents)
       .map((t) => t(coreTheme))

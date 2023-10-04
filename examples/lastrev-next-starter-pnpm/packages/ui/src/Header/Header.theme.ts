@@ -46,7 +46,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     justifySelf: 'flex-end',
     gridRow: 3,
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       gridColumnStart: 'eleven-start',
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
@@ -70,7 +70,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     paddingBottom: theme.spacing(2),
     gap: theme.spacing(2),
 
-    [theme.breakpoints.down('md')]: {
+    [theme.containerBreakpoints.down('md')]: {
       ...(!menuVisible && {
         maxHeight: 0,
         paddingBottom: 0,
@@ -78,7 +78,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       })
     },
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       display: 'contents'
     }
   }),
@@ -94,7 +94,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     position: 'unset',
     display: 'inline-flex',
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       height: 'auto',
       overflow: 'unset',
       maxHeight: '100%',
@@ -112,7 +112,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     gridRow: 1,
     justifyContent: 'flex-end',
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       display: 'none'
     }
   }),
@@ -138,7 +138,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     width: '100%',
     margin: 'auto',
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       height: '100%',
       flexDirection: 'row',
       width: 'auto'
@@ -149,7 +149,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     padding: 0,
     position: 'unset',
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       height: '100%'
     }
   })

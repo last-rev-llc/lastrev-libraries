@@ -3,6 +3,7 @@ import React from 'react';
 import Box from '@mui/material/Box';
 
 import Collection from './Collection';
+import Grid from '../Grid';
 
 import { collectionBaseMock } from './Collection.mock';
 
@@ -42,6 +43,7 @@ const CollectionTemplate = {
         {itemsVariants?.map((itemsVariant: CardVariants) => (
           <>
             <Box
+              key={itemsVariant}
               sx={{
                 position: 'sticky',
                 top: 0,
@@ -51,9 +53,11 @@ const CollectionTemplate = {
                 zIndex: 500,
                 p: 1
               }}>
-              Collection :: Variant :: &quot;{itemsVariant}&quot;
+              Collection &quot;{itemsVariant}&quot; Items Variant
             </Box>
-            <Collection key={`${variant}_${itemsVariant}`} {...collectionBaseMock({ variant, itemsVariant })} />
+            <Grid>
+              <Collection key={`${variant}_${itemsVariant}`} {...collectionBaseMock({ variant, itemsVariant })} />
+            </Grid>
           </>
         ))}
       </div>

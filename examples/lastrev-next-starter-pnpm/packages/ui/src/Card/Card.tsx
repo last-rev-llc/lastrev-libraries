@@ -11,7 +11,7 @@ import Skeleton from '@mui/material/Skeleton';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
-import getFirstOfArray from '../utils/getFirstOfArray';
+import { getFirstOfArray } from '../utils/getFirstOfArray';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import type { CardProps, CardOwnerState } from './Card.types';

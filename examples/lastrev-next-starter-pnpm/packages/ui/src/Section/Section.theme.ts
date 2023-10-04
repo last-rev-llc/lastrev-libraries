@@ -6,21 +6,29 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
+import { SectionVariants } from './Section.types';
+
 const defaultProps: ComponentsProps['Section'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
-  root: ({ theme, hasBackground }) => {
-    return {
-      'marginTop': hasBackground ? 0 : theme.spacing(15),
-      'marginBottom': hasBackground ? 0 : theme.spacing(15),
-      'paddingTop': hasBackground ? theme.spacing(20) : 0,
-      'paddingBottom': hasBackground ? theme.spacing(20) : 0,
-      'overflow': hasBackground ? 'hidden' : 'visible',
+  root: ({ theme, ownerState }) => {
+    const background = theme.mixins.applyBackgroundColor({ ownerState, theme });
 
-      '& &': {
-        marginTop: theme.spacing(10),
-        marginBottom: theme.spacing(10)
-      },
+    // const hasBackground = !!Object.keys(background).length || ownerState.background;
+
+    return {
+      ...background,
+      'containerType': 'inline-size',
+      'width': '100%',
+      'position': 'relative',
+
+      // 'overflow': hasBackground ? 'hidden' : 'visible',
+
+      // TODO: Nested Sections
+      // '& &': {
+      //   marginTop: theme.spacing(10),
+      //   marginBottom: theme.spacing(10)
+      // },
 
       // 'main > &': {
       //   '&:first-of-type': {
@@ -30,83 +38,81 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
 
       'main > &:last-of-type': {
         marginBottom: 0
-      },
-
-      '& [class*=backgroundMedia]': {
-        height: 'auto !important',
-        width: '100% !important'
       }
     };
   },
 
-  introText: ({ theme, align }) => ({
-    'gridColumn': '1 / span 2',
-    'position': 'relative',
+  contentOuterGrid: {
+    gridColumn: 'full-start/full-end',
+    gridRow: '1/-1'
+  },
 
-    'marginBottom': theme.spacing(4),
+  contentWrap: ({ theme, ownerState }) => {
+    const background = theme.mixins.applyBackgroundColor({ ownerState, theme });
+    const hasBackground = !!Object.keys(background).length || ownerState.background;
 
-    '[class$=Text-title]': {
-      ...theme.typography.h4,
-      textAlign: `${align === 'center' ? 'center' : 'left'}`
-    },
+    return {
+      zIndex: 2,
+      // 'containerType': 'inline-size',
+      gridColumn: 'full-start/full-end',
+      gridRow: 1
+      // marginTop: hasBackground ? 0 : theme.spacing(10),
+      // marginBottom: hasBackground ? 0 : theme.spacing(10),
+      // paddingTop: hasBackground ? theme.spacing(10) : 0,
+      // paddingBottom: hasBackground ? theme.spacing(10) : 0
 
-    '[class$=Text-subtitle]': {
-      ...theme.typography.h3,
-      textAlign: `${align === 'center' ? 'center' : 'left'}`,
-      marginTop: theme.spacing(2)
-    },
+      // '& > *': {
+      //   zIndex: 2
+      // }
+    };
+  },
 
-    '[class$=Text-root]': {
-      marginTop: theme.spacing(3),
-      textAlign: `${align === 'center' ? 'center' : 'left'}`
-    },
-
-    [theme.breakpoints.up('md')]: {
-      'gridColumn': '1 / span 5',
-
-      ...(align === 'center' && {
-        gridColumn: '1 / -1'
-      }),
-
-      '[class$=Text-title]': {
-        ...theme.typography.h3
-      },
-
-      '[class$=Text-root] > *': {
-        ...theme.typography.body2
-      },
-
-      '&::before': {
-        width: 115
-      }
-    },
-
-    [theme.breakpoints.up('md')]: {
-      'gridColumn': '1 / span 8',
-
-      ...(align === 'center' && {
-        gridColumn: '3 / span 8'
-      }),
-
-      '[class$=Text-title]': {
-        ...theme.typography.h2
-      }
-    },
-
-    '& + [class*=contentContainer]': {
-      marginTop: theme.spacing(4)
+  backgroundMediaWrap: {
+    '&&': {
+      gridColumn: '1/-1',
+      gridRow: '1/-1',
+      zIndex: 1,
+      position: 'relative'
     }
-  })
-  //
-  // Use the ownerState to set dynamic styles
-  // root: ({ ownerState, theme }) => {
-  //   return {
-  //     backgroundColor: ownerState.variant === 'example' ? 'red' : theme.palette.background.paper
-  //   };
-  // }
+  },
+
+  backgroundMedia: {
+    '&&': {
+      minWidth: '100%',
+      minHeight: '100%',
+      objectFit: 'cover'
+    }
+  },
+
+  introTextGrid: { gridColumn: 'content-start/content-end' },
+
+  // introText: { },
+
+  itemsGrid: ({ theme, ownerState }) => {
+    return {
+      gridColumn: 'full-start/full-end',
+      display: 'grid',
+      gridGap: 'inherit',
+      gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
+
+      ...((ownerState.variant === SectionVariants.twoPerRow || ownerState.variant === SectionVariants.threePerRow) && {
+        [theme.containerBreakpoints.up('md')]: {
+          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
+        }
+      }),
+
+      ...(ownerState.variant === SectionVariants.threePerRow && {
+        [theme.containerBreakpoints.up('lg')]: {
+          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
+        }
+      })
+    };
+  },
+
+  sectionItem: ({ theme, ownerState }) => ({})
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['Section'] => [];
+const createVariants = (theme: Theme): ComponentsVariants['Section'] => [];
 
 export const sectionTheme = (theme: Theme): ThemeOptions => ({
   components: {

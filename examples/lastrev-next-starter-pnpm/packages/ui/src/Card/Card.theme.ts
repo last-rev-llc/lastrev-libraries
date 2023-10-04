@@ -73,7 +73,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         marginLeft: 'auto',
         marginRight: 'auto',
 
-        [theme.breakpoints.up('lg')]: {
+        [theme.containerBreakpoints.up('lg')]: {
           // 'padding': theme.spacing(1),
           '& > img': {
             objectFit: 'contain'

@@ -4,7 +4,7 @@ declare var Osano: {
   };
 };
 
-const linkActionTypePropsMapper = (actionType?: string): Object => {
+export const linkActionTypePropsMapper = (actionType?: string): Object => {
   switch (actionType) {
     case 'openCookieConsentDialog':
       return {
@@ -22,5 +22,3 @@ const linkActionTypePropsMapper = (actionType?: string): Object => {
       return {};
   }
 };
-
-export default linkActionTypePropsMapper;

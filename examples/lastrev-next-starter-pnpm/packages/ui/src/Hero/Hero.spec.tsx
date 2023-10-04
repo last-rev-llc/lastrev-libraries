@@ -6,7 +6,7 @@ import mountWithRouter from '../../../cypress/mountWithRouter';
 import Hero from './Hero';
 
 import mockContent from './Hero.mock';
-import getFirstOfArray from '../utils/getFirstOfArray';
+import { getFirstOfArray } from '../utils/getFirstOfArray';
 
 import type { HeroProps } from './Hero.types';
 

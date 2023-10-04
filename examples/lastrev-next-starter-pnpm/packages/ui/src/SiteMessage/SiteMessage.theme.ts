@@ -18,7 +18,7 @@ const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
       color: theme.palette.common.white
     },
 
-    [theme.breakpoints.down('md')]: {
+    [theme.containerBreakpoints.down('md')]: {
       margin: theme.spacing(0, -2),
       transform: 'scaleY(1)',
       transformOrigin: 'top',
@@ -41,7 +41,7 @@ const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
       // })
     },
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       margin: theme.spacing(0, -5),
 
       ...(!!ownerState.isElevated && {

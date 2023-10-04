@@ -17,11 +17,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
     gridRow: 1,
     gridColumn: 'two-start/three-end',
 
-    [theme.breakpoints.up('sm')]: {
+    [theme.containerBreakpoints.up('sm')]: {
       gridColumn: 'four-start/five-end'
     },
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       gridColumn: 'six-start/seven-end'
     }
   }),
@@ -32,11 +32,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
     textAlign: 'center',
     ...theme.typography.display4,
 
-    [theme.breakpoints.up('sm')]: {
+    [theme.containerBreakpoints.up('sm')]: {
       gridColumnStart: 'two-start/eight-end'
     },
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       gridColumn: 'two-start/eleven-end'
     }
   }),
@@ -51,7 +51,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
     gridRow: '3/5',
     gridColumn: 'content-start/one-end',
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       gridColumn: 'three-start/four-end'
     }
   }),
@@ -61,7 +61,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
     gridColumn: 'two-start/content-end',
     lineHeight: 1,
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       gridColumn: 'five-start/nine-end'
     }
   }),
@@ -72,7 +72,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
     fontStyle: 'italic',
     lineHeight: 1,
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       gridColumn: 'five-start/nine-end'
     }
   })

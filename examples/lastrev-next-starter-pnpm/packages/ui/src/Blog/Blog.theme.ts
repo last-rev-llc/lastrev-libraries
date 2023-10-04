@@ -52,7 +52,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
       display: 'none'
     },
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       'gap': theme.spacing(1),
       '& .MuiTypography-root': {
         ...theme.typography.bodySmall,
@@ -71,11 +71,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   title: ({ theme }) => ({
     ...theme.typography.h5,
 
-    [theme.breakpoints.up('md')]: {
+    [theme.containerBreakpoints.up('md')]: {
       ...theme.typography.h3
     },
 
-    [theme.breakpoints.up('lg')]: {
+    [theme.containerBreakpoints.up('lg')]: {
       ...theme.typography.h2
     }
   }),
