@@ -1,9 +1,5 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
-
 import type { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
-import { type RichTextProps } from '../RichText';
-import { type MediaProps } from '../Media';
-import { type LinkProps } from '../Link';
 
 // TODO Review
 export enum HeroVariants {
@@ -26,41 +22,36 @@ export enum HeroHeightVariants {
 
 // TODO: Check these types, but might be needed for owner state in themes
 export interface HeroProps extends Hero_BaseFragmentFragment {
-  backgroundColor?: string;
-  contentHeight?: string;
-  contentWidth?: string;
-  disableGutters?: boolean;
-  variant: string;
-  background?: MediaProps;
-  overline?: string;
-  title?: string;
-  subtitle?: string;
-  body?: RichTextProps;
-  images?: [MediaProps];
-  actions?: [LinkProps];
-  sidekickLookup?: any;
+  // backgroundColor?: string;
+  // contentHeight?: string;
+  // contentWidth?: string;
+  // disableGutters?: boolean;
+  // variant: string;
+  // background?: MediaProps;
+  // overline?: string;
+  // title?: string;
+  // subtitle?: string;
+  // body?: RichTextProps;
+  // images?: [MediaProps];
+  // actions?: [LinkProps];
+  // sidekickLookup?: any;
 }
 
+export interface HeroOwnerState extends HeroProps {}
 interface HeroClasses {
-  heroRoot: string;
-  mainContentWrapper: string;
-  contentOuterGrid: string;
+  root: string;
+  backgroundGrid: string;
+  contentGrid: string;
   content: string;
-  backgroundRoot: string;
-  backgroundRootContent: string;
-  contentHeightSM: string;
-  contentHeightMD: string;
-  contentHeightLG: string;
-  contentHeightXL: string;
+  background: string;
   overline: string;
   title: string;
   subtitle: string;
   body: string;
-  sideContentWrapper: string;
-  images: string;
+  mediaWrap: string;
+  media: string;
   actionsWrapper: string;
   action: string;
-  common: string;
 }
 
 export declare type HeroClassKey = keyof HeroClasses;

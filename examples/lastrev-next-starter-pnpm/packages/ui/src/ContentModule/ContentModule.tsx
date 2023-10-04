@@ -3,6 +3,7 @@
 import React from 'react';
 import { useContentModuleContext } from './ContentModuleContext';
 import type { ContentModuleProps } from './ContentModule.types';
+import ErrorBoundary from '../ErrorBoundary';
 
 const ContentModule = React.forwardRef(function ContentModule(
   { __typename, theme, ...fields }: ContentModuleProps,
@@ -28,7 +29,11 @@ const ContentModule = React.forwardRef(function ContentModule(
 
   Main.displayName = `Content_${contentType}:${fields?.variant}`;
 
-  return <Main {...fields} ref={ref} />;
+  return (
+    <ErrorBoundary>
+      <Main {...fields} ref={ref} />
+    </ErrorBoundary>
+  );
 });
 
 export default ContentModule;

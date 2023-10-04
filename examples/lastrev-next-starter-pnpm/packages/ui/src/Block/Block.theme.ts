@@ -21,7 +21,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
 
   // introTextGrid: : {},
 
-  // introText: : {},
+  introText: { gridColumn: 'content-start / content-end' },
 
   contentOuterGrid: {
     '> *': {
