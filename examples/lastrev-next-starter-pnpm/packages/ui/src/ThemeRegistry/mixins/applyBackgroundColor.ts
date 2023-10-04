@@ -21,19 +21,19 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
 
   const backgroundColor: string = ownerState?.backgroundColor as any;
   let styles = {};
-  if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
+  if (backgroundColor?.includes('gradient') && get(theme.vars.palette, backgroundColor)) {
     styles = {
-      background: get(theme.palette, `${backgroundColor}.main`),
-      color: get(theme.palette, `${backgroundColor}.contrastText`)
+      background: get(theme.vars.palette, `${backgroundColor}.main`),
+      color: get(theme.vars.palette, `${backgroundColor}.contrastText`)
     };
   } else {
     const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
     const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
 
-    if (backgroundColor && get(theme.palette, parsedBGColor)) {
+    if (backgroundColor && get(theme.vars.palette, parsedBGColor)) {
       styles = {
-        backgroundColor: get(theme.palette, parsedBGColor),
-        color: get(theme.palette, `${paletteColor}.contrastText`)
+        backgroundColor: get(theme.vars.palette, parsedBGColor),
+        color: get(theme.vars.palette, `${paletteColor}.contrastText`)
       };
     }
     // console.log('ApplyBackgroundColor', { ownerState, theme, backgroundColor, parsedBGColor, paletteColor, styles });

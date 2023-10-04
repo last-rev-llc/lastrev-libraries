@@ -1,5 +1,5 @@
 import { DM_Sans } from 'next/font/google';
-import { type Breakpoint, type ThemeOptions, type Theme, createTheme } from '@mui/material/styles';
+import { type Breakpoint, type ThemeOptions, experimental_extendTheme as extendTheme } from '@mui/material/styles';
 import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
@@ -17,8 +17,7 @@ export const mainColors = ['primary', 'secondary', 'tertiary'];
 const defaultSpacing = 8;
 const defaultBorderRadius = 10;
 
-const muiTheme = createTheme();
-const paletteTheme = createTheme({
+const paletteTheme = {
   values: {
     xs: 0,
     sm: 600,
@@ -27,83 +26,85 @@ const paletteTheme = createTheme({
     xl: 1536,
     xxl: 3840
   },
-  palette: {
-    mode: 'light',
-    ...{
-      white: {
-        main: '#FFF',
-        contrastText: '#1F1F1F'
-      },
-      black: {
-        main: '#1F1F1F',
-        contrastText: '#FFF'
+  colorSchemes: {
+    light: {
+      palette: {
+        white: {
+          main: '#FFF',
+          contrastText: 'rgba(0, 0, 0, 0.87)'
+        },
+        black: {
+          main: '#000',
+          contrastText: '#FFF'
+        },
+
+        primary: {
+          main: '#fba62d'
+        },
+        secondary: {
+          main: '#00fff2'
+        },
+        //   name: 'primary'
+        // }),
+        // secondary: muiTheme.palette.augmentColor({
+        //   color: {
+        //     main: '#00fff2'
+        //   },
+        //   name: 'secondary'
+        // }),
+
+        // text: {
+        //   primary: '#ffffff',
+        //   secondary: '#E5E5E5',
+        //   disabled: 'rgba(0, 0, 0, 0.38)'
+        // },
+        background: {
+          // default: '#121212',
+          // paper: '#1E1E1E'
+          // contrastText: '#FFF'
+        },
+        error: {
+          main: '#ff1744',
+          light: 'rgb(255, 69, 105)',
+          dark: 'rgb(178, 16, 47)',
+          contrastText: '#fff'
+        },
+        common: {
+          black: '#00030B',
+          white: '#FFFFFF'
+        },
+        warning: {
+          main: '#ed6c02',
+          light: '#ff9800',
+          dark: '#e65100',
+          contrastText: '#fff'
+        },
+        info: {
+          main: '#0288d1',
+          light: '#03a9f4',
+          dark: '#01579b',
+          contrastText: '#fff'
+        },
+        success: {
+          main: '#2e7d32',
+          light: '#4caf50',
+          dark: '#1b5e20',
+          contrastText: '#fff'
+        }
       }
     },
-    primary: muiTheme.palette.augmentColor({
-      color: {
-        main: '#9146ff',
-        contrastText: '#ffffff'
-      },
-      name: 'primary'
-    }),
-    secondary: muiTheme.palette.augmentColor({
-      color: {
-        main: '#ffff55',
-        contrastText: '#000000'
-      },
-      name: 'secondary'
-    }),
-
-    tertiary: muiTheme.palette.augmentColor({
-      color: {
-        main: '#6530b2',
-        contrastText: '#000000'
-      },
-      name: 'tertiary'
-    }),
-
-    // text: {
-    //   primary: '#ffffff',
-    //   secondary: '#E5E5E5',
-    //   disabled: 'rgba(0, 0, 0, 0.38)'
-    // },
-    background: {
-      // default: '#121212',
-      // paper: '#1E1E1E'
-      // contrastText: '#FFF'
-    },
-    error: {
-      main: '#ff1744',
-      light: 'rgb(255, 69, 105)',
-      dark: 'rgb(178, 16, 47)',
-      contrastText: '#fff'
-    },
-    common: {
-      black: '#00030B',
-      white: '#FFFFFF'
-    },
-    warning: {
-      main: '#ed6c02',
-      light: '#ff9800',
-      dark: '#e65100',
-      contrastText: '#fff'
-    },
-    info: {
-      main: '#0288d1',
-      light: '#03a9f4',
-      dark: '#01579b',
-      contrastText: '#fff'
-    },
-    success: {
-      main: '#2e7d32',
-      light: '#4caf50',
-      dark: '#1b5e20',
-      contrastText: '#fff'
+    dark: {
+      palette: {
+        primary: {
+          main: '#000'
+        }
+      }
     }
   }
-});
+};
 
-const coreTheme = createTheme({
+const muiTheme = extendTheme(paletteTheme);
+const baseTheme = {
   ...paletteTheme,
   spacing: defaultSpacing,
   shape: {
@@ -203,7 +204,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--display1-font-size)',
       lineHeight: 'var(--display1-line-height)',
       margin: 'var(--display1-margin)',
-      color: paletteTheme?.palette?.tertiary?.main
+      color: muiTheme?.palette?.tertiary?.main
     },
     display2: {
       display: 'block',
@@ -212,7 +213,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--display2-font-size)',
       lineHeight: 'var(--display2-line-height)',
       margin: 'var(--display2-margin)',
-      color: paletteTheme?.palette?.tertiary?.main
+      color: muiTheme?.palette?.tertiary?.main
     },
     display3: {
       display: 'block',
@@ -221,7 +222,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--display3-font-size)',
       lineHeight: 'var(--display3-line-height)',
       margin: 'var(--display3-margin)',
-      color: paletteTheme?.palette?.tertiary?.main
+      color: muiTheme?.palette?.tertiary?.main
     },
     display4: {
       display: 'block',
@@ -230,7 +231,8 @@ const coreTheme = createTheme({
       fontSize: 'var(--display4-font-size)',
       lineHeight: 'var(--display4-line-height)',
       margin: 'var(--display4-margin)',
-      color: paletteTheme?.palette?.tertiary?.main
+      color: muiTheme?.palette?.tertiary?.main,
+color: muiTheme?.
     },
     display5: {
       display: 'block',
@@ -239,7 +241,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--display5-font-size)',
       lineHeight: 'var(--display5-line-height)',
       margin: 'var(--display5-margin)',
-      color: paletteTheme?.palette?.tertiary?.main
+      color: muiTheme?.palette?.tertiary?.main
     },
     display6: {
       display: 'block',
@@ -248,7 +250,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--display6-font-size)',
       lineHeight: 'var(--display6-line-height)',
       margin: 'var(--display6-margin)',
-      color: paletteTheme?.palette?.tertiary?.main
+      color: muiTheme?.palette?.tertiary?.main
     },
     overline: {
       display: 'block',
@@ -262,18 +264,19 @@ const coreTheme = createTheme({
     }
   },
   containerBreakpoints: {
-    ...paletteTheme.breakpoints,
+    ...muiTheme.breakpoints,
     up(key: number | Breakpoint) {
-      return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
+      return muiTheme.breakpoints.up(key)?.replace('@media', '@container');
     },
     down(key: number | Breakpoint) {
-      return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
+      return muiTheme.breakpoints.down(key)?.replace('@media', '@container');
     }
   }
-});
+};
+const coreTheme = extendTheme(baseTheme);
 
-export const theme: Theme = createTheme(
-  deepmerge(coreTheme, {
+export const theme = extendTheme(
+  deepmerge(baseTheme, {
     components: Object.values(themeComponents)
       .map((t) => t(coreTheme))
       .reduce((acc, current) => {
@@ -287,7 +290,7 @@ export const breakpoints = theme.breakpoints.values;
 // export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
 //   containerBreakpoints: {
 //     up(key: any) {
-//       return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
+//       return muiTheme.breakpoints.up(key)?.replace('@media', '@container');
 //     },
 //     down(key: any) {
 //       return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
