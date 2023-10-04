@@ -157,52 +157,15 @@ type Collection implements Content {
 type CollectionDynamic implements Content {
   animation: JSON
   backgroundColor: String
-  backgroundImage: Media
   id: String
   internalTitle: String
-  introText: Text
-  isCarouselDesktop: Boolean
-  isCarouselMobile: Boolean
-  isCarouselTablet: Boolean
-  items: [CollectionDynamicItem]
-  itemsConnection(filter: CollectionDynamicFilterInput, limit: Int, offset: Int): CollectionDynamicItemConnection
-  itemsPerRow: Int
   itemsVariant: String
-  numItems: Int
   numberOfItemsToPull: String
   pullFromContentType: String
+  settings: JSON
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
-}
-
-type CollectionDynamicConnectionPageInfo {
-  allOptions: CollectionDynamicOptions
-  options: CollectionDynamicOptions
-  total: Int
-}
-
-input CollectionDynamicFilterInput {
-  body: String
-  tags: [String]
-  topics: [String]
-}
-
-union CollectionDynamicItem = Card
-
-type CollectionDynamicItemConnection {
-  items: [CollectionDynamicItem]
-  pageInfo: CollectionDynamicConnectionPageInfo
-}
-
-type CollectionDynamicOption {
-  label: String
-  value: String
-}
-
-type CollectionDynamicOptions {
-  tags: [CollectionDynamicOption]
-  topics: [CollectionDynamicOption]
 }
 
 type CollectionExpandable implements Content {
@@ -494,25 +457,13 @@ type PagePathParams {
   params: PagePathParam!
 }
 
-type PageProperty {
-  body: RichText
-  breadcrumbs: [Link]
-  featuredAssets: Collection
-  footer: Footer
-  header: Header
-  hero: Content
-  imageCarousel: Collection
-  mainImage: Media
-  path: String
-  socialLinks: [Link]
-}
-
 type PageResource implements Content {
   animation: JSON
   body: RichText
   disableBackToTop: Boolean
   footerDisclaimerOverride: RichText
   id: String
+  includeTocTableOfContents: Boolean
   internalTitle: String
   lr__path__: String
   persona: [String]
@@ -554,10 +505,13 @@ type Person implements Content {
 type PricingPlan implements Content {
   animation: JSON
   body: String
+  disclaimerText: String
   id: String
+  internalTitle: String
   overline: String
   price: String
   sidekickLookup: JSON
+  textBelowPrice: String
   theme: [Theme]
   variant: String
 }

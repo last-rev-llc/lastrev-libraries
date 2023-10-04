@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { BlockVariants } from './Block.types';
 
@@ -24,10 +19,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
       padding: 'var(--grid-gap)',
       paddingTop: 0
-    }
+    },
     // TODO: Update to check if within a section
     // padding: theme.spacing(0, 4)
     // margin: theme.spacing(0, -4)
+    'ins': {
+      textDecoration: 'none',
+      color: 'var(--variant-highlight-color)'
+    }
   }),
 
   // introTextGrid: : {},

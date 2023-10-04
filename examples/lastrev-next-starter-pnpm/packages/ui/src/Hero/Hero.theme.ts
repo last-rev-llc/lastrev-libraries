@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { HeroVariants } from './Hero.types';
 
@@ -33,7 +28,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
       left: 0,
       height: theme.spacing(22),
       width: '100%',
-      backgroundColor: theme.palette.white.main,
+      backgroundColor: 'var(--variant-overlay-color)',
       zIndex: 0
     }
   }),

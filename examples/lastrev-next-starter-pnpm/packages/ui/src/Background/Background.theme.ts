@@ -1,16 +1,12 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Background'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Background'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    // ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    'backgroundColor': 'inherit',
     'zIndex': -1,
     'position': 'absolute',
     'top': 0,

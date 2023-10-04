@@ -21,25 +21,27 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
 
   const backgroundColor: string = ownerState?.backgroundColor as any;
   let styles = {};
-  if (backgroundColor?.toLowerCase()?.includes('gradient') && get(theme.palette, backgroundColor)) {
+  if (backgroundColor?.toLowerCase()?.includes('gradient') && get(theme.vars.palette, backgroundColor)) {
     styles = {
-      background: get(theme.palette, `${backgroundColor}.main`),
-      color: get(theme.palette, `${backgroundColor}.contrastText`)
+      background: get(theme.vars.palette, `${backgroundColor}.main`),
+      color: get(theme.vars.palette, `${backgroundColor}.contrastText`)
     };
   } else {
-    const parsedBGColor = backgroundColor?.includes('.') ? backgroundColor : `${backgroundColor}.main`;
     const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
 
-    if (backgroundColor && get(theme.palette, parsedBGColor)) {
-      const textColor = get(theme.palette, `${paletteColor}.contrastText`) ?? 'currentColor';
-      const bgColor = get(theme.palette, parsedBGColor);
+    if (backgroundColor && theme.vars.palette.schemes[paletteColor]) {
       styles = {
-        'backgroundColor': bgColor,
-        'color': textColor,
-        'borderColor': textColor,
-        'fill': 'currentColor !important',
-        '--current-color-text': textColor,
-        '--current-color-bg': bgColor
+        'backgroundColor': theme.vars.palette.schemes[paletteColor].primary.main,
+        'color': theme.vars.palette.text.primary,
+        '--mui-palette-text-primary': theme.vars.palette.schemes[paletteColor].primary.contrastText,
+        '--mui-palette-primary-light': theme.vars.palette.schemes[paletteColor].secondary.light,
+        '--mui-palette-primary-main': theme.vars.palette.schemes[paletteColor].secondary.main,
+        '--mui-palette-primary-contrastText': theme.vars.palette.schemes[paletteColor].secondary.contrastText,
+        '--mui-palette-primary-dark': theme.vars.palette.schemes[paletteColor].secondary.dark,
+        '--variant-highlight-color': theme.vars.palette.schemes[paletteColor].highlightColor,
+        '--current-color-text': theme.vars.palette.schemes[paletteColor].primary.contrastText,
+        '--current-color-bg': theme.vars.palette.schemes[paletteColor].primary.main
+        // '--mui-palette-primary-main': `var(--mui-palette-${paletteColor}-accent)`
       };
     }
   }

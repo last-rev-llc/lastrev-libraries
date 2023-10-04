@@ -65,7 +65,7 @@ const Hero = (props: HeroProps) => {
             {!!actions?.length && (
               <ActionsWrap {...sidekick(sidekickLookup, 'actions')} data-testid="Hero-actions" ownerState={ownerState}>
                 {actions.map((action) => (
-                  <Action ownerState={ownerState} key={action?.id} {...action} color={'inherit'} />
+                  <Action ownerState={ownerState} key={action?.id} {...action} />
                 ))}
               </ActionsWrap>
             )}

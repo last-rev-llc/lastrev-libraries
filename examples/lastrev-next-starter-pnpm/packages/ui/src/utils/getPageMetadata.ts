@@ -49,8 +49,8 @@ export const getPageMetadata = ({
     keywords: seo['keywords']?.value,
     robots: seo['robots']?.value,
     // TODO: Cannot import theme in server AND client ????
-    // colorScheme: theme.palette.mode,
-    // themeColor: theme.palette.primary.main,
+    // colorScheme: theme.vars.palette.mode,
+    // themeColor: theme.vars.palette.primary.main,
     alternates: {
       canonical
       // TODO: Add support for included locales

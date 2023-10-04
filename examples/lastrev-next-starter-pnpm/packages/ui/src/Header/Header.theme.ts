@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const SUPERNAV_TIMEOUT = '15s';
 
@@ -75,7 +70,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     display: 'flex',
     flexDirection: 'column',
     transition: 'max-height 500ms ease',
-    borderBottom: `solid 2px ${theme.palette.primary.main}`,
+    borderBottom: `solid 2px ${theme.vars.palette.primary.main}`,
     paddingTop: 'var(--grid-gap)',
     paddingBottom: 'var(--grid-gap)',
     gap: theme.spacing(2),
