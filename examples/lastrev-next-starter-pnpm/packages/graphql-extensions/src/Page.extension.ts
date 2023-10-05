@@ -7,7 +7,7 @@ import { pathResolver } from './utils/pathResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { resolveField } from './utils/resolveField';
-import { pageBreadcrumbsResolver } from './utils/pageBreadcrumbsResolver';
+import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 
 export const typeMappings = {};
 
@@ -18,6 +18,7 @@ export const typeDefs = gql`
     path: String
     hero: Hero
     contents: [Content]
+    breadcrumbs: [Link]
   }
 `;
 
@@ -27,7 +28,7 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      breadcrumbs: pageBreadcrumbsResolver
+      breadcrumbs: breadcrumbsResolver
     },
 
     Link: {

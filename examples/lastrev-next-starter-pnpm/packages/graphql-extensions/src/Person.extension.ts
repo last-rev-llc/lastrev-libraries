@@ -1,13 +1,13 @@
 import gql from 'graphql-tag';
-
-import createRichText from '@last-rev/graphql-contentful-core/dist/utils/createRichText';
-import getLocalizedField from '@last-rev/graphql-contentful-core/dist/utils/getLocalizedField';
 import type { ApolloContext, Mappers } from '@last-rev/types';
+import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
+import { pageV1 } from './PathsConfigs.extension';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
 import { resolveField } from './utils/resolveField';
+import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 
 export const typeDefs = gql`
   extend type Person {
@@ -17,6 +17,7 @@ export const typeDefs = gql`
     body: RichText
     socialLinks: [Link]
     mainImage: Media
+    breadcrumbs: [Link]
   }
 `;
 
@@ -25,7 +26,8 @@ export const mappers: Mappers = {
     Person: {
       path: pathResolver,
       header: pageHeaderResolver,
-      footer: pageFooterResolver
+      footer: pageFooterResolver,
+      breadcrumbs: breadcrumbsResolver
     },
 
     Link: {
@@ -48,4 +50,8 @@ export const mappers: Mappers = {
       }
     }
   }
+};
+
+export const pathsConfigs = {
+  ...pageV1
 };

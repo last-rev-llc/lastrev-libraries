@@ -25,6 +25,7 @@ const HeaderNavLinkNested = dynamic(() => import('./Header/HeaderNavLinkNested/H
 const FooterNavigationItem = dynamic(() => import('./Footer/FooterNavigationItem'));
 const FooterNavigationItemGroup = dynamic(() => import('./Footer/FooterNavigationItemGroup'));
 const SiteMessage = dynamic(() => import('./SiteMessage'));
+const Breadcrumbs = dynamic(() => import('./Breadcrumbs'));
 
 export const contentMapping: {
   [key: string]: any;
@@ -60,7 +61,8 @@ export const contentMapping: {
   'NavigationItem:linkFooter': FooterNavigationItem,
   'NavigationItem:linkBoldedFooter': FooterNavigationItem,
   'NavigationItem:groupFooter': FooterNavigationItemGroup,
-  SiteMessage
+  SiteMessage,
+  Breadcrumbs
 };
 
 export default contentMapping;

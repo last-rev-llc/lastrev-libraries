@@ -16,7 +16,7 @@ export enum NavigationLinkVariants {
   featured = 'featured'
 }
 
-export interface NavigationItemProps extends NavigationItem_BaseFragmentFragment {
+export interface NavigationItemProps extends Omit<NavigationItem_BaseFragmentFragment, 'variant'> {
   subNavigation?: Array<LinkProps | NavigationItemProps>;
   sidekickLookup?: any;
   onRequestClose?: any;

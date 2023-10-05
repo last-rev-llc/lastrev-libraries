@@ -9,17 +9,54 @@ import type {
 const defaultProps: ComponentsProps['Person'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
-  root: ({}) => ({}),
-  featuredMedia: ({}) => ({}),
-  name: ({}) => ({}),
-  jobTitle: ({}) => ({}),
-  email: ({}) => ({}),
-  body: ({}) => ({})
+  root: {},
+
+  contentOuterGrid: () => ({
+    '> *': {
+      gridColumnStart: 'auto'
+    }
+  }),
+
+  headerWrap: {
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end'
+  },
+
+  contentWrap: {
+    display: 'contents'
+  },
+
+  // mainImage: : {},
+
+  mainImageWrap: {
+    gridColumnStart: 'three-start',
+    gridColumnEnd: 'ten-end'
+  },
+
+  name: ({ theme }) => ({
+    ...theme.typography.display3
+  }),
+
+  body: {
+    '& > *:not(div)': {
+      gridColumnStart: 'three-start',
+      gridColumnEnd: 'ten-end',
+      backgroundColor: '#eeeeee'
+    },
+
+    '& > div': {
+      gridColumnStart: 'full-start',
+      gridColumnEnd: 'full-end',
+      backgroundColor: '#cccccc'
+    }
+  }
+  // jobTitle: {},
+  // email: {}
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Person'] => [];
 
-export default (theme: Theme): ThemeOptions => ({
+export const personTheme = (theme: Theme): ThemeOptions => ({
   components: {
     Person: {
       defaultProps,
@@ -28,3 +65,5 @@ export default (theme: Theme): ThemeOptions => ({
     }
   }
 });
+
+export default personTheme;

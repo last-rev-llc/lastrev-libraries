@@ -8,7 +8,7 @@ import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
 import { resolveField } from './utils/resolveField';
-import { pageBreadcrumbsResolver } from './utils/pageBreadcrumbsResolver';
+import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 
 export const typeDefs = gql`
   extend type Blog {
@@ -17,11 +17,9 @@ export const typeDefs = gql`
     path: String
     relatedItems: Content
     categories: [CategoryBlog]
+    breadcrumbs: [Link]
     author: Person
-    breadcrumbs: pageBreadcrumbsResolver
-
-    # Uncomment next line if using Media references instead
-    # featuredMedia: [Media]
+    hero: Hero
   }
 `;
 
@@ -42,12 +40,20 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
+      breadcrumbs: breadcrumbsResolver,
       // contents: blogGlobalContentsResolver,
       relatedItems: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('Collection', {
           items: getLocalizedField(blog.fields, 'relatedItems', ctx),
           variant: 'Three Per Row',
           itemsVariant: 'Blog'
+        }),
+      hero: async (blog: any, _args: any, ctx: ApolloContext) =>
+        createType('Hero', {
+          variant: 'default',
+          overline: getLocalizedField(blog.fields, 'pubDate', ctx),
+          title: getLocalizedField(blog.fields, 'title', ctx),
+          images: getLocalizedField(blog.fields, 'featuredMedia', ctx)
         })
     },
 

@@ -1,13 +1,11 @@
 import React from 'react';
-// import BLOCKS from './BLOCKS';
-// import MARKS from './MARKS';
 
 import { type RichTextProps } from './RichText.types';
 import { type BlockProps } from '../Block';
 import { type CollectionProps } from '../Collection';
+
 import BLOCKS from './BLOCKS';
 import MARKS from './MARKS';
-import { Collection } from '../../../graphql-sdk/src/types';
 
 export const valueNode = (type: string = 'text') => ({
   data: {},
@@ -337,18 +335,6 @@ export const blogMock = ({ text } = { text: 'Default blog mock' }): RichTextProp
           nodeType: 'unordered-list'
         },
         embeddedEntryBlockNode(blockMock.id || ''),
-        {
-          data: {},
-          content: [
-            {
-              data: {},
-              marks: [],
-              value: 'This is longer paragraph text',
-              nodeType: 'text'
-            }
-          ],
-          nodeType: 'paragraph'
-        },
         embeddedEntryBlockNode(collectionMock.id || '')
       ]
     },
@@ -361,6 +347,8 @@ export const blogMock = ({ text } = { text: 'Default blog mock' }): RichTextProp
     }
   };
 };
+
+export const personMock = ({ text } = { text: 'Default person mock' }): RichTextProps => blogMock({ text });
 
 export const withLinksMock = ({ text } = { text: 'Default with links mock' }): RichTextProps => ({
   __typename: 'RichText',
@@ -513,7 +501,6 @@ export const formattedMock = (): RichTextProps => ({
 
 export const paragraphMock = ({ text } = { text: 'Default paragraph mock' }): RichTextProps => ({
   __typename: 'RichText',
-
   json: {
     nodeType: 'document',
     data: {},

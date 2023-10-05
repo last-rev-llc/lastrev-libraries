@@ -7,8 +7,9 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
 import Grid from '../Grid';
-import type { BlockProps, BlockOwnerState } from './Block.types';
 import Background from '../Background';
+
+import type { BlockProps, BlockOwnerState } from './Block.types';
 
 const Block = (props: BlockProps) => {
   const ownerState = { ...props };

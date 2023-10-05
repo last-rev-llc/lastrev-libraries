@@ -35,25 +35,25 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
   }),
 
   navItemSubMenu: ({ theme }) => ({
-    [theme.containerBreakpoints.up('sm')]: {
+    [theme.breakpoints.up('sm')]: {
       display: 'grid',
       gridTemplateColumns: 'repeat(3, 1fr)', // Change this to however many columns they'd like
       gap: theme.spacing(1)
     },
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'block'
     }
   }),
 
   navItemSubMenuItem: ({ theme }) => ({
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       width: 'fit-content'
     }
   }),
 
   navItemGroup: ({ theme }) => ({
-    [theme.containerBreakpoints.only('md')]: {
+    [theme.breakpoints.only('md')]: {
       paddingRight: 0,
       paddingLeft: 0
     }

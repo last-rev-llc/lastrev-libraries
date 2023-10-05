@@ -88,7 +88,7 @@ export const Header = (props: HeaderProps) => {
           )}
 
           <HeaderMenuCtas ownerState={ownerState}>
-            {ctaItems?.map((ctaItem: LinkProps, index: number) => (
+            {ctaItems?.map((ctaItem: any, index: number) => (
               <HeaderMenuCtaItem key={`${ctaItem.id}-${index}`} ownerState={ownerState}>
                 <ContentModule {...ctaItem} size="small" />
               </HeaderMenuCtaItem>

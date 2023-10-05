@@ -2,11 +2,6 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 
 import type { Section_BaseFragmentFragment } from '@graphql-sdk/types';
 
-// import { Breakpoint } from '@mui/material';
-
-// import type { MediaProps } from '../Media/Media.types';
-// import type { TextProps } from '../Text/Text.types';
-
 export enum SectionContentDirections {
   row = 'row',
   column = 'column'
@@ -19,17 +14,9 @@ export enum SectionVariants {
   threePerRow = 'threePerRow'
 }
 
-export interface SectionProps extends Section_BaseFragmentFragment {
-  // introText?: TextProps;
-  // contents?: Array<{ __typename?: string; id?: string; file?: any }>;
-  // background?: MediaProps;
-  // backgroundColor?: string;
+export interface SectionProps extends Omit<Section_BaseFragmentFragment, 'variant' | 'contentDirection'> {
   variant?: SectionVariants;
-  // testId?: string;
-  // contentWidth?: false | Breakpoint | undefined;
   contentDirection?: SectionContentDirections;
-  // contentSpacing?: number;
-  // sidekickLookup?: any;
 }
 
 export interface SectionOwnerState extends SectionProps {}

@@ -7,25 +7,52 @@ import Typography, { type TypographyProps } from '@mui/material/Typography';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
-import type { PersonProps } from './Person.types';
+import Grid from '../Grid';
 
-const Person = ({ header, footer, name, jobTitle, email, body, sidekickLookup }: PersonProps) => {
+import type { PersonProps, PersonOwnerState } from './Person.types';
+import type { MediaProps } from '../Media';
+
+const Person = (props: PersonProps) => {
+  const ownerState = { ...props };
+  const { header, footer, name, jobTitle, email, body, mainImage, breadcrumbs, jsonLd, sidekickLookup } = props;
+
   return (
     <>
+      {!!jsonLd ? (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      ) : null}
+
       {header ? <ContentModule {...(header as any)} /> : null}
 
-      <Root component="main" {...sidekick(sidekickLookup)}>
-        {!!name && <Name {...sidekick(sidekickLookup, 'name')}>{name}</Name>}
+      <Root component="main" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+        <ContentOuterGrid ownerState={ownerState}>
+          <HeaderWrap ownerState={ownerState}>
+            {!!name && <Name {...sidekick(sidekickLookup, 'name')}>{name}</Name>}
 
-        {!!jobTitle && <JobTitle {...sidekick(sidekickLookup, 'jobTitle')}>{jobTitle}</JobTitle>}
+            {!!jobTitle && <JobTitle {...sidekick(sidekickLookup, 'jobTitle')}>{jobTitle}</JobTitle>}
 
-        {!!email && <Email {...sidekick(sidekickLookup, 'email')}>{email}</Email>}
+            {!!email && <Email {...sidekick(sidekickLookup, 'email')}>{email}</Email>}
+          </HeaderWrap>
 
-        {!!body && (
-          <BodyWrap>
-            <Body {...sidekick(sidekickLookup, 'body')} __typename="Text" body={body} variant="detailPageBody" />
-          </BodyWrap>
-        )}
+          <ContentWrap ownerState={ownerState}>
+            {!!mainImage && (
+              <MainImageWrap {...sidekick(sidekickLookup, 'mainImage')} ownerState={ownerState}>
+                <MainImage {...(mainImage as MediaProps)} ownerState={ownerState} />
+              </MainImageWrap>
+            )}
+
+            {!!body && (
+              <Body
+                body={body}
+                sidekickLookup={sidekickLookup}
+                {...props}
+                variant="inline"
+                __typename="RichText"
+                ownerState={ownerState}
+              />
+            )}
+          </ContentWrap>
+        </ContentOuterGrid>
       </Root>
 
       {footer ? <ContentModule {...(footer as any)} /> : null}
@@ -34,10 +61,22 @@ const Person = ({ header, footer, name, jobTitle, email, body, sidekickLookup }:
 };
 
 const Root = styled(Box, {
-  name: 'Person',
+  name: 'Page',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
-})(() => ({}));
+})<{ ownerState: PersonOwnerState }>``;
+
+const ContentOuterGrid = styled(Grid, {
+  name: 'Person',
+  slot: 'ContentOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentOuterGrid]
+})<{ ownerState: PersonOwnerState }>``;
+
+const HeaderWrap = styled(Box, {
+  name: 'Person',
+  slot: 'HeaderWrap',
+  overridesResolver: (_, styles) => [styles.headerWrap]
+})<{ ownerState: PersonOwnerState }>``;
 
 const Name = styled(Typography, {
   name: 'Person',
@@ -57,16 +96,28 @@ const Email = styled(Typography, {
   overridesResolver: (_, styles) => [styles.email]
 })<TypographyProps<React.ElementType>>(() => ({}));
 
-const BodyWrap = styled(Box, {
-  name: 'Blog',
-  slot: 'BodyWrap',
-  overridesResolver: (_, styles) => [styles.bodyWrap]
-})(() => ({}));
+const ContentWrap = styled(Box, {
+  name: 'Person',
+  slot: 'ContentWrap',
+  overridesResolver: (_, styles) => [styles.contentWrap]
+})<{ ownerState: PersonOwnerState }>``;
 
 const Body = styled(ContentModule, {
-  name: 'Blog',
+  name: 'Person',
   slot: 'Body',
   overridesResolver: (_, styles) => [styles.body]
-})(() => ({}));
+})<{ ownerState: PersonOwnerState }>``;
+
+const MainImageWrap = styled(Box, {
+  name: 'Person',
+  slot: 'MainImageWrap',
+  overridesResolver: (_, styles) => [styles.mainImageWrap]
+})<{ ownerState: PersonOwnerState }>``;
+
+const MainImage = styled(ContentModule, {
+  name: 'Person',
+  slot: 'MainImage',
+  overridesResolver: (_, styles) => [styles.mainImage]
+})<{ ownerState: PersonOwnerState }>``;
 
 export default Person;

@@ -1,4 +1,3 @@
-import theme from '../ThemeRegistry/theme';
 import Block from './Block';
 
 import {

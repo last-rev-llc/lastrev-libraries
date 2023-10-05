@@ -4,11 +4,12 @@ fragment Page_BaseFragment on Page {
   jsonLd
   path
   slug
+  title
   header {
-    ...ContentModule_BaseFragment
+    ...Header_BaseFragment
   }
   footer {
-    ...ContentModule_BaseFragment
+    ...Footer_BaseFragment
   }
   hero {
     ...ContentModule_BaseFragment

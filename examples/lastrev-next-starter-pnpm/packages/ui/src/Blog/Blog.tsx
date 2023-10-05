@@ -11,6 +11,7 @@ import ListItem from '@mui/material/ListItem';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import Grid from '../Grid';
+import Breadcrumbs from '../Breadcrumbs';
 import ContentModule from '../ContentModule';
 import TwitterIcon from '../Icons/TwitterIcon';
 import FacebookIcon from '../Icons/FacebookIcon';
@@ -34,8 +35,9 @@ const Blog = (props: BlogProps) => {
     author,
     relatedItems,
     jsonLd,
-    // breadcrumbs,
-    sidekickLookup
+    breadcrumbs,
+    sidekickLookup,
+    hero
   } = props;
 
   const pathname = usePathname();
@@ -55,30 +57,31 @@ const Blog = (props: BlogProps) => {
 
       {header ? <ContentModule {...(header as any)} /> : null}
 
-      {/* {/* {hero ? <ContentModule {...(hero as any)} /> : null} */}
-
       <Root component="main" {...sidekick(sidekickLookup)} ownerState={ownerState}>
         <ContentOuterGrid ownerState={ownerState}>
           <HeaderWrap ownerState={ownerState}>
-            {/* TODO: Move Breadcrumb to its own component */}
-            {/* {!!breadcrumbs?.length && (
-            <Breadcrumb>
-              {breadcrumbs.map((breadcrumb) => (
-                <BreadcrumbItem key={breadcrumb?.id} {...breadcrumb} />
-              ))}
-            </Breadcrumb>
-          )} */}
-            {/* TODO: Make this a hero in the extensions? */}
-            {!!title && (
-              <Title component="h1" ownerState={ownerState}>
-                {title}
-              </Title>
-            )}
+            {hero ? (
+              <ContentModule {...(hero as any)} />
+            ) : (
+              <>
+                {!!title && (
+                  <Title component="h1" variant="display1" ownerState={ownerState}>
+                    {title}
+                  </Title>
+                )}
 
-            {!!pubDate && <PubDate ownerState={ownerState}>{pubDate}</PubDate>}
+                {!!pubDate && <PubDate ownerState={ownerState}>{pubDate}</PubDate>}
+              </>
+            )}
           </HeaderWrap>
 
           <ContentWrap ownerState={ownerState}>
+            {!!breadcrumbs?.length ? (
+              <BreadcrumbsWrap ownerState={ownerState}>
+                <Breadcrumbs links={breadcrumbs} />
+              </BreadcrumbsWrap>
+            ) : null}
+
             {!!featuredMedia && (
               <FeaturedMediaWrap {...sidekick(sidekickLookup, 'featuredMedia')} ownerState={ownerState}>
                 <FeaturedMedia {...(featuredMedia as MediaProps)} ownerState={ownerState} />
@@ -181,15 +184,7 @@ const Blog = (props: BlogProps) => {
                 </Author>
               )}
 
-              {!!author.body && (
-                <AuthorSummary
-                  {...sidekick(sidekickLookup, 'body')}
-                  __typename="Text"
-                  body={author.body}
-                  variant="inline"
-                  ownerState={ownerState}
-                />
-              )}
+              {!!author.body && <AuthorSummary body={author.body} __typename="RichText" ownerState={ownerState} />}
 
               {!!author.socialLinks?.length && (
                 <AuthorSocialLinks ownerState={ownerState}>
@@ -230,39 +225,11 @@ const HeaderWrap = styled(Box, {
   overridesResolver: (_, styles) => [styles.headerWrap]
 })<{ ownerState: BlogOwnerState }>``;
 
-{
-  /* const Breadcrumb = styled(Box, {
+const BreadcrumbsWrap = styled(Box, {
   name: 'Blog',
-  slot: 'Breadcrumb',
-  overridesResolver: (_, styles) => [styles.breadcrumb]
-})(({}) => ({
-  'gridColumn': '1 / -1',
-  'gridRow': '1',
-  'alignItems': 'center',
-  'maxWidth': '100%',
-  'overflow': 'hidden',
-  'overflowWrap': 'break-word',
-  'textOverflow': 'ellipsis',
-  'display': '-webkit-box',
-  'hyphens': 'auto',
-  '-webkit-line-clamp': '1',
-  '-webkit-box-orient': 'vertical'
-})); */
-}
-
-{
-  /* const BreadcrumbItem = styled(ContentModule, {
-  name: 'Blog',
-  slot: 'BreadcrumbItem',
-  overridesResolver: (_, styles) => [styles.breadcrumbItem]
-})(({ theme }) => ({
-  borderLeft: `1px solid ${theme.palette.secondary.main}`,
-  paddingLeft: theme.spacing(0.5),
-  ...theme.typography.bodySmall,
-  color: theme.palette.primary.main,
-  marginRight: theme.spacing(1)
-})); */
-}
+  slot: 'BreadcrumbsWrap',
+  overridesResolver: (_, styles) => [styles.breadcrumbsWrap]
+})<{ ownerState: BlogOwnerState }>``;
 
 const Title = styled(Typography, {
   name: 'Blog',
@@ -364,12 +331,6 @@ const RelatedItems = styled(ContentModule, {
   name: 'Blog',
   slot: 'RelatedItems',
   overridesResolver: (_, styles) => [styles.relatedItems]
-})<{ ownerState: BlogOwnerState }>``;
-
-const RelatedItem = styled(ContentModule, {
-  name: 'Blog',
-  slot: 'RelatedItem',
-  overridesResolver: (_, styles) => [styles.relatedItem]
 })<{ ownerState: BlogOwnerState }>``;
 
 const AuthorWrap = styled(Box, {

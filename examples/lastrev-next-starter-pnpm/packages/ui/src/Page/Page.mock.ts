@@ -6,6 +6,7 @@ import { headerBaseMock } from '../Header/Header.mock';
 import heroBaseMock from '../Hero/Hero.mock';
 import sectionBaseMock from '../Section/Section.mock';
 import { tabsBaseMock } from '../Tabs/Tabs.mock';
+import { breadcrumbsBaseMock } from '../Breadcrumbs/Breadcrumbs.mock';
 
 import { randomId } from '../utils/randomId';
 
@@ -18,6 +19,7 @@ const pageDefaultMock: PageProps = {
   header: headerBaseMock(),
   footer: footerBaseMock(),
   hero: heroBaseMock(),
+  breadcrumbs: breadcrumbsBaseMock().links,
   title: 'This is the Page Title',
   contents: [
     blockBaseMock({}),

@@ -1,15 +1,18 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
 import type { Blog_BaseFragmentFragment } from '@graphql-sdk/types';
+import { type LinkProps } from '../Link';
 
 export enum BlogVariants {
   default = 'default'
 }
 
-export interface BlogProps extends Blog_BaseFragmentFragment {
+export interface BlogProps extends Omit<Blog_BaseFragmentFragment, 'variant'> {
   variant: BlogVariants;
-  jsonLd?: any;
+  breadcrumbs?: LinkProps[];
+  jsonLd: any;
 }
+
 export interface BlogOwnerState extends BlogProps {}
 
 interface BlogClasses {
@@ -24,6 +27,7 @@ interface BlogClasses {
   authorWrap: string;
   author: string;
   body: string;
+  breadcrumbsWrap: string;
   blogCategories: string;
   blogCategory: string;
   tags: string;

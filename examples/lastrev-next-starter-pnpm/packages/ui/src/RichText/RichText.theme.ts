@@ -51,19 +51,19 @@ const createVariants = (theme: Theme): ComponentsVariants['RichText'] => [
         },
 
         '&[class*=-h1]': {
-          ...theme.typography.h3
+          ...theme.typography.display3
         },
 
         '&[class*=-h2]': {
-          ...theme.typography.h4
+          ...theme.typography.display4
         },
 
         '&[class*=-h3]': {
-          ...theme.typography.h5
+          ...theme.typography.display5
         },
 
         '&[class*=-h4]': {
-          ...theme.typography.h5
+          ...theme.typography.display5
         }
       },
 

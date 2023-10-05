@@ -52,7 +52,7 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     'justifyContent': 'space-between',
     'cursor': 'pointer',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       padding: theme.spacing(1),
       justifyContent: 'flex-start',
       borderTop: 'none'
@@ -68,12 +68,12 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
       transition: 'fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, transform 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
       ...(!!open && {
-        [theme.containerBreakpoints.down('md')]: {
+        [theme.breakpoints.down('md')]: {
           transform: 'rotate(-90deg)'
         }
       }),
 
-      [theme.containerBreakpoints.up('md')]: {
+      [theme.breakpoints.up('md')]: {
         height: '10px',
         fill: theme.palette.primary.main
       }
@@ -84,11 +84,11 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     display: 'none',
     transition: 'visibility 0s, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
 
-    [theme.containerBreakpoints.down('md')]: {
+    [theme.breakpoints.down('md')]: {
       flexDirection: 'column'
     },
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       visibility: 'hidden',
       opacity: 0,
 
@@ -117,14 +117,14 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
   }),
 
   navItemSubMenuItem: ({ theme }) => ({
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start'
     }
   }),
 
   megaNavContainer: ({ theme }) => ({
     display: 'none',
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'space-between',

@@ -5,6 +5,7 @@ import type {
   ComponentsOverrides,
   ComponentsVariants
 } from '@mui/material/styles';
+
 import { CardVariants } from './Card.types';
 
 const defaultProps: ComponentsProps['Card'] = {};
@@ -68,7 +69,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       '[class*=Card-media]': {
-        // padding: theme.spacing(0),
         maxWidth: 96,
         marginLeft: 'auto',
         marginRight: 'auto',
@@ -129,24 +129,13 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
 
       '[class*=cardMedia]': {
-        // TODO: Margin and padding here should match the content.   Mixin?
-        // 'marginBottom': theme.spacing(-2),
         '& > *': {
           borderRadius: '50%',
           aspectRatio: '1 / 1',
           width: '100%',
-          // padding: theme.spacing(2),
-
           display: 'inline-block',
           overflow: 'hidden'
         }
-      },
-
-      '[class*=Card-title]': {
-        // TODO: Saving container query for later
-        // [`@container (min-width: ${theme.breakpoints.values.xs}${theme.breakpoints.unit})`]: {
-        //   backgroundColor: 'blue'
-        // }
       }
     }
   }

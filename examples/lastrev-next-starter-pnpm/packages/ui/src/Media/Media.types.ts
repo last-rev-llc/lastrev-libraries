@@ -1,3 +1,5 @@
+import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
+
 import type { Media_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export interface FileProps {
@@ -5,6 +7,7 @@ export interface FileProps {
   width?: number;
   height?: number;
 }
+
 export interface AssetProps {
   file: FileProps;
   title?: string;
@@ -18,6 +21,8 @@ export interface MediaProps extends Media_BaseFragmentFragment {
   disableInlineSVG?: boolean;
   q?: number;
   unoptimized?: boolean;
+  nextImageOptimization: boolean;
+  sizes: string;
 }
 export interface MediaVideoProps extends MediaProps {
   controls: boolean;
@@ -29,5 +34,22 @@ interface MediaClasses {
 }
 
 export declare type MediaClassKey = keyof MediaClasses;
-declare const accordionClasses: MediaClasses;
-export default accordionClasses;
+declare module '@mui/material/styles' {
+  export interface ComponentNameToClassKey {
+    Media: MediaClassKey;
+  }
+
+  export interface ComponentsPropsList {
+    Media: MediaProps;
+  }
+}
+
+declare module '@mui/material/styles' {
+  interface Components {
+    Media?: {
+      defaultProps?: ComponentsProps['Media'];
+      styleOverrides?: ComponentsOverrides<Theme>['Media'];
+      variants?: ComponentsVariants['Media'];
+    };
+  }
+}

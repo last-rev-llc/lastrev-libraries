@@ -2,12 +2,14 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
 import Grid from '../Grid';
-import type { HeroProps, HeroOwnerState } from './Hero.types';
 import Background from '../Background';
+
+import type { HeroProps, HeroOwnerState } from './Hero.types';
 
 export const Hero = (props: HeroProps) => {
   const ownerState = { ...props };
@@ -21,20 +23,6 @@ export const Hero = (props: HeroProps) => {
         testId="Hero-background"
       />
 
-      {/* {background ? (
-
-        <BackgroundGrid ownerState={ownerState}>
-          <Background
-            {...background}
-            {...sidekick(sidekickLookup, 'background')}
-            fill
-            key={background?.id}
-            ownerState={ownerState}
-            priority
-            testId="Hero-background"
-          />
-        </BackgroundGrid>
-      ) : null} */}
       <ContentGrid ownerState={ownerState}>
         {overline || title || subtitle || body || actions ? (
           <Content ownerState={ownerState}>
@@ -51,7 +39,7 @@ export const Hero = (props: HeroProps) => {
                 component="h1"
                 data-testid="Hero-title"
                 ownerState={ownerState}
-                variant="display3">
+                variant="display1">
                 {title}
               </Title>
             )}
@@ -61,7 +49,7 @@ export const Hero = (props: HeroProps) => {
                 {...sidekick(sidekickLookup, 'subtitle')}
                 data-testid="Hero-subtitle"
                 ownerState={ownerState}
-                variant="display2">
+                variant="display3">
                 {subtitle}
               </Subtitle>
             )}
@@ -159,10 +147,10 @@ const MediaWrap = styled(Box, {
   slot: 'MediaWrap ',
   overridesResolver: (_, styles) => [styles.mediaWrap]
 })``;
+
 const ActionsWrapper = styled(Box, {
   name: 'Hero',
   slot: 'ActionsWrapper',
-
   overridesResolver: (_, styles) => [styles.actionsWrapper]
 })<{ ownerState: HeroOwnerState }>``;
 

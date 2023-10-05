@@ -3,13 +3,7 @@ import type { ContentModule_BaseFragmentFragment } from '@graphql-sdk/types';
 
 // TODO Review
 export enum BackgroundVariants {
-  default = 'default',
-  mediaOnRight = 'mediaOnRight',
-  mediaOnRightFullBleed = 'mediaOnRightFullBleed',
-  mediaOnLeft = 'mediaOnLeft',
-  mediaOnLeftFullBleed = 'mediaOnLeftFullBleed',
-  mediaBelow = 'mediaBelow',
-  mediaAbove = 'mediaAbove'
+  default = 'default'
 }
 
 export interface BackgroundProps {
@@ -20,18 +14,7 @@ export interface BackgroundProps {
 export interface BackgroundOwnerState extends BackgroundProps {}
 interface BackgroundClasses {
   root: string;
-  backgroundGrid: string;
-  contentGrid: string;
-  content: string;
-  background: string;
-  overline: string;
-  title: string;
-  subtitle: string;
-  body: string;
-  mediaWrap: string;
-  media: string;
-  actionsWrapper: string;
-  action: string;
+  backgroundContent: string;
 }
 
 export declare type BackgroundClassKey = keyof BackgroundClasses;

@@ -1,15 +1,26 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 import type { Person_BaseFragmentFragment } from '@graphql-sdk/types';
+import { LinkProps } from '../Link/Link.types';
 
 export enum PersonVariants {
   default = 'default'
 }
 
-export interface PersonProps extends Person_BaseFragmentFragment {}
+export interface PersonProps extends Omit<Person_BaseFragmentFragment, 'variant'> {
+  variant: PersonVariants;
+  breadcrumbs?: LinkProps[];
+  jsonLd: any;
+}
+
+export interface PersonOwnerState extends PersonProps {}
 
 interface PersonClasses {
   root: string;
-  featuredMedia: string;
+  contentOuterGrid: string;
+  headerWrap: string;
+  contentWrap: string;
+  mainImageWrap: string;
+  mainImage: string;
   name: string;
   jobTitle: string;
   email: string;

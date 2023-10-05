@@ -1,16 +1,19 @@
 fragment Blog_BaseFragment on Blog {
   ...Content_BaseFragment
+  seo
+  jsonLd
+  path
   title
   slug
   pubDate
   author {
-    ...Person_Card_Fragment
+    ...Person_Blog_Author_Fragment
   }
   header {
     ...Header_BaseFragment
   }
   footer {
-    ...ContentModule_BaseFragment
+    ...Footer_BaseFragment
   }
   featuredMedia {
     ...Media_BaseFragment
@@ -20,16 +23,7 @@ fragment Blog_BaseFragment on Blog {
   }
   relatedItems {
     ...Collection_BaseFragment
-    #...LinkNavigation_BaseFragment
   }
-  ## TODO
-  # breadcrumbs {
-  #  ...Link_BaseFragment
-  #}
-  #contents {
-  #  ...ContentModule_BaseFragment
-  #}
-  seo
 }
 
 fragment Blog_CardFragment on Blog {

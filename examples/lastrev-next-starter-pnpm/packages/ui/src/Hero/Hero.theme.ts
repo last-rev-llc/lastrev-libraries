@@ -6,6 +6,8 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
+import { HeroVariants } from './Hero.types';
+
 const defaultProps: ComponentsProps['Hero'] = {
   variant: 'default'
 };
@@ -15,38 +17,48 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     position: 'relative',
     padding: theme.spacing(12, 0)
   }),
+
   contentGrid: {
     alignItems: 'center'
   },
+
   content: {
     gridColumn: 'content-start/content-half',
     gridRow: 1
   },
+
   mediaWrap: {
     gridColumn: 'content-half/content-end',
     gridRow: 1
   },
+
   // media: {},
+
   // overline: {},
+
   // title: {},
+
   // subtitle: {},
+
   // body: {},
+
   actionsWrapper: ({ theme }) => ({
     marginTop: theme.spacing(2)
   })
+
   // action: {}
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
   {
     props: {
-      variant: 'mediaOnRight'
+      variant: HeroVariants.mediaOnRight
     },
     style: () => ({})
   },
   {
     props: {
-      variant: 'mediaOnRightFullBleed'
+      variant: HeroVariants.mediaOnRightFullBleed
     },
     style: () => ({
       '[class*=Hero-mediaWrap]': {
@@ -59,7 +71,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
   },
   {
     props: {
-      variant: 'mediaOnLeft'
+      variant: HeroVariants.mediaOnLeft
     },
     style: () => ({
       '[class*=Hero-content]': {
@@ -72,6 +84,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       '[class*=Hero-mediaWrap]': {
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-half',
+
         [theme.breakpoints.down('sm')]: {
           gridColumnEnd: 'content-end'
         }
@@ -80,7 +93,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
   },
   {
     props: {
-      variant: 'mediaOnLeftFullBleed'
+      variant: HeroVariants.mediaOnLeftFullBleed
     },
     style: () => ({
       '[class*=Hero-content]': {
@@ -90,6 +103,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
           gridColumnStart: 'content-start'
         }
       },
+
       '[class*=Hero-mediaWrap]': {
         gridColumnStart: '1',
         gridColumnEnd: 'content-half',
@@ -102,7 +116,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
 
   {
     props: {
-      variant: 'contentAbove'
+      variant: HeroVariants.mediaAbove
     },
     style: {
       '[class*=Hero-content]': {
@@ -118,7 +132,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
   },
   {
     props: {
-      variant: 'contentBelow'
+      variant: HeroVariants.mediaBelow
     },
     style: {
       '[class*=Hero-content]': {

@@ -19,7 +19,7 @@ const generateParentPaths = async (page: any, ctx: ApolloContext, paths: any[] =
   return paths;
 };
 
-export const pageBreadcrumbsResolver = async (item: any, _args: any, ctx: ApolloContext) => {
+export const breadcrumbsResolver = async (item: any, _args: any, ctx: ApolloContext) => {
   const slug: any = getLocalizedField(item.fields, 'slug', ctx);
   const title: any = getLocalizedField(item.fields, 'title', ctx);
   const paths = await generateParentPaths(item, ctx);
@@ -30,7 +30,7 @@ export const pageBreadcrumbsResolver = async (item: any, _args: any, ctx: Apollo
     prevSlug = path.slug !== '/' ? `${prevSlug}/${path.slug}` : prevSlug;
 
     links.push(
-      createType('link', {
+      createType('Link', {
         id: path.id,
         text: path.text,
         manualUrl: prevSlug
@@ -39,7 +39,7 @@ export const pageBreadcrumbsResolver = async (item: any, _args: any, ctx: Apollo
   }
 
   links.push(
-    createType('link', {
+    createType('Link', {
       id: item?.sys?.id,
       text: title,
       manualUrl: slug !== '/' ? `${prevSlug}/${slug}` : prevSlug
