@@ -8,6 +8,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ContentModule from '../ContentModule';
 import Grid from '../Grid';
 import Background from '../Background';
+import ErrorBoundary from '../ErrorBoundary';
 
 import type { BlockProps, BlockOwnerState } from './Block.types';
 
@@ -28,74 +29,84 @@ const Block = (props: BlockProps) => {
   } = props;
 
   return (
-    <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState}>
-      <BlockBackground background={background} backgroundColor={backgroundColor} testId="Block-background" />
+    <ErrorBoundary>
+      <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+        <BlockBackground background={background} backgroundColor={backgroundColor} testId="Block-background" />
 
-      {!!introText && (
-        <IntroTextGrid ownerState={ownerState}>
-          <IntroText
-            ownerState={ownerState}
-            {...sidekick(sidekickLookup, 'introText')}
-            {...introText}
-            variant="introText"
-          />
-        </IntroTextGrid>
-      )}
-
-      <ContentOuterGrid ownerState={ownerState}>
-        {overline || title || subtitle || body || actions ? (
-          <MainContentWrap ownerState={ownerState}>
-            <Content ownerState={ownerState}>
-              {!!overline && (
-                <Overline ownerState={ownerState} variant="overline">
-                  {overline}
-                </Overline>
-              )}
-
-              {!!title && (
-                <Title
-                  ownerState={ownerState}
-                  {...sidekick(sidekickLookup, 'title')}
-                  data-testid="Block-title"
-                  variant="display4">
-                  {title}
-                </Title>
-              )}
-
-              {!!subtitle && (
-                <Subtitle
-                  ownerState={ownerState}
-                  {...sidekick(sidekickLookup, 'subtitle')}
-                  data-testid="Block-subtitle"
-                  variant="display5">
-                  {subtitle}
-                </Subtitle>
-              )}
-
-              {!!body && (
-                <Body ownerState={ownerState} {...sidekick(sidekickLookup, 'body')} __typename="RichText" body={body} />
-              )}
-            </Content>
-
-            {!!actions?.length && (
-              <ActionsWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'actions')} data-testid="Block-actions">
-                {actions.map((action) => (
-                  <Action ownerState={ownerState} key={action?.id} {...action} />
-                ))}
-              </ActionsWrap>
-            )}
-          </MainContentWrap>
-        ) : null}
-
-        {!!mediaItems && (
-          <SideContentWrap ownerState={ownerState}>
-            {mediaItems.map((media) => (
-              <Media ownerState={ownerState} key={media?.id} {...sidekick(sidekickLookup, 'mediaItems')} {...media} />
-            ))}
-          </SideContentWrap>
+        {!!introText && (
+          <IntroTextGrid ownerState={ownerState}>
+            <IntroText
+              ownerState={ownerState}
+              {...sidekick(sidekickLookup, 'introText')}
+              {...introText}
+              variant="introText"
+            />
+          </IntroTextGrid>
         )}
-      </ContentOuterGrid>
-    </Root>
+
+        <ContentOuterGrid ownerState={ownerState}>
+          {overline || title || subtitle || body || actions ? (
+            <MainContentWrap ownerState={ownerState}>
+              <Content ownerState={ownerState}>
+                {!!overline && (
+                  <Overline ownerState={ownerState} variant="overline">
+                    {overline}
+                  </Overline>
+                )}
+
+                {!!title && (
+                  <Title
+                    ownerState={ownerState}
+                    {...sidekick(sidekickLookup, 'title')}
+                    data-testid="Block-title"
+                    variant="display4">
+                    {title}
+                  </Title>
+                )}
+
+                {!!subtitle && (
+                  <Subtitle
+                    ownerState={ownerState}
+                    {...sidekick(sidekickLookup, 'subtitle')}
+                    data-testid="Block-subtitle"
+                    variant="display5">
+                    {subtitle}
+                  </Subtitle>
+                )}
+
+                {!!body && (
+                  <Body
+                    ownerState={ownerState}
+                    {...sidekick(sidekickLookup, 'body')}
+                    __typename="RichText"
+                    body={body}
+                  />
+                )}
+              </Content>
+
+              {!!actions?.length && (
+                <ActionsWrap
+                  ownerState={ownerState}
+                  {...sidekick(sidekickLookup, 'actions')}
+                  data-testid="Block-actions">
+                  {actions.map((action) => (
+                    <Action ownerState={ownerState} key={action?.id} {...action} />
+                  ))}
+                </ActionsWrap>
+              )}
+            </MainContentWrap>
+          ) : null}
+
+          {!!mediaItems && (
+            <SideContentWrap ownerState={ownerState}>
+              {mediaItems.map((media) => (
+                <Media ownerState={ownerState} key={media?.id} {...sidekick(sidekickLookup, 'mediaItems')} {...media} />
+              ))}
+            </SideContentWrap>
+          )}
+        </ContentOuterGrid>
+      </Root>
+    </ErrorBoundary>
   );
 };
 

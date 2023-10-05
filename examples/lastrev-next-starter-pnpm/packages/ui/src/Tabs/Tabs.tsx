@@ -2,7 +2,6 @@ import React from 'react';
 
 import { styled } from '@mui/material/styles';
 
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -14,13 +13,14 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import Grid from '../Grid';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
+import Background from '../Background';
 
 import type { TabsProps, TabsOwnerState } from './Tabs.types';
 
 const Tabs = (props: TabsProps) => {
   const ownerState = { ...props };
 
-  const { id, items, variant, sidekickLookup, introText } = props;
+  const { background, backgroundColor, id, items, variant, sidekickLookup, introText } = props;
 
   const [value, setValue] = React.useState('0');
 
@@ -31,7 +31,9 @@ const Tabs = (props: TabsProps) => {
   return (
     <ErrorBoundary>
       <Root data-testid={`Tabs-${variant}`} {...sidekick(sidekickLookup)} ownerState={ownerState}>
-        {introText && (
+        <TabsBackground background={background} backgroundColor={backgroundColor} testId="Tabs-background" />
+
+        {!!introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText
               ownerState={ownerState}
@@ -43,7 +45,7 @@ const Tabs = (props: TabsProps) => {
         )}
 
         {!!items?.length && (
-          <ContentGrid ownerState={ownerState}>
+          <ContentOuterGrid ownerState={ownerState}>
             <TabsContext value={value} ownerState={ownerState}>
               <TabListWrap sx={{ borderBottom: 1, borderColor: 'divider' }} ownerState={ownerState}>
                 {/* TODO: Add "orientation" to the expanding content type */}
@@ -77,7 +79,7 @@ const Tabs = (props: TabsProps) => {
                 )
               )}
             </TabsContext>
-          </ContentGrid>
+          </ContentOuterGrid>
         )}
       </Root>
     </ErrorBoundary>
@@ -87,14 +89,19 @@ const Tabs = (props: TabsProps) => {
 const Root = styled(Box, {
   name: 'Tabs',
   slot: 'Root',
-
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: TabsOwnerState }>``;
 
-const ContentGrid = styled(Grid, {
+const TabsBackground = styled(Background, {
   name: 'Tabs',
-  slot: 'ContentGrid',
-  overridesResolver: (_, styles) => [styles.contentGrid]
+  slot: 'Background',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
+
+const ContentOuterGrid = styled(Grid, {
+  name: 'Tabs',
+  slot: 'ContentOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentOuterGrid]
 })<{ ownerState: TabsOwnerState }>``;
 
 const IntroTextGrid = styled(Grid, {
@@ -104,7 +111,7 @@ const IntroTextGrid = styled(Grid, {
 })<{ ownerState: TabsOwnerState }>``;
 
 const IntroText = styled(ContentModule, {
-  name: 'Collection',
+  name: 'Tabs',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
 })<{ ownerState: TabsOwnerState }>``;
@@ -112,7 +119,7 @@ const IntroText = styled(ContentModule, {
 const TabsContext = styled(TabContext, {
   name: 'Tabs',
   slot: 'TabsContext',
-  overridesResolver: (_, styles) => [styles.tabContext]
+  overridesResolver: (_, styles) => [styles.tabsContext]
 })<{ ownerState: TabsOwnerState }>``;
 
 const TabListWrap = styled(Box, {

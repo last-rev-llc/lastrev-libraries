@@ -1,4 +1,4 @@
-import { Poppins } from 'next/font/google';
+import { Open_Sans } from 'next/font/google';
 import { type Breakpoint, type ThemeOptions, type Theme, createTheme } from '@mui/material/styles';
 import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
@@ -6,7 +6,7 @@ import createGridMixin from './mixins/createGridMixin';
 import applyBackgroundColor from './mixins/applyBackgroundColor';
 import themeComponents from './theme.components';
 
-export const poppins = Poppins({
+export const openSans = Open_Sans({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   display: 'swap'
@@ -41,14 +41,14 @@ const paletteTheme = createTheme({
     },
     primary: muiTheme.palette.augmentColor({
       color: {
-        main: '#00fff2',
-        contrastText: '#fba62d'
+        main: '#9146ff',
+        contrastText: '#ffffff'
       },
       name: 'primary'
     }),
     secondary: muiTheme.palette.augmentColor({
       color: {
-        main: '#EDF0FF',
+        main: '#ffff55',
         contrastText: '#000000'
       },
       name: 'secondary'
@@ -56,7 +56,7 @@ const paletteTheme = createTheme({
 
     tertiary: muiTheme.palette.augmentColor({
       color: {
-        main: '#fba62d',
+        main: '#6530b2',
         contrastText: '#000000'
       },
       name: 'tertiary'
@@ -114,9 +114,9 @@ const coreTheme = createTheme({
     applyBackgroundColor
   },
   typography: {
-    fontFamily: poppins.style.fontFamily,
+    fontFamily: openSans.style.fontFamily,
     body1: {
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--body1-font-weight)',
       fontSize: 'var(--body1-font-size)',
       lineHeight: 'var(--body1-line-height)',
@@ -124,7 +124,7 @@ const coreTheme = createTheme({
       color: 'inherit'
     },
     body2: {
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--body2-font-weight)',
       fontSize: 'var(--body2-font-size)',
       lineHeight: 'var(--body2-line-height)',
@@ -132,7 +132,7 @@ const coreTheme = createTheme({
       color: 'inherit'
     },
     bodySmall: {
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--bodySmall-font-weight)',
       fontSize: 'var(--bodySmall-font-size)',
       lineHeight: 'var(--bodySmall-line-height)',
@@ -140,7 +140,7 @@ const coreTheme = createTheme({
       color: 'inherit'
     },
     bodyLarge: {
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--bodyLarge-font-weight)',
       fontSize: 'var(--bodyLarge-font-size)',
       lineHeight: 'var(--bodyLarge-line-height)',
@@ -149,7 +149,7 @@ const coreTheme = createTheme({
     },
 
     h1: {
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--h1-font-weight)',
       fontSize: 'var(--h1-font-size)',
       lineHeight: 'var(--h1-line-height)',
@@ -157,7 +157,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h2: {
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--h2-font-weight)',
       fontSize: 'var(--h2-font-size)',
       lineHeight: 'var(--h2-line-height)',
@@ -165,7 +165,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h3: {
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--h3-font-weight)',
       fontSize: 'var(--h3-font-size)',
       lineHeight: 'var(--h3-line-height)',
@@ -173,7 +173,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h4: {
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--h4-font-weight)',
       fontSize: 'var(--h4-font-size)',
       lineHeight: 'var(--h4-line-height)',
@@ -181,7 +181,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h5: {
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--h5-font-weight)',
       fontSize: 'var(--h5-font-size)',
       lineHeight: 'var(--h5-line-height)',
@@ -189,7 +189,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h6: {
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--h6-font-weight)',
       fontSize: 'var(--h6-font-size)',
       lineHeight: 'var(--h6-line-height)',
@@ -198,7 +198,7 @@ const coreTheme = createTheme({
     },
     display1: {
       display: 'block',
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--display1-font-weight)',
       fontSize: 'var(--display1-font-size)',
       lineHeight: 'var(--display1-line-height)',
@@ -207,7 +207,7 @@ const coreTheme = createTheme({
     },
     display2: {
       display: 'block',
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--display2-font-weight)',
       fontSize: 'var(--display2-font-size)',
       lineHeight: 'var(--display2-line-height)',
@@ -216,7 +216,7 @@ const coreTheme = createTheme({
     },
     display3: {
       display: 'block',
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--display3-font-weight)',
       fontSize: 'var(--display3-font-size)',
       lineHeight: 'var(--display3-line-height)',
@@ -225,7 +225,7 @@ const coreTheme = createTheme({
     },
     display4: {
       display: 'block',
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--display4-font-weight)',
       fontSize: 'var(--display4-font-size)',
       lineHeight: 'var(--display4-line-height)',
@@ -234,7 +234,7 @@ const coreTheme = createTheme({
     },
     display5: {
       display: 'block',
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--display5-font-weight)',
       fontSize: 'var(--display5-font-size)',
       lineHeight: 'var(--display5-line-height)',
@@ -243,7 +243,7 @@ const coreTheme = createTheme({
     },
     display6: {
       display: 'block',
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--display6-font-weight)',
       fontSize: 'var(--display6-font-size)',
       lineHeight: 'var(--display6-line-height)',
@@ -252,7 +252,7 @@ const coreTheme = createTheme({
     },
     overline: {
       display: 'block',
-      fontFamily: poppins.style.fontFamily,
+      fontFamily: openSans.style.fontFamily,
       fontWeight: 'var(--overline-font-weight)',
       fontSize: 'var(--overline-font-size)',
       lineHeight: 'var(--overline-line-height)',

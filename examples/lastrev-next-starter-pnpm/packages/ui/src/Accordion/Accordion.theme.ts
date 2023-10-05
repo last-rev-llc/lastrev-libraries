@@ -11,10 +11,26 @@ import { AccordionVariants } from './Accordion.types';
 const defaultProps: ComponentsProps['Accordion'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
-  // root: : {},
-  // contentGrid: {},
-  // introTextGrid: {},
-  // introText: {},
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    containerType: 'inline-size',
+    position: 'relative',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    // TODO: Update to check if within a section
+    padding: theme.spacing(12, 0)
+  }),
+
+  // introTextGrid: : {},
+
+  introText: { gridColumn: 'content-start / content-end' },
+
+  contentOuterGrid: {
+    '> *': {
+      gridColumnStart: 'auto'
+    }
+  }
   // accordionItem: {},
   // summaryWrap: {},
   // summary: {},

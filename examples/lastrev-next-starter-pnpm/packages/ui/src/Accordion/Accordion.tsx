@@ -13,13 +13,14 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import Grid from '../Grid';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
+import Background from '../Background';
 
 import type { AccordionProps, AccordionOwnerState } from './Accordion.types';
 
 const Accordion = (props: AccordionProps) => {
   const ownerState = { ...props };
 
-  const { id, items, variant, sidekickLookup, introText } = props;
+  const { background, backgroundColor, id, items, variant, sidekickLookup, introText } = props;
 
   const [expanded, setExpanded] = React.useState<string | false>('panel1');
 
@@ -30,7 +31,9 @@ const Accordion = (props: AccordionProps) => {
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} ownerState={ownerState} data-testid={`Accordion-${variant}`}>
-        {introText && (
+        <AccordionBackground background={background} backgroundColor={backgroundColor} testId="Block-background" />
+
+        {!!introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText
               ownerState={ownerState}
@@ -42,7 +45,7 @@ const Accordion = (props: AccordionProps) => {
         )}
 
         {!!items?.length && (
-          <ContentGrid ownerState={ownerState}>
+          <ContentOuterGrid ownerState={ownerState}>
             {items?.map(
               (
                 item: any,
@@ -66,7 +69,7 @@ const Accordion = (props: AccordionProps) => {
                 </AccordionItem>
               )
             )}
-          </ContentGrid>
+          </ContentOuterGrid>
         )}
       </Root>
     </ErrorBoundary>
@@ -79,10 +82,16 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: AccordionOwnerState }>``;
 
-const ContentGrid = styled(Grid, {
+const AccordionBackground = styled(Background, {
+  name: 'Tabs',
+  slot: 'AccordionBackground',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
+
+const ContentOuterGrid = styled(Grid, {
   name: 'Accordion',
-  slot: 'ContentGrid',
-  overridesResolver: (_, styles) => [styles.contentGrid]
+  slot: 'ContentOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentOuterGrid]
 })<{ ownerState: AccordionOwnerState }>``;
 
 const IntroTextGrid = styled(Grid, {

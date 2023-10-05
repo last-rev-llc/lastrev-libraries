@@ -8,12 +8,13 @@ import {
 
 import { randomId } from '../utils/randomId';
 
-import type { TabsProps } from './Tabs.types';
+import { type TabsProps, TabsVariants } from './Tabs.types';
 
 export const tabsBaseMock = (override?: Partial<TabsProps>): TabsProps => {
   return {
     id: randomId(),
     __typename: 'CollectionExpandable',
+    variant: TabsVariants.default,
     items: [
       collectionExpandableItemBlocksMock({ title: 'Block - Title' }),
       collectionExpandableItemBaseMock({ title: 'Collection - Title' }),
