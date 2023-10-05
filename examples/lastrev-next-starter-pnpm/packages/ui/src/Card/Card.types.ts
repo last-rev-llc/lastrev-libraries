@@ -26,9 +26,9 @@ interface CardClasses {
   media: string;
   mediaFlip: string;
   mediaContainer: string;
-  actions: string;
+  actionsWrap: string;
   action: string;
-  content: string;
+  contentWrap: string;
   overline: string;
   title: string;
   subtitle: string;

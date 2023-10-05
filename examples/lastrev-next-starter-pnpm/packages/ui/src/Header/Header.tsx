@@ -17,10 +17,9 @@ import ContentModule from '../ContentModule';
 import SiteMessage from '../SiteMessage';
 
 import type { HeaderProps, HeaderOwnerState } from './Header.types';
-import type { LinkProps } from '../Link';
 import type { NavigationItemProps } from '../NavigationItem';
 
-export const Header = (props: HeaderProps) => {
+const Header = (props: HeaderProps) => {
   const ownerState = { ...props };
 
   const {

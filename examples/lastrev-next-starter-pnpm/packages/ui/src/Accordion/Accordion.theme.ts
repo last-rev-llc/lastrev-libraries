@@ -6,24 +6,26 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
+import { AccordionVariants } from './Accordion.types';
+
 const defaultProps: ComponentsProps['Accordion'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
   // root: : {},
-  // contentGrid: : {},
-  // introTextGrid: : {},
-  // introText: ({}) => ({}),
-  // accordionItem: ({}) => ({}),
-  // summaryWrap: ({}) => ({}),
-  // summary: ({}) => ({}),
-  // detailsWrap: ({}) => ({}),
-  // details: ({}) => ({})
+  // contentGrid: {},
+  // introTextGrid: {},
+  // introText: {},
+  // accordionItem: {},
+  // summaryWrap: {},
+  // summary: {},
+  // detailsWrap: {},
+  // details: {},
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Accordion'] => [
   {
     props: {
-      variant: 'default'
+      variant: AccordionVariants.default
     },
     style: {}
   }

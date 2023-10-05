@@ -1,14 +1,17 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 
-import Grid from '../Grid';
-import type { BackgroundProps, BackgroundOwnerState } from './Background.types';
 import ContentModule from '../ContentModule';
+import Grid from '../Grid';
 
-export const Background = (props: BackgroundProps) => {
+import type { BackgroundProps, BackgroundOwnerState } from './Background.types';
+
+const Background = (props: BackgroundProps) => {
   const ownerState = { ...props };
   const { background, backgroundColor } = props;
+
   if (!background && !backgroundColor) return null;
+
   return (
     <Root ownerState={ownerState}>
       {background ? (

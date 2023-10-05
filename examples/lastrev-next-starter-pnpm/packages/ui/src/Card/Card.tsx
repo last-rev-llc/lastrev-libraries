@@ -17,7 +17,7 @@ import ContentModule from '../ContentModule';
 import type { CardProps, CardOwnerState } from './Card.types';
 import { type LinkProps } from '../Link';
 
-export const Card = (props: CardProps) => {
+const Card = (props: CardProps) => {
   const { id, media, overline, title, subtitle, body, link, actions, variant, loading, sidekickLookup } = props;
 
   const ownerState = {
@@ -49,7 +49,7 @@ export const Card = (props: CardProps) => {
 
         {!loading && (overline || title || subtitle || body || actions) ? (
           // @ts-ignore: TODO
-          <Content ownerState={ownerState}>
+          <ContentWrap ownerState={ownerState}>
             {overline ? (
               <Overline
                 {...sidekick(sidekickLookup, 'overline')}
@@ -93,10 +93,11 @@ export const Card = (props: CardProps) => {
                 data-testid="Card-body"
               />
             ) : null}
-          </Content>
+          </ContentWrap>
         ) : null}
+
         {actions?.length ? (
-          <Actions
+          <ActionsWrap
             {...sidekick(sidekickLookup, 'actions')}
             data-testid="Card-actions"
             // @ts-ignore: TODO
@@ -104,10 +105,11 @@ export const Card = (props: CardProps) => {
             {actions?.map((link: any, index: number) => (
               <Action key={`card-${id}-link-${link?.id || index}`} {...(link as LinkProps)} ownerState={ownerState} />
             ))}
-          </Actions>
+          </ActionsWrap>
         ) : null}
+
         {loading ? (
-          <Content ownerState={ownerState} data-testid="Card-ContentSkeleton">
+          <ContentWrap ownerState={ownerState} data-testid="Card-ContentSkeleton">
             <Overline ownerState={ownerState} variant="overline">
               <Skeleton width="100%" />
             </Overline>
@@ -124,10 +126,10 @@ export const Card = (props: CardProps) => {
               <Skeleton width="100%" />
             </Body>
 
-            <Actions ownerState={ownerState}>
+            <ActionsWrap ownerState={ownerState}>
               <Skeleton width="100%" />
-            </Actions>
-          </Content>
+            </ActionsWrap>
+          </ContentWrap>
         ) : null}
       </Root>
     </ErrorBoundary>
@@ -152,10 +154,10 @@ const CardMedia = styled(MuiCardMedia, {
   overridesResolver: (_, styles) => [styles.media]
 })<{ ownerState: CardOwnerState }>``;
 
-const Actions = styled(CardActions, {
+const ActionsWrap = styled(CardActions, {
   name: 'Card',
-  slot: 'Actions',
-  overridesResolver: (_, styles) => [styles.actions]
+  slot: 'ActionsWrap',
+  overridesResolver: (_, styles) => [styles.actionsWrap]
 })<{ ownerState: CardOwnerState }>``;
 
 const Action = styled(ContentModule, {
@@ -164,10 +166,10 @@ const Action = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.action]
 })<{ ownerState: CardOwnerState }>``;
 
-const Content = styled(CardContent, {
+const ContentWrap = styled(CardContent, {
   name: 'Card',
-  slot: 'Content',
-  overridesResolver: (_, styles) => [styles.content]
+  slot: 'ContentWrap',
+  overridesResolver: (_, styles) => [styles.contentWrap]
 })<{ ownerState: CardOwnerState }>``;
 
 const Overline = styled(Typography, {

@@ -8,12 +8,13 @@ import {
 
 import { randomId } from '../utils/randomId';
 
-import { AccordionProps } from './Accordion.types';
+import { type AccordionProps, AccordionVariants } from './Accordion.types';
 
 export const accordionBaseMock = (override?: Partial<AccordionProps>): AccordionProps => {
   return {
     id: randomId(),
     __typename: 'CollectionExpandable',
+    variant: AccordionVariants.default,
     items: [
       collectionExpandableItemBlocksMock({ title: 'Block - Title' }),
       collectionExpandableItemBaseMock({ title: 'Collection - Title' }),

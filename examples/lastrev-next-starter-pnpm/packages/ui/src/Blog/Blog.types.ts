@@ -2,6 +2,7 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 
 import type { Blog_BaseFragmentFragment } from '@graphql-sdk/types';
 import { type LinkProps } from '../Link';
+import { type HeroProps } from '../Hero';
 
 export enum BlogVariants {
   default = 'default'
@@ -11,6 +12,7 @@ export interface BlogProps extends Omit<Blog_BaseFragmentFragment, 'variant'> {
   variant: BlogVariants;
   breadcrumbs?: LinkProps[];
   jsonLd: any;
+  hero?: HeroProps;
 }
 
 export interface BlogOwnerState extends BlogProps {}

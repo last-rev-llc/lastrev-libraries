@@ -22,18 +22,21 @@ const pageDefaultMock: PageProps = {
   breadcrumbs: breadcrumbsBaseMock().links,
   title: 'This is the Page Title',
   contents: [
-    blockBaseMock({}),
-    blockBaseMock({ backgroundColor: 'secondary' }),
-    blockBaseMock({ backgroundColor: 'primary' }),
+    blockBaseMock({ introText: undefined }),
+    blockBaseMock({ backgroundColor: 'black', introText: undefined }),
+    blockBaseMock({ backgroundColor: 'black', introText: undefined }),
     sectionBaseMock({
       variant: 'twoPerRow',
       backgroundColor: null,
       background: null,
-      contents: [blockBaseMock({ backgroundColor: 'secondary' }), blockBaseMock({ backgroundColor: 'secondary' })]
+      contents: [
+        blockBaseMock({ backgroundColor: 'black', introText: undefined }),
+        blockBaseMock({ backgroundColor: 'black', introText: undefined })
+      ]
     }),
-    collectionBaseMock(),
-    accordionBaseMock(),
-    tabsBaseMock()
+    collectionBaseMock({ introText: undefined }),
+    accordionBaseMock({ introText: undefined }),
+    tabsBaseMock({ introText: undefined })
   ]
 };
 

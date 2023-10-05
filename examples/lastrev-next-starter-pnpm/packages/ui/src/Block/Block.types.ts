@@ -3,7 +3,7 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 import type { Block_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum BlockVariants {
-  default = 'default',
+  default = 'contentOnRight',
   contentOnRight = 'contentOnRight',
   contentOnRightFullBleed = 'contentOnRightFullBleed',
   contentOnLeft = 'contentOnLeft',
@@ -12,7 +12,10 @@ export enum BlockVariants {
   contentAbove = 'contentAbove'
 }
 
-export interface BlockProps extends Block_BaseFragmentFragment {}
+export interface BlockProps extends Omit<Block_BaseFragmentFragment, 'variant'> {
+  variant: BlockVariants;
+}
+
 export interface BlockOwnerState extends BlockProps {}
 
 interface BlockClasses {
@@ -20,19 +23,17 @@ interface BlockClasses {
   introTextGrid: string;
   introText: string;
   contentOuterGrid: string;
-  categoriesWrapper: string;
-  mainContentWrapper: string;
+  mainContentWrap: string;
+  sideContentWrap: string;
   content: string;
-  angledArrowIcon: string;
+  background: string;
   overline: string;
   title: string;
   subtitle: string;
   body: string;
-  sideContentWrapper: string;
   mediaItems: string;
-  actionsWrapper: string;
+  actionsWrap: string;
   action: string;
-  common: string;
 }
 
 export declare type BlockClassKey = keyof BlockClasses;

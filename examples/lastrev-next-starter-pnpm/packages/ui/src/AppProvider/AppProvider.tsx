@@ -3,6 +3,7 @@ import ThemeRegistry from '../ThemeRegistry/ThemeRegistry';
 
 import { ContentModuleProvider } from '../ContentModule/ContentModuleContext';
 
+// This appears to have a requirements to be a named export
 export const AppProvider = ({ children }: { children: any }) => {
   return (
     <>
@@ -12,5 +13,3 @@ export const AppProvider = ({ children }: { children: any }) => {
     </>
   );
 };
-
-export default AppProvider;

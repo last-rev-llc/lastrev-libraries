@@ -15,7 +15,6 @@ const Blog = dynamic(() => import('./Blog'));
 const Accordion = dynamic(() => import('./Accordion'));
 const Form = dynamic(() => import('./Form'));
 const Section = dynamic(() => import('./Section'));
-const NavigationBar = dynamic(() => import('./NavigationBar'));
 const NavigationItem = dynamic(() => import('./NavigationItem'));
 const Header = dynamic(() => import('./Header'));
 const Footer = dynamic(() => import('./Footer'));
@@ -50,7 +49,6 @@ export const contentMapping: {
   Accordion,
   Tabs,
   Section,
-  NavigationBar,
   FooterNavigationItem,
   FooterNavigationItemGroup,
   'ElementForm': Form,

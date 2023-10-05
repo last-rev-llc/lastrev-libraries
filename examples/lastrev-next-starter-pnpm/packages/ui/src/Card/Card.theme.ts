@@ -26,6 +26,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     }
   },
 
+  contentWrap: {
+    flex: 1,
+    padding: 'var(--grid-gap)'
+  },
+
+  actionsWrap: {
+    padding: 'var(--grid-gap)'
+  },
+
   link: {
     'position': 'absolute',
     'top': 0,
@@ -38,9 +47,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
         opacity: 0
       }
     }
-  },
-
-  content: { flex: 1 }
+  }
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
@@ -74,7 +81,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         marginRight: 'auto',
 
         [theme.containerBreakpoints.up('lg')]: {
-          // 'padding': theme.spacing(1),
           '& > img': {
             objectFit: 'contain'
           }
@@ -124,7 +130,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.person
     },
     style: {
-      '[class*=Card-content]': {
+      '[class*=Card-contentWrap]': {
         containerType: 'inline-size'
       },
 

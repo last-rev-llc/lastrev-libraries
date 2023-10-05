@@ -13,7 +13,7 @@ import ContentModule from '../ContentModule';
 import type { CollectionProps, CollectionOwnerState } from './Collection.types';
 import Background from '../Background';
 
-export const Collection = (props: CollectionProps) => {
+const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
 
   const { background, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;

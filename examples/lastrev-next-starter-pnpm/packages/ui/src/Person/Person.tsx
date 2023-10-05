@@ -27,11 +27,23 @@ const Person = (props: PersonProps) => {
       <Root component="main" {...sidekick(sidekickLookup)} ownerState={ownerState}>
         <ContentOuterGrid ownerState={ownerState}>
           <HeaderWrap ownerState={ownerState}>
-            {!!name && <Name {...sidekick(sidekickLookup, 'name')}>{name}</Name>}
+            {!!name && (
+              <Name {...sidekick(sidekickLookup, 'name')} ownerState={ownerState}>
+                {name}
+              </Name>
+            )}
 
-            {!!jobTitle && <JobTitle {...sidekick(sidekickLookup, 'jobTitle')}>{jobTitle}</JobTitle>}
+            {!!jobTitle && (
+              <JobTitle {...sidekick(sidekickLookup, 'jobTitle')} ownerState={ownerState}>
+                {jobTitle}
+              </JobTitle>
+            )}
 
-            {!!email && <Email {...sidekick(sidekickLookup, 'email')}>{email}</Email>}
+            {!!email && (
+              <Email {...sidekick(sidekickLookup, 'email')} ownerState={ownerState}>
+                {email}
+              </Email>
+            )}
           </HeaderWrap>
 
           <ContentWrap ownerState={ownerState}>
@@ -82,19 +94,19 @@ const Name = styled(Typography, {
   name: 'Person',
   slot: 'Name',
   overridesResolver: (_, styles) => [styles.name]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<TypographyProps & { ownerState: PersonOwnerState }>``;
 
 const JobTitle = styled(Typography, {
   name: 'Person',
   slot: 'JobTitle',
   overridesResolver: (_, styles) => [styles.jobTitle]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<TypographyProps & { ownerState: PersonOwnerState }>``;
 
 const Email = styled(Typography, {
   name: 'Person',
   slot: 'Email',
   overridesResolver: (_, styles) => [styles.email]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<TypographyProps & { ownerState: PersonOwnerState }>``;
 
 const ContentWrap = styled(Box, {
   name: 'Person',

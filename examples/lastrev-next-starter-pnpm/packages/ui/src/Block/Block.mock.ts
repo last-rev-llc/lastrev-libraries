@@ -1,6 +1,6 @@
 import { linkButtonMock } from '../Link/Link.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
-import { richTextMock } from '../RichText/RichText.mock';
+import { richTextBlockMock } from '../RichText/RichText.mock';
 import { introTextMock } from '../Text/Text.mock';
 
 import { randomId } from '../utils/randomId';
@@ -16,7 +16,7 @@ const blockDefaultMock = (override?: Partial<BlockProps>): BlockProps => {
     overline: 'This is the Block overline',
     title: 'This is the Block title',
     subtitle: 'This is the Block subtitle',
-    body: richTextMock({ text: 'This is the Block body' }),
+    body: richTextBlockMock(),
     mediaItems: [mediaBaseImageMock({ title: 'This is the Block Media 1' })],
     actions: [
       linkButtonMock({ text: 'This is the Block Action 1', variant: 'buttonContained' }),

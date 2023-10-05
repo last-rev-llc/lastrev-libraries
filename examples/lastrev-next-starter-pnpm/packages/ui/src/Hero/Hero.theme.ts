@@ -9,28 +9,23 @@ import type {
 import { HeroVariants } from './Hero.types';
 
 const defaultProps: ComponentsProps['Hero'] = {
-  variant: 'default'
+  variant: HeroVariants.default
 };
 
 const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   root: ({ theme }) => ({
+    containerType: 'inline-size',
     position: 'relative',
     padding: theme.spacing(12, 0)
   }),
 
-  contentGrid: {
-    alignItems: 'center'
+  contentOuterGrid: {
+    '> *': {
+      gridColumnStart: 'auto'
+    }
   },
 
-  content: {
-    gridColumn: 'content-start/content-half',
-    gridRow: 1
-  },
-
-  mediaWrap: {
-    gridColumn: 'content-half/content-end',
-    gridRow: 1
-  },
+  // content: {},
 
   // media: {},
 
@@ -42,8 +37,28 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 
   // body: {},
 
-  actionsWrapper: ({ theme }) => ({
-    marginTop: theme.spacing(2)
+  mainContentWrap: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignSelf: 'center'
+  },
+
+  mediaWrap: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  },
+
+  actionsWrap: ({ theme }) => ({
+    marginTop: theme.spacing(2),
+    display: 'flex',
+    flexDirection: 'column',
+    gap: theme.spacing(2),
+
+    [theme.containerBreakpoints.up('lg')]: {
+      flexDirection: 'row'
+    }
   })
 
   // action: {}
@@ -54,64 +69,113 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
     props: {
       variant: HeroVariants.mediaOnRight
     },
-    style: () => ({})
+    style: {
+      '[class*=mainContentWrap]': {
+        gridRow: 2,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridRow: 1,
+          gridColumnStart: 'content-start',
+          gridColumnEnd: 'content-half'
+        }
+      },
+
+      '[class*=mediaWrap]': {
+        gridRow: 1,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnStart: 'content-half',
+          gridColumnEnd: 'content-end'
+        }
+      }
+    }
   },
   {
     props: {
       variant: HeroVariants.mediaOnRightFullBleed
     },
-    style: () => ({
-      '[class*=Hero-mediaWrap]': {
-        gridColumnEnd: '-1',
-        [theme.breakpoints.down('sm')]: {
-          gridColumnStart: '1'
+    style: {
+      '[class*=mainContentWrap]': {
+        gridRow: 2,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridRow: 1,
+          gridColumnStart: 'content-start',
+          gridColumnEnd: 'content-half'
+        }
+      },
+
+      '[class*=mediaWrap]': {
+        gridRow: 1,
+        gridColumnStart: 'full-start',
+        gridColumnEnd: 'full-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnStart: 'content-half',
+          gridColumnEnd: 'full-end'
         }
       }
-    })
+    }
   },
   {
     props: {
       variant: HeroVariants.mediaOnLeft
     },
-    style: () => ({
-      '[class*=Hero-content]': {
-        gridColumnStart: 'content-half',
-        gridColumnEnd: 'content-end',
-        [theme.breakpoints.down('sm')]: {
-          gridColumnStart: 'content-start'
-        }
-      },
-      '[class*=Hero-mediaWrap]': {
+    style: {
+      '[class*=mainContentWrap]': {
+        gridRow: 2,
         gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-half',
+        gridColumnEnd: 'content-end',
 
-        [theme.breakpoints.down('sm')]: {
+        [theme.containerBreakpoints.up('md')]: {
+          gridRow: 1,
+          gridColumnStart: 'content-half',
           gridColumnEnd: 'content-end'
         }
+      },
+
+      '[class*=mediaWrap]': {
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnEnd: 'content-half'
+        }
       }
-    })
+    }
   },
   {
     props: {
       variant: HeroVariants.mediaOnLeftFullBleed
     },
-    style: () => ({
-      '[class*=Hero-content]': {
-        gridColumnStart: 'content-half',
+    style: {
+      '[class*=mainContentWrap]': {
+        gridRow: 2,
+        gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
-        [theme.breakpoints.down('sm')]: {
-          gridColumnStart: 'content-start'
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridRow: 1,
+          gridColumnStart: 'content-half',
+          gridColumnEnd: 'content-end'
         }
       },
 
-      '[class*=Hero-mediaWrap]': {
+      '[class*=mediaWrap]': {
         gridColumnStart: '1',
-        gridColumnEnd: 'content-half',
-        [theme.breakpoints.down('sm')]: {
-          gridColumnEnd: '-1'
+        gridColumnEnd: '-1',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnEnd: 'content-half'
         }
       }
-    })
+    }
   },
 
   {
@@ -119,12 +183,17 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.mediaAbove
     },
     style: {
-      '[class*=Hero-content]': {
-        gridColumn: 'content-start/content-end',
-        gridRow: 2
+      '[class*=mainContentWrap]': {
+        'gridRow': 2,
+        'gridColumnStart': 'content-start',
+        'gridColumnEnd': 'content-end',
+
+        '& *': {
+          alignSelf: 'center'
+        }
       },
 
-      '[class*=Hero-mediaWrap]': {
+      '[class*=mediaWrap]': {
         gridColumn: 'content-start/content-end',
         gridRow: 1
       }
@@ -135,12 +204,16 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.mediaBelow
     },
     style: {
-      '[class*=Hero-content]': {
-        gridColumn: 'content-start/content-end',
-        gridRow: 1
+      '[class*=mainContentWrap]': {
+        'gridRow': 1,
+        'gridColumnStart': 'content-start',
+        'gridColumnEnd': 'content-end',
+        '& *': {
+          alignSelf: 'center'
+        }
       },
 
-      '[class*=Hero-mediaWrap]': {
+      '[class*=mediaWrap]': {
         gridColumn: 'content-start/content-end',
         gridRow: 2
       }

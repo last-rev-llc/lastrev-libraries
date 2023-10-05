@@ -1,13 +1,13 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
 import type { MediaProps } from '../Media/Media.types';
-import type { RichText } from '../RichText/RichText.types';
+import type { RichTextProps } from '../RichText/RichText.types';
 import type { LinkProps } from '../Link/Link.types';
 
 export interface SiteMessageProps {
   sidekickLookup?: any;
   isElevated?: boolean;
-  text?: RichText;
+  text?: RichTextProps;
   link?: LinkProps;
   icon?: MediaProps;
 }

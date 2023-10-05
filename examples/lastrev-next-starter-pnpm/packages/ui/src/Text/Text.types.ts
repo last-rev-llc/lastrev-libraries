@@ -1,8 +1,14 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import { Options } from '@contentful/rich-text-react-renderer';
+import { type Options } from '@contentful/rich-text-react-renderer';
 
 import type { Text_BaseFragmentFragment } from '@graphql-sdk/types';
+
+export enum TextVariants {
+  default = 'default',
+  introText = 'introText',
+  inline = 'inline'
+}
 
 export interface TextProps extends Text_BaseFragmentFragment {
   styles?: {
@@ -15,6 +21,8 @@ export interface TextProps extends Text_BaseFragmentFragment {
   renderMark?: any;
   renderOptions?: Options;
 }
+
+export interface TextOwnerState extends TextProps {}
 
 interface TextClasses {
   /** Styles applied to the root element. */

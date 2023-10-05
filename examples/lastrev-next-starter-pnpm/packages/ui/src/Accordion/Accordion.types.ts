@@ -2,7 +2,15 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 
 import type { CollectionExpandable_BaseFragmentFragment } from '@graphql-sdk/types';
 
+export enum AccordionVariants {
+  default = 'default'
+}
+
 export interface AccordionProps extends CollectionExpandable_BaseFragmentFragment {}
+
+export interface AccordionProps extends Omit<CollectionExpandable_BaseFragmentFragment, 'variant'> {
+  variant: AccordionVariants;
+}
 
 export interface AccordionOwnerState extends AccordionProps {}
 

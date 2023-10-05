@@ -1,11 +1,20 @@
 import { Mixins } from '@mui/material/styles/createMixins';
 import { type TypographyStyle, type Breakpoints } from '@mui/material/styles';
+import { Palette as MuiPalette } from '@mui/material/styles/createPalette';
 
 declare module '@mui/material/styles' {
   interface TypeBackground {
     default: string;
     paper: string;
     contrastText: string;
+  }
+
+  interface Palette {
+    tertiary?: MuiPalette['primary'];
+  }
+
+  interface PaletteOptions {
+    tertiary?: PaletteOptions['primary'];
   }
 
   interface BreakpointOverrides {

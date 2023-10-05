@@ -9,26 +9,34 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import type { TextProps } from './Text.types';
+import type { TextProps, TextOwnerState } from './Text.types';
 
-const Text = ({ body, align, overline, title, subtitle, variant, sidekickLookup, sx, ...props }: TextProps) => {
+const Text = (props: TextProps) => {
+  const ownerState = { ...props };
+
+  const { body, overline, title, subtitle, variant, sidekickLookup, sx } = props;
+
   return (
     <ErrorBoundary>
-      <Root data-testid="Text-root" variant={variant} {...sidekick(sidekickLookup)} {...props}>
+      <Root data-testid="Text-root" {...sidekick(sidekickLookup)} ownerState={ownerState}>
         {!!overline && (
-          <Overline data-testid="Text-overline" {...sidekick(sidekickLookup, 'overline')} variant="overline">
+          <Overline
+            data-testid="Text-overline"
+            {...sidekick(sidekickLookup, 'overline')}
+            variant="overline"
+            ownerState={ownerState}>
             {overline}
           </Overline>
         )}
 
         {!!title && (
-          <Title data-testid="Text-title" variant="display1" {...sidekick(sidekickLookup, 'title')}>
+          <Title data-testid="Text-title" {...sidekick(sidekickLookup, 'title')} ownerState={ownerState}>
             {title}
           </Title>
         )}
 
         {!!subtitle && (
-          <Subtitle data-testid="Text-subtitle" {...sidekick(sidekickLookup, 'subtitle')} variant="display2">
+          <Subtitle data-testid="Text-subtitle" {...sidekick(sidekickLookup, 'subtitle')} ownerState={ownerState}>
             {subtitle}
           </Subtitle>
         )}
@@ -38,9 +46,9 @@ const Text = ({ body, align, overline, title, subtitle, variant, sidekickLookup,
             body={body}
             sidekickLookup={sidekickLookup}
             variant={variant}
-            align={align}
             {...props}
             __typename="RichText"
+            ownerState={ownerState}
           />
         )}
       </Root>
@@ -54,24 +62,24 @@ const Root = styled(Box, {
   slot: 'Root',
   shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string }>``;
+})<{ ownerState: TextOwnerState }>``;
 
 const Overline = styled(Typography, {
   name: 'Text',
   slot: 'Overline',
   overridesResolver: (_, styles) => [styles.overline]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<TypographyProps & { ownerState: TextOwnerState }>``;
 
 const Title = styled(Typography, {
   name: 'Text',
   slot: 'Title',
   overridesResolver: (_, styles) => [styles.title]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<TypographyProps & { ownerState: TextOwnerState }>``;
 
 const Subtitle = styled(Typography, {
   name: 'Text',
   slot: 'Subtitle',
   overridesResolver: (_, styles) => [styles.subtitle]
-})<TypographyProps<React.ElementType>>(() => ({}));
+})<TypographyProps & { ownerState: TextOwnerState }>``;
 
 export default Text;

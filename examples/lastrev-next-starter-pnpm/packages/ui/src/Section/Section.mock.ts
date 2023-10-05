@@ -15,7 +15,7 @@ const sectionDefaultMock = (override?: Partial<SectionProps>): SectionProps => {
     __typename: 'Section',
     variant: SectionVariants.onePerRow,
     // introText: introTextMock(),
-    backgroundColor: 'primary',
+    backgroundColor: 'black',
     // background: mediaBaseImageMock(),
     contents: [blockBaseMock({ introText: undefined }), collectionBaseMock({ introText: undefined })] //, collectionBaseMock(), accordionBaseMock(), tabsBaseMock()]
   };

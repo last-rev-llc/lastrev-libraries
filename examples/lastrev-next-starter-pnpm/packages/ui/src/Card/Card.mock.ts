@@ -1,4 +1,4 @@
-import { complexMock } from '../RichText/RichText.mock';
+import { richTextCardMock } from '../RichText/RichText.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
 import { linkButtonMock, linkBaseMock } from '../Link/Link.mock';
 
@@ -15,7 +15,7 @@ export const cardBaseMock = (override?: Partial<CardProps>): CardProps => {
     overline: 'This is a card overline',
     title: 'This is a card title',
     subtitle: 'And this is the subtitle',
-    body: complexMock(),
+    body: richTextCardMock(),
     actions: [linkButtonMock({ text: 'Card Link 1' }), linkButtonMock({ text: 'Card Link 2' })],
     link: { ...linkBaseMock() },
     sidekickLookup: {},

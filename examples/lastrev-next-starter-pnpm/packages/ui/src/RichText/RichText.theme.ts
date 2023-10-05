@@ -40,7 +40,7 @@ const createVariants = (theme: Theme): ComponentsVariants['RichText'] => [
         },
 
         '&:is(span)': {
-          // Image Wrappers
+          // Image Wraps
           marginTop: '2em !important',
           marginBottom: '2em !important'
         },
