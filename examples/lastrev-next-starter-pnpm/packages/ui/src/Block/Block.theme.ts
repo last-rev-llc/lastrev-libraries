@@ -15,13 +15,21 @@ const defaultProps: ComponentsProps['Block'] = {
 const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    containerType: 'inline-size',
-    position: 'relative',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
+    'containerType': 'inline-size',
+    'position': 'relative',
+    'width': '100%',
+    'display': 'flex',
+    'flexDirection': 'column',
+    '[class*="Background-root"] [class*=itemsGrid] &': {
+      border: 'solid 10px blue'
+    },
+    '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
+      padding: 'var(--grid-gap)',
+      paddingTop: 0
+    }
     // TODO: Update to check if within a section
-    padding: theme.spacing(12, 0)
+    // padding: theme.spacing(0, 4)
+    // margin: theme.spacing(0, -4)
   }),
 
   // introTextGrid: : {},
@@ -62,11 +70,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
 
   // mediaItems: : {},
 
-  actionsWrap: ({ theme }) => ({
+  actionsWrap: ({ theme, ownerState }) => ({
     marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
-    gap: theme.spacing(2),
+    gap: 'var(--grid-gap)',
 
     [theme.containerBreakpoints.up('lg')]: {
       flexDirection: 'row'

@@ -11,8 +11,7 @@ const defaultProps: ComponentsProps['Link'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
   root: ({ theme }) => ({
     display: 'inline-flex',
-    alignItems: 'center',
-    ...theme.typography.bodySmall
+    alignItems: 'center'
   }),
 
   rootButton: {

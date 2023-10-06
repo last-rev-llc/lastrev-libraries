@@ -43,10 +43,8 @@ const Collection = (props: CollectionProps) => {
               {items?.map((item, index) => (
                 <Item
                   ownerState={ownerState}
-                  // @ts-ignore: TODO: ID not recognized
                   key={item?.id}
                   {...item}
-                  // @ts-ignore: TODO: Variant does not exist on Section
                   variant={itemsVariant ?? item?.variant}
                   position={index + 1}
                 />

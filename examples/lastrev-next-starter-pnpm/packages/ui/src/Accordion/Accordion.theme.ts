@@ -28,8 +28,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
 
   contentOuterGrid: {
     '> *': {
-      gridColumnStart: 'auto'
-    }
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-end'
+    },
+    'gridGap': 0
+    // 'display': 'contents'
   }
   // accordionItem: {},
   // summaryWrap: {},

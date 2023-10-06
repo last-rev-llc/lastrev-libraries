@@ -30,28 +30,26 @@ const Section = (props: SectionProps) => {
     <ErrorBoundary>
       <Root component="section" {...sidekick(sidekickLookup)} ownerState={ownerState}>
         <SectionBackground background={background} backgroundColor={backgroundColor} />
-        <ContentOuterGrid ownerState={ownerState}>
-          <ContentWrap ownerState={ownerState}>
-            {!!introText && (
-              <IntroTextGrid ownerState={ownerState}>
-                <IntroText
-                  ownerState={ownerState}
-                  {...sidekick(sidekickLookup, 'introText')}
-                  {...introText}
-                  variant="introText"
-                />
-              </IntroTextGrid>
-            )}
+        {!!introText && (
+          <IntroTextGrid ownerState={ownerState}>
+            <IntroText
+              ownerState={ownerState}
+              {...sidekick(sidekickLookup, 'introText')}
+              {...introText}
+              variant="introText"
+            />
+          </IntroTextGrid>
+        )}
 
-            <ItemsGrid ownerState={ownerState}>
-              {contents?.map((content, idx) => (
-                <SectionItem key={`section-item-${idx}-${content?.id}`} ownerState={ownerState}>
-                  <ContentModule {...content} ownerState={ownerState} />
-                </SectionItem>
-              ))}
-            </ItemsGrid>
-          </ContentWrap>
-        </ContentOuterGrid>
+        <ContentWrap ownerState={ownerState}>
+          <ItemsGrid ownerState={ownerState}>
+            {contents?.map((content, idx) => (
+              // <SectionItem key={`section-item-${idx}-${content?.id}`} ownerState={ownerState}>
+              <ContentModule key={`section-item-${idx}-${content?.id}`} {...content} ownerState={ownerState} />
+              // </SectionItem>
+            ))}
+          </ItemsGrid>
+        </ContentWrap>
       </Root>
     </ErrorBoundary>
   );

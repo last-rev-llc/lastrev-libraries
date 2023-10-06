@@ -282,6 +282,8 @@ export const theme: Theme = createTheme(
   })
 );
 
+export const breakpoints = theme.breakpoints.values;
+
 // export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
 //   containerBreakpoints: {
 //     up(key: any) {

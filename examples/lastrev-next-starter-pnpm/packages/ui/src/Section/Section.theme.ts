@@ -21,16 +21,52 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
     }
   },
 
-  contentOuterGrid: {
+  contentOuterGrid: ({ theme, ownerState }) => ({
     gridColumn: 'full-start/full-end',
-    gridRow: '1/-1'
-  },
+    gridRow: '1/-1',
 
-  contentWrap: {
+    ...((ownerState?.variant === SectionVariants.twoPerRow || ownerState?.variant === SectionVariants.threePerRow) && {
+      gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
+
+      ...((ownerState?.variant === SectionVariants.twoPerRow ||
+        ownerState?.variant === SectionVariants.threePerRow) && {
+        [theme.containerBreakpoints.up('md')]: {
+          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
+        }
+      }),
+
+      ...(ownerState?.variant === SectionVariants.threePerRow && {
+        [theme.containerBreakpoints.up('lg')]: {
+          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
+        }
+      })
+    })
+  }),
+
+  contentWrap: ({ theme, ownerState }) => ({
     zIndex: 2,
-    gridColumn: 'full-start/full-end',
-    gridRow: 1
-  },
+    gridColumn: 'content-start/content-end'
+    // 'gridRow': 1,
+
+    // TEST TO let children blocks flow with main section grid
+    // 'display': 'contents',
+
+    // '& > *': {
+    //   gridColumn: 'unset',
+    //   gridRow: 'auto'
+    //   // ...((ownerState?.variant === SectionVariants.twoPerRow ||
+    //   //   ownerState?.variant === SectionVariants.threePerRow) && {
+    //   //   [theme.containerBreakpoints.up('md')]: {
+    //   //     gridColumn: `span var(--num-columns-md)`
+    //   //   }
+    //   // }),
+    //   // ...(ownerState?.variant === SectionVariants.threePerRow && {
+    //   //   [theme.containerBreakpoints.up('lg')]: {
+    //   //     gridColumn: `span var(--num-columns-lg)`
+    //   //   }
+    //   // })
+    // }
+  }),
 
   introTextGrid: { gridColumn: 'content-start/content-end' },
 
@@ -38,9 +74,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
 
   itemsGrid: ({ theme, ownerState }) => {
     return {
-      gridColumn: 'full-start/full-end',
+      // gridColumn: 'full-start/full-end',
       display: 'grid',
       gridGap: 'inherit',
+      gridRowGap: 0,
       gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
 
       ...((ownerState?.variant === SectionVariants.twoPerRow ||

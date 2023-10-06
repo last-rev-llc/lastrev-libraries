@@ -101,7 +101,7 @@ const IntroTextGrid = styled(Grid, {
 })<{ ownerState: AccordionOwnerState }>``;
 
 const IntroText = styled(ContentModule, {
-  name: 'Collection',
+  name: 'Accordion',
   slot: 'IntroText',
   overridesResolver: (_, styles) => [styles.introText]
 })<{ ownerState: AccordionOwnerState }>``;
