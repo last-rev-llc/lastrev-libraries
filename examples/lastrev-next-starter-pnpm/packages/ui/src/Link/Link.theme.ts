@@ -9,10 +9,11 @@ import type {
 const defaultProps: ComponentsProps['Link'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
-  root: {
+  root: ({ theme }) => ({
     display: 'inline-flex',
-    alignItems: 'center'
-  },
+    alignItems: 'center',
+    ...theme.typography.bodySmall
+  }),
 
   rootButton: {
     display: 'inline-flex',

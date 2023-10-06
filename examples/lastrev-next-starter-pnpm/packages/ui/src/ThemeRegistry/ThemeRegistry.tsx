@@ -60,7 +60,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --overline-font-size: 0.625rem;
               --body1-font-size: 0.875rem;
               --body2-font-size: 0.875rem;
-              --bodySmall-font-size: 0.75rem;
+              --bodySmall-font-size: 0.625rem;
               --bodyLarge-font-size: 1.125rem;
 
               --h1-line-height: 1.125em;
@@ -132,7 +132,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display4-font-size: 1.25rem;
                 --display5-font-size: 1.125rem;
                 --display6-font-size: 1rem;
-                --overline-font-size: 0.625rem;
+                --overline-font-size: 0.75rem;
                 --body1-font-size: 0.875rem;
                 --body2-font-size: 0.875rem;
                 --bodySmall-font-size: 0.75rem;

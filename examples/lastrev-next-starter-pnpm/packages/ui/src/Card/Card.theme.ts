@@ -12,6 +12,7 @@ const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: {
+    'containerType': 'inline-size',
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
     'willChange': 'transform',
@@ -19,7 +20,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'display': 'flex',
     'flexDirection': 'column',
     'height': '100%',
-    'maxWidth': '640px',
 
     '&:hover': {
       transform: 'scale(1.05)'
@@ -31,9 +31,18 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     padding: 'var(--grid-gap)'
   },
 
-  actionsWrap: {
-    padding: 'var(--grid-gap)'
-  },
+  actionsWrap: ({ theme }) => ({
+    padding: 'var(--grid-gap)',
+    display: 'flex',
+    gap: 'var(--grid-gap)',
+    flexDirection: 'column',
+    alignItems: 'center',
+
+    // TODO: Need additional breakpoints here
+    [theme.containerBreakpoints.up('sm')]: {
+      flexDirection: 'row'
+    }
+  }),
 
   link: {
     'position': 'absolute',
