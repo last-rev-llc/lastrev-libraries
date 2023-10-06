@@ -24,11 +24,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gridRow: 1,
     alignSelf: 'center',
 
-    [theme.containerBreakpoints.up('sm')]: {
+    [theme.breakpoints.up('sm')]: {
       gridColumn: 'three-start / six-end'
     },
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridColumn: 'content-start / span 2',
       alignSelf: 'center'
     }
@@ -49,7 +49,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridRow: 1,
       gridColumnStart: 'three-start',
       gridColumnEnd: ownerState?.hasSocialLinks ? 'ten-end' : 'content-end'
@@ -65,7 +65,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     width: '100%',
     margin: 'auto',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       height: '100%',
       flexDirection: 'row',
       width: 'auto'
@@ -76,7 +76,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     padding: 0,
     position: 'unset',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       height: '100%'
     }
   }),
@@ -93,7 +93,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     justifySelf: 'center',
     gap: theme.spacing(2),
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridColumnStart: 'eleven-start',
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
@@ -121,7 +121,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridRow: 2,
       gridColumnStart: 'content-start',
       gridColumnEnd: 'content-half'
@@ -137,7 +137,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridRow: 2,
       gridColumnStart: 'content-half',
       gridColumnEnd: 'content-end'
@@ -154,7 +154,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     justifySelf: 'flex-end',
     gap: theme.spacing(2),
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridColumn: 'content-start / content-end',
       gridRow: 3,
       marginLeft: 'auto'
