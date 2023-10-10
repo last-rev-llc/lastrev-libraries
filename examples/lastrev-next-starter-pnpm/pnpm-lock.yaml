@@ -323,6 +323,9 @@ importers:
       '@contentful/rich-text-react-renderer':
         specifier: ^15.17.1
         version: 15.17.1(react-dom@18.2.0)(react@18.2.0)
+      '@egjs/flicking':
+        specifier: ^4.11.0
+        version: 4.11.0
       '@last-rev/contentful-sidekick-util':
         specifier: ^0.1.3
         version: 0.1.3
@@ -366,6 +369,9 @@ importers:
       '@types/react-dom':
         specifier: ^18.2.0
         version: 18.2.4
+      css-loader:
+        specifier: ^6.8.1
+        version: 6.8.1(webpack@5.88.2)
       eslint:
         specifier: ^7.32.0
         version: 7.32.0
@@ -2923,6 +2929,18 @@ packages:
   /@bcoe/v8-coverage@0.2.3:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
 
+  /@cfcs/core@0.0.24:
+    resolution: {integrity: sha512-feB38qu+eDk0Pggh/yR7gjaNmvUYA2uCxHP3Pz2MLE4LZ/9jPdtu8bzCSI47yTEhWyZCF5Pk698hdz8IN2mTjA==}
+    dependencies:
+      '@egjs/component': 3.0.4
+    dev: false
+
+  /@cfcs/core@0.1.0:
+    resolution: {integrity: sha512-kvYX0RpL45XTHJ5sW7teNbKeAa7pK3nNqaJPoFfZDPTIBJOkTtRD3QhkBG+O3Hu69a8xeMoPvF6y/RtJ6JUOdA==}
+    dependencies:
+      '@egjs/component': 3.0.4
+    dev: false
+
   /@cnakazawa/watch@1.0.4:
     resolution: {integrity: sha512-v9kIhKwjeZThiWrLmj0y17CWoyddASLj9O2yvbZkbvw/N3rWOYy9zkV66ursAoVr0mV15bL8g0c4QZUE6cdDoQ==}
     engines: {node: '>=0.1.95'}
@@ -3051,6 +3069,42 @@ packages:
   /@discoveryjs/json-ext@0.5.7:
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
     engines: {node: '>=10.0.0'}
+
+  /@egjs/agent@2.4.3:
+    resolution: {integrity: sha512-XvksSENe8wPeFlEVouvrOhKdx8HMniJ3by7sro2uPF3M6QqWwjzVcmvwoPtdjiX8O1lfRoLhQMp1a7NGlVTdIA==}
+    dev: false
+
+  /@egjs/axes@3.9.0:
+    resolution: {integrity: sha512-V+HxHxEGmlu/0yJ9kqlj2doiJt1yVeROTy/0Qf+IaJ9hMabjzUgfYffGR+3atcRpejjGbcpAIiBrGbAkDVaLjg==}
+    dependencies:
+      '@cfcs/core': 0.1.0
+      '@egjs/agent': 2.4.3
+      '@egjs/component': 3.0.4
+    dev: false
+
+  /@egjs/component@3.0.4:
+    resolution: {integrity: sha512-sXA7bGbIeLF2OAw/vpka66c6QBBUPcA4UUhR4WGJfnp2XWdiI8QrnJGJMr/UxpE/xnevX9tN3jvNPlW8WkHl3g==}
+    dev: false
+
+  /@egjs/flicking@4.11.0:
+    resolution: {integrity: sha512-KxVdLrfQY2he7KMvAwaUrnZwF11X1RLnA6ShN8BtEuI9DwrciIISs+yKFKwTc7K7QzDRyiHl9vR8CRds7chOKA==}
+    dependencies:
+      '@egjs/axes': 3.9.0
+      '@egjs/component': 3.0.4
+      '@egjs/imready': 1.4.1
+      '@egjs/list-differ': 1.0.1
+    dev: false
+
+  /@egjs/imready@1.4.1:
+    resolution: {integrity: sha512-JIOBs4lB7FYdsKi5uvz2j3SObX8eShtZjtqlOH41tm185aJOQZwiKBK8+V4MxzG4X6DqVhpdN8UcuVwBbElfsg==}
+    dependencies:
+      '@cfcs/core': 0.0.24
+      '@egjs/component': 3.0.4
+    dev: false
+
+  /@egjs/list-differ@1.0.1:
+    resolution: {integrity: sha512-OTFTDQcWS+1ZREOdCWuk5hCBgYO4OsD30lXcOCyVOAjXMhgL5rBRDnt/otb6Nz8CzU0L/igdcaQBDLWc4t9gvg==}
+    dev: false
 
   /@emotion/babel-plugin@11.11.0:
     resolution: {integrity: sha512-m4HEDZleaaCH+XgDDsPF15Ht6wTLsgDTeR3WYj9Q/k76JtWhrJjcP4+/XlG8LGT/Rol9qUfOIztXeA84ATpqPQ==}
@@ -12650,7 +12704,7 @@ packages:
       postcss-modules-values: 4.0.0(postcss@8.4.29)
       postcss-value-parser: 4.2.0
       semver: 7.5.4
-      webpack: 5.88.2(@swc/core@1.3.82)(esbuild@0.18.20)
+      webpack: 5.88.2(@swc/core@1.3.82)(esbuild@0.17.14)
     dev: true
 
   /css-prefers-color-scheme@3.1.1:
@@ -24346,6 +24400,32 @@ packages:
       - bluebird
     dev: true
 
+  /terser-webpack-plugin@5.3.9(@swc/core@1.3.82)(esbuild@0.17.14)(webpack@5.88.2):
+    resolution: {integrity: sha512-ZuXsqE07EcggTWQjXUj+Aot/OMcD0bMKGgF63f7UxYcu5/AJF53aIpK1YoP5xR9l6s/Hy2b+t1AM0bLNPRuhwA==}
+    engines: {node: '>= 10.13.0'}
+    peerDependencies:
+      '@swc/core': '*'
+      esbuild: '*'
+      uglify-js: '*'
+      webpack: ^5.1.0
+    peerDependenciesMeta:
+      '@swc/core':
+        optional: true
+      esbuild:
+        optional: true
+      uglify-js:
+        optional: true
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.19
+      '@swc/core': 1.3.82
+      esbuild: 0.17.14
+      jest-worker: 27.5.1
+      schema-utils: 3.3.0
+      serialize-javascript: 6.0.1
+      terser: 5.19.4
+      webpack: 5.88.2(@swc/core@1.3.82)(esbuild@0.17.14)
+    dev: true
+
   /terser-webpack-plugin@5.3.9(@swc/core@1.3.82)(esbuild@0.18.20)(webpack@5.88.2):
     resolution: {integrity: sha512-ZuXsqE07EcggTWQjXUj+Aot/OMcD0bMKGgF63f7UxYcu5/AJF53aIpK1YoP5xR9l6s/Hy2b+t1AM0bLNPRuhwA==}
     engines: {node: '>= 10.13.0'}
@@ -25832,6 +25912,46 @@ packages:
       webpack-sources: 1.4.3
     transitivePeerDependencies:
       - supports-color
+    dev: true
+
+  /webpack@5.88.2(@swc/core@1.3.82)(esbuild@0.17.14):
+    resolution: {integrity: sha512-JmcgNZ1iKj+aiR0OvTYtWQqJwq37Pf683dY9bVORwVbUrDhLhdn/PlO2sHsFHPkj7sHNQF3JwaAkp49V+Sq1tQ==}
+    engines: {node: '>=10.13.0'}
+    hasBin: true
+    peerDependencies:
+      webpack-cli: '*'
+    peerDependenciesMeta:
+      webpack-cli:
+        optional: true
+    dependencies:
+      '@types/eslint-scope': 3.7.4
+      '@types/estree': 1.0.1
+      '@webassemblyjs/ast': 1.11.6
+      '@webassemblyjs/wasm-edit': 1.11.6
+      '@webassemblyjs/wasm-parser': 1.11.6
+      acorn: 8.10.0
+      acorn-import-assertions: 1.9.0(acorn@8.10.0)
+      browserslist: 4.21.10
+      chrome-trace-event: 1.0.3
+      enhanced-resolve: 5.15.0
+      es-module-lexer: 1.3.0
+      eslint-scope: 5.1.1
+      events: 3.3.0
+      glob-to-regexp: 0.4.1
+      graceful-fs: 4.2.11
+      json-parse-even-better-errors: 2.3.1
+      loader-runner: 4.3.0
+      mime-types: 2.1.35
+      neo-async: 2.6.2
+      schema-utils: 3.3.0
+      tapable: 2.2.1
+      terser-webpack-plugin: 5.3.9(@swc/core@1.3.82)(esbuild@0.17.14)(webpack@5.88.2)
+      watchpack: 2.4.0
+      webpack-sources: 3.2.3
+    transitivePeerDependencies:
+      - '@swc/core'
+      - esbuild
+      - uglify-js
     dev: true
 
   /webpack@5.88.2(@swc/core@1.3.82)(esbuild@0.18.20):
