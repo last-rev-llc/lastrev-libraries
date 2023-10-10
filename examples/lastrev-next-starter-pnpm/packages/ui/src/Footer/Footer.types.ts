@@ -12,6 +12,7 @@ interface FooterClasses {
   logoRoot: string;
   logo: string;
   disclaimer: string;
+  disclaimerWrap: string;
   socialLinks: string;
   socialLink: string;
   footerMenuNav: string;
@@ -22,6 +23,7 @@ interface FooterClasses {
   divider: string;
   legalSection: string;
   copyrightDisclaimer: string;
+  copyrightDisclaimerWrap: string;
   legalLinks: string;
   legalLink: string;
 }

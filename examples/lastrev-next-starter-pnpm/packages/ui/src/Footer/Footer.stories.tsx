@@ -22,6 +22,12 @@ export const Default = {
   }
 };
 
+export const BasicNavigation = {
+  args: {
+    ...footerChildrenNestedMock()
+  }
+};
+
 export const NestedNavigation = {
   args: {
     ...footerChildrenNestedMock()

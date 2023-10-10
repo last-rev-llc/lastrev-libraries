@@ -1,10 +1,11 @@
 import { linkBaseMock, linkSocialMock } from '../Link/Link.mock';
 import {
   navigationItemWithChildrenMock,
-  navigationItemWithChildrenNestedMock
+  navigationItemWithChildrenNestedMock,
+  navigationItemBaseMock
 } from '../NavigationItem/NavigationItem.mock';
 import { mediaBaseImageMock } from '../Media/Media.mock';
-import { complexMock } from '../RichText/RichText.mock';
+import { richTextShortMock } from '../RichText/RichText.mock';
 import blockBaseMock from '../Block/Block.mock';
 
 import { randomId } from '../utils/randomId';
@@ -18,13 +19,13 @@ const footerDefaultMock = (): FooterProps => {
     __typename: 'Footer',
     logo: mediaBaseImageMock(), // TODO;
     logoUrl: linkBaseMock(),
-    disclaimerText: complexMock({ text: 'This is the disclaimer' }),
+    disclaimerText: richTextShortMock({ text: 'This is the disclaimer' }),
     socialLinks: [linkSocialMock(), linkSocialMock(), linkSocialMock()],
     navigationItems: [
-      navigationItemWithChildrenMock(),
-      navigationItemWithChildrenMock(),
-      navigationItemWithChildrenMock(),
-      navigationItemWithChildrenMock()
+      navigationItemBaseMock(),
+      navigationItemBaseMock(),
+      navigationItemBaseMock(),
+      navigationItemBaseMock()
     ],
     introContents: [
       blockBaseMock({
@@ -34,13 +35,27 @@ const footerDefaultMock = (): FooterProps => {
         subtitle: undefined
       })
     ],
-    copyrightDisclaimer: complexMock({ text: 'This is the copyright disclaimer' }),
+    copyrightDisclaimer: richTextShortMock({ text: 'This is the copyright disclaimer' }),
     legalLinks: [linkBaseMock(), linkBaseMock(), linkBaseMock()]
   };
 };
 
 export const footerBaseMock = ({ ...override } = {}) => {
   const mock = { ...footerDefaultMock(), ...override };
+
+  return { ...mock, hasSocialLinks: !!mock?.socialLinks?.length };
+};
+
+export const footerChildrenMock = ({ ...override } = {}) => {
+  const mock = {
+    ...footerDefaultMock(),
+    navigationItems: [
+      navigationItemWithChildrenMock(),
+      navigationItemWithChildrenMock(),
+      navigationItemWithChildrenMock()
+    ],
+    ...override
+  };
 
   return { ...mock, hasSocialLinks: !!mock?.socialLinks?.length };
 };

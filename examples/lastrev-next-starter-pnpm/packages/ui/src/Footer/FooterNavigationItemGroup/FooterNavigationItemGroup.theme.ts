@@ -9,35 +9,29 @@ import type {
 const defaultProps: ComponentsProps['FooterNavigationItemGroup'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGroup'] = {
-  root: ({ theme }) => ({
+  root: {
     display: 'flex',
     flexDirection: 'column',
-    gap: theme.spacing(3.5),
-    [theme.breakpoints.up('md')]: {
-      gap: theme.spacing(3)
-    }
-  }),
+    gap: 'calc(var(--grid-gap) / 4)'
+  },
 
-  navGroupItem: ({ theme }) => ({
-    color: theme.palette.secondary.main,
-    textDecoration: 'none',
-    ...theme.typography.body2
-  }),
+  // navItemLink: {},
 
-  navigationItems: ({ theme }) => ({
+  navItemSubMenu: ({ theme }) => ({
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
     gridTemplateAreas: '"first second"',
-    gap: theme.spacing(2),
+    gap: 'calc(var(--grid-gap) / 4)',
 
     [theme.breakpoints.up('md')]: {
       display: 'flex',
-      flexDirection: 'column',
-      gap: theme.spacing(2)
+      flexDirection: 'column'
     }
   }),
 
-  navigationItem: ({ theme }) => ({})
+  navItemSubMenuItem: {
+    gap: 'calc(var(--grid-gap) / 4)'
+  }
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['FooterNavigationItemGroup'] => [];

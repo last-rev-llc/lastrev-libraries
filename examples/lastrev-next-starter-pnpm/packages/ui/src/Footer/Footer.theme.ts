@@ -13,11 +13,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     padding: theme.spacing(4, 2) // Update
   }),
 
-  // introContentsWrap: : {},
+  introContentsWrap: ({ theme }) => ({
+    marginBottom: theme.spacing(10)
+  }),
 
-  // introContent: : {},
+  // introContent: {},
 
-  // contentOuterGrid: : {},
+  // contentOuterGrid: {},
 
   logoRoot: ({ theme }) => ({
     gridColumn: 'two-start / three-end',
@@ -91,15 +93,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     alignItems: 'center',
     height: '100%',
     justifySelf: 'center',
-    gap: theme.spacing(2),
+    gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'eleven-start',
+      gridColumnStart: 'auto', //'eleven-start',
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
       justifySelf: 'flex-end',
       width: '100%',
-      gap: theme.spacing(4),
       gridRow: 1
     }
   }),
@@ -116,7 +117,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  disclaimer: ({ theme }) => ({
+  disclaimerWrap: ({ theme }) => ({
     gridRow: 4,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
@@ -132,7 +133,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     display: 'contents' // take out of flow
   },
 
-  copyrightDisclaimer: ({ theme }) => ({
+  copyrightDisclaimerWrap: ({ theme }) => ({
     gridRow: 5,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
@@ -152,7 +153,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     alignItems: 'center',
     height: '100%',
     justifySelf: 'flex-end',
-    gap: theme.spacing(2),
+    gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('md')]: {
       gridColumn: 'content-start / content-end',

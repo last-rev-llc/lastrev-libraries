@@ -55,6 +55,7 @@ const Header = (props: HeaderProps) => {
           <SiteMessage icon={siteMessageIcon} text={siteMessageText} link={siteMessageLink} />
         </SiteMessageWrap>
       )}
+
       <ContentOuterGrid ownerState={ownerState}>
         {logo ? (
           <LogoRoot {...logoUrl} aria-label={'Go to homepage'} ownerState={ownerState} text={undefined}>

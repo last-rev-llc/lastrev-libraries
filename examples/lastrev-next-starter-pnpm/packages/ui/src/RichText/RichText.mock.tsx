@@ -258,6 +258,32 @@ export const richTextBlockMock = (
   }
 });
 
+export const richTextShortMock = (
+  { text } = {
+    text: "This is default text for a short sentence.   It's generally pretty short, but sometimes it may wrap to multiple lines."
+  }
+): RichTextProps => ({
+  __typename: 'RichText',
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        data: {},
+        content: [
+          {
+            data: {},
+            marks: [],
+            value: text,
+            nodeType: 'text'
+          }
+        ],
+        nodeType: 'paragraph'
+      }
+    ]
+  }
+});
+
 export const blogMock = ({ text } = { text: 'Default blog mock' }): RichTextProps => {
   const blockMock: BlockProps = require('../Block/Block.mock').default();
   const collectionMock: CollectionProps = require('../Collection/Collection.mock').default();

@@ -3,6 +3,8 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
+import ListItem from '@mui/material/ListItem';
+import List from '@mui/material/List';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -13,39 +15,47 @@ import type {
   FooterNavigationItemGroupProps,
   FooterNavigationItemGroupOwnerState
 } from './FooterNavigationItemGroup.types';
-import type { LinkProps } from '../../Link';
-import type { NavigationItemProps } from '../../NavigationItem';
 
 const FooterNavigationItemGroup = (props: FooterNavigationItemGroupProps) => {
   const ownerState = { ...props };
 
-  const { text, href, subNavigation, sidekickLookup } = props;
+  const { variant, subNavigation, sidekickLookup, id: navItemId } = props;
 
   return (
     <ErrorBoundary>
       {!!subNavigation?.length ? (
-        <Root ownerState={ownerState}>
-          <NavGroupItem
+        <Root data-testid="FooterNavGroup" ownerState={ownerState}>
+          <NavItemLink
+            {...props}
+            variant={variant}
             {...sidekick(sidekickLookup)}
-            text={text}
-            href={href}
             __typename="Link"
+            subNavigation={undefined}
             ownerState={ownerState}
           />
-
-          <NavigationItems ownerState={ownerState}>
-            {subNavigation?.map((item) => (
-              <NavigationItem
-                key={item?.id}
-                {...(item as NavigationItemProps | LinkProps)}
-                variant={!!item?.variant ? `${item?.variant}Footer` : null}
-                ownerState={ownerState}
-              />
+          <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState}>
+            {subNavigation?.map((subNavItem: any, index: number) => (
+              <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
+                <NavItemLink
+                  {...props}
+                  variant={variant}
+                  {...sidekick(sidekickLookup)}
+                  subNavigation={undefined}
+                  __typename="Link"
+                  ownerState={ownerState}
+                />
+              </NavItemSubMenuItem>
             ))}
-          </NavigationItems>
+          </NavItemSubMenu>
         </Root>
       ) : (
-        <NavGroupItem {...sidekick(sidekickLookup)} text={text} href={href} __typename="Link" ownerState={ownerState} />
+        <NavItemLink
+          {...props}
+          variant={variant}
+          {...sidekick(sidekickLookup)}
+          __typename="Link"
+          ownerState={ownerState}
+        />
       )}
     </ErrorBoundary>
   );
@@ -57,22 +67,22 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: FooterNavigationItemGroupOwnerState }>``;
 
-const NavGroupItem = styled(ContentModule, {
+const NavItemSubMenu = styled(List, {
   name: 'FooterNavigationItemGroup',
-  slot: 'NavGroupItem',
-  overridesResolver: (_, styles) => [styles.navGroupItem]
+  slot: 'NavItemSubMenu',
+  overridesResolver: (_, styles) => [styles.navItemSubMenu]
 })<{ ownerState: FooterNavigationItemGroupOwnerState }>``;
 
-const NavigationItems = styled(Box, {
+const NavItemSubMenuItem = styled(ListItem, {
   name: 'FooterNavigationItemGroup',
-  slot: 'NavigationItems',
-  overridesResolver: (_, styles) => [styles.navigationItems]
+  slot: 'NavItemSubMenuItem',
+  overridesResolver: (_, styles) => [styles.navItemSubMenuItem]
 })<{ ownerState: FooterNavigationItemGroupOwnerState }>``;
 
-const NavigationItem = styled(ContentModule, {
+const NavItemLink = styled(ContentModule, {
   name: 'FooterNavigationItemGroup',
-  slot: 'NavigationItem',
-  overridesResolver: (_, styles) => [styles.navigationItem]
+  slot: 'NavItemLink',
+  overridesResolver: (_, styles) => [styles.navItemLink]
 })<{ ownerState: FooterNavigationItemGroupOwnerState }>``;
 
 export default FooterNavigationItemGroup;

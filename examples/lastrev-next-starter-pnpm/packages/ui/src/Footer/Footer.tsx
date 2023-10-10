@@ -78,32 +78,33 @@ const Footer = (props: FooterProps) => {
 
         <LegalSection ownerState={ownerState}>
           {!!disclaimerText && (
-            <Disclaimer
-              {...sidekick(sidekickLookup, 'disclaimerText')}
-              __typename="Text"
-              body={disclaimerText}
-              ownerState={ownerState}
-            />
+            <DisclaimerWrap ownerState={ownerState}>
+              <Disclaimer
+                {...sidekick(sidekickLookup, 'disclaimerText')}
+                ownerState={ownerState}
+                __typename="RichText"
+                body={disclaimerText}
+              />
+            </DisclaimerWrap>
           )}
 
           {!!copyrightDisclaimer && (
-            <CopyrightDisclaimer
-              {...sidekick(sidekickLookup, 'copyrightDisclaimer')}
-              __typename="Text"
-              body={copyrightDisclaimer}
-              ownerState={ownerState}
-            />
+            <CopyrightDisclaimerWrap ownerState={ownerState}>
+              <CopyrightDisclaimer
+                {...sidekick(sidekickLookup, 'copyrightDisclaimer')}
+                __typename="RichText"
+                body={copyrightDisclaimer}
+                ownerState={ownerState}
+              />
+            </CopyrightDisclaimerWrap>
           )}
 
           {!!legalLinks?.length && (
             <LegalLinks ownerState={ownerState}>
               {legalLinks.map((link?: LinkProps) => (
-                <LegalLink
-                  key={link?.id}
-                  {...sidekick(sidekickLookup, 'sidekickLookup')}
-                  {...(link as LinkProps)}
-                  ownerState={ownerState}
-                />
+                <LegalLinkWrap key={link?.id} ownerState={ownerState} {...sidekick(sidekickLookup, 'sidekickLookup')}>
+                  <LegalLink {...(link as LinkProps)} ownerState={ownerState} />
+                </LegalLinkWrap>
               ))}
             </LegalLinks>
           )}
@@ -135,6 +136,12 @@ const Logo = styled(ContentModule, {
   name: 'Footer',
   slot: 'Logo',
   overridesResolver: (_, styles) => [styles.logo]
+})<{ ownerState: FooterOwnerState }>``;
+
+const DisclaimerWrap = styled(Box, {
+  name: 'Footer',
+  slot: 'DisclaimerWrap',
+  overridesResolver: (_, styles) => [styles.disclaimerWrap]
 })<{ ownerState: FooterOwnerState }>``;
 
 const Disclaimer = styled(ContentModule, {
@@ -191,16 +198,28 @@ const LegalSection = styled(Box, {
   overridesResolver: (_, styles) => [styles.legalSection]
 })<{ ownerState: FooterOwnerState }>``;
 
+const CopyrightDisclaimerWrap = styled(Box, {
+  name: 'Footer',
+  slot: 'CopyrightDisclaimerWrap',
+  overridesResolver: (_, styles) => [styles.copyrightDisclaimerWrap]
+})<{ ownerState: FooterOwnerState }>``;
+
 const CopyrightDisclaimer = styled(ContentModule, {
   name: 'Footer',
   slot: 'CopyrightDisclaimer',
   overridesResolver: (_, styles) => [styles.copyrightDisclaimer]
 })<{ ownerState: FooterOwnerState }>``;
 
-const LegalLinks = styled(Box, {
+const LegalLinks = styled(List, {
   name: 'Footer',
   slot: 'LegalLinks',
   overridesResolver: (_, styles) => [styles.legalLinks]
+})<{ ownerState: FooterOwnerState }>``;
+
+const LegalLinkWrap = styled(ListItem, {
+  name: 'Footer',
+  slot: 'LegalLinkWrap',
+  overridesResolver: (_, styles) => [styles.legalLinkWrap]
 })<{ ownerState: FooterOwnerState }>``;
 
 const LegalLink = styled(ContentModule, {
