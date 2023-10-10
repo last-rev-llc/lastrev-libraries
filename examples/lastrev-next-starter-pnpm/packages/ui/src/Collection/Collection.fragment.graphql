@@ -12,6 +12,8 @@ fragment Collection_FieldsFragment on Collection {
   isCarouselDesktop
   isCarouselTablet
   isCarouselMobile
+  itemsPerRow
+  numItems
 }
 
 # Base fragment used everywhere there's a Collection

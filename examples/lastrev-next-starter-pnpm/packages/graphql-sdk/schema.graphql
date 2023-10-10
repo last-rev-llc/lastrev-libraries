@@ -119,6 +119,7 @@ type Collection implements Content {
   isCarouselTablet: Boolean
   items: [CollectionItem]
   itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
+  itemsPerRow: Boolean
   itemsVariant: String
   sidekickLookup: JSON
   theme: [Theme]

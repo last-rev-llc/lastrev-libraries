@@ -5,12 +5,12 @@ import type { Collection_BaseFragmentFragment } from '@graphql-sdk/types';
 import { CardVariants } from '../Card/Card.types';
 
 export enum CarouselVariants {
-  default = 'default',
-  onePerRow = 'onePerRow',
-  twoPerRow = 'twoPerRow',
-  threePerRow = 'threePerRow',
-  fourPerRow = 'fourPerRow',
-  fivePerRow = 'fivePerRow'
+  default = 'defaultCarousel',
+  onePerRow = 'onePerRowCarousel',
+  twoPerRow = 'twoPerRowCarousel',
+  threePerRow = 'threePerRowCarousel',
+  fourPerRow = 'fourPerRowCarousel',
+  fivePerRow = 'fivePerRowCarousel'
 }
 
 export interface CarouselProps extends Omit<Collection_BaseFragmentFragment, 'variant' | 'itemsVariant'> {

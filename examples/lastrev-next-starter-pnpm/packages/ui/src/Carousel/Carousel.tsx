@@ -3,6 +3,7 @@ import React from 'react';
 // import Swiper core and required modules
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y, Grid as SwiperGrid } from 'swiper/modules';
+import { type SwiperOptions } from 'swiper/types';
 
 import { styled } from '@mui/material/styles';
 
@@ -32,47 +33,20 @@ const Carousel = (props: CarouselProps) => {
     variant,
     itemsVariant,
     sidekickLookup,
-    introText
+    introText,
+    itemsPerRow = 3,
+    numItems = props?.items?.length ?? 3
   } = props;
 
-  let itemsPerRow = 3;
-  const numItems = items?.length ?? 3;
-
-  switch (variant) {
-    case 'onePerRow':
-      itemsPerRow = 1;
-      break;
-
-    case 'twoPerRow':
-      itemsPerRow = numItems >= 2 ? 2 : numItems;
-      break;
-
-    case 'threePerRow':
-      itemsPerRow = numItems >= 3 ? 3 : numItems;
-      break;
-
-    case 'fourPerRow':
-      itemsPerRow = numItems >= 4 ? 4 : numItems;
-      break;
-
-    case 'fivePerRow':
-      itemsPerRow = numItems >= 5 ? 5 : numItems;
-      break;
-
-    default:
-      itemsPerRow = 3;
-  }
-
-  // TODO: See if this type can be pulled from Swiper
-  const swiperBreakpoints: { [key: string]: { slidesPerView: number; spaceBetween: number } } = {};
+  const swiperBreakpoints: { [width: number]: SwiperOptions } = {};
 
   swiperBreakpoints['1'] = {
     grid: {
       rows: isCarouselMobile ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: 1, //isCarouselMobile ? 1 : itemsPerRow,
-    spaceBetween: '24px'
+    slidesPerView: 1,
+    spaceBetween: 4
   };
 
   swiperBreakpoints[breakpoints.sm] = {
@@ -81,7 +55,7 @@ const Carousel = (props: CarouselProps) => {
       fill: 'row'
     },
     slidesPerView: 1,
-    spaceBetween: '24px'
+    spaceBetween: 8
   };
 
   swiperBreakpoints[breakpoints.md] = {
@@ -90,7 +64,7 @@ const Carousel = (props: CarouselProps) => {
       fill: 'row'
     },
     slidesPerView: itemsPerRow > 1 ? 2 : 1,
-    spaceBetween: '24px'
+    spaceBetween: 12
   };
 
   swiperBreakpoints[breakpoints.lg] = {
@@ -99,7 +73,7 @@ const Carousel = (props: CarouselProps) => {
       fill: 'row'
     },
     slidesPerView: itemsPerRow > 2 ? 3 : 2,
-    spaceBetween: '24px'
+    spaceBetween: 16
   };
 
   if (itemsPerRow === 4) {
@@ -109,7 +83,7 @@ const Carousel = (props: CarouselProps) => {
         fill: 'row'
       },
       slidesPerView: 4,
-      spaceBetween: '24px'
+      spaceBetween: 20
     };
   } else if (itemsPerRow >= 5) {
     swiperBreakpoints[breakpoints.xl] = {
@@ -118,7 +92,7 @@ const Carousel = (props: CarouselProps) => {
         fill: 'row'
       },
       slidesPerView: 5,
-      spaceBetween: '24px'
+      spaceBetween: 20
     };
   }
 
@@ -142,6 +116,7 @@ const Carousel = (props: CarouselProps) => {
             <SwiperInnerWrap ownerState={ownerState}>
               <Swiper
                 rewind={true}
+                breakpointsBase="container"
                 cssMode={true}
                 modules={[Navigation, SwiperGrid, Pagination, A11y]}
                 spaceBetween={24}

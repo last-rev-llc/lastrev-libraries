@@ -26,6 +26,7 @@ const Collection = (props: CollectionProps) => {
           backgroundColor={backgroundColor}
           testId="Collection-background"
         />
+
         {introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText

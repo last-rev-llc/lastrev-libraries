@@ -19,7 +19,7 @@ export const cardBaseMock = (override?: Partial<CardProps>): CardProps => {
     actions: [linkButtonMock({ text: 'Card Link 1' }), linkButtonMock({ text: 'Card Link 2' })],
     link: { ...linkBaseMock() },
     sidekickLookup: {},
-    loading: true
+    loading: false
   };
 
   let variantOverride: Partial<CardProps>;

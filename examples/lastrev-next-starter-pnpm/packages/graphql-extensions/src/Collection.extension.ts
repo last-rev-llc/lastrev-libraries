@@ -25,7 +25,10 @@ export const typeDefs = gql`
     isCarouselDesktop: Boolean
     isCarouselTablet: Boolean
     isCarouselMobile: Boolean
+    itemsPerRow: Number
+    numItems: Number
   }
+
 
   type CollectionOptions {
     tags: [Option]
@@ -103,21 +106,6 @@ export const mappers: Mappers = {
         return returnItems;
       },
 
-      isCarousel: async (collection: any, _args: any, ctx: ApolloContext) => {
-        let carouselType = getLocalizedField(collection.fields, 'carouselType', ctx) ?? [];
-        return carouselType === 'No Carousel';
-      },
-
-      // isCarouselDesktop: async (collection: any, _args: any, ctx: ApolloContext) => {
-      //   let carouselType = getLocalizedField(collection.fields, 'carouselType', ctx) ?? [];
-      //   return carouselType === 'Carousel on Desktop' || carouselType === 'Always a Carousel';
-      // },
-
-      // isCarouselMobile: async (collection: any, _args: any, ctx: ApolloContext) => {
-      //   let carouselType = getLocalizedField(collection.fields, 'carouselType', ctx) ?? [];
-      //   return carouselType === 'Carousel on Mobile' || carouselType === 'Always a Carousel';
-      // },
-
       isCarouselDesktop: async (collection: any, _args: any, ctx: ApolloContext) => {
         let carouselBreakpoints = getLocalizedField(collection.fields, 'carouselBreakpoints', ctx) ?? [];
         return carouselBreakpoints.includes('Desktop');
@@ -133,7 +121,54 @@ export const mappers: Mappers = {
         return carouselBreakpoints.includes('Mobile');
       },
 
-      variant: defaultResolver('variant'),
+      numItems: async (collection: any, args: any, ctx: ApolloContext) => {
+        let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
+        return items.length;
+      },
+
+      itemsPerRow: async (collection: any, args: any, ctx: ApolloContext) => {
+        let variant = getLocalizedField(collection.fields, 'variant', ctx) ?? [];
+        let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
+        let itemsPerRow = 3;
+        const numItems = items?.length ?? 3;
+
+        switch (variant) {
+          case 'onePerRow':
+            itemsPerRow = 1;
+            break;
+
+          case 'twoPerRow':
+            itemsPerRow = numItems >= 2 ? 2 : numItems;
+            break;
+
+          case 'threePerRow':
+            itemsPerRow = numItems >= 3 ? 3 : numItems;
+            break;
+
+          case 'fourPerRow':
+            itemsPerRow = numItems >= 4 ? 4 : numItems;
+            break;
+
+          case 'fivePerRow':
+            itemsPerRow = numItems >= 5 ? 5 : numItems;
+            break;
+
+          default:
+            itemsPerRow = 3;
+        }
+
+        return itemsPerRow;
+      },
+
+      variant: async (collection: any, args: any, ctx: ApolloContext) => {
+        let carouselBreakpoints = getLocalizedField(collection.fields, 'carouselBreakpoints', ctx) ?? [];
+        const variantFn = defaultResolver('variant');
+        const variant = variantFn(collection, args, ctx);
+
+        if (!carouselBreakpoints) return variant;
+
+        return `${variant}Carousel`;
+      },
 
       itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];

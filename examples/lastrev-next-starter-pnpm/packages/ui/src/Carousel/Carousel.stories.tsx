@@ -8,14 +8,14 @@ export default {
   component: Carousel,
   tags: ['autodocs'],
   argTypes: {
-    isCarousel: {
-      name: 'Is Carousel?',
+    isCarouselDesktop: {
+      name: 'Is Carousel on Desktop?',
       control: {
         type: 'boolean'
       }
     },
-    isCarouselDesktop: {
-      name: 'Is Carousel on Desktop?',
+    isCarouselTablet: {
+      name: 'Is Carousel on Tablet?',
       control: {
         type: 'boolean'
       }
@@ -30,21 +30,21 @@ export default {
 };
 
 export const OnePerRow = {
-  args: { ...carouselBaseMock({ variant: CarouselVariants.onePerRow }) }
+  args: { ...carouselBaseMock({ variant: CarouselVariants.onePerRow, itemsPerRow: 1 }) }
 };
 
 export const TwoPerRow = {
-  args: { ...carouselBaseMock({ variant: CarouselVariants.twoPerRow }) }
+  args: { ...carouselBaseMock({ variant: CarouselVariants.twoPerRow, itemsPerRow: 2 }) }
 };
 
 export const ThreePerRow = {
-  args: { ...carouselBaseMock({ variant: CarouselVariants.threePerRow }) }
+  args: { ...carouselBaseMock({ variant: CarouselVariants.threePerRow, itemsPerRow: 3 }) }
 };
 
 export const FourPerRow = {
-  args: { ...carouselBaseMock({ variant: CarouselVariants.fourPerRow }) }
+  args: { ...carouselBaseMock({ variant: CarouselVariants.fourPerRow, itemsPerRow: 4 }) }
 };
 
 export const FivePerRow = {
-  args: { ...carouselBaseMock({ variant: CarouselVariants.fivePerRow }) }
+  args: { ...carouselBaseMock({ variant: CarouselVariants.fivePerRow, itemsPerRow: 5 }) }
 };

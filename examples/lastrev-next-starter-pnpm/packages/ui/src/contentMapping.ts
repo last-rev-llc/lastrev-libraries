@@ -6,6 +6,7 @@ const Media = dynamic(() => import('./Media'));
 const Page = dynamic(() => import('./Page'));
 const Text = dynamic(() => import('./Text'));
 const RichText = dynamic(() => import('./RichText'));
+const Carousel = dynamic(() => import('./Carousel'));
 const Collection = dynamic(() => import('./Collection'));
 const Tabs = dynamic(() => import('./Tabs'));
 const Card = dynamic(() => import('./Card'));
@@ -38,7 +39,9 @@ export const contentMapping: {
   Page,
   Text,
   RichText,
+  Carousel,
   Collection,
+  'Collection:.*Carousel': Carousel,
   'CollectionExpandable:Tabs': Tabs,
   'CollectionExpandable:Accordion': Accordion,
   'CollectionExpandable': Tabs,

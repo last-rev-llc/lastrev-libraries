@@ -10,8 +10,9 @@ export const carouselBaseMock = (override?: Partial<CarouselProps>): CarouselPro
   const itemsVariant = override?.itemsVariant ?? CardVariants.default;
   const baseMock: CarouselProps = {
     id: randomId(),
-    __typename: 'Carousel',
+    __typename: 'Collection',
     variant: CarouselVariants.threePerRow,
+    itemsPerRow: 3, // This needs to stay aligned with the variant
     backgroundColor: 'black',
     items: [
       cardBaseMock({ variant: itemsVariant }),
@@ -24,9 +25,9 @@ export const carouselBaseMock = (override?: Partial<CarouselProps>): CarouselPro
     introText: introTextMock({
       title: `This is the Carousel ${override?.variant}-${override?.itemsVariant} title`
     }),
-    isCarouselDesktop: false,
+    isCarouselDesktop: true,
     isCarouselTablet: true,
-    isCarouselMobile: false
+    isCarouselMobile: true
   };
 
   let variantOverride;
@@ -35,7 +36,10 @@ export const carouselBaseMock = (override?: Partial<CarouselProps>): CarouselPro
       variantOverride = {};
   }
 
-  return { ...baseMock, ...variantOverride, ...override } as CarouselProps;
+  const mock = { ...baseMock, ...variantOverride, ...override, numItems: baseMock.items.length } as CarouselProps;
+  mock.numItems = baseMock.items.length;
+
+  return mock;
 };
 
 export default carouselBaseMock;

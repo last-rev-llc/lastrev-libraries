@@ -19,7 +19,7 @@ const swiperStyles = css`
     overflow: hidden;
     overflow: clip;
     list-style: none;
-    padding: 0;
+
     /* Fix of Webkit flickering */
     z-index: 1;
     display: block;
@@ -55,8 +55,8 @@ const swiperStyles = css`
     position: relative;
     transition-property: transform;
     display: block;
-    /* margin-right: var(--grid-gap) !important; */
   }
+
   .swiper-slide-invisible-blank {
     visibility: hidden;
   }
@@ -89,6 +89,7 @@ const swiperStyles = css`
     transform-style: preserve-3d;
   }
   /* CSS Mode */
+
   .swiper-css-mode > .swiper-wrapper {
     overflow: auto;
     scrollbar-width: none;
@@ -210,6 +211,7 @@ const swiperStyles = css`
   /* Slide styles end */
   .swiper-virtual .swiper-slide {
     -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
     transform: translateZ(0);
   }
   .swiper-virtual.swiper-css-mode .swiper-wrapper::after {
@@ -231,7 +233,7 @@ const swiperStyles = css`
   .swiper-button-prev,
   .swiper-button-next {
     position: absolute;
-    top: var(--swiper-navigation-top-offset),
+    top: var(--swiper-navigation-top-offset);
     width: calc(var(--swiper-navigation-size) / 44 * 27);
     height: var(--swiper-navigation-size);
     margin-top: calc(0px - (var(--swiper-navigation-size) / 2));
@@ -681,7 +683,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    position: 'relative'
+    position: 'relative',
+    ...swiperStyles
   }),
 
   swiperWrap: () => ({
@@ -689,9 +692,16 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
     overflow: 'hidden'
   }),
 
-  swiperInnerWrap: () => ({
-    ...swiperStyles
-  }),
+  swiperInnerWrap: {
+    padding: '0 calc(var(--grid-margin) / 2)',
+    position: 'relative'
+  },
+
+  item: {
+    overflow: 'unset',
+    position: 'relative',
+    zIndex: 20
+  },
 
   contentGrid: {}
 };

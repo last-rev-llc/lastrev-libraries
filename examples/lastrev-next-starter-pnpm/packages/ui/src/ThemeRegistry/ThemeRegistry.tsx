@@ -27,11 +27,11 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --grid-margin-lg: 64px;
               --grid-margin-xl: 80px;
 
-              --grid-gap-xs: calc(var(--grid-margin-xs) / 4); //16px;
-              --grid-gap-sm: calc(var(--grid-margin-sm) / 4); //16px;
-              --grid-gap-md: calc(var(--grid-margin-md) / 4); //16px;
-              --grid-gap-lg: calc(var(--grid-margin-lg) / 4); //16px;
-              --grid-gap-xl: calc(var(--grid-margin-xl) / 4); //16px;
+              --grid-gap-xs: calc(var(--grid-margin-xs) / 4);
+              --grid-gap-sm: calc(var(--grid-margin-sm) / 4);
+              --grid-gap-md: calc(var(--grid-margin-md) / 4);
+              --grid-gap-lg: calc(var(--grid-margin-lg) / 4);
+              --grid-gap-xl: calc(var(--grid-margin-xl) / 4);
 
               --grid-gap: var(--grid-margin-xs);
 
@@ -135,7 +135,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
               --swiper-navigation-size: calc(var(--grid-margin) / 2);
               --swiper-navigation-top-offset: 50%;
-              --swiper-navigation-sides-offset: calc(var(--grid-margin) / 2);
+              --swiper-navigation-sides-offset: 0; //calc(var(--grid-margin) / 2);
               --swiper-navigation-color: var(--swiper-theme-color);
 
               --swiper-pagination-color: var(--swiper-theme-color);

@@ -16,13 +16,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
     'willChange': 'transform',
-    'transform': 'translateZ(0)',
+    'transform': 'translateZ(0) scale(0.95)',
     'display': 'flex',
     'flexDirection': 'column',
     'height': '100%',
 
     '&:hover': {
-      transform: 'scale(1.05)'
+      transform: 'scale(1)'
     }
   },
 
