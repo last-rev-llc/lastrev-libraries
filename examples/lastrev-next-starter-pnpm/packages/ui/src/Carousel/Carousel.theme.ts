@@ -55,7 +55,7 @@ const swiperStyles = css`
     position: relative;
     transition-property: transform;
     display: block;
-    margin-right: var(--grid-gap) !important;
+    /* margin-right: var(--grid-gap) !important; */
   }
   .swiper-slide-invisible-blank {
     visibility: hidden;

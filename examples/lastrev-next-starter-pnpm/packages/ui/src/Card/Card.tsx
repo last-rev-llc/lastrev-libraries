@@ -18,7 +18,8 @@ import type { CardProps, CardOwnerState } from './Card.types';
 import { type LinkProps } from '../Link';
 
 const Card = (props: CardProps) => {
-  const { id, media, overline, title, subtitle, body, link, actions, variant, loading, sidekickLookup } = props;
+  const { className, id, media, overline, title, subtitle, body, link, actions, variant, loading, sidekickLookup } =
+    props;
 
   const ownerState = {
     ...props,
@@ -29,25 +30,26 @@ const Card = (props: CardProps) => {
 
   return (
     <ErrorBoundary>
-      <Root ownerState={ownerState} data-testid="Card" {...sidekick(sidekickLookup)}>
+      <Root ownerState={ownerState} data-testid="Card" {...sidekick(sidekickLookup)} className={className}>
         {!!link ? <CardLink component={CardActionArea} {...(link as any)} /> : null}
+
         {image || loading ? (
           // @ts-ignore: TODO
           <CardMedia ownerState={ownerState}>
-            {!loading && (
+            {!loading ? (
               <ContentModule
                 __typename="Media"
                 {...sidekick(sidekickLookup, 'media')}
                 {...image}
                 data-testid="Card-media"
               />
+            ) : (
+              <Skeleton variant="rectangular" width={210} height={118} />
             )}
-
-            {loading && <Skeleton>TODO Image Placeholder</Skeleton>}
           </CardMedia>
         ) : null}
 
-        {!loading && (overline || title || subtitle || body || actions) ? (
+        {!loading && (overline || title || subtitle || body) ? (
           // @ts-ignore: TODO
           <ContentWrap ownerState={ownerState}>
             {overline ? (
@@ -94,43 +96,41 @@ const Card = (props: CardProps) => {
               />
             ) : null}
           </ContentWrap>
-        ) : null}
+        ) : (
+          <ContentWrap ownerState={ownerState} data-testid="Card-ContentSkeleton">
+            <Overline ownerState={ownerState} variant="overline">
+              <Skeleton variant="text" width="100%" />
+            </Overline>
 
-        {actions?.length ? (
+            <Title ownerState={ownerState} variant="display5">
+              <Skeleton variant="text" width="100%" />
+            </Title>
+
+            <Subtitle ownerState={ownerState} variant="display6">
+              <Skeleton variant="text" width="100%" />
+            </Subtitle>
+
+            <Body ownerState={ownerState} variant="bodySmall">
+              <Skeleton variant="text" width="100%" />
+            </Body>
+          </ContentWrap>
+        )}
+
+        {(actions?.length || loading) && (
           <ActionsWrap
             {...sidekick(sidekickLookup, 'actions')}
             data-testid="Card-actions"
             // @ts-ignore: TODO
             ownerState={ownerState}>
-            {actions?.map((link: any, index: number) => (
-              <Action key={`card-${id}-link-${link?.id || index}`} {...(link as LinkProps)} ownerState={ownerState} />
-            ))}
+            {!loading ? (
+              actions?.map((link: any, index: number) => (
+                <Action key={`card-${id}-link-${link?.id || index}`} {...(link as LinkProps)} ownerState={ownerState} />
+              ))
+            ) : (
+              <Skeleton variant="text" width="100%" />
+            )}
           </ActionsWrap>
-        ) : null}
-
-        {loading ? (
-          <ContentWrap ownerState={ownerState} data-testid="Card-ContentSkeleton">
-            <Overline ownerState={ownerState} variant="overline">
-              <Skeleton width="100%" />
-            </Overline>
-
-            <Title ownerState={ownerState} variant="display5">
-              <Skeleton width="100%" />
-            </Title>
-
-            <Subtitle ownerState={ownerState} variant="display6">
-              <Skeleton width="100%" />
-            </Subtitle>
-
-            <Body ownerState={ownerState} variant="bodySmall">
-              <Skeleton width="100%" />
-            </Body>
-
-            <ActionsWrap ownerState={ownerState}>
-              <Skeleton width="100%" />
-            </ActionsWrap>
-          </ContentWrap>
-        ) : null}
+        )}
       </Root>
     </ErrorBoundary>
   );

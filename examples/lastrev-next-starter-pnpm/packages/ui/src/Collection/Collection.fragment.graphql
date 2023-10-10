@@ -9,6 +9,9 @@ fragment Collection_FieldsFragment on Collection {
     ...Media_BaseFragment
   }
   backgroundColor
+  isCarouselDesktop
+  isCarouselTablet
+  isCarouselMobile
 }
 
 # Base fragment used everywhere there's a Collection

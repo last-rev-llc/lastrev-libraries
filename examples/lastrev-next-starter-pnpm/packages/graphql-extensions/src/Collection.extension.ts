@@ -6,6 +6,7 @@ import { pascalCase } from './utils/pascalCase';
 import { collectOptions } from './utils/collectOptions';
 import { queryContentful } from './utils/queryContentful';
 import { getWinstonLogger } from '@last-rev/logging';
+import { defaultResolver } from './utils/defaultResolver';
 
 const logger = getWinstonLogger({
   package: 'graphql-contentful-extensions',
@@ -21,6 +22,9 @@ export const typeDefs = gql`
     introText: Text
     itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
     backgroundImage: Media
+    isCarouselDesktop: Boolean
+    isCarouselTablet: Boolean
+    isCarouselMobile: Boolean
   }
 
   type CollectionOptions {
@@ -98,6 +102,38 @@ export const mappers: Mappers = {
 
         return returnItems;
       },
+
+      isCarousel: async (collection: any, _args: any, ctx: ApolloContext) => {
+        let carouselType = getLocalizedField(collection.fields, 'carouselType', ctx) ?? [];
+        return carouselType === 'No Carousel';
+      },
+
+      // isCarouselDesktop: async (collection: any, _args: any, ctx: ApolloContext) => {
+      //   let carouselType = getLocalizedField(collection.fields, 'carouselType', ctx) ?? [];
+      //   return carouselType === 'Carousel on Desktop' || carouselType === 'Always a Carousel';
+      // },
+
+      // isCarouselMobile: async (collection: any, _args: any, ctx: ApolloContext) => {
+      //   let carouselType = getLocalizedField(collection.fields, 'carouselType', ctx) ?? [];
+      //   return carouselType === 'Carousel on Mobile' || carouselType === 'Always a Carousel';
+      // },
+
+      isCarouselDesktop: async (collection: any, _args: any, ctx: ApolloContext) => {
+        let carouselBreakpoints = getLocalizedField(collection.fields, 'carouselBreakpoints', ctx) ?? [];
+        return carouselBreakpoints.includes('Desktop');
+      },
+
+      isCarouselTablet: async (collection: any, _args: any, ctx: ApolloContext) => {
+        let carouselBreakpoints = getLocalizedField(collection.fields, 'carouselBreakpoints', ctx) ?? [];
+        return carouselBreakpoints.includes('Tablet');
+      },
+
+      isCarouselMobile: async (collection: any, _args: any, ctx: ApolloContext) => {
+        let carouselBreakpoints = getLocalizedField(collection.fields, 'carouselBreakpoints', ctx) ?? [];
+        return carouselBreakpoints.includes('Mobile');
+      },
+
+      variant: defaultResolver('variant'),
 
       itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];

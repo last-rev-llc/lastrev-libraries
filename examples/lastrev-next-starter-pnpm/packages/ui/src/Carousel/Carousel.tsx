@@ -2,7 +2,7 @@ import React from 'react';
 
 // import Swiper core and required modules
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { Navigation, Pagination, Scrollbar, A11y, Grid as SwiperGrid } from 'swiper/modules';
 
 import { styled } from '@mui/material/styles';
 
@@ -22,34 +22,104 @@ import { breakpoints } from '../ThemeRegistry/theme';
 const Carousel = (props: CarouselProps) => {
   const ownerState = { ...props };
 
-  const { background, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;
+  const {
+    background,
+    isCarouselDesktop,
+    isCarouselTablet,
+    isCarouselMobile,
+    backgroundColor,
+    items,
+    variant,
+    itemsVariant,
+    sidekickLookup,
+    introText
+  } = props;
+
+  let itemsPerRow = 3;
+  const numItems = items?.length ?? 3;
+
+  switch (variant) {
+    case 'onePerRow':
+      itemsPerRow = 1;
+      break;
+
+    case 'twoPerRow':
+      itemsPerRow = numItems >= 2 ? 2 : numItems;
+      break;
+
+    case 'threePerRow':
+      itemsPerRow = numItems >= 3 ? 3 : numItems;
+      break;
+
+    case 'fourPerRow':
+      itemsPerRow = numItems >= 4 ? 4 : numItems;
+      break;
+
+    case 'fivePerRow':
+      itemsPerRow = numItems >= 5 ? 5 : numItems;
+      break;
+
+    default:
+      itemsPerRow = 3;
+  }
 
   // TODO: See if this type can be pulled from Swiper
   const swiperBreakpoints: { [key: string]: { slidesPerView: number; spaceBetween: number } } = {};
-  swiperBreakpoints[breakpoints.sm] = {
-    slidesPerView: variant === 'onePerRow' ? 1 : 2
-    // spaceBetween: 24
+
+  swiperBreakpoints['1'] = {
+    grid: {
+      rows: isCarouselMobile ? 1 : numItems,
+      fill: 'row'
+    },
+    slidesPerView: 1, //isCarouselMobile ? 1 : itemsPerRow,
+    spaceBetween: '24px'
   };
 
-  if (variant !== 'onePerRow') {
-    swiperBreakpoints[breakpoints.md] = {
-      slidesPerView: 2
-      // spaceBetween: 24
+  swiperBreakpoints[breakpoints.sm] = {
+    grid: {
+      rows: isCarouselTablet ? 1 : numItems,
+      fill: 'row'
+    },
+    slidesPerView: 1,
+    spaceBetween: '24px'
+  };
+
+  swiperBreakpoints[breakpoints.md] = {
+    grid: {
+      rows: isCarouselDesktop ? 1 : numItems,
+      fill: 'row'
+    },
+    slidesPerView: itemsPerRow > 1 ? 2 : 1,
+    spaceBetween: '24px'
+  };
+
+  swiperBreakpoints[breakpoints.lg] = {
+    grid: {
+      rows: isCarouselDesktop ? 1 : numItems,
+      fill: 'row'
+    },
+    slidesPerView: itemsPerRow > 2 ? 3 : 2,
+    spaceBetween: '24px'
+  };
+
+  if (itemsPerRow === 4) {
+    swiperBreakpoints[breakpoints.xl] = {
+      grid: {
+        rows: isCarouselDesktop ? 1 : numItems,
+        fill: 'row'
+      },
+      slidesPerView: 4,
+      spaceBetween: '24px'
     };
-
-    if (variant !== 'twoPerRow') {
-      swiperBreakpoints[breakpoints.lg] = {
-        slidesPerView: 3
-        // spaceBetween: 36
-      };
-
-      if (variant !== 'threePerRow') {
-        swiperBreakpoints[breakpoints.xl] = {
-          slidesPerView: 4
-          // spaceBetween: 48
-        };
-      }
-    }
+  } else if (itemsPerRow >= 5) {
+    swiperBreakpoints[breakpoints.xl] = {
+      grid: {
+        rows: isCarouselDesktop ? 1 : numItems,
+        fill: 'row'
+      },
+      slidesPerView: 5,
+      spaceBetween: '24px'
+    };
   }
 
   return (
@@ -71,24 +141,20 @@ const Carousel = (props: CarouselProps) => {
           <SwiperWrap ownerState={ownerState}>
             <SwiperInnerWrap ownerState={ownerState}>
               <Swiper
-                // install Swiper modules
-                modules={[Navigation, Pagination, Scrollbar, A11y]}
-                spaceBetween="24px"
-                slidesPerView={1}
+                rewind={true}
+                cssMode={true}
+                modules={[Navigation, SwiperGrid, Pagination, A11y]}
+                spaceBetween={24}
                 breakpoints={swiperBreakpoints}
                 navigation
                 pagination={{ clickable: true }}
-                scrollbar={{ draggable: true }}
-                onSwiper={(swiper) => console.log(swiper)}
-                onSlideChange={() => console.log('slide change')}>
+                // scrollbar={{ draggable: true }}
+                // onSwiper={(swiper) => console.log(swiper)}
+                // onSlideChange={() => console.log('slide change')}
+              >
                 {items?.map((item, index) => (
                   <SwiperSlide key={item?.id}>
-                    <Item
-                      ownerState={ownerState}
-                      {...item}
-                      variant={itemsVariant ?? item?.variant}
-                      position={index + 1}
-                    />
+                    <Item ownerState={ownerState} {...item} variant={itemsVariant ?? item?.variant} />
                   </SwiperSlide>
                 ))}
               </Swiper>

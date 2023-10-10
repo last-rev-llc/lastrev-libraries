@@ -109,9 +109,14 @@ type Collection implements Content {
   animation: JSON
   backgroundColor: String
   backgroundImage: Media
+  carouselAutoPlay: Boolean
+  carouselType: String
   id: String
   internalTitle: String
   introText: Text
+  isCarouselDesktop: Boolean
+  isCarouselMobile: Boolean
+  isCarouselTablet: Boolean
   items: [CollectionItem]
   itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
   itemsVariant: String
@@ -122,6 +127,8 @@ type Collection implements Content {
 
 type CollectionCarousel implements Content {
   animation: JSON
+  carouselAutoPlay: Boolean
+  carouselType: String
   id: String
   internalTitle: String
   itemsVariant: String
