@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 import { defaultResolver } from './utils/defaultResolver';
 import { pathResolver } from './utils/pathResolver';
+import { pascalCase } from './utils/pascalCase';
 
 const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem'];
 
@@ -28,6 +29,23 @@ export const mappers = {
       //   return mediaRef;
       // },
       href: pathResolver
+    }
+  }
+};
+
+const ITEM_MAPPING: { [key: string]: string } = {
+  NavigationItem: 'NavigationItem',
+  Link: 'Link'
+};
+
+export const resolvers = {
+  SubNavigationItem: {
+    __resolveType: (item: any) => {
+      const type =
+        ITEM_MAPPING[pascalCase(item?.sys?.contentType?.sys?.id) ?? ''] ?? pascalCase(item?.sys?.contentType?.sys?.id);
+      if (SUB_NAVIGATION_ITEM_TYPES.includes(type)) return type;
+
+      return 'Link';
     }
   }
 };
