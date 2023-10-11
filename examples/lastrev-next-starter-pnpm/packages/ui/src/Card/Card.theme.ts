@@ -23,6 +23,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 
     '&:hover': {
       transform: 'scale(1)'
+    },
+
+    '.swiper-grid &': {
+      'transform': 'translateZ(0) scale(1)',
+
+      '&:hover': {
+        transform: 'scale(1.05)'
+      }
     }
   },
 

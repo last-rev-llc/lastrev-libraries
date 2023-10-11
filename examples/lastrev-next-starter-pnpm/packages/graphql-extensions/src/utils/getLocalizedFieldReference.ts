@@ -16,6 +16,11 @@ export const getLocalizedFieldReference = async (fields: any, fieldName: string,
   }
 
   if (!value?.sys?.id) return value;
+
+  if (value.sys.linkType === 'Asset') {
+    return ctx.loaders.assetLoader.load({ id: value.sys.id, preview: !!ctx.preview });
+  }
+
   return ctx.loaders.entryLoader.load({
     id: value.sys.id,
     preview: !!ctx.preview

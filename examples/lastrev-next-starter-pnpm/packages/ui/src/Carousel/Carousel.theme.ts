@@ -693,8 +693,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
   }),
 
   swiperInnerWrap: {
-    padding: '0 calc(var(--grid-margin) / 2)',
-    position: 'relative'
+    'position': 'relative',
+
+    '.swiper': {
+      'width': 'calc(100% - (var(--grid-margin) / 2px))',
+
+      '&.swiper-grid': {
+        width: '100%'
+      }
+    }
   },
 
   item: {

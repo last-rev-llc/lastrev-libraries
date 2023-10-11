@@ -10,7 +10,11 @@ const defaultProps: ComponentsProps['Footer'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme }) => ({
-    padding: theme.spacing(4, 2) // Update
+    'padding': theme.spacing(4, 2), // Update
+
+    '& a': {
+      whiteSpace: 'nowrap'
+    }
   }),
 
   introContentsWrap: ({ theme }) => ({
@@ -53,7 +57,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
     [theme.breakpoints.up('md')]: {
       gridRow: 1,
-      gridColumnStart: 'three-start',
+      gridColumnStart: 'content-start',
       gridColumnEnd: ownerState?.hasSocialLinks ? 'ten-end' : 'content-end'
     }
   }),

@@ -70,14 +70,26 @@ export const mappers: Mappers = {
       body: async (blog: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(blog.fields, 'promoSummary', ctx)),
 
-      media: resolveField(['promoImage', 'featuredMedia']),
+      media: async (blog: any, _args: any, ctx: ApolloContext) => {
+        const promoImage =
+          getLocalizedField(blog.fields, 'promoImage', ctx) ?? getLocalizedField(blog.fields, 'featuredMedia', ctx);
+        if (!promoImage) return null;
+        return [promoImage];
+      },
 
       variant: () => 'default',
 
       link: async (blog: any) => blog,
 
       actions: async (blog: any, _args: any, ctx: ApolloContext) => {
-        return [blog];
+        return [
+          createType('Link', {
+            id: blog.id,
+            text: 'Read More',
+            linkedContent: blog,
+            variant: 'buttonContained'
+          })
+        ];
       }
     }
   }

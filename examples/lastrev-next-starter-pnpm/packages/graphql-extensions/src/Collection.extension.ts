@@ -162,6 +162,7 @@ export const mappers: Mappers = {
 
       variant: async (collection: any, args: any, ctx: ApolloContext) => {
         let carouselBreakpoints = getLocalizedField(collection.fields, 'carouselBreakpoints', ctx) ?? [];
+
         const variantFn = defaultResolver('variant');
         const variant = variantFn(collection, args, ctx);
 
@@ -238,6 +239,7 @@ export const resolvers = {
     __resolveType: (item: any) => {
       const type =
         ITEM_MAPPING[pascalCase(item?.sys?.contentType?.sys?.id) ?? ''] ?? pascalCase(item?.sys?.contentType?.sys?.id);
+
       if (COLLECTION_ITEM_TYPES.includes(type)) return type;
 
       return 'Card';

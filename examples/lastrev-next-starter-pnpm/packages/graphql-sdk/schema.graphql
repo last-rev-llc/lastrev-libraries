@@ -111,7 +111,6 @@ type Collection implements Content {
   backgroundImage: Media
   carouselAutoPlay: Boolean
   carouselBreakpoints: [String]
-  carouselType: String
   id: String
   internalTitle: String
   introText: Text
