@@ -69,7 +69,8 @@ const config = new LastRevAppConfig({
     introspection: true
   },
   features: {
-    disableCoreSidekickLookup: true
+    disableCoreSidekickLookup: true,
+    enablePathsV2: true
   }
 });
 

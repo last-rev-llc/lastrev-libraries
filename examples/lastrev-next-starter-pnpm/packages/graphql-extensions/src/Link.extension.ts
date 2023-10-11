@@ -5,6 +5,7 @@ import type { Mappers, ApolloContext } from '@last-rev/types';
 
 import { createPath } from './utils/createPath';
 import { defaultResolver } from './utils/defaultResolver';
+import { pathResolver } from './utils/pathResolver';
 
 type TargetMapping = {
   'New Window': string;
@@ -47,7 +48,7 @@ const targetResolver = async (link: any, _: never, ctx: ApolloContext) => {
 export const mappers: Mappers = {
   Link: {
     Link: {
-      href: hrefUrlResolver,
+      href: pathResolver,
       target: targetResolver,
       variant: defaultResolver('variant')
     },
