@@ -548,7 +548,7 @@ type SitemapPage {
   page: Int
 }
 
-union SubNavigationItem = Link | NavigationItem
+union SubNavigationItem = Blog | Link | NavigationItem | Page | Person
 
 type Template implements Content {
   animation: JSON

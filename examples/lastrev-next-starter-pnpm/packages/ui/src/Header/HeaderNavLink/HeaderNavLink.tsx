@@ -21,7 +21,7 @@ const HeaderNavLink = (props: HeaderNavLinkProps) => {
     numOfCols: props.subNavigation?.length || 1
   };
 
-  const { navMedia, variant, subNavigation, sidekickLookup, onRequestClose, id: navItemId } = props;
+  const { variant, subNavigation, sidekickLookup, onRequestClose, id: navItemId } = props;
 
   const onNavItemClick = (evt: any) => {
     if (subNavigation?.length) {
@@ -105,6 +105,7 @@ const NavItemSubMenuItem = styled(ListItem, {
 const NavItemLink = styled(ContentModule, {
   name: 'HeaderNavLink',
   slot: 'NavItemLink',
+  shouldForwardProp: (prop: string) => prop !== 'subNavigation' && prop !== 'menuVisible' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.navItemLink]
 })<{ open?: boolean; ownerState: HeaderNavLinkOwnerState }>``;
 

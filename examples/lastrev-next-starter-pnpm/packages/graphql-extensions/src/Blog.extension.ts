@@ -2,7 +2,6 @@ import gql from 'graphql-tag';
 import type { Mappers, ApolloContext } from '@last-rev/types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
-import { blogV1 } from './PathsConfigs.extension';
 import { createType } from './utils/createType';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
@@ -62,6 +61,11 @@ export const mappers: Mappers = {
       href: pathResolver
     },
 
+    NavigationItem: {
+      text: 'title',
+      href: pathResolver
+    },
+
     Card: {
       body: async (blog: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(blog.fields, 'promoSummary', ctx)),
@@ -77,8 +81,4 @@ export const mappers: Mappers = {
       }
     }
   }
-};
-
-export const pathsConfigs = {
-  ...blogV1
 };

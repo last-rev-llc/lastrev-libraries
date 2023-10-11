@@ -129,7 +129,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     fontSize: 42
   }),
 
-  headerMenuNavItems: ({ theme, ownerState }) => ({
+  headerMenuNavItems: ({ theme }) => ({
     display: 'inline-flex',
     alignItems: 'center',
     padding: 0,

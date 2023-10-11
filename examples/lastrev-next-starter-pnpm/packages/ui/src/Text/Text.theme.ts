@@ -16,10 +16,20 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
   root: {
     'width': '100%',
+    'display': 'unset',
     'ol, ul, li': {
       /* Revert padding reset is what gives the indentation to list */
 
       padding: 'revert'
+    },
+
+    'main > &': {
+      'display': 'grid',
+
+      '& > *': {
+        display: 'unset',
+        gridColumn: 'content-start/content-end'
+      }
     }
   },
 

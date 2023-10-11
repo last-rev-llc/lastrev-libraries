@@ -1,10 +1,36 @@
 import gql from 'graphql-tag';
 
-import { defaultResolver } from './utils/defaultResolver';
-import { pathResolver } from './utils/pathResolver';
-import { pascalCase } from './utils/pascalCase';
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import { type ApolloContext } from '@last-rev/types';
 
-const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem'];
+import { createPath } from './utils/createPath';
+import { pascalCase } from './utils/pascalCase';
+import { defaultResolver } from './utils/defaultResolver';
+
+const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem', 'Page', 'Person', 'Blog'];
+
+const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
+  const href = getLocalizedField(link.fields, 'href', ctx);
+  const manualUrl = getLocalizedField(link.fields, 'manualUrl', ctx);
+  if (href || manualUrl) return createPath(href ?? manualUrl);
+
+  const contentRef = getLocalizedField(link.fields, 'linkedContent', ctx);
+  if (contentRef) {
+    const content = await ctx.loaders.entryLoader.load({ id: contentRef.sys.id, preview: !!ctx.preview });
+    if (content) {
+      if (content?.sys?.contentType?.sys?.id === 'media') {
+        const assetRef = getLocalizedField(content.fields, 'asset', ctx);
+        const asset = await ctx.loaders.assetLoader.load({ id: assetRef.sys.id, preview: !!ctx.preview });
+        if (asset) {
+          return `https:${getLocalizedField(asset.fields, 'file', ctx)?.url}`;
+        }
+      }
+      const slug = getLocalizedField(content?.fields, 'slug', ctx);
+      if (slug) return createPath(getLocalizedField(content?.fields, 'slug', ctx));
+    }
+  }
+  return '#';
+};
 
 export const typeDefs = gql`
   extend type NavigationItem {
@@ -28,14 +54,17 @@ export const mappers = {
       //   const mediaRef: any = getLocalizedField(item.fields, 'media', ctx);
       //   return mediaRef;
       // },
-      href: pathResolver
+      href: hrefUrlResolver
     }
   }
 };
 
 const ITEM_MAPPING: { [key: string]: string } = {
   NavigationItem: 'NavigationItem',
-  Link: 'Link'
+  Link: 'Link',
+  Page: 'Link',
+  Person: 'Link',
+  Blog: 'Link'
 };
 
 export const resolvers = {
