@@ -12,4 +12,5 @@ export const pathResolver = async (content: any, _args: any, ctx: ApolloContext)
 
   const manualUrl = getLocalizedField(content.fields, 'manualUrl', ctx);
   if (manualUrl) return manualUrl;
+  return '#';
 };
