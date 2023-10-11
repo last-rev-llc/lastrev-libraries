@@ -152,8 +152,15 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
 
       '[class*=cardMedia]': {
+        'maxWidth': '50%',
+        'paddingTop': 'var(--grid-gap)',
+        'marginLeft': 'auto',
+        'marginRight': 'auto',
+        'aspectRatio': '1 / 1',
+
         '& > *': {
           borderRadius: '50%',
+          objectFit: 'cover',
           aspectRatio: '1 / 1',
           width: '100%',
           display: 'inline-block',

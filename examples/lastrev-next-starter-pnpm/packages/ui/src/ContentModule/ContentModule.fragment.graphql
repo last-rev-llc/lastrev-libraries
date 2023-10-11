@@ -19,6 +19,14 @@ fragment ContentModule_PageFragment on Content {
   ...Page_BaseFragment
 }
 
+fragment ContentModule_PersonFragment on Content {
+  ...Person_BaseFragment
+}
+
+fragment ContentModule_BlogFragment on Content {
+  ...Blog_BaseFragment
+}
+
 fragment ContentModule_SectionFragment on Content {
   ...Content_BaseFragment
   #...Card_BaseFragment
@@ -50,5 +58,5 @@ fragment ContentModule_RichTextFragment on Content {
   #...NavigationItem_BaseFragment
   ...Quote_BaseFragment
   #...Section_BaseFragment
-  ...Text_BaseFragment
+  ...Text_RichTextFragment
 }

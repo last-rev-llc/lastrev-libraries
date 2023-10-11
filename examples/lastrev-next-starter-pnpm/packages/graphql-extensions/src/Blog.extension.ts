@@ -18,7 +18,7 @@ export const typeDefs = gql`
     categories: [CategoryBlog]
     breadcrumbs: [Link]
     author: Person
-    hero: Hero
+    hero: Content
   }
 `;
 
@@ -52,7 +52,7 @@ export const mappers: Mappers = {
           variant: 'default',
           overline: getLocalizedField(blog.fields, 'pubDate', ctx),
           title: getLocalizedField(blog.fields, 'title', ctx),
-          images: getLocalizedField(blog.fields, 'featuredMedia', ctx)
+          sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)
         })
     },
 

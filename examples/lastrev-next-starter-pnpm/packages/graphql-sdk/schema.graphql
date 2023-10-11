@@ -51,7 +51,7 @@ type Blog implements Content {
   featuredMedia: Media
   footer: Footer
   header: Header
-  hero: Hero
+  hero: Content
   id: String
   jsonLd: JSON
   lr__path__: String
@@ -424,6 +424,7 @@ type Person implements Content {
   email: String
   footer: Footer
   header: Header
+  hero: Hero
   id: String
   jobTitle: String
   jsonLd: JSON

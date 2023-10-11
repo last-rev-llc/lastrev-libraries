@@ -159,6 +159,7 @@ export const mappers: Mappers = {
 
         return itemsPerRow;
       },
+      itemsVariant: defaultResolver('itemsVariant'),
 
       variant: async (collection: any, args: any, ctx: ApolloContext) => {
         let carouselBreakpoints = getLocalizedField(collection.fields, 'carouselBreakpoints', ctx) ?? [];

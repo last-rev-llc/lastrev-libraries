@@ -20,6 +20,9 @@ fragment Person_BaseFragment on Person {
   socialLinks {
     ...Link_BaseFragment
   }
+  hero {
+    ...Hero_BaseFragment
+  }
 }
 
 fragment Person_Card_Fragment on Person {

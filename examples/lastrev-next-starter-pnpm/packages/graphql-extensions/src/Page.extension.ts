@@ -44,7 +44,12 @@ export const mappers: Mappers = {
       body: async (page: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(page.fields, 'promoSummary', ctx)),
 
-      media: resolveField(['promoImage']),
+      media: async (blog: any, _args: any, ctx: ApolloContext) => {
+        const promoImage =
+          getLocalizedField(blog.fields, 'promoImage', ctx) ?? getLocalizedField(blog.fields, 'mainImage', ctx);
+        if (!promoImage) return null;
+        return [promoImage];
+      },
 
       variant: () => 'default',
 
