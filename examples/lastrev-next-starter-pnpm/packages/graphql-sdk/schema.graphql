@@ -110,6 +110,7 @@ type Collection implements Content {
   backgroundColor: String
   backgroundImage: Media
   carouselAutoPlay: Boolean
+  carouselBreakpoints: [String]
   carouselType: String
   id: String
   internalTitle: String
@@ -119,8 +120,9 @@ type Collection implements Content {
   isCarouselTablet: Boolean
   items: [CollectionItem]
   itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
-  itemsPerRow: Boolean
+  itemsPerRow: Int
   itemsVariant: String
+  numItems: Int
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
