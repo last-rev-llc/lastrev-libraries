@@ -1,4 +1,4 @@
-import { Roboto } from 'next/font/google';
+import { Open_Sans } from 'next/font/google';
 import { type Breakpoint, type ThemeOptions, type Theme, createTheme } from '@mui/material/styles';
 import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
@@ -6,7 +6,7 @@ import createGridMixin from './mixins/createGridMixin';
 import applyBackgroundColor from './mixins/applyBackgroundColor';
 import themeComponents from './theme.components';
 
-export const roboto = Roboto({
+export const openSans = Open_Sans({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
   display: 'swap'
@@ -41,15 +41,25 @@ const paletteTheme = createTheme({
     },
     primary: muiTheme.palette.augmentColor({
       color: {
-        main: '#fba62d'
+        main: '#9146ff',
+        contrastText: '#ffffff'
       },
       name: 'primary'
     }),
     secondary: muiTheme.palette.augmentColor({
       color: {
-        main: '#00fff2'
+        main: '#ffff55',
+        contrastText: '#000000'
       },
       name: 'secondary'
+    }),
+
+    tertiary: muiTheme.palette.augmentColor({
+      color: {
+        main: '#6530b2',
+        contrastText: '#000000'
+      },
+      name: 'tertiary'
     }),
 
     // text: {
@@ -104,124 +114,151 @@ const coreTheme = createTheme({
     applyBackgroundColor
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
-    // TODO: Add Responsive font sizing
+    fontFamily: openSans.style.fontFamily,
     body1: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 400,
-      fontSize: '1rem',
-      lineHeight: 1.625
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--body1-font-weight)',
+      fontSize: 'var(--body1-font-size)',
+      lineHeight: 'var(--body1-line-height)',
+      margin: 'var(--body1-margin)',
+      color: 'inherit'
     },
     body2: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 400,
-      fontSize: '1rem',
-      lineHeight: 1.5
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--body2-font-weight)',
+      fontSize: 'var(--body2-font-size)',
+      lineHeight: 'var(--body2-line-height)',
+      margin: 'var(--body2-margin)',
+      color: 'inherit'
     },
     bodySmall: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 400,
-      fontSize: '.875rem',
-      lineHeight: 1.25
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--bodySmall-font-weight)',
+      fontSize: 'var(--bodySmall-font-size)',
+      lineHeight: 'var(--bodySmall-line-height)',
+      margin: 'var(--bodySmall-margin)',
+      color: 'inherit'
     },
     bodyLarge: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 400,
-      fontSize: '1.5rem',
-      lineHeight: 1.625
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--bodyLarge-font-weight)',
+      fontSize: 'var(--bodyLarge-font-size)',
+      lineHeight: 'var(--bodyLarge-line-height)',
+      margin: 'var(--bodyLarge-margin)',
+      color: 'inherit'
     },
 
     h1: {
-      fontFamily: roboto.style.fontFamily,
-      fontSize: '4.5rem',
-      lineHeight: 1.375,
-      fontWeight: 700,
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--h1-font-weight)',
+      fontSize: 'var(--h1-font-size)',
+      lineHeight: 'var(--h1-line-height)',
+      margin: 'var(--h1-margin)',
       fontStyle: 'normal'
     },
     h2: {
-      fontFamily: roboto.style.fontFamily,
-      fontSize: '4rem',
-      lineHeight: 1.25,
-      fontWeight: 700,
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--h2-font-weight)',
+      fontSize: 'var(--h2-font-size)',
+      lineHeight: 'var(--h2-line-height)',
+      margin: 'var(--h2-margin)',
       fontStyle: 'normal'
     },
     h3: {
-      fontFamily: roboto.style.fontFamily,
-      fontSize: '3rem',
-      lineHeight: 1.375,
-      fontWeight: 700,
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--h3-font-weight)',
+      fontSize: 'var(--h3-font-size)',
+      lineHeight: 'var(--h3-line-height)',
+      margin: 'var(--h3-margin)',
       fontStyle: 'normal'
     },
     h4: {
-      fontFamily: roboto.style.fontFamily,
-      fontSize: '2.25rem',
-      lineHeight: 1.5,
-      fontWeight: 700,
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--h4-font-weight)',
+      fontSize: 'var(--h4-font-size)',
+      lineHeight: 'var(--h4-line-height)',
+      margin: 'var(--h4-margin)',
       fontStyle: 'normal'
     },
     h5: {
-      fontFamily: roboto.style.fontFamily,
-      fontSize: '1.5rem',
-      lineHeight: 1.2,
-      fontWeight: 700,
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--h5-font-weight)',
+      fontSize: 'var(--h5-font-size)',
+      lineHeight: 'var(--h5-line-height)',
+      margin: 'var(--h5-margin)',
       fontStyle: 'normal'
     },
     h6: {
-      fontFamily: roboto.style.fontFamily,
-      fontSize: '1.125rem',
-      lineHeight: 1.3333,
-      fontWeight: 700,
-      fontStyle: 'normal',
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--h6-font-weight)',
+      fontSize: 'var(--h6-font-size)',
+      lineHeight: 'var(--h6-line-height)',
+      margin: 'var(--h6-margin)',
       color: '#000000'
     },
     display1: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '2.5rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--display1-font-weight)',
+      fontSize: 'var(--display1-font-size)',
+      lineHeight: 'var(--display1-line-height)',
+      margin: 'var(--display1-margin)',
+      color: paletteTheme?.palette?.tertiary?.main
     },
     display2: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '2.25rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--display2-font-weight)',
+      fontSize: 'var(--display2-font-size)',
+      lineHeight: 'var(--display2-line-height)',
+      margin: 'var(--display2-margin)',
+      color: paletteTheme?.palette?.tertiary?.main
     },
     display3: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '2rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--display3-font-weight)',
+      fontSize: 'var(--display3-font-size)',
+      lineHeight: 'var(--display3-line-height)',
+      margin: 'var(--display3-margin)',
+      color: paletteTheme?.palette?.tertiary?.main
     },
     display4: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '1.75rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--display4-font-weight)',
+      fontSize: 'var(--display4-font-size)',
+      lineHeight: 'var(--display4-line-height)',
+      margin: 'var(--display4-margin)',
+      color: paletteTheme?.palette?.tertiary?.main
     },
     display5: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '1.5rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--display5-font-weight)',
+      fontSize: 'var(--display5-font-size)',
+      lineHeight: 'var(--display5-line-height)',
+      margin: 'var(--display5-margin)',
+      color: paletteTheme?.palette?.tertiary?.main
     },
     display6: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 500,
-      fontSize: '1.25rem',
       display: 'block',
-      marginBottom: ' .25em'
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--display6-font-weight)',
+      fontSize: 'var(--display6-font-size)',
+      lineHeight: 'var(--display6-line-height)',
+      margin: 'var(--display6-margin)',
+      color: paletteTheme?.palette?.tertiary?.main
     },
     overline: {
-      fontFamily: roboto.style.fontFamily,
-      fontWeight: 900,
-      fontSize: '.75rem',
+      display: 'block',
+      fontFamily: openSans.style.fontFamily,
+      fontWeight: 'var(--overline-font-weight)',
+      fontSize: 'var(--overline-font-size)',
+      lineHeight: 'var(--overline-line-height)',
       textTransform: 'uppercase',
-      marginBottom: `${defaultSpacing}px` // TODO: Check on this approach
+      margin: 'var(--overline-margin)',
+      color: 'inherit'
     }
   },
   containerBreakpoints: {
@@ -235,7 +272,7 @@ const coreTheme = createTheme({
   }
 });
 
-const theme: Theme = createTheme(
+export const theme: Theme = createTheme(
   deepmerge(coreTheme, {
     components: Object.values(themeComponents)
       .map((t) => t(coreTheme))
@@ -244,6 +281,8 @@ const theme: Theme = createTheme(
       }, {})
   })
 );
+
+export const breakpoints = theme.breakpoints.values;
 
 // export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
 //   containerBreakpoints: {
@@ -255,5 +294,3 @@ const theme: Theme = createTheme(
 //     }
 //   }
 // });
-
-export default theme;

@@ -45,11 +45,13 @@ type Blog implements Content {
   animation: JSON
   author: Person
   body: RichText
+  breadcrumbs: [Link]
   categories: [CategoryBlog]
   disableBackToTop: Boolean
   featuredMedia: Media
   footer: Footer
   header: Header
+  hero: Hero
   id: String
   jsonLd: JSON
   lr__path__: String
@@ -107,12 +109,20 @@ type Collection implements Content {
   animation: JSON
   backgroundColor: String
   backgroundImage: Media
+  carouselAutoPlay: Boolean
+  carouselBreakpoints: [String]
+  carouselType: String
   id: String
   internalTitle: String
   introText: Text
+  isCarouselDesktop: Boolean
+  isCarouselMobile: Boolean
+  isCarouselTablet: Boolean
   items: [CollectionItem]
   itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
+  itemsPerRow: Int
   itemsVariant: String
+  numItems: Int
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
@@ -120,6 +130,8 @@ type Collection implements Content {
 
 type CollectionCarousel implements Content {
   animation: JSON
+  carouselAutoPlay: Boolean
+  carouselType: String
   id: String
   internalTitle: String
   itemsVariant: String
@@ -377,6 +389,7 @@ type Option {
 
 type Page implements Content {
   animation: JSON
+  breadcrumbs: [Link]
   contents: [Content]
   disableBackToTop: Boolean
   footer: Footer
@@ -408,11 +421,13 @@ type PagePathParams {
 type Person implements Content {
   animation: JSON
   body: RichText
+  breadcrumbs: [Link]
   email: String
   footer: Footer
   header: Header
   id: String
   jobTitle: String
+  jsonLd: JSON
   lr__path__: String
   mainImage: Media
   name: String
@@ -420,6 +435,7 @@ type Person implements Content {
   promoImage: Media
   promoSummary: String
   rolloverImage: Media
+  seo: JSON
   sidekickLookup: JSON
   slug: String
   socialLinks: [Link]

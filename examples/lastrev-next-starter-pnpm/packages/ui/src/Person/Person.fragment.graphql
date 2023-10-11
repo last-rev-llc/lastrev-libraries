@@ -1,21 +1,19 @@
 fragment Person_BaseFragment on Person {
   ...Content_BaseFragment
+  path
+  slug
   header {
     ...Header_BaseFragment
   }
   footer {
     ...Footer_BaseFragment
   }
-  slug
   name
   jobTitle
   email
   mainImage {
     ...Media_BaseFragment
   }
-  # featuredMedia {
-  #   ...Media_BaseFragment
-  # }
   body {
     ...RichText_BaseFragment
   }
@@ -35,5 +33,12 @@ fragment Person_Card_Fragment on Person {
   }
   socialLinks {
     ...Link_BaseFragment
+  }
+}
+
+fragment Person_Blog_Author_Fragment on Person {
+  ...Person_Card_Fragment
+  body {
+    ...RichText_BaseFragment
   }
 }

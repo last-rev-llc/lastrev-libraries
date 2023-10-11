@@ -11,7 +11,7 @@ import ContentModule from '../ContentModule';
 
 import type { SiteMessageProps, SiteMessageOwnerState } from './SiteMessage.types';
 
-export const SiteMessage = (props: SiteMessageProps) => {
+const SiteMessage = (props: SiteMessageProps) => {
   const ownerState = { ...props };
 
   const { icon, text, link, sidekickLookup } = props;

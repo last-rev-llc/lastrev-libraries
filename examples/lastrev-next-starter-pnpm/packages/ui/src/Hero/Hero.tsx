@@ -1,16 +1,20 @@
 import React from 'react';
+
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Typography, { type TypographyProps } from '@mui/material/Typography';
+
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
 import Grid from '../Grid';
-import type { HeroProps, HeroOwnerState } from './Hero.types';
 import Background from '../Background';
 
-export const Hero = (props: HeroProps) => {
+import type { HeroProps, HeroOwnerState } from './Hero.types';
+
+const Hero = (props: HeroProps) => {
   const ownerState = { ...props };
+
   const { background, backgroundColor, overline, title, subtitle, body, actions, images, sidekickLookup } = props;
 
   return (
@@ -21,68 +25,53 @@ export const Hero = (props: HeroProps) => {
         testId="Hero-background"
       />
 
-      {/* {background ? (
-
-        <BackgroundGrid ownerState={ownerState}>
-          <Background
-            {...background}
-            {...sidekick(sidekickLookup, 'background')}
-            fill
-            key={background?.id}
-            ownerState={ownerState}
-            priority
-            testId="Hero-background"
-          />
-        </BackgroundGrid>
-      ) : null} */}
-      <ContentGrid ownerState={ownerState}>
+      <ContentOuterGrid ownerState={ownerState}>
         {overline || title || subtitle || body || actions ? (
-          <Content ownerState={ownerState}>
-            {!!overline && (
-              <Overline ownerState={ownerState} variant="overline">
-                {overline}
-              </Overline>
-            )}
+          <MainContentWrap ownerState={ownerState}>
+            <Content ownerState={ownerState}>
+              {!!overline && (
+                <Overline ownerState={ownerState} variant="overline">
+                  {overline}
+                </Overline>
+              )}
 
-            {!!title && (
-              <Title
-                {...sidekick(sidekickLookup, 'title')}
-                // @ts-expect-error TODO: Fix this
-                component="h1"
-                data-testid="Hero-title"
-                ownerState={ownerState}
-                variant="display3">
-                {title}
-              </Title>
-            )}
+              {!!title && (
+                <Title
+                  {...sidekick(sidekickLookup, 'title')}
+                  component="h1"
+                  variant="display1"
+                  data-testid="Hero-title"
+                  ownerState={ownerState}>
+                  {title}
+                </Title>
+              )}
 
-            {!!subtitle && (
-              <Subtitle
-                {...sidekick(sidekickLookup, 'subtitle')}
-                data-testid="Hero-subtitle"
-                ownerState={ownerState}
-                variant="display2">
-                {subtitle}
-              </Subtitle>
-            )}
+              {!!subtitle && (
+                <Subtitle
+                  {...sidekick(sidekickLookup, 'subtitle')}
+                  data-testid="Hero-subtitle"
+                  ownerState={ownerState}
+                  variant="display3">
+                  {subtitle}
+                </Subtitle>
+              )}
 
-            {!!body && (
-              <Body __typename="Text" {...sidekick(sidekickLookup, 'body')} ownerState={ownerState} body={body} />
-            )}
+              {!!body && (
+                <Body __typename="RichText" ownerState={ownerState} body={body} {...sidekick(sidekickLookup, 'body')} />
+              )}
+            </Content>
+
             {!!actions?.length && (
-              <ActionsWrapper
-                {...sidekick(sidekickLookup, 'actions')}
-                data-testid="Hero-actions"
-                ownerState={ownerState}>
+              <ActionsWrap {...sidekick(sidekickLookup, 'actions')} data-testid="Hero-actions" ownerState={ownerState}>
                 {actions.map((action) => (
                   <Action ownerState={ownerState} key={action?.id} {...action} />
                 ))}
-              </ActionsWrapper>
+              </ActionsWrap>
             )}
-          </Content>
+          </MainContentWrap>
         ) : null}
 
-        {images?.length ? (
+        {!!images?.length ? (
           <MediaWrap>
             {images?.map((image) => (
               <Media
@@ -95,7 +84,7 @@ export const Hero = (props: HeroProps) => {
             ))}
           </MediaWrap>
         ) : null}
-      </ContentGrid>
+      </ContentOuterGrid>
     </Root>
   );
 };
@@ -106,10 +95,16 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: HeroOwnerState }>``;
 
-const ContentGrid = styled(Grid, {
+const ContentOuterGrid = styled(Grid, {
   name: 'Hero',
-  slot: 'ContentGrid',
-  overridesResolver: (_, styles) => [styles.contentGrid]
+  slot: 'ContentOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentOuterGrid]
+})<{ ownerState: HeroOwnerState }>``;
+
+const MainContentWrap = styled('div', {
+  name: 'Hero',
+  slot: 'MainContentWrap',
+  overridesResolver: (_, styles) => [styles.mainContentWrap]
 })<{ ownerState: HeroOwnerState }>``;
 
 const Content = styled(Box, {
@@ -134,13 +129,13 @@ const Title = styled(Typography, {
   name: 'Hero',
   slot: 'Title',
   overridesResolver: (_, styles) => [styles.title]
-})<{ ownerState: HeroOwnerState }>``;
+})<TypographyProps & { ownerState: HeroOwnerState }>``;
 
 const Subtitle = styled(Typography, {
   name: 'Hero',
   slot: 'Subtitle',
   overridesResolver: (_, styles) => [styles.subtitle]
-})<{ ownerState: HeroOwnerState }>``;
+})<TypographyProps & { ownerState: HeroOwnerState }>``;
 
 const Body = styled(ContentModule, {
   name: 'Hero',
@@ -159,11 +154,11 @@ const MediaWrap = styled(Box, {
   slot: 'MediaWrap ',
   overridesResolver: (_, styles) => [styles.mediaWrap]
 })``;
-const ActionsWrapper = styled(Box, {
-  name: 'Hero',
-  slot: 'ActionsWrapper',
 
-  overridesResolver: (_, styles) => [styles.actionsWrapper]
+const ActionsWrap = styled(Box, {
+  name: 'Hero',
+  slot: 'ActionsWrap',
+  overridesResolver: (_, styles) => [styles.actionsWrap]
 })<{ ownerState: HeroOwnerState }>``;
 
 const Action = styled(ContentModule, {

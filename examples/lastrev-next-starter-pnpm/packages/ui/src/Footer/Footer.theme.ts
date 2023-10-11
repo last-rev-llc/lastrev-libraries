@@ -13,22 +13,24 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     padding: theme.spacing(4, 2) // Update
   }),
 
-  // introContentsWrap: : {},
+  introContentsWrap: ({ theme }) => ({
+    marginBottom: theme.spacing(10)
+  }),
 
-  // introContent: : {},
+  // introContent: {},
 
-  // contentOuterGrid: : {},
+  // contentOuterGrid: {},
 
   logoRoot: ({ theme }) => ({
     gridColumn: 'two-start / three-end',
     gridRow: 1,
     alignSelf: 'center',
 
-    [theme.containerBreakpoints.up('sm')]: {
+    [theme.breakpoints.up('sm')]: {
       gridColumn: 'three-start / six-end'
     },
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridColumn: 'content-start / span 2',
       alignSelf: 'center'
     }
@@ -49,7 +51,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridRow: 1,
       gridColumnStart: 'three-start',
       gridColumnEnd: ownerState?.hasSocialLinks ? 'ten-end' : 'content-end'
@@ -65,7 +67,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     width: '100%',
     margin: 'auto',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       height: '100%',
       flexDirection: 'row',
       width: 'auto'
@@ -76,7 +78,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     padding: 0,
     position: 'unset',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       height: '100%'
     }
   }),
@@ -91,15 +93,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     alignItems: 'center',
     height: '100%',
     justifySelf: 'center',
-    gap: theme.spacing(2),
+    gap: 'var(--grid-gap)',
 
-    [theme.containerBreakpoints.up('md')]: {
-      gridColumnStart: 'eleven-start',
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'auto', //'eleven-start',
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
       justifySelf: 'flex-end',
       width: '100%',
-      gap: theme.spacing(4),
       gridRow: 1
     }
   }),
@@ -116,12 +117,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  disclaimer: ({ theme }) => ({
+  disclaimerWrap: ({ theme }) => ({
     gridRow: 4,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridRow: 2,
       gridColumnStart: 'content-start',
       gridColumnEnd: 'content-half'
@@ -132,12 +133,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     display: 'contents' // take out of flow
   },
 
-  copyrightDisclaimer: ({ theme }) => ({
+  copyrightDisclaimerWrap: ({ theme }) => ({
     gridRow: 5,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridRow: 2,
       gridColumnStart: 'content-half',
       gridColumnEnd: 'content-end'
@@ -152,9 +153,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     alignItems: 'center',
     height: '100%',
     justifySelf: 'flex-end',
-    gap: theme.spacing(2),
+    gap: 'var(--grid-gap)',
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       gridColumn: 'content-start / content-end',
       gridRow: 3,
       marginLeft: 'auto'

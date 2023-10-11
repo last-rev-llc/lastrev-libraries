@@ -3,15 +3,20 @@ import { Theme, ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVa
 const defaultProps: ComponentsProps['Blog'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
-  root: ({}) => ({}),
+  // root: {},
 
-  contentOuterGrid: ({ theme }) => ({
+  contentOuterGrid: {
     '> *': {
       gridColumnStart: 'auto'
     }
-  }),
+  },
 
   headerWrap: {
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end'
+  },
+
+  breadcrumbsWrap: {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end'
   },
@@ -20,14 +25,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     display: 'contents'
   },
 
-  // featuredMedia: : {},
-
   featuredMediaWrap: {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end'
   },
 
-  // pubDate: ({}) => ({}),
+  // featuredMedia: {},
+
+  // pubDate: {},
 
   shareLinksWrap: {
     gridColumnStart: 'three-start',
@@ -68,29 +73,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
 
   // author: ({}) => ({}),
 
-  title: ({ theme }) => ({
-    ...theme.typography.h5,
-
-    [theme.containerBreakpoints.up('md')]: {
-      ...theme.typography.h3
-    },
-
-    [theme.containerBreakpoints.up('lg')]: {
-      ...theme.typography.h2
-    }
-  }),
+  // title: {},
 
   body: {
     '& > *:not(div)': {
       gridColumnStart: 'three-start',
-      gridColumnEnd: 'ten-end',
-      backgroundColor: '#eeeeee'
+      gridColumnEnd: 'ten-end'
     },
 
     '& > div': {
       gridColumnStart: 'full-start',
-      gridColumnEnd: 'full-end',
-      backgroundColor: '#cccccc'
+      gridColumnEnd: 'full-end'
     }
   },
 

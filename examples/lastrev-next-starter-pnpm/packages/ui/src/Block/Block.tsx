@@ -7,11 +7,14 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
 import Grid from '../Grid';
-import type { BlockProps, BlockOwnerState } from './Block.types';
 import Background from '../Background';
+import ErrorBoundary from '../ErrorBoundary';
+
+import type { BlockProps, BlockOwnerState } from './Block.types';
 
 const Block = (props: BlockProps) => {
   const ownerState = { ...props };
+
   const {
     background,
     backgroundColor,
@@ -26,76 +29,84 @@ const Block = (props: BlockProps) => {
   } = props;
 
   return (
-    <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState}>
-      <BlockBackground background={background} backgroundColor={backgroundColor} testId="Block-background" />
-      {!!introText && (
-        <IntroTextGrid ownerState={ownerState}>
-          <IntroText
-            ownerState={ownerState}
-            {...sidekick(sidekickLookup, 'introText')}
-            {...introText}
-            variant="introText"
-          />
-        </IntroTextGrid>
-      )}
+    <ErrorBoundary>
+      <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+        <BlockBackground background={background} backgroundColor={backgroundColor} testId="Block-background" />
 
-      <ContentOuterGrid ownerState={ownerState}>
-        {overline || title || subtitle || body || actions ? (
-          <MainContentWrapper ownerState={ownerState}>
-            <Content ownerState={ownerState}>
-              {!!overline && (
-                <Overline ownerState={ownerState} variant="overline">
-                  {overline}
-                </Overline>
-              )}
-
-              {!!title && (
-                <Title
-                  ownerState={ownerState}
-                  {...sidekick(sidekickLookup, 'title')}
-                  data-testid="Block-title"
-                  variant="display3">
-                  {title}
-                </Title>
-              )}
-
-              {!!subtitle && (
-                <Subtitle
-                  ownerState={ownerState}
-                  {...sidekick(sidekickLookup, 'subtitle')}
-                  data-testid="Block-subtitle"
-                  variant="display4">
-                  {subtitle}
-                </Subtitle>
-              )}
-
-              {!!body && (
-                <Body ownerState={ownerState} {...sidekick(sidekickLookup, 'body')} __typename="Text" body={body} />
-              )}
-            </Content>
-
-            {!!actions?.length && (
-              <ActionsWrapper
-                ownerState={ownerState}
-                {...sidekick(sidekickLookup, 'actions')}
-                data-testid="Block-actions">
-                {actions.map((action) => (
-                  <Action ownerState={ownerState} key={action?.id} {...action} />
-                ))}
-              </ActionsWrapper>
-            )}
-          </MainContentWrapper>
-        ) : null}
-
-        {!!mediaItems && (
-          <SideContentWrapper ownerState={ownerState}>
-            {mediaItems.map((media) => (
-              <Media ownerState={ownerState} key={media?.id} {...sidekick(sidekickLookup, 'mediaItems')} {...media} />
-            ))}
-          </SideContentWrapper>
+        {!!introText && (
+          <IntroTextGrid ownerState={ownerState}>
+            <IntroText
+              ownerState={ownerState}
+              {...sidekick(sidekickLookup, 'introText')}
+              {...introText}
+              variant="introText"
+            />
+          </IntroTextGrid>
         )}
-      </ContentOuterGrid>
-    </Root>
+
+        <ContentOuterGrid ownerState={ownerState}>
+          {overline || title || subtitle || body || actions ? (
+            <MainContentWrap ownerState={ownerState}>
+              <Content ownerState={ownerState}>
+                {!!overline && (
+                  <Overline ownerState={ownerState} variant="overline">
+                    {overline}
+                  </Overline>
+                )}
+
+                {!!title && (
+                  <Title
+                    ownerState={ownerState}
+                    {...sidekick(sidekickLookup, 'title')}
+                    data-testid="Block-title"
+                    variant="display4">
+                    {title}
+                  </Title>
+                )}
+
+                {!!subtitle && (
+                  <Subtitle
+                    ownerState={ownerState}
+                    {...sidekick(sidekickLookup, 'subtitle')}
+                    data-testid="Block-subtitle"
+                    variant="display5">
+                    {subtitle}
+                  </Subtitle>
+                )}
+
+                {!!body && (
+                  <Body
+                    ownerState={ownerState}
+                    {...sidekick(sidekickLookup, 'body')}
+                    __typename="RichText"
+                    body={body}
+                  />
+                )}
+              </Content>
+
+              {!!actions?.length && (
+                <ActionsWrap
+                  ownerState={ownerState}
+                  {...sidekick(sidekickLookup, 'actions')}
+                  data-testid="Block-actions">
+                  {actions.map((action) => (
+                    <Action ownerState={ownerState} key={action?.id} {...action} />
+                  ))}
+                </ActionsWrap>
+              )}
+            </MainContentWrap>
+          ) : null}
+
+          {!!mediaItems && (
+            <SideContentWrap ownerState={ownerState}>
+              {mediaItems.map((media) => (
+                <Media ownerState={ownerState} key={media?.id} {...sidekick(sidekickLookup, 'mediaItems')} {...media} />
+              ))}
+            </SideContentWrap>
+          )}
+        </ContentOuterGrid>
+      </Root>
+    </ErrorBoundary>
   );
 };
 
@@ -129,10 +140,10 @@ const IntroText = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.introText]
 })<{ ownerState: BlockOwnerState }>``;
 
-const MainContentWrapper = styled('div', {
+const MainContentWrap = styled('div', {
   name: 'Block',
-  slot: 'MainContentWrapper',
-  overridesResolver: (_, styles) => [styles.mainContentWrapper]
+  slot: 'MainContentWrap',
+  overridesResolver: (_, styles) => [styles.mainContentWrap]
 })<{ ownerState: BlockOwnerState }>``;
 
 const Content = styled(Box, {
@@ -165,11 +176,11 @@ const Body = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.body]
 })<{ ownerState: BlockOwnerState }>``;
 
-const SideContentWrapper = styled('div', {
+const SideContentWrap = styled('div', {
   name: 'Block',
-  slot: 'SideContentWrapper',
+  slot: 'SideContentWrap',
 
-  overridesResolver: (_, styles) => [styles.sideContentWrapper]
+  overridesResolver: (_, styles) => [styles.sideContentWrap]
 })<{ ownerState: BlockOwnerState }>``;
 
 const Media = styled(ContentModule, {
@@ -178,11 +189,11 @@ const Media = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.media]
 })<{ ownerState: BlockOwnerState }>``;
 
-const ActionsWrapper = styled(Box, {
+const ActionsWrap = styled(Box, {
   name: 'Block',
-  slot: 'ActionsWrapper',
+  slot: 'ActionsWrap',
 
-  overridesResolver: (_, styles) => [styles.actionsWrapper]
+  overridesResolver: (_, styles) => [styles.actionsWrap]
 })<{ ownerState: BlockOwnerState }>``;
 
 const Action = styled(ContentModule, {

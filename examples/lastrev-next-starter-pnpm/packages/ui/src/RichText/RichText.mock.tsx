@@ -1,13 +1,11 @@
 import React from 'react';
-// import BLOCKS from './BLOCKS';
-// import MARKS from './MARKS';
 
 import { type RichTextProps } from './RichText.types';
 import { type BlockProps } from '../Block';
 import { type CollectionProps } from '../Collection';
+
 import BLOCKS from './BLOCKS';
 import MARKS from './MARKS';
-import { Collection } from '../../../graphql-sdk/src/types';
 
 export const valueNode = (type: string = 'text') => ({
   data: {},
@@ -208,6 +206,84 @@ export const complexMock = ({ text } = { text: 'Default complex mock' }): RichTe
   }
 });
 
+export const richTextCardMock = (
+  { text } = {
+    text: "This is default text for a card.   It's generally pretty short, but sometimes it may wrap to multiple lines."
+  }
+): RichTextProps => ({
+  __typename: 'RichText',
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        data: {},
+        content: [
+          {
+            data: {},
+            marks: [],
+            value: text,
+            nodeType: 'text'
+          }
+        ],
+        nodeType: 'paragraph'
+      }
+    ]
+  }
+});
+
+export const richTextBlockMock = (
+  { text } = {
+    text: "This is default text for a block.   It's generally pretty short, but sometimes it may wrap to multiple lines."
+  }
+): RichTextProps => ({
+  __typename: 'RichText',
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        data: {},
+        content: [
+          {
+            data: {},
+            marks: [],
+            value: text,
+            nodeType: 'text'
+          }
+        ],
+        nodeType: 'paragraph'
+      }
+    ]
+  }
+});
+
+export const richTextShortMock = (
+  { text } = {
+    text: "This is default text for a short sentence.   It's generally pretty short, but sometimes it may wrap to multiple lines."
+  }
+): RichTextProps => ({
+  __typename: 'RichText',
+  json: {
+    nodeType: 'document',
+    data: {},
+    content: [
+      {
+        data: {},
+        content: [
+          {
+            data: {},
+            marks: [],
+            value: text,
+            nodeType: 'text'
+          }
+        ],
+        nodeType: 'paragraph'
+      }
+    ]
+  }
+});
+
 export const blogMock = ({ text } = { text: 'Default blog mock' }): RichTextProps => {
   const blockMock: BlockProps = require('../Block/Block.mock').default();
   const collectionMock: CollectionProps = require('../Collection/Collection.mock').default();
@@ -337,18 +413,6 @@ export const blogMock = ({ text } = { text: 'Default blog mock' }): RichTextProp
           nodeType: 'unordered-list'
         },
         embeddedEntryBlockNode(blockMock.id || ''),
-        {
-          data: {},
-          content: [
-            {
-              data: {},
-              marks: [],
-              value: 'This is longer paragraph text',
-              nodeType: 'text'
-            }
-          ],
-          nodeType: 'paragraph'
-        },
         embeddedEntryBlockNode(collectionMock.id || '')
       ]
     },
@@ -361,6 +425,8 @@ export const blogMock = ({ text } = { text: 'Default blog mock' }): RichTextProp
     }
   };
 };
+
+export const personMock = ({ text } = { text: 'Default person mock' }): RichTextProps => blogMock({ text });
 
 export const withLinksMock = ({ text } = { text: 'Default with links mock' }): RichTextProps => ({
   __typename: 'RichText',
@@ -513,7 +579,6 @@ export const formattedMock = (): RichTextProps => ({
 
 export const paragraphMock = ({ text } = { text: 'Default paragraph mock' }): RichTextProps => ({
   __typename: 'RichText',
-
   json: {
     nodeType: 'document',
     data: {},

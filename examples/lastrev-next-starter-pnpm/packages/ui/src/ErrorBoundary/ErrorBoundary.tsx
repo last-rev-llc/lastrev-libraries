@@ -37,7 +37,7 @@ class BaseErrorBoundary extends React.Component<ErrorBoundaryProps> {
   }
 }
 
-export const ErrorBoundary = ({ children }: ErrorBoundaryProps) => {
+const ErrorBoundary = ({ children }: ErrorBoundaryProps) => {
   return (
     <BaseErrorBoundary fallback={<FallbackComponent />} showDialog={NODE_ENV !== 'production'}>
       {children}

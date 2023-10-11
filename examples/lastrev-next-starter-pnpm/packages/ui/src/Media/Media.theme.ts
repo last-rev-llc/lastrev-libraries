@@ -9,8 +9,7 @@ import type {
 const defaultProps: ComponentsProps['Media'] = {
   nextImageOptimization: true,
   priority: false,
-  // All images are shown close to full bleed size
-  sizes: '100vw'
+  sizes: '100vw' // All images are shown close to full bleed size
 };
 
 const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
@@ -21,40 +20,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
     maxWidth: `100%`,
     height: 'auto'
   }
-  // root: {
-  //   backgroundColor: 'red'
-  // }
-  //
-  // Use the ownerState to set dynamic styles
-  // root: ({ ownerState, theme }) => {
-  //   return {
-  //     backgroundColor: ownerState.variant === 'example' ? 'red' : theme.palette.background.paper
-  //   };
-  // }
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['Media'] => [
-  // Use prop matching to set variant styles
-  // {
-  //   props: {
-  //     variant: 'example'
-  //   },
-  //   style: {
-  //     backgroundColor: theme.palette.primary.main
-  //   }
-  // }
-  // Other props are also valid
-  // {
-  //   props: {
-  //     backgroundColor: 'primary.main',
-  //   },
-  //   style: {
-  //     color: theme.palette.primary.contrastText
-  //   }
-  // }
-];
+const createVariants = (_theme: Theme): ComponentsVariants['Media'] => [];
 
-export default (theme: Theme): ThemeOptions => ({
+export const mediaTheme = (theme: Theme): ThemeOptions => ({
   components: {
     Media: {
       defaultProps,
@@ -63,3 +33,5 @@ export default (theme: Theme): ThemeOptions => ({
     }
   }
 });
+
+export default mediaTheme;

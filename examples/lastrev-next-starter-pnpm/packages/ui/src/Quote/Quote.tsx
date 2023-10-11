@@ -12,7 +12,7 @@ import ContentModule from '../ContentModule';
 
 import { type QuoteProps, QuoteOwnerState } from './Quote.types';
 
-export const Quote = (props: QuoteProps) => {
+const Quote = (props: QuoteProps) => {
   const ownerState = { ...props };
 
   const { sidekickLookup, logo, quote, authorName, authorTitle, image, variant } = props;

@@ -3,7 +3,7 @@ import type { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
 
 // TODO Review
 export enum HeroVariants {
-  default = 'default',
+  default = 'mediaOnRight',
   mediaOnRight = 'mediaOnRight',
   mediaOnRightFullBleed = 'mediaOnRightFullBleed',
   mediaOnLeft = 'mediaOnLeft',
@@ -12,13 +12,18 @@ export enum HeroVariants {
   mediaAbove = 'mediaAbove'
 }
 
-export interface HeroProps extends Hero_BaseFragmentFragment {}
+export interface HeroProps extends Omit<Hero_BaseFragmentFragment, 'variant'> {
+  variant: HeroVariants;
+}
 
 export interface HeroOwnerState extends HeroProps {}
+
 interface HeroClasses {
   root: string;
   backgroundGrid: string;
-  contentGrid: string;
+  contentOuterGrid: string;
+  mainContentWrap: string;
+  sideContentWrap: string;
   content: string;
   background: string;
   overline: string;
@@ -27,7 +32,7 @@ interface HeroClasses {
   body: string;
   mediaWrap: string;
   media: string;
-  actionsWrapper: string;
+  actionsWrap: string;
   action: string;
 }
 

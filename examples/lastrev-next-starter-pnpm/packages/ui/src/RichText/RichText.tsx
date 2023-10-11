@@ -136,7 +136,7 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
       [INLINES.EMBEDDED_ENTRY]: (node: any) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
-        console.log({ entry });
+
         return (
           <InlineRoot data-testid={`Text-${INLINES.EMBEDDED_ENTRY}`}>
             <ContentModule {...entry} />

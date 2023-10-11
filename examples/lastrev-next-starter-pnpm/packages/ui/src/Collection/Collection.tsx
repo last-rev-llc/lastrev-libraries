@@ -13,7 +13,7 @@ import ContentModule from '../ContentModule';
 import type { CollectionProps, CollectionOwnerState } from './Collection.types';
 import Background from '../Background';
 
-export const Collection = (props: CollectionProps) => {
+const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
 
   const { background, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;
@@ -26,6 +26,7 @@ export const Collection = (props: CollectionProps) => {
           backgroundColor={backgroundColor}
           testId="Collection-background"
         />
+
         {introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText
@@ -43,10 +44,8 @@ export const Collection = (props: CollectionProps) => {
               {items?.map((item, index) => (
                 <Item
                   ownerState={ownerState}
-                  // @ts-ignore: TODO: ID not recognized
                   key={item?.id}
                   {...item}
-                  // @ts-ignore: TODO: Variant does not exist on Section
                   variant={itemsVariant ?? item?.variant}
                   position={index + 1}
                 />

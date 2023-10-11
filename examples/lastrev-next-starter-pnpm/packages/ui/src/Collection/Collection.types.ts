@@ -23,7 +23,7 @@ export interface CollectionOwnerState extends CollectionProps {}
 interface CollectionClasses {
   root: string;
   contentGrid: string;
-  introTextWrapper: string;
+  introTextWrap: string;
   introText: string;
   itemsGrid: string;
   item: string;

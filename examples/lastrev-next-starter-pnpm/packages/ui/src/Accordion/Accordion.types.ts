@@ -2,13 +2,19 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 
 import type { CollectionExpandable_BaseFragmentFragment } from '@graphql-sdk/types';
 
-export interface AccordionProps extends CollectionExpandable_BaseFragmentFragment {}
+export enum AccordionVariants {
+  default = 'default'
+}
+
+export interface AccordionProps extends Omit<CollectionExpandable_BaseFragmentFragment, 'variant'> {
+  variant: AccordionVariants;
+}
 
 export interface AccordionOwnerState extends AccordionProps {}
 
 interface AccordionClasses {
   root: string;
-  contentGrid: string;
+  contentOuterGrid: string;
   introTextGrid: string;
   introText: string;
   accordionItem: string;

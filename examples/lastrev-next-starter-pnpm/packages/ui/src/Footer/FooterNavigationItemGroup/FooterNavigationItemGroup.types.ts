@@ -8,9 +8,9 @@ export interface FooterNavigationItemGroupOwnerState extends FooterNavigationIte
 
 interface FooterNavigationItemGroupClasses {
   root: string;
-  navGroupItem: string;
-  navigationItems: string;
-  navigationItem: string;
+  navItemSubMenu: string;
+  navItemSubMenuItem: string;
+  navItemLink: string;
 }
 
 export declare type FooterNavigationItemGroupClassKey = keyof FooterNavigationItemGroupClasses;

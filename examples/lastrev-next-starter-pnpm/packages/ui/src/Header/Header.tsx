@@ -17,10 +17,9 @@ import ContentModule from '../ContentModule';
 import SiteMessage from '../SiteMessage';
 
 import type { HeaderProps, HeaderOwnerState } from './Header.types';
-import type { LinkProps } from '../Link';
 import type { NavigationItemProps } from '../NavigationItem';
 
-export const Header = (props: HeaderProps) => {
+const Header = (props: HeaderProps) => {
   const ownerState = { ...props };
 
   const {
@@ -56,6 +55,7 @@ export const Header = (props: HeaderProps) => {
           <SiteMessage icon={siteMessageIcon} text={siteMessageText} link={siteMessageLink} />
         </SiteMessageWrap>
       )}
+
       <ContentOuterGrid ownerState={ownerState}>
         {logo ? (
           <LogoRoot {...logoUrl} aria-label={'Go to homepage'} ownerState={ownerState} text={undefined}>
@@ -88,7 +88,7 @@ export const Header = (props: HeaderProps) => {
           )}
 
           <HeaderMenuCtas ownerState={ownerState}>
-            {ctaItems?.map((ctaItem: LinkProps, index: number) => (
+            {ctaItems?.map((ctaItem: any, index: number) => (
               <HeaderMenuCtaItem key={`${ctaItem.id}-${index}`} ownerState={ownerState}>
                 <ContentModule {...ctaItem} size="small" />
               </HeaderMenuCtaItem>

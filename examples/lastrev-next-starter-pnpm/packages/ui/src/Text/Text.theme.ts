@@ -6,7 +6,11 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
-const defaultProps: ComponentsProps['Text'] = {};
+const defaultProps: ComponentsProps['Text'] = {
+  variant: TextVariants.default
+};
+
+import { TextVariants } from './Text.types';
 
 const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
@@ -17,7 +21,27 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
 
       padding: 'revert'
     }
-  }
+  },
+
+  title: ({ theme, ownerState }) => ({
+    ...(ownerState?.variant === TextVariants.default && {
+      ...theme.typography.display3
+    }),
+
+    ...(ownerState?.variant === TextVariants.introText && {
+      ...theme.typography.display2
+    })
+  }),
+
+  subtitle: ({ theme, ownerState }) => ({
+    ...(ownerState?.variant === TextVariants.default && {
+      ...theme.typography.display4
+    }),
+
+    ...(ownerState?.variant === TextVariants.introText && {
+      ...theme.typography.display3
+    })
+  })
   //
   // Use the ownerState to set dynamic styles
   // root: ({ ownerState, theme }) => {

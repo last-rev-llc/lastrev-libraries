@@ -20,96 +20,50 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     position: 'relative'
   }),
 
-  itemsGrid: ({ theme }) => ({
+  itemsGrid: ({ theme, ownerState }) => ({
     gridColumn: 'content-start/content-end',
     display: 'grid',
     gap: 'inherit',
-    gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
+    gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
 
-    // [theme.containerBreakpoints.up('sm')]: {
-    //   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-    // },
+    ...((ownerState?.variant === CollectionVariants.twoPerRow ||
+      ownerState?.variant === CollectionVariants.threePerRow) && {
+      [theme.containerBreakpoints.up('md')]: {
+        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
+      }
+    }),
 
-    // [theme.containerBreakpoints.up('lg')]: {
-    //   gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
-    // }
+    ...(ownerState?.variant === CollectionVariants.threePerRow && {
+      [theme.containerBreakpoints.up('lg')]: {
+        gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
+      }
+    }),
+
+    ...(ownerState?.variant === CollectionVariants.fourPerRow && {
+      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+
+      [theme.containerBreakpoints.up('lg')]: {
+        gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
+      }
+    }),
+
+    ...(ownerState?.variant === CollectionVariants.fivePerRow && {
+      gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+
+      [theme.containerBreakpoints.up('sm')]: {
+        gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
+      },
+
+      [theme.containerBreakpoints.up('md')]: {
+        gridTemplateColumns: 'repeat(5, minmax(0, 1fr))'
+      }
+    })
   }),
 
   contentGrid: {}
 };
 
-const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [
-  {
-    props: {
-      variant: CollectionVariants.onePerRow
-    },
-    style: {
-      gridTemplateColumns: 'repeat(1, minmax(0, 1fr))'
-    }
-  },
-  {
-    props: {
-      variant: CollectionVariants.twoPerRow
-    },
-    style: {
-      [theme.containerBreakpoints.up('sm')]: {
-        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-      }
-    }
-  },
-  {
-    props: {
-      variant: CollectionVariants.threePerRow
-    },
-    style: {
-      [theme.containerBreakpoints.up('sm')]: {
-        '[class*=itemsGrid]': { gridTemplateColumns: 'repeat(2, minmax(0, 1fr))' }
-      },
-
-      [theme.containerBreakpoints.up('lg')]: {
-        '[class*=itemsGrid]': { gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }
-      }
-    }
-  },
-  {
-    props: {
-      variant: CollectionVariants.fourPerRow
-    },
-    style: {
-      '[class*="Collection-itemsGrid"]': {
-        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-
-        [theme.containerBreakpoints.up('sm')]: {
-          gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-        },
-
-        [theme.containerBreakpoints.up('lg')]: {
-          gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
-        }
-      }
-    }
-  },
-  {
-    props: {
-      variant: CollectionVariants.fivePerRow
-    },
-    style: {
-      '[class*="Collection-itemsGrid"]': {
-        '&': {
-          gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-
-          [theme.containerBreakpoints.up('sm')]: {
-            gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
-          },
-
-          [theme.containerBreakpoints.up('lg')]: {
-            gridTemplateColumns: 'repeat(5, minmax(0, 1fr))'
-          }
-        }
-      }
-    }
-  }
-];
+const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [];
 
 const collectionTheme = (theme: Theme): ThemeOptions => ({
   components: {

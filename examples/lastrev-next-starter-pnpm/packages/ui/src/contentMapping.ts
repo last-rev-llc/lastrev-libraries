@@ -6,6 +6,7 @@ const Media = dynamic(() => import('./Media'));
 const Page = dynamic(() => import('./Page'));
 const Text = dynamic(() => import('./Text'));
 const RichText = dynamic(() => import('./RichText'));
+const Carousel = dynamic(() => import('./Carousel'));
 const Collection = dynamic(() => import('./Collection'));
 const Tabs = dynamic(() => import('./Tabs'));
 const Card = dynamic(() => import('./Card'));
@@ -15,7 +16,6 @@ const Blog = dynamic(() => import('./Blog'));
 const Accordion = dynamic(() => import('./Accordion'));
 const Form = dynamic(() => import('./Form'));
 const Section = dynamic(() => import('./Section'));
-const NavigationBar = dynamic(() => import('./NavigationBar'));
 const NavigationItem = dynamic(() => import('./NavigationItem'));
 const Header = dynamic(() => import('./Header'));
 const Footer = dynamic(() => import('./Footer'));
@@ -25,6 +25,7 @@ const HeaderNavLinkNested = dynamic(() => import('./Header/HeaderNavLinkNested/H
 const FooterNavigationItem = dynamic(() => import('./Footer/FooterNavigationItem'));
 const FooterNavigationItemGroup = dynamic(() => import('./Footer/FooterNavigationItemGroup'));
 const SiteMessage = dynamic(() => import('./SiteMessage'));
+const Breadcrumbs = dynamic(() => import('./Breadcrumbs'));
 
 export const contentMapping: {
   [key: string]: any;
@@ -38,7 +39,9 @@ export const contentMapping: {
   Page,
   Text,
   RichText,
+  Carousel,
   Collection,
+  'Collection:.*Carousel': Carousel,
   'CollectionExpandable:Tabs': Tabs,
   'CollectionExpandable:Accordion': Accordion,
   'CollectionExpandable': Tabs,
@@ -49,7 +52,6 @@ export const contentMapping: {
   Accordion,
   Tabs,
   Section,
-  NavigationBar,
   FooterNavigationItem,
   FooterNavigationItemGroup,
   'ElementForm': Form,
@@ -60,7 +62,8 @@ export const contentMapping: {
   'NavigationItem:linkFooter': FooterNavigationItem,
   'NavigationItem:linkBoldedFooter': FooterNavigationItem,
   'NavigationItem:groupFooter': FooterNavigationItemGroup,
-  SiteMessage
+  SiteMessage,
+  Breadcrumbs
 };
 
 export default contentMapping;

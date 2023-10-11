@@ -1,4 +1,3 @@
-import theme from '../ThemeRegistry/theme';
 import Block from './Block';
 
 import {
@@ -10,8 +9,6 @@ import {
   blockContentOnRightFullBleedMock,
   blockContentOnRightMock
 } from './Block.mock';
-
-import { BlockVariants } from './Block.types';
 
 export default {
   title: 'Components/Block',

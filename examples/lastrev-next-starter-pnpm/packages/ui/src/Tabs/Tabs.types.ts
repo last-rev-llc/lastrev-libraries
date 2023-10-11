@@ -2,17 +2,24 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 
 import type { CollectionExpandable_BaseFragmentFragment } from '@graphql-sdk/types';
 
-export interface TabsProps extends CollectionExpandable_BaseFragmentFragment {}
+export enum TabsVariants {
+  default = 'default'
+}
+
+export interface TabsProps extends Omit<CollectionExpandable_BaseFragmentFragment, 'variant'> {
+  variant: TabsVariants;
+}
 
 export interface TabsOwnerState extends TabsProps {}
 
+import Background from '../Background';
+
 interface TabsClasses {
   root: string;
-  contentGrid: string;
+  contentOuterGrid: string;
   introTextGrid: string;
   introText: string;
-  itemsContainer: string;
-  tabContext: string;
+  tabsContext: string;
   tabListWrap: string;
   detailsWrap: string;
   details: string;

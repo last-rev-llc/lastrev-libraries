@@ -6,11 +6,10 @@ import Collection from './Collection';
 import Grid from '../Grid';
 
 import { collectionBaseMock } from './Collection.mock';
-
 import { CollectionVariants } from './Collection.types';
 import { CardVariants } from '../Card/Card.types';
 
-import theme from '../ThemeRegistry/theme';
+import { theme } from '../ThemeRegistry/theme';
 
 export default {
   title: 'Components/Collection',

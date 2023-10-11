@@ -1,5 +1,5 @@
 import Blog from './Blog';
-import { blogBaseMock } from './Blog.mock';
+import { blogBaseMock, blogWithHeroMock } from './Blog.mock';
 
 export default {
   title: 'Pages/Blog',
@@ -7,8 +7,5 @@ export default {
 };
 
 // More on writing stories with args: https://storybook.js.org/docs/react/writing-stories/args
-export const Default = {
-  args: {
-    ...blogBaseMock()
-  }
-};
+export const Default = { args: { ...blogBaseMock() } };
+export const WithHero = { args: { ...blogWithHeroMock() } };

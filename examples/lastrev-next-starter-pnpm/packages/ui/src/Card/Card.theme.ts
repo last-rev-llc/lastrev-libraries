@@ -5,25 +5,44 @@ import type {
   ComponentsOverrides,
   ComponentsVariants
 } from '@mui/material/styles';
+
 import { CardVariants } from './Card.types';
 
 const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: {
+    'containerType': 'inline-size',
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
     'willChange': 'transform',
-    'transform': 'translateZ(0)',
+    'transform': 'translateZ(0) scale(0.95)',
     'display': 'flex',
     'flexDirection': 'column',
     'height': '100%',
-    'maxWidth': '640px',
 
     '&:hover': {
-      transform: 'scale(1.05)'
+      transform: 'scale(1)'
     }
   },
+
+  contentWrap: {
+    flex: 1,
+    padding: 'var(--grid-gap)'
+  },
+
+  actionsWrap: ({ theme }) => ({
+    padding: 'var(--grid-gap)',
+    display: 'flex',
+    gap: 'var(--grid-gap)',
+    flexDirection: 'column',
+    alignItems: 'center',
+
+    // TODO: Need additional breakpoints here
+    [theme.containerBreakpoints.up('sm')]: {
+      flexDirection: 'row'
+    }
+  }),
 
   link: {
     'position': 'absolute',
@@ -37,9 +56,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
         opacity: 0
       }
     }
-  },
-
-  content: { flex: 1 }
+  }
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
@@ -68,13 +85,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       '[class*=Card-media]': {
-        // padding: theme.spacing(0),
         maxWidth: 96,
         marginLeft: 'auto',
         marginRight: 'auto',
 
         [theme.containerBreakpoints.up('lg')]: {
-          // 'padding': theme.spacing(1),
           '& > img': {
             objectFit: 'contain'
           }
@@ -124,29 +139,18 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.person
     },
     style: {
-      '[class*=Card-content]': {
+      '[class*=Card-contentWrap]': {
         containerType: 'inline-size'
       },
 
       '[class*=cardMedia]': {
-        // TODO: Margin and padding here should match the content.   Mixin?
-        // 'marginBottom': theme.spacing(-2),
         '& > *': {
           borderRadius: '50%',
           aspectRatio: '1 / 1',
           width: '100%',
-          // padding: theme.spacing(2),
-
           display: 'inline-block',
           overflow: 'hidden'
         }
-      },
-
-      '[class*=Card-title]': {
-        // TODO: Saving container query for later
-        // [`@container (min-width: ${theme.breakpoints.values.xs}${theme.breakpoints.unit})`]: {
-        //   backgroundColor: 'blue'
-        // }
       }
     }
   }

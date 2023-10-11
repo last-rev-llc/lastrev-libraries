@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styled from '@mui/system/styled';
+import { styled } from '@mui/material/styles';
 
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -18,7 +18,7 @@ import ContentModule from '../ContentModule';
 import type { NavigationItemProps, NavigationItemOwnerState } from './NavigationItem.types';
 import type { LinkProps } from '../Link';
 
-export const NavigationItem = (props: NavigationItemProps) => {
+const NavigationItem = (props: NavigationItemProps) => {
   const ownerState = {
     ...props,
     numOfCols: props.subNavigation?.length || 1
