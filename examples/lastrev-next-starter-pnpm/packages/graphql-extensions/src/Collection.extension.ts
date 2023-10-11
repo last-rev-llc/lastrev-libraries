@@ -25,8 +25,8 @@ export const typeDefs = gql`
     isCarouselDesktop: Boolean
     isCarouselTablet: Boolean
     isCarouselMobile: Boolean
-    itemsPerRow: Number
-    numItems: Number
+    itemsPerRow: number
+    numItems: number
   }
 
 
