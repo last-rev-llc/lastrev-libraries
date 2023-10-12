@@ -1,5 +1,8 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
+import Head from 'next/head';
+import { type BlogPosting } from 'schema-dts';
+import { jsonLdScriptProps } from 'react-schemaorg';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -25,6 +28,7 @@ import { type LinkProps } from '../Link';
 
 const Blog = (props: BlogProps) => {
   const ownerState = { ...props };
+  console.log({ props });
   const {
     header,
     footer,
@@ -52,8 +56,23 @@ const Blog = (props: BlogProps) => {
   return (
     <>
       {!!jsonLd ? (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      ) : null}
+        <Head>
+          <script
+            {...jsonLdScriptProps<BlogPosting>({
+              '@context': 'https://schema.org',
+              '@type': 'BlogPosting',
+              'name': 'Grace Hopper',
+              'alternateName': 'Grace Brewster Murray Hopper',
+              'alumniOf': {
+                '@type': 'CollegeOrUniversity',
+                'name': ['Yale University', 'Vassar College']
+              },
+              'knowsAbout': ['Compilers', 'Computer Science']
+            })}
+          />
+        </Head>
+      ) : // <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      null}
 
       {header ? <ContentModule {...(header as any)} /> : null}
 
