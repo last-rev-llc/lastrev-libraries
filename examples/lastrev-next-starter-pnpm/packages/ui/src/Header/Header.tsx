@@ -69,7 +69,7 @@ const Header = (props: HeaderProps) => {
               <HeaderMenuNavItems ownerState={ownerState}>
                 {navigationItems.map((navItem: any, index: number) => (
                   <HeaderMenuNavItem key={`${navItem.id}-${index}`} ownerState={ownerState}>
-                    <ContentModule
+                    <HeaderMenuNavLink
                       {...(navItem as NavigationItemProps)}
                       variant="link"
                       onRequestClose={() => {
@@ -78,6 +78,7 @@ const Header = (props: HeaderProps) => {
                           document.activeElement.blur();
                         }
                       }}
+                      ownerState={ownerState}
                       __typename="NavigationItem"
                       menuVisible={menuVisible}
                     />
@@ -116,9 +117,9 @@ const Header = (props: HeaderProps) => {
 const Root = styled(Box, {
   name: 'Header',
   slot: 'Root',
-  shouldForwardProp: (prop: string) => prop !== 'menuVisible',
+  shouldForwardProp: (prop: string) => prop !== 'menuVisible' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.root]
-})<{ ownerState: HeaderOwnerState; menuVisible: boolean }>``;
+})<{ ownerState: HeaderOwnerState; menuVisible?: boolean }>``;
 
 const ContentOuterGrid = styled(Grid, {
   name: 'Header',
@@ -159,12 +160,14 @@ const HeaderMenuCtaItem = styled(ListItem, {
 const HeaderMenuNav = styled(Box, {
   name: 'Header',
   slot: 'HeaderMenuNav',
+  shouldForwardProp: (prop: string) => prop !== 'menuVisible' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.headerMenuNav]
 })<{ ownerState: HeaderOwnerState; menuVisible?: boolean }>``;
 
 const HeaderMobileNavWrap = styled(Box, {
   name: 'Header',
   slot: 'HeaderMobileNavWrap',
+  shouldForwardProp: (prop: string) => prop !== 'menuVisible' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.headerMobileNavWrap]
 })<{ ownerState: HeaderOwnerState; menuVisible?: boolean }>``;
 
@@ -177,7 +180,14 @@ const HeaderMenuNavItems = styled(List, {
 const HeaderMenuNavItem = styled(ListItem, {
   name: 'Header',
   slot: 'HeaderMenuNavItem',
+  shouldForwardProp: (prop: string) => prop !== 'menuVisible' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.headerMenuNavItem]
+})<{ ownerState: HeaderOwnerState }>``;
+
+const HeaderMenuNavLink = styled(ContentModule, {
+  name: 'Header',
+  slot: 'HeaderMenuNavLink',
+  overridesResolver: (_, styles) => [styles.headerMenuNavLink]
 })<{ ownerState: HeaderOwnerState }>``;
 
 const MenuIcon = styled(MuiMenuIcon, {
@@ -203,23 +213,5 @@ const IconButton = styled(MuiIconButton, {
   slot: 'IconButton',
   overridesResolver: (_, styles) => [styles.iconButton]
 })<{ ownerState: HeaderOwnerState }>``;
-
-const HeaderMenuMobileCtaItem = styled(ListItem, {
-  name: 'Header',
-  slot: 'HeaderMenuMobileCtaItem',
-  overridesResolver: (_, styles) => [styles.headerMenuMobileCtaItem]
-})<{ ownerState: HeaderOwnerState }>``;
-
-const ContentContainer = styled(Toolbar, {
-  name: 'Header',
-  slot: 'ContentContainer',
-  overridesResolver: (_, styles) => [styles.contentContainer]
-})<{
-  ownerState: HeaderOwnerState;
-  variant?: string;
-  menuVisible?: boolean;
-  legacyBehavior?: boolean;
-  isElevated?: boolean;
-}>``;
 
 export default Header;

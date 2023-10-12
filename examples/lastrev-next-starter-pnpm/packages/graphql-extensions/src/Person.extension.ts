@@ -2,12 +2,12 @@ import gql from 'graphql-tag';
 import type { ApolloContext, Mappers } from '@last-rev/types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
-import { pageV1 } from './PathsConfigs.extension';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
 import { resolveField } from './utils/resolveField';
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
+import { createType } from './utils/createType';
 
 export const typeDefs = gql`
   extend type Person {
@@ -18,6 +18,7 @@ export const typeDefs = gql`
     socialLinks: [Link]
     mainImage: Media
     breadcrumbs: [Link]
+    hero: Hero
   }
 `;
 
@@ -27,10 +28,22 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      breadcrumbs: breadcrumbsResolver
+      breadcrumbs: breadcrumbsResolver,
+      hero: async (person: any, _args: any, ctx: ApolloContext) =>
+        createType('Hero', {
+          variant: 'mediaOnRight',
+          overline: getLocalizedField(person.fields, 'jobTitle', ctx),
+          title: getLocalizedField(person.fields, 'name', ctx),
+          sideImageItems: [getLocalizedField(person.fields, 'mainImage', ctx)]
+        })
     },
 
     Link: {
+      text: 'name',
+      href: pathResolver
+    },
+
+    NavigationItem: {
       text: 'name',
       href: pathResolver
     },
@@ -39,7 +52,12 @@ export const mappers: Mappers = {
       body: async (person: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(person.fields, 'promoSummary', ctx)),
 
-      media: resolveField(['promoImage', 'mainImage']),
+      media: async (blog: any, _args: any, ctx: ApolloContext) => {
+        const promoImage =
+          getLocalizedField(blog.fields, 'promoImage', ctx) ?? getLocalizedField(blog.fields, 'mainImage', ctx);
+        if (!promoImage) return null;
+        return [promoImage];
+      },
 
       variant: () => 'default',
 
@@ -50,8 +68,4 @@ export const mappers: Mappers = {
       }
     }
   }
-};
-
-export const pathsConfigs = {
-  ...pageV1
 };

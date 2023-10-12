@@ -46,7 +46,7 @@ const Carousel = (props: CarouselProps) => {
       fill: 'row'
     },
     slidesPerView: 1,
-    spaceBetween: 4
+    spaceBetween: 16
   };
 
   swiperBreakpoints[breakpoints.sm] = {
@@ -55,7 +55,7 @@ const Carousel = (props: CarouselProps) => {
       fill: 'row'
     },
     slidesPerView: 1,
-    spaceBetween: 8
+    spaceBetween: 16
   };
 
   swiperBreakpoints[breakpoints.md] = {

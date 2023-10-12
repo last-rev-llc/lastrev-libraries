@@ -36,7 +36,7 @@ export const resolveField =
   async (root: any, args: any, ctx: ApolloContext) => {
     if (typeof setting === 'string') {
       // If the settings is a string, resolve to that field
-      // IF there are multiple segments, resolve each segment from the previous value
+      // If there are multiple segments, resolve each segment from the previous value
       const segments = setting.split('.');
       let parent = root;
       let value;
@@ -46,9 +46,10 @@ export const resolveField =
           parent = value;
         }
       }
+
       return value;
     } else if (Array.isArray(setting)) {
-      // IF the settinsg is an array, fallback resol ution in order
+      // If the settings is an array, fallback resolution in order
       for (const field of setting) {
         const value = await resolveField(field)(root, args, ctx);
         if (value) {
@@ -56,7 +57,7 @@ export const resolveField =
         }
       }
     } else if (typeof setting === 'object') {
-      // If the setting is a object, resolve each key recursively
+      // If the setting is an object, resolve each key recursively
       const acc: any = {};
 
       await Promise.all(

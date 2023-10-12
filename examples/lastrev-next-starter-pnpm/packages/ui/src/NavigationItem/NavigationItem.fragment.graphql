@@ -34,8 +34,8 @@ fragment NavigationItem_BaseFieldsFragment on NavigationItem {
   summary {
     ...RichText_BaseFragment
   }
-  navMedia {
-    ...Media_BaseFragment
-    #...MediaVideo_BaseFragment
-  }
+  #navMedia {
+  # ...Media_BaseFragment
+  #...MediaVideo_BaseFragment
+  #}
 }

@@ -9,7 +9,7 @@ import type {
 const defaultProps: ComponentsProps['Person'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
-  root: {},
+  // root: {},
 
   contentOuterGrid: () => ({
     '> *': {
@@ -18,6 +18,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   }),
 
   headerWrap: {
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end'
+  },
+
+  breadcrumbsWrap: {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end'
   },
@@ -40,14 +45,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   body: {
     '& > *:not(div)': {
       gridColumnStart: 'three-start',
-      gridColumnEnd: 'ten-end',
-      backgroundColor: '#eeeeee'
+      gridColumnEnd: 'ten-end'
     },
 
     '& > div': {
       gridColumnStart: 'full-start',
-      gridColumnEnd: 'full-end',
-      backgroundColor: '#cccccc'
+      gridColumnEnd: 'full-end'
     }
   }
   // jobTitle: {},

@@ -33,6 +33,7 @@ interface HeaderClasses {
   headerMobileNavWrap: string;
   headerMenuNavItems: string;
   headerMenuNavItem: string;
+  headerMenuNavItemLink: string;
   headerMenuCtas: string;
   headerMenuCtaItem: string;
   menuIcon: string;

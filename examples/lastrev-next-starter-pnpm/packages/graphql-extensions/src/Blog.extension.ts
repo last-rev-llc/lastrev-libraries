@@ -2,7 +2,6 @@ import gql from 'graphql-tag';
 import type { Mappers, ApolloContext } from '@last-rev/types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
-import { blogV1 } from './PathsConfigs.extension';
 import { createType } from './utils/createType';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
@@ -19,7 +18,7 @@ export const typeDefs = gql`
     categories: [CategoryBlog]
     breadcrumbs: [Link]
     author: Person
-    hero: Hero
+    hero: Content
   }
 `;
 
@@ -53,7 +52,7 @@ export const mappers: Mappers = {
           variant: 'default',
           overline: getLocalizedField(blog.fields, 'pubDate', ctx),
           title: getLocalizedField(blog.fields, 'title', ctx),
-          images: getLocalizedField(blog.fields, 'featuredMedia', ctx)
+          sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)
         })
     },
 
@@ -62,23 +61,36 @@ export const mappers: Mappers = {
       href: pathResolver
     },
 
+    NavigationItem: {
+      text: 'title',
+      href: pathResolver
+    },
+
     Card: {
       body: async (blog: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(blog.fields, 'promoSummary', ctx)),
 
-      media: resolveField(['promoImage', 'featuredMedia']),
+      media: async (blog: any, _args: any, ctx: ApolloContext) => {
+        const promoImage =
+          getLocalizedField(blog.fields, 'promoImage', ctx) ?? getLocalizedField(blog.fields, 'featuredMedia', ctx);
+        if (!promoImage) return null;
+        return [promoImage];
+      },
 
       variant: () => 'default',
 
       link: async (blog: any) => blog,
 
       actions: async (blog: any, _args: any, ctx: ApolloContext) => {
-        return [blog];
+        return [
+          createType('Link', {
+            id: blog.id,
+            text: 'Read More',
+            linkedContent: blog,
+            variant: 'buttonContained'
+          })
+        ];
       }
     }
   }
-};
-
-export const pathsConfigs = {
-  ...blogV1
 };

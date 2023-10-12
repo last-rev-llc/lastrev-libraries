@@ -82,6 +82,7 @@ const NavItemSubMenuItem = styled(ListItem, {
 const NavItemLink = styled(ContentModule, {
   name: 'FooterNavigationItemGroup',
   slot: 'NavItemLink',
+  shouldForwardProp: (prop: string) => prop !== 'subNavigation' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.navItemLink]
 })<{ ownerState: FooterNavigationItemGroupOwnerState }>``;
 

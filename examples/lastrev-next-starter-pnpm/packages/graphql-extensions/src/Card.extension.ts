@@ -21,7 +21,7 @@ export const mappers: any = {
   Media: {
     media: async (media: any, _args: any, ctx: ApolloContext) => {
       const featuredMedia: any = getLocalizedField(media.fields, 'asset', ctx);
-      if (featuredMedia) return [featuredMedia];
+      if (featuredMedia) return featuredMedia;
       return;
     },
     variant: () => 'media'

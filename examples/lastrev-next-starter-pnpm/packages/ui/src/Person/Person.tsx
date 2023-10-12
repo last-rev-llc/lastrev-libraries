@@ -8,13 +8,14 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 
 import ContentModule from '../ContentModule';
 import Grid from '../Grid';
+import Breadcrumbs from '../Breadcrumbs';
 
 import type { PersonProps, PersonOwnerState } from './Person.types';
 import type { MediaProps } from '../Media';
 
 const Person = (props: PersonProps) => {
   const ownerState = { ...props };
-  const { header, footer, name, jobTitle, email, body, mainImage, breadcrumbs, jsonLd, sidekickLookup } = props;
+  const { header, footer, name, jobTitle, email, body, mainImage, breadcrumbs, jsonLd, sidekickLookup, hero } = props;
 
   return (
     <>
@@ -27,27 +28,39 @@ const Person = (props: PersonProps) => {
       <Root component="main" {...sidekick(sidekickLookup)} ownerState={ownerState}>
         <ContentOuterGrid ownerState={ownerState}>
           <HeaderWrap ownerState={ownerState}>
-            {!!name && (
-              <Name {...sidekick(sidekickLookup, 'name')} ownerState={ownerState}>
-                {name}
-              </Name>
-            )}
+            {hero ? (
+              <ContentModule {...hero} />
+            ) : (
+              <>
+                {!!name && (
+                  <Name {...sidekick(sidekickLookup, 'name')} ownerState={ownerState}>
+                    {name}
+                  </Name>
+                )}
 
-            {!!jobTitle && (
-              <JobTitle {...sidekick(sidekickLookup, 'jobTitle')} ownerState={ownerState}>
-                {jobTitle}
-              </JobTitle>
-            )}
+                {!!jobTitle && (
+                  <JobTitle {...sidekick(sidekickLookup, 'jobTitle')} ownerState={ownerState}>
+                    {jobTitle}
+                  </JobTitle>
+                )}
 
-            {!!email && (
-              <Email {...sidekick(sidekickLookup, 'email')} ownerState={ownerState}>
-                {email}
-              </Email>
+                {!!email && (
+                  <Email {...sidekick(sidekickLookup, 'email')} ownerState={ownerState}>
+                    {email}
+                  </Email>
+                )}
+              </>
             )}
           </HeaderWrap>
 
           <ContentWrap ownerState={ownerState}>
-            {!!mainImage && (
+            {!!breadcrumbs?.length ? (
+              <BreadcrumbsWrap ownerState={ownerState}>
+                <Breadcrumbs links={breadcrumbs} />
+              </BreadcrumbsWrap>
+            ) : null}
+
+            {!hero && !!mainImage && (
               <MainImageWrap {...sidekick(sidekickLookup, 'mainImage')} ownerState={ownerState}>
                 <MainImage {...(mainImage as MediaProps)} ownerState={ownerState} />
               </MainImageWrap>
@@ -88,6 +101,12 @@ const HeaderWrap = styled(Box, {
   name: 'Person',
   slot: 'HeaderWrap',
   overridesResolver: (_, styles) => [styles.headerWrap]
+})<{ ownerState: PersonOwnerState }>``;
+
+const BreadcrumbsWrap = styled(Box, {
+  name: 'Person',
+  slot: 'BreadcrumbsWrap',
+  overridesResolver: (_, styles) => [styles.breadcrumbsWrap]
 })<{ ownerState: PersonOwnerState }>``;
 
 const Name = styled(Typography, {
