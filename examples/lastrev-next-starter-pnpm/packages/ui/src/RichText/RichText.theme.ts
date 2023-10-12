@@ -15,7 +15,10 @@ const styleOverrides: ComponentsOverrides<Theme>['RichText'] = {
     'ol, ul, li': {
       /* Revert padding reset is what gives the indentation to list */
 
-      padding: 'revert'
+      'padding': 'revert',
+      '& > li': {
+        marginBottom: '1em'
+      }
     }
   }
 };

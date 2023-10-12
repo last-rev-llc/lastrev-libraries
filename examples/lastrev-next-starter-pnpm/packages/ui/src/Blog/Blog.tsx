@@ -1,8 +1,6 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
-import Head from 'next/head';
-import { type BlogPosting } from 'schema-dts';
-import { jsonLdScriptProps } from 'react-schemaorg';
+import Script from 'next/script';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -28,8 +26,9 @@ import { type LinkProps } from '../Link';
 
 const Blog = (props: BlogProps) => {
   const ownerState = { ...props };
-  console.log({ props });
+
   const {
+    id,
     header,
     footer,
     featuredMedia,
@@ -56,21 +55,9 @@ const Blog = (props: BlogProps) => {
   return (
     <>
       {!!jsonLd ? (
-        <Head>
-          <script
-            {...jsonLdScriptProps<BlogPosting>({
-              '@context': 'https://schema.org',
-              '@type': 'BlogPosting',
-              'name': 'Grace Hopper',
-              'alternateName': 'Grace Brewster Murray Hopper',
-              'alumniOf': {
-                '@type': 'CollegeOrUniversity',
-                'name': ['Yale University', 'Vassar College']
-              },
-              'knowsAbout': ['Compilers', 'Computer Science']
-            })}
-          />
-        </Head>
+        <Script type="application/ld+json" id={`blog-${id}-jsonld`}>
+          {jsonLd}
+        </Script>
       ) : // <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       null}
 
@@ -111,7 +98,6 @@ const Blog = (props: BlogProps) => {
               <Body
                 body={body}
                 sidekickLookup={sidekickLookup}
-                {...props}
                 variant="inline"
                 __typename="RichText"
                 ownerState={ownerState}
@@ -182,28 +168,25 @@ const Blog = (props: BlogProps) => {
             </ShareLinksWrap>
           </ContentWrap>
 
-          {/* TODO: Return a collection */}
-          {!!relatedItems && (
-            <RelatedItemsWrap ownerState={ownerState}>
-              <RelatedItems {...relatedItems} ownerState={ownerState} />
-            </RelatedItemsWrap>
-          )}
-
           {!!author && (
             <AuthorWrap ownerState={ownerState}>
-              {(!!author.mainImage || !!author.name) && (
-                <Author ownerState={ownerState}>
-                  {!!author.mainImage && (
-                    <Avatar ownerState={ownerState}>
-                      <AvatarImage {...author.mainImage} ownerState={ownerState} />
-                    </Avatar>
-                  )}
-
-                  {!!author.name && <AuthorName ownerState={ownerState}>{author.name}</AuthorName>}
-                </Author>
+              {!!author.mainImage && (
+                <AuthorImageWrap ownerState={ownerState}>
+                  <AuthorImage {...author.mainImage} ownerState={ownerState} />
+                </AuthorImageWrap>
               )}
 
-              {!!author.body && <AuthorSummary body={author.body} __typename="RichText" ownerState={ownerState} />}
+              {!!author.name && (
+                <AuthorName ownerState={ownerState} variant="display4">
+                  {author.name}
+                </AuthorName>
+              )}
+
+              {!!author.body && (
+                <AuthorSummaryWrap ownerState={ownerState}>
+                  <AuthorSummary body={author.body} variant="bodyLarge" __typename="RichText" ownerState={ownerState} />
+                </AuthorSummaryWrap>
+              )}
 
               {!!author.socialLinks?.length && (
                 <AuthorSocialLinks ownerState={ownerState}>
@@ -217,6 +200,13 @@ const Blog = (props: BlogProps) => {
                 </AuthorSocialLinks>
               )}
             </AuthorWrap>
+          )}
+
+          {/* TODO: Return a collection */}
+          {!!relatedItems && (
+            <RelatedItemsWrap ownerState={ownerState}>
+              <RelatedItems {...relatedItems} ownerState={ownerState} />
+            </RelatedItemsWrap>
           )}
         </ContentOuterGrid>
       </Root>
@@ -268,16 +258,16 @@ const Author = styled(Box, {
   overridesResolver: (_, styles) => [styles.author]
 })<{ ownerState: BlogOwnerState }>``;
 
-const Avatar = styled(MuiAvatar, {
+const AuthorImageWrap = styled(Box, {
   name: 'Blog',
-  slot: 'Avatar',
-  overridesResolver: (_, styles) => [styles.avatar]
+  slot: 'AuthorImageWrap',
+  overridesResolver: (_, styles) => [styles.authorImageWrap]
 })<{ ownerState: BlogOwnerState }>``;
 
-const AvatarImage = styled(ContentModule, {
+const AuthorImage = styled(ContentModule, {
   name: 'Blog',
-  slot: 'AvatarImage',
-  overridesResolver: (_, styles) => [styles.avatarImage]
+  slot: 'AuthorImage',
+  overridesResolver: (_, styles) => [styles.authorImage]
 })<{ ownerState: BlogOwnerState }>``;
 
 const AuthorName = styled(Typography, {
@@ -352,10 +342,16 @@ const RelatedItems = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.relatedItems]
 })<{ ownerState: BlogOwnerState }>``;
 
-const AuthorWrap = styled(Box, {
+const AuthorWrap = styled(Grid, {
   name: 'Blog',
   slot: 'AuthorWrap',
   overridesResolver: (_, styles) => [styles.authorWrap]
+})<{ ownerState: BlogOwnerState }>``;
+
+const AuthorSummaryWrap = styled(Box, {
+  name: 'Blog',
+  slot: 'AuthorSummaryWrap',
+  overridesResolver: (_, styles) => [styles.authorSummaryWrap]
 })<{ ownerState: BlogOwnerState }>``;
 
 const AuthorSummary = styled(ContentModule, {

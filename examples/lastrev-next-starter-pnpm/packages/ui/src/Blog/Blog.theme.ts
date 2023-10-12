@@ -12,15 +12,26 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   // root: {},
 
   contentOuterGrid: {
+    'containerType': 'inline-size',
     '> *': {
       gridColumnStart: 'auto'
     }
   },
 
-  headerWrap: {
+  headerWrap: ({ theme }) => ({
     gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
-  },
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'content-quarter',
+      gridColumnEnd: 'content-three-quarter'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'two-start',
+      gridColumnEnd: 'eleven-end'
+    }
+  }),
 
   breadcrumbsWrap: {
     gridColumnStart: 'content-start',
@@ -31,19 +42,34 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     display: 'contents'
   },
 
-  featuredMediaWrap: {
+  featuredMediaWrap: ({ theme }) => ({
     gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
-  },
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'content-quarter',
+      gridColumnEnd: 'content-three-quarter'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'two-start',
+      gridColumnEnd: 'eleven-end'
+    }
+  }),
 
   // featuredMedia: {},
 
   // pubDate: {},
 
-  shareLinksWrap: {
-    gridColumnStart: 'three-start',
-    gridColumnEnd: 'ten-end'
-  },
+  shareLinksWrap: ({ theme }) => ({
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'content-quarter',
+      gridColumnEnd: 'content-three-quarter'
+    }
+  }),
 
   shareLinks: ({ theme }) => ({
     display: 'flex',
@@ -72,26 +98,98 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     }
   }),
 
-  authorWrap: {
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
-  },
+  authorImageWrap: ({ theme }) => ({
+    gridRow: '1/ span 3',
 
-  // author: ({}) => ({}),
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-quarter',
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'four-start',
+      gridColumnEnd: 'four-end'
+    }
+  }),
+
+  authorName: ({ theme }) => ({
+    gridRow: 1,
+    alignSelf: 'self-end',
+    marginBottom: 0,
+
+    gridColumnStart: 'content-quarter',
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'content-quarter',
+      gridColumnEnd: 'content-three-quarter'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'five-start',
+      gridColumnEnd: 'content-three-quarter'
+    }
+  }),
+
+  authorSummaryWrap: ({ theme }) => ({
+    display: 'flex',
+    alignSelf: 'center',
+    marginBottom: 0,
+
+    gridRow: 2,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'content-quarter',
+      gridColumnEnd: 'content-three-quarter'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'five-start',
+      gridColumnEnd: 'content-three-quarter'
+    }
+  }),
+
+  authorSocialLinks: ({ theme }) => ({
+    alignSelf: 'self-start',
+
+    gridRow: 3,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'content-quarter',
+      gridColumnEnd: 'content-three-quarter'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'five-start',
+      gridColumnEnd: 'content-three-quarter'
+    }
+  }),
 
   // title: {},
 
-  body: {
+  body: ({ theme }) => ({
     '& > *:not(div)': {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'ten-end'
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-end',
+
+      [theme.breakpoints.up('md')]: {
+        gridColumnStart: 'three-start',
+        gridColumnEnd: 'ten-end'
+      },
+
+      [theme.breakpoints.up('lg')]: {
+        gridColumnStart: 'five-start',
+        gridColumnEnd: 'content-three-quarter'
+      }
     },
 
     '& > div': {
       gridColumnStart: 'full-start',
       gridColumnEnd: 'full-end'
     }
-  },
+  }),
 
   // blogCategories: ({}) => ({}),
 

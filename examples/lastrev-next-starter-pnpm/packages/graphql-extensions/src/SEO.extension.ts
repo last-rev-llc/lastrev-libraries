@@ -122,8 +122,6 @@ export const resolvers: any = {
 
       if (seo['keywords']?.value) jsonLDSchema.keywords = seo['keywords']?.value;
 
-      console.log({ jsonLDSchema });
-
       return jsonLDSchema as unknown as JSON;
     }
   },
