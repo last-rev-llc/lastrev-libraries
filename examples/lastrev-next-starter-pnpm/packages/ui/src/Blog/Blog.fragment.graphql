@@ -24,6 +24,7 @@ fragment Blog_BaseFragment on Blog {
   relatedItems {
     ...Collection_BaseFragment
   }
+  jsonLd
 }
 
 fragment Blog_CardFragment on Blog {

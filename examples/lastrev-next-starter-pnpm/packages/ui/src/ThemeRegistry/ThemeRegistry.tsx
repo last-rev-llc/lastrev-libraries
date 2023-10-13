@@ -21,7 +21,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
             }
 
             :root {
-              --grid-margin-xs: 16px;
+              --grid-margin-xs: 8px;
               --grid-margin-sm: 32px;
               --grid-margin-md: 48px;
               --grid-margin-lg: 64px;
@@ -87,11 +87,11 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --display4-line-height: 1.125em;
               --display5-line-height: 1.125em;
               --display6-line-height: 1.125em;
-              --overline-line-height: 1.25em;
-              --body1-line-height: 1.25em;
-              --body2-line-height: 1.25em;
-              --bodySmall-line-height: 1.25em;
-              --bodyLarge-line-height: 1.25em;
+              --overline-line-height: 1.375em;
+              --body1-line-height: 1.375em;
+              --body2-line-height: 1.375em;
+              --bodySmall-line-height: 1.375em;
+              --bodyLarge-line-height: 1.375em;
 
               --h1-margin: 0 0 0.75em 0;
               --h2-margin: 0 0 0.75em 0;
@@ -182,9 +182,9 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display5-font-size: 1.125rem;
                 --display6-font-size: 1rem;
                 --overline-font-size: 0.75rem;
-                --body1-font-size: 0.875rem;
-                --body2-font-size: 0.875rem;
-                --bodySmall-font-size: 0.75rem;
+                --body1-font-size: 1rem;
+                --body2-font-size: 1rem;
+                --bodySmall-font-size: 0.875rem;
                 --bodyLarge-font-size: 1.125rem;
               }
 

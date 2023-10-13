@@ -1,5 +1,6 @@
 import React from 'react';
 import { usePathname } from 'next/navigation';
+import Script from 'next/script';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -25,7 +26,9 @@ import { type LinkProps } from '../Link';
 
 const Blog = (props: BlogProps) => {
   const ownerState = { ...props };
+
   const {
+    id,
     header,
     footer,
     featuredMedia,
@@ -51,9 +54,11 @@ const Blog = (props: BlogProps) => {
 
   return (
     <>
-      {!!jsonLd ? (
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      ) : null}
+      {!!jsonLd && (
+        <Script type="application/ld+json" id={`blog-${id}-jsonld`}>
+          {jsonLd}
+        </Script>
+      )}
 
       {header ? <ContentModule {...(header as any)} /> : null}
 
@@ -92,7 +97,6 @@ const Blog = (props: BlogProps) => {
               <Body
                 body={body}
                 sidekickLookup={sidekickLookup}
-                {...props}
                 variant="inline"
                 __typename="RichText"
                 ownerState={ownerState}
@@ -163,28 +167,25 @@ const Blog = (props: BlogProps) => {
             </ShareLinksWrap>
           </ContentWrap>
 
-          {/* TODO: Return a collection */}
-          {!!relatedItems && (
-            <RelatedItemsWrap ownerState={ownerState}>
-              <RelatedItems {...relatedItems} ownerState={ownerState} />
-            </RelatedItemsWrap>
-          )}
-
           {!!author && (
             <AuthorWrap ownerState={ownerState}>
-              {(!!author.mainImage || !!author.name) && (
-                <Author ownerState={ownerState}>
-                  {!!author.mainImage && (
-                    <Avatar ownerState={ownerState}>
-                      <AvatarImage {...author.mainImage} ownerState={ownerState} />
-                    </Avatar>
-                  )}
-
-                  {!!author.name && <AuthorName ownerState={ownerState}>{author.name}</AuthorName>}
-                </Author>
+              {!!author.mainImage && (
+                <AuthorImageWrap ownerState={ownerState}>
+                  <AuthorImage {...author.mainImage} ownerState={ownerState} />
+                </AuthorImageWrap>
               )}
 
-              {!!author.body && <AuthorSummary body={author.body} __typename="RichText" ownerState={ownerState} />}
+              {!!author.name && (
+                <AuthorName ownerState={ownerState} variant="display4">
+                  {author.name}
+                </AuthorName>
+              )}
+
+              {!!author.body && (
+                <AuthorSummaryWrap ownerState={ownerState}>
+                  <AuthorSummary body={author.body} variant="bodyLarge" __typename="RichText" ownerState={ownerState} />
+                </AuthorSummaryWrap>
+              )}
 
               {!!author.socialLinks?.length && (
                 <AuthorSocialLinks ownerState={ownerState}>
@@ -200,6 +201,8 @@ const Blog = (props: BlogProps) => {
             </AuthorWrap>
           )}
         </ContentOuterGrid>
+
+        {!!relatedItems && <RelatedItems {...relatedItems} ownerState={ownerState} backgroundColor="white" />}
       </Root>
 
       {footer ? <ContentModule {...(footer as any)} /> : null}
@@ -249,16 +252,16 @@ const Author = styled(Box, {
   overridesResolver: (_, styles) => [styles.author]
 })<{ ownerState: BlogOwnerState }>``;
 
-const Avatar = styled(MuiAvatar, {
+const AuthorImageWrap = styled(Box, {
   name: 'Blog',
-  slot: 'Avatar',
-  overridesResolver: (_, styles) => [styles.avatar]
+  slot: 'AuthorImageWrap',
+  overridesResolver: (_, styles) => [styles.authorImageWrap]
 })<{ ownerState: BlogOwnerState }>``;
 
-const AvatarImage = styled(ContentModule, {
+const AuthorImage = styled(ContentModule, {
   name: 'Blog',
-  slot: 'AvatarImage',
-  overridesResolver: (_, styles) => [styles.avatarImage]
+  slot: 'AuthorImage',
+  overridesResolver: (_, styles) => [styles.authorImage]
 })<{ ownerState: BlogOwnerState }>``;
 
 const AuthorName = styled(Typography, {
@@ -333,10 +336,16 @@ const RelatedItems = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.relatedItems]
 })<{ ownerState: BlogOwnerState }>``;
 
-const AuthorWrap = styled(Box, {
+const AuthorWrap = styled(Grid, {
   name: 'Blog',
   slot: 'AuthorWrap',
   overridesResolver: (_, styles) => [styles.authorWrap]
+})<{ ownerState: BlogOwnerState }>``;
+
+const AuthorSummaryWrap = styled(Box, {
+  name: 'Blog',
+  slot: 'AuthorSummaryWrap',
+  overridesResolver: (_, styles) => [styles.authorSummaryWrap]
 })<{ ownerState: BlogOwnerState }>``;
 
 const AuthorSummary = styled(ContentModule, {

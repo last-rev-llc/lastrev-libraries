@@ -12,15 +12,21 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   // root: {},
 
   contentOuterGrid: {
+    'containerType': 'inline-size',
     '> *': {
-      gridColumnStart: 'auto'
+      gridColumn: 'full-start / full-end'
     }
   },
 
-  headerWrap: {
+  headerWrap: ({ theme }) => ({
     gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
-  },
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'three-start',
+      gridColumnEnd: 'ten-end'
+    }
+  }),
 
   breadcrumbsWrap: {
     gridColumnStart: 'content-start',
@@ -31,40 +37,55 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     display: 'contents'
   },
 
-  featuredMediaWrap: {
+  featuredMediaWrap: ({ theme }) => ({
     gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
-  },
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'three-start',
+      gridColumnEnd: 'ten-end'
+    }
+  }),
 
   // featuredMedia: {},
 
   // pubDate: {},
 
-  shareLinksWrap: {
-    gridColumnStart: 'three-start',
-    gridColumnEnd: 'ten-end'
-  },
+  shareLinksWrap: ({ theme }) => ({
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'two-start',
+      gridColumnEnd: 'seven-end'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'content-quarter',
+      gridColumnEnd: 'content-three-quarter'
+    }
+  }),
 
   shareLinks: ({ theme }) => ({
     display: 'flex',
     alignItems: 'flex-start',
-    gap: theme.spacing(1)
+    gap: 'var(--grid-gap)'
   }),
 
   shareLink: ({ theme }) => ({
-    'gap': theme.spacing(1),
+    'gap': 'var(--grid-gap)',
 
     '& svg': {
-      width: theme.spacing(2),
-      height: theme.spacing(2)
+      width: 'var(--grid-gap)',
+      height: 'var(--grid-gap)'
     },
 
     '& .MuiTypography-root': {
       display: 'none'
     },
 
-    [theme.containerBreakpoints.up('md')]: {
-      'gap': theme.spacing(1),
+    [theme.containerBreakpoints.up('lg')]: {
+      'gap': 'var(--grid-gap)',
       '& .MuiTypography-root': {
         ...theme.typography.bodySmall,
         display: 'block'
@@ -72,26 +93,106 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     }
   }),
 
-  authorWrap: {
+  authorImageWrap: ({ theme }) => ({
+    gridRow: 1,
     gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
-  },
+    gridColumnEnd: 'content-quarter',
 
-  // author: ({}) => ({}),
+    [theme.breakpoints.up('md')]: {
+      gridRow: '1/ span 3',
+      gridColumnStart: 'two-start',
+      gridColumnEnd: 'two-end'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridRow: '1/ span 3',
+      gridColumnStart: 'four-start',
+      gridColumnEnd: 'four-end'
+    }
+  }),
+
+  authorName: ({ theme }) => ({
+    gridRow: 1,
+    alignSelf: 'center',
+    marginBottom: 0,
+
+    gridColumnStart: 'content-quarter',
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'three-start',
+      gridColumnEnd: 'seven-end',
+      alignSelf: 'self-end'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'five-start',
+      gridColumnEnd: 'content-three-quarter',
+      alignSelf: 'self-end'
+    }
+  }),
+
+  authorSummaryWrap: ({ theme }) => ({
+    display: 'flex',
+    alignSelf: 'center',
+    marginBottom: 0,
+
+    gridRow: 2,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'three-start',
+      gridColumnEnd: 'seven-end'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'five-start',
+      gridColumnEnd: 'content-three-quarter'
+    }
+  }),
+
+  authorSocialLinks: ({ theme }) => ({
+    alignSelf: 'self-start',
+
+    gridRow: 3,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'three-start',
+      gridColumnEnd: 'seven-end'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'five-start',
+      gridColumnEnd: 'content-three-quarter'
+    }
+  }),
 
   // title: {},
 
-  body: {
+  body: ({ theme }) => ({
     '& > *:not(div)': {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'ten-end'
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-end',
+
+      [theme.breakpoints.up('md')]: {
+        gridColumnStart: 'two-start',
+        gridColumnEnd: 'seven-end'
+      },
+
+      [theme.breakpoints.up('lg')]: {
+        gridColumnStart: 'content-quarter',
+        gridColumnEnd: 'content-three-quarter'
+      }
     },
 
     '& > div': {
       gridColumnStart: 'full-start',
       gridColumnEnd: 'full-end'
     }
-  },
+  }),
 
   // blogCategories: ({}) => ({}),
 
@@ -102,8 +203,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   // tag: ({}) => ({}),
 
   relatedItemsWrap: {
-    gridColumnStart: 'full-start',
-    gridColumnEnd: 'full-end'
+    '& > *': {
+      gridColumn: 'full-start / full-end'
+    }
   }
 
   // relatedItems: ({}) => ({})

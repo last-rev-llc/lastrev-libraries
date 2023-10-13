@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@types/css": "^0.0.34",
+    "schema-dts": "^1.1.2",
     "tsconfig": "workspace:*",
     "typescript": "^4.8.3"
   }

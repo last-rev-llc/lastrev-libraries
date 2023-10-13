@@ -28,6 +28,12 @@ interface BlogClasses {
   featuredMediaWrap: string;
   authorWrap: string;
   author: string;
+  authorName: string;
+  authorSummaryWrap: string;
+  authorSummary: string;
+  authorImageWrap: string;
+  authorImage: string;
+  authorSocialLinks: string;
   body: string;
   breadcrumbsWrap: string;
   blogCategories: string;
