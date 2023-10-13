@@ -9,7 +9,8 @@ import type {
 const defaultProps: ComponentsProps['Footer'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
-  root: ({ theme }) => ({
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     'padding': theme.spacing(4, 2), // Update
 
     '& a': {

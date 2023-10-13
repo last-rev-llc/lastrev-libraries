@@ -12,12 +12,12 @@ const styleOverrides: ComponentsOverrides<Theme>['RichText'] = {
   // Set some static styles
   root: {
     'width': '100%',
-    'ol, ul, li': {
-      /* Revert padding reset is what gives the indentation to list */
+    'ol, ul': {
+      'padding': '0 0 0 calc(var(--grid-gap) * 4)',
 
-      'padding': 'revert',
       '& > li': {
-        marginBottom: '1em'
+        marginBottom: '1em',
+        padding: 'revert'
       }
     }
   }

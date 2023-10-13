@@ -21,7 +21,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
             }
 
             :root {
-              --grid-margin-xs: 16px;
+              --grid-margin-xs: 8px;
               --grid-margin-sm: 32px;
               --grid-margin-md: 48px;
               --grid-margin-lg: 64px;

@@ -54,12 +54,11 @@ const Blog = (props: BlogProps) => {
 
   return (
     <>
-      {!!jsonLd ? (
+      {!!jsonLd && (
         <Script type="application/ld+json" id={`blog-${id}-jsonld`}>
           {jsonLd}
         </Script>
-      ) : // <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      null}
+      )}
 
       {header ? <ContentModule {...(header as any)} /> : null}
 
@@ -201,14 +200,9 @@ const Blog = (props: BlogProps) => {
               )}
             </AuthorWrap>
           )}
-
-          {/* TODO: Return a collection */}
-          {!!relatedItems && (
-            <RelatedItemsWrap ownerState={ownerState}>
-              <RelatedItems {...relatedItems} ownerState={ownerState} />
-            </RelatedItemsWrap>
-          )}
         </ContentOuterGrid>
+
+        {!!relatedItems && <RelatedItems {...relatedItems} ownerState={ownerState} backgroundColor="white" />}
       </Root>
 
       {footer ? <ContentModule {...(footer as any)} /> : null}

@@ -11,11 +11,10 @@ const SUPERNAV_TIMEOUT = '15s';
 const defaultProps: ComponentsProps['Header'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
-  root: ({ theme }) => ({
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     '& *': {
-      whiteSpace: 'nowrap',
-      // TODO: Update
-      backgroundColor: theme.palette.common.white
+      whiteSpace: 'nowrap'
     }
   }),
 
