@@ -73,7 +73,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.media
     },
     style: {
-      '[class*=Card-media]': {
+      '[class*=Card-cardMedia]': {
         'width': '100%',
 
         '& > *': {
@@ -92,13 +92,14 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.icon
     },
     style: {
-      '[class*=Card-media]': {
+      '[class*=cardMedia]': {
         maxWidth: 96,
         marginLeft: 'auto',
         marginRight: 'auto',
+        paddingTop: 'var(--grid-gap)',
 
         [theme.containerBreakpoints.up('lg')]: {
-          '& > img': {
+          '& > :is(img, svg)': {
             objectFit: 'contain'
           }
         }
@@ -110,8 +111,17 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.logo
     },
     style: {
-      '[class*=Card-media]': {
-        '& > *': {
+      '[class*=contentWrap]': {
+        textAlign: 'center'
+      },
+
+      '[class*=cardMedia]': {
+        'maxHeight': 96,
+        'marginLeft': 'auto',
+        'marginRight': 'auto',
+        'paddingTop': 'var(--grid-gap)',
+
+        '& > :is(img, svg)': {
           objectFit: 'contain',
           width: '100%',
           height: '100%'

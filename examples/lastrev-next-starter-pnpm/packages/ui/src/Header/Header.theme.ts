@@ -12,7 +12,10 @@ const defaultProps: ComponentsProps['Header'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ':is(&, & [class*=navItemSubMenu])': {
+      ...theme.mixins.applyBackgroundColor({ ownerState, theme })
+    },
+
     '& *': {
       whiteSpace: 'nowrap'
     }
@@ -21,9 +24,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   // contentOuterGrid: : {},
 
   logoRoot: ({ theme }) => ({
-    gridColumn: 'content-start / span 2',
+    gridColumn: 'content-quarter / content-three-quarter',
     gridRow: 1,
-    alignSelf: 'center'
+    alignSelf: 'center',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumn: 'content-start / span 2'
+    }
   }),
 
   logo: ({ isElevated }) => ({
@@ -88,12 +95,18 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   }),
 
   headerMenuNav: ({ theme, ownerState }) => ({
-    justifyItems: 'center',
-    justifyContent: 'flex-end',
-    position: 'unset',
-    display: 'inline-flex',
+    'justifyItems': 'center',
+    'justifyContent': 'flex-end',
+    'position': 'unset',
+    'display': 'inline-flex',
+
+    '& a': {
+      whiteSpace: 'nowrap',
+      color: 'inherit'
+    },
 
     [theme.breakpoints.up('md')]: {
+      justifyContent: 'flex-start',
       height: 'auto',
       overflow: 'unset',
       maxHeight: '100%',
@@ -140,7 +153,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     [theme.breakpoints.up('md')]: {
       height: '100%',
       flexDirection: 'row',
-      width: 'auto'
+      width: 'auto',
+      marginLeft: 'unset'
     }
   }),
 

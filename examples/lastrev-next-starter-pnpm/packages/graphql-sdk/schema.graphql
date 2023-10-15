@@ -248,6 +248,7 @@ type ElementVideo implements Content {
 
 type Footer implements Content {
   animation: JSON
+  backgroundColor: String
   copyrightDisclaimer: RichText
   disclaimerText: RichText
   hasSocialLinks: Boolean
@@ -266,6 +267,7 @@ type Footer implements Content {
 
 type Header implements Content {
   animation: JSON
+  backgroundColor: String
   ctaItems: [Link]
   hasCtaItems: Boolean
   id: String
@@ -392,6 +394,7 @@ type Page implements Content {
   contents: [Content]
   disableBackToTop: Boolean
   footer: Footer
+  footerDisclaimerOverride: RichText
   header: Header
   hero: Hero
   id: String

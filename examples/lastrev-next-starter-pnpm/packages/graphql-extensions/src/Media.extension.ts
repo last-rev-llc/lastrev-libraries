@@ -53,6 +53,7 @@ export const mappers = {
           try {
             const svgContent = await fetch(url).then((res) => res.text());
             let cleaned = cleanSVG(svgContent);
+
             return cleaned;
           } catch (err) {
             return null;
@@ -88,6 +89,7 @@ export const mappers = {
         }
         return 'image';
       },
+
       title: async (media: any, _args: any, ctx: ApolloContext) => {
         const title: any = getLocalizedField(media?.fields, 'title', ctx);
         const assetTitle: any = await mediaFieldResolver({
@@ -98,19 +100,25 @@ export const mappers = {
         });
         return title ?? assetTitle;
       },
+
       file: resolveFile,
+
       fileTablet: async (media: any, _args: any, ctx: ApolloContext) => {
+        const defaultFile = await resolveFile(media, _args, ctx);
         let file: any;
         const assetFile = await mediaFieldResolver({ fields: media?.fields, field: 'tablet', assetField: 'file', ctx });
-        if (assetFile) {
+        if (assetFile && assetFile !== defaultFile) {
           file = assetFile;
         }
         return file;
       },
+
       fileMobile: async (media: any, _args: any, ctx: ApolloContext) => {
+        const defaultFile = await resolveFile(media, _args, ctx);
+
         let file: any;
         const assetFile = await mediaFieldResolver({ fields: media?.fields, field: 'mobile', assetField: 'file', ctx });
-        if (assetFile) {
+        if (assetFile && assetFile !== defaultFile) {
           file = assetFile;
         }
         return file;

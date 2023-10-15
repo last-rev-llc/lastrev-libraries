@@ -20,6 +20,7 @@ interface HeaderNavGroupClasses {
   menuRoot: string;
   menuItem: string;
   navItemLink: string;
+  navItemLinkGroup: string;
   navItemGroup: string;
   navItemSubMenu: string;
   navItemSubMenuItem: string;

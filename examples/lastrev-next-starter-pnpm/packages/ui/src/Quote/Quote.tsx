@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import Grid from '../Grid';
+import Background from '../Background';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
@@ -15,12 +16,14 @@ import { type QuoteProps, QuoteOwnerState } from './Quote.types';
 const Quote = (props: QuoteProps) => {
   const ownerState = { ...props };
 
-  const { sidekickLookup, logo, quote, authorName, authorTitle, image, variant } = props;
+  const { backgroundColor, background, sidekickLookup, logo, quote, authorName, authorTitle, image, variant } = props;
 
   return (
     <ErrorBoundary>
       <Root {...sidekick(sidekickLookup)} ownerState={ownerState} data-testid={`Quote-${variant}`}>
-        <ContentGrid ownerState={ownerState}>
+        <QuoteBackground background={background} backgroundColor={backgroundColor} testId="Block-background" />
+
+        <ContentOuterGrid ownerState={ownerState}>
           {logo && <Logo {...logo} {...sidekick(sidekickLookup?.logo)} ownerState={ownerState} />}
 
           {quote && (
@@ -48,7 +51,7 @@ const Quote = (props: QuoteProps) => {
               )}
             </AuthorRoot>
           ) : null}
-        </ContentGrid>
+        </ContentOuterGrid>
       </Root>
     </ErrorBoundary>
   );
@@ -60,10 +63,16 @@ const Root = styled(Box, {
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: QuoteOwnerState }>``;
 
-const ContentGrid = styled(Grid, {
+const QuoteBackground = styled(Background, {
+  name: 'Block',
+  slot: 'Background',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
+
+const ContentOuterGrid = styled(Grid, {
   name: 'Quote',
-  slot: 'ContentGrid',
-  overridesResolver: (_, styles) => [styles.contentGrid]
+  slot: 'ContentOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentOuterGrid]
 })<{ ownerState: QuoteOwnerState }>``;
 
 const AuthorRoot = styled(Box, {

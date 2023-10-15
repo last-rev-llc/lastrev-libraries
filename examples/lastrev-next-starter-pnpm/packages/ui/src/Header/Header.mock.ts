@@ -18,6 +18,7 @@ const headerDefaultMock = (): HeaderProps => {
     variant: HeaderVariants.elevation,
     logo: mediaBaseImageMock(),
     logoUrl: linkBaseMock(),
+    backgroundColor: 'white',
     ctaItems: [linkButtonMock({ text: 'Header CTA 1' }), linkButtonMock({ text: 'Header CTA 1' })],
     navigationItems: [navigationItemBaseMock(), navigationItemBaseMock(), navigationItemBaseMock()],
     siteMessageIcon: siteMessageMock.icon,

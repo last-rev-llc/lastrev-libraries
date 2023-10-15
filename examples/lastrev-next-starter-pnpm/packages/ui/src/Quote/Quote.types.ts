@@ -17,7 +17,8 @@ export interface QuoteOwnerState extends QuoteProps {}
 
 interface QuoteClasses {
   root: string;
-  contentGrid: string;
+  background: string;
+  contentOuterGrid: string;
   authorRoot: string;
   logo: string;
   image: string;

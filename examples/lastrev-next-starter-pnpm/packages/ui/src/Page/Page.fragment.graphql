@@ -11,6 +11,9 @@ fragment Page_BaseFragment on Page {
   footer {
     ...Footer_BaseFragment
   }
+  footerDisclaimerOverride {
+    ...RichText_BaseFragment
+  }
   hero {
     ...ContentModule_BaseFragment
   }

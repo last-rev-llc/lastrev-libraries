@@ -22,4 +22,5 @@ fragment Header_BaseFragment on Header {
   supernavLink {
     ...Link_BaseFragment
   }
+  backgroundColor
 }

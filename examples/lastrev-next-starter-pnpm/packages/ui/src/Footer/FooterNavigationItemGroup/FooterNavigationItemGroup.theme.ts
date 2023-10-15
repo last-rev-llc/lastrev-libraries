@@ -15,22 +15,19 @@ const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGroup'] = 
     gap: 'calc(var(--grid-gap) / 4)'
   },
 
-  // navItemLink: {},
+  navItemLinkGroup: ({ theme }) => ({
+    ...theme.typography.bodyLarge,
+    gap: 'calc(var(--grid-gap) / 4)'
+  }),
 
   navItemSubMenu: ({ theme }) => ({
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gridTemplateAreas: '"first second"',
-    gap: 'calc(var(--grid-gap) / 4)',
-
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-      flexDirection: 'column'
-    }
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 'calc(var(--grid-gap) / 2)'
   }),
 
   navItemSubMenuItem: {
-    gap: 'calc(var(--grid-gap) / 4)'
+    padding: 0
   }
 };
 

@@ -11,11 +11,7 @@ const defaultProps: ComponentsProps['Footer'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    'padding': theme.spacing(4, 2), // Update
-
-    '& a': {
-      whiteSpace: 'nowrap'
-    }
+    padding: theme.spacing(4, 0, 0, 0) // Update
   }),
 
   introContentsWrap: ({ theme }) => ({
@@ -24,20 +20,20 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   // introContent: {},
 
-  // contentOuterGrid: {},
+  contentOuterGrid: {
+    '& a': {
+      whiteSpace: 'nowrap',
+      color: 'inherit'
+    }
+  },
 
   logoRoot: ({ theme }) => ({
-    gridColumn: 'two-start / three-end',
+    gridColumn: 'content-quarter / content-three-quarter',
     gridRow: 1,
     alignSelf: 'center',
 
-    [theme.breakpoints.up('sm')]: {
-      gridColumn: 'three-start / six-end'
-    },
-
     [theme.breakpoints.up('md')]: {
-      gridColumn: 'content-start / span 2',
-      alignSelf: 'center'
+      gridColumn: 'content-start / span 2'
     }
   }),
 
@@ -54,13 +50,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   footerMenuNav: ({ theme, ownerState }) => ({
     gridRow: 2,
     gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridRow: 1,
-      gridColumnStart: 'content-start',
-      gridColumnEnd: ownerState?.hasSocialLinks ? 'ten-end' : 'content-end'
-    }
+    gridColumnEnd: 'content-end'
   }),
 
   footerMenuNavItems: ({ theme, ownerState }) => ({
@@ -68,13 +58,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     alignItems: 'center',
     padding: 0,
     position: 'unset',
-    flexDirection: 'column',
+    flexDirection: 'row',
     width: '100%',
     margin: 'auto',
+    gap: 'var(--grid-gap)',
 
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       height: '100%',
-      flexDirection: 'row',
       width: 'auto'
     }
   }),
@@ -83,7 +73,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     padding: 0,
     position: 'unset',
 
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up('sm')]: {
       height: '100%'
     }
   }),
@@ -101,12 +91,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'auto', //'eleven-start',
+      gridColumnStart: 'content-three-quarter',
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
       justifySelf: 'flex-end',
       width: '100%',
-      gridRow: 1
+      gridRow: 3
     }
   }),
 
@@ -122,20 +112,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  disclaimerWrap: ({ theme }) => ({
-    gridRow: 4,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridRow: 2,
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-half'
-    }
-  }),
-
   legalSection: {
-    display: 'contents' // take out of flow
+    display: 'contents' // take out of flow,
   },
 
   copyrightDisclaimerWrap: ({ theme }) => ({
@@ -144,26 +122,42 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gridColumnEnd: 'content-end',
 
     [theme.breakpoints.up('md')]: {
-      gridRow: 2,
-      gridColumnStart: 'content-half',
-      gridColumnEnd: 'content-end'
+      gridRow: 3,
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-quarter'
     }
   }),
 
   legalLinks: ({ theme }) => ({
-    gridRow: 6,
+    gridRow: 4,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
     display: 'inline-flex',
     alignItems: 'center',
     height: '100%',
-    justifySelf: 'flex-end',
+    justifySelf: 'center',
     gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('md')]: {
-      gridColumn: 'content-start / content-end',
-      gridRow: 3,
-      marginLeft: 'auto'
+      gridColumn: 'content-quarter / content-three-quarter',
+      gridRow: 3
+    }
+  }),
+
+  disclaimerWrap: ({ theme }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState: { backgroundColor: 'black' }, theme }),
+    'gridRow': 6,
+    'gridColumnStart': 'full-start',
+    'gridColumnEnd': 'full-end',
+    'padding': theme.spacing(4, 0),
+
+    [theme.breakpoints.up('md')]: {
+      gridRow: 4
+    },
+
+    '& [class*=disclaimer] > *': {
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-end'
     }
   })
 

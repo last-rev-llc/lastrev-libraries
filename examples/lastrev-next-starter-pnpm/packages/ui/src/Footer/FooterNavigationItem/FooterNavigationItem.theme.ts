@@ -12,12 +12,8 @@ const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.typography.body2,
 
-    ...(ownerState?.variant === 'linkBoldedFooter' && {
-      fontFamily: '"Inter", sans-serif',
-      fontWeight: 600
-    }),
-
-    color: theme.palette.secondary.main
+    color: theme.palette.secondary.main,
+    border: 'solid 10px blue'
   })
 
   // rootLinkButton: : {},

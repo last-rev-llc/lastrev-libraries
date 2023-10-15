@@ -33,7 +33,7 @@ const HeaderNavGroup = (props: HeaderNavGroupProps) => {
     <ErrorBoundary>
       {!!subNavigation?.length ? (
         <Root data-testid="HeaderNavGroup" ownerState={ownerState}>
-          <NavItemLink
+          <NavItemLinkGroup
             {...props}
             variant={variant}
             {...sidekick(sidekickLookup)}
@@ -96,6 +96,13 @@ const NavItemLink = styled(ContentModule, {
   slot: 'NavItemLink',
   shouldForwardProp: (prop: string) => prop !== 'subNavigation' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.navItemLink]
+})<{ ownerState: HeaderNavGroupOwnerState }>``;
+
+const NavItemLinkGroup = styled(ContentModule, {
+  name: 'HeaderNavGroup',
+  slot: 'NavItemLink',
+  shouldForwardProp: (prop: string) => prop !== 'subNavigation' && prop !== 'ownerState',
+  overridesResolver: (_, styles) => [styles.navItemLinkGroup]
 })<{ ownerState: HeaderNavGroupOwnerState }>``;
 
 const NavItemGroup = styled(ContentModule, {
