@@ -18,6 +18,7 @@ export const typeDefs = gql`
     hero: Hero
     contents: [Content]
     breadcrumbs: [Link]
+    footerDisclaimerOverride: RichText
   }
 `;
 

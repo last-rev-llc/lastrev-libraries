@@ -25,7 +25,7 @@ const FooterNavigationItemGroup = (props: FooterNavigationItemGroupProps) => {
     <ErrorBoundary>
       {!!subNavigation?.length ? (
         <Root data-testid="FooterNavGroup" ownerState={ownerState}>
-          <NavItemLink
+          <NavItemLinkGroup
             {...props}
             variant={variant}
             {...sidekick(sidekickLookup)}
@@ -84,6 +84,13 @@ const NavItemLink = styled(ContentModule, {
   slot: 'NavItemLink',
   shouldForwardProp: (prop: string) => prop !== 'subNavigation' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.navItemLink]
+})<{ ownerState: FooterNavigationItemGroupOwnerState }>``;
+
+const NavItemLinkGroup = styled(ContentModule, {
+  name: 'FooterNavigationItemGroup',
+  slot: 'NavItemLinkGroup',
+  shouldForwardProp: (prop: string) => prop !== 'subNavigation' && prop !== 'ownerState',
+  overridesResolver: (_, styles) => [styles.navItemLinkGroup]
 })<{ ownerState: FooterNavigationItemGroupOwnerState }>``;
 
 export default FooterNavigationItemGroup;

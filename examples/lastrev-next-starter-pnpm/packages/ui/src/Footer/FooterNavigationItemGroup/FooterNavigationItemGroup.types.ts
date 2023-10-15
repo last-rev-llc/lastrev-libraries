@@ -10,6 +10,7 @@ interface FooterNavigationItemGroupClasses {
   root: string;
   navItemSubMenu: string;
   navItemSubMenuItem: string;
+  navItemLinkGroup: string;
   navItemLink: string;
 }
 

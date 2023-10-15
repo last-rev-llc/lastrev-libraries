@@ -19,6 +19,7 @@ const footerDefaultMock = (): FooterProps => {
     __typename: 'Footer',
     logo: mediaBaseImageMock(), // TODO;
     logoUrl: linkBaseMock(),
+    backgroundColor: 'white',
     disclaimerText: richTextShortMock({ text: 'This is the disclaimer' }),
     socialLinks: [linkSocialMock(), linkSocialMock(), linkSocialMock()],
     navigationItems: [

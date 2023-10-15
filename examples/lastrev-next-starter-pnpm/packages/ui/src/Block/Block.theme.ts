@@ -20,9 +20,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     'width': '100%',
     'display': 'flex',
     'flexDirection': 'column',
-    '[class*="Background-root"] [class*=itemsGrid] &': {
-      border: 'solid 10px blue'
-    },
+
     '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
       padding: 'var(--grid-gap)',
       paddingTop: 0

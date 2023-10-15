@@ -73,7 +73,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   };
 
   if (children) {
-    <RootLinkChildren {...sharedLinkProps}>{children}</RootLinkChildren>;
+    return <RootLinkChildren {...sharedLinkProps}>{children}</RootLinkChildren>;
   }
 
   if (!text && icon) {

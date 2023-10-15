@@ -167,9 +167,9 @@ export const mappers: Mappers = {
         const variantFn = defaultResolver('variant');
         const variant = variantFn(collection, args, ctx);
 
-        if (!carouselBreakpoints) return variant;
+        if (!!carouselBreakpoints.length) `${variant}Carousel`;
 
-        return `${variant}Carousel`;
+        return variant;
       },
 
       itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {

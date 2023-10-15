@@ -2,6 +2,7 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 
 export interface GridProps {
   children: React.ReactNode;
+  overrideNested?: boolean;
 }
 
 interface GridClasses {

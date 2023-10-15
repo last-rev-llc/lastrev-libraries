@@ -57,41 +57,41 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
               --section-padding: calc(var(--grid-gap) * 4);
 
-              --h1-font-size: 1.75rem;
-              --h2-font-size: 1.5rem;
-              --h3-font-size: 1.25rem;
-              --h4-font-size: 1.125rem;
-              --h5-font-size: 1rem;
-              --h6-font-size: 0.875rem;
-              --display1-font-size: 1.75rem;
-              --display2-font-size: 1.5rem;
-              --display3-font-size: 1.25rem;
-              --display4-font-size: 1.125rem;
-              --display5-font-size: 1rem;
-              --display6-font-size: 0.875rem;
+              --h1-font-size: 2.75rem;
+              --h2-font-size: 2.25rem;
+              --h3-font-size: 1.75rem;
+              --h4-font-size: 1.5rem;
+              --h5-font-size: 1.25rem;
+              --h6-font-size: 1rem;
+              --display1-font-size: 3rem;
+              --display2-font-size: 2rem;
+              --display3-font-size: 1.75rem;
+              --display4-font-size: 1.5rem;
+              --display5-font-size: 1.25rem;
+              --display6-font-size: 1rem;
               --overline-font-size: 0.625rem;
-              --body1-font-size: 0.875rem;
-              --body2-font-size: 0.875rem;
-              --bodySmall-font-size: 0.625rem;
-              --bodyLarge-font-size: 1.125rem;
+              --body1-font-size: 1rem;
+              --body2-font-size: 1.125rem;
+              --bodySmall-font-size: 0.75rem;
+              --bodyLarge-font-size: 1.25rem;
 
-              --h1-line-height: 1.125em;
-              --h2-line-height: 1.125em;
-              --h3-line-height: 1.125em;
-              --h4-line-height: 1.125em;
-              --h5-line-height: 1.125em;
-              --h6-line-height: 1.125em;
-              --display1-line-height: 1.125em;
-              --display2-line-height: 1.125em;
-              --display3-line-height: 1.125em;
-              --display4-line-height: 1.125em;
-              --display5-line-height: 1.125em;
-              --display6-line-height: 1.125em;
-              --overline-line-height: 1.375em;
-              --body1-line-height: 1.375em;
-              --body2-line-height: 1.375em;
-              --bodySmall-line-height: 1.375em;
-              --bodyLarge-line-height: 1.375em;
+              --h1-line-height: 1.1em;
+              --h2-line-height: 1.3em;
+              --h3-line-height: 1.3em;
+              --h4-line-height: 1.3em;
+              --h5-line-height: 1.3em;
+              --h6-line-height: 1.3em;
+              --display1-line-height: 1.3em;
+              --display2-line-height: 1.3em;
+              --display3-line-height: 1.3em;
+              --display4-line-height: 1.3em;
+              --display5-line-height: 1.3em;
+              --display6-line-height: 1.3em;
+              --overline-line-height: 1.3em;
+              --body1-line-height: 1.3em;
+              --body2-line-height: 1.3em;
+              --bodySmall-line-height: 1.3em;
+              --bodyLarge-line-height: 1.3em;
 
               --h1-margin: 0 0 0.75em 0;
               --h2-margin: 0 0 0.75em 0;
@@ -111,19 +111,19 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --bodySmall-margin: 0;
               --bodyLarge-margin: 0;
 
-              --h1-font-weight: 500;
-              --h2-font-weight: 500;
-              --h3-font-weight: 500;
-              --h4-font-weight: 500;
-              --h5-font-weight: 500;
-              --h6-font-weight: 500;
-              --display1-font-weight: 500;
-              --display2-font-weight: 500;
-              --display3-font-weight: 500;
-              --display4-font-weight: 500;
-              --display5-font-weight: 500;
-              --display6-font-weight: 500;
-              --overline-font-weight: 900;
+              --h1-font-weight: 700;
+              --h2-font-weight: 700;
+              --h3-font-weight: 700;
+              --h4-font-weight: 700;
+              --h5-font-weight: 700;
+              --h6-font-weight: 700;
+              --display1-font-weight: 700;
+              --display2-font-weight: 400;
+              --display3-font-weight: 400;
+              --display4-font-weight: 400;
+              --display5-font-weight: 400;
+              --display6-font-weight: 400;
+              --overline-font-weight: 400;
               --body1-font-weight: 400;
               --body2-font-weight: 400;
               --bodySmall-font-weight: 400;
@@ -167,7 +167,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --swiper-scrollbar-size: calc(var(--grid-gap) / 4);
             }
 
-            body * {
+            /* body * {
               ${theme.containerBreakpoints.up('sm')} {
                 --h1-font-size: 2rem;
                 --h2-font-size: 1.75rem;
@@ -237,7 +237,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display5-font-size: 1.5rem;
                 --display6-font-size: 1.25rem;
               }
-            }
+            } */
           `}
         />
         {children}

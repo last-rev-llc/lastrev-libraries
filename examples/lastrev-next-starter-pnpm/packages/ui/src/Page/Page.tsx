@@ -10,7 +10,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import type { PageProps } from './Page.types';
 
 const Page = (props: PageProps) => {
-  const { header, hero, contents, footer, disableBackToTop, sidekickLookup, jsonLd } = props;
+  const { header, hero, contents, footer, disableBackToTop, sidekickLookup, jsonLd, footerDisclaimerOverride } = props;
 
   const ownerState = {
     ...props
@@ -33,7 +33,9 @@ const Page = (props: PageProps) => {
         {!disableBackToTop ? <BackToTop /> : null}
       </Main>
 
-      {footer ? <ContentModule {...(footer as any)} /> : null}
+      {footer ? (
+        <ContentModule {...(footer as any)} disclaimerText={footerDisclaimerOverride ?? footer.disclaimerText} />
+      ) : null}
     </>
   );
 };

@@ -2,6 +2,7 @@ import gql from 'graphql-tag';
 
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import type { ApolloContext } from '@last-rev/types';
+import { defaultResolver } from './utils/defaultResolver';
 
 export const typeDefs = gql`
   extend type Header {
@@ -21,7 +22,8 @@ export const mappers = {
       hasCtaItems: async (header: any, _args: any, ctx: ApolloContext) => {
         const ctaItems: any = getLocalizedField(header.fields, 'ctaItems', ctx);
         return !!ctaItems.length;
-      }
+      },
+      backgroundColor: defaultResolver('backgroundColor')
     }
   }
 };

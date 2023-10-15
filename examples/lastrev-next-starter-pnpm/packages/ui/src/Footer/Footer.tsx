@@ -42,8 +42,8 @@ const Footer = (props: FooterProps) => {
 
       <ContentOuterGrid ownerState={ownerState}>
         {logo ? (
-          <LogoRoot {...logoUrl} aria-label={'Go to homepage'} ownerState={ownerState} text={undefined}>
-            <Logo {...logo} __typename="Media" priority alt={logo?.title ?? 'Go to homepage'} ownerState={ownerState} />
+          <LogoRoot {...logoUrl} aria-label={'Go to homepage'} ownerState={ownerState} text={null}>
+            <Logo {...logo} __typename="Media" alt={logo?.title ?? 'Go to homepage'} ownerState={ownerState} />
           </LogoRoot>
         ) : null}
 
@@ -78,7 +78,7 @@ const Footer = (props: FooterProps) => {
 
         <LegalSection ownerState={ownerState}>
           {!!disclaimerText && (
-            <DisclaimerWrap ownerState={ownerState}>
+            <DisclaimerWrap ownerState={ownerState} overrideNested>
               <Disclaimer
                 {...sidekick(sidekickLookup, 'disclaimerText')}
                 ownerState={ownerState}
@@ -138,7 +138,7 @@ const Logo = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.logo]
 })<{ ownerState: FooterOwnerState }>``;
 
-const DisclaimerWrap = styled(Box, {
+const DisclaimerWrap = styled(Grid, {
   name: 'Footer',
   slot: 'DisclaimerWrap',
   overridesResolver: (_, styles) => [styles.disclaimerWrap]
