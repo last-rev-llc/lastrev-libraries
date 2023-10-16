@@ -28,24 +28,27 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   },
 
   logoRoot: ({ theme }) => ({
-    gridColumn: 'content-quarter / content-three-quarter',
+    gridColumn: 'content-start / content-half',
     gridRow: 1,
     alignSelf: 'center',
+    width: '100%',
+    height: 'auto',
+    display: 'block',
 
     [theme.breakpoints.up('md')]: {
       gridColumn: 'content-start / span 2'
     }
   }),
 
-  logo: {
-    width: 'auto',
-    height: 40,
-    margin: 0,
+  // logo: {
+  //   width: 'auto',
+  //   height: 40,
+  //   margin: 0,
 
-    svg: {
-      fill: '#ffffff'
-    }
-  },
+  //   svg: {
+  //     fill: '#ffffff'
+  //   }
+  // },
 
   footerMenuNav: ({ theme, ownerState }) => ({
     gridRow: 2,
@@ -149,7 +152,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     'gridRow': 6,
     'gridColumnStart': 'full-start',
     'gridColumnEnd': 'full-end',
-    'padding': theme.spacing(4, 0),
+    'padding': 'var(--grid-gap) 0',
 
     [theme.breakpoints.up('md')]: {
       gridRow: 4

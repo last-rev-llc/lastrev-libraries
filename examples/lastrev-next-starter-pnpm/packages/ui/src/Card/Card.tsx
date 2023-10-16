@@ -87,8 +87,7 @@ const Card = (props: CardProps) => {
 
             {body ? (
               <Body
-                __typename="Text"
-                variant="bodySmall"
+                __typename="RichText"
                 {...sidekick(sidekickLookup, 'body')}
                 body={body}
                 ownerState={ownerState}

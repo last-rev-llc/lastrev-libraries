@@ -16,7 +16,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   root: ({ theme }) => ({
     containerType: 'inline-size',
     position: 'relative',
-    padding: theme.spacing(12, 0)
+    padding: theme.spacing(0, 0),
+
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(12, 0)
+    }
   }),
 
   contentOuterGrid: {

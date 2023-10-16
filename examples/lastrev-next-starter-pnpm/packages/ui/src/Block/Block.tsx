@@ -59,7 +59,7 @@ const Block = (props: BlockProps) => {
                     ownerState={ownerState}
                     {...sidekick(sidekickLookup, 'title')}
                     data-testid="Block-title"
-                    variant="display4">
+                    variant="h1">
                     {title}
                   </Title>
                 )}

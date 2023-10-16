@@ -18,7 +18,6 @@ const Section = (props: SectionProps) => {
   const {
     introText,
     contents,
-
     background,
     backgroundColor,
     // TODO: Ensure test id is propagated correctly

@@ -35,21 +35,21 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
 
   title: ({ theme, ownerState }) => ({
     ...(ownerState?.variant === TextVariants.default && {
-      ...theme.typography.display3
+      ...theme.typography.h2
     }),
 
     ...(ownerState?.variant === TextVariants.introText && {
-      ...theme.typography.display2
+      ...theme.typography.h1
     })
   }),
 
   subtitle: ({ theme, ownerState }) => ({
     ...(ownerState?.variant === TextVariants.default && {
-      ...theme.typography.display4
+      ...theme.typography.h3
     }),
 
     ...(ownerState?.variant === TextVariants.introText && {
-      ...theme.typography.display3
+      ...theme.typography.h2
     })
   })
   //
