@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const SITEMESSAGE_TIMEOUT = '200s';
 
@@ -12,10 +7,10 @@ const defaultProps: ComponentsProps['SiteMessage'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['SiteMessage'] = {
   root: ({ theme, ownerState }) => ({
-    'backgroundColor': theme.palette.primary.main,
+    'backgroundColor': theme.vars.palette.primary.main,
 
     '& *': {
-      color: theme.palette.common.white
+      color: theme.vars.palette.common.white
     },
 
     [theme.containerBreakpoints.down('md')]: {

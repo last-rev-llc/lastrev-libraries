@@ -109,31 +109,31 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
               'width': '100%',
               'maxWidth': '100%',
               'padding': theme.spacing(2),
-              'color': theme.palette.grey[700],
+              'color': theme.vars.palette.grey[700],
 
               ...(ownerState?.variant !== 'hubspotFormFooter' && {
-                border: `solid 2px ${theme.palette.grey[300]}`,
+                border: `solid 2px ${theme.vars.palette.grey[300]}`,
                 borderRadius: theme.spacing(0.5)
               }),
 
               ...(ownerState?.variant === 'hubspotFormFooter' && {
                 border: 'none',
-                borderBottom: `solid 2px ${theme.palette.common.white}`,
+                borderBottom: `solid 2px ${theme.vars.palette.common.white}`,
                 fontSize: theme.typography.body1
               }),
 
               '&:hover': {
-                borderColor: theme.palette.grey[300],
+                borderColor: theme.vars.palette.grey[300],
                 boxShadow: theme.shadows[1]
               },
 
               '&:focus': {
-                borderColor: theme.palette.primary.main,
+                borderColor: theme.vars.palette.primary.main,
                 boxShadow: theme.shadows[1]
               },
 
               '&:focus-visible': {
-                outline: `${theme.palette.primary.main} auto 0px`
+                outline: `${theme.vars.palette.primary.main} auto 0px`
               }
             },
 
@@ -187,13 +187,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
                 'backgroundOrigin': 'content-box',
 
                 '&.is-placeholder': {
-                  color: alpha(theme.palette.grey[700], 0.7)
+                  color: alpha(theme.vars.palette.grey[700], 0.7)
                 }
               }
             },
 
             '&.error': {
-              borderColor: theme.palette.error.main,
+              borderColor: theme.vars.palette.error.main,
               borderWidth: 1
             }
           }
@@ -220,7 +220,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
             },
             '& span': {
               ...theme.typography.bodySmall,
-              color: theme.palette.grey[600],
+              color: theme.vars.palette.grey[600],
               paddingLeft: theme.spacing(1)
             },
             "& input[type='checkbox']::before": {
@@ -245,22 +245,22 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         '& input': {
           ...theme.typography.bodySmall,
 
-          'backgroundColor': theme.palette.primary.main,
-          'color': theme.palette.common.white,
-          'border': `3px solid ${theme.palette.primary.main}`,
+          'backgroundColor': theme.vars.palette.primary.main,
+          'color': theme.vars.palette.common.white,
+          'border': `3px solid ${theme.vars.palette.primary.main}`,
           'padding': theme.spacing(0.625, 2.625), // Substract border
           'borderRadius': theme.spacing(0.5),
           'textDecoration': 'none',
           'width': '100%',
 
           '&:hover': {
-            borderColor: theme.palette.common.black,
-            backgroundColor: theme.palette.primary.main
+            borderColor: theme.vars.palette.common.black,
+            backgroundColor: theme.vars.palette.primary.main
           },
 
           '&:active': {
-            backgroundColor: theme.palette.secondary.main,
-            borderColor: theme.palette.common.black
+            backgroundColor: theme.vars.palette.secondary.main,
+            borderColor: theme.vars.palette.common.black
           },
 
           [theme.containerBreakpoints.up('md')]: {
@@ -284,7 +284,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
           ...theme.typography.bodySmall,
           display: 'block !important',
           padding: theme.spacing(0.25, 0, 0),
-          color: theme.palette.error.main,
+          color: theme.vars.palette.error.main,
           textAlign: 'left'
         }
       }
@@ -294,14 +294,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
   formOuterContainer: ({ theme, ownerState }) => ({
     ...((ownerState?.variant === 'hubspotFormDefault' || ownerState?.variant === 'hubspotFormDefaultThin') && {
       padding: theme.spacing(4, 3),
-      backgroundColor: theme.palette.grey[100],
-      border: `solid 2px ${theme.palette.grey[200]}`,
+      backgroundColor: theme.vars.palette.grey[100],
+      border: `solid 2px ${theme.vars.palette.grey[200]}`,
       borderRadius: 12
     }),
 
     ...(ownerState?.variant === 'hubspotFormSidebar' && {
       padding: theme.spacing(2, 0, 6, 0),
-      backgroundColor: theme.palette.grey[200],
+      backgroundColor: theme.vars.palette.grey[200],
       borderRadius: 8
     })
   }),

@@ -1,5 +1,10 @@
 import { DM_Sans } from 'next/font/google';
-import { type Breakpoint, type ThemeOptions, experimental_extendTheme as extendTheme } from '@mui/material/styles';
+import {
+  type Breakpoint,
+  type ThemeOptions,
+  experimental_extendTheme as extendTheme,
+  CssVarsThemeOptions
+} from '@mui/material/styles';
 import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
@@ -17,14 +22,16 @@ export const mainColors = ['primary', 'secondary', 'tertiary'];
 const defaultSpacing = 8;
 const defaultBorderRadius = 10;
 
-const paletteTheme = {
-  values: {
-    xs: 0,
-    sm: 600,
-    md: 900,
-    lg: 1200,
-    xl: 1536,
-    xxl: 3840
+const paletteTheme: CssVarsThemeOptions = {
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+      xxl: 3840
+    }
   },
   colorSchemes: {
     light: {
@@ -44,25 +51,8 @@ const paletteTheme = {
         secondary: {
           main: '#00fff2'
         },
-        //   name: 'primary'
-        // }),
-        // secondary: muiTheme.palette.augmentColor({
-        //   color: {
-        //     main: '#00fff2'
-        //   },
-        //   name: 'secondary'
-        // }),
 
-        // text: {
-        //   primary: '#ffffff',
-        //   secondary: '#E5E5E5',
-        //   disabled: 'rgba(0, 0, 0, 0.38)'
-        // },
-        background: {
-          // default: '#121212',
-          // paper: '#1E1E1E'
-          // contrastText: '#FFF'
-        },
+        background: {},
         error: {
           main: '#ff1744',
           light: 'rgb(255, 69, 105)',
@@ -117,7 +107,6 @@ const baseTheme = {
   typography: {
     fontFamily: dmSans.style.fontFamily,
     body1: {
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--body1-font-weight)',
       fontSize: 'var(--body1-font-size)',
       lineHeight: 'var(--body1-line-height)',
@@ -125,7 +114,6 @@ const baseTheme = {
       color: 'inherit'
     },
     body2: {
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--body2-font-weight)',
       fontSize: 'var(--body2-font-size)',
       lineHeight: 'var(--body2-line-height)',
@@ -133,7 +121,6 @@ const baseTheme = {
       color: 'inherit'
     },
     bodySmall: {
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--bodySmall-font-weight)',
       fontSize: 'var(--bodySmall-font-size)',
       lineHeight: 'var(--bodySmall-line-height)',
@@ -141,7 +128,6 @@ const baseTheme = {
       color: 'inherit'
     },
     bodyLarge: {
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--bodyLarge-font-weight)',
       fontSize: 'var(--bodyLarge-font-size)',
       lineHeight: 'var(--bodyLarge-line-height)',
@@ -150,7 +136,6 @@ const baseTheme = {
     },
 
     h1: {
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--h1-font-weight)',
       fontSize: 'var(--h1-font-size)',
       lineHeight: 'var(--h1-line-height)',
@@ -158,7 +143,6 @@ const baseTheme = {
       fontStyle: 'normal'
     },
     h2: {
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--h2-font-weight)',
       fontSize: 'var(--h2-font-size)',
       lineHeight: 'var(--h2-line-height)',
@@ -166,7 +150,6 @@ const baseTheme = {
       fontStyle: 'normal'
     },
     h3: {
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--h3-font-weight)',
       fontSize: 'var(--h3-font-size)',
       lineHeight: 'var(--h3-line-height)',
@@ -174,7 +157,6 @@ const baseTheme = {
       fontStyle: 'normal'
     },
     h4: {
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--h4-font-weight)',
       fontSize: 'var(--h4-font-size)',
       lineHeight: 'var(--h4-line-height)',
@@ -182,7 +164,6 @@ const baseTheme = {
       fontStyle: 'normal'
     },
     h5: {
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--h5-font-weight)',
       fontSize: 'var(--h5-font-size)',
       lineHeight: 'var(--h5-line-height)',
@@ -190,7 +171,6 @@ const baseTheme = {
       fontStyle: 'normal'
     },
     h6: {
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--h6-font-weight)',
       fontSize: 'var(--h6-font-size)',
       lineHeight: 'var(--h6-line-height)',
@@ -199,62 +179,54 @@ const baseTheme = {
     },
     display1: {
       display: 'block',
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--display1-font-weight)',
       fontSize: 'var(--display1-font-size)',
       lineHeight: 'var(--display1-line-height)',
       margin: 'var(--display1-margin)',
-      color: muiTheme?.palette?.tertiary?.main
+      color: muiTheme?.vars?.palette?.tertiary?.main
     },
     display2: {
       display: 'block',
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--display2-font-weight)',
       fontSize: 'var(--display2-font-size)',
       lineHeight: 'var(--display2-line-height)',
       margin: 'var(--display2-margin)',
-      color: muiTheme?.palette?.tertiary?.main
+      color: muiTheme?.vars?.palette?.tertiary?.main
     },
     display3: {
       display: 'block',
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--display3-font-weight)',
       fontSize: 'var(--display3-font-size)',
       lineHeight: 'var(--display3-line-height)',
       margin: 'var(--display3-margin)',
-      color: muiTheme?.palette?.tertiary?.main
+      color: muiTheme?.vars?.palette?.tertiary?.main
     },
     display4: {
       display: 'block',
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--display4-font-weight)',
       fontSize: 'var(--display4-font-size)',
       lineHeight: 'var(--display4-line-height)',
       margin: 'var(--display4-margin)',
-      color: muiTheme?.palette?.tertiary?.main,
-color: muiTheme?.
+      color: muiTheme?.vars?.palette?.tertiary?.main
     },
     display5: {
       display: 'block',
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--display5-font-weight)',
       fontSize: 'var(--display5-font-size)',
       lineHeight: 'var(--display5-line-height)',
       margin: 'var(--display5-margin)',
-      color: muiTheme?.palette?.tertiary?.main
+      color: muiTheme?.vars?.palette?.tertiary?.main
     },
     display6: {
       display: 'block',
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--display6-font-weight)',
       fontSize: 'var(--display6-font-size)',
       lineHeight: 'var(--display6-line-height)',
       margin: 'var(--display6-margin)',
-      color: muiTheme?.palette?.tertiary?.main
+      color: muiTheme?.vars?.palette?.tertiary?.main
     },
     overline: {
       display: 'block',
-      fontFamily: dmSans.style.fontFamily,
       fontWeight: 'var(--overline-font-weight)',
       fontSize: 'var(--overline-font-size)',
       lineHeight: 'var(--overline-line-height)',

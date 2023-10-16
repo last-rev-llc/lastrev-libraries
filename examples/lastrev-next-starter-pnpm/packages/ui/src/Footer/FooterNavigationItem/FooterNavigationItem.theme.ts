@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['FooterNavigationItem'] = {};
 
@@ -12,7 +7,7 @@ const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.typography.body2,
 
-    color: theme.palette.secondary.main,
+    color: theme.vars.palette.secondary.main,
     border: 'solid 10px blue'
   })
 

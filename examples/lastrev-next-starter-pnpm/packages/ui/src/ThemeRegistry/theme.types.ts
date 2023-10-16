@@ -1,5 +1,10 @@
 import { Mixins } from '@mui/material/styles/createMixins';
-import { type TypographyStyle, type Breakpoints } from '@mui/material/styles';
+import {
+  type TypographyStyle,
+  type Breakpoints,
+  type CssVarsTheme,
+  type Theme as MUITheme
+} from '@mui/material/styles';
 import { Palette as MuiPalette } from '@mui/material/styles/createPalette';
 
 declare module '@mui/material/styles' {
@@ -75,3 +80,5 @@ declare module '@mui/material/Typography' {
     display6?: TypographyStyle;
   };
 }
+
+export type Theme = Omit<MUITheme, 'palette'> & CssVarsTheme;

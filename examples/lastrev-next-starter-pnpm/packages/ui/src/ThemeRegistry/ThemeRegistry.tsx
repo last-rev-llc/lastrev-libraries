@@ -5,7 +5,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import StyledComponentsRegistry from './StyledComponentsRegistry';
 import { theme } from './theme';
-import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles';
+import { Experimental_CssVarsProvider as CssVarsProvider, css } from '@mui/material/styles';
 import { getInitColorSchemeScript } from '@mui/material/styles';
 export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
   return (
