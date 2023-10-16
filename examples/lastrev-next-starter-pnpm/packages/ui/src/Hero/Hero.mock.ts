@@ -18,9 +18,9 @@ const heroDefaultMock: HeroProps = {
   actions: [
     linkButtonMock({ text: 'This is the Hero Action 1', variant: 'buttonOutlined', color: 'primary' })
     // linkButtonMock({ text: 'This is the Hero Action 2', variant: 'buttonOutlined' })
-  ],
+  ]
   // background: mediaBaseImageMock(),
-  backgroundColor: 'black'
+  // backgroundColor: 'black'
 };
 
 export const heroBaseMock = ({ ...override } = {}) => ({

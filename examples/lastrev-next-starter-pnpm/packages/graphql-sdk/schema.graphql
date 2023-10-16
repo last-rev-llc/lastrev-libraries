@@ -36,7 +36,6 @@ type Block implements Content {
   overline: String
   sidekickLookup: JSON
   subtitle: String
-  testField: String
   theme: [Theme]
   title: String
   variant: String
@@ -222,10 +221,17 @@ scalar Date
 
 type ElementForm implements Content {
   animation: JSON
+  confirmationPath: String
+  footerDisclaimerOverride: RichText
+  hubspotFormId: String
+  hubspotPortalId: String
   id: String
   internalTitle: String
   introText: Text
+  lr__path__: String
+  seo: JSON
   sidekickLookup: JSON
+  slug: String
   theme: [Theme]
   variant: String
 }

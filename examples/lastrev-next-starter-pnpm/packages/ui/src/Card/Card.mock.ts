@@ -5,6 +5,7 @@ import { linkButtonMock, linkBaseMock } from '../Link/Link.mock';
 import { randomId } from '../utils/randomId';
 
 import { type CardProps, CardVariants } from './Card.types';
+import { LinkVariants } from '../Link/Link.types';
 
 export const cardBaseMock = (override?: Partial<CardProps>): CardProps => {
   const baseMock: CardProps = {
@@ -16,7 +17,10 @@ export const cardBaseMock = (override?: Partial<CardProps>): CardProps => {
     title: 'This is a card title',
     subtitle: 'And this is the subtitle',
     body: richTextCardMock(),
-    actions: [linkButtonMock({ text: 'Card Link 1' }), linkButtonMock({ text: 'Card Link 2' })],
+    actions: [
+      linkButtonMock({ text: 'Card Link 1', variant: LinkVariants.buttonText }),
+      linkButtonMock({ text: 'Card Link 2', variant: LinkVariants.buttonText })
+    ],
     link: { ...linkBaseMock() },
     sidekickLookup: {},
     loading: false
@@ -37,6 +41,15 @@ export const cardBaseMock = (override?: Partial<CardProps>): CardProps => {
       variantOverride = {
         overline: undefined,
         title: undefined,
+        subtitle: undefined,
+        actions: undefined,
+        body: undefined
+      };
+      break;
+    case CardVariants.icon:
+      variantOverride = {
+        overline: undefined,
+        // title: undefined,
         subtitle: undefined,
         actions: undefined,
         body: undefined

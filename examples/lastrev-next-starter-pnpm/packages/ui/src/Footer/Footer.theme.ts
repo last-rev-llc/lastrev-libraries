@@ -148,7 +148,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   }),
 
   disclaimerWrap: ({ theme }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState: { backgroundColor: 'black' }, theme }),
+    ...theme.mixins.applyBackgroundColor({
+      ownerState: {
+        backgroundColor: 'black'
+      },
+      theme
+    }),
     'gridRow': 6,
     'gridColumnStart': 'full-start',
     'gridColumnEnd': 'full-end',

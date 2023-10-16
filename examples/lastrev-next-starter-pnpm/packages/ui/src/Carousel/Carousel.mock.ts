@@ -13,7 +13,7 @@ export const carouselBaseMock = (override?: Partial<CarouselProps>): CarouselPro
     __typename: 'Collection',
     variant: CarouselVariants.threePerRow,
     itemsPerRow: 3, // This needs to stay aligned with the variant
-    backgroundColor: 'black',
+    // backgroundColor: 'black',
     items: [
       cardBaseMock({ variant: itemsVariant }),
       cardBaseMock({ variant: itemsVariant }),

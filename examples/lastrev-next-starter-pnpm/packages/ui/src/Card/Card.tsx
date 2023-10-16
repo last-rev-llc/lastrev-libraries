@@ -95,7 +95,8 @@ const Card = (props: CardProps) => {
               />
             ) : null}
           </ContentWrap>
-        ) : (
+        ) : null}
+        {loading ? (
           <ContentWrap ownerState={ownerState} data-testid="Card-ContentSkeleton">
             <Overline ownerState={ownerState} variant="overline">
               <Skeleton variant="text" width="100%" />
@@ -113,8 +114,7 @@ const Card = (props: CardProps) => {
               <Skeleton variant="text" width="100%" />
             </Body>
           </ContentWrap>
-        )}
-
+        ) : null}
         {(actions?.length || loading) && (
           <ActionsWrap
             {...sidekick(sidekickLookup, 'actions')}
