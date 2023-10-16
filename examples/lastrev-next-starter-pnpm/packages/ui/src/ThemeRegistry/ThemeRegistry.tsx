@@ -76,12 +76,12 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --h4-font-size: var(--h4-font-size-base);
               --h5-font-size: var(--h5-font-size-base);
               --h6-font-size: var(--h6-font-size-base);
-              --display1-font-size: var(--display-1-font-size-base);
-              --display2-font-size: var(--display-2-font-size-base);
-              --display3-font-size: var(--display-3-font-size-base);
-              --display4-font-size: var(--display-4-font-size-base);
-              --display5-font-size: var(--display-5-font-size-base);
-              --display6-font-size: var(--display-6-font-size-base);
+              --display1-font-size: var(--display1-font-size-base);
+              --display2-font-size: var(--display2-font-size-base);
+              --display3-font-size: var(--display3-font-size-base);
+              --display4-font-size: var(--display4-font-size-base);
+              --display5-font-size: var(--display5-font-size-base);
+              --display6-font-size: var(--display6-font-size-base);
               --overline-font-size: 0.75rem;
               --body1-font-size: 1rem;
               --body2-font-size: 1.125rem;

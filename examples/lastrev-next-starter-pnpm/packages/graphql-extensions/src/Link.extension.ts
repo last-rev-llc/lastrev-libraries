@@ -5,6 +5,7 @@ import type { Mappers, ApolloContext } from '@last-rev/types';
 
 import { createPath } from './utils/createPath';
 import { defaultResolver } from './utils/defaultResolver';
+import { camelCase } from './utils/camelCase';
 
 type TargetMapping = {
   'New Window': string;
