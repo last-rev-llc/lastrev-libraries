@@ -21,6 +21,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
     }
   },
 
+  introText: { gridColumn: 'content-start / content-end' },
+
   contentOuterGrid: ({ theme, ownerState }) => ({
     gridColumn: 'full-start/full-end',
     gridRow: '1/-1',
