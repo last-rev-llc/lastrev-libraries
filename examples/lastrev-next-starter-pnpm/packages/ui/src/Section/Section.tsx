@@ -78,7 +78,7 @@ const ContentWrap = styled(Grid, {
   overridesResolver: (_, styles) => [styles.contentWrap]
 })<{ ownerState: SectionOwnerState }>``;
 
-const IntroTextGrid = styled(Box, {
+const IntroTextGrid = styled(Grid, {
   name: 'Section',
   slot: 'IntroTextGrid',
   overridesResolver: (_, styles) => [styles.introTextGrid]
