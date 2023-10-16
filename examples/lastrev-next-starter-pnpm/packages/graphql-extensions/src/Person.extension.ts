@@ -64,7 +64,14 @@ export const mappers: Mappers = {
       link: async (person: any) => person,
 
       actions: async (person: any, _args: any, ctx: ApolloContext) => {
-        return [person];
+        return [
+          createType('Link', {
+            id: person.id,
+            text: 'Read More',
+            linkedContent: person,
+            variant: 'buttonContained'
+          })
+        ];
       }
     }
   }

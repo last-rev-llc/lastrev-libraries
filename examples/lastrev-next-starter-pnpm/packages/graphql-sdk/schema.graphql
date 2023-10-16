@@ -36,6 +36,7 @@ type Block implements Content {
   overline: String
   sidekickLookup: JSON
   subtitle: String
+  testField: String
   theme: [Theme]
   title: String
   variant: String

@@ -7,6 +7,7 @@ import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { resolveField } from './utils/resolveField';
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
+import { createType } from './utils/createType';
 
 export const typeMappings = {};
 
@@ -45,9 +46,9 @@ export const mappers: Mappers = {
       body: async (page: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(page.fields, 'promoSummary', ctx)),
 
-      media: async (blog: any, _args: any, ctx: ApolloContext) => {
+      media: async (page: any, _args: any, ctx: ApolloContext) => {
         const promoImage =
-          getLocalizedField(blog.fields, 'promoImage', ctx) ?? getLocalizedField(blog.fields, 'mainImage', ctx);
+          getLocalizedField(page.fields, 'promoImage', ctx) ?? getLocalizedField(page.fields, 'mainImage', ctx);
         if (!promoImage) return null;
         return [promoImage];
       },
@@ -55,7 +56,14 @@ export const mappers: Mappers = {
       variant: () => 'default',
 
       actions: async (page: any, _args: any, ctx: ApolloContext) => {
-        return [page];
+        return [
+          createType('Link', {
+            id: page.id,
+            text: 'Read More',
+            linkedContent: page,
+            variant: 'buttonContained'
+          })
+        ];
       }
     }
   }
