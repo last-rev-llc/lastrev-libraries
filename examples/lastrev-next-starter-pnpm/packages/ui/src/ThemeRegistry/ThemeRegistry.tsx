@@ -57,19 +57,32 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
               --section-padding: calc(var(--grid-gap) * 4);
 
-              --h1-font-size: 2.75rem;
-              --h2-font-size: 2.25rem;
-              --h3-font-size: 1.75rem;
-              --h4-font-size: 1.5rem;
-              --h5-font-size: 1.25rem;
-              --h6-font-size: 1rem;
-              --display1-font-size: 3rem;
-              --display2-font-size: 2rem;
-              --display3-font-size: 1.75rem;
-              --display4-font-size: 1.5rem;
-              --display5-font-size: 1.25rem;
-              --display6-font-size: 1rem;
-              --overline-font-size: 0.625rem;
+              --h1-font-size-base: 2.75rem;
+              --h2-font-size-base: 2.25rem;
+              --h3-font-size-base: 1.75rem;
+              --h4-font-size-base: 1.5rem;
+              --h5-font-size-base: 1.25rem;
+              --h6-font-size-base: 1rem;
+              --display1-font-size-base: 3rem;
+              --display2-font-size-base: 2rem;
+              --display3-font-size-base: 1.75rem;
+              --display4-font-size-base: 1.5rem;
+              --display5-font-size-base: 1.25rem;
+              --display6-font-size-base: 1rem;
+
+              --h1-font-size: var(--h1-font-size-base);
+              --h2-font-size: var(--h2-font-size-base);
+              --h3-font-size: var(--h3-font-size-base);
+              --h4-font-size: var(--h4-font-size-base);
+              --h5-font-size: var(--h5-font-size-base);
+              --h6-font-size: var(--h6-font-size-base);
+              --display1-font-size: var(--display-1-font-size-base);
+              --display2-font-size: var(--display-2-font-size-base);
+              --display3-font-size: var(--display-3-font-size-base);
+              --display4-font-size: var(--display-4-font-size-base);
+              --display5-font-size: var(--display-5-font-size-base);
+              --display6-font-size: var(--display-6-font-size-base);
+              --overline-font-size: 0.75rem;
               --body1-font-size: 1rem;
               --body2-font-size: 1.125rem;
               --bodySmall-font-size: 0.75rem;

@@ -8,10 +8,14 @@ import type {
 
 const SUPERNAV_TIMEOUT = '15s';
 
+const menuMobileBreakpoint = 'md';
+
 const defaultProps: ComponentsProps['Header'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   root: ({ theme, ownerState }) => ({
+    'padding': 'var(--grid-gap) 0',
+
     ':is(&, & [class*=navItemSubMenu])': {
       ...theme.mixins.applyBackgroundColor({ ownerState, theme })
     },
@@ -21,27 +25,39 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     }
   }),
 
-  // contentOuterGrid: : {},
+  contentOuterGrid: ({ theme }) => ({
+    [theme.breakpoints.down(menuMobileBreakpoint)]: {
+      rowGap: 0
+    }
+  }),
 
   logoRoot: ({ theme }) => ({
-    gridColumn: 'content-quarter / content-three-quarter',
+    gridColumn: 'content-start / content-half',
     gridRow: 1,
     alignSelf: 'center',
+    width: '100%',
+    height: 'auto',
+    display: 'block',
 
-    [theme.breakpoints.up('md')]: {
+    // '& > svg': {
+    //   'width': 'auto !important',
+    //   'height': 'auto  !important',
+    //   'maxWidth': '100% !important',
+    //   'maxHeight': '100% !important',
+
+    //   '& > svg': {
+    //     fill: '#ffffff',
+    //     width: 'auto !important',
+    //     height: 'auto !important'
+    //   }
+    // },
+
+    [theme.breakpoints.up(menuMobileBreakpoint)]: {
       gridColumn: 'content-start / span 2'
     }
   }),
 
-  logo: ({ isElevated }) => ({
-    width: 'auto',
-    height: !!isElevated ? 20 : 40,
-    margin: 0,
-
-    svg: {
-      fill: '#ffffff'
-    }
-  }),
+  // logo: {},
 
   headerMenuCtas: ({ theme }) => ({
     padding: 0,
@@ -52,7 +68,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     justifySelf: 'flex-end',
     gridRow: 3,
 
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up(menuMobileBreakpoint)]: {
       gridColumnStart: 'eleven-start',
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
@@ -73,26 +89,28 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     flexDirection: 'column',
     transition: 'max-height 500ms ease',
     borderBottom: `solid 2px ${theme.palette.primary.main}`,
-    paddingBottom: theme.spacing(2),
+    paddingTop: 'var(--grid-gap)',
+    paddingBottom: 'var(--grid-gap)',
     gap: theme.spacing(2),
 
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down(menuMobileBreakpoint)]: {
       ...(!menuVisible && {
         maxHeight: 0,
+        paddingTop: 0,
         paddingBottom: 0,
         borderBottomColor: 'transparent'
       })
     },
 
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up(menuMobileBreakpoint)]: {
       display: 'contents'
     }
   }),
 
-  headerMenuCtaItem: ({ theme }) => ({
+  headerMenuCtaItem: {
     padding: 0,
     justifyContent: 'center'
-  }),
+  },
 
   headerMenuNav: ({ theme, ownerState }) => ({
     'justifyItems': 'center',
@@ -105,7 +123,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       color: 'inherit'
     },
 
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up(menuMobileBreakpoint)]: {
       justifyContent: 'flex-start',
       height: 'auto',
       overflow: 'unset',
@@ -117,14 +135,19 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   }),
 
   iconButtonWrap: ({ theme }) => ({
-    padding: 0,
-    display: 'flex',
-    gridColumnStart: 'content-half',
-    gridColumnEnd: 'content-end',
-    gridRow: 1,
-    justifyContent: 'flex-end',
+    'padding': 0,
+    'display': 'flex',
+    'gridColumnStart': 'content-half',
+    'gridColumnEnd': 'content-end',
+    'gridRow': 1,
+    'justifyContent': 'flex-end',
 
-    [theme.breakpoints.up('md')]: {
+    '& > *': {
+      paddingTop: 0,
+      paddingBottom: 0
+    },
+
+    [theme.breakpoints.up(menuMobileBreakpoint)]: {
       display: 'none'
     }
   }),
@@ -149,8 +172,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     flexDirection: 'column',
     width: '100%',
     margin: 'auto',
+    gap: 'var(--grid-gap)',
 
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up(menuMobileBreakpoint)]: {
       height: '100%',
       flexDirection: 'row',
       width: 'auto',

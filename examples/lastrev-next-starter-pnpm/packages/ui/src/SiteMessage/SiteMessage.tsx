@@ -22,7 +22,7 @@ const SiteMessage = (props: SiteMessageProps) => {
         <ContentWrap ownerState={ownerState}>
           {icon && <Icon {...icon} ownerState={ownerState} />}
 
-          <Text __typename="Text" {...text} ownerState={ownerState} />
+          <Text __typename="RichText" {...text} ownerState={ownerState} />
 
           <Link text="Learn More" variant="button-cta3" icon="arrow-right" {...link} ownerState={ownerState} />
         </ContentWrap>

@@ -11,8 +11,8 @@ const defaultProps: ComponentsProps['HeaderNavLink'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
   root: ({ theme, open }) => ({
     'height': '100%',
-    'borderBottom': `solid ${theme.spacing(0.5)} transparent`,
-    'borderTop': `solid ${theme.spacing(0.5)} transparent`,
+    // 'borderBottom': `solid ${theme.spacing(0.5)} transparent`,
+    // 'borderTop': `solid ${theme.spacing(0.5)} transparent`,
     'display': 'flex',
     'flexDirection': 'column',
     'flexGrow': '1',
@@ -43,7 +43,7 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
 
   navItemLink: ({ theme, open }) => ({
     // TODO: Custom Styles
-    'borderTop': `solid 1px ${theme.palette.primary.main}`,
+    // 'borderTop': `solid 1px ${theme.palette.primary.main}`,
 
     'flexGrow': '1',
     'alignItems': 'center',
@@ -54,8 +54,8 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
 
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(1),
-      justifyContent: 'flex-start',
-      borderTop: 'none'
+      justifyContent: 'flex-start'
+      // borderTop: 'none'
     },
 
     // TODO: Standardizxe this across the header links if they're the same

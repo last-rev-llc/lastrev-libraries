@@ -28,7 +28,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
 
     ...((ownerState?.variant === CollectionVariants.twoPerRow ||
       ownerState?.variant === CollectionVariants.threePerRow) && {
-      [theme.containerBreakpoints.up('md')]: {
+      [theme.containerBreakpoints.up('sm')]: {
         gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
       }
     }),

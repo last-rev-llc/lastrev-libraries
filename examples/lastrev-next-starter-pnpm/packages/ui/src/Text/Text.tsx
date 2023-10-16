@@ -36,7 +36,11 @@ const Text = (props: TextProps) => {
         )}
 
         {!!subtitle && (
-          <Subtitle data-testid="Text-subtitle" {...sidekick(sidekickLookup, 'subtitle')} ownerState={ownerState}>
+          <Subtitle
+            data-testid="Text-subtitle"
+            {...sidekick(sidekickLookup, 'subtitle')}
+            ownerState={ownerState}
+            variant="h2">
             {subtitle}
           </Subtitle>
         )}

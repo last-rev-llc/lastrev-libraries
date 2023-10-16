@@ -90,13 +90,15 @@ const Header = (props: HeaderProps) => {
             </HeaderMenuNav>
           )}
 
-          <HeaderMenuCtas ownerState={ownerState}>
-            {ctaItems?.map((ctaItem: any, index: number) => (
-              <HeaderMenuCtaItem key={`${ctaItem.id}-${index}`} ownerState={ownerState}>
-                <ContentModule {...ctaItem} size="small" />
-              </HeaderMenuCtaItem>
-            ))}
-          </HeaderMenuCtas>
+          {!!ctaItems?.length && (
+            <HeaderMenuCtas ownerState={ownerState}>
+              {ctaItems?.map((ctaItem: any, index: number) => (
+                <HeaderMenuCtaItem key={`${ctaItem.id}-${index}`} ownerState={ownerState}>
+                  <ContentModule {...ctaItem} size="small" />
+                </HeaderMenuCtaItem>
+              ))}
+            </HeaderMenuCtas>
+          )}
         </HeaderMobileNavWrap>
 
         <IconButtonWrap ownerState={ownerState}>
