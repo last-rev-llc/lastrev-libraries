@@ -63,8 +63,8 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --h4-font-size-base: 1.5rem;
               --h5-font-size-base: 1.25rem;
               --h6-font-size-base: 1rem;
-              --display1-font-size-base: 2.75rem;
-              --display2-font-size-base: 2.25rem;
+              --display1-font-size-base: 3rem;
+              --display2-font-size-base: 2rem;
               --display3-font-size-base: 1.75rem;
               --display4-font-size-base: 1.5rem;
               --display5-font-size-base: 1.25rem;
@@ -124,13 +124,13 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --bodySmall-margin: 0;
               --bodyLarge-margin: 0;
 
-              --h1-font-weight: 300;
-              --h2-font-weight: 300;
-              --h3-font-weight: 300;
-              --h4-font-weight: 300;
-              --h5-font-weight: 300;
-              --h6-font-weight: 300;
-              --display1-font-weight: 300;
+              --h1-font-weight: 700;
+              --h2-font-weight: 700;
+              --h3-font-weight: 700;
+              --h4-font-weight: 700;
+              --h5-font-weight: 700;
+              --h6-font-weight: 700;
+              --display1-font-weight: 700;
               --display2-font-weight: 400;
               --display3-font-weight: 400;
               --display4-font-weight: 400;
