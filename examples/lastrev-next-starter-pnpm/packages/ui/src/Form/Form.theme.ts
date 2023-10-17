@@ -11,232 +11,162 @@ const defaultProps: ComponentsProps['Form'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
   root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    'containerType': 'inline-size',
+    'position': 'relative',
     'width': '100%',
+    'display': 'flex',
+    'flexDirection': 'column',
 
-    ...((ownerState?.variant === 'hubspotFormDefault' || ownerState?.variant === 'hubspotFormDefaultThin') && {
-      padding: theme.spacing(2),
-
-      [theme.containerBreakpoints.up('md')]: {
-        padding: theme.spacing(10, 4, 8, 0)
-      },
-
-      [theme.containerBreakpoints.up('lg')]: {
-        padding: theme.spacing(18, 4, 16, 0)
-      }
-    }),
+    '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
+      padding: 'var(--grid-gap)',
+      paddingTop: 0
+    },
 
     '& form': {
+      'border': 'solid 10px blue',
       'display': 'grid',
-      'gap': theme.spacing(3),
-
-      ...(ownerState?.variant === 'hubspotFormSidebar' && {
-        gap: theme.spacing(2)
-      }),
-
-      ...(ownerState?.variant === 'hubspotFormFooter' && {
-        gap: theme.spacing(2),
-
-        [theme.containerBreakpoints.up('md')]: {
-          gridTemplateColumns: 'auto min-content',
-          gap: theme.spacing(0.5)
-        },
-
-        [theme.containerBreakpoints.up('lg')]: {
-          gridTemplateColumns: 'repeat(auto-fit, minmax(0, min-content))',
-          gap: theme.spacing(5.75)
-        }
-      }),
+      'gap': 'var(--grid-gap)',
 
       '& .hs-recaptcha': {
         display: 'none'
       },
 
       '& fieldset': {
-        'maxWidth': '100%',
-        'display': 'grid',
-        'margin': 0,
+        maxWidth: '100%',
+        display: 'grid',
+        margin: 0,
 
-        ...((ownerState?.variant === 'hubspotFormDefault' || ownerState?.variant === 'hubspotFormDefaultThin') && {
-          grid: 'none',
-          gap: theme.spacing(3),
+        grid: 'none',
+        gap: 'var(--grid-gap)',
 
-          [theme.containerBreakpoints.up('lg')]: {
-            gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))',
+        [theme.containerBreakpoints.up('lg')]: {
+          gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))'
+        }
+      },
 
-            ...(ownerState?.variant === 'hubspotFormDefaultThin' && {
-              gridTemplateColumns: 'initial'
-            })
-          }
-        }),
+      '& .field.hs-form-field': {
+        'marginRight': 0,
+        'position': 'relative',
+        'width': '100%',
+        'float': 'none',
+        'background': 'transparent',
 
-        ...(ownerState?.variant === 'hubspotFormSidebar' && {
-          grid: 'none',
-          gap: theme.spacing(2),
-
-          [theme.containerBreakpoints.up('md')]: {
-            gridTemplateColumns: 'initial'
-          }
-        }),
-
-        ...(ownerState?.variant === 'hubspotFormFooter' && {
-          grid: 'none',
-          gap: theme.spacing(2),
-
-          [theme.containerBreakpoints.up('md')]: {
-            grid: 'initial',
-            gridTemplateColumns: 'minmax(150px, max-content) minmax(150px, max-content)',
-
-            gap: theme.spacing(0.5)
-          },
-
-          [theme.containerBreakpoints.up('lg')]: {
-            gridTemplateColumns: 'minmax(250px, max-content) minmax(250px, max-content)',
-            gap: theme.spacing(1)
-          }
-        }),
-
-        '& .field.hs-form-field': {
+        '& .input': {
           'marginRight': 0,
-          'position': 'relative',
-          'width': '100%',
-          'float': 'none',
-          'background': 'transparent',
 
-          '& .input': {
-            'marginRight': 0,
+          '& .hs-input': {
+            'width': '100%',
+            'maxWidth': '100%',
+            'padding': theme.spacing(2),
+            'color': 'blue', //theme.palette.text.text,
+            'border': `solid 2px ${theme.palette.common.black}`,
+            'borderRadius': theme.spacing(0.5),
 
-            '& .hs-input': {
-              'width': '100%',
-              'maxWidth': '100%',
-              'padding': theme.spacing(2),
-              'color': theme.palette.grey[700],
-
-              ...(ownerState?.variant !== 'hubspotFormFooter' && {
-                border: `solid 2px ${theme.palette.grey[300]}`,
-                borderRadius: theme.spacing(0.5)
-              }),
-
-              ...(ownerState?.variant === 'hubspotFormFooter' && {
-                border: 'none',
-                borderBottom: `solid 2px ${theme.palette.common.white}`,
-                fontSize: theme.typography.body1
-              }),
-
-              '&:hover': {
-                borderColor: theme.palette.grey[300],
-                boxShadow: theme.shadows[1]
-              },
-
-              '&:focus': {
-                borderColor: theme.palette.primary.main,
-                boxShadow: theme.shadows[1]
-              },
-
-              '&:focus-visible': {
-                outline: `${theme.palette.primary.main} auto 0px`
-              }
+            '&:hover': {
+              borderColor: theme.palette.common.black,
+              boxShadow: theme.shadows[1]
             },
 
-            'input': {
-              '&': {
-                ...theme.typography.bodySmall,
-
-                height: 'auto',
-
-                ...(ownerState?.variant !== 'hubspotFormFooter' && {
-                  '&::placeholder': {
-                    opacity: 0.7
-                  }
-                }),
-
-                ...(ownerState?.variant === 'hubspotFormFooter' && {
-                  backgroundColor: 'transparent',
-                  padding: theme.spacing(1)
-                })
-              }
+            '&:focus': {
+              borderColor: theme.palette.common.black,
+              boxShadow: theme.shadows[1]
             },
 
-            'textarea': {
+            '&:focus-visible': {
+              outline: `${theme.palette.common.black} auto 0px`
+            }
+          },
+
+          'input': {
+            '&': {
+              ...theme.typography.bodySmall,
+              'height': 'auto',
+
+              '&::placeholder': {
+                opacity: 0.7
+              }
+            }
+          },
+
+          'textarea': {
+            ...theme.typography.bodySmall,
+            'height': 300,
+            'maxHeight': '80vh',
+
+            '&::placeholder': {
+              opacity: 0.7
+            }
+          },
+
+          'select': {
+            '&': {
               ...theme.typography.bodySmall,
 
-              ...(ownerState?.variant !== 'hubspotFormFooter' && {
-                'height': 300,
-                'maxHeight': '80vh',
+              'appearance': 'none',
+              'backgroundImage':
+                'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxNyAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gXAogICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMS45OTc1IDAuNzM3NTQ5TDguNSA2LjQ2MjU1TDE1LjAwMjUgMC43Mzc1NDlMMTcgMi41MDAwNUw4LjUgMTBMMCAyLjUwMDA1TDEuOTk3NSAwLjczNzU0OVoiIGZpbGw9IiNBNEE0QTQiLz4gXAogICAgICAgICAgICAgICAgICAgIDwvc3ZnPg==)',
+              'backgroundPosition': 'right center',
+              'backgroundRepeat': 'no-repeat',
+              'backgroundSize': 17,
+              'backgroundOrigin': 'content-box',
 
-                '&::placeholder': {
-                  opacity: 0.7
-                }
-              }),
-
-              ...(ownerState?.variant === 'hubspotFormSidebar' && {
-                height: 150,
-                maxHeight: '40vh'
-              })
-            },
-
-            'select': {
-              '&': {
-                ...theme.typography.bodySmall,
-
-                'appearance': 'none',
-                'backgroundImage':
-                  'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxNyAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gXAogICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMS45OTc1IDAuNzM3NTQ5TDguNSA2LjQ2MjU1TDE1LjAwMjUgMC43Mzc1NDlMMTcgMi41MDAwNUw4LjUgMTBMMCAyLjUwMDA1TDEuOTk3NSAwLjczNzU0OVoiIGZpbGw9IiNBNEE0QTQiLz4gXAogICAgICAgICAgICAgICAgICAgIDwvc3ZnPg==)',
-                'backgroundPosition': 'right center',
-                'backgroundRepeat': 'no-repeat',
-                'backgroundSize': 17,
-                'backgroundOrigin': 'content-box',
-
-                '&.is-placeholder': {
-                  color: alpha(theme.palette.grey[700], 0.7)
-                }
+              '&.is-placeholder': {
+                color: alpha(theme.palette.common.black, 0.7)
               }
-            },
-
-            '&.error': {
-              borderColor: theme.palette.error.main,
-              borderWidth: 1
             }
+          },
+
+          '&.error': {
+            borderColor: theme.palette.error.main,
+            borderWidth: 1
           }
+        }
+      },
+      '& .hs-fieldtype-checkbox.field.hs-form-field': {
+        'ul': {
+          listStyleType: 'none',
+          padding: 0
         },
-        '& .hs-fieldtype-checkbox.field.hs-form-field': {
-          'ul': {
-            listStyleType: 'none',
-            padding: 0
+
+        '& .hs-form-checkbox': {
+          width: 'fit-content',
+          marginBottom: 'var(--grid-gap)'
+        },
+
+        '& .hs-form-checkbox-display': {
+          'display': 'flex',
+          'alignItems': 'center',
+          'cursor': 'pointer',
+
+          '& .hs-input': {
+            visibility: 'hidden',
+            width: 20,
+            height: 20,
+            padding: 0,
+            margin: 0
           },
-          '& .hs-form-checkbox': {
-            width: 'fit-content',
-            marginBottom: theme.spacing(3)
+
+          '& span': {
+            ...theme.typography.bodySmall,
+            color: theme.palette.common.black,
+            paddingLeft: 'var(--grid-gap)'
           },
-          '& .hs-form-checkbox-display': {
-            'display': 'flex',
-            'alignItems': 'center',
-            'cursor': 'pointer',
-            '& .hs-input': {
-              visibility: 'hidden',
-              width: 20,
-              height: 20,
-              padding: 0,
-              margin: 0
-            },
-            '& span': {
-              ...theme.typography.bodySmall,
-              color: theme.palette.grey[600],
-              paddingLeft: theme.spacing(1)
-            },
-            "& input[type='checkbox']::before": {
-              width: 20,
-              height: 20,
-              position: 'absolute',
-              cursor: 'pointer',
-              backgroundImage:
-                'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSIxOSIgaGVpZ2h0PSIxOSIgcng9IjEuNSIgc3Ryb2tlPSIjQkVCRUJFIi8+Cjwvc3ZnPgo=)',
-              content: '""',
-              visibility: 'visible'
-            },
-            "& input[type='checkbox']:checked::before": {
-              backgroundImage:
-                'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSIxOSIgaGVpZ2h0PSIxOSIgcng9IjEuNSIgZmlsbD0iIzA1ODBFOCIvPgo8cmVjdCB4PSIwLjUiIHk9IjAuNSIgd2lkdGg9IjE5IiBoZWlnaHQ9IjE5IiByeD0iMS41IiBzdHJva2U9IiNCRUJFQkUiLz4KPHBhdGggZD0iTTE2Ljk1NTEgNi40NzYxMkwxNS4zODc4IDVMNy45MTI3NCAxMi4wNDc2TDQuNTY3MjcgOC44OTMzMkwzIDEwLjM2OTRMNy45MTI3NyAxNUwxNi45NTUxIDYuNDc2MTJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K)'
-            }
+
+          "& input[type='checkbox']::before": {
+            width: 20,
+            height: 20,
+            position: 'absolute',
+            cursor: 'pointer',
+            backgroundImage:
+              'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSIxOSIgaGVpZ2h0PSIxOSIgcng9IjEuNSIgc3Ryb2tlPSIjQkVCRUJFIi8+Cjwvc3ZnPgo=)',
+            content: '""',
+            visibility: 'visible'
+          },
+
+          "& input[type='checkbox']:checked::before": {
+            backgroundImage:
+              'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSIxOSIgaGVpZ2h0PSIxOSIgcng9IjEuNSIgZmlsbD0iIzA1ODBFOCIvPgo8cmVjdCB4PSIwLjUiIHk9IjAuNSIgd2lkdGg9IjE5IiBoZWlnaHQ9IjE5IiByeD0iMS41IiBzdHJva2U9IiNCRUJFQkUiLz4KPHBhdGggZD0iTTE2Ljk1NTEgNi40NzYxMkwxNS4zODc4IDVMNy45MTI3NCAxMi4wNDc2TDQuNTY3MjcgOC44OTMzMkwzIDEwLjM2OTRMNy45MTI3NyAxNUwxNi45NTUxIDYuNDc2MTJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K)'
           }
         }
       },
@@ -245,9 +175,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         '& input': {
           ...theme.typography.bodySmall,
 
-          'backgroundColor': theme.palette.primary.main,
-          'color': theme.palette.common.white,
-          'border': `3px solid ${theme.palette.primary.main}`,
+          'backgroundColor': theme.palette.common.white,
+          'color': theme.palette.common.black,
+          'border': `3px solid ${theme.palette.common.black}`,
           'padding': theme.spacing(0.625, 2.625), // Substract border
           'borderRadius': theme.spacing(0.5),
           'textDecoration': 'none',
@@ -255,18 +185,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
 
           '&:hover': {
             borderColor: theme.palette.common.black,
-            backgroundColor: theme.palette.primary.main
+            backgroundColor: theme.palette.common.white
           },
 
           '&:active': {
-            backgroundColor: theme.palette.secondary.main,
+            backgroundColor: theme.palette.common.white,
             borderColor: theme.palette.common.black
-          },
-
-          [theme.containerBreakpoints.up('md')]: {
-            ...(ownerState?.variant === 'hubspotFormFooter' && {
-              width: 'auto%'
-            })
           }
         }
       },
@@ -289,29 +213,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         }
       }
     }
-  }),
-
-  formOuterContainer: ({ theme, ownerState }) => ({
-    ...((ownerState?.variant === 'hubspotFormDefault' || ownerState?.variant === 'hubspotFormDefaultThin') && {
-      padding: theme.spacing(4, 3),
-      backgroundColor: theme.palette.grey[100],
-      border: `solid 2px ${theme.palette.grey[200]}`,
-      borderRadius: 12
-    }),
-
-    ...(ownerState?.variant === 'hubspotFormSidebar' && {
-      padding: theme.spacing(2, 0, 6, 0),
-      backgroundColor: theme.palette.grey[200],
-      borderRadius: 8
-    })
-  }),
-
-  formContainer: ({ theme, ownerState }) => ({
-    display: ownerState?.submitted && ownerState?.hasSuccessMessage ? 'none' : 'block',
-    ...(ownerState?.variant === 'hubspotFormFooter' && {
-      marginTop: theme.spacing(1.5)
-    })
   })
+
+  // formContainer: ({ theme, ownerState }) => ({
+  //   display: ownerState?.submitted && ownerState?.hasSuccessMessage ? 'none' : 'block'
+  // })
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Form'] => [];

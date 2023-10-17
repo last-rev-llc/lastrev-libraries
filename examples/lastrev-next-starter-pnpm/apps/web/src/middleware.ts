@@ -2,16 +2,17 @@ import { NextResponse } from 'next/server';
 
 export function middleware() {
   const cspHeader = `
-    default-src 'self'  *.sentry.io  *.facebook.com vitals.vercel-insights.com;
-    style-src 'self' 'unsafe-inline'  *.sentry.io  fonts.googleapis.com vitals.vercel-insights.com;
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' *.sentry.io  *.google-analytics.com *.googletagmanager.com vitals.vercel-insights.com;
-    font-src 'self'  *.sentry.io  fonts.gstatic.com data:;
+    default-src 'self'  *.sentry.io  *.facebook.com vitals.vercel-insights.com *.hubapi.com *.hsforms.com *.hs-scripts.com *.hsforms.net *.hscollectedforms.net;
+    style-src 'self' 'unsafe-inline'  *.sentry.io  fonts.googleapis.com vitals.vercel-insights.com *.hs-scripts.com *.hsforms.net;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' *.sentry.io  *.google-analytics.com *.googletagmanager.com vitals.vercel-insights.com *.hs-analytics.net *.hs-banner.com *.hsadspixel.net *.hscollectedforms.net *.jquery.com *.hs-scripts.com *.hsforms.net;
+    font-src 'self'  *.sentry.io  fonts.gstatic.com *.hs-scripts.com *.hsforms.net data:;
+    frame-src  https://forms.hsforms.com;
     img-src * data:;
     media-src * data:;
     object-src 'none';
     base-uri 'self';
     form-action 'self';
-    frame-ancestors 'none';
+    frame-ancestors https://app.contentful.com https://lastrev.com https://lr-live-editor.netlify.app;
     block-all-mixed-content;
     upgrade-insecure-requests;
 `;

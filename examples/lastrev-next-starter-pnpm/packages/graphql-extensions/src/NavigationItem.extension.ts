@@ -55,6 +55,10 @@ export const mappers = {
       //   return mediaRef;
       // },
       href: hrefUrlResolver
+    },
+    Link: {
+      href: hrefUrlResolver,
+      variant: defaultResolver('variant')
     }
   }
 };

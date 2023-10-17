@@ -15,6 +15,7 @@ const Grid = ({ children, overrideNested, ...props }: GridProps) => {
 const Root = styled('div', {
   name: 'Grid',
   slot: 'Root',
+  shouldForwardProp: (prop: string) => prop !== 'overrideNested' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.root]
 })<{ variant?: string; colorScheme?: string; overrideNested?: boolean }>``;
 

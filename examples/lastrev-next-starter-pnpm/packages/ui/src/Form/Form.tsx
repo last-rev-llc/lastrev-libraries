@@ -1,49 +1,65 @@
 import React from 'react';
 
-// import dynamic from 'next/dynamic';
+import dynamic from 'next/dynamic';
 import Head from 'next/head';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-// import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from '@mui/material/CircularProgress';
 
-import type { FormProps } from './Form.types';
+import sidekick from '@last-rev/contentful-sidekick-util';
 
-// TODO: Remove hubspot form or make new component?
+import Background from '../Background';
+import Grid from '../Grid';
+import ContentModule from '../ContentModule';
+
+import type { FormProps, FormOwnerState } from './Form.types';
+
 // @ts-ignore
-// const HSForm = dynamic(() => import('react-hubspot-form'), { ssr: false });
+const HSForm = dynamic(() => import('react-hubspot-form'), { ssr: false });
 
-const Form = ({ settings, variant }: FormProps) => {
+const Form = (props: FormProps) => {
   const [submitted, setSubmitted] = React.useState(false);
-  const ownerState = { variant, submitted, hasSuccessMessage: false };
+  const ownerState = { ...props, submitted, hasSuccessMessage: false };
+
+  const { hubspotPortalId, hubspotFormId, background, backgroundColor, introText, sidekickLookup } = props;
   const handleSubmit = () => {
     setSubmitted(true);
   };
 
-  // const { portalId, formId } = settings;
-
   return (
     <Root ownerState={ownerState}>
-      <FormOuterContainer ownerState={ownerState}>
-        <Head>
-          <script async type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" />
-        </Head>
-        {/* @ts-ignore */}
-        <FormContainer ownerState={ownerState}>
-          {/* <HSForm
+      <Head>
+        <script async type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" />
+      </Head>
+      <FormBackground background={background} backgroundColor={backgroundColor} testId="Form-background" />
+
+      {!!introText && (
+        <IntroTextGrid ownerState={ownerState}>
+          <IntroText
+            ownerState={ownerState}
+            {...sidekick(sidekickLookup, 'introText')}
+            {...introText}
+            variant="introText"
+          />
+        </IntroTextGrid>
+      )}
+
+      <ContentOuterGrid ownerState={ownerState}>
+        <MainContentWrap ownerState={ownerState}>
+          <HSForm
             //   @ts-ignore
-            portalId={portalId}
-            formId={formId}
+            portalId={hubspotPortalId}
+            formId={hubspotFormId}
             onSubmit={() => {
               // react-hubspot-form expects this callback to  be here and will throw an error if not found
-               
-             }}
+            }}
             onFormSubmitted={handleSubmit}
             inlineMessage={'Thanks for submitting!'}
             loading={<CircularProgress />}
-          /> */}
-        </FormContainer>
-      </FormOuterContainer>
+          />
+        </MainContentWrap>
+      </ContentOuterGrid>
     </Root>
   );
 };
@@ -52,18 +68,36 @@ const Root = styled(Box, {
   name: 'Form',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
-})<{ ownerState?: any }>``;
+})<{ ownerState: FormOwnerState }>``;
 
-const FormOuterContainer = styled(Box, {
+const FormBackground = styled(Background, {
   name: 'Form',
-  slot: 'FormOuterContainer',
-  overridesResolver: (_, styles) => [styles.formOuterContainer]
-})<{ ownerState?: any }>``;
+  slot: 'Background',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
 
-const FormContainer = styled(Box, {
+const ContentOuterGrid = styled(Grid, {
   name: 'Form',
-  slot: 'FormContainer',
-  overridesResolver: (_, styles) => [styles.formContainer]
-})(() => ({}));
+  slot: 'ContentOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentOuterGrid]
+})<{ ownerState: FormOwnerState }>``;
+
+const MainContentWrap = styled('div', {
+  name: 'Block',
+  slot: 'MainContentWrap',
+  overridesResolver: (_, styles) => [styles.mainContentWrap]
+})<{ ownerState: FormOwnerState }>``;
+
+const IntroTextGrid = styled(Grid, {
+  name: 'Form',
+  slot: 'IntroTextGrid',
+  overridesResolver: (_, styles) => [styles.introTextGrid]
+})<{ ownerState: FormOwnerState }>``;
+
+const IntroText = styled(ContentModule, {
+  name: 'Form',
+  slot: 'IntroText',
+  overridesResolver: (_, styles) => [styles.introText]
+})<{ ownerState: FormOwnerState }>``;
 
 export default Form;

@@ -23,7 +23,6 @@ type Asset {
 }
 
 type Block implements Content {
-  actions: [Link]
   animation: JSON
   asset: Media
   backgroundColor: String
@@ -31,9 +30,6 @@ type Block implements Content {
   body: RichText
   id: String
   internalTitle: String
-  introText: Text
-  link: Link
-  mediaItems: [Media]
   overline: String
   sidekickLookup: JSON
   subtitle: String
@@ -222,14 +218,20 @@ scalar Date
 
 type ElementForm implements Content {
   animation: JSON
+  breadcrumbs: [Link]
   confirmationPath: String
+  contents: [Content]
+  footer: Footer
   footerDisclaimerOverride: RichText
+  header: Header
+  hero: Hero
   hubspotFormId: String
   hubspotPortalId: String
   id: String
   internalTitle: String
   introText: Text
   lr__path__: String
+  path: String
   seo: JSON
   sidekickLookup: JSON
   slug: String

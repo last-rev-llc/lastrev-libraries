@@ -34,7 +34,6 @@ fragment Blog_CardFragment on Blog {
   featuredMedia {
     ...Media_BaseFragment
   }
-
   promoImage {
     ...Media_BaseFragment
   }
