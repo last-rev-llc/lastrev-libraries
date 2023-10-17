@@ -159,7 +159,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
     [theme.breakpoints.up('xl')]: {
       // gridGap: 'var(--grid-gap-xl)',
       gridTemplateColumns: `
-        [full-start] minmax(var(--grid-margin-xl), calc(50vw - calc((${theme.containerBreakpoints.values.xl}px / 1.25) - var(--grid-margin-xl))))
+        [full-start] minmax(var(--grid-margin-xl), calc(50vw - calc((${theme.containerBreakpoints.values.xl}px / 2) - var(--grid-margin-xl))))
         [one-start content-start] minmax(0, 1fr)
         [one-end two-start] minmax(0, 1fr)
         [two-end three-start] minmax(0, 1fr)
@@ -172,7 +172,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
         [nine-end ten-start content-three-quarter] minmax(0, 1fr)
         [ten-end eleven-start] minmax(0, 1fr)
         [eleven-end twelve-start] minmax(0, 1fr)
-        [twelve-end content-end] minmax(var(--grid-margin-xl), calc(50vw - calc((${theme.containerBreakpoints.values.xl}px / 1.25) - var(--grid-margin-xl))))
+        [twelve-end content-end] minmax(var(--grid-margin-xl), calc(50vw - calc((${theme.containerBreakpoints.values.xl}px / 2) - var(--grid-margin-xl))))
         [full-end] 
       `
     }

@@ -11,12 +11,12 @@ import { CardVariants } from './Card.types';
 const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
-  root: {
+  root: ({ ownerState }) => ({
     'containerType': 'inline-size',
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
-    'willChange': 'transform',
-    'transform': 'translateZ(0) scale(0.95)',
+    // 'willChange': 'transform',
+    // 'transform': 'translateZ(0) scale(0.95)',
     'display': 'flex',
     'flexDirection': 'column',
     'height': '100%',
@@ -31,32 +31,43 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
       '&:hover': {
         transform: 'scale(1.05)'
       }
-    }
-  },
+    },
+    ...(ownerState?.variant === CardVariants.icon && {
+      alignItems: 'center'
+    })
+  }),
 
-  contentWrap: {
-    flex: 1,
-    padding: 'var(--grid-gap)'
-  },
+  // contentWrap: {
+  //   flex: 1,
+  //   padding: 'var(--grid-gap)'
+  // },
+  title: ({ ownerState, theme }) => ({
+    ...(ownerState?.variant === CardVariants.icon && {
+      ...theme.typography.h3
+    }),
+    ...(ownerState?.variant === CardVariants.blog && {
+      ...theme.typography.body1
+    }),
+    fontWeight: 'bold'
+  }),
 
   actionsWrap: ({ theme }) => ({
-    padding: 'var(--grid-gap)',
-    display: 'flex',
-    gap: 'var(--grid-gap)',
-    flexDirection: 'column',
-    alignItems: 'center',
-
-    // TODO: Need additional breakpoints here
-    [theme.containerBreakpoints.up('sm')]: {
-      flexDirection: 'row'
-    }
+    // display: 'flex'
+    // padding: 'var(--grid-gap)',
+    // gap: 'var(--grid-gap)'
+    // flexDirection: 'column',
+    // alignItems: 'center',
+    // // TODO: Need additional breakpoints here
+    // [theme.containerBreakpoints.up('sm')]: {
+    //   flexDirection: 'row'
+    // }
   }),
 
   link: {
     'position': 'absolute',
     'top': 0,
     'left': 0,
-    'zIndex': -1,
+    // 'zIndex': -1,
     'width': '100%',
     'height': '100%',
     '&:hover': {

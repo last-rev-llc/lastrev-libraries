@@ -27,6 +27,7 @@ type Block implements Content {
   animation: JSON
   asset: Media
   backgroundColor: String
+  backgroundImage: Media
   body: RichText
   id: String
   internalTitle: String

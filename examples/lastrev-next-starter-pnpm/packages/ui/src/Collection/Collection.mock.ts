@@ -11,7 +11,7 @@ export const collectionBaseMock = (override?: Partial<CollectionProps>): Collect
     id: randomId(),
     __typename: 'Collection',
     variant: CollectionVariants.threePerRow,
-    backgroundColor: 'black',
+    // backgroundColor: 'black',
     items: [
       cardBaseMock({ variant: override?.itemsVariant }),
       cardBaseMock({ variant: override?.itemsVariant }),

@@ -80,18 +80,18 @@ export const mappers: Mappers = {
 
       variant: () => 'default',
 
-      link: async (blog: any) => blog,
+      link: async (blog: any) => blog
 
-      actions: async (blog: any, _args: any, ctx: ApolloContext) => {
-        return [
-          createType('Link', {
-            id: blog.id,
-            text: 'Read More',
-            linkedContent: blog,
-            variant: 'buttonContained'
-          })
-        ];
-      }
+      // actions: async (blog: any, _args: any, ctx: ApolloContext) => {
+      //   return [
+      //     createType('Link', {
+      //       id: blog.id,
+      //       text: 'Read More',
+      //       linkedContent: blog,
+      //       variant: 'buttonContained'
+      //     })
+      //   ];
+      // }
     }
   }
 };

@@ -32,7 +32,6 @@ const pageDefaultMock: PageProps = {
 
     sectionBaseMock({
       variant: 'twoPerRow',
-      backgroundColor: 'black',
       background: null, //mediaBaseImageMock(),
       contents: [carouselBaseMock({ introText: undefined }), tabsBaseMock({ introText: undefined })]
     })

@@ -66,7 +66,8 @@ const Card = (props: CardProps) => {
             {title ? (
               <Title
                 {...sidekick(sidekickLookup, 'title')}
-                variant="display5"
+                component="p"
+                variant="h3"
                 data-testid="Card-title"
                 // @ts-ignore: TODO
                 ownerState={ownerState}>
@@ -77,7 +78,8 @@ const Card = (props: CardProps) => {
             {subtitle ? (
               <Subtitle
                 {...sidekick(sidekickLookup, 'subtitle')}
-                variant="display6"
+                component="p"
+                variant="h4"
                 data-testid="Card-subtitle"
                 // @ts-ignore: TODO
                 ownerState={ownerState}>
@@ -95,7 +97,8 @@ const Card = (props: CardProps) => {
               />
             ) : null}
           </ContentWrap>
-        ) : (
+        ) : null}
+        {loading ? (
           <ContentWrap ownerState={ownerState} data-testid="Card-ContentSkeleton">
             <Overline ownerState={ownerState} variant="overline">
               <Skeleton variant="text" width="100%" />
@@ -113,8 +116,7 @@ const Card = (props: CardProps) => {
               <Skeleton variant="text" width="100%" />
             </Body>
           </ContentWrap>
-        )}
-
+        ) : null}
         {(actions?.length || loading) && (
           <ActionsWrap
             {...sidekick(sidekickLookup, 'actions')}
