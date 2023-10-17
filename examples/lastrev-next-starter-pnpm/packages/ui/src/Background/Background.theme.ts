@@ -17,9 +17,31 @@ const styleOverrides: ComponentsOverrides<Theme>['Background'] = {
     'left': 0,
     'right': 0,
     'bottom': 0,
-    'overflow': 'hidden',
+    // 'overflow': 'hidden',
     'width': '100%',
     'height': '100%',
+
+    '&::before': {
+      content: '""',
+      position: 'absolute',
+      width: 'var(--grid-margin)',
+      height: 'calc(var(--grid-margin) * 1.5)',
+      left: 0,
+      top: 'calc(var(--grid-margin) * -1.5)',
+      background: 'inherit',
+      zIndex: 20
+    },
+
+    '&::after': {
+      content: '""',
+      position: 'absolute',
+      width: 'var(--grid-margin)',
+      height: 'calc(var(--grid-margin) * 1.5)',
+      right: 0,
+      top: 'calc(var(--grid-margin) * -1.5)',
+      background: 'inherit',
+      zIndex: 20
+    },
 
     '> *': {
       'gridColumn': '1/-1',

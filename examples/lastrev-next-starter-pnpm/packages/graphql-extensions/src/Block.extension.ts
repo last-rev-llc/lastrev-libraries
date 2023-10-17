@@ -13,7 +13,7 @@ export const typeDefs = gql`
     mediaItems: [Media]
     actions: [Link]
     link: Link
-    backgroundColor: String
+    backgroundImage: Media
   }
 `;
 

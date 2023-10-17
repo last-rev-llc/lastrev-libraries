@@ -1,5 +1,6 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import type { ApolloContext } from '@last-rev/types';
+import { defaultResolver } from './utils/defaultResolver';
 
 // This is a example of a extension to normalize the color values from the CMS
 // Lowercase the color and remove anything after the first _
@@ -21,13 +22,55 @@ export const colorResolver = (field: string, root?: true) => async (quote: any, 
 export const mappers = {
   Link: {
     Link: {
-      backgroundColor: colorResolver('backgroundColor'),
+      backgroundColor: defaultResolver('backgroundColor'),
       color: colorResolver('color', true)
     }
   },
   Hero: {
     Hero: {
-      backgroundColor: colorResolver('backgroundColor'),
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
+  },
+  Block: {
+    Block: {
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
+  },
+  Collection: {
+    Collection: {
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
+  },
+  CollectionExpandable: {
+    CollectionExpandable: {
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
+  },
+  Header: {
+    Header: {
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
+  },
+  Footer: {
+    Footer: {
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
+  },
+  Form: {
+    Form: {
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
+  },
+  Section: {
+    Section: {
+      backgroundColor: defaultResolver('backgroundColor'),
       color: colorResolver('color', true)
     }
   }

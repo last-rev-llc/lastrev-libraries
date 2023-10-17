@@ -1,3 +1,7 @@
+TransparentDark and TransparentLight
+Quick Supplemental Body on Block?
+Icons for links?
+
 # TODO
 
 [x] Implement 404 for non generated pages
