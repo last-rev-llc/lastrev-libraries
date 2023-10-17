@@ -15,7 +15,8 @@ import type { HeroProps, HeroOwnerState } from './Hero.types';
 const Hero = (props: HeroProps) => {
   const ownerState = { ...props };
 
-  const { background, backgroundColor, overline, title, subtitle, body, actions, images, sidekickLookup } = props;
+  const { background, backgroundColor, variant, overline, title, subtitle, body, actions, images, sidekickLookup } =
+    props;
 
   return (
     <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>

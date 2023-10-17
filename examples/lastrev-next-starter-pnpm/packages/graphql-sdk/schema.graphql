@@ -23,7 +23,6 @@ type Asset {
 }
 
 type Block implements Content {
-  actions: [Link]
   animation: JSON
   asset: Media
   backgroundColor: String
@@ -31,13 +30,9 @@ type Block implements Content {
   body: RichText
   id: String
   internalTitle: String
-  introText: Text
-  link: Link
-  mediaItems: [Media]
   overline: String
   sidekickLookup: JSON
   subtitle: String
-  supplementalContent: Content
   theme: [Theme]
   title: String
   variant: String
