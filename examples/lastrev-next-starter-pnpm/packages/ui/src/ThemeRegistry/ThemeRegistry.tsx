@@ -21,11 +21,11 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
             }
 
             :root {
-              --grid-margin-xs: 8px;
-              --grid-margin-sm: 32px;
-              --grid-margin-md: 48px;
-              --grid-margin-lg: 64px;
-              --grid-margin-xl: 80px;
+              --grid-margin-xs: 16px;
+              --grid-margin-sm: 64px;
+              --grid-margin-md: 96px;
+              --grid-margin-lg: 128px;
+              --grid-margin-xl: 160px;
 
               --grid-gap-xs: var(--grid-margin-xs);
               --grid-gap-sm: calc(var(--grid-margin-sm) / 2);
