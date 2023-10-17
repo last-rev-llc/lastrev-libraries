@@ -23,6 +23,7 @@ const Block = (props: BlockProps) => {
     title,
     subtitle,
     body,
+    supplementalContent,
     mediaItems,
     actions,
     sidekickLookup
@@ -96,12 +97,23 @@ const Block = (props: BlockProps) => {
               )}
             </MainContentWrap>
           ) : null}
-
-          {!!mediaItems && (
+          {/* <SideContentWrap ownerState={ownerState}>
+            <ContentModule {...supplementalContent} __typename="ElementForm" />
+          </SideContentWrap> */}
+          {(!!mediaItems?.length || supplementalContent) && (
             <SideContentWrap ownerState={ownerState}>
-              {mediaItems.map((media) => (
-                <Media ownerState={ownerState} key={media?.id} {...sidekick(sidekickLookup, 'mediaItems')} {...media} />
-              ))}
+              {!!mediaItems?.length ? (
+                mediaItems.map((media) => (
+                  <Media
+                    ownerState={ownerState}
+                    key={media?.id}
+                    {...sidekick(sidekickLookup, 'mediaItems')}
+                    {...media}
+                  />
+                ))
+              ) : (
+                <ContentModule {...supplementalContent} __typename="ElementForm" />
+              )}
             </SideContentWrap>
           )}
         </ContentOuterGrid>

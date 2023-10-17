@@ -27,6 +27,10 @@ fragment ContentModule_BlogFragment on Content {
   ...Blog_BaseFragment
 }
 
+fragment ContentModule_FormFragment on Content {
+  ...Form_PageFragment
+}
+
 fragment ContentModule_SectionFragment on Content {
   ...Content_BaseFragment
   #...Card_BaseFragment

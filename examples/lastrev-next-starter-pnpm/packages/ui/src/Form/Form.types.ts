@@ -4,18 +4,23 @@ import type { Form_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum FormVariants {
   default = 'default',
-  hubspotFormFooter = 'hubspotFormFooter'
+  footer = 'footer'
 }
 
 export interface FormProps extends Form_BaseFragmentFragment {
   submitted?: boolean;
   hasSuccessMessage?: boolean;
+  variant: FormVariants;
 }
+
+export interface FormOwnerState extends FormProps {}
 
 interface FormClasses {
   root: string;
-  formContainer: string;
-  formOuterContainer: string;
+  introTextGrid: string;
+  introText: string;
+  contentOuterGrid: string;
+  mainContentWrap: string;
 }
 
 export declare type FormClassKey = keyof FormClasses;

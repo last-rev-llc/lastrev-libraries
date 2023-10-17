@@ -14,6 +14,7 @@ export const typeDefs = gql`
     actions: [Link]
     link: Link
     backgroundColor: String
+    supplementalContent: Content
   }
 `;
 
@@ -23,7 +24,8 @@ export const mappers: Mappers = {
       variant: defaultResolver('variant'),
       mediaItems: async (block: any, _args: any, ctx: ApolloContext) => {
         const mediaItem = getLocalizedField(block.fields, 'asset', ctx);
-        return [mediaItem];
+        if (mediaItem) return [mediaItem];
+        return null;
       }
     }
   }
