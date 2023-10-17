@@ -1,4 +1,4 @@
-import { DM_Sans } from 'next/font/google';
+import { Roboto } from 'next/font/google';
 import { type Breakpoint, type ThemeOptions, type Theme, createTheme } from '@mui/material/styles';
 import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
@@ -6,13 +6,13 @@ import createGridMixin from './mixins/createGridMixin';
 import applyBackgroundColor from './mixins/applyBackgroundColor';
 import themeComponents from './theme.components';
 
-export const dmSans = DM_Sans({
-  weight: ['300', '400', '500', '700'],
+export const roboto = Roboto({
+  weight: ['100', '300', '400', '500', '700'],
   subsets: ['latin'],
   display: 'swap'
 });
 
-export const mainColors = ['sapphire', 'blue', 'green'];
+export const mainColors = ['navy', 'blueGray', 'red', 'transparentLight', 'transparentDark'];
 
 const defaultSpacing = 8;
 const defaultBorderRadius = 4;
@@ -29,19 +29,31 @@ const paletteTheme = createTheme({
   palette: {
     mode: 'light',
 
-    sapphire: { lighter: '##EAEDFA', light: '#5368D2', main: '#3049C9', dark: '#22338D' },
+    transparentLight: {
+      lighter: 'rgba(0, 0, 0, 0)',
+      light: 'rgba(0, 0, 0, 0)',
+      main: 'rgba(0, 0, 0, 0)',
+      dark: 'rgba(0, 0, 0, 0)',
+      contrastText: '#ffffff'
+    },
+    transparentDark: {
+      lighter: 'rgba(255, 255, 255, 0)',
+      light: 'rgba(255, 255, 255, 0)',
+      main: 'rgba(255, 255, 255, 0)',
+      dark: 'rgba(255, 255, 255, 0)',
+      contrastText: '#ffffff'
+    },
+    // TODO: Get  shades
+    navy: { lighter: '#03263e', light: '#03263e', main: '#03263e', dark: '#03263e', contrastText: '#ffffff' },
 
-    blue: { lighter: '#ECF2FE', light: '#C4D6FB', main: '#407BF2', dark: '#264A91' },
+    // TODO: Get  shades
+    red: { lighter: '#e50a31', light: '#e50a31', main: '#e50a31', dark: '#e50a31', contrastText: '#ffffff' },
 
-    green: { lighter: '#EAF2EE', light: '#88B19C', main: '#317955', dark: '#1E4A34' },
+    // TODO: Get  shades
+    blueGray: { lighter: '#355165', light: '#355165', main: '#355165', dark: '#355165', contrastText: '#ffffff' },
 
-    sunflower: { lighter: '#FFFBF1', light: '#FEE8AD', main: '#FED872', dark: '#9B8446' },
-
-    fuchsia: { lighter: '#F6ECFF', light: '#C890FF', main: '#A040FF', dark: '#702DB3' },
-
-    mint: { lighter: '#F9FDFC', light: '#DDF2EB', main: '#C4E9DD', dark: '#788E87' },
-
-    orange: { lighter: '#FFF5E9', light: '#FFC37F', main: '#FF9823', dark: '#B36A19' },
+    // TODO: Get  shades
+    offwhite: { lighter: '#f8f8f8', light: '#f8f8f8', main: '#f8f8f8', dark: '#f8f8f8', contrastText: '#000000' },
 
     background: {
       // default: '#FFFFFF',
@@ -94,8 +106,8 @@ const coreTheme = createTheme({
   ...paletteTheme,
   palette: {
     ...paletteTheme.palette,
-    primary: paletteTheme.palette.sapphire,
-    secondary: paletteTheme.palette.sunflower
+    primary: paletteTheme.palette.offwhite,
+    secondary: paletteTheme.palette.blueGray
   },
   spacing: defaultSpacing,
   shape: {
@@ -106,9 +118,9 @@ const coreTheme = createTheme({
     applyBackgroundColor
   },
   typography: {
-    fontFamily: dmSans.style.fontFamily,
+    fontFamily: roboto.style.fontFamily,
     // body1: {
-    //   fontFamily: dmSans.style.fontFamily,
+    //   fontFamily: roboto.style.fontFamily,
     //   fontWeight: 'var(--body1-font-weight)',
     //   fontSize: 'var(--body1-font-size)',
     //   lineHeight: 'var(--body1-line-height)',
@@ -116,7 +128,7 @@ const coreTheme = createTheme({
     //   color: 'inherit'
     // },
     // body2: {
-    //   fontFamily: dmSans.style.fontFamily,
+    //   fontFamily: roboto.style.fontFamily,
     //   fontWeight: 'var(--body2-font-weight)',
     //   fontSize: 'var(--body2-font-size)',
     //   lineHeight: 'var(--body2-line-height)',
@@ -124,7 +136,7 @@ const coreTheme = createTheme({
     //   color: 'inherit'
     // },
     // bodySmall: {
-    //   fontFamily: dmSans.style.fontFamily,
+    //   fontFamily: roboto.style.fontFamily,
     //   fontWeight: 'var(--bodySmall-font-weight)',
     //   fontSize: 'var(--bodySmall-font-size)',
     //   lineHeight: 'var(--bodySmall-line-height)',
@@ -132,7 +144,7 @@ const coreTheme = createTheme({
     //   color: 'inherit'
     // },
     // bodyLarge: {
-    //   fontFamily: dmSans.style.fontFamily,
+    //   fontFamily: roboto.style.fontFamily,
     //   fontWeight: 'var(--bodyLarge-font-weight)',
     //   fontSize: 'var(--bodyLarge-font-size)',
     //   lineHeight: 'var(--bodyLarge-line-height)',
@@ -141,7 +153,7 @@ const coreTheme = createTheme({
     // },
     display1: {
       display: 'block',
-      fontFamily: dmSans.style.fontFamily,
+      fontFamily: roboto.style.fontFamily,
       fontWeight: 'var(--display1-font-weight)',
       fontSize: 'var(--display1-font-size)',
       lineHeight: 'var(--display1-line-height)',
@@ -150,7 +162,7 @@ const coreTheme = createTheme({
     },
     display2: {
       display: 'block',
-      fontFamily: dmSans.style.fontFamily,
+      fontFamily: roboto.style.fontFamily,
       fontWeight: 'var(--display2-font-weight)',
       fontSize: 'var(--display2-font-size)',
       lineHeight: 'var(--display2-line-height)',
@@ -158,7 +170,7 @@ const coreTheme = createTheme({
       color: paletteTheme?.palette?.tertiary?.main
     },
     h1: {
-      fontFamily: dmSans.style.fontFamily,
+      fontFamily: roboto.style.fontFamily,
       fontWeight: 'var(--h1-font-weight)',
       fontSize: 'var(--h1-font-size)',
       lineHeight: 'var(--h1-line-height)',
@@ -166,7 +178,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h2: {
-      fontFamily: dmSans.style.fontFamily,
+      fontFamily: roboto.style.fontFamily,
       fontWeight: 'var(--h2-font-weight)',
       fontSize: 'var(--h2-font-size)',
       lineHeight: 'var(--h2-line-height)',
@@ -174,7 +186,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h3: {
-      fontFamily: dmSans.style.fontFamily,
+      fontFamily: roboto.style.fontFamily,
       fontWeight: 'var(--h3-font-weight)',
       fontSize: 'var(--h3-font-size)',
       lineHeight: 'var(--h3-line-height)',
@@ -182,7 +194,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h4: {
-      fontFamily: dmSans.style.fontFamily,
+      fontFamily: roboto.style.fontFamily,
       fontWeight: 'var(--h4-font-weight)',
       fontSize: 'var(--h4-font-size)',
       lineHeight: 'var(--h4-line-height)',
@@ -190,7 +202,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h5: {
-      fontFamily: dmSans.style.fontFamily,
+      fontFamily: roboto.style.fontFamily,
       fontWeight: 'var(--h5-font-weight)',
       fontSize: 'var(--h5-font-size)',
       lineHeight: 'var(--h5-line-height)',
@@ -198,7 +210,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h6: {
-      fontFamily: dmSans.style.fontFamily,
+      fontFamily: roboto.style.fontFamily,
       fontWeight: 'var(--h6-font-weight)',
       fontSize: 'var(--h6-font-size)',
       lineHeight: 'var(--h6-line-height)',
@@ -211,7 +223,7 @@ const coreTheme = createTheme({
     body2: {},
     overline: {
       display: 'block',
-      fontFamily: dmSans.style.fontFamily,
+      fontFamily: roboto.style.fontFamily,
       fontWeight: 'var(--overline-font-weight)',
       fontSize: 'var(--overline-font-size)',
       lineHeight: 'var(--overline-line-height)',
