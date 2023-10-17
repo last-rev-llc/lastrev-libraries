@@ -97,9 +97,7 @@ const Block = (props: BlockProps) => {
               )}
             </MainContentWrap>
           ) : null}
-          {/* <SideContentWrap ownerState={ownerState}>
-            <ContentModule {...supplementalContent} __typename="ElementForm" />
-          </SideContentWrap> */}
+
           {(!!mediaItems?.length || supplementalContent) && (
             <SideContentWrap ownerState={ownerState}>
               {!!mediaItems?.length ? (
@@ -112,7 +110,7 @@ const Block = (props: BlockProps) => {
                   />
                 ))
               ) : (
-                <ContentModule {...supplementalContent} __typename="ElementForm" />
+                <ContentModule {...supplementalContent} />
               )}
             </SideContentWrap>
           )}
