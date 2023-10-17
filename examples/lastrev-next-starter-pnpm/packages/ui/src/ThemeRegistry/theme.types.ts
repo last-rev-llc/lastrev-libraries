@@ -11,10 +11,14 @@ declare module '@mui/material/styles' {
 
   interface Palette {
     tertiary?: MuiPalette['primary'];
+    transparentLight?: MuiPalette['primary'];
+    transparentDark?: MuiPalette['primary'];
   }
 
   interface PaletteOptions {
     tertiary?: PaletteOptions['primary'];
+    transparentLight?: PaletteOptions['primary'];
+    transparentDark?: PaletteOptions['primary'];
   }
 
   interface BreakpointOverrides {

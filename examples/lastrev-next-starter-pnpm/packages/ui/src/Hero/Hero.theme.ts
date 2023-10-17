@@ -13,7 +13,8 @@ const defaultProps: ComponentsProps['Hero'] = {
 };
 
 const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
-  root: ({ theme }) => ({
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
     padding: theme.spacing(0, 0),
