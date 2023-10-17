@@ -18,12 +18,26 @@ import type { CardProps, CardOwnerState } from './Card.types';
 import { type LinkProps } from '../Link';
 
 const Card = (props: CardProps) => {
-  const { className, id, media, overline, title, subtitle, body, link, actions, variant, loading, sidekickLookup } =
-    props;
+  const {
+    ownerState: parentOwnerState,
+    className,
+    id,
+    media,
+    overline,
+    title,
+    subtitle,
+    body,
+    link,
+    actions,
+    variant,
+    loading,
+    sidekickLookup
+  } = props;
 
   const ownerState = {
     ...props,
-    variant
+    variant,
+    backgroundColor: parentOwnerState?.backgroundColor || 'transparentDark'
   };
 
   const image = getFirstOfArray(media);
@@ -98,6 +112,7 @@ const Card = (props: CardProps) => {
             ) : null}
           </ContentWrap>
         ) : null}
+
         {loading ? (
           <ContentWrap ownerState={ownerState} data-testid="Card-ContentSkeleton">
             <Overline ownerState={ownerState} variant="overline">

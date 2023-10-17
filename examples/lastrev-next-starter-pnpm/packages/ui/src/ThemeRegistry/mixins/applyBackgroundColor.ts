@@ -33,7 +33,8 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
     if (backgroundColor && get(theme.palette, parsedBGColor)) {
       styles = {
         backgroundColor: get(theme.palette, parsedBGColor),
-        color: get(theme.palette, `${paletteColor}.contrastText`)
+        color: get(theme.palette, `${paletteColor}.contrastText`),
+        borderColor: get(theme.palette, `${paletteColor}.contrastText`)
       };
     }
     // console.log('ApplyBackgroundColor', { ownerState, theme, backgroundColor, parsedBGColor, paletteColor, styles });

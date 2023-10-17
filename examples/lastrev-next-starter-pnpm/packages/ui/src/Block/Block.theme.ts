@@ -49,22 +49,30 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   // body: {},
 
   content: {
-    display: 'flex',
-    flexDirection: 'column'
+    'display': 'flex',
+    'flexDirection': 'column',
+    'borderLeft': 'solid',
+    'borderLeftWidth': '1px',
+    'paddingLeft': 'var(--grid-gap)',
+
+    '& > *:last-child': {
+      paddingBottom: 0,
+      marginBottom: 0
+    }
   },
 
-  mainContentWrap: {
+  mainContentWrap: ({ ownerState }) => ({
     display: 'flex',
     flexDirection: 'column',
-    alignSelf: 'center'
-  },
+    alignSelf: ownerState?.supplementalContent ? 'flex-start' : 'center'
+  }),
 
-  sideContentWrap: {
+  sideContentWrap: ({ ownerState }) => ({
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: ownerState?.supplementalContent ? 'flex-start' : 'center',
+    justifyContent: ownerState?.supplementalContent ? 'flex-start' : 'center',
     flexDirection: 'column'
-  },
+  }),
 
   // mediaItems: : {},
 

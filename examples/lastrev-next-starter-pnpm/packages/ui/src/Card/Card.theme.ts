@@ -11,12 +11,12 @@ import { CardVariants } from './Card.types';
 const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
-  root: ({ ownerState }) => ({
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     'containerType': 'inline-size',
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
-    // 'willChange': 'transform',
-    // 'transform': 'translateZ(0) scale(0.95)',
+    'willChange': 'transform',
     'display': 'flex',
     'flexDirection': 'column',
     'height': '100%',
@@ -45,6 +45,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     ...(ownerState?.variant === CardVariants.icon && {
       ...theme.typography.h3
     }),
+
     ...(ownerState?.variant === CardVariants.blog && {
       ...theme.typography.body1
     }),
@@ -79,6 +80,56 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
+  {
+    props: {
+      variant: CardVariants.default
+    },
+    style: {
+      'overflow': 'hidden',
+
+      '&:not(:hover) ': {
+        '[class*=title]': {
+          marginBottom: 0
+          // marginTop: '-100%'
+        }
+      },
+
+      '&:hover': {
+        ':is([class*=overline], [class*=subtitle], [class*=body])': {
+          maxHeight: '100px'
+        },
+
+        '[class*=contentWrap]': {
+          bottom: 0
+        }
+      },
+
+      '[class*=Card-cardMedia]': {
+        'width': '100%',
+
+        '& > *': {
+          width: '100%',
+          height: '100%'
+        }
+      },
+
+      '[class*=contentWrap]': {
+        transition: 'inherit',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        width: '100%',
+        zIndex: 20
+      },
+
+      ':is([class*=overline], [class*=subtitle], [class*=body])': {
+        maxHeight: 0,
+        height: '100%',
+        overflow: 'hidden',
+        transition: 'inherit'
+      }
+    }
+  },
   {
     props: {
       variant: CardVariants.media

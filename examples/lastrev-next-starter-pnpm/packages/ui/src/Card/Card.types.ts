@@ -16,9 +16,12 @@ export enum CardVariants {
 export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant'> {
   loading?: boolean;
   variant?: CardVariants;
+  ownerState?: any;
 }
 
-export interface CardOwnerState extends CardProps {}
+export interface CardOwnerState extends CardProps {
+  backgroundColor: string;
+}
 
 interface CardClasses {
   root: string;
