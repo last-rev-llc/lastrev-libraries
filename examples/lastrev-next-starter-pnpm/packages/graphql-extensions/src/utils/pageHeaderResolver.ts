@@ -5,7 +5,7 @@ import { resolveField } from './resolveField';
 const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
 
 export const pageHeaderResolver = resolveField([
-  'overrideHeader',
+  'headerOverride',
   'site.header',
   (_root: any, _args: any, ctx: ApolloContext) =>
     ctx.loaders.entryLoader
