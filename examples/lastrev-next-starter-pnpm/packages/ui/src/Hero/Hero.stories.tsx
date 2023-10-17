@@ -26,7 +26,27 @@ export default {
   }
 };
 export const Default = { args: { ...heroBaseMock() } };
-export const MediaOnRight = { args: { ...heroMediaOnRightMock() } };
+export const Simple = {
+  args: {
+    ...heroBaseMock({
+      images: [],
+      variant: HeroVariants.simple,
+      actions: [],
+      subtitle: undefined,
+      body: undefined,
+      overline: undefined,
+      // backgoundColor: 'primary-light'
+      backgoundColor: 'black'
+    })
+  }
+};
+export const MediaOnRight = {
+  args: {
+    ...heroMediaOnRightMock({
+      subtitle: undefined
+    })
+  }
+};
 export const MediaOnRightFullBleed = { args: { ...heroMediaOnRightFullBleedMock() } };
 export const MediaOnLeft = { args: { ...heroMediaOnLeftMock() } };
 export const MediaOnLeftFullBleed = { args: { ...heroMediaOnLeftFullBleedMock() } };

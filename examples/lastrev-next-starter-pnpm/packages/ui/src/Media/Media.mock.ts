@@ -9,7 +9,7 @@ const getSvgContent = (url: string) =>
     });
 
 export const defaultFileImageMock = (override?: Partial<MediaProps>): FileProps => ({
-  url: `https://source.unsplash.com/random/1280x500?rnd=${Math.random()}`,
+  url: `https://source.unsplash.com/random/${override.width ?? 1280}x${override.height ?? 500}?rnd=${Math.random()}`,
   width: 1920,
   height: 1080,
   ...override
@@ -30,7 +30,7 @@ export const defaultFileVideoMock = (override?: Partial<MediaProps>): FileProps 
 });
 
 const defaultAssetFileMock = (override?: Partial<MediaProps>): AssetProps => ({
-  file: defaultFileImageMock(),
+  file: defaultFileImageMock({ ...override }),
   title: 'This is an asset title',
   ...override
 });

@@ -13,7 +13,7 @@ const Background = (props: BackgroundProps) => {
   if (!background && !backgroundColor) return null;
 
   return (
-    <Root ownerState={ownerState}>
+    <Root ownerState={ownerState} className={props.className}>
       {background ? (
         <BackgroundContent {...background} key={background?.id} ownerState={ownerState} fill testId="Hero-background" />
       ) : null}

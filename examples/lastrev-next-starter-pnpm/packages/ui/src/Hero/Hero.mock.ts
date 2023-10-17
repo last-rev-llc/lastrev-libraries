@@ -16,11 +16,11 @@ const heroDefaultMock: HeroProps = {
   body: richTextMock({ text: 'This is the Hero body' }),
   images: [mediaBaseImageMock({ title: 'This is the Hero Media 1', width: 900, height: 900 })],
   actions: [
-    linkButtonMock({ text: 'This is the Hero Action 1', variant: 'buttonOutlined', color: 'primary' })
+    linkButtonMock({ text: 'This is the Hero Action 1', variant: 'buttonContained', color: 'primary' })
     // linkButtonMock({ text: 'This is the Hero Action 2', variant: 'buttonOutlined' })
-  ]
+  ],
   // background: mediaBaseImageMock(),
-  // backgroundColor: 'black'
+  backgroundColor: 'primary.lighter'
 };
 
 export const heroBaseMock = ({ ...override } = {}) => ({

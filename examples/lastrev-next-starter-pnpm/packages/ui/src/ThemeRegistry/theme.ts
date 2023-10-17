@@ -29,7 +29,7 @@ const paletteTheme = createTheme({
   palette: {
     mode: 'light',
 
-    sapphire: { lighter: '#FFFBF1', light: '#5368D2', main: '#3049C9', dark: '#22338D' },
+    sapphire: { lighter: '##EAEDFA', light: '#5368D2', main: '#3049C9', dark: '#22338D' },
 
     blue: { lighter: '#ECF2FE', light: '#C4D6FB', main: '#407BF2', dark: '#264A91' },
 

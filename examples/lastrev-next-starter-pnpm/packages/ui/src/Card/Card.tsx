@@ -66,7 +66,8 @@ const Card = (props: CardProps) => {
             {title ? (
               <Title
                 {...sidekick(sidekickLookup, 'title')}
-                variant="display5"
+                component="p"
+                variant="h3"
                 data-testid="Card-title"
                 // @ts-ignore: TODO
                 ownerState={ownerState}>
@@ -77,7 +78,8 @@ const Card = (props: CardProps) => {
             {subtitle ? (
               <Subtitle
                 {...sidekick(sidekickLookup, 'subtitle')}
-                variant="display6"
+                component="p"
+                variant="h4"
                 data-testid="Card-subtitle"
                 // @ts-ignore: TODO
                 ownerState={ownerState}>

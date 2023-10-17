@@ -42,10 +42,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   //   padding: 'var(--grid-gap)'
   // },
   title: ({ ownerState, theme }) => ({
-    fontWeight: 'bold',
     ...(ownerState?.variant === CardVariants.icon && {
       ...theme.typography.h3
-    })
+    }),
+    ...(ownerState?.variant === CardVariants.blog && {
+      ...theme.typography.body1
+    }),
+    fontWeight: 'bold'
   }),
 
   actionsWrap: ({ theme }) => ({
@@ -64,7 +67,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'position': 'absolute',
     'top': 0,
     'left': 0,
-    'zIndex': -1,
+    // 'zIndex': -1,
     'width': '100%',
     'height': '100%',
     '&:hover': {

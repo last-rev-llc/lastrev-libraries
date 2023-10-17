@@ -22,6 +22,19 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
       padding: theme.spacing(12, 0)
     }
   }),
+  background: ({ theme }) => ({
+    '&::before': {
+      content: '""',
+      display: 'block',
+      position: 'absolute',
+      bottom: 0,
+      left: 0,
+      height: theme.spacing(22),
+      width: '100%',
+      backgroundColor: theme.palette.white.main,
+      zIndex: 0
+    }
+  }),
 
   contentOuterGrid: {
     '> *': {
@@ -29,13 +42,19 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     }
   },
 
-  // content: {},
+  title: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
+  overline: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
 
   // media: {},
 
   // overline: {},
 
-  // title: {},
+  content: ({ theme }) => ({
+    'paddingRight': theme.spacing(2),
+    '> *:last-child': {
+      marginBottom: 0
+    }
+  }),
 
   // subtitle: {},
 
@@ -43,24 +62,25 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 
   mainContentWrap: {
     display: 'flex',
-    flexDirection: 'column',
-    alignSelf: 'center'
+    flexDirection: 'column'
+    // alignSelf: 'center'
   },
 
-  mediaWrap: {
+  mediaWrap: ({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'column'
-  },
+    flexDirection: 'column',
+    boxShadow: theme.shadows['L']
+  }),
 
   actionsWrap: ({ theme }) => ({
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(5),
     display: 'flex',
     flexDirection: 'column',
     gap: theme.spacing(2),
 
-    [theme.containerBreakpoints.up('lg')]: {
+    [theme.containerBreakpoints.up('sm')]: {
       flexDirection: 'row'
     }
   })
@@ -69,6 +89,25 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
+  {
+    props: {
+      variant: HeroVariants.simple
+    },
+    style: {
+      'textAlign': 'center',
+      'padding': theme.spacing(12, 0),
+      '[class*=Hero-mainContentWrap]': {
+        gridRow: 1,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end'
+      },
+
+      '[class*=Hero-mediaWrap]': {},
+      '[class*=Hero-actionsWrap]': {
+        justifyContent: 'center'
+      }
+    }
+  },
   {
     props: {
       variant: HeroVariants.mediaOnRight
