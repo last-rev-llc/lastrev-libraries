@@ -30,8 +30,8 @@ const parseBooleanEnvVar = (value = '') => {
 
 const config = new LastRevAppConfig({
   cms: 'Contentful',
-  cmsCacheStrategy: 'redis',
-  contentStrategy: process.env.GRAPHQL_RUNNER_STRATEGY === 'fs' ? 'fs' : 'cms',
+  contentStrategy: 'fs',
+  // cmsCacheStrategy: 'redis',
   sites: [process.env.SITE],
   extensions,
   graphql: { port: 8888 },
