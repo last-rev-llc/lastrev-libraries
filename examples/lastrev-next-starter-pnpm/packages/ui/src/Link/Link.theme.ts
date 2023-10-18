@@ -16,7 +16,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
 
   rootButton: {
     display: 'inline-flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    fontWeight: 600
   },
 
   // rootLink: : {},

@@ -38,7 +38,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 
   contentWrap: {
     flex: 1,
-    padding: 'var(--grid-gap)'
+    padding: 'calc(var(--grid-gap) / 2)'
   },
 
   title: ({ ownerState, theme }) => ({
@@ -49,6 +49,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   }),
 
   actionsWrap: ({ theme }) => ({
+    padding: 'calc(var(--grid-gap) / 2)'
     // display: 'flex'
     // padding: 'var(--grid-gap)',
     // gap: 'var(--grid-gap)'
@@ -64,7 +65,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'position': 'absolute',
     'top': 0,
     'left': 0,
-    // 'zIndex': -1,
     'width': '100%',
     'height': '100%',
     '&:hover': {
@@ -81,15 +81,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.default
     },
     style: {
-      [theme.containerBreakpoints.up('sm')]: {
+      [theme.breakpoints.up('sm')]: {
         'overflow': 'hidden',
-
-        '&:hover': {
-          ':is([class*=contentWrap], [class*=actionsWrap], [class*=title])': {
-            transform: 'translateY(0)',
-            height: 'auto'
-          }
-        },
 
         '[class*=Card-cardMedia]': {
           'width': '100%',
@@ -101,15 +94,13 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         },
 
         '[class*=Card-title]': {
-          // transform: 'translateY(calc(-1 * calc(100% + var(--grid-gap))))'
-          transform: 'translateY(calc(-100% - var(--grid-gap)))'
+          transform: 'translateY(calc(-100% - calc(var(--grid-gap) * 1.5)))'
         },
 
         ':is([class*=contentWrap], [class*=actionsWrap])': {
           transition: 'inherit',
           position: 'absolute',
           bottom: 0,
-          // left: 0,
           transform: 'translateY(100%)',
           width: '100%',
           zIndex: 20,
@@ -117,10 +108,25 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         },
 
         ':is([class*=overline], [class*=subtitle], [class*=body], [class*=actionsWrap])': {
-          // maxHeight: 0,
-          // height: '100%',
           overflow: 'hidden',
           transition: 'inherit'
+        },
+
+        '&:hover': {
+          '[class*=Card-title]': {
+            transform: 'translateY(0)',
+            height: 'auto'
+          },
+
+          '[class*=contentWrap]': {
+            transform: 'translateY(calc(var(--grid-gap) * -1.5))',
+            height: 'auto'
+          },
+
+          '[class*=actionsWrap]': {
+            transform: 'translateY(0)',
+            height: 'auto'
+          }
         }
       }
     }
@@ -209,7 +215,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
 
       '& [class*=Card-subtitle]': {
-        ...theme.typography.display5,
+        ...theme.typography.h4,
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2)
       }
