@@ -15,8 +15,9 @@ const handler: NextApiHandler = async (req, res) => {
   return await createVercelHandler(
     lrConfig.clone({
       contentStrategy: 'cms',
+      cmsCacheStrategy: 'none',
       // If you have Redis configured you can get better preview performance
-
+      // cmsCacheStrategy: 'redis',
       apolloServerOptions: {
         introspection: false,
         plugins: [ApolloServerPluginLandingPageDisabled()]
