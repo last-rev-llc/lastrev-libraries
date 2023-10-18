@@ -18,8 +18,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'width': '100%',
     'zIndex': 100,
     'gap': 0,
-    // 'position': 'sticky',
-    // 'top': 0,
+
+    '--grid-margin-sm': '0px',
+    '--grid-margin-md': '0px',
+    '--grid-margin-lg': '0px',
+    '--grid-margin-xl': '0px',
 
     ':is(&, & [class*=navItemSubMenu])': {
       ...theme.mixins.applyBackgroundColor({ ownerState, theme })
@@ -31,21 +34,19 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   }),
 
   contentOuterGrid: ({ theme }) => ({
-    rowGap: 0,
-    [theme.breakpoints.down(menuMobileBreakpoint)]: {
-      rowGap: 0
-    }
+    rowGap: 'calc(var(--grid-gap) / 2)'
   }),
 
   logoRoot: ({ theme }) => ({
     gridColumn: 'content-start / content-half',
-    gridRow: '2',
+    gridRow: '1',
     alignSelf: 'center',
     width: '100%',
     height: 'auto',
     display: 'block',
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
+      gridRow: '2',
       gridColumn: 'content-start / span 2'
     },
 
@@ -66,7 +67,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'gridRow': 3,
     'margin': 'auto',
     '& *': {
-      ...theme.typography.navLink,
+      ...theme.typography.bodySmall,
       ...theme.typography.bodySpectral
     },
 

@@ -80,45 +80,47 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.default
     },
     style: {
-      'overflow': 'hidden',
+      [theme.containerBreakpoints.up('sm')]: {
+        'overflow': 'hidden',
 
-      '&:hover': {
-        ':is([class*=contentWrap], [class*=actionsWrap], [class*=title])': {
-          transform: 'translateY(0)',
-          height: 'auto'
-        }
-      },
+        '&:hover': {
+          ':is([class*=contentWrap], [class*=actionsWrap], [class*=title])': {
+            transform: 'translateY(0)',
+            height: 'auto'
+          }
+        },
 
-      '[class*=Card-cardMedia]': {
-        'width': '100%',
+        '[class*=Card-cardMedia]': {
+          'width': '100%',
 
-        '& > *': {
+          '& > *': {
+            width: '100%',
+            height: '100%'
+          }
+        },
+
+        '[class*=Card-title]': {
+          // transform: 'translateY(calc(-1 * calc(100% + var(--grid-gap))))'
+          transform: 'translateY(calc(-100% - var(--grid-gap)))'
+        },
+
+        ':is([class*=contentWrap], [class*=actionsWrap])': {
+          transition: 'inherit',
+          position: 'absolute',
+          bottom: 0,
+          // left: 0,
+          transform: 'translateY(100%)',
           width: '100%',
+          zIndex: 20,
           height: '100%'
+        },
+
+        ':is([class*=overline], [class*=subtitle], [class*=body], [class*=actionsWrap])': {
+          // maxHeight: 0,
+          // height: '100%',
+          overflow: 'hidden',
+          transition: 'inherit'
         }
-      },
-
-      '[class*=Card-title]': {
-        // transform: 'translateY(calc(-1 * calc(100% + var(--grid-gap))))'
-        transform: 'translateY(calc(-100% - var(--grid-gap)))'
-      },
-
-      ':is([class*=contentWrap], [class*=actionsWrap])': {
-        transition: 'inherit',
-        position: 'absolute',
-        bottom: 0,
-        // left: 0,
-        transform: 'translateY(100%)',
-        width: '100%',
-        zIndex: 20,
-        height: '100%'
-      },
-
-      ':is([class*=overline], [class*=subtitle], [class*=body], [class*=actionsWrap])': {
-        // maxHeight: 0,
-        // height: '100%',
-        overflow: 'hidden',
-        transition: 'inherit'
       }
     }
   },

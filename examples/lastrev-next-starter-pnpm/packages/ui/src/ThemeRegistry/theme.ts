@@ -57,7 +57,7 @@ const paletteTheme = createTheme({
       light: '#f8f8f8',
       main: '#f8f8f8',
       dark: '#f8f8f8',
-      contrastText: '#00030B'
+      contrastText: '#3c5969'
     },
     // TODO: Get  shades
     navy: { lighter: '#03263e', light: '#03263e', main: '#03263e', dark: '#03263e', contrastText: '#ffffff' },
@@ -109,7 +109,7 @@ const paletteTheme = createTheme({
 
     white: {
       main: '#FFF',
-      contrastText: '#1F1F1F'
+      contrastText: '#03263e'
     },
     black: {
       main: '#1F1F1F',
