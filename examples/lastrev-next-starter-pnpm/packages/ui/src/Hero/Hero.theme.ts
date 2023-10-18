@@ -33,12 +33,27 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     }
   }),
 
-  contentOuterGrid: ({ theme }) => ({
+  bottomContentWrap: {
+    '& > *': {
+      margin: '0 !important',
+      padding: '0 !important'
+    }
+  },
+
+  contentOuterGrid: ({ theme, ownerState }) => ({
     margin: theme.spacing(0, 0),
 
     [theme.breakpoints.up('md')]: {
-      margin: theme.spacing(12, 0)
+      margin: theme.spacing(16, 0)
     }
+
+    // ...(!!ownerState?.bottomContent && {
+    //   marginBottom: 0,
+
+    //   [theme.breakpoints.up('md')]: {
+    //     marginBottom: 0
+    //   }
+    // })
   }),
 
   title: ({ theme }) => ({ marginBottom: theme.spacing(1) }),

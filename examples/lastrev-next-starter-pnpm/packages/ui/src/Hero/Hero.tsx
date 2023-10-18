@@ -99,9 +99,13 @@ const Hero = (props: HeroProps) => {
             ))}
           </MediaWrap>
         ) : null}
-
-        {!!bottomContent && <BottomContent {...bottomContent} ownerState={ownerState} />}
       </ContentOuterGrid>
+
+      {!!bottomContent && (
+        <BottomContentWrap ownerState={ownerState}>
+          <BottomContent {...bottomContent} ownerState={ownerState} />
+        </BottomContentWrap>
+      )}
     </Root>
   );
 };
@@ -122,6 +126,12 @@ const BottomContent = styled(ContentModule, {
   name: 'Hero',
   slot: 'BottomContent',
   overridesResolver: (_, styles) => [styles.bottomContent]
+})<{ ownerState: HeroOwnerState }>``;
+
+const BottomContentWrap = styled(Box, {
+  name: 'Hero',
+  slot: 'BottomContentWrap',
+  overridesResolver: (_, styles) => [styles.bottomContentWrap]
 })<{ ownerState: HeroOwnerState }>``;
 
 const MainContentWrap = styled('div', {
