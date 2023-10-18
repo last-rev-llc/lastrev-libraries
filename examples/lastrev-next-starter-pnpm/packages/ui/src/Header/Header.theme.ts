@@ -15,10 +15,11 @@ const defaultProps: ComponentsProps['Header'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   root: ({ theme, ownerState }) => ({
     'padding': 'var(--grid-gap) 0',
-    'position': 'absolute',
     'width': '100%',
     'zIndex': 100,
     'gap': 0,
+    // 'position': 'sticky',
+    // 'top': 0,
 
     ':is(&, & [class*=navItemSubMenu])': {
       ...theme.mixins.applyBackgroundColor({ ownerState, theme })
@@ -65,20 +66,25 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   // logo: {},
 
   headerMenuCtas: ({ theme }) => ({
-    padding: 0,
-    display: 'inline-flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: '100%',
-    justifySelf: 'flex-end',
-    gridRow: 3,
+    'padding': 0,
+    'display': 'inline-flex',
+    'justifyContent': 'space-between',
+    'alignItems': 'center',
+    'height': '100%',
+    'justifySelf': 'flex-end',
+    'gridRow': 3,
+    'margin': 'auto',
+    '& *': {
+      ...theme.typography.bodySmall,
+      ...theme.typography.bodySpectral
+    },
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
-      gridColumnStart: 'eleven-start',
+      marginRight: 'unset',
+      gridColumnStart: 'content-start',
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
-      width: '100%',
-      gap: theme.spacing(4),
+      gap: 'var(--grid-gap)',
       gridRow: 1
     }
   }),
@@ -96,7 +102,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     borderBottom: `solid 2px ${theme.palette.primary.main}`,
     paddingTop: 'var(--grid-gap)',
     paddingBottom: 'var(--grid-gap)',
-    gap: theme.spacing(2),
+    gap: 'var(--grid-gap)',
 
     [theme.breakpoints.down(menuMobileBreakpoint)]: {
       ...(!menuVisible && {

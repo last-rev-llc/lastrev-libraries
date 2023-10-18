@@ -16,9 +16,11 @@ const Hero = (props: HeroProps) => {
   const ownerState = { ...props };
 
   const {
+    bottomContent,
+    header,
     background,
     backgroundColor,
-    bottomContent,
+    variant,
     overline,
     title,
     subtitle,
@@ -30,6 +32,8 @@ const Hero = (props: HeroProps) => {
 
   return (
     <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
+      {header ? <ContentModule {...(header as any)} /> : null}
+
       <HeroBackground
         background={{ ...background, priority: true }}
         backgroundColor={backgroundColor}
@@ -97,11 +101,7 @@ const Hero = (props: HeroProps) => {
         ) : null}
       </ContentOuterGrid>
 
-      {!!bottomContent && (
-        <ContentOuterGrid ownerState={ownerState}>
-          <BottomContent {...bottomContent} ownerState={ownerState} />
-        </ContentOuterGrid>
-      )}
+      {!!bottomContent && <BottomContent {...bottomContent} ownerState={ownerState} />}
     </Root>
   );
 };

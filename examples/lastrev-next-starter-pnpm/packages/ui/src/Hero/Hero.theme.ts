@@ -16,13 +16,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     containerType: 'inline-size',
-    position: 'relative',
-    padding: theme.spacing(0, 0),
-
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(12, 0)
-    }
+    position: 'relative'
   }),
+
   background: ({ theme }) => ({
     '&::before': {
       content: '""',
@@ -37,12 +33,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     }
   }),
 
-  // contentOuterGrid: {
-  //   '> *': {
-  //     gridColumnStart: 'auto',
-  //     gridRow: 'auto'
-  //   }
-  // },
+  contentOuterGrid: ({ theme }) => ({
+    margin: theme.spacing(0, 0),
+
+    [theme.breakpoints.up('md')]: {
+      margin: theme.spacing(12, 0)
+    }
+  }),
 
   title: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
   overline: ({ theme }) => ({ marginBottom: theme.spacing(1) }),

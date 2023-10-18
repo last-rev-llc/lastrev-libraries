@@ -15,6 +15,7 @@ export enum HeroVariants {
 
 export interface HeroProps extends Omit<Hero_BaseFragmentFragment, 'variant'> {
   variant: HeroVariants;
+  header?: any;
 }
 
 export interface HeroOwnerState extends HeroProps {}
@@ -35,6 +36,8 @@ interface HeroClasses {
   media: string;
   actionsWrap: string;
   action: string;
+  heroRoot: string;
+  innerRoot: string;
 }
 
 export declare type HeroClassKey = keyof HeroClasses;

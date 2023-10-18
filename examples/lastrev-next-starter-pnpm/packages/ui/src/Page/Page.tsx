@@ -22,9 +22,9 @@ const Page = (props: PageProps) => {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       ) : null}
 
-      {header ? <ContentModule {...(header as any)} /> : null}
+      {header && !hero ? <ContentModule {...(header as any)} /> : null}
 
-      {hero ? <ContentModule {...(hero as any)} /> : null}
+      {hero ? <ContentModule {...(hero as any)} header={header} /> : null}
 
       <Main {...sidekick(sidekickLookup, 'contents')}>
         {contents?.map((content: any) => (
