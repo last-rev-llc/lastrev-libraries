@@ -2,7 +2,7 @@ import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import handleWebhook from '@last-rev/contentful-webhook-handler';
 import { cors } from '../../cors';
 
-import lrConfig from 'graphql-sdk/config';
+import lrConfig from 'graphql-sdk/config.serverless';
 
 export const config = {
   api: {

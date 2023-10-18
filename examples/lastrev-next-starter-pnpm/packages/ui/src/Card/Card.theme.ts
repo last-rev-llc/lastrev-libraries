@@ -11,12 +11,12 @@ import { CardVariants } from './Card.types';
 const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
-  root: ({ ownerState }) => ({
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     'containerType': 'inline-size',
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
-    // 'willChange': 'transform',
-    // 'transform': 'translateZ(0) scale(0.95)',
+    'willChange': 'transform',
     'display': 'flex',
     'flexDirection': 'column',
     'height': '100%',

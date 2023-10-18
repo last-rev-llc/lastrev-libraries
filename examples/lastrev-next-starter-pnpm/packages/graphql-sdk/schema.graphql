@@ -30,6 +30,7 @@ type Block implements Content {
   backgroundImage: Media
   body: RichText
   id: String
+  inheritTopBGOverlap: Boolean
   internalTitle: String
   introText: Text
   link: Link
@@ -114,6 +115,7 @@ type Collection implements Content {
   carouselAutoPlay: Boolean
   carouselBreakpoints: [String]
   id: String
+  inheritTopBGOverlap: Boolean
   internalTitle: String
   introText: Text
   isCarouselDesktop: Boolean
@@ -124,20 +126,6 @@ type Collection implements Content {
   itemsPerRow: Int
   itemsVariant: String
   numItems: Int
-  sidekickLookup: JSON
-  theme: [Theme]
-  variant: String
-}
-
-type CollectionCarousel implements Content {
-  animation: JSON
-  carouselAutoPlay: Boolean
-  carouselType: String
-  id: String
-  internalTitle: String
-  itemsVariant: String
-  numberOfItemsToPull: String
-  pullFromContentType: String
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
