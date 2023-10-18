@@ -53,6 +53,13 @@ const paletteTheme = createTheme({
       dark: 'rgba(255, 255, 255, 0)',
       contrastText: '#ffffff'
     },
+    lightGray: {
+      lighter: '#f8f8f8',
+      light: '#f8f8f8',
+      main: '#f8f8f8',
+      dark: '#f8f8f8',
+      contrastText: '#00030B'
+    },
     // TODO: Get  shades
     navy: { lighter: '#03263e', light: '#03263e', main: '#03263e', dark: '#03263e', contrastText: '#ffffff' },
 
