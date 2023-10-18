@@ -21,6 +21,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'flexDirection': 'column',
     'height': '100%',
     'boxShadow': 'initial',
+    'borderRadius': 0,
 
     '&:hover': {
       transform: 'scale(1)'

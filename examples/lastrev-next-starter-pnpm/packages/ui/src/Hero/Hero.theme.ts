@@ -19,45 +19,26 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     position: 'relative'
   }),
 
-  background: ({ theme }) => ({
-    '&::before': {
-      content: '""',
-      display: 'block',
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      height: theme.spacing(22),
-      width: '100%',
-      backgroundColor: theme.palette.white.main,
-      zIndex: 0
+  bottomContentWrap: ({ theme }) => ({
+    '& > *': {
+      [theme.containerBreakpoints.up('sm')]: {
+        margin: '0 !important',
+        padding: '0 !important'
+      }
     }
   }),
 
-  bottomContentWrap: {
-    '& > *': {
-      margin: '0 !important',
-      padding: '0 !important'
-    }
-  },
-
-  contentOuterGrid: ({ theme, ownerState }) => ({
-    margin: theme.spacing(0, 0),
+  contentOuterGrid: ({ theme }) => ({
+    margin: theme.spacing(4, 0),
 
     [theme.breakpoints.up('md')]: {
       margin: theme.spacing(16, 0)
     }
-
-    // ...(!!ownerState?.bottomContent && {
-    //   marginBottom: 0,
-
-    //   [theme.breakpoints.up('md')]: {
-    //     marginBottom: 0
-    //   }
-    // })
   }),
 
-  title: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
-  overline: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
+  // title: {},
+
+  // overline: {},
 
   // media: {},
 
