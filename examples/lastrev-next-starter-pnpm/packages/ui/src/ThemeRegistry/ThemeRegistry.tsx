@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+
 import { ThemeProvider, css } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import GlobalStyles from '@mui/material/GlobalStyles';
@@ -85,7 +86,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --overline-font-size: 0.75rem;
               --body1-font-size: 1rem;
               --body2-font-size: 1.125rem;
-              --bodySmall-font-size: 0.75rem;
+              --bodySmall-font-size: 0.875rem;
               --bodyLarge-font-size: 1.25rem;
 
               --h1-line-height: 1.1em;

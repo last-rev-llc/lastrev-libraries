@@ -49,6 +49,7 @@ declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
     bodySmall?: true;
     bodyLarge?: true;
+    bodySpectral?: true;
     display1?: true;
     display2?: true;
     display3?: true;
@@ -56,6 +57,7 @@ declare module '@mui/material/Typography' {
   type TypographyOptions = {
     bodySmall?: TypographyStyle;
     bodyLarge?: TypographyStyle;
+    bodySpectral?: TypographyStyle;
     display1?: TypographyStyle;
     display2?: TypographyStyle;
     display3?: TypographyStyle;

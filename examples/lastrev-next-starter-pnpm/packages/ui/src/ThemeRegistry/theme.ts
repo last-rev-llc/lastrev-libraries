@@ -1,15 +1,25 @@
-import { Roboto } from 'next/font/google';
-import { type Breakpoint, type ThemeOptions, type Theme, createTheme } from '@mui/material/styles';
+import { Spectral } from 'next/font/google';
+import localFont from 'next/font/local';
+const realHeadPro = localFont({
+  src: [
+    {
+      path: '../../fonts/font-real-head-pro.woff2'
+    }
+  ]
+});
+
+import { type Breakpoint, type Theme, createTheme } from '@mui/material/styles';
 import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
 import applyBackgroundColor from './mixins/applyBackgroundColor';
 import themeComponents from './theme.components';
 
-export const roboto = Roboto({
-  weight: ['100', '300', '400', '500', '700'],
+export const spectral = Spectral({
+  weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
-  display: 'swap'
+  display: 'swap',
+  adjustFontFallback: false
 });
 
 export const mainColors = ['navy', 'blueGray', 'red', 'transparentLight', 'transparentDark'];
@@ -118,42 +128,45 @@ const coreTheme = createTheme({
     applyBackgroundColor
   },
   typography: {
-    fontFamily: roboto.style.fontFamily,
-    // body1: {
-    //   fontFamily: roboto.style.fontFamily,
-    //   fontWeight: 'var(--body1-font-weight)',
-    //   fontSize: 'var(--body1-font-size)',
-    //   lineHeight: 'var(--body1-line-height)',
-    //   margin: 'var(--body1-margin)',
-    //   color: 'inherit'
-    // },
-    // body2: {
-    //   fontFamily: roboto.style.fontFamily,
-    //   fontWeight: 'var(--body2-font-weight)',
-    //   fontSize: 'var(--body2-font-size)',
-    //   lineHeight: 'var(--body2-line-height)',
-    //   margin: 'var(--body2-margin)',
-    //   color: 'inherit'
-    // },
-    // bodySmall: {
-    //   fontFamily: roboto.style.fontFamily,
-    //   fontWeight: 'var(--bodySmall-font-weight)',
-    //   fontSize: 'var(--bodySmall-font-size)',
-    //   lineHeight: 'var(--bodySmall-line-height)',
-    //   margin: 'var(--bodySmall-margin)',
-    //   color: 'inherit'
-    // },
-    // bodyLarge: {
-    //   fontFamily: roboto.style.fontFamily,
-    //   fontWeight: 'var(--bodyLarge-font-weight)',
-    //   fontSize: 'var(--bodyLarge-font-size)',
-    //   lineHeight: 'var(--bodyLarge-line-height)',
-    //   margin: 'var(--bodyLarge-margin)',
-    //   color: 'inherit'
-    // },
+    fontFamily: realHeadPro.style.fontFamily,
+    bodySpectral: {
+      fontFamily: `${spectral.style.fontFamily}, Georgia, Arial`
+    },
+    body1: {
+      fontFamily: realHeadPro.style.fontFamily,
+      fontWeight: 'var(--body1-font-weight)',
+      fontSize: 'var(--body1-font-size)',
+      lineHeight: 'var(--body1-line-height)',
+      margin: 'var(--body1-margin)',
+      color: 'inherit'
+    },
+    body2: {
+      fontFamily: realHeadPro.style.fontFamily,
+      fontWeight: 'var(--body2-font-weight)',
+      fontSize: 'var(--body2-font-size)',
+      lineHeight: 'var(--body2-line-height)',
+      margin: 'var(--body2-margin)',
+      color: 'inherit'
+    },
+    bodySmall: {
+      fontFamily: realHeadPro.style.fontFamily,
+      fontWeight: 'var(--bodySmall-font-weight)',
+      fontSize: 'var(--bodySmall-font-size)',
+      lineHeight: 'var(--bodySmall-line-height)',
+      margin: 'var(--bodySmall-margin)',
+      color: 'inherit'
+    },
+    bodyLarge: {
+      fontFamily: realHeadPro.style.fontFamily,
+      fontWeight: 'var(--bodyLarge-font-weight)',
+      fontSize: 'var(--bodyLarge-font-size)',
+      lineHeight: 'var(--bodyLarge-line-height)',
+      margin: 'var(--bodyLarge-margin)',
+      color: 'inherit'
+    },
     display1: {
       display: 'block',
-      fontFamily: roboto.style.fontFamily,
+      fontFamily: realHeadPro.style.fontFamily,
       fontWeight: 'var(--display1-font-weight)',
       fontSize: 'var(--display1-font-size)',
       lineHeight: 'var(--display1-line-height)',
@@ -162,7 +175,7 @@ const coreTheme = createTheme({
     },
     display2: {
       display: 'block',
-      fontFamily: roboto.style.fontFamily,
+      fontFamily: realHeadPro.style.fontFamily,
       fontWeight: 'var(--display2-font-weight)',
       fontSize: 'var(--display2-font-size)',
       lineHeight: 'var(--display2-line-height)',
@@ -170,7 +183,7 @@ const coreTheme = createTheme({
       color: paletteTheme?.palette?.tertiary?.main
     },
     h1: {
-      fontFamily: roboto.style.fontFamily,
+      fontFamily: realHeadPro.style.fontFamily,
       fontWeight: 'var(--h1-font-weight)',
       fontSize: 'var(--h1-font-size)',
       lineHeight: 'var(--h1-line-height)',
@@ -178,7 +191,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h2: {
-      fontFamily: roboto.style.fontFamily,
+      fontFamily: realHeadPro.style.fontFamily,
       fontWeight: 'var(--h2-font-weight)',
       fontSize: 'var(--h2-font-size)',
       lineHeight: 'var(--h2-line-height)',
@@ -186,7 +199,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h3: {
-      fontFamily: roboto.style.fontFamily,
+      fontFamily: realHeadPro.style.fontFamily,
       fontWeight: 'var(--h3-font-weight)',
       fontSize: 'var(--h3-font-size)',
       lineHeight: 'var(--h3-line-height)',
@@ -194,7 +207,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h4: {
-      fontFamily: roboto.style.fontFamily,
+      fontFamily: realHeadPro.style.fontFamily,
       fontWeight: 'var(--h4-font-weight)',
       fontSize: 'var(--h4-font-size)',
       lineHeight: 'var(--h4-line-height)',
@@ -202,7 +215,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h5: {
-      fontFamily: roboto.style.fontFamily,
+      fontFamily: realHeadPro.style.fontFamily,
       fontWeight: 'var(--h5-font-weight)',
       fontSize: 'var(--h5-font-size)',
       lineHeight: 'var(--h5-line-height)',
@@ -210,7 +223,7 @@ const coreTheme = createTheme({
       fontStyle: 'normal'
     },
     h6: {
-      fontFamily: roboto.style.fontFamily,
+      fontFamily: realHeadPro.style.fontFamily,
       fontWeight: 'var(--h6-font-weight)',
       fontSize: 'var(--h6-font-size)',
       lineHeight: 'var(--h6-line-height)',
@@ -223,7 +236,7 @@ const coreTheme = createTheme({
     body2: {},
     overline: {
       display: 'block',
-      fontFamily: roboto.style.fontFamily,
+      fontFamily: realHeadPro.style.fontFamily,
       fontWeight: 'var(--overline-font-weight)',
       fontSize: 'var(--overline-font-size)',
       lineHeight: 'var(--overline-line-height)',
