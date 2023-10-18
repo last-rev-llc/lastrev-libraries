@@ -37,11 +37,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     }
   }),
 
-  contentOuterGrid: {
-    '> *': {
-      gridColumnStart: 'auto'
-    }
-  },
+  // contentOuterGrid: {
+  //   '> *': {
+  //     gridColumnStart: 'auto',
+  //     gridRow: 'auto'
+  //   }
+  // },
 
   title: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
   overline: ({ theme }) => ({ marginBottom: theme.spacing(1) }),

@@ -293,6 +293,7 @@ type Hero implements Content {
   background: Media
   backgroundColor: String
   body: RichText
+  bottomContent: Content
   contentHeight: String
   id: String
   internalTitle: String

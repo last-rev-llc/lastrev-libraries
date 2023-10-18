@@ -3,6 +3,7 @@ fragment ContentModule_BaseFragment on Content {
   #...Card_BaseFragment
   ...Block_BaseFragment
   ...Collection_BaseFragment
+  ...CollectionExpandable_BaseFragment
   #...Footer_BaseFragment
   #...Header_BaseFragment
   ...Hero_BaseFragment
@@ -36,6 +37,7 @@ fragment ContentModule_SectionFragment on Content {
   #...Card_BaseFragment
   ...Block_BaseFragment
   ...Collection_BaseFragment
+  ...CollectionExpandable_BaseFragment
   #...Footer_BaseFragment
   #...Header_BaseFragment
   ...Hero_BaseFragment
@@ -53,6 +55,7 @@ fragment ContentModule_RichTextFragment on Content {
   #...Card_BaseFragment
   ...Block_BaseFragment
   ...Collection_BaseFragment
+  ...CollectionExpandable_BaseFragment
   #...Footer_BaseFragment
   #...Header_BaseFragment
   #...Hero_BaseFragment

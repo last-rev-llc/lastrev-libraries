@@ -34,7 +34,8 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
       styles = {
         backgroundColor: get(theme.palette, parsedBGColor),
         color: get(theme.palette, `${paletteColor}.contrastText`),
-        borderColor: get(theme.palette, `${paletteColor}.contrastText`)
+        borderColor: get(theme.palette, `${paletteColor}.contrastText`),
+        fill: 'currentColor'
       };
     }
     // console.log('ApplyBackgroundColor', { ownerState, theme, backgroundColor, parsedBGColor, paletteColor, styles });

@@ -42,7 +42,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     ...(ownerState?.variant === CollectionVariants.fourPerRow && {
       gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
 
-      [theme.containerBreakpoints.up('lg')]: {
+      [theme.containerBreakpoints.up('md')]: {
         gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
       }
     }),

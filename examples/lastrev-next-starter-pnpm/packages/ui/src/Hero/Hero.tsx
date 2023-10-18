@@ -15,8 +15,18 @@ import type { HeroProps, HeroOwnerState } from './Hero.types';
 const Hero = (props: HeroProps) => {
   const ownerState = { ...props };
 
-  const { background, backgroundColor, variant, overline, title, subtitle, body, actions, images, sidekickLookup } =
-    props;
+  const {
+    background,
+    backgroundColor,
+    bottomContent,
+    overline,
+    title,
+    subtitle,
+    body,
+    actions,
+    images,
+    sidekickLookup
+  } = props;
 
   return (
     <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
@@ -86,6 +96,12 @@ const Hero = (props: HeroProps) => {
           </MediaWrap>
         ) : null}
       </ContentOuterGrid>
+
+      {!!bottomContent && (
+        <ContentOuterGrid ownerState={ownerState}>
+          <BottomContent {...bottomContent} ownerState={ownerState} />
+        </ContentOuterGrid>
+      )}
     </Root>
   );
 };
@@ -100,6 +116,12 @@ const ContentOuterGrid = styled(Grid, {
   name: 'Hero',
   slot: 'ContentOuterGrid',
   overridesResolver: (_, styles) => [styles.contentOuterGrid]
+})<{ ownerState: HeroOwnerState }>``;
+
+const BottomContent = styled(ContentModule, {
+  name: 'Hero',
+  slot: 'BottomContent',
+  overridesResolver: (_, styles) => [styles.bottomContent]
 })<{ ownerState: HeroOwnerState }>``;
 
 const MainContentWrap = styled('div', {
