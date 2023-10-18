@@ -99,9 +99,9 @@ const Hero = (props: HeroProps) => {
             ))}
           </MediaWrap>
         ) : null}
-      </ContentOuterGrid>
 
-      {!!bottomContent && <BottomContent {...bottomContent} ownerState={ownerState} />}
+        {!!bottomContent && <BottomContent {...bottomContent} ownerState={ownerState} />}
+      </ContentOuterGrid>
     </Root>
   );
 };
