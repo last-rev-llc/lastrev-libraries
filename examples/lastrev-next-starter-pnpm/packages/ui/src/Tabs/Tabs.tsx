@@ -19,6 +19,7 @@ import type { TabsProps, TabsOwnerState } from './Tabs.types';
 
 const Tabs = (props: TabsProps) => {
   const ownerState = { ...props };
+  console.log({ ownerState });
 
   const { background, backgroundColor, id, items, variant, sidekickLookup, introText } = props;
 

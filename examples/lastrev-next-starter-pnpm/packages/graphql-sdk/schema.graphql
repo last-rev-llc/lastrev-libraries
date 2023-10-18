@@ -158,7 +158,7 @@ type CollectionExpandableItem implements Content {
   animation: JSON
   body: RichText
   bodyRte: JSON
-  content: [Content]
+  content: Content
   id: String
   internalTitle: String
   sidekickLookup: JSON
