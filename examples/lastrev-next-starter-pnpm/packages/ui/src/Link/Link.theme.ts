@@ -36,7 +36,7 @@ const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
       variant: 'link'
     },
     style: {
-      textDecoration: 'underline'
+      textDecoration: 'none'
     }
   },
   {
@@ -44,7 +44,7 @@ const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
       variant: 'default'
     },
     style: {
-      textDecoration: 'underline'
+      textDecoration: 'none'
     }
   },
   {
@@ -52,7 +52,7 @@ const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
       variant: 'text'
     },
     style: {
-      textDecoration: 'underline'
+      textDecoration: 'none'
     }
   }
 ];

@@ -15,6 +15,10 @@ const defaultProps: ComponentsProps['Header'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   root: ({ theme, ownerState }) => ({
     'padding': 'var(--grid-gap) 0',
+    'position': 'absolute',
+    'width': '100%',
+    'zIndex': 100,
+    'gap': 0,
 
     ':is(&, & [class*=navItemSubMenu])': {
       ...theme.mixins.applyBackgroundColor({ ownerState, theme })
@@ -26,6 +30,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   }),
 
   contentOuterGrid: ({ theme }) => ({
+    rowGap: 0,
     [theme.breakpoints.down(menuMobileBreakpoint)]: {
       rowGap: 0
     }
@@ -33,7 +38,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
 
   logoRoot: ({ theme }) => ({
     gridColumn: 'content-start / content-half',
-    gridRow: 1,
+    gridRow: '2',
     alignSelf: 'center',
     width: '100%',
     height: 'auto',
@@ -128,9 +133,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       height: 'auto',
       overflow: 'unset',
       maxHeight: '100%',
-      gridRow: 1,
+      // gridRow: 1,
+      gridRow: 2,
       gridColumnStart: 'three-start',
-      gridColumnEnd: ownerState.hasCtaItems ? 'ten-end' : 'content-end'
+      // gridColumnEnd: ownerState?.hasCtaItems ? 'ten-end' : 'content-end'
+      gridColumnEnd: 'content-end'
     }
   }),
 
@@ -172,13 +179,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     flexDirection: 'column',
     width: '100%',
     margin: 'auto',
-    gap: 'var(--grid-gap)',
+    gap: 'calc(var(--grid-gap) / 2)',
+    textTransform: 'uppercase',
+    fontWeight: 700,
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
       height: '100%',
       flexDirection: 'row',
       width: 'auto',
-      marginLeft: 'unset'
+      marginRight: 'unset'
     }
   }),
 

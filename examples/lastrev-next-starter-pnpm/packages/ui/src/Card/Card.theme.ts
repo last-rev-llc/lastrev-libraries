@@ -87,20 +87,10 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     style: {
       'overflow': 'hidden',
 
-      '&:not(:hover) ': {
-        '[class*=title]': {
-          marginBottom: 0
-          // marginTop: '-100%'
-        }
-      },
-
       '&:hover': {
-        ':is([class*=overline], [class*=subtitle], [class*=body])': {
-          maxHeight: '100px'
-        },
-
-        '[class*=contentWrap]': {
-          bottom: 0
+        ':is([class*=contentWrap], [class*=actionsWrap], [class*=title])': {
+          transform: 'translateY(0)',
+          height: 'auto'
         }
       },
 
@@ -113,18 +103,25 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         }
       },
 
-      '[class*=contentWrap]': {
+      '[class*=title]': {
+        // transform: 'translateY(calc(-1 * calc(100% + var(--grid-gap))))'
+        transform: 'translateY(calc(-100% - var(--grid-gap)))'
+      },
+
+      ':is([class*=contentWrap], [class*=actionsWrap])': {
         transition: 'inherit',
         position: 'absolute',
         bottom: 0,
-        left: 0,
+        // left: 0,
+        transform: 'translateY(100%)',
         width: '100%',
-        zIndex: 20
+        zIndex: 20,
+        height: '100%'
       },
 
-      ':is([class*=overline], [class*=subtitle], [class*=body])': {
-        maxHeight: 0,
-        height: '100%',
+      ':is([class*=overline], [class*=subtitle], [class*=body], [class*=actionsWrap])': {
+        // maxHeight: 0,
+        // height: '100%',
         overflow: 'hidden',
         transition: 'inherit'
       }
