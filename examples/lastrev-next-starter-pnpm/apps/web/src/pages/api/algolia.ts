@@ -3,7 +3,7 @@ import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { cors } from '../../cors';
 import { createAlgoliaSyncHandler } from '@last-rev/graphql-algolia-integration';
 
-import lrConfig from 'graphql-sdk/config';
+import lrConfig from 'graphql-sdk/config.serverless';
 
 const maxRecords = process.env.ALGOLIA_MAX_RECORDS ? parseInt(process.env.ALGOLIA_MAX_RECORDS) : undefined;
 
