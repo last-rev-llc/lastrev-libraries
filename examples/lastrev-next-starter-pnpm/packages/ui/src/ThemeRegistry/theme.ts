@@ -1,3 +1,10 @@
+import { type Breakpoint, type Theme, createTheme } from '@mui/material/styles';
+import deepmerge from '@mui/utils/deepmerge';
+import './theme.types';
+import createGridMixin from './mixins/createGridMixin';
+import applyBackgroundColor from './mixins/applyBackgroundColor';
+import themeComponents from './theme.components';
+
 import { Spectral } from 'next/font/google';
 import localFont from 'next/font/local';
 const realHeadPro = localFont({
@@ -7,14 +14,6 @@ const realHeadPro = localFont({
     }
   ]
 });
-
-import { type Breakpoint, type Theme, createTheme } from '@mui/material/styles';
-import deepmerge from '@mui/utils/deepmerge';
-import './theme.types';
-import createGridMixin from './mixins/createGridMixin';
-import applyBackgroundColor from './mixins/applyBackgroundColor';
-import themeComponents from './theme.components';
-
 export const spectral = Spectral({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin'],
@@ -22,7 +21,7 @@ export const spectral = Spectral({
   adjustFontFallback: false
 });
 
-export const mainColors = ['navy', 'blueGray', 'red', 'transparentLight', 'transparentDark'];
+export const mainColors = ['navy', 'blueGray', 'red', 'transparentLight', 'transparentDark', 'lightGray'];
 
 const defaultSpacing = 8;
 const defaultBorderRadius = 4;
@@ -136,6 +135,14 @@ const coreTheme = createTheme({
   },
   typography: {
     fontFamily: realHeadPro.style.fontFamily,
+    navLink: {
+      fontWeight: 600,
+      lineHeight: 1.17,
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
+
+      fontSize: 'var(--bodySmall-font-size)'
+    },
     bodySpectral: {
       fontFamily: `${spectral.style.fontFamily}, Georgia, Arial`
     },

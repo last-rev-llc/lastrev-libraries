@@ -32,25 +32,19 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
       '&:hover': {
         transform: 'scale(1.05)'
       }
-    },
-    ...(ownerState?.variant === CardVariants.icon && {
-      alignItems: 'center'
-    })
+    }
   }),
 
-  // contentWrap: {
-  //   flex: 1,
-  //   padding: 'var(--grid-gap)'
-  // },
-  title: ({ ownerState, theme }) => ({
-    ...(ownerState?.variant === CardVariants.icon && {
-      ...theme.typography.h3
-    }),
+  contentWrap: {
+    flex: 1,
+    padding: 'var(--grid-gap)'
+  },
 
+  title: ({ ownerState, theme }) => ({
     ...(ownerState?.variant === CardVariants.blog && {
       ...theme.typography.body1
     }),
-    fontWeight: 'bold'
+    fontWeight: '900'
   }),
 
   actionsWrap: ({ theme }) => ({
@@ -104,7 +98,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         }
       },
 
-      '[class*=title]': {
+      '[class*=Card-title]': {
         // transform: 'translateY(calc(-1 * calc(100% + var(--grid-gap))))'
         transform: 'translateY(calc(-100% - var(--grid-gap)))'
       },
@@ -152,11 +146,17 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.icon
     },
     style: {
+      'alignItems': 'flex-start',
+      'borderLeft': 'solid 1px currentColor',
+
+      '[class*=Card-title]': {
+        ...theme.typography.h1,
+        fontWeight: '900'
+      },
+
       '[class*=cardMedia]': {
         maxWidth: 96,
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        paddingTop: 'var(--grid-gap)',
+        paddingLeft: 'var(--grid-gap)',
 
         [theme.containerBreakpoints.up('lg')]: {
           '& > :is(img, svg)': {

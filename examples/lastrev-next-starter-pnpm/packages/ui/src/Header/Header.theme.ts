@@ -45,21 +45,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     height: 'auto',
     display: 'block',
 
-    // '& > svg': {
-    //   'width': 'auto !important',
-    //   'height': 'auto  !important',
-    //   'maxWidth': '100% !important',
-    //   'maxHeight': '100% !important',
-
-    //   '& > svg': {
-    //     fill: '#ffffff',
-    //     width: 'auto !important',
-    //     height: 'auto !important'
-    //   }
-    // },
-
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
       gridColumn: 'content-start / span 2'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumn: 'content-start / span 3'
     }
   }),
 
@@ -75,7 +66,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'gridRow': 3,
     'margin': 'auto',
     '& *': {
-      ...theme.typography.bodySmall,
+      ...theme.typography.navLink,
       ...theme.typography.bodySpectral
     },
 
@@ -131,7 +122,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
 
     '& a': {
       whiteSpace: 'nowrap',
-      color: 'inherit'
+      color: 'inherit',
+      ...theme.typography.navLink
     },
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {

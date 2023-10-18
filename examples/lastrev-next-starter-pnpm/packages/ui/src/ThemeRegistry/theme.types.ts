@@ -36,30 +36,42 @@ declare module '@mui/material/styles' {
   interface TypographyVariants {
     display1: TypographyStyle;
     display2: TypographyStyle;
+    display3: TypographyStyle;
+    bodySmall: TypographyStyle;
+    bodyLarge: TypographyStyle;
+    bodySpectral: TypographyStyle;
+    navLink: TypographyStyle;
   }
 
   interface TypographyVariantsOptions {
     display1?: TypographyStyle;
     display2?: TypographyStyle;
+    display3?: TypographyStyle;
+    bodySmall?: TypographyStyle;
+    bodyLarge?: TypographyStyle;
+    bodySpectral?: TypographyStyle;
+    navLink?: TypographyStyle;
   }
 }
 
 // Update the Typography's variant prop options
 declare module '@mui/material/Typography' {
   interface TypographyPropsVariantOverrides {
-    bodySmall?: true;
-    bodyLarge?: true;
-    bodySpectral?: true;
     display1?: true;
     display2?: true;
     display3?: true;
+    bodySmall?: true;
+    bodyLarge?: true;
+    bodySpectral?: true;
+    navLink?: true;
   }
   type TypographyOptions = {
-    bodySmall?: TypographyStyle;
-    bodyLarge?: TypographyStyle;
-    bodySpectral?: TypographyStyle;
     display1?: TypographyStyle;
     display2?: TypographyStyle;
     display3?: TypographyStyle;
+    bodySmall?: TypographyStyle;
+    bodyLarge?: TypographyStyle;
+    bodySpectral?: TypographyStyle;
+    navLink?: TypographyStyle;
   };
 }
