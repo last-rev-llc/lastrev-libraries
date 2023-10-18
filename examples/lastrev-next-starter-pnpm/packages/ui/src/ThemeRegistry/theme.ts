@@ -44,7 +44,7 @@ const paletteTheme = createTheme({
       light: 'rgba(0, 0, 0, 0)',
       main: 'rgba(0, 0, 0, 0)',
       dark: 'rgba(0, 0, 0, 0)',
-      contrastText: '#ffffff'
+      contrastText: '#00030B'
     },
     transparentDark: {
       lighter: 'rgba(255, 255, 255, 0)',

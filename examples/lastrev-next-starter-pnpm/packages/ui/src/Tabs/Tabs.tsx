@@ -50,7 +50,12 @@ const Tabs = (props: TabsProps) => {
             <TabsContext value={value} ownerState={ownerState}>
               <TabListWrap sx={{ borderBottom: 1, borderColor: 'divider' }} ownerState={ownerState}>
                 {/* TODO: Add "orientation" to the expanding content type */}
-                <TabList onChange={handleChange} orientation="horizontal" aria-label="TODO">
+                <TabList
+                  onChange={handleChange}
+                  orientation="horizontal"
+                  aria-label="TODO"
+                  textColor="primary"
+                  indicatorColor="primary">
                   {items?.map(
                     (
                       item: any,

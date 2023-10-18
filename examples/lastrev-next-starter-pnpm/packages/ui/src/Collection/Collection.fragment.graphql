@@ -14,6 +14,7 @@ fragment Collection_FieldsFragment on Collection {
   isCarouselMobile
   itemsPerRow
   numItems
+  inheritTopBGOverlap
 }
 
 # Base fragment used everywhere there's a Collection

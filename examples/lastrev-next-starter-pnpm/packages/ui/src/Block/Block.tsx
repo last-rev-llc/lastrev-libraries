@@ -16,7 +16,8 @@ const Block = (props: BlockProps) => {
   const ownerState = { ...props };
 
   const {
-    background,
+    inheritTopBGOverlap,
+    backgroundImage,
     backgroundColor,
     introText,
     overline,
@@ -32,7 +33,12 @@ const Block = (props: BlockProps) => {
   return (
     <ErrorBoundary>
       <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState}>
-        <BlockBackground background={background} backgroundColor={backgroundColor} testId="Block-background" />
+        <BlockBackground
+          background={backgroundImage}
+          backgroundColor={backgroundColor}
+          overlap={inheritTopBGOverlap}
+          testId="Block-background"
+        />
 
         {!!introText && (
           <IntroTextGrid ownerState={ownerState}>
