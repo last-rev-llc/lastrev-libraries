@@ -145,6 +145,8 @@ type CollectionDynamic implements Content {
 
 type CollectionExpandable implements Content {
   animation: JSON
+  backgroundColor: String
+  backgroundImage: Media
   id: String
   internalTitle: String
   introText: Text
@@ -295,6 +297,7 @@ type Hero implements Content {
   body: RichText
   bottomContent: Content
   contentHeight: String
+  hideBreadcrumbs: Boolean
   id: String
   internalTitle: String
   overline: String

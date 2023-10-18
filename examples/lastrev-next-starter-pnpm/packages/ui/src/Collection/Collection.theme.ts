@@ -13,11 +13,17 @@ const defaultProps: ComponentsProps['Collection'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   root: ({ theme }) => ({
     containerType: 'inline-size',
-    padding: theme.spacing(12, 0),
+
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    position: 'relative'
+    position: 'relative',
+
+    padding: theme.spacing(4, 0),
+
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(12, 0)
+    }
   }),
 
   itemsGrid: ({ theme, ownerState }) => ({

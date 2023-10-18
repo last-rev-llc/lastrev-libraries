@@ -18,8 +18,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    // TODO: Update to check if within a section
-    padding: theme.spacing(12, 0)
+
+    padding: theme.spacing(4, 0),
+
+    [theme.breakpoints.up('md')]: {
+      padding: theme.spacing(12, 0)
+    }
   }),
 
   // introTextGrid: : {},

@@ -19,8 +19,9 @@ import type { TabsProps, TabsOwnerState } from './Tabs.types';
 
 const Tabs = (props: TabsProps) => {
   const ownerState = { ...props };
+  // console.log({ ownerState });
 
-  const { background, backgroundColor, id, items, variant, sidekickLookup, introText } = props;
+  const { backgroundImage, backgroundColor, id, items, variant, sidekickLookup, introText } = props;
 
   const [value, setValue] = React.useState('0');
 
@@ -31,7 +32,7 @@ const Tabs = (props: TabsProps) => {
   return (
     <ErrorBoundary>
       <Root data-testid={`Tabs-${variant}`} {...sidekick(sidekickLookup)} ownerState={ownerState}>
-        <TabsBackground background={background} backgroundColor={backgroundColor} testId="Tabs-background" />
+        <TabsBackground background={backgroundImage} backgroundColor={backgroundColor} testId="Tabs-background" />
 
         {!!introText && (
           <IntroTextGrid ownerState={ownerState}>
