@@ -22,7 +22,7 @@ const Page = (props: PageProps) => {
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       ) : null}
 
-      {header && !hero ? <ContentModule {...(header as any)} /> : null}
+      {header && !hero ? <ContentModule {...(header as any)} backgroundColor={'transparentLight'} /> : null}
 
       {hero ? <ContentModule {...(hero as any)} header={header} /> : null}
 

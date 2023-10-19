@@ -9,7 +9,7 @@ function LogoIcon(props: SvgIconProps) {
           id="path-1"
           points="0.155943007 0.101052632 316.843055 0.101052632 316.843055 35.6885526 0.155943007 35.6885526"></polygon>
       </defs>
-      <g id="Header-&amp;-Nav" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <g id="Header-&amp;-Nav" stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
         <g id="1400---No-Title" transform="translate(-130.000000, -70.000000)">
           <g id="Group-5" transform="translate(130.000000, 70.000000)">
             <path

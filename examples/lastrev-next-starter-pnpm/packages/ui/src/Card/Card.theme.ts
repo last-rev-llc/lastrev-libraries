@@ -81,6 +81,27 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.default
     },
     style: {
+      '[class*=Card-cardMedia]': {
+        'width': '100%',
+        'height': '100%',
+
+        '& > *': {
+          width: '100%',
+          height: '100%'
+        }
+        // TODO Overlay
+        // '&::after': {
+        //   content: '""',
+        //   position: 'absolute',
+        //   height: '100%',
+        //   width: '100%',
+        //   backgroundColor: 'rgba(currentColor, .5)',
+        //   zIndex: 2,
+        //   top: 0,
+        //   left: 0
+        // }
+      },
+
       [theme.breakpoints.up('sm')]: {
         'overflow': 'hidden',
 
@@ -89,7 +110,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
 
           '& > *': {
             width: '100%',
-            height: '100%'
+            height: '100%',
+            objectFit: 'cover'
           }
         },
 
