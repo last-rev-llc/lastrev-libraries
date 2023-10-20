@@ -9,6 +9,7 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import ContentModule from '../ContentModule';
 import Grid from '../Grid';
 import Background from '../Background';
+import Breadcrumbs from '../Breadcrumbs';
 
 import type { HeroProps, HeroOwnerState } from './Hero.types';
 
@@ -16,6 +17,7 @@ const Hero = (props: HeroProps) => {
   const ownerState = { ...props };
 
   const {
+    breadcrumbs,
     bottomContent,
     header,
     background,
@@ -32,7 +34,7 @@ const Hero = (props: HeroProps) => {
 
   return (
     <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
-      {header ? <ContentModule {...(header as any)} /> : null}
+      {header ? <ContentModule {...(header as any)} backgroundColor={backgroundColor} /> : null}
 
       <HeroBackground
         background={{ ...background, priority: true }}
@@ -44,6 +46,12 @@ const Hero = (props: HeroProps) => {
         {overline || title || subtitle || body || actions ? (
           <MainContentWrap ownerState={ownerState}>
             <Content ownerState={ownerState}>
+              {!!breadcrumbs?.length ? (
+                <BreadcrumbsWrap ownerState={ownerState}>
+                  <Breadcrumbs links={breadcrumbs} />
+                </BreadcrumbsWrap>
+              ) : null}
+
               {!!overline && (
                 <Overline ownerState={ownerState} variant="overline">
                   {overline}
@@ -114,6 +122,12 @@ const Root = styled(Box, {
   name: 'Hero',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
+})<{ ownerState: HeroOwnerState }>``;
+
+const BreadcrumbsWrap = styled(Box, {
+  name: 'Hero',
+  slot: 'BreadcrumbsWrap',
+  overridesResolver: (_, styles) => [styles.breadcrumbsWrap]
 })<{ ownerState: HeroOwnerState }>``;
 
 const ContentOuterGrid = styled(Grid, {

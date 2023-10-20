@@ -1,5 +1,6 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 import type { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
+import { type LinkProps } from '../Link';
 
 // TODO Review
 export enum HeroVariants {
@@ -16,6 +17,7 @@ export enum HeroVariants {
 export interface HeroProps extends Omit<Hero_BaseFragmentFragment, 'variant'> {
   variant: HeroVariants;
   header?: any;
+  breadcrumbs?: LinkProps[];
 }
 
 export interface HeroOwnerState extends HeroProps {}
@@ -39,6 +41,7 @@ interface HeroClasses {
   action: string;
   heroRoot: string;
   innerRoot: string;
+  breadcrumbsWrap: string;
 }
 
 export declare type HeroClassKey = keyof HeroClasses;

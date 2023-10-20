@@ -5,6 +5,9 @@ fragment Page_BaseFragment on Page {
   path
   slug
   title
+  breadcrumbs {
+    ...Link_BaseFragment
+  }
   header {
     ...Header_BaseFragment
   }

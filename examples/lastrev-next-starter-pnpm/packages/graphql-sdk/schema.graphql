@@ -44,6 +44,23 @@ type Block implements Content {
   variant: String
 }
 
+type BlockContent implements Content {
+  animation: JSON
+  asset: Media
+  backgroundColor: String
+  backgroundImage: Media
+  body: RichText
+  id: String
+  inheritTopBGOverlap: Boolean
+  internalTitle: String
+  overline: String
+  sidekickLookup: JSON
+  subtitle: String
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
 type Blog implements Content {
   animation: JSON
   author: Person

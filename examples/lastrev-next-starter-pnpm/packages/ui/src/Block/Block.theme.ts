@@ -97,6 +97,35 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
 const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
   {
     props: {
+      variant: BlockVariants.default
+    },
+    style: {
+      '[class*=mainContentWrap]': {
+        gridRow: 2,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridRow: 1,
+          gridColumnStart: 'content-start',
+          gridColumnEnd: 'content-half'
+        }
+      },
+
+      '[class*=sideContentWrap]': {
+        gridRow: 1,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnStart: 'content-half',
+          gridColumnEnd: 'content-end'
+        }
+      }
+    }
+  },
+  {
+    props: {
       variant: BlockVariants.contentOnRight
     },
     style: {

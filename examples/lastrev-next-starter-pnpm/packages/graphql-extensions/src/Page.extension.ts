@@ -52,7 +52,7 @@ export const mappers: Mappers = {
         return [promoImage];
       },
 
-      variant: () => 'default',
+      variant: () => 'buttonText',
 
       actions: async (page: any, _args: any, ctx: ApolloContext) => {
         return [

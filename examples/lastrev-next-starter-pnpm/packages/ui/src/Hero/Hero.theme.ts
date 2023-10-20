@@ -28,12 +28,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     }
   }),
 
-  contentOuterGrid: ({ theme }) => ({
-    margin: theme.spacing(4, 0),
+  contentOuterGrid: ({ theme, ownerState }) => ({
+    ...(!!ownerState?.background && {
+      margin: theme.spacing(4, 0, 0),
 
-    [theme.breakpoints.up('md')]: {
-      margin: theme.spacing(16, 0)
-    }
+      [theme.breakpoints.up('md')]: {
+        margin: theme.spacing(16, 0, 0)
+      }
+    })
   }),
 
   // title: {},
@@ -55,10 +57,22 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 
   // body: {},
 
+  breadcrumbsWrap: {
+    'gridColumnStart': 'content-start',
+    'gridColumnEnd': 'content-end',
+
+    'position': 'absolute',
+    'bottom': 'var(--grid-gap)',
+    '& *': {
+      color: 'inherit !important'
+    }
+  },
+
   mainContentWrap: {
     display: 'flex',
-    flexDirection: 'column'
-    // alignSelf: 'center'
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'center'
   },
 
   mediaWrap: ({ theme }) => ({

@@ -10,7 +10,17 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import type { PageProps } from './Page.types';
 
 const Page = (props: PageProps) => {
-  const { header, hero, contents, footer, disableBackToTop, sidekickLookup, jsonLd, footerDisclaimerOverride } = props;
+  const {
+    breadcrumbs,
+    header,
+    hero,
+    contents,
+    footer,
+    disableBackToTop,
+    sidekickLookup,
+    jsonLd,
+    footerDisclaimerOverride
+  } = props;
 
   const ownerState = {
     ...props
@@ -24,7 +34,7 @@ const Page = (props: PageProps) => {
 
       {header && !hero ? <ContentModule {...(header as any)} backgroundColor={'transparentLight'} /> : null}
 
-      {hero ? <ContentModule {...(hero as any)} header={header} /> : null}
+      {hero ? <ContentModule {...(hero as any)} header={header} breadcrumbs={breadcrumbs} /> : null}
 
       <Main {...sidekick(sidekickLookup, 'contents')}>
         {contents?.map((content: any) => (

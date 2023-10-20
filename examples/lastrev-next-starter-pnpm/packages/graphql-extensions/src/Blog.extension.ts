@@ -78,7 +78,7 @@ export const mappers: Mappers = {
         return [promoImage];
       },
 
-      variant: () => 'default',
+      variant: () => 'buttonText',
 
       link: async (blog: any) => blog
 

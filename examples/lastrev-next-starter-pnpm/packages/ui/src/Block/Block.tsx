@@ -32,7 +32,7 @@ const Block = (props: BlockProps) => {
 
   return (
     <ErrorBoundary>
-      <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+      <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState} data-variant={props.variant}>
         <BlockBackground
           background={backgroundImage}
           backgroundColor={backgroundColor}
