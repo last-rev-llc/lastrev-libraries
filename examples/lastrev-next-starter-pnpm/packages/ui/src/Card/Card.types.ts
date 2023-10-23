@@ -10,7 +10,8 @@ export enum CardVariants {
   pricing = 'pricing',
   person = 'person',
   quote = 'quote',
-  blog = 'blog'
+  blog = 'blog',
+  timeline = 'timeline'
 }
 
 export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant'> {
@@ -36,6 +37,7 @@ interface CardClasses {
   title: string;
   subtitle: string;
   body: string;
+  bodyWrap: string;
 }
 
 export declare type CardClassKey = keyof CardClasses;

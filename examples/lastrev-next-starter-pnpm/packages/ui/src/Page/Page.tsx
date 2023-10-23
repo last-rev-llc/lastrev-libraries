@@ -37,8 +37,13 @@ const Page = (props: PageProps) => {
       {hero ? <ContentModule {...(hero as any)} header={header} breadcrumbs={breadcrumbs} /> : null}
 
       <Main {...sidekick(sidekickLookup, 'contents')}>
-        {contents?.map((content: any) => (
-          <ContentModule key={content?.id} {...content} component="section" />
+        {contents?.map((content: any, index) => (
+          <ContentModule
+            key={content?.id}
+            {...content}
+            prevBgColor={contents?.[index - 1]?.backgroundColor}
+            component="section"
+          />
         ))}
         {!disableBackToTop ? <BackToTop /> : null}
       </Main>

@@ -16,12 +16,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-
-    padding: theme.spacing(4, 0),
-
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(12, 0)
-    }
+    padding: `var(--section-padding)`
   }),
 
   // introTextGrid: : {},

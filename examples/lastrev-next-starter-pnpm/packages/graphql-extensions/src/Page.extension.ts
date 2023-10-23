@@ -54,13 +54,20 @@ export const mappers: Mappers = {
 
       variant: () => 'buttonText',
 
+      link: async (page: any, _args: any, ctx: ApolloContext) => {
+        return page;
+      },
+
       actions: async (page: any, _args: any, ctx: ApolloContext) => {
         return [
           createType('Link', {
             id: page.id,
             text: 'Read More',
-            linkedContent: page,
-            variant: 'buttonContained'
+            icon: 'logo',
+            iconPosition: 'Left',
+            href: await pathResolver(page, _args, ctx),
+            // linkedContent: page,
+            variant: 'buttonText'
           })
         ];
       }

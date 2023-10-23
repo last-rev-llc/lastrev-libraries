@@ -1,16 +1,17 @@
 import { type Theme } from '@mui/system';
 import { type CSSProperties } from '@mui/material/styles/createMixins';
+import { alpha } from '@mui/material/styles';
 import get from '../../utils/get';
 
-type ApplyBackgroundColor = (args: { theme: Theme; ownerState: any }) => CSSProperties;
+type ApplyBackgroundOverlay = (args: { theme: Theme; ownerState: any }) => CSSProperties;
 
 declare module '@mui/material/styles/createMixins' {
   interface Mixins {
-    applyBackgroundColor: ApplyBackgroundColor;
+    applyBackgroundOverlay: ApplyBackgroundOverlay;
   }
 }
 
-export const applyBackgroundColor: ApplyBackgroundColor = ({
+export const applyBackgroundOverlay: ApplyBackgroundOverlay = ({
   ownerState,
   theme
 }: {
@@ -21,7 +22,6 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
 
   const backgroundColor: string = ownerState?.backgroundColor as any;
   let styles = {};
-
   if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
     styles = {
       background: get(theme.palette, `${backgroundColor}.main`),
@@ -32,19 +32,17 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
     const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
 
     if (backgroundColor && get(theme.palette, parsedBGColor)) {
-      const textColor = get(theme.palette, `${paletteColor}.contrastText`) ?? 'currentColor';
-      const bgColor = get(theme.palette, parsedBGColor);
+      const textColor = get(theme.palette, parsedBGColor);
+      const bgColor = get(theme.palette, `${paletteColor}.contrastText`);
       styles = {
-        'backgroundColor': bgColor,
-        'color': textColor,
-        'borderColor': textColor,
-        'fill': 'currentColor !important',
-        '--current-color-text': textColor,
-        '--current-color-bg': bgColor
+        backgroundColor: bgColor,
+        color: textColor,
+        borderColor: textColor,
+        fill: 'currentColor !important'
       };
     }
   }
   return styles;
 };
 
-export default applyBackgroundColor;
+export default applyBackgroundOverlay;

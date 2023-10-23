@@ -24,9 +24,11 @@ const swiperStyles = css`
     z-index: 1;
     display: block;
   }
+
   .swiper-vertical > .swiper-wrapper {
     flex-direction: column;
   }
+
   .swiper-wrapper {
     position: relative;
     width: 100%;
@@ -383,7 +385,7 @@ const swiperStyles = css`
   }
   .swiper-pagination-bullet-active {
     opacity: var(--swiper-pagination-bullet-opacity, 1);
-    background: var(--swiper-pagination-color, var(--swiper-theme-color));
+    background: var(--swiper-pagination-color);
   }
   .swiper-vertical > .swiper-pagination-bullets,
   .swiper-pagination-vertical.swiper-pagination-bullets {
@@ -677,18 +679,35 @@ const swiperStyles = css`
 `;
 
 const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
-  root: ({ theme }) => ({
-    containerType: 'inline-size',
-    padding: theme.spacing(12, 0),
-    display: 'flex',
-    flexDirection: 'column',
-    width: '100%',
-    position: 'relative',
-    ...swiperStyles
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    'containerType': 'inline-size',
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': '100%',
+    'position': 'relative',
+    'padding': 0,
+    ...swiperStyles,
+
+    '&': {
+      ':is(.swiper-button-prev, .swiper-button-next)': {
+        border: 'solid',
+        aspectRatio: '1/1',
+        width: 'var(--swiper-navigation-size)',
+        borderRadius: '50%',
+        padding: 'var(--swiper-navigation-size)'
+      },
+
+      '.swiper-button-next': {
+        right: 'unset',
+        left: 'calc(3 * var(--swiper-navigation-size))'
+      }
+    }
   }),
 
-  swiperWrap: () => ({
-    gridColumn: 'content-start/content-end',
+  swiperWrap: ({ theme }) => ({
+    padding: 'var(--section-padding) 0 calc(2 * var(--section-padding))',
+    gridColumn: 'content-start/full-end',
     overflow: 'hidden'
   }),
 

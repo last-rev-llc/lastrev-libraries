@@ -25,9 +25,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
       padding: 'var(--grid-gap)',
       paddingTop: 0
     }
-    // TODO: Update to check if within a section
-    // padding: theme.spacing(0, 4)
-    // margin: theme.spacing(0, -4)
   }),
 
   // introTextGrid: : {},

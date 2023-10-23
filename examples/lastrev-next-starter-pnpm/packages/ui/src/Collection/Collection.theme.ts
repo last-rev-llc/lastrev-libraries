@@ -11,19 +11,29 @@ import { CollectionVariants } from './Collection.types';
 const defaultProps: ComponentsProps['Collection'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
-  root: ({ theme }) => ({
-    containerType: 'inline-size',
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
 
+    containerType: 'inline-size',
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
     position: 'relative',
+    padding: 0,
 
-    padding: theme.spacing(4, 0),
-
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(12, 0)
-    }
+    ...(ownerState?.prevBgColor && {
+      '&::before': {
+        content: '""',
+        position: 'absolute',
+        display: 'block',
+        height: 'var(--section-padding)',
+        width: '100%',
+        ...theme.mixins.applyBackgroundColor({
+          ownerState: { ...ownerState, backgroundColor: ownerState?.prevBgColor ?? 'navy' },
+          theme
+        })
+      }
+    })
   }),
 
   itemsGrid: ({ theme, ownerState }) => ({

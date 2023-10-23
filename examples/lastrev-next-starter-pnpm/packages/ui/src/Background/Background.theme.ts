@@ -26,9 +26,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Background'] = {
         content: '""',
         position: 'absolute',
         width: 'var(--grid-margin)',
-        height: 'calc(var(--grid-margin) * 1.5)',
+        height: 'calc(2 * var(--section-padding))',
         left: 0,
-        top: 'calc(var(--grid-margin) * -1.5)',
+        top: 'calc(-2 * var(--section-padding))',
         background: 'inherit',
         zIndex: 20
       },
@@ -37,9 +37,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Background'] = {
         content: '""',
         position: 'absolute',
         width: 'var(--grid-margin)',
-        height: 'calc(var(--grid-margin) * 1.5)',
+        height: 'calc(2 * var(--section-padding))',
         right: 0,
-        top: 'calc(var(--grid-margin) * -1.5)',
+        top: 'calc(-2 * var(--section-padding))',
         background: 'inherit',
         zIndex: 20
       }

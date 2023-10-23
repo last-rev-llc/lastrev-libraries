@@ -183,10 +183,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     fontWeight: 700,
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
-      height: '100%',
-      flexDirection: 'row',
-      width: 'auto',
-      marginRight: 'unset'
+      'height': '100%',
+      'flexDirection': 'row',
+      'width': 'auto',
+      'marginRight': 'unset',
+
+      '& > *:last-child a': {
+        paddingRight: 0
+      }
     }
   }),
 

@@ -3,6 +3,7 @@ import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
 import applyBackgroundColor from './mixins/applyBackgroundColor';
+import applyBackgroundOverlay from './mixins/applyBackgroundOverlay';
 import themeComponents from './theme.components';
 
 import { Spectral } from 'next/font/google';
@@ -131,7 +132,8 @@ const coreTheme = createTheme({
   },
   mixins: {
     gridContainer: createGridMixin,
-    applyBackgroundColor
+    applyBackgroundColor,
+    applyBackgroundOverlay
   },
   typography: {
     fontFamily: realHeadPro.style.fontFamily,

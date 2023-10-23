@@ -4,6 +4,7 @@ import React, { useMemo } from 'react';
 import { useContentModuleContext } from './ContentModuleContext';
 import type { ContentModuleProps } from './ContentModule.types';
 import ErrorBoundary from '../ErrorBoundary';
+import { css } from '@mui/material/styles';
 
 const getComponentForContentType = (
   contentType: string,
@@ -50,6 +51,10 @@ const ContentModule = React.forwardRef(function ContentModule(
   }
 
   Main.displayName = `Content_${contentMappingKey}`;
+
+  const StyleTag = ({ styles }) => <style dangerouslySetInnerHTML={{ __html: styles }} />;
+
+  // console.log('--', fields.title, fields.backgroundColor);
 
   return (
     <ErrorBoundary>

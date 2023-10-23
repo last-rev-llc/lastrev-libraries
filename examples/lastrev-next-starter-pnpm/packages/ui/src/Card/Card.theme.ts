@@ -1,9 +1,10 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
+import {
+  alpha,
+  type Theme,
+  type ThemeOptions,
+  type ComponentsProps,
+  type ComponentsOverrides,
+  type ComponentsVariants
 } from '@mui/material/styles';
 
 import { CardVariants } from './Card.types';
@@ -12,7 +13,6 @@ const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     'containerType': 'inline-size',
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
@@ -22,6 +22,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'height': '100%',
     'boxShadow': 'initial',
     'borderRadius': 0,
+
+    ...(ownerState?.variant === CardVariants.default
+      ? {
+          [theme.containerBreakpoints.up('sm')]: { ...theme.mixins.applyBackgroundOverlay({ ownerState, theme }) }
+        }
+      : {
+          ...theme.mixins.applyBackgroundColor({ ownerState, theme })
+        }),
 
     '&:hover': {
       transform: 'scale(1)'
@@ -36,10 +44,21 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     }
   }),
 
-  contentWrap: {
+  media: ({ ownerState, theme }) => ({
+    backgroundColor: 'inherit',
+
+    ...(ownerState?.variant === CardVariants.default && {
+      '&::after': {
+        backgroundColor: 'inherit',
+        opacity: '.5'
+      }
+    })
+  }),
+
+  contentWrap: ({ ownerState, theme }) => ({
     flex: 1,
     padding: 'calc(var(--grid-gap) / 2)'
-  },
+  }),
 
   title: ({ ownerState, theme }) => ({
     ...(ownerState?.variant === CardVariants.blog && {
@@ -47,6 +66,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     }),
     fontWeight: '900'
   }),
+
+  // bodyWrap: {},
 
   actionsWrap: ({ theme }) => ({
     padding: 'calc(var(--grid-gap) / 2)'
@@ -85,22 +106,22 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         'width': '100%',
         'height': '100%',
         'aspectRatio': '9/16',
+        'position': 'relative',
 
         '& > *': {
           width: '100%',
           height: '100%'
+        },
+
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          height: '100%',
+          width: '100%',
+          zIndex: 1,
+          top: 0,
+          left: 0
         }
-        // TODO Overlay
-        // '&::after': {
-        //   content: '""',
-        //   position: 'absolute',
-        //   height: '100%',
-        //   width: '100%',
-        //   backgroundColor: 'rgba(currentColor, .5)',
-        //   zIndex: 2,
-        //   top: 0,
-        //   left: 0
-        // }
       },
 
       [theme.breakpoints.up('sm')]: {
@@ -218,6 +239,30 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           width: '100%',
           height: '100%'
         }
+      }
+    }
+  },
+
+  {
+    props: {
+      variant: CardVariants.timeline
+    },
+    style: {
+      'aspectRatio': '1/1',
+
+      '[class*=contentWrap]': { display: 'flex', flexDirection: 'column' },
+
+      '[class*=bodyWrap]': {
+        order: 1
+      },
+
+      '[class*=Card-title]': {
+        order: 2,
+        marginTop: 'auto'
+      },
+
+      '[class*=Card-subtitle]': {
+        order: 3
       }
     }
   },

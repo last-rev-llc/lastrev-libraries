@@ -127,7 +127,8 @@ export const mappers: Mappers = {
       },
 
       itemsPerRow: async (collection: any, args: any, ctx: ApolloContext) => {
-        let variant = getLocalizedField(collection.fields, 'variant', ctx) ?? [];
+        const variantFn = defaultResolver('variant');
+        const variant = variantFn(collection, args, ctx);
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
         let itemsPerRow = 3;
         const numItems = items?.length ?? 3;
@@ -167,7 +168,7 @@ export const mappers: Mappers = {
         const variantFn = defaultResolver('variant');
         const variant = variantFn(collection, args, ctx);
 
-        if (!!carouselBreakpoints.length) `${variant}Carousel`;
+        if (!!carouselBreakpoints.length) return `${variant}Carousel`;
 
         return variant;
       },

@@ -23,7 +23,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
             :root {
               --grid-margin-xs: 12px;
-              --grid-margin-sm: 48px;
+              --grid-margin-sm: 36px;
               --grid-margin-md: 64px;
               --grid-margin-lg: 96px;
               --grid-margin-xl: 128px;
@@ -143,16 +143,16 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --bodySmall-font-weight: 400;
               --bodyLarge-font-weight: 400;
 
-              --swiper-theme-color: #007aff;
+              --swiper-theme-color: var(--current-color-text);
               --swiper-preloader-color: var(--swiper-theme-color);
               --swiper-wrapper-transition-timing-function: initial;
 
-              --swiper-navigation-size: calc(var(--grid-margin) / 2);
-              --swiper-navigation-top-offset: 50%;
+              --swiper-navigation-size: calc(var(--grid-gap) / 1); // calc(var(--grid-margin) / 4);
+              --swiper-navigation-top-offset: 100%;
               --swiper-navigation-sides-offset: 0; //calc(var(--grid-margin) / 2);
               --swiper-navigation-color: var(--swiper-theme-color);
 
-              --swiper-pagination-color: var(--swiper-theme-color);
+              --swiper-pagination-color: currentColor; //var(--current-color-text); //var(--swiper-theme-color);
               --swiper-pagination-left: auto;
               --swiper-pagination-right: calc(var(--grid-gap) / 2);
               --swiper-pagination-bottom: calc(var(--grid-gap) / 2);
@@ -164,7 +164,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --swiper-pagination-bullet-width: calc(var(--grid-gap) / 2);
               --swiper-pagination-bullet-height: calc(var(--grid-gap) / 2);
               --swiper-pagination-bullet-border-radius: 50%;
-              --swiper-pagination-bullet-inactive-color: #000;
+              --swiper-pagination-bullet-inactive-color: currentColor; //var(--swiper-theme-color);
               --swiper-pagination-bullet-inactive-opacity: 0.2;
               --swiper-pagination-bullet-opacity: 1;
               --swiper-pagination-bullet-horizontal-gap: calc(var(--grid-gap) / 4);
@@ -181,9 +181,9 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --swiper-scrollbar-size: calc(var(--grid-gap) / 4);
             }
 
-            /* body * {
+            body * {
               ${theme.containerBreakpoints.up('sm')} {
-                --h1-font-size: 2rem;
+                /* --h1-font-size: 2rem;
                 --h2-font-size: 1.75rem;
                 --h3-font-size: 1.5rem;
                 --h4-font-size: 1.25rem;
@@ -199,11 +199,12 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --body1-font-size: 1rem;
                 --body2-font-size: 1rem;
                 --bodySmall-font-size: 0.875rem;
-                --bodyLarge-font-size: 1.125rem;
+                --bodyLarge-font-size: 1.125rem; */
+                --section-padding: calc(var(--grid-gap) * 2);
               }
 
               ${theme.containerBreakpoints.up('md')} {
-                --h1-font-size: 2.25rem;
+                /* --h1-font-size: 2.25rem;
                 --h2-font-size: 2rem;
                 --h3-font-size: 1.75rem;
                 --h4-font-size: 1.5rem;
@@ -219,11 +220,12 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --body1-font-size: 1rem;
                 --body2-font-size: 1rem;
                 --bodySmall-font-size: 0.875rem;
-                --bodyLarge-font-size: 1.25rem;
+                --bodyLarge-font-size: 1.25rem; */
+                --section-padding: calc(var(--grid-gap) * 2);
               }
 
               ${theme.containerBreakpoints.up('lg')} {
-                --h1-font-size: 2.5rem;
+                /* --h1-font-size: 2.5rem;
                 --h2-font-size: 2.25rem;
                 --h3-font-size: 1.75rem;
                 --h4-font-size: 1.5rem;
@@ -234,11 +236,12 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display3-font-size: 2rem;
                 --display4-font-size: 1.5rem;
                 --display5-font-size: 1.25rem;
-                --display6-font-size: 1.125rem;
+                --display6-font-size: 1.125rem; */
+                --section-padding: calc(var(--grid-gap) * 2);
               }
 
               ${theme.containerBreakpoints.up('xl')} {
-                --h1-font-size: 2.75rem;
+                /* --h1-font-size: 2.75rem;
                 --h2-font-size: 2.5rem;
                 --h3-font-size: 2rem;
                 --h4-font-size: 1.75rem;
@@ -249,9 +252,10 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display3-font-size: 2rem;
                 --display4-font-size: 1.75rem;
                 --display5-font-size: 1.5rem;
-                --display6-font-size: 1.25rem;
+                --display6-font-size: 1.25rem; */
+                --section-padding: calc(var(--grid-gap) * 2);
               }
-            } */
+            }
           `}
         />
         {children}

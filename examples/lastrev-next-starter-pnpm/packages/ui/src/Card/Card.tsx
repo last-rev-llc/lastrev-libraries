@@ -16,10 +16,12 @@ import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import type { CardProps, CardOwnerState } from './Card.types';
 import { type LinkProps } from '../Link';
+import Box from '@mui/material/Box';
 
 const Card = (props: CardProps) => {
   const {
     ownerState: parentOwnerState,
+    backgroundColor,
     className,
     id,
     media,
@@ -37,7 +39,7 @@ const Card = (props: CardProps) => {
   const ownerState = {
     ...props,
     variant,
-    backgroundColor: parentOwnerState?.backgroundColor || 'transparentDark'
+    backgroundColor: backgroundColor
   };
 
   const image = getFirstOfArray(media);
@@ -102,13 +104,9 @@ const Card = (props: CardProps) => {
             ) : null}
 
             {body ? (
-              <Body
-                __typename="RichText"
-                {...sidekick(sidekickLookup, 'body')}
-                body={body}
-                ownerState={ownerState}
-                data-testid="Card-body"
-              />
+              <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
+                <Body __typename="RichText" body={body} ownerState={ownerState} data-testid="Card-body" />
+              </BodyWrap>
             ) : null}
           </ContentWrap>
         ) : null}
@@ -127,9 +125,11 @@ const Card = (props: CardProps) => {
               <Skeleton variant="text" width="100%" />
             </Subtitle>
 
-            <Body ownerState={ownerState} variant="bodySmall">
-              <Skeleton variant="text" width="100%" />
-            </Body>
+            <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
+              <Body ownerState={ownerState} variant="bodySmall">
+                <Skeleton variant="text" width="100%" />
+              </Body>
+            </BodyWrap>
           </ContentWrap>
         ) : null}
         {(actions?.length || loading) && (
@@ -204,6 +204,12 @@ const Subtitle = styled(Typography, {
   name: 'Card',
   slot: 'Subtitle',
   overridesResolver: (_, styles) => [styles.subtitle]
+})<{ ownerState: CardOwnerState }>``;
+
+const BodyWrap = styled(Box, {
+  name: 'Card',
+  slot: 'BodyWrap',
+  overridesResolver: (_, styles) => [styles.bodyWrap]
 })<{ ownerState: CardOwnerState }>``;
 
 const Body = styled(ContentModule, {

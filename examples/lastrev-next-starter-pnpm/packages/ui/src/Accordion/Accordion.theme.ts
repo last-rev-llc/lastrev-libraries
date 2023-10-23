@@ -17,13 +17,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
     position: 'relative',
     width: '100%',
     display: 'flex',
-    flexDirection: 'column',
-
-    padding: theme.spacing(4, 0),
-
-    [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(12, 0)
-    }
+    flexDirection: 'column'
   }),
 
   // introTextGrid: : {},
