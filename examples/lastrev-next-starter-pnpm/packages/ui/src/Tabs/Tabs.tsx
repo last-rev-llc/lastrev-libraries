@@ -47,7 +47,7 @@ const Tabs = (props: TabsProps) => {
         {!!items?.length && (
           <ContentOuterGrid ownerState={ownerState}>
             <TabsContext value={value} ownerState={ownerState}>
-              <TabListWrap sx={{ borderBottom: 1, borderColor: 'divider' }} ownerState={ownerState}>
+              <TabListWrap ownerState={ownerState}>
                 {/* TODO: Add "orientation" to the expanding content type */}
                 <TabList
                   onChange={handleChange}
@@ -78,7 +78,7 @@ const Tabs = (props: TabsProps) => {
                     {item.body ? (
                       <Details __typename="RichText" body={item.body} ownerState={ownerState} />
                     ) : (
-                      <Details {...item.content} ownerState={ownerState} />
+                      <Details {...item.content} ownerState={ownerState} backgroundColor={backgroundColor} />
                     )}
                   </DetailsWrap>
                 )

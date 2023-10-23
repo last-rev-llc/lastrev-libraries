@@ -11,7 +11,7 @@ const defaultProps: ComponentsProps['Footer'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    padding: `var(--section-padding)`
+    padding: `var(--section-padding) 0`
   }),
 
   introContentsWrap: ({ theme }) => ({

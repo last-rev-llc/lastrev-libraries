@@ -16,8 +16,7 @@ import Background from '../Background';
 const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
 
-  const { prevBgColor, backgroundImage, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } =
-    props;
+  const { backgroundImage, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;
 
   return (
     <ErrorBoundary>

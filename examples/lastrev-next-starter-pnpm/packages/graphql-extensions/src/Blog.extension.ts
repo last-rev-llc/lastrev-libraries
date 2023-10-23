@@ -80,18 +80,23 @@ export const mappers: Mappers = {
 
       variant: () => 'buttonText',
 
-      link: async (blog: any) => blog
+      link: async (blog: any, _args: any, ctx: ApolloContext) => {
+        return blog;
+      },
 
-      // actions: async (blog: any, _args: any, ctx: ApolloContext) => {
-      //   return [
-      //     createType('Link', {
-      //       id: blog.id,
-      //       text: 'Read More',
-      //       linkedContent: blog,
-      //       variant: 'buttonContained'
-      //     })
-      //   ];
-      // }
+      actions: async (blog: any, _args: any, ctx: ApolloContext) => {
+        return [
+          createType('Link', {
+            id: blog.id,
+            text: 'Read More',
+            icon: 'logo',
+            iconPosition: 'Left',
+            href: await pathResolver(blog, _args, ctx),
+            // linkedContent: page,
+            variant: 'buttonText'
+          })
+        ];
+      }
     }
   }
 };

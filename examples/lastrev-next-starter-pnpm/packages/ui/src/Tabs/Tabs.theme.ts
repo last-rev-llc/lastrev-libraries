@@ -16,7 +16,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     width: '100%',
     display: 'flex',
     flexDirection: 'column',
-    padding: `var(--section-padding)`
+    padding: `var(--section-padding) 0`
   }),
 
   // introTextGrid: : {},
@@ -30,13 +30,32 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
   },
 
   // tabsContext: {},
-  tabListWrap: {
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
-  },
+  tabListWrap: ({ theme }) => ({
+    'gridColumnStart': 'content-start',
+    'gridColumnEnd': 'content-end',
+    '.MuiTabs-flexContainer': { gap: 'var(--grid-gap)' },
+
+    '.MuiTab-root': {
+      borderBottomWidth: '1px',
+      borderBottomStyle: 'solid',
+      paddingRight: 'calc(3 * var(--grid-gap))',
+      paddingLeft: 0,
+      whiteSpace: 'nowrap',
+      opacity: 0.5,
+      ...theme.typography.h4
+    },
+
+    '.Mui-selected': {
+      opacity: 1,
+      fontWeight: 700,
+      color: 'currentColor'
+    }
+  }),
+
   detailsWrap: {
     gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
+    gridColumnEnd: 'content-end',
+    padding: 0
   }
   // details: {}
 };

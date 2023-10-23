@@ -5,7 +5,6 @@ import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
-import { resolveField } from './utils/resolveField';
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 import { createType } from './utils/createType';
 
@@ -49,6 +48,8 @@ export const mappers: Mappers = {
     },
 
     Card: {
+      title: 'name',
+      subtitle: 'jobTitle',
       body: async (person: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(person.fields, 'promoSummary', ctx)),
 
@@ -61,15 +62,20 @@ export const mappers: Mappers = {
 
       variant: () => 'buttonText',
 
-      link: async (person: any) => person,
+      link: async (person: any, _args: any, ctx: ApolloContext) => {
+        return person;
+      },
 
       actions: async (person: any, _args: any, ctx: ApolloContext) => {
         return [
           createType('Link', {
             id: person.id,
             text: 'Read More',
-            linkedContent: person,
-            variant: 'buttonContained'
+            icon: 'logo',
+            iconPosition: 'Left',
+            href: await pathResolver(person, _args, ctx),
+            // linkedContent: page,
+            variant: 'buttonText'
           })
         ];
       }

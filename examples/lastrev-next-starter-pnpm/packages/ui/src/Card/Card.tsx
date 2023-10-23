@@ -48,7 +48,6 @@ const Card = (props: CardProps) => {
     <ErrorBoundary>
       <Root ownerState={ownerState} data-testid="Card" {...sidekick(sidekickLookup)} className={className}>
         {!!link ? <CardLink component={CardActionArea} {...(link as any)} /> : null}
-
         {image || loading ? (
           // @ts-ignore: TODO
           <CardMedia ownerState={ownerState}>
@@ -64,7 +63,6 @@ const Card = (props: CardProps) => {
             )}
           </CardMedia>
         ) : null}
-
         {!loading && (overline || title || subtitle || body) ? (
           // @ts-ignore: TODO
           <ContentWrap ownerState={ownerState}>
@@ -110,7 +108,6 @@ const Card = (props: CardProps) => {
             ) : null}
           </ContentWrap>
         ) : null}
-
         {loading ? (
           <ContentWrap ownerState={ownerState} data-testid="Card-ContentSkeleton">
             <Overline ownerState={ownerState} variant="overline">

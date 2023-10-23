@@ -23,7 +23,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'boxShadow': 'initial',
     'borderRadius': 0,
 
-    ...(ownerState?.variant === CardVariants.default
+    ...(ownerState?.variant === CardVariants.default || ownerState?.variant === CardVariants.person
       ? {
           [theme.containerBreakpoints.up('sm')]: { ...theme.mixins.applyBackgroundOverlay({ ownerState, theme }) }
         }
@@ -47,7 +47,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   media: ({ ownerState, theme }) => ({
     backgroundColor: 'inherit',
 
-    ...(ownerState?.variant === CardVariants.default && {
+    ...((ownerState?.variant === CardVariants.default || ownerState?.variant === CardVariants.person) && {
       '&::after': {
         backgroundColor: 'inherit',
         opacity: '.5'
@@ -294,24 +294,90 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.person
     },
     style: {
-      '[class*=Card-contentWrap]': {
-        containerType: 'inline-size'
-      },
-
-      '[class*=cardMedia]': {
-        'maxWidth': '50%',
-        'paddingTop': 'var(--grid-gap)',
-        'marginLeft': 'auto',
-        'marginRight': 'auto',
-        'aspectRatio': '1 / 1',
+      '[class*=Card-cardMedia]': {
+        'width': '100%',
+        'height': '100%',
+        'aspectRatio': '9/16',
+        'position': 'relative',
 
         '& > *': {
-          borderRadius: '50%',
-          objectFit: 'cover',
-          aspectRatio: '1 / 1',
           width: '100%',
-          display: 'inline-block',
-          overflow: 'hidden'
+          height: '100%'
+        },
+
+        '&::after': {
+          content: '""',
+          position: 'absolute',
+          height: '100%',
+          width: '100%',
+          zIndex: 1,
+          top: 0,
+          left: 0
+        }
+      },
+
+      '[class*=Card-title]': {
+        ...theme.typography.h4
+      },
+
+      '[class*=subtitle]': {
+        ...theme.typography.overline,
+        fontWeight: 700
+      },
+
+      [theme.breakpoints.up('sm')]: {
+        'overflow': 'hidden',
+
+        '[class*=Card-cardMedia]': {
+          'width': '100%',
+
+          '& > *': {
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover'
+          }
+        },
+
+        ':is([class*=Card-title], [class*=subtitle])': {
+          transform: 'translateY(calc(-100% - calc(var(--grid-gap) * 2.5)))'
+        },
+
+        '&:not(:hover)': {
+          '& :is([class*=Card-title], [class*=subtitle])': {
+            marginBottom: 0
+          }
+        },
+
+        ':is([class*=contentWrap], [class*=actionsWrap])': {
+          transition: 'inherit',
+          position: 'absolute',
+          bottom: 0,
+          transform: 'translateY(100%)',
+          width: '100%',
+          zIndex: 20,
+          height: '100%'
+        },
+
+        ':is([class*=overline], [class*=body], [class*=actionsWrap])': {
+          overflow: 'hidden',
+          transition: 'inherit'
+        },
+
+        '&:hover': {
+          ':is([class*=Card-title], [class*=subtitle])': {
+            transform: 'translateY(0)',
+            height: 'auto'
+          },
+
+          '[class*=contentWrap]': {
+            transform: 'translateY(calc(var(--grid-gap) * -1.5))',
+            height: 'auto'
+          },
+
+          '[class*=actionsWrap]': {
+            transform: 'translateY(0)',
+            height: 'auto'
+          }
         }
       }
     }
