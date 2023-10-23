@@ -24,7 +24,7 @@ const Carousel = (props: CarouselProps) => {
   const ownerState = { ...props };
 
   const {
-    background,
+    backgroundImage,
     backgroundColor,
     isCarouselDesktop,
     isCarouselTablet,
@@ -108,7 +108,11 @@ const Carousel = (props: CarouselProps) => {
   return (
     <ErrorBoundary>
       <Root ownerState={ownerState} {...sidekick(sidekickLookup)} data-testid={`Carousel-${variant}`}>
-        <CarouselBackground background={background} backgroundColor={backgroundColor} testId="Carousel-background" />
+        <CarouselBackground
+          background={backgroundImage}
+          backgroundColor={backgroundColor}
+          testId="Carousel-background"
+        />
         {introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText
