@@ -37,7 +37,7 @@ const FooterNavigationItemGroup = (props: FooterNavigationItemGroupProps) => {
             {subNavigation?.map((subNavItem: any, index: number) => (
               <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
                 <NavItemLink
-                  {...props}
+                  {...subNavItem}
                   variant={variant}
                   {...sidekick(sidekickLookup)}
                   subNavigation={undefined}
