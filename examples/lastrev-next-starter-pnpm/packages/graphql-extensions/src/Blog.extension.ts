@@ -6,7 +6,7 @@ import { createType } from './utils/createType';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
-import { resolveField } from './utils/resolveField';
+
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 
 export const typeDefs = gql`
@@ -50,7 +50,7 @@ export const mappers: Mappers = {
         }),
       hero: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('Hero', {
-          variant: 'default',
+          variant: 'mediaOnRightFullBleed',
           overline: getLocalizedField(blog.fields, 'pubDate', ctx),
           title: getLocalizedField(blog.fields, 'title', ctx),
           sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)

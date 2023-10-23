@@ -450,10 +450,11 @@ type Person implements Content {
   animation: JSON
   body: RichText
   breadcrumbs: [Link]
+  education: [String]
   email: String
   footer: Footer
   header: Header
-  hero: Hero
+  hero: Content
   id: String
   jobTitle: String
   jsonLd: JSON
@@ -461,6 +462,7 @@ type Person implements Content {
   mainImage: Media
   name: String
   path: String
+  previousExperiences: [String]
   promoImage: Media
   promoSummary: String
   rolloverImage: Media

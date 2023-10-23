@@ -149,7 +149,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
 
         [theme.containerBreakpoints.up('md')]: {
           gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnEnd: 'content-end',
+          alignItems: 'flex-end'
         }
       }
     }
@@ -178,7 +179,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
 
         [theme.containerBreakpoints.up('md')]: {
           gridColumnStart: 'content-half',
-          gridColumnEnd: 'full-end'
+          gridColumnEnd: 'full-end',
+          alignItems: 'flex-end'
         }
       }
     }
@@ -205,7 +207,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'content-half',
+          alignItems: 'flex-start'
         }
       }
     }
@@ -228,11 +231,12 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       },
 
       '[class*=mediaWrap]': {
-        gridColumnStart: '1',
-        gridColumnEnd: '-1',
+        gridColumnStart: 'content-half',
+        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'content-half',
+          alignItems: 'flex-start'
         }
       }
     }

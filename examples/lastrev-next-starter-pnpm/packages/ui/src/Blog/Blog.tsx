@@ -4,7 +4,6 @@ import Script from 'next/script';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import MuiAvatar from '@mui/material/Avatar';
 import Typography, { type TypographyProps } from '@mui/material/Typography';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';

@@ -17,7 +17,7 @@ export const typeDefs = gql`
     socialLinks: [Link]
     mainImage: Media
     breadcrumbs: [Link]
-    hero: Hero
+    hero: Content
   }
 `;
 
@@ -30,7 +30,8 @@ export const mappers: Mappers = {
       breadcrumbs: breadcrumbsResolver,
       hero: async (person: any, _args: any, ctx: ApolloContext) =>
         createType('Hero', {
-          variant: 'mediaOnRight',
+          variant: 'mediaOnRightFullBleed',
+          backgroundColor: 'navy',
           overline: getLocalizedField(person.fields, 'jobTitle', ctx),
           title: getLocalizedField(person.fields, 'name', ctx),
           sideImageItems: [getLocalizedField(person.fields, 'mainImage', ctx)]
