@@ -3,22 +3,36 @@
 /* eslint-disable no-param-reassign */
 const { getContentfulIdFromString } = require('../contentful-fields');
 
-const content_type = 'featuresListItem';
+const content_type = 'article';
 
 const queryOptions = {
   'limit': 100,
   content_type,
   // 'sys.id[in]': '4rECnuLOSbnJafPL9g3hdU',
   'order': '-sys.createdAt',
-  // 'sys.publishedVersion[exists]': false,
+  'sys.publishedVersion[exists]': true,
   'sys.archivedAt[exists]': false
 };
 
 const dropboxLocales = ['en-US', 'de', 'es', 'fr', 'it', 'ja', 'pt-BR'];
+const iasLocales = [
+  'en-US',
+  'es-419',
+  'fr-FR',
+  'de-DE',
+  'it-IT',
+  'ja-JP',
+  'pt-BR',
+  'ko-KR',
+  'id-ID',
+  'zh-CN',
+  'th-TH',
+  'vi-VN'
+];
 const ifLocales = ['en-US', 'hk', 'hk-en', 'ca', 'cn', 'cn-en', 'fr-ca', 'me-en', 'au-en', 'gb-en', 'nz-en'];
 const englishOnly = ['en-US'];
 
-const locales = englishOnly;
+const locales = iasLocales;
 
 const displayHyperlink = (content) => {
   if (content.nodeType === 'hyperlink') {
@@ -86,15 +100,22 @@ const findDescription = (item, locale) => {
   return desc && descRichText && desc !== descRichText; // && (!descriptionRichText || !descriptionRichText[locale]);
 };
 
-const findCondition = (item, locale) => findDescription(item, locale); // findCardListByType(item, locale, 'Timeline');
+const findPubDate = (item, locale) => {
+  // Publish Date
+  const { pubDate } = item.fields;
+  return !pubDate || !pubDate['en-US'];
+};
+
+const findCondition = (item, locale) => findPubDate(item, locale); // findCardListByType(item, locale, 'Timeline');
 
 const displayObject = (item) => ({
   id: item.sys.id,
+  pubDate: item.fields.pubDate
   // sys: item.sys,
   // cards: item.fields.cards,
   // slug: item.fields.slug,
-  description: item.fields.description,
-  descriptionRichText: item.fields.descriptionRichText
+  // description: item.fields.description,
+  // descriptionRichText: item.fields.descriptionRichText
   // destinationPath: item.fields.destinationPath
   // body: item.fields.body['en-US'].content
   //   .map(displayHyperlink)
