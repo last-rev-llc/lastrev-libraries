@@ -21,27 +21,7 @@ export const mappers: Mappers = {
   Block: {
     Block: {
       variant: defaultResolver('variant'),
-      actions: async (block: any, _args: any, ctx: ApolloContext) => {
-        const actionsRef = getLocalizedField(block.fields, 'actions', ctx);
-        if (!actionsRef?.length) return null;
 
-        // const actions: any[] = (
-        return (
-          await ctx.loaders.entryLoader.loadMany(
-            actionsRef?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-          )
-        )
-          .filter(Boolean)
-          .map((x: any) => {
-            return createType('Link', {
-              icon: 'logo',
-              iconPosition: 'left',
-              variant: 'buttonText',
-              ...x
-            });
-          });
-        // return actions;
-      },
       mediaItems: async (block: any, _args: any, ctx: ApolloContext) => {
         const mediaItem = getLocalizedField(block.fields, 'asset', ctx);
         if (mediaItem) return [mediaItem];

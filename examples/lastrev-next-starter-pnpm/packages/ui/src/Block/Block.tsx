@@ -195,7 +195,6 @@ const Body = styled(ContentModule, {
 const SideContentWrap = styled('div', {
   name: 'Block',
   slot: 'SideContentWrap',
-
   overridesResolver: (_, styles) => [styles.sideContentWrap]
 })<{ ownerState: BlockOwnerState }>``;
 
@@ -208,7 +207,6 @@ const Media = styled(ContentModule, {
 const ActionsWrap = styled(Box, {
   name: 'Block',
   slot: 'ActionsWrap',
-
   overridesResolver: (_, styles) => [styles.actionsWrap]
 })<{ ownerState: BlockOwnerState }>``;
 

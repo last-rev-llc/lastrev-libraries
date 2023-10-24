@@ -101,12 +101,14 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   }
 
   if (text && icon) {
-    <RootLinkTextIcon {...sharedLinkProps}>
-      <RootLinkText ownerState={ownerState}>{text}</RootLinkText>
-      <RootLinkIcon ownerState={ownerState}>
-        <Icon iconName={icon} />
-      </RootLinkIcon>
-    </RootLinkTextIcon>;
+    return (
+      <RootLinkTextIcon {...sharedLinkProps}>
+        <RootLinkText ownerState={ownerState}>{text}</RootLinkText>
+        <RootLinkIcon ownerState={ownerState}>
+          <Icon iconName={icon} />
+        </RootLinkIcon>
+      </RootLinkTextIcon>
+    );
   }
 
   return <RootLink {...sharedLinkProps}>{text}</RootLink>;
