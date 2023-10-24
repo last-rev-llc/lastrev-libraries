@@ -57,6 +57,7 @@ declare module '@mui/material/styles' {
     display1: TypographyStyle;
     display2: TypographyStyle;
     display3: TypographyStyle;
+    bodyXSmall: TypographyStyle;
     bodySmall: TypographyStyle;
     bodyLarge: TypographyStyle;
     bodySpectral: TypographyStyle;
@@ -67,6 +68,7 @@ declare module '@mui/material/styles' {
     display1?: TypographyStyle;
     display2?: TypographyStyle;
     display3?: TypographyStyle;
+    bodyXSmall?: TypographyStyle;
     bodySmall?: TypographyStyle;
     bodyLarge?: TypographyStyle;
     bodySpectral?: TypographyStyle;
@@ -80,6 +82,7 @@ declare module '@mui/material/Typography' {
     display1?: true;
     display2?: true;
     display3?: true;
+    bodyXSmall?: true;
     bodySmall?: true;
     bodyLarge?: true;
     bodySpectral?: true;
@@ -89,6 +92,7 @@ declare module '@mui/material/Typography' {
     display1?: TypographyStyle;
     display2?: TypographyStyle;
     display3?: TypographyStyle;
+    bodyXSmall?: TypographyStyle;
     bodySmall?: TypographyStyle;
     bodyLarge?: TypographyStyle;
     bodySpectral?: TypographyStyle;

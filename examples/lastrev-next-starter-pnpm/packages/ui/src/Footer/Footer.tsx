@@ -147,7 +147,7 @@ const Logo = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.logo]
 })<{ ownerState: FooterOwnerState }>``;
 
-const DisclaimerWrap = styled(Grid, {
+const DisclaimerWrap = styled(Box, {
   name: 'Footer',
   slot: 'DisclaimerWrap',
   overridesResolver: (_, styles) => [styles.disclaimerWrap]

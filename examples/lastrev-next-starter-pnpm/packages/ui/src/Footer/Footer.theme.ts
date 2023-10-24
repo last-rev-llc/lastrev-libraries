@@ -15,7 +15,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   }),
 
   introContentsWrap: ({ theme }) => ({
-    marginBottom: theme.spacing(10)
+    marginBottom: 'var(--section-padding)'
   }),
 
   // introContent: {},
@@ -115,61 +115,67 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  legalSection: {
-    display: 'contents' // take out of flow,
-  },
+  legalSection: ({ theme }) => ({
+    'display': 'contents', // take out of flow,
+    '& *': {
+      ...theme.typography.bodyXSmall
+    }
+  }),
 
   copyrightDisclaimerWrap: ({ theme }) => ({
+    gridRow: 4,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+    display: 'inline-flex',
+    alignItems: 'flex-start',
+    height: '100%',
+    justifySelf: 'flex-start',
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-half'
+    }
+  }),
+
+  legalLinks: ({ theme }) => ({
+    gridRow: 3,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+    display: 'inline-flex',
+    alignItems: 'flex-end',
+    height: '100%',
+    justifySelf: 'flex-start',
+    padding: 0,
+
+    [theme.breakpoints.up('md')]: {
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-half'
+    }
+  }),
+
+  legalLinkWrap: {
+    'padding': 0,
+
+    '&:not(:first-of-type)': {
+      '&::before': {
+        content: '"•"',
+        display: 'block',
+        padding: '0 calc(var(--grid-gap) / 4)'
+      }
+    }
+  },
+
+  disclaimerWrap: ({ theme }) => ({
     gridRow: 5,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 
     [theme.breakpoints.up('md')]: {
-      gridRow: 3,
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-quarter'
-    }
-  }),
-
-  legalLinks: ({ theme }) => ({
-    gridRow: 4,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-    display: 'inline-flex',
-    alignItems: 'center',
-    height: '100%',
-    justifySelf: 'center',
-    gap: 'var(--grid-gap)',
-
-    [theme.breakpoints.up('md')]: {
-      gridColumn: 'content-quarter / content-three-quarter',
-      gridRow: 3
-    }
-  }),
-
-  disclaimerWrap: ({ theme }) => ({
-    ...theme.mixins.applyBackgroundColor({
-      ownerState: {
-        backgroundColor: 'black'
-      },
-      theme
-    }),
-    'gridRow': 6,
-    'gridColumnStart': 'full-start',
-    'gridColumnEnd': 'full-end',
-    'padding': 'var(--grid-gap) 0',
-
-    [theme.breakpoints.up('md')]: {
-      gridRow: 4
-    },
-
-    '& [class*=disclaimer] > *': {
-      gridColumnStart: 'content-start',
+      gridRow: '3 / 5',
+      gridColumnStart: 'content-half',
       gridColumnEnd: 'content-end'
     }
   })
-
-  // legalLink: : {}
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Footer'] => [];

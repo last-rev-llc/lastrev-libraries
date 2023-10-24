@@ -52,9 +52,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   content: {
     'display': 'flex',
     'flexDirection': 'column',
-    'borderLeft': 'solid',
-    'borderLeftWidth': '1px',
-    'paddingLeft': 'var(--grid-gap)',
 
     '& > *:last-child': {
       paddingBottom: 0,
@@ -65,7 +62,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   mainContentWrap: ({ ownerState }) => ({
     display: 'flex',
     flexDirection: 'column',
-    alignSelf: ownerState?.supplementalContent ? 'flex-start' : 'center'
+    alignSelf: ownerState?.supplementalContent ? 'flex-start' : 'center',
+
+    borderLeft: 'solid',
+    borderLeftWidth: '1px',
+    paddingLeft: 'var(--grid-gap)'
   }),
 
   sideContentWrap: ({ ownerState }) => ({

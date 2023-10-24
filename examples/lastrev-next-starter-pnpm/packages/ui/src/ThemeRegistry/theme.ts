@@ -33,7 +33,8 @@ export const mainColors = [
   'texasRose',
   'transparentLight',
   'transparentDark',
-  'lightGray'
+  'lightGray',
+  'darkGray'
 ];
 
 const defaultSpacing = 8;
@@ -78,7 +79,7 @@ const paletteTheme = createTheme({
       light: '#F8F8F8',
       main: '#F8F8F8',
       dark: '#F8F8F8',
-      contrastText: '#FFFFFF'
+      contrastText: '#000000'
     },
 
     navy: { lighter: '#002339', light: '#002339', main: '#002339', dark: '#002339', contrastText: '#ffffff' },
@@ -183,6 +184,14 @@ const coreTheme = createTheme({
       fontSize: 'var(--body2-font-size)',
       lineHeight: 'var(--body2-line-height)',
       margin: 'var(--body2-margin)',
+      color: 'inherit'
+    },
+    bodyXSmall: {
+      fontFamily: realHeadPro.style.fontFamily,
+      fontWeight: 'var(--bodyXSmall-font-weight)',
+      fontSize: 'var(--bodyXSmall-font-size)',
+      lineHeight: 'var(--bodyXSmall-line-height)',
+      margin: 'var(--bodyXSmall-margin)',
       color: 'inherit'
     },
     bodySmall: {
