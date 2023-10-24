@@ -8,6 +8,20 @@ import StyledComponentsRegistry from './StyledComponentsRegistry';
 import { theme } from './theme';
 
 export default function ThemeRegistry({ children }: { children: React.ReactNode }) {
+  const h1FontSizeBase = 3;
+  const h2FontSizeBase = 2.25;
+  const h3FontSizeBase = 1.75;
+  const h4FontSizeBase = 1.5;
+  const h5FontSizeBase = 1.25;
+  const h6FontSizeBase = 1;
+
+  const display1FontSizeBase = 3;
+  const display2FontSizeBase = 2.25;
+  const display3FontSizeBase = 1.75;
+  const display4FontSizeBase = 1.5;
+  const display5FontSizeBase = 1.25;
+  const display6FontSizeBase = 1;
+
   return (
     <StyledComponentsRegistry>
       <ThemeProvider theme={theme}>
@@ -58,31 +72,18 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
               --section-padding: calc(var(--grid-gap) * 4);
 
-              --h1-font-size-base: 3rem;
-              --h2-font-size-base: 2.25rem;
-              --h3-font-size-base: 1.75rem;
-              --h4-font-size-base: 1.5rem;
-              --h5-font-size-base: 1.25rem;
-              --h6-font-size-base: 1rem;
-              --display1-font-size-base: 3rem;
-              --display2-font-size-base: 2.25rem;
-              --display3-font-size-base: 1.75rem;
-              --display4-font-size-base: 1.5rem;
-              --display5-font-size-base: 1.25rem;
-              --display6-font-size-base: 1rem;
-
-              --h1-font-size: var(--h1-font-size-base);
-              --h2-font-size: var(--h2-font-size-base);
-              --h3-font-size: var(--h3-font-size-base);
-              --h4-font-size: var(--h4-font-size-base);
-              --h5-font-size: var(--h5-font-size-base);
-              --h6-font-size: var(--h6-font-size-base);
-              --display1-font-size: var(--display1-font-size-base);
-              --display2-font-size: var(--display2-font-size-base);
-              --display3-font-size: var(--display3-font-size-base);
-              --display4-font-size: var(--display4-font-size-base);
-              --display5-font-size: var(--display5-font-size-base);
-              --display6-font-size: var(--display6-font-size-base);
+              --h1-font-size: ${(h1FontSizeBase / 8) * 6}rem;
+              --h2-font-size: ${(h2FontSizeBase / 8) * 6}rem;
+              --h3-font-size: ${(h3FontSizeBase / 8) * 6}rem;
+              --h4-font-size: ${(h4FontSizeBase / 8) * 6}rem;
+              --h5-font-size: ${(h5FontSizeBase / 8) * 6}rem;
+              --h6-font-size: ${(h6FontSizeBase / 8) * 6}rem;
+              --display1-font-size: ${(display1FontSizeBase / 8) * 6}rem;
+              --display2-font-size: ${(display2FontSizeBase / 8) * 6}rem;
+              --display3-font-size: ${(display3FontSizeBase / 8) * 6}rem;
+              --display4-font-size: ${(display4FontSizeBase / 8) * 6}rem;
+              --display5-font-size: ${(display5FontSizeBase / 8) * 6}rem;
+              --display6-font-size: ${(display6FontSizeBase / 8) * 6}rem;
               --overline-font-size: 0.75rem;
               --body1-font-size: 1rem;
               --body2-font-size: 1.125rem;
@@ -183,76 +184,66 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
             body * {
               ${theme.containerBreakpoints.up('sm')} {
-                /* --h1-font-size: 2rem;
-                --h2-font-size: 1.75rem;
-                --h3-font-size: 1.5rem;
-                --h4-font-size: 1.25rem;
-                --h5-font-size: 1.125rem;
-                --h6-font-size: 1rem;
-                --display1-font-size: 2rem;
-                --display2-font-size: 1.75rem;
-                --display3-font-size: 1.5rem;
-                --display4-font-size: 1.25rem;
-                --display5-font-size: 1.125rem;
-                --display6-font-size: 1rem;
-                --overline-font-size: 0.75rem;
-                --body1-font-size: 1rem;
-                --body2-font-size: 1rem;
-                --bodySmall-font-size: 0.875rem;
-                --bodyLarge-font-size: 1.125rem; */
+                --h1-font-size: ${(h1FontSizeBase / 8) * 6}rem;
+                --h2-font-size: ${(h2FontSizeBase / 8) * 6}rem;
+                --h3-font-size: ${(h3FontSizeBase / 8) * 6}rem;
+                --h4-font-size: ${(h4FontSizeBase / 8) * 6}rem;
+                --h5-font-size: ${(h5FontSizeBase / 8) * 6}rem;
+                --h6-font-size: ${(h6FontSizeBase / 8) * 6}rem;
+                --display1-font-size: ${(display1FontSizeBase / 8) * 6}rem;
+                --display2-font-size: ${(display2FontSizeBase / 8) * 6}rem;
+                --display3-font-size: ${(display3FontSizeBase / 8) * 6}rem;
+                --display4-font-size: ${(display4FontSizeBase / 8) * 6}rem;
+                --display5-font-size: ${(display5FontSizeBase / 8) * 6}rem;
+                --display6-font-size: ${(display6FontSizeBase / 8) * 6}rem;
                 --section-padding: calc(var(--grid-gap) * 2);
               }
 
               ${theme.containerBreakpoints.up('md')} {
-                /* --h1-font-size: 2.25rem;
-                --h2-font-size: 2rem;
-                --h3-font-size: 1.75rem;
-                --h4-font-size: 1.5rem;
-                --h5-font-size: 1.25rem;
-                --h6-font-size: 1.125rem;
-                --display1-font-size: 2.25rem;
-                --display2-font-size: 2rem;
-                --display3-font-size: 1.75rem;
-                --display4-font-size: 1.5rem;
-                --display5-font-size: 1.25rem;
-                --display6-font-size: 1.125rem;
-                --overline-font-size: 0.875rem;
-                --body1-font-size: 1rem;
-                --body2-font-size: 1rem;
-                --bodySmall-font-size: 0.875rem;
-                --bodyLarge-font-size: 1.25rem; */
+                --h1-font-size: ${(h1FontSizeBase / 8) * 7}rem;
+                --h2-font-size: ${(h2FontSizeBase / 8) * 7}rem;
+                --h3-font-size: ${(h3FontSizeBase / 8) * 7}rem;
+                --h4-font-size: ${(h4FontSizeBase / 8) * 7}rem;
+                --h5-font-size: ${(h5FontSizeBase / 8) * 7}rem;
+                --h6-font-size: ${(h6FontSizeBase / 8) * 7}rem;
+                --display1-font-size: ${(display1FontSizeBase / 8) * 7}rem;
+                --display2-font-size: ${(display2FontSizeBase / 8) * 7}rem;
+                --display3-font-size: ${(display3FontSizeBase / 8) * 7}rem;
+                --display4-font-size: ${(display4FontSizeBase / 8) * 7}rem;
+                --display5-font-size: ${(display5FontSizeBase / 8) * 7}rem;
+                --display6-font-size: ${(display6FontSizeBase / 8) * 7}rem;
                 --section-padding: calc(var(--grid-gap) * 2);
               }
 
               ${theme.containerBreakpoints.up('lg')} {
-                /* --h1-font-size: 2.5rem;
-                --h2-font-size: 2.25rem;
-                --h3-font-size: 1.75rem;
-                --h4-font-size: 1.5rem;
-                --h5-font-size: 1.25rem;
-                --h6-font-size: 1.125rem;
-                --display1-font-size: 2.5rem;
-                --display2-font-size: 2.25rem;
-                --display3-font-size: 2rem;
-                --display4-font-size: 1.5rem;
-                --display5-font-size: 1.25rem;
-                --display6-font-size: 1.125rem; */
+                --h1-font-size: ${(h1FontSizeBase / 8) * 8}rem;
+                --h2-font-size: ${(h2FontSizeBase / 8) * 8}rem;
+                --h3-font-size: ${(h3FontSizeBase / 8) * 8}rem;
+                --h4-font-size: ${(h4FontSizeBase / 8) * 8}rem;
+                --h5-font-size: ${(h5FontSizeBase / 8) * 8}rem;
+                --h6-font-size: ${(h6FontSizeBase / 8) * 8}rem;
+                --display1-font-size: ${(display1FontSizeBase / 8) * 8}rem;
+                --display2-font-size: ${(display2FontSizeBase / 8) * 8}rem;
+                --display3-font-size: ${(display3FontSizeBase / 8) * 8}rem;
+                --display4-font-size: ${(display4FontSizeBase / 8) * 8}rem;
+                --display5-font-size: ${(display5FontSizeBase / 8) * 8}rem;
+                --display6-font-size: ${(display6FontSizeBase / 8) * 8}rem;
                 --section-padding: calc(var(--grid-gap) * 2);
               }
 
               ${theme.containerBreakpoints.up('xl')} {
-                /* --h1-font-size: 2.75rem;
-                --h2-font-size: 2.5rem;
-                --h3-font-size: 2rem;
-                --h4-font-size: 1.75rem;
-                --h5-font-size: 1.5rem;
-                --h6-font-size: 1.25rem;
-                --display1-font-size: 2.75rem;
-                --display2-font-size: 2.5rem;
-                --display3-font-size: 2rem;
-                --display4-font-size: 1.75rem;
-                --display5-font-size: 1.5rem;
-                --display6-font-size: 1.25rem; */
+                --h1-font-size: ${(h1FontSizeBase / 8) * 9}rem;
+                --h2-font-size: ${(h2FontSizeBase / 8) * 9}rem;
+                --h3-font-size: ${(h3FontSizeBase / 8) * 9}rem;
+                --h4-font-size: ${(h4FontSizeBase / 8) * 9}rem;
+                --h5-font-size: ${(h5FontSizeBase / 8) * 9}rem;
+                --h6-font-size: ${(h6FontSizeBase / 8) * 9}rem;
+                --display1-font-size: ${(display1FontSizeBase / 8) * 9}rem;
+                --display2-font-size: ${(display2FontSizeBase / 8) * 9}rem;
+                --display3-font-size: ${(display3FontSizeBase / 8) * 9}rem;
+                --display4-font-size: ${(display4FontSizeBase / 8) * 9}rem;
+                --display5-font-size: ${(display5FontSizeBase / 8) * 9}rem;
+                --display6-font-size: ${(display6FontSizeBase / 8) * 9}rem;
                 --section-padding: calc(var(--grid-gap) * 2);
               }
             }
