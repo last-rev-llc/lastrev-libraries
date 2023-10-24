@@ -57,21 +57,27 @@ const paletteTheme = createTheme({
       light: 'rgba(0, 0, 0, 0)',
       main: 'rgba(0, 0, 0, 0)',
       dark: 'rgba(0, 0, 0, 0)',
-      contrastText: '#000000'
+      overlay: '#002339',
+      contrastText: '#000000',
+      overlayText: '#FFFFFF'
     },
     transparentDark: {
       lighter: 'rgba(255, 255, 255, 0)',
       light: 'rgba(255, 255, 255, 0)',
       main: 'rgba(255, 255, 255, 0)',
       dark: 'rgba(255, 255, 255, 0)',
-      contrastText: '#ffffff'
+      overlay: '#002339',
+      contrastText: '#ffffff',
+      overlayText: '#FFFFFF'
     },
     darkGray: {
       lighter: 'rgba(0, 0, 0, .3)',
       light: 'rgba(0, 0, 0, .3)',
       main: 'rgba(0, 0, 0, .3)',
       dark: 'rgba(0, 0, 0, .3)',
-      contrastText: '#000000'
+      overlay: '#002339',
+      contrastText: '#000000',
+      overlayText: '#FFFFFF'
     },
 
     lightGray: {
@@ -79,17 +85,83 @@ const paletteTheme = createTheme({
       light: '#F8F8F8',
       main: '#F8F8F8',
       dark: '#F8F8F8',
-      contrastText: '#000000'
+      overlay: '#002339',
+      contrastText: '#000000',
+      overlayText: '#FFFFFF'
     },
 
-    navy: { lighter: '#002339', light: '#002339', main: '#002339', dark: '#002339', contrastText: '#ffffff' },
-    burgandy: { lighter: '#9D0031', light: '#9D0031', main: '#9D0031', dark: '#9D0031', contrastText: '#ffffff' },
-    crimson: { lighter: '#EC1A3A', light: '#EC1A3A', main: '#EC1A3A', dark: '#EC1A3A', contrastText: '#ffffff' },
-    sanJuan: { lighter: '#395B7E', light: '#395B7E', main: '#395B7E', dark: '#395B7E', contrastText: '#ffffff' },
-    cornflower: { lighter: '#93BDE4', light: '#93BDE4', main: '#93BDE4', dark: '#93BDE4', contrastText: '#ffffff' },
-    bordeaux: { lighter: '#5E001D', light: '#5E001D', main: '#5E001D', dark: '#5E001D', contrastText: '#ffffff' },
-    cucumber: { lighter: '#83AE74', light: '#83AE74', main: '#83AE74', dark: '#83AE74', contrastText: '#ffffff' },
-    texasRose: { lighter: '#FDBA4D', light: '#FDBA4D', main: '#FDBA4D', dark: '#FDBA4D', contrastText: '#ffffff' },
+    navy: {
+      lighter: '#002339',
+      light: '#002339',
+      main: '#002339',
+      dark: '#002339',
+      contrastText: '#ffffff',
+      overlay: '#002339',
+      overlayText: '#FFFFFF'
+    },
+    burgandy: {
+      lighter: '#9D0031',
+      light: '#9D0031',
+      main: '#9D0031',
+      dark: '#9D0031',
+      contrastText: '#ffffff',
+      overlay: '#002339',
+      overlayText: '#FFFFFF'
+    },
+    crimson: {
+      lighter: '#EC1A3A',
+      light: '#EC1A3A',
+      main: '#EC1A3A',
+      dark: '#EC1A3A',
+      contrastText: '#ffffff',
+      overlay: '#002339',
+      overlayText: '#FFFFFF'
+    },
+    sanJuan: {
+      lighter: '#395B7E',
+      light: '#395B7E',
+      main: '#395B7E',
+      dark: '#395B7E',
+      contrastText: '#ffffff',
+      overlay: '#002339',
+      overlayText: '#FFFFFF'
+    },
+    cornflower: {
+      lighter: '#93BDE4',
+      light: '#93BDE4',
+      main: '#93BDE4',
+      dark: '#93BDE4',
+      contrastText: '#ffffff',
+      overlay: '#002339',
+      overlayText: '#FFFFFF'
+    },
+    bordeaux: {
+      lighter: '#5E001D',
+      light: '#5E001D',
+      main: '#5E001D',
+      dark: '#5E001D',
+      contrastText: '#ffffff',
+      overlay: '#002339',
+      overlayText: '#FFFFFF'
+    },
+    cucumber: {
+      lighter: '#83AE74',
+      light: '#83AE74',
+      main: '#83AE74',
+      dark: '#83AE74',
+      contrastText: '#ffffff',
+      overlay: '#002339',
+      overlayText: '#FFFFFF'
+    },
+    texasRose: {
+      lighter: '#FDBA4D',
+      light: '#FDBA4D',
+      main: '#FDBA4D',
+      dark: '#FDBA4D',
+      contrastText: '#ffffff',
+      overlay: '#002339',
+      overlayText: '#FFFFFF'
+    },
 
     // TODO: Get  shades
     offwhite: { lighter: '#f8f8f8', light: '#f8f8f8', main: '#f8f8f8', dark: '#f8f8f8', contrastText: '#000000' },
@@ -99,13 +171,13 @@ const paletteTheme = createTheme({
       // paper: '#E3E3E3'
       // default: '#121212',
       // paper: '#1E1E1E'
-      // contrastText: '#FFF'
+      // contrastText: '#FFFFFF'
     },
     error: {
       main: '#ff1744',
       light: 'rgb(255, 69, 105)',
       dark: 'rgb(178, 16, 47)',
-      contrastText: '#fff'
+      contrastText: '#ffffff'
     },
     common: {
       black: '#00030B',
@@ -115,28 +187,32 @@ const paletteTheme = createTheme({
       main: '#ed6c02',
       light: '#ff9800',
       dark: '#e65100',
-      contrastText: '#fff'
+      contrastText: '#ffffff'
     },
     info: {
       main: '#0288d1',
       light: '#03a9f4',
       dark: '#01579b',
-      contrastText: '#fff'
+      contrastText: '#ffffff'
     },
     success: {
       main: '#2e7d32',
       light: '#4caf50',
       dark: '#1b5e20',
-      contrastText: '#fff'
+      contrastText: '#ffffff'
     },
 
     white: {
-      main: '#FFF',
-      contrastText: '#03263e'
+      main: '#FFFFFF',
+      contrastText: '#03263e',
+      overlay: '#002339',
+      overlayText: '#FFFFFF'
     },
     black: {
       main: '#1F1F1F',
-      contrastText: '#FFF'
+      contrastText: '#FFFFFF',
+      overlay: '#002339',
+      overlayText: '#FFFFFF'
     }
   }
 });

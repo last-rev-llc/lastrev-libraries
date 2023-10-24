@@ -32,8 +32,8 @@ export const applyBackgroundOverlay: ApplyBackgroundOverlay = ({
     const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
 
     if (backgroundColor && get(theme.palette, parsedBGColor)) {
-      const textColor = get(theme.palette, parsedBGColor);
-      const bgColor = get(theme.palette, `${paletteColor}.contrastText`);
+      const textColor = get(theme.palette, `${paletteColor}.overlayText`);
+      const bgColor = get(theme.palette, `${paletteColor}.overlay`);
       styles = {
         backgroundColor: bgColor,
         color: textColor,

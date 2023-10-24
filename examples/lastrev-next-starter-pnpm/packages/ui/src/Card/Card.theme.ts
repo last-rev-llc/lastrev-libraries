@@ -13,7 +13,17 @@ const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
-    containerType: 'inline-size'
+    containerType: 'inline-size',
+
+    ...(ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person
+      ? {
+          [theme.containerBreakpoints.up('sm')]: {
+            ...theme.mixins.applyBackgroundOverlay({ ownerState, theme })
+          }
+        }
+      : {
+          ...theme.mixins.applyBackgroundColor({ ownerState, theme })
+        })
   }),
 
   cardWrap: ({ theme, ownerState }) => ({
@@ -22,10 +32,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'height': '100%',
     'boxShadow': 'initial',
     'borderRadius': 0,
-
+    'backgroundColor': 'inherit',
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
     'willChange': 'transform',
+    'color': 'inherit',
 
     '&:hover': {
       transform: 'scale(1)'
@@ -38,14 +49,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
         transform: 'scale(1.05)'
       }
     },
-
-    ...(ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person
-      ? {
-          [theme.containerBreakpoints.up('sm')]: { ...theme.mixins.applyBackgroundOverlay({ ownerState, theme }) }
-        }
-      : {
-          ...theme.mixins.applyBackgroundColor({ ownerState, theme })
-        }),
 
     [theme.breakpoints.up('md')]: {
       ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
