@@ -13,6 +13,8 @@ declare module '@mui/material/styles' {
     tertiary?: MuiPalette['primary'];
     transparentLight?: MuiPalette['primary'];
     transparentDark?: MuiPalette['primary'];
+    lightGray?: MuiPalette['primary'];
+    darkGray?: MuiPalette['primary'];
     navy?: MuiPalette['primary'];
     burgandy?: MuiPalette['primary'];
     crimson?: MuiPalette['primary'];
@@ -27,6 +29,8 @@ declare module '@mui/material/styles' {
     tertiary?: PaletteOptions['primary'];
     transparentLight?: PaletteOptions['primary'];
     transparentDark?: PaletteOptions['primary'];
+    lightGray?: PaletteOptions['primary'];
+    darkGray?: PaletteOptions['primary'];
     navy?: PaletteOptions['primary'];
     burgandy?: PaletteOptions['primary'];
     crimson?: PaletteOptions['primary'];

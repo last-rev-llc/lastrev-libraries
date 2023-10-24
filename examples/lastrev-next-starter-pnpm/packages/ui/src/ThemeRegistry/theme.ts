@@ -65,12 +65,20 @@ const paletteTheme = createTheme({
       dark: 'rgba(255, 255, 255, 0)',
       contrastText: '#ffffff'
     },
-    lightGray: {
+    darkGray: {
       lighter: 'rgba(0, 0, 0, .3)',
       light: 'rgba(0, 0, 0, .3)',
       main: 'rgba(0, 0, 0, .3)',
       dark: 'rgba(0, 0, 0, .3)',
       contrastText: '#000000'
+    },
+
+    lightGray: {
+      lighter: '#F8F8F8',
+      light: '#F8F8F8',
+      main: '#F8F8F8',
+      dark: '#F8F8F8',
+      contrastText: '#FFFFFF'
     },
 
     navy: { lighter: '#002339', light: '#002339', main: '#002339', dark: '#002339', contrastText: '#ffffff' },

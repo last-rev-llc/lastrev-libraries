@@ -427,7 +427,6 @@ type Page implements Content {
   id: String
   internalTitle: String
   jsonLd: JSON
-  liveEditor: JSON
   lr__path__: String
   path: String
   promoImage: Media
