@@ -23,7 +23,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'boxShadow': 'initial',
     'borderRadius': 0,
 
-    ...(ownerState?.variant === CardVariants.default || ownerState?.variant === CardVariants.person
+    ...(ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person
       ? {
           [theme.containerBreakpoints.up('sm')]: { ...theme.mixins.applyBackgroundOverlay({ ownerState, theme }) }
         }
@@ -47,7 +47,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   media: ({ ownerState, theme }) => ({
     backgroundColor: 'inherit',
 
-    ...((ownerState?.variant === CardVariants.default || ownerState?.variant === CardVariants.person) && {
+    ...((ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person) && {
       '&::after': {
         backgroundColor: 'inherit',
         opacity: '.5'
@@ -100,6 +100,47 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   {
     props: {
       variant: CardVariants.default
+    },
+    style: {
+      '& [class*=contentWrap]': {
+        borderLeft: 'solid 1px currentColor',
+        paddingLeft: 'var(--grid-gap)',
+        paddingTop: 'calc(var(--grid-gap) / 2)',
+        paddingBottom: 'calc(var(--grid-gap) / 2)'
+      },
+
+      '& [class*=Card-content]': {
+        'minHeight': '33cqi',
+        'display': 'flex',
+        'flexDirection': 'column',
+
+        [theme.breakpoints.up('sm')]: {
+          minHeight: '100cqi'
+        },
+
+        [theme.breakpoints.up('md')]: {
+          minHeight: '177cqi',
+          maxHeight: '33vhh'
+        },
+
+        '& > *': {
+          marginTop: 'auto'
+        }
+      },
+
+      '& [class*=Card-title]': {
+        ...theme.typography.h5,
+        marginTop: 0
+      },
+
+      '& [class*=Card-subtitle]': {
+        ...theme.typography.h6
+      }
+    }
+  },
+  {
+    props: {
+      variant: CardVariants.hover
     },
     style: {
       '[class*=Card-cardMedia]': {

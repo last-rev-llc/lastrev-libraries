@@ -4,6 +4,7 @@ import type { Card_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum CardVariants {
   default = 'default',
+  hover = 'hover',
   icon = 'icon',
   logo = 'logo',
   media = 'media',
