@@ -29,7 +29,8 @@ const Hero = (props: HeroProps) => {
     body,
     actions,
     images,
-    sidekickLookup
+    sidekickLookup,
+    hideBreadcrumbs
   } = props;
 
   return (
@@ -46,7 +47,7 @@ const Hero = (props: HeroProps) => {
         {overline || title || subtitle || body || actions ? (
           <MainContentWrap ownerState={ownerState}>
             <Content ownerState={ownerState}>
-              {!!breadcrumbs?.length ? (
+              {!hideBreadcrumbs && !!breadcrumbs?.length ? (
                 <BreadcrumbsWrap ownerState={ownerState}>
                   <Breadcrumbs links={breadcrumbs} />
                 </BreadcrumbsWrap>

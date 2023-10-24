@@ -21,4 +21,5 @@ fragment Hero_BaseFragment on Hero {
   bottomContent {
     ...ContentModule_RichTextFragment
   }
+  hideBreadcrumbs
 }
