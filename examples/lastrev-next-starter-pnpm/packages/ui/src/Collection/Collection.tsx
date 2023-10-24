@@ -56,9 +56,8 @@ const Collection = (props: CollectionProps) => {
                   backgroundColor={backgroundColor}
                   key={item?.id}
                   {...item}
-                  variant={item?.variant || itemsVariant}
-                  aspectRatio={item?.aspectRatio || itemsAspectRatio}
-                  // aspectRatio="vertical"
+                  variant={itemsVariant ?? item?.variant}
+                  aspectRatio={itemsAspectRatio ?? item?.aspectRatio}
                   position={index + 1}
                 />
               ))}
