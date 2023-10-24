@@ -19,21 +19,22 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     flexDirection: 'column',
     width: '100%',
     position: 'relative',
-    padding: 0,
 
-    ...(ownerState?.prevBgColor && {
-      '&::before': {
-        content: '""',
-        position: 'absolute',
-        display: 'block',
-        height: 'var(--section-padding)',
-        width: '100%',
-        ...theme.mixins.applyBackgroundColor({
-          ownerState: { ...ownerState, backgroundColor: ownerState?.prevBgColor ?? 'navy' },
-          theme
-        })
-      }
-    })
+    ...(ownerState?.prevBgColor &&
+      ownerState.inheritTopBGOverlap && {
+        'padding': 0,
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          display: 'block',
+          height: 'var(--section-padding)',
+          width: '100%',
+          ...theme.mixins.applyBackgroundColor({
+            ownerState: { ...ownerState, backgroundColor: ownerState?.prevBgColor ?? 'navy' },
+            theme
+          })
+        }
+      })
   }),
 
   itemsGrid: ({ theme, ownerState }) => ({

@@ -7,29 +7,25 @@ import {
   type ComponentsVariants
 } from '@mui/material/styles';
 
-import { CardVariants } from './Card.types';
+import { CardVariants, CardAspectRatios } from './Card.types';
 
 const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
-    'containerType': 'inline-size',
-    'position': 'relative',
-    'transition': 'all 0.25s ease-in-out',
-    'willChange': 'transform',
+    containerType: 'inline-size'
+  }),
+
+  cardWrap: ({ theme, ownerState }) => ({
     'display': 'flex',
     'flexDirection': 'column',
     'height': '100%',
     'boxShadow': 'initial',
     'borderRadius': 0,
 
-    ...(ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person
-      ? {
-          [theme.containerBreakpoints.up('sm')]: { ...theme.mixins.applyBackgroundOverlay({ ownerState, theme }) }
-        }
-      : {
-          ...theme.mixins.applyBackgroundColor({ ownerState, theme })
-        }),
+    'position': 'relative',
+    'transition': 'all 0.25s ease-in-out',
+    'willChange': 'transform',
 
     '&:hover': {
       transform: 'scale(1)'
@@ -41,6 +37,28 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
       '&:hover': {
         transform: 'scale(1.05)'
       }
+    },
+
+    ...(ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person
+      ? {
+          [theme.containerBreakpoints.up('sm')]: { ...theme.mixins.applyBackgroundOverlay({ ownerState, theme }) }
+        }
+      : {
+          ...theme.mixins.applyBackgroundColor({ ownerState, theme })
+        }),
+
+    [theme.breakpoints.up('md')]: {
+      ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
+        minHeight: '56.25cqi'
+      }),
+
+      ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
+        minHeight: '177.78cqi'
+      }),
+
+      ...(ownerState?.aspectRatio === CardAspectRatios.square && {
+        minHeight: '100cqi'
+      })
     }
   }),
 
@@ -51,7 +69,19 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
       '&::after': {
         backgroundColor: 'inherit',
         opacity: '.5'
-      }
+      },
+
+      ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
+        minHeight: '56.25cqi'
+      }),
+
+      ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
+        minHeight: '177.78cqi'
+      }),
+
+      ...(ownerState?.aspectRatio === CardAspectRatios.square && {
+        minHeight: '100cqi'
+      })
     })
   }),
 
@@ -114,15 +144,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         'display': 'flex',
         'flexDirection': 'column',
 
-        [theme.breakpoints.up('sm')]: {
-          minHeight: '100cqi'
-        },
-
-        [theme.breakpoints.up('md')]: {
-          minHeight: '177cqi',
-          maxHeight: '33vhh'
-        },
-
         '& > *': {
           marginTop: 'auto'
         }
@@ -138,6 +159,41 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       }
     }
   },
+  // {
+  //   props: {
+  //     variant: CardVariants.hover,
+  //     aspectRatio: CardAspectRatios.vertical
+  //   },
+  //   style: {
+  //     '&& [class*=Card-cardMedia]': {
+  //       minHeight: '177.78cqi'
+  //     }
+  //   }
+  // },
+
+  // {
+  //   props: {
+  //     variant: CardVariants.hover,
+  //     aspectRatio: CardAspectRatios.square
+  //   },
+  //   style: {
+  //     '&& [class*=Card-cardMedia]': {
+  //       minHeight: '100cqi'
+  //     }
+  //   }
+  // },
+  // {
+  //   props: {
+  //     variant: CardVariants.hover,
+  //     aspectRatio: CardAspectRatios.horizontal
+  //   },
+  //   style: {
+  //     '&& [class*=Card-cardMedia]': {
+  //       minHeight: '56.25cqi'
+  //     }
+  //   }
+  // },
+
   {
     props: {
       variant: CardVariants.hover
@@ -146,12 +202,14 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       '[class*=Card-cardMedia]': {
         'width': '100%',
         'height': '100%',
-        'aspectRatio': '9/16',
+
         'position': 'relative',
 
         '& > *': {
           width: '100%',
-          height: '100%'
+          objectFit: 'cover',
+          minHeight: 'inherit',
+          height: 'auto'
         },
 
         '&::after': {
@@ -289,8 +347,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.timeline
     },
     style: {
-      'aspectRatio': '1/1',
-
       '[class*=contentWrap]': { display: 'flex', flexDirection: 'column' },
 
       '[class*=bodyWrap]': {

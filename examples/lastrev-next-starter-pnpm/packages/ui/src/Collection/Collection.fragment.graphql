@@ -5,6 +5,7 @@ fragment Collection_FieldsFragment on Collection {
   }
   variant
   itemsVariant
+  itemsAspectRatio
   backgroundImage {
     ...Media_BaseFragment
   }

@@ -13,6 +13,7 @@ fragment Card_FieldsFragment on Card {
     ...Link_CardFragment
   }
   variant
+  aspectRatio
 }
 
 # Base fragment used everywhere there's a Card

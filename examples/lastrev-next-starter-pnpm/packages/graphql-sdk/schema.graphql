@@ -91,6 +91,7 @@ type Blog implements Content {
 type Card implements Content {
   actions: [Link]
   animation: JSON
+  aspectRatio: String
   body: RichText
   bodyRte: JSON
   id: String
@@ -139,6 +140,7 @@ type Collection implements Content {
   isCarouselMobile: Boolean
   isCarouselTablet: Boolean
   items: [CollectionItem]
+  itemsAspectRatio: String
   itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
   itemsPerRow: Int
   itemsVariant: String

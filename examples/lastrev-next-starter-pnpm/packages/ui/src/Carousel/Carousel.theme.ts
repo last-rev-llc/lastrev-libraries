@@ -35,7 +35,23 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
         right: 'unset',
         left: 'calc(3 * var(--swiper-navigation-size))'
       }
-    }
+    },
+
+    ...(ownerState?.prevBgColor &&
+      ownerState.inheritTopBGOverlap && {
+        'padding': 0,
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          display: 'block',
+          height: 'var(--section-padding)',
+          width: '100%',
+          ...theme.mixins.applyBackgroundColor({
+            ownerState: { ...ownerState, backgroundColor: ownerState?.prevBgColor ?? 'navy' },
+            theme
+          })
+        }
+      })
   }),
 
   swiperWrap: {

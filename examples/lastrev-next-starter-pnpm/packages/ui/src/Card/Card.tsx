@@ -47,112 +47,126 @@ const Card = (props: CardProps) => {
   return (
     <ErrorBoundary>
       <Root ownerState={ownerState} data-testid="Card" {...sidekick(sidekickLookup)} className={className}>
-        {!!link ? <CardLink component={CardActionArea} {...(link as any)} /> : null}
-        {image || loading ? (
-          // @ts-ignore: TODO
-          <CardMedia ownerState={ownerState}>
-            {!loading ? (
-              <ContentModule
-                __typename="Media"
-                {...sidekick(sidekickLookup, 'media')}
-                {...image}
-                data-testid="Card-media"
-              />
-            ) : (
-              <Skeleton variant="rectangular" width={210} height={118} />
-            )}
-          </CardMedia>
-        ) : null}
-        {!loading && (overline || title || subtitle || body) ? (
-          // @ts-ignore: TODO
-          <ContentWrap ownerState={ownerState}>
-            {overline ? (
-              <Overline
-                {...sidekick(sidekickLookup, 'overline')}
-                variant="overline"
-                data-testid="Card-overline"
-                // @ts-ignore: TODO
-                ownerState={ownerState}>
-                {overline}
-              </Overline>
-            ) : null}
+        <CardWrap ownerState={ownerState}>
+          {!!link ? <CardLink component={CardActionArea} {...(link as any)} /> : null}
 
-            {title ? (
-              <Title
-                {...sidekick(sidekickLookup, 'title')}
-                component="p"
-                variant="h3"
-                data-testid="Card-title"
-                // @ts-ignore: TODO
-                ownerState={ownerState}>
-                {title}
-              </Title>
-            ) : null}
-
-            {subtitle ? (
-              <Subtitle
-                {...sidekick(sidekickLookup, 'subtitle')}
-                component="p"
-                variant="h4"
-                data-testid="Card-subtitle"
-                // @ts-ignore: TODO
-                ownerState={ownerState}>
-                {subtitle}
-              </Subtitle>
-            ) : null}
-
-            {body ? (
-              <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
-                <Body __typename="RichText" body={body} ownerState={ownerState} data-testid="Card-body" />
-              </BodyWrap>
-            ) : null}
-          </ContentWrap>
-        ) : null}
-        {loading ? (
-          <ContentWrap ownerState={ownerState} data-testid="Card-ContentSkeleton">
-            <Overline ownerState={ownerState} variant="overline">
-              <Skeleton variant="text" width="100%" />
-            </Overline>
-
-            <Title ownerState={ownerState} variant="display5">
-              <Skeleton variant="text" width="100%" />
-            </Title>
-
-            <Subtitle ownerState={ownerState} variant="display6">
-              <Skeleton variant="text" width="100%" />
-            </Subtitle>
-
-            <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
-              <Body ownerState={ownerState} variant="bodySmall">
-                <Skeleton variant="text" width="100%" />
-              </Body>
-            </BodyWrap>
-          </ContentWrap>
-        ) : null}
-        {(actions?.length || loading) && (
-          <ActionsWrap
-            {...sidekick(sidekickLookup, 'actions')}
-            data-testid="Card-actions"
+          {image || loading ? (
             // @ts-ignore: TODO
-            ownerState={ownerState}>
-            {!loading ? (
-              actions?.map((link: any, index: number) => (
-                <Action key={`card-${id}-link-${link?.id || index}`} {...(link as LinkProps)} ownerState={ownerState} />
-              ))
-            ) : (
-              <Skeleton variant="text" width="100%" />
-            )}
-          </ActionsWrap>
-        )}
+            <CardMedia ownerState={ownerState}>
+              {!loading ? (
+                <ContentModule
+                  __typename="Media"
+                  {...sidekick(sidekickLookup, 'media')}
+                  {...image}
+                  data-testid="Card-media"
+                />
+              ) : (
+                <Skeleton variant="rectangular" width={210} height={118} />
+              )}
+            </CardMedia>
+          ) : null}
+
+          {!loading && (overline || title || subtitle || body) ? (
+            // @ts-ignore: TODO
+            <ContentWrap ownerState={ownerState}>
+              {overline ? (
+                <Overline
+                  {...sidekick(sidekickLookup, 'overline')}
+                  variant="overline"
+                  data-testid="Card-overline"
+                  // @ts-ignore: TODO
+                  ownerState={ownerState}>
+                  {overline}
+                </Overline>
+              ) : null}
+
+              {title ? (
+                <Title
+                  {...sidekick(sidekickLookup, 'title')}
+                  component="p"
+                  variant="h3"
+                  data-testid="Card-title"
+                  // @ts-ignore: TODO
+                  ownerState={ownerState}>
+                  {title}
+                </Title>
+              ) : null}
+
+              {subtitle ? (
+                <Subtitle
+                  {...sidekick(sidekickLookup, 'subtitle')}
+                  component="p"
+                  variant="h4"
+                  data-testid="Card-subtitle"
+                  // @ts-ignore: TODO
+                  ownerState={ownerState}>
+                  {subtitle}
+                </Subtitle>
+              ) : null}
+
+              {body ? (
+                <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
+                  <Body __typename="RichText" body={body} ownerState={ownerState} data-testid="Card-body" />
+                </BodyWrap>
+              ) : null}
+            </ContentWrap>
+          ) : null}
+          {loading ? (
+            <ContentWrap ownerState={ownerState} data-testid="Card-ContentSkeleton">
+              <Overline ownerState={ownerState} variant="overline">
+                <Skeleton variant="text" width="100%" />
+              </Overline>
+
+              <Title ownerState={ownerState} variant="display5">
+                <Skeleton variant="text" width="100%" />
+              </Title>
+
+              <Subtitle ownerState={ownerState} variant="display6">
+                <Skeleton variant="text" width="100%" />
+              </Subtitle>
+
+              <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
+                <Body ownerState={ownerState} variant="bodySmall">
+                  <Skeleton variant="text" width="100%" />
+                </Body>
+              </BodyWrap>
+            </ContentWrap>
+          ) : null}
+          {(actions?.length || loading) && (
+            <ActionsWrap
+              {...sidekick(sidekickLookup, 'actions')}
+              data-testid="Card-actions"
+              // @ts-ignore: TODO
+              ownerState={ownerState}>
+              {!loading ? (
+                actions?.map((link: any, index: number) => (
+                  <Action
+                    key={`card-${id}-link-${link?.id || index}`}
+                    {...(link as LinkProps)}
+                    ownerState={ownerState}
+                  />
+                ))
+              ) : (
+                <Skeleton variant="text" width="100%" />
+              )}
+            </ActionsWrap>
+          )}
+        </CardWrap>
       </Root>
     </ErrorBoundary>
   );
 };
 
-const Root = styled(MuiCard, {
+const Root = styled(Box, {
   name: 'Card',
   slot: 'Root',
-  overridesResolver: (_, styles) => [styles.root]
+  overridesResolver: (props, styles) => [styles.root]
+})<{ ownerState: CardOwnerState }>``;
+
+const CardWrap = styled(MuiCard, {
+  name: 'Card',
+  slot: 'CardWrap',
+  overridesResolver: (props, styles) => [styles.cardWrap]
 })<{ ownerState: CardOwnerState }>``;
 
 const CardLink = styled(CardActionArea, {

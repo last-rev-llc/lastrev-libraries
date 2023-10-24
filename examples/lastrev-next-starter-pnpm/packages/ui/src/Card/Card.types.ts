@@ -15,10 +15,18 @@ export enum CardVariants {
   timeline = 'timeline'
 }
 
-export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant'> {
+export enum CardAspectRatios {
+  default = 'default',
+  square = 'square',
+  horizontal = 'horizontal',
+  vertical = 'vertical'
+}
+
+export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant' | 'aspectRatio'> {
   loading?: boolean;
   variant?: CardVariants;
   ownerState?: any;
+  aspectRatio?: CardAspectRatios;
 }
 
 export interface CardOwnerState extends CardProps {
@@ -27,6 +35,7 @@ export interface CardOwnerState extends CardProps {
 
 interface CardClasses {
   root: string;
+  cardWrap: string;
   link: string;
   media: string;
   mediaFlip: string;

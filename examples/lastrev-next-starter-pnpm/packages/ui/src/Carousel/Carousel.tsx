@@ -32,6 +32,7 @@ const Carousel = (props: CarouselProps) => {
     items,
     variant,
     itemsVariant,
+    itemsAspectRatio,
     sidekickLookup,
     introText,
     itemsPerRow = 3,
@@ -146,7 +147,9 @@ const Carousel = (props: CarouselProps) => {
                       backgroundColor={backgroundColor}
                       ownerState={ownerState}
                       {...item}
-                      variant={itemsVariant ?? item?.variant}
+                      variant={item?.variant || itemsVariant}
+                      aspectRatio={item?.aspectRatio || itemsAspectRatio}
+                      // aspectRatio="vertical"
                     />
                   </SwiperSlide>
                 ))}

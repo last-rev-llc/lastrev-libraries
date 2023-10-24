@@ -14,6 +14,7 @@ export const typeDefs = gql`
     actions: [Link]
     link: Link
     variant: String
+    aspectRatio: String
   }
 `;
 

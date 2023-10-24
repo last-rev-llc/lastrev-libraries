@@ -81,9 +81,14 @@ interface CollectionSettings {
 export const mappers: Mappers = {
   Collection: {
     Collection: {
-      items: async (collection: any, _args: any, ctx: ApolloContext) => {
+      items: async (collection: any, args: any, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
-        const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
+        const itemsVariantFn = defaultResolver('itemsVariant');
+        const itemsVariant = itemsVariantFn(collection, args, ctx);
+
+        const itemsAspectRatioFn = defaultResolver('itemsAspectRatio');
+        const itemsAspectRatio = itemsAspectRatioFn(collection, args, ctx);
+
         try {
           const { contentType, limit, offset, order, filter } =
             (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
@@ -101,7 +106,7 @@ export const mappers: Mappers = {
           });
         }
 
-        const returnItems = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
+        const returnItems = items?.map((x: any) => ({ ...x, aspectRatio: itemsAspectRatio, variant: itemsVariant }));
 
         return returnItems;
       },
@@ -161,6 +166,8 @@ export const mappers: Mappers = {
         return itemsPerRow;
       },
       itemsVariant: defaultResolver('itemsVariant'),
+
+      itemsAspectRatio: defaultResolver('itemsAspectRatio'),
 
       variant: async (collection: any, args: any, ctx: ApolloContext) => {
         let carouselBreakpoints = getLocalizedField(collection.fields, 'carouselBreakpoints', ctx) ?? [];

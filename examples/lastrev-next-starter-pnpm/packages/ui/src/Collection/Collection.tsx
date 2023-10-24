@@ -16,7 +16,16 @@ import Background from '../Background';
 const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
 
-  const { backgroundImage, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;
+  const {
+    backgroundImage,
+    backgroundColor,
+    items,
+    variant,
+    itemsAspectRatio,
+    itemsVariant,
+    sidekickLookup,
+    introText
+  } = props;
 
   return (
     <ErrorBoundary>
@@ -47,7 +56,9 @@ const Collection = (props: CollectionProps) => {
                   backgroundColor={backgroundColor}
                   key={item?.id}
                   {...item}
-                  variant={itemsVariant ?? item?.variant}
+                  variant={item?.variant || itemsVariant}
+                  aspectRatio={item?.aspectRatio || itemsAspectRatio}
+                  // aspectRatio="vertical"
                   position={index + 1}
                 />
               ))}
