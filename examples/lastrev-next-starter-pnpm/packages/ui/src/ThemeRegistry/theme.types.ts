@@ -13,12 +13,28 @@ declare module '@mui/material/styles' {
     tertiary?: MuiPalette['primary'];
     transparentLight?: MuiPalette['primary'];
     transparentDark?: MuiPalette['primary'];
+    navy?: MuiPalette['primary'];
+    burgandy?: MuiPalette['primary'];
+    crimson?: MuiPalette['primary'];
+    sanJuan?: MuiPalette['primary'];
+    cornflower?: MuiPalette['primary'];
+    bordeaux?: MuiPalette['primary'];
+    cucumber?: MuiPalette['primary'];
+    texasRose?: MuiPalette['primary'];
   }
 
   interface PaletteOptions {
     tertiary?: PaletteOptions['primary'];
     transparentLight?: PaletteOptions['primary'];
     transparentDark?: PaletteOptions['primary'];
+    navy?: PaletteOptions['primary'];
+    burgandy?: PaletteOptions['primary'];
+    crimson?: PaletteOptions['primary'];
+    sanJuan?: PaletteOptions['primary'];
+    cornflower?: PaletteOptions['primary'];
+    bordeaux?: PaletteOptions['primary'];
+    cucumber?: PaletteOptions['primary'];
+    texasRose?: PaletteOptions['primary'];
   }
 
   interface BreakpointOverrides {

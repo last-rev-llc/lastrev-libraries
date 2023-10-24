@@ -22,7 +22,19 @@ export const spectral = Spectral({
   adjustFontFallback: false
 });
 
-export const mainColors = ['navy', 'blueGray', 'red', 'transparentLight', 'transparentDark', 'lightGray'];
+export const mainColors = [
+  'navy',
+  'burgandy',
+  'crimson',
+  'sanJuan',
+  'cornflower',
+  'bordeaux',
+  'cucumber',
+  'texasRose',
+  'transparentLight',
+  'transparentDark',
+  'lightGray'
+];
 
 const defaultSpacing = 8;
 const defaultBorderRadius = 4;
@@ -44,7 +56,7 @@ const paletteTheme = createTheme({
       light: 'rgba(0, 0, 0, 0)',
       main: 'rgba(0, 0, 0, 0)',
       dark: 'rgba(0, 0, 0, 0)',
-      contrastText: '#00030B'
+      contrastText: '#000000'
     },
     transparentDark: {
       lighter: 'rgba(255, 255, 255, 0)',
@@ -54,20 +66,21 @@ const paletteTheme = createTheme({
       contrastText: '#ffffff'
     },
     lightGray: {
-      lighter: '#f8f8f8',
-      light: '#f8f8f8',
-      main: '#f8f8f8',
-      dark: '#f8f8f8',
-      contrastText: '#3c5969'
+      lighter: 'rgba(0, 0, 0, .3)',
+      light: 'rgba(0, 0, 0, .3)',
+      main: 'rgba(0, 0, 0, .3)',
+      dark: 'rgba(0, 0, 0, .3)',
+      contrastText: '#000000'
     },
-    // TODO: Get  shades
-    navy: { lighter: '#03263e', light: '#03263e', main: '#03263e', dark: '#03263e', contrastText: '#ffffff' },
 
-    // TODO: Get  shades
-    red: { lighter: '#e50a31', light: '#e50a31', main: '#e50a31', dark: '#e50a31', contrastText: '#ffffff' },
-
-    // TODO: Get  shades
-    blueGray: { lighter: '#355165', light: '#355165', main: '#355165', dark: '#355165', contrastText: '#ffffff' },
+    navy: { lighter: '#002339', light: '#002339', main: '#002339', dark: '#002339', contrastText: '#ffffff' },
+    burgandy: { lighter: '#9D0031', light: '#9D0031', main: '#9D0031', dark: '#9D0031', contrastText: '#ffffff' },
+    crimson: { lighter: '#EC1A3A', light: '#EC1A3A', main: '#EC1A3A', dark: '#EC1A3A', contrastText: '#ffffff' },
+    sanJuan: { lighter: '#395B7E', light: '#395B7E', main: '#395B7E', dark: '#395B7E', contrastText: '#ffffff' },
+    cornflower: { lighter: '#93BDE4', light: '#93BDE4', main: '#93BDE4', dark: '#93BDE4', contrastText: '#ffffff' },
+    bordeaux: { lighter: '#5E001D', light: '#5E001D', main: '#5E001D', dark: '#5E001D', contrastText: '#ffffff' },
+    cucumber: { lighter: '#83AE74', light: '#83AE74', main: '#83AE74', dark: '#83AE74', contrastText: '#ffffff' },
+    texasRose: { lighter: '#FDBA4D', light: '#FDBA4D', main: '#FDBA4D', dark: '#FDBA4D', contrastText: '#ffffff' },
 
     // TODO: Get  shades
     offwhite: { lighter: '#f8f8f8', light: '#f8f8f8', main: '#f8f8f8', dark: '#f8f8f8', contrastText: '#000000' },
