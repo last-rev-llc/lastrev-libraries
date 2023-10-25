@@ -157,7 +157,7 @@ const Card = (props: CardProps) => {
   );
 };
 
-const Root = styled(MuiCard, {
+const Root = styled(Box, {
   name: 'Card',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
