@@ -9,7 +9,7 @@ import Box from '@mui/material/Box';
 import { Icon } from '../Icons/Icon';
 import IconButton from '@mui/material/IconButton';
 import MuiLink from '@mui/material/Link';
-import Button from '@mui/material/Button';
+import Button, { ButtonProps } from '@mui/material/Button';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -101,12 +101,14 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   }
 
   if (text && icon) {
-    <RootLinkTextIcon {...sharedLinkProps}>
-      <RootLinkText ownerState={ownerState}>{text}</RootLinkText>
-      <RootLinkIcon ownerState={ownerState}>
-        <Icon iconName={icon} />
-      </RootLinkIcon>
-    </RootLinkTextIcon>;
+    return (
+      <RootLinkTextIcon {...sharedLinkProps}>
+        <RootLinkText ownerState={ownerState}>{text}</RootLinkText>
+        <RootLinkIcon ownerState={ownerState}>
+          <Icon iconName={icon} />
+        </RootLinkIcon>
+      </RootLinkTextIcon>
+    );
   }
 
   return <RootLink {...sharedLinkProps}>{text}</RootLink>;
@@ -116,7 +118,7 @@ const RootButton = styled(Button, {
   name: 'Link',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root, styles.rootButton]
-})<{ ownerState: LinkOwnerState }>``;
+})<ButtonProps & { ownerState: LinkOwnerState }>``;
 
 const RootIconButton = styled(IconButton, {
   name: 'Link',

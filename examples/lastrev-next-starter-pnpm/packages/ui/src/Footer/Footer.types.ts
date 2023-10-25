@@ -25,6 +25,7 @@ interface FooterClasses {
   copyrightDisclaimer: string;
   copyrightDisclaimerWrap: string;
   legalLinks: string;
+  legalLinkWrap: string;
   legalLink: string;
 }
 

@@ -11,9 +11,10 @@ import { CollectionVariants } from './Collection.types';
 const defaultProps: ComponentsProps['Collection'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
-  root: ({ theme }) => ({
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+
     containerType: 'inline-size',
-    padding: theme.spacing(12, 0),
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
@@ -40,15 +41,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     }),
 
     ...(ownerState?.variant === CollectionVariants.fourPerRow && {
-      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
+      [theme.containerBreakpoints.up('sm')]: {
+        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
+      },
 
-      [theme.containerBreakpoints.up('lg')]: {
+      [theme.containerBreakpoints.up('md')]: {
         gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
       }
     }),
 
     ...(ownerState?.variant === CollectionVariants.fivePerRow && {
-      gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
 
       [theme.containerBreakpoints.up('sm')]: {
         gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'

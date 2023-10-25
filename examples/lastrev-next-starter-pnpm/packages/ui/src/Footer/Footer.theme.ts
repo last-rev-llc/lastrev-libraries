@@ -11,11 +11,11 @@ const defaultProps: ComponentsProps['Footer'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    padding: theme.spacing(4, 0, 0, 0) // Update
+    padding: `var(--section-padding) 0 0`
   }),
 
   introContentsWrap: ({ theme }) => ({
-    marginBottom: theme.spacing(10)
+    marginBottom: 'var(--section-padding)'
   }),
 
   // introContent: {},
@@ -39,16 +39,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
       gridColumn: 'content-start / span 2'
     }
   }),
-
-  // logo: {
-  //   width: 'auto',
-  //   height: 40,
-  //   margin: 0,
-
-  //   svg: {
-  //     fill: '#ffffff'
-  //   }
-  // },
 
   footerMenuNav: ({ theme, ownerState }) => ({
     gridRow: 2,
@@ -115,9 +105,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  legalSection: {
-    display: 'contents' // take out of flow,
-  },
+  legalSection: ({ theme }) => ({
+    'display': 'contents', // take out of flow,
+
+    '& *': {
+      ...theme.typography.bodySmall
+    }
+  }),
 
   copyrightDisclaimerWrap: ({ theme }) => ({
     gridRow: 5,

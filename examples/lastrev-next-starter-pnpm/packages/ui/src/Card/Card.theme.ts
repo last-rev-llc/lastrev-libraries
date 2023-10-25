@@ -14,12 +14,21 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     'containerType': 'inline-size',
-    'position': 'relative',
-    'transition': 'all 0.25s ease-in-out',
-    'willChange': 'transform',
+    
+    
+  }),
+
+  cardWrap: ({ theme, ownerState }) => ({
     'display': 'flex',
     'flexDirection': 'column',
     'height': '100%',
+    // 'boxShadow': 'initial',
+    // 'borderRadius': 0,
+    'backgroundColor': 'inherit',
+    'position': 'relative',
+    'transition': 'all 0.25s ease-in-out',
+    'willChange': 'transform',
+    'color': 'inherit',
 
     '&:hover': {
       transform: 'scale(1)'
@@ -32,15 +41,21 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
         transform: 'scale(1.05)'
       }
     },
+
     ...(ownerState?.variant === CardVariants.icon && {
       alignItems: 'center'
     })
   }),
 
-  // contentWrap: {
-  //   flex: 1,
-  //   padding: 'var(--grid-gap)'
-  // },
+  media: ({ ownerState, theme }) => ({
+    backgroundColor: 'inherit'
+  }),
+
+  contentWrap: ({ ownerState, theme }) => ({
+    flex: 1,
+    padding: 'calc(var(--grid-gap) / 2)'
+  }),
+
   title: ({ ownerState, theme }) => ({
     ...(ownerState?.variant === CardVariants.icon && {
       ...theme.typography.h3
@@ -48,19 +63,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     ...(ownerState?.variant === CardVariants.blog && {
       ...theme.typography.body1
     }),
-    fontWeight: 'bold'
+    fontWeight: 900
   }),
 
   actionsWrap: ({ theme }) => ({
-    // display: 'flex'
-    // padding: 'var(--grid-gap)',
-    // gap: 'var(--grid-gap)'
-    // flexDirection: 'column',
-    // alignItems: 'center',
-    // // TODO: Need additional breakpoints here
-    // [theme.containerBreakpoints.up('sm')]: {
-    //   flexDirection: 'row'
-    // }
+    padding: 'calc(var(--grid-gap) / 2)'
   }),
 
   link: {

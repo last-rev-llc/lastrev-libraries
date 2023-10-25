@@ -11,17 +11,10 @@ const defaultProps: ComponentsProps['Quote'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    'containerType': 'inline-size',
-    'padding': theme.spacing(4, 0),
-
-    '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=contentOuterGrid]': {
-      padding: 'var(--grid-gap)',
-      paddingTop: 0
-    }
-    // TODO: Update to check if within a section
-    // padding: theme.spacing(0, 4)
-    // margin: theme.spacing(0, -4)
+    containerType: 'inline-size',
+    padding: `var(--section-padding) 0`
   }),
+
   // contentGrid: : {},
 
   logo: ({ theme }) => ({

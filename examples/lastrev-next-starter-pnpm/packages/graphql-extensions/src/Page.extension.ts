@@ -54,12 +54,16 @@ export const mappers: Mappers = {
 
       variant: () => 'default',
 
-      actions: async (page: any, _args: any, ctx: ApolloContext) => {
+      link: async (page: any, _args: any, ctx: ApolloContext) => {
+        return page;
+      },
+
+      actions: async (page: any, args: any, ctx: ApolloContext) => {
         return [
           createType('Link', {
             id: page.id,
             text: 'Read More',
-            linkedContent: page,
+            href: await pathResolver(page, args, ctx),
             variant: 'buttonContained'
           })
         ];

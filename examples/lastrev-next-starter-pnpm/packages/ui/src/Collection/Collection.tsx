@@ -16,13 +16,13 @@ import Background from '../Background';
 const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
 
-  const { background, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;
+  const { backgroundImage, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;
 
   return (
     <ErrorBoundary>
       <Root ownerState={ownerState} {...sidekick(sidekickLookup)} data-testid={`Collection-${variant}`}>
         <CollectionBackground
-          background={background}
+          background={backgroundImage}
           backgroundColor={backgroundColor}
           testId="Collection-background"
         />
@@ -44,6 +44,7 @@ const Collection = (props: CollectionProps) => {
               {items?.map((item, index) => (
                 <Item
                   ownerState={ownerState}
+                  backgroundColor={backgroundColor}
                   key={item?.id}
                   {...item}
                   variant={itemsVariant ?? item?.variant}

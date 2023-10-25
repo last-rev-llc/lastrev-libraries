@@ -28,7 +28,7 @@ const Root = styled(Grid, {
 })<{ ownerState: BackgroundOwnerState }>``;
 
 const BackgroundContent = styled(ContentModule, {
-  name: 'Hero',
+  name: 'Background',
   slot: 'Background',
   overridesResolver: (_, styles) => [styles.backgroundContent]
 })<{ ownerState: BackgroundOwnerState }>``;

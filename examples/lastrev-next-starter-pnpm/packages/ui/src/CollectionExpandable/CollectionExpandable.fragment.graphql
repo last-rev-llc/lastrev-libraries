@@ -4,6 +4,10 @@ fragment CollectionExpandable_FieldsFragment on CollectionExpandable {
   introText {
     ...Text_IntroTextFragment
   }
+  backgroundImage {
+    ...Media_BaseFragment
+  }
+  backgroundColor
 }
 
 # Base fragment used everywhere there's a CollectionExpandable
