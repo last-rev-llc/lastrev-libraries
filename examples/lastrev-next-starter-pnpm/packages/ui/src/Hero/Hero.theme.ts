@@ -210,8 +210,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       },
 
       '[class*=mediaWrap]': {
-        gridColumnStart: '1',
-        gridColumnEnd: '-1',
+        gridColumnStart: 'content-half',
+        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
           gridColumnEnd: 'content-half'
