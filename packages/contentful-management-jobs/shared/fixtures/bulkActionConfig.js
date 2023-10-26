@@ -30,9 +30,10 @@ const iasLocales = [
   'vi-VN'
 ];
 const ifLocales = ['en-US', 'hk', 'hk-en', 'ca', 'cn', 'cn-en', 'fr-ca', 'me-en', 'au-en', 'gb-en', 'nz-en'];
+const coalitionLocales = ['en-US', 'en-AU', 'en-CA', 'en-GB', 'fr-CA'];
 const englishOnly = ['en-US'];
 
-const locales = iasLocales;
+const locales = coalitionLocales;
 
 const displayHyperlink = (content) => {
   if (content.nodeType === 'hyperlink') {

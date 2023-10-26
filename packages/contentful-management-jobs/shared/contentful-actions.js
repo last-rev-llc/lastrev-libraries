@@ -201,16 +201,20 @@ const getAllEntries = async (api, query, callback) => {
   return importParser(async () => api.getEntries(query), callback);
 };
 
+const getAllAssets = async (api, query, callback) => {
+  return importParser(async () => api.getAssets(query), callback);
+};
+
 const query = (options) => ({ ...options });
 
-const getAllItems = async (api, result, queryOptions) => {
+const getAllItems = async (api, result, queryOptions, getAllFunction = getAllEntries) => {
   const { limit } = queryOptions;
   const allItems = [];
   console.log('total items found => ', result.total);
   for (let skip = 0; skip < result.total; skip += limit) {
     console.log(`processed items ${skip} to ${skip + limit}`);
-    const entries = await getAllEntries(api, query({ ...queryOptions, skip }));
-    allItems.push(entries?.items || []);
+    const items = await getAllFunction(api, query({ ...queryOptions, skip }));
+    allItems.push(items?.items || []);
   }
   return allItems.flat();
 };
@@ -219,6 +223,7 @@ module.exports = {
   publishItem,
   deleteItem,
   checkForExistingItem,
+  getAllAssets,
   getAllEntries,
   getAllItems,
   query,

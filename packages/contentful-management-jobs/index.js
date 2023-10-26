@@ -23,8 +23,14 @@ program
   .command('find-linked-entries', 'find-linked-entries', {
     executableFile: resolve(__dirname, './jobs/find-linked-entries.js')
   })
+  .command('find-linked-entries-to-asset', 'find-linked-entries-to-asset', {
+    executableFile: resolve(__dirname, './jobs/find-linked-entries-to-asset.js')
+  })
   .command('find-entries', 'find-entries', {
     executableFile: resolve(__dirname, './jobs/find-entries.js')
+  })
+  .command('find-assets', 'find-assets', {
+    executableFile: resolve(__dirname, './jobs/find-assets.js')
   })
   .command('update-entries', 'update-entries', {
     executableFile: resolve(__dirname, './jobs/update-entries.js')
