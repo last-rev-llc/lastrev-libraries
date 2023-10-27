@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-await-in-loop */
-const { clientDelivery } = require('../shared/contentful-init');
+const { environmentManagement, clientDelivery } = require('../shared/contentful-init');
 
 const getLinkedEntries = async (id) => {
+  const environment = await environmentManagement;
   let links;
   try {
     console.log(`getting linked entries for ${id}`);
-    links = await clientDelivery.getEntries({ links_to_asset: id });
+    links = await environment.getEntries({ links_to_entry: id });
   } catch (error) {
     console.log(`error getting linked entries for ${id} => `, error);
   }
@@ -20,7 +21,7 @@ const getLinkedEntries = async (id) => {
 };
 
 (async () => {
-  const linkedItems = await getLinkedEntries('75ENpjF2gGS8HWSslI5jcj');
+  const linkedItems = await getLinkedEntries('42iJUCQShnK5UhXGPXfaef');
   console.log('linkedItems length => ', linkedItems?.length);
   console.log(
     'linkedItems ids => ',
