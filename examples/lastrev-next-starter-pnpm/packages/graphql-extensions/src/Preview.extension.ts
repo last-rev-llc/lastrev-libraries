@@ -1,4 +1,4 @@
-import type { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from './types';
 import gql from 'graphql-tag';
 import { deepMerge } from './utils/deepMerge';
 import { createType } from './utils/createType';

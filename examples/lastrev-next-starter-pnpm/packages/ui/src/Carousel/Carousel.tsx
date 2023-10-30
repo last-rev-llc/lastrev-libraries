@@ -2,7 +2,7 @@ import React from 'react';
 
 // import Swiper core and required modules
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y, Grid as SwiperGrid } from 'swiper/modules';
+import { Navigation, Pagination, A11y, Grid as SwiperGrid } from 'swiper/modules';
 import { type SwiperOptions } from 'swiper/types';
 
 import { styled } from '@mui/material/styles';

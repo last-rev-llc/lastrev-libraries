@@ -1,0 +1,4 @@
+fragment Site_BaseFragment on Site {
+  ...Content_BaseFragment
+  taRealtyAddress
+}

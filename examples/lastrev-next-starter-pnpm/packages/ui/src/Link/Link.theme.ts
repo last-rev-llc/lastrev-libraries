@@ -11,7 +11,8 @@ const defaultProps: ComponentsProps['Link'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
   root: ({ theme }) => ({
     display: 'inline-flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    textUnderlineOffset: '4px'
   }),
 
   rootButton: {
@@ -37,7 +38,10 @@ const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
       variant: 'link'
     },
     style: {
-      textDecoration: 'none'
+      '&:not(:hover)': { textDecoration: 'none' },
+      '&.MuiLink-selected': {
+        textDecoration: 'underline'
+      }
     }
   },
   {

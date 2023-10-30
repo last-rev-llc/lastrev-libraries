@@ -33,12 +33,17 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
 
     if (backgroundColor && get(theme.palette, parsedBGColor)) {
       const textColor = get(theme.palette, `${paletteColor}.contrastText`) ?? 'currentColor';
+      const linkColor = get(theme.palette, `${paletteColor}.linkColor`) ?? textColor;
+      const headerColor = get(theme.palette, `${paletteColor}.headerColor`) ?? textColor;
       const bgColor = get(theme.palette, parsedBGColor);
       styles = {
         'backgroundColor': bgColor,
         'color': textColor,
         'borderColor': textColor,
         'fill': 'currentColor !important',
+        '--text-color': textColor,
+        '--header-color': headerColor,
+        '--link-color': linkColor,
         '--current-color-text': textColor,
         '--current-color-bg': bgColor
       };

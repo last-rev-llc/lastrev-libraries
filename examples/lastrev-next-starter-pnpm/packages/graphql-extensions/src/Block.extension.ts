@@ -2,7 +2,8 @@ import gql from 'graphql-tag';
 
 import { defaultResolver } from './utils/defaultResolver';
 
-import type { ApolloContext, Mappers } from '@last-rev/types';
+import type { Mappers } from '@last-rev/types';
+import type { ApolloContext } from './types';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { createType } from './utils/createType';
 

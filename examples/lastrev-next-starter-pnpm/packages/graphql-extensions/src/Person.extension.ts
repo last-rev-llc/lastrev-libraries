@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
-import type { ApolloContext, Mappers } from '@last-rev/types';
+import type { Mappers } from '@last-rev/types';
+import type { ApolloContext } from './types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
 import { pageFooterResolver } from './utils/pageFooterResolver';
@@ -75,7 +76,6 @@ export const mappers: Mappers = {
             icon: 'logo',
             iconPosition: 'Left',
             href: await pathResolver(person, _args, ctx),
-            // linkedContent: page,
             variant: 'buttonText'
           })
         ];

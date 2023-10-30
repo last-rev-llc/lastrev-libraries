@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+
 const Block = dynamic(() => import('./Block'));
 const Hero = dynamic(() => import('./Hero'));
 const Link = dynamic(() => import('./Link'));
@@ -11,10 +12,12 @@ const Collection = dynamic(() => import('./Collection'));
 const Tabs = dynamic(() => import('./Tabs'));
 const Card = dynamic(() => import('./Card'));
 const Person = dynamic(() => import('./Person'));
+const Property = dynamic(() => import('./Property'));
 const Quote = dynamic(() => import('./Quote'));
 const Blog = dynamic(() => import('./Blog'));
 const Accordion = dynamic(() => import('./Accordion'));
 const Form = dynamic(() => import('./Form'));
+const FormContactUs = dynamic(() => import('./FormContactUs'));
 const Section = dynamic(() => import('./Section'));
 const NavigationItem = dynamic(() => import('./NavigationItem'));
 const Header = dynamic(() => import('./Header'));
@@ -42,11 +45,14 @@ export const contentMapping: {
   Carousel,
   Collection,
   'Collection:.*Carousel': Carousel,
+  'CollectionDynamic': Collection,
+  'CollectionDynamic:.*Carousel': Carousel,
   'CollectionExpandable:Tabs': Tabs,
   'CollectionExpandable:Accordion': Accordion,
   'CollectionExpandable': Tabs,
   Card,
   Person,
+  'PageProperty': Property,
   Blog,
   Quote,
   Accordion,
@@ -54,6 +60,7 @@ export const contentMapping: {
   Section,
   FooterNavigationItem,
   FooterNavigationItemGroup,
+  'ElementForm:contactUs': FormContactUs,
   'ElementForm': Form,
   NavigationItem,
   'NavigationItem:link': HeaderNavLink,

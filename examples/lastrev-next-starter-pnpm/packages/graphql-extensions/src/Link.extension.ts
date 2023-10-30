@@ -1,11 +1,12 @@
 import gql from 'graphql-tag';
 
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import type { Mappers, ApolloContext } from '@last-rev/types';
+import type { Mappers } from '@last-rev/types';
+import type { ApolloContext } from './types';
 
 import { createPath } from './utils/createPath';
 import { defaultResolver } from './utils/defaultResolver';
-import { camelCase } from './utils/camelCase';
+import { pathResolver } from './utils/pathResolver';
 
 type TargetMapping = {
   'New Window': string;
@@ -34,7 +35,8 @@ const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
         }
       }
       const slug = getLocalizedField(content?.fields, 'slug', ctx);
-      if (slug) return createPath(getLocalizedField(content?.fields, 'slug', ctx));
+
+      if (slug) return pathResolver(content, _, ctx);
     }
   }
   return '#';

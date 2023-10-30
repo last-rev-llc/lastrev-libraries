@@ -32,6 +32,7 @@ const Form = (props: FormProps) => {
       <Head>
         <script async type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" />
       </Head>
+
       <FormBackground background={background} backgroundColor={backgroundColor} testId="Form-background" />
 
       {!!introText && (
@@ -44,7 +45,6 @@ const Form = (props: FormProps) => {
           />
         </IntroTextGrid>
       )}
-
       <ContentOuterGrid ownerState={ownerState}>
         <MainContentWrap ownerState={ownerState}>
           <HSForm

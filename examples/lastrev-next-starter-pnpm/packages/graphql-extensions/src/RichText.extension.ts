@@ -1,4 +1,5 @@
-import type { ApolloContext, Mappers } from '@last-rev/types';
+import type { Mappers } from '@last-rev/types';
+import type { ApolloContext } from './types';
 import type { Entry, RichTextContent } from 'contentful';
 import { FilterXSS } from 'xss';
 import { isHTML } from './utils/isHTML';

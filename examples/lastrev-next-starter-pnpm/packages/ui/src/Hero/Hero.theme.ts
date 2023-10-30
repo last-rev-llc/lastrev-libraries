@@ -22,7 +22,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   bottomContentWrap: ({ theme }) => ({
     '& > *': {
       [theme.containerBreakpoints.up('sm')]: {
-        margin: '0 !important',
+        margin: 'calc(2 * var(--section-padding)) 0 0 !important',
         padding: '0 !important'
       }
     }
@@ -30,12 +30,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 
   contentOuterGrid: ({ theme, ownerState }) => ({
     ...(!!ownerState?.background && {
-      // margin: theme.spacing(4, 0, 0),
-
-      // [theme.breakpoints.up('md')]: {
-      //   margin: theme.spacing(16, 0, 0)
-      // }
-
       margin: `var(--section-padding) 0 0`
     })
   }),
@@ -127,6 +121,42 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
   },
   {
     props: {
+      variant: HeroVariants.mediaSmall
+    },
+    style: {
+      '[class*=mainContentWrap]': {
+        gridRow: 2,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridRow: 1,
+          gridColumnEnd: 'five-end'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnEnd: 'seven-end'
+        }
+      },
+
+      '[class*=mediaWrap]': {
+        gridRow: 1,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnStart: 'six-start',
+          alignItems: 'flex-end'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnStart: 'eight-start'
+        }
+      }
+    }
+  },
+  {
+    props: {
       variant: HeroVariants.mediaOnRight
     },
     style: {
@@ -137,8 +167,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'four-end'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnEnd: 'five-end'
         }
       },
 
@@ -148,9 +181,12 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end',
+          gridColumnStart: 'five-start',
           alignItems: 'flex-end'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnStart: 'six-start'
         }
       }
     }
@@ -167,8 +203,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'four-end'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnEnd: 'five-end'
         }
       },
 
@@ -178,9 +217,12 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         gridColumnEnd: 'full-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnStart: 'content-half',
-          gridColumnEnd: 'full-end',
+          gridColumnStart: 'five-start',
           alignItems: 'flex-end'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnStart: 'six-start'
         }
       }
     }
@@ -197,8 +239,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnStart: 'content-half'
         }
       },
 
@@ -225,14 +266,13 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnStart: 'content-half'
         }
       },
 
       '[class*=mediaWrap]': {
-        gridColumnStart: 'content-half',
-        gridColumnEnd: 'content-end',
+        gridColumnStart: 'full-start',
+        gridColumnEnd: 'full-end',
 
         [theme.containerBreakpoints.up('md')]: {
           gridColumnEnd: 'content-half',

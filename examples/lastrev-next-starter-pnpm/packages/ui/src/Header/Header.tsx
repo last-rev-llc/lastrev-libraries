@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-// import Toolbar from '@mui/material/Toolbar';
 import MuiIconButton from '@mui/material/IconButton';
 import MuiMenuIcon from '@mui/icons-material/Menu';
 import MuiCloseIcon from '@mui/icons-material/Close';
@@ -53,6 +52,7 @@ const Header = (props: HeaderProps) => {
       // menuBreakpoint={menuBreakpoint}
     >
       <HeaderBackground backgroundColor={backgroundColor} testId="Header-background" />
+
       {siteMessageText && (
         <SiteMessageWrap ownerState={ownerState}>
           <SiteMessage icon={siteMessageIcon} text={siteMessageText} link={siteMessageLink} />

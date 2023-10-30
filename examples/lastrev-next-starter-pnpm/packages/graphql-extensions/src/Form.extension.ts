@@ -3,6 +3,9 @@ import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
+import { defaultResolver } from './utils/defaultResolver';
+import { siteAddressResolver } from './utils/siteAddressResolver';
+import { siteEmailResolver } from './utils/siteEmailResolver';
 
 export const typeDefs = gql`
   extend type ElementForm {
@@ -14,6 +17,7 @@ export const typeDefs = gql`
     contents: [Content]
     breadcrumbs: [Link]
     footerDisclaimerOverride: RichText
+    formDisclaimerText: RichText
   }
 `;
 
@@ -23,7 +27,11 @@ export const mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      breadcrumbs: breadcrumbsResolver
+      breadcrumbs: breadcrumbsResolver,
+      variant: defaultResolver('variant'),
+      formLayout: defaultResolver('formLayout'),
+      address: siteAddressResolver,
+      email: siteEmailResolver
     },
     Link: {
       href: pathResolver,

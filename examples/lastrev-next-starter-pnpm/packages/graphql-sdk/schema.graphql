@@ -152,14 +152,57 @@ type Collection implements Content {
 
 type CollectionDynamic implements Content {
   animation: JSON
+  backgroundColor: String
+  backgroundImage: Media
+  carouselAutoPlay: Boolean
+  carouselBreakpoints: [String]
   id: String
+  inheritTopBGOverlap: Boolean
   internalTitle: String
+  introText: Text
+  isCarouselDesktop: Boolean
+  isCarouselMobile: Boolean
+  isCarouselTablet: Boolean
+  items: [CollectionDynamicItem]
+  itemsAspectRatio: String
+  itemsConnection(filter: CollectionDynamicFilterInput, limit: Int, offset: Int): CollectionDynamicItemConnection
+  itemsPerRow: Int
   itemsVariant: String
+  numItems: Int
   numberOfItemsToPull: String
   pullFromContentType: String
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
+}
+
+type CollectionDynamicConnectionPageInfo {
+  allOptions: CollectionDynamicOptions
+  options: CollectionDynamicOptions
+  total: Int
+}
+
+input CollectionDynamicFilterInput {
+  body: String
+  tags: [String]
+  topics: [String]
+}
+
+union CollectionDynamicItem = Card
+
+type CollectionDynamicItemConnection {
+  items: [CollectionDynamicItem]
+  pageInfo: CollectionDynamicConnectionPageInfo
+}
+
+type CollectionDynamicOption {
+  label: String
+  value: String
+}
+
+type CollectionDynamicOptions {
+  tags: [CollectionDynamicOption]
+  topics: [CollectionDynamicOption]
 }
 
 type CollectionExpandable implements Content {
@@ -232,11 +275,15 @@ scalar Date
 
 type ElementForm implements Content {
   animation: JSON
+  backgroundColor: String
+  backgroundImage: Media
   breadcrumbs: [Link]
   confirmationPath: String
   contents: [Content]
   footer: Footer
   footerDisclaimerOverride: RichText
+  formDisclaimerText: RichText
+  formLayout: String
   header: Header
   hero: Hero
   hubspotFormId: String
@@ -447,6 +494,40 @@ type PagePathParams {
   params: PagePathParam!
 }
 
+type PageProperty implements Content {
+  address: JSON
+  animation: JSON
+  assetType: String
+  body: RichText
+  breadcrumbs: [Link]
+  dateAcquired: Date
+  dateSold: Date
+  featuredAssets: Collection
+  footer: Footer
+  header: Header
+  hero: Content
+  id: String
+  imageCarousel: Collection
+  images: [Media]
+  jsonLd: JSON
+  lr__path__: String
+  mainImage: Media
+  market: String
+  name: String
+  ncreifRegion: String
+  path: String
+  promoImage: Media
+  promoSummary: String
+  sector: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  socialLinks: [Link]
+  squareFootage: Int
+  strategy: String
+  theme: [Theme]
+}
+
 type Person implements Content {
   animation: JSON
   body: RichText
@@ -466,7 +547,6 @@ type Person implements Content {
   previousExperiences: [String]
   promoImage: Media
   promoSummary: String
-  rolloverImage: Media
   seo: JSON
   sidekickLookup: JSON
   slug: String
@@ -484,6 +564,7 @@ type Query {
   paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
   redirects(preview: Boolean!): [SiteRedirect]
   rewrites(preview: Boolean!): [SiteRedirect]
+  siteSettings(preview: Boolean!): Site
   sitemap(locales: [String!], preview: Boolean, root: String!, site: String): Sitemap
   sitemapIndex(preview: Boolean, site: String): Sitemap
   sitemapPage(contentType: String!, locale: String, page: Int, preview: Boolean, site: String): SitemapPage
@@ -546,6 +627,9 @@ type Site implements Content {
   seo: JSON
   sidekickLookup: JSON
   siteKey: String
+  taRealtyAddress: JSON
+  taRealtyEmail: String
+  taRealtyPhone: JSON
   theme: [Theme]
   variant: String
 }
@@ -580,7 +664,7 @@ type SitemapPage {
   page: Int
 }
 
-union SubNavigationItem = Blog | Link | NavigationItem | Page | Person
+union SubNavigationItem = Blog | Link | NavigationItem | Page | PageProperty | Person
 
 type Template implements Content {
   animation: JSON
@@ -590,6 +674,15 @@ type Template implements Content {
   sidekickLookup: JSON
   templateName: String
   theme: [Theme]
+  variant: String
+}
+
+type TestPageType implements Content {
+  animation: JSON
+  id: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  title: String
   variant: String
 }
 

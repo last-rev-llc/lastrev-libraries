@@ -10,7 +10,9 @@ const defaultProps: ComponentsProps['Breadcrumbs'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Breadcrumbs'] = {
   root: {},
-  breadcrumb: {}
+  breadcrumb: ({ theme }) => ({
+    ...theme.typography.bodyXSmall
+  })
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Breadcrumbs'] => [];

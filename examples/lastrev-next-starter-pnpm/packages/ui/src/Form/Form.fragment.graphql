@@ -1,19 +1,24 @@
 fragment Form_BaseFragment on ElementForm {
   ...Content_BaseFragment
   variant
+  formLayout
+  backgroundImage {
+    ...Media_BaseFragment
+  }
+  backgroundColor
   hubspotPortalId
   hubspotFormId
+  formDisclaimerText {
+    ...RichText_BaseFragment
+  }
   introText {
     ...Text_IntroTextFragment
   }
 }
 
 fragment Form_PageFragment on ElementForm {
-  ...Content_BaseFragment
-  variant
-  hubspotPortalId
-  hubspotFormId
-  #seo
+  ...Form_BaseFragment
+  seo
   #jsonLd
   path
   slug
@@ -25,5 +30,8 @@ fragment Form_PageFragment on ElementForm {
   }
   footerDisclaimerOverride {
     ...RichText_BaseFragment
+  }
+  hero {
+    ...ContentModule_BaseFragment
   }
 }

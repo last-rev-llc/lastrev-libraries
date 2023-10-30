@@ -35,6 +35,7 @@ const Footer = (props: FooterProps) => {
   return (
     <Root {...sidekick(sidekickLookup)} component="footer" ownerState={ownerState}>
       <FooterBackground backgroundColor={backgroundColor} testId="Footer-background" />
+
       {!!introContents?.length && (
         <IntroContentsWrap ownerState={ownerState}>
           {introContents?.map((content, index) => (

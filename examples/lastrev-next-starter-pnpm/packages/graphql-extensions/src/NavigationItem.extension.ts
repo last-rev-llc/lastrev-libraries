@@ -1,13 +1,13 @@
 import gql from 'graphql-tag';
 
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { type ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from './types';
 
 import { createPath } from './utils/createPath';
 import { pascalCase } from './utils/pascalCase';
 import { defaultResolver } from './utils/defaultResolver';
 
-const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem', 'Page', 'Person', 'Blog'];
+const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem', 'Page', 'Person', 'Blog', 'PageProperty'];
 
 const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
   const href = getLocalizedField(link.fields, 'href', ctx);
@@ -68,6 +68,7 @@ const ITEM_MAPPING: { [key: string]: string } = {
   Link: 'Link',
   Page: 'Link',
   Person: 'Link',
+  PageProperty: 'Link',
   Blog: 'Link'
 };
 

@@ -1,0 +1,50 @@
+fragment Property_BaseFragment on PageProperty {
+  ...Content_BaseFragment
+  path
+  slug
+  header {
+    ...Header_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+
+  imageCarousel {
+    ...Collection_BaseFragment
+  }
+  name
+  assetType
+  address
+  squareFootage
+  mainImage {
+    ...Media_BaseFragment
+  }
+  body {
+    ...RichText_BaseFragment
+  }
+  dateAcquired
+  dateSold
+  market
+  ncreifRegion
+  strategy
+  sector
+  featuredAssets {
+    ...Collection_BaseFragment
+  }
+  hero {
+    ...Hero_BaseFragment
+  }
+  breadcrumbs {
+    ...Link_BaseFragment
+  }
+}
+
+fragment Property_Card_Fragment on PageProperty {
+  ...Content_BaseFragment
+  slug
+  name
+  assetType
+  mainImage {
+    ...Media_BaseFragment
+  }
+}

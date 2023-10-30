@@ -4,5 +4,6 @@ query Preview($id: String!, $locale: String) {
     ...ContentModule_PageFragment
     ...ContentModule_PersonFragment
     ...ContentModule_BlogFragment
+    ...ContentModule_PropertyFragment
   }
 }

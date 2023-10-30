@@ -11,7 +11,8 @@ export enum HeroVariants {
   mediaOnLeft = 'mediaOnLeft',
   mediaOnLeftFullBleed = 'mediaOnLeftFullBleed',
   mediaBelow = 'mediaBelow',
-  mediaAbove = 'mediaAbove'
+  mediaAbove = 'mediaAbove',
+  mediaSmall = 'mediaSmall'
 }
 
 export interface HeroProps extends Omit<Hero_BaseFragmentFragment, 'variant'> {
@@ -39,8 +40,6 @@ interface HeroClasses {
   media: string;
   actionsWrap: string;
   action: string;
-  heroRoot: string;
-  innerRoot: string;
   breadcrumbsWrap: string;
 }
 

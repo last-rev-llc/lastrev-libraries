@@ -1,8 +1,12 @@
-query Page($path: String!, $locale: String, $preview: Boolean, $site: String) {
+query Page($path: String!, $locale: String, $preview: Boolean!, $site: String) {
   page(path: $path, locale: $locale, preview: $preview, site: $site) {
     ...ContentModule_PageFragment
+    ...ContentModule_PropertyFragment
     ...ContentModule_PersonFragment
     ...ContentModule_BlogFragment
     ...ContentModule_FormFragment
+  }
+  siteSettings(preview: $preview) {
+    ...Site_BaseFragment
   }
 }

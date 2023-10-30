@@ -1,5 +1,5 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import type { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from './types';
 import { defaultResolver } from './utils/defaultResolver';
 
 // This is a example of a extension to normalize the color values from the CMS
@@ -44,6 +44,13 @@ export const mappers = {
       color: colorResolver('color', true)
     }
   },
+
+  CollectionDynamic: {
+    CollectionDynamic: {
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
+  },
   CollectionExpandable: {
     CollectionExpandable: {
       backgroundColor: defaultResolver('backgroundColor'),
@@ -62,8 +69,8 @@ export const mappers = {
       color: colorResolver('color', true)
     }
   },
-  Form: {
-    Form: {
+  ElementForm: {
+    ElementForm: {
       backgroundColor: defaultResolver('backgroundColor'),
       color: colorResolver('color', true)
     }

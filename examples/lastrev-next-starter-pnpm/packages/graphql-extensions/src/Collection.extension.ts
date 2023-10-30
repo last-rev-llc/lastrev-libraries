@@ -1,6 +1,7 @@
 import gql from 'graphql-tag';
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import type { ApolloContext, Mappers } from '@last-rev/types';
+import type { Mappers } from '@last-rev/types';
+import type { ApolloContext } from './types';
 
 import { pascalCase } from './utils/pascalCase';
 import { collectOptions } from './utils/collectOptions';
@@ -240,7 +241,8 @@ const ITEM_MAPPING: { [key: string]: string } = {
   Page: 'Card',
   Blog: 'Card',
   Media: 'Card',
-  Person: 'Card'
+  Person: 'Card',
+  PageProperty: 'Card'
 };
 
 export const resolvers = {

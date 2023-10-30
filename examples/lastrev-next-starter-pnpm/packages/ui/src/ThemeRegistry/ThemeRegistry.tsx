@@ -84,7 +84,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --display4-font-size: ${(display4FontSizeBase / 8) * 6}rem;
               --display5-font-size: ${(display5FontSizeBase / 8) * 6}rem;
               --display6-font-size: ${(display6FontSizeBase / 8) * 6}rem;
-              --overline-font-size: 0.75rem;
+              --overline-font-size: 0.875rem;
               --body1-font-size: 1rem;
               --body2-font-size: 1.125rem;
               --bodyXSmall-font-size: 0.75rem;
@@ -92,24 +92,24 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --bodyLarge-font-size: 1.25rem;
 
               --h1-line-height: 1.125em;
-              --h2-line-height: 1.375em;
-              --h3-line-height: 1.375em;
-              --h4-line-height: 1.375em;
-              --h5-line-height: 1.375em;
-              --h6-line-height: 1.375em;
-              --display1-line-height: 1.375em;
-              --display2-line-height: 1.375em;
-              --display3-line-height: 1.375em;
-              --display4-line-height: 1.375em;
-              --display5-line-height: 1.375em;
-              --display6-line-height: 1.375em;
-              --overline-line-height: 1.375em;
+              --h2-line-height: 1.25em;
+              --h3-line-height: 1.25em;
+              --h4-line-height: 1.25em;
+              --h5-line-height: 1.25em;
+              --h6-line-height: 1.25em;
+              --display1-line-height: 1.25em;
+              --display2-line-height: 1.25em;
+              --display3-line-height: 1.25em;
+              --display4-line-height: 1.25em;
+              --display5-line-height: 1.25em;
+              --display6-line-height: 1.25em;
+              --overline-line-height: 1.125em;
 
-              --body1-line-height: 1.375em;
-              --body2-line-height: 1.375em;
-              --bodyXSmall-line-height: 1.375em;
-              --bodySmall-line-height: 1.375em;
-              --bodyLarge-line-height: 1.375em;
+              --body1-line-height: 1.5em;
+              --body2-line-height: 1.5em;
+              --bodyXSmall-line-height: 1.25em;
+              --bodySmall-line-height: 1.25em;
+              --bodyLarge-line-height: 1.25em;
 
               --h1-margin: 0 0 0.5em 0;
               --h2-margin: 0 0 0.5em 0;
@@ -142,7 +142,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --display4-font-weight: 600;
               --display5-font-weight: 600;
               --display6-font-weight: 600;
-              --overline-font-weight: 600;
+              --overline-font-weight: 500;
               --body1-font-weight: 400;
               --body2-font-weight: 400;
               --bodyXSmall-font-weight: 400;

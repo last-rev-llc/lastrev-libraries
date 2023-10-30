@@ -61,12 +61,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     alignItems: 'center',
     padding: 0,
     position: 'unset',
-    flexDirection: 'row',
+    flexDirection: 'column',
     width: '100%',
     margin: 'auto',
     gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row',
       height: '100%',
       width: 'auto'
     }

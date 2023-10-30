@@ -8,10 +8,18 @@ import themeComponents from './theme.components';
 
 import { Spectral } from 'next/font/google';
 import localFont from 'next/font/local';
-const realHeadPro = localFont({
+const realHeadProBold = localFont({
   src: [
     {
       path: '../../fonts/font-real-head-pro.woff2'
+    }
+  ]
+});
+
+const realHeadPro = localFont({
+  src: [
+    {
+      path: '../../fonts/font-real-head-web-pro-light.woff2'
     }
   ]
 });
@@ -58,7 +66,10 @@ const paletteTheme = createTheme({
       main: 'rgba(0, 0, 0, 0)',
       dark: 'rgba(0, 0, 0, 0)',
       overlay: '#002339',
-      contrastText: '#000000',
+      contrastText: '#395B7E',
+      linkColor: '#395B7E',
+      headerColor: '#000000',
+      textColor: '#395B7E',
       overlayText: '#FFFFFF'
     },
     transparentDark: {
@@ -68,6 +79,9 @@ const paletteTheme = createTheme({
       dark: 'rgba(255, 255, 255, 0)',
       overlay: '#002339',
       contrastText: '#ffffff',
+      linkColor: '#FFFFFF',
+      headerColor: '#FFFFFF',
+      textColor: '#FFFFFF',
       overlayText: '#FFFFFF'
     },
     darkGray: {
@@ -86,7 +100,10 @@ const paletteTheme = createTheme({
       main: '#F8F8F8',
       dark: '#F8F8F8',
       overlay: '#002339',
-      contrastText: '#000000',
+      contrastText: '#395B7E',
+      linkColor: '#395B7E',
+      headerColor: '#000000',
+      textColor: '#395B7E',
       overlayText: '#FFFFFF'
     },
 
@@ -204,14 +221,22 @@ const paletteTheme = createTheme({
 
     white: {
       main: '#FFFFFF',
-      contrastText: '#03263e',
+      contrastText: '#395B7E',
+      linkColor: 'red',
       overlay: '#002339',
+      contrastText: '#395B7E',
+      linkColor: '#395B7E',
+      headerColor: '#000000',
+      textColor: '#395B7E',
       overlayText: '#FFFFFF'
     },
     black: {
       main: '#1F1F1F',
       contrastText: '#FFFFFF',
       overlay: '#002339',
+      linkColor: '#FFFFFF',
+      headerColor: '#FFFFFF',
+      textColor: '#FFFFFF',
       overlayText: '#FFFFFF'
     }
   }
@@ -235,13 +260,14 @@ const coreTheme = createTheme({
   },
   typography: {
     fontFamily: realHeadPro.style.fontFamily,
+
     navLink: {
-      fontWeight: 600,
+      fontWeight: 500,
       lineHeight: 1.17,
       letterSpacing: '1px',
       textTransform: 'uppercase',
-
-      fontSize: 'var(--bodySmall-font-size)'
+      fontFamily: realHeadProBold.style.fontFamily,
+      fontSize: 'var(--bodyXSmall-font-size)'
     },
     bodySpectral: {
       fontFamily: `${spectral.style.fontFamily}, Georgia, Arial`
@@ -252,7 +278,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--body1-font-size)',
       lineHeight: 'var(--body1-line-height)',
       margin: 'var(--body1-margin)',
-      color: 'inherit'
+      color: 'var(--text-color, inherit)'
     },
     body2: {
       fontFamily: realHeadPro.style.fontFamily,
@@ -260,7 +286,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--body2-font-size)',
       lineHeight: 'var(--body2-line-height)',
       margin: 'var(--body2-margin)',
-      color: 'inherit'
+      color: 'var(--text-color, inherit)'
     },
     bodyXSmall: {
       fontFamily: realHeadPro.style.fontFamily,
@@ -268,7 +294,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--bodyXSmall-font-size)',
       lineHeight: 'var(--bodyXSmall-line-height)',
       margin: 'var(--bodyXSmall-margin)',
-      color: 'inherit'
+      color: 'var(--text-color, inherit)'
     },
     bodySmall: {
       fontFamily: realHeadPro.style.fontFamily,
@@ -276,7 +302,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--bodySmall-font-size)',
       lineHeight: 'var(--bodySmall-line-height)',
       margin: 'var(--bodySmall-margin)',
-      color: 'inherit'
+      color: 'var(--text-color, inherit)'
     },
     bodyLarge: {
       fontFamily: realHeadPro.style.fontFamily,
@@ -284,7 +310,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--bodyLarge-font-size)',
       lineHeight: 'var(--bodyLarge-line-height)',
       margin: 'var(--bodyLarge-margin)',
-      color: 'inherit'
+      color: 'var(--text-color, inherit)'
     },
     display1: {
       display: 'block',
@@ -293,7 +319,8 @@ const coreTheme = createTheme({
       fontSize: 'var(--display1-font-size)',
       lineHeight: 'var(--display1-line-height)',
       margin: 'var(--display1-margin)',
-      color: paletteTheme?.palette?.tertiary?.main
+      color: 'var(--header-color, inherit)',
+      letterSpacing: '1px'
     },
     display2: {
       display: 'block',
@@ -302,7 +329,8 @@ const coreTheme = createTheme({
       fontSize: 'var(--display2-font-size)',
       lineHeight: 'var(--display2-line-height)',
       margin: 'var(--display2-margin)',
-      color: paletteTheme?.palette?.tertiary?.main
+      letterSpacing: '1px',
+      color: 'var(--header-color, inherit)'
     },
     h1: {
       fontFamily: realHeadPro.style.fontFamily,
@@ -310,7 +338,9 @@ const coreTheme = createTheme({
       fontSize: 'var(--h1-font-size)',
       lineHeight: 'var(--h1-line-height)',
       margin: 'var(--h1-margin)',
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      letterSpacing: '1px',
+      color: 'var(--header-color, inherit)'
     },
     h2: {
       fontFamily: realHeadPro.style.fontFamily,
@@ -318,7 +348,9 @@ const coreTheme = createTheme({
       fontSize: 'var(--h2-font-size)',
       lineHeight: 'var(--h2-line-height)',
       margin: 'var(--h2-margin)',
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      letterSpacing: '1px',
+      color: 'var(--header-color, inherit)'
     },
     h3: {
       fontFamily: realHeadPro.style.fontFamily,
@@ -326,7 +358,8 @@ const coreTheme = createTheme({
       fontSize: 'var(--h3-font-size)',
       lineHeight: 'var(--h3-line-height)',
       margin: 'var(--h3-margin)',
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      color: 'var(--header-color, inherit)'
     },
     h4: {
       fontFamily: realHeadPro.style.fontFamily,
@@ -334,7 +367,8 @@ const coreTheme = createTheme({
       fontSize: 'var(--h4-font-size)',
       lineHeight: 'var(--h4-line-height)',
       margin: 'var(--h4-margin)',
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      color: 'var(--header-color, inherit)'
     },
     h5: {
       fontFamily: realHeadPro.style.fontFamily,
@@ -342,7 +376,8 @@ const coreTheme = createTheme({
       fontSize: 'var(--h5-font-size)',
       lineHeight: 'var(--h5-line-height)',
       margin: 'var(--h5-margin)',
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      color: 'var(--header-color, inherit)'
     },
     h6: {
       fontFamily: realHeadPro.style.fontFamily,
@@ -350,21 +385,19 @@ const coreTheme = createTheme({
       fontSize: 'var(--h6-font-size)',
       lineHeight: 'var(--h6-line-height)',
       margin: 'var(--h6-margin)',
-      color: '#000000'
+      color: 'var(--header-color, inherit)'
     },
     subtitle1: {},
     subtitle2: {},
-    body1: {},
-    body2: {},
     overline: {
       display: 'block',
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: realHeadProBold.style.fontFamily,
       fontWeight: 'var(--overline-font-weight)',
       fontSize: 'var(--overline-font-size)',
       lineHeight: 'var(--overline-line-height)',
       textTransform: 'uppercase',
       margin: 'var(--overline-margin)',
-      color: 'inherit'
+      color: 'var(--text-color, inherit)'
     },
     button: {},
     caption: {}

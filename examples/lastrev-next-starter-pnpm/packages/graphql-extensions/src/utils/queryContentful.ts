@@ -1,4 +1,4 @@
-import type { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from '../types';
 import type { Entry } from 'contentful';
 
 interface QueryArgs {

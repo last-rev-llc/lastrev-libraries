@@ -32,13 +32,21 @@ export const applyBackgroundOverlay: ApplyBackgroundOverlay = ({
     const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
 
     if (backgroundColor && get(theme.palette, parsedBGColor)) {
-      const textColor = get(theme.palette, `${paletteColor}.overlayText`);
+      const textColor = get(theme.palette, `${paletteColor}.overlayText`) ?? 'currentColor';
       const bgColor = get(theme.palette, `${paletteColor}.overlay`);
+
+      const linkColor = get(theme.palette, `${paletteColor}.linkColor`) ?? textColor;
+      const headerColor = get(theme.palette, `${paletteColor}.overlayText`) ?? textColor;
       styles = {
-        backgroundColor: bgColor,
-        color: textColor,
-        borderColor: textColor,
-        fill: 'currentColor !important'
+        'backgroundColor': bgColor,
+        'color': textColor,
+        'borderColor': textColor,
+        'fill': 'currentColor !important',
+        '--text-color': textColor,
+        '--header-color': headerColor,
+        '--link-color': linkColor,
+        '--current-color-text': textColor,
+        '--current-color-bg': bgColor
       };
     }
   }

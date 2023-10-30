@@ -1,4 +1,4 @@
-import type { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from '../types';
 import { getLocalizedField, getDefaultFieldValue } from '@last-rev/graphql-contentful-core';
 
 import { createType } from './createType';

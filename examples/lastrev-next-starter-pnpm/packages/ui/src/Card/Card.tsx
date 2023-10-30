@@ -8,6 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import CardActionArea from '@mui/material/CardActionArea';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
+import Box from '@mui/material/Box';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -16,11 +17,9 @@ import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import type { CardProps, CardOwnerState } from './Card.types';
 import { type LinkProps } from '../Link';
-import Box from '@mui/material/Box';
 
 const Card = (props: CardProps) => {
   const {
-    ownerState: parentOwnerState,
     backgroundColor,
     className,
     id,

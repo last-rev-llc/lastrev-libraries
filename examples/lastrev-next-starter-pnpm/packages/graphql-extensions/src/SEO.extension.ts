@@ -14,6 +14,9 @@ export const typeDefs = gql`
   extend type Person {
     jsonLd: JSON
   }
+  extend type PageProperty {
+    jsonLd: JSON
+  }
   extend type Card {
     jsonLd: JSON
   }
@@ -129,6 +132,50 @@ export const resolvers: any = {
     jsonLd: (person: any, _args: any, ctx: any) => {
       // const title = getLocalizedField(person.fields, 'name', ctx);
       // const description = getLocalizedField(person.fields, 'promoSummary', ctx);
+      // const jsonLDSchema = {
+      //   // '@context': 'https://schema.org',
+      //   // '@type': 'BlogPosting',
+      //   // 'mainEntityOfPage': {
+      //   //   '@type': 'WebPage'
+      //   //   // '@id': `${siteUrl}/blogs`
+      //   // },
+      //   // 'headline': title,
+      //   // description,
+      //   // 'image': {
+      //   //   '@type': 'ImageObject'
+      //   //   // url: image
+      //   // }
+      // };
+      // return jsonLDSchema as unknown as JSON;
+      return {};
+    }
+  },
+  PageProperty: {
+    jsonLd: (property: any, _args: any, ctx: any) => {
+      // const title = getLocalizedField(property.fields, 'name', ctx);
+      // const description = getLocalizedField(property.fields, 'promoSummary', ctx);
+      // const jsonLDSchema = {
+      //   // '@context': 'https://schema.org',
+      //   // '@type': 'BlogPosting',
+      //   // 'mainEntityOfPage': {
+      //   //   '@type': 'WebPage'
+      //   //   // '@id': `${siteUrl}/blogs`
+      //   // },
+      //   // 'headline': title,
+      //   // description,
+      //   // 'image': {
+      //   //   '@type': 'ImageObject'
+      //   //   // url: image
+      //   // }
+      // };
+      // return jsonLDSchema as unknown as JSON;
+      return {};
+    }
+  },
+  ElementForm: {
+    jsonLd: (property: any, _args: any, ctx: any) => {
+      // const title = getLocalizedField(form.fields, 'name', ctx);
+      // const description = getLocalizedField(form.fields, 'promoSummary', ctx);
       // const jsonLDSchema = {
       //   // '@context': 'https://schema.org',
       //   // '@type': 'BlogPosting',

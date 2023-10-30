@@ -19,8 +19,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
     'flexDirection': 'column',
     'width': '100%',
     'position': 'relative',
-    'padding': 0,
-    // ...swiperStyles,
 
     '&': {
       ':is(.swiper-button-prev, .swiper-button-next)': {
@@ -37,21 +35,22 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
       }
     },
 
-    ...(ownerState?.prevBgColor &&
-      ownerState.inheritTopBGOverlap && {
-        'padding': 0,
-        '&::before': {
-          content: '""',
-          position: 'absolute',
-          display: 'block',
-          height: 'var(--section-padding)',
-          width: '100%',
-          ...theme.mixins.applyBackgroundColor({
-            ownerState: { ...ownerState, backgroundColor: ownerState?.prevBgColor ?? 'navy' },
-            theme
-          })
+    ...(ownerState?.prevBgColor && ownerState.inheritTopBGOverlap
+      ? {
+          'padding': 0,
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            display: 'block',
+            height: 'var(--section-padding)',
+            width: '100%',
+            ...theme.mixins.applyBackgroundColor({
+              ownerState: { ...ownerState, backgroundColor: ownerState?.prevBgColor ?? 'navy' },
+              theme
+            })
+          }
         }
-      })
+      : { ...theme.mixins.applyBackgroundColor({ ownerState, theme }), padding: 'var(--section-padding) 0' })
   }),
 
   swiperWrap: {
