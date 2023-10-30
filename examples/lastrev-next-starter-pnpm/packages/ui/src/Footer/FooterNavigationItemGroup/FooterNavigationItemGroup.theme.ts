@@ -16,7 +16,7 @@ const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGroup'] = 
   },
 
   navItemLinkGroup: ({ theme }) => ({
-    ...theme.typography.bodyLarge,
+    ...theme.typography.navLink,
     gap: 'calc(var(--grid-gap) / 4)'
   }),
 
@@ -26,9 +26,10 @@ const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGroup'] = 
     gap: 'calc(var(--grid-gap) / 2)'
   }),
 
-  navItemSubMenuItem: {
-    padding: 0
-  }
+  navItemSubMenuItem: ({ theme }) => ({
+    padding: 0,
+    ...theme.typography.bodySmall
+  })
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['FooterNavigationItemGroup'] => [];

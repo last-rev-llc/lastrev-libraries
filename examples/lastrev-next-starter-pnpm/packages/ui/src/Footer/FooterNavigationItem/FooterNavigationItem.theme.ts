@@ -9,7 +9,7 @@ import type {
 const defaultProps: ComponentsProps['FooterNavigationItem'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
-  root: ({ theme, ownerState }) => ({
+  root: ({ theme }) => ({
     ...theme.typography.body2
   })
 
