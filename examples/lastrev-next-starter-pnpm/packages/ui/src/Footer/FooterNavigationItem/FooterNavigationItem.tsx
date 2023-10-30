@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-const Chip = dynamic(() => import('@mui/material/Chip'));
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -22,7 +21,7 @@ const FooterNavigationItem = (props: FooterNavigationItemProps) => {
 
   return (
     <RootCmp {...sidekick(sidekickLookup)} component={Typography} ownerState={ownerState}>
-      {text}
+      {text} - hello
     </RootCmp>
   );
 };

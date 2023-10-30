@@ -9,8 +9,14 @@ import type {
 const defaultProps: ComponentsProps['FooterNavigationItem'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
-  root: ({ theme }) => ({
-    ...theme.typography.body2
+  root: ({ theme, ownerState }) => ({
+    ...(ownerState.variant === 'linkBoldedFooter'
+      ? {
+          ...theme.typography.navLink
+        }
+      : {
+          ...theme.typography.body2
+        })
   })
 
   // rootLinkButton: : {},

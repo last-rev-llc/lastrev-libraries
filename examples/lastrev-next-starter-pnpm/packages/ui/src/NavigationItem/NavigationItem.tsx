@@ -80,39 +80,12 @@ const NavigationItem = (props: NavigationItemProps) => {
   );
 };
 
-// const visibleStyles = (open: boolean) => `
-//   max-height: ${open ? 300 : 0}px;
-//   box-shadow: ${open ? 'inset 0 0 16px -8px rgb(0 0 0 / 30%)' : 'inset 0 0 0 0 rgb(0 0 0 / 0%)'};
-// `;
-
-// const shouldForwardProp = (prop: string) =>
-//   prop !== 'variant' && prop !== 'onRequestClose' && prop !== 'menuBreakpoint';
-
 const Root = styled(Box, {
   name: 'NavigationItem',
   slot: 'Root',
   // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string; open: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
-  // ${({ open, theme, menuBreakpoint }) => `
-  //   @media (max-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
-  //     [class$=NavigationItem-menuRoot] {
-  //       ${visibleStyles(open)}
-  //     }
-  //   }
-  //   @media (min-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
-  //     [class$=NavigationItem-menuRoot] {
-  //       max-height: 0px;
-  //     }
-  //     &:hover {
-  //       background: rgba(0,0,0,0.05);
-  //       [class$=NavigationItem-menuRoot] {
-  //         max-height: 300px;
-  //       }
-  //     }
-  //  }
-  // `}
-`;
+})<{ variant?: string; open: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>``;
 
 const NavItemSubMenu = styled(List, {
   name: 'NavigationItem',

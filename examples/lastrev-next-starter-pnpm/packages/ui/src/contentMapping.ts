@@ -67,7 +67,7 @@ export const contentMapping: {
   'NavigationItem:linkNested': HeaderNavLinkNested,
   'NavigationItem:group': HeaderNavGroup,
   'NavigationItem:linkFooter': FooterNavigationItem,
-  'NavigationItem:linkBoldedFooter': FooterNavigationItem,
+  'NavigationItem:linkBoldedFooter': FooterNavigationItemGroup,
   'NavigationItem:groupFooter': FooterNavigationItemGroup,
   SiteMessage,
   Breadcrumbs

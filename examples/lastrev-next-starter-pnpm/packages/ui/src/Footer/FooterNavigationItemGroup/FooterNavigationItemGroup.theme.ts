@@ -15,6 +15,16 @@ const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItemGroup'] = 
     gap: 'calc(var(--grid-gap) / 4)'
   },
 
+  navItemLink: ({ theme, ownerState }) => ({
+    ...(ownerState.variant === 'linkBoldedFooter'
+      ? {
+          ...theme.typography.navLink
+        }
+      : {
+          ...theme.typography.bodySmall
+        })
+  }),
+
   navItemLinkGroup: ({ theme }) => ({
     ...theme.typography.navLink,
     gap: 'calc(var(--grid-gap) / 4)'
