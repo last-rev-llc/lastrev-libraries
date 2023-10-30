@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-// import Toolbar from '@mui/material/Toolbar';
 import MuiIconButton from '@mui/material/IconButton';
 import MuiMenuIcon from '@mui/icons-material/Menu';
 import MuiCloseIcon from '@mui/icons-material/Close';
@@ -18,12 +17,12 @@ import SiteMessage from '../SiteMessage';
 
 import type { HeaderProps, HeaderOwnerState } from './Header.types';
 import type { NavigationItemProps } from '../NavigationItem';
+import Background from '../Background';
 
 const Header = (props: HeaderProps) => {
   const ownerState = { ...props };
 
   const {
-    background,
     backgroundColor,
     logo,
     logoUrl,
@@ -52,6 +51,7 @@ const Header = (props: HeaderProps) => {
       menuVisible={menuVisible}
       // menuBreakpoint={menuBreakpoint}
     >
+      <HeaderBackground backgroundColor={backgroundColor} testId="Header-background" />
       {siteMessageText && (
         <SiteMessageWrap ownerState={ownerState}>
           <SiteMessage icon={siteMessageIcon} text={siteMessageText} link={siteMessageLink} />
@@ -124,6 +124,12 @@ const Root = styled(Box, {
   shouldForwardProp: (prop: string) => prop !== 'menuVisible' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: HeaderOwnerState; menuVisible?: boolean }>``;
+
+const HeaderBackground = styled(Background, {
+  name: 'Block',
+  slot: 'HeaderBackground',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
 
 const ContentOuterGrid = styled(Grid, {
   name: 'Header',

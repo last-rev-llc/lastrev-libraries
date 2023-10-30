@@ -30,7 +30,6 @@ type Block implements Content {
   backgroundImage: Media
   body: RichText
   id: String
-  inheritTopBGOverlap: Boolean
   internalTitle: String
   introText: Text
   link: Link
@@ -115,7 +114,6 @@ type Collection implements Content {
   carouselAutoPlay: Boolean
   carouselBreakpoints: [String]
   id: String
-  inheritTopBGOverlap: Boolean
   internalTitle: String
   introText: Text
   isCarouselDesktop: Boolean
@@ -145,6 +143,8 @@ type CollectionDynamic implements Content {
 
 type CollectionExpandable implements Content {
   animation: JSON
+  backgroundColor: String
+  backgroundImage: Media
   id: String
   internalTitle: String
   introText: Text
@@ -158,7 +158,7 @@ type CollectionExpandableItem implements Content {
   animation: JSON
   body: RichText
   bodyRte: JSON
-  content: [Content]
+  content: Content
   id: String
   internalTitle: String
   sidekickLookup: JSON
@@ -427,6 +427,7 @@ type Person implements Content {
   animation: JSON
   body: RichText
   breadcrumbs: [Link]
+  education: [String]
   email: String
   footer: Footer
   header: Header
@@ -438,6 +439,7 @@ type Person implements Content {
   mainImage: Media
   name: String
   path: String
+  previousExperiences: [String]
   promoImage: Media
   promoSummary: String
   rolloverImage: Media

@@ -17,12 +17,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
-    padding: theme.spacing(0, 0),
+    padding: 'var(--grid-gap) 0',
 
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(12, 0)
+      padding: 'var(--grid-margin) 0'
     }
   }),
+
   background: ({ theme }) => ({
     '&::before': {
       content: '""',
@@ -37,21 +38,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     }
   }),
 
-  contentOuterGrid: {
-    '> *': {
-      gridColumnStart: 'auto'
-    }
-  },
+  // title: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
 
-  title: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
-  overline: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
+  // overline: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
 
   // media: {},
 
   // overline: {},
 
   content: ({ theme }) => ({
-    'paddingRight': theme.spacing(2),
+    'paddingRight': 'var(--grid-gap)',
+
     '> *:last-child': {
       marginBottom: 0
     }
@@ -63,8 +60,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 
   mainContentWrap: {
     display: 'flex',
-    flexDirection: 'column'
-    // alignSelf: 'center'
+    flexDirection: 'column',
+    height: '100%',
+    justifyContent: 'center'
   },
 
   mediaWrap: ({ theme }) => ({
@@ -212,8 +210,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       },
 
       '[class*=mediaWrap]': {
-        gridColumnStart: '1',
-        gridColumnEnd: '-1',
+        gridColumnStart: 'content-half',
+        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
           gridColumnEnd: 'content-half'

@@ -25,6 +25,7 @@ export interface CardOwnerState extends CardProps {
 
 interface CardClasses {
   root: string;
+  cardWrap: string;
   link: string;
   media: string;
   mediaFlip: string;
@@ -36,6 +37,7 @@ interface CardClasses {
   title: string;
   subtitle: string;
   body: string;
+  bodyWrap: string;
 }
 
 export declare type CardClassKey = keyof CardClasses;

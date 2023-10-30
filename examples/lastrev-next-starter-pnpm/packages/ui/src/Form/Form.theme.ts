@@ -18,11 +18,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
     'display': 'flex',
     'flexDirection': 'column',
 
-    '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
-      padding: 'var(--grid-gap)',
-      paddingTop: 0
-    },
-
     '& form': {
       'border': 'solid 10px blue',
       'display': 'grid',

@@ -21,6 +21,7 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
 
   const backgroundColor: string = ownerState?.backgroundColor as any;
   let styles = {};
+
   if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
     styles = {
       background: get(theme.palette, `${backgroundColor}.main`),
@@ -31,12 +32,17 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
     const paletteColor = backgroundColor?.includes('.') ? backgroundColor.split('.')[0] : `${backgroundColor}`;
 
     if (backgroundColor && get(theme.palette, parsedBGColor)) {
+      const textColor = get(theme.palette, `${paletteColor}.contrastText`) ?? 'currentColor';
+      const bgColor = get(theme.palette, parsedBGColor);
       styles = {
-        backgroundColor: get(theme.palette, parsedBGColor),
-        color: get(theme.palette, `${paletteColor}.contrastText`)
+        'backgroundColor': bgColor,
+        'color': textColor,
+        'borderColor': textColor,
+        'fill': 'currentColor !important',
+        '--current-color-text': textColor,
+        '--current-color-bg': bgColor
       };
     }
-    // console.log('ApplyBackgroundColor', { ownerState, theme, backgroundColor, parsedBGColor, paletteColor, styles });
   }
   return styles;
 };

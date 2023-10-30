@@ -20,15 +20,16 @@ export interface PersonOwnerState extends PersonProps {}
 interface PersonClasses {
   root: string;
   contentOuterGrid: string;
-  breadcrumbsWrap: string;
-  headerWrap: string;
   contentWrap: string;
-  mainImageWrap: string;
-  mainImage: string;
+  sideContentWrap: string;
+  sideContentInnerWrap: string;
   name: string;
   jobTitle: string;
   email: string;
   body: string;
+  bodyHeader: string;
+  bodyList: string;
+  bodyListItem: string;
 }
 
 export declare type PersonClassKey = keyof PersonClasses;

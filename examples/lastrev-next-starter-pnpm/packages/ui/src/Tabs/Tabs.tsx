@@ -20,7 +20,7 @@ import type { TabsProps, TabsOwnerState } from './Tabs.types';
 const Tabs = (props: TabsProps) => {
   const ownerState = { ...props };
 
-  const { background, backgroundColor, id, items, variant, sidekickLookup, introText } = props;
+  const { backgroundImage, backgroundColor, id, items, variant, sidekickLookup, introText } = props;
 
   const [value, setValue] = React.useState('0');
 
@@ -31,7 +31,7 @@ const Tabs = (props: TabsProps) => {
   return (
     <ErrorBoundary>
       <Root data-testid={`Tabs-${variant}`} {...sidekick(sidekickLookup)} ownerState={ownerState}>
-        <TabsBackground background={background} backgroundColor={backgroundColor} testId="Tabs-background" />
+        <TabsBackground background={backgroundImage} backgroundColor={backgroundColor} testId="Tabs-background" />
 
         {!!introText && (
           <IntroTextGrid ownerState={ownerState}>
@@ -47,9 +47,14 @@ const Tabs = (props: TabsProps) => {
         {!!items?.length && (
           <ContentOuterGrid ownerState={ownerState}>
             <TabsContext value={value} ownerState={ownerState}>
-              <TabListWrap sx={{ borderBottom: 1, borderColor: 'divider' }} ownerState={ownerState}>
+              <TabListWrap ownerState={ownerState}>
                 {/* TODO: Add "orientation" to the expanding content type */}
-                <TabList onChange={handleChange} orientation="horizontal" aria-label="TODO">
+                <TabList
+                  onChange={handleChange}
+                  orientation="horizontal"
+                  aria-label="TODO"
+                  textColor="primary"
+                  indicatorColor="primary">
                   {items?.map(
                     (
                       item: any,
@@ -73,7 +78,7 @@ const Tabs = (props: TabsProps) => {
                     {item.body ? (
                       <Details __typename="RichText" body={item.body} ownerState={ownerState} />
                     ) : (
-                      <Details {...item.content} ownerState={ownerState} />
+                      <Details {...item.content} ownerState={ownerState} backgroundColor={backgroundColor} />
                     )}
                   </DetailsWrap>
                 )
