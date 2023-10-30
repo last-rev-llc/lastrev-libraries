@@ -11,8 +11,8 @@ fragment Person_BaseFragment on Person {
   name
   jobTitle
   email
-  education
-  previousExperiences
+  #education
+  #previousExperiences
   mainImage {
     ...Media_BaseFragment
   }
