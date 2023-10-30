@@ -64,14 +64,24 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
 
     borderLeft: 'solid',
     borderLeftWidth: '1px',
-    paddingLeft: 'var(--grid-gap)'
+    paddingLeft: 'var(--grid-gap)',
+
+    ...(!ownerState?.media && {
+      gridRow: '1 !important'
+    })
   }),
 
-  sideContentWrap: ({ ownerState }) => ({
+  sideContentWrap: ({ ownerState, theme }) => ({
     display: 'flex',
     alignItems: ownerState?.supplementalContent ? 'flex-start' : 'center',
     justifyContent: ownerState?.supplementalContent ? 'flex-start' : 'center',
-    flexDirection: 'column'
+    flexDirection: 'column',
+
+    ...(!ownerState?.media && {
+      [theme.containerBreakpoints.down('md')]: {
+        gridRow: '2 !important'
+      }
+    })
   }),
 
   // mediaItems: : {},
