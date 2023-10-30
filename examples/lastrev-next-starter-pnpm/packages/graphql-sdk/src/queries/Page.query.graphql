@@ -6,7 +6,4 @@ query Page($path: String!, $locale: String, $preview: Boolean!, $site: String) {
     ...ContentModule_BlogFragment
     ...ContentModule_FormFragment
   }
-  siteSettings(preview: $preview) {
-    ...Site_BaseFragment
-  }
 }

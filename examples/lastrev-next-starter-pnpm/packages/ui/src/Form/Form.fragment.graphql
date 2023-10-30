@@ -5,6 +5,8 @@ fragment Form_BaseFragment on ElementForm {
   backgroundImage {
     ...Media_BaseFragment
   }
+  address
+  email
   backgroundColor
   hubspotPortalId
   hubspotFormId

@@ -1,5 +1,0 @@
-query Site($preview: Boolean!) {
-  siteSettings(preview: $preview) {
-    ...Site_BaseFragment
-  }
-}

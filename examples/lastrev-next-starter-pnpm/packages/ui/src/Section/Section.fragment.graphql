@@ -25,6 +25,7 @@ fragment Section_BaseFieldsFragment on Section {
   ...Content_BaseFragment
   variant
   backgroundColor
+  inheritTopBGOverlap
   background {
     ...Media_BaseFragment
   }

@@ -11,15 +11,32 @@ import { SectionVariants } from './Section.types';
 const defaultProps: ComponentsProps['Section'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
-  root: {
+  root: ({ theme, ownerState }) => ({
     'containerType': 'inline-size',
     'width': '100%',
     'position': 'relative',
 
     'main > &:last-of-type': {
       marginBottom: 0
-    }
-  },
+    },
+
+    ...(ownerState?.prevBgColor && ownerState.inheritTopBGOverlap
+      ? {
+          'padding': 0,
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            display: 'block',
+            height: 'var(--section-padding)',
+            width: '100%',
+            ...theme.mixins.applyBackgroundColor({
+              ownerState: { ...ownerState, backgroundColor: ownerState?.prevBgColor ?? 'navy' },
+              theme
+            })
+          }
+        }
+      : { ...theme.mixins.applyBackgroundColor({ ownerState, theme }), padding: 'var(--section-padding) 0' })
+  }),
 
   introText: { gridColumn: 'content-start / content-end' },
 
@@ -76,7 +93,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
 
   itemsGrid: ({ theme, ownerState }) => {
     return {
-      // gridColumn: 'full-start/full-end',
+      zIndex: 10,
       display: 'grid',
       gridGap: 'inherit',
       gridRowGap: 0,

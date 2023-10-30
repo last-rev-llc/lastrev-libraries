@@ -18,6 +18,8 @@ export const typeDefs = gql`
     breadcrumbs: [Link]
     footerDisclaimerOverride: RichText
     formDisclaimerText: RichText
+    address: JSON
+    email: String
   }
 `;
 

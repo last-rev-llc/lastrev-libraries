@@ -274,12 +274,14 @@ input ContentsFilter {
 scalar Date
 
 type ElementForm implements Content {
+  address: JSON
   animation: JSON
   backgroundColor: String
   backgroundImage: Media
   breadcrumbs: [Link]
   confirmationPath: String
   contents: [Content]
+  email: String
   footer: Footer
   footerDisclaimerOverride: RichText
   formDisclaimerText: RichText
@@ -564,7 +566,6 @@ type Query {
   paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
   redirects(preview: Boolean!): [SiteRedirect]
   rewrites(preview: Boolean!): [SiteRedirect]
-  siteSettings(preview: Boolean!): Site
   sitemap(locales: [String!], preview: Boolean, root: String!, site: String): Sitemap
   sitemapIndex(preview: Boolean, site: String): Sitemap
   sitemapPage(contentType: String!, locale: String, page: Int, preview: Boolean, site: String): SitemapPage
@@ -603,6 +604,7 @@ type Section implements Content {
   contents: [Content]
   hasBackground: Boolean
   id: String
+  inheritTopBGOverlap: Boolean
   internalTitle: String
   introText: Text
   sidekickLookup: JSON
