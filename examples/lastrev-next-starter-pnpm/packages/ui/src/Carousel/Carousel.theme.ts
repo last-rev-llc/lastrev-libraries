@@ -26,7 +26,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
         aspectRatio: '1/1',
         width: 'var(--swiper-navigation-size)',
         borderRadius: '50%',
-        padding: 'var(--swiper-navigation-size)'
+        padding: 'var(--swiper-navigation-size)',
+        top: 'unset',
+        bottom: 'calc(-1.5 * var(--section-padding))'
       },
 
       '.swiper-button-next': {
