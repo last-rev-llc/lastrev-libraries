@@ -7,16 +7,16 @@ export const metadata: Metadata = {
   title: {
     template: '%s | LastRev Next Starter',
     default: 'LastRev Next Starter'
+  },
+  other: {
+    contentful_space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID ?? '',
+    contentful_environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENV ?? ''
   }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <head>
-        <meta name="contentful_space" content="{process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}" />
-        <meta name="contentful_environment" content="{process.env.NEXT_PUBLIC_CONTENTFUL_ENV}" />
-      </head>
       <body>{children}</body>
     </html>
   );
