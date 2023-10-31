@@ -1,4 +1,5 @@
 import ContentModule from '@ui/ContentModule/ContentModule';
+import type { Metadata, ResolvingMetadata } from 'next';
 import { client } from '@graphql-sdk/client';
 
 import { AppProvider } from '@ui/AppProvider/AppProvider';
@@ -10,6 +11,14 @@ type Props = {
 };
 
 const locale = 'en-US';
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  return {
+    other: {
+      pageId: params.id
+    }
+  };
+}
 
 export default async function Preview({ params }: Props) {
   const { id } = params;
