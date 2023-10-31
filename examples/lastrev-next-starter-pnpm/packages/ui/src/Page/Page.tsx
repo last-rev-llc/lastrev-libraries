@@ -27,6 +27,7 @@ const Page = (props: PageProps) => {
       {hero ? <ContentModule {...(hero as any)} /> : null}
 
       <Main {...sidekick(sidekickLookup, 'contents')}>
+        {/* <ContentModule __typename="ElementForm" /> */}
         {contents?.map((content: any) => (
           <ContentModule key={content?.id} {...content} component="section" />
         ))}

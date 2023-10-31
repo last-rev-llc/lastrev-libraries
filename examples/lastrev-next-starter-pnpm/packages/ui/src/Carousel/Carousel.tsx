@@ -2,7 +2,7 @@ import React from 'react';
 
 // import Swiper core and required modules
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar, A11y, Grid as SwiperGrid } from 'swiper/modules';
+import { Navigation, Pagination, A11y, Grid as SwiperGrid } from 'swiper/modules';
 import { type SwiperOptions } from 'swiper/types';
 
 import { styled } from '@mui/material/styles';
@@ -24,11 +24,11 @@ const Carousel = (props: CarouselProps) => {
   const ownerState = { ...props };
 
   const {
-    background,
+    backgroundImage,
+    backgroundColor,
     isCarouselDesktop,
     isCarouselTablet,
     isCarouselMobile,
-    backgroundColor,
     items,
     variant,
     itemsVariant,
@@ -40,12 +40,13 @@ const Carousel = (props: CarouselProps) => {
 
   const swiperBreakpoints: { [width: number]: SwiperOptions } = {};
 
+  // Can change the slidePerView below if you don't want to show a partial for the next slide
   swiperBreakpoints['1'] = {
     grid: {
       rows: isCarouselMobile ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: 1,
+    slidesPerView: 1.25,
     spaceBetween: 16
   };
 
@@ -54,7 +55,7 @@ const Carousel = (props: CarouselProps) => {
       rows: isCarouselTablet ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: 1,
+    slidesPerView: 1.25,
     spaceBetween: 16
   };
 
@@ -63,7 +64,7 @@ const Carousel = (props: CarouselProps) => {
       rows: isCarouselDesktop ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: itemsPerRow > 1 ? 2 : 1,
+    slidesPerView: itemsPerRow > 1 ? 2.5 : 1,
     spaceBetween: 12
   };
 
@@ -72,17 +73,26 @@ const Carousel = (props: CarouselProps) => {
       rows: isCarouselDesktop ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: itemsPerRow > 2 ? 3 : 2,
+    slidesPerView: itemsPerRow > 2 ? 3.5 : 2.5,
     spaceBetween: 16
   };
 
   if (itemsPerRow === 4) {
-    swiperBreakpoints[breakpoints.xl] = {
+    swiperBreakpoints[breakpoints.sm] = {
       grid: {
         rows: isCarouselDesktop ? 1 : numItems,
         fill: 'row'
       },
-      slidesPerView: 4,
+      slidesPerView: 2.5,
+      spaceBetween: 20
+    };
+
+    swiperBreakpoints[breakpoints.lg] = {
+      grid: {
+        rows: isCarouselDesktop ? 1 : numItems,
+        fill: 'row'
+      },
+      slidesPerView: 4.5,
       spaceBetween: 20
     };
   } else if (itemsPerRow >= 5) {
@@ -91,7 +101,7 @@ const Carousel = (props: CarouselProps) => {
         rows: isCarouselDesktop ? 1 : numItems,
         fill: 'row'
       },
-      slidesPerView: 5,
+      slidesPerView: 5.5,
       spaceBetween: 20
     };
   }
@@ -99,7 +109,11 @@ const Carousel = (props: CarouselProps) => {
   return (
     <ErrorBoundary>
       <Root ownerState={ownerState} {...sidekick(sidekickLookup)} data-testid={`Carousel-${variant}`}>
-        <CarouselBackground background={background} backgroundColor={backgroundColor} testId="Carousel-background" />
+        <CarouselBackground
+          background={backgroundImage}
+          backgroundColor={backgroundColor}
+          testId="Carousel-background"
+        />
         {introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText
@@ -122,14 +136,19 @@ const Carousel = (props: CarouselProps) => {
                 spaceBetween={24}
                 breakpoints={swiperBreakpoints}
                 navigation
-                pagination={{ clickable: true }}
+                // pagination={{ clickable: true }}
                 // scrollbar={{ draggable: true }}
                 // onSwiper={(swiper) => console.log(swiper)}
                 // onSlideChange={() => console.log('slide change')}
               >
                 {items?.map((item, index) => (
                   <SwiperSlide key={item?.id}>
-                    <Item ownerState={ownerState} {...item} variant={itemsVariant ?? item?.variant} />
+                    <Item
+                      backgroundColor={backgroundColor}
+                      ownerState={ownerState}
+                      {...item}
+                      variant={itemsVariant ?? item?.variant}
+                    />
                   </SwiperSlide>
                 ))}
               </Swiper>

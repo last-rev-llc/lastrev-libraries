@@ -5,6 +5,9 @@ fragment Block_BaseFragment on Block {
     ...Text_IntroTextFragment
   }
   backgroundColor
+  backgroundImage {
+    ...Media_BaseFragment
+  }
   overline
   title
   subtitle

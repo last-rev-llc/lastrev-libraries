@@ -10,7 +10,22 @@ export enum FormVariants {
 export interface FormProps extends Form_BaseFragmentFragment {
   submitted?: boolean;
   hasSuccessMessage?: boolean;
-  variant: FormVariants;
+  variant?: FormVariants;
+  id?: string;
+  formContainer?: React.RefObject<HTMLDivElement>;
+  successContainer?: React.RefObject<HTMLDivElement>;
+  isOnNewtab?: boolean;
+  pageType?: string;
+  thankYouPage?: string;
+  redirectUrl?: string;
+  displayFormat?: string;
+  buttonText?: string;
+  cta?: string;
+  formStyles?: string;
+  disclaimerStyles?: string;
+  fieldWrapStyles?: string;
+  onKnownVisitor?: (knownVisitor: boolean) => void;
+  hasMargin?: boolean;
 }
 
 export interface FormOwnerState extends FormProps {}

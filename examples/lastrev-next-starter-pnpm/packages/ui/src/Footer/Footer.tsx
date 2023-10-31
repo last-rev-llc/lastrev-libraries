@@ -14,11 +14,13 @@ import Grid from '../Grid';
 import type { FooterProps, FooterOwnerState } from './Footer.types';
 import type { NavigationItemProps } from '../NavigationItem';
 import type { LinkProps } from '../Link';
+import Background from '../Background';
 
 const Footer = (props: FooterProps) => {
   const ownerState = { ...props };
 
   const {
+    backgroundColor,
     logo,
     logoUrl,
     disclaimerText,
@@ -32,6 +34,8 @@ const Footer = (props: FooterProps) => {
 
   return (
     <Root {...sidekick(sidekickLookup)} component="footer" ownerState={ownerState}>
+      <FooterBackground backgroundColor={backgroundColor} testId="Footer-background" />
+
       {!!introContents?.length && (
         <IntroContentsWrap ownerState={ownerState}>
           {introContents?.map((content, index) => (
@@ -119,6 +123,12 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: FooterOwnerState }>``;
+
+const FooterBackground = styled(Background, {
+  name: 'Block',
+  slot: 'FooterBackground',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
 
 const ContentOuterGrid = styled(Grid, {
   name: 'Footer',

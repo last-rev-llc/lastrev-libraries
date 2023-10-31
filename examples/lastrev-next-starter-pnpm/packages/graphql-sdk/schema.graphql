@@ -23,18 +23,23 @@ type Asset {
 }
 
 type Block implements Content {
+  OLDoverline: String
+  OLDsubtitle: String
+  OLDtitle: String
   actions: [Link]
   animation: JSON
   asset: Media
   backgroundColor: String
   backgroundImage: Media
   body: RichText
+  disclaimerText: String
   id: String
   internalTitle: String
   introText: Text
   link: Link
   longText: String
   mediaItems: [Media]
+  overlapWithPreviousModule: Boolean
   overline: String
   shortText: String
   sidekickLookup: JSON
@@ -76,6 +81,9 @@ type Blog implements Content {
 }
 
 type Card implements Content {
+  OLDoverline: String
+  OLDsubtitle: String
+  OLDtitle: String
   actions: [Link]
   animation: JSON
   body: RichText
@@ -129,6 +137,7 @@ type Collection implements Content {
   backgroundImage: Media
   carouselAutoPlay: Boolean
   carouselBreakpoints: [String]
+  disclaimerText: String
   id: String
   internalTitle: String
   introText: Text
@@ -147,9 +156,19 @@ type Collection implements Content {
 
 type CollectionDynamic implements Content {
   animation: JSON
+  backgroundColor: String
+  backgroundImage: Media
   id: String
   internalTitle: String
+  introText: Text
+  isCarouselDesktop: Boolean
+  isCarouselMobile: Boolean
+  isCarouselTablet: Boolean
+  items: [CollectionDynamicItem]
+  itemsConnection(filter: CollectionDynamicFilterInput, limit: Int, offset: Int): CollectionDynamicItemConnection
+  itemsPerRow: Int
   itemsVariant: String
+  numItems: Int
   numberOfItemsToPull: String
   pullFromContentType: String
   sidekickLookup: JSON
@@ -157,8 +176,39 @@ type CollectionDynamic implements Content {
   variant: String
 }
 
+type CollectionDynamicConnectionPageInfo {
+  allOptions: CollectionDynamicOptions
+  options: CollectionDynamicOptions
+  total: Int
+}
+
+input CollectionDynamicFilterInput {
+  body: String
+  tags: [String]
+  topics: [String]
+}
+
+union CollectionDynamicItem = Card
+
+type CollectionDynamicItemConnection {
+  items: [CollectionDynamicItem]
+  pageInfo: CollectionDynamicConnectionPageInfo
+}
+
+type CollectionDynamicOption {
+  label: String
+  value: String
+}
+
+type CollectionDynamicOptions {
+  tags: [CollectionDynamicOption]
+  topics: [CollectionDynamicOption]
+}
+
 type CollectionExpandable implements Content {
   animation: JSON
+  backgroundColor: String
+  backgroundImage: Media
   id: String
   internalTitle: String
   introText: Text
@@ -169,10 +219,11 @@ type CollectionExpandable implements Content {
 }
 
 type CollectionExpandableItem implements Content {
+  OLDtitle: String
   animation: JSON
   body: RichText
   bodyRte: JSON
-  content: [Content]
+  content: Content
   id: String
   internalTitle: String
   sidekickLookup: JSON
@@ -304,6 +355,9 @@ type Header implements Content {
 }
 
 type Hero implements Content {
+  OLDoverline: String
+  OLDsubtitle: String
+  OLDtitle: String
   actions: [Link]
   animation: JSON
   background: Media
@@ -440,6 +494,38 @@ type PagePathParams {
   params: PagePathParam!
 }
 
+type PageProperty {
+  body: RichText
+  breadcrumbs: [Link]
+  featuredAssets: Collection
+  footer: Footer
+  header: Header
+  hero: Content
+  imageCarousel: Collection
+  mainImage: Media
+  path: String
+  socialLinks: [Link]
+}
+
+type PageResource implements Content {
+  animation: JSON
+  body: RichText
+  disableBackToTop: Boolean
+  footerDisclaimerOverride: RichText
+  id: String
+  internalTitle: String
+  lr__path__: String
+  persona: [String]
+  promoImage: Media
+  promoSummary: String
+  resourceType: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+  title: String
+}
+
 type Person implements Content {
   animation: JSON
   body: RichText
@@ -492,6 +578,8 @@ type Query {
 }
 
 type Quote implements Content {
+  OLDauthorName: String
+  OLDauthorTitle: String
   animation: JSON
   authorName: String
   authorTitle: String
@@ -522,6 +610,7 @@ type Section implements Content {
   background: Media
   backgroundColor: String
   contents: [Content]
+  disclaimerText: String
   hasBackground: Boolean
   id: String
   internalTitle: String
@@ -596,6 +685,9 @@ type Template implements Content {
 }
 
 type Text implements Content {
+  OLDoverline: String
+  OLDsubtitle: String
+  OLDtitle: String
   align: String
   animation: JSON
   body: RichText

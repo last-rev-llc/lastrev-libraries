@@ -9,11 +9,8 @@ import type {
 const defaultProps: ComponentsProps['FooterNavigationItem'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
-  root: ({ theme, ownerState }) => ({
-    ...theme.typography.body2,
-
-    color: theme.palette.secondary.main,
-    border: 'solid 10px blue'
+  root: ({ theme }) => ({
+    ...theme.typography.body2
   })
 
   // rootLinkButton: : {},

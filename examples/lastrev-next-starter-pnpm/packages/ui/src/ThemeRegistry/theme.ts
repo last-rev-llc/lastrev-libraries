@@ -1,5 +1,5 @@
 import { DM_Sans } from 'next/font/google';
-import { type Breakpoint, type ThemeOptions, type Theme, createTheme } from '@mui/material/styles';
+import { type Breakpoint, type Theme, createTheme } from '@mui/material/styles';
 import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
@@ -48,13 +48,13 @@ const paletteTheme = createTheme({
       // paper: '#E3E3E3'
       // default: '#121212',
       // paper: '#1E1E1E'
-      // contrastText: '#FFF'
+      // contrastText: '#FFFFFF'
     },
     error: {
       main: '#ff1744',
       light: 'rgb(255, 69, 105)',
       dark: 'rgb(178, 16, 47)',
-      contrastText: '#fff'
+      contrastText: '#FFFFFF'
     },
     common: {
       black: '#00030B',
@@ -64,28 +64,28 @@ const paletteTheme = createTheme({
       main: '#ed6c02',
       light: '#ff9800',
       dark: '#e65100',
-      contrastText: '#fff'
+      contrastText: '#FFFFFF'
     },
     info: {
       main: '#0288d1',
       light: '#03a9f4',
       dark: '#01579b',
-      contrastText: '#fff'
+      contrastText: '#FFFFFF'
     },
     success: {
       main: '#2e7d32',
       light: '#4caf50',
       dark: '#1b5e20',
-      contrastText: '#fff'
+      contrastText: '#FFFFFF'
     },
 
     white: {
-      main: '#FFF',
+      main: '#FFFFFF',
       contrastText: '#1F1F1F'
     },
     black: {
       main: '#1F1F1F',
-      contrastText: '#FFF'
+      contrastText: '#FFFFFF'
     }
   }
 });

@@ -11,6 +11,8 @@ fragment Person_BaseFragment on Person {
   name
   jobTitle
   email
+  #education
+  #previousExperiences
   mainImage {
     ...Media_BaseFragment
   }
@@ -22,6 +24,9 @@ fragment Person_BaseFragment on Person {
   }
   hero {
     ...Hero_BaseFragment
+  }
+  breadcrumbs {
+    ...Link_BaseFragment
   }
 }
 

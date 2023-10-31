@@ -3,7 +3,7 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 import type { Block_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum BlockVariants {
-  default = 'contentOnRight',
+  default = 'default',
   contentOnRight = 'contentOnRight',
   contentOnRightFullBleed = 'contentOnRightFullBleed',
   contentOnLeft = 'contentOnLeft',

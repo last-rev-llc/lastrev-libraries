@@ -81,9 +81,11 @@ interface CollectionSettings {
 export const mappers: Mappers = {
   Collection: {
     Collection: {
-      items: async (collection: any, _args: any, ctx: ApolloContext) => {
+      items: async (collection: any, args: any, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
-        const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
+        const itemsVariantFn = defaultResolver('itemsVariant');
+        const itemsVariant = itemsVariantFn(collection, args, ctx);
+
         try {
           const { contentType, limit, offset, order, filter } =
             (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
@@ -127,7 +129,8 @@ export const mappers: Mappers = {
       },
 
       itemsPerRow: async (collection: any, args: any, ctx: ApolloContext) => {
-        let variant = getLocalizedField(collection.fields, 'variant', ctx) ?? [];
+        const variantFn = defaultResolver('variant');
+        const variant = variantFn(collection, args, ctx);
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
         let itemsPerRow = 3;
         const numItems = items?.length ?? 3;
@@ -167,7 +170,7 @@ export const mappers: Mappers = {
         const variantFn = defaultResolver('variant');
         const variant = variantFn(collection, args, ctx);
 
-        if (!!carouselBreakpoints.length) `${variant}Carousel`;
+        if (!!carouselBreakpoints.length) return `${variant}Carousel`;
 
         return variant;
       },
