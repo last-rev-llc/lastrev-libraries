@@ -129,7 +129,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --body1-font-weight: 400;
               --body2-font-weight: 400;
             }
-
+            /* 
             body * {
               ${theme.containerBreakpoints.up('sm')} {
                 --h1-font-size: ${(h1FontSizeBase / 8) * 6}rem;
@@ -194,7 +194,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display6-font-size: ${(display6FontSizeBase / 8) * 9}rem;
                 --section-padding: calc(var(--grid-gap) * 2);
               }
-            }
+            } */
           `}
         />
         {children}

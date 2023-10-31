@@ -109,12 +109,12 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.icon
     },
     style: {
-      '[class*=cardMedia]': {
+      'textAlign': 'center',
+      '[class*=cardMedia] img': {
         maxWidth: 96,
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingTop: 'var(--grid-gap)',
-
         [theme.containerBreakpoints.up('lg')]: {
           '& > :is(img, svg)': {
             objectFit: 'contain'

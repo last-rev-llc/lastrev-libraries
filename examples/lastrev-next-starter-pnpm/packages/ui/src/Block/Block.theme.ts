@@ -96,7 +96,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
           gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'content-half',
+          paddingRight: 'var(--grid-gap)'
         }
       },
 
@@ -121,11 +122,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         gridRow: 2,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
-
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
           gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'content-half',
+          paddingRight: 'var(--grid-gap)'
         }
       },
 
@@ -154,7 +155,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
           gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnEnd: 'content-end',
+          paddingLeft: 'var(--grid-gap)'
         }
       },
 
@@ -181,7 +183,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
           gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnEnd: 'content-end',
+          paddingLeft: 'var(--grid-gap)'
         }
       },
 

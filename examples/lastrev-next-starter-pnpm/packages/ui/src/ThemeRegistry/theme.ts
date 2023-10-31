@@ -29,9 +29,11 @@ const paletteTheme = createTheme({
   palette: {
     mode: 'light',
     sapphirePinkGradient: { main: 'linear-gradient(281deg, #E82163 0%, #3049C9 100%)', contrastText: '#FFF' },
-    sapphire: { lighter: '##EAEDFA', light: '#5368D2', main: '#3049C9', dark: '#22338D' },
+    sapphire: { light: '#5368D2', main: '#3049C9', dark: '#22338D' },
+    sapphireLight: { light: '#EAEDFA', main: '#5368D2', dark: '#3049C9' },
 
     blue: { lighter: '#ECF2FE', light: '#C4D6FB', main: '#407BF2', dark: '#264A91' },
+    blueLight: { light: '#ECF2FE', main: '#C4D6FB', dark: '#407BF2' },
 
     green: { lighter: '#EAF2EE', light: '#88B19C', main: '#317955', dark: '#1E4A34' },
 

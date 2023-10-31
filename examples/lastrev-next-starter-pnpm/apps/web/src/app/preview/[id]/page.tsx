@@ -1,5 +1,5 @@
-import ContentModule from '@ui/ContentModule/ContentModule';
-import type { Metadata, ResolvingMetadata } from 'next';
+import React from 'react';
+import ContentPreview from '@ui/ContentPreview';
 import { client } from '@graphql-sdk/client';
 
 import { AppProvider } from '@ui/AppProvider/AppProvider';
@@ -23,13 +23,13 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 export default async function Preview({ params }: Props) {
   const { id } = params;
   const { data } = await client.Preview({ id, locale });
-
   if (!data?.content) {
     return notFound();
   }
+
   return (
     <AppProvider>
-      <ContentModule {...data.content} />
+      <ContentPreview {...data} id={id} />
     </AppProvider>
   );
 }
