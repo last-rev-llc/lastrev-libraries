@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.16.5",
-    "@contentful/rich-text-from-markdown": "^15.10.0",
+    "@contentful/rich-text-from-markdown": "^15.16.8",
     "@contentful/rich-text-types": "^15.11.1",
     "@graphql-tools/merge": "^8.4.0",
     "@last-rev/graphql-algolia-integration": "^0.1.10",
