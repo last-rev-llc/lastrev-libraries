@@ -21,8 +21,7 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
 
   const backgroundColor: string = ownerState?.backgroundColor as any;
   let styles = {};
-
-  if (backgroundColor?.includes('gradient') && get(theme.palette, backgroundColor)) {
+  if (backgroundColor?.toLowerCase()?.includes('gradient') && get(theme.palette, backgroundColor)) {
     styles = {
       background: get(theme.palette, `${backgroundColor}.main`),
       color: get(theme.palette, `${backgroundColor}.contrastText`)
@@ -44,6 +43,7 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
       };
     }
   }
+  // console.log({ backgroundColor });
   return styles;
 };
 

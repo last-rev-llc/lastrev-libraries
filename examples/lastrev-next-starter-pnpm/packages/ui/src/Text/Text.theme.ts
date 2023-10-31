@@ -97,7 +97,7 @@ const createVariants = (_theme: Theme): ComponentsVariants['Text'] => [
       variant: 'introText'
     },
     style: ({ theme }: { theme: Theme }) => ({
-      marginBottom: theme.spacing(4)
+      textAlign: 'center'
     })
   }
 ];

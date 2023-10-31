@@ -36,7 +36,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
 
   contentOuterGrid: {
     '> *': {
-      gridColumnStart: 'auto'
+      // gridColumnStart: 'auto'
     }
   },
 

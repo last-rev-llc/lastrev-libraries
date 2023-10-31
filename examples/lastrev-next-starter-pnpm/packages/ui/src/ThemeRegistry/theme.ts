@@ -15,7 +15,7 @@ export const dmSans = DM_Sans({
 export const mainColors = ['sapphire', 'blue', 'green'];
 
 const defaultSpacing = 8;
-const defaultBorderRadius = 4;
+const defaultBorderRadius = 8;
 
 const paletteTheme = createTheme({
   values: {
@@ -28,7 +28,7 @@ const paletteTheme = createTheme({
   },
   palette: {
     mode: 'light',
-
+    sapphirePinkGradient: { main: 'linear-gradient(281deg, #E82163 0%, #3049C9 100%)', contrastText: '#FFF' },
     sapphire: { lighter: '##EAEDFA', light: '#5368D2', main: '#3049C9', dark: '#22338D' },
 
     blue: { lighter: '#ECF2FE', light: '#C4D6FB', main: '#407BF2', dark: '#264A91' },
@@ -243,6 +243,8 @@ export const theme: Theme = createTheme(
   })
 );
 
+console.log('Theme');
+console.log(theme);
 export const breakpoints = theme.breakpoints.values;
 
 // export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {

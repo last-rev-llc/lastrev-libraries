@@ -8,8 +8,9 @@ import { defaultResolver } from './utils/defaultResolver';
 const COLOR_MAPPING: { [key: string]: string } = {};
 
 export const colorResolver = (field: string, root?: true) => async (quote: any, _args: any, ctx: ApolloContext) => {
-  const colorValue: any = getLocalizedField(quote.fields, field, ctx);
-  let colorClean = colorValue?.split('_')[0]?.toLowerCase();
+  const colorValue: any = defaultResolver(field)(quote, _args, ctx);
+  console.log('COLORVALUE', { colorValue });
+  let colorClean = colorValue?.split('_')[0];
   if (COLOR_MAPPING[colorClean]) {
     colorClean = COLOR_MAPPING[colorClean];
   }
@@ -22,62 +23,62 @@ export const colorResolver = (field: string, root?: true) => async (quote: any, 
 export const mappers = {
   Link: {
     Link: {
-      backgroundColor: defaultResolver('backgroundColor'),
+      backgroundColor: colorResolver('backgroundColor', true),
       color: colorResolver('color', true)
     }
   },
   Hero: {
     Hero: {
-      backgroundColor: defaultResolver('backgroundColor'),
+      backgroundColor: colorResolver('backgroundColor', true),
       color: colorResolver('color', true)
     }
   },
   Block: {
     Block: {
-      backgroundColor: defaultResolver('backgroundColor'),
+      backgroundColor: colorResolver('backgroundColor', true),
       color: colorResolver('color', true)
     }
   },
   Collection: {
     Collection: {
-      backgroundColor: defaultResolver('backgroundColor'),
+      backgroundColor: colorResolver('backgroundColor', true),
       color: colorResolver('color', true)
     }
   },
   CollectionExpandable: {
     CollectionExpandable: {
-      backgroundColor: defaultResolver('backgroundColor'),
+      backgroundColor: colorResolver('backgroundColor', true),
       color: colorResolver('color', true)
     }
   },
   Header: {
     Header: {
-      backgroundColor: defaultResolver('backgroundColor'),
+      backgroundColor: colorResolver('backgroundColor', true),
       color: colorResolver('color', true)
     }
   },
   Footer: {
     Footer: {
-      backgroundColor: defaultResolver('backgroundColor'),
+      backgroundColor: colorResolver('backgroundColor', true),
       color: colorResolver('color', true)
     }
   },
   Form: {
     Form: {
-      backgroundColor: defaultResolver('backgroundColor'),
+      backgroundColor: colorResolver('backgroundColor', true),
       color: colorResolver('color', true)
     }
   },
   Section: {
     Section: {
-      backgroundColor: defaultResolver('backgroundColor'),
+      backgroundColor: colorResolver('backgroundColor', true),
       color: colorResolver('color', true)
     }
   }
 };
 export const resolvers = {
   Content: {
-    backgroundColor: colorResolver('backgroundColor'),
+    backgroundColor: colorResolver('backgroundColor', true),
     color: colorResolver('color')
   }
 };

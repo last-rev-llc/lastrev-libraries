@@ -3,6 +3,8 @@
 import { Meta, Story, Canvas, Typeset } from '@storybook/blocks';
 import { linkTo } from '@storybook/addon-links';
 import { theme } from '../src/ThemeRegistry/theme';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
 <Meta
@@ -22,10 +24,15 @@ export const SampleText = 'Lorem ipsum dolor sit amet, consectetur adipiscing el
 .map(t => ({ name:t, ...theme.typography[t] }) )
 .map(t => (
 
-<>
-  <h3>{t?.name}</h3>
-  <Typeset fontSizes={[t?.fontSize]} sampleText={SampleText} fontWeight={t?.fontWeight} fontFamily={t?.fontFamily} />
-</>
+<Box sx={{ display: 'flex', gap: 4, p: 2, background: 'white', alignItems: 'center' }}>
+  <Typography variant={t.name}>{t?.name}</Typography>
+  <Box sx={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+    <Typography>{t.fontFamily}</Typography>
+    <Typography>{t.fontWeight}</Typography>
+    <Typography>{t.lineHeight}</Typography>
+    <Typography>{t.fontSize}</Typography>
+  </Box>
+</Box>
 ))}
 
 <a onClick={linkTo('2. Components/Text')}>Go to Text component</a>

@@ -41,6 +41,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   // title: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
 
   // overline: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
+  title: ({ theme }) => ({}),
+  overline: ({ theme }) => ({}),
 
   // media: {},
 
@@ -70,7 +72,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    boxShadow: theme.shadows['L']
+    boxShadow: theme.shadows['L'],
+    borderRadius: theme.shape.borderRadius,
+    overflow: 'hidden'
   }),
 
   actionsWrap: ({ theme }) => ({

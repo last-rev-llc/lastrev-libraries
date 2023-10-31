@@ -35,6 +35,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               font-style: normal;
             }
 
+            // Grid and spacing
             :root {
               --grid-margin-xs: 12px;
               --grid-margin-sm: 36px;
@@ -70,121 +71,63 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --grid-margin: var(--grid-margin-xl);
               }
 
-              --section-padding: calc(var(--grid-gap) * 4);
+              --section-padding: calc(var(--grid-gap) * 3);
 
-              --h1-font-size: ${(h1FontSizeBase / 8) * 6}rem;
-              --h2-font-size: ${(h2FontSizeBase / 8) * 6}rem;
-              --h3-font-size: ${(h3FontSizeBase / 8) * 6}rem;
-              --h4-font-size: ${(h4FontSizeBase / 8) * 6}rem;
-              --h5-font-size: ${(h5FontSizeBase / 8) * 6}rem;
-              --h6-font-size: ${(h6FontSizeBase / 8) * 6}rem;
-              --display1-font-size: ${(display1FontSizeBase / 8) * 6}rem;
-              --display2-font-size: ${(display2FontSizeBase / 8) * 6}rem;
-              --display3-font-size: ${(display3FontSizeBase / 8) * 6}rem;
-              --display4-font-size: ${(display4FontSizeBase / 8) * 6}rem;
-              --display5-font-size: ${(display5FontSizeBase / 8) * 6}rem;
-              --display6-font-size: ${(display6FontSizeBase / 8) * 6}rem;
-              --overline-font-size: 0.75rem;
-              --body1-font-size: 1rem;
-              --body2-font-size: 1.125rem;
-              --bodyXSmall-font-size: 0.75rem;
-              --bodySmall-font-size: 0.875rem;
-              --bodyLarge-font-size: 1.25rem;
+              // Typography
+              --h1-font-size-base: 44px;
+              --h2-font-size-base: 36px;
+              --h3-font-size-base: 28px;
+              --h4-font-size-base: 24px;
+              --h5-font-size-base: 20px;
+              --h6-font-size-base: 16px;
+              --display1-font-size-base: 48px;
+              --display2-font-size-base: 40px;
 
-              --h1-line-height: 1.125em;
-              --h2-line-height: 1.375em;
-              --h3-line-height: 1.375em;
-              --h4-line-height: 1.375em;
-              --h5-line-height: 1.375em;
-              --h6-line-height: 1.375em;
-              --display1-line-height: 1.375em;
-              --display2-line-height: 1.375em;
-              --display3-line-height: 1.375em;
-              --display4-line-height: 1.375em;
-              --display5-line-height: 1.375em;
-              --display6-line-height: 1.375em;
-              --overline-line-height: 1.375em;
+              --h1-font-size: var(--h1-font-size-base);
+              --h2-font-size: var(--h2-font-size-base);
+              --h3-font-size: var(--h3-font-size-base);
+              --h4-font-size: var(--h4-font-size-base);
+              --h5-font-size: var(--h5-font-size-base);
+              --h6-font-size: var(--h6-font-size-base);
+              --display1-font-size: var(--display1-font-size-base);
+              --display2-font-size: var(--display2-font-size-base);
 
-              --body1-line-height: 1.375em;
-              --body2-line-height: 1.375em;
-              --bodyXSmall-line-height: 1.375em;
-              --bodySmall-line-height: 1.375em;
-              --bodyLarge-line-height: 1.375em;
+              --h1-line-height: 1.1em;
+              --h2-line-height: 1.3em;
+              --h3-line-height: 1.3em;
+              --h4-line-height: 1.3em;
+              --h5-line-height: 1.3em;
+              --h6-line-height: 1.3em;
+              --display1-line-height: 1.3em;
+              --display2-line-height: 1.3em;
+              --display3-line-height: 1.3em;
+              --overline-line-height: 1.3em;
+              --body1-line-height: 1.3em;
+              --body2-line-height: 1.3em;
 
-              --h1-margin: 0 0 0.5em 0;
-              --h2-margin: 0 0 0.5em 0;
-              --h3-margin: 0 0 0.5em 0;
-              --h4-margin: 0 0 0.5em 0;
-              --h5-margin: 0 0 0.5em 0;
-              --h6-margin: 0 0 0.5em 0;
-              --display1-margin: 0 0 0.5em 0;
-              --display2-margin: 0 0 0.5em 0;
-              --display3-margin: 0 0 0.5em 0;
-              --display4-margin: 0 0 0.5em 0;
-              --display5-margin: 0 0 0.5em 0;
-              --display6-margin: 0 0 0.5em 0;
-              --overline-margin: 0 0 1.5em 0;
+              --h1-margin: 0 0 16px 0;
+              --h2-margin: 0 0 16px 0;
+              --h3-margin: 0 0 16px 0;
+              --h4-margin: 0 0 16px 0;
+              --h5-margin: 0 0 16px 0;
+              --h6-margin: 0 0 16px 0;
+              --display1-margin: 0 0 16px 0;
+              --display2-margin: 0 0 16px 0;
+              --overline-margin: 0 0 16px 0;
               --body1-margin: 0;
               --body2-margin: 0;
-              --bodyXSmall-margin: 0;
-              --bodySmall-margin: 0;
-              --bodyLarge-margin: 0;
 
-              --h1-font-weight: 600;
-              --h2-font-weight: 600;
-              --h3-font-weight: 600;
-              --h4-font-weight: 600;
-              --h5-font-weight: 600;
-              --h6-font-weight: 600;
-              --display1-font-weight: 600;
-              --display2-font-weight: 600;
-              --display3-font-weight: 600;
-              --display4-font-weight: 600;
-              --display5-font-weight: 600;
-              --display6-font-weight: 600;
-              --overline-font-weight: 600;
+              --h1-font-weight: 700;
+              --h2-font-weight: 700;
+              --h3-font-weight: 700;
+              --h4-font-weight: 700;
+              --h5-font-weight: 700;
+              --h6-font-weight: 700;
+              --display1-font-weight: 700;
+              --display2-font-weight: 400;
+              --overline-font-weight: 400;
               --body1-font-weight: 400;
               --body2-font-weight: 400;
-              --bodyXSmall-font-weight: 400;
-              --bodySmall-font-weight: 400;
-              --bodyLarge-font-weight: 400;
-
-              --swiper-theme-color: var(--current-color-text);
-              --swiper-preloader-color: var(--swiper-theme-color);
-              --swiper-wrapper-transition-timing-function: initial;
-
-              --swiper-navigation-size: calc(var(--grid-gap) / 1); // calc(var(--grid-margin) / 4);
-              --swiper-navigation-top-offset: 100%;
-              --swiper-navigation-sides-offset: 0; //calc(var(--grid-margin) / 2);
-              --swiper-navigation-color: var(--swiper-theme-color);
-
-              --swiper-pagination-color: currentColor; //var(--current-color-text); //var(--swiper-theme-color);
-              --swiper-pagination-left: auto;
-              --swiper-pagination-right: calc(var(--grid-gap) / 2);
-              --swiper-pagination-bottom: calc(var(--grid-gap) / 2);
-              --swiper-pagination-top: auto;
-              --swiper-pagination-fraction-color: inherit;
-              --swiper-pagination-progressbar-bg-color: rgba(0, 0, 0, 0.25);
-              --swiper-pagination-progressbar-size: calc(var(--grid-gap) / 4);
-              --swiper-pagination-bullet-size: calc(var(--grid-gap) / 2);
-              --swiper-pagination-bullet-width: calc(var(--grid-gap) / 2);
-              --swiper-pagination-bullet-height: calc(var(--grid-gap) / 2);
-              --swiper-pagination-bullet-border-radius: 50%;
-              --swiper-pagination-bullet-inactive-color: currentColor; //var(--swiper-theme-color);
-              --swiper-pagination-bullet-inactive-opacity: 0.2;
-              --swiper-pagination-bullet-opacity: 1;
-              --swiper-pagination-bullet-horizontal-gap: calc(var(--grid-gap) / 4);
-              --swiper-pagination-bullet-vertical-gap: calc(var(--grid-gap) / 4);
-
-              --swiper-scrollbar-border-radius: calc(var(--grid-gap) / 2);
-              --swiper-scrollbar-top: auto;
-              --swiper-scrollbar-bottom: calc(var(--grid-gap) / 4);
-              --swiper-scrollbar-left: auto;
-              --swiper-scrollbar-right: calc(var(--grid-gap) / 4);
-              --swiper-scrollbar-sides-offset: 1%;
-              --swiper-scrollbar-bg-color: rgba(0, 0, 0, 0.1);
-              --swiper-scrollbar-drag-bg-color: rgba(0, 0, 0, 0.5);
-              --swiper-scrollbar-size: calc(var(--grid-gap) / 4);
             }
 
             body * {
