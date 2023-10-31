@@ -157,14 +157,52 @@ type Collection implements Content {
 type CollectionDynamic implements Content {
   animation: JSON
   backgroundColor: String
+  backgroundImage: Media
   id: String
   internalTitle: String
+  introText: Text
+  isCarouselDesktop: Boolean
+  isCarouselMobile: Boolean
+  isCarouselTablet: Boolean
+  items: [CollectionDynamicItem]
+  itemsConnection(filter: CollectionDynamicFilterInput, limit: Int, offset: Int): CollectionDynamicItemConnection
+  itemsPerRow: Int
   itemsVariant: String
+  numItems: Int
   numberOfItemsToPull: String
   pullFromContentType: String
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
+}
+
+type CollectionDynamicConnectionPageInfo {
+  allOptions: CollectionDynamicOptions
+  options: CollectionDynamicOptions
+  total: Int
+}
+
+input CollectionDynamicFilterInput {
+  body: String
+  tags: [String]
+  topics: [String]
+}
+
+union CollectionDynamicItem = Card
+
+type CollectionDynamicItemConnection {
+  items: [CollectionDynamicItem]
+  pageInfo: CollectionDynamicConnectionPageInfo
+}
+
+type CollectionDynamicOption {
+  label: String
+  value: String
+}
+
+type CollectionDynamicOptions {
+  tags: [CollectionDynamicOption]
+  topics: [CollectionDynamicOption]
 }
 
 type CollectionExpandable implements Content {
@@ -454,6 +492,19 @@ type PagePathParam {
 type PagePathParams {
   locale: String
   params: PagePathParam!
+}
+
+type PageProperty {
+  body: RichText
+  breadcrumbs: [Link]
+  featuredAssets: Collection
+  footer: Footer
+  header: Header
+  hero: Content
+  imageCarousel: Collection
+  mainImage: Media
+  path: String
+  socialLinks: [Link]
 }
 
 type PageResource implements Content {
