@@ -83,7 +83,7 @@ const Form = (props: FormProps) => {
   const key = '6LcKhioeAAAAAHSdAWHJeDqEVaFnSPKbV2jccg5N';
   const {
     background,
-    backgroundColor,
+    backgroundColor = 'sapphire',
     introText,
     sidekickLookup,
     // formId,
@@ -390,19 +390,6 @@ const Form = (props: FormProps) => {
         )}
         <ContentOuterGrid ownerState={ownerState}>
           <MainContentWrap ownerState={ownerState}>
-            <TextField label="Full Name" name="fullName" type="text" fullWidth required />
-            <TextField label="Company Name" name="companyName" type="text" fullWidth required />
-            <TextField label="Email" name="email" type="email" fullWidth required />
-            <TextField label="Phone Number" name="phone" type="tel" fullWidth required />
-            <TextField label="Address" name="address" type="text" fullWidth required />
-            <TextField label="Address Line 2" name="address_line_2" type="text" fullWidth />
-            <TextField label="City" name="city" type="text" fullWidth required />
-            <TextField label="State" name="state" type="text" fullWidth required />
-            <TextField label="ZIP" name="zip" type="text" fullWidth required />
-            <TextField label="Country" name="country" type="text" fullWidth required />
-            <Button type="submit" size="large" variant="contained">
-              Submit
-            </Button>
             {/* <Container
       formStyles={props.formStyles}
       disclaimerStyles={props.disclaimerStyles}

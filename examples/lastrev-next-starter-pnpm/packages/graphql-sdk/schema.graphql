@@ -554,10 +554,13 @@ type Person implements Content {
 type PricingPlan implements Content {
   animation: JSON
   body: String
+  disclaimerText: String
   id: String
+  internalTitle: String
   overline: String
   price: String
   sidekickLookup: JSON
+  textBelowPrice: String
   theme: [Theme]
   variant: String
 }
