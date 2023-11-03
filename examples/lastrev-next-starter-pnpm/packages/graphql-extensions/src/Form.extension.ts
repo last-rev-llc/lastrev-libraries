@@ -3,6 +3,7 @@ import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
+import { defaultResolver } from './utils/defaultResolver';
 
 export const typeDefs = gql`
   extend type ElementForm {
@@ -13,7 +14,6 @@ export const typeDefs = gql`
     hero: Hero
     contents: [Content]
     breadcrumbs: [Link]
-    footerDisclaimerOverride: RichText
   }
 `;
 
@@ -23,7 +23,8 @@ export const mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      breadcrumbs: breadcrumbsResolver
+      breadcrumbs: breadcrumbsResolver,
+      variant: defaultResolver('variant')
     },
     Link: {
       href: pathResolver,
