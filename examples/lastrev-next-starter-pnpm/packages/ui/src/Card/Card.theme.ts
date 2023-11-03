@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { CardVariants } from './Card.types';
 
@@ -13,9 +8,7 @@ const defaultProps: ComponentsProps['Card'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    'containerType': 'inline-size',
-    
-    
+    containerType: 'inline-size'
   }),
 
   cardWrap: ({ theme, ownerState }) => ({
@@ -30,6 +23,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'willChange': 'transform',
     'color': 'inherit',
 
+    'overflow': 'hidden',
     '&:hover': {
       transform: 'scale(1)'
     },
@@ -110,12 +104,12 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.icon
     },
     style: {
-      '[class*=cardMedia]': {
+      'textAlign': 'center',
+      '[class*=cardMedia] img': {
         maxWidth: 96,
         marginLeft: 'auto',
         marginRight: 'auto',
         paddingTop: 'var(--grid-gap)',
-
         [theme.containerBreakpoints.up('lg')]: {
           '& > :is(img, svg)': {
             objectFit: 'contain'
@@ -129,16 +123,14 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.logo
     },
     style: {
+      '[class*=cardWrap]': {
+        boxShadow: 'none'
+      },
       '[class*=contentWrap]': {
         textAlign: 'center'
       },
 
       '[class*=cardMedia]': {
-        'maxHeight': 96,
-        'marginLeft': 'auto',
-        'marginRight': 'auto',
-        'paddingTop': 'var(--grid-gap)',
-
         '& > :is(img, svg)': {
           objectFit: 'contain',
           width: '100%',

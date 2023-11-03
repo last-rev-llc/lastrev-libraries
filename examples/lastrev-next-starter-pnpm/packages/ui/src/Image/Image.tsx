@@ -28,7 +28,7 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
     // if (isSVG) console.log({ isSVG, imageProps, svgContent: imageProps.svgContent });
 
     let content;
-    if (isSVG && !disableInlineSVG && imageProps.svgContent) {
+    if (isSVG && imageProps.svgContent) {
       content = (
         <>
           <svg
@@ -44,7 +44,7 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
           />
         </>
       );
-    } else if (src && !isSVG) {
+    } else if (src) {
       content = (
         <NextImage
           src={src}

@@ -2,19 +2,13 @@ import { Meta, Typeset, Story, ColorPalette, ColorItem } from '@storybook/blocks
 import { linkTo } from '@storybook/addon-links';
 import { theme, mainColors } from '../src/ThemeRegistry/theme';
 
-<Meta
-  title="1. Brand/Colors"
-  parameters={{
-    previewTabs: {
-      'storybook/docs/panel': { hidden: true }
-    },
-    options: { isToolshown: false }
-  }}
-/>
+<Meta title="1. Brand/Colors" />
 
 # Colors
 
-### Primary palette
+### Primary
+
+## Mode: {theme.vars.palette.mode}
 
 <ColorPalette>
   {Object.keys(theme.palette).map((palette) =>

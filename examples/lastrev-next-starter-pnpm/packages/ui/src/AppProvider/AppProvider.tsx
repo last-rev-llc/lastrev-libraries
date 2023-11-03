@@ -13,3 +13,5 @@ export const AppProvider = ({ children }: { children: any }) => {
     </>
   );
 };
+
+export default AppProvider;

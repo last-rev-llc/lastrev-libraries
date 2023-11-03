@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Tabs'] = {};
 
@@ -36,13 +31,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     '.MuiTabs-flexContainer': { gap: 'var(--grid-gap)' },
 
     '.MuiTab-root': {
-      borderBottomWidth: '1px',
-      borderBottomStyle: 'solid',
-      paddingRight: 'calc(3 * var(--grid-gap))',
-      paddingLeft: 0,
-      whiteSpace: 'nowrap',
-      opacity: 0.5,
-      ...theme.typography.h4
+      // borderBottomWidth: '1px',
+      // borderBottomStyle: 'solid',
+      // paddingRight: 'calc(3 * var(--grid-gap))',
+      // paddingLeft: 0,
+      // whiteSpace: 'nowrap',
+      // opacity: 0.5,
+      // ...theme.typography.h4
     },
 
     '.Mui-selected': {

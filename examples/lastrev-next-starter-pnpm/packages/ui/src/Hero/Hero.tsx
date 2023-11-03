@@ -40,7 +40,7 @@ const Hero = (props: HeroProps) => {
                 <Title
                   {...sidekick(sidekickLookup, 'title')}
                   component="h1"
-                  variant="display1"
+                  variant="h1"
                   data-testid="Hero-title"
                   ownerState={ownerState}>
                   {title}
@@ -52,7 +52,7 @@ const Hero = (props: HeroProps) => {
                   {...sidekick(sidekickLookup, 'subtitle')}
                   data-testid="Hero-subtitle"
                   ownerState={ownerState}
-                  variant="display3">
+                  variant="body1">
                   {subtitle}
                 </Subtitle>
               )}

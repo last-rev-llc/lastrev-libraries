@@ -46,7 +46,7 @@ const Carousel = (props: CarouselProps) => {
       rows: isCarouselMobile ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: 1.25,
+    slidesPerView: 2,
     spaceBetween: 16
   };
 
@@ -64,7 +64,7 @@ const Carousel = (props: CarouselProps) => {
       rows: isCarouselDesktop ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: itemsPerRow > 1 ? 2.5 : 1,
+    slidesPerView: itemsPerRow > 1 ? 4 : 1,
     spaceBetween: 12
   };
 
@@ -73,7 +73,7 @@ const Carousel = (props: CarouselProps) => {
       rows: isCarouselDesktop ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: itemsPerRow > 2 ? 3.5 : 2.5,
+    slidesPerView: itemsPerRow > 2 ? 4 : 2.5,
     spaceBetween: 16
   };
 
@@ -83,7 +83,7 @@ const Carousel = (props: CarouselProps) => {
         rows: isCarouselDesktop ? 1 : numItems,
         fill: 'row'
       },
-      slidesPerView: 2.5,
+      slidesPerView: 5,
       spaceBetween: 20
     };
 

@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { BlockVariants } from './Block.types';
 
@@ -24,10 +19,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
       padding: 'var(--grid-gap)',
       paddingTop: 0
-    }
+    },
     // TODO: Update to check if within a section
     // padding: theme.spacing(0, 4)
     // margin: theme.spacing(0, -4)
+    'ins': {
+      textDecoration: 'none',
+      color: 'var(--variant-highlight-color)'
+    }
   }),
 
   // introTextGrid: : {},
@@ -36,7 +35,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
 
   contentOuterGrid: {
     '> *': {
-      gridColumnStart: 'auto'
+      // gridColumnStart: 'auto'
     }
   },
 
@@ -96,7 +95,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
           gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'content-half',
+          paddingRight: 'var(--grid-gap)'
         }
       },
 
@@ -121,11 +121,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         gridRow: 2,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
-
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
           gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'content-half',
+          paddingRight: 'var(--grid-gap)'
         }
       },
 
@@ -154,7 +154,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
           gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnEnd: 'content-end',
+          paddingLeft: 'var(--grid-gap)'
         }
       },
 
@@ -181,7 +182,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
           gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnEnd: 'content-end',
+          paddingLeft: 'var(--grid-gap)'
         }
       },
 

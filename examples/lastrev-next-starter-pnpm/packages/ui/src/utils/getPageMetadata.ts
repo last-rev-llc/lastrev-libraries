@@ -31,10 +31,12 @@ interface SEOValue {
 
 export const getPageMetadata = ({
   seo,
-  parentSEO
+  parentSEO,
+  pageId
 }: {
   seo: SEOValue | undefined;
   parentSEO: ResolvedMetadata;
+  pageId: string;
 }): Metadata => {
   if (!seo) return {} as Metadata;
   const canonical = seo['canonical']?.value;
@@ -47,8 +49,8 @@ export const getPageMetadata = ({
     keywords: seo['keywords']?.value,
     robots: seo['robots']?.value,
     // TODO: Cannot import theme in server AND client ????
-    // colorScheme: theme.palette.mode,
-    // themeColor: theme.palette.primary.main,
+    // colorScheme: theme.vars.palette.mode,
+    // themeColor: theme.vars.palette.primary.main,
     alternates: {
       canonical
       // TODO: Add support for included locales
@@ -76,6 +78,9 @@ export const getPageMetadata = ({
             }
           ]
         : undefined
+    },
+    other: {
+      pageId
     }
   };
 };

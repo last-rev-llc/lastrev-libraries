@@ -62,7 +62,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
           border: 'unset !important',
           textShadow: 'unset',
           boxShadow: 'unset',
-          color: theme.palette.error.main,
+          color: theme.vars.palette.error.main,
           fontSize: 'inherit',
           padding: 0,
           margin: 0,
@@ -101,7 +101,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         'backgroundColor': '#efefef',
 
         '&[aria-invalid=true]': {
-          borderBottomColor: theme.palette.error.main
+          borderBottomColor: theme.vars.palette.error.main
         },
 
         '&::placeholder': {
@@ -109,17 +109,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         },
 
         '&:hover': {
-          borderColor: theme.palette.common.black,
+          borderColor: theme.vars.palette.common.black,
           boxShadow: theme.shadows[1]
         },
 
         '&:focus': {
-          borderColor: theme.palette.common.black,
+          borderColor: theme.vars.palette.common.black,
           boxShadow: theme.shadows[1]
         },
 
         '&:focus-visible': {
-          outline: `${theme.palette.common.black} auto 0px`
+          outline: `${theme.vars.palette.common.black} auto 0px`
         }
       },
 
@@ -138,16 +138,16 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         'backgroundOrigin': 'content-box',
 
         '&.is-placeholder': {
-          color: alpha(theme.palette.common.black, 0.7)
+          color: alpha(theme.vars.palette.common.black, 0.7)
         }
       },
 
       'button': {
         ...theme.typography.body1,
 
-        'backgroundColor': theme.palette.common.white,
-        'color': theme.palette.common.black,
-        'border': `3px solid ${theme.palette.common.black}`,
+        'backgroundColor': theme.vars.palette.common.white,
+        'color': theme.vars.palette.common.black,
+        'border': `3px solid ${theme.vars.palette.common.black}`,
         'padding': theme.spacing(0.625, 2.625), // Substract border
         'borderRadius': theme.spacing(0.5),
         'textDecoration': 'none',
@@ -156,13 +156,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         'display': 'block',
 
         '&:hover': {
-          borderColor: theme.palette.common.black,
-          backgroundColor: theme.palette.common.white
+          borderColor: theme.vars.palette.common.black,
+          backgroundColor: theme.vars.palette.common.white
         },
 
         '&:active': {
-          backgroundColor: theme.palette.common.white,
-          borderColor: theme.palette.common.black
+          backgroundColor: theme.vars.palette.common.white,
+          borderColor: theme.vars.palette.common.black
         }
       }
     }

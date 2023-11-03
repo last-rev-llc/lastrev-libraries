@@ -1,5 +1,6 @@
-import { AppProvider } from '../packages/ui/src/AppProvider/AppProvider';
+import AppProvider from '../packages/ui/src/AppProvider';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import { DocsPage } from '@storybook/addon-docs/blocks';
 
 const preview = {
   decorators: [
@@ -13,6 +14,13 @@ const preview = {
   ],
   parameters: {
     layout: 'fullscreen',
+    docs: {
+      page: (props) => (
+        <AppProvider>
+          <DocsPage {...props} />
+        </AppProvider>
+      )
+    },
     viewport: {
       viewports: {
         ...INITIAL_VIEWPORTS,

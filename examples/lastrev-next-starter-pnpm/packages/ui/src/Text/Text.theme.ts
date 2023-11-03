@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Text'] = {
   variant: TextVariants.default
@@ -56,7 +51,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Use the ownerState to set dynamic styles
   // root: ({ ownerState, theme }) => {
   //   return {
-  //     backgroundColor: ownerState.variant === 'example' ? 'red' : theme.palette.background.paper
+  //     backgroundColor: ownerState.variant === 'example' ? 'red' : theme.vars.palette.background.paper
   //   };
   // }
 };
@@ -97,7 +92,7 @@ const createVariants = (_theme: Theme): ComponentsVariants['Text'] => [
       variant: 'introText'
     },
     style: ({ theme }: { theme: Theme }) => ({
-      marginBottom: theme.spacing(4)
+      textAlign: 'center'
     })
   }
 ];
