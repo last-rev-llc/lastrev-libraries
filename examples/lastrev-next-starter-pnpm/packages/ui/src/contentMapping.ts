@@ -41,6 +41,7 @@ export const contentMapping: {
   RichText,
   Carousel,
   Collection,
+  'CollectionDynamic': Collection,
   'Collection:.*Carousel': Carousel,
   'CollectionExpandable:Tabs': Tabs,
   'CollectionExpandable:Accordion': Accordion,

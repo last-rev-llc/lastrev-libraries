@@ -28,6 +28,17 @@ export const typeDefs = gql`
     itemsPerRow: Int
     numItems: Int
   }
+  extend type CollectionDynamic {
+    items: [CollectionItem]
+    introText: Text
+    itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
+    backgroundImage: Media
+    isCarouselDesktop: Boolean
+    isCarouselTablet: Boolean
+    isCarouselMobile: Boolean
+    itemsPerRow: Int
+    numItems: Int
+  }
 
 
   type CollectionOptions {
@@ -78,9 +89,7 @@ interface CollectionSettings {
   }>;
 }
 
-export const mappers: Mappers = {
-  Collection: {
-    Collection: {
+const collectionMappers ={
       items: async (collection: any, args: any, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
         const itemsVariantFn = defaultResolver('itemsVariant');
@@ -227,6 +236,12 @@ export const mappers: Mappers = {
         return items;
       }
     }
+export const mappers: Mappers = {
+  Collection: {
+    Collection: collectionMappers
+  },
+  CollectionDynamic: {
+    CollectionDynamic: collectionMappers
   }
 };
 

@@ -157,9 +157,18 @@ type Collection implements Content {
 type CollectionDynamic implements Content {
   animation: JSON
   backgroundColor: String
+  backgroundImage: Media
   id: String
   internalTitle: String
+  introText: Text
+  isCarouselDesktop: Boolean
+  isCarouselMobile: Boolean
+  isCarouselTablet: Boolean
+  items: [CollectionItem]
+  itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
+  itemsPerRow: Int
   itemsVariant: String
+  numItems: Int
   numberOfItemsToPull: String
   pullFromContentType: String
   settings: JSON
@@ -238,6 +247,7 @@ input ContentsFilter {
 scalar Date
 
 type ElementForm implements Content {
+  allowPersonalEmailAddresses: Boolean
   animation: JSON
   breadcrumbs: [Link]
   confirmationPath: String
@@ -247,6 +257,7 @@ type ElementForm implements Content {
   footerDisclaimerOverride: RichText
   header: Header
   hero: Hero
+  hideRecaptcha: Boolean
   hubspotFormId: String
   hubspotPortalId: String
   id: String

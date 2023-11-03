@@ -21,7 +21,7 @@ const Hero = (props: HeroProps) => {
   return (
     <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
       <HeroBackground
-        background={{ ...background, priority: true }}
+        background={background ? { ...background, priority: true } : undefined}
         backgroundColor={backgroundColor}
         testId="Hero-background"
       />
