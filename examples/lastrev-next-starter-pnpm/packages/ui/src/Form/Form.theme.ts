@@ -61,7 +61,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
           border: 'unset !important',
           textShadow: 'unset',
           boxShadow: 'unset',
-          color: theme.vars.palette.error.main,
+          color: theme.palette.error.main,
           fontSize: 'inherit',
           padding: 0,
           margin: 0,
@@ -100,7 +100,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         'backgroundColor': '#efefef',
 
         '&[aria-invalid=true]': {
-          borderBottomColor: theme.vars.palette.error.main
+          borderBottomColor: theme.palette.error.main
         },
 
         '&::placeholder': {
@@ -108,17 +108,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         },
 
         '&:hover': {
-          borderColor: theme.vars.palette.common.black,
+          borderColor: theme.palette.common.black,
           boxShadow: theme.shadows[1]
         },
 
         '&:focus': {
-          borderColor: theme.vars.palette.common.black,
+          borderColor: theme.palette.common.black,
           boxShadow: theme.shadows[1]
         },
 
         '&:focus-visible': {
-          outline: `${theme.vars.palette.common.black} auto 0px`
+          outline: `${theme.palette.common.black} auto 0px`
         }
       },
 
@@ -144,9 +144,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
       'button': {
         ...theme.typography.body1,
 
-        'backgroundColor': theme.vars.palette.common.white,
-        'color': theme.vars.palette.common.black,
-        'border': `3px solid ${theme.vars.palette.common.black}`,
+        'backgroundColor': theme.palette.common.white,
+        'color': theme.palette.common.black,
+        'border': `3px solid ${theme.palette.common.black}`,
         'padding': theme.spacing(0.625, 2.625), // Substract border
         'borderRadius': theme.spacing(0.5),
         'textDecoration': 'none',
@@ -155,13 +155,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         'display': 'block',
 
         '&:hover': {
-          borderColor: theme.vars.palette.common.black,
-          backgroundColor: theme.vars.palette.common.white
+          borderColor: theme.palette.common.black,
+          backgroundColor: theme.palette.common.white
         },
 
         '&:active': {
-          backgroundColor: theme.vars.palette.common.white,
-          borderColor: theme.vars.palette.common.black
+          backgroundColor: theme.palette.common.white,
+          borderColor: theme.palette.common.black
         }
       }
     }
