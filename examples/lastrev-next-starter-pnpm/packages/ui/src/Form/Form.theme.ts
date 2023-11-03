@@ -137,7 +137,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         'backgroundOrigin': 'content-box',
 
         '&.is-placeholder': {
-          color: alpha(theme.vars.palette.primary.contrastText, 0.7)
+          color: alpha(theme.palette.primary.contrastText, 0.7)
         }
       },
 
