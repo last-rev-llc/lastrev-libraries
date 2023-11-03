@@ -4,8 +4,7 @@ import {
   type ComponentsProps,
   type ComponentsOverrides,
   type ComponentsVariants,
-  alpha,
-  css
+  alpha
 } from '@mui/material/styles';
 import { FormVariants } from './Form.types';
 
@@ -138,7 +137,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         'backgroundOrigin': 'content-box',
 
         '&.is-placeholder': {
-          color: alpha(theme.vars.palette.common.black, 0.7)
+          color: alpha(theme.palette.common.black, 0.7)
         }
       },
 
