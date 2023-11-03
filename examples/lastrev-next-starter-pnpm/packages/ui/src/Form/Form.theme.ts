@@ -108,17 +108,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         },
 
         '&:hover': {
-          borderColor: theme.palette.common.black,
+          borderColor: theme.vars.palette.primary.contrastText,
           boxShadow: theme.shadows[1]
         },
 
         '&:focus': {
-          borderColor: theme.palette.common.black,
+          borderColor: theme.vars.palette.primary.contrastText,
           boxShadow: theme.shadows[1]
         },
 
         '&:focus-visible': {
-          outline: `${theme.palette.common.black} auto 0px`
+          outline: `${theme.vars.palette.primary.contrastText} auto 0px`
         }
       },
 
@@ -137,16 +137,16 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         'backgroundOrigin': 'content-box',
 
         '&.is-placeholder': {
-          color: alpha(theme.palette.common.black, 0.7)
+          color: alpha(theme.vars.palette.primary.contrastText, 0.7)
         }
       },
 
       'button': {
         ...theme.typography.body1,
 
-        'backgroundColor': theme.palette.common.white,
-        'color': theme.palette.common.black,
-        'border': `3px solid ${theme.palette.common.black}`,
+        'backgroundColor': theme.vars.palette.primary.light,
+        'color': theme.vars.palette.primary.contrastText,
+        'border': `3px solid ${theme.vars.palette.primary.contrastText}`,
         'padding': theme.spacing(0.625, 2.625), // Substract border
         'borderRadius': theme.spacing(0.5),
         'textDecoration': 'none',
@@ -155,13 +155,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         'display': 'block',
 
         '&:hover': {
-          borderColor: theme.palette.common.black,
-          backgroundColor: theme.palette.common.white
+          borderColor: theme.vars.palette.primary.contrastText,
+          backgroundColor: theme.vars.palette.primary.light
         },
 
         '&:active': {
-          backgroundColor: theme.palette.common.white,
-          borderColor: theme.palette.common.black
+          backgroundColor: theme.vars.palette.primary.light,
+          borderColor: theme.vars.palette.primary.contrastText
         }
       }
     }
