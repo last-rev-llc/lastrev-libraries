@@ -19,6 +19,7 @@ const Section = dynamic(() => import('./Section'));
 const NavigationItem = dynamic(() => import('./NavigationItem'));
 const Header = dynamic(() => import('./Header'));
 const Footer = dynamic(() => import('./Footer'));
+const CardPricing = dynamic(() => import('./CardPricing'));
 const HeaderNavLink = dynamic(() => import('./Header/HeaderNavLink/HeaderNavLink'));
 const HeaderNavGroup = dynamic(() => import('./Header/HeaderNavGroup/HeaderNavGroup'));
 const HeaderNavLinkNested = dynamic(() => import('./Header/HeaderNavLinkNested/HeaderNavLinkNested'));
@@ -46,6 +47,7 @@ export const contentMapping: {
   'CollectionExpandable:Tabs': Tabs,
   'CollectionExpandable:Accordion': Accordion,
   'CollectionExpandable': Tabs,
+  'PricingPlan': CardPricing,
   Card,
   Person,
   Blog,

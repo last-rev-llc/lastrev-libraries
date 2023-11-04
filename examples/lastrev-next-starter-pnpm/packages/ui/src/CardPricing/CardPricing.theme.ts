@@ -1,11 +1,11 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 import { Theme } from '@ui/ThemeRegistry/theme.types';
 
-import { CardVariants } from './Card.types';
+import { CardPricingVariants } from './CardPricing.types';
 
-const defaultProps: ComponentsProps['Card'] = {};
+const defaultProps: ComponentsProps['CardPricing'] = {};
 
-const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
+const styleOverrides: ComponentsOverrides<Theme>['CardPricing'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
     containerType: 'inline-size'
@@ -37,11 +37,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
       }
     },
 
-    ...(ownerState?.variant === CardVariants.stat && {
+    ...(ownerState?.variant === CardPricingVariants.stat && {
       // padding: theme.spacing(2, 0),
       alignItems: 'center'
     }),
-    ...(ownerState?.variant === CardVariants.icon && {
+    ...(ownerState?.variant === CardPricingVariants.icon && {
       alignItems: 'center',
       boxShadow: 'none'
     })
@@ -50,11 +50,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   cardMedia: ({ ownerState, theme }) => ({
     backgroundColor: 'inherit',
     padding: 0,
-    ...(ownerState?.variant === CardVariants.stat &&
+    ...(ownerState?.variant === CardPricingVariants.stat &&
       {
         // paddingTop: theme.spacing(4)
       }),
-    ...(ownerState?.variant === CardVariants.icon &&
+    ...(ownerState?.variant === CardPricingVariants.icon &&
       {
         // paddingTop: theme.spacing(4)
       })
@@ -66,36 +66,36 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     // TODO: MUI Override
     paddingBottom: '0!important',
 
-    ...(ownerState?.variant === CardVariants.stat &&
+    ...(ownerState?.variant === CardPricingVariants.stat &&
       {
         // padding: theme.spacing(4)
       })
   }),
 
   title: ({ ownerState, theme }) => ({
-    ...(ownerState?.variant === CardVariants.stat && {
+    ...(ownerState?.variant === CardPricingVariants.stat && {
       ...theme.typography.h1
     }),
-    ...(ownerState?.variant === CardVariants.stat && {
+    ...(ownerState?.variant === CardPricingVariants.stat && {
       ...theme.typography.h1
     }),
-    ...(ownerState?.variant === CardVariants.blog && {
+    ...(ownerState?.variant === CardPricingVariants.blog && {
       ...theme.typography.body1
     })
   }),
 
   subtitle: ({ ownerState, theme }) => ({
-    ...(ownerState?.variant === CardVariants.stat && {
+    ...(ownerState?.variant === CardPricingVariants.stat && {
       ...theme.typography.h3,
       // TODO: Should not be overriding fonts here
       fontWeight: 400
     }),
-    ...(ownerState?.variant === CardVariants.stat && {
+    ...(ownerState?.variant === CardPricingVariants.stat && {
       ...theme.typography.h3,
       // TODO: Should not be overriding fonts here
       fontWeight: 400
     }),
-    ...(ownerState?.variant === CardVariants.blog && {
+    ...(ownerState?.variant === CardPricingVariants.blog && {
       ...theme.typography.body1
     })
   }),
@@ -112,20 +112,20 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'width': '100%',
     'height': '100%',
     '&:hover': {
-      '.MuiCardActionArea-focusHighlight': {
+      '.MuiCardPricingActionArea-focusHighlight': {
         opacity: 0
       }
     }
   }
 };
 
-const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
+const createVariants = (theme: Theme): ComponentsVariants['CardPricing'] => [
   {
     props: {
-      variant: CardVariants.media
+      variant: CardPricingVariants.media
     },
     style: {
-      '[class*=Card-cardMedia]': {
+      '[class*=CardPricing-cardMedia]': {
         'width': '100%',
 
         '& > *': {
@@ -141,7 +141,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: CardVariants.icon
+      variant: CardPricingVariants.icon
     },
     style: {
       'textAlign': 'center',
@@ -165,7 +165,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: CardVariants.stat
+      variant: CardPricingVariants.stat
     },
     style: {
       'textAlign': 'center',
@@ -187,7 +187,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: CardVariants.logo
+      variant: CardPricingVariants.logo
     },
     style: {
       '[class*=cardWrap]': {
@@ -208,21 +208,21 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: CardVariants.pricing
+      variant: CardPricingVariants.pricing
     },
     style: {
-      '& [class*=Card-content] > *': {
+      '& [class*=CardPricing-content] > *': {
         textAlign: 'center',
         display: 'block'
       },
 
-      '& [class*=Card-title]': {
+      '& [class*=CardPricing-title]': {
         ...theme.typography.display1,
         marginTop: theme.spacing(4),
         marginBottom: theme.spacing(4)
       },
 
-      '& [class*=Card-subtitle]': {
+      '& [class*=CardPricing-subtitle]': {
         ...theme.typography.display5,
         marginTop: theme.spacing(2),
         marginBottom: theme.spacing(2)
@@ -231,10 +231,10 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: CardVariants.person
+      variant: CardPricingVariants.person
     },
     style: {
-      '[class*=Card-contentWrap]': {
+      '[class*=CardPricing-contentWrap]': {
         containerType: 'inline-size'
       },
 
@@ -260,7 +260,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
 
 export const cardTheme = (theme: Theme): ThemeOptions => ({
   components: {
-    Card: {
+    CardPricing: {
       defaultProps,
       styleOverrides,
       variants: createVariants(theme)

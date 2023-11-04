@@ -39,17 +39,18 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               }
 
               :root {
-                --grid-margin-xs: 8px;
-                --grid-margin-sm: 32px;
-                --grid-margin-md: 48px;
-                --grid-margin-lg: 64px;
-                --grid-margin-xl: 80px;
+                --base-spacing: 8px;
+                --grid-margin-xs: 24px;
+                --grid-margin-sm: 56px;
+                --grid-margin-md: 56px;
+                --grid-margin-lg: 96px;
+                --grid-margin-xl: 96px;
 
-                --grid-gap-xs: var(--grid-margin-xs);
-                --grid-gap-sm: calc(var(--grid-margin-sm) / 2);
-                --grid-gap-md: calc(var(--grid-margin-md) / 4);
-                --grid-gap-lg: calc(var(--grid-margin-lg) / 4);
-                --grid-gap-xl: calc(var(--grid-margin-xl) / 4);
+                --grid-gap-xs: 16px;
+                --grid-gap-sm: 16px;
+                --grid-gap-md: 16px;
+                --grid-gap-lg: 24px;
+                --grid-gap-xl: 24px;
 
                 --grid-gap: var(--grid-margin-xs);
 
@@ -73,7 +74,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                   --grid-margin: var(--grid-margin-xl);
                 }
 
-                --section-padding: calc(var(--grid-gap) * 4);
+                --section-padding: calc(var(--grid-gap) * 2);
 
                 --h1-font-size-base: 2.75rem;
                 --h2-font-size-base: 2.25rem;
@@ -124,19 +125,19 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --bodySmall-line-height: 1.3em;
                 --bodyLarge-line-height: 1.3em;
 
-                --h1-margin: 0 0 0.75em 0;
-                --h2-margin: 0 0 0.75em 0;
-                --h3-margin: 0 0 0.75em 0;
-                --h4-margin: 0 0 0.75em 0;
-                --h5-margin: 0 0 0.75em 0;
-                --h6-margin: 0 0 0.75em 0;
-                --display1-margin: 0 0 0.75em 0;
-                --display2-margin: 0 0 0.75em 0;
-                --display3-margin: 0 0 0.75em 0;
-                --display4-margin: 0 0 0.75em 0;
-                --display5-margin: 0 0 0.75em 0;
-                --display6-margin: 0 0 0.75em 0;
-                --overline-margin: 0 0 1.5em 0;
+                --h1-margin: 0 0 16px 0;
+                --h2-margin: 0 0 16px 0;
+                --h3-margin: 0 0 16px 0;
+                --h4-margin: 0 0 16px 0;
+                --h5-margin: 0 0 16px 0;
+                --h6-margin: 0 0 16px 0;
+                --display1-margin: 0 0 16px 0;
+                --display2-margin: 0 0 16px 0;
+                --display3-margin: 0 0 16px 0;
+                --display4-margin: 0 0 16px 0;
+                --display5-margin: 0 0 16px 0;
+                --display6-margin: 0 0 16px 0;
+                --overline-margin: 0 0 16px 0;
                 --body1-margin: 0;
                 --body2-margin: 0;
                 --bodySmall-margin: 0;

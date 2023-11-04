@@ -17,7 +17,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     'flexDirection': 'column',
 
     '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
-      padding: 'var(--grid-gap)',
+      padding: 'calc(var(--grid-gap) * 2)',
       paddingTop: 0
     },
     // TODO: Update to check if within a section
@@ -68,10 +68,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   // mediaItems: : {},
 
   actionsWrap: ({ theme, ownerState }) => ({
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
-    gap: 'var(--grid-gap)',
+    gap: 'calc(var(--grid-gap) * 2)',
 
     [theme.containerBreakpoints.up('lg')]: {
       flexDirection: 'row'
@@ -96,7 +96,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
           gridRow: 1,
           gridColumnStart: 'content-start',
           gridColumnEnd: 'content-half',
-          paddingRight: 'var(--grid-gap)'
+          paddingRight: 'calc(var(--grid-gap) * 2)'
         }
       },
 
@@ -125,7 +125,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
           gridRow: 1,
           gridColumnStart: 'content-start',
           gridColumnEnd: 'content-half',
-          paddingRight: 'var(--grid-gap)'
+          paddingRight: 'calc(var(--grid-gap) * 2)'
         }
       },
 
@@ -155,7 +155,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
           gridRow: 1,
           gridColumnStart: 'content-half',
           gridColumnEnd: 'content-end',
-          paddingLeft: 'var(--grid-gap)'
+          paddingLeft: 'calc(var(--grid-gap) * 2)'
         }
       },
 
@@ -183,7 +183,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
           gridRow: 1,
           gridColumnStart: 'content-half',
           gridColumnEnd: 'content-end',
-          paddingLeft: 'var(--grid-gap)'
+          paddingLeft: 'calc(var(--grid-gap) * 2)'
         }
       },
 

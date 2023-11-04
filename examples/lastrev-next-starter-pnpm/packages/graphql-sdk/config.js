@@ -30,7 +30,7 @@ const parseBooleanEnvVar = (value = '') => {
 
 const config = new LastRevAppConfig({
   cms: 'Contentful',
-  // contentStrategy: 'fs',
+  contentStrategy: 'cms',
   cmsCacheStrategy: 'redis',
   sites: [process.env.SITE],
   extensions,

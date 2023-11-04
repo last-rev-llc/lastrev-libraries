@@ -88,6 +88,7 @@ type Card implements Content {
   animation: JSON
   body: RichText
   bodyRte: JSON
+  color: String
   id: String
   internalTitle: String
   jsonLd: JSON
@@ -132,6 +133,7 @@ type CategoryTag implements Content {
 }
 
 type Collection implements Content {
+  actions: [Link]
   animation: JSON
   backgroundColor: String
   backgroundImage: Media
@@ -155,6 +157,7 @@ type Collection implements Content {
 }
 
 type CollectionDynamic implements Content {
+  actions: [Link]
   animation: JSON
   backgroundColor: String
   backgroundImage: Media
@@ -210,7 +213,7 @@ input CollectionFilterInput {
   topics: [String]
 }
 
-union CollectionItem = Card
+union CollectionItem = Card | PricingPlan | Quote
 
 type CollectionItemConnection {
   items: [CollectionItem]
@@ -484,6 +487,8 @@ type PageResource implements Content {
   seo: JSON
   sidekickLookup: JSON
   slug: String
+  successBody: RichText
+  successSlug: String
   theme: [Theme]
   title: String
 }
@@ -514,8 +519,10 @@ type Person implements Content {
 }
 
 type PricingPlan implements Content {
+  actions: [Link]
   animation: JSON
   body: String
+  bodyRTE: RichText
   disclaimerText: String
   id: String
   internalTitle: String

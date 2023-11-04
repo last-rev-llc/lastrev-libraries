@@ -1,8 +1,8 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import type { Card_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { CardPricing_BaseFragmentFragment } from '@graphql-sdk/types';
 
-export enum CardVariants {
+export enum CardPricingVariants {
   default = 'default',
   icon = 'icon',
   stat = 'stat',
@@ -14,17 +14,17 @@ export enum CardVariants {
   blog = 'blog'
 }
 
-export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant'> {
+export interface CardPricingProps extends Omit<CardPricing_BaseFragmentFragment, 'variant'> {
   loading?: boolean;
-  variant?: CardVariants;
+  variant?: CardPricingVariants;
   ownerState?: any;
 }
 
-export interface CardOwnerState extends CardProps {
+export interface CardPricingOwnerState extends CardPricingProps {
   backgroundColor: string;
 }
 
-interface CardClasses {
+interface CardPricingClasses {
   root: string;
   cardWrap: string;
   link: string;
@@ -41,24 +41,24 @@ interface CardClasses {
   bodyWrap: string;
 }
 
-export declare type CardClassKey = keyof CardClasses;
+export declare type CardPricingClassKey = keyof CardPricingClasses;
 
 declare module '@mui/material/styles' {
   export interface ComponentNameToClassKey {
-    Card: CardClassKey;
+    CardPricing: CardPricingClassKey;
   }
 
   export interface ComponentsPropsList {
-    Card: CardProps;
+    CardPricing: CardPricingProps;
   }
 }
 
 declare module '@mui/material/styles' {
   interface Components {
-    Card?: {
-      defaultProps?: ComponentsProps['Card'];
-      styleOverrides?: ComponentsOverrides<Theme>['Card'];
-      variants?: ComponentsVariants['Card'];
+    CardPricing?: {
+      defaultProps?: ComponentsProps['CardPricing'];
+      styleOverrides?: ComponentsOverrides<Theme>['CardPricing'];
+      variants?: ComponentsVariants['CardPricing'];
     };
   }
 }

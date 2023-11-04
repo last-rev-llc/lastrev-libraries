@@ -19,7 +19,7 @@ interface TabsClasses {
   contentOuterGrid: string;
   introTextGrid: string;
   introText: string;
-  tabsContext: string;
+  tabsWrap: string;
   tabListWrap: string;
   detailsWrap: string;
   details: string;

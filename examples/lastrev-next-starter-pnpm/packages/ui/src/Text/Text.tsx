@@ -30,7 +30,7 @@ const Text = (props: TextProps) => {
         )}
 
         {!!title && (
-          <Title data-testid="Text-title" {...sidekick(sidekickLookup, 'title')} ownerState={ownerState}>
+          <Title variant="h3" data-testid="Text-title" {...sidekick(sidekickLookup, 'title')} ownerState={ownerState}>
             {title}
           </Title>
         )}
@@ -40,7 +40,7 @@ const Text = (props: TextProps) => {
             data-testid="Text-subtitle"
             {...sidekick(sidekickLookup, 'subtitle')}
             ownerState={ownerState}
-            variant="h2">
+            variant="h4">
             {subtitle}
           </Subtitle>
         )}
@@ -64,28 +64,24 @@ const Text = (props: TextProps) => {
 const Root = styled(Grid, {
   name: 'Text',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: TextOwnerState }>``;
 
 const Overline = styled(Typography, {
   name: 'Text',
   slot: 'Overline',
-  shouldForwardProp: (prop: string) => prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.overline]
 })<TypographyProps & { ownerState: TextOwnerState }>``;
 
 const Title = styled(Typography, {
   name: 'Text',
   slot: 'Title',
-  shouldForwardProp: (prop: string) => prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.title]
 })<TypographyProps & { ownerState: TextOwnerState }>``;
 
 const Subtitle = styled(Typography, {
   name: 'Text',
   slot: 'Subtitle',
-  shouldForwardProp: (prop: string) => prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.subtitle]
 })<TypographyProps & { ownerState: TextOwnerState }>``;
 

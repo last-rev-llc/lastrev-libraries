@@ -38,17 +38,19 @@ const Quote = (props: QuoteProps) => {
             <AuthorRoot ownerState={ownerState}>
               {image && <ImageItem {...image} {...sidekick(sidekickLookup?.image)} ownerState={ownerState} />}
 
-              {authorName && (
-                <AuthorName {...sidekick(sidekickLookup?.authorName)} ownerState={ownerState}>
-                  {authorName}
-                </AuthorName>
-              )}
+              <AuthorDetails>
+                {authorName && (
+                  <AuthorName {...sidekick(sidekickLookup?.authorName)} ownerState={ownerState}>
+                    {authorName}
+                  </AuthorName>
+                )}
 
-              {authorTitle && (
-                <AuthorTitle {...sidekick(sidekickLookup?.authorTitle)} ownerState={ownerState}>
-                  {authorTitle}
-                </AuthorTitle>
-              )}
+                {authorTitle && (
+                  <AuthorTitle {...sidekick(sidekickLookup?.authorTitle)} ownerState={ownerState}>
+                    {authorTitle}
+                  </AuthorTitle>
+                )}
+              </AuthorDetails>
             </AuthorRoot>
           ) : null}
         </ContentOuterGrid>
@@ -79,6 +81,12 @@ const AuthorRoot = styled(Box, {
   name: 'Quote',
   slot: 'AuthorRoot',
   overridesResolver: (_, styles) => [styles.authorRoot]
+})<{ ownerState: QuoteOwnerState }>``;
+
+const AuthorDetails = styled(Box, {
+  name: 'Quote',
+  slot: 'AuthorDetails',
+  overridesResolver: (_, styles) => [styles.authorDetails]
 })<{ ownerState: QuoteOwnerState }>``;
 
 const Logo = styled(ContentModule, {

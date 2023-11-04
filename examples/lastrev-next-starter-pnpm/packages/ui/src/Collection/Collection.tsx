@@ -16,7 +16,7 @@ import Background from '../Background';
 const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
 
-  const { backgroundImage, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;
+  const { backgroundImage, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText, actions } = props;
 
   return (
     <ErrorBoundary>
@@ -44,7 +44,6 @@ const Collection = (props: CollectionProps) => {
               {items?.map((item, index) => (
                 <Item
                   ownerState={ownerState}
-                  backgroundColor={backgroundColor}
                   key={item?.id}
                   {...item}
                   variant={itemsVariant ?? item?.variant}
@@ -52,6 +51,13 @@ const Collection = (props: CollectionProps) => {
                 />
               ))}
             </ItemsGrid>
+          )}
+          {!!actions?.length && (
+            <ActionsWrap {...sidekick(sidekickLookup, 'actions')} data-testid="Hero-actions" ownerState={ownerState}>
+              {actions.map((action) => (
+                <Action ownerState={ownerState} key={action?.id} {...action} />
+              ))}
+            </ActionsWrap>
           )}
         </ContentGrid>
       </Root>
@@ -99,6 +105,18 @@ const Item = styled(ContentModule, {
   name: 'Collection',
   slot: 'Item',
   overridesResolver: (_, styles) => [styles.item]
+})<{ ownerState: CollectionOwnerState }>``;
+
+const ActionsWrap = styled(Box, {
+  name: 'Collection',
+  slot: 'ActionsWrap',
+  overridesResolver: (_, styles) => [styles.actionsWrap]
+})<{ ownerState: CollectionOwnerState }>``;
+
+const Action = styled(ContentModule, {
+  name: 'Collection',
+  slot: 'Action',
+  overridesResolver: (_, styles) => [styles.action]
 })<{ ownerState: CollectionOwnerState }>``;
 
 export default Collection;

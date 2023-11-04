@@ -18,6 +18,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
       padding: 'revert'
     },
 
+    '> *:not(:last-child)': {
+      '&:is(p)': {
+        marginBottom: 'var(--grid-gap)'
+      }
+    },
     'main > &': {
       'display': 'grid',
 
@@ -56,7 +61,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // }
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['Text'] => [
+const createVariants = (theme: Theme): ComponentsVariants['Text'] => [
   // Use prop matching to set variant styles
   {
     props: {
@@ -91,9 +96,43 @@ const createVariants = (_theme: Theme): ComponentsVariants['Text'] => [
     props: {
       variant: 'introText'
     },
-    style: ({ theme }: { theme: Theme }) => ({
-      textAlign: 'center'
-    })
+    style: {
+      'textAlign': 'center',
+      'marginBottom': theme.spacing(3),
+      '> *': {
+        '&:is(p)': {
+          marginBottom: theme.spacing(2)
+        },
+        '&:is(ul, ol)': {
+          margin: 0,
+          marginBottom: theme.spacing(2)
+        },
+        '[class*=MuiTypography-h1]': {
+          margin: 'var(--h1-margin)'
+        },
+        '[class*=MuiTypography-h2]': {
+          margin: 'var(--h2-margin)'
+        },
+        '[class*=MuiTypography-h3]': {
+          margin: 'var(--h3-margin)'
+        },
+        '[class*=MuiTypography-h4]': {
+          margin: 'var(--h4-margin)'
+        },
+        '[class*=MuiTypography-h5]': {
+          margin: 'var(--h5-margin)'
+        },
+        '[class*=MuiTypography-h6]': {
+          margin: 'var(--h6-margin)'
+        },
+        '[class*=MuiTypography-display1]': {
+          margin: 'var(--display2-margin)'
+        },
+        '[class*=MuiTypography-display2]': {
+          margin: 'var(--display2-margin)'
+        }
+      }
+    }
   }
 ];
 

@@ -39,6 +39,11 @@ export const mappers = {
       color: colorResolver('color', true)
     }
   },
+  Card: {
+    Card: {
+      color: colorResolver('color', true)
+    }
+  },
   Collection: {
     Collection: {
       backgroundColor: colorResolver('backgroundColor', true),

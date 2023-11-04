@@ -44,7 +44,8 @@ const ContentModule = React.forwardRef(function ContentModule(
     console.info(
       `Did not find mapping for Content Type "${__typename}"${
         fields?.variant ? ` with a variant "${fields?.variant}"` : ``
-      }. Please add a mapping in the ContentModuleProvider`
+      }. Please add a mapping in the ContentModuleProvider`,
+      fields
     );
     return null;
   }

@@ -15,7 +15,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     width: '100%',
     position: 'relative'
   }),
-
+  actionsWrap: ({ theme }) => ({
+    display: 'flex',
+    gap: theme.spacing(2),
+    justifyContent: 'center'
+  }),
   itemsGrid: ({ theme, ownerState }) => ({
     gridColumn: 'content-start/content-end',
     display: 'grid',
@@ -30,7 +34,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     }),
 
     ...(ownerState?.variant === CollectionVariants.threePerRow && {
-      [theme.containerBreakpoints.up('lg')]: {
+      [theme.containerBreakpoints.up('md')]: {
         gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
       }
     }),

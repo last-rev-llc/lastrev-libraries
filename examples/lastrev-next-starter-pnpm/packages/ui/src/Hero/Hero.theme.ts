@@ -119,7 +119,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
           gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'five-end'
         }
       },
 

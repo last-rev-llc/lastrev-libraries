@@ -52,6 +52,7 @@ const Accordion = (props: AccordionProps) => {
                 index: number // TODO: Fix type
               ) => (
                 <AccordionItem
+                  disableGutters
                   expanded={expanded === `${!id}-accordion-panel-${item?.id}-${index}`}
                   onChange={handleChange(`${!id}-accordion-panel-${item?.id}-${index}`)}
                   key={`${!id}-accordion-panel-${item?.id}-${index}`}
