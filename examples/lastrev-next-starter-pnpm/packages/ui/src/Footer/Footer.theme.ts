@@ -5,12 +5,13 @@ const defaultProps: ComponentsProps['Footer'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme, ownerState }) => ({
+    position: 'relative',
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
-    padding: `var(--section-padding) 0 0`
+    padding: theme.spacing(10, 0)
   }),
 
   introContentsWrap: ({ theme }) => ({
-    marginBottom: 'var(--section-padding)'
+    // marginBottom: 'var(--section-padding)'
   }),
 
   // introContent: {},
@@ -43,13 +44,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   footerMenuNavItems: ({ theme, ownerState }) => ({
     display: 'inline-flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     padding: 0,
     position: 'unset',
     flexDirection: 'row',
     width: '100%',
     margin: 'auto',
-    gap: 'var(--grid-gap)',
+    gap: theme.spacing(5),
 
     [theme.breakpoints.up('sm')]: {
       height: '100%',
@@ -60,14 +61,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   footerMenuNavItem: ({ theme }) => ({
     padding: 0,
     position: 'unset',
-
+    alignItems: 'flex-start',
     [theme.breakpoints.up('sm')]: {
       height: '100%'
     }
   }),
 
   socialLinks: ({ theme }) => ({
-    gridRow: 3,
+    gridRow: 4,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 
@@ -79,12 +80,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'content-three-quarter',
+      gridColumnStart: 'content-start',
       gridColumnEnd: 'content-end',
-      justifyContent: 'flex-end',
-      justifySelf: 'flex-end',
+      justifyContent: 'flex-start',
       width: '100%',
-      gridRow: 3
+      gridRow: 4
     }
   }),
 
@@ -112,11 +112,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gridRow: 5,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
-
+    display: 'flex',
+    alignItems: 'center',
     [theme.breakpoints.up('md')]: {
       gridRow: 3,
       gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-quarter'
+      gridColumnEnd: 'content-end'
     }
   }),
 
@@ -131,7 +132,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('md')]: {
-      gridColumn: 'content-quarter / content-three-quarter',
+      gridColumn: 'content-quarter / content-end',
       gridRow: 3
     }
   }),
@@ -146,10 +147,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     'gridRow': 6,
     'gridColumnStart': 'full-start',
     'gridColumnEnd': 'full-end',
-    'padding': 'var(--grid-gap) 0',
 
     [theme.breakpoints.up('md')]: {
-      gridRow: 4
+      gridRow: 5
     },
 
     '& [class*=disclaimer] > *': {

@@ -9,6 +9,7 @@ const defaultProps: ComponentsProps['Header'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   root: ({ theme, ownerState }) => ({
+    'position': 'relative',
     'padding': 'var(--grid-gap) 0',
 
     ':is(&, & [class*=navItemSubMenu])': {
