@@ -41,6 +41,7 @@ function loadFiles() {
     modules['PathsConfigs'] = require('./PathsConfigs.extension');
     modules['Person'] = require('./Person.extension');
     modules['Preview'] = require('./Preview.extension');
+    modules['PageResource'] = require('./PageResource.extension');
     modules['Quote'] = require('./Quote.extension');
     modules['PricingPlan'] = require('./PricingPlan.extension');
     modules['RichText'] = require('./RichText.extension');

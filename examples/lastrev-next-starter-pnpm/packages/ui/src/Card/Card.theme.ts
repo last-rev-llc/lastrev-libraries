@@ -72,22 +72,23 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     ...(ownerState?.variant === CardVariants.stat && {
       ...theme.typography.h1
     }),
-    ...(ownerState?.variant === CardVariants.stat && {
-      ...theme.typography.h1
+    ...(ownerState?.variant === CardVariants.icon && {
+      ...theme.typography.h4
     }),
+
     ...(ownerState?.variant === CardVariants.blog && {
-      ...theme.typography.body1
+      ...theme.typography.h5
     })
   }),
 
   subtitle: ({ ownerState, theme }) => ({
-    ...(ownerState?.variant === CardVariants.stat && {
+    ...(ownerState?.variant === CardVariants.icon && {
       ...theme.typography.h3,
       // TODO: Should not be overriding fonts here
       fontWeight: 400
     }),
     ...(ownerState?.variant === CardVariants.stat && {
-      ...theme.typography.h3,
+      ...theme.typography.h4,
       // TODO: Should not be overriding fonts here
       fontWeight: 400
     }),
@@ -206,24 +207,15 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: CardVariants.pricing
+      variant: CardVariants.blog
     },
     style: {
-      '& [class*=Card-content] > *': {
-        textAlign: 'center',
-        display: 'block'
+      '[class*=Card-cardWrap]': {
+        gap: theme.spacing(2),
+        boxShadow: 'none'
       },
-
-      '& [class*=Card-title]': {
-        ...theme.typography.display1,
-        marginTop: theme.spacing(4),
-        marginBottom: theme.spacing(4)
-      },
-
-      '& [class*=Card-subtitle]': {
-        ...theme.typography.display5,
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(2)
+      '[class*=cardMedia] img': {
+        aspectRatio: '1/1'
       }
     }
   },

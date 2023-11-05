@@ -473,16 +473,23 @@ type PagePathParams {
 
 type PageResource implements Content {
   animation: JSON
+  author: Person
   body: RichText
+  breadcrumbs: [Link]
   disableBackToTop: Boolean
+  footer: Footer
   footerDisclaimerOverride: RichText
+  header: Header
+  hero: Content
   id: String
   includeTocTableOfContents: Boolean
   internalTitle: String
   lr__path__: String
+  path: String
   persona: [String]
   promoImage: Media
   promoSummary: String
+  relatedItems: Content
   resourceType: String
   seo: JSON
   sidekickLookup: JSON
