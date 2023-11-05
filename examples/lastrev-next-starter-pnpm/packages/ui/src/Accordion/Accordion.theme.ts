@@ -7,7 +7,7 @@ const defaultProps: ComponentsProps['Accordion'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'containerType': 'inline-size',
     'position': 'relative',
     'width': '100%',

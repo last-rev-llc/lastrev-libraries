@@ -78,7 +78,7 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
   navItemSubMenu: ({ theme, open, ownerState }) => ({
     display: 'none',
     transition: 'visibility 0s, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
 
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column'

@@ -5,7 +5,7 @@ const defaultProps: ComponentsProps['Quote'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size'
   }),
 

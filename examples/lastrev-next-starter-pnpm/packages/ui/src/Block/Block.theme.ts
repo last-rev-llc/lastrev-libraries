@@ -9,7 +9,7 @@ const defaultProps: ComponentsProps['Block'] = {
 
 const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'containerType': 'inline-size',
     'position': 'relative',
     'width': '100%',
@@ -68,12 +68,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   // mediaItems: : {},
 
   actionsWrap: ({ theme, ownerState }) => ({
+    margin: theme.spacing(0, -1),
     marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
     gap: 'calc(var(--grid-gap) * 2)',
-
-    [theme.containerBreakpoints.up('lg')]: {
+    [theme.containerBreakpoints.up('sm')]: {
       flexDirection: 'row'
     }
   })

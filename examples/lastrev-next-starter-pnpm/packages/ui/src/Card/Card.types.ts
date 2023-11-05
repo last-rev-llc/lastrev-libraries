@@ -28,17 +28,15 @@ interface CardClasses {
   root: string;
   cardWrap: string;
   link: string;
-  media: string;
-  mediaFlip: string;
-  mediaContainer: string;
+  cardMedia: string;
   actionsWrap: string;
   action: string;
   contentWrap: string;
   overline: string;
-  title: string;
-  subtitle: string;
-  body: string;
+  price: string;
+  textbelowprice: string;
   bodyWrap: string;
+  body: string;
 }
 
 export declare type CardClassKey = keyof CardClasses;

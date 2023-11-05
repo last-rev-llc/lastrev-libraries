@@ -19,7 +19,7 @@ export const typeDefs = gql`
 export const mappers = {
   PricingPlan: {
     PricingPlan: {
-      body: 'bodyRTE'
+      bodyRTE: 'body'
     }
   }
 };

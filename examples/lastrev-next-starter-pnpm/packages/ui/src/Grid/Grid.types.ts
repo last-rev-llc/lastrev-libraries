@@ -5,6 +5,9 @@ export interface GridProps {
   overrideNested?: boolean;
 }
 
+export interface GridOwnerState {
+  overrideNested?: boolean;
+}
 interface GridClasses {
   root: string;
 }

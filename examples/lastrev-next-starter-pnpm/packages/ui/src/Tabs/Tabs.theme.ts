@@ -5,7 +5,7 @@ const defaultProps: ComponentsProps['Tabs'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'backgroundColor': 'none',
     'containerType': 'inline-size',
     'position': 'relative',

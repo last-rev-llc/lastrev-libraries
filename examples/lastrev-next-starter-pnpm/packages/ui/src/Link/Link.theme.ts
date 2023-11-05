@@ -53,10 +53,11 @@ const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
   },
   {
     props: {
-      variant: 'text'
+      variant: 'buttonText'
     },
     style: {
-      textDecoration: 'underline'
+      textDecoration: 'underline',
+      textTransform: 'unset'
     }
   }
 ];

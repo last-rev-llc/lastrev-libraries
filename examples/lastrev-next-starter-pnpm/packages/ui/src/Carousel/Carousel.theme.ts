@@ -14,7 +14,7 @@ const defaultProps: ComponentsProps['Carousel'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'containerType': 'inline-size',
     'display': 'flex',
     'flexDirection': 'column',
@@ -79,6 +79,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
       },
       '.swiper-wrapper': {
         alignItems: 'center'
+      },
+      '.swiper-pagination-bullet': {
+        'transform': 'scale(0.8)',
+        '&.swiper-pagination-bullet-active': {}
       },
       ':is(.swiper-button-prev, .swiper-button-next)': {
         // aspectRatio: '1/1'

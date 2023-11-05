@@ -12,7 +12,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'padding': 'var(--grid-gap) 0',
 
     ':is(&, & [class*=navItemSubMenu])': {
-      ...theme.mixins.applyBackgroundColor({ ownerState, theme })
+      ...theme.mixins.applyColorScheme({ ownerState, theme })
     },
 
     '& *': {

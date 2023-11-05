@@ -29,73 +29,46 @@ const CardPricing = (props: CardPricingProps) => {
   return (
     <ErrorBoundary>
       <Root ownerState={ownerState} data-testid="CardPricing" {...sidekick(sidekickLookup)}>
-        <CardPricingWrap ownerState={ownerState}>
-          {!loading && (overline || price || textBelowPrice || body) ? (
-            // @ts-ignore: TODO
-            <ContentWrap ownerState={ownerState}>
-              {overline ? (
-                <Overline
-                  {...sidekick(sidekickLookup, 'overline')}
-                  variant="overline"
-                  data-testid="CardPricing-overline"
-                  // @ts-ignore: TODO
-                  ownerState={ownerState}>
-                  {overline}
-                </Overline>
-              ) : null}
-
-              {price ? (
-                <Price
-                  {...sidekick(sidekickLookup, 'price')}
-                  component="p"
-                  variant="h3"
-                  data-testid="CardPricing-price"
-                  // @ts-ignore: TODO
-                  ownerState={ownerState}>
-                  {price}
-                </Price>
-              ) : null}
-
-              {textBelowPrice ? (
-                <TextBelowPrice
-                  {...sidekick(sidekickLookup, 'textbelowprice')}
-                  component="p"
-                  variant="h4"
-                  data-testid="CardPricing-textbelowprice"
-                  // @ts-ignore: TODO
-                  ownerState={ownerState}>
-                  {textBelowPrice}
-                </TextBelowPrice>
-              ) : null}
-
-              {body ? (
-                <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
-                  <Body __typename="RichText" body={body} ownerState={ownerState} data-testid="CardPricing-body" />
-                </BodyWrap>
-              ) : null}
-            </ContentWrap>
-          ) : null}
-
-          {loading ? (
-            <ContentWrap ownerState={ownerState} data-testid="CardPricing-ContentSkeleton">
-              <Overline ownerState={ownerState} variant="overline">
-                <Skeleton variant="text" width="100%" />
+        {!loading && (overline || price || textBelowPrice || body) ? (
+          <CardPricingWrap ownerState={ownerState}>
+            {overline ? (
+              <Overline
+                {...sidekick(sidekickLookup, 'overline')}
+                variant="overline"
+                data-testid="CardPricing-overline"
+                // @ts-ignore: TODO
+                ownerState={ownerState}>
+                {overline}
               </Overline>
-
-              <Price ownerState={ownerState} variant="display5">
-                <Skeleton variant="text" width="100%" />
+            ) : null}
+            {price ? (
+              <Price
+                {...sidekick(sidekickLookup, 'price')}
+                component="p"
+                variant="display1"
+                data-testid="CardPricing-price"
+                // @ts-ignore: TODO
+                ownerState={ownerState}>
+                {price}
               </Price>
-
-              <TextBelowPrice ownerState={ownerState} variant="display6">
-                <Skeleton variant="text" width="100%" />
+            ) : null}
+            {textBelowPrice ? (
+              <TextBelowPrice
+                {...sidekick(sidekickLookup, 'textbelowprice')}
+                data-testid="CardPricing-textbelowprice"
+                // @ts-ignore: TODO
+                ownerState={ownerState}>
+                {textBelowPrice}
               </TextBelowPrice>
+            ) : null}
+          </CardPricingWrap>
+        ) : null}
 
-              <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
-                <Body ownerState={ownerState} variant="bodySmall">
-                  <Skeleton variant="text" width="100%" />
-                </Body>
-              </BodyWrap>
-            </ContentWrap>
+        <ContentWrap ownerState={ownerState}>
+          {body ? (
+            <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
+              <Body __typename="RichText" body={body} ownerState={ownerState} data-testid="CardPricing-body" />
+            </BodyWrap>
           ) : null}
           {(actions?.length || loading) && (
             <ActionsWrap
@@ -116,28 +89,22 @@ const CardPricing = (props: CardPricingProps) => {
               )}
             </ActionsWrap>
           )}
-        </CardPricingWrap>
+        </ContentWrap>
       </Root>
     </ErrorBoundary>
   );
 };
 
-const Root = styled(Box, {
+const Root = styled(MuiCard, {
   name: 'CardPricing',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: CardPricingOwnerState }>``;
 
-const CardPricingWrap = styled(MuiCard, {
+const CardPricingWrap = styled(Box, {
   name: 'CardPricing',
   slot: 'CardPricingWrap',
-  overridesResolver: (props, styles) => [styles.cardWrap]
-})<{ ownerState: CardPricingOwnerState }>``;
-
-const CardPricingLink = styled(CardActionArea, {
-  name: 'CardPricing',
-  slot: 'CardPricingLink',
-  overridesResolver: (_, styles) => [styles.link]
+  overridesResolver: (props, styles) => [styles.cardPricingWrap]
 })<{ ownerState: CardPricingOwnerState }>``;
 
 const CardPricingMedia = styled(MuiCardMedia, {
@@ -179,7 +146,7 @@ const Price = styled(Typography, {
 const TextBelowPrice = styled(Typography, {
   name: 'CardPricing',
   slot: 'TextBelowPrice',
-  overridesResolver: (_, styles) => [styles.textbelowprice]
+  overridesResolver: (_, styles) => [styles.textBelowPrice]
 })<{ ownerState: CardPricingOwnerState }>``;
 
 const BodyWrap = styled(Box, {

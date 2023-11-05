@@ -9,7 +9,7 @@ import {
 import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
-import applyBackgroundColor from './mixins/applyBackgroundColor';
+import applyColorScheme from './mixins/applyColorScheme';
 import themeComponents from './theme.components';
 
 export const dmSans = DM_Sans({
@@ -152,7 +152,7 @@ const paletteTheme = {
         schemes: schemes,
         ...schemes['sapphire'],
         background: {
-          // TODO: Avoid colors here
+          // TODO: Avoid unnamed colors here
           tab: '#E3E3E3',
           lightOne: '#E3E3E3',
           lightTwo: '#F2F2F2',
@@ -178,36 +178,30 @@ const baseTheme = {
   },
   mixins: {
     gridContainer: createGridMixin,
-    applyBackgroundColor
+    applyColorScheme
   },
   typography: {
     fontFamily: dmSans.style.fontFamily,
     body1: {
-      'fontWeight': 'var(--body1-font-weight)',
-      'fontSize': 'var(--body1-font-size)',
-      'lineHeight': 'var(--body1-line-height)',
-      '&:not(:last-child)': {
-        margin: 'var(--body1-margin)'
-      },
-      'color': 'inherit'
+      fontWeight: 'var(--body1-font-weight)',
+      fontSize: 'var(--body1-font-size)',
+      lineHeight: 'var(--body1-line-height)',
+      margin: 'var(--body1-margin)',
+      color: 'inherit'
     },
     body2: {
-      'fontWeight': 'var(--body2-font-weight)',
-      'fontSize': 'var(--body2-font-size)',
-      'lineHeight': 'var(--body2-line-height)',
-      '&:not(:last-child)': {
-        margin: 'var(--body2-margin)'
-      },
-      'color': 'inherit'
+      fontWeight: 'var(--body2-font-weight)',
+      fontSize: 'var(--body2-font-size)',
+      lineHeight: 'var(--body2-line-height)',
+      margin: 'var(--body2-margin)',
+      color: 'inherit'
     },
     bodySmall: {
-      'fontWeight': 'var(--bodySmall-font-weight)',
-      'fontSize': 'var(--bodySmall-font-size)',
-      'lineHeight': 'var(--bodySmall-line-height)',
-      '&:not(:last-child)': {
-        margin: 'var(--bodySmall-margin)'
-      },
-      'color': 'inherit'
+      fontWeight: 'var(--bodySmall-font-weight)',
+      fontSize: 'var(--bodySmall-font-size)',
+      lineHeight: 'var(--bodySmall-line-height)',
+      margin: 'var(--bodySmall-margin)',
+      color: 'inherit'
     },
     bodyLarge: {
       fontWeight: 'var(--bodyLarge-font-weight)',
@@ -215,7 +209,6 @@ const baseTheme = {
       lineHeight: 'var(--bodyLarge-line-height)',
       color: 'inherit'
     },
-
     h1: {
       fontWeight: 'var(--h1-font-weight)',
       fontSize: 'var(--h1-font-size)',
@@ -274,14 +267,12 @@ const baseTheme = {
     },
 
     overline: {
-      'display': 'block',
-      'fontWeight': 'var(--overline-font-weight)',
-      'fontSize': 'var(--overline-font-size)',
-      'lineHeight': 'var(--overline-line-height)',
-      'textTransform': 'uppercase',
-      '&:not(:last-child)': {
-        margin: 'var(--overline-margin)'
-      }
+      display: 'block',
+      fontWeight: 'var(--overline-font-weight)',
+      fontSize: 'var(--overline-font-size)',
+      lineHeight: 'var(--overline-line-height)',
+      textTransform: 'uppercase',
+      margin: 'var(--overline-margin)'
     },
     button: {},
     caption: {}

@@ -14,7 +14,7 @@ export const colorResolver = (field: string, root?: true) => async (quote: any, 
   if (COLOR_MAPPING[colorClean]) {
     colorClean = COLOR_MAPPING[colorClean];
   }
-  if (!colorClean) return 'inherit';
+  // if (!colorClean) return 'inherit';
 
   if (root) return colorClean?.split('.')[0];
   return colorClean;

@@ -7,7 +7,7 @@ const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size'
   }),
 
@@ -16,14 +16,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'display': 'flex',
     'flexDirection': 'column',
     'height': '100%',
-    // 'boxShadow': 'initial',
-    // 'borderRadius': 0,
     'backgroundColor': 'inherit',
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
     'willChange': 'transform',
-    'color': 'inherit',
-
     'overflow': 'hidden',
     '&:hover': {
       transform: 'scale(1)'
@@ -169,14 +165,16 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       'textAlign': 'center',
-
-      '[class*=cardMedia]': {
-        paddingTop: 'var(--grid-gap)'
+      '[class*=cardWrap]': {
+        padding: theme.spacing(5, 3),
+        gap: theme.spacing(2)
       },
+
       '[class*=cardMedia] img': {
         maxWidth: 96,
-        marginLeft: 'auto',
-        marginRight: 'auto',
+        // marginLeft: 'auto',
+        // marginRight: 'auto',
+
         [theme.containerBreakpoints.up('lg')]: {
           '& > :is(img, svg)': {
             objectFit: 'contain'

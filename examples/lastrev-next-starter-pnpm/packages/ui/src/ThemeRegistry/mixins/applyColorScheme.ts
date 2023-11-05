@@ -2,21 +2,15 @@ import { type Theme } from '@mui/system';
 import { type CSSProperties } from '@mui/material/styles/createMixins';
 import get from '../../utils/get';
 
-type ApplyBackgroundColor = (args: { theme: Theme; ownerState: any }) => CSSProperties;
+type ApplyColorScheme = (args: { theme: Theme; ownerState: any }) => CSSProperties;
 
 declare module '@mui/material/styles/createMixins' {
   interface Mixins {
-    applyBackgroundColor: ApplyBackgroundColor;
+    applyColorScheme: ApplyColorScheme;
   }
 }
 
-export const applyBackgroundColor: ApplyBackgroundColor = ({
-  ownerState,
-  theme
-}: {
-  ownerState?: any;
-  theme: Theme;
-}) => {
+export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { ownerState?: any; theme: Theme }) => {
   const colorScheme: string = ownerState?.color || ownerState?.backgroundColor || ownerState?.colorScheme;
   if (!colorScheme) return {};
   let styles = {};
@@ -34,7 +28,7 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
         '--mui-palette-background-tab': theme.vars.palette.schemes[paletteColor].primary.main,
         '> *': {
           // Color inversion
-          'color': theme.vars.palette.text.primary,
+          'color': theme.vars.palette.schemes[paletteColor].primary.contrastText,
           '--mui-palette-text-primary': theme.vars.palette.schemes[paletteColor].primary.contrastText,
           '--mui-palette-primary-light': theme.vars.palette.schemes[paletteColor].secondary.light,
           '--mui-palette-primary-main': theme.vars.palette.schemes[paletteColor].secondary.main,
@@ -54,4 +48,4 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
   return styles;
 };
 
-export default applyBackgroundColor;
+export default applyColorScheme;

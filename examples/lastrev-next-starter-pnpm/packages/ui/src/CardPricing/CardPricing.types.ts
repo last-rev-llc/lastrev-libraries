@@ -26,19 +26,17 @@ export interface CardPricingOwnerState extends CardPricingProps {
 
 interface CardPricingClasses {
   root: string;
-  cardWrap: string;
   link: string;
-  media: string;
-  mediaFlip: string;
-  mediaContainer: string;
+  cardPricingWrap: string;
+  cardMedia: string;
   actionsWrap: string;
   action: string;
   contentWrap: string;
   overline: string;
-  title: string;
-  subtitle: string;
-  body: string;
+  price: string;
+  textBelowPrice: string;
   bodyWrap: string;
+  body: string;
 }
 
 export declare type CardPricingClassKey = keyof CardPricingClasses;
