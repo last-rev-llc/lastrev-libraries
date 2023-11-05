@@ -7,7 +7,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme, ownerState }) => ({
     position: 'relative',
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
-    padding: theme.spacing(10, 0)
+    padding: theme.spacing(10, 0),
+    backgroundColor: theme.vars.palette.primary.dark
   }),
 
   introContentsWrap: ({ theme }) => ({

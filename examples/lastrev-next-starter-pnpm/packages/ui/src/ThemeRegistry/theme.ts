@@ -40,7 +40,12 @@ const colors = {
   // blueLight: '#C4D6FB',
   // blueMain: '#407BF2',
   // blueDark: '#264A91'
-  sapphirePinkGradient: { main: 'linear-gradient(281deg, #E82163 0%, #3049C9 100%)', contrastText: '#FFF' },
+  sapphirePinkGradient: {
+    main: 'linear-gradient(281deg, #E82163 0%, #3049C9 100%)',
+    dark: 'linear-gradient(281deg, #E82163 0%, #3049C9 100%)',
+    light: 'linear-gradient(281deg, #E82163 0%, #3049C9 100%)',
+    contrastText: '#FFF'
+  },
   sapphire: { light: '#5368D2', main: '#3049C9', dark: '#22338D', contrastText: '#FFF' },
   sapphireLight: { light: '#EAEDFA', main: '#EAEDFA', dark: '#5368D2', contrastText: '#000' },
   blue: { lighter: '#ECF2FE', light: '#C4D6FB', main: '#407BF2', dark: '#264A91', contrastText: '#FFF' },
@@ -51,7 +56,8 @@ const colors = {
   sunflowerLight: { light: '#FFFBF1', main: '#FEE8AD', dark: '#FED872', contrastText: '#000' },
   fuchsia: { lighter: '#F6ECFF', light: '#C890FF', main: '#A040FF', dark: '#702DB3', contrastText: '#FFF' },
   mint: { lighter: '#F9FDFC', light: '#DDF2EB', main: '#C4E9DD', dark: '#788E87', contrastText: '#000' },
-  orange: { lighter: '#FFF5E9', light: '#FFC37F', main: '#FF9823', dark: '#B36A19', contrastText: '#000' }
+  orange: { lighter: '#FFF5E9', light: '#FFC37F', main: '#FF9823', dark: '#B36A19', contrastText: '#000' },
+  white: { lighter: '#FFF5E9', light: '#FFC37F', main: '#FFF', dark: '#B36A19', contrastText: '#3049C9' }
 };
 
 const augmentColor = (color: any) => theme.palette.augmentColor({});
@@ -64,6 +70,11 @@ const schemes = {
   sapphireLight: {
     primary: colors.sapphireLight,
     secondary: colors.blue,
+    highlightColor: colors.blue.main
+  },
+  sapphirePinkGradient: {
+    primary: colors.sapphirePinkGradient,
+    secondary: colors.white,
     highlightColor: colors.blue.main
   },
   blue: {

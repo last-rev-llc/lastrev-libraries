@@ -26,10 +26,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     gap: 'inherit',
     gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
 
-    ...((ownerState?.variant === CollectionVariants.twoPerRow ||
-      ownerState?.variant === CollectionVariants.threePerRow) && {
+    ...(ownerState?.variant === CollectionVariants.twoPerRow && {
       [theme.containerBreakpoints.up('sm')]: {
         gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
+      }
+    }),
+    ...(ownerState?.variant === CollectionVariants.threePerRow && {
+      [theme.containerBreakpoints.up('sm')]: {
+        gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
       }
     }),
 

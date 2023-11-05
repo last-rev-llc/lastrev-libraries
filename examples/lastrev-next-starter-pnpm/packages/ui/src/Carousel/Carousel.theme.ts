@@ -81,8 +81,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
         alignItems: 'center'
       },
       '.swiper-pagination-bullet': {
-        'transform': 'scale(0.8)',
-        '&.swiper-pagination-bullet-active': {}
+        'transform': 'scale(1)',
+        '&.swiper-pagination-bullet-active': { transform: 'scale(1.25)' }
       },
       ':is(.swiper-button-prev, .swiper-button-next)': {
         // aspectRatio: '1/1'

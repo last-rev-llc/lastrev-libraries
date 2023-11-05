@@ -446,7 +446,7 @@ type Page implements Content {
   footer: Footer
   footerDisclaimerOverride: RichText
   header: Header
-  hero: Hero
+  hero: Content
   id: String
   internalTitle: String
   jsonLd: JSON
