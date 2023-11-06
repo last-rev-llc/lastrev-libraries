@@ -8,7 +8,9 @@ const defaultProps: ComponentsProps['Card'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
-    containerType: 'inline-size'
+    containerType: 'inline-size',
+    overflow: 'hidden',
+    borderRadius: '8px'
   }),
 
   cardWrap: ({ theme, ownerState }) => ({
@@ -21,6 +23,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'transition': 'all 0.25s ease-in-out',
     'willChange': 'transform',
     'overflow': 'hidden',
+    'borderRadius': '8px',
     '&:hover': {
       transform: 'scale(1)'
     },
