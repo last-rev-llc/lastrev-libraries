@@ -83,6 +83,11 @@ const schemes = {
     secondary: colors.sunflower,
     highlightColor: colors.sunflower.main
   },
+  blueDark: {
+    primary: { ...colors.blue, main: colors.blue.dark },
+    secondary: colors.white,
+    highlightColor: colors.white.main
+  },
   blueLight: {
     primary: colors.blueLight,
     secondary: {
@@ -210,7 +215,7 @@ const baseTheme = {
       'fontWeight': 'var(--body1-font-weight)',
       'fontSize': 'var(--body1-font-size)',
       'lineHeight': 'var(--body1-line-height)',
-      '&:not(:only-child)': {
+      '&:not(:last-child)': {
         margin: 'var(--body1-margin)'
       },
       'color': 'inherit'
@@ -219,7 +224,7 @@ const baseTheme = {
       'fontWeight': 'var(--body2-font-weight)',
       'fontSize': 'var(--body2-font-size)',
       'lineHeight': 'var(--body2-line-height)',
-      '&:not(:only-child)': {
+      '&:not(:last-child)': {
         margin: 'var(--body2-margin)'
       },
       'color': 'inherit'

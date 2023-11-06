@@ -5,10 +5,9 @@ const defaultProps: ComponentsProps['Footer'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme, ownerState }) => ({
-    position: 'relative',
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
-    padding: theme.spacing(10, 0),
-    backgroundColor: theme.vars.palette.primary.dark
+    position: 'relative',
+    padding: theme.spacing(10, 0)
   }),
 
   introContentsWrap: ({ theme }) => ({
@@ -82,11 +81,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'content-start',
+      gridColumnStart: 'ten-end',
       gridColumnEnd: 'content-end',
-      justifyContent: 'flex-start',
+      justifyContent: 'flex-end',
       width: '100%',
-      gridRow: 4
+      gridRow: 3
     }
   }),
 
@@ -130,22 +129,16 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     display: 'inline-flex',
     alignItems: 'center',
     height: '100%',
-    justifySelf: 'center',
     gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('md')]: {
-      gridColumn: 'content-quarter / content-end',
+      gridColumn: 'content-quarter / ten-start',
+      justifySelf: 'center',
       gridRow: 3
     }
   }),
 
   disclaimerWrap: ({ theme }) => ({
-    ...theme.mixins.applyColorScheme({
-      ownerState: {
-        backgroundColor: 'black'
-      },
-      theme
-    }),
     'gridRow': 6,
     'gridColumnStart': 'full-start',
     'gridColumnEnd': 'full-end',

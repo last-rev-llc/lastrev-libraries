@@ -83,13 +83,19 @@ export const mappers: Mappers = {
         const date = dayjs(blog.fields.date).format('MMMM D, YYYY'); // Format the date
         const bodyRichText = getLocalizedField(blog.fields, 'body', ctx); // Get localized field
         const readingTime = calculateReadingTime(bodyRichText); // Calculate reading time
+        const authorName = await resolveField('author.name')(blog, _args, ctx);
         // You might want to format the subtitle to include both date and reading time.
         // This is an example format - "January 1, 2023 · 5 min read"
-        return `${date} · ${readingTime} min read`;
+        return `${authorName} · ${date} · ${readingTime} min read`;
       },
-      overline: resolveField('author.name'),
+      overline: async (blog: any, _args: any, ctx: ApolloContext) => {
+        const categories = await resolveField('categories')(blog, 'categories', ctx);
+        return categories?.map((category) => getLocalizedField(category.fields, 'title', ctx)).join('/ ');
+      },
       body: async (blog: any, _args: any, ctx: ApolloContext) =>
-        createRichText(getLocalizedField(blog.fields, 'promoSummary', ctx)),
+        getLocalizedField(blog.fields, 'promoSummary', ctx)
+          ? createRichText(getLocalizedField(blog.fields, 'promoSummary', ctx))
+          : null,
 
       media: async (blog: any, _args: any, ctx: ApolloContext) => {
         const promoImage =
@@ -105,8 +111,8 @@ export const mappers: Mappers = {
       },
       actions: async (blog: any, _args: any, ctx: ApolloContext) => {
         // Assume `getFullBlogUrl` is a helper to generate the absolute URL to the blog post
-        const blogUrl = await pathResolver(blog, _args, ctx);
-
+        let blogUrl = await pathResolver(blog, _args, ctx);
+        blogUrl = `${process.env.DOMAIN}/${blogUrl}`;
         const socialLinks = [
           {
             platform: 'facebook',
@@ -136,6 +142,7 @@ export const mappers: Mappers = {
               // text: `Share on ${link.platform.charAt(0).toUpperCase() + link.platform.slice(1)}`, // Capitalize platform name
               href: link.url,
               icon: link.platform,
+              target: '_blank',
               variant: 'icon'
             })
           );

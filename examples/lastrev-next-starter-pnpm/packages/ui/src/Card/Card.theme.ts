@@ -240,6 +240,9 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.blog
     },
     style: {
+      '[class*=Card-contentWrap]': {
+        flex: 'unset'
+      },
       '[class*=Card-cardWrap]': {
         overflow: 'visible',
         gap: theme.spacing(2),

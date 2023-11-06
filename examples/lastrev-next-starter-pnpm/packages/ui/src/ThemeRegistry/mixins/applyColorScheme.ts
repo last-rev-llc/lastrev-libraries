@@ -25,7 +25,7 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
       [backgroundKey]: theme.vars.palette.schemes[paletteColor].primary.main,
       '--current-color-main': theme.vars.palette.schemes[paletteColor].primary.main,
       '--mui-palette-background-tab': theme.vars.palette.schemes[paletteColor].primary.main,
-      '> *': {
+      '*': {
         // Color inversion
         'color': theme.vars.palette.schemes[paletteColor].primary.contrastText,
         '--mui-palette-text-primary': theme.vars.palette.schemes[paletteColor].primary.contrastText,
@@ -33,6 +33,11 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
         '--mui-palette-primary-main': theme.vars.palette.schemes[paletteColor].secondary.main,
         '--mui-palette-primary-contrastText': theme.vars.palette.schemes[paletteColor].secondary.contrastText,
         '--mui-palette-primary-dark': theme.vars.palette.schemes[paletteColor].secondary.dark,
+
+        '--mui-palette-secondary-light': theme.vars.palette.schemes[paletteColor].primary.light,
+        '--mui-palette-secondary-main': theme.vars.palette.schemes[paletteColor].primary.main,
+        '--mui-palette-secondary-contrastText': theme.vars.palette.schemes[paletteColor].primary.contrastText,
+        '--mui-palette-secondary-dark': theme.vars.palette.schemes[paletteColor].primary.dark,
 
         // Theme colors
         '--variant-highlight-color': theme.vars.palette.schemes[paletteColor].highlightColor,
