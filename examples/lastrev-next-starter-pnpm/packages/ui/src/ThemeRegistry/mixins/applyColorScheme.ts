@@ -23,6 +23,7 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
   if (colorScheme && theme.vars.palette.schemes[paletteColor]) {
     styles = {
       [backgroundKey]: theme.vars.palette.schemes[paletteColor].primary.main,
+      '--current-color-main': theme.vars.palette.schemes[paletteColor].primary.main,
       '--mui-palette-background-tab': theme.vars.palette.schemes[paletteColor].primary.main,
       '> *': {
         // Color inversion

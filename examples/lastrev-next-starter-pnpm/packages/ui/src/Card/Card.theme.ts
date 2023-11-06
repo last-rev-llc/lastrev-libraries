@@ -8,9 +8,7 @@ const defaultProps: ComponentsProps['Card'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
-    containerType: 'inline-size',
-    overflow: 'hidden',
-    borderRadius: '8px'
+    containerType: 'inline-size'
   }),
 
   cardWrap: ({ theme, ownerState }) => ({
@@ -22,8 +20,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'position': 'relative',
     'transition': 'all 0.25s ease-in-out',
     'willChange': 'transform',
-    'overflow': 'hidden',
-    'borderRadius': '8px',
     '&:hover': {
       transform: 'scale(1)'
     },
@@ -38,9 +34,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 
     ...(ownerState?.variant === CardVariants.stat && {
       // padding: theme.spacing(2, 0),
-      alignItems: 'center'
+      alignItems: 'center',
+      overflow: 'hidden',
+      borderRadius: '8px'
     }),
     ...(ownerState?.variant === CardVariants.icon && {
+      overflow: 'hidden',
+      borderRadius: '8px',
       alignItems: 'center',
       boxShadow: 'none'
     })
@@ -49,6 +49,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   cardMedia: ({ ownerState, theme }) => ({
     backgroundColor: 'inherit',
     padding: 0,
+    img: {
+      objectFit: 'cover'
+    },
     ...(ownerState?.variant === CardVariants.stat &&
       {
         // paddingTop: theme.spacing(4)
@@ -79,6 +82,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
       ...theme.typography.h4
     }),
 
+    ...(ownerState?.variant === CardVariants.media && {
+      ...theme.typography.h5
+    }),
     ...(ownerState?.variant === CardVariants.blog && {
       ...theme.typography.h5
     })
@@ -95,12 +101,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
       // TODO: Should not be overriding fonts here
       fontWeight: 400
     }),
+    ...(ownerState?.variant === CardVariants.media && {
+      ...theme.typography.body1
+    }),
     ...(ownerState?.variant === CardVariants.blog && {
       ...theme.typography.body1
     })
   }),
 
   actionsWrap: ({ theme }) => ({
+    margin: theme.spacing(0, -1),
+    padding: 0
     // padding: 'calc(var(--grid-gap) / 2)'
   }),
 
@@ -127,7 +138,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     style: {
       '[class*=Card-cardMedia]': {
         'width': '100%',
-
+        'overflow': 'hidden',
+        'borderRadius': '8px',
         '& > *': {
           width: '100%',
           height: '100%'
@@ -210,7 +222,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: CardVariants.blog
+      variant: CardVariants.media
     },
     style: {
       '[class*=Card-cardWrap]': {
@@ -219,6 +231,24 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
       '[class*=cardMedia] img': {
         aspectRatio: '1/1'
+      }
+    }
+  },
+
+  {
+    props: {
+      variant: CardVariants.blog
+    },
+    style: {
+      '[class*=Card-cardWrap]': {
+        overflow: 'visible',
+        gap: theme.spacing(2),
+        boxShadow: 'none',
+        borderRadius: 4
+      },
+      '[class*=cardMedia]': {},
+      '[class*=cardMedia] img': {
+        aspectRatio: '16/9'
       }
     }
   },

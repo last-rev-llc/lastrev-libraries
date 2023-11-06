@@ -88,6 +88,7 @@ type Card implements Content {
   animation: JSON
   body: RichText
   bodyRte: JSON
+  category: String
   color: String
   id: String
   internalTitle: String
@@ -626,7 +627,7 @@ type SiteRedirect implements Content {
   id: String
   permanent: Boolean
   sidekickLookup: JSON
-  source: String
+  source: [String]
   theme: [Theme]
   variant: String
 }

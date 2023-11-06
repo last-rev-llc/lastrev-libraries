@@ -29,6 +29,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gridRow: 1,
     alignSelf: 'center',
     width: '100%',
+    maxWidth: 120,
     height: 'auto',
     display: 'block',
 

@@ -11,6 +11,7 @@ export const typeDefs = gql`
   extend type Card {
     # Unccoment if using Media reference
     # media: [Media]
+    category: String
     actions: [Link]
     link: Link
     variant: String

@@ -5,8 +5,8 @@ const defaultProps: ComponentsProps['Link'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
   root: ({ ownerState, theme }) => ({
-    display: 'inline-flex',
-    alignItems: 'center',
+    'display': 'inline-flex',
+    'alignItems': 'center',
     ...(ownerState?.variant?.includes('Contained') && {
       'color': 'var(--mui-palette-primary-contrastText)',
       'backgroundColor': 'var(--mui-palette-primary-main)',
@@ -15,7 +15,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
     ...(ownerState?.variant?.includes('Outlined') && {
       color: 'var(--mui-palette-primary-main)',
       borderColor: 'var(--mui-palette-primary-main)'
-    })
+    }),
+
+    // TODO: Review, looks out of place but allows for any icon color controlled from Link color
+    'svg .fill-primary': {
+      fill: 'var(--current-color-main)'
+    }
   }),
 
   rootButton: {

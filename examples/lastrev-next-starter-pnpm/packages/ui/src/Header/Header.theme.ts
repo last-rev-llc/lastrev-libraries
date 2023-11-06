@@ -32,6 +32,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     gridRow: 1,
     alignSelf: 'center',
     width: '100%',
+    maxWidth: '120px',
     height: 'auto',
     display: 'block',
 
@@ -161,7 +162,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       'height': '100%',
       'flexDirection': 'row',
       'width': 'auto',
-      'marginLeft': 'unset',
+      // 'marginLeft': 'unset',
 
       '& > *:last-child a': {
         paddingRight: 0

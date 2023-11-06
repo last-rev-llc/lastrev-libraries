@@ -23,7 +23,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   itemsGrid: ({ theme, ownerState }) => ({
     gridColumn: 'content-start/content-end',
     display: 'grid',
-    gap: 'inherit',
+    gap: theme.spacing(3),
     gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
 
     ...(ownerState?.variant === CollectionVariants.twoPerRow && {

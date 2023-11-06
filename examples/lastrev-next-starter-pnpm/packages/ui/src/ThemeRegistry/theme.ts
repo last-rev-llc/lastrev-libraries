@@ -49,7 +49,7 @@ const colors = {
   sapphire: { light: '#5368D2', main: '#3049C9', dark: '#22338D', contrastText: '#FFF' },
   sapphireLight: { light: '#EAEDFA', main: '#EAEDFA', dark: '#5368D2', contrastText: '#000' },
   blue: { lighter: '#ECF2FE', light: '#C4D6FB', main: '#407BF2', dark: '#264A91', contrastText: '#FFF' },
-  blueLight: { light: '#ECF2FE', main: '#C4D6FB', dark: '#407BF2', contrastText: '#000' },
+  blueLight: { light: '#ECF2FE', main: '#ECF2FE', dark: '#407BF2', contrastText: '#000' },
   green: { lighter: '#EAF2EE', light: '#88B19C', main: '#317955', dark: '#1E4A34', contrastText: '#FFF' },
   greenLight: { light: '#EAF2EE', main: '#88B19C', dark: '#317955', contrastText: '#FFF' },
   sunflower: { light: '#FEE8AD', main: '#FED872', dark: '#9B8446', contrastText: '#000' },
@@ -57,7 +57,8 @@ const colors = {
   fuchsia: { lighter: '#F6ECFF', light: '#C890FF', main: '#A040FF', dark: '#702DB3', contrastText: '#FFF' },
   mint: { lighter: '#F9FDFC', light: '#DDF2EB', main: '#C4E9DD', dark: '#788E87', contrastText: '#000' },
   orange: { lighter: '#FFF5E9', light: '#FFC37F', main: '#FF9823', dark: '#B36A19', contrastText: '#000' },
-  white: { lighter: '#FFF5E9', light: '#FFC37F', main: '#FFF', dark: '#B36A19', contrastText: '#3049C9' }
+  white: { lighter: '#FFF', light: '#FFF', main: '#FFF', dark: '#FFF', contrastText: '#000' },
+  black: { lighter: '#000', light: '#000', main: '#000', dark: '#000', contrastText: '#FFF' }
 };
 
 const augmentColor = (color: any) => theme.palette.augmentColor({});
@@ -83,7 +84,7 @@ const schemes = {
     highlightColor: colors.sunflower.main
   },
   blueLight: {
-    primary: { main: colors.blueLight.main },
+    primary: colors.blueLight,
     secondary: {
       light: colors.blueLight.light,
       main: colors.blue.main,
@@ -108,7 +109,7 @@ const schemes = {
     highlightColor: colors.green.main
   },
   sunflowerLight: {
-    primary: { main: colors.sunflower.light, contrastText: colors.sunflower.contrastText },
+    primary: colors.sunflowerLight,
     secondary: colors.sunflower,
     highlightColor: colors.green.main,
     text: {
@@ -145,6 +146,16 @@ const schemes = {
     primary: { main: colors.mint.light },
     secondary: colors.mint,
     highlightColor: colors.mint.main
+  },
+  black: {
+    primary: colors.black,
+    secondary: colors.sapphire,
+    highlightColor: colors.sapphire.main
+  },
+  white: {
+    primary: colors.white,
+    secondary: colors.sapphire,
+    highlightColor: colors.sapphire.main
   }
 };
 
@@ -162,6 +173,8 @@ const paletteTheme = {
       palette: {
         schemes: schemes,
         ...schemes['sapphire'],
+        white: colors.white,
+        black: colors.black,
         background: {
           // TODO: Avoid unnamed colors here
           tab: '#E3E3E3',
@@ -194,18 +207,22 @@ const baseTheme = {
   typography: {
     fontFamily: dmSans.style.fontFamily,
     body1: {
-      fontWeight: 'var(--body1-font-weight)',
-      fontSize: 'var(--body1-font-size)',
-      lineHeight: 'var(--body1-line-height)',
-      margin: 'var(--body1-margin)',
-      color: 'inherit'
+      'fontWeight': 'var(--body1-font-weight)',
+      'fontSize': 'var(--body1-font-size)',
+      'lineHeight': 'var(--body1-line-height)',
+      '&:not(:only-child)': {
+        margin: 'var(--body1-margin)'
+      },
+      'color': 'inherit'
     },
     body2: {
-      fontWeight: 'var(--body2-font-weight)',
-      fontSize: 'var(--body2-font-size)',
-      lineHeight: 'var(--body2-line-height)',
-      margin: 'var(--body2-margin)',
-      color: 'inherit'
+      'fontWeight': 'var(--body2-font-weight)',
+      'fontSize': 'var(--body2-font-size)',
+      'lineHeight': 'var(--body2-line-height)',
+      '&:not(:only-child)': {
+        margin: 'var(--body2-margin)'
+      },
+      'color': 'inherit'
     },
     bodySmall: {
       fontWeight: 'var(--bodySmall-font-weight)',

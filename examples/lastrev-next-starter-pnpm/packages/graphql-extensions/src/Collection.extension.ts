@@ -101,9 +101,11 @@ const collectionMappers = {
       const { contentType, limit, offset, order, filter } =
         (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
       if (contentType) {
-        items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
+        const queryItems = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
 
-        return ctx.loaders.entryLoader.loadMany(items?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview })));
+        items = await ctx.loaders.entryLoader.loadMany(
+          queryItems?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+        );
       }
     } catch (error: any) {
       logger.error(error.message, {

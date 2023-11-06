@@ -245,6 +245,9 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.mediaBelow
     },
     style: {
+      '[class*=title]': {
+        color: theme.vars.palette.primary.dark
+      },
       '[class*=mainContentWrap]': {
         'gridRow': 1,
         'gridColumnStart': 'content-start',
