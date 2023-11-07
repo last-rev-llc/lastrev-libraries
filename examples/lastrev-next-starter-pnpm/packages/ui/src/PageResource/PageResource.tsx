@@ -20,23 +20,23 @@ import LinkedinIcon from '../Icons/LinkedinIcon';
 import EmailIcon from '../Icons/EmailIcon';
 import CopyLinkIcon from '../Icons/CopyLinkIcon';
 
-import type { BlogProps, BlogOwnerState } from './Blog.types';
+import type { PageResourceProps, PageResourceOwnerState } from './PageResource.types';
 import { type MediaProps } from '../Media';
 import { type LinkProps } from '../Link';
 
-const Blog = (props: BlogProps) => {
+const PageResource = (props: PageResourceProps) => {
   const ownerState = { ...props };
 
   const {
     id,
     header,
     footer,
-    featuredMedia,
-    pubDate,
+    // featuredMedia,
+    // pubDate,
     title,
     body,
-    author,
-    relatedItems,
+    // author,
+    // relatedItems,
     jsonLd,
     breadcrumbs,
     sidekickLookup,
@@ -55,7 +55,7 @@ const Blog = (props: BlogProps) => {
   return (
     <>
       {!!jsonLd && (
-        <Script type="application/ld+json" id={`blog-${id}-jsonld`}>
+        <Script type="application/ld+json" id={`pageresource-${id}-jsonld`}>
           {jsonLd}
         </Script>
       )}
@@ -74,8 +74,6 @@ const Blog = (props: BlogProps) => {
                     {title}
                   </Title>
                 )}
-
-                {!!pubDate && <PubDate ownerState={ownerState}>{pubDate}</PubDate>}
               </>
             )}
           </HeaderWrap>
@@ -86,12 +84,6 @@ const Blog = (props: BlogProps) => {
                 <Breadcrumbs links={breadcrumbs} />
               </BreadcrumbsWrap>
             ) : null}
-
-            {!!featuredMedia && (
-              <FeaturedMediaWrap {...sidekick(sidekickLookup, 'featuredMedia')} ownerState={ownerState}>
-                <FeaturedMedia {...(featuredMedia as MediaProps)} ownerState={ownerState} />
-              </FeaturedMediaWrap>
-            )}
 
             {!!body && (
               <Body
@@ -113,7 +105,7 @@ const Blog = (props: BlogProps) => {
                     href={`http://www.twitter.com/share?url=${encodedShareUrl}`}
                     target="_blank"
                     icon={TwitterIcon}
-                    // text="Twitter"
+                    text="Twitter"
                     ownerState={ownerState}
                   />
                 </ShareLink>
@@ -124,7 +116,7 @@ const Blog = (props: BlogProps) => {
                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`}
                     target="_blank"
                     icon={FacebookIcon}
-                    // text="Facebook"
+                    text="Facebook"
                     ownerState={ownerState}
                   />
                 </ShareLink>
@@ -135,7 +127,7 @@ const Blog = (props: BlogProps) => {
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedShareUrl}`}
                     target="_blank"
                     icon={LinkedinIcon}
-                    // text="Linkedin"
+                    text="Linkedin"
                     ownerState={ownerState}
                   />
                 </ShareLink>
@@ -146,7 +138,7 @@ const Blog = (props: BlogProps) => {
                     href={`mailto:?to=&body=${encodedShareUrl}`}
                     target="_blank"
                     icon={EmailIcon}
-                    // text="Email"
+                    text="Email"
                     ownerState={ownerState}
                   />
                 </ShareLink>
@@ -166,43 +158,7 @@ const Blog = (props: BlogProps) => {
               </ShareLinks>
             </ShareLinksWrap>
           </ContentWrap>
-
-          {!!author && (
-            <AuthorWrap ownerState={ownerState}>
-              {!!author.mainImage && (
-                <AuthorImageWrap ownerState={ownerState}>
-                  <AuthorImage {...author.mainImage} ownerState={ownerState} />
-                </AuthorImageWrap>
-              )}
-
-              {!!author.name && (
-                <AuthorName ownerState={ownerState} variant="display4">
-                  {author.name}
-                </AuthorName>
-              )}
-
-              {!!author.body && (
-                <AuthorSummaryWrap ownerState={ownerState}>
-                  <AuthorSummary body={author.body} variant="bodyLarge" __typename="RichText" ownerState={ownerState} />
-                </AuthorSummaryWrap>
-              )}
-
-              {!!author.socialLinks?.length && (
-                <AuthorSocialLinks ownerState={ownerState}>
-                  {author.socialLinks.map((link, index) => (
-                    <AuthorSocialLink
-                      key={`author-social-link-${index}=${link?.href}`}
-                      {...(link as LinkProps)}
-                      ownerState={ownerState}
-                    />
-                  ))}
-                </AuthorSocialLinks>
-              )}
-            </AuthorWrap>
-          )}
         </ContentOuterGrid>
-
-        {!!relatedItems && <RelatedItems {...relatedItems} ownerState={ownerState} backgroundColor="white" />}
       </Root>
 
       {footer ? <ContentModule {...(footer as any)} /> : null}
@@ -214,156 +170,156 @@ const Root = styled(Box, {
   name: 'Page',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const ContentOuterGrid = styled(Grid, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'ContentOuterGrid',
   overridesResolver: (_, styles) => [styles.contentOuterGrid]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const HeaderWrap = styled(Box, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'HeaderWrap',
   overridesResolver: (_, styles) => [styles.headerWrap]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const BreadcrumbsWrap = styled(Box, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'BreadcrumbsWrap',
   overridesResolver: (_, styles) => [styles.breadcrumbsWrap]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const Title = styled(Typography, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'Title',
   overridesResolver: (_, styles) => [styles.title]
-})<TypographyProps & { ownerState: BlogOwnerState }>``;
+})<TypographyProps & { ownerState: PageResourceOwnerState }>``;
 
 const PubDate = styled(Typography, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'PubDate',
   overridesResolver: (_, styles) => [styles.pubDate]
-})<TypographyProps & { ownerState: BlogOwnerState }>``;
+})<TypographyProps & { ownerState: PageResourceOwnerState }>``;
 
 const Author = styled(Box, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'Author',
   overridesResolver: (_, styles) => [styles.author]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const AuthorImageWrap = styled(Box, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'AuthorImageWrap',
   overridesResolver: (_, styles) => [styles.authorImageWrap]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const AuthorImage = styled(ContentModule, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'AuthorImage',
   overridesResolver: (_, styles) => [styles.authorImage]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const AuthorName = styled(Typography, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'AuthorName',
   overridesResolver: (_, styles) => [styles.authorName]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const FeaturedMediaWrap = styled(Box, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'FeaturedMediaWrap',
   overridesResolver: (_, styles) => [styles.featuredMediaWrap]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const FeaturedMedia = styled(ContentModule, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'FeaturedMedia',
   overridesResolver: (_, styles) => [styles.featuredMedia]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const ShareLinksWrap = styled(Box, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'ShareLinksWrap',
   overridesResolver: (_, styles) => [styles.shareLinksWrap]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const ShareLinksLabel = styled(Typography, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'ShareLinksLabel',
   overridesResolver: (_, styles) => [styles.shareLinksLabel]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const ShareLinks = styled(List, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'ShareLinks',
   overridesResolver: (_, styles) => [styles.shareLinks]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const ShareLink = styled(ListItem, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'ShareLShareLinkinks',
   overridesResolver: (_, styles) => [styles.shareLink]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const ShareLinkItem = styled(ContentModule, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'ShareLinkItem',
   overridesResolver: (_, styles) => [styles.shareLinkItem]
-})<{ href?: string; target?: string; onClick?: any; ownerState: BlogOwnerState }>``;
+})<{ href?: string; target?: string; onClick?: any; ownerState: PageResourceOwnerState }>``;
 
 const ContentWrap = styled(Box, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'ContentWrap',
   overridesResolver: (_, styles) => [styles.contentWrap]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const Body = styled(ContentModule, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'Body',
   overridesResolver: (_, styles) => [styles.body]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const RelatedItemsWrap = styled(Box, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'RelatedItemsWrap',
   overridesResolver: (_, styles) => [styles.relatedItemsWrap]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const RelatedItems = styled(ContentModule, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'RelatedItems',
   overridesResolver: (_, styles) => [styles.relatedItems]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const AuthorWrap = styled(Grid, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'AuthorWrap',
   overridesResolver: (_, styles) => [styles.authorWrap]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const AuthorSummaryWrap = styled(Box, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'AuthorSummaryWrap',
   overridesResolver: (_, styles) => [styles.authorSummaryWrap]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const AuthorSummary = styled(ContentModule, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'AuthorSummary',
   overridesResolver: (_, styles) => [styles.authorSummary]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const AuthorSocialLinks = styled(Box, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'AuthorSocialLinks',
   overridesResolver: (_, styles) => [styles.authorSocialLinks]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
 const AuthorSocialLink = styled(ContentModule, {
-  name: 'Blog',
+  name: 'PageResource',
   slot: 'AuthorSocialLink',
   overridesResolver: (_, styles) => [styles.AuthorSocialLink]
-})<{ ownerState: BlogOwnerState }>``;
+})<{ ownerState: PageResourceOwnerState }>``;
 
-export default Blog;
+export default PageResource;

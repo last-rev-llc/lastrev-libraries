@@ -34,7 +34,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     overflow: 'visible',
     // transform: 'scale(1)'
     ...(ownerState?.variant === CardVariants.media ||
-    ownerState?.variant === CardVariants.blog ||
+    // ownerState?.variant === CardVariants.blog ||
     ownerState?.variant === CardVariants.person
       ? {
           '[class*=cardMedia] img': { transition: 'all 0.25s ease-in-out' },

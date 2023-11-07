@@ -14,6 +14,7 @@ const Card = dynamic(() => import('./Card'));
 const Person = dynamic(() => import('./Person'));
 const Quote = dynamic(() => import('./Quote'));
 const Blog = dynamic(() => import('./Blog'));
+const PageResource = dynamic(() => import('./PageResource'));
 const Accordion = dynamic(() => import('./Accordion'));
 const Form = dynamic(() => import('./Form'));
 const Section = dynamic(() => import('./Section'));
@@ -51,6 +52,7 @@ export const contentMapping: {
   'CollectionExpandable': Tabs,
   'PricingPlan': CardPricing,
   Card,
+  PageResource,
   Person,
   Blog,
   Quote,

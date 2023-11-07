@@ -20,7 +20,7 @@ export const typeDefs = gql`
     relatedItems: Content
     categories: [CategoryBlog]
     breadcrumbs: [Link]
-    author: Person
+    author: Card
     hero: Content
   }
 `;

@@ -42,7 +42,7 @@ export default async function Page({ params }: Props) {
   const path = join('/', (params.slug || ['/']).join('/'));
 
   const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
-
+  console.log(pageData);
   if (!pageData?.page) {
     return notFound();
   }

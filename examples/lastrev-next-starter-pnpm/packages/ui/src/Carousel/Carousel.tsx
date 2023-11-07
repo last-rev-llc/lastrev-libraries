@@ -140,6 +140,7 @@ const Carousel = (props: CarouselProps) => {
                 spaceBetween={24}
                 breakpoints={swiperBreakpoints}
                 pagination={{ clickable: true }}
+                grid
                 // scrollbar={{ draggable: true }}
                 // onSwiper={(swiper) => console.log(swiper)}
                 // onSlideChange={() => console.log('slide change')}

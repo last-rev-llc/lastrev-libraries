@@ -52,7 +52,7 @@ type Block implements Content {
 
 type Blog implements Content {
   animation: JSON
-  author: Person
+  author: Card
   body: RichText
   breadcrumbs: [Link]
   categories: [CategoryBlog]
@@ -482,16 +482,16 @@ type PageResource implements Content {
   footer: Footer
   footerDisclaimerOverride: RichText
   header: Header
-  hero: Content
+  hero: Hero
   id: String
   includeTocTableOfContents: Boolean
   internalTitle: String
+  jsonLd: JSON
   lr__path__: String
   path: String
   persona: [String]
   promoImage: Media
   promoSummary: String
-  relatedItems: Content
   resourceType: String
   seo: JSON
   sidekickLookup: JSON

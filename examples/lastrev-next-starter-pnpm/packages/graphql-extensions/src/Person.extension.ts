@@ -5,7 +5,6 @@ import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
-import { resolveField } from './utils/resolveField';
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 import { createType } from './utils/createType';
 
@@ -37,17 +36,14 @@ export const mappers: Mappers = {
           sideImageItems: [getLocalizedField(person.fields, 'mainImage', ctx)]
         })
     },
-
     Link: {
       text: 'name',
       href: pathResolver
     },
-
     NavigationItem: {
       text: 'name',
       href: pathResolver
     },
-
     Card: {
       body: async (person: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(person.fields, 'promoSummary', ctx)),

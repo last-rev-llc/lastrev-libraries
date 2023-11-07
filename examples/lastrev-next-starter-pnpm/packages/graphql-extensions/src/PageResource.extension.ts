@@ -13,11 +13,11 @@ export const typeDefs = gql`
   extend type PageResource {
     header: Header
     footer: Footer
+    hero: Hero
     path: String
-    relatedItems: Content
+    jsonLd: JSON
     breadcrumbs: [Link]
     author: Person
-    hero: Content
   }
 `;
 
@@ -38,22 +38,22 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      breadcrumbs: breadcrumbsResolver,
+      breadcrumbs: breadcrumbsResolver
       // contents: pageresourceGlobalContentsResolver,
-      relatedItems: async (pageresource: any, _args: any, ctx: ApolloContext) =>
-        createType('Collection', {
-          introText: createType('Text', { title: 'Related PageResources' }),
-          items: getLocalizedField(pageresource.fields, 'relatedItems', ctx),
-          variant: 'Three Per Row',
-          itemsVariant: 'PageResource'
-        }),
-      hero: async (pageresource: any, _args: any, ctx: ApolloContext) =>
-        createType('Hero', {
-          variant: 'default',
-          overline: getLocalizedField(pageresource.fields, 'pubDate', ctx),
-          title: getLocalizedField(pageresource.fields, 'title', ctx),
-          sideImageItems: getLocalizedField(pageresource.fields, 'featuredMedia', ctx)
-        })
+      // relatedItems: async (pageresource: any, _args: any, ctx: ApolloContext) =>
+      //   createType('Collection', {
+      //     introText: createType('Text', { title: 'Related PageResources' }),
+      //     items: getLocalizedField(pageresource.fields, 'relatedItems', ctx),
+      //     variant: 'Three Per Row',
+      //     itemsVariant: 'PageResource'
+      //   })
+      // hero: async (pageresource: any, _args: any, ctx: ApolloContext) =>
+      //   createType('Hero', {
+      //     variant: 'default',
+      //     overline: getLocalizedField(pageresource.fields, 'pubDate', ctx),
+      //     title: getLocalizedField(pageresource.fields, 'title', ctx),
+      //     sideImageItems: getLocalizedField(pageresource.fields, 'featuredMedia', ctx)
+      //   })
     },
 
     Link: {
