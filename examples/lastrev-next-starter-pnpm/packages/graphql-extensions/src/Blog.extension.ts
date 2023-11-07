@@ -80,14 +80,15 @@ export const mappers: Mappers = {
     Card: {
       title: 'title',
       subtitle: async (blog: any, _args: any, ctx: ApolloContext) => {
-        const date = format(new Date(blog.fields.date), 'MMMM d, yyyy'); // Format the date with 'date-fns'
+        const dateValue = getLocalizedField(blog.fields, 'pubDate', ctx); // Get localized field
+        const date = dateValue ? format(new Date(dateValue), 'MMMM d, yyyy') : ''; // Format the date with 'date-fns'
 
         const bodyRichText = getLocalizedField(blog.fields, 'body', ctx); // Get localized field
         const readingTime = calculateReadingTime(bodyRichText); // Calculate reading time
         const authorName = await resolveField('author.name')(blog, _args, ctx);
         // You might want to format the subtitle to include both date and reading time.
         // This is an example format - "January 1, 2023 · 5 min read"
-        return `${authorName} · ${date} · ${readingTime} min read`;
+        return `${authorName} ${date ? '· ' + date : ''} · ${readingTime} min read`;
       },
       overline: async (blog: any, _args: any, ctx: ApolloContext) => {
         const categories = await resolveField('categories')(blog, 'categories', ctx);
