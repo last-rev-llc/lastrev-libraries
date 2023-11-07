@@ -16,10 +16,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
       color: 'var(--mui-palette-primary-main)',
       borderColor: 'var(--mui-palette-primary-main)'
     }),
+    // TODO: Discuss but this helps to do a label
+    ...(ownerState?.href !== '#'
+      ? {
+          textDecorationColor: 'var(--mui-palette-primary-main)'
+        }
+      : null),
 
     // TODO: Review, looks out of place but allows for any icon color controlled from Link color
     // TODO Add variant
     // TODO Really review this weird stuff, supports color inversion as well as explicit color on the link
+
     ...(ownerState?.icon
       ? {
           'backgroundColor': 'transparent',

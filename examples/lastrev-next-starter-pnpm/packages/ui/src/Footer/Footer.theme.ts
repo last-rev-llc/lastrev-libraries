@@ -80,12 +80,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     justifySelf: 'center',
     gap: 'var(--grid-gap)',
 
-    [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'ten-end',
+    [theme.breakpoints.up('sm')]: {
+      gridColumnStart: 'auto',
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
       width: '100%',
-      gridRow: 3
+      gridRow: 4
     }
   }),
 
@@ -95,18 +95,20 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     'width': 30,
     '&:hover': {
       backgroundColor: theme.vars.palette.primary.main
-    },
-    '> svg': {
-      fontSize: 30
     }
   }),
 
   legalSection: ({ theme }) => ({
     'display': 'contents', // take out of flow,
 
-    '& *': {
-      ...theme.typography.bodySmall
+    '& .MuiTypography-root': {
+      ...theme.typography.bodySmall,
+      margin: 0
     }
+  }),
+  copyrightDivider: ({ theme }) => ({
+    gridColumn: 'content-start/content-end',
+    gridRow: 3
   }),
 
   copyrightDisclaimerWrap: ({ theme }) => ({
@@ -115,10 +117,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gridColumnEnd: 'content-end',
     display: 'flex',
     alignItems: 'center',
-    [theme.breakpoints.up('md')]: {
-      gridRow: 3,
+    [theme.breakpoints.up('sm')]: {
+      gridRow: 4,
       gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-end'
+      gridColumnEnd: 'auto'
     }
   }),
 
@@ -131,10 +133,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     height: '100%',
     gap: 'var(--grid-gap)',
 
-    [theme.breakpoints.up('md')]: {
-      gridColumn: 'content-quarter / ten-start',
+    [theme.breakpoints.up('sm')]: {
+      gridColumn: 'content-start / content-end',
       justifySelf: 'center',
-      gridRow: 3
+      gridRow: 4
     }
   }),
 
@@ -143,8 +145,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     'gridColumnStart': 'full-start',
     'gridColumnEnd': 'full-end',
 
-    [theme.breakpoints.up('md')]: {
-      gridRow: 5
+    [theme.breakpoints.up('sm')]: {
+      gridRow: 5,
+      marginTop: theme.spacing(5)
     },
 
     '& [class*=disclaimer] > *': {

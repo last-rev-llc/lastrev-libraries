@@ -9,7 +9,7 @@ import { pathResolver } from './utils/pathResolver';
 
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
-import dayjs from 'dayjs'; // Assuming you use dayjs for date formatting
+import { format } from 'date-fns'; // Assuming you use dayjs for date formatting
 import { resolveField } from './utils/resolveField';
 
 export const typeDefs = gql`
@@ -51,13 +51,14 @@ export const mappers: Mappers = {
       footer: pageFooterResolver,
       breadcrumbs: breadcrumbsResolver,
       // contents: blogGlobalContentsResolver,
-      relatedItems: async (blog: any, _args: any, ctx: ApolloContext) =>
-        createType('Collection', {
-          introText: createType('Text', { title: 'Related Blogs' }),
-          items: getLocalizedField(blog.fields, 'relatedItems', ctx),
-          variant: 'Three Per Row',
-          itemsVariant: 'Blog'
-        }),
+      // TODO: Erroring out with current content
+      // relatedItems: async (blog: any, _args: any, ctx: ApolloContext) =>
+      //   createType('Collection', {
+      //     introText: createType('Text', { title: 'Related Blogs' }),
+      //     items: getLocalizedField(blog.fields, 'relatedItems', ctx),
+      //     variant: 'Three Per Row',
+      //     itemsVariant: 'Blog'
+      //   }),
       hero: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('Hero', {
           variant: 'default',
@@ -76,11 +77,11 @@ export const mappers: Mappers = {
       text: 'title',
       href: pathResolver
     },
-
     Card: {
       title: 'title',
       subtitle: async (blog: any, _args: any, ctx: ApolloContext) => {
-        const date = dayjs(blog.fields.date).format('MMMM D, YYYY'); // Format the date
+        const date = format(new Date(blog.fields.date), 'MMMM d, yyyy'); // Format the date with 'date-fns'
+
         const bodyRichText = getLocalizedField(blog.fields, 'body', ctx); // Get localized field
         const readingTime = calculateReadingTime(bodyRichText); // Calculate reading time
         const authorName = await resolveField('author.name')(blog, _args, ctx);
@@ -90,7 +91,7 @@ export const mappers: Mappers = {
       },
       overline: async (blog: any, _args: any, ctx: ApolloContext) => {
         const categories = await resolveField('categories')(blog, 'categories', ctx);
-        return categories?.map((category) => getLocalizedField(category.fields, 'title', ctx)).join('/ ');
+        return categories?.map((category: any) => getLocalizedField(category.fields, 'title', ctx)).join('/ ');
       },
       body: async (blog: any, _args: any, ctx: ApolloContext) =>
         getLocalizedField(blog.fields, 'promoSummary', ctx)

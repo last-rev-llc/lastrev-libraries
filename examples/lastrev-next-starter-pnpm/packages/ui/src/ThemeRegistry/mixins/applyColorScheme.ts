@@ -38,7 +38,7 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
         '--mui-palette-secondary-main': theme.vars.palette.schemes[paletteColor].primary.main,
         '--mui-palette-secondary-contrastText': theme.vars.palette.schemes[paletteColor].primary.contrastText,
         '--mui-palette-secondary-dark': theme.vars.palette.schemes[paletteColor].primary.dark,
-
+        '--mui-palette-divider': theme.vars.palette.schemes[paletteColor].primary.contrastText,
         // Theme colors
         '--variant-highlight-color': theme.vars.palette.schemes[paletteColor].highlightColor,
         '--current-color-text': theme.vars.palette.schemes[paletteColor].primary.main,
