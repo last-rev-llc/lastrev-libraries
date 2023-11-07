@@ -24,15 +24,19 @@ const Text = (props: TextProps) => {
             data-testid="Text-overline"
             {...sidekick(sidekickLookup, 'overline')}
             variant="overline"
-            ownerState={ownerState}>
-            {overline}
-          </Overline>
+            ownerState={ownerState}
+            dangerouslySetInnerHTML={{ __html: overline }}
+          />
         )}
 
         {!!title && (
-          <Title variant="h3" data-testid="Text-title" {...sidekick(sidekickLookup, 'title')} ownerState={ownerState}>
-            {title}
-          </Title>
+          <Title
+            variant="h3"
+            data-testid="Text-title"
+            {...sidekick(sidekickLookup, 'title')}
+            ownerState={ownerState}
+            dangerouslySetInnerHTML={{ __html: title }}
+          />
         )}
 
         {!!subtitle && (
@@ -40,9 +44,9 @@ const Text = (props: TextProps) => {
             data-testid="Text-subtitle"
             {...sidekick(sidekickLookup, 'subtitle')}
             ownerState={ownerState}
-            variant="h4">
-            {subtitle}
-          </Subtitle>
+            variant="h4"
+            dangerouslySetInnerHTML={{ __html: subtitle }}
+          />
         )}
 
         {!!body && (

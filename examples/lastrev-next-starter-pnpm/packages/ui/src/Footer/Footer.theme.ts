@@ -18,8 +18,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   contentOuterGrid: {
     '& a': {
-      whiteSpace: 'nowrap',
-      color: 'inherit'
+      whiteSpace: 'nowrap'
     }
   },
 

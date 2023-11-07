@@ -12,15 +12,18 @@ const styleOverrides: ComponentsOverrides<Theme>['CardPricing'] = {
   }),
 
   cardPricingWrap: ({ theme, ownerState }) => ({
-    background: theme.vars.palette.primary.main,
-    color: theme.vars.palette.primary.contrastText,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    gap: theme.spacing(1),
-    alignItems: 'center',
-    minHeight: 240,
-    padding: theme.spacing(6, 7)
+    // TODO: Unfortunate color applying here due to card being half color / half white
+    'background': theme.vars.palette.primary.main,
+    '*': {
+      color: theme.vars.palette.white.main
+    },
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'center',
+    'gap': theme.spacing(1),
+    'alignItems': 'center',
+    'minHeight': 240,
+    'padding': theme.spacing(6, 7)
   }),
 
   contentWrap: ({ ownerState, theme }) => ({

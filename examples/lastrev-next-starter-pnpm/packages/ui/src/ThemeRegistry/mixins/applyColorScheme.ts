@@ -27,8 +27,10 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
       '--mui-palette-background-tab': theme.vars.palette.schemes[paletteColor].primary.main,
       '*': {
         // Color inversion
-        'color': theme.vars.palette.schemes[paletteColor].primary.contrastText,
         '--mui-palette-text-primary': theme.vars.palette.schemes[paletteColor].primary.contrastText,
+        // TODO: Everything should be using the above variable for color, so below is not needed
+        // 'color': theme.vars.palette.schemes[paletteColor].primary.contrastText,
+
         '--mui-palette-primary-light': theme.vars.palette.schemes[paletteColor].secondary.light,
         '--mui-palette-primary-main': theme.vars.palette.schemes[paletteColor].secondary.main,
         '--mui-palette-primary-contrastText': theme.vars.palette.schemes[paletteColor].secondary.contrastText,

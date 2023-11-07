@@ -11,11 +11,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   root: ({ theme, ownerState }) => ({
     'position': 'relative',
     'padding': 'var(--grid-gap) 0',
-
-    ':is(&, & [class*=navItemSubMenu])': {
-      // ...theme.mixins.applyColorScheme({ ownerState, theme })
+    // ':is(&, & [class*=navItemSubMenu])': {
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
+    // },
+    '[class*=navItemSubMenu]': {
+      backgroundColor: 'var(--current-color-main)'
     },
-
     '& *': {
       whiteSpace: 'nowrap'
     }
@@ -103,8 +104,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'display': 'inline-flex',
 
     '& a': {
-      whiteSpace: 'nowrap',
-      color: 'inherit'
+      whiteSpace: 'nowrap'
     },
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {

@@ -75,7 +75,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
         })
       },
       '.swiper-slide': {
-        width: 'unset'
+        width: 'unset',
+        height: '100%'
       },
       '.swiper-wrapper': {
         alignItems: 'center'

@@ -8,7 +8,6 @@ const defaultProps: ComponentsProps['Collection'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
-
     containerType: 'inline-size',
     display: 'flex',
     flexDirection: 'column',

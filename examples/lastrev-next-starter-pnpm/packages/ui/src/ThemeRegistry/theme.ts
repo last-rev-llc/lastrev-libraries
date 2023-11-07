@@ -211,6 +211,7 @@ const baseTheme = {
   },
   typography: {
     fontFamily: dmSans.style.fontFamily,
+
     body1: {
       'fontWeight': 'var(--body1-font-weight)',
       'fontSize': 'var(--body1-font-size)',
@@ -218,7 +219,7 @@ const baseTheme = {
       '&:not(:last-child)': {
         margin: 'var(--body1-margin)'
       },
-      'color': 'inherit'
+      'color': 'var(--mui-palette-text-primary)'
     },
     body2: {
       'fontWeight': 'var(--body2-font-weight)',
@@ -227,55 +228,60 @@ const baseTheme = {
       '&:not(:last-child)': {
         margin: 'var(--body2-margin)'
       },
-      'color': 'inherit'
+      'color': 'var(--mui-palette-text-primary)'
     },
     bodySmall: {
       fontWeight: 'var(--bodySmall-font-weight)',
       fontSize: 'var(--bodySmall-font-size)',
       lineHeight: 'var(--bodySmall-line-height)',
       margin: 'var(--bodySmall-margin)',
-      color: 'inherit'
+      color: 'var(--mui-palette-text-primary)'
     },
     bodyLarge: {
       fontWeight: 'var(--bodyLarge-font-weight)',
       fontSize: 'var(--bodyLarge-font-size)',
       lineHeight: 'var(--bodyLarge-line-height)',
-      color: 'inherit'
+      color: 'var(--mui-palette-text-primary)'
     },
     h1: {
       fontWeight: 'var(--h1-font-weight)',
       fontSize: 'var(--h1-font-size)',
       lineHeight: 'var(--h1-line-height)',
       margin: 'var(--h1-margin)',
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      color: 'var(--mui-palette-text-primary)'
     },
     h2: {
       fontWeight: 'var(--h2-font-weight)',
       fontSize: 'var(--h2-font-size)',
       lineHeight: 'var(--h2-line-height)',
       margin: 'var(--h2-margin)',
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      color: 'var(--mui-palette-text-primary)'
     },
     h3: {
       fontWeight: 'var(--h3-font-weight)',
       fontSize: 'var(--h3-font-size)',
       lineHeight: 'var(--h3-line-height)',
       margin: 'var(--h3-margin)',
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      color: 'var(--mui-palette-text-primary)'
     },
     h4: {
       fontWeight: 'var(--h4-font-weight)',
       fontSize: 'var(--h4-font-size)',
       lineHeight: 'var(--h4-line-height)',
       margin: 'var(--h4-margin)',
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      color: 'var(--mui-palette-text-primary)'
     },
     h5: {
       fontWeight: 'var(--h5-font-weight)',
       fontSize: 'var(--h5-font-size)',
       lineHeight: 'var(--h5-line-height)',
       margin: 'var(--h5-margin)',
-      fontStyle: 'normal'
+      fontStyle: 'normal',
+      color: 'var(--mui-palette-text-primary)'
     },
     h6: {
       fontWeight: 'var(--h6-font-weight)',

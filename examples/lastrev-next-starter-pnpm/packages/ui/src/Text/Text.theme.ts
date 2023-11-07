@@ -142,6 +142,16 @@ export const textTheme = (theme: Theme): ThemeOptions => ({
       defaultProps,
       styleOverrides,
       variants: createVariants(theme)
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          ins: {
+            textDecoration: 'none',
+            color: 'var(--variant-highlight-color)'
+          }
+        }
+      }
     }
   }
 });
