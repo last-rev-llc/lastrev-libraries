@@ -72,6 +72,7 @@ const CardPricing = (props: CardPricingProps) => {
           ) : null}
           {(actions?.length || loading) && (
             <ActionsWrap
+              disableSpacing
               {...sidekick(sidekickLookup, 'actions')}
               data-testid="CardPricing-actions"
               // @ts-ignore: TODO

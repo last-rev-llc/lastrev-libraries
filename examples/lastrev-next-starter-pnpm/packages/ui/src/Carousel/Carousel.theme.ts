@@ -76,10 +76,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
       },
       '.swiper-slide': {
         width: 'unset',
-        height: '100%'
+        height: 'auto',
+        alignSelf: 'stretch'
       },
       '.swiper-wrapper': {
         alignItems: 'center'
+        // overflow: 'visible'
       },
       '.swiper-pagination-bullet': {
         'transform': 'scale(1)',

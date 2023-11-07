@@ -9,7 +9,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
-    height: '100%'
+    height: '100%',
+    ...(ownerState?.link && {
+      '&:hover': {
+        '[class*="Card-title"]': {
+          textDecoration: 'underline'
+        }
+      }
+    })
   }),
 
   cardWrap: ({ theme, ownerState }) => ({
@@ -22,7 +29,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     transition: 'all 0.25s ease-in-out',
     willChange: 'transform',
     boxShadow: theme.vars.shadows[0],
+    gap: theme.spacing(2),
 
+    overflow: 'visible',
     // transform: 'scale(1)'
     ...(ownerState?.variant === CardVariants.media ||
     ownerState?.variant === CardVariants.blog ||
@@ -115,7 +124,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   }),
 
   actionsWrap: ({ theme }) => ({
-    margin: theme.spacing(0, -1),
     padding: 0
     // padding: 'calc(var(--grid-gap) / 2)'
   }),
@@ -141,16 +149,24 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.media
     },
     style: {
-      '[class*=Card-cardMedia]': {
-        'width': '100%',
-        'overflow': 'hidden',
-        'borderRadius': '8px',
-        '& > *': {
+      '[class*=cardMedia]': {
+        width: '100%',
+
+        // 'overflow': 'hidden',
+        img: {
+          borderRadius: '8px',
+          aspectRatio: '1/1',
           width: '100%',
           height: '100%'
         }
       },
 
+      '[class*=cardWrap]': {
+        overflow: 'visible'
+      },
+      '[class*=actionsWrap]': {
+        margin: theme.spacing(0, -1)
+      },
       '[class*=cardContent]': {
         display: 'none'
       }
@@ -165,6 +181,9 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       '[class*=cardWrap]': {
         padding: theme.spacing(5, 3),
         gap: theme.spacing(2)
+      },
+      '[class*=actionsWrap]': {
+        margin: theme.spacing(0, -1)
       },
       '[class*=cardMedia] img': {
         maxWidth: 96,
@@ -189,7 +208,9 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         padding: theme.spacing(5, 3),
         gap: theme.spacing(2)
       },
-
+      '[class*=actionsWrap]': {
+        margin: theme.spacing(0, -1)
+      },
       '[class*=cardMedia] img': {
         maxWidth: 96,
         // marginLeft: 'auto',
@@ -224,20 +245,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       }
     }
   },
-  {
-    props: {
-      variant: CardVariants.media
-    },
-    style: {
-      '[class*=Card-cardWrap]': {
-        gap: theme.spacing(2),
-        boxShadow: 'none'
-      },
-      '[class*=cardMedia] img': {
-        aspectRatio: '1/1'
-      }
-    }
-  },
 
   {
     props: {
@@ -245,7 +252,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       '[class*=Card-contentWrap]': {
-        // flex: 'unset'
+        flex: 'unset'
       },
       '[class*=Card-cardWrap]': {
         overflow: 'visible',
@@ -267,7 +274,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     style: {
       '[class*=Card-contentWrap]': {
         containerType: 'inline-size',
-        flex: 'unset',
+        // flex: 'unset',
         width: '100%'
       },
       '[class*=Card-cardWrap]': {
@@ -285,10 +292,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         '& > *': {
           borderRadius: '50%',
           objectFit: 'cover',
+          objectPosition: 'top',
           aspectRatio: '1 / 1',
           width: '100%',
-          display: 'inline-block',
-          overflow: 'hidden'
+          display: 'inline-block'
+          // overflow: 'hidden'
         }
       }
     }

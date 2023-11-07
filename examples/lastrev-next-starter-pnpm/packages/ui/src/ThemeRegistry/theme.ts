@@ -287,14 +287,16 @@ const baseTheme = {
       fontWeight: 'var(--h6-font-weight)',
       fontSize: 'var(--h6-font-size)',
       lineHeight: 'var(--h6-line-height)',
-      margin: 'var(--h6-margin)'
+      margin: 'var(--h6-margin)',
+      color: 'var(--mui-palette-text-primary)'
     },
     display1: {
       display: 'block',
       fontWeight: 'var(--display1-font-weight)',
       fontSize: 'var(--display1-font-size)',
       lineHeight: 'var(--display1-line-height)',
-      margin: 'var(--display1-margin)'
+      margin: 'var(--display1-margin)',
+      color: 'var(--mui-palette-text-primary)'
     },
     display2: {
       display: 'block',
@@ -302,7 +304,8 @@ const baseTheme = {
       fontSize: 'var(--display2-font-size)',
       lineHeight: 'var(--display2-line-height)',
 
-      margin: 'var(--display2-margin)'
+      margin: 'var(--display2-margin)',
+      color: 'var(--mui-palette-text-primary)'
     },
 
     overline: {
@@ -311,7 +314,8 @@ const baseTheme = {
       fontSize: 'var(--overline-font-size)',
       lineHeight: 'var(--overline-line-height)',
       textTransform: 'uppercase',
-      margin: 'var(--overline-margin)'
+      margin: 'var(--overline-margin)',
+      color: 'var(--mui-palette-text-primary)'
     },
     button: {},
     caption: {}

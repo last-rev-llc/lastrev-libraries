@@ -6,10 +6,14 @@ const defaultProps: ComponentsProps['Quote'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
-    containerType: 'inline-size'
+    containerType: 'inline-size',
+    height: '100%'
   }),
 
-  // contentGrid: : {},
+  contentOuterGrid: {
+    height: '100%',
+    alignItems: 'center'
+  },
 
   // logo: ({ theme }) => ({
   //   // gridRow: 1,

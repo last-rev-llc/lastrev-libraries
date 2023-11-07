@@ -12,7 +12,6 @@ const styleOverrides: ComponentsOverrides<Theme>['CardPricing'] = {
   }),
 
   cardPricingWrap: ({ theme, ownerState }) => ({
-    // TODO: Unfortunate color applying here due to card being half color / half white
     'background': theme.vars.palette.primary.main,
     '*': {
       color: theme.vars.palette.white.main
@@ -27,22 +26,28 @@ const styleOverrides: ComponentsOverrides<Theme>['CardPricing'] = {
   }),
 
   contentWrap: ({ ownerState, theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    padding: theme.spacing(6, 7),
-    gap: theme.spacing(3)
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'center',
+    'padding': theme.spacing(6, 7),
+    'gap': theme.spacing(3),
+    '[class*="CardPricing-body"] *': {
+      color: theme.vars.palette.black.main
+    }
   }),
 
   price: ({ ownerState, theme }) => ({ margin: 0 }),
   overline: ({ ownerState, theme }) => ({ margin: 0 }),
   textBelowPrice: ({ ownerState, theme }) => ({ margin: 0 }),
   actionsWrap: ({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: 0,
-    gap: theme.spacing(2)
+    'display': 'flex',
+    'flexDirection': 'column',
+    'alignItems': 'center',
+    'padding': 0,
+    'gap': theme.spacing(2),
+    '>*': {
+      marginLeft: '0!important'
+    }
   })
 };
 

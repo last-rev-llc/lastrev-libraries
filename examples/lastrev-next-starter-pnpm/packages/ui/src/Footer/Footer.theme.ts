@@ -74,13 +74,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
     display: 'inline-flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     height: '100%',
     justifySelf: 'center',
     gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('sm')]: {
-      gridColumnStart: 'auto',
+      gridColumnStart: 'content-half',
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
       width: '100%',
@@ -119,7 +119,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     [theme.breakpoints.up('sm')]: {
       gridRow: 4,
       gridColumnStart: 'content-start',
-      gridColumnEnd: 'auto'
+      gridColumnEnd: 'content-half'
     }
   }),
 
