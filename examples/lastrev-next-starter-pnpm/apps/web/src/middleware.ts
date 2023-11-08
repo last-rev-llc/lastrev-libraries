@@ -5,6 +5,7 @@ export function middleware() {
     default-src 'self'  *.sentry.io  *.facebook.com vitals.vercel-insights.com *.hubapi.com *.hsforms.com *.hs-scripts.com *.hsforms.net *.hscollectedforms.net;
     style-src 'self' 'unsafe-inline'  *.sentry.io  fonts.googleapis.com vitals.vercel-insights.com *.hs-scripts.com *.hsforms.net;
     script-src 'self' 'unsafe-inline' 'unsafe-eval' *.sentry.io  *.google-analytics.com *.googletagmanager.com vitals.vercel-insights.com *.hs-analytics.net *.hs-banner.com *.hsadspixel.net *.hscollectedforms.net *.jquery.com *.hs-scripts.com *.hsforms.net;
+    connect-src 'self' formspree.io;
     font-src 'self'  *.sentry.io  fonts.gstatic.com *.hs-scripts.com *.hsforms.net data:;
     frame-src  https://forms.hsforms.com;
     img-src * data:;

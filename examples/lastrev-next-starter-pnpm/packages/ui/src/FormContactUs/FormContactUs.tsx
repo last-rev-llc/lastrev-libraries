@@ -2,8 +2,9 @@ import React from 'react';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Typography, { TypographyProps } from '@mui/material/Typography';
+import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import { useForm } from '@formspree/react';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -14,12 +15,18 @@ import ContentModule from '../ContentModule';
 import type { FormContactUsProps, FormContactUsOwnerState } from './FormContactUs.types';
 
 const FormContactUs = (props: FormContactUsProps) => {
-  const [submitted, setSubmitted] = React.useState(false);
-  const ownerState = { ...props, submitted, hasSuccessMessage: false };
+  const formId = 'mwkdzyrq';
+  const [state, handleSubmit] = useForm(formId);
 
-  const formId = 'contact-us';
+  const ownerState = { ...props, hasSuccessMessage: false };
 
   const { backgroundImage, backgroundColor, id, sidekickLookup, introText } = props;
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Submit the form using the handleSubmit function
+    await handleSubmit(e);
+  };
 
   return (
     <Root ownerState={ownerState}>
@@ -47,30 +54,59 @@ const FormContactUs = (props: FormContactUsProps) => {
           </SideContentInnerWrap>
         </SideContentWrap>
         <ContentWrap ownerState={ownerState}>
-          <form id={formId} name={formId} method="POST" action="/success" style={{ width: '100%' }}>
-            <input type="hidden" name="form-name" value={formId} />
-            <FormFields ownerState={ownerState}>
-              <TextField label="First Name" name="lastName" type="text" required variant="standard" />
-              <TextField label="Last Name" name="firstName" type="text" required variant="standard" />
-              <TextField label="Email" name="email" type="email" required variant="standard" />
-              <TextField label="Company Name" name="companyName" type="text" required variant="standard" />
-              <TextField label="Message" name="message" fullWidth multiline rows="3" required variant="standard" />
-            </FormFields>
+          {state.succeeded ? (
+            <>Success!</>
+          ) : (
+            <>
+              <form id={formId} name={formId} onSubmit={onSubmit} style={{ width: '100%' }}>
+                <input type="hidden" name="form-name" value={formId} />
+                <FormFields ownerState={ownerState}>
+                  <TextField label="First Name" id="lastName" name="lastName" type="text" required variant="standard" />
+                  <TextField
+                    label="Last Name"
+                    id="firstName"
+                    name="firstName"
+                    type="text"
+                    required
+                    variant="standard"
+                  />
+                  <TextField label="Email" id="email" name="email" type="email" required variant="standard" />
+                  <TextField
+                    label="Company Name"
+                    id="companyName"
+                    name="companyName"
+                    type="text"
+                    required
+                    variant="standard"
+                  />
+                  <TextField
+                    label="Message"
+                    id="message"
+                    name="message"
+                    fullWidth
+                    multiline
+                    rows="3"
+                    required
+                    variant="standard"
+                  />
+                </FormFields>
 
-            <FormActions ownerState={ownerState}>
-              <SubmitButton
-                ownerState={ownerState}
-                href="#"
-                color="navy"
-                type="submit"
-                __typename="Link"
-                text="Submit"
-                variant="buttonText"
-                icon="logo"
-                iconPosition="Left"
-              />
-            </FormActions>
-          </form>
+                <FormActions ownerState={ownerState}>
+                  <SubmitButton
+                    ownerState={ownerState}
+                    href="#"
+                    color="navy"
+                    type="submit"
+                    __typename="Link"
+                    text="Submit"
+                    variant="buttonText"
+                    icon="logo"
+                    iconPosition="Left"
+                  />
+                </FormActions>
+              </form>
+            </>
+          )}
         </ContentWrap>
       </ContentOuterGrid>
     </Root>
@@ -93,12 +129,6 @@ const SubmitButton = styled(ContentModule, {
   name: 'FormContactUs',
   slot: 'SubmitButton',
   overridesResolver: (_, styles) => [styles.submitButton]
-})<{ ownerState: FormContactUsOwnerState }>``;
-
-const ResetButton = styled(ContentModule, {
-  name: 'FormContactUs',
-  slot: 'ResetButton',
-  overridesResolver: (_, styles) => [styles.resetButton]
 })<{ ownerState: FormContactUsOwnerState }>``;
 
 const FormFields = styled(Grid, {
@@ -136,12 +166,6 @@ const SideContentInnerWrap = styled(Box, {
   slot: 'SideContentInnerWrap',
   overridesResolver: (_, styles) => [styles.sideContentInnerWrap]
 })<{ ownerState: FormContactUsOwnerState }>``;
-
-const BodyHeader = styled(Typography, {
-  name: 'FormContactUs',
-  slot: 'BodyHeader',
-  overridesResolver: (_, styles) => [styles.bodyHeader]
-})<TypographyProps & { ownerState: FormContactUsOwnerState }>``;
 
 const IntroTextGrid = styled(Grid, {
   name: 'FormContactUs',
