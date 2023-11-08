@@ -64,7 +64,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   // mediaItems: : {},
 
   actionsWrap: ({ theme, ownerState }) => ({
-    margin: theme.spacing(0, -1),
+    // margin: theme.spacing(0, -1),
     marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',

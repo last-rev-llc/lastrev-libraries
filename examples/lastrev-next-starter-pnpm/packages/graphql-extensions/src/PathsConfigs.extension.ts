@@ -100,6 +100,7 @@ const generatePaths: ContentfulPathsGenerator = async (
 
 export const pathsConfigs = {
   page: generatePaths,
+  pageResource: generatePaths,
   blog: generatePaths,
   person: generatePaths,
   categoryBlog: generatePaths

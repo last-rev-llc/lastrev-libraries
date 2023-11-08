@@ -124,7 +124,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   }),
 
   actionsWrap: ({ theme }) => ({
-    padding: 0
+    // padding: 0
     // padding: 'calc(var(--grid-gap) / 2)'
   }),
 
@@ -165,7 +165,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         overflow: 'visible'
       },
       '[class*=actionsWrap]': {
-        margin: theme.spacing(0, -1)
+        // margin: theme.spacing(0, -1)
       },
       '[class*=cardContent]': {
         display: 'none'
@@ -183,7 +183,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         gap: theme.spacing(2)
       },
       '[class*=actionsWrap]': {
-        margin: theme.spacing(0, -1)
+        // margin: theme.spacing(0, -1)
       },
       '[class*=cardMedia] img': {
         maxWidth: 96,
@@ -209,7 +209,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         gap: theme.spacing(2)
       },
       '[class*=actionsWrap]': {
-        margin: theme.spacing(0, -1)
+        // margin: theme.spacing(0, -1)
       },
       '[class*=cardMedia] img': {
         maxWidth: 96,
@@ -262,6 +262,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         alignItems: 'flex-start'
       },
       '[class*=cardMedia]': {},
+      '[class*=actionsWrap]': { alignItems: 'flex-end', flex: 1 },
       '[class*=cardMedia] img': {
         aspectRatio: '16/9'
       }
@@ -309,6 +310,9 @@ export const cardTheme = (theme: Theme): ThemeOptions => ({
       defaultProps,
       styleOverrides,
       variants: createVariants(theme)
+    },
+    MuiCardActions: {
+      defaultProps: { disableSpacing: true }
     }
   }
 });

@@ -13,6 +13,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
 
     'main > &:last-of-type': {
       marginBottom: 0
+    },
+    '[class*="Media-root"]': {
+      width: '100%'
     }
   },
 
