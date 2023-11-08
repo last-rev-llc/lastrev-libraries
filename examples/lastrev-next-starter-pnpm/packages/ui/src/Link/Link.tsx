@@ -88,11 +88,15 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
 
   if (variant?.includes('button')) {
     const buttonVariant = variant.replace('button', '').toLowerCase() as 'text' | 'outlined' | 'contained' | undefined;
+    let trimmedSharedLinkProps: any = sharedLinkProps;
+    if ((sharedLinkProps as { type?: string }).type === 'submit') {
+      const { component, href, ...rest } = sharedLinkProps;
+      trimmedSharedLinkProps = rest;
+    }
 
     return (
       <RootButton
-        {...sharedLinkProps}
-        variant={buttonVariant}
+        {...trimmedSharedLinkProps}
         startIcon={icon && iconPosition === 'Left' && <Icon iconName={icon} />}
         endIcon={icon && iconPosition !== 'Left' && <Icon iconName={icon} />}>
         {text || children}
