@@ -1,6 +1,6 @@
-import { Mixins } from '@mui/material/styles/createMixins';
-import { type TypographyStyle, type Breakpoints } from '@mui/material/styles';
-import { Palette as MuiPalette } from '@mui/material/styles/createPalette';
+import { type Breakpoints, type Mixins } from '@mui/material/styles';
+import { type TypographyStyle } from '@mui/material/styles';
+import { type Palette as MuiPalette } from '@mui/material/styles/createPalette';
 
 declare module '@mui/material/styles' {
   interface TypeBackground {
@@ -47,6 +47,7 @@ declare module '@mui/material/styles' {
 
   interface Theme {
     mixins: Mixins;
+    containerBreakpoints: Breakpoints;
   }
 
   interface ThemeOptions {

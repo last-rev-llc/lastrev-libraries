@@ -389,10 +389,10 @@ const coreTheme = createTheme({
   },
   containerBreakpoints: {
     ...paletteTheme.breakpoints,
-    up(key: number | Breakpoint) {
+    up: (key: Breakpoint | number) => {
       return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
     },
-    down(key: number | Breakpoint) {
+    down: (key: Breakpoint | number) => {
       return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
     }
   }

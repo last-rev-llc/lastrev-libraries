@@ -22,20 +22,12 @@ import { breakpoints } from '../ThemeRegistry/theme';
 
 const Carousel = (props: CarouselProps) => {
   const ownerState: CarouselOwnerState = { ...props };
+  const [jsEnabled, setJsEnabled] = React.useState<boolean>(false);
 
   const refSwiperWrap = React.useRef<HTMLElement | null>(null);
 
   React.useEffect(() => {
-    // Check if JavaScript is enabled
-    const isJavaScriptEnabled = typeof window !== 'undefined';
-
-    if (isJavaScriptEnabled) {
-      // Remove the 'no-js' class from the target element
-      const element = refSwiperWrap.current;
-      if (element) {
-        element.classList.remove('no-js');
-      }
-    }
+    setJsEnabled(true);
   }, []);
 
   const {
@@ -141,7 +133,7 @@ const Carousel = (props: CarouselProps) => {
         )}
 
         <ContentGrid ownerState={ownerState}>
-          <SwiperWrap ownerState={ownerState} ref={refSwiperWrap} className="no-js">
+          <SwiperWrap ownerState={ownerState} ref={refSwiperWrap} className={jsEnabled ? '' : 'no-js'}>
             <SwiperInnerWrap ownerState={ownerState}>
               <Swiper
                 rewind={true}

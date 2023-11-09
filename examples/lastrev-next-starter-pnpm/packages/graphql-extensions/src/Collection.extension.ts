@@ -28,7 +28,6 @@ export const typeDefs = gql`
     isCarouselMobile: Boolean
     itemsPerRow: Int
     numItems: Int
-    originalVariant: String
   }
 
 
@@ -181,8 +180,6 @@ export const mappers: Mappers = {
 
         return variant;
       },
-
-      originalVariant: defaultResolver('variant'),
 
       itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];

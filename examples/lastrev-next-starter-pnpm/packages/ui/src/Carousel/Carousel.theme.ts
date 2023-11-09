@@ -56,79 +56,40 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
   }),
 
   swiperWrap: ({ theme, ownerState }) => {
-    // const numItems = ownerState?.items?.length ?? 3;
     const itemsPerRow = ownerState?.itemsPerRow || 3;
 
     return {
       '&.no-js': {
-        // ...(baseItemsGrid
-        //   ? baseItemsGrid({
-        //       ownerState: { variant: ownerState?.originalVariant },
-        //       theme
-        //     })
-        //   : {
-        //       border: 'solid 10px blue'
-        //     }),
-        // 'gridColumn': 'content-start/full-end',
-        // 'gridAutoFlow': 'column',
-        // 'width': '100%',
-        // 'overflowX': 'auto',
-
-        // '[class*=swiper]': {
-        //   'display': 'contents',
-
-        //   '&[class*=swiper-button]': {
-        //     display: 'none'
-        //   }
-        // },
-
         '[class*=swiper-button]': {
           visibility: 'hidden'
         },
 
-        // '.swiper-slide': {
-        //   'gridColumn': 'auto',
-
-        //   '&:nth-of-type(n + 5)': {
-        //     'gridColumn': 'span 1',
-        //     '[class*=Carousel-item]': {
-        //       maxWidth: '50%',
-        //       overflow: 'hidden'
-        //     }
-        //   }
-        // }
-
         '.swiper-slide': {
-          'paddingRight': 'var(--grid-gap)',
+          // Calculations get messed up if we don't do this
+          'paddingRight': theme.spacing(1),
+
           '--carousel-col-count': 1.25,
 
-          'width': `calc(min(${theme.containerBreakpoints.values.sm}px, (100vw - (2 * var(--grid-margin-md)))) / var(--carousel-col-count))`,
-
-          [theme.breakpoints.up('sm')]: {
-            width: `calc(min(${theme.containerBreakpoints.values.sm}px, (100vw - (2 * var(--grid-margin-md)))) / var(--carousel-col-count))`
-          },
-
           [theme.breakpoints.up('md')]: {
-            '--carousel-col-count': itemsPerRow > 2 ? 2.5 : 2,
-            'width': `calc(min(${theme.containerBreakpoints.values.md}px, (100vw - (2 * var(--grid-margin-lg)))) / var(--carousel-col-count))`
+            '--carousel-col-count': itemsPerRow > 2 ? 2.5 : 2
           },
 
           [theme.breakpoints.up('lg')]: {
-            '--carousel-col-count': itemsPerRow >= 4 ? 4.5 : 2.5,
-            'width': `calc(min(${theme.containerBreakpoints.values.lg}px, (100vw - (2 * var(--grid-margin-xl)))) / var(--carousel-col-count))`
+            '--carousel-col-count': itemsPerRow >= 4 ? 4.5 : 2.5
           },
 
           ...(itemsPerRow >= 5 && {
             [theme.breakpoints.up('xl')]: {
-              '--carousel-col-count': 5.5,
-              'width': `calc(min(${theme.containerBreakpoints.values.xl}px, (100vw - (2 * var(--grid-margin-xl)))) / var(--carousel-col-count))`
+              '--carousel-col-count': 5.5
             }
-          })
+          }),
+
+          'width': `calc(var(--content-width) / var(--carousel-col-count))`
         }
       },
 
       'padding': 'var(--section-padding) 0 calc(2 * var(--section-padding))',
-      'gridColumn': 'content-start/content-end',
+      'gridColumn': 'content-start/full-end',
       'overflow': 'hidden'
     };
   },
@@ -155,7 +116,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
   contentGrid: {}
 };
 
-const createVariants = (theme: Theme): ComponentsVariants['Carousel'] => [];
+const createVariants = (_theme: Theme): ComponentsVariants['Carousel'] => [];
 
 const carouselTheme = (theme: Theme): ThemeOptions => ({
   components: {

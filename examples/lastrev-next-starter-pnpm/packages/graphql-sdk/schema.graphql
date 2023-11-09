@@ -128,7 +128,6 @@ type Collection implements Content {
   itemsPerRow: Int
   itemsVariant: String
   numItems: Int
-  originalVariant: String
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
