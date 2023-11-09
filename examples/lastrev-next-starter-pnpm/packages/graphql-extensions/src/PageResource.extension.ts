@@ -68,7 +68,6 @@ export const mappers: Mappers = {
 
     Card: {
       title: 'title',
-      body: () => null,
       overline: 'resourceType',
       media: async (pageresource: any, _args: any, ctx: ApolloContext) => {
         const promoImage =
@@ -79,7 +78,10 @@ export const mappers: Mappers = {
       },
 
       variant: () => 'blog',
-
+      body: async (blog: any, _args: any, ctx: ApolloContext) =>
+        getLocalizedField(blog.fields, 'promoSummary', ctx)
+          ? createRichText(getLocalizedField(blog.fields, 'promoSummary', ctx))
+          : null,
       link: async (pageresource: any, _args: any, ctx: ApolloContext) => {
         return pageresource;
       }

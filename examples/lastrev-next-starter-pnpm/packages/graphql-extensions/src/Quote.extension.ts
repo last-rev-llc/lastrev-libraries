@@ -7,42 +7,12 @@ export const typeDefs = gql`
   extend type Quote {
     image: Media
     logo: Media
+    actions: [Link]
   }
 `;
 
 export const mappers: Mappers = {
   Quote: {
-    Quote: {},
-    Card: {
-      body: async (quote: any, _args: any, ctx: ApolloContext) =>
-        createRichText(getLocalizedField(quote.fields, 'quote', ctx)),
-
-      media: async (quote: any, _args: any, ctx: ApolloContext) => {
-        const image = getLocalizedField(quote.fields, 'image', ctx);
-        if (!image) return null;
-        return [image];
-      },
-
-      variant: () => 'default',
-
-      actions: async (quote: any, _args: any, ctx: ApolloContext) => {
-        const actionsRef = getLocalizedField(quote.fields, 'actions', ctx);
-        if (!actionsRef?.length) return [];
-        const actions: any[] = (
-          await ctx.loaders.entryLoader.loadMany(
-            actionsRef?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-          )
-        )
-          .filter(Boolean)
-          .map((x: any) => {
-            return {
-              ...x,
-              text: 'hello',
-              variant: 'buttonContained'
-            };
-          });
-        return actions;
-      }
-    }
+    Card: {}
   }
 };

@@ -561,6 +561,7 @@ type Query {
 type Quote implements Content {
   OLDauthorName: String
   OLDauthorTitle: String
+  actions: [Link]
   animation: JSON
   authorName: String
   authorTitle: String

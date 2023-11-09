@@ -101,11 +101,11 @@ const collectionMappers = {
       const { contentType, limit, offset, order, filter } =
         (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
       if (contentType) {
-        const queryItems = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
+        items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
 
-        items = await ctx.loaders.entryLoader.loadMany(
-          queryItems?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-        );
+        // items = await ctx.loaders.entryLoader.loadMany(
+        //   queryItems?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+        // );
       }
     } catch (error: any) {
       logger.error(error.message, {
@@ -113,8 +113,13 @@ const collectionMappers = {
         stack: error.stack
       });
     }
-
+    if (!!items?.length) {
+      items = await ctx.loaders.entryLoader.loadMany(
+        items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+      );
+    }
     const returnItems = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
+    console.log('Blog', returnItems);
 
     return returnItems;
   },
@@ -208,17 +213,13 @@ const collectionMappers = {
           items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
         }
 
-        let fullItemsWithVariant = [];
-
         if (!!items?.length) {
-          const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
-
-          const fullItems = await ctx.loaders.entryLoader.loadMany(
+          items = await ctx.loaders.entryLoader.loadMany(
             items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
           );
-
-          fullItemsWithVariant = fullItems?.map((x: any) => ({ ...x, variant: itemsVariant }));
         }
+        const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
+        const fullItemsWithVariant = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
 
         return {
           pageInfo: {

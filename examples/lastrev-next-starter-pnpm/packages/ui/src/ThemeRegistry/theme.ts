@@ -73,6 +73,41 @@ const schemes = {
     secondary: colors.blue,
     highlightColor: colors.blue.main
   },
+  sapphireAccent: {
+    primary: colors.white,
+    secondary: colors.sapphire,
+    highlightColor: colors.sapphire.main
+  },
+  blueAccent: {
+    primary: colors.white,
+    secondary: colors.blue,
+    highlightColor: colors.blue.main
+  },
+  greenAccent: {
+    primary: colors.white,
+    secondary: colors.green,
+    highlightColor: colors.green.main
+  },
+  sunflowerAccent: {
+    primary: colors.white,
+    secondary: colors.sunflower,
+    highlightColor: colors.sunflower.main
+  },
+  orangeAccent: {
+    primary: colors.white,
+    secondary: colors.orange,
+    highlightColor: colors.orange.main
+  },
+  mintAccent: {
+    primary: colors.white,
+    secondary: colors.mint,
+    highlightColor: colors.mint.main
+  },
+  fuchsiaAccent: {
+    primary: colors.white,
+    secondary: colors.fuchsia,
+    highlightColor: colors.fuchsia.main
+  },
   sapphirePinkGradient: {
     primary: colors.sapphirePinkGradient,
     secondary: colors.white,

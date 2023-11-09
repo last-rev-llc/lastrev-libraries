@@ -10,10 +10,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     height: '100%',
+    transition: 'all 0.25',
     ...(ownerState?.link && {
+      '[class*="Card-title"]': {
+        textDecoration: 'underline',
+        textDecorationColor: 'transparent'
+      },
       '&:hover': {
         '[class*="Card-title"]': {
-          textDecoration: 'underline'
+          textDecorationColor: 'var(--mui-palette-text-primary)'
         }
       }
     })
@@ -33,9 +38,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 
     overflow: 'visible',
     // transform: 'scale(1)'
-    ...(ownerState?.variant === CardVariants.media ||
-    // ownerState?.variant === CardVariants.blog ||
-    ownerState?.variant === CardVariants.person
+    ...(ownerState?.link &&
+    (ownerState?.variant === CardVariants.media ||
+      ownerState?.variant === CardVariants.blog ||
+      ownerState?.variant === CardVariants.person)
       ? {
           '[class*=cardMedia] img': { transition: 'all 0.25s ease-in-out' },
           '&:hover': {
@@ -101,7 +107,24 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     }),
     ...(ownerState?.variant === CardVariants.blog && {
       ...theme.typography.h5
-    })
+    }),
+
+    // May be different on other variants
+    overflow: 'hidden',
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical',
+    textOverflow: 'ellipsis'
+  }),
+  body: ({ ownerState, theme }) => ({
+    '.MuiTypography-root': {
+      // May be different on other variants
+      overflow: 'hidden',
+      display: '-webkit-box',
+      WebkitLineClamp: 3,
+      WebkitBoxOrient: 'vertical',
+      textOverflow: 'ellipsis'
+    }
   }),
 
   subtitle: ({ ownerState, theme }) => ({
@@ -122,8 +145,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
       ...theme.typography.body1
     })
   }),
-
   actionsWrap: ({ theme }) => ({
+    display: 'flex',
+    gap: theme.spacing(2),
+    margin: theme.spacing(0, -1)
     // padding: 0
     // padding: 'calc(var(--grid-gap) / 2)'
   }),
@@ -155,7 +180,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         // 'overflow': 'hidden',
         img: {
           borderRadius: '8px',
-          aspectRatio: '1/1',
+          aspectRatio: '16/9',
           width: '100%',
           height: '100%'
         }

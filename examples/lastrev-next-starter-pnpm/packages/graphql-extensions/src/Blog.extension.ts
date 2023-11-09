@@ -80,6 +80,8 @@ export const mappers: Mappers = {
     Card: {
       title: 'title',
       subtitle: async (blog: any, _args: any, ctx: ApolloContext) => {
+        if (blog?.variant === 'media') return null;
+
         const dateValue = getLocalizedField(blog.fields, 'pubDate', ctx); // Get localized field
         const date = dateValue ? format(new Date(dateValue), 'MMMM d, yyyy') : ''; // Format the date with 'date-fns'
 
@@ -112,7 +114,7 @@ export const mappers: Mappers = {
         return blog;
       },
       actions: async (blog: any, _args: any, ctx: ApolloContext) => {
-        // Assume `getFullBlogUrl` is a helper to generate the absolute URL to the blog post
+        if (blog?.variant === 'media') return null;
         let blogUrl = await pathResolver(blog, _args, ctx);
         blogUrl = `${process.env.DOMAIN}/${blogUrl}`;
         const socialLinks = [

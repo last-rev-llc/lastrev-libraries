@@ -9,7 +9,7 @@ const COLOR_MAPPING: { [key: string]: string } = {};
 
 export const colorResolver = (field: string, root?: true) => async (quote: any, _args: any, ctx: ApolloContext) => {
   const colorValue: any = defaultResolver(field)(quote, _args, ctx);
-  console.log('COLORVALUE', { colorValue });
+
   let colorClean = colorValue?.split('_')[0];
   if (COLOR_MAPPING[colorClean]) {
     colorClean = COLOR_MAPPING[colorClean];

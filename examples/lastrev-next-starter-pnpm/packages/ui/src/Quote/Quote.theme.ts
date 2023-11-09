@@ -10,27 +10,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
     height: '100%'
   }),
 
-  contentOuterGrid: {
+  contentOuterGrid: ({ theme }) => ({
     height: '100%',
-    alignItems: 'center'
-  },
+    alignItems: 'center',
+    gridRowGap: theme.spacing(5)
+  }),
 
-  // logo: ({ theme }) => ({
-  //   // gridRow: 1,
-  //   gridColumn: 'content-quarter/content-three-quarter',
-
-  //   [theme.containerBreakpoints.up('sm')]: {
-  //     gridColumn: 'four-start/five-end'
-  //   },
-
-  //   [theme.containerBreakpoints.up('md')]: {
-  //     gridColumn: 'six-start/seven-end'
-  //   },
-
-  //   [theme.containerBreakpoints.up('lg')]: {
-  //     gridColumn: 'six-start/seven-end'
-  //   }
-  // }),
+  actionsWrap: ({ theme }) => ({
+    display: 'flex',
+    gap: theme.spacing(2),
+    justifyContent: 'center'
+  }),
 
   quoteText: ({ theme }) => ({
     gridRow: 1,

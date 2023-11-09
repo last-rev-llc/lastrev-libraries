@@ -147,8 +147,13 @@ export const textTheme = (theme: Theme): ThemeOptions => ({
       styleOverrides: {
         root: {
           ins: {
+            // textDecoration: 'none',
+            color: 'red'
+          },
+          mark: {
             textDecoration: 'none',
-            color: 'var(--variant-highlight-color)'
+            color: 'var(--variant-highlight-color)',
+            backgroundColor: 'unset'
           }
         }
       }
