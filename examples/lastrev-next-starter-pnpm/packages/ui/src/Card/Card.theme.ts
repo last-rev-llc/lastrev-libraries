@@ -25,7 +25,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   }),
 
   cardWrap: ({ theme, ownerState }) => ({
-    padding: 0,
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
@@ -33,24 +32,22 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     position: 'relative',
     transition: 'all 0.25s ease-in-out',
     willChange: 'transform',
-    boxShadow: theme.vars.shadows[0],
+
+    // boxShadow: theme.vars.shadows[0],
     gap: theme.spacing(2),
 
     overflow: 'visible',
     // transform: 'scale(1)'
-    ...(ownerState?.link &&
-    (ownerState?.variant === CardVariants.media ||
-      ownerState?.variant === CardVariants.blog ||
-      ownerState?.variant === CardVariants.person)
+    ...(ownerState?.link && (ownerState?.variant === CardVariants.media || ownerState?.variant === CardVariants.blog)
       ? {
           '[class*=cardMedia] img': { transition: 'all 0.25s ease-in-out' },
           '&:hover': {
             '[class*=cardMedia] img': {
-              boxShadow: theme.vars.shadows[8]
+              // boxShadow: theme.vars.shadows[8]
             }
           }
         }
-      : null),
+      : {}),
     ...(ownerState?.variant === CardVariants.stat && {
       // padding: theme.spacing(2, 0),
       alignItems: 'center',
@@ -60,8 +57,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     ...(ownerState?.variant === CardVariants.icon && {
       overflow: 'hidden',
       borderRadius: '8px',
-      alignItems: 'center',
-      boxShadow: 'none'
+      alignItems: 'center'
+      // boxShadow: 'none'
     })
   }),
 
@@ -187,7 +184,9 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
 
       '[class*=cardWrap]': {
-        overflow: 'visible'
+        overflow: 'visible',
+        padding: 0,
+        boxShadow: 'none'
       },
       '[class*=actionsWrap]': {
         // margin: theme.spacing(0, -1)
@@ -205,7 +204,9 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       'textAlign': 'center',
       '[class*=cardWrap]': {
         padding: theme.spacing(5, 3),
-        gap: theme.spacing(2)
+        gap: theme.spacing(2),
+        backgroundColor: 'white',
+        color: 'black'
       },
       '[class*=actionsWrap]': {
         // margin: theme.spacing(0, -1)
@@ -231,7 +232,9 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       'textAlign': 'center',
       '[class*=cardWrap]': {
         padding: theme.spacing(5, 3),
-        gap: theme.spacing(2)
+        gap: theme.spacing(2),
+        backgroundColor: 'white',
+        color: 'black'
       },
       '[class*=actionsWrap]': {
         // margin: theme.spacing(0, -1)
@@ -255,7 +258,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       '[class*=cardWrap]': {
-        boxShadow: 'none'
+        boxShadow: 'none',
+        background: 'transparent'
       },
       '[class*=contentWrap]': {
         textAlign: 'center'
@@ -280,6 +284,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         flex: 'unset'
       },
       '[class*=Card-cardWrap]': {
+        padding: 0,
         overflow: 'visible',
         gap: theme.spacing(2),
         boxShadow: 'none',
@@ -298,22 +303,25 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.person
     },
     style: {
+      'backgroundColor': 'transparent',
       '[class*=Card-contentWrap]': {
         containerType: 'inline-size',
         // flex: 'unset',
-        width: '100%'
+        width: '100%',
+        backgroundColor: 'transparent'
       },
       '[class*=Card-cardWrap]': {
-        overflow: 'visible', // This is a comment
-        gap: theme.spacing(2), // This is another comment
-        boxShadow: 'none', // This is a third comment
-        borderRadius: 4, // This is a fourth comment
-        alignItems: 'flex-start' // This is a fifth comment
+        overflow: 'visible',
+        gap: theme.spacing(2),
+        boxShadow: 'none',
+        borderRadius: 4,
+        alignItems: 'flex-start',
+        backgroundColor: 'transparent'
       },
       '[class*=cardMedia]': {
         'width': 80,
         'height': 80,
-        'paddingTop': 'var(--grid-gap)',
+        // 'paddingTop': 'var(--grid-gap)',
         'aspectRatio': '1 / 1',
         '& > *': {
           borderRadius: '50%',

@@ -33,6 +33,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
     }
   },
 
+  overline: {
+    color: 'var(--variant-highlight-color)'
+  },
   title: ({ theme, ownerState }) => ({
     ...(ownerState?.variant === TextVariants.default && {
       ...theme.typography.h2

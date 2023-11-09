@@ -75,7 +75,8 @@ const schemes = {
   },
   sapphireAccent: {
     primary: colors.white,
-    secondary: colors.sapphire,
+    secondary: { ...colors.sapphire, main: colors.sapphire.dark },
+
     highlightColor: colors.sapphire.main
   },
   blueAccent: {
@@ -90,8 +91,9 @@ const schemes = {
   },
   sunflowerAccent: {
     primary: colors.white,
-    secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main
+    secondary: { ...colors.sapphire, main: colors.sapphire.dark },
+
+    highlightColor: colors.sunflower.dark
   },
   orangeAccent: {
     primary: colors.white,

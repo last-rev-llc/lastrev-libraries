@@ -54,7 +54,7 @@ export const mappers: Mappers = {
         if (!promoImage) return null;
         return [promoImage];
       },
-
+      // color: () => 'white',
       variant: () => 'default',
 
       link: async (person: any, _args: any, ctx: ApolloContext) => {
