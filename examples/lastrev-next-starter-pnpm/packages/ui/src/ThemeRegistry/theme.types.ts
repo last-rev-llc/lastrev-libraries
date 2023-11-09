@@ -16,7 +16,7 @@ declare module '@mui/material/styles' {
     lightGray?: MuiPalette['primary'];
     darkGray?: MuiPalette['primary'];
     navy?: MuiPalette['primary'];
-    burgandy?: MuiPalette['primary'];
+    red?: MuiPalette['primary'];
     crimson?: MuiPalette['primary'];
     sanJuan?: MuiPalette['primary'];
     cornflower?: MuiPalette['primary'];
@@ -32,7 +32,7 @@ declare module '@mui/material/styles' {
     lightGray?: PaletteOptions['primary'];
     darkGray?: PaletteOptions['primary'];
     navy?: PaletteOptions['primary'];
-    burgandy?: PaletteOptions['primary'];
+    red?: PaletteOptions['primary'];
     crimson?: PaletteOptions['primary'];
     sanJuan?: PaletteOptions['primary'];
     cornflower?: PaletteOptions['primary'];
@@ -60,7 +60,6 @@ declare module '@mui/material/styles' {
     bodyXSmall: TypographyStyle;
     bodySmall: TypographyStyle;
     bodyLarge: TypographyStyle;
-    bodySpectral: TypographyStyle;
     navLink: TypographyStyle;
   }
 
@@ -71,7 +70,6 @@ declare module '@mui/material/styles' {
     bodyXSmall?: TypographyStyle;
     bodySmall?: TypographyStyle;
     bodyLarge?: TypographyStyle;
-    bodySpectral?: TypographyStyle;
     navLink?: TypographyStyle;
   }
 }
@@ -85,7 +83,6 @@ declare module '@mui/material/Typography' {
     bodyXSmall?: true;
     bodySmall?: true;
     bodyLarge?: true;
-    bodySpectral?: true;
     navLink?: true;
   }
   type TypographyOptions = {
@@ -95,7 +92,6 @@ declare module '@mui/material/Typography' {
     bodyXSmall?: TypographyStyle;
     bodySmall?: TypographyStyle;
     bodyLarge?: TypographyStyle;
-    bodySpectral?: TypographyStyle;
     navLink?: TypographyStyle;
   };
 }

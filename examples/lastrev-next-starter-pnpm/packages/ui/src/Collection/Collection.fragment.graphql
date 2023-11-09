@@ -4,6 +4,7 @@ fragment Collection_FieldsFragment on Collection {
     ...Text_IntroTextFragment
   }
   variant
+  originalVariant
   itemsVariant
   itemsAspectRatio
   backgroundImage {

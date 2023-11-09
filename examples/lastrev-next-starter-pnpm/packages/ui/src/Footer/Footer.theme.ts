@@ -61,13 +61,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     alignItems: 'center',
     padding: 0,
     position: 'unset',
-    flexDirection: 'column',
+    flexDirection: 'row',
     width: '100%',
     margin: 'auto',
     gap: 'var(--grid-gap)',
+    flexWrap: 'wrap',
 
-    [theme.breakpoints.up('sm')]: {
-      flexDirection: 'row',
+    [theme.breakpoints.up('md')]: {
+      flexWrap: 'unset',
       height: '100%',
       width: 'auto'
     }
@@ -77,7 +78,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     padding: 0,
     position: 'unset',
 
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.only('sm')]: {
+      width: 'calc(50% - var(--grid-gap))'
+    },
+
+    [theme.breakpoints.up('md')]: {
       height: '100%'
     }
   }),
@@ -147,6 +152,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     height: '100%',
     justifySelf: 'flex-start',
     padding: 0,
+    flexDirection: 'column',
+
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row'
+    },
 
     [theme.breakpoints.up('md')]: {
       gridColumnStart: 'content-start',
@@ -154,17 +164,23 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  legalLinkWrap: {
-    'padding': 0,
+  legalLink: {
+    marginBottom: 0
+  },
 
-    '&:not(:first-of-type)': {
-      '&::before': {
-        content: '"•"',
-        display: 'block',
-        padding: '0 calc(var(--grid-gap) / 4)'
+  legalLinkWrap: ({ theme }) => ({
+    padding: 0,
+
+    [theme.breakpoints.up('sm')]: {
+      '&:not(:first-of-type)': {
+        '&::before': {
+          content: '"•"',
+          display: 'block',
+          padding: '0 calc(var(--grid-gap) / 4)'
+        }
       }
     }
-  },
+  }),
 
   disclaimerWrap: ({ theme }) => ({
     gridRow: 5,

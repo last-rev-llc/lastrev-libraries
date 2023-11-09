@@ -6,33 +6,19 @@ import applyBackgroundColor from './mixins/applyBackgroundColor';
 import applyBackgroundOverlay from './mixins/applyBackgroundOverlay';
 import themeComponents from './theme.components';
 
-import { Spectral } from 'next/font/google';
-import localFont from 'next/font/local';
-const realHeadProBold = localFont({
-  src: [
-    {
-      path: '../../fonts/font-real-head-pro.woff2'
-    }
-  ]
-});
+import { Inter_Tight } from 'next/font/google';
 
-const realHeadPro = localFont({
-  src: [
-    {
-      path: '../../fonts/font-real-head-web-pro-light.woff2'
-    }
-  ]
-});
-export const spectral = Spectral({
-  weight: ['300', '400', '500', '700'],
+export const interTight = Inter_Tight({
+  weight: ['200', '300', '400', '600', '700'],
   subsets: ['latin'],
   display: 'swap',
+  // fallback: ['Courier'],
   adjustFontFallback: false
 });
 
 export const mainColors = [
   'navy',
-  'burgandy',
+  'red',
   'crimson',
   'sanJuan',
   'cornflower',
@@ -108,22 +94,22 @@ const paletteTheme = createTheme({
     },
 
     navy: {
-      lighter: '#002339',
-      light: '#002339',
-      main: '#002339',
-      dark: '#002339',
+      lighter: '#03263C',
+      light: '#03263C',
+      main: '#03263C',
+      dark: '#03263C',
       contrastText: '#ffffff',
-      overlay: '#002339',
+      overlay: '#03263C',
       overlayText: '#FFFFFF'
     },
-    burgandy: {
-      lighter: '#9D0031',
-      light: '#9D0031',
-      main: '#9D0031',
-      dark: '#9D0031',
-      contrastText: '#ffffff',
-      overlay: '#002339',
-      overlayText: '#FFFFFF'
+    red: {
+      lighter: '#eb183d',
+      light: '#eb183d',
+      main: '#eb183d',
+      dark: '#eb183d',
+      contrastText: '#000000',
+      overlay: '#ffffff',
+      overlayText: '#000000'
     },
     crimson: {
       lighter: '#EC1A3A',
@@ -259,21 +245,19 @@ const coreTheme = createTheme({
     applyBackgroundOverlay
   },
   typography: {
-    fontFamily: realHeadPro.style.fontFamily,
+    fontFamily: interTight.style.fontFamily,
 
     navLink: {
-      fontWeight: 500,
-      lineHeight: 1.17,
+      fontWeight: 600,
+      lineHeight: 'var(--bodyXSmall-line-height)',
       letterSpacing: '1px',
       textTransform: 'uppercase',
-      fontFamily: realHeadProBold.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontSize: 'var(--bodyXSmall-font-size)'
     },
-    bodySpectral: {
-      fontFamily: `${spectral.style.fontFamily}, Georgia, Arial`
-    },
+
     body1: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--body1-font-weight)',
       fontSize: 'var(--body1-font-size)',
       lineHeight: 'var(--body1-line-height)',
@@ -281,7 +265,7 @@ const coreTheme = createTheme({
       color: 'var(--text-color, inherit)'
     },
     body2: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--body2-font-weight)',
       fontSize: 'var(--body2-font-size)',
       lineHeight: 'var(--body2-line-height)',
@@ -289,7 +273,7 @@ const coreTheme = createTheme({
       color: 'var(--text-color, inherit)'
     },
     bodyXSmall: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--bodyXSmall-font-weight)',
       fontSize: 'var(--bodyXSmall-font-size)',
       lineHeight: 'var(--bodyXSmall-line-height)',
@@ -297,7 +281,7 @@ const coreTheme = createTheme({
       color: 'var(--text-color, inherit)'
     },
     bodySmall: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--bodySmall-font-weight)',
       fontSize: 'var(--bodySmall-font-size)',
       lineHeight: 'var(--bodySmall-line-height)',
@@ -305,7 +289,7 @@ const coreTheme = createTheme({
       color: 'var(--text-color, inherit)'
     },
     bodyLarge: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--bodyLarge-font-weight)',
       fontSize: 'var(--bodyLarge-font-size)',
       lineHeight: 'var(--bodyLarge-line-height)',
@@ -314,7 +298,7 @@ const coreTheme = createTheme({
     },
     display1: {
       display: 'block',
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--display1-font-weight)',
       fontSize: 'var(--display1-font-size)',
       lineHeight: 'var(--display1-line-height)',
@@ -324,7 +308,7 @@ const coreTheme = createTheme({
     },
     display2: {
       display: 'block',
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--display2-font-weight)',
       fontSize: 'var(--display2-font-size)',
       lineHeight: 'var(--display2-line-height)',
@@ -333,7 +317,7 @@ const coreTheme = createTheme({
       color: 'var(--header-color, inherit)'
     },
     h1: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--h1-font-weight)',
       fontSize: 'var(--h1-font-size)',
       lineHeight: 'var(--h1-line-height)',
@@ -343,7 +327,7 @@ const coreTheme = createTheme({
       color: 'var(--header-color, inherit)'
     },
     h2: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--h2-font-weight)',
       fontSize: 'var(--h2-font-size)',
       lineHeight: 'var(--h2-line-height)',
@@ -353,7 +337,7 @@ const coreTheme = createTheme({
       color: 'var(--header-color, inherit)'
     },
     h3: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--h3-font-weight)',
       fontSize: 'var(--h3-font-size)',
       lineHeight: 'var(--h3-line-height)',
@@ -362,7 +346,7 @@ const coreTheme = createTheme({
       color: 'var(--header-color, inherit)'
     },
     h4: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--h4-font-weight)',
       fontSize: 'var(--h4-font-size)',
       lineHeight: 'var(--h4-line-height)',
@@ -371,7 +355,7 @@ const coreTheme = createTheme({
       color: 'var(--header-color, inherit)'
     },
     h5: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--h5-font-weight)',
       fontSize: 'var(--h5-font-size)',
       lineHeight: 'var(--h5-line-height)',
@@ -380,7 +364,7 @@ const coreTheme = createTheme({
       color: 'var(--header-color, inherit)'
     },
     h6: {
-      fontFamily: realHeadPro.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--h6-font-weight)',
       fontSize: 'var(--h6-font-size)',
       lineHeight: 'var(--h6-line-height)',
@@ -391,7 +375,8 @@ const coreTheme = createTheme({
     subtitle2: {},
     overline: {
       display: 'block',
-      fontFamily: realHeadProBold.style.fontFamily,
+      fontFamily: interTight.style.fontFamily,
+      letterSpacing: '1px',
       fontWeight: 'var(--overline-font-weight)',
       fontSize: 'var(--overline-font-size)',
       lineHeight: 'var(--overline-line-height)',

@@ -20,6 +20,7 @@ export const typeDefs = gql`
     contents: [Content]
     breadcrumbs: [Link]
     footerDisclaimerOverride: RichText
+    isHomepage: Boolean
   }
 `;
 
@@ -29,7 +30,12 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      breadcrumbs: breadcrumbsResolver
+      breadcrumbs: breadcrumbsResolver,
+      isHomepage: async (page: any, _args: any, ctx: ApolloContext) => {
+        const slug = getLocalizedField(page.fields, 'slug', ctx);
+        console.log({ slug });
+        return slug === '/';
+      }
     },
 
     Link: {

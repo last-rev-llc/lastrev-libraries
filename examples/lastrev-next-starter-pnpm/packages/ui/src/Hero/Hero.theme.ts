@@ -28,23 +28,38 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     }
   }),
 
-  contentOuterGrid: ({ theme, ownerState }) => ({
+  contentOuterGrid: ({ ownerState }) => ({
     ...(!!ownerState?.background && {
       margin: `var(--section-padding) 0 0`
     })
   }),
 
-  // title: {},
+  title: ({ theme, ownerState }) => ({
+    ...(!ownerState?.isHomepage && {
+      ...theme.typography.h2
+    })
+  }),
 
   // overline: {},
 
   // media: {},
 
-  // overline: {},
+  overline: ({ theme }) => ({
+    [theme.containerBreakpoints.down('md')]: {
+      marginBottom: 0
+    }
+  }),
 
   content: ({ theme }) => ({
     'display': 'flex',
     'flexDirection': 'column',
+    'padding': 'calc(3 * var(--grid-gap)) 0',
+    'gap': 'var(--grid-gap)',
+
+    [theme.containerBreakpoints.up('md')]: {
+      padding: 0,
+      gap: 0
+    },
 
     '> *:last-child': {
       marginBottom: 0

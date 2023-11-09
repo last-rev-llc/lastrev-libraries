@@ -61,15 +61,15 @@ const FormContactUs = (props: FormContactUsProps) => {
               <form id={formId} name={formId} onSubmit={onSubmit} style={{ width: '100%' }}>
                 <input type="hidden" name="form-name" value={formId} />
                 <FormFields ownerState={ownerState}>
-                  <TextField label="First Name" id="lastName" name="lastName" type="text" required variant="standard" />
                   <TextField
-                    label="Last Name"
+                    label="First Name"
                     id="firstName"
                     name="firstName"
                     type="text"
                     required
                     variant="standard"
                   />
+                  <TextField label="Last Name" id="lastName" name="lastName" type="text" required variant="standard" />
                   <TextField label="Email" id="email" name="email" type="email" required variant="standard" />
                   <TextField
                     label="Company Name"

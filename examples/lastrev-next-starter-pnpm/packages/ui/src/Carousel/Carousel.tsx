@@ -21,7 +21,22 @@ import Background from '../Background';
 import { breakpoints } from '../ThemeRegistry/theme';
 
 const Carousel = (props: CarouselProps) => {
-  const ownerState = { ...props };
+  const ownerState: CarouselOwnerState = { ...props };
+
+  const refSwiperWrap = React.useRef<HTMLElement | null>(null);
+
+  React.useEffect(() => {
+    // Check if JavaScript is enabled
+    const isJavaScriptEnabled = typeof window !== 'undefined';
+
+    if (isJavaScriptEnabled) {
+      // Remove the 'no-js' class from the target element
+      const element = refSwiperWrap.current;
+      if (element) {
+        element.classList.remove('no-js');
+      }
+    }
+  }, []);
 
   const {
     backgroundImage,
@@ -126,16 +141,18 @@ const Carousel = (props: CarouselProps) => {
         )}
 
         <ContentGrid ownerState={ownerState}>
-          <SwiperWrap ownerState={ownerState}>
+          <SwiperWrap ownerState={ownerState} ref={refSwiperWrap} className="no-js">
             <SwiperInnerWrap ownerState={ownerState}>
               <Swiper
                 rewind={true}
                 breakpointsBase="container"
                 cssMode={true}
+                className="swiper-horizontal swiper-css-mode"
                 modules={[Navigation, SwiperGrid, Pagination, A11y]}
                 spaceBetween={24}
                 breakpoints={swiperBreakpoints}
                 navigation
+                // onBeforeInit={initSlider}
                 // pagination={{ clickable: true }}
                 // scrollbar={{ draggable: true }}
                 // onSwiper={(swiper) => console.log(swiper)}
@@ -194,7 +211,7 @@ const IntroText = styled(ContentModule, {
 const SwiperWrap = styled(Box, {
   name: 'Carousel',
   slot: 'SwiperWrap',
-  overridesResolver: (_, styles) => [styles.swiperWrap]
+  overridesResolver: (props, styles) => [styles.swiperWrap]
 })<{ ownerState: CarouselOwnerState }>``;
 
 const SwiperInnerWrap = styled(Box, {

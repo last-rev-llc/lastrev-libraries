@@ -128,6 +128,7 @@ type Collection implements Content {
   itemsPerRow: Int
   itemsVariant: String
   numItems: Int
+  originalVariant: String
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
@@ -458,6 +459,7 @@ type Page implements Content {
   hero: Hero
   id: String
   internalTitle: String
+  isHomepage: Boolean
   jsonLd: JSON
   lr__path__: String
   path: String

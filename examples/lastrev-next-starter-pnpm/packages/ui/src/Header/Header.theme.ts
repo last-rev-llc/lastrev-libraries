@@ -67,8 +67,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'gridRow': 3,
     'margin': 'auto',
     '& *': {
-      ...theme.typography.bodySmall,
-      ...theme.typography.bodySpectral
+      ...theme.typography.bodyXSmall
     },
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
@@ -115,7 +114,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     justifyContent: 'center'
   },
 
-  headerMenuNav: ({ theme, ownerState }) => ({
+  headerMenuNav: ({ theme }) => ({
     'justifyItems': 'center',
     'justifyContent': 'flex-end',
     'position': 'unset',
@@ -132,10 +131,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       height: 'auto',
       overflow: 'unset',
       maxHeight: '100%',
-      // gridRow: 1,
       gridRow: 2,
       gridColumnStart: 'three-start',
-      // gridColumnEnd: ownerState?.hasCtaItems ? 'ten-end' : 'content-end'
       gridColumnEnd: 'content-end'
     }
   }),

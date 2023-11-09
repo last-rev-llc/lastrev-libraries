@@ -104,31 +104,33 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     })
   }),
 
-  contentWrap: ({ ownerState, theme }) => ({
+  contentWrap: ({ theme }) => ({
     flex: 1,
-    padding: 'calc(var(--grid-gap) / 2)'
+    padding: 'calc(var(--grid-gap) / 2) 0 0',
+
+    [theme.containerBreakpoints.up('sm')]: {
+      padding: '0 var(--grid-gap) var(--grid-gap)'
+    }
   }),
 
   title: ({ ownerState, theme }) => ({
     ...(ownerState?.variant === CardVariants.blog && {
       ...theme.typography.body1
-    }),
-    fontWeight: '900'
+    })
   }),
 
-  // bodyWrap: {},
+  bodyWrap: ({ theme }) => ({
+    '*': {
+      ...theme.typography.body1
+    }
+  }),
 
   actionsWrap: ({ theme }) => ({
-    padding: 'calc(var(--grid-gap) / 2)'
-    // display: 'flex'
-    // padding: 'var(--grid-gap)',
-    // gap: 'var(--grid-gap)'
-    // flexDirection: 'column',
-    // alignItems: 'center',
-    // // TODO: Need additional breakpoints here
-    // [theme.containerBreakpoints.up('sm')]: {
-    //   flexDirection: 'row'
-    // }
+    padding: 0,
+
+    [theme.containerBreakpoints.up('sm')]: {
+      padding: '0 var(--grid-gap) var(--grid-gap)'
+    }
   }),
 
   link: {
@@ -154,8 +156,12 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       '& [class*=contentWrap]': {
         borderLeft: 'solid 1px currentColor',
         paddingLeft: 'var(--grid-gap)',
-        paddingTop: 'calc(var(--grid-gap) / 2)',
-        paddingBottom: 'calc(var(--grid-gap) / 2)'
+        paddingTop: 0,
+        paddingBottom: 0,
+
+        [theme.containerBreakpoints.up('sm')]: {
+          paddingLeft: 'calc(var(--grid-gap) / 2)'
+        }
       },
 
       '& [class*=Card-content]': {
@@ -169,13 +175,12 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
 
       '& [class*=Card-title]': {
-        ...theme.typography.h5,
         marginTop: 0
-      },
-
-      '& [class*=Card-subtitle]': {
-        ...theme.typography.h6
       }
+
+      // '& [class*=Card-subtitle]': {
+      //   ...theme.typography.h6
+      // }
     }
   },
 
@@ -187,7 +192,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       '[class*=Card-cardMedia]': {
         'width': '100%',
         'height': '100%',
-
         'position': 'relative',
 
         '& > *': {
@@ -222,7 +226,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         },
 
         '[class*=Card-title]': {
-          transform: 'translateY(calc(-100% - calc(var(--grid-gap) * 1.5)))'
+          transform: 'translateY(calc(-100% - calc(var(--grid-gap) * 1.75)))'
         },
 
         ':is([class*=contentWrap], [class*=actionsWrap])': {
@@ -247,7 +251,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           },
 
           '[class*=contentWrap]': {
-            transform: 'translateY(calc(var(--grid-gap) * -1.5))',
+            transform: 'translateY(calc(var(--grid-gap) * -1.75))',
             height: 'auto'
           },
 
@@ -264,16 +268,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.media
     },
     style: {
-      // '[class*=Card-cardMedia]': {
-      //   'width': '100%',
-
-      //   '& > *': {
-      //     width: '100%',
-      //     height: '100%',
-      //     objectFit: 'cover'
-      //   }
-      // },
-
       '[class*=cardContent]': {
         display: 'none'
       }
@@ -288,8 +282,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       'borderLeft': 'solid 1px currentColor',
 
       '[class*=Card-title]': {
-        ...theme.typography.h1,
-        fontWeight: '900'
+        ...theme.typography.h2
       },
 
       '[class*=cardMedia]': {
@@ -337,16 +330,18 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         display: 'flex',
         flexDirection: 'column',
         borderLeft: 'solid 1px currentColor',
-        paddingTop: 0,
-        paddingBottom: 0
+        padding: '0 calc(var(--grid-gap) / 1)'
       },
 
       '[class*=bodyWrap]': {
-        order: 1
+        'order': 1,
+        '& *': {
+          ...theme.typography.body1
+        }
       },
 
       '[class*=Card-title]': {
-        ...theme.typography.h1,
+        ...theme.typography.h2,
         order: 2,
         marginTop: 'auto',
         marginBottom: 0

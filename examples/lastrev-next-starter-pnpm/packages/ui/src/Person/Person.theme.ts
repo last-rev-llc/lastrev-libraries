@@ -42,6 +42,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
     }
   },
 
+  detailsLabel: {
+    '&': {
+      paddingBottom: 'var(--grid-gap)'
+    }
+  },
+
   bodyHeader: {
     '&:not(:first-of-type)': {
       paddingTop: 'var(--grid-gap)',
@@ -49,6 +55,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
       borderTop: 'solid',
       borderTopWidth: '1px'
     }
+  },
+
+  bodyList: {
+    padding: 0
   },
 
   bodyListItem: {

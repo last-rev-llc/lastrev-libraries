@@ -41,13 +41,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
       paddingRight: 'calc(3 * var(--grid-gap))',
       paddingLeft: 0,
       whiteSpace: 'nowrap',
-      opacity: 0.5,
-      ...theme.typography.h4
+      opacity: 0.3,
+      textTransform: 'unset',
+      ...theme.typography.h5
     },
 
     '.Mui-selected': {
       opacity: 1,
-      fontWeight: 700,
       color: 'currentColor'
     }
   }),

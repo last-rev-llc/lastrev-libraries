@@ -6,11 +6,13 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
+import { RichTextVariants } from './RichText.types';
+
 const defaultProps: ComponentsProps['RichText'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['RichText'] = {
   // Set some static styles
-  root: {
+  root: ({ ownerState, theme }) => ({
     'width': '100%',
     'ol, ul': {
       'padding': '0 0 0 calc(var(--grid-gap) * 4)',
@@ -20,14 +22,14 @@ const styleOverrides: ComponentsOverrides<Theme>['RichText'] = {
         padding: 'revert'
       }
     }
-  }
+  })
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['RichText'] => [
   // Use prop matching to set variant styles
   {
     props: {
-      variant: 'inline'
+      variant: RichTextVariants.inline
     },
     style: {
       // TODO: Pulled from Text, but adds default padding around elements.   Classes may be wrong
@@ -83,10 +85,21 @@ const createVariants = (theme: Theme): ComponentsVariants['RichText'] => [
 
   {
     props: {
-      variant: 'introText'
+      variant: RichTextVariants.introText
     },
     style: ({ theme }: { theme: Theme }) => ({
       marginBottom: theme.spacing(4)
+    })
+  },
+
+  {
+    props: {
+      variant: RichTextVariants.smallText
+    },
+    style: ({ theme }: { theme: Theme }) => ({
+      '& *': {
+        ...theme.typography.bodySmall
+      }
     })
   }
 ];

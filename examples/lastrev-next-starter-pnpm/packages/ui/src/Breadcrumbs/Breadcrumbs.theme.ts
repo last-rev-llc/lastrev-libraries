@@ -9,9 +9,14 @@ import type {
 const defaultProps: ComponentsProps['Breadcrumbs'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Breadcrumbs'] = {
-  root: {},
-  breadcrumb: ({ theme }) => ({
-    ...theme.typography.bodyXSmall
+  root: ({ theme }) => ({
+    '& *': {
+      ...theme.typography.bodyXSmall,
+
+      '[class*=separator]': {
+        padding: `0 calc(var(--grid-gap) / 4)`
+      }
+    }
   })
 };
 

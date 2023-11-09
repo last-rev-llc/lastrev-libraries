@@ -30,6 +30,7 @@ interface PersonClasses {
   bodyHeader: string;
   bodyList: string;
   bodyListItem: string;
+  detailsLabel: string;
 }
 
 export declare type PersonClassKey = keyof PersonClasses;

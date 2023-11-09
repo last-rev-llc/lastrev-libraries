@@ -4,6 +4,7 @@ import dynamic from 'next/dynamic';
 
 import { styled } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 const TableContainer = dynamic(() => import('@mui/material/TableContainer'));
 const Table = dynamic(() => import('@mui/material/Table'));
@@ -19,7 +20,7 @@ import INLINES from './INLINES';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import type { RichTextProps } from './RichText.types';
+import type { RichTextOwnerState, RichTextProps } from './RichText.types';
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 const keyBy = (key: string, xs: any[]) => xs.filter(Boolean).reduce((acc, x) => ({ ...acc, [x[key]]: x }), {});
@@ -191,25 +192,14 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
   };
 };
 
-const RichText = ({
-  body,
-  align,
-  variant,
-  sidekickLookup,
-  sx,
-  renderNode,
-  renderMark,
-  renderOptions,
-  ...props
-}: RichTextProps) => {
+const RichText = (props: RichTextProps) => {
+  const ownerState = { ...props };
+
+  const { body, variant, sidekickLookup, renderNode, renderMark, renderOptions } = props;
+
   return (
     <ErrorBoundary>
-      <Root
-        {...sidekick(sidekickLookup)}
-        variant={variant}
-        // sx={{ textAlign: align, ...sx, ...styles?.root }} // TODO
-        data-testid="RichText-root"
-        {...props}>
+      <Root {...sidekick(sidekickLookup)} ownerState={ownerState} data-testid="RichText-root" {...props}>
         {documentToReactComponents(
           body?.json,
           createRenderOptions({ links: body?.links, renderNode, renderMark, ...renderOptions })
@@ -219,34 +209,29 @@ const RichText = ({
   );
 };
 
-const Root = styled('div', {
+const Root = styled(Box, {
   name: 'RichText',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.root, styles.richTextContent]
-})<{ variant?: string }>`
-  white-space: pre-wrap;
-  display: contents;
-`;
+})<{ ownerState: RichTextOwnerState }>``;
 
 const EmbeddedRoot = styled('div', {
   name: 'RichText',
   slot: 'EmbeddedRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
+
   overridesResolver: (_, styles) => [styles.embeddedRoot]
 })<{ variant?: string }>``;
 
 const InlineRoot = styled('span', {
   name: 'RichText',
   slot: 'InlineRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
   overridesResolver: (_, styles) => [styles.inlineRoot]
 })<{ variant?: string }>``;
 
 const TableRoot = styled(TableContainer, {
   name: 'RichText',
   slot: 'TableRoot',
-  shouldForwardProp: (prop) => prop !== 'variant',
+
   overridesResolver: (_, styles) => [styles.tableRoot]
 })<{ variant?: string }>``;
 
