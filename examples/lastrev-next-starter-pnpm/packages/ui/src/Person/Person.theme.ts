@@ -22,7 +22,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   sideContentWrap: ({ theme }) => ({
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
-    paddingBottom: 'calc(2 * var(--grid-gap))',
+    paddingBottom: 'var(--grid-gap-double)',
 
     [theme.containerBreakpoints.up('lg')]: {
       gridColumnStart: 'content-start',
@@ -72,7 +72,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
 
   contentWrap: ({ theme }) => ({
     backgroundColor: theme.palette.white.main,
-    padding: 'calc(2 * var(--grid-gap))',
+    padding: 'var(--grid-gap-double)',
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 

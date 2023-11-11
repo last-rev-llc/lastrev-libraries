@@ -42,6 +42,8 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --grid-margin-lg: 96px;
               --grid-margin-xl: 128px;
 
+              --grid-margin: var(--grid-margin-xs);
+
               --grid-gap-xs: var(--grid-margin-xs);
               --grid-gap-sm: calc(var(--grid-margin-sm) / 2);
               --grid-gap-md: calc(var(--grid-margin-md) / 4);
@@ -49,6 +51,9 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --grid-gap-xl: calc(var(--grid-margin-xl) / 4);
 
               --grid-gap: var(--grid-margin-xs);
+              --grid-gap-double: calc(var(--grid-gap) * 2);
+              --grid-gap-half: calc(var(--grid-gap) / 2);
+              --grid-gap-quarter: calc(var(--grid-gap) / 4);
 
               ${theme.breakpoints.up('sm')} {
                 --grid-gap: var(--grid-gap-sm);
@@ -153,38 +158,38 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               --swiper-preloader-color: var(--swiper-theme-color);
               --swiper-wrapper-transition-timing-function: initial;
 
-              --swiper-navigation-size: calc(var(--grid-gap) / 1); // calc(var(--grid-margin) / 4);
+              --swiper-navigation-size: var(--grid-gap);
               --swiper-navigation-top-offset: 100%;
               --swiper-navigation-sides-offset: 0; //calc(var(--grid-margin) / 2);
               --swiper-navigation-color: var(--swiper-theme-color);
 
               --swiper-pagination-color: currentColor; //var(--current-color-text); //var(--swiper-theme-color);
               --swiper-pagination-left: auto;
-              --swiper-pagination-right: calc(var(--grid-gap) / 2);
-              --swiper-pagination-bottom: calc(var(--grid-gap) / 2);
+              --swiper-pagination-right: var(--grid-gap-half);
+              --swiper-pagination-bottom: var(--grid-gap-half);
               --swiper-pagination-top: auto;
               --swiper-pagination-fraction-color: inherit;
               --swiper-pagination-progressbar-bg-color: rgba(0, 0, 0, 0.25);
-              --swiper-pagination-progressbar-size: calc(var(--grid-gap) / 4);
-              --swiper-pagination-bullet-size: calc(var(--grid-gap) / 2);
-              --swiper-pagination-bullet-width: calc(var(--grid-gap) / 2);
-              --swiper-pagination-bullet-height: calc(var(--grid-gap) / 2);
+              --swiper-pagination-progressbar-size: var(--grid-gap-quarter);
+              --swiper-pagination-bullet-size: var(--grid-gap-half);
+              --swiper-pagination-bullet-width: var(--grid-gap-half);
+              --swiper-pagination-bullet-height: var(--grid-gap-half);
               --swiper-pagination-bullet-border-radius: 50%;
               --swiper-pagination-bullet-inactive-color: currentColor; //var(--swiper-theme-color);
               --swiper-pagination-bullet-inactive-opacity: 0.2;
               --swiper-pagination-bullet-opacity: 1;
-              --swiper-pagination-bullet-horizontal-gap: calc(var(--grid-gap) / 4);
-              --swiper-pagination-bullet-vertical-gap: calc(var(--grid-gap) / 4);
+              --swiper-pagination-bullet-horizontal-gap: var(--grid-gap-quarter);
+              --swiper-pagination-bullet-vertical-gap: var(--grid-gap-quarter);
 
-              --swiper-scrollbar-border-radius: calc(var(--grid-gap) / 2);
+              --swiper-scrollbar-border-radius: var(--grid-gap-half);
               --swiper-scrollbar-top: auto;
-              --swiper-scrollbar-bottom: calc(var(--grid-gap) / 4);
+              --swiper-scrollbar-bottom: var(--grid-gap-quarter);
               --swiper-scrollbar-left: auto;
-              --swiper-scrollbar-right: calc(var(--grid-gap) / 4);
+              --swiper-scrollbar-right: var(--grid-gap-quarter);
               --swiper-scrollbar-sides-offset: 1%;
               --swiper-scrollbar-bg-color: rgba(0, 0, 0, 0.1);
               --swiper-scrollbar-drag-bg-color: rgba(0, 0, 0, 0.5);
-              --swiper-scrollbar-size: calc(var(--grid-gap) / 4);
+              --swiper-scrollbar-size: var(--grid-gap-quarter);
             }
 
             body * {
@@ -201,7 +206,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display4-font-size: ${(display4FontSizeBase / 8) * 6}rem;
                 --display5-font-size: ${(display5FontSizeBase / 8) * 6}rem;
                 --display6-font-size: ${(display6FontSizeBase / 8) * 6}rem; */
-                --section-padding: calc(var(--grid-gap) * 2);
+                --section-padding: var(--grid-gap-double);
               }
 
               ${theme.containerBreakpoints.up('md')} {
@@ -217,7 +222,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display4-font-size: ${(display4FontSizeBase / 8) * 7}rem;
                 --display5-font-size: ${(display5FontSizeBase / 8) * 7}rem;
                 --display6-font-size: ${(display6FontSizeBase / 8) * 7}rem; */
-                --section-padding: calc(var(--grid-gap) * 2);
+                --section-padding: var(--grid-gap-double);
               }
 
               ${theme.containerBreakpoints.up('lg')} {
@@ -233,7 +238,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display4-font-size: ${display4FontSizeBase}rem;
                 --display5-font-size: ${display5FontSizeBase}rem; */
                 /* --display6-font-size: ${display6FontSizeBase}rem;
-                --section-padding: calc(var(--grid-gap) * 2);
+                --section-padding: var(--grid-gap-double);
               }
 
               ${theme.containerBreakpoints.up('xl')} {
@@ -249,7 +254,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display4-font-size: ${(display4FontSizeBase / 8) * 9}rem;
                 --display5-font-size: ${(display5FontSizeBase / 8) * 9}rem; */
                 /* --display6-font-size: ${(display6FontSizeBase / 8) * 9}rem; */
-                --section-padding: calc(var(--grid-gap) * 2);
+                --section-padding: var(--grid-gap-double);
               }
             }
           `}

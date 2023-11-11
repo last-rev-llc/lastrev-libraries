@@ -14,7 +14,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Breadcrumbs'] = {
       ...theme.typography.bodyXSmall,
 
       '[class*=separator]': {
-        padding: `0 calc(var(--grid-gap) / 4)`
+        padding: `0 var(--grid-gap-quarter)`
       }
     }
   })

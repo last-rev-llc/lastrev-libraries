@@ -6,6 +6,9 @@ import type { ApolloContext } from './types';
 import { createPath } from './utils/createPath';
 import { pascalCase } from './utils/pascalCase';
 import { defaultResolver } from './utils/defaultResolver';
+import { siteAddressResolver } from './utils/siteAddressResolver';
+import { siteEmailResolver } from './utils/siteEmailResolver';
+import { sitePhoneResolver } from './utils/sitePhoneResolver';
 
 const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem', 'Page', 'Person', 'Blog', 'PageProperty'];
 
@@ -50,15 +53,68 @@ export const mappers = {
   NavigationItem: {
     NavigationItem: {
       variant: defaultResolver('variant'),
-      // image: (item: any, _args: any, ctx: ApolloContext) => {
-      //   const mediaRef: any = getLocalizedField(item.fields, 'media', ctx);
-      //   return mediaRef;
-      // },
-      href: hrefUrlResolver
+      href: hrefUrlResolver,
+      text: async (navItem: any, args: any, ctx: ApolloContext) => {
+        const variantFn = defaultResolver('variant');
+        const variant = variantFn(navItem, args, ctx);
+
+        if (variant === 'footerContactDetails') {
+          const address = await siteAddressResolver(navItem, args, ctx);
+          const email = await siteEmailResolver(navItem, args, ctx);
+          const phone = await sitePhoneResolver(navItem, args, ctx);
+
+          const parts: (string | null | undefined)[] = [
+            address.streetAddress,
+            address.streetAddress2,
+            `${address.city ? (address.state ? `${address.city},` : `${address.city}`) : null} ${address.state} ${
+              address.postalCode
+            }`,
+            phone.phoneNumber,
+            email
+          ];
+
+          return parts.filter((part) => part != null && part !== '').join('\n');
+        }
+
+        return getLocalizedField(navItem.fields, 'text', ctx);
+      }
     },
     Link: {
       href: hrefUrlResolver,
       variant: defaultResolver('variant')
+      // text: async (navItem: any, args: any, ctx: ApolloContext) => {
+      //   const variantFn = defaultResolver('variant');
+      //   const variant = variantFn(navItem, args, ctx);
+
+      //   console.log('match', variant, variant === 'footerContactDetails');
+
+      //   if (variant === 'footerContactDetails') {
+      //     const address = await siteAddressResolver(navItem, args, ctx);
+      //     const email = await siteEmailResolver(navItem, args, ctx);
+      //     const phone = await sitePhoneResolver(navItem, args, ctx);
+
+      //     const parts: (string | null | undefined)[] = [
+      //       address.streetAddress,
+      //       address.streetAddress2,
+      //       `
+      //         ${address.city ? (address.state ? `${address.city},` : `${address.city}`) : null}
+      //         ${address.state}
+      //         ${address.postalCode}
+      //       `,
+      //       phone.phoneNumber,
+      //       email
+      //     ];
+
+      //     console.log('parts', parts);
+
+      //     return parts
+      //       .filter((part) => part != null && part !== '')
+      //       .join('<br/>')
+      //       .trim();
+      //   }
+
+      //   return getLocalizedField(navItem.fields, 'text', ctx);
+      // }
     }
   }
 };

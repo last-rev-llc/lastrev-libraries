@@ -34,7 +34,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   }),
 
   contentOuterGrid: ({ theme }) => ({
-    rowGap: 'calc(var(--grid-gap) / 2)'
+    rowGap: 'var(--grid-gap-half)'
   }),
 
   logoRoot: ({ theme }) => ({
@@ -175,7 +175,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     flexDirection: 'column',
     width: '100%',
     margin: 'auto',
-    gap: 'calc(var(--grid-gap) / 2)',
+    gap: 'var(--grid-gap-half)',
     textTransform: 'uppercase',
     fontWeight: 700,
 

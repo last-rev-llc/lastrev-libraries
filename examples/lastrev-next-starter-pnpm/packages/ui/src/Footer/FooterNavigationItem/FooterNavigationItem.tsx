@@ -15,13 +15,13 @@ import type { FooterNavigationItemProps, FooterNavigationItemOwnerState } from '
 const FooterNavigationItem = (props: FooterNavigationItemProps) => {
   const ownerState = { ...props };
 
-  const { text, href, variant, sidekickLookup } = props;
+  const { text, href, sidekickLookup } = props;
 
   const RootCmp = href ? RootLink : Root;
 
   return (
     <RootCmp {...sidekick(sidekickLookup)} component={Typography} ownerState={ownerState}>
-      {text} - hello
+      {text}
     </RootCmp>
   );
 };

@@ -15,7 +15,7 @@ const styleOverrides: ComponentsOverrides<Theme>['RichText'] = {
   root: ({ ownerState, theme }) => ({
     'width': '100%',
     'ol, ul': {
-      'padding': '0 0 0 calc(var(--grid-gap) * 4)',
+      'padding': '0 0 0 var(--grid-gap-double)',
 
       '& > li': {
         marginBottom: '1em',

@@ -97,25 +97,25 @@ const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
     '--content-width': `min(${theme.containerBreakpoints.values.sm}px, (100vw - (2 * var(--grid-margin))))`,
 
     'gridTemplateColumns': `
-      [full-start] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.sm}px / 2)))
-      [one-start content-start] minmax(0, 1fr)
-      [one-end two-start content-quarter] minmax(0, 1fr)
-      [two-end three-start content-half] minmax(0, 1fr)
-      [three-end four-start content-three-quarter] minmax(0, 1fr)
-      [four-end content-end] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.sm}px / 2)))
-      [full-end]
-    `,
+        [full-start] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.sm}px / 2)))
+        [one-start content-start] minmax(0, 1fr)
+        [one-end two-start content-quarter] minmax(0, 1fr)
+        [two-end three-start content-half] minmax(0, 1fr)
+        [three-end four-start content-three-quarter] minmax(0, 1fr)
+        [four-end content-end] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.sm}px / 2)))
+        [full-end]
+      `,
 
     [theme.breakpoints.up('sm')]: {
       '--content-width': `min(${theme.containerBreakpoints.values.sm}px, (100vw - (2 * var(--grid-margin))))`,
       'gridTemplateColumns': `
-      [full-start] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.md}px / 2)))
-      [one-start content-start] minmax(0, 1fr)
-      [one-end two-start content-quarter] minmax(0, 1fr)
-      [two-end three-start content-half] minmax(0, 1fr)
-      [three-end four-start content-three-quarter] minmax(0, 1fr)
-      [four-end content-end] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.md}px / 2)))
-      [full-end]
+        [full-start] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.md}px / 2)))
+        [one-start content-start] minmax(0, 1fr)
+        [one-end two-start content-quarter] minmax(0, 1fr)
+        [two-end three-start content-half] minmax(0, 1fr)
+        [three-end four-start content-three-quarter] minmax(0, 1fr)
+        [four-end content-end] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.md}px / 2)))
+        [full-end]
       `
     },
 

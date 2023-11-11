@@ -10,12 +10,12 @@ const defaultProps: ComponentsProps['FooterNavigationItem'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
   root: ({ theme, ownerState }) => ({
-    ...(ownerState.variant === 'linkBoldedFooter'
+    ...(ownerState.variant === 'linkBoldedFooter' || ownerState.variant === 'labelFooter'
       ? {
           ...theme.typography.navLink
         }
       : {
-          ...theme.typography.body2
+          ...theme.typography.bodyXSmall
         })
   })
 

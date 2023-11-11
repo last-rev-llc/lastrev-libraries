@@ -53,7 +53,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   content: ({ theme }) => ({
     'display': 'flex',
     'flexDirection': 'column',
-    'padding': 'calc(3 * var(--grid-gap)) 0',
+    'padding': 'var(--section-padding) 0',
     'gap': 'var(--grid-gap)',
 
     [theme.containerBreakpoints.up('md')]: {

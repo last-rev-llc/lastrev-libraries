@@ -144,7 +144,6 @@ const Carousel = (props: CarouselProps) => {
                 spaceBetween={24}
                 breakpoints={swiperBreakpoints}
                 navigation
-                // onBeforeInit={initSlider}
                 // pagination={{ clickable: true }}
                 // scrollbar={{ draggable: true }}
                 // onSwiper={(swiper) => console.log(swiper)}

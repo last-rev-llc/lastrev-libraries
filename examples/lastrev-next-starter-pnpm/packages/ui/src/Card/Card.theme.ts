@@ -106,11 +106,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 
   contentWrap: ({ theme }) => ({
     flex: 1,
-    padding: 'calc(var(--grid-gap) / 2) 0 0',
-
-    [theme.containerBreakpoints.up('sm')]: {
-      padding: '0 var(--grid-gap) var(--grid-gap)'
-    }
+    padding: 'var(--grid-gap)'
   }),
 
   title: ({ ownerState, theme }) => ({
@@ -126,10 +122,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   }),
 
   actionsWrap: ({ theme }) => ({
-    padding: 0,
+    padding: 'var(--grid-gap)',
 
     [theme.containerBreakpoints.up('sm')]: {
       padding: '0 var(--grid-gap) var(--grid-gap)'
+    },
+
+    a: {
+      padding: 0,
+      margin: 0
     }
   }),
 
@@ -160,7 +161,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         paddingBottom: 0,
 
         [theme.containerBreakpoints.up('sm')]: {
-          paddingLeft: 'calc(var(--grid-gap) / 2)'
+          paddingLeft: 'var(--grid-gap-half)'
         }
       },
 
@@ -177,10 +178,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       '& [class*=Card-title]': {
         marginTop: 0
       }
-
-      // '& [class*=Card-subtitle]': {
-      //   ...theme.typography.h6
-      // }
     }
   },
 
@@ -330,7 +327,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         display: 'flex',
         flexDirection: 'column',
         borderLeft: 'solid 1px currentColor',
-        padding: '0 calc(var(--grid-gap) / 1)'
+        padding: '0 var(--grid-gap)'
       },
 
       '[class*=bodyWrap]': {

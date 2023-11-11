@@ -22,7 +22,7 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
   sideContentWrap: ({ theme }) => ({
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
-    paddingBottom: 'calc(2 * var(--grid-gap))',
+    paddingBottom: 'var(--grid-gap-double)',
 
     [theme.containerBreakpoints.up('md')]: {
       gridColumnStart: 'content-start',
@@ -44,7 +44,7 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
 
   contentWrap: ({ theme }) => ({
     backgroundColor: theme.palette.white.main,
-    padding: 'calc(2 * var(--grid-gap))',
+    padding: 'var(--grid-gap-double)',
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 
@@ -65,7 +65,7 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
   },
 
   formFields: ({ theme, ownerState }) => ({
-    'paddingBottom': 'calc(2 * var(--grid-gap))',
+    'paddingBottom': 'var(--grid-gap-double)',
     '& > *': {
       'gridColumnStart': 'content-start',
       'gridColumnEnd': 'content-end',

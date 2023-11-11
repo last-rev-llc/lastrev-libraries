@@ -38,7 +38,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     '.MuiTab-root': {
       borderBottomWidth: '1px',
       borderBottomStyle: 'solid',
-      paddingRight: 'calc(3 * var(--grid-gap))',
+      paddingRight: 'var(--grid-gap-double)',
       paddingLeft: 0,
       whiteSpace: 'nowrap',
       opacity: 0.3,
