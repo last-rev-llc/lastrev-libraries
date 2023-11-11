@@ -55,10 +55,43 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
       : { ...theme.mixins.applyBackgroundColor({ ownerState, theme }), padding: 'var(--section-padding) 0' })
   }),
 
-  swiperWrap: {
-    padding: 'var(--section-padding) 0 calc(2 * var(--section-padding))',
-    gridColumn: 'content-start/full-end',
-    overflow: 'hidden'
+  swiperWrap: ({ theme, ownerState }) => {
+    const itemsPerRow = ownerState?.itemsPerRow || 3;
+
+    return {
+      '&.no-js': {
+        '[class*=swiper-button]': {
+          visibility: 'hidden'
+        },
+
+        '.swiper-slide': {
+          // Calculations get messed up if we don't do this
+          'paddingRight': theme.spacing(1),
+
+          '--carousel-col-count': 1.25,
+
+          [theme.breakpoints.up('md')]: {
+            '--carousel-col-count': itemsPerRow > 2 ? 2.5 : 2
+          },
+
+          [theme.breakpoints.up('lg')]: {
+            '--carousel-col-count': itemsPerRow >= 4 ? 4.5 : 2.5
+          },
+
+          ...(itemsPerRow >= 5 && {
+            [theme.breakpoints.up('xl')]: {
+              '--carousel-col-count': 5.5
+            }
+          }),
+
+          'width': `calc(var(--content-width) / var(--carousel-col-count))`
+        }
+      },
+
+      'padding': 'var(--section-padding) 0 calc(2 * var(--section-padding))',
+      'gridColumn': 'content-start/full-end',
+      'overflow': 'hidden'
+    };
   },
 
   swiperInnerWrap: {
@@ -83,7 +116,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
   contentGrid: {}
 };
 
-const createVariants = (theme: Theme): ComponentsVariants['Carousel'] => [];
+const createVariants = (_theme: Theme): ComponentsVariants['Carousel'] => [];
 
 const carouselTheme = (theme: Theme): ThemeOptions => ({
   components: {

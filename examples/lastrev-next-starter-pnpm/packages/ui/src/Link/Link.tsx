@@ -63,7 +63,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   });
 
   const sharedLinkProps = {
-    component: NextLink,
+    component: href === '/#' ? Box : NextLink,
     className,
     ref,
     href,

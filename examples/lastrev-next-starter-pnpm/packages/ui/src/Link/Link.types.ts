@@ -6,6 +6,7 @@ import type { Link_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum LinkVariants {
   default = 'default',
+  link = 'link',
   buttonContained = 'buttonContained',
   buttonOutlined = 'buttonOutlined',
   buttonText = 'buttonText',

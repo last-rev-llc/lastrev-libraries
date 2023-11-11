@@ -22,7 +22,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   sideContentWrap: ({ theme }) => ({
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
-    paddingBottom: 'calc(2 * var(--grid-gap))',
+    paddingBottom: 'var(--grid-gap-double)',
 
     [theme.containerBreakpoints.up('lg')]: {
       gridColumnStart: 'content-start',
@@ -42,6 +42,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
     }
   },
 
+  detailsLabel: {
+    '&': {
+      paddingBottom: 'var(--grid-gap)'
+    }
+  },
+
   bodyHeader: {
     '&:not(:first-of-type)': {
       paddingTop: 'var(--grid-gap)',
@@ -49,6 +55,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
       borderTop: 'solid',
       borderTopWidth: '1px'
     }
+  },
+
+  bodyList: {
+    padding: 0
   },
 
   bodyListItem: {
@@ -62,7 +72,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
 
   contentWrap: ({ theme }) => ({
     backgroundColor: theme.palette.white.main,
-    padding: 'calc(2 * var(--grid-gap))',
+    padding: 'var(--grid-gap-double)',
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 

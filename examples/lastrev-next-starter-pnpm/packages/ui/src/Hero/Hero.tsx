@@ -22,7 +22,6 @@ const Hero = (props: HeroProps) => {
     header,
     background,
     backgroundColor,
-    variant,
     overline,
     title,
     subtitle,
@@ -63,7 +62,7 @@ const Hero = (props: HeroProps) => {
                 <Title
                   {...sidekick(sidekickLookup, 'title')}
                   component="h1"
-                  variant="display1"
+                  variant="h1"
                   data-testid="Hero-title"
                   ownerState={ownerState}>
                   {title}
@@ -75,7 +74,7 @@ const Hero = (props: HeroProps) => {
                   {...sidekick(sidekickLookup, 'subtitle')}
                   data-testid="Hero-subtitle"
                   ownerState={ownerState}
-                  variant="display3">
+                  variant="h2">
                   {subtitle}
                 </Subtitle>
               )}

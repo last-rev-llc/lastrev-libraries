@@ -1,6 +1,6 @@
-import { Mixins } from '@mui/material/styles/createMixins';
-import { type TypographyStyle, type Breakpoints } from '@mui/material/styles';
-import { Palette as MuiPalette } from '@mui/material/styles/createPalette';
+import { type Breakpoints, type Mixins } from '@mui/material/styles';
+import { type TypographyStyle } from '@mui/material/styles';
+import { type Palette as MuiPalette } from '@mui/material/styles/createPalette';
 
 declare module '@mui/material/styles' {
   interface TypeBackground {
@@ -16,7 +16,7 @@ declare module '@mui/material/styles' {
     lightGray?: MuiPalette['primary'];
     darkGray?: MuiPalette['primary'];
     navy?: MuiPalette['primary'];
-    burgandy?: MuiPalette['primary'];
+    red?: MuiPalette['primary'];
     crimson?: MuiPalette['primary'];
     sanJuan?: MuiPalette['primary'];
     cornflower?: MuiPalette['primary'];
@@ -32,7 +32,7 @@ declare module '@mui/material/styles' {
     lightGray?: PaletteOptions['primary'];
     darkGray?: PaletteOptions['primary'];
     navy?: PaletteOptions['primary'];
-    burgandy?: PaletteOptions['primary'];
+    red?: PaletteOptions['primary'];
     crimson?: PaletteOptions['primary'];
     sanJuan?: PaletteOptions['primary'];
     cornflower?: PaletteOptions['primary'];
@@ -47,6 +47,7 @@ declare module '@mui/material/styles' {
 
   interface Theme {
     mixins: Mixins;
+    containerBreakpoints: Breakpoints;
   }
 
   interface ThemeOptions {
@@ -60,7 +61,6 @@ declare module '@mui/material/styles' {
     bodyXSmall: TypographyStyle;
     bodySmall: TypographyStyle;
     bodyLarge: TypographyStyle;
-    bodySpectral: TypographyStyle;
     navLink: TypographyStyle;
   }
 
@@ -71,7 +71,6 @@ declare module '@mui/material/styles' {
     bodyXSmall?: TypographyStyle;
     bodySmall?: TypographyStyle;
     bodyLarge?: TypographyStyle;
-    bodySpectral?: TypographyStyle;
     navLink?: TypographyStyle;
   }
 }
@@ -85,7 +84,6 @@ declare module '@mui/material/Typography' {
     bodyXSmall?: true;
     bodySmall?: true;
     bodyLarge?: true;
-    bodySpectral?: true;
     navLink?: true;
   }
   type TypographyOptions = {
@@ -95,7 +93,6 @@ declare module '@mui/material/Typography' {
     bodyXSmall?: TypographyStyle;
     bodySmall?: TypographyStyle;
     bodyLarge?: TypographyStyle;
-    bodySpectral?: TypographyStyle;
     navLink?: TypographyStyle;
   };
 }

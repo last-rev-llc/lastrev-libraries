@@ -40,12 +40,17 @@ export const applyBackgroundColor: ApplyBackgroundColor = ({
         'backgroundColor': bgColor,
         'color': textColor,
         'borderColor': textColor,
-        'fill': 'currentColor !important',
         '--text-color': textColor,
         '--header-color': headerColor,
         '--link-color': linkColor,
         '--current-color-text': textColor,
-        '--current-color-bg': bgColor
+        '--current-color-bg': bgColor,
+        '[stroke]': {
+          stroke: 'var(--text-color) !important'
+        },
+        '.tarealty-logo-text [fill]': {
+          fill: 'var(--text-color) !important'
+        }
       };
     }
   }

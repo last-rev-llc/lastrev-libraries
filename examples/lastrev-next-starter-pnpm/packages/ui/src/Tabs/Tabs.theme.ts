@@ -38,16 +38,16 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     '.MuiTab-root': {
       borderBottomWidth: '1px',
       borderBottomStyle: 'solid',
-      paddingRight: 'calc(3 * var(--grid-gap))',
+      paddingRight: 'var(--grid-gap-double)',
       paddingLeft: 0,
       whiteSpace: 'nowrap',
-      opacity: 0.5,
-      ...theme.typography.h4
+      opacity: 0.3,
+      textTransform: 'unset',
+      ...theme.typography.h5
     },
 
     '.Mui-selected': {
       opacity: 1,
-      fontWeight: 700,
       color: 'currentColor'
     }
   }),

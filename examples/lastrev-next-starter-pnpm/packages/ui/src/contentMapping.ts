@@ -68,6 +68,8 @@ export const contentMapping: {
   'NavigationItem:group': HeaderNavGroup,
   'NavigationItem:linkFooter': FooterNavigationItem,
   'NavigationItem:linkBoldedFooter': FooterNavigationItemGroup,
+  'NavigationItem:labelFooter': FooterNavigationItemGroup,
+  'NavigationItem:footerContactDetailsFooter': FooterNavigationItemGroup,
   'NavigationItem:groupFooter': FooterNavigationItemGroup,
   SiteMessage,
   Breadcrumbs

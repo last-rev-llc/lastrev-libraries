@@ -22,8 +22,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   contentOuterGrid: {
     '& a': {
-      whiteSpace: 'nowrap',
-      color: 'inherit'
+      color: 'inherit',
+      alignItems: 'baseline'
     }
   },
 
@@ -37,18 +37,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
     [theme.breakpoints.up('md')]: {
       gridColumn: 'content-start / span 2'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumn: 'content-start / span 3'
     }
   }),
-
-  // logo: {
-  //   width: 'auto',
-  //   height: 40,
-  //   margin: 0,
-
-  //   svg: {
-  //     fill: '#ffffff'
-  //   }
-  // },
 
   footerMenuNav: ({ theme, ownerState }) => ({
     gridRow: 2,
@@ -58,26 +52,31 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   footerMenuNavItems: ({ theme, ownerState }) => ({
     display: 'inline-flex',
-    alignItems: 'center',
     padding: 0,
     position: 'unset',
-    flexDirection: 'column',
+    flexDirection: 'row',
     width: '100%',
     margin: 'auto',
     gap: 'var(--grid-gap)',
+    flexWrap: 'wrap',
+    alignItems: 'baseline',
 
-    [theme.breakpoints.up('sm')]: {
-      flexDirection: 'row',
-      height: '100%',
-      width: 'auto'
+    [theme.breakpoints.up('md')]: {
+      flexWrap: 'unset',
+      height: '100%'
     }
   }),
 
   footerMenuNavItem: ({ theme }) => ({
     padding: 0,
     position: 'unset',
+    alignItems: 'flex-start',
 
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.only('sm')]: {
+      width: 'calc(50% - var(--grid-gap))'
+    },
+
+    [theme.breakpoints.up('md')]: {
       height: '100%'
     }
   }),
@@ -147,6 +146,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     height: '100%',
     justifySelf: 'flex-start',
     padding: 0,
+    flexDirection: 'column',
+
+    a: {
+      whiteSpace: 'nowrap'
+    },
+
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row'
+    },
 
     [theme.breakpoints.up('md')]: {
       gridColumnStart: 'content-start',
@@ -154,17 +162,23 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  legalLinkWrap: {
-    'padding': 0,
+  legalLink: {
+    marginBottom: 0
+  },
 
-    '&:not(:first-of-type)': {
-      '&::before': {
-        content: '"•"',
-        display: 'block',
-        padding: '0 calc(var(--grid-gap) / 4)'
+  legalLinkWrap: ({ theme }) => ({
+    padding: 0,
+
+    [theme.breakpoints.up('sm')]: {
+      '&:not(:first-of-type)': {
+        '&::before': {
+          content: '"•"',
+          display: 'block',
+          padding: '0 var(--grid-gap-quarter)'
+        }
       }
     }
-  },
+  }),
 
   disclaimerWrap: ({ theme }) => ({
     gridRow: 5,

@@ -6,19 +6,21 @@ import type {
   ComponentsVariants
 } from '@mui/material/styles';
 
+import { LinkVariants } from './Link.types';
+
 const defaultProps: ComponentsProps['Link'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
   root: ({ theme }) => ({
     display: 'inline-flex',
     alignItems: 'center',
-    textUnderlineOffset: '4px'
+    textUnderlineOffset: '4px',
+    marginBottom: 0
   }),
 
   rootButton: {
     display: 'inline-flex',
-    alignItems: 'center',
-    fontWeight: 600
+    alignItems: 'center'
   },
 
   // rootLink: : {},
@@ -32,10 +34,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
   })
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
+const createVariants = (theme: Theme): ComponentsVariants['Link'] => [
   {
     props: {
-      variant: 'link'
+      variant: LinkVariants.link
     },
     style: {
       '&:not(:hover)': { textDecoration: 'none' },
@@ -44,9 +46,25 @@ const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
       }
     }
   },
+
   {
     props: {
-      variant: 'default'
+      variant: LinkVariants.buttonText
+    },
+    style: {
+      'paddingLeft': 0,
+      'alignSelf': 'flex-start',
+      ...theme.typography.h6,
+
+      '.MuiButton-startIcon ': {
+        marginLeft: 0
+      }
+    }
+  },
+
+  {
+    props: {
+      variant: LinkVariants.default
     },
     style: {
       textDecoration: 'none'
@@ -54,10 +72,20 @@ const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
   },
   {
     props: {
-      variant: 'text'
+      variant: LinkVariants.text
     },
     style: {
       textDecoration: 'none'
+    }
+  },
+  {
+    props: {
+      variant: 'footerContactDetailsFooter'
+    },
+    style: {
+      '&&': {
+        whiteSpace: 'pre'
+      }
     }
   }
 ];

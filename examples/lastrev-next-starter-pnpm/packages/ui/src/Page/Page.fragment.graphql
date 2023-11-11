@@ -5,6 +5,7 @@ fragment Page_BaseFragment on Page {
   path
   slug
   title
+  isHomepage
   breadcrumbs {
     ...Link_BaseFragment
   }

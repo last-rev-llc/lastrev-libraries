@@ -34,7 +34,9 @@ const Page = (props: PageProps) => {
 
       {header && !hero ? <ContentModule {...(header as any)} backgroundColor={'transparentLight'} /> : null}
 
-      {hero ? <ContentModule {...(hero as any)} header={header} breadcrumbs={breadcrumbs} /> : null}
+      {hero ? (
+        <ContentModule {...(hero as any)} isHomepage={props.isHomepage} header={header} breadcrumbs={breadcrumbs} />
+      ) : null}
 
       <Main {...sidekick(sidekickLookup, 'contents')}>
         {contents?.map((content: any, index) => (

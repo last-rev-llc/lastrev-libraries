@@ -94,34 +94,35 @@ const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
 
     'rowGap': 'var(--grid-gap)',
     'columnGap': 'var(--grid-gap)',
+    '--content-width': `min(${theme.containerBreakpoints.values.sm}px, (100vw - (2 * var(--grid-margin))))`,
+
     'gridTemplateColumns': `
-      [full-start] minmax(var(--grid-margin-xs), calc(50vw - calc((${theme.containerBreakpoints.values.sm}px / 2) - var(--grid-margin-xs))))
-      [one-start content-start] minmax(0, 1fr)
-      [one-end two-start content-quarter] minmax(0, 1fr)
-      [two-end three-start content-half] minmax(0, 1fr)
-      [three-end four-start content-three-quarter] minmax(0, 1fr)
-      [four-end content-end] minmax(var(--grid-margin-xs), calc(50vw - calc((${theme.containerBreakpoints.values.sm}px / 2) - var(--grid-margin-xs))))
-      [full-end]
-    `,
+        [full-start] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.sm}px / 2)))
+        [one-start content-start] minmax(0, 1fr)
+        [one-end two-start content-quarter] minmax(0, 1fr)
+        [two-end three-start content-half] minmax(0, 1fr)
+        [three-end four-start content-three-quarter] minmax(0, 1fr)
+        [four-end content-end] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.sm}px / 2)))
+        [full-end]
+      `,
 
     [theme.breakpoints.up('sm')]: {
-      //   'rowGap': 'var(--grid-gap-sm)',
-      // 'columnGap': 'var(--grid-gap-sm)',
-      gridTemplateColumns: `
-      [full-start] minmax(var(--grid-margin-sm), calc(50vw - calc((${theme.containerBreakpoints.values.md}px / 2) - var(--grid-margin-sm))))
-      [one-start content-start] minmax(0, 1fr)
-      [one-end two-start content-quarter] minmax(0, 1fr)
-      [two-end three-start content-half] minmax(0, 1fr)
-      [three-end four-start content-three-quarter] minmax(0, 1fr)
-      [four-end content-end] minmax(var(--grid-margin-sm), calc(50vw - calc((${theme.containerBreakpoints.values.md}px / 2) - var(--grid-margin-sm))))
-      [full-end]
+      '--content-width': `min(${theme.containerBreakpoints.values.sm}px, (100vw - (2 * var(--grid-margin))))`,
+      'gridTemplateColumns': `
+        [full-start] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.md}px / 2)))
+        [one-start content-start] minmax(0, 1fr)
+        [one-end two-start content-quarter] minmax(0, 1fr)
+        [two-end three-start content-half] minmax(0, 1fr)
+        [three-end four-start content-three-quarter] minmax(0, 1fr)
+        [four-end content-end] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.md}px / 2)))
+        [full-end]
       `
     },
 
     [theme.breakpoints.up('md')]: {
-      // gridGap: 'var(--grid-gap-md)',
-      gridTemplateColumns: `
-        [full-start] minmax(var(--grid-margin-md), calc(50vw - calc((${theme.containerBreakpoints.values.lg}px / 2) - var(--grid-margin-md))))
+      '--content-width': `min(${theme.containerBreakpoints.values.md}px, (100vw - (2 * var(--grid-margin))))`,
+      'gridTemplateColumns': `
+        [full-start] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.lg}px / 2)))
         [one-start content-start] minmax(0, 1fr)
         [one-end two-start] minmax(0, 1fr)
         [two-end three-start content-quarter] minmax(0, 1fr)
@@ -130,15 +131,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
         [five-end six-start] minmax(0, 1fr)
         [six-end seven-start content-three-quarter] minmax(0, 1fr)
         [seven-end eight-start] minmax(0, 1fr)
-        [eight-end content-end] minmax(var(--grid-margin-md), calc(50vw - calc((${theme.containerBreakpoints.values.lg}px / 2) - var(--grid-margin-md))))
+        [eight-end content-end] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.lg}px / 2)))
         [full-end]
       `
     },
 
     [theme.breakpoints.up('lg')]: {
-      // gridGap: 'var(--grid-gap-lg)',
-      gridTemplateColumns: `
-        [full-start] minmax(var(--grid-margin-lg), calc(50vw - calc((${theme.containerBreakpoints.values.xl}px / 2) - var(--grid-margin-lg))))
+      '--content-width': `min(${theme.containerBreakpoints.values.lg}px, (100vw - (2 * var(--grid-margin))))`,
+      'gridTemplateColumns': `
+        [full-start] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.xl}px / 2)))
         [one-start content-start] minmax(0, 1fr)
         [one-end two-start] minmax(0, 1fr)
         [two-end three-start] minmax(0, 1fr)
@@ -151,15 +152,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
         [nine-end ten-start content-three-quarter] minmax(0, 1fr)
         [ten-end eleven-start] minmax(0, 1fr)
         [eleven-end twelve-start] minmax(0, 1fr)
-        [twelve-end content-end] minmax(var(--grid-margin-lg), calc(50vw - calc((${theme.containerBreakpoints.values.xl}px / 2) - var(--grid-margin-lg))))
+        [twelve-end content-end] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.xl}px / 2)))
         [full-end] 
       `
     },
 
     [theme.breakpoints.up('xl')]: {
-      // gridGap: 'var(--grid-gap-xl)',
-      gridTemplateColumns: `
-        [full-start] minmax(var(--grid-margin-xl), calc(50vw - calc((${theme.containerBreakpoints.values.xl}px / 2) - var(--grid-margin-xl))))
+      '--content-width': `min(${theme.containerBreakpoints.values.xl}px, (100vw - (2 * var(--grid-margin))))`,
+      'gridTemplateColumns': `
+        [full-start] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.xl}px / 2)))
         [one-start content-start] minmax(0, 1fr)
         [one-end two-start] minmax(0, 1fr)
         [two-end three-start] minmax(0, 1fr)
@@ -172,7 +173,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Grid'] = {
         [nine-end ten-start content-three-quarter] minmax(0, 1fr)
         [ten-end eleven-start] minmax(0, 1fr)
         [eleven-end twelve-start] minmax(0, 1fr)
-        [twelve-end content-end] minmax(var(--grid-margin-xl), calc(50vw - calc((${theme.containerBreakpoints.values.xl}px / 2) - var(--grid-margin-xl))))
+        [twelve-end content-end] minmax(var(--grid-margin), calc(50vw - var(--grid-margin) - (${theme.containerBreakpoints.values.xl}px / 2)))
         [full-end] 
       `
     }
