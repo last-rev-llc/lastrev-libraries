@@ -39,7 +39,7 @@ type Block implements Content {
   link: Link
   longText: String
   mediaItems: [Media]
-  overlapWithPreviousModule: Boolean
+  overlap: Boolean
   overline: String
   shortText: String
   sidekickLookup: JSON
@@ -345,6 +345,7 @@ type Hero implements Content {
   contentHeight: String
   id: String
   internalTitle: String
+  overlap: Boolean
   overline: String
   sideImageItems: [Media]
   sidekickLookup: JSON

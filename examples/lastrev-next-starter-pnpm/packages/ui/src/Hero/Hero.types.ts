@@ -4,7 +4,7 @@ import type { Hero_BaseFragmentFragment } from '@graphql-sdk/types';
 // TODO Review
 export enum HeroVariants {
   default = 'mediaOnRight',
-  simple = 'simple',
+  simpleCentered = 'simpleCentered',
   mediaOnRight = 'mediaOnRight',
   mediaOnRightFullBleed = 'mediaOnRightFullBleed',
   mediaOnLeft = 'mediaOnLeft',

@@ -5,6 +5,7 @@ fragment Hero_BaseFragment on Hero {
   overline
   title
   subtitle
+  overlap
   backgroundColor
   background {
     ...Media_BaseFragment

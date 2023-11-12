@@ -77,7 +77,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
     return {
       // gridColumn: 'full-start/full-end',
       display: 'grid',
-      gridGap: 'inherit',
+      gridGap: theme.spacing(8),
       gridRowGap: 0,
       gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
 

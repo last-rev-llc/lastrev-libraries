@@ -12,27 +12,36 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
-    padding: 'var(--grid-gap) 0',
-    paddingBottom: theme.spacing(10),
-
+    padding: theme.spacing(10, 0),
     [theme.breakpoints.up('md')]: {
-      padding: 'var(--grid-margin) 0',
-      paddingBottom: theme.spacing(10)
-    }
+      padding: theme.spacing(10, 0)
+    },
+    ...(ownerState?.overlap && {
+      'paddingBottom': theme.spacing(10),
+      [theme.breakpoints.up('md')]: {
+        paddingBottom: theme.spacing(10)
+      },
+      '[class*=Hero-mediaWrap]': {
+        background: 'var(--variant-background-color, #FFF)',
+        boxShadow: theme.shadows[10]
+      }
+    })
   }),
 
-  background: ({ theme }) => ({
-    '&::before': {
-      content: '""',
-      display: 'block',
-      position: 'absolute',
-      bottom: 0,
-      left: 0,
-      height: theme.spacing(20),
-      width: '100%',
-      backgroundColor: 'var(--variant-overlay-color, #FFF)',
-      zIndex: 0
-    }
+  background: ({ theme, ownerState }) => ({
+    ...(ownerState?.overlap && {
+      '&::before': {
+        content: '""',
+        display: 'block',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        height: theme.spacing(20),
+        width: '100%',
+        backgroundColor: 'var(--variant-overlay-color, #FFF)',
+        zIndex: 0
+      }
+    })
   }),
 
   // title: ({ theme }) => ({ marginBottom: theme.spacing(1) }),
@@ -69,10 +78,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    boxShadow: theme.shadows[10],
+
     borderRadius: theme.shape.borderRadius,
     overflow: 'hidden',
-    background: 'var(--variant-background-color, #FFF)',
     img: {
       width: '100%',
       height: 'auto',
@@ -97,7 +105,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
   {
     props: {
-      variant: HeroVariants.simple
+      variant: HeroVariants.simpleCentered
     },
     style: {
       'textAlign': 'center',
@@ -232,6 +240,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.mediaAbove
     },
     style: {
+      'textAlign': 'center',
       '[class*=mainContentWrap]': {
         'gridRow': 2,
         'gridColumnStart': 'content-start',
@@ -253,6 +262,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.mediaBelow
     },
     style: {
+      'textAlign': 'center',
       '[class*=title]': {
         color: theme.vars.palette.primary.dark
       },
