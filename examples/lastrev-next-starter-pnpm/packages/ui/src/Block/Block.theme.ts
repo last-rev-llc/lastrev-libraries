@@ -36,7 +36,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   },
 
   overline: ({ theme }) => ({
-    color: 'var(--variant-highlight-color)'
+    color: 'var(--mui-palette-overline)'
   }),
 
   // title: {},

@@ -2,7 +2,7 @@ import React from 'react';
 
 // import Swiper core and required modules
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y, Grid as SwiperGrid } from 'swiper/modules';
+import { Navigation, Pagination, A11y, Grid as SwiperGrid, Autoplay } from 'swiper/modules';
 import { type SwiperOptions } from 'swiper/types';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -26,6 +26,7 @@ const Carousel = (props: CarouselProps) => {
     isCarouselDesktop,
     isCarouselTablet,
     isCarouselMobile,
+    carouselAutoPlay,
     items,
     variant,
     itemsVariant,
@@ -136,11 +137,12 @@ const Carousel = (props: CarouselProps) => {
                 rewind={true}
                 breakpointsBase="container"
                 cssMode={true}
-                modules={[Navigation, SwiperGrid, Pagination, A11y]}
+                modules={[Navigation, SwiperGrid, Pagination, A11y, Autoplay]}
                 spaceBetween={24}
                 breakpoints={swiperBreakpoints}
                 pagination={{ clickable: true }}
-                grid
+                navigation
+                autoplay={carouselAutoPlay}
                 // scrollbar={{ draggable: true }}
                 // onSwiper={(swiper) => console.log(swiper)}
                 // onSlideChange={() => console.log('slide change')}

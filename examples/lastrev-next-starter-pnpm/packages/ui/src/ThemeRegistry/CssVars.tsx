@@ -64,7 +64,7 @@ export const CssVars = () => {
           }
 
           /* --section-padding: calc(var(--grid-gap) * 2); */
-          --section-padding: 56px;
+          --section-padding: 80px;
 
           --h1-font-size-base: 2.75rem;
           --h2-font-size-base: 2.25rem;
@@ -155,7 +155,7 @@ export const CssVars = () => {
           --swiper-preloader-color: var(--swiper-theme-color);
           --swiper-wrapper-transition-timing-function: initial;
 
-          --swiper-navigation-size: calc(var(--grid-margin) / 2);
+          --swiper-navigation-size: 24px;
           --swiper-navigation-top-offset: 50%;
           --swiper-navigation-sides-offset: 0; //calc(var(--grid-margin) / 2);
           --swiper-navigation-color: var(--swiper-theme-color);

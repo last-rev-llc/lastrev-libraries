@@ -13,9 +13,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     containerType: 'inline-size',
     position: 'relative',
     padding: 'var(--grid-gap) 0',
+    paddingBottom: theme.spacing(10),
 
     [theme.breakpoints.up('md')]: {
-      padding: 'var(--grid-margin) 0'
+      padding: 'var(--grid-margin) 0',
+      paddingBottom: theme.spacing(10)
     }
   }),
 
@@ -26,9 +28,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
       position: 'absolute',
       bottom: 0,
       left: 0,
-      height: theme.spacing(22),
+      height: theme.spacing(20),
       width: '100%',
-      backgroundColor: 'var(--variant-overlay-color)',
+      backgroundColor: 'var(--variant-overlay-color, #FFF)',
       zIndex: 0
     }
   }),
@@ -59,7 +61,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    justifyContent: 'center'
+    justifyContent: 'flex-start'
   },
 
   mediaWrap: ({ theme }) => ({
@@ -67,9 +69,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    boxShadow: theme.shadows['L'],
+    boxShadow: theme.shadows[10],
     borderRadius: theme.shape.borderRadius,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    background: 'var(--variant-background-color, #FFF)',
+    img: {
+      width: '100%',
+      height: 'auto',
+      aspectRatio: '1/1'
+    }
   }),
 
   actionsWrap: ({ theme }) => ({
@@ -119,7 +127,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
           gridColumnStart: 'content-start',
-          gridColumnEnd: 'five-end'
+          gridColumnEnd: 'content-half'
         }
       },
 

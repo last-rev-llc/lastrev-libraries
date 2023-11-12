@@ -25,12 +25,16 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
       [backgroundKey]: theme.vars.palette.schemes[paletteColor].primary.main,
       '--current-color-main': theme.vars.palette.schemes[paletteColor].primary.main,
       '--mui-palette-background-tab': theme.vars.palette.schemes[paletteColor].primary.main,
+      '--mui-palette-overline': theme.vars.palette.schemes[paletteColor].overline,
+      '--swiper-theme-color': theme.vars.palette.schemes[paletteColor].overline,
       '*': {
         // Color inversion
         '--mui-palette-text-primary': theme.vars.palette.schemes[paletteColor].primary.contrastText,
+        '--mui-palette-background-paper': theme.vars.palette.schemes[paletteColor].dark,
         // TODO: Everything should be using the above variable for color, so below is not needed
         // 'color': theme.vars.palette.schemes[paletteColor].primary.contrastText,
 
+        '--swiper-theme-color': theme.vars.palette.schemes[paletteColor].secondary.main,
         '--mui-palette-primary-light': theme.vars.palette.schemes[paletteColor].secondary.light,
         '--mui-palette-primary-main': theme.vars.palette.schemes[paletteColor].secondary.main,
         '--mui-palette-primary-contrastText': theme.vars.palette.schemes[paletteColor].secondary.contrastText,

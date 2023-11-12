@@ -17,6 +17,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   }),
   actionsWrap: ({ theme }) => ({
     display: 'flex',
+    paddingTop: theme.spacing(3),
     gap: theme.spacing(2),
     justifyContent: 'center'
   }),
@@ -33,7 +34,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     }),
     ...(ownerState?.variant === CollectionVariants.threePerRow && {
       [theme.containerBreakpoints.up('sm')]: {
-        gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
+        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
       }
     }),
 
@@ -66,7 +67,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     })
   }),
 
-  contentGrid: {}
+  contentGrid: ({ theme }) => ({})
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [];

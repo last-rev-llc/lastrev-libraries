@@ -9,7 +9,7 @@ import { TextVariants } from './Text.types';
 
 const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
-  root: {
+  root: ({ theme, ownerState }) => ({
     'width': '100%',
     'display': 'unset',
     'ol, ul, li': {
@@ -30,11 +30,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
         display: 'unset',
         gridColumn: 'content-start/content-end'
       }
-    }
-  },
+    },
+    ...(ownerState?.align && {
+      textAlign: ownerState?.align?.toLowerCase()
+    })
+  }),
 
   overline: {
-    color: 'var(--variant-highlight-color)'
+    color: 'var(--mui-palette-overline, #000)'
   },
   title: ({ theme, ownerState }) => ({
     ...(ownerState?.variant === TextVariants.default && {
@@ -100,8 +103,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Text'] => [
       variant: 'introText'
     },
     style: {
-      'textAlign': 'center',
-      'marginBottom': theme.spacing(3),
+      // 'textAlign': 'center',
+      'marginBottom': theme.spacing(5),
       '> *': {
         '&:is(p)': {
           marginBottom: theme.spacing(2)

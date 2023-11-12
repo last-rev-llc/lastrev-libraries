@@ -43,7 +43,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
           '[class*=cardMedia] img': { transition: 'all 0.25s ease-in-out' },
           '&:hover': {
             '[class*=cardMedia] img': {
-              // boxShadow: theme.vars.shadows[8]
+              // TODO: boxShadow: theme.vars.shadows[12],
+              boxShadow: `0px 7px 8px -4px rgba(0,0,0,0.08),0px 12px 17px 2px rgba(0,0,0,0.08),0px 5px 22px 4px rgba(0,0,0,0.08)`,
+              transform: 'translateY(-8px)'
             }
           }
         }
@@ -66,17 +68,24 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     transition: 'all 0.25s ease-in-out',
     backgroundColor: 'inherit',
     padding: 0,
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
     img: {
-      objectFit: 'cover'
+      objectFit: 'cover',
+      width: '100%',
+      height: 'auto',
+      aspectRatio: '16/9'
     },
-    ...(ownerState?.variant === CardVariants.stat &&
-      {
-        // paddingTop: theme.spacing(4)
-      }),
-    ...(ownerState?.variant === CardVariants.icon &&
-      {
-        // paddingTop: theme.spacing(4)
-      })
+    ...(ownerState?.variant === CardVariants.stat || ownerState?.variant === CardVariants.icon
+      ? {
+          img: {
+            width: 40,
+            height: 40
+          }
+          // paddingTop: theme.spacing(4)
+        }
+      : null)
   }),
 
   contentWrap: ({ ownerState, theme }) => ({
@@ -93,7 +102,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 
   title: ({ ownerState, theme }) => ({
     ...(ownerState?.variant === CardVariants.stat && {
-      ...theme.typography.h1
+      ...theme.typography.h1,
+      color: 'var(--variant-highlight-color)'
     }),
     ...(ownerState?.variant === CardVariants.icon && {
       ...theme.typography.h4
@@ -294,7 +304,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       '[class*=cardMedia]': {},
       '[class*=actionsWrap]': { alignItems: 'flex-end', flex: 1 },
       '[class*=cardMedia] img': {
-        aspectRatio: '16/9'
+        aspectRatio: '16/9',
+        borderRadius: 4
       }
     }
   },

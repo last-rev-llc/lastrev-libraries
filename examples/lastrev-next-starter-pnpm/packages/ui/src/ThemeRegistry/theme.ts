@@ -61,69 +61,80 @@ const colors = {
   black: { lighter: '#000', light: '#000', main: '#000', dark: '#000', contrastText: '#FFF' }
 };
 
-const augmentColor = (color: any) => theme.palette.augmentColor({});
 const schemes = {
   sapphire: {
     primary: colors.sapphire,
     secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main
+    highlightColor: colors.sunflower.main,
+    overline: colors.sunflower.main
   },
   sapphireLight: {
     primary: colors.sapphireLight,
     secondary: colors.blue,
-    highlightColor: colors.blue.main
+    highlightColor: colors.blue.main,
+    overline: colors.blue.main
   },
   sapphireAccent: {
     primary: colors.white,
     secondary: { ...colors.sapphire, main: colors.sapphire.dark },
 
-    highlightColor: colors.sapphire.main
+    highlightColor: colors.sapphire.main,
+    overline: colors.sapphire.main
   },
   blueAccent: {
     primary: colors.white,
     secondary: colors.blue,
-    highlightColor: colors.blue.main
+    highlightColor: colors.blue.main,
+    overline: colors.blue.main
   },
   greenAccent: {
     primary: colors.white,
     secondary: colors.green,
-    highlightColor: colors.green.main
+    highlightColor: colors.green.main,
+    overline: colors.green.main
   },
   sunflowerAccent: {
     primary: colors.white,
     secondary: { ...colors.sapphire, main: colors.sapphire.dark },
 
-    highlightColor: colors.sunflower.dark
+    highlightColor: colors.sunflower.dark,
+    overline: colors.sunflower.dark
   },
   orangeAccent: {
     primary: colors.white,
     secondary: colors.orange,
-    highlightColor: colors.orange.main
+    highlightColor: colors.orange.main,
+    overline: colors.orange.main
   },
   mintAccent: {
     primary: colors.white,
     secondary: colors.mint,
-    highlightColor: colors.mint.main
+    highlightColor: colors.mint.main,
+    overline: colors.mint.main
   },
   fuchsiaAccent: {
     primary: colors.white,
     secondary: colors.fuchsia,
-    highlightColor: colors.fuchsia.main
+    highlightColor: colors.fuchsia.main,
+    overline: colors.fuchsia.main
   },
   sapphirePinkGradient: {
     primary: colors.sapphirePinkGradient,
     secondary: colors.white,
-    highlightColor: colors.blue.main
+    highlightColor: colors.blue.main,
+    overline: colors.blue.main
   },
   blue: {
     primary: colors.blue,
     secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main
+    highlightColor: colors.sunflower.main,
+    overline: colors.sunflower.main
   },
   blueDark: {
     primary: { ...colors.blue, main: colors.blue.dark },
     secondary: colors.white,
-    highlightColor: colors.white.main
+    highlightColor: colors.white.main,
+    overline: colors.white.main
   },
   blueLight: {
     primary: colors.blueLight,
@@ -133,27 +144,32 @@ const schemes = {
       dark: colors.blue.dark,
       contrastText: colors.blue.contrastText
     },
-    highlightColor: colors.blue.main
+    highlightColor: colors.blue.main,
+    overline: colors.blue.main
   },
   green: {
     primary: colors.green,
     secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main
+    highlightColor: colors.sunflower.main,
+    overline: colors.sunflower.light
   },
   greenLight: {
     primary: colors.greenLight,
     secondary: colors.green,
-    highlightColor: colors.green.main
+    highlightColor: colors.green.main,
+    overline: colors.green.main
   },
   sunflower: {
     primary: colors.sunflower,
     secondary: colors.green,
-    highlightColor: colors.green.main
+    highlightColor: colors.green.main,
+    overline: colors.green.main
   },
   sunflowerLight: {
     primary: colors.sunflowerLight,
     secondary: colors.sunflower,
     highlightColor: colors.green.main,
+    overline: colors.green.main,
     text: {
       primary: '#000',
       secondary: '#000'
@@ -162,42 +178,50 @@ const schemes = {
   orange: {
     primary: colors.orange,
     secondary: colors.sunflower,
-    highlightColor: colors.green.main
+    highlightColor: colors.green.dark,
+    overline: colors.green.dark
   },
   orangeLight: {
     primary: { main: colors.orange.light },
     secondary: colors.orange,
-    highlightColor: colors.orange.main
+    highlightColor: colors.orange.main,
+    overline: colors.orange.main
   },
   fuchsia: {
     primary: colors.fuchsia,
     secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main
+    highlightColor: colors.sunflower.main,
+    overline: colors.sunflower.main
   },
   fuchsiaLight: {
     primary: { main: colors.fuchsia.light },
     secondary: colors.fuchsia,
-    highlightColor: colors.fuchsia.main
+    highlightColor: colors.fuchsia.main,
+    overline: colors.fuchsia.main
   },
   mint: {
     primary: colors.mint,
     secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main
+    highlightColor: colors.sunflower.main,
+    overline: colors.sunflower.main
   },
   mintLight: {
     primary: { main: colors.mint.light },
     secondary: colors.mint,
-    highlightColor: colors.mint.main
+    highlightColor: colors.mint.main,
+    overline: colors.mint.main
   },
   black: {
     primary: colors.black,
     secondary: colors.sapphire,
-    highlightColor: colors.sapphire.main
+    highlightColor: colors.sapphire.main,
+    overline: colors.sapphire.main
   },
   white: {
     primary: colors.white,
     secondary: colors.sapphire,
-    highlightColor: colors.sapphire.main
+    highlightColor: colors.sapphire.main,
+    overline: colors.sapphire.main
   }
 };
 

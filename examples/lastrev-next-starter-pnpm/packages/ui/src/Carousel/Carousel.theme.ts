@@ -25,13 +25,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
     '&': {
       // Swiper Overrides
       '--swiper-navigation-sides-offset': 'calc(var(--grid-margin) / -2)',
-      '--swiper-theme-color': theme.colorSchemes.light.palette.primary.main,
-      '--swiper-navigation-color': 'var(--swiper-theme-color)',
-      '--swiper-pagination-color': 'var(--swiper-theme-color)',
-      '--swiper-preloader-color': ' var(--swiper-theme-color)',
-      '--swiper-pagination-top': 'auto',
-      '--swiper-pagination-bottom': '0px',
 
+      '--swiper-navigation-color': `var(--swiper-theme-color)`,
+      '--swiper-pagination-color': `var(--swiper-theme-color)`,
+      '--swiper-preloader-color': `var(--swiper-theme-color)`,
+      '--swiper-pagination-fraction-color': 'inherit',
+      '--swiper-pagination-progressbar-bg-color': 'rgba(0, 0, 0, 0.25)',
+      // '--swiper-pagination-bullet-inactive-color': `var(--swiper-theme-color)`,
+      '--swiper-scrollbar-bg-color': 'rgba(0, 0, 0, 0.1)',
+      '--swiper-scrollbar-drag-bg-color': 'rgba(0, 0, 0, 0.5)',
       /* 
               --swiper-wrapper-transition-timing-function: initial;
 

@@ -6,7 +6,8 @@ import { SectionVariants } from './Section.types';
 const defaultProps: ComponentsProps['Section'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
-  root: {
+  root: ({ ownerState, theme }) => ({
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'containerType': 'inline-size',
     'width': '100%',
     'position': 'relative',
@@ -17,7 +18,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
     '[class*="Media-root"]': {
       width: '100%'
     }
-  },
+  }),
 
   introText: { gridColumn: 'content-start / content-end' },
 

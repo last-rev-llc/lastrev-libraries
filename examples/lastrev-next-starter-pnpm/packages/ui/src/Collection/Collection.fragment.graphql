@@ -12,6 +12,7 @@ fragment Collection_FieldsFragment on Collection {
   isCarouselDesktop
   isCarouselTablet
   isCarouselMobile
+  carouselAutoPlay
   itemsPerRow
   numItems
   actions {

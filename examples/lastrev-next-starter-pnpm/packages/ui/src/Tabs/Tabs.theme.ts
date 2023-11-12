@@ -32,7 +32,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
       fontWeight: 700,
       color: 'currentColor',
       backgroundColor: theme.vars.palette.background.tab
-    }
+    },
+    // TODO: Review and maybe create as new variants
+    '& [class*=Card-cardWrap]': { backgroundColor: 'transparent!important', boxShadow: 'none' },
+    '& [class*=Card-title]': { ...theme.typography.h5 },
+    '& [class*=Text-title]': { ...theme.typography.h5 },
+    '& [class*=Block-title]': { ...theme.typography.h5 }
   }),
 
   // introTextGrid: : {},

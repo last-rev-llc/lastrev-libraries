@@ -36,11 +36,16 @@ const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
   },
   accordionItem: ({ theme }) => ({
     'boxShadow': 'none',
+    // 'background': theme.vars.palette.secondary.main,
+    'background': 'transparent',
     '&:not(:last-child)': {
       borderBottom: 0
     },
     '&:before': {
       display: 'none'
+    },
+    '[class*=Accordion-summary]': {
+      color: 'var(--variant-highlight-color)'
     }
   }),
   summaryWrap: {
