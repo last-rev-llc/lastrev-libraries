@@ -9,7 +9,7 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavGroup'] = {
   navItemLink: ({ theme }) => ({
     'padding': 0,
     'border': 'none',
-    'flexGrow': '1',
+    // 'flexGrow': '1',
     'alignItems': 'center',
     'display': 'flex',
     'width': '100%',

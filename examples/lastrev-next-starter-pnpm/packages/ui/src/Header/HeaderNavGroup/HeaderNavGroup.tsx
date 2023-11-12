@@ -12,6 +12,7 @@ import ErrorBoundary from '../../ErrorBoundary';
 import ContentModule from '../../ContentModule';
 
 import type { HeaderNavGroupProps, HeaderNavGroupOwnerState } from './HeaderNavGroup.types';
+import Grid from '../../Grid';
 
 const HeaderNavGroup = (props: HeaderNavGroupProps) => {
   const ownerState = {
@@ -73,7 +74,7 @@ const HeaderNavGroup = (props: HeaderNavGroupProps) => {
   );
 };
 
-const Root = styled(Box, {
+const Root = styled(Grid, {
   name: 'HeaderNavGroup',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]

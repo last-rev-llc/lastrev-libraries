@@ -10,6 +10,7 @@ import deepmerge from '@mui/utils/deepmerge';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
 import applyColorScheme from './mixins/applyColorScheme';
+import applyGrid from './mixins/applyGrid';
 import themeComponents from './theme.components';
 
 export const dmSans = DM_Sans({
@@ -268,7 +269,8 @@ const baseTheme = {
   },
   mixins: {
     gridContainer: createGridMixin,
-    applyColorScheme
+    applyColorScheme,
+    applyGrid
   },
   typography: {
     fontFamily: dmSans.style.fontFamily,

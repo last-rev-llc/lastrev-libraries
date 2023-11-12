@@ -15,7 +15,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
     // },
     '[class*=navItemSubMenu]': {
-      backgroundColor: 'var(--current-color-main)'
+      // backgroundColor: 'var(--current-color-main)'
     },
     '& *': {
       whiteSpace: 'nowrap'
@@ -58,7 +58,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
       width: '100%',
-      gap: 'var(--grid-gap)',
+      gap: theme.spacing(2),
+
       gridRow: 1
     }
   }),
@@ -94,7 +95,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
 
   headerMenuCtaItem: {
     padding: 0,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: 'unset'
   },
 
   headerMenuNav: ({ theme, ownerState }) => ({
@@ -156,7 +158,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     flexDirection: 'column',
     width: '100%',
     margin: 'auto',
-    gap: 'var(--grid-gap)',
+    gap: theme.spacing(2),
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
       'height': '100%',

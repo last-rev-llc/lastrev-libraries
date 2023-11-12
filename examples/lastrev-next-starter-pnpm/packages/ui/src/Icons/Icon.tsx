@@ -6,6 +6,8 @@ const ICONS: any = {
   instagram: dynamic(() => import('./InstagramIcon')),
   linkedin: dynamic(() => import('./LinkedinIcon')),
   facebook: dynamic(() => import('./FacebookIcon')),
+  search: dynamic(() => import('./SearchIcon')),
+  user: dynamic(() => import('./ProfileIcon')),
   twitter: dynamic(() => import('./TwitterIcon'))
 };
 export const Icon = ({ iconName }: { iconName: string }) => {

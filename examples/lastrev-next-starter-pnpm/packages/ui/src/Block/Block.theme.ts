@@ -201,6 +201,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
       variant: BlockVariants.contentAbove
     },
     style: {
+      'textAlign': 'center',
       '[class*=mainContentWrap]': {
         'gridRow': 2,
         'gridColumnStart': 'content-start',
@@ -222,6 +223,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
       variant: BlockVariants.contentBelow
     },
     style: {
+      'textAlign': 'center',
       '[class*=mainContentWrap]': {
         'gridRow': 1,
         'gridColumnStart': 'content-start',

@@ -23,4 +23,5 @@ fragment Header_BaseFragment on Header {
     ...Link_BaseFragment
   }
   backgroundColor
+  hasCtaItems
 }
