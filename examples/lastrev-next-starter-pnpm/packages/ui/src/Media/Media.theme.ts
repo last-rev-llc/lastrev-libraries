@@ -13,6 +13,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Media'] = {
     // img default display: inline introduces a line-height space at the bottom
     display: 'block',
     maxWidth: `100%`,
+    // TODO: Works great in most cases, race condition on others
+    // width: `100%`,
     height: 'auto'
   }
 };

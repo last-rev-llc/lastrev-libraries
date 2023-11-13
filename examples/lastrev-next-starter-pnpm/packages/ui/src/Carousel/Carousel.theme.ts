@@ -8,12 +8,13 @@ import {
 
 import 'swiper/css';
 import 'swiper/css/navigation';
-
+import 'swiper/css/pagination';
+import 'swiper/css/grid';
 const defaultProps: ComponentsProps['Carousel'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'containerType': 'inline-size',
     'display': 'flex',
     'flexDirection': 'column',
@@ -24,15 +25,21 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
     '&': {
       // Swiper Overrides
       '--swiper-navigation-sides-offset': 'calc(var(--grid-margin) / -2)',
-      '--swiper-theme-color': '#fff',
+
+      '--swiper-navigation-color': `var(--swiper-theme-color)`,
+      '--swiper-pagination-color': `var(--swiper-theme-color)`,
+      '--swiper-preloader-color': `var(--swiper-theme-color)`,
+      '--swiper-pagination-fraction-color': 'inherit',
+      '--swiper-pagination-progressbar-bg-color': 'rgba(0, 0, 0, 0.25)',
+      // '--swiper-pagination-bullet-inactive-color': `var(--swiper-theme-color)`,
+      '--swiper-scrollbar-bg-color': 'rgba(0, 0, 0, 0.1)',
+      '--swiper-scrollbar-drag-bg-color': 'rgba(0, 0, 0, 0.5)',
       /* 
-              --swiper-preloader-color: var(--swiper-theme-color);
               --swiper-wrapper-transition-timing-function: initial;
 
               --swiper-navigation-size: calc(var(--grid-gap) / 1); // calc(var(--grid-margin) / 4);
               --swiper-navigation-top-offset: 100%;
              
-              --swiper-navigation-color: var(--swiper-theme-color);
 
               --swiper-pagination-color: currentColor; //var(--current-color-text); //var(--swiper-theme-color);
               --swiper-pagination-left: auto;
@@ -62,12 +69,25 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
               --swiper-scrollbar-drag-bg-color: rgba(0, 0, 0, 0.5);
               --swiper-scrollbar-size: calc(var(--grid-gap) / 4); */
 
-      // Can ue these classes to move nav buttons
       '.swiper': {
-        overflow: 'visible'
+        overflow: 'visible',
+        paddingBottom: theme.spacing(6),
+        ...(ownerState?.itemsVariant === 'logo' && {
+          paddingBottom: theme.spacing(6)
+        })
+      },
+      '.swiper-slide': {
+        width: 'unset',
+        height: 'auto',
+        alignSelf: 'stretch'
       },
       '.swiper-wrapper': {
         alignItems: 'center'
+        // overflow: 'visible'
+      },
+      '.swiper-pagination-bullet': {
+        'transform': 'scale(1)',
+        '&.swiper-pagination-bullet-active': { transform: 'scale(1.25)' }
       },
       ':is(.swiper-button-prev, .swiper-button-next)': {
         // aspectRatio: '1/1'
@@ -90,16 +110,16 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
       // Allows for placement of the buttons below the carousel if needed.
       // 'overflowY': 'unset',
       // 'width': 'calc(100% - (var(--grid-margin) / 2px))',
-      // '&.swiper-grid': {
-      //   width: '100%'
-      // }
+      '&.swiper-grid': {
+        width: '100%'
+      }
     }
   },
 
   item: {
-    overflow: 'unset',
-    position: 'relative',
-    zIndex: 20
+    // overflow: 'unset',
+    // position: 'relative',
+    // zIndex: 20
   },
 
   contentGrid: {}

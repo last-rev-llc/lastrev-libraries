@@ -28,6 +28,7 @@ interface CollectionClasses {
   itemsGrid: string;
   item: string;
   actionsContainer: string;
+  actionsWrap: string;
   action: string;
 }
 

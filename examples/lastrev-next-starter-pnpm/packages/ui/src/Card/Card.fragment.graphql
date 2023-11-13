@@ -3,7 +3,10 @@ fragment Card_FieldsFragment on Card {
   media {
     ...Media_BaseFragment
   }
+  color
   overline
+
+  category
   title
   subtitle
   actions {

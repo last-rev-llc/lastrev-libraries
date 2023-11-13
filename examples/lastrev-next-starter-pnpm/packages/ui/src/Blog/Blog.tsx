@@ -113,7 +113,7 @@ const Blog = (props: BlogProps) => {
                     href={`http://www.twitter.com/share?url=${encodedShareUrl}`}
                     target="_blank"
                     icon={TwitterIcon}
-                    text="Twitter"
+                    // text="Twitter"
                     ownerState={ownerState}
                   />
                 </ShareLink>
@@ -124,7 +124,7 @@ const Blog = (props: BlogProps) => {
                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`}
                     target="_blank"
                     icon={FacebookIcon}
-                    text="Facebook"
+                    // text="Facebook"
                     ownerState={ownerState}
                   />
                 </ShareLink>
@@ -135,7 +135,7 @@ const Blog = (props: BlogProps) => {
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedShareUrl}`}
                     target="_blank"
                     icon={LinkedinIcon}
-                    text="Linkedin"
+                    // text="Linkedin"
                     ownerState={ownerState}
                   />
                 </ShareLink>
@@ -146,7 +146,7 @@ const Blog = (props: BlogProps) => {
                     href={`mailto:?to=&body=${encodedShareUrl}`}
                     target="_blank"
                     icon={EmailIcon}
-                    text="Email"
+                    // text="Email"
                     ownerState={ownerState}
                   />
                 </ShareLink>

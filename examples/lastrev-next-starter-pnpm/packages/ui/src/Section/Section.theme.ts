@@ -6,15 +6,19 @@ import { SectionVariants } from './Section.types';
 const defaultProps: ComponentsProps['Section'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
-  root: {
+  root: ({ ownerState, theme }) => ({
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'containerType': 'inline-size',
     'width': '100%',
     'position': 'relative',
 
     'main > &:last-of-type': {
       marginBottom: 0
+    },
+    '[class*="Media-root"]': {
+      width: '100%'
     }
-  },
+  }),
 
   introText: { gridColumn: 'content-start / content-end' },
 
@@ -73,7 +77,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
     return {
       // gridColumn: 'full-start/full-end',
       display: 'grid',
-      gridGap: 'inherit',
+      gridGap: theme.spacing(8),
       gridRowGap: 0,
       gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
 

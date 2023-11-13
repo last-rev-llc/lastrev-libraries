@@ -21,7 +21,8 @@ const Hero = (props: HeroProps) => {
   return (
     <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
       <HeroBackground
-        background={{ ...background, priority: true }}
+        ownerState={ownerState}
+        background={background ? { ...background, priority: true } : undefined}
         backgroundColor={backgroundColor}
         testId="Hero-background"
       />
@@ -118,7 +119,7 @@ const HeroBackground = styled(Background, {
   name: 'Hero',
   slot: 'Background',
   overridesResolver: (_, styles) => [styles.background]
-})<{}>``;
+})<{ ownerState: HeroOwnerState }>``;
 
 const Overline = styled(Typography, {
   name: 'Hero',

@@ -5,7 +5,7 @@ const defaultProps: ComponentsProps['Person'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
     width: '100%',

@@ -11,6 +11,7 @@ export const typeDefs = gql`
   extend type Card {
     # Unccoment if using Media reference
     # media: [Media]
+    category: String
     actions: [Link]
     link: Link
     variant: String
@@ -19,12 +20,23 @@ export const typeDefs = gql`
 
 export const mappers: any = {
   Media: {
-    media: async (media: any, _args: any, ctx: ApolloContext) => {
-      const featuredMedia: any = getLocalizedField(media.fields, 'asset', ctx);
-      if (featuredMedia) return featuredMedia;
-      return;
-    },
-    variant: () => 'media'
+    Media: {
+      media: async (media: any, _args: any, ctx: ApolloContext) => {
+        const featuredMedia: any = getLocalizedField(media.fields, 'asset', ctx);
+        if (featuredMedia) return featuredMedia;
+        return;
+      },
+      variant: () => 'media'
+    }
+  },
+  Card: {
+    Card: {
+      variant: async (media: any, _args: any, ctx: ApolloContext) => {
+        const variant = getLocalizedField(media.fields, 'variant', ctx);
+        if (variant === 'Default') return 'media';
+        return variant;
+      }
+    }
   }
 
   // Blog: {

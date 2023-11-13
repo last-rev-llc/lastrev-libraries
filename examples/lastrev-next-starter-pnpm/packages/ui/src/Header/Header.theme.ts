@@ -9,12 +9,14 @@ const defaultProps: ComponentsProps['Header'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   root: ({ theme, ownerState }) => ({
+    'position': 'relative',
     'padding': 'var(--grid-gap) 0',
-
-    ':is(&, & [class*=navItemSubMenu])': {
-      ...theme.mixins.applyBackgroundColor({ ownerState, theme })
+    // ':is(&, & [class*=navItemSubMenu])': {
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
+    // },
+    '[class*=navItemSubMenu]': {
+      // backgroundColor: 'var(--current-color-main)'
     },
-
     '& *': {
       whiteSpace: 'nowrap'
     }
@@ -31,6 +33,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     gridRow: 1,
     alignSelf: 'center',
     width: '100%',
+    maxWidth: '120px',
     height: 'auto',
     display: 'block',
 
@@ -55,7 +58,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
       width: '100%',
-      gap: 'var(--grid-gap)',
+      gap: theme.spacing(2),
+
       gridRow: 1
     }
   }),
@@ -91,7 +95,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
 
   headerMenuCtaItem: {
     padding: 0,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    width: 'unset'
   },
 
   headerMenuNav: ({ theme, ownerState }) => ({
@@ -101,8 +106,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'display': 'inline-flex',
 
     '& a': {
-      whiteSpace: 'nowrap',
-      color: 'inherit'
+      whiteSpace: 'nowrap'
     },
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
@@ -154,13 +158,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     flexDirection: 'column',
     width: '100%',
     margin: 'auto',
-    gap: 'var(--grid-gap)',
+    gap: theme.spacing(2),
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
       'height': '100%',
       'flexDirection': 'row',
       'width': 'auto',
-      'marginLeft': 'unset',
+      // 'marginLeft': 'unset',
 
       '& > *:last-child a': {
         paddingRight: 0

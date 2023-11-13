@@ -9,7 +9,7 @@ const defaultProps: ComponentsProps['Block'] = {
 
 const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'containerType': 'inline-size',
     'position': 'relative',
     'width': '100%',
@@ -17,16 +17,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     'flexDirection': 'column',
 
     '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
-      padding: 'var(--grid-gap)',
+      padding: 'calc(var(--grid-gap) * 2)',
       paddingTop: 0
-    },
+    }
     // TODO: Update to check if within a section
     // padding: theme.spacing(0, 4)
     // margin: theme.spacing(0, -4)
-    'ins': {
-      textDecoration: 'none',
-      color: 'var(--variant-highlight-color)'
-    }
   }),
 
   // introTextGrid: : {},
@@ -39,7 +35,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     }
   },
 
-  // overline: {},
+  overline: ({ theme }) => ({
+    color: 'var(--mui-palette-overline)'
+  }),
 
   // title: {},
 
@@ -68,12 +66,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   // mediaItems: : {},
 
   actionsWrap: ({ theme, ownerState }) => ({
-    marginTop: theme.spacing(2),
+    // margin: theme.spacing(0, -1),
+    marginTop: theme.spacing(4),
     display: 'flex',
     flexDirection: 'column',
-    gap: 'var(--grid-gap)',
-
-    [theme.containerBreakpoints.up('lg')]: {
+    gap: 'calc(var(--grid-gap) * 2)',
+    [theme.containerBreakpoints.up('sm')]: {
       flexDirection: 'row'
     }
   })
@@ -96,7 +94,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
           gridRow: 1,
           gridColumnStart: 'content-start',
           gridColumnEnd: 'content-half',
-          paddingRight: 'var(--grid-gap)'
+          paddingRight: 'calc(var(--grid-gap) * 2)'
         }
       },
 
@@ -125,7 +123,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
           gridRow: 1,
           gridColumnStart: 'content-start',
           gridColumnEnd: 'content-half',
-          paddingRight: 'var(--grid-gap)'
+          paddingRight: 'calc(var(--grid-gap) * 2)'
         }
       },
 
@@ -155,7 +153,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
           gridRow: 1,
           gridColumnStart: 'content-half',
           gridColumnEnd: 'content-end',
-          paddingLeft: 'var(--grid-gap)'
+          paddingLeft: 'calc(var(--grid-gap) * 2)'
         }
       },
 
@@ -183,7 +181,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
           gridRow: 1,
           gridColumnStart: 'content-half',
           gridColumnEnd: 'content-end',
-          paddingLeft: 'var(--grid-gap)'
+          paddingLeft: 'calc(var(--grid-gap) * 2)'
         }
       },
 
@@ -203,6 +201,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
       variant: BlockVariants.contentAbove
     },
     style: {
+      'textAlign': 'center',
       '[class*=mainContentWrap]': {
         'gridRow': 2,
         'gridColumnStart': 'content-start',
@@ -224,6 +223,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
       variant: BlockVariants.contentBelow
     },
     style: {
+      'textAlign': 'center',
       '[class*=mainContentWrap]': {
         'gridRow': 1,
         'gridColumnStart': 'content-start',

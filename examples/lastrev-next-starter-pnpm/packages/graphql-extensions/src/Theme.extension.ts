@@ -9,12 +9,12 @@ const COLOR_MAPPING: { [key: string]: string } = {};
 
 export const colorResolver = (field: string, root?: true) => async (quote: any, _args: any, ctx: ApolloContext) => {
   const colorValue: any = defaultResolver(field)(quote, _args, ctx);
-  console.log('COLORVALUE', { colorValue });
+
   let colorClean = colorValue?.split('_')[0];
   if (COLOR_MAPPING[colorClean]) {
     colorClean = COLOR_MAPPING[colorClean];
   }
-  if (!colorClean) return 'inherit';
+  // if (!colorClean) return 'inherit';
 
   if (root) return colorClean?.split('.')[0];
   return colorClean;
@@ -36,6 +36,11 @@ export const mappers = {
   Block: {
     Block: {
       backgroundColor: colorResolver('backgroundColor', true),
+      color: colorResolver('color', true)
+    }
+  },
+  Card: {
+    Card: {
       color: colorResolver('color', true)
     }
   },

@@ -52,6 +52,7 @@ const Accordion = (props: AccordionProps) => {
                 index: number // TODO: Fix type
               ) => (
                 <AccordionItem
+                  disableGutters
                   expanded={expanded === `${!id}-accordion-panel-${item?.id}-${index}`}
                   onChange={handleChange(`${!id}-accordion-panel-${item?.id}-${index}`)}
                   key={`${!id}-accordion-panel-${item?.id}-${index}`}
@@ -60,11 +61,8 @@ const Accordion = (props: AccordionProps) => {
                     <Summary ownerState={ownerState}>{item.title}</Summary>
                   </SummaryWrap>
                   <DetailsWrap ownerState={ownerState}>
-                    {item.body ? (
-                      <Details __typename="RichText" body={item.body} ownerState={ownerState} />
-                    ) : (
-                      <Details {...item.content} ownerState={ownerState} />
-                    )}
+                    {item.body ? <Details __typename="RichText" body={item.body} ownerState={ownerState} /> : null}
+                    {!item.body && item.content ? <Details {...item.content} ownerState={ownerState} /> : null}
                   </DetailsWrap>
                 </AccordionItem>
               )

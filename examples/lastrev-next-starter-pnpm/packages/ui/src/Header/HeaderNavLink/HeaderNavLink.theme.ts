@@ -4,18 +4,20 @@ import { Theme } from '@ui/ThemeRegistry/theme.types';
 const defaultProps: ComponentsProps['HeaderNavLink'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
-  root: ({ theme, open }) => ({
+  root: ({ theme, ownerState }) => ({
     'height': '100%',
     // 'borderBottom': `solid ${theme.spacing(0.5)} transparent`,
     // 'borderTop': `solid ${theme.spacing(0.5)} transparent`,
     'display': 'flex',
     'flexDirection': 'column',
-    'flexGrow': '1',
+    // 'flexGrow': '1',
     'position': 'relative',
 
-    '[class$=HeaderNavLink-navItemLink]': {
-      ...(!!open && {
-        fontWeight: 800
+    '[class*=Link-rootLinkText]': {
+      fontWeight: 400,
+      color: 'black',
+      ...(ownerState.open && {
+        color: theme.vars.palette.primary.main
       })
     },
 
@@ -28,8 +30,8 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
         }
       },
 
-      '[class*="HeaderNavLink-navItemSubMenu"]': {
-        display: 'flex',
+      '[class*="HeaderNavLink-navItemSubMenuGrid"]': {
+        // display: 'flex',
         visibility: 'visible',
         opacity: 1
       }
@@ -40,7 +42,7 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     // TODO: Custom Styles
     // 'borderTop': `solid 1px ${theme.vars.palette.primary.main}`,
 
-    'flexGrow': '1',
+    // 'flexGrow': '1',
     'alignItems': 'center',
     'display': 'flex',
     'width': '100%',
@@ -75,31 +77,75 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     }
   }),
 
-  navItemSubMenu: ({ theme, open, ownerState }) => ({
-    display: 'none',
-    transition: 'visibility 0s, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-
+  navItemSubMenuGrid: ({ theme, open, ownerState }) => ({
+    // display: 'none',
+    transition: 'visibility .25s, opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+    // ...theme.mixins.applyColorScheme({ ownerState, theme }),
+    backgroundColor: theme.vars.palette.background.lightThree,
+    // ...theme.mixins.applyGrid({ theme, ownerState: { overrideNested: true } }),
     [theme.breakpoints.down('md')]: {
-      flexDirection: 'column'
+      // flexDirection: 'column'
     },
-
+    transitionDelay: '3s',
     [theme.breakpoints.up('md')]: {
+      transitionDelay: '0s',
       visibility: 'hidden',
       opacity: 0,
 
+      // display: 'grid',
+      // gap: theme.spacing(0),
+      // overflow: 'hidden',
+      width: '100vw',
+      // height: '88px',
+      position: 'fixed',
+      top: 88,
+      left: 0,
+      // @ts-ignore: TODO: items not recognized
+      // gridTemplateColumns: `repeat(${(ownerState.numOfCols ?? 0) + 1}, auto)`,
+      // border: `solid 1px ${theme.vars.palette.primary.contrastText}`,
+      zIndex: 1
+      // transform: 'translateY(100%)',
+      // padding: theme.spacing(3, 0, 0, 0),
+
+      // ...(ownerState.numOfCols === 2 && {
+      //   // TODO: Check variant here instead?
+      //   right: ownerState.hasMegaNav ? -578 : -252
+      // }),
+
+      // ...(ownerState.numOfCols === 1 && {
+      //   left: 0
+      // })
+    }
+  }),
+  navItemSubMenu: ({ theme, open, ownerState }) => ({
+    // display: 'none',
+    // transition: 'visibility 0s, opacity 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms',
+    // ...theme.mixins.applyColorScheme({ ownerState, theme }),
+    // backgroundColor: theme.vars.palette.background.lightThree,
+    // // ...theme.mixins.applyGrid({ theme, ownerState: { overrideNested: true } }),
+    // [theme.breakpoints.down('md')]: {
+    //   flexDirection: 'column'
+    // },
+
+    [theme.breakpoints.up('md')]: {
+      // visibility: 'hidden',
+      // opacity: 0,
+      gridColumn: 'content-start/content-end',
       display: 'grid',
       gap: theme.spacing(0),
-      overflow: 'hidden',
-      width: 'fit-content',
+      margin: theme.spacing(0, -2),
+      // overflow: 'hidden',
+
+      // height: '88px',
+      // position: 'fixed',
+      // top: 88,
+      // left: 0,
       // @ts-ignore: TODO: items not recognized
       gridTemplateColumns: `repeat(${(ownerState.numOfCols ?? 0) + 1}, auto)`,
       // border: `solid 1px ${theme.vars.palette.primary.contrastText}`,
-      position: 'absolute',
-      zIndex: 1,
-      bottom: 0,
-      transform: 'translateY(100%)',
-      padding: theme.spacing(3, 0, 0, 0),
+      // zIndex: 1,
+      // transform: 'translateY(100%)',
+      // padding: theme.spacing(3, 0, 0, 0),
 
       ...(ownerState.numOfCols === 2 && {
         // TODO: Check variant here instead?

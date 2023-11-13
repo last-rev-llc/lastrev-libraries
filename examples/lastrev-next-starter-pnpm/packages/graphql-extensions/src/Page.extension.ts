@@ -15,7 +15,7 @@ export const typeDefs = gql`
     header: Header
     footer: Footer
     path: String
-    hero: Hero
+    hero: Content
     contents: [Content]
     breadcrumbs: [Link]
     footerDisclaimerOverride: RichText

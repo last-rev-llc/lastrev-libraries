@@ -55,7 +55,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   } = props;
 
   // Color prop fails if it's null
-  // if (!other.color) delete other.color;
+  if (!other.color) delete other.color;
 
   const pathname = usePathname();
   const className = clsx(classNameProps, {
@@ -63,7 +63,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   });
 
   const sharedLinkProps = {
-    'component': NextLink,
+    'component': href == '#' ? 'span' : NextLink,
     className,
     ref,
     href,

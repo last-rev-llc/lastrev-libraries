@@ -14,6 +14,7 @@ import ContentModule from '../../ContentModule';
 // import { getFirstOfArray } from '../../utils/getFirstOfArray';
 
 import type { HeaderNavLinkProps, HeaderNavLinkOwnerState } from './HeaderNavLink.types';
+import Grid from '../../Grid';
 
 const HeaderNavLink = (props: HeaderNavLinkProps) => {
   const ownerState = {
@@ -53,21 +54,22 @@ const HeaderNavLink = (props: HeaderNavLinkProps) => {
             subNavigation={undefined}
             ownerState={ownerState}
           />
-
-          <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState}>
-            {subNavigation?.map((subNavItem: any, index: number) => (
-              <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
-                <NavItemGroup
-                  {...subNavItem}
-                  variant="group"
-                  __typename="NavigationItem"
-                  onClick={onSubNavItemClick}
-                  onRequestClose={onRequestClose}
-                  ownerState={ownerState}
-                />
-              </NavItemSubMenuItem>
-            ))}
-          </NavItemSubMenu>
+          <NavItemSubMenuGrid ownerState={ownerState} overrideNested>
+            <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState}>
+              {subNavigation?.map((subNavItem: any, index: number) => (
+                <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
+                  <NavItemGroup
+                    {...subNavItem}
+                    variant="group"
+                    __typename="NavigationItem"
+                    onClick={onSubNavItemClick}
+                    onRequestClose={onRequestClose}
+                    ownerState={ownerState}
+                  />
+                </NavItemSubMenuItem>
+              ))}
+            </NavItemSubMenu>
+          </NavItemSubMenuGrid>
         </Root>
       ) : (
         <NavItemLink
@@ -89,6 +91,12 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })<{ open?: boolean; ownerState: HeaderNavLinkOwnerState }>``;
+
+const NavItemSubMenuGrid = styled(Grid, {
+  name: 'HeaderNavLink',
+  slot: 'NavItemSubMenuGrid',
+  overridesResolver: (_, styles) => [styles.navItemSubMenuGrid]
+})<{ ownerState: HeaderNavLinkOwnerState }>``;
 
 const NavItemSubMenu = styled(List, {
   name: 'HeaderNavLink',

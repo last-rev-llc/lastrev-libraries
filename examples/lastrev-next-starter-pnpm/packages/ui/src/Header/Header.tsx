@@ -58,7 +58,7 @@ const Header = (props: HeaderProps) => {
         </SiteMessageWrap>
       )}
 
-      <ContentOuterGrid ownerState={ownerState}>
+      <ContentOuterGrid ownerState={ownerState} overrideNested={true}>
         {logo ? (
           <LogoRoot {...logoUrl} aria-label={'Go to homepage'} ownerState={ownerState} text={undefined}>
             <Logo {...logo} __typename="Media" priority alt={logo?.title ?? 'Go to homepage'} ownerState={ownerState} />

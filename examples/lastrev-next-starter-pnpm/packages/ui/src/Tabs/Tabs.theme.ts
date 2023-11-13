@@ -5,13 +5,39 @@ const defaultProps: ComponentsProps['Tabs'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    containerType: 'inline-size',
-    position: 'relative',
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    padding: `var(--section-padding) 0`
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
+    'backgroundColor': 'none',
+    'containerType': 'inline-size',
+    'position': 'relative',
+    'width': '100%',
+    'display': 'flex',
+    'flexDirection': 'column',
+    'padding': `var(--section-padding) 0`,
+    '.MuiTabs-flexContainer': {
+      gap: theme.spacing(0.5)
+    },
+    '.MuiTabs-indicator': {
+      display: 'none'
+    },
+    '.MuiTab-root': {
+      'flex': 1,
+      'backgroundColor': theme.vars.palette.background.lightTwo,
+      'color': theme.vars.palette.text.primary,
+      'borderRadius': '8px 8px 0 0',
+      '&.Mui-selected': {}
+    },
+
+    '.Mui-selected': {
+      opacity: 1,
+      fontWeight: 700,
+      color: 'currentColor',
+      backgroundColor: theme.vars.palette.background.tab
+    },
+    // TODO: Review and maybe create as new variants
+    '& [class*=Card-cardWrap]': { backgroundColor: 'transparent!important', boxShadow: 'none' },
+    '& [class*=Card-title]': { ...theme.typography.h5 },
+    '& [class*=Text-title]': { ...theme.typography.h5 },
+    '& [class*=Block-title]': { ...theme.typography.h5 }
   }),
 
   // introTextGrid: : {},
@@ -23,35 +49,33 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
       gridColumnStart: 'auto'
     }
   },
-
-  // tabsContext: {},
-  tabListWrap: ({ theme }) => ({
-    'gridColumnStart': 'content-start',
-    'gridColumnEnd': 'content-end',
-    '.MuiTabs-flexContainer': { gap: 'var(--grid-gap)' },
-
-    '.MuiTab-root': {
-      // borderBottomWidth: '1px',
-      // borderBottomStyle: 'solid',
-      // paddingRight: 'calc(3 * var(--grid-gap))',
-      // paddingLeft: 0,
-      // whiteSpace: 'nowrap',
-      // opacity: 0.5,
-      // ...theme.typography.h4
-    },
-
-    '.Mui-selected': {
-      opacity: 1,
-      fontWeight: 700,
-      color: 'currentColor'
-    }
-  }),
-
-  detailsWrap: {
+  tabsWrap: ({ theme }) => ({
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
-    padding: 0
-  }
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+    overflow: 'hidden',
+    borderRadius: theme.shape.borderRadius
+  }),
+  // tabsContext: {},
+  tabListWrap: ({ theme }) => ({
+    // 'gridColumnStart': 'content-start',
+    // 'gridColumnEnd': 'content-end',
+  }),
+
+  detailsWrap: ({ theme }) => ({
+    'backgroundColor': theme.vars.palette.background.tab,
+    'display': 'block!important',
+    'gridColumnStart': 'content-start',
+    'gridColumnEnd': 'content-end',
+    'padding': theme.spacing(6, 10),
+    '&[hidden]': {
+      visibility: 'hidden',
+      position: 'absolute'
+    }
+  })
   // details: {}
 };
 

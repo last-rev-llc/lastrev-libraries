@@ -6,7 +6,10 @@ fragment Quote_BaseFragment on Quote {
   image {
     ...Media_BaseFragment
   }
-  logo {
-    ...Media_BaseFragment
+  #logo {
+  #  ...Media_BaseFragment
+  #}
+  actions {
+    ...Link_BaseFragment
   }
 }

@@ -16,7 +16,8 @@ import { type QuoteProps, QuoteOwnerState } from './Quote.types';
 const Quote = (props: QuoteProps) => {
   const ownerState = { ...props };
 
-  const { backgroundColor, background, sidekickLookup, logo, quote, authorName, authorTitle, image, variant } = props;
+  const { backgroundColor, background, sidekickLookup, actions, quote, authorName, authorTitle, image, variant } =
+    props;
 
   return (
     <ErrorBoundary>
@@ -24,8 +25,6 @@ const Quote = (props: QuoteProps) => {
         <QuoteBackground background={background} backgroundColor={backgroundColor} testId="Block-background" />
 
         <ContentOuterGrid ownerState={ownerState}>
-          {logo && <Logo {...logo} {...sidekick(sidekickLookup?.logo)} ownerState={ownerState} />}
-
           {quote && (
             <QuoteText {...sidekick(sidekickLookup?.quote)} ownerState={ownerState}>
               <QuoteSymbol ownerState={ownerState}>&quot;</QuoteSymbol>
@@ -38,19 +37,30 @@ const Quote = (props: QuoteProps) => {
             <AuthorRoot ownerState={ownerState}>
               {image && <ImageItem {...image} {...sidekick(sidekickLookup?.image)} ownerState={ownerState} />}
 
-              {authorName && (
-                <AuthorName {...sidekick(sidekickLookup?.authorName)} ownerState={ownerState}>
-                  {authorName}
-                </AuthorName>
-              )}
+              <AuthorDetails>
+                {authorName && (
+                  <AuthorName {...sidekick(sidekickLookup?.authorName)} ownerState={ownerState}>
+                    {authorName}
+                  </AuthorName>
+                )}
 
-              {authorTitle && (
-                <AuthorTitle {...sidekick(sidekickLookup?.authorTitle)} ownerState={ownerState}>
-                  {authorTitle}
-                </AuthorTitle>
-              )}
+                {authorTitle && (
+                  <AuthorTitle {...sidekick(sidekickLookup?.authorTitle)} ownerState={ownerState}>
+                    {authorTitle}
+                  </AuthorTitle>
+                )}
+              </AuthorDetails>
             </AuthorRoot>
           ) : null}
+          <ActionsWrap
+            {...sidekick(sidekickLookup, 'actions')}
+            data-testid="Card-actions"
+            // @ts-ignore: TODO
+            ownerState={ownerState}>
+            {actions?.map((link: any, index: number) => (
+              <Action key={`link-${link?.id || index}`} {...link} ownerState={ownerState} />
+            ))}
+          </ActionsWrap>
         </ContentOuterGrid>
       </Root>
     </ErrorBoundary>
@@ -81,10 +91,22 @@ const AuthorRoot = styled(Box, {
   overridesResolver: (_, styles) => [styles.authorRoot]
 })<{ ownerState: QuoteOwnerState }>``;
 
-const Logo = styled(ContentModule, {
+const AuthorDetails = styled(Box, {
   name: 'Quote',
-  slot: 'Logo',
-  overridesResolver: (_, styles) => [styles.logo]
+  slot: 'AuthorDetails',
+  overridesResolver: (_, styles) => [styles.authorDetails]
+})<{ ownerState: QuoteOwnerState }>``;
+
+const ActionsWrap = styled(Box, {
+  name: 'Quote',
+  slot: 'ActionsWrap',
+  overridesResolver: (_, styles) => [styles.actionsWrap]
+})<{ ownerState: QuoteOwnerState }>``;
+
+const Action = styled(ContentModule, {
+  name: 'Quote',
+  slot: 'QuoteAction',
+  overridesResolver: (_, styles) => [styles.action]
 })<{ ownerState: QuoteOwnerState }>``;
 
 const ImageItem = styled(ContentModule, {

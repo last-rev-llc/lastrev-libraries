@@ -3,6 +3,7 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 import type { Collection_BaseFragmentFragment } from '@graphql-sdk/types';
 
 import { CardVariants } from '../Card/Card.types';
+import { SwiperProps } from 'swiper/react';
 
 export enum CarouselVariants {
   default = 'defaultCarousel',
@@ -16,6 +17,7 @@ export enum CarouselVariants {
 export interface CarouselProps extends Omit<Collection_BaseFragmentFragment, 'variant' | 'itemsVariant'> {
   variant?: CarouselVariants;
   itemsVariant?: CardVariants;
+  SwiperProps?: SwiperProps;
 }
 
 export interface CarouselOwnerState extends CarouselProps {}

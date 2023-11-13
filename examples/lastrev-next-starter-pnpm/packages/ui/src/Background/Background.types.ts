@@ -7,7 +7,7 @@ export enum BackgroundVariants {
 }
 
 export interface BackgroundProps {
-  background?: ContentModule_BaseFragmentFragment;
+  background?: ContentModule_BaseFragmentFragment & { priority: boolean };
   backgroundColor?: string;
 }
 
