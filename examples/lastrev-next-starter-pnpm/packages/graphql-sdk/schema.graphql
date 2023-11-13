@@ -8,9 +8,7 @@ directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
 
 directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
 
-directive @tag(
-  name: String!
-) on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
+directive @tag(name: String!) on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
 
 type Asset {
   description: String
@@ -184,35 +182,6 @@ type CollectionDynamic implements Content {
   variant: String
 }
 
-type CollectionDynamicConnectionPageInfo {
-  allOptions: CollectionDynamicOptions
-  options: CollectionDynamicOptions
-  total: Int
-}
-
-input CollectionDynamicFilterInput {
-  body: String
-  tags: [String]
-  topics: [String]
-}
-
-union CollectionDynamicItem = Card
-
-type CollectionDynamicItemConnection {
-  items: [CollectionDynamicItem]
-  pageInfo: CollectionDynamicConnectionPageInfo
-}
-
-type CollectionDynamicOption {
-  label: String
-  value: String
-}
-
-type CollectionDynamicOptions {
-  tags: [CollectionDynamicOption]
-  topics: [CollectionDynamicOption]
-}
-
 type CollectionExpandable implements Content {
   animation: JSON
   backgroundColor: String
@@ -279,9 +248,7 @@ input ContentsFilter {
   preview: Boolean
 }
 
-"""
-Date custom scalar type
-"""
+"""Date custom scalar type"""
 scalar Date
 
 type ElementForm implements Content {
@@ -505,19 +472,6 @@ type PagePathParam {
 type PagePathParams {
   locale: String
   params: PagePathParam!
-}
-
-type PageProperty {
-  body: RichText
-  breadcrumbs: [Link]
-  featuredAssets: Collection
-  footer: Footer
-  header: Header
-  hero: Content
-  imageCarousel: Collection
-  mainImage: Media
-  path: String
-  socialLinks: [Link]
 }
 
 type PageResource implements Content {

@@ -12,7 +12,7 @@ const defaultProps: ComponentsProps['Form'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
     width: '100%',
