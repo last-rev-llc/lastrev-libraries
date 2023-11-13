@@ -4,9 +4,9 @@ import { SvgIcon, type SvgIconProps } from '@mui/material';
 function ProfileIcon(props: SvgIconProps) {
   return (
     <SvgIcon width="25" height="24" viewBox="0 0 25 24" fill="none" {...props}>
-      <rect x="0.255859" y="0.65918" width="24" height="22.7586" fill="url(#pattern0)" />
+      <rect x="0.255859" y="0.65918" width="24" height="22.7586" fill="url(#profile-pattern0)" />
       <defs>
-        <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
+        <pattern id="profile-pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
           <use xlinkHref="#image0_2005_389764" transform="matrix(0.00862069 0 0 0.00909091 0.0474139 0)" />
         </pattern>
         <image

@@ -4,13 +4,17 @@ import type { Form_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum FormVariants {
   default = 'default',
-  footer = 'footer'
+  footer = 'footer',
+  oneColumn = 'oneColumn',
+  twoColumns = 'twoColumns'
 }
 
 export interface FormProps extends Form_BaseFragmentFragment {
   submitted?: boolean;
   hasSuccessMessage?: boolean;
-  variant: FormVariants;
+  variant?: FormVariants;
+  marketoFormId: string;
+  id?: string;
 }
 
 export interface FormOwnerState extends FormProps {}
@@ -21,6 +25,8 @@ interface FormClasses {
   introText: string;
   contentOuterGrid: string;
   mainContentWrap: string;
+  formWrap: string;
+  recaptchaWrap: string;
 }
 
 export declare type FormClassKey = keyof FormClasses;

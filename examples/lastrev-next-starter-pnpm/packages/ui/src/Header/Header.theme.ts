@@ -9,9 +9,14 @@ const defaultProps: ComponentsProps['Header'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   root: ({ theme, ownerState }) => ({
-    'position': 'relative',
+    'position': 'sticky',
+    'zIndex': 99999,
+    'top': 0,
+    'left': 0,
+    'width': '100%',
     'padding': 'var(--grid-gap) 0',
     // ':is(&, & [class*=navItemSubMenu])': {
+    'backgroundColor': 'white',
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
     // },
     '[class*=navItemSubMenu]': {

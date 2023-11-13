@@ -1,29 +1,33 @@
 fragment Form_BaseFragment on ElementForm {
   ...Content_BaseFragment
-  variant
-  hubspotPortalId
-  hubspotFormId
   introText {
     ...Text_IntroTextFragment
   }
+  variant
+  hideRecaptcha
+  marketoFormId
+  confirmationPath
+  allowPersonalEmailAddresses
 }
 
 fragment Form_PageFragment on ElementForm {
   ...Content_BaseFragment
-  variant
-  hubspotPortalId
-  hubspotFormId
-  #seo
-  #jsonLd
+  seo
   path
   slug
+  variant
+  hideRecaptcha
+  confirmationPath
+  allowPersonalEmailAddresses
+  contents {
+    ...ContentModule_BaseFragment
+  }
+  disclaimerText
+  marketoFormId
   header {
     ...Header_BaseFragment
   }
   footer {
     ...Footer_BaseFragment
-  }
-  footerDisclaimerOverride {
-    ...RichText_BaseFragment
   }
 }
