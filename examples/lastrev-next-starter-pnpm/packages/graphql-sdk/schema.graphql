@@ -630,7 +630,8 @@ type SiteRedirect implements Content {
   id: String
   permanent: Boolean
   sidekickLookup: JSON
-  source: [String]
+  source: String
+  sourceList: [String]
   theme: [Theme]
   variant: String
 }
