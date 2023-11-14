@@ -21,21 +21,31 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
       })
     },
 
-    '&:is(:hover, :focus, :focus-within):not(:focus-visible)': {
-      '[class*="HeaderNavLink-navItemLink"]': {
-        // TODO: Standardize this across the header links if they're the same
-        '.MuiSvgIcon-root': {
-          // fill: 'currentcolor',
-          transform: 'rotate(-90deg)'
-        }
-      },
+    '[class*="HeaderNavLink-navItemSubMenuGrid"]': {
+      // display: 'flex',
+      visibility: 'hidden',
+      zIndex: -2,
+      transform: 'translateY(-100%)'
+    },
+    ...(ownerState.open
+      ? {
+          '[class*="HeaderNavLink-navItemLink"]': {
+            // TODO: Standardize this across the header links if they're the same
+            '.MuiSvgIcon-root': {
+              // fill: 'currentcolor',
+              transform: 'rotate(-90deg)'
+            }
+          },
 
-      '[class*="HeaderNavLink-navItemSubMenuGrid"]': {
-        // display: 'flex',
-        visibility: 'visible',
-        opacity: 1
-      }
-    }
+          '[class*="HeaderNavLink-navItemSubMenuGrid"]': {
+            // display: 'flex',
+            visibility: 'visible',
+            zIndex: -2,
+            opacity: 1,
+            transform: 'translateY(0%)'
+          }
+        }
+      : null)
   }),
 
   navItemLink: ({ theme, open }) => ({
@@ -43,10 +53,10 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     // 'borderTop': `solid 1px ${theme.vars.palette.primary.main}`,
 
     // 'flexGrow': '1',
-    'alignItems': 'center',
-    'display': 'flex',
-    'width': '100%',
-    'justifyContent': 'space-between',
+    // 'alignItems': 'center',
+    // 'display': 'flex',
+    // 'width': '100%',
+    // 'justifyContent': 'space-between',
     'cursor': 'pointer',
 
     [theme.breakpoints.up('md')]: {
@@ -79,7 +89,7 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
 
   navItemSubMenuGrid: ({ theme, open, ownerState }) => ({
     // display: 'none',
-    transition: 'visibility .25s, opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+    transition: '.25s ease-in-out',
     // ...theme.mixins.applyColorScheme({ ownerState, theme }),
     backgroundColor: theme.vars.palette.background.lightThree,
     // ...theme.mixins.applyGrid({ theme, ownerState: { overrideNested: true } }),
@@ -89,8 +99,8 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
     transitionDelay: '3s',
     [theme.breakpoints.up('md')]: {
       transitionDelay: '0s',
-      visibility: 'hidden',
-      opacity: 0,
+      // visibility: 'hidden',
+      // opacity: 0,
 
       // display: 'grid',
       // gap: theme.spacing(0),
@@ -131,9 +141,11 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
       // visibility: 'hidden',
       // opacity: 0,
       gridColumn: 'content-start/content-end',
-      display: 'grid',
-      gap: theme.spacing(0),
+      display: 'flex',
+      gap: theme.spacing(5),
       margin: theme.spacing(0, -2),
+      padding: theme.spacing(3, 0),
+      justifyContent: 'center'
       // overflow: 'hidden',
 
       // height: '88px',
@@ -141,26 +153,38 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLink'] = {
       // top: 88,
       // left: 0,
       // @ts-ignore: TODO: items not recognized
-      gridTemplateColumns: `repeat(${(ownerState.numOfCols ?? 0) + 1}, auto)`,
+      // gridTemplateColumns: `repeat(${(ownerState.numOfCols ?? 0) + 1}, auto)`
       // border: `solid 1px ${theme.vars.palette.primary.contrastText}`,
       // zIndex: 1,
       // transform: 'translateY(100%)',
       // padding: theme.spacing(3, 0, 0, 0),
 
-      ...(ownerState.numOfCols === 2 && {
-        // TODO: Check variant here instead?
-        right: ownerState.hasMegaNav ? -578 : -252
-      }),
+      // ...(ownerState.numOfCols === 2 && {
+      //   // TODO: Check variant here instead?
+      //   right: ownerState.hasMegaNav ? -578 : -252
+      // }),
 
-      ...(ownerState.numOfCols === 1 && {
-        left: 0
-      })
+      // ...(ownerState.numOfCols === 1 && {
+      //   left: 0
+      // })
     }
   }),
 
   navItemSubMenuItem: ({ theme }) => ({
+    // border: '1px solid red',
     [theme.breakpoints.up('md')]: {
-      alignItems: 'flex-start'
+      'width': 'auto',
+      'alignItems': 'flex-start',
+      'position': 'relative',
+      '&:not(:last-child):after': {
+        content: '""',
+        position: 'absolute',
+        width: '1px',
+        height: '100%',
+        bottom: '0',
+        right: theme.spacing(-2.5),
+        background: theme.vars.palette.background.lightOne
+      }
     }
   }),
 

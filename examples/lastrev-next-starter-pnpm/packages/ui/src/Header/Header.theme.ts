@@ -19,6 +19,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'backgroundColor': 'white',
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
     // },
+    '[class*=Link-root]': {
+      'color': 'black',
+      '&:hover': {
+        color: theme.vars.palette.primary.main
+      }
+    },
     '[class*=navItemSubMenu]': {
       // backgroundColor: 'var(--current-color-main)'
     },

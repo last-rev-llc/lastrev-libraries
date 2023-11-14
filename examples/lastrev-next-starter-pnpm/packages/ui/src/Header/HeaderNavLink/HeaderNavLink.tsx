@@ -22,18 +22,19 @@ const HeaderNavLink = (props: HeaderNavLinkProps) => {
     numOfCols: props.subNavigation?.length || 1
   };
 
-  const { variant, subNavigation, sidekickLookup, onRequestClose, id: navItemId } = props;
+  const { variant, subNavigation, sidekickLookup, onRequestClose, id: navItemId, open, onClickNav } = props;
 
   const onNavItemClick = (evt: any) => {
-    if (subNavigation?.length) {
-      evt.preventDefault();
-      evt.stopPropagation();
-      if (document.activeElement instanceof HTMLElement) {
-        evt?.target?.blur();
-      }
-    } else {
-      if (onRequestClose) onRequestClose();
-    }
+    onClickNav(evt);
+    // if (subNavigation?.length) {
+    //   evt.preventDefault();
+    //   evt.stopPropagation();
+    //   if (document.activeElement instanceof HTMLElement) {
+    //     evt?.target?.blur();
+    //   }
+    // } else {
+    //   if (onRequestClose) onRequestClose();
+    // }
   };
 
   const onSubNavItemClick = () => {
@@ -55,9 +56,12 @@ const HeaderNavLink = (props: HeaderNavLinkProps) => {
             ownerState={ownerState}
           />
           <NavItemSubMenuGrid ownerState={ownerState} overrideNested>
-            <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState}>
+            <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState} disablePadding>
               {subNavigation?.map((subNavItem: any, index: number) => (
-                <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
+                <NavItemSubMenuItem
+                  key={`${navItemId}-nav-item-${subNavItem.id}-${index}`}
+                  ownerState={ownerState}
+                  disablePadding>
                   <NavItemGroup
                     {...subNavItem}
                     variant="group"

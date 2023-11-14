@@ -18,9 +18,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
     }),
     // TODO: Discuss but this helps to do a label
     'textDecorationColor': 'currentColor',
-    '&[href="#"]': {
+    '&&': {
       textDecoration: 'none'
     },
+    '&:hover': {
+      textDecoration: 'underline'
+    },
+    '&[href="#"]': {},
     // TODO: Review, looks out of place but allows for any icon color controlled from Link color
     // TODO Add variant
     // TODO Really review this weird stuff, supports color inversion as well as explicit color on the link

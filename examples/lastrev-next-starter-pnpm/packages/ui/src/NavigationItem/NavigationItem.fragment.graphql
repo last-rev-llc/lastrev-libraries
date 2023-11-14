@@ -19,6 +19,17 @@ fragment NavigationItem_BaseFragment on NavigationItem {
 
         ... on NavigationItem {
           ...NavigationItem_BaseFieldsFragment
+          subNavigation {
+            ... on Content {
+              id
+              __typename
+            }
+            ...Link_NavItemFragment
+
+            ... on NavigationItem {
+              ...NavigationItem_BaseFieldsFragment
+            }
+          }
         }
       }
     }

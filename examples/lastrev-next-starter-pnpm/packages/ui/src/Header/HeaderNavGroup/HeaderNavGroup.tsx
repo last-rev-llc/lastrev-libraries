@@ -12,7 +12,6 @@ import ErrorBoundary from '../../ErrorBoundary';
 import ContentModule from '../../ContentModule';
 
 import type { HeaderNavGroupProps, HeaderNavGroupOwnerState } from './HeaderNavGroup.types';
-import Grid from '../../Grid';
 
 const HeaderNavGroup = (props: HeaderNavGroupProps) => {
   const ownerState = {
@@ -44,13 +43,13 @@ const HeaderNavGroup = (props: HeaderNavGroupProps) => {
             subNavigation={undefined}
             ownerState={ownerState}
           />
-          <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState}>
+          <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState} disablePadding>
             {subNavigation?.map((subNavItem: any, index: number) => (
               <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
                 <NavItemGroup
                   {...subNavItem}
-                  variant="linkNested"
-                  __typename="NavigationItem"
+                  // variant="linkNested"
+                  // __typename="NavigationItem"
                   onClick={onSubNavItemClick}
                   onRequestClose={onRequestClose}
                   ownerState={ownerState}
@@ -74,7 +73,7 @@ const HeaderNavGroup = (props: HeaderNavGroupProps) => {
   );
 };
 
-const Root = styled(Grid, {
+const Root = styled(Box, {
   name: 'HeaderNavGroup',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
