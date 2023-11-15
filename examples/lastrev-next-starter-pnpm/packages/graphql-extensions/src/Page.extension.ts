@@ -64,10 +64,6 @@ export const mappers: Mappers = {
         return page;
       },
 
-      link: async (page: any, _args: any, ctx: ApolloContext) => {
-        return page;
-      },
-
       actions: async (page: any, args: any, ctx: ApolloContext) => {
         return [
           createType('Link', {
