@@ -18,8 +18,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <meta name="contentful_space" content="{process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID}" />
-        <meta name="contentful_environment" content="{process.env.NEXT_PUBLIC_CONTENTFUL_ENV}" />
       </head>
       <body>{children}</body>
     </html>
