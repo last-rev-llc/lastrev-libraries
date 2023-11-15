@@ -3,12 +3,12 @@
 /* eslint-disable no-param-reassign */
 const { getContentfulIdFromString } = require('../contentful-fields');
 
-const content_type = 'article';
+const content_type = 'pageVideo';
 
 const queryOptions = {
   'limit': 100,
   content_type,
-  // 'sys.id[in]': '4rECnuLOSbnJafPL9g3hdU',
+  // 'sys.id[in]': '4fH4CCUm0vIVCE6XwzwJJI',
   'order': '-sys.createdAt',
   'sys.publishedVersion[exists]': true,
   'sys.archivedAt[exists]': false
@@ -33,7 +33,7 @@ const ifLocales = ['en-US', 'hk', 'hk-en', 'ca', 'cn', 'cn-en', 'fr-ca', 'me-en'
 const coalitionLocales = ['en-US', 'en-AU', 'en-CA', 'en-GB', 'fr-CA'];
 const englishOnly = ['en-US'];
 
-const locales = coalitionLocales;
+const locales = dropboxLocales;
 
 const displayHyperlink = (content) => {
   if (content.nodeType === 'hyperlink') {
@@ -77,6 +77,21 @@ const findBody = (item, locale) => {
   return body && body[locale] && body[locale].content && body[locale].content.some(hasHyperlink);
 };
 
+const findDisclaimerText = (item, locale) => {
+  const { disclaimerText } = item.fields;
+  return disclaimerText && disclaimerText[locale];
+};
+
+const findCategories = (item, locale) => {
+  const { subjects } = item.fields;
+  return subjects && locale !== 'en-US' && subjects[locale];
+};
+
+const findSubCategories = (item, locale) => {
+  const { tags } = item.fields;
+  return tags && locale !== 'en-US' && tags[locale];
+};
+
 const findRedirect = (item, locale) => {
   // Redirect data
   const { sourcePath, destinationPath } = item.fields;
@@ -107,11 +122,12 @@ const findPubDate = (item, locale) => {
   return !pubDate || !pubDate['en-US'];
 };
 
-const findCondition = (item, locale) => findPubDate(item, locale); // findCardListByType(item, locale, 'Timeline');
+const findCondition = (item, locale) => findSubCategories(item, locale); // findCardListByType(item, locale, 'Timeline');
 
 const displayObject = (item) => ({
-  id: item.sys.id,
-  pubDate: item.fields.pubDate
+  id: item.sys.id
+  // categories: item.fields.subjects
+  // subCategories: item.fields.tags
   // sys: item.sys,
   // cards: item.fields.cards,
   // slug: item.fields.slug,
@@ -153,17 +169,21 @@ const log = (items) => {
   );
 };
 
-const prepareEntryForUpdate = (entry) => {
+const prepareForEntry = (entry, field) => {
   console.log(`preparing entry => ${entry.sys.id}`);
-  const { destinationPath } = entry.fields;
-  locales.forEach((locale) => {
-    if (destinationPath?.[locale]) {
-      entry.fields.destinationPath[locale] = destinationPath[locale].replace('/topics/', '/self-guided-learning/');
-      console.log(`prepared entry for ${locale} locale => `, entry.fields.destinationPath[locale]);
+  const preparedField = entry.fields[field];
+  englishOnly.forEach((locale) => {
+    if (preparedField?.[locale]) {
+      entry.fields[field] = { [locale]: preparedField[locale] };
+      console.log(`prepared entry for ${locale} locale => `, entry.fields[field][locale]);
     }
   });
+  console.log(`prepared entry => `, JSON.stringify(entry.fields[field], null, 2));
   return entry;
 };
+
+// tags and subjects
+const prepareEntryForUpdate = (entry) => prepareForEntry(entry, 'tags');
 
 const prepareEntryForDuplication = (entry) => {
   console.log(`preparing entry => ${entry.sys.id}`);
@@ -194,5 +214,5 @@ module.exports = {
   itemFilter,
   prepareEntryForUpdate,
   prepareEntryForDuplication,
-  prepareOnly: true
+  prepareOnly: false
 };

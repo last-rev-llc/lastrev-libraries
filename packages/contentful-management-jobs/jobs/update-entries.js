@@ -31,7 +31,7 @@ const {
         console.log('number of updated entries => ', updatedEntries.filter((entry) => entry).length);
       }
     } else {
-      console.log('No entries were prepared for duplication');
+      console.log('No entries were prepared for an update');
     }
   } else {
     console.log('No entries found');
