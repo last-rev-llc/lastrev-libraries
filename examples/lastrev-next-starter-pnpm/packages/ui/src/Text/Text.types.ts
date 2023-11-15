@@ -7,15 +7,16 @@ import type { Text_BaseFragmentFragment } from '@graphql-sdk/types';
 export enum TextVariants {
   default = 'default',
   introText = 'introText',
-  inline = 'inline'
+  inline = 'inline',
+  thin = 'thin'
 }
 
-export interface TextProps extends Text_BaseFragmentFragment {
+export interface TextProps extends Omit<Text_BaseFragmentFragment, 'variant'> {
   styles?: {
     root?: any;
   };
   sx?: any;
-  variant?: string;
+  variant?: TextVariants;
   align?: 'left' | 'center' | 'right' | 'justified' | any;
   renderNode?: any;
   renderMark?: any;
@@ -30,6 +31,7 @@ interface TextClasses {
   overline: string;
   title: string;
   subtitle: string;
+  bodyWrap: string;
 }
 
 export declare type TextClassKey = keyof TextClasses;

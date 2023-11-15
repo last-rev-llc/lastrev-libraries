@@ -29,6 +29,7 @@ const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
         }
       }
       const slug = getLocalizedField(content?.fields, 'slug', ctx);
+
       if (slug) return createPath(getLocalizedField(content?.fields, 'slug', ctx));
     }
   }

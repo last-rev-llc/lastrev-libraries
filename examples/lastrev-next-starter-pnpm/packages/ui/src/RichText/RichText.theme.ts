@@ -7,17 +7,17 @@ const defaultProps: ComponentsProps['RichText'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['RichText'] = {
   // Set some static styles
-  root: ({ ownerState, theme }) => ({
+  root: {
     'width': '100%',
     'ol, ul': {
-      'padding': '0 0 0 var(--grid-gap-double)',
+      'padding': '0 0 0 var(--grid-gap)',
 
       '& > li': {
         marginBottom: '1em',
         padding: 'revert'
       }
     }
-  })
+  }
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['RichText'] => [

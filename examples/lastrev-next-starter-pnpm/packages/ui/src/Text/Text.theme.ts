@@ -9,7 +9,7 @@ import { TextVariants } from './Text.types';
 
 const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
-  root: {
+  root: ({ ownerState, theme }) => ({
     'width': '100%',
     'display': 'unset',
     'ol, ul, li': {
@@ -26,7 +26,25 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
         gridColumn: 'content-start/content-end'
       }
     }
-  },
+  }),
+
+  bodyWrap: ({ ownerState, theme }) => ({
+    '&&': {
+      ...(ownerState?.variant === 'thin'
+        ? {
+            gridColumnStart: 'content-start',
+            gridColumnEnd: 'content-end',
+
+            [theme.breakpoints.up('lg')]: {
+              gridColumnStart: 'two-start',
+              gridColumnEnd: 'eleven-end'
+            }
+          }
+        : {
+            display: 'contents'
+          })
+    }
+  }),
 
   title: ({ theme, ownerState }) => ({
     ...(ownerState?.variant === TextVariants.default && {
