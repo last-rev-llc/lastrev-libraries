@@ -1,7 +1,8 @@
 // route handler with secret and slug
+import { getClient } from 'graphql-sdk/src/client';
 import { draftMode } from 'next/headers';
 // import { redirect } from 'next/navigation';
-import client from '../../../../../../packages/graphql-sdk/src/client';
+// import client from '../../../../../../packages/graphql-sdk/src/client';
 import { notFound } from 'next/navigation';
 
 export async function GET(request: Request) {
@@ -9,9 +10,10 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const secret = searchParams.get('secret');
   const locale = searchParams.get('locale');
+  const environment = searchParams.get('env_id');
   // const environment = searchParams.get('environment');
   const id = searchParams.get('id');
-
+  const client = getClient({ environment });
   if (!id) {
     return notFound();
   }
@@ -52,7 +54,7 @@ export async function GET(request: Request) {
   return new Response(null, {
     status: 307,
     headers: {
-      Location: `/preview/${content.id}`
+      Location: `/preview/${content.id}` + (environment ? `?environment=${environment}` : '')
     }
   });
 }

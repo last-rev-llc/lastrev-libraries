@@ -21,7 +21,7 @@ export const mappers = {
     Header: {
       hasCtaItems: async (header: any, _args: any, ctx: ApolloContext) => {
         const ctaItems: any = getLocalizedField(header.fields, 'ctaItems', ctx);
-        return !!ctaItems.length;
+        return !!ctaItems?.length;
       },
       backgroundColor: defaultResolver('backgroundColor')
     }

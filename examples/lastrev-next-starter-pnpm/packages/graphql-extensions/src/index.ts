@@ -22,6 +22,7 @@ function loadFiles() {
     dirPath = path.resolve(process.cwd(), '../../packages/graphql-extensions/src');
     console.warn('Dynamic Extension Files are not supported in NextJS');
     console.warn('Update graphql-extensions/src/index.ts to load ALL extension files manually');
+
     modules['Algolia'] = require('./Algolia.extension');
     modules['Block'] = require('./Block.extension');
     modules['Blog'] = require('./Blog.extension');

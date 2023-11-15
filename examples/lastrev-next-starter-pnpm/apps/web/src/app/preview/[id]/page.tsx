@@ -1,6 +1,6 @@
 import React from 'react';
 import ContentPreview from '@ui/ContentPreview';
-import { client } from '@graphql-sdk/client';
+import { getClient } from '@graphql-sdk/client';
 
 import { AppProvider } from '@ui/AppProvider/AppProvider';
 import { notFound } from 'next/navigation';
@@ -20,9 +20,12 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   };
 }
 
-export default async function Preview({ params }: Props) {
+export default async function Preview({ params, searchParams }: Props) {
   const { id } = params;
+  const environment = searchParams.environment;
+  const client = getClient({ environment });
   const { data } = await client.Preview({ id, locale });
+
   if (!data?.content) {
     return notFound();
   }

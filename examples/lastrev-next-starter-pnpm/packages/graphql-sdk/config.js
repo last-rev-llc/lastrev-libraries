@@ -49,6 +49,7 @@ const config = new LastRevAppConfig({
     contentTypeIds: ['blog'],
     indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT)
   },
+
   redis: {
     port: process.env.REDIS_PORT,
     host: process.env.REDIS_HOST,
