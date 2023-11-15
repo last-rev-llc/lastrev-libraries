@@ -15,7 +15,7 @@ import Box from '@mui/material/Box';
 const Text = (props: TextProps) => {
   const ownerState = { ...props };
 
-  const { body, overline, title, subtitle, variant, sidekickLookup, sx } = props;
+  const { body, overline, titleIcon, title, subtitle, variant, sidekickLookup, sx } = props;
 
   return (
     <ErrorBoundary>
@@ -30,11 +30,18 @@ const Text = (props: TextProps) => {
           </Overline>
         )}
 
-        {!!title && (
-          <Title data-testid="Text-title" {...sidekick(sidekickLookup, 'title')} ownerState={ownerState}>
-            {title}
-          </Title>
-        )}
+        {!!titleIcon || title ? (
+          <TitleWrap>
+            {!!titleIcon ? (
+              <TitleIcon ownerState={ownerState} {...sidekick(sidekickLookup, 'titleIcon')}>
+                <ContentModule {...titleIcon} data-testid="Text-titleIcon" />
+              </TitleIcon>
+            ) : null}
+            <Title data-testid="Text-title" {...sidekick(sidekickLookup, 'title')} ownerState={ownerState}>
+              {!!title ? title : null}
+            </Title>
+          </TitleWrap>
+        ) : null}
 
         {!!subtitle && (
           <Subtitle
@@ -52,7 +59,6 @@ const Text = (props: TextProps) => {
               body={body}
               sidekickLookup={sidekickLookup}
               variant={variant}
-              {...props}
               __typename="RichText"
               ownerState={{ ...ownerState, variant: variant === 'thin' ? 'inline' : variant }}
             />
@@ -75,11 +81,23 @@ const Overline = styled(Typography, {
   overridesResolver: (_, styles) => [styles.overline]
 })<TypographyProps & { ownerState: TextOwnerState }>``;
 
+const TitleWrap = styled(Box, {
+  name: 'Text',
+  slot: 'TitleWrap',
+  overridesResolver: (_, styles) => [styles.titleWrap]
+})<{ ownerState: TextOwnerState }>``;
+
 const Title = styled(Typography, {
   name: 'Text',
   slot: 'Title',
   overridesResolver: (_, styles) => [styles.title]
 })<TypographyProps & { ownerState: TextOwnerState }>``;
+
+const TitleIcon = styled(Box, {
+  name: 'Text',
+  slot: 'TitleIcon',
+  overridesResolver: (_, styles) => [styles.titleIcon]
+})<{ ownerState: TextOwnerState }>``;
 
 const Subtitle = styled(Typography, {
   name: 'Text',

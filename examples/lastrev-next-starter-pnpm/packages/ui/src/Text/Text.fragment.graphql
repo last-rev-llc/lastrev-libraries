@@ -3,6 +3,9 @@ fragment Text_FieldsFragment on Text {
   variant
   align
   overline
+  titleIcon {
+    ...Media_BaseFragment
+  }
   title
   subtitle
 }

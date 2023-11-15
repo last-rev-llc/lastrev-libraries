@@ -25,7 +25,6 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
 
   const imgContent = React.useMemo(() => {
     const isSVG = src?.endsWith('.svg');
-    // if (isSVG) console.log({ isSVG, imageProps, svgContent: imageProps.svgContent });
 
     let content;
     if (isSVG && !disableInlineSVG && imageProps.svgContent) {

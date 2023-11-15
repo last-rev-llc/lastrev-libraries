@@ -9,7 +9,7 @@ import { TextVariants } from './Text.types';
 
 const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
-  root: ({ ownerState, theme }) => ({
+  root: {
     'width': '100%',
     'display': 'unset',
     'ol, ul, li': {
@@ -18,12 +18,28 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
       padding: 'revert'
     },
 
+    '& > *:last-child': {
+      paddingBottom: 0,
+      marginBottom: 0
+    },
+
     'main > &': {
       'display': 'grid',
 
       '& > *': {
         display: 'unset',
         gridColumn: 'content-start/content-end'
+      }
+    }
+  },
+
+  titleIcon: ({ theme }) => ({
+    maxWidth: '96px',
+    paddingRight: 'var(--grid-gap)',
+
+    [theme.containerBreakpoints.up('lg')]: {
+      '& > :is(img, svg)': {
+        objectFit: 'contain'
       }
     }
   }),
@@ -46,6 +62,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
     }
   }),
 
+  titleWrap: {
+    display: 'flex'
+  },
+
   title: ({ theme, ownerState }) => ({
     ...(ownerState?.variant === TextVariants.default && {
       ...theme.typography.h4
@@ -65,7 +85,7 @@ const createVariants = (_theme: Theme): ComponentsVariants['Text'] => [
   // Use prop matching to set variant styles
   {
     props: {
-      variant: 'inline'
+      variant: TextVariants.inline
     },
     style: {
       // TODO: Pulled from Text, but adds default padding around elements.   Classes may be wrong
@@ -94,7 +114,7 @@ const createVariants = (_theme: Theme): ComponentsVariants['Text'] => [
 
   {
     props: {
-      variant: 'introText'
+      variant: TextVariants.introText
     },
     style: ({ theme }: { theme: Theme }) => ({
       marginBottom: theme.spacing(4)

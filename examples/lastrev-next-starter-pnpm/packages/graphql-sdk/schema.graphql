@@ -674,6 +674,7 @@ type Text implements Content {
   subtitle: String
   theme: [Theme]
   title: String
+  titleIcon: Media
   variant: String
 }
 

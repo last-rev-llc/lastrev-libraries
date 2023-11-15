@@ -14,6 +14,7 @@ const defaultProps: ComponentsProps['Card'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
     containerType: 'inline-size',
+    height: '100%',
 
     ...(ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person
       ? {
@@ -233,7 +234,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           transform: 'translateY(100%)',
           width: '100%',
           zIndex: 20,
-          height: '100%'
+          height: '100%',
+          boxSizing: 'border-box'
         },
 
         ':is([class*=overline], [class*=subtitle], [class*=body], [class*=actionsWrap])': {

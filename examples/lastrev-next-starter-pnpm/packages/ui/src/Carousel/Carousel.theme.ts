@@ -60,12 +60,16 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
     const itemsPerRow = ownerState?.itemsPerRow || 3;
 
     return {
+      '.swiper-slide': {
+        height: 'auto'
+      },
       '&.no-js': {
         '[class*=swiper-button]': {
           visibility: 'hidden'
         },
 
         '.swiper-slide': {
+          'height': '100%',
           // Calculations get messed up if we don't do this
           'paddingRight': theme.spacing(1),
 

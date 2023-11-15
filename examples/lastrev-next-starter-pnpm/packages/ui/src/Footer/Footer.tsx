@@ -82,7 +82,7 @@ const Footer = (props: FooterProps) => {
 
         <LegalSection ownerState={ownerState}>
           {!!disclaimerText && (
-            <DisclaimerWrap ownerState={ownerState} overrideNested>
+            <DisclaimerWrap ownerState={ownerState}>
               <Disclaimer
                 {...sidekick(sidekickLookup, 'disclaimerText')}
                 ownerState={ownerState}
