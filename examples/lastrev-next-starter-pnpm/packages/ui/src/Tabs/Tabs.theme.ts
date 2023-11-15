@@ -1,16 +1,11 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Tabs'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
     width: '100%',
@@ -48,7 +43,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
 
     '.Mui-selected': {
       opacity: 1,
-      color: 'currentColor'
+      color: 'var(--mui-palette-text-primary)'
     }
   }),
 

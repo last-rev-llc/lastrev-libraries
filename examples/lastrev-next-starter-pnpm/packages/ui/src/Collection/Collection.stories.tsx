@@ -46,8 +46,8 @@ const CollectionTemplate = {
               sx={{
                 position: 'sticky',
                 top: 0,
-                backgroundColor: theme.palette.primary.main,
-                color: theme.palette.primary.contrastText,
+                backgroundColor: theme.vars.palette.primary.main,
+                color: theme.vars.palette.primary.contrastText,
                 ...theme.typography.display6,
                 zIndex: 500,
                 p: 1

@@ -52,7 +52,6 @@ const Header = (props: HeaderProps) => {
       // menuBreakpoint={menuBreakpoint}
     >
       <HeaderBackground backgroundColor={backgroundColor} testId="Header-background" />
-
       {siteMessageText && (
         <SiteMessageWrap ownerState={ownerState}>
           <SiteMessage icon={siteMessageIcon} text={siteMessageText} link={siteMessageLink} />

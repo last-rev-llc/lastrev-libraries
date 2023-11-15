@@ -1,11 +1,11 @@
 import {
-  alpha,
-  type Theme,
   type ThemeOptions,
   type ComponentsProps,
   type ComponentsOverrides,
   type ComponentsVariants
 } from '@mui/material/styles';
+
+import { type Theme } from '../ThemeRegistry/theme.types';
 
 import { CardVariants, CardAspectRatios } from './Card.types';
 
@@ -18,11 +18,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     ...(ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person
       ? {
           [theme.containerBreakpoints.up('sm')]: {
-            ...theme.mixins.applyBackgroundOverlay({ ownerState, theme })
+            ...theme.mixins.applyColorSchemeOverlay({ ownerState, theme })
           }
         }
       : {
-          ...theme.mixins.applyBackgroundColor({ ownerState, theme })
+          ...theme.mixins.applyColorScheme({ ownerState, theme })
         })
   }),
 
@@ -155,7 +155,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       '& [class*=contentWrap]': {
-        borderLeft: 'solid 1px currentColor',
+        borderLeft: 'solid 1px var(--mui-palette-text-primary)',
         paddingLeft: 'var(--grid-gap)',
         paddingTop: 0,
         paddingBottom: 0,
@@ -276,7 +276,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       'alignItems': 'flex-start',
-      'borderLeft': 'solid 1px currentColor',
+      'borderLeft': 'solid 1px var(--mui-palette-text-primary)',
 
       '[class*=Card-title]': {
         ...theme.typography.h2
@@ -326,7 +326,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       '[class*=contentWrap]': {
         display: 'flex',
         flexDirection: 'column',
-        borderLeft: 'solid 1px currentColor',
+        borderLeft: 'solid 1px var(--mui-palette-text-primary)',
         padding: '0 var(--grid-gap)'
       },
 

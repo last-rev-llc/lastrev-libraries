@@ -53,11 +53,8 @@ export const mappers: Mappers = {
         const assetsLinks = new Map();
         const entryHyperlinks = new Set();
         const traverseRichText = (node: any) => {
-          const {
-            data: { target },
-            nodeType,
-            content
-          } = node;
+          const { data, nodeType, content } = node;
+          const target = data?.target;
           // DFS collect children links
           if (content?.length) {
             content.forEach(traverseRichText);

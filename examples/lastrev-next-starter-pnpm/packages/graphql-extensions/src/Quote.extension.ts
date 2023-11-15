@@ -28,6 +28,7 @@ export const mappers: Mappers = {
 
       actions: async (quote: any, _args: any, ctx: ApolloContext) => {
         const actionsRef = getLocalizedField(quote.fields, 'actions', ctx);
+        if (!actionsRef?.length) return [];
         const actions: any[] = (
           await ctx.loaders.entryLoader.loadMany(
             actionsRef?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))

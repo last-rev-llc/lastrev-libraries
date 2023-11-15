@@ -35,13 +35,11 @@ const Hero = (props: HeroProps) => {
   return (
     <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
       {header ? <ContentModule {...(header as any)} backgroundColor={backgroundColor} /> : null}
-
       <HeroBackground
         background={{ ...background, priority: true }}
         backgroundColor={backgroundColor}
         testId="Hero-background"
       />
-
       <ContentOuterGrid ownerState={ownerState}>
         {overline || title || subtitle || body || actions ? (
           <MainContentWrap ownerState={ownerState}>
@@ -108,7 +106,6 @@ const Hero = (props: HeroProps) => {
           </MediaWrap>
         ) : null}
       </ContentOuterGrid>
-
       {!!bottomContent && (
         <BottomContentWrap ownerState={ownerState}>
           <BottomContent {...bottomContent} ownerState={ownerState} />

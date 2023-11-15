@@ -1,10 +1,10 @@
 import {
-  type Theme,
   type ThemeOptions,
   type ComponentsProps,
   type ComponentsOverrides,
   type ComponentsVariants
 } from '@mui/material/styles';
+import { type Theme } from '../ThemeRegistry/theme.types';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -13,7 +13,7 @@ const defaultProps: ComponentsProps['Carousel'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'containerType': 'inline-size',
     'display': 'flex',
     'flexDirection': 'column',
@@ -22,6 +22,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
 
     '&': {
       ':is(.swiper-button-prev, .swiper-button-next)': {
+        // '--swiper-navigation-color': 'var(--mui-palette-text-primary)',
         border: 'solid',
         aspectRatio: '1/1',
         width: 'var(--swiper-navigation-size)',
@@ -46,13 +47,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
             display: 'block',
             height: 'var(--section-padding)',
             width: '100%',
-            ...theme.mixins.applyBackgroundColor({
+            ...theme.mixins.applyColorScheme({
               ownerState: { ...ownerState, backgroundColor: ownerState?.prevBgColor ?? 'navy' },
               theme
             })
           }
         }
-      : { ...theme.mixins.applyBackgroundColor({ ownerState, theme }), padding: 'var(--section-padding) 0' })
+      : { ...theme.mixins.applyColorScheme({ ownerState, theme }), padding: 'var(--section-padding) 0' })
   }),
 
   swiperWrap: ({ theme, ownerState }) => {

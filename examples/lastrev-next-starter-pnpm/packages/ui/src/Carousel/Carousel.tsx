@@ -48,6 +48,7 @@ const Carousel = (props: CarouselProps) => {
 
   const swiperBreakpoints: { [width: number]: SwiperOptions } = {};
 
+  // Can change the slidePerView below if you don't want to show a partial for the next slide
   swiperBreakpoints['1'] = {
     grid: {
       rows: isCarouselMobile ? 1 : numItems,

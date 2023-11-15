@@ -71,7 +71,7 @@ export const mappers: Mappers = {
           introText: createType('Text', { title: 'Featured Assets' }),
           items,
           variant: itemsLength <= 2 ? 'twoPerRow' : 'threePerRow',
-          itemsVariant: 'Hover',
+          itemsVariant: 'hover',
           itemsAspectRatio: 'horizontal',
           backgroundColor: 'white'
         });

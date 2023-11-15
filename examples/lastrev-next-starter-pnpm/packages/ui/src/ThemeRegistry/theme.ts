@@ -1,9 +1,15 @@
-import { type Breakpoint, type Theme, createTheme } from '@mui/material/styles';
-import deepmerge from '@mui/utils/deepmerge';
+import {
+  type Breakpoint,
+  experimental_extendTheme as extendTheme,
+  CssVarsThemeOptions,
+  createTheme
+} from '@mui/material/styles';
+
+import { deepmerge } from '@mui/utils';
 import './theme.types';
 import createGridMixin from './mixins/createGridMixin';
-import applyBackgroundColor from './mixins/applyBackgroundColor';
-import applyBackgroundOverlay from './mixins/applyBackgroundOverlay';
+import applyColorScheme from './mixins/applyColorScheme';
+import applyColorSchemeOverlay from './mixins/applyColorSchemeOverlay';
 import themeComponents from './theme.components';
 
 import { Inter_Tight } from 'next/font/google';
@@ -16,25 +22,72 @@ export const interTight = Inter_Tight({
   adjustFontFallback: false
 });
 
-export const mainColors = [
-  'navy',
-  'red',
-  'crimson',
-  'sanJuan',
-  'cornflower',
-  'bordeaux',
-  'cucumber',
-  'texasRose',
-  'transparentLight',
-  'transparentDark',
-  'lightGray',
-  'darkGray'
-];
-
 const defaultSpacing = 8;
 const defaultBorderRadius = 4;
 
-const paletteTheme = createTheme({
+const commonColors = {
+  black: '#000000',
+  navy: '#03263C',
+  red: '#eb183d',
+  white: '#ffffff',
+  gray1: '#f8f8f8',
+  gray2: '#E5E6E8',
+  gray3: '#BBC5CB',
+  gray4: '#7D909B',
+  gray5: '#3C586A',
+  transparentLight: 'rgba(0, 0, 0, 0)',
+  transparentDark: 'rgba(255, 255, 255, 0)'
+};
+
+const schemes = {
+  transparentLight: {
+    primary: { main: commonColors.transparentLight, contrastText: commonColors.navy },
+    secondary: { main: commonColors.red, contrastText: commonColors.white },
+    linkColor: commonColors.navy,
+    headerColor: commonColors.black,
+    text: commonColors.navy,
+    overlay: commonColors.navy,
+    overlayText: commonColors.white
+  },
+  transparentDark: {
+    primary: { main: commonColors.transparentDark, contrastText: commonColors.white },
+    secondary: { main: commonColors.red, contrastText: commonColors.white },
+    linkColor: commonColors.white,
+    headerColor: commonColors.white,
+    text: commonColors.white,
+    overlay: commonColors.gray2,
+    overlayText: commonColors.black
+  },
+  lightGray: {
+    primary: { main: commonColors.gray1, contrastText: commonColors.gray5 },
+    secondary: { main: commonColors.red, contrastText: commonColors.white },
+    linkColor: commonColors.gray5,
+    headerColor: commonColors.gray5,
+    text: commonColors.gray5,
+    overlay: commonColors.gray1,
+    overlayText: commonColors.gray5
+  },
+  navy: {
+    primary: { main: commonColors.navy, contrastText: commonColors.gray2 },
+    secondary: { main: commonColors.red, contrastText: commonColors.white },
+    linkColor: commonColors.gray2,
+    headerColor: commonColors.white,
+    text: commonColors.gray2,
+    overlay: commonColors.navy,
+    overlayText: commonColors.white
+  },
+  white: {
+    primary: { main: commonColors.white, contrastText: commonColors.gray5 },
+    secondary: { main: commonColors.red, contrastText: commonColors.white },
+    linkColor: commonColors.gray5,
+    headerColor: commonColors.black,
+    text: commonColors.gray5,
+    overlay: commonColors.navy,
+    overlayText: commonColors.white
+  }
+};
+
+const paletteTheme = {
   values: {
     xs: 0,
     sm: 600,
@@ -43,206 +96,33 @@ const paletteTheme = createTheme({
     xl: 1536,
     xxl: 3840
   },
-  palette: {
-    mode: 'light',
-
-    transparentLight: {
-      lighter: 'rgba(0, 0, 0, 0)',
-      light: 'rgba(0, 0, 0, 0)',
-      main: 'rgba(0, 0, 0, 0)',
-      dark: 'rgba(0, 0, 0, 0)',
-      overlay: '#002339',
-      contrastText: '#395B7E',
-      linkColor: '#395B7E',
-      headerColor: '#000000',
-      textColor: '#395B7E',
-      overlayText: '#FFFFFF'
+  colorSchemes: {
+    light: {
+      palette: {
+        schemes: schemes,
+        ...schemes['white']
+      }
     },
-    transparentDark: {
-      lighter: 'rgba(255, 255, 255, 0)',
-      light: 'rgba(255, 255, 255, 0)',
-      main: 'rgba(255, 255, 255, 0)',
-      dark: 'rgba(255, 255, 255, 0)',
-      overlay: '#002339',
-      contrastText: '#ffffff',
-      linkColor: '#FFFFFF',
-      headerColor: '#FFFFFF',
-      textColor: '#FFFFFF',
-      overlayText: '#FFFFFF'
-    },
-    darkGray: {
-      lighter: 'rgba(0, 0, 0, .3)',
-      light: 'rgba(0, 0, 0, .3)',
-      main: 'rgba(0, 0, 0, .3)',
-      dark: 'rgba(0, 0, 0, .3)',
-      overlay: '#002339',
-      contrastText: '#000000',
-      overlayText: '#FFFFFF'
-    },
-
-    lightGray: {
-      lighter: '#F8F8F8',
-      light: '#F8F8F8',
-      main: '#F8F8F8',
-      dark: '#F8F8F8',
-      overlay: '#002339',
-      contrastText: '#395B7E',
-      linkColor: '#395B7E',
-      headerColor: '#000000',
-      textColor: '#395B7E',
-      overlayText: '#FFFFFF'
-    },
-
-    navy: {
-      lighter: '#03263C',
-      light: '#03263C',
-      main: '#03263C',
-      dark: '#03263C',
-      contrastText: '#ffffff',
-      overlay: '#03263C',
-      overlayText: '#FFFFFF'
-    },
-    red: {
-      lighter: '#eb183d',
-      light: '#eb183d',
-      main: '#eb183d',
-      dark: '#eb183d',
-      contrastText: '#000000',
-      overlay: '#ffffff',
-      overlayText: '#000000'
-    },
-    crimson: {
-      lighter: '#EC1A3A',
-      light: '#EC1A3A',
-      main: '#EC1A3A',
-      dark: '#EC1A3A',
-      contrastText: '#ffffff',
-      overlay: '#002339',
-      overlayText: '#FFFFFF'
-    },
-    sanJuan: {
-      lighter: '#395B7E',
-      light: '#395B7E',
-      main: '#395B7E',
-      dark: '#395B7E',
-      contrastText: '#ffffff',
-      overlay: '#002339',
-      overlayText: '#FFFFFF'
-    },
-    cornflower: {
-      lighter: '#93BDE4',
-      light: '#93BDE4',
-      main: '#93BDE4',
-      dark: '#93BDE4',
-      contrastText: '#ffffff',
-      overlay: '#002339',
-      overlayText: '#FFFFFF'
-    },
-    bordeaux: {
-      lighter: '#5E001D',
-      light: '#5E001D',
-      main: '#5E001D',
-      dark: '#5E001D',
-      contrastText: '#ffffff',
-      overlay: '#002339',
-      overlayText: '#FFFFFF'
-    },
-    cucumber: {
-      lighter: '#83AE74',
-      light: '#83AE74',
-      main: '#83AE74',
-      dark: '#83AE74',
-      contrastText: '#ffffff',
-      overlay: '#002339',
-      overlayText: '#FFFFFF'
-    },
-    texasRose: {
-      lighter: '#FDBA4D',
-      light: '#FDBA4D',
-      main: '#FDBA4D',
-      dark: '#FDBA4D',
-      contrastText: '#ffffff',
-      overlay: '#002339',
-      overlayText: '#FFFFFF'
-    },
-
-    // TODO: Get  shades
-    offwhite: { lighter: '#f8f8f8', light: '#f8f8f8', main: '#f8f8f8', dark: '#f8f8f8', contrastText: '#000000' },
-
-    background: {
-      // default: '#FFFFFF',
-      // paper: '#E3E3E3'
-      // default: '#121212',
-      // paper: '#1E1E1E'
-      // contrastText: '#FFFFFF'
-    },
-    error: {
-      main: '#ff1744',
-      light: 'rgb(255, 69, 105)',
-      dark: 'rgb(178, 16, 47)',
-      contrastText: '#ffffff'
-    },
-    common: {
-      black: '#00030B',
-      white: '#FFFFFF'
-    },
-    warning: {
-      main: '#ed6c02',
-      light: '#ff9800',
-      dark: '#e65100',
-      contrastText: '#ffffff'
-    },
-    info: {
-      main: '#0288d1',
-      light: '#03a9f4',
-      dark: '#01579b',
-      contrastText: '#ffffff'
-    },
-    success: {
-      main: '#2e7d32',
-      light: '#4caf50',
-      dark: '#1b5e20',
-      contrastText: '#ffffff'
-    },
-
-    white: {
-      main: '#FFFFFF',
-      contrastText: '#395B7E',
-      linkColor: 'red',
-      overlay: '#002339',
-      contrastText: '#395B7E',
-      linkColor: '#395B7E',
-      headerColor: '#000000',
-      textColor: '#395B7E',
-      overlayText: '#FFFFFF'
-    },
-    black: {
-      main: '#1F1F1F',
-      contrastText: '#FFFFFF',
-      overlay: '#002339',
-      linkColor: '#FFFFFF',
-      headerColor: '#FFFFFF',
-      textColor: '#FFFFFF',
-      overlayText: '#FFFFFF'
+    dark: {
+      palette: {
+        schemes: schemes,
+        ...schemes['navy']
+      }
     }
   }
-});
+};
 
-const coreTheme = createTheme({
+const muiTheme = extendTheme(paletteTheme);
+const baseTheme = {
   ...paletteTheme,
-  palette: {
-    ...paletteTheme.palette,
-    primary: paletteTheme.palette.offwhite,
-    secondary: paletteTheme.palette.blueGray
-  },
   spacing: defaultSpacing,
   shape: {
     borderRadius: defaultBorderRadius
   },
   mixins: {
     gridContainer: createGridMixin,
-    applyBackgroundColor,
-    applyBackgroundOverlay
+    applyColorScheme,
+    applyColorSchemeOverlay
   },
   typography: {
     fontFamily: interTight.style.fontFamily,
@@ -253,7 +133,8 @@ const coreTheme = createTheme({
       letterSpacing: '1px',
       textTransform: 'uppercase',
       fontFamily: interTight.style.fontFamily,
-      fontSize: 'var(--bodyXSmall-font-size)'
+      fontSize: 'var(--bodyXSmall-font-size)',
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
 
     body1: {
@@ -262,7 +143,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--body1-font-size)',
       lineHeight: 'var(--body1-line-height)',
       margin: 'var(--body1-margin)',
-      color: 'var(--text-color, inherit)'
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     body2: {
       fontFamily: interTight.style.fontFamily,
@@ -270,7 +151,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--body2-font-size)',
       lineHeight: 'var(--body2-line-height)',
       margin: 'var(--body2-margin)',
-      color: 'var(--text-color, inherit)'
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     bodyXSmall: {
       fontFamily: interTight.style.fontFamily,
@@ -278,7 +159,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--bodyXSmall-font-size)',
       lineHeight: 'var(--bodyXSmall-line-height)',
       margin: 'var(--bodyXSmall-margin)',
-      color: 'var(--text-color, inherit)'
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     bodySmall: {
       fontFamily: interTight.style.fontFamily,
@@ -286,7 +167,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--bodySmall-font-size)',
       lineHeight: 'var(--bodySmall-line-height)',
       margin: 'var(--bodySmall-margin)',
-      color: 'var(--text-color, inherit)'
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     bodyLarge: {
       fontFamily: interTight.style.fontFamily,
@@ -294,7 +175,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--bodyLarge-font-size)',
       lineHeight: 'var(--bodyLarge-line-height)',
       margin: 'var(--bodyLarge-margin)',
-      color: 'var(--text-color, inherit)'
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     display1: {
       display: 'block',
@@ -303,7 +184,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--display1-font-size)',
       lineHeight: 'var(--display1-line-height)',
       margin: 'var(--display1-margin)',
-      color: 'var(--header-color, inherit)',
+      color: 'var(--mui-palette-text-primary-header, inherit)',
       letterSpacing: '1px'
     },
     display2: {
@@ -314,7 +195,7 @@ const coreTheme = createTheme({
       lineHeight: 'var(--display2-line-height)',
       margin: 'var(--display2-margin)',
       letterSpacing: '1px',
-      color: 'var(--header-color, inherit)'
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
     h1: {
       fontFamily: interTight.style.fontFamily,
@@ -324,7 +205,7 @@ const coreTheme = createTheme({
       margin: 'var(--h1-margin)',
       fontStyle: 'normal',
       letterSpacing: '1px',
-      color: 'var(--header-color, inherit)'
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
     h2: {
       fontFamily: interTight.style.fontFamily,
@@ -334,7 +215,7 @@ const coreTheme = createTheme({
       margin: 'var(--h2-margin)',
       fontStyle: 'normal',
       letterSpacing: '1px',
-      color: 'var(--header-color, inherit)'
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
     h3: {
       fontFamily: interTight.style.fontFamily,
@@ -343,7 +224,7 @@ const coreTheme = createTheme({
       lineHeight: 'var(--h3-line-height)',
       margin: 'var(--h3-margin)',
       fontStyle: 'normal',
-      color: 'var(--header-color, inherit)'
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
     h4: {
       fontFamily: interTight.style.fontFamily,
@@ -352,7 +233,7 @@ const coreTheme = createTheme({
       lineHeight: 'var(--h4-line-height)',
       margin: 'var(--h4-margin)',
       fontStyle: 'normal',
-      color: 'var(--header-color, inherit)'
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
     h5: {
       fontFamily: interTight.style.fontFamily,
@@ -361,7 +242,7 @@ const coreTheme = createTheme({
       lineHeight: 'var(--h5-line-height)',
       margin: 'var(--h5-margin)',
       fontStyle: 'normal',
-      color: 'var(--header-color, inherit)'
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
     h6: {
       fontFamily: interTight.style.fontFamily,
@@ -369,7 +250,7 @@ const coreTheme = createTheme({
       fontSize: 'var(--h6-font-size)',
       lineHeight: 'var(--h6-line-height)',
       margin: 'var(--h6-margin)',
-      color: 'var(--header-color, inherit)'
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
     subtitle1: {},
     subtitle2: {},
@@ -382,24 +263,26 @@ const coreTheme = createTheme({
       lineHeight: 'var(--overline-line-height)',
       textTransform: 'uppercase',
       margin: 'var(--overline-margin)',
-      color: 'var(--text-color, inherit)'
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     button: {},
     caption: {}
   },
   containerBreakpoints: {
-    ...paletteTheme.breakpoints,
+    ...muiTheme.breakpoints,
     up: (key: Breakpoint | number) => {
-      return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
+      return muiTheme.breakpoints.up(key)?.replace('@media', '@container');
     },
     down: (key: Breakpoint | number) => {
-      return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
+      return muiTheme.breakpoints.down(key)?.replace('@media', '@container');
     }
   }
-});
+};
 
-export const theme: Theme = createTheme(
-  deepmerge(coreTheme, {
+const coreTheme = extendTheme(baseTheme);
+
+export const theme = extendTheme(
+  deepmerge(baseTheme, {
     components: Object.values(themeComponents)
       .map((t) => t(coreTheme))
       .reduce((acc, current) => {
@@ -409,14 +292,3 @@ export const theme: Theme = createTheme(
 );
 
 export const breakpoints = theme.breakpoints.values;
-
-// export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
-//   containerBreakpoints: {
-//     up(key: any) {
-//       return paletteTheme.breakpoints.up(key)?.replace('@media', '@container');
-//     },
-//     down(key: any) {
-//       return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
-//     }
-//   }
-// });

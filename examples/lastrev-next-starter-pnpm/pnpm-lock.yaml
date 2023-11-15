@@ -88,6 +88,9 @@ importers:
       '@last-rev/graphql-contentful-core':
         specifier: ^0.5.17
         version: 0.5.17(encoding@0.1.13)(jest@26.6.3)(next@13.4.19)(typescript@4.9.5)
+      '@mui/material':
+        specifier: ^5.14.8
+        version: 5.14.8(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
       '@next/bundle-analyzer':
         specifier: ^13.4.19
         version: 13.4.19
@@ -357,6 +360,9 @@ importers:
       '@mui/system':
         specifier: ^5.14.8
         version: 5.14.9(patch_hash=vcbin7hequ7fzhrbzdnbfhsg2a)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
+      clsx:
+        specifier: ^2.0.0
+        version: 2.0.0
       next:
         specifier: ^13.4.19
         version: 13.4.19(@babel/core@7.22.15)(react-dom@18.2.0)(react@18.2.0)
@@ -5486,7 +5492,7 @@ packages:
       '@mui/core-downloads-tracker': 5.14.8
       '@mui/system': 5.14.9(patch_hash=vcbin7hequ7fzhrbzdnbfhsg2a)(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
       '@mui/types': 7.2.4(@types/react@18.2.5)
-      '@mui/utils': 5.14.8(react@18.2.0)
+      '@mui/utils': 5.14.9(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0)
       '@types/react': 18.2.5
       '@types/react-transition-group': 4.4.6
       clsx: 2.0.0
@@ -5596,20 +5602,6 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.5
-    dev: false
-
-  /@mui/utils@5.14.8(react@18.2.0):
-    resolution: {integrity: sha512-1Ls2FfyY2yVSz9NEqedh3J8JAbbZAnUWkOWLE2f4/Hc4T5UWHMfzBLLrCqExfqyfyU+uXYJPGeNIsky6f8Gh5Q==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      react: ^17.0.0 || ^18.0.0
-    dependencies:
-      '@babel/runtime': 7.22.15
-      '@types/prop-types': 15.7.5
-      '@types/react-is': 18.2.1
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-is: 18.2.0
     dev: false
 
   /@mui/utils@5.14.9(@types/react@18.2.5)(react-dom@18.2.0)(react@18.2.0):
@@ -9303,12 +9295,6 @@ packages:
     dependencies:
       '@types/react': 18.2.5
     dev: true
-
-  /@types/react-is@18.2.1:
-    resolution: {integrity: sha512-wyUkmaaSZEzFZivD8F2ftSyAfk6L+DfFliVj/mYdOXbVjRcS87fQJLTnhk6dRZPuJjI+9g6RZJO4PNCngUrmyw==}
-    dependencies:
-      '@types/react': 18.2.5
-    dev: false
 
   /@types/react-router-dom@5.3.2:
     resolution: {integrity: sha512-ELEYRUie2czuJzaZ5+ziIp9Hhw+juEw8b7C11YNA4QdLCVbQ3qLi2l4aq8XnlqM7V31LZX8dxUuFUCrzHm6sqQ==}

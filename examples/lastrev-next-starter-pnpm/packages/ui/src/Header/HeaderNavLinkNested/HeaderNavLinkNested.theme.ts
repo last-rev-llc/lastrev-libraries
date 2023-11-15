@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['HeaderNavLinkNested'] = {};
 
@@ -19,7 +14,7 @@ const styleOverrides: ComponentsOverrides<Theme>['HeaderNavLinkNested'] = {
 
     // TODO: Standardizxe this across the header links if they're the same
     '.MuiSvgIcon-root': {
-      fill: theme.palette.primary.main,
+      fill: theme.vars.palette.primary.main,
       width: 'auto',
       height: '14px',
       paddingLeft: theme.spacing(0.625)

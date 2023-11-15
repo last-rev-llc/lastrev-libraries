@@ -1,16 +1,11 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Footer'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     padding: `var(--section-padding) 0 0`
   }),
 
@@ -104,11 +99,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   }),
 
   socialLink: ({ theme }) => ({
-    'backgroundColor': theme.palette.primary.main,
+    'backgroundColor': theme.vars.palette.primary.main,
     'height': 30,
     'width': 30,
     '&:hover': {
-      backgroundColor: theme.palette.primary.main
+      backgroundColor: theme.vars.palette.primary.main
     },
     '> svg': {
       fontSize: 30

@@ -33,7 +33,6 @@ export const mappers: Mappers = {
       breadcrumbs: breadcrumbsResolver,
       isHomepage: async (page: any, _args: any, ctx: ApolloContext) => {
         const slug = getLocalizedField(page.fields, 'slug', ctx);
-        console.log({ slug });
         return slug === '/';
       }
     },
@@ -65,14 +64,18 @@ export const mappers: Mappers = {
         return page;
       },
 
-      actions: async (page: any, _args: any, ctx: ApolloContext) => {
+      link: async (page: any, _args: any, ctx: ApolloContext) => {
+        return page;
+      },
+
+      actions: async (page: any, args: any, ctx: ApolloContext) => {
         return [
           createType('Link', {
             id: page.id,
             text: 'Read More',
             icon: 'logo',
             iconPosition: 'Left',
-            href: await pathResolver(page, _args, ctx),
+            href: await pathResolver(page, args, ctx),
             // linkedContent: page,
             variant: 'buttonText'
           })

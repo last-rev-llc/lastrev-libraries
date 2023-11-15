@@ -116,11 +116,11 @@ const Card = (props: CardProps) => {
                 <Skeleton variant="text" width="100%" />
               </Overline>
 
-              <Title ownerState={ownerState} variant="display5">
+              <Title ownerState={ownerState} variant="h5">
                 <Skeleton variant="text" width="100%" />
               </Title>
 
-              <Subtitle ownerState={ownerState} variant="display6">
+              <Subtitle ownerState={ownerState} variant="h6">
                 <Skeleton variant="text" width="100%" />
               </Subtitle>
 
@@ -159,13 +159,13 @@ const Card = (props: CardProps) => {
 const Root = styled(Box, {
   name: 'Card',
   slot: 'Root',
-  overridesResolver: (props, styles) => [styles.root]
+  overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: CardOwnerState }>``;
 
 const CardWrap = styled(MuiCard, {
   name: 'Card',
   slot: 'CardWrap',
-  overridesResolver: (props, styles) => [styles.cardWrap]
+  overridesResolver: (_, styles) => [styles.cardWrap]
 })<{ ownerState: CardOwnerState }>``;
 
 const CardLink = styled(CardActionArea, {

@@ -1,21 +1,25 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { LinkVariants } from './Link.types';
 
 const defaultProps: ComponentsProps['Link'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
-  root: ({ theme }) => ({
+  root: ({ ownerState, theme }) => ({
     display: 'inline-flex',
     alignItems: 'center',
     textUnderlineOffset: '4px',
-    marginBottom: 0
+    marginBottom: 0,
+    ...(ownerState?.variant?.includes('Contained') && {
+      'color': 'var(--mui-palette-primary-contrastText)',
+      'backgroundColor': 'var(--mui-palette-primary-main)',
+      '--mui-palette-Button-inheritContainedHoverBg': 'var(--mui-palette-primary-dark)'
+    }),
+    ...(ownerState?.variant?.includes('Outlined') && {
+      color: 'var(--mui-palette-primary-main)',
+      borderColor: 'var(--mui-palette-primary-main)'
+    })
   }),
 
   rootButton: {
@@ -67,7 +71,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Link'] => [
       variant: LinkVariants.default
     },
     style: {
-      textDecoration: 'none'
+      textDecoration: 'underline'
     }
   },
   {
@@ -75,7 +79,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Link'] => [
       variant: LinkVariants.text
     },
     style: {
-      textDecoration: 'none'
+      textDecoration: 'underline'
     }
   },
   {
@@ -83,6 +87,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Link'] => [
       variant: 'footerContactDetailsFooter'
     },
     style: {
+      'textDecoration': 'underline',
       '&&': {
         whiteSpace: 'pre'
       }

@@ -1,16 +1,12 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+
+import { type Theme } from '../ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Property'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Property'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
     width: '100%',
@@ -67,7 +63,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Property'] = {
   }),
 
   contentWrap: ({ theme }) => ({
-    backgroundColor: theme.palette.white.main,
+    ...theme.mixins.applyColorScheme({ ownerState: { backgroundColor: 'white' }, theme }),
     padding: 'var(--grid-gap-double)',
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',

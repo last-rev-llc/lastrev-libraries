@@ -1,5 +1,4 @@
 import {
-  type Theme,
   type ThemeOptions,
   type ComponentsProps,
   type ComponentsOverrides,
@@ -7,21 +6,18 @@ import {
   alpha
 } from '@mui/material/styles';
 
+import { type Theme } from '../ThemeRegistry/theme.types';
+
 const defaultProps: ComponentsProps['Form'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'containerType': 'inline-size',
     'position': 'relative',
     'width': '100%',
     'display': 'flex',
     'flexDirection': 'column',
-
-    // '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
-    //   padding: 'var(--grid-gap)',
-    //   paddingTop: 0
-    // },
 
     '& form': {
       'border': 'solid 10px blue',
@@ -59,22 +55,22 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
             'width': '100%',
             'maxWidth': '100%',
             'padding': theme.spacing(2),
-            'color': 'blue', //theme.palette.text.text,
-            'border': `solid 2px ${theme.palette.common.black}`,
+            'color': 'blue', //theme.vars.palette.text.text,
+            'border': `solid 2px ${theme.vars.palette.common.black}`,
             'borderRadius': theme.spacing(0.5),
 
             '&:hover': {
-              borderColor: theme.palette.common.black,
+              borderColor: theme.vars.palette.common.black,
               boxShadow: theme.shadows[1]
             },
 
             '&:focus': {
-              borderColor: theme.palette.common.black,
+              borderColor: theme.vars.palette.common.black,
               boxShadow: theme.shadows[1]
             },
 
             '&:focus-visible': {
-              outline: `${theme.palette.common.black} auto 0px`
+              outline: `${theme.vars.palette.common.black} auto 0px`
             }
           },
 
@@ -112,13 +108,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
               'backgroundOrigin': 'content-box',
 
               '&.is-placeholder': {
-                color: alpha(theme.palette.common.black, 0.7)
+                color: alpha(theme.vars.palette.common.black, 0.7)
               }
             }
           },
 
           '&.error': {
-            borderColor: theme.palette.error.main,
+            borderColor: theme.vars.palette.error.main,
             borderWidth: 1
           }
         }
@@ -149,7 +145,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
 
           '& span': {
             ...theme.typography.bodySmall,
-            color: theme.palette.common.black,
+            color: theme.vars.palette.common.black,
             paddingLeft: 'var(--grid-gap)'
           },
 
@@ -175,22 +171,22 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         '& input': {
           ...theme.typography.bodySmall,
 
-          'backgroundColor': theme.palette.common.white,
-          'color': theme.palette.common.black,
-          'border': `3px solid ${theme.palette.common.black}`,
+          'backgroundColor': theme.vars.palette.common.white,
+          'color': theme.vars.palette.common.black,
+          'border': `3px solid ${theme.vars.palette.common.black}`,
           'padding': theme.spacing(0.625, 2.625), // Substract border
           'borderRadius': theme.spacing(0.5),
           'textDecoration': 'none',
           'width': '100%',
 
           '&:hover': {
-            borderColor: theme.palette.common.black,
-            backgroundColor: theme.palette.common.white
+            borderColor: theme.vars.palette.common.black,
+            backgroundColor: theme.vars.palette.common.white
           },
 
           '&:active': {
-            backgroundColor: theme.palette.common.white,
-            borderColor: theme.palette.common.black
+            backgroundColor: theme.vars.palette.common.white,
+            borderColor: theme.vars.palette.common.black
           }
         }
       },
@@ -208,7 +204,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
           ...theme.typography.bodySmall,
           display: 'block !important',
           padding: theme.spacing(0.25, 0, 0),
-          color: theme.palette.error.main,
+          color: theme.vars.palette.error.main,
           textAlign: 'left'
         }
       }

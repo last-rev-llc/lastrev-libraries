@@ -68,14 +68,14 @@ export const mappers: Mappers = {
         return person;
       },
 
-      actions: async (person: any, _args: any, ctx: ApolloContext) => {
+      actions: async (person: any, args: any, ctx: ApolloContext) => {
         return [
           createType('Link', {
             id: person.id,
             text: 'Read More',
             icon: 'logo',
             iconPosition: 'Left',
-            href: await pathResolver(person, _args, ctx),
+            href: await pathResolver(person, args, ctx),
             variant: 'buttonText'
           })
         ];

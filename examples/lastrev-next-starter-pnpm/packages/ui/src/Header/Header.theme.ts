@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const SUPERNAV_TIMEOUT = '15s';
 
@@ -24,10 +19,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     '--grid-margin-lg': '0px',
     '--grid-margin-xl': '0px',
 
-    ':is(&, & [class*=navItemSubMenu])': {
-      ...theme.mixins.applyBackgroundColor({ ownerState, theme })
-    },
-
     '& *': {
       whiteSpace: 'nowrap'
     }
@@ -39,7 +30,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
 
   logoRoot: ({ theme }) => ({
     gridColumn: 'content-start / content-half',
-    gridRow: '1',
+    gridRow: 1,
     alignSelf: 'center',
     width: '100%',
     height: 'auto',
@@ -66,6 +57,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'justifySelf': 'flex-end',
     'gridRow': 3,
     'margin': 'auto',
+
     '& *': {
       ...theme.typography.bodyXSmall
     },
@@ -90,7 +82,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     display: 'flex',
     flexDirection: 'column',
     transition: 'max-height 500ms ease',
-    borderBottom: `solid 2px ${theme.palette.primary.main}`,
+    borderBottom: `solid 2px ${theme.vars.palette.primary.main}`,
     paddingTop: 'var(--grid-gap)',
     paddingBottom: 'var(--grid-gap)',
     gap: 'var(--grid-gap)',
@@ -144,6 +136,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'gridColumnEnd': 'content-end',
     'gridRow': 1,
     'justifyContent': 'flex-end',
+
+    '& *': {
+      fill: 'var(--mui-palette-text-primary) !important'
+    },
 
     '& > *': {
       paddingTop: 0,

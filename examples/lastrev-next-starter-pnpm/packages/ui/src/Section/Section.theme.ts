@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { SectionVariants } from './Section.types';
 
@@ -29,13 +24,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
             display: 'block',
             height: 'var(--section-padding)',
             width: '100%',
-            ...theme.mixins.applyBackgroundColor({
+            ...theme.mixins.applyColorScheme({
               ownerState: { ...ownerState, backgroundColor: ownerState?.prevBgColor ?? 'navy' },
               theme
             })
           }
         }
-      : { ...theme.mixins.applyBackgroundColor({ ownerState, theme }), padding: 'var(--section-padding) 0' })
+      : { ...theme.mixins.applyColorScheme({ ownerState, theme }), padding: 'var(--section-padding) 0' })
   }),
 
   introText: { gridColumn: 'content-start / content-end' },

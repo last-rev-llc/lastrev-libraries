@@ -1,5 +1,4 @@
 import {
-  type Theme,
   type ThemeOptions,
   type ComponentsProps,
   type ComponentsOverrides,
@@ -7,11 +6,13 @@ import {
   alpha
 } from '@mui/material/styles';
 
+import { type Theme } from '../ThemeRegistry/theme.types';
+
 const defaultProps: ComponentsProps['FormContactUs'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
     width: '100%',
@@ -43,7 +44,7 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
   },
 
   contentWrap: ({ theme }) => ({
-    backgroundColor: theme.palette.white.main,
+    ...theme.mixins.applyColorScheme({ ownerState: { backgroundColor: 'white' }, theme }),
     padding: 'var(--grid-gap-double)',
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
@@ -79,16 +80,16 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
 
       'label': {
         opacity: 0.5,
-        color: 'var(--text-color) !important'
+        color: 'var(--mui-palette-text-primary) !important'
       },
 
       '.MuiInput-root::before': {
-        borderColor: 'var(--text-color) !important',
+        borderColor: 'var(--mui-palette-text-primary) !important',
         opacity: 0.5
       },
 
       '.MuiInput-root::after': {
-        borderColor: 'var(--text-color) !important',
+        borderColor: 'var(--mui-palette-text-primary) !important',
         opacity: 0.5
       },
 

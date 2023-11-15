@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { BlockVariants } from './Block.types';
 
@@ -14,7 +9,7 @@ const defaultProps: ComponentsProps['Block'] = {
 
 const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'containerType': 'inline-size',
     'position': 'relative',
     'width': '100%',
@@ -24,6 +19,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
       padding: 'var(--grid-gap)',
       paddingTop: 0
+    },
+    // TODO: Update to check if within a section
+    // padding: theme.spacing(0, 4)
+    // margin: theme.spacing(0, -4)
+    'ins': {
+      textDecoration: 'none',
+      color: 'var(--variant-highlight-color)'
     }
   }),
 
@@ -57,13 +59,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     }
   },
 
-  mainContentWrap: ({ ownerState }) => ({
+  mainContentWrap: ({ ownerState, theme }) => ({
     display: 'flex',
     flexDirection: 'column',
     alignSelf: ownerState?.supplementalContent ? 'flex-start' : 'center',
 
-    borderLeft: 'solid',
-    borderLeftWidth: '1px',
+    borderLeft: 'solid 1px var(--mui-palette-text-primary)',
     paddingLeft: 'var(--grid-gap)',
 
     ...(!ownerState?.media && {

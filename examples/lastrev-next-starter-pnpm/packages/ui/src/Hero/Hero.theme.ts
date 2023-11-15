@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { HeroVariants } from './Hero.types';
 
@@ -14,7 +9,7 @@ const defaultProps: ComponentsProps['Hero'] = {
 
 const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative'
   }),
@@ -71,13 +66,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   // body: {},
 
   breadcrumbsWrap: ({ theme }) => ({
-    'gridColumnStart': 'content-start',
-    'gridColumnEnd': 'content-end',
-    'order': 2,
-
-    '& *': {
-      color: 'inherit !important'
-    },
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+    order: 2,
 
     [theme.containerBreakpoints.up('md')]: {
       position: 'absolute',

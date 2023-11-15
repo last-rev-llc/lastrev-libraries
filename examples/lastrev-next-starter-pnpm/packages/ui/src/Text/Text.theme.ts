@@ -1,10 +1,5 @@
-import type {
-  Theme,
-  ThemeOptions,
-  ComponentsProps,
-  ComponentsOverrides,
-  ComponentsVariants
-} from '@mui/material/styles';
+import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Text'] = {
   variant: TextVariants.default
@@ -35,30 +30,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
 
   title: ({ theme, ownerState }) => ({
     ...(ownerState?.variant === TextVariants.default && {
-      ...theme.typography.h2
+      ...theme.typography.h4
     }),
 
     ...(ownerState?.variant === TextVariants.introText && {
-      ...theme.typography.h1
+      ...theme.typography.h3
     })
   }),
 
-  subtitle: ({ theme, ownerState }) => ({
-    ...(ownerState?.variant === TextVariants.default && {
-      ...theme.typography.h3
-    }),
-
-    ...(ownerState?.variant === TextVariants.introText && {
-      ...theme.typography.h2
-    })
+  subtitle: ({ theme }) => ({
+    ...theme.typography.h5
   })
-  //
-  // Use the ownerState to set dynamic styles
-  // root: ({ ownerState, theme }) => {
-  //   return {
-  //     backgroundColor: ownerState.variant === 'example' ? 'red' : theme.palette.background.paper
-  //   };
-  // }
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Text'] => [
