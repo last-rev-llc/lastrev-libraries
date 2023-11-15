@@ -45,7 +45,7 @@ function loadFiles() {
     modules['Quote'] = require('./Quote.extension');
     modules['PricingPlan'] = require('./PricingPlan.extension');
     modules['RichText'] = require('./RichText.extension');
-    modules['Redirects'] = require('./Redirects.extension');
+    modules['Redirect'] = require('./Redirect.extension');
     modules['Section'] = require('./Section.extension');
     modules['SEO'] = require('./SEO.extension');
     modules['Sidekick'] = require('./Sidekick.extension');

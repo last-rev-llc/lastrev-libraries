@@ -37,6 +37,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     '& [class*=Card-cardWrap]': { backgroundColor: 'transparent!important', boxShadow: 'none' },
     '& [class*=Card-title]': { ...theme.typography.h5 },
     '& [class*=Text-title]': { ...theme.typography.h5 },
+    '& [class*=Text-subtitle]': { ...theme.typography.h6 },
     '& [class*=Block-title]': { ...theme.typography.h5 }
   }),
 
