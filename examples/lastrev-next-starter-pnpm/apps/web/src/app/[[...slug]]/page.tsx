@@ -15,7 +15,7 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-export const revalidate = 300;
+// export const revalidate = 300;
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const path = join('/', (params.slug || ['/']).join('/'));
