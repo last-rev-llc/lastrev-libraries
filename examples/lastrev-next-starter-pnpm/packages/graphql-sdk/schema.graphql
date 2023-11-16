@@ -56,6 +56,7 @@ type Blog implements Content {
   body: RichText
   breadcrumbs: [Link]
   categories: [CategoryBlog]
+  contents: [Content]
   disableBackToTop: Boolean
   excludeFromDynamicLists: Boolean
   featuredMedia: Media
@@ -72,8 +73,11 @@ type Blog implements Content {
   pubDate: Date
   relatedItems: Content
   seo: JSON
+  sidebarContents: [Content]
   sidekickLookup: JSON
   slug: String
+  subNavigation: NavigationItem
+  subtitle: String
   summary: String
   tags: [String]
   theme: [Theme]
@@ -454,6 +458,7 @@ type Page implements Content {
   internalTitle: String
   jsonLd: JSON
   lr__path__: String
+  pageType: String
   path: String
   persona: [String]
   promoImage: Media

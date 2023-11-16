@@ -4,6 +4,9 @@ import { Theme } from '@ui/ThemeRegistry/theme.types';
 const defaultProps: ComponentsProps['NavigationItem'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['NavigationItem'] = {
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyColorScheme({ theme, ownerState: { backgroundColor: 'white' } })
+  })
   // link: {
   //   textDecoration: 'none',
   //   textUnderline: 'none'

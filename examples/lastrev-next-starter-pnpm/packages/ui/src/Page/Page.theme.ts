@@ -5,10 +5,11 @@ const defaultProps: ComponentsProps['Page'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Page'] = {
   root: ({ theme }) => ({
-    '& > :is([class*=Collection-root],[class*=Section-root],[class*=Block-root],[class*=Carousel-root])': {
-      paddingTop: 'var(--section-padding)',
-      paddingBottom: 'var(--section-padding)'
-    }
+    '& > :is([class*=Collection-root],[class*=Section-root],[class*=Block-root],[class*=Carousel-root],[class*=Text-root])':
+      {
+        paddingTop: 'var(--section-padding)',
+        paddingBottom: 'var(--section-padding)'
+      }
   })
 };
 

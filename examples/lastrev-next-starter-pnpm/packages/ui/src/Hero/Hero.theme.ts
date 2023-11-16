@@ -12,7 +12,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
-    padding: theme.spacing(10, 0),
+    padding: theme.spacing(12, 0),
     [theme.breakpoints.up('md')]: {
       padding: theme.spacing(10, 0)
     },

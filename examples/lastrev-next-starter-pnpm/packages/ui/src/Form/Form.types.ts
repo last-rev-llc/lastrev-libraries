@@ -7,6 +7,7 @@ export enum FormVariants {
   footer = 'footer',
   oneColumn = 'oneColumn',
   twoColumns = 'twoColumns'
+  sidebarNewsletter = 'sidebarNewsletter'
 }
 
 export interface FormProps extends Form_BaseFragmentFragment {

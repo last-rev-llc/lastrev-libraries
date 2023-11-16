@@ -40,10 +40,6 @@ export const invalidPersonalDomains = [
 ];
 
 const Form = (props: FormProps) => {
-  if (!props.marketoFormId) {
-    return null;
-  }
-
   const ownerState = { ...props };
 
   const { introText, sidekickLookup, marketoFormId, confirmationPath, allowPersonalEmailAddresses, hideRecaptcha } =
@@ -61,6 +57,10 @@ const Form = (props: FormProps) => {
   //     props.onKnownVisitor(knownVisitor);
   //   }
   // }, [knownVisitor]);
+  React.useEffect(() => {});
+  if (!props.marketoFormId) {
+    return null;
+  }
 
   return (
     <ErrorBoundary>

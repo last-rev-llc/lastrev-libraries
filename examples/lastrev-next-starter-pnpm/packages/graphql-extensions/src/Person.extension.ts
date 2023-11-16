@@ -45,6 +45,7 @@ export const mappers: Mappers = {
       href: pathResolver
     },
     Card: {
+      title: 'name',
       body: async (person: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(person.fields, 'promoSummary', ctx)),
 
@@ -55,22 +56,22 @@ export const mappers: Mappers = {
         return [promoImage];
       },
       // color: () => 'white',
-      variant: () => 'default',
+      variant: () => 'person',
 
       link: async (person: any, _args: any, ctx: ApolloContext) => {
         return person;
-      },
-
-      actions: async (person: any, args: any, ctx: ApolloContext) => {
-        return [
-          createType('Link', {
-            id: person.id,
-            text: 'Read More',
-            href: await pathResolver(person, args, ctx),
-            variant: 'buttonContained'
-          })
-        ];
       }
+
+      // actions: async (person: any, args: any, ctx: ApolloContext) => {
+      //   return [
+      //     createType('Link', {
+      //       id: person.id,
+      //       text: 'Read More',
+      //       href: await pathResolver(person, args, ctx),
+      //       variant: 'buttonContained'
+      //     })
+      //   ];
+      // }
     }
   }
 };

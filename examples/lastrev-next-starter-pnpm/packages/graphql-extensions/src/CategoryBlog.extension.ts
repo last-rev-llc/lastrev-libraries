@@ -6,10 +6,9 @@ import type { ApolloContext, Mappers } from '@last-rev/types';
 
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
+import { pageContentsResolver } from './utils/pageContentsResolver';
 import { pathResolver } from './utils/pathResolver';
 import { resolveField } from './utils/resolveField';
-
-const BLOGS_LANDING_ID = process.env.BLOGS_LANDING_ID;
 
 export const typeDefs = gql`
   extend type CategoryBlog {
@@ -27,13 +26,7 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      contents: async (_: any, _args: any, ctx: ApolloContext) => {
-        // TODO: Update once path lookup is implemented to remove dependency on env ID
-        if (BLOGS_LANDING_ID) {
-          const blogsLanding = await ctx.loaders.entryLoader.load({ id: BLOGS_LANDING_ID, preview: !!ctx.preview });
-          return getLocalizedField(blogsLanding?.fields, 'contents', ctx);
-        }
-      }
+      contents: pageContentsResolver
     },
 
     Link: {

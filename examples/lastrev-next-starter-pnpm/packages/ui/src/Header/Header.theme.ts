@@ -15,6 +15,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'left': 0,
     'width': '100%',
     'padding': 'var(--grid-gap) 0',
+    'boxShadow': '0px 0px 20px 0px rgba(31, 31, 31, 0.06)',
     // ':is(&, & [class*=navItemSubMenu])': {
     'backgroundColor': 'white',
     ...theme.mixins.applyColorScheme({ ownerState, theme }),

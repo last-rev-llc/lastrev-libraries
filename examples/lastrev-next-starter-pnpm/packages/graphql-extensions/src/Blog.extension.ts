@@ -1,16 +1,19 @@
 import gql from 'graphql-tag';
-import type { Mappers, ApolloContext } from '@last-rev/types';
+import type { Mappers } from '@last-rev/types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
 import { createType } from './utils/createType';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
+import { pageSubNavigationResolver } from './utils/pageSubNavigationResolver';
 
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
 import { format } from 'date-fns'; // Assuming you use dayjs for date formatting
 import { resolveField } from './utils/resolveField';
+import { pageContentsResolver } from './utils/pageContentsResolver';
+import { ApolloContext } from './types';
 
 export const typeDefs = gql`
   extend type Blog {
@@ -18,10 +21,14 @@ export const typeDefs = gql`
     footer: Footer
     path: String
     relatedItems: Content
+    contents: [Content]
+    sidebarContents: [Content]
+    subNavigation: NavigationItem
     categories: [CategoryBlog]
     breadcrumbs: [Link]
     author: Card
     hero: Content
+    subtitle: String
   }
 `;
 
@@ -49,7 +56,29 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
+      subtitle: async (blog: any, _args: any, ctx: ApolloContext) => {
+        if (blog?.variant === 'media') return null;
+
+        const dateValue = getLocalizedField(blog.fields, 'pubDate', ctx); // Get localized field
+        const date = dateValue ? format(new Date(dateValue), 'MMMM d, yyyy') : ''; // Format the date with 'date-fns'
+
+        const bodyRichText = getLocalizedField(blog.fields, 'body', ctx); // Get localized field
+        const readingTime = calculateReadingTime(bodyRichText); // Calculate reading time
+        const authorName = await resolveField('author.name')(blog, _args, ctx);
+        // You might want to format the subtitle to include both date and reading time.
+        // This is an example format - "January 1, 2023 · 5 min read"
+        return `${authorName} ${date ? '· ' + date : ''} · ${readingTime} min read`;
+      },
       breadcrumbs: breadcrumbsResolver,
+      contents: pageContentsResolver,
+      sidebarContents: async (entry: any, _args: any, ctx: ApolloContext) => {
+        const contents = [];
+
+        const blogNewsletterSidebar = getLocalizedField(ctx.siteSettings?.fields, 'blogNewsletterSidebar', ctx);
+        if (blogNewsletterSidebar) contents.push(blogNewsletterSidebar);
+
+        return contents;
+      },
       // contents: blogGlobalContentsResolver,
       // TODO: Erroring out with current content
       // relatedItems: async (blog: any, _args: any, ctx: ApolloContext) =>
@@ -59,12 +88,24 @@ export const mappers: Mappers = {
       //     variant: 'Three Per Row',
       //     itemsVariant: 'Blog'
       //   }),
+      subNavigation: async (blog: any, args: any, ctx: ApolloContext) =>
+        createType('NavigationItem', {
+          variant: 'inlineNavigation',
+          // overline: getLocalizedField(blog.fields, 'pubDate', ctx),
+          // title: getLocalizedField(blog.fields, 'title', ctx)
+          // title: 'The Lively Blog',
+          // backgroundColor: 'blueLight'
+          subNavigation: await pageSubNavigationResolver(blog, args, ctx)
+          // sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)
+        }),
       hero: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('Hero', {
-          variant: 'default',
-          overline: getLocalizedField(blog.fields, 'pubDate', ctx),
-          title: getLocalizedField(blog.fields, 'title', ctx),
-          sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)
+          variant: 'simpleCentered',
+          // overline: getLocalizedField(blog.fields, 'pubDate', ctx),
+          // title: getLocalizedField(blog.fields, 'title', ctx)
+          title: 'The Lively Blog',
+          backgroundColor: 'blueLight'
+          // sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)
         })
     },
 

@@ -48,18 +48,18 @@ const colors = {
     contrastText: '#FFF'
   },
   sapphire: { light: '#5368D2', main: '#3049C9', dark: '#22338D', contrastText: '#FFF' },
-  sapphireLight: { light: '#EAEDFA', main: '#EAEDFA', dark: '#5368D2', contrastText: '#000' },
+  sapphireLight: { light: '#EAEDFA', main: '#EAEDFA', dark: '#5368D2', contrastText: '#1F1F1F' },
   blue: { lighter: '#ECF2FE', light: '#C4D6FB', main: '#407BF2', dark: '#264A91', contrastText: '#FFF' },
-  blueLight: { light: '#ECF2FE', main: '#ECF2FE', dark: '#407BF2', contrastText: '#000' },
+  blueLight: { light: '#ECF2FE', main: '#ECF2FE', dark: '#407BF2', contrastText: '#264A91' },
   green: { lighter: '#EAF2EE', light: '#88B19C', main: '#317955', dark: '#1E4A34', contrastText: '#FFF' },
   greenLight: { light: '#EAF2EE', main: '#88B19C', dark: '#317955', contrastText: '#FFF' },
-  sunflower: { light: '#FEE8AD', main: '#FED872', dark: '#9B8446', contrastText: '#000' },
-  sunflowerLight: { light: '#FFFBF1', main: '#FEE8AD', dark: '#FED872', contrastText: '#000' },
+  sunflower: { light: '#FEE8AD', main: '#FED872', dark: '#9B8446', contrastText: '#1F1F1F' },
+  sunflowerLight: { light: '#FFFBF1', main: '#FEE8AD', dark: '#FED872', contrastText: '#1F1F1F' },
   fuchsia: { lighter: '#F6ECFF', light: '#C890FF', main: '#A040FF', dark: '#702DB3', contrastText: '#FFF' },
-  mint: { lighter: '#F9FDFC', light: '#DDF2EB', main: '#C4E9DD', dark: '#788E87', contrastText: '#000' },
-  orange: { lighter: '#FFF5E9', light: '#FFC37F', main: '#FF9823', dark: '#B36A19', contrastText: '#000' },
-  white: { lighter: '#FFF', light: '#FFF', main: '#FFF', dark: '#FFF', contrastText: '#000' },
-  black: { lighter: '#000', light: '#000', main: '#000', dark: '#000', contrastText: '#FFF' }
+  mint: { lighter: '#F9FDFC', light: '#DDF2EB', main: '#C4E9DD', dark: '#788E87', contrastText: '#1F1F1F' },
+  orange: { lighter: '#FFF5E9', light: '#FFC37F', main: '#FF9823', dark: '#B36A19', contrastText: '#1F1F1F' },
+  white: { lighter: '#FFF', light: '#FFF', main: '#FFF', dark: '#FFF', contrastText: '#1F1F1F' },
+  black: { lighter: '#1F1F1F', light: '#1F1F1F', main: '#1F1F1F', dark: '#1F1F1F', contrastText: '#FFF' }
 };
 
 const schemes = {
@@ -172,8 +172,8 @@ const schemes = {
     highlightColor: colors.green.main,
     overline: colors.green.main,
     text: {
-      primary: '#000',
-      secondary: '#000'
+      primary: '#1F1F1F',
+      secondary: '#1F1F1F'
     }
   },
   orange: {
@@ -239,9 +239,14 @@ const paletteTheme = {
     light: {
       palette: {
         schemes: schemes,
-        ...schemes['sapphire'],
+        ...schemes['blueAccent'],
         white: colors.white,
         black: colors.black,
+        text: {
+          one: '#1F1F1F',
+          two: '#A3A3A3',
+          three: '#C7C9D9'
+        },
         background: {
           // TODO: Avoid unnamed colors here
           tab: '#E3E3E3',

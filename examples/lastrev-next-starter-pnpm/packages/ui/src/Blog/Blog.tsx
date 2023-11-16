@@ -31,9 +31,12 @@ const Blog = (props: BlogProps) => {
     id,
     header,
     footer,
+    subNavigation,
+    contents,
+    sidebarContents,
     featuredMedia,
-    pubDate,
     title,
+    subtitle,
     body,
     author,
     relatedItems,
@@ -61,13 +64,22 @@ const Blog = (props: BlogProps) => {
       )}
 
       {header ? <ContentModule {...(header as any)} /> : null}
-
+      {hero ? <ContentModule {...(hero as any)} /> : null}
       <Root component="main" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+        {subNavigation ? <ContentModule {...(subNavigation as any)} /> : null}
         <ContentOuterGrid ownerState={ownerState}>
-          <HeaderWrap ownerState={ownerState}>
-            {hero ? (
-              <ContentModule {...(hero as any)} />
-            ) : (
+          <SideWrap ownerState={ownerState}>
+            {sidebarContents?.map((content: any) => (
+              <ContentModule key={content?.id} {...content} />
+            ))}
+          </SideWrap>
+          <ContentWrap ownerState={ownerState}>
+            {!!breadcrumbs?.length ? (
+              <BreadcrumbsWrap ownerState={ownerState}>
+                <Breadcrumbs links={breadcrumbs} />
+              </BreadcrumbsWrap>
+            ) : null}
+            <HeaderWrap ownerState={ownerState}>
               <>
                 {!!title && (
                   <Title component="h1" variant="display1" ownerState={ownerState}>
@@ -75,18 +87,9 @@ const Blog = (props: BlogProps) => {
                   </Title>
                 )}
 
-                {!!pubDate && <PubDate ownerState={ownerState}>{pubDate}</PubDate>}
+                {!!subtitle && <Subtitle ownerState={ownerState}>{subtitle}</Subtitle>}
               </>
-            )}
-          </HeaderWrap>
-
-          <ContentWrap ownerState={ownerState}>
-            {!!breadcrumbs?.length ? (
-              <BreadcrumbsWrap ownerState={ownerState}>
-                <Breadcrumbs links={breadcrumbs} />
-              </BreadcrumbsWrap>
-            ) : null}
-
+            </HeaderWrap>
             {!!featuredMedia && (
               <FeaturedMediaWrap {...sidekick(sidekickLookup, 'featuredMedia')} ownerState={ownerState}>
                 <FeaturedMedia {...(featuredMedia as MediaProps)} ownerState={ownerState} />
@@ -166,41 +169,17 @@ const Blog = (props: BlogProps) => {
               </ShareLinks>
             </ShareLinksWrap>
           </ContentWrap>
-
-          {!!author && (
-            <AuthorWrap ownerState={ownerState}>
-              {!!author.mainImage && (
-                <AuthorImageWrap ownerState={ownerState}>
-                  <AuthorImage {...author.mainImage} ownerState={ownerState} />
-                </AuthorImageWrap>
-              )}
-
-              {!!author.name && (
-                <AuthorName ownerState={ownerState} variant="display4">
-                  {author.name}
-                </AuthorName>
-              )}
-
-              {!!author.body && (
-                <AuthorSummaryWrap ownerState={ownerState}>
-                  <AuthorSummary body={author.body} variant="bodyLarge" __typename="RichText" ownerState={ownerState} />
-                </AuthorSummaryWrap>
-              )}
-
-              {!!author.socialLinks?.length && (
-                <AuthorSocialLinks ownerState={ownerState}>
-                  {author.socialLinks.map((link, index) => (
-                    <AuthorSocialLink
-                      key={`author-social-link-${index}=${link?.href}`}
-                      {...(link as LinkProps)}
-                      ownerState={ownerState}
-                    />
-                  ))}
-                </AuthorSocialLinks>
-              )}
-            </AuthorWrap>
-          )}
         </ContentOuterGrid>
+        {!!author && (
+          <AuthorWrap ownerState={ownerState}>
+            <Grid>
+              <ContentModule {...author} />
+            </Grid>
+          </AuthorWrap>
+        )}
+        {contents?.map((content: any) => (
+          <ContentModule key={content?.id} {...content} component="section" />
+        ))}
 
         {!!relatedItems && <RelatedItems {...relatedItems} ownerState={ownerState} backgroundColor="white" />}
       </Root>
@@ -211,7 +190,7 @@ const Blog = (props: BlogProps) => {
 };
 
 const Root = styled(Box, {
-  name: 'Page',
+  name: 'Blog',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: BlogOwnerState }>``;
@@ -220,6 +199,12 @@ const ContentOuterGrid = styled(Grid, {
   name: 'Blog',
   slot: 'ContentOuterGrid',
   overridesResolver: (_, styles) => [styles.contentOuterGrid]
+})<{ ownerState: BlogOwnerState }>``;
+
+const ContentsOuterGrid = styled(Grid, {
+  name: 'Blog',
+  slot: 'ContentsOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentsOuterGrid]
 })<{ ownerState: BlogOwnerState }>``;
 
 const HeaderWrap = styled(Box, {
@@ -240,10 +225,10 @@ const Title = styled(Typography, {
   overridesResolver: (_, styles) => [styles.title]
 })<TypographyProps & { ownerState: BlogOwnerState }>``;
 
-const PubDate = styled(Typography, {
+const Subtitle = styled(Typography, {
   name: 'Blog',
-  slot: 'PubDate',
-  overridesResolver: (_, styles) => [styles.pubDate]
+  slot: 'Subtitle',
+  overridesResolver: (_, styles) => [styles.subtitle]
 })<TypographyProps & { ownerState: BlogOwnerState }>``;
 
 const Author = styled(Box, {
@@ -318,6 +303,12 @@ const ContentWrap = styled(Box, {
   overridesResolver: (_, styles) => [styles.contentWrap]
 })<{ ownerState: BlogOwnerState }>``;
 
+const SideWrap = styled(Box, {
+  name: 'Blog',
+  slot: 'SideWrap',
+  overridesResolver: (_, styles) => [styles.sideWrap]
+})<{ ownerState: BlogOwnerState }>``;
+
 const Body = styled(ContentModule, {
   name: 'Blog',
   slot: 'Body',
@@ -336,7 +327,7 @@ const RelatedItems = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.relatedItems]
 })<{ ownerState: BlogOwnerState }>``;
 
-const AuthorWrap = styled(Grid, {
+const AuthorWrap = styled(Box, {
   name: 'Blog',
   slot: 'AuthorWrap',
   overridesResolver: (_, styles) => [styles.authorWrap]

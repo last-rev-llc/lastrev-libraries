@@ -323,11 +323,15 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
       '[class*=Card-cardWrap]': {
         overflow: 'visible',
-        gap: theme.spacing(2),
+        gap: theme.spacing(3),
         boxShadow: 'none',
         borderRadius: 4,
         alignItems: 'flex-start',
         backgroundColor: 'transparent'
+      },
+
+      '[class*="Card-title"]': {
+        ...theme.typography.h4
       },
       '[class*=cardMedia]': {
         'width': 80,

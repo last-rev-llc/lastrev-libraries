@@ -19,6 +19,7 @@ const Accordion = dynamic(() => import('./Accordion'));
 const Form = dynamic(() => import('./Form'));
 const Section = dynamic(() => import('./Section'));
 const NavigationItem = dynamic(() => import('./NavigationItem'));
+const InlineNavigation = dynamic(() => import('./InlineNavigation'));
 const Header = dynamic(() => import('./Header'));
 const Footer = dynamic(() => import('./Footer'));
 const CardPricing = dynamic(() => import('./CardPricing'));
@@ -69,6 +70,7 @@ export const contentMapping: {
   'NavigationItem:linkFooter': FooterNavigationItem,
   'NavigationItem:linkBoldedFooter': FooterNavigationItem,
   'NavigationItem:groupFooter': FooterNavigationItemGroup,
+  'NavigationItem:inlineNavigation': InlineNavigation,
   SiteMessage,
   Breadcrumbs
 };

@@ -37,7 +37,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   }),
 
   overline: {
-    color: 'var(--mui-palette-overline, #000)'
+    color: 'var(--mui-palette-overline, #1E1E1E)'
   },
   title: ({ theme, ownerState }) => ({
     ...(ownerState?.variant === TextVariants.default && {
@@ -69,6 +69,39 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
 
 const createVariants = (theme: Theme): ComponentsVariants['Text'] => [
   // Use prop matching to set variant styles
+  {
+    props: {
+      variant: 'disclaimer'
+    },
+    style: {
+      ...theme.typography.overline,
+      'textTransform': 'unset',
+      '.MuiTypography-root': {
+        color: theme.vars.palette.text.two
+      },
+      // TODO: Pulled from Text, but adds default padding around elements.   Classes may be wrong
+      '& > [class*=Text-root] > *:not(:first-child)': {
+        '&:not(:is(ul, ol, li))': {
+          marginTop: '1em',
+          marginBottom: '2em'
+        },
+
+        '&:is(ul, ol)': {
+          marginTop: '-1em',
+          marginBottom: '3em'
+        }
+      },
+
+      '& > [class*=Text-root] > *:first-child': {
+        marginTop: '0'
+      },
+
+      '[class*=MuiTypography-h]': {
+        marginBottom: '.5em',
+        marginTop: '2em'
+      }
+    }
+  },
   {
     props: {
       variant: 'inline'

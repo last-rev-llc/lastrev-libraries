@@ -1,11 +1,13 @@
 import gql from 'graphql-tag';
-import type { Mappers, ApolloContext } from '@last-rev/types';
+import type { Mappers } from '@last-rev/types';
+import type { ApolloContext } from './types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
 import { pathResolver } from './utils/pathResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
+import { pageContentsResolver } from './utils/pageContentsResolver';
 import { createType } from './utils/createType';
 
 export const typeMappings = {};
@@ -28,7 +30,8 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      breadcrumbs: breadcrumbsResolver
+      breadcrumbs: breadcrumbsResolver,
+      contents: pageContentsResolver
     },
 
     Link: {

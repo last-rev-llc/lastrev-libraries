@@ -168,7 +168,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
   })
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['Form'] => [];
+const createVariants = (theme: Theme): ComponentsVariants['Form'] => [
+  {
+    props: { variant: FormVariants.sidebarNewsletter },
+    style: {
+      background: theme.vars.palette.background.lightThree,
+      padding: theme.spacing(6, 3)
+    }
+  }
+];
 
 export const formTheme = (theme: Theme): ThemeOptions => ({
   components: {

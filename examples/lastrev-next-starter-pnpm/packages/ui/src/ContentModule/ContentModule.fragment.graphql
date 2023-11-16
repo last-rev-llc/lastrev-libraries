@@ -10,6 +10,7 @@ fragment ContentModule_BaseFragment on Content {
   ...Quote_BaseFragment
   ...Section_BaseFragment
   ...Text_BaseFragment
+  ...Form_BaseFragment
 }
 
 fragment ContentModule_PageFragment on Content {
@@ -40,6 +41,7 @@ fragment ContentModule_SectionFragment on Content {
   ...ModuleIntegration_BaseFragment
   ...Quote_BaseFragment
   ...Text_BaseFragment
+  ...Form_BaseFragment
 }
 
 fragment ContentModule_RichTextFragment on Content {
@@ -53,4 +55,5 @@ fragment ContentModule_RichTextFragment on Content {
   ...ModuleIntegration_BaseFragment
   ...Quote_BaseFragment
   ...Text_RichTextFragment
+  ...Form_BaseFragment
 }
