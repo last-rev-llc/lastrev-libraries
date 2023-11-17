@@ -11,7 +11,7 @@ export const pageContentsResolver = async (entry: any, _args: any, ctx: ApolloCo
     const categoryId = entry?.sys?.id;
     const collection = createType('Collection', {
       id: 'random',
-      introText: createType('Text', { title: 'Latest articles', align: 'center' }),
+      // introText: createType('Text', { title: 'Latest articles', align: 'center' }),
       showFilters: true,
       settings: {
         contentType: 'blog',

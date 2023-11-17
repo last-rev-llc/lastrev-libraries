@@ -24,6 +24,11 @@ const styleOverrides: ComponentsOverrides<Theme>['InlineNavigation'] = {
   }),
   link: ({ ownerState, theme }) => ({
     // padding: theme.spacing(1, 2)
+    ...(ownerState?.active
+      ? {
+          color: theme.vars.palette.secondary.main
+        }
+      : null)
   })
 };
 

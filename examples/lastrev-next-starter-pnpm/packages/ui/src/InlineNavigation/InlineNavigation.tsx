@@ -9,14 +9,18 @@ import { useScrollTrigger } from '@mui/material';
 import { Link } from '../../../graphql-sdk/src/types';
 import Grid from '../Grid';
 import sidekick from '@last-rev/contentful-sidekick-util';
+import { usePathname } from 'next/navigation';
 
 const InlineNavigation = React.forwardRef<any, InlineNavigationProps>(function InlineNavigation(props, ref) {
   const { subNavigation, id, sidekickLookup, ...other } = props;
-  const [activeLink, setActiveLink] = React.useState('');
   const trigger = useScrollTrigger({
     disableHysteresis: true
   });
-
+  const pathname = usePathname();
+  const [activeLink, setActiveLink] = React.useState(() => {
+    return subNavigation?.find((link) => pathname?.includes(link?.href))?.id;
+  });
+  console.log('ActiveLink', activeLink);
   useEffect(() => {
     const handleScroll = () => {
       let foundActive = false;
@@ -25,22 +29,31 @@ const InlineNavigation = React.forwardRef<any, InlineNavigationProps>(function I
         ?.forEach((link) => {
           const section = document.querySelector((link as Link)?.href);
           if (section && window.pageYOffset >= section?.offsetTop - 100) {
-            setActiveLink((link as Link)?.href);
+            setActiveLink((link as Link)?.id);
             foundActive = true;
           }
         });
-      if (!foundActive) setActiveLink('');
+      // if (!foundActive) setActiveLink('');
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, [subNavigation]);
+
   const ownerState = { ...props, trigger, activeLink };
   return (
     <Root ownerState={ownerState} {...sidekick(sidekickLookup)}>
       <LinksWrap ownerState={ownerState}>
         {subNavigation?.map((link) => (
-          <Link ownerState={ownerState} key={link?.id} {...link} color="inherit" variant="buttonText" size="large" />
+          <Link
+            active={activeLink === link?.id}
+            ownerState={{ ...ownerState, active: activeLink === link?.id }}
+            key={link?.id}
+            {...link}
+            color="inherit"
+            variant="buttonText"
+            size="large"
+          />
         ))}
       </LinksWrap>
     </Root>
