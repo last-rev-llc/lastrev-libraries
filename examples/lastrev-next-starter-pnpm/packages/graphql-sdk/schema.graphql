@@ -154,6 +154,8 @@ type CollectionDynamic implements Content {
   numItems: Int
   numberOfItemsToPull: String
   pullFromContentType: String
+  settings: JSON
+  showFilters: Boolean
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
