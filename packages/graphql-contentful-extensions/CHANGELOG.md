@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.2.3
+
+### Patch Changes
+
+- b82daa87: Allow for special data marks in RTE content
+
 ## 0.2.2
 
 ### Patch Changes
