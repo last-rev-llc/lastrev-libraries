@@ -40,7 +40,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
 
     ...(ownerState?.prevBgColor && ownerState.inheritTopBGOverlap
       ? {
-          'padding': 0,
+          'paddingTop': 0,
+          'paddingLeft': 0,
+          'paddingRight': 0,
           '&::before': {
             content: '""',
             position: 'absolute',

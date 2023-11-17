@@ -110,11 +110,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     padding: 'var(--grid-gap)'
   }),
 
-  title: ({ ownerState, theme }) => ({
-    ...(ownerState?.variant === CardVariants.blog && {
-      ...theme.typography.body1
-    })
-  }),
+  title: {},
 
   bodyWrap: ({ theme }) => ({
     '*': {
@@ -155,21 +151,56 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.default
     },
     style: {
-      '& [class*=contentWrap]': {
-        borderLeft: 'solid 1px var(--mui-palette-text-primary)',
-        paddingLeft: 'var(--grid-gap)',
-        paddingTop: 0,
+      '[class*=actionsWrap]': {
+        borderLeft: 'solid 1px',
         paddingBottom: 0,
+        paddingLeft: 'var(--grid-gap)',
+        paddingRight: 0
+      },
 
-        [theme.containerBreakpoints.up('sm')]: {
-          paddingLeft: 'var(--grid-gap-half)'
+      '& [class*=Card-content]': {
+        'borderLeft': 'solid 1px',
+        'minHeight': '33cqi',
+        'display': 'flex',
+        'flexDirection': 'column',
+        'paddingBottom': 0,
+        'paddingLeft': 'var(--grid-gap)',
+        'paddingRight': 0,
+
+        '& > *': {
+          marginTop: 'auto'
         }
+      },
+
+      '& [class*=Card-title]': {
+        marginTop: 0
+      }
+    }
+  },
+
+  {
+    props: {
+      variant: CardVariants.news
+    },
+    style: {
+      'borderLeft': 'solid 1px',
+      'paddingLeft': 'var(--grid-gap)',
+
+      '[class*=Card-cardMedia]': {
+        display: 'none'
+      },
+
+      '[class*=actionsWrap]': {
+        paddingBottom: 0,
+        paddingLeft: 0,
+        paddingRight: 0
       },
 
       '& [class*=Card-content]': {
         'minHeight': '33cqi',
         'display': 'flex',
         'flexDirection': 'column',
+        'padding': 0,
 
         '& > *': {
           marginTop: 'auto'

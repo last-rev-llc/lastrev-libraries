@@ -9,6 +9,7 @@ import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
 
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
+import { defaultResolver } from './utils/defaultResolver';
 
 export const typeDefs = gql`
   extend type Blog {
@@ -72,7 +73,7 @@ export const mappers: Mappers = {
       body: async (blog: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(blog.fields, 'promoSummary', ctx)),
 
-      media: async (blog: any, _args: any, ctx: ApolloContext) => {
+      media: async (blog: any, args: any, ctx: ApolloContext) => {
         const promoImage =
           getLocalizedField(blog.fields, 'promoImage', ctx) ?? getLocalizedField(blog.fields, 'featuredMedia', ctx);
         if (!promoImage) return null;

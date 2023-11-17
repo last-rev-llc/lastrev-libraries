@@ -59,6 +59,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Link'] => [
       'paddingLeft': 0,
       'alignSelf': 'flex-start',
       ...theme.typography.h6,
+      'margin': 0,
+      'paddingBottom': 0,
 
       '.MuiButton-startIcon ': {
         marginLeft: 0

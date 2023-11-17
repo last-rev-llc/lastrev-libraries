@@ -30,7 +30,6 @@ export const typeDefs = gql`
     numItems: Int
   }
 
-
   type CollectionDynamicOptions {
     tags: [CollectionDynamicOption]
     topics: [CollectionDynamicOption]
@@ -82,37 +81,33 @@ interface CollectionDynamicSettings {
 export const mappers: Mappers = {
   CollectionDynamic: {
     CollectionDynamic: {
-      items: async (collectionDynamic: any, args: any, ctx: ApolloContext) => {
-        let items = getLocalizedField(collectionDynamic.fields, 'items', ctx) ?? [];
-        const itemsVariantFn = defaultResolver('itemsVariant');
-        const itemsVariant = itemsVariantFn(collectionDynamic, args, ctx);
+      items: async (collection: any, args: any, ctx: ApolloContext) => {
+        let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
 
-        const itemsAspectRatioFn = defaultResolver('itemsAspectRatio');
-        const itemsAspectRatio = itemsAspectRatioFn(collectionDynamic, args, ctx);
+        const itemsVariantFn = defaultResolver('itemsVariant');
+        const itemsVariant = itemsVariantFn(collection, args, ctx);
 
         try {
-          const contentType = 'pageProperty' ?? getLocalizedField(collectionDynamic.fields, 'pullFromContentType', ctx);
-
+          const { contentType, limit, offset, order, filter } =
+            (getLocalizedField(collection.fields, 'settings', ctx) as CollectionDynamicSettings) || {};
           if (contentType) {
-            const limit = getLocalizedField(collectionDynamic.fields, 'numberOfItemsToPull', ctx);
-            const offset = 0;
-            const order = null;
-            const filter = null;
-
             items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
-
-            return ctx.loaders.entryLoader.loadMany(
-              items?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-            );
+            // items = await ctx.loaders.entryLoader.loadMany(
+            //   queryItems?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+            // );
           }
         } catch (error: any) {
           logger.error(error.message, {
-            caller: 'CollectionDynamic.items',
+            caller: 'Collection.items',
             stack: error.stack
           });
         }
-
-        const returnItems = items?.map((x: any) => ({ ...x, aspectRatio: itemsAspectRatio, variant: itemsVariant }));
+        if (!!items?.length) {
+          items = await ctx.loaders.entryLoader.loadMany(
+            items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+          );
+        }
+        const returnItems = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
 
         return returnItems;
       },
@@ -186,15 +181,11 @@ export const mappers: Mappers = {
         return variant;
       },
 
-      itemsConnection: async (
-        collectionDynamic: any,
-        { limit, offset, filter }: ItemsConnectionArgs,
-        ctx: ApolloContext
-      ) => {
-        let items = getLocalizedField(collectionDynamic.fields, 'items', ctx) ?? [];
+      itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
+        let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
         try {
           const { contentType, filters } =
-            (getLocalizedField(collectionDynamic.fields, 'settings', ctx) as CollectionDynamicSettings) || {};
+            (getLocalizedField(collection.fields, 'settings', ctx) as CollectionDynamicSettings) || {};
           // Get all possible items from Contentful
           // Need all to generate the possible options for all items. Not just the current page.
           if (contentType) {
@@ -212,17 +203,13 @@ export const mappers: Mappers = {
               items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
             }
 
-            let fullItemsWithVariant = [];
-
             if (!!items?.length) {
-              const itemsVariant = getLocalizedField(collectionDynamic.fields, 'itemsVariant', ctx) ?? [];
-
-              const fullItems = await ctx.loaders.entryLoader.loadMany(
+              items = await ctx.loaders.entryLoader.loadMany(
                 items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
               );
-
-              fullItemsWithVariant = fullItems?.map((x: any) => ({ ...x, variant: itemsVariant }));
             }
+            const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
+            const fullItemsWithVariant = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
 
             return {
               pageInfo: {
@@ -234,7 +221,7 @@ export const mappers: Mappers = {
           }
         } catch (error: any) {
           logger.error(error.message, {
-            caller: 'CollectionDynamic.itemsConnection',
+            caller: 'Collection.itemsConnection',
             stack: error.stack
           });
         }

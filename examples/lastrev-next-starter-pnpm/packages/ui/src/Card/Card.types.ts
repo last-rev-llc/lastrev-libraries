@@ -11,7 +11,7 @@ export enum CardVariants {
   pricing = 'pricing',
   person = 'person',
   quote = 'quote',
-  blog = 'blog',
+  news = 'news',
   timeline = 'timeline'
 }
 
