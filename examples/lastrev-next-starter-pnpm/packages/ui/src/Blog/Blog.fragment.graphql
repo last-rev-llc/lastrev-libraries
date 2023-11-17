@@ -6,6 +6,13 @@ fragment Blog_BaseFragment on Blog {
   title
   slug
   pubDate
+  #mediaContactName
+  #mediaContactPhone
+  #mediaContactEmail
+  #aboutText {
+  #  ...RichText_BaseFragment
+  #}
+
   author {
     ...Person_Blog_Author_Fragment
   }

@@ -9,7 +9,10 @@ import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
 
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
-import { defaultResolver } from './utils/defaultResolver';
+// import { siteMediaContactNameResolver } from './utils/siteMediaContactNameResolver';
+// import { siteMediaContactEmailResolver } from './utils/siteMediaContactEmailResolver';
+// import { siteMediaContactPhoneResolver } from './utils/siteMediaContactPhoneResolver';
+// import { siteNewsDefaultAboutUsResolver } from './utils/siteNewsDefaultAboutUsResolver';
 
 export const typeDefs = gql`
   extend type Blog {
@@ -21,6 +24,10 @@ export const typeDefs = gql`
     breadcrumbs: [Link]
     author: Person
     hero: Content
+    aboutText: RichText
+    mediaContactName: String
+    mediaContactEmail: String
+    mediaContactPhone: JSON
   }
 `;
 
@@ -31,6 +38,10 @@ export const mappers: Mappers = {
       header: pageHeaderResolver,
       footer: pageFooterResolver,
       breadcrumbs: breadcrumbsResolver,
+      // mediaContactName: siteMediaContactNameResolver,
+      // mediaContactEmail: siteMediaContactEmailResolver,
+      // mediaContactPhone: siteMediaContactPhoneResolver,
+      // aboutText: siteNewsDefaultAboutUsResolver,
       relatedItems: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('CollectionDynamic', {
           introText: createType('Text', { title: 'Related News' }),

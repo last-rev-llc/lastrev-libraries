@@ -45,6 +45,7 @@ type Block implements Content {
 }
 
 type Blog implements Content {
+  aboutText: RichText
   animation: JSON
   author: Person
   body: RichText
@@ -58,6 +59,9 @@ type Blog implements Content {
   id: String
   jsonLd: JSON
   lr__path__: String
+  mediaContactEmail: String
+  mediaContactName: String
+  mediaContactPhone: JSON
   path: String
   promoImage: Media
   promoSummary: String
@@ -612,6 +616,10 @@ type Site implements Content {
   animation: JSON
   id: String
   internalTitle: String
+  mediaContactEmail: String
+  mediaContactName: String
+  mediaContactPhone: String
+  newsDefaultAboutUs: RichText
   seo: JSON
   sidekickLookup: JSON
   siteKey: String
