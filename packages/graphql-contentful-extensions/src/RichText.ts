@@ -11,6 +11,10 @@ const bodyXSS = new FilterXSS({
   css: false
 });
 
+const mergeSpecialMarks = (node: any) => {
+  return [...(node.marks || []), ...(node.data?.marks || [])];
+};
+
 // const __html = React.useMemo(() => bodyXSS.process(children), [children]);
 export const mappers: Mappers = {
   RichText: {
@@ -41,6 +45,9 @@ export const mappers: Mappers = {
           }
           if (isHTML(node?.value)) {
             node.value = bodyXSS.process(node.value);
+          }
+          if (node?.nodeType === 'text') {
+            node.marks = mergeSpecialMarks(node);
           }
         };
 
