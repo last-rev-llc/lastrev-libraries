@@ -88,16 +88,7 @@ export const mappers: Mappers = {
       //     variant: 'Three Per Row',
       //     itemsVariant: 'Blog'
       //   }),
-      subNavigation: async (blog: any, args: any, ctx: ApolloContext) =>
-        createType('NavigationItem', {
-          variant: 'inlineNavigation',
-          // overline: getLocalizedField(blog.fields, 'pubDate', ctx),
-          // title: getLocalizedField(blog.fields, 'title', ctx)
-          // title: 'The Lively Blog',
-          // backgroundColor: 'blueLight'
-          subNavigation: await pageSubNavigationResolver(blog, args, ctx)
-          // sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)
-        }),
+      subNavigation: pageSubNavigationResolver,
       hero: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('Hero', {
           variant: 'simpleCentered',
