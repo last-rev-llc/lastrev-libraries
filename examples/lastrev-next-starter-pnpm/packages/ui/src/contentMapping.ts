@@ -13,6 +13,7 @@ const Tabs = dynamic(() => import('./Tabs'));
 const Card = dynamic(() => import('./Card'));
 const Person = dynamic(() => import('./Person'));
 const Quote = dynamic(() => import('./Quote'));
+const CategoryBlog = dynamic(() => import('./CategoryBlog'));
 const Blog = dynamic(() => import('./Blog'));
 const PageResource = dynamic(() => import('./PageResource'));
 const Accordion = dynamic(() => import('./Accordion'));
@@ -56,6 +57,7 @@ export const contentMapping: {
   PageResource,
   Person,
   Blog,
+  CategoryBlog,
   Quote,
   Accordion,
   Tabs,

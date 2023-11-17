@@ -16,6 +16,7 @@ fragment ContentModule_BaseFragment on Content {
 fragment ContentModule_PageFragment on Content {
   ...Page_BaseFragment
   ...PageResource_BaseFragment
+  ...CategoryBlog_BaseFragment
 }
 
 fragment ContentModule_PersonFragment on Content {

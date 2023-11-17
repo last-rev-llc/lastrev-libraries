@@ -6,13 +6,12 @@ export const pageSubNavigationResolver = async (entry: any, _args: any, ctx: Apo
 
   const pageType = getLocalizedField(entry.fields, 'pageType', ctx);
 
-  if (pageType?.toLowerCase() === 'blog' || contentType === 'blog') {
+  if (pageType?.toLowerCase() === 'blog' || contentType === 'blog' || contentType == 'categoryBlog') {
     const allBlogCategories = await ctx.loaders.entriesByContentTypeLoader.load({
       id: 'categoryBlog',
       preview: !!ctx.preview
     });
 
-    console.log({ allBlogCategories });
     return allBlogCategories?.sort((a: any, b: any) => {
       const aTitle = getLocalizedField(a.fields, 'title', ctx);
       const bTitle = getLocalizedField(b.fields, 'title', ctx);

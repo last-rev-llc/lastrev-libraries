@@ -1,0 +1,31 @@
+fragment CategoryCategoryBlog_BaseFragment on CategoryCategoryBlog {
+  ...Content_BaseFragment
+  seo
+  jsonLd
+  path
+  title
+
+  slug
+
+  header {
+    ...Header_BaseFragment
+  }
+  subNavigation {
+    ...NavigationItem_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+
+  body {
+    ...RichText_BaseFragment
+  }
+
+  hero {
+    ...Hero_BaseFragment
+  }
+
+  contents {
+    ...ContentModule_BaseFragment
+  }
+}

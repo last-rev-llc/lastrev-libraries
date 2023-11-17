@@ -9,6 +9,8 @@ import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pageContentsResolver } from './utils/pageContentsResolver';
 import { pathResolver } from './utils/pathResolver';
 import { resolveField } from './utils/resolveField';
+import { createType } from './utils/createType';
+import { pageSubNavigationResolver } from './utils/pageSubNavigationResolver';
 
 export const typeDefs = gql`
   extend type CategoryBlog {
@@ -17,6 +19,8 @@ export const typeDefs = gql`
     path: String
     hero: Hero
     contents: [Content]
+    jsonLd: JSON
+    subNavigation: NavigationItem
   }
 `;
 
@@ -26,7 +30,28 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      contents: pageContentsResolver
+      hero: resolveField([
+        'hero',
+        async (category: any, _args: any, ctx: ApolloContext) =>
+          createType('Hero', {
+            variant: 'simpleCentered',
+            // overline: getLocalizedField(blog.fields, 'pubDate', ctx),
+            title: getLocalizedField(category.fields, 'title', ctx),
+            backgroundColor: 'blueLight'
+            // sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)
+          })
+      ]),
+      contents: pageContentsResolver,
+      subNavigation: async (blog: any, args: any, ctx: ApolloContext) =>
+        createType('NavigationItem', {
+          variant: 'inlineNavigation',
+          // overline: getLocalizedField(blog.fields, 'pubDate', ctx),
+          // title: getLocalizedField(blog.fields, 'title', ctx)
+          // title: 'The Lively Blog',
+          // backgroundColor: 'blueLight'
+          subNavigation: await pageSubNavigationResolver(blog, args, ctx)
+          // sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)
+        })
     },
 
     Link: {

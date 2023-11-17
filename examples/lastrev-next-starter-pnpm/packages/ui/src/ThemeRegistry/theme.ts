@@ -410,8 +410,6 @@ export const theme = extendTheme(
   })
 );
 
-console.log('Theme');
-console.log(theme);
 export const breakpoints = theme.breakpoints.values;
 
 // export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {

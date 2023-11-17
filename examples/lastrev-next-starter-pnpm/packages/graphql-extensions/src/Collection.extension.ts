@@ -100,9 +100,15 @@ const collectionMappers = {
     try {
       const { contentType, limit, offset, order, filter } =
         (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
+      console.log('Resolveitems', { contentType, limit, offset, order, filter });
       if (contentType) {
         items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
-
+        console.log('Query', {
+          filter,
+          order,
+          limit,
+          items
+        });
         // items = await ctx.loaders.entryLoader.loadMany(
         //   queryItems?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
         // );

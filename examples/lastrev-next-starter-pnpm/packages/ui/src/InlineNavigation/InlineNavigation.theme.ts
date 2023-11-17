@@ -5,7 +5,7 @@ const defaultProps: ComponentsProps['InlineNavigation'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['InlineNavigation'] = {
   root: ({ ownerState, theme }) => ({
-    padding: theme.spacing(4, 0),
+    padding: theme.spacing(2, 0),
     borderBottom: `1px solid ${theme.vars.palette.background.lightOne}`,
     // borderTop: `1px solid ${theme.vars.palette.background.lightOne}`,
     transition: '.25 ease-in-out',

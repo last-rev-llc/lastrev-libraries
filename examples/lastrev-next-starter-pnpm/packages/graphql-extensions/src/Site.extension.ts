@@ -25,7 +25,9 @@ export const resolvers = {
       const siteSettings = await ctx.loaders.entryLoader.load({ id: SITE_ID!, preview: !!ctx.preview });
       ctx.siteSettings = siteSettings;
 
-      return pathEntries.reduce((acc: any, curr: any) => (curr ? curr : acc), null as any);
+      const entry = pathEntries.reduce((acc: any, curr: any) => (curr ? curr : acc), null as any);
+      console.log({ path, entry });
+      return entry;
     }
   }
 };
