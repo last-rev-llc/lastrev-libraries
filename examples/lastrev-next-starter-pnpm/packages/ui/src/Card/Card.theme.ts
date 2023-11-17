@@ -155,7 +155,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   actionsWrap: ({ theme }) => ({
     display: 'flex',
     gap: theme.spacing(2),
-    margin: theme.spacing(0, -1)
+    margin: theme.spacing(0, -1),
+    zIndex: 2
     // padding: 0
     // padding: 'calc(var(--grid-gap) / 2)'
   }),
@@ -164,7 +165,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'position': 'absolute',
     'top': 0,
     'left': 0,
-    // 'zIndex': -1,
+    'zIndex': 1,
     'width': '100%',
     'height': '100%',
     '&:hover': {
