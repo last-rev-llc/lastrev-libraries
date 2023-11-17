@@ -186,7 +186,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       'borderLeft': 'solid 1px',
       'paddingLeft': 'var(--grid-gap)',
 
-      '[class*=Card-cardMedia]': {
+      ':is([class*=Card-cardMedia], [class*=Card-bodyWrap])': {
         display: 'none'
       },
 

@@ -27,8 +27,7 @@ const createVariants = (theme: Theme): ComponentsVariants['RichText'] => [
       variant: RichTextVariants.inline
     },
     style: {
-      // TODO: Pulled from Text, but adds default padding around elements.   Classes may be wrong
-      '& > [class*=Text-root] > *:not(:first-child)': {
+      '& > *:not(:first-child)': {
         '&:not(:is(ul, ol, li))': {
           marginTop: '1em',
           marginBottom: '1em'

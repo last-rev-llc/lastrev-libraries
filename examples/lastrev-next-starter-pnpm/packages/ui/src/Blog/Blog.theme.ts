@@ -4,206 +4,79 @@ import type { Theme } from '@ui/ThemeRegistry/theme.types';
 const defaultProps: ComponentsProps['Blog'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
-  // root: {},
-
-  contentOuterGrid: {
-    'containerType': 'inline-size',
-    '> *': {
-      gridColumn: 'full-start / full-end'
-    }
-  },
-
-  headerWrap: ({ theme }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'ten-end'
-    }
-  }),
-
-  breadcrumbsWrap: {
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
-  },
-
-  contentWrap: {
-    display: 'contents'
-  },
-
-  featuredMediaWrap: ({ theme }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'ten-end'
-    }
-  }),
-
-  // featuredMedia: {},
-
-  // pubDate: {},
-
-  shareLinksWrap: ({ theme }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'two-start',
-      gridColumnEnd: 'seven-end'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'content-quarter',
-      gridColumnEnd: 'content-three-quarter'
-    }
-  }),
-
-  shareLinks: ({ theme }) => ({
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
+    containerType: 'inline-size',
+    position: 'relative',
+    width: '100%',
     display: 'flex',
-    alignItems: 'flex-start',
-    gap: 'var(--grid-gap)'
+    flexDirection: 'column',
+    padding: 'var(--section-padding) 0'
   }),
 
-  shareLink: ({ theme }) => ({
-    'gap': 'var(--grid-gap)',
-
-    '& svg': {
-      width: 'var(--grid-gap)',
-      height: 'var(--grid-gap)'
-    },
-
-    '& .MuiTypography-root': {
-      display: 'none'
-    },
+  sideContentWrap: ({ theme }) => ({
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+    paddingBottom: 'var(--grid-gap-double)',
 
     [theme.containerBreakpoints.up('lg')]: {
-      'gap': 'var(--grid-gap)',
-      '& .MuiTypography-root': {
-        ...theme.typography.bodySmall,
-        display: 'block'
-      }
-    }
-  }),
-
-  authorImageWrap: ({ theme }) => ({
-    gridRow: 1,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-quarter',
-
-    [theme.breakpoints.up('md')]: {
-      gridRow: '1/ span 3',
-      gridColumnStart: 'two-start',
-      gridColumnEnd: 'two-end'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridRow: '1/ span 3',
-      gridColumnStart: 'four-start',
+      gridColumnStart: 'content-start',
       gridColumnEnd: 'four-end'
     }
   }),
 
-  authorName: ({ theme }) => ({
-    gridRow: 1,
-    alignSelf: 'center',
-    marginBottom: 0,
+  sideContentInnerWrap: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'borderLeft': 'solid',
+    'borderLeftWidth': '1px',
+    'paddingLeft': 'var(--grid-gap)',
 
-    gridColumnStart: 'content-quarter',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'seven-end',
-      alignSelf: 'self-end'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'five-start',
-      gridColumnEnd: 'content-three-quarter',
-      alignSelf: 'self-end'
-    }
-  }),
-
-  authorSummaryWrap: ({ theme }) => ({
-    display: 'flex',
-    alignSelf: 'center',
-    marginBottom: 0,
-
-    gridRow: 2,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'seven-end'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'five-start',
-      gridColumnEnd: 'content-three-quarter'
-    }
-  }),
-
-  authorSocialLinks: ({ theme }) => ({
-    alignSelf: 'self-start',
-
-    gridRow: 3,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'seven-end'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'five-start',
-      gridColumnEnd: 'content-three-quarter'
-    }
-  }),
-
-  // title: {},
-
-  body: ({ theme }) => ({
-    '& > *:not(div)': {
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-end',
-
-      [theme.breakpoints.up('md')]: {
-        gridColumnStart: 'two-start',
-        gridColumnEnd: 'seven-end'
-      },
-
-      [theme.breakpoints.up('lg')]: {
-        gridColumnStart: 'content-quarter',
-        gridColumnEnd: 'content-three-quarter'
-      }
-    },
-
-    '& > div': {
-      gridColumnStart: 'full-start',
-      gridColumnEnd: 'full-end'
-    }
-  }),
-
-  // blogCategories: ({}) => ({}),
-
-  // blogCategory: ({}) => ({}),
-
-  // tags: ({}) => ({}),
-
-  // tag: ({}) => ({}),
-
-  relatedItemsWrap: {
     '& > *': {
-      gridColumn: 'full-start / full-end'
+      marginBottom: 0
     }
-  }
+  },
 
-  // relatedItems: ({}) => ({})
+  detailsLabel: {
+    '&': {
+      paddingBottom: 'var(--grid-gap)'
+    }
+  },
+
+  bodyHeader: {
+    '&:not(:first-of-type)': {
+      paddingTop: 'var(--grid-gap)',
+      marginTop: 'var(--grid-gap)',
+      borderTop: 'solid',
+      borderTopWidth: '1px'
+    }
+  },
+
+  bodyList: {
+    padding: 0
+  },
+
+  bodyListItem: {
+    'paddingLeft': 0,
+    '&::before': {
+      content: '"– "' /* en dash */,
+      display: ' inline-block',
+      marginRight: '.25em'
+    }
+  },
+
+  contentWrap: ({ theme }) => ({
+    ...theme.mixins.applyColorScheme({ ownerState: { backgroundColor: 'white' }, theme }),
+    padding: 'var(--grid-gap-double)',
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+
+    [theme.containerBreakpoints.up('lg')]: {
+      gridColumnStart: 'five-start',
+      gridColumnEnd: 'full-end',
+      paddingRight: 'var(--grid-margin)'
+    }
+  })
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Blog'] => [];

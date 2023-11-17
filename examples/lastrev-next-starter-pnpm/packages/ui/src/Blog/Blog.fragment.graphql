@@ -22,7 +22,13 @@ fragment Blog_BaseFragment on Blog {
     ...RichText_BaseFragment
   }
   relatedItems {
-    ...Collection_BaseFragment
+    ...CollectionDynamic_BaseFragment
+  }
+  hero {
+    ...Hero_BaseFragment
+  }
+  breadcrumbs {
+    ...Link_BaseFragment
   }
   jsonLd
 }

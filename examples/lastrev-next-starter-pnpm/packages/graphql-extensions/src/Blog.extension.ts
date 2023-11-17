@@ -24,17 +24,6 @@ export const typeDefs = gql`
   }
 `;
 
-// Controls which site the Blogs gets it's global config from
-// const BLOGS_SITE_ID = process.env.BLOGS_SITE_ID ?? (process.env.DEFAULT_SITE_ID || process.env.SITE_ID);
-
-// const blogGlobalContentsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
-//   // TODO: Make getting a localized resolved link a single function
-//   const siteRef: any = getLocalizedField(page.fields, 'site', ctx);
-//   const site = await ctx.loaders.entryLoader.load({ id: siteRef?.sys?.id ?? BLOGS_SITE_ID, preview: !!ctx.preview });
-//   const siteblogGlobalContents: any = getLocalizedField(site?.fields, 'blogGlobalContents', ctx);
-//   return siteblogGlobalContents;
-// };
-
 export const mappers: Mappers = {
   Blog: {
     Blog: {
@@ -42,20 +31,23 @@ export const mappers: Mappers = {
       header: pageHeaderResolver,
       footer: pageFooterResolver,
       breadcrumbs: breadcrumbsResolver,
-      // contents: blogGlobalContentsResolver,
       relatedItems: async (blog: any, _args: any, ctx: ApolloContext) =>
-        createType('Collection', {
-          introText: createType('Text', { title: 'Related Blogs' }),
-          items: getLocalizedField(blog.fields, 'relatedItems', ctx),
-          variant: 'Three Per Row',
-          itemsVariant: 'Blog'
+        createType('CollectionDynamic', {
+          introText: createType('Text', { title: 'Related News' }),
+          items: getLocalizedField(blog.fields, 'relatedItems', ctx) ?? [],
+          variant: 'threePerRow',
+          itemsVariant: 'news',
+          settings: {
+            limit: 3,
+            contentType: 'blog'
+          }
         }),
       hero: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('Hero', {
           variant: 'mediaOnRightFullBleed',
           overline: getLocalizedField(blog.fields, 'pubDate', ctx),
           title: getLocalizedField(blog.fields, 'title', ctx),
-          sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)
+          sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx) ?? []
         })
     },
 
