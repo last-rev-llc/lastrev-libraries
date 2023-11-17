@@ -20,7 +20,7 @@ import LinkedinIcon from '../Icons/LinkedinIcon';
 import EmailIcon from '../Icons/EmailIcon';
 import CopyLinkIcon from '../Icons/CopyLinkIcon';
 
-import type { CategoryBlogProps, CategoryBlogOwnerState } from './CategoryCategoryBlog.types';
+import type { CategoryBlogProps, CategoryBlogOwnerState } from './CategoryBlog.types';
 import { type MediaProps } from '../Media';
 import { type LinkProps } from '../Link';
 

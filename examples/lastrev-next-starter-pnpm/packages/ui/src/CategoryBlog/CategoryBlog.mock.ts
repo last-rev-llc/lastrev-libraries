@@ -9,7 +9,7 @@ import { personBaseMock } from '../Person/Person.mock';
 
 import { randomId } from '../utils/randomId';
 
-import { CategoryBlogVariants, type CategoryBlogProps } from './CategoryCategoryBlog.types';
+import { CategoryBlogVariants, type CategoryBlogProps } from './CategoryBlog.types';
 import heroBaseMock from '../Hero/Hero.mock';
 
 const categoryblogDefaultMock = (override?: Partial<CategoryBlogProps>): CategoryBlogProps => {

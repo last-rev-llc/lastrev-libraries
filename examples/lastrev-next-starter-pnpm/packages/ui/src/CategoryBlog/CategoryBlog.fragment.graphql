@@ -1,4 +1,4 @@
-fragment CategoryCategoryBlog_BaseFragment on CategoryCategoryBlog {
+fragment CategoryBlog_BaseFragment on CategoryBlog {
   ...Content_BaseFragment
   seo
   jsonLd

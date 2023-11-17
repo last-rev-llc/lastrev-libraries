@@ -1,4 +1,4 @@
-import CategoryBlog from './CategoryCategoryBlog';
+import CategoryBlog from './CategoryBlog';
 import { categoryblogBaseMock, categoryblogWithHeroMock } from './CategoryBlog.mock';
 
 export default {
