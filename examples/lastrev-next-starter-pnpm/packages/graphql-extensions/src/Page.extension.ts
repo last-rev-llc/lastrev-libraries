@@ -9,6 +9,7 @@ import { pageFooterResolver } from './utils/pageFooterResolver';
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 import { pageContentsResolver } from './utils/pageContentsResolver';
 import { createType } from './utils/createType';
+import { pageSubNavigationResolver } from './utils/pageSubNavigationResolver';
 
 export const typeMappings = {};
 
@@ -16,6 +17,7 @@ export const typeDefs = gql`
   extend type Page {
     header: Header
     footer: Footer
+    subNavigation: NavigationItem
     path: String
     hero: Content
     contents: [Content]
@@ -31,7 +33,17 @@ export const mappers: Mappers = {
       header: pageHeaderResolver,
       footer: pageFooterResolver,
       breadcrumbs: breadcrumbsResolver,
-      contents: pageContentsResolver
+      contents: pageContentsResolver,
+      subNavigation: async (blog: any, args: any, ctx: ApolloContext) =>
+        createType('NavigationItem', {
+          variant: 'inlineNavigation',
+          // overline: getLocalizedField(blog.fields, 'pubDate', ctx),
+          // title: getLocalizedField(blog.fields, 'title', ctx)
+          // title: 'The Lively Blog',
+          // backgroundColor: 'blueLight'
+          subNavigation: await pageSubNavigationResolver(blog, args, ctx)
+          // sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx)
+        })
     },
 
     Link: {

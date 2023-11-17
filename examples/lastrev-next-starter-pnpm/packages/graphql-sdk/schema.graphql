@@ -468,6 +468,7 @@ type Page implements Content {
   seo: JSON
   sidekickLookup: JSON
   slug: String
+  subNavigation: NavigationItem
   theme: [Theme]
   title: String
 }

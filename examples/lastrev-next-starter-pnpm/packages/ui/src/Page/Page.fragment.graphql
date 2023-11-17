@@ -17,6 +17,9 @@ fragment Page_BaseFragment on Page {
   hero {
     ...ContentModule_BaseFragment
   }
+  subNavigation {
+    ...NavigationItem_BaseFragment
+  }
   contents {
     ...ContentModule_BaseFragment
   }
