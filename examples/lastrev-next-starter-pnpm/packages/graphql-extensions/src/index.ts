@@ -50,6 +50,7 @@ function loadFiles() {
     modules['Section'] = require('./Section.extension');
     modules['SEO'] = require('./SEO.extension');
     modules['Sidekick'] = require('./Sidekick.extension');
+    modules['Site'] = require('./Site.extension');
     modules['Text'] = require('./Text.extension');
     modules['Theme'] = require('./Theme.extension');
 
