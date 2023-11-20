@@ -53,7 +53,6 @@ export const collectOptions = async ({
       );
     })
   );
-  console.log(options);
   return Object.entries(options).map(([key, values]) => ({ key, values }));
 };
 

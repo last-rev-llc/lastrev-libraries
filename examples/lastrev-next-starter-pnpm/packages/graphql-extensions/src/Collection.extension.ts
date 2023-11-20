@@ -220,12 +220,23 @@ const collectionMappers = {
   itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
     let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
     try {
-      const { contentType, filters } =
-        (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
+      const {
+        contentType,
+        filters,
+        order,
+        filter: settingsFilter
+      } = (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
       // Get all possible items from Contentful
       // Need all to generate the possible options for all items. Not just the current page.
+
       if (contentType) {
-        const matchingItems = await queryContentful({ contentType, filters, filter, ctx });
+        const matchingItems = await queryContentful({
+          contentType,
+          filters,
+          order,
+          filter: { ...settingsFilter, ...filter },
+          ctx
+        });
         const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
           id: contentType,
           preview: !!ctx.preview
