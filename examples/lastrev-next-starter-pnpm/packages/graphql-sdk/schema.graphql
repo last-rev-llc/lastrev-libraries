@@ -517,6 +517,7 @@ type PageResource implements Content {
 
 type Person implements Content {
   animation: JSON
+  bioDetails: RichText
   body: RichText
   breadcrumbs: [Link]
   email: String

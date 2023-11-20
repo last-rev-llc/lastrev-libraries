@@ -22,7 +22,7 @@ const Accordion = (props: AccordionProps) => {
 
   const { background, backgroundColor, id, items, variant, sidekickLookup, introText } = props;
 
-  const [expanded, setExpanded] = React.useState<string | false>('panel1');
+  const [expanded, setExpanded] = React.useState<string | false>((items?.[0] as any)?.id);
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
