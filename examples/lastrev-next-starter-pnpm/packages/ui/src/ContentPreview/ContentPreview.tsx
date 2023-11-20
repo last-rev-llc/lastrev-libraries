@@ -40,16 +40,8 @@ const ContentPreview = ({
   // });
   return (
     <>
-      <Box
-        sx={{
-          '& > :is([class*=Collection-root],[class*=Section-root],[class*=Block-root],[class*=Carousel-root],[class*=Text-root])':
-            {
-              paddingTop: 'var(--section-padding)',
-              paddingBottom: 'var(--section-padding)'
-            }
-        }}>
-        {content ? <ContentModule {...content} searchParams={searchParams} /> : null}
-      </Box>
+      {content ? <ContentModule {...content} searchParams={searchParams} /> : null}
+
       {!content ? (
         <Container
           maxWidth="lg"
