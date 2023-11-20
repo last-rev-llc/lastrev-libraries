@@ -132,6 +132,7 @@ type Collection implements Content {
   itemsPerRow: Int
   itemsVariant: String
   numItems: Int
+  preFilter: JSON
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
@@ -156,6 +157,7 @@ type CollectionDynamic implements Content {
   itemsPerRow: Int
   itemsVariant: String
   numItems: Int
+  preFilter: JSON
   settings: JSON
   showFilters: Boolean
   sidekickLookup: JSON

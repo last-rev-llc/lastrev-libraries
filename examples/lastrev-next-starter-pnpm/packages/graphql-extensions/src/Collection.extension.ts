@@ -27,7 +27,8 @@ export const typeDefs = gql`
     isCarouselTablet: Boolean
     isCarouselMobile: Boolean
     itemsPerRow: Int
-    numItems: Int
+    numItems: Int,
+    preFilter: JSON
   }
 
 
@@ -84,6 +85,17 @@ interface CollectionSettings {
 export const mappers: Mappers = {
   Collection: {
     Collection: {
+      preFilter: async (collection: any, args: any, ctx: ApolloContext) => {
+        return {
+          query: 'viewability',
+          configure: {
+            filters: 'locale:"en-US"'
+          },
+          hierarchicalMenu: {
+            'categories.level-1': ['Advertiser + Agency Solutions']
+          }
+        };
+      },
       items: async (collection: any, args: any, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
         return items;

@@ -11,26 +11,28 @@ const searchClient = createSearchClient();
 type AlgoliaSearch = {
   children: any;
   indexName: string;
+  preFilter?: any;
 };
 
-const forceState = {
-  query: 'viewability',
-  configure: {
-    filters: 'locale:"en-US"'
-  },
-  hierarchicalMenu: {
-    'categories.level-1': ['Advertiser + Agency Solutions']
-  }
-};
+// const forceState = {
+//   query: 'viewability',
+//   configure: {
+//     filters: 'locale:"en-US"'
+//   },
+//   hierarchicalMenu: {
+//     'categories.level-1': ['Advertiser + Agency Solutions']
+//   }
+// };
 
-export const AlgoliaSearch = ({ children, indexName }: AlgoliaSearch) => {
+export const AlgoliaSearch = ({ children, indexName, preFilter }: AlgoliaSearch) => {
+  console.log({ preFilter });
   return (
     <InstantSearchNext
       searchClient={searchClient}
       indexName={indexName}
       initialUiState={{
         [indexName]: {
-          ...forceState
+          ...preFilter
         }
       }}
       // defaultUiState={{

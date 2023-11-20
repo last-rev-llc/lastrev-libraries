@@ -17,6 +17,7 @@ fragment CollectionDynamic_FieldsFragment on CollectionDynamic {
   inheritTopBGOverlap
   settings
   showFilters
+  preFilter
 }
 
 # Base fragment used everywhere there's a Collection

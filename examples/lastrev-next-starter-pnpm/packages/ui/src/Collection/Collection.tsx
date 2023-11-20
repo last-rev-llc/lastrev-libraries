@@ -45,7 +45,8 @@ const Collection = (props: CollectionProps) => {
     introText,
     itemsConnection,
     indexName = 'articles',
-    useInfinite
+    useInfinite,
+    preFilter
   } = props;
 
   return (
@@ -69,7 +70,7 @@ const Collection = (props: CollectionProps) => {
         )}
 
         {/* Use the AlgoliaSearch component here */}
-        <AlgoliaSearch indexName={indexName}>
+        <AlgoliaSearch indexName={indexName} preFilter={preFilter}>
           <ContentGrid ownerState={ownerState}>
             <CurrentRefinements ownerState={ownerState} />
             <FiltersWrap ownerState={ownerState}>
