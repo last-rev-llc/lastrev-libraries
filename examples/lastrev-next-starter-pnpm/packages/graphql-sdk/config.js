@@ -1,15 +1,15 @@
 require('dotenv').config();
-const { ApolloServerPluginInlineTrace } = require('@apollo/server/plugin/inlineTrace');
 
 const LastRevAppConfig = require('@last-rev/app-config');
 const extensions = require('graphql-extensions');
 const { resolve } = require('path');
-const Keyv = require('keyv');
-const { KeyvAdapter } = require('@apollo/utils.keyvadapter');
-const { ErrorsAreMissesCache } = require('@apollo/utils.keyvaluecache');
-const KeyvRedis = require('@keyv/redis');
+// const { ApolloServerPluginInlineTrace } = require('@apollo/server/plugin/inlineTrace');
+// const Keyv = require('keyv');
+// const { KeyvAdapter } = require('@apollo/utils.keyvadapter');
+// const { ErrorsAreMissesCache } = require('@apollo/utils.keyvaluecache');
+// const KeyvRedis = require('@keyv/redis');
 
-const Redis = require('ioredis');
+// const Redis = require('ioredis');
 
 const testForEnvVar = (name) => {
   const envVar = process.env[name];
@@ -37,7 +37,7 @@ const parseBooleanEnvVar = (value = '') => {
 
 const config = new LastRevAppConfig({
   cms: 'Contentful',
-  contentStrategy: process.env.NODE_ENV !== 'production' ? 'cms' : undefined,
+  contentStrategy: process.env.NODE_ENV !== 'production' ? 'fs' : undefined,
   cmsCacheStrategy: 'redis',
   sites: [process.env.SITE],
   extensions,
@@ -74,23 +74,23 @@ const config = new LastRevAppConfig({
     excludePages: ['error_404']
   },
   apolloServerOptions: {
-    introspection: true,
-    plugins: [ApolloServerPluginInlineTrace()],
-    cache: new ErrorsAreMissesCache(
-      new KeyvAdapter(
-        new Keyv({
-          store: new KeyvRedis(
-            new Redis({
-              port: process.env.REDIS_PORT,
-              host: process.env.REDIS_HOST,
-              password: process.env.REDIS_PASSWORD,
-              username: process.env.REDIS_USERNAME,
-              tls: {}
-            })
-          )
-        })
-      )
-    )
+    introspection: true
+    // plugins: [ApolloServerPluginInlineTrace()],
+    // cache: new ErrorsAreMissesCache(
+    //   new KeyvAdapter(
+    //     new Keyv({
+    //       store: new KeyvRedis(
+    //         new Redis({
+    //           port: process.env.REDIS_PORT,
+    //           host: process.env.REDIS_HOST,
+    //           password: process.env.REDIS_PASSWORD,
+    //           username: process.env.REDIS_USERNAME,
+    //           tls: {}
+    //         })
+    //       )
+    //     })
+    //   )
+    // )
   },
   features: {
     disableCoreSidekickLookup: true
