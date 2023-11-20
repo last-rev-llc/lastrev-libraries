@@ -33,7 +33,7 @@ const Card = (props: CardProps) => {
     <ErrorBoundary>
       <Root ownerState={ownerState} data-testid="Card" {...sidekick(sidekickLookup)} className={className}>
         <CardWrap ownerState={ownerState}>
-          {!!link ? <CardLink component={CardActionArea} {...(link as any)} /> : null}
+          {!!link ? <CardLink component={CardActionArea} {...(link as any)} variant="link" /> : null}
 
           {image || loading ? (
             // @ts-ignore: TODO
