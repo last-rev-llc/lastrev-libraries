@@ -85,31 +85,30 @@ export const mappers: Mappers = {
     CollectionDynamic: {
       items: async (collection: any, args: any, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
-        return items;
 
         const itemsVariantFn = defaultResolver('itemsVariant');
         const itemsVariant = itemsVariantFn(collection, args, ctx);
 
-        try {
-          const { contentType, limit, offset, order, filter } =
-            (getLocalizedField(collection.fields, 'settings', ctx) as CollectionDynamicSettings) || {};
-          if (contentType) {
-            // items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
-            // items = await ctx.loaders.entryLoader.loadMany(
-            //   queryItems?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-            // );
-          }
-        } catch (error: any) {
-          logger.error(error.message, {
-            caller: 'Collection.items',
-            stack: error.stack
-          });
-        }
-        if (!!items?.length) {
-          items = await ctx.loaders.entryLoader.loadMany(
-            items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-          );
-        }
+        // try {
+        //   const { contentType, limit, offset, order, filter } =
+        //     (getLocalizedField(collection.fields, 'settings', ctx) as CollectionDynamicSettings) || {};
+        //   if (contentType) {
+        //     // items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
+        //     // items = await ctx.loaders.entryLoader.loadMany(
+        //     //   queryItems?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+        //     // );
+        //   }
+        // } catch (error: any) {
+        //   logger.error(error.message, {
+        //     caller: 'Collection.items',
+        //     stack: error.stack
+        //   });
+        // }
+        // if (!!items?.length) {
+        //   items = await ctx.loaders.entryLoader.loadMany(
+        //     items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+        //   );
+        // }
         const returnItems = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
 
         return returnItems;
@@ -187,49 +186,50 @@ export const mappers: Mappers = {
 
       itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
-        try {
-          const { contentType, filters } =
-            (getLocalizedField(collection.fields, 'settings', ctx) as CollectionDynamicSettings) || {};
-          // Get all possible items from Contentful
-          // Need all to generate the possible options for all items. Not just the current page.
-          if (contentType) {
-            items = await queryContentful({ contentType, filters, filter, ctx });
-            const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
-              id: contentType,
-              preview: !!ctx.preview
-            });
-            // const options = await collectOptions({ filters, items, ctx });
-            const options = {};
-            const allOptions = await collectOptions({ filters, items: allItems, ctx });
-            console.log({ filters, allItems, allOptions });
 
-            // Paginate results
-            if (offset || limit) {
-              items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
-            }
+        // try {
+        //   const { contentType, filters } =
+        //     (getLocalizedField(collection.fields, 'settings', ctx) as CollectionDynamicSettings) || {};
+        //   // Get all possible items from Contentful
+        //   // Need all to generate the possible options for all items. Not just the current page.
+        //   if (contentType) {
+        //     items = await queryContentful({ contentType, filters, filter, ctx });
+        //     const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
+        //       id: contentType,
+        //       preview: !!ctx.preview
+        //     });
+        //     // const options = await collectOptions({ filters, items, ctx });
+        //     const options = {};
+        //     const allOptions = await collectOptions({ filters, items: allItems, ctx });
+        //     console.log({ filters, allItems, allOptions });
 
-            if (!!items?.length) {
-              items = await ctx.loaders.entryLoader.loadMany(
-                items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-              );
-            }
-            const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
-            const fullItemsWithVariant = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
+        //     // Paginate results
+        //     if (offset || limit) {
+        //       items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
+        //     }
 
-            return {
-              pageInfo: {
-                options,
-                allOptions
-              },
-              items: fullItemsWithVariant
-            };
-          }
-        } catch (error: any) {
-          logger.error(error.message, {
-            caller: 'Collection.itemsConnection',
-            stack: error.stack
-          });
-        }
+        //     if (!!items?.length) {
+        //       items = await ctx.loaders.entryLoader.loadMany(
+        //         items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+        //       );
+        //     }
+        //     const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
+        //     const fullItemsWithVariant = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
+
+        //     return {
+        //       pageInfo: {
+        //         options,
+        //         allOptions
+        //       },
+        //       items: fullItemsWithVariant
+        //     };
+        //   }
+        // } catch (error: any) {
+        //   logger.error(error.message, {
+        //     caller: 'Collection.itemsConnection',
+        //     stack: error.stack
+        //   });
+        // }
 
         return items;
       }
