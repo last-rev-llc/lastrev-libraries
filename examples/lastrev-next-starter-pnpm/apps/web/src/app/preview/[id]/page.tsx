@@ -12,7 +12,7 @@ type Props = {
 
 const locale = 'en-US';
 
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   return {
     other: {
       pageId: params.id
@@ -32,7 +32,7 @@ export default async function Preview({ params, searchParams }: Props) {
 
   return (
     <AppProvider>
-      <ContentPreview {...data} id={id} />
+      <ContentPreview {...data} id={id} searchParams={searchParams} />
     </AppProvider>
   );
 }

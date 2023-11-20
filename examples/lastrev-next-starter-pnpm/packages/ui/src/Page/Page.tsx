@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import dynamic from 'next/dynamic';
 
@@ -19,7 +20,8 @@ const Page = (props: PageProps) => {
     disableBackToTop,
     sidekickLookup,
     jsonLd,
-    footerDisclaimerOverride
+    footerDisclaimerOverride,
+    searchParams
   } = props;
 
   const ownerState = {
@@ -39,7 +41,7 @@ const Page = (props: PageProps) => {
       <Main {...sidekick(sidekickLookup, 'contents')}>
         {subNavigation ? <ContentModule {...(subNavigation as any)} /> : null}
         {contents?.map((content: any) => (
-          <ContentModule key={content?.id} {...content} component="section" />
+          <ContentModule key={content?.id} {...content} component="section" searchParams={searchParams} />
         ))}
         {!disableBackToTop ? <BackToTop /> : null}
       </Main>

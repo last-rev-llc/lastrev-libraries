@@ -19,7 +19,8 @@ const ContentPreview = ({
   spaceId,
   locale = 'en-US',
   pageURL,
-  livePreview = false
+  livePreview = false,
+  searchParams
 }: ContentPreviewProps) => {
   const router = useRouter();
   const [viewportW, setViewportW] = React.useState(0);
@@ -39,7 +40,7 @@ const ContentPreview = ({
   // });
   return (
     <>
-      {content ? <ContentModule {...content} /> : null}
+      {content ? <ContentModule {...content} searchParams={searchParams} /> : null}
       {!content ? (
         <Container
           maxWidth="lg"

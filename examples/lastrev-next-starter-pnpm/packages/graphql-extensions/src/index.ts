@@ -32,7 +32,7 @@ function loadFiles() {
     modules['CollectionExpandable'] = require('./CollectionExpandable.extension');
     modules['CollectionExpandableItem'] = require('./CollectionExpandableItem.extension');
     modules['Footer'] = require('./Footer.extension');
-    modules['ElementForm'] = require('./Form.extension');
+    modules['Form'] = require('./Form.extension');
     modules['Header'] = require('./Header.extension');
     modules['Hero'] = require('./Hero.extension');
     modules['Link'] = require('./Link.extension');

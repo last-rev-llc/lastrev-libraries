@@ -1,3 +1,5 @@
+directive @cacheControl(inheritMaxAge: Boolean, maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | INTERFACE | OBJECT | UNION
+
 directive @extends on INTERFACE | OBJECT
 
 directive @external(reason: String) on FIELD_DEFINITION | OBJECT
@@ -66,6 +68,7 @@ type Blog implements Content {
   id: String
   jsonLd: JSON
   lr__path__: String
+  originalSourceBody: String
   path: String
   persona: [String]
   promoImage: Media
@@ -79,9 +82,13 @@ type Blog implements Content {
   subNavigation: NavigationItem
   subtitle: String
   summary: String
-  tags: [String]
   theme: [Theme]
   title: String
+}
+
+enum CacheControlScope {
+  PRIVATE
+  PUBLIC
 }
 
 type Card implements Content {
@@ -158,6 +165,7 @@ type Collection implements Content {
   itemsPerRow: Int
   itemsVariant: String
   numItems: Int
+  pageInfo: CollectionPageInfo
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
@@ -180,6 +188,7 @@ type CollectionDynamic implements Content {
   itemsVariant: String
   numItems: Int
   numberOfItemsToPull: String
+  pageInfo: CollectionPageInfo
   pullFromContentType: String
   settings: JSON
   showFilters: Boolean
@@ -225,17 +234,17 @@ union CollectionItem = Card | PricingPlan | Quote
 
 type CollectionItemConnection {
   items: [CollectionItem]
-  pageInfo: ConnectionPageInfo
+  pageInfo: CollectionPageInfo
 }
 
-type CollectionOptions {
-  tags: [Option]
-  topics: [Option]
+type CollectionOption {
+  key: String
+  values: [JSON]
 }
 
-type ConnectionPageInfo {
-  allOptions: CollectionOptions
-  options: CollectionOptions
+type CollectionPageInfo {
+  allOptions: [CollectionOption]
+  options: [CollectionOption]
   total: Int
 }
 
@@ -440,11 +449,6 @@ type NavigationItem implements Content {
   text: String
   theme: [Theme]
   variant: String
-}
-
-type Option {
-  label: String
-  value: String
 }
 
 type Page implements Content {

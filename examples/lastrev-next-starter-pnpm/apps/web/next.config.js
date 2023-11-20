@@ -66,6 +66,7 @@ let config = {
     return config;
   },
   experimental: {
+    serverActions: true,
     turbo: {
       resolveAlias: {
         '@mui/styled-engine': '@mui/styled-engine-sc'

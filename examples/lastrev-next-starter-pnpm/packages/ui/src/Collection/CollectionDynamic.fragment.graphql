@@ -8,6 +8,14 @@ fragment CollectionDynamic_FieldsFragment on CollectionDynamic {
   backgroundImage {
     ...Media_BaseFragment
   }
+  settings
+  pageInfo {
+    total
+    allOptions {
+      key
+      values
+    }
+  }
   backgroundColor
   isCarouselDesktop
   isCarouselTablet
@@ -15,6 +23,10 @@ fragment CollectionDynamic_FieldsFragment on CollectionDynamic {
   itemsPerRow
   numItems
   showFilters
+
+  actions {
+    ...Link_BaseFragment
+  }
 }
 
 # Base fragment used everywhere there's a Collection

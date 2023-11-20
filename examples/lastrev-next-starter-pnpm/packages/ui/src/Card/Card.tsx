@@ -153,7 +153,7 @@ const CardWrap = styled(MuiCard, {
   overridesResolver: (props, styles) => [styles.cardWrap]
 })<{ ownerState: CardOwnerState }>``;
 
-const CardLink = styled(CardActionArea, {
+const CardLink = styled(ContentModule, {
   name: 'Card',
   slot: 'CardLink',
   overridesResolver: (_, styles) => [styles.link]

@@ -110,10 +110,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   shareLinks: ({ theme }) => ({
     display: 'flex',
     alignItems: 'flex-start',
+    justifyContent: 'flex-end',
     gap: 'var(--grid-gap)'
   }),
 
   shareLink: ({ theme }) => ({
+    'width': 'unset',
+    'padding': 0,
     'gap': 'var(--grid-gap)',
 
     '& svg': {

@@ -6,4 +6,5 @@ export const getClient = ({ environment }: any) => {
   if (!environment) return client;
   return getSdk(new GraphQLClient(`${graphqlEndpoint}?env=${environment}`));
 };
+
 export default client;

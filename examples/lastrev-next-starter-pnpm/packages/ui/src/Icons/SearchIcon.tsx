@@ -4,7 +4,7 @@ import { SvgIcon, type SvgIconProps } from '@mui/material';
 function SearchIcon(props: SvgIconProps) {
   return (
     <SvgIcon width="24" height="24" viewBox="0 0 24 24" fill="none" {...props}>
-      <g clip-path="url(#clip0_2005_389766)">
+      <g clipPath="url(#clip0_2005_389766)">
         <rect x="0.255859" y="0.65918" width="24" height="22.7586" fill="url(#search-pattern0)" />
       </g>
       <defs>

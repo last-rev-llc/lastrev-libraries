@@ -107,15 +107,14 @@ const Blog = (props: BlogProps) => {
             )}
 
             <ShareLinksWrap ownerState={ownerState}>
-              <ShareLinksLabel ownerState={ownerState}>Share</ShareLinksLabel>
-
-              <ShareLinks ownerState={ownerState}>
-                <ShareLink ownerState={ownerState}>
+              <ShareLinks ownerState={ownerState} disablePadding>
+                <ShareLink ownerState={ownerState} disableGutters disablePadding>
                   <ShareLinkItem
                     __typename="Link"
+                    color="black"
                     href={`http://www.twitter.com/share?url=${encodedShareUrl}`}
                     target="_blank"
-                    icon={TwitterIcon}
+                    icon="twitter"
                     // text="Twitter"
                     ownerState={ownerState}
                   />
@@ -124,9 +123,10 @@ const Blog = (props: BlogProps) => {
                 <ShareLink ownerState={ownerState}>
                   <ShareLinkItem
                     __typename="Link"
+                    color="black"
                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`}
                     target="_blank"
-                    icon={FacebookIcon}
+                    icon="facebook"
                     // text="Facebook"
                     ownerState={ownerState}
                   />
@@ -135,28 +135,31 @@ const Blog = (props: BlogProps) => {
                 <ShareLink ownerState={ownerState}>
                   <ShareLinkItem
                     __typename="Link"
+                    color="black"
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedShareUrl}`}
                     target="_blank"
-                    icon={LinkedinIcon}
+                    icon="linkedin"
                     // text="Linkedin"
                     ownerState={ownerState}
                   />
                 </ShareLink>
 
-                <ShareLink ownerState={ownerState}>
+                {/* <ShareLink ownerState={ownerState}>
                   <ShareLinkItem
                     __typename="Link"
+                    color="black"
                     href={`mailto:?to=&body=${encodedShareUrl}`}
                     target="_blank"
-                    icon={EmailIcon}
+                    icon=
                     // text="Email"
                     ownerState={ownerState}
                   />
-                </ShareLink>
+                </ShareLink> */}
 
-                <ShareLink ownerState={ownerState}>
+                {/* <ShareLink ownerState={ownerState}>
                   <ShareLinkItem
                     __typename="Link"
+color="secondary"
                     target="_blank"
                     icon={CopyLinkIcon}
                     text="Copy Link"
@@ -165,7 +168,7 @@ const Blog = (props: BlogProps) => {
                       navigator.clipboard.writeText(shareUrl);
                     }}
                   />
-                </ShareLink>
+                </ShareLink> */}
               </ShareLinks>
             </ShareLinksWrap>
           </ContentWrap>

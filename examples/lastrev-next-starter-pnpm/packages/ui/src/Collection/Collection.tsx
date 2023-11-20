@@ -12,11 +12,45 @@ import ContentModule from '../ContentModule';
 
 import type { CollectionProps, CollectionOwnerState } from './Collection.types';
 import Background from '../Background';
+import { Pagination, PaginationItem } from '@mui/material';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import CollectionFilters from '../CollectionFilters';
 
 const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
+  const router = useRouter();
+  const {
+    backgroundImage,
+    backgroundColor,
+    items,
+    variant,
+    itemsVariant,
+    sidekickLookup,
+    introText,
+    actions,
 
-  const { backgroundImage, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText, actions } = props;
+    settings,
+    showFilters,
+    pageInfo,
+    searchParams,
+    setFilter
+  } = props;
+  const pathname = usePathname();
+
+  const getURL = (params: { page?: number }) => {
+    // Add new search params
+    // return the final url taking into account the current path
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (params.page) {
+      newSearchParams.set('page', params.page.toString());
+    }
+    return `${pathname}?${newSearchParams.toString()}`;
+  };
+
+  // Parse filter from search params
+
+  // Create filter with values that are filter, not pagination
 
   return (
     <ErrorBoundary>
@@ -39,19 +73,33 @@ const Collection = (props: CollectionProps) => {
         )}
 
         <ContentGrid ownerState={ownerState}>
+          {showFilters ? <CollectionFilters {...pageInfo} filters={settings?.filters} setFilter={setFilter} /> : null}
           {!!items?.length && (
             <ItemsGrid ownerState={ownerState} id="items">
               {items?.map((item, index) => (
                 <Item
-                  ownerState={ownerState}
+                  // ownerState={ownerState}
                   key={item?.id}
                   {...item}
-                  variant={itemsVariant ?? item?.variant}
+                  variant={itemsVariant ?? (item as any)?.variant}
                   position={index + 1}
                 />
               ))}
             </ItemsGrid>
           )}
+          {showFilters && pageInfo?.total ? (
+            <CollectionPagination
+              page={pageInfo?.page}
+              count={Math.ceil(pageInfo?.total / pageInfo?.limit)}
+              renderItem={(item) => (
+                <CollectionPaginationItem
+                  component={Link}
+                  href={item.page === 1 ? getURL({}) : getURL({ page: item.page! })}
+                  {...item}
+                />
+              )}
+            />
+          ) : null}
           {!!actions?.length && (
             <ActionsWrap {...sidekick(sidekickLookup, 'actions')} data-testid="Hero-actions" ownerState={ownerState}>
               {actions.map((action) => (
@@ -75,6 +123,16 @@ const CollectionBackground = styled(Background, {
   name: 'Collection',
   slot: 'Background',
   overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
+const CollectionPagination = styled(Pagination, {
+  name: 'Collection',
+  slot: 'Pagination',
+  overridesResolver: (_, styles) => [styles.pagination]
+})<{}>``;
+const CollectionPaginationItem = styled(PaginationItem, {
+  name: 'Collection',
+  slot: 'PaginationItem',
+  overridesResolver: (_, styles) => [styles.paginationItem]
 })<{}>``;
 
 const ContentGrid = styled(Grid, {

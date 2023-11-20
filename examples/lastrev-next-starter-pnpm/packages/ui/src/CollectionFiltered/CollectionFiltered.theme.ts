@@ -1,11 +1,11 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 import { Theme } from '@ui/ThemeRegistry/theme.types';
 
-import { CollectionVariants } from './Collection.types';
+import { CollectionFilteredVariants } from './CollectionFiltered.types';
 
-const defaultProps: ComponentsProps['Collection'] = {};
+const defaultProps: ComponentsProps['CollectionFiltered'] = {};
 
-const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
+const styleOverrides: ComponentsOverrides<Theme>['CollectionFiltered'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
 
@@ -27,24 +27,24 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     gap: theme.spacing(3),
     gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
 
-    ...(ownerState?.variant === CollectionVariants.twoPerRow && {
+    ...(ownerState?.variant === CollectionFilteredVariants.twoPerRow && {
       [theme.containerBreakpoints.up('sm')]: {
         gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
       }
     }),
-    ...(ownerState?.variant === CollectionVariants.threePerRow && {
+    ...(ownerState?.variant === CollectionFilteredVariants.threePerRow && {
       [theme.containerBreakpoints.up('sm')]: {
         gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
       }
     }),
 
-    ...(ownerState?.variant === CollectionVariants.threePerRow && {
+    ...(ownerState?.variant === CollectionFilteredVariants.threePerRow && {
       [theme.containerBreakpoints.up('md')]: {
         gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
       }
     }),
 
-    ...(ownerState?.variant === CollectionVariants.fourPerRow && {
+    ...(ownerState?.variant === CollectionFilteredVariants.fourPerRow && {
       [theme.containerBreakpoints.up('sm')]: {
         gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
       },
@@ -54,7 +54,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
       }
     }),
 
-    ...(ownerState?.variant === CollectionVariants.fivePerRow && {
+    ...(ownerState?.variant === CollectionFilteredVariants.fivePerRow && {
       gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
 
       [theme.containerBreakpoints.up('sm')]: {
@@ -67,18 +67,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     })
   }),
 
-  pagination: ({ theme }) => ({
-    justifySelf: 'center',
-    padding: theme.spacing(3, 0)
-  }),
   contentGrid: ({ theme }) => ({})
 };
 
-const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [];
+const createVariants = (theme: Theme): ComponentsVariants['CollectionFiltered'] => [];
 
-const collectionTheme = (theme: Theme): ThemeOptions => ({
+const CollectionFilteredTheme = (theme: Theme): ThemeOptions => ({
   components: {
-    Collection: {
+    CollectionFiltered: {
       defaultProps,
       styleOverrides,
       variants: createVariants(theme)
@@ -86,4 +82,4 @@ const collectionTheme = (theme: Theme): ThemeOptions => ({
   }
 });
 
-export default collectionTheme;
+export default CollectionFilteredTheme;

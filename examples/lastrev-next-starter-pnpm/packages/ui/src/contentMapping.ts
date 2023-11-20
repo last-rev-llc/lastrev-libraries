@@ -9,6 +9,7 @@ const RichText = dynamic(() => import('./RichText'));
 const Carousel = dynamic(() => import('./Carousel'));
 const Collection = dynamic(() => import('./Collection'));
 // const CollectionFiltered = dynamic(() => import('./CollectionFiltered'));
+import CollectionFiltered from './CollectionFiltered';
 const Tabs = dynamic(() => import('./Tabs'));
 const Card = dynamic(() => import('./Card'));
 const Person = dynamic(() => import('./Person'));
@@ -49,6 +50,8 @@ export const contentMapping: {
   'CollectionDynamic': Collection,
   // 'CollectionDynamic:filtered': CollectionFiltered,
   'Collection:.*Carousel': Carousel,
+  'Collection:.*Filtered': CollectionFiltered,
+  'CollectionDynamic:.*Filtered': CollectionFiltered,
   'CollectionExpandable:Tabs': Tabs,
   'CollectionExpandable:Accordion': Accordion,
   'CollectionExpandable': Tabs,

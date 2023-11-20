@@ -19,6 +19,7 @@ const COLLECTION_ITEM_TYPES = ['Card', 'Quote', 'PricingPlan'];
 export const typeDefs = gql`
   extend type Collection {
     items: [CollectionItem]
+    pageInfo: CollectionPageInfo
     actions:[Link]
     introText: Text
     itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
@@ -34,6 +35,7 @@ export const typeDefs = gql`
     actions:[Link]
     introText: Text
     itemsConnection(limit: Int, offset: Int, filter: CollectionFilterInput): CollectionItemConnection
+    pageInfo: CollectionPageInfo
     backgroundImage: Media
     isCarouselDesktop: Boolean
     isCarouselTablet: Boolean
@@ -43,24 +45,19 @@ export const typeDefs = gql`
   }
 
 
-  type CollectionOptions {
-    tags: [Option]
-    topics: [Option]
+  type CollectionOption {
+    key: String
+    values: [JSON]    
   }
 
-  type Option {
-    label: String
-    value: String
-  }
-  
-  type ConnectionPageInfo {
-    options: CollectionOptions
-    allOptions: CollectionOptions
+  type CollectionPageInfo {
+    options: [CollectionOption]
+    allOptions: [CollectionOption]
     total: Int
   }
 
   type CollectionItemConnection {
-    pageInfo: ConnectionPageInfo
+    pageInfo: CollectionPageInfo
     items: [CollectionItem]
   }
 
@@ -100,15 +97,10 @@ const collectionMappers = {
     try {
       const { contentType, limit, offset, order, filter } =
         (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
-      console.log('Resolveitems', { contentType, limit, offset, order, filter });
+
       if (contentType) {
         items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
-        console.log('Query', {
-          filter,
-          order,
-          limit,
-          items
-        });
+
         // items = await ctx.loaders.entryLoader.loadMany(
         //   queryItems?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
         // );
@@ -119,15 +111,13 @@ const collectionMappers = {
         stack: error.stack
       });
     }
-    if (!!items?.length) {
+    if (items?.length) {
       items = await ctx.loaders.entryLoader.loadMany(
         items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
       );
     }
-    const returnItems = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
-    console.log('Blog', returnItems);
-
-    return returnItems;
+    items = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
+    return items;
   },
 
   isCarouselDesktop: async (collection: any, _args: any, ctx: ApolloContext) => {
@@ -193,10 +183,40 @@ const collectionMappers = {
     const variant = variantFn(collection, args, ctx);
 
     if (!!carouselBreakpoints.length) return `${variant}Carousel`;
+    let showFilters = getLocalizedField(collection.fields, 'showFilters', ctx) ?? [];
+    if (showFilters) return `${variant}Filtered`;
 
     return variant;
   },
+  pageInfo: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
+    try {
+      const { contentType, filters } =
+        (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
+      // Get all possible items from Contentful
+      // Need all to generate the possible options for all items. Not just the current page.
+      if (contentType) {
+        const matchingItems = await queryContentful({ contentType, filters, filter, ctx });
+        const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
+          id: contentType,
+          preview: !!ctx.preview
+        });
+        // const options = await collectOptions({ filters, items, ctx });
+        const options: any[] = [];
+        const allOptions = await collectOptions({ filters, items: allItems, ctx });
 
+        return {
+          total: matchingItems?.length,
+          options,
+          allOptions
+        };
+      }
+    } catch (error: any) {
+      logger.error(error.message, {
+        caller: 'Collection.itemsConnection',
+        stack: error.stack
+      });
+    }
+  },
   itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
     let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
     try {
@@ -205,18 +225,18 @@ const collectionMappers = {
       // Get all possible items from Contentful
       // Need all to generate the possible options for all items. Not just the current page.
       if (contentType) {
-        items = await queryContentful({ contentType, filters, filter, ctx });
+        const matchingItems = await queryContentful({ contentType, filters, filter, ctx });
         const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
           id: contentType,
           preview: !!ctx.preview
         });
         // const options = await collectOptions({ filters, items, ctx });
-        const options = {};
+        const options: any[] = [];
         const allOptions = await collectOptions({ filters, items: allItems, ctx });
 
         // Paginate results
         if (offset || limit) {
-          items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
+          items = matchingItems?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
         }
 
         if (!!items?.length) {
@@ -229,6 +249,7 @@ const collectionMappers = {
 
         return {
           pageInfo: {
+            total: matchingItems?.length,
             options,
             allOptions
           },

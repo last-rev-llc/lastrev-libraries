@@ -10,7 +10,7 @@ fragment Link_BaseFragment on Link {
 
 fragment Link_CardFragment on Link {
   ...Content_BaseFragment
-  text
+  #text
   href
   variant
   icon
