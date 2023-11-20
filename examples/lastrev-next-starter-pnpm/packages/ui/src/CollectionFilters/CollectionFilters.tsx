@@ -113,7 +113,7 @@ const CollectionFilters = ({
           return null;
         })}
       </Grid>
-      <Grid item>
+      {/* <Grid item>
         <Button
           data-testid="CollectionFilters-clear"
           onClick={() => {
@@ -122,7 +122,7 @@ const CollectionFilters = ({
           }}>
           Clear
         </Button>
-      </Grid>
+      </Grid> */}
     </CollectionFiltersRoot>
   );
 };

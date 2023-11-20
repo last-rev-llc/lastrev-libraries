@@ -2,8 +2,28 @@ import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import type { ApolloContext } from '@last-rev/types';
 import { collectOptions } from './collectOptions';
 import { queryContentful } from './queryContentful';
-import { ItemsConnectionArgs, CollectionSettings, logger } from '../Collection.extension';
 
+export interface ItemsConnectionArgs {
+  limit?: number;
+  offset?: number;
+  filter?: any;
+  id?: string;
+  settings?: any;
+  locale?: string;
+  preview?: boolean;
+}
+
+export interface CollectionSettings {
+  contentType: string;
+  limit?: number;
+  offset?: number;
+  filter?: any;
+  order?: string;
+  filters: Array<{
+    id: string;
+    key: string;
+  }>;
+}
 export const collectionItemsResolver = async (
   _: any,
   { id, locale, settings: querySettings = {}, preview, limit, offset, filter }: ItemsConnectionArgs,
@@ -80,7 +100,7 @@ export const collectionItemsResolver = async (
       };
     }
   } catch (error: any) {
-    logger.error(error.message, {
+    console.error(error.message, {
       caller: 'Collection.itemsConnection',
       stack: error.stack
     });

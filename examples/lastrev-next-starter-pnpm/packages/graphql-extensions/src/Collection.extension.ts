@@ -5,14 +5,8 @@ import type { ApolloContext, Mappers } from '@last-rev/types';
 import { pascalCase } from './utils/pascalCase';
 import { collectOptions } from './utils/collectOptions';
 import { queryContentful } from './utils/queryContentful';
-import { getWinstonLogger } from '@last-rev/logging';
 import { defaultResolver } from './utils/defaultResolver';
-import { collectionItemsResolver } from './utils/collectionItemsResolver';
-
-export const logger = getWinstonLogger({
-  package: 'graphql-contentful-extensions',
-  module: 'Collection'
-});
+import { CollectionSettings, ItemsConnectionArgs, collectionItemsResolver } from './utils/collectionItemsResolver';
 
 // Note: If you want anything other than the below, this is where you will add it
 const COLLECTION_ITEM_TYPES = ['Card', 'Quote', 'PricingPlan'];
@@ -74,24 +68,6 @@ export const typeDefs = gql`
   union CollectionItem = ${COLLECTION_ITEM_TYPES.join('| ')}
 `;
 
-export interface ItemsConnectionArgs {
-  limit?: number;
-  offset?: number;
-  filter?: any;
-}
-
-export interface CollectionSettings {
-  contentType: string;
-  limit?: number;
-  offset?: number;
-  filter?: any;
-  order?: string;
-  filters: Array<{
-    id: string;
-    key: string;
-  }>;
-}
-
 const collectionMappers = {
   items: async (collection: any, args: any, ctx: ApolloContext) => {
     let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
@@ -99,8 +75,7 @@ const collectionMappers = {
     const itemsVariant = itemsVariantFn(collection, args, ctx);
 
     try {
-      const { contentType, limit, offset, order, filter } =
-        (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
+      const { contentType, limit, offset, order, filter } = getLocalizedField(collection.fields, 'settings', ctx) || {};
 
       if (contentType) {
         items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
@@ -110,7 +85,7 @@ const collectionMappers = {
         // );
       }
     } catch (error: any) {
-      logger.error(error.message, {
+      console.error(error.message, {
         caller: 'Collection.items',
         stack: error.stack
       });
@@ -226,7 +201,7 @@ const collectionMappers = {
         };
       }
     } catch (error: any) {
-      logger.error(error.message, {
+      console.error(error.message, {
         caller: 'Collection.itemsConnection',
         stack: error.stack
       });
