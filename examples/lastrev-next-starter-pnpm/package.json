@@ -37,7 +37,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "^7.4.2",
-    "turbo": "latest"
+    "turbo": "^1.10.13"
   },
   "packageManager": "pnpm@8.6.10",
   "version": "",
