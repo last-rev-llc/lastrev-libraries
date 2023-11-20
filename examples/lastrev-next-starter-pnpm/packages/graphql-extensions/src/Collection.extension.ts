@@ -5,7 +5,7 @@ import type { ApolloContext } from './types';
 
 import { pascalCase } from './utils/pascalCase';
 import { collectOptions } from './utils/collectOptions';
-import { queryContentful } from './utils/queryContentful';
+// import { queryContentful } from './utils/queryContentful';
 import { getWinstonLogger } from '@last-rev/logging';
 import { defaultResolver } from './utils/defaultResolver';
 
@@ -86,6 +86,7 @@ export const mappers: Mappers = {
     Collection: {
       items: async (collection: any, args: any, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
+        return items;
         const itemsVariantFn = defaultResolver('itemsVariant');
         const itemsVariant = itemsVariantFn(collection, args, ctx);
 
@@ -96,7 +97,7 @@ export const mappers: Mappers = {
           const { contentType, limit, offset, order, filter } =
             (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
           if (contentType) {
-            items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
+            // items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
 
             return ctx.loaders.entryLoader.loadMany(
               items?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
