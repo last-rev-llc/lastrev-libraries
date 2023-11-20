@@ -560,6 +560,7 @@ type PricingPlan implements Content {
 type Query {
   _service: _Service!
   availableLocales: Locales
+  collectionItems(filter: CollectionFilterInput, id: String, limit: Int, locale: String, offset: Int, preview: Boolean, settings: JSON): CollectionItemConnection
   content(displayType: String, id: String!, locale: String, preview: Boolean): Content
   contentPreview(displayType: String, id: String!, locale: String, overrideContent: JSON): Content
   contents(filter: ContentsFilter!): [Content]

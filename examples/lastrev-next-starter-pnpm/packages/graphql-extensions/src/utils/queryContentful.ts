@@ -76,10 +76,11 @@ function parseFilters(filter: any, filters: { id: string; key: string }[] | unde
         !!filter[id] && (Array.isArray(filter[id]) ? filter[id] : [filter[id]])?.length
           ? {
               ...accum,
+              [id]: undefined,
               [key]: (Array.isArray(filter[id]) ? filter[id] : [filter[id]]).join(',')
             }
           : accum,
-      {}
+      filter
     );
   } else if (filter) {
     return filter;

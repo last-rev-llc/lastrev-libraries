@@ -1,47 +1,32 @@
 query CollectionItems(
   $locale: String
   $preview: Boolean
-  $id: String!
+  $id: String
+  $settings: JSON
   $limit: Int = 10
   $offset: Int = 0
   $filter: CollectionFilterInput
 ) {
-  content(id: $id, locale: $locale, preview: $preview) {
-    __typename
-    id
-    ... on Collection {
-      ...Content_BaseFragment
-      itemsConnection(limit: $limit, offset: $offset, filter: $filter) {
-        pageInfo {
-          total
-          allOptions {
-            ...CollectionItems_OptionsFragment
-          }
-          options {
-            ...CollectionItems_OptionsFragment
-          }
-        }
-        items {
-          ...Card_BaseFragment
-        }
+  collectionItems(
+    id: $id
+    locale: $locale
+    settings: $settings
+    preview: $preview
+    limit: $limit
+    offset: $offset
+    filter: $filter
+  ) {
+    pageInfo {
+      total
+      allOptions {
+        ...CollectionItems_OptionsFragment
+      }
+      options {
+        ...CollectionItems_OptionsFragment
       }
     }
-    ... on CollectionDynamic {
-      ...Content_BaseFragment
-      itemsConnection(limit: $limit, offset: $offset, filter: $filter) {
-        pageInfo {
-          total
-          allOptions {
-            ...CollectionItems_OptionsFragment
-          }
-          options {
-            ...CollectionItems_OptionsFragment
-          }
-        }
-        items {
-          ...Card_BaseFragment
-        }
-      }
+    items {
+      ...Card_BaseFragment
     }
   }
 }

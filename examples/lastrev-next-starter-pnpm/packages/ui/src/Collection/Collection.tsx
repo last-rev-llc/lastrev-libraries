@@ -12,7 +12,7 @@ import ContentModule from '../ContentModule';
 
 import type { CollectionProps, CollectionOwnerState } from './Collection.types';
 import Background from '../Background';
-import { Pagination, PaginationItem } from '@mui/material';
+import { Pagination, PaginationItem, Typography } from '@mui/material';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import CollectionFilters from '../CollectionFilters';
@@ -87,16 +87,29 @@ const Collection = (props: CollectionProps) => {
               ))}
             </ItemsGrid>
           )}
+
+          {pageInfo?.error ? (
+            <Typography variant="h3" component="h3" align="center">
+              {JSON.stringify(pageInfo.error)}
+            </Typography>
+          ) : null}
+
+          {/* {!!pageInfo?.page && pageInfo.page !== 1 ? (
+            <Typography variant="h3" component="h3" align="center">
+              No results found for this page
+            </Typography>
+          ) : null} */}
+          {pageInfo?.total === 0 ? (
+            <Typography variant="h3" component="h3" align="center">
+              No results found
+            </Typography>
+          ) : null}
           {showFilters && pageInfo?.total ? (
             <CollectionPagination
               page={pageInfo?.page}
               count={Math.ceil(pageInfo?.total / pageInfo?.limit)}
               renderItem={(item) => (
-                <CollectionPaginationItem
-                  component={Link}
-                  href={item.page === 1 ? getURL({}) : getURL({ page: item.page! })}
-                  {...item}
-                />
+                <CollectionPaginationItem component={Link} href={getURL({ page: item.page! })} {...item} />
               )}
             />
           ) : null}

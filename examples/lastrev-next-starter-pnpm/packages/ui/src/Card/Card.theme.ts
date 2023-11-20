@@ -65,13 +65,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   }),
 
   cardMedia: ({ ownerState, theme }) => ({
-    transition: 'all 0.25s ease-in-out',
-    backgroundColor: 'inherit',
-    padding: 0,
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    img: {
+    'transition': 'all 0.25s ease-in-out',
+    'backgroundColor': 'inherit',
+    'padding': 0,
+    'width': '100%',
+    'display': 'flex',
+    'justifyContent': 'center',
+    '> *': {
       objectFit: 'cover',
       width: '100%',
       height: 'auto',
@@ -90,6 +90,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 
   contentWrap: ({ ownerState, theme }) => ({
     flex: 1,
+    width: '100%',
     padding: 0,
     // TODO: MUI Override
     paddingBottom: '0!important',
@@ -122,6 +123,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     WebkitLineClamp: 2,
     WebkitBoxOrient: 'vertical',
     textOverflow: 'ellipsis'
+  }),
+  bodyWrap: ({ ownerState, theme }) => ({
+    minHeight: 64
   }),
   body: ({ ownerState, theme }) => ({
     '.MuiTypography-root': {
@@ -156,8 +160,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     display: 'flex',
     gap: theme.spacing(2),
     margin: theme.spacing(0, -1),
-    zIndex: 2
-    // padding: 0
+    zIndex: 2,
+    width: '100%',
+    minHeight: 40,
+    padding: 0
     // padding: 'calc(var(--grid-gap) / 2)'
   }),
 
@@ -304,7 +310,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
       '[class*=cardMedia]': {},
       '[class*=actionsWrap]': { alignItems: 'flex-end', flex: 1 },
-      '[class*=cardMedia] img': {
+      '[class*=cardMedia] > *': {
         aspectRatio: '16/9',
         borderRadius: 4
       }

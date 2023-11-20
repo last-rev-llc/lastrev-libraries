@@ -122,11 +122,11 @@ export const mappers: Mappers = {
         const authorName = await resolveField('author.name')(blog, _args, ctx);
         // You might want to format the subtitle to include both date and reading time.
         // This is an example format - "January 1, 2023 · 5 min read"
-        return `${authorName ? `${authorName} ·` : ''}${date ? `${date} ·` : ''}${readingTime} min read`;
+        return `${authorName ? `${authorName} · ` : ''}${date ? `${date} · ` : ''}${readingTime} min read`;
       },
       overline: async (blog: any, _args: any, ctx: ApolloContext) => {
         const categories = await resolveField('categories')(blog, 'categories', ctx);
-        return categories?.map((category: any) => getLocalizedField(category.fields, 'title', ctx)).join('/ ');
+        return categories?.map((category: any) => getLocalizedField(category.fields, 'title', ctx)).join(' / ');
       },
       body: async (blog: any, _args: any, ctx: ApolloContext) =>
         getLocalizedField(blog.fields, 'promoSummary', ctx)

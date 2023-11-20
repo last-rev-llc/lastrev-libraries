@@ -12,28 +12,29 @@ export const pageContentsResolver = async (entry: any, _args: any, ctx: ApolloCo
     const collection = createType('CollectionDynamic', {
       id: 'collection-dynamic-' + entry?.sys?.id,
       // introText: createType('Text', { title: 'Latest articles', align: 'center' }),
-      // showFilters: true,
+      showFilters: true,
       settings: {
         contentType: 'blog',
         limit: 6,
         filter: {
           'fields.categories.sys.id': categoryId
-        }
-        // filters: [
-        //   {
-        //     id: 'tags',
-        //     key: 'fields.tags[in]',
-        //     type: 'autocomplete',
-        //     label: 'Tag',
-        //     multiple: true
-        //   },
-        //   {
-        //     id: 'body',
-        //     key: 'query',
-        //     type: 'text',
-        //     label: 'Search'
-        //   }
-        // ]
+        },
+        order: '-fields.pubDate',
+        filters: [
+          {
+            id: 'tags',
+            key: 'fields.tags.sys.id[in]',
+            type: 'autocomplete',
+            label: 'Tag',
+            multiple: true
+          },
+          {
+            id: 'body',
+            key: 'query',
+            type: 'text',
+            label: 'Search'
+          }
+        ]
       },
       variant: 'Three Per Row',
       itemsVariant: 'media'

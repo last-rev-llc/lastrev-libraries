@@ -7,8 +7,9 @@ import { collectOptions } from './utils/collectOptions';
 import { queryContentful } from './utils/queryContentful';
 import { getWinstonLogger } from '@last-rev/logging';
 import { defaultResolver } from './utils/defaultResolver';
+import { collectionItemsResolver } from './utils/collectionItemsResolver';
 
-const logger = getWinstonLogger({
+export const logger = getWinstonLogger({
   package: 'graphql-contentful-extensions',
   module: 'Collection'
 });
@@ -17,6 +18,9 @@ const logger = getWinstonLogger({
 const COLLECTION_ITEM_TYPES = ['Card', 'Quote', 'PricingPlan'];
 
 export const typeDefs = gql`
+  extend type Query{
+    collectionItems(id: String, locale: String, settings: JSON, preview:Boolean, limit:Int, offset:Int, filter:CollectionFilterInput): CollectionItemConnection
+  }
   extend type Collection {
     items: [CollectionItem]
     pageInfo: CollectionPageInfo
@@ -70,13 +74,13 @@ export const typeDefs = gql`
   union CollectionItem = ${COLLECTION_ITEM_TYPES.join('| ')}
 `;
 
-interface ItemsConnectionArgs {
+export interface ItemsConnectionArgs {
   limit?: number;
   offset?: number;
   filter?: any;
 }
 
-interface CollectionSettings {
+export interface CollectionSettings {
   contentType: string;
   limit?: number;
   offset?: number;
@@ -189,82 +193,36 @@ const collectionMappers = {
     return variant;
   },
   pageInfo: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
-    try {
-      const { contentType, filters } =
-        (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
-      // Get all possible items from Contentful
-      // Need all to generate the possible options for all items. Not just the current page.
-      if (contentType) {
-        const matchingItems = await queryContentful({ contentType, filters, filter, ctx });
-        const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
-          id: contentType,
-          preview: !!ctx.preview
-        });
-        // const options = await collectOptions({ filters, items, ctx });
-        const options: any[] = [];
-        const allOptions = await collectOptions({ filters, items: allItems, ctx });
-
-        return {
-          total: matchingItems?.length,
-          options,
-          allOptions
-        };
-      }
-    } catch (error: any) {
-      logger.error(error.message, {
-        caller: 'Collection.itemsConnection',
-        stack: error.stack
-      });
-    }
-  },
-  itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
-    let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
+    let items = getLocalizedField(collection?.fields, 'items', ctx) ?? [];
     try {
       const {
         contentType,
         filters,
         order,
         filter: settingsFilter
-      } = (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
-      // Get all possible items from Contentful
-      // Need all to generate the possible options for all items. Not just the current page.
+      } = (getLocalizedField(collection?.fields, 'settings', ctx) as CollectionSettings) || {};
 
       if (contentType) {
         const matchingItems = await queryContentful({
           contentType,
           filters,
           order,
-          filter: { ...settingsFilter, ...filter },
+          filter: { ...{ ...settingsFilter, ...filter } },
           ctx
         });
-        const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
-          id: contentType,
-          preview: !!ctx.preview
-        });
-        // const options = await collectOptions({ filters, items, ctx });
-        const options: any[] = [];
-        const allOptions = await collectOptions({ filters, items: allItems, ctx });
+        items = matchingItems;
 
-        // Paginate results
-        if (offset || limit) {
-          items = matchingItems?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
-        }
-
-        if (!!items?.length) {
+        if (items?.length) {
           items = await ctx.loaders.entryLoader.loadMany(
             items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
           );
         }
-        const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
-        const fullItemsWithVariant = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
+
+        const options = await collectOptions({ filters, items, ctx });
 
         return {
-          pageInfo: {
-            total: matchingItems?.length,
-            options,
-            allOptions
-          },
-          items: fullItemsWithVariant
+          total: matchingItems?.length,
+          options
         };
       }
     } catch (error: any) {
@@ -273,11 +231,14 @@ const collectionMappers = {
         stack: error.stack
       });
     }
-
-    return items;
   }
 };
 export const mappers: Mappers = {
+  Query: {
+    Query: {
+      collectionItems: collectionItemsResolver
+    }
+  },
   Collection: {
     Collection: collectionMappers
   },

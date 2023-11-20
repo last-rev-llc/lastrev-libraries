@@ -10,7 +10,7 @@ import useSWR from 'swr';
 // import parseBooleanEnvVar from '../utils/parseBooleanEnvVar';
 // import { useSearchParams } from 'next/navigation';
 import { getCollectionItems } from './getCollectionItems';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 const useQueryState = (defaultValue: any): [any, any] => {
   const router = useRouter();
   const { slug, ...query } = router?.query ?? {};
@@ -24,10 +24,18 @@ const useQueryState = (defaultValue: any): [any, any] => {
 };
 
 const CollectionFiltered = (props: CollectionFilteredProps) => {
-  const { searchParams, variant, introText, items: defaultItems, settings, pageInfo: defaultPageInfo } = props;
+  const {
+    //  searchParams,
+    variant,
+    introText,
+    items: defaultItems,
+    settings,
+    pageInfo: defaultPageInfo
+  } = props;
+  const searchParams = useSearchParams();
   const { filter: defaultFilter } = settings ?? {};
   const [filterQuery, setFilter] = useQueryState(defaultFilter);
-  const page = parseInt(searchParams?.page ?? '1');
+  const page = parseInt(searchParams?.get('page') ?? '1');
   const limit = settings?.limit ?? 6;
   const offset = (page - 1) * limit;
 
@@ -37,24 +45,50 @@ const CollectionFiltered = (props: CollectionFilteredProps) => {
     return settings?.filters?.reduce(
       (acc: any, { id }: any) => ({
         ...acc,
+
         [id]: filterQuery[id]
       }),
       {}
     );
   }, [filterQuery, settings?.filters]);
 
-  // const filter = Array.from(Object.keys(searchParams))
-  //   ?.filter((key) => !['page', 'limit', 'offset']?.includes(key))
-  //   ?.reduce((acc, cur) => ({ ...acc, [cur]: searchParams[cur] }), {});
-  // const filter = {};
-  const { data, error, isLoading } = useSWR([props.id, limit, offset, filter], ([...args]) =>
-    getCollectionItems(...args)
+  let { data, error, isLoading } = useSWR(
+    [props.id, limit, offset, filter, settings],
+    ([id, limit, offset, filter, settings]) =>
+      getCollectionItems({
+        id,
+        limit,
+        offset,
+        filter,
+        settings
+      })
   );
-  console.log('FilterSearchParrams', { searchParams, filter, data });
+
   const collectionVariant = variant?.replace('Filtered', '');
-  let items = defaultItems?.map((item: any) => ({ ...item, loading: page !== 1 }));
-  if (data || Object.keys(filter).length > 0) {
+  let items = [];
+  let pageInfo = {
+    ...defaultPageInfo,
+    filter,
+    limit,
+    offset,
+    page,
+    isLoading,
+    error
+  };
+
+  if (data?.items) {
     items = data?.items;
+    pageInfo = { ...pageInfo, ...data?.pageInfo };
+  }
+
+  if (!data) {
+    items = defaultItems?.map((item: any) => ({
+      ...item,
+      loading: isLoading && (page != 1 || !Object.values(filter).every((x) => !x))
+    }));
+  } else if (isLoading && !data?.items) {
+    items = new Array(limit).fill({ __typename: 'Card', variant: props.itemsVariant, loading: true });
+    // items[0] = defaultItems[0];
   }
 
   return (
@@ -65,17 +99,10 @@ const CollectionFiltered = (props: CollectionFilteredProps) => {
         variant={collectionVariant}
         introText={introText}
         items={items}
-        // items={items}
-        pageInfo={{
-          ...defaultPageInfo,
-          ...data?.pageInfo,
-          filter,
-          limit,
-          offset,
-          page
-        }}
+        pageInfo={pageInfo}
         showFilters
         setFilter={setFilter}
+        error={error}
       />
     </ErrorBoundary>
   );

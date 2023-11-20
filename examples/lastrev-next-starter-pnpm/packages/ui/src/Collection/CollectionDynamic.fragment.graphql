@@ -11,7 +11,7 @@ fragment CollectionDynamic_FieldsFragment on CollectionDynamic {
   settings
   pageInfo {
     total
-    allOptions {
+    options {
       key
       values
     }

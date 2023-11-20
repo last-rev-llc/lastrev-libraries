@@ -46,7 +46,7 @@ const Card = (props: CardProps) => {
                   data-testid="Card-media"
                 />
               ) : (
-                <Skeleton variant="rectangular" width={210} height={118} />
+                <Skeleton variant="rectangular" />
               )}
             </CardMedia>
           ) : null}
@@ -110,9 +110,7 @@ const Card = (props: CardProps) => {
               </Subtitle>
 
               <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
-                <Body ownerState={ownerState} variant="bodySmall">
-                  <Skeleton variant="text" width="100%" />
-                </Body>
+                <Skeleton variant="text" width="100%" height="64px" />
               </BodyWrap>
             </ContentWrap>
           ) : null}
@@ -122,17 +120,17 @@ const Card = (props: CardProps) => {
               data-testid="Card-actions"
               // @ts-ignore: TODO
               ownerState={ownerState}>
-              {!loading ? (
-                actions?.map((link: any, index: number) => (
-                  <Action
-                    key={`card-${id}-link-${link?.id || index}`}
-                    {...(link as LinkProps)}
-                    ownerState={ownerState}
-                  />
-                ))
-              ) : (
-                <Skeleton variant="text" width="100%" />
-              )}
+              {!loading
+                ? actions?.map((link: any, index: number) => (
+                    <Action
+                      key={`card-${id}-link-${link?.id || index}`}
+                      {...(link as LinkProps)}
+                      ownerState={ownerState}
+                    />
+                  ))
+                : null
+                  // <Skeleton variant="text" width="100%" />
+              }
             </ActionsWrap>
           )}
         </CardWrap>

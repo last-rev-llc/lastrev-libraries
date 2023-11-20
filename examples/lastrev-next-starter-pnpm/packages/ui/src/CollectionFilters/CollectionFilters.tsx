@@ -8,7 +8,7 @@ import { CollectionFiltersProps, Option } from './CollectionFilters.types';
 const CollectionFilters = ({
   id,
   // options,
-  allOptions,
+  options,
   filters,
   filter = {},
   setFilter,
@@ -18,8 +18,8 @@ const CollectionFilters = ({
   const handleChange = (id: string) => (event: any) => {
     setFilter({ ...filter, [id]: event.target.value });
   };
-  const optionsByKey = allOptions?.reduce((acc, { key, values }) => ({ ...acc, [key]: values }), {});
-  console.log('Filters', { filters, optionsByKey, filter, allOptions });
+  const optionsByKey = options?.reduce((acc, { key, values }) => ({ ...acc, [key]: values }), {});
+  console.log('Filters', { filters, optionsByKey, filter, options });
   return (
     <CollectionFiltersRoot id={`collection_${id}_filters`} container style={{ justifyContent: 'flex-end' }} {...props}>
       <Grid item container sx={{ justifyContent: 'flex-end' }} spacing={2}>

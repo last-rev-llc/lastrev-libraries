@@ -1,14 +1,11 @@
-export const getCollectionItems = async (id: string, limit: number, offset: number, filter: {}) => {
+export const getCollectionItems = async (variables: any) => {
   try {
     const client = await import('@graphql-sdk/client').then((module) => module.client);
     const { data } = await client.CollectionItems({
-      id,
-      limit,
-      offset,
-      filter,
+      ...variables,
       preview: process.env.CONTENTFUL_USE_PREVIEW === 'true'
     });
-    return (data?.content as any)?.itemsConnection;
+    return data?.collectionItems as any;
   } catch (err) {
     console.log('errr', err);
   }
