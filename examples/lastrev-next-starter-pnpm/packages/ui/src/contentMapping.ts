@@ -47,7 +47,7 @@ export const contentMapping: {
   Collection,
   'Collection:.*Carousel': Carousel,
   'CollectionDynamic': Collection,
-  'CollectionDynamic:.*Carousel': Carousel,
+  'CollectionDynamic:.*Carousel': CarouselDynamic,
   'CollectionExpandable:Tabs': Tabs,
   'CollectionExpandable:Accordion': Accordion,
   'CollectionExpandable': Tabs,

@@ -106,7 +106,6 @@ export const mappers: Mappers = {
           },
           initialUiState: {
             query: 'viewability',
-
             hierarchicalMenu: {
               'categories.level-1': ['Advertiser + Agency Solutions']
             }
