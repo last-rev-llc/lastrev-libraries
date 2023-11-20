@@ -28,7 +28,7 @@ export const typeDefs = gql`
     isCarouselMobile: Boolean
     itemsPerRow: Int
     numItems: Int,
-    preFilter: JSON
+    algoliaSettings: JSON
   }
 
   type CollectionDynamicOptions {
@@ -84,14 +84,32 @@ interface CollectionDynamicSettings {
 export const mappers: Mappers = {
   CollectionDynamic: {
     CollectionDynamic: {
-      preFilter: async (collection: any, args: any, ctx: ApolloContext) => {
+      algoliaSettings: async (collection: any, args: any, ctx: ApolloContext) => {
         return {
-          query: 'viewability',
+          indexName: 'articles',
+          showCurrentRefinements: true,
+          useInfiniteHits: false,
+          showPagination: false,
+          showSearchBox: true,
+          searchAsYouType: false,
+          showFilters: true,
+          filters: [
+            {
+              type: 'hierarchialMenu',
+              limit: 100,
+              attributes: ['categories.level-1', 'categories.level-2', 'categories.level-3']
+            }
+          ],
           configure: {
-            filters: 'locale:"en-US"'
+            hitsPerPage: 4,
+            filters: `locale:"en-US"`
           },
-          hierarchicalMenu: {
-            'categories.level-1': ['Advertiser + Agency Solutions']
+          initialUiState: {
+            query: 'viewability',
+
+            hierarchicalMenu: {
+              'categories.level-1': ['Advertiser + Agency Solutions']
+            }
           }
         };
       },

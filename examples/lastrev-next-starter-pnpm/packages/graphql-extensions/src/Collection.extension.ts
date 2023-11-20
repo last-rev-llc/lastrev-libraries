@@ -28,7 +28,7 @@ export const typeDefs = gql`
     isCarouselMobile: Boolean
     itemsPerRow: Int
     numItems: Int,
-    preFilter: JSON
+    algoliaSettings: JSON
   }
 
 
@@ -85,7 +85,7 @@ interface CollectionSettings {
 export const mappers: Mappers = {
   Collection: {
     Collection: {
-      preFilter: async (collection: any, args: any, ctx: ApolloContext) => {
+      algoliaSettings: async (collection: any, args: any, ctx: ApolloContext) => {
         return {
           query: 'viewability',
           configure: {

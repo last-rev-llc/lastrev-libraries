@@ -10,55 +10,28 @@ const searchClient = createSearchClient();
 
 type AlgoliaSearch = {
   children: any;
-  indexName: string;
-  preFilter?: any;
+  algoliaSettings?: any;
 };
 
-// const forceState = {
-//   query: 'viewability',
-//   configure: {
-//     filters: 'locale:"en-US"'
-//   },
-//   hierarchicalMenu: {
-//     'categories.level-1': ['Advertiser + Agency Solutions']
-//   }
-// };
+export const AlgoliaSearch = ({ children, algoliaSettings }: AlgoliaSearch) => {
+  // if (!!algoliaSettings?.indexName) {
+  //   return <>{children}</>;
+  // }
 
-export const AlgoliaSearch = ({ children, indexName, preFilter }: AlgoliaSearch) => {
-  console.log({ preFilter });
   return (
     <InstantSearchNext
       searchClient={searchClient}
-      indexName={indexName}
-      initialUiState={{
-        [indexName]: {
-          ...preFilter
-        }
-      }}
-      // defaultUiState={{
-      //   [indexName]: {
-      //     ...forceState
-      //   }
-      // }}
-      // onStateChange={({ uiState, setUiState }) => {
-      //   console.log(uiState);
-      //   //   const categories = uiState[indexName].refinementList?.categories || [];
-      //   // const [lastSelectedCategory] = categories.slice(-1);
-
-      //   setUiState({
-      //     ...uiState
-      //     // [indexName]: {
-      //     //   ...uiState[indexName],
-      //     //   refinementList: {
-      //     //     ...uiState[indexName].refinementList,
-      //     //     categories: categories.filter((category) => (lastSelectedCategory === 'All' ? false : category !== 'All'))
-      //     //   }
-      //     // }
-      //   });
-      // }}>
-    >
-      <Configure filters={`locale:"en-US"`} />
-      {/* query={forceState.query} filters={`locale:"en-US"`} */}
+      indexName={algoliaSettings?.indexName}
+      initialUiState={
+        !!algoliaSettings?.initialUiState
+          ? {
+              [algoliaSettings?.indexName]: {
+                ...algoliaSettings.initialUiState
+              }
+            }
+          : {}
+      }>
+      {!!algoliaSettings.configure ? <Configure {...algoliaSettings.configure} /> : null}
       {children}
     </InstantSearchNext>
   );

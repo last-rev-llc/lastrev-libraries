@@ -52,7 +52,7 @@ fragment Collection_FieldsFragment on Collection {
       ...Card_BaseFragment
     }
   }
-  preFilter
+  algoliaSettings
 }
 
 # Base fragment used everywhere there's a Collection

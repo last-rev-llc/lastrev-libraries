@@ -1,5 +1,4 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -11,15 +10,7 @@ import Background from '../Background';
 import ContentModule from '../ContentModule';
 import ErrorBoundary from '../ErrorBoundary';
 
-// const HierarchicalMenu = dynamic(() => import('../Algolia/HierarchicalMenu'), { ssr: false });
-// const Pagination = dynamic(() => import('../Algolia/Pagination'), { ssr: false });
-// const Hits = dynamic(() => import('../Algolia/Hits'), { ssr: false });
-// const InfiniteHits = dynamic(() => import('../Algolia/InfiniteHits'), { ssr: false });
-// const SearchBox = dynamic(() => import('../Algolia/SearchBox'), { ssr: false });
-// const CurrentRefinements = dynamic(() => import('../Algolia/CurrentRefinements'), { ssr: false });
-// const AlgoliaSearch = dynamic(() => import('../Algolia/AlgoliaSearch'), { ssr: false });
-
-import HierarchicalMenu from '../Algolia/HierarchicalMenu';
+import Filters from '../Algolia/Filters';
 import Pagination from '../Algolia/Pagination';
 import Hits from '../Algolia/Hits';
 import InfiniteHits from '../Algolia/InfiniteHits';
@@ -27,27 +18,12 @@ import SearchBox from '../Algolia/SearchBox';
 import CurrentRefinements from '../Algolia/CurrentRefinements';
 import AlgoliaSearch from '../Algolia/AlgoliaSearch';
 
-// Your code here
-
 import type { CollectionProps, CollectionOwnerState } from './Collection.types';
 
 const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
 
-  const {
-    backgroundImage,
-    backgroundColor,
-    items,
-    variant,
-    itemsAspectRatio,
-    itemsVariant,
-    sidekickLookup,
-    introText,
-    itemsConnection,
-    indexName = 'articles',
-    useInfinite,
-    preFilter
-  } = props;
+  const { backgroundImage, backgroundColor, variant, sidekickLookup, introText, algoliaSettings } = props;
 
   return (
     <ErrorBoundary>
@@ -70,30 +46,43 @@ const Collection = (props: CollectionProps) => {
         )}
 
         {/* Use the AlgoliaSearch component here */}
-        <AlgoliaSearch indexName={indexName} preFilter={preFilter}>
+        <AlgoliaSearch algoliaSettings={algoliaSettings}>
           <ContentGrid ownerState={ownerState}>
-            <CurrentRefinements ownerState={ownerState} />
-            <FiltersWrap ownerState={ownerState}>
-              <SearchBoxWrap ownerState={ownerState}>
-                <SearchBox ownerState={ownerState} searchAsYouType />
-              </SearchBoxWrap>
+            {!!algoliaSettings?.indexName && !!algoliaSettings?.showCurrentRefinements ? (
+              <CurrentRefinements ownerState={ownerState} />
+            ) : null}
 
-              <HierarchicalMenu
-                limit={100}
-                attributes={['categories.level-1', 'categories.level-2', 'categories.level-3']}
-              />
-            </FiltersWrap>
+            {!!algoliaSettings?.indexName && (!!algoliaSettings?.showFilters || !!algoliaSettings?.showSearchBox) ? (
+              <FiltersWrap ownerState={ownerState}>
+                {!!algoliaSettings?.indexName && !!algoliaSettings?.showSearchBox ? (
+                  <SearchBoxWrap ownerState={ownerState}>
+                    <SearchBox ownerState={ownerState} searchAsYouType={!!algoliaSettings?.searchAsYouType} />
+                  </SearchBoxWrap>
+                ) : null}
+
+                {!!algoliaSettings?.indexName && !!algoliaSettings?.showFilters ? (
+                  <Filters ownerState={ownerState} filters={algoliaSettings.filters} />
+                ) : null}
+              </FiltersWrap>
+            ) : null}
 
             <ResultsWrap ownerState={ownerState}>
               <ItemsGrid ownerState={ownerState}>
-                {useInfinite ? <InfiniteHits ownerState={ownerState} /> : <Hits ownerState={ownerState} />}
-              </ItemsGrid>
+                {!!algoliaSettings?.indexName && !!algoliaSettings?.useInfiniteHits ? (
+                  <InfiniteHits ownerState={ownerState} />
+                ) : null}
 
-              {!useInfinite && (
-                <PaginationWrap ownerState={ownerState}>
-                  <Pagination ownerState={ownerState} />
-                </PaginationWrap>
-              )}
+                {!!algoliaSettings?.indexName && !algoliaSettings?.useInfiniteHits ? (
+                  <>
+                    <Hits ownerState={ownerState} />
+                    {!!algoliaSettings?.showPagination ? (
+                      <PaginationWrap ownerState={ownerState}>
+                        <Pagination ownerState={ownerState} />
+                      </PaginationWrap>
+                    ) : null}
+                  </>
+                ) : null}
+              </ItemsGrid>
             </ResultsWrap>
           </ContentGrid>
         </AlgoliaSearch>
@@ -136,12 +125,6 @@ const ItemsGrid = styled(Box, {
   name: 'Collection',
   slot: 'ItemsGrid',
   overridesResolver: (_, styles) => [styles.itemsGrid, styles.itemsContainerOnePerRow]
-})<{ ownerState: CollectionOwnerState }>``;
-
-const Item = styled(ContentModule, {
-  name: 'Collection',
-  slot: 'Item',
-  overridesResolver: (_, styles) => [styles.item]
 })<{ ownerState: CollectionOwnerState }>``;
 
 const FiltersWrap = styled(Box, {
