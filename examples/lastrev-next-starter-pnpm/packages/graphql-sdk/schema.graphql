@@ -156,8 +156,6 @@ type CollectionDynamic implements Content {
   itemsPerRow: Int
   itemsVariant: String
   numItems: Int
-  numberOfItemsToPull: String
-  pullFromContentType: String
   settings: JSON
   showFilters: Boolean
   sidekickLookup: JSON
@@ -173,6 +171,7 @@ type CollectionDynamicConnectionPageInfo {
 
 input CollectionDynamicFilterInput {
   body: String
+  sector: [String]
   tags: [String]
   topics: [String]
 }
@@ -190,6 +189,7 @@ type CollectionDynamicOption {
 }
 
 type CollectionDynamicOptions {
+  sector: [CollectionDynamicOption]
   tags: [CollectionDynamicOption]
   topics: [CollectionDynamicOption]
 }
@@ -222,6 +222,7 @@ type CollectionExpandableItem implements Content {
 
 input CollectionFilterInput {
   body: String
+  sector: [String]
   tags: [String]
   topics: [String]
 }
@@ -234,6 +235,7 @@ type CollectionItemConnection {
 }
 
 type CollectionOptions {
+  sector: [Option]
   tags: [Option]
   topics: [Option]
 }
@@ -475,6 +477,24 @@ type Page implements Content {
   slug: String
   theme: [Theme]
   title: String
+}
+
+type PageAsset implements Content {
+  address: JSON
+  animation: JSON
+  assetType: String
+  body: RichText
+  id: String
+  mainImage: Media
+  name: String
+  ncreifRegion: String
+  promoImage: Media
+  promoSummary: String
+  sector: String
+  sidekickLookup: JSON
+  strategy: String
+  theme: [Theme]
+  variant: String
 }
 
 type PagePathParam {

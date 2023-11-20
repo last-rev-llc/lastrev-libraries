@@ -1,0 +1,23 @@
+fragment PropertyAsset_BaseFragment on PageAsset {
+  ...Content_BaseFragment
+  name
+  assetType
+  ncreifRegion
+  strategy
+  sector
+  promoImage {
+    ...Media_BaseFragment
+  }
+}
+
+fragment PropertyAsset_Card_Fragment on PageAsset {
+  ...Content_BaseFragment
+  name
+  assetType
+  ncreifRegion
+  strategy
+  sector
+  promoImage {
+    ...Media_BaseFragment
+  }
+}

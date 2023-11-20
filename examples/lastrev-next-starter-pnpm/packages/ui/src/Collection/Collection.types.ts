@@ -17,6 +17,8 @@ export interface CollectionProps extends Omit<Collection_BaseFragmentFragment, '
   variant?: CollectionVariants;
   itemsVariant?: CardVariants;
   prevBgColor?: string;
+  indexName?: string;
+  useInfinite?: boolean;
 }
 
 export interface CollectionOwnerState extends CollectionProps {}
@@ -30,6 +32,10 @@ interface CollectionClasses {
   item: string;
   actionsContainer: string;
   action: string;
+  paginationWrap: string;
+  filtersWrap: string;
+  resultsWrap: string;
+  searchBoxWrap: string;
 }
 
 export declare type CollectionClassKey = keyof CollectionClasses;

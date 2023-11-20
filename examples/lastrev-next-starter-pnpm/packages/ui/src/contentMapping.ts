@@ -13,6 +13,7 @@ const Tabs = dynamic(() => import('./Tabs'));
 const Card = dynamic(() => import('./Card'));
 const Person = dynamic(() => import('./Person'));
 const Property = dynamic(() => import('./Property'));
+const PropertyAsset = dynamic(() => import('./PropertyAsset'));
 const Quote = dynamic(() => import('./Quote'));
 const Blog = dynamic(() => import('./Blog'));
 const Accordion = dynamic(() => import('./Accordion'));

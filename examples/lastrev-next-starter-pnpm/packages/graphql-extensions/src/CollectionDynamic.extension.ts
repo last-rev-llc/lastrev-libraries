@@ -33,6 +33,7 @@ export const typeDefs = gql`
   type CollectionDynamicOptions {
     tags: [CollectionDynamicOption]
     topics: [CollectionDynamicOption]
+    sector: [CollectionDynamicOption]
   }
 
   type CollectionDynamicOption {
@@ -54,6 +55,7 @@ export const typeDefs = gql`
   input CollectionDynamicFilterInput {
     topics: [String]
     tags: [String]
+    sector: [String]
     body: String
   }
 
@@ -166,6 +168,7 @@ export const mappers: Mappers = {
 
         return itemsPerRow;
       },
+
       itemsVariant: defaultResolver('itemsVariant'),
 
       itemsAspectRatio: defaultResolver('itemsAspectRatio'),
@@ -197,6 +200,7 @@ export const mappers: Mappers = {
             // const options = await collectOptions({ filters, items, ctx });
             const options = {};
             const allOptions = await collectOptions({ filters, items: allItems, ctx });
+            console.log({ filters, allItems, allOptions });
 
             // Paginate results
             if (offset || limit) {

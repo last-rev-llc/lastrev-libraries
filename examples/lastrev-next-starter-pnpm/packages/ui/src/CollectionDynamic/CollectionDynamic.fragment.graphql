@@ -14,10 +14,7 @@ fragment CollectionDynamic_FieldsFragment on CollectionDynamic {
   isCarouselTablet
   isCarouselMobile
   itemsPerRow
-  numItems
   inheritTopBGOverlap
-  pullFromContentType
-  numberOfItemsToPull
   settings
   showFilters
 }
@@ -27,6 +24,42 @@ fragment CollectionDynamic_BaseFragment on CollectionDynamic {
   ...CollectionDynamic_FieldsFragment
   items {
     ...Card_BaseFragment
+  }
+  itemsConnection {
+    pageInfo {
+      options {
+        tags {
+          label
+          value
+        }
+        topics {
+          label
+          value
+        }
+        sector {
+          label
+          value
+        }
+      }
+      allOptions {
+        tags {
+          label
+          value
+        }
+        topics {
+          label
+          value
+        }
+        sector {
+          label
+          value
+        }
+      }
+      total
+    }
+    items {
+      ...Card_BaseFragment
+    }
   }
 }
 

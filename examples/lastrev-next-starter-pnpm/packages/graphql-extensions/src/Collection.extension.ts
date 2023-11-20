@@ -34,6 +34,7 @@ export const typeDefs = gql`
   type CollectionOptions {
     tags: [Option]
     topics: [Option]
+    sector: [Option]
   }
 
   type Option {
@@ -55,6 +56,7 @@ export const typeDefs = gql`
   input CollectionFilterInput {
     topics: [String]
     tags: [String]
+    sector: [String]
     body: String
   }
 

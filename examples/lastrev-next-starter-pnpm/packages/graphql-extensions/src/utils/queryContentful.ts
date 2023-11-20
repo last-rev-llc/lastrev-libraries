@@ -6,70 +6,13 @@ interface QueryArgs {
   filters?: { id: string; key: string }[];
   filter?: any;
   order?: any;
-  limit?: any;
-  skip?: any;
+  limit?: number;
+  skip?: number;
   ctx: ApolloContext;
 }
-const query = async ({
-  contentType,
-  filters,
-  filter,
-  order,
-  limit = 1000,
-  skip = 0,
-  ctx
-}: QueryArgs): Promise<Entry<unknown>[]> => {
-  let items;
-  const contentfulQuery = {
-    content_type: contentType,
-    limit,
-    skip,
-    order,
-    select: 'sys.id',
-    ...parseFilters(filter, filters)
-  };
-  if (ctx.preview) {
-    items = (await ctx.contentful.preview.getEntries(contentfulQuery)).items;
-  } else {
-    items = (await ctx.contentful.prod.getEntries(contentfulQuery)).items;
-  }
-  if (items.length === 1000)
-    return [
-      ...items,
-      ...(await query({
-        contentType,
-        filters,
-        filter,
-        order,
-        limit,
-        skip: skip + 1000,
-        ctx
-      }))
-    ];
-  return items;
-};
 
-export const queryContentful = async ({
-  contentType,
-  filters,
-  filter,
-  order,
-  limit = 1000,
-  skip = 0,
-  ctx
-}: QueryArgs): Promise<Entry<unknown>[]> => {
-  return query({
-    contentType,
-    filters,
-    filter,
-    order,
-    limit,
-    skip,
-    ctx
-  });
-};
-
-function parseFilters(filter: any, filters: { id: string; key: string }[] | undefined) {
+// Function to parse filters
+const parseFilters = (filter: any, filters: { id: string; key: string }[] | undefined) => {
   if (filter && filters) {
     return filters?.reduce(
       (accum, { id, key }) =>
@@ -84,4 +27,48 @@ function parseFilters(filter: any, filters: { id: string; key: string }[] | unde
   } else if (filter) {
     return filter;
   }
-}
+};
+
+// Modified query function
+const query = async ({
+  contentType,
+  filters,
+  filter,
+  order,
+  limit = 1000,
+  skip = 0,
+  ctx,
+  total = 0
+}: QueryArgs & { total?: number }): Promise<Entry<unknown>[]> => {
+  const contentfulQuery = {
+    content_type: contentType,
+    limit,
+    skip,
+    order,
+    select: 'sys.id',
+    ...parseFilters(filter, filters)
+  };
+
+  const response = ctx.preview
+    ? await ctx.contentful.preview.getEntries(contentfulQuery)
+    : await ctx.contentful.prod.getEntries(contentfulQuery);
+
+  let items = response.items;
+  if (total === 0) total = response.total;
+
+  const remainingItems = total - (skip + items.length);
+  const newLimit = 1000;
+  if (remainingItems > 0) {
+    const additionalQueries = [];
+    for (let newSkip = skip + newLimit; newSkip < total; newSkip += newLimit) {
+      additionalQueries.push(query({ ...contentfulQuery, limit: newLimit, skip: newSkip, ctx, total }));
+    }
+    const additionalItems = (await Promise.all(additionalQueries)).flat();
+    items = items.concat(additionalItems);
+  }
+  return items;
+};
+
+export const queryContentful = async (args: QueryArgs): Promise<Entry<unknown>[]> => {
+  return query(args);
+};

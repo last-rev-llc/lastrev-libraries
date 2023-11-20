@@ -35,11 +35,29 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
       : { ...theme.mixins.applyColorScheme({ ownerState, theme }), padding: 'var(--section-padding) 0' })
   }),
 
+  // contentGrid: {},
+
+  filtersWrap: {
+    gridColumn: 'content-start/three-end',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 'var(--grid-gap)'
+  },
+
+  // paginationWrap: {},
+
+  // searchBoxWrap: {},
+
+  resultsWrap: {
+    gridColumn: 'four-start/content-end',
+    gap: 'inherit'
+  },
+
   itemsGrid: ({ theme, ownerState }) => ({
-    gridColumn: 'content-start/content-end',
-    display: 'grid',
-    gap: 'inherit',
-    gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
+    // 'gridColumn': 'four-start/content-end',
+    'display': 'grid',
+    'gap': 'inherit',
+    'gridTemplateColumns': 'repeat(1, minmax(0, 1fr))',
 
     ...((ownerState?.variant === CollectionVariants.twoPerRow ||
       ownerState?.variant === CollectionVariants.threePerRow) && {
@@ -74,10 +92,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
       [theme.containerBreakpoints.up('md')]: {
         gridTemplateColumns: 'repeat(5, minmax(0, 1fr))'
       }
-    })
-  }),
+    }),
 
-  contentGrid: {}
+    '& [class*=ais-Hit]': {
+      display: 'contents'
+    }
+  })
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [];
