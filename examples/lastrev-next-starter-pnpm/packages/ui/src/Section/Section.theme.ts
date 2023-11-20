@@ -14,9 +14,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
 
     'main > &:last-of-type': {
       marginBottom: 0
-    },
-    '[class*="Media-root"]': {
-      width: '100%'
     }
   }),
 
@@ -76,11 +73,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
   itemsGrid: ({ theme, ownerState }) => {
     return {
       // gridColumn: 'full-start/full-end',
-      display: 'grid',
-      gridGap: theme.spacing(8),
-      gridRowGap: 0,
-      gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
-
+      'display': 'grid',
+      'gridGap': theme.spacing(8),
+      'gridRowGap': 0,
+      'gridTemplateColumns': 'repeat(1, minmax(0, 1fr))',
+      '> [class*="Media-root"]': {
+        width: '100%'
+      },
       ...((ownerState?.variant === SectionVariants.twoPerRow ||
         ownerState?.variant === SectionVariants.threePerRow) && {
         [theme.containerBreakpoints.up('md')]: {

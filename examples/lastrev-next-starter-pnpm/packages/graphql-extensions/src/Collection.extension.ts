@@ -183,7 +183,7 @@ const collectionMappers = {
     const variant = variantFn(collection, args, ctx);
 
     if (!!carouselBreakpoints.length) return `${variant}Carousel`;
-    let showFilters = getLocalizedField(collection.fields, 'showFilters', ctx) ?? [];
+    let showFilters = getLocalizedField(collection.fields, 'showFilters', ctx);
     if (showFilters) return `${variant}Filtered`;
 
     return variant;

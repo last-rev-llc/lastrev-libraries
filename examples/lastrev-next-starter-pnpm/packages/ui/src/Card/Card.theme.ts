@@ -226,7 +226,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         maxWidth: 96,
         // marginLeft: 'auto',
         // marginRight: 'auto',
-
+        objectFit: 'contain',
         [theme.containerBreakpoints.up('lg')]: {
           '& > :is(img, svg)': {
             objectFit: 'contain'
