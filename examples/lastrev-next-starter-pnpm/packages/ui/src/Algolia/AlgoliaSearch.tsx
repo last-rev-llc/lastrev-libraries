@@ -1,5 +1,5 @@
 'use client';
-import React, { type ReactNode } from 'react';
+import React from 'react';
 
 import { InstantSearchNext } from 'react-instantsearch-nextjs';
 import { Configure } from 'react-instantsearch';
@@ -13,10 +13,50 @@ type AlgoliaSearch = {
   indexName: string;
 };
 
+const forceState = {
+  query: 'viewability',
+  configure: {
+    filters: 'locale:"en-US"'
+  },
+  hierarchicalMenu: {
+    'categories.level-1': ['Advertiser + Agency Solutions']
+  }
+};
+
 export const AlgoliaSearch = ({ children, indexName }: AlgoliaSearch) => {
   return (
-    <InstantSearchNext searchClient={searchClient} indexName={indexName}>
+    <InstantSearchNext
+      searchClient={searchClient}
+      indexName={indexName}
+      initialUiState={{
+        [indexName]: {
+          ...forceState
+        }
+      }}
+      // defaultUiState={{
+      //   [indexName]: {
+      //     ...forceState
+      //   }
+      // }}
+      // onStateChange={({ uiState, setUiState }) => {
+      //   console.log(uiState);
+      //   //   const categories = uiState[indexName].refinementList?.categories || [];
+      //   // const [lastSelectedCategory] = categories.slice(-1);
+
+      //   setUiState({
+      //     ...uiState
+      //     // [indexName]: {
+      //     //   ...uiState[indexName],
+      //     //   refinementList: {
+      //     //     ...uiState[indexName].refinementList,
+      //     //     categories: categories.filter((category) => (lastSelectedCategory === 'All' ? false : category !== 'All'))
+      //     //   }
+      //     // }
+      //   });
+      // }}>
+    >
       <Configure filters={`locale:"en-US"`} />
+      {/* query={forceState.query} filters={`locale:"en-US"`} */}
       {children}
     </InstantSearchNext>
   );
