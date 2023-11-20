@@ -215,6 +215,9 @@ importers:
       graphql-tag:
         specifier: ^2.12.5
         version: 2.12.5(graphql@16.6.0)
+      ioredis:
+        specifier: ^5.3.2
+        version: 5.3.2
       xss:
         specifier: ^1.0.14
         version: 1.0.14
