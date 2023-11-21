@@ -48,7 +48,8 @@ const config = new LastRevAppConfig({
     adminApiKey: process.env.ALGOLIA_ADMIN_API_KEY,
     contentTypeIds: ['blog', 'page', 'pageProperty', 'person'],
     indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT),
-    indices: [process.env.ALGOLIA_INDEX_NAME] // this can be hard coded if needed
+    indices: ['tet127'], // this can be hard coded if needed
+    maxBatchSize: process.env.ALGOLIA_MAX_BATCH_SIZE ? parseInt(process.env.ALGOLIA_MAX_BATCH_SIZE, 10) : 400
   },
   redis: {
     port: process.env.REDIS_PORT,

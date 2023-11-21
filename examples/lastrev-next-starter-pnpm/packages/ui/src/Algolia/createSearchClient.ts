@@ -1,7 +1,10 @@
 'use client';
 import algoliasearch, { type SearchClient } from 'algoliasearch';
 
+const ALGOLIA_APPLICATION_ID = process.env.ALGOLIA_APPLICATION_ID as string;
+const ALGOLIA_SEARCH_API_KEY = process.env.ALGOLIA_SEARCH_API_KEY as string;
+
 export const createSearchClient = (): SearchClient => {
-  const searchClient = algoliasearch('MH24U6G8TO', '58cc0b4fc97965049b8b4ec7ca5c5ce9');
+  const searchClient = algoliasearch(ALGOLIA_APPLICATION_ID, ALGOLIA_SEARCH_API_KEY);
   return searchClient;
 };

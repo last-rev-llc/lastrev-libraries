@@ -6,7 +6,7 @@ import { documentToPlainTextString } from '@contentful/rich-text-plain-text-rend
 import { generateCard } from './utils/generateCard';
 import { getLink } from './utils/getLink';
 
-const index = 'contentful';
+const index = 'test127';
 
 export const mappers = {
   Blog: {
