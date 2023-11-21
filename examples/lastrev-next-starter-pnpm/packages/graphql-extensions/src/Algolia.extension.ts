@@ -5,59 +5,10 @@ import { pathResolver } from './utils/pathResolver';
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
 import { generateCard } from './utils/generateCard';
 import { getLink } from './utils/getLink';
-// import gql from 'graphql-tag';
-
-// export const typeDefs = gql`
-//   extend type AlgoliaObject {
-//     introText: Text
-//     mediaItems: [Media]
-//     actions: [Link]
-//     link: Link
-//     supplementalContent: Content
-//     backgroundImage: Media
-//   }
-// `;
 
 const index = 'contentful';
 
 export const mappers = {
-  // Page: {
-  //   AlgoliaRecord: {
-  //     algoliaObjects: async (page: any, args: any, ctx: ApolloContext) => {
-  //       const referencedIds: Set<string> = new Set([page.sys.id]);
-
-  //       // ...
-
-  //       const title = getLocalizedField(item.fields, 'title', ctx);
-  //       // TODO: get rendered page content as body
-  //       // const body = getLocalizedField(item.fields, 'contents', ctx);
-  //       const body = title;
-  //       const summary = body;
-  //       const entries: any[] = [];
-
-  //       return [
-  //         {
-  //           index: process.env.ALGOLIA_INDEX_NAME,
-  //           objectId: constructObjectId(page, ctx),
-  //           referencedIds: Array.from(referencedIds),
-  //           additionalFields: {
-  //             locale: ctx.locale || ctx.defaultLocale,
-  //             preview: !!ctx.preview,
-  //             title,
-  //             summary,
-  //             contentBody,
-  //             path,
-  //             categories,
-  //             categoryLinks,
-  //             translatedInLocale,
-  //             tags
-  //           }
-  //         }
-  //       ];
-  //     }
-  //   }
-  // },
-
   Blog: {
     AlgoliaRecord: {
       algoliaObjects: async (blog: any, args: any, ctx: ApolloContext) => {
@@ -97,6 +48,132 @@ export const mappers = {
               pubDate,
               pubDateTimestamp,
               body: documentToPlainTextString(body),
+              summary,
+              promoImage,
+              path,
+              contentType: ['all', contentType],
+              link,
+              card
+            }
+          }
+        ];
+      }
+    }
+  },
+  Person: {
+    AlgoliaRecord: {
+      algoliaObjects: async (person: any, args: any, ctx: ApolloContext) => {
+        const path = pathResolver(person, args, ctx);
+
+        if (!path) return [];
+
+        const title = getLocalizedField(person.fields, 'title', ctx);
+        const subtitle = getLocalizedField(person.fields, 'jobTitle', ctx);
+        const body = getLocalizedField(person.fields, 'body', ctx);
+        const summary = getLocalizedField(person.fields, 'promoSummary', ctx) ?? '';
+        const promoImage =
+          getLocalizedField(person.fields, 'promoImage', ctx) ?? getLocalizedField(person.fields, 'mainImage', ctx);
+
+        const entries: any[] = [];
+
+        const contentType = person.sys.contentType.sys.id;
+
+        const link = await getLink(person, args, ctx);
+
+        const card = generateCard({ id: person.sys.id, title, subtitle, summary, link, media: promoImage, entries });
+
+        return [
+          {
+            index,
+            data: {
+              objectID: constructObjectId(person, ctx),
+              locale: ctx.locale || ctx.defaultLocale,
+              preview: !!ctx.preview,
+              title,
+              subtitle,
+              body: documentToPlainTextString(body),
+              summary,
+              promoImage,
+              path,
+              contentType: ['all', contentType],
+              link,
+              card
+            }
+          }
+        ];
+      }
+    }
+  },
+  Page: {
+    AlgoliaRecord: {
+      algoliaObjects: async (page: any, args: any, ctx: ApolloContext) => {
+        const path = pathResolver(page, args, ctx);
+
+        if (!path) return [];
+
+        const title = getLocalizedField(page.fields, 'title', ctx);
+        const body = getLocalizedField(page.fields, 'body', ctx);
+        const summary = getLocalizedField(page.fields, 'promoSummary', ctx) ?? '';
+        const promoImage =
+          getLocalizedField(page.fields, 'promoImage', ctx) ?? getLocalizedField(page.fields, 'mainImage', ctx);
+
+        const entries: any[] = [];
+
+        const contentType = page.sys.contentType.sys.id;
+
+        const link = await getLink(page, args, ctx);
+
+        const card = generateCard({ id: page.sys.id, title, summary, link, media: promoImage, entries });
+
+        return [
+          {
+            index,
+            data: {
+              objectID: constructObjectId(page, ctx),
+              locale: ctx.locale || ctx.defaultLocale,
+              preview: !!ctx.preview,
+              title,
+              body: documentToPlainTextString(body),
+              summary,
+              promoImage,
+              path,
+              contentType: ['all', contentType],
+              link,
+              card
+            }
+          }
+        ];
+      }
+    }
+  },
+  PageProperty: {
+    AlgoliaRecord: {
+      algoliaObjects: async (property: any, args: any, ctx: ApolloContext) => {
+        const path = pathResolver(property, args, ctx);
+
+        if (!path) return [];
+
+        const title = getLocalizedField(property.fields, 'name', ctx);
+        const summary = getLocalizedField(property.fields, 'promoSummary', ctx) ?? '';
+        const promoImage =
+          getLocalizedField(property.fields, 'promoImage', ctx) ?? getLocalizedField(property.fields, 'mainImage', ctx);
+
+        const entries: any[] = [];
+
+        const contentType = property.sys.contentType.sys.id;
+
+        const link = await getLink(property, args, ctx);
+
+        const card = generateCard({ id: property.sys.id, title, summary, link, media: promoImage, entries });
+
+        return [
+          {
+            index,
+            data: {
+              objectID: constructObjectId(property, ctx),
+              locale: ctx.locale || ctx.defaultLocale,
+              preview: !!ctx.preview,
+              title,
               summary,
               promoImage,
               path,

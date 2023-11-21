@@ -46,7 +46,7 @@ const config = new LastRevAppConfig({
   algolia: {
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
     adminApiKey: process.env.ALGOLIA_ADMIN_API_KEY,
-    contentTypeIds: ['pageBlog', 'pageGeneral', 'pageProperty', 'person'],
+    contentTypeIds: ['blog', 'page', 'pageProperty', 'person'],
     indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT),
     indices: [process.env.ALGOLIA_INDEX_NAME] // this can be hard coded if needed
   },
