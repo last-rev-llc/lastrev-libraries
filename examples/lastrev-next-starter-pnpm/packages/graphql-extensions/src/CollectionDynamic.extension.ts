@@ -115,8 +115,7 @@ export const mappers: Mappers = {
       items: async (collection: any, args: any, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
 
-        const itemsVariantFn = defaultResolver('itemsVariant');
-        const itemsVariant = itemsVariantFn(collection, args, ctx);
+        const itemsVariant = defaultResolver('itemsVariant')(collection, args, ctx);
 
         // try {
         //   const { contentType, limit, offset, order, filter } =

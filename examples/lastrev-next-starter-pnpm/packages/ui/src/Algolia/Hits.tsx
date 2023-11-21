@@ -3,15 +3,14 @@ import React from 'react';
 
 import { useHits } from 'react-instantsearch-core';
 
-import Hit from './Hit';
-
 // https://www.algolia.com/doc/api-reference/widgets/hits/react/#hook
-const Hits = ({ ownerState, ...other }: { ownerState: any }) => {
+const Hits = ({ ownerState, HitComponent, ...other }: { ownerState: any; HitComponent: any }) => {
   const { hits } = useHits(other);
+
   return (
     <>
       {hits.map((hit, index) => (
-        <Hit key={`hit-${index}-${hit.id}`} hit={hit} ownerState={ownerState} />
+        <HitComponent key={`hit-${index}-${hit.id}`} hit={hit} ownerState={ownerState} />
       ))}
     </>
   );

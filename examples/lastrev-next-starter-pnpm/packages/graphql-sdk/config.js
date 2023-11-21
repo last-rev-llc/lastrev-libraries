@@ -46,8 +46,9 @@ const config = new LastRevAppConfig({
   algolia: {
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
     adminApiKey: process.env.ALGOLIA_ADMIN_API_KEY,
-    contentTypeIds: ['blog'],
-    indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT)
+    contentTypeIds: ['pageBlog', 'pageGeneral', 'pageProperty', 'person'],
+    indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT),
+    indices: [process.env.ALGOLIA_INDEX_NAME] // this can be hard coded if needed
   },
   redis: {
     port: process.env.REDIS_PORT,

@@ -1,29 +1,31 @@
 import React from 'react';
 
 import { styled } from '@mui/material/styles';
+
 import Box from '@mui/material/Box';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import Grid from '../Grid';
-import Background from '../Background';
-import ContentModule from '../ContentModule';
 import ErrorBoundary from '../ErrorBoundary';
-
-import Filters from '../Algolia/Filters';
-import Pagination from '../Algolia/Pagination';
-import Hits from '../Algolia/Hits';
-import InfiniteHits from '../Algolia/InfiniteHits';
-import SearchBox from '../Algolia/SearchBox';
-import CurrentRefinements from '../Algolia/CurrentRefinements';
-import AlgoliaSearch from '../Algolia/AlgoliaSearch';
+import ContentModule from '../ContentModule';
 
 import type { CollectionProps, CollectionOwnerState } from './Collection.types';
+import Background from '../Background';
 
 const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
 
-  const { backgroundImage, backgroundColor, variant, sidekickLookup, introText, algoliaSettings } = props;
+  const {
+    backgroundImage,
+    backgroundColor,
+    items,
+    variant,
+    itemsAspectRatio,
+    itemsVariant,
+    sidekickLookup,
+    introText
+  } = props;
 
   return (
     <ErrorBoundary>
@@ -45,47 +47,23 @@ const Collection = (props: CollectionProps) => {
           </IntroTextGrid>
         )}
 
-        {/* Use the AlgoliaSearch component here */}
-        <AlgoliaSearch algoliaSettings={algoliaSettings}>
-          <ContentGrid ownerState={ownerState}>
-            {!!algoliaSettings?.indexName && !!algoliaSettings?.showCurrentRefinements ? (
-              <CurrentRefinements ownerState={ownerState} />
-            ) : null}
-
-            {!!algoliaSettings?.indexName && (!!algoliaSettings?.showFilters || !!algoliaSettings?.showSearchBox) ? (
-              <FiltersWrap ownerState={ownerState}>
-                {!!algoliaSettings?.indexName && !!algoliaSettings?.showSearchBox ? (
-                  <SearchBoxWrap ownerState={ownerState}>
-                    <SearchBox ownerState={ownerState} searchAsYouType={!!algoliaSettings?.searchAsYouType} />
-                  </SearchBoxWrap>
-                ) : null}
-
-                {!!algoliaSettings?.indexName && !!algoliaSettings?.showFilters ? (
-                  <Filters ownerState={ownerState} filters={algoliaSettings.filters} />
-                ) : null}
-              </FiltersWrap>
-            ) : null}
-
-            <ResultsWrap ownerState={ownerState}>
-              <ItemsGrid ownerState={ownerState}>
-                {!!algoliaSettings?.indexName && !!algoliaSettings?.useInfiniteHits ? (
-                  <InfiniteHits ownerState={ownerState} />
-                ) : null}
-
-                {!!algoliaSettings?.indexName && !algoliaSettings?.useInfiniteHits ? (
-                  <>
-                    <Hits ownerState={ownerState} />
-                    {!!algoliaSettings?.showPagination ? (
-                      <PaginationWrap ownerState={ownerState}>
-                        <Pagination ownerState={ownerState} />
-                      </PaginationWrap>
-                    ) : null}
-                  </>
-                ) : null}
-              </ItemsGrid>
-            </ResultsWrap>
-          </ContentGrid>
-        </AlgoliaSearch>
+        <ContentGrid ownerState={ownerState}>
+          {!!items?.length && (
+            <ItemsGrid ownerState={ownerState} id="items">
+              {items?.map((item, index) => (
+                <Item
+                  ownerState={ownerState}
+                  backgroundColor={backgroundColor}
+                  key={item?.id}
+                  {...item}
+                  variant={itemsVariant ?? item?.variant}
+                  aspectRatio={itemsAspectRatio ?? item?.aspectRatio}
+                  position={index + 1}
+                />
+              ))}
+            </ItemsGrid>
+          )}
+        </ContentGrid>
       </Root>
     </ErrorBoundary>
   );
@@ -127,28 +105,10 @@ const ItemsGrid = styled(Box, {
   overridesResolver: (_, styles) => [styles.itemsGrid, styles.itemsContainerOnePerRow]
 })<{ ownerState: CollectionOwnerState }>``;
 
-const FiltersWrap = styled(Box, {
+const Item = styled(ContentModule, {
   name: 'Collection',
-  slot: 'FiltersWrap',
-  overridesResolver: (_, styles) => [styles.filtersWrap]
-})<{ ownerState: CollectionOwnerState }>``;
-
-const PaginationWrap = styled(Box, {
-  name: 'Collection',
-  slot: 'PaginationWrap',
-  overridesResolver: (_, styles) => [styles.paginationWrap]
-})<{ ownerState: CollectionOwnerState }>``;
-
-const ResultsWrap = styled(Box, {
-  name: 'Collection',
-  slot: 'ResultsWrap',
-  overridesResolver: (_, styles) => [styles.resultsWrap]
-})<{ ownerState: CollectionOwnerState }>``;
-
-const SearchBoxWrap = styled(Box, {
-  name: 'Collection',
-  slot: 'SearchBoxWrap',
-  overridesResolver: (_, styles) => [styles.searchBoxWrap]
+  slot: 'Item',
+  overridesResolver: (_, styles) => [styles.item]
 })<{ ownerState: CollectionOwnerState }>``;
 
 export default Collection;

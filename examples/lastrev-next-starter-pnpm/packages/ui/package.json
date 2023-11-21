@@ -38,7 +38,7 @@
     "typescript": "^4.8.3"
   },
   "dependencies": {
-    "@contentful/rich-text-react-renderer": "^15.17.1",
+    "@contentful/rich-text-react-renderer": "^15.19.0",
     "styled-components": "^6",
     "@formspree/react": "^2.5.1",
     "@last-rev/contentful-sidekick-util": "^0.1.3",

@@ -16,43 +16,6 @@ fragment Collection_FieldsFragment on Collection {
   itemsPerRow
   numItems
   inheritTopBGOverlap
-  itemsConnection {
-    pageInfo {
-      options {
-        tags {
-          label
-          value
-        }
-        topics {
-          label
-          value
-        }
-        sector {
-          label
-          value
-        }
-      }
-      allOptions {
-        tags {
-          label
-          value
-        }
-        topics {
-          label
-          value
-        }
-        sector {
-          label
-          value
-        }
-      }
-      total
-    }
-    items {
-      ...Card_BaseFragment
-    }
-  }
-  algoliaSettings
 }
 
 # Base fragment used everywhere there's a Collection
