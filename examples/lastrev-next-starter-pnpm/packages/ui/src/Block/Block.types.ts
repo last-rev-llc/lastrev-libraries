@@ -4,12 +4,11 @@ import type { Block_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum BlockVariants {
   default = 'default',
-  contentOnRight = 'contentOnRight',
-  contentOnRightFullBleed = 'contentOnRightFullBleed',
-  contentOnLeft = 'contentOnLeft',
-  contentOnLeftFullBleed = 'contentOnLeftFullBleed',
-  contentBelow = 'contentBelow',
-  contentAbove = 'contentAbove'
+  supportingItemOnLeft = 'supportingItemOnLeft',
+  supportingItemOnRight = 'supportingItemOnRight',
+  supportingItemOnTop = 'supportingItemOnTop',
+  supportingItemOnBottom = 'supportingItemOnBottom',
+  simpleCentered = 'simpleCentered'
 }
 
 export interface BlockProps extends Omit<Block_BaseFragmentFragment, 'variant'> {
