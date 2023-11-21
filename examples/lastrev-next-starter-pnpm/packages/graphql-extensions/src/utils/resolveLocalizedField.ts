@@ -20,11 +20,10 @@ export const resolveLocalizedField = async (fields: any, field: string, ctx: Apo
         .filter((r) => r !== null)
         .map((r) => r as Entry<any>);
     }
-
     if (firstItem?.sys?.linkType === 'Asset') {
       return (await loaders.assetLoader.loadMany(value.map((x) => ({ id: x.sys.id, preview: !!preview }))))
         .filter((r) => r !== null)
-        .map((r) => r as Asset<any>);
+        .map((r) => r as Entry<any>);
     }
   }
 
