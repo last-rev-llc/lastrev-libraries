@@ -1,6 +1,6 @@
 import type { Mappers } from '@last-rev/types';
 import type { ApolloContext } from './types';
-import type { Entry, RichTextContent } from 'contentful';
+import type { Entry } from 'contentful';
 import { FilterXSS } from 'xss';
 import { isHTML } from './utils/isHTML';
 
@@ -16,7 +16,7 @@ const bodyXSS = new FilterXSS({
 export const mappers: Mappers = {
   RichText: {
     RichText: {
-      json: async (raw: RichTextContent) => {
+      json: async (raw: any) => {
         let sanitized = raw; // Sanitize RichText Contentful JSOn
         // It will add extra empty lines almost all the times
         const { content } = sanitized;
