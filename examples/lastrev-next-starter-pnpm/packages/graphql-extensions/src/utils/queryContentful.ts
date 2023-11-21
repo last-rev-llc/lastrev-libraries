@@ -39,7 +39,7 @@ const query = async ({
   skip = 0,
   ctx,
   total = 0
-}: QueryArgs & { total?: number }): Promise<Entry<unknown>[]> => {
+}: QueryArgs & { total?: number }): Promise<Entry<any>[]> => {
   const contentfulQuery = {
     content_type: contentType,
     limit,
@@ -69,6 +69,6 @@ const query = async ({
   return items;
 };
 
-export const queryContentful = async (args: QueryArgs): Promise<Entry<unknown>[]> => {
+export const queryContentful = async (args: QueryArgs): Promise<Entry<any>[]> => {
   return query(args);
 };
