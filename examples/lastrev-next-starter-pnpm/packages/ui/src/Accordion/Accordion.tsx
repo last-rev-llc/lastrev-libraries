@@ -7,6 +7,7 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -57,7 +58,11 @@ const Accordion = (props: AccordionProps) => {
                   onChange={handleChange(`${!id}-accordion-panel-${item?.id}-${index}`)}
                   key={`${!id}-accordion-panel-${item?.id}-${index}`}
                   ownerState={ownerState}>
-                  <SummaryWrap aria-controls="panel1d-content" id="panel1d-header" ownerState={ownerState}>
+                  <SummaryWrap
+                    aria-controls="panel1d-content"
+                    id="panel1d-header"
+                    ownerState={ownerState}
+                    expandIcon={<ExpandMoreIcon />}>
                     <Summary ownerState={ownerState}>{item.title}</Summary>
                   </SummaryWrap>
                   <DetailsWrap ownerState={ownerState}>
