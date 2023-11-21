@@ -110,6 +110,36 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
       }
     }
   },
+  {
+    props: {
+      variant: BlockVariants.default
+    },
+    style: {
+      '[class*=mainContentWrap]': {
+        gridRow: 2,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridRow: 1,
+          gridColumnStart: 'content-start',
+          gridColumnEnd: 'content-half',
+          paddingRight: 'calc(var(--grid-gap) * 2)'
+        }
+      },
+
+      '[class*=sideContentWrap]': {
+        gridRow: 1,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnStart: 'content-half',
+          gridColumnEnd: 'content-end'
+        }
+      }
+    }
+  },
   // {
   //   props: {
   //     variant: BlockVariants.supportingItemOnRightFullBleed
@@ -167,6 +197,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
       }
     }
   },
+
   // {
   //   props: {
   //     variant: BlockVariants.supportingItemOnLeftFullBleed
@@ -234,8 +265,35 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
       },
 
       '[class*=sideContentWrap]': {
-        gridColumn: 'content-start/content-end',
-        gridRow: 2
+        'gridColumn': 'content-start/content-end',
+        'gridRow': 2,
+        '[class*=Block-media]': {
+          aspectRatio: '21/9'
+        }
+      }
+    }
+  },
+  {
+    props: {
+      variant: BlockVariants.simpleCentered
+    },
+    style: {
+      'textAlign': 'center',
+      '[class*=mainContentWrap]': {
+        'gridRow': 1,
+        'gridColumnStart': 'content-start',
+        'gridColumnEnd': 'content-end',
+        '& *': {
+          alignSelf: 'center'
+        }
+      },
+
+      '[class*=sideContentWrap]': {
+        'gridColumn': 'content-start/content-end',
+        'gridRow': 2,
+        '[class*=Block-media]': {
+          aspectRatio: '21/9'
+        }
       }
     }
   }
