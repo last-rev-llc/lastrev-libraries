@@ -1,5 +1,6 @@
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import type { Source, DocumentNode, GraphQLSchema } from 'graphql';
+import { typeDefs as algoliaTypeDefs } from '@last-rev/graphql-algolia-integration';
 
 import fs from 'fs';
 import path from 'path';
@@ -86,6 +87,7 @@ function loadFiles() {
 }
 
 const extensions: GraphQlExtension[] = loadFiles();
+extensions.push({ typeDefs: algoliaTypeDefs });
 
 const getNonNullPropertiesFromExtensions = (property: any) =>
   extensions.map((ext: GraphQlExtension) => ext[property]).filter(Boolean);

@@ -10,6 +10,19 @@ directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
 
 directive @tag(name: String!) on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
 
+type AlgoliaObject {
+  data: JSON!
+  index: String!
+}
+
+type AlgoliaRecord implements Content {
+  algoliaObjects: [AlgoliaObject]
+  animation: JSON
+  id: String
+  sidekickLookup: JSON
+  theme: [Theme]
+}
+
 type Asset {
   description: String
   extension: String
