@@ -197,8 +197,8 @@ const schemes = {
   fuchsiaLight: {
     primary: { main: colors.fuchsia.light },
     secondary: colors.fuchsia,
-    highlightColor: colors.fuchsia.main,
-    overline: colors.fuchsia.main
+    highlightColor: colors.black.main,
+    overline: colors.black.main
   },
   mint: {
     primary: colors.mint,
@@ -243,6 +243,9 @@ const paletteTheme = {
         overline: colors.black.main,
         white: colors.white,
         black: colors.black,
+        common: {
+          black: colors.black.main
+        },
         text: {
           one: '#1F1F1F',
           two: '#A3A3A3',

@@ -23,7 +23,10 @@ const Accordion = (props: AccordionProps) => {
 
   const { background, backgroundColor, id, items, variant, sidekickLookup, introText } = props;
 
-  const [expanded, setExpanded] = React.useState<string | false>((items?.[0] as any)?.id);
+  const [expanded, setExpanded] = React.useState<string | false>(() => {
+    const [item] = items;
+    return `${id}-accordion-panel-${item?.id}-0`;
+  });
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
@@ -54,9 +57,9 @@ const Accordion = (props: AccordionProps) => {
               ) => (
                 <AccordionItem
                   disableGutters
-                  expanded={expanded === `${!id}-accordion-panel-${item?.id}-${index}`}
-                  onChange={handleChange(`${!id}-accordion-panel-${item?.id}-${index}`)}
-                  key={`${!id}-accordion-panel-${item?.id}-${index}`}
+                  expanded={expanded === `${id}-accordion-panel-${item?.id}-${index}`}
+                  onChange={handleChange(`${id}-accordion-panel-${item?.id}-${index}`)}
+                  key={`${id}-accordion-panel-${item?.id}-${index}`}
                   ownerState={ownerState}>
                   <SummaryWrap
                     aria-controls="panel1d-content"

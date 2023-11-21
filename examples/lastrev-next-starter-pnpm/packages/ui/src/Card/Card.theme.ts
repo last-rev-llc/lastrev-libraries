@@ -24,7 +24,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   }),
 
   cardWrap: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyColorScheme({ ownerState: { ...ownerState, color: ownerState?.color ?? 'white' }, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState: { ...ownerState, color: ownerState?.color }, theme }),
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
@@ -155,15 +155,19 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
       ...theme.typography.body1
     })
   }),
-  actionsWrap: ({ theme }) => ({
+  actionsWrap: ({ theme, ownerState }) => ({
     display: 'flex',
     gap: theme.spacing(2),
     // margin: theme.spacing(0, -1),
     zIndex: 2,
     width: '100%',
     minHeight: 40,
-    padding: 0
-    // padding: 'calc(var(--grid-gap) / 2)'
+    padding: 0,
+    ...(ownerState?.variant === CardVariants.stat || ownerState?.variant === CardVariants.icon
+      ? {
+          justifyContent: 'center'
+        }
+      : null)
   }),
 
   link: {

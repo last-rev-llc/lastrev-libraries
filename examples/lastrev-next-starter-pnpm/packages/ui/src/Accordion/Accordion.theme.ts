@@ -18,6 +18,21 @@ const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
       '> .MuiAccordionSummary-root': {
         minHeight: '48px'
       }
+    },
+    '[class*=MuiCollapse-wrapperInner]': {
+      'position': 'relative',
+      'borderRadius': '0 0 8px 8px',
+      'overflow': 'hidden',
+      '&:before': {
+        content: '""',
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        width: '100%',
+        height: '100%',
+        background: 'white',
+        zIndex: -1
+      }
     }
   }),
 
@@ -49,14 +64,21 @@ const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
     }
   }),
   summaryWrap: {
-    borderBottom: '1px solid rgba(0, 0, 0, .125)'
+    'borderBottom': '1px solid rgba(0, 0, 0, .125)',
+    'borderColor': `color-mix(in srgb, var(--variant-highlight-color), transparent 80%)`,
+    '[class*=expandIconWrapper]': {
+      color: 'var(--variant-highlight-color)'
+    }
   },
   // summary: {},
   detailsWrap: ({ theme }) => ({
-    background: theme.vars.palette.background.lightThree,
-    borderRadius: '0 0 8px 8px',
-    overflow: 'hidden',
-    padding: theme.spacing(2)
+    'background': theme.vars.palette.background.lightThree,
+    '.MuiTypography-root': {
+      color: theme.vars.palette.common.black
+    },
+    'borderRadius': '0 0 8px 8px',
+    'overflow': 'hidden',
+    'padding': theme.spacing(2)
   })
 };
 

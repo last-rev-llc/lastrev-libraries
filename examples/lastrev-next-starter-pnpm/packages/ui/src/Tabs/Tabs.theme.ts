@@ -21,8 +21,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     },
     '.MuiTab-root': {
       'flex': 1,
-      'backgroundColor': theme.vars.palette.background.lightTwo,
-      'color': theme.vars.palette.text.primary,
+      'backgroundColor': `color-mix(in srgb, ${theme.vars.palette.background.tab}, transparent 75%)`,
+      'color': theme.vars.palette.common.black,
       'borderRadius': '8px 8px 0 0',
       '&.Mui-selected': {}
     },
