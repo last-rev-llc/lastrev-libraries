@@ -7,7 +7,6 @@ const defaultProps: ComponentsProps['Card'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     height: '100%',
     transition: 'all 0.25',
@@ -25,10 +24,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   }),
 
   cardWrap: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyColorScheme({ ownerState: { ...ownerState, color: ownerState?.color ?? 'white' }, theme }),
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-    backgroundColor: 'inherit',
     position: 'relative',
     transition: 'all 0.25s ease-in-out',
     willChange: 'transform',
@@ -159,7 +158,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   actionsWrap: ({ theme }) => ({
     display: 'flex',
     gap: theme.spacing(2),
-    margin: theme.spacing(0, -1),
+    // margin: theme.spacing(0, -1),
     zIndex: 2,
     width: '100%',
     minHeight: 40,
@@ -201,6 +200,38 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
 
       '[class*=cardWrap]': {
+        backgroundColor: 'transparent',
+        overflow: 'visible',
+        padding: 0,
+        boxShadow: 'none'
+      },
+      '[class*=actionsWrap]': {
+        // margin: theme.spacing(0, -1)
+      },
+      '[class*=cardContent]': {
+        display: 'none'
+      }
+    }
+  },
+  {
+    props: {
+      variant: CardVariants.default
+    },
+    style: {
+      '[class*=cardMedia]': {
+        width: '100%',
+
+        // 'overflow': 'hidden',
+        img: {
+          borderRadius: '8px',
+          aspectRatio: '16/9',
+          width: '100%',
+          height: '100%'
+        }
+      },
+
+      '[class*=cardWrap]': {
+        backgroundColor: 'transparent',
         overflow: 'visible',
         padding: 0,
         boxShadow: 'none'
@@ -219,10 +250,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       'textAlign': 'center',
+      'backgroundColor': 'var(--current-color-main, white)',
       '[class*=cardWrap]': {
         padding: theme.spacing(5, 3),
         gap: theme.spacing(2),
-        backgroundColor: 'white',
+
         color: 'black'
       },
       '[class*=actionsWrap]': {
@@ -301,6 +333,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         flex: 'unset'
       },
       '[class*=Card-cardWrap]': {
+        backgroundColor: 'transparent',
         padding: 0,
         overflow: 'visible',
         gap: theme.spacing(2),
