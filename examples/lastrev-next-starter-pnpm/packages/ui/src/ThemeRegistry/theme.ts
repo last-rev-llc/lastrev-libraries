@@ -239,7 +239,8 @@ const paletteTheme = {
     light: {
       palette: {
         schemes: schemes,
-        ...schemes['blueAccent'],
+        ...schemes['sapphire'],
+        overline: colors.black.main,
         white: colors.white,
         black: colors.black,
         text: {

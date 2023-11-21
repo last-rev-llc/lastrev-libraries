@@ -26,7 +26,7 @@ const styleOverrides: ComponentsOverrides<Theme>['InlineNavigation'] = {
     // padding: theme.spacing(1, 2)
     ...(ownerState?.active
       ? {
-          color: theme.vars.palette.secondary.main
+          color: theme.vars.palette.primary.main
         }
       : null)
   })
