@@ -11,7 +11,6 @@ const SearchBox = ({ ownerState, searchAsYouType, ...other }: { ownerState: any;
     <TextField
       id="keywords"
       fullWidth
-      size="small"
       label="Keywords"
       value={query}
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
