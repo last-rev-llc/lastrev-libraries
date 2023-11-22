@@ -12,11 +12,13 @@ export const getMedia = async (imageRef: any, ctx: ApolloContext) => {
   if (!image?.fields) return null;
 
   const file = getLocalizedField(image.fields, 'file', ctx);
-  file.url = file?.url?.startsWith('//') ? `https:${file.url}` : file?.url;
   const imageObj = {
     __typename: 'Media',
     title: getLocalizedField(image.fields, 'title', ctx),
-    file: file,
+    file: {
+      url: file?.url?.startsWith('//') ? `https:${file.url}` : file?.url,
+      ...file?.details?.image
+    },
     description: getLocalizedField(image.fields, 'description', ctx)
   };
 
