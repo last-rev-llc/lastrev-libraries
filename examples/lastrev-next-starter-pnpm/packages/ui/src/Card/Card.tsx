@@ -101,6 +101,7 @@ const Card = (props: CardProps) => {
                   {subtitle}
                 </Subtitle>
               ) : null}
+              {console.log(body)}
               {body ? (
                 <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
                   <Body __typename="RichText" body={body} ownerState={ownerState} data-testid="Card-body" />

@@ -183,28 +183,33 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.searchResult
     },
     style: {
-      'alignItems': 'flex-start',
-      'borderLeft': 'solid 1px var(--mui-palette-text-primary)',
-
-      '[class*=Card-cardWrap]': {
-        flexDirection: 'row'
+      '.MuiCard-root': {
+        alignItems: 'flex-start',
+        borderLeft: 'solid 1px var(--mui-palette-text-primary)',
+        display: 'grid',
+        gridGap: 'var(--grid-gap-half)',
+        gridTemplateColumns: 'minmax(0, max-content) auto'
       },
 
       '[class*=contentWrap]': {
         paddingTop: 0,
-        paddingBottom: 0
+        paddingBottom: 0,
+        gridRow: 1,
+        gridColumn: 2
       },
 
       '[class*=cardMedia]': {
         'maxWidth': 48,
         'paddingLeft': 'var(--grid-gap)',
+        'gridRow': '1/3',
+        'gridColumn': '1',
 
         [theme.containerBreakpoints.up('sm')]: {
           maxWidth: 96
         },
 
         [theme.containerBreakpoints.up('lg')]: {
-          maxWidth: 128
+          maxWidth: 256
         },
 
         '& > :is(img, svg)': {
@@ -212,11 +217,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         }
       },
 
-      // '[class*=actionsWrap]': {
-      //   paddingBottom: 0,
-      //   paddingLeft: 'var(--grid-gap)',
-      //   paddingRight: 0
-      // },
+      '[class*=actionsWrap]': {
+        gridRow: 2,
+        gridColumn: 2,
+        paddingBottom: 0
+      },
 
       // '& [class*=Card-content]': {
       //   'display': 'flex',

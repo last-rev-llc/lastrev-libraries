@@ -2,6 +2,8 @@ import { createRichText } from '@last-rev/graphql-contentful-core';
 
 import { checkAndWrapArray } from './checkAndWrapArray';
 
+import { mappers as richtextMappers } from '../RichText.extension';
+
 type GenerateCardProps = {
   id: string;
   overline?: string;
@@ -13,7 +15,7 @@ type GenerateCardProps = {
   entries?: any[];
 };
 
-export const generateCard = ({
+export const generateCard = async ({
   id,
   overline,
   title,
@@ -23,13 +25,22 @@ export const generateCard = ({
   media,
   entries = []
 }: GenerateCardProps) => {
+  let foundSummary = !!summary;
+  let richText: any = {};
+  if (foundSummary && summary) {
+    const raw = createRichText(summary);
+    richText = {
+      json: await (richtextMappers.RichText.RichText.body as Function)(raw),
+      links: await (richtextMappers.RichText.RichText.links as Function)(raw)
+    };
+  }
   return {
     __typename: 'Card',
     id,
     overline,
     title,
     subtitle,
-    body: summary ? createRichText(summary) : null,
+    body: foundSummary ? richText : null,
     media: checkAndWrapArray(media),
     link,
     actions: [link]
