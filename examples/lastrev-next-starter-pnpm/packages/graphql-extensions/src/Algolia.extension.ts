@@ -22,7 +22,7 @@ export const mappers = {
         const title = getLocalizedField(blog.fields, 'title', ctx);
         const pubDate = getLocalizedField(blog.fields, 'pubDate', ctx);
         const body = getLocalizedField(blog.fields, 'body', ctx);
-        const summary = getLocalizedField(blog.fields, 'promoSummary', ctx) ?? '';
+        const summary = getLocalizedField(blog.fields, 'promoSummary', ctx);
         const promoImageRef =
           getLocalizedField(blog.fields, 'promoImage', ctx) ?? getLocalizedField(blog.fields, 'featuredMedia', ctx);
         const promoImage = await getMedia(promoImageRef, ctx);
@@ -32,7 +32,15 @@ export const mappers = {
 
         const link = await getLink(blog, args, ctx);
 
-        const card = generateCard({ id: blog.sys.id, title, summary, link, media: promoImage, entries });
+        const card = generateCard({
+          id: blog.sys.id,
+          overline: 'News',
+          title,
+          summary,
+          link,
+          media: promoImage,
+          entries
+        });
 
         let pubDateTimestamp;
 
@@ -73,7 +81,7 @@ export const mappers = {
         const title = getLocalizedField(person.fields, 'name', ctx);
         const subtitle = getLocalizedField(person.fields, 'jobTitle', ctx);
         const body = getLocalizedField(person.fields, 'body', ctx);
-        const summary = getLocalizedField(person.fields, 'promoSummary', ctx) ?? '';
+        const summary = getLocalizedField(person.fields, 'promoSummary', ctx);
         const promoImageRef =
           getLocalizedField(person.fields, 'promoImage', ctx) ?? getLocalizedField(person.fields, 'mainImage', ctx);
         const promoImage = await getMedia(promoImageRef, ctx);
@@ -83,7 +91,17 @@ export const mappers = {
 
         const link = await getLink(person, args, ctx);
 
-        const card = generateCard({ id: person.sys.id, title, subtitle, summary, link, media: promoImage, entries });
+        const card = generateCard({
+          id: person.sys.id,
+          overline: 'Our Team',
+          title,
+          subtitle,
+          summary,
+          link,
+          media: promoImage,
+          entries
+        });
+
         const areaOfExpertise = getLocalizedField(person.fields, 'areaOfExpertise', ctx);
         return [
           {
@@ -117,7 +135,7 @@ export const mappers = {
 
         const title = getLocalizedField(page.fields, 'title', ctx);
         const body = getLocalizedField(page.fields, 'body', ctx);
-        const summary = getLocalizedField(page.fields, 'promoSummary', ctx) ?? '';
+        const summary = getLocalizedField(page.fields, 'promoSummary', ctx);
         const promoImageRef =
           getLocalizedField(page.fields, 'promoImage', ctx) ?? getLocalizedField(page.fields, 'mainImage', ctx);
 
@@ -129,7 +147,15 @@ export const mappers = {
 
         const link = await getLink(page, args, ctx);
 
-        const card = generateCard({ id: page.sys.id, title, summary, link, media: promoImage, entries });
+        const card = generateCard({
+          id: page.sys.id,
+          overline: 'Page',
+          title,
+          summary,
+          link,
+          media: promoImage,
+          entries
+        });
 
         return [
           {
@@ -159,7 +185,7 @@ export const mappers = {
         if (!path) return [];
 
         const title = getLocalizedField(property.fields, 'name', ctx);
-        const summary = getLocalizedField(property.fields, 'promoSummary', ctx) ?? '';
+        const summary = getLocalizedField(property.fields, 'promoSummary', ctx);
         const promoImageRef =
           getLocalizedField(property.fields, 'promoImage', ctx) ?? getLocalizedField(property.fields, 'mainImage', ctx);
         const promoImage = await getMedia(promoImageRef, ctx);
@@ -169,7 +195,15 @@ export const mappers = {
 
         const link = await getLink(property, args, ctx);
 
-        const card = generateCard({ id: property.sys.id, title, summary, link, media: promoImage, entries });
+        const card = generateCard({
+          id: property.sys.id,
+          overline: 'Case Study',
+          title,
+          summary,
+          link,
+          media: promoImage,
+          entries
+        });
 
         return [
           {

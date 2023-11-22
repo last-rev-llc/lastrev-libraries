@@ -180,6 +180,64 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
 
   {
     props: {
+      variant: CardVariants.searchResult
+    },
+    style: {
+      'alignItems': 'flex-start',
+      'borderLeft': 'solid 1px var(--mui-palette-text-primary)',
+
+      '[class*=Card-cardWrap]': {
+        flexDirection: 'row'
+      },
+
+      '[class*=contentWrap]': {
+        paddingTop: 0,
+        paddingBottom: 0
+      },
+
+      '[class*=cardMedia]': {
+        'maxWidth': 48,
+        'paddingLeft': 'var(--grid-gap)',
+
+        [theme.containerBreakpoints.up('sm')]: {
+          maxWidth: 96
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          maxWidth: 128
+        },
+
+        '& > :is(img, svg)': {
+          objectFit: 'contain'
+        }
+      },
+
+      // '[class*=actionsWrap]': {
+      //   paddingBottom: 0,
+      //   paddingLeft: 'var(--grid-gap)',
+      //   paddingRight: 0
+      // },
+
+      // '& [class*=Card-content]': {
+      //   'display': 'flex',
+      //   'flexDirection': 'column',
+      //   'paddingBottom': 0,
+      //   'paddingLeft': 'var(--grid-gap)',
+      //   'paddingRight': 0,
+
+      //   '& > *': {
+      //     marginTop: 'auto'
+      //   }
+      // },
+
+      '& [class*=Card-title]': {
+        marginTop: 0
+      }
+    }
+  },
+
+  {
+    props: {
       variant: CardVariants.news
     },
     style: {

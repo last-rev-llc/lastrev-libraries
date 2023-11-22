@@ -12,7 +12,8 @@ export enum CardVariants {
   person = 'person',
   quote = 'quote',
   news = 'news',
-  timeline = 'timeline'
+  timeline = 'timeline',
+  searchResult = 'searchResult'
 }
 
 export enum CardAspectRatios {

@@ -4,6 +4,7 @@ import { checkAndWrapArray } from './checkAndWrapArray';
 
 type GenerateCardProps = {
   id: string;
+  overline?: string;
   title?: string;
   subtitle?: string;
   summary?: string;
@@ -12,10 +13,20 @@ type GenerateCardProps = {
   entries?: any[];
 };
 
-export const generateCard = ({ id, title, subtitle, summary, link, media, entries = [] }: GenerateCardProps) => {
+export const generateCard = ({
+  id,
+  overline,
+  title,
+  subtitle,
+  summary,
+  link,
+  media,
+  entries = []
+}: GenerateCardProps) => {
   return {
     __typename: 'Card',
     id,
+    overline,
     title,
     subtitle,
     body: summary ? createRichText(summary) : null,
