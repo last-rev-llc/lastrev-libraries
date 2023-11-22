@@ -24,6 +24,7 @@ interface BlockClasses {
   contentOuterGrid: string;
   mainContentWrap: string;
   sideContentWrap: string;
+  media: string;
   content: string;
   background: string;
   overline: string;

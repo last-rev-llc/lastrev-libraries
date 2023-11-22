@@ -84,7 +84,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     img: {
       width: '100%',
       height: 'auto',
-      aspectRatio: '1/1'
+      aspectRatio: '1/1',
+      objectFit: 'cover'
     }
   }),
 
@@ -277,7 +278,13 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
 
       '[class*=mediaWrap]': {
         gridColumn: 'content-start/content-end',
-        gridRow: 2
+        maxWidth: 800,
+        margin: 'auto',
+        gridRow: 2,
+        img: {
+          aspectRatio: '21/9',
+          objectFit: 'contain'
+        }
       }
     }
   }

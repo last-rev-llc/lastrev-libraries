@@ -72,7 +72,7 @@ const schemes = {
   sapphireLight: {
     primary: colors.sapphireLight,
     secondary: colors.blue,
-    highlightColor: colors.blue.main,
+    highlightColor: colors.blue.dark,
     overline: colors.blue.main
   },
   sapphireAccent: {
@@ -85,7 +85,7 @@ const schemes = {
   blueAccent: {
     primary: colors.white,
     secondary: colors.blue,
-    highlightColor: colors.blue.main,
+    highlightColor: colors.blue.dark,
     overline: colors.blue.main
   },
   greenAccent: {

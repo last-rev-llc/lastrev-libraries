@@ -26,7 +26,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
   }),
 
   // introTextGrid: : {},
-
+  media: {
+    '&:is(img)': {
+      objectFit: 'contain'
+    }
+  },
   introText: { gridColumn: 'content-start / content-end' },
 
   contentOuterGrid: {

@@ -59,7 +59,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
   }),
 
   authorName: ({ theme }) => ({
-    gridArea: 'authorName'
+    gridArea: 'authorName',
+    fontWeight: 'bold'
   }),
 
   authorTitle: ({ theme }) => ({
