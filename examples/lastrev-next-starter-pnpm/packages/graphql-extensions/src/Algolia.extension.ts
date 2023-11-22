@@ -68,7 +68,7 @@ export const mappers = {
 
         if (!path) return [];
 
-        const title = getLocalizedField(person.fields, 'title', ctx);
+        const title = getLocalizedField(person.fields, 'name', ctx);
         const subtitle = getLocalizedField(person.fields, 'jobTitle', ctx);
         const body = getLocalizedField(person.fields, 'body', ctx);
         const summary = getLocalizedField(person.fields, 'promoSummary', ctx) ?? '';

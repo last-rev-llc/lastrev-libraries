@@ -3,7 +3,6 @@ import Cors from 'cors';
 
 import { createAlgoliaSyncHandler } from '@last-rev/graphql-algolia-integration';
 
-// import lrConfig from '../../../../config';
 import lrConfig from '../../../../../packages/graphql-sdk/config';
 
 console.log(JSON.stringify(lrConfig.algolia, null, 2));
@@ -55,11 +54,3 @@ const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse
 };
 
 export default handler;
-
-// Next.js API route
-// import { createAlgoliaSyncNextHandler } from '@last-rev/graphql-algolia-integration';
-// import config from '../../../../../packages/graphql-sdk/config';
-
-// const url = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}/api/graphql` : 'http://localhost:8888/graphql';
-
-// export default createAlgoliaSyncNextHandler(config, url);

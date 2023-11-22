@@ -86,20 +86,20 @@ export const mappers: Mappers = {
     CollectionDynamic: {
       algoliaSettings: async (collection: any, args: any, ctx: ApolloContext) => {
         return {
-          indexName: 'test127',
+          indexName: 'contentful',
           showCurrentRefinements: true,
           useInfiniteHits: false,
           showPagination: false,
           showSearchBox: true,
           searchAsYouType: false,
           showFilters: true,
-          // filters: [
-          //   {
-          //     type: 'hierarchialMenu',
-          //     limit: 100,
-          //     attributes: ['categories.level-1', 'categories.level-2', 'categories.level-3']
-          //   }
-          // ],
+          filters: [
+            {
+              type: 'hierarchialMenu',
+              limit: 100,
+              attributes: ['contentType']
+            }
+          ],
           configure: {
             hitsPerPage: 4,
             filters: `locale:"en-US"`
