@@ -6,6 +6,8 @@ import { pathResolver } from './utils/pathResolver';
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
 import { generateCard } from './utils/generateCard';
 import { getLink } from './utils/getLink';
+import { getMedia } from './utils/getMedia';
+import { getSysContentTypeName } from './utils/getSysContentTypeName';
 
 const index = 'contentful';
 
@@ -21,12 +23,12 @@ export const mappers = {
         const pubDate = getLocalizedField(blog.fields, 'pubDate', ctx);
         const body = getLocalizedField(blog.fields, 'body', ctx);
         const summary = getLocalizedField(blog.fields, 'promoSummary', ctx) ?? '';
-        const promoImage =
+        const promoImageRef =
           getLocalizedField(blog.fields, 'promoImage', ctx) ?? getLocalizedField(blog.fields, 'featuredMedia', ctx);
-
+        const promoImage = await getMedia(promoImageRef, ctx);
         const entries: any[] = [];
 
-        const contentType = blog.sys.contentType.sys.id;
+        const contentType = getSysContentTypeName(blog);
 
         const link = await getLink(blog, args, ctx);
 
@@ -52,7 +54,7 @@ export const mappers = {
               summary,
               promoImage,
               path,
-              contentType: ['all', contentType],
+              contentType,
               link,
               card
             }
@@ -72,12 +74,12 @@ export const mappers = {
         const subtitle = getLocalizedField(person.fields, 'jobTitle', ctx);
         const body = getLocalizedField(person.fields, 'body', ctx);
         const summary = getLocalizedField(person.fields, 'promoSummary', ctx) ?? '';
-        const promoImage =
+        const promoImageRef =
           getLocalizedField(person.fields, 'promoImage', ctx) ?? getLocalizedField(person.fields, 'mainImage', ctx);
-
+        const promoImage = await getMedia(promoImageRef, ctx);
         const entries: any[] = [];
 
-        const contentType = person.sys.contentType.sys.id;
+        const contentType = getSysContentTypeName(person);
 
         const link = await getLink(person, args, ctx);
 
@@ -96,7 +98,7 @@ export const mappers = {
               summary,
               promoImage,
               path,
-              contentType: ['all', contentType],
+              contentType,
               link,
               card
             }
@@ -115,12 +117,14 @@ export const mappers = {
         const title = getLocalizedField(page.fields, 'title', ctx);
         const body = getLocalizedField(page.fields, 'body', ctx);
         const summary = getLocalizedField(page.fields, 'promoSummary', ctx) ?? '';
-        const promoImage =
+        const promoImageRef =
           getLocalizedField(page.fields, 'promoImage', ctx) ?? getLocalizedField(page.fields, 'mainImage', ctx);
+
+        const promoImage = await getMedia(promoImageRef, ctx);
 
         const entries: any[] = [];
 
-        const contentType = page.sys.contentType.sys.id;
+        const contentType = getSysContentTypeName(page);
 
         const link = await getLink(page, args, ctx);
 
@@ -136,9 +140,8 @@ export const mappers = {
               title,
               body: documentToPlainTextString(body),
               summary,
-              promoImage,
               path,
-              contentType: ['all', contentType],
+              contentType,
               link,
               card
             }
@@ -156,12 +159,12 @@ export const mappers = {
 
         const title = getLocalizedField(property.fields, 'name', ctx);
         const summary = getLocalizedField(property.fields, 'promoSummary', ctx) ?? '';
-        const promoImage =
+        const promoImageRef =
           getLocalizedField(property.fields, 'promoImage', ctx) ?? getLocalizedField(property.fields, 'mainImage', ctx);
-
+        const promoImage = await getMedia(promoImageRef, ctx);
         const entries: any[] = [];
 
-        const contentType = property.sys.contentType.sys.id;
+        const contentType = getSysContentTypeName(property);
 
         const link = await getLink(property, args, ctx);
 
@@ -178,7 +181,7 @@ export const mappers = {
               summary,
               promoImage,
               path,
-              contentType: ['all', contentType],
+              contentType,
               link,
               card
             }

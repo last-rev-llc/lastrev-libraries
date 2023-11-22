@@ -1,10 +1,9 @@
 import type { ContentType } from 'contentful';
 import { isString } from './isString';
+import { capitalizeFirst } from './capitalizeFirst';
 
-const capitalizeFirst = (str: string): string => str?.charAt(0)?.toUpperCase() + str?.slice(1);
-
-export const getTypeName = (contentType: ContentType | string): string => {
+export const getTypeName = (contentType: ContentType | string): string | null => {
   const contentTypeId = isString(contentType) ? contentType : (contentType as ContentType)?.sys?.id;
-
+  if (!contentTypeId) return null;
   return capitalizeFirst(String(contentTypeId));
 };
