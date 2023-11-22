@@ -37,20 +37,30 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
 
   // contentGrid: {},
 
-  currentRefinementsWrap: {
-    gridColumn: 'content-start/content-end',
+  filtersOuterWrap: ({ theme }) => ({
+    gridColumn: 'content-start/conent-end',
     display: 'flex',
     flexDirection: 'column',
     gap: 'var(--grid-gap)',
-    gridRow: 1
+    gridRow: 1,
+
+    [theme.containerBreakpoints.up('md')]: {
+      flexDirection: 'row'
+    }
+  }),
+
+  currentRefinementsWrap: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 'var(--grid-gap)'
   },
 
   filtersWrap: {
-    gridColumn: 'content-start/three-end',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 'var(--grid-gap)',
-    gridRow: 2
+    display: 'contents'
+    // display: 'flex',
+    // flexDirection: 'column',
+    // gap: 'var(--grid-gap)',
+    // gridRow: 2
   },
 
   // paginationWrap: {},
@@ -58,13 +68,12 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
   // searchBoxWrap: {},
 
   resultsWrap: {
-    gridColumn: 'four-start/content-end',
+    gridColumn: 'content-start/content-end',
     gap: 'inherit',
     gridRow: 2
   },
 
   itemsGrid: ({ theme, ownerState }) => ({
-    // 'gridColumn': 'four-start/content-end',
     'display': 'grid',
     'gap': 'inherit',
     'gridTemplateColumns': 'repeat(1, minmax(0, 1fr))',

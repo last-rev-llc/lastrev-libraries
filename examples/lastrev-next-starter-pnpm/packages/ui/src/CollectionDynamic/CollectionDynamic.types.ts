@@ -34,6 +34,7 @@ interface CollectionDynamicClasses {
   actionsContainer: string;
   action: string;
   paginationWrap: string;
+  filtersOuterWrap: string;
   filtersWrap: string;
   resultsWrap: string;
   searchBoxWrap: string;

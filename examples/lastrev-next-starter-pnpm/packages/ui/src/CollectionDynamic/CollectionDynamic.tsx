@@ -59,25 +59,30 @@ const CollectionDynamic = (props: CollectionDynamicProps) => {
         {/* Use the AlgoliaSearch component here */}
         <AlgoliaSearch algoliaSettings={algoliaSettings}>
           <ContentGrid ownerState={ownerState}>
-            {!!algoliaSettings?.indexName && !!algoliaSettings?.showCurrentRefinements ? (
-              <CurrentRefinementsWrap>
-                <CurrentRefinements ownerState={ownerState} />
-              </CurrentRefinementsWrap>
-            ) : null}
+            <FiltersOuterWrap ownerState={ownerState}>
+              {!!algoliaSettings?.indexName && !!algoliaSettings?.showCurrentRefinements ? (
+                <CurrentRefinementsWrap ownerState={ownerState}>
+                  <CurrentRefinements ownerState={ownerState} />
+                </CurrentRefinementsWrap>
+              ) : null}
 
-            {!!algoliaSettings?.indexName && (!!algoliaSettings?.showFilters || !!algoliaSettings?.showSearchBox) ? (
-              <FiltersWrap ownerState={ownerState}>
-                {!!algoliaSettings?.indexName && !!algoliaSettings?.showSearchBox ? (
-                  <SearchBoxWrap ownerState={ownerState}>
-                    <SearchBox ownerState={ownerState} searchAsYouType={!!algoliaSettings?.searchAsYouType} />
-                  </SearchBoxWrap>
-                ) : null}
+              {!!algoliaSettings?.indexName && (!!algoliaSettings?.showFilters || !!algoliaSettings?.showSearchBox) ? (
+                <FiltersWrap ownerState={ownerState}>
+                  {!!algoliaSettings?.indexName && !!algoliaSettings?.showSearchBox ? (
+                    <SearchBoxWrap ownerState={ownerState}>
+                      <SearchBox ownerState={ownerState} searchAsYouType={!!algoliaSettings?.searchAsYouType} />
+                    </SearchBoxWrap>
+                  ) : null}
 
-                {!!algoliaSettings?.indexName && !!algoliaSettings?.showFilters ? (
-                  <Filters ownerState={ownerState} filters={algoliaSettings.filters} />
-                ) : null}
-              </FiltersWrap>
-            ) : null}
+                  {!!algoliaSettings?.indexName && !!algoliaSettings?.showFilters ? (
+                    <Filters
+                      ownerState={ownerState}
+                      filters={algoliaSettings.filters ?? algoliaSettings.facetFilters}
+                    />
+                  ) : null}
+                </FiltersWrap>
+              ) : null}
+            </FiltersOuterWrap>
 
             <ResultsWrap ownerState={ownerState}>
               <ItemsGrid ownerState={ownerState}>
@@ -138,6 +143,12 @@ const ItemsGrid = styled(Box, {
   name: 'CollectionDynamic',
   slot: 'ItemsGrid',
   overridesResolver: (_, styles) => [styles.itemsGrid, styles.itemsContainerOnePerRow]
+})<{ ownerState: CollectionDynamicOwnerState }>``;
+
+const FiltersOuterWrap = styled(Grid, {
+  name: 'CollectionDynamic',
+  slot: 'FiltersOuterWrap',
+  overridesResolver: (_, styles) => [styles.filtersOuterWrap]
 })<{ ownerState: CollectionDynamicOwnerState }>``;
 
 const FiltersWrap = styled(Box, {
