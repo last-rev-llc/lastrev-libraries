@@ -5,8 +5,6 @@ import { createAlgoliaSyncHandler } from '@last-rev/graphql-algolia-integration'
 
 import lrConfig from '../../../../../packages/graphql-sdk/config';
 
-console.log(JSON.stringify(lrConfig.algolia, null, 2));
-
 const maxRecords = process.env.ALGOLIA_MAX_RECORDS ? parseInt(process.env.ALGOLIA_MAX_RECORDS) : undefined;
 
 function initMiddleware(middleware: any) {

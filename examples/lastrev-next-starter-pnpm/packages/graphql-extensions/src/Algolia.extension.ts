@@ -84,7 +84,7 @@ export const mappers = {
         const link = await getLink(person, args, ctx);
 
         const card = generateCard({ id: person.sys.id, title, subtitle, summary, link, media: promoImage, entries });
-
+        const areaOfExpertise = getLocalizedField(person.fields, 'areaOfExpertise', ctx);
         return [
           {
             index,
@@ -95,6 +95,7 @@ export const mappers = {
               title,
               subtitle,
               body: documentToPlainTextString(body),
+              areaOfExpertise,
               summary,
               promoImage,
               path,
