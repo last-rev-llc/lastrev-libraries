@@ -26,16 +26,6 @@ const CollectionDynamic = (props: CollectionDynamicProps) => {
 
   const { backgroundImage, backgroundColor, variant, sidekickLookup, introText, algoliaSettings } = props;
 
-  const HitComponent = ({ hit }: { hit: any }) => (
-    <Card
-      {...hit}
-      ownerState={ownerState}
-      variant={ownerState.itemsVariant}
-      aspectRatio={ownerState.itemsAspectRatio}
-      backgroundColor={ownerState.backgroundColor}
-    />
-  );
-
   return (
     <ErrorBoundary>
       <Root ownerState={ownerState} {...sidekick(sidekickLookup)} data-testid={`CollectionDynamic-${variant}`}>
@@ -92,7 +82,7 @@ const CollectionDynamic = (props: CollectionDynamicProps) => {
 
                 {!!algoliaSettings?.indexName && !algoliaSettings?.useInfiniteHits ? (
                   <>
-                    <Hits ownerState={ownerState} HitComponent={HitComponent} />
+                    <Hits ownerState={ownerState} HitComponent={Card} />
                     {!!algoliaSettings?.showPagination ? (
                       <PaginationWrap ownerState={ownerState}>
                         <Pagination ownerState={ownerState} />
