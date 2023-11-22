@@ -51,5 +51,6 @@ fragment Blog_CardFragment on Blog {
     ...Media_BaseFragment
   }
   promoSummary
+  promoLinkText
   pubDate
 }

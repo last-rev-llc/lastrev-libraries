@@ -486,6 +486,7 @@ type Page implements Content {
   lr__path__: String
   path: String
   promoImage: Media
+  promoLinkText: String
   promoSummary: String
   seo: JSON
   sidekickLookup: JSON
@@ -544,6 +545,7 @@ type PageProperty implements Content {
   ncreifRegion: String
   path: String
   promoImage: Media
+  promoLinkText: String
   promoSummary: String
   sector: String
   seo: JSON

@@ -42,6 +42,11 @@ fragment Person_Card_Fragment on Person {
   socialLinks {
     ...Link_BaseFragment
   }
+  promoImage {
+    ...Media_BaseFragment
+  }
+  promoSummary
+  promoLinkText
 }
 
 fragment Person_Blog_Author_Fragment on Person {

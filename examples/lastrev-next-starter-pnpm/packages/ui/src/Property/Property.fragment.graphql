@@ -47,4 +47,9 @@ fragment Property_Card_Fragment on PageProperty {
   mainImage {
     ...Media_BaseFragment
   }
+  promoImage {
+    ...Media_BaseFragment
+  }
+  promoSummary
+  promoLinkText
 }

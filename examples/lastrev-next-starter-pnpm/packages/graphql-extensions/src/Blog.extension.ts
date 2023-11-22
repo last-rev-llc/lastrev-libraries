@@ -89,15 +89,15 @@ export const mappers: Mappers = {
         return blog;
       },
 
-      actions: async (blog: any, _args: any, ctx: ApolloContext) => {
+      actions: async (blog: any, args: any, ctx: ApolloContext) => {
+        const text = getLocalizedField(blog.fields, 'promoLinkText', ctx) ?? 'Read More';
         return [
           createType('Link', {
             id: blog.id,
-            text: 'Read More',
+            text,
             icon: 'logo',
             iconPosition: 'Left',
-            href: await pathResolver(blog, _args, ctx),
-            // linkedContent: page,
+            href: await pathResolver(blog, args, ctx),
             variant: 'buttonText'
           })
         ];
