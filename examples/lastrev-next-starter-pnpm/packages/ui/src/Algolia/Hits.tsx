@@ -10,7 +10,7 @@ const Hits = ({ ownerState, HitComponent, ...other }: { ownerState: any; HitComp
   return (
     <>
       {hits.map((hit, index) => (
-        <HitComponent key={`hit-${index}-${hit.id}`} hit={hit} ownerState={ownerState} />
+        <HitComponent key={`hit-${index}-${hit.id}`} hit={hit.card} ownerState={ownerState} />
       ))}
     </>
   );
