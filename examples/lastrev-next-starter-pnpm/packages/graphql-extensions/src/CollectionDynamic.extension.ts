@@ -85,6 +85,15 @@ export const mappers: Mappers = {
   CollectionDynamic: {
     CollectionDynamic: {
       algoliaSettings: async (collection: any, args: any, ctx: ApolloContext) => {
+        const settings = getLocalizedField(collection.fields, 'settings', ctx);
+
+        if (settings) {
+          return {
+            indexName: 'contentful',
+            ...settings
+          };
+        }
+
         return {
           indexName: 'contentful',
           showCurrentRefinements: true,
