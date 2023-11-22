@@ -13,6 +13,7 @@
     "@apollo/server": "^4.9.3",
     "@last-rev/graphql-contentful-core": "^0.5.17",
     "@last-rev/contentful-webhook-handler": "^0.4.16",
+    "@last-rev/graphql-algolia-integration": "^0.1.13",
     "@next/bundle-analyzer": "^13.4.19",
     "@sentry/nextjs": "^7.68.0",
     "cors": "^2.8.5",

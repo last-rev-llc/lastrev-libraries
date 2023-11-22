@@ -30,8 +30,8 @@ const parseBooleanEnvVar = (value = '') => {
 
 const config = new LastRevAppConfig({
   cms: 'Contentful',
-  contentStrategy: process.env.NODE_ENV !== 'production' ? 'cms' : undefined,
-  cmsCacheStrategy: 'redis',
+  contentStrategy: 'cms',
+  // cmsCacheStrategy: 'redis',
   sites: [process.env.SITE],
   extensions,
   graphql: { port: 8888 },
@@ -46,8 +46,9 @@ const config = new LastRevAppConfig({
   algolia: {
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
     adminApiKey: process.env.ALGOLIA_ADMIN_API_KEY,
-    contentTypeIds: ['blog'],
-    indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT)
+    contentTypeIds: ['blog', 'page', 'pageProperty', 'person'],
+    indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT),
+    maxBatchSize: process.env.ALGOLIA_MAX_BATCH_SIZE ? parseInt(process.env.ALGOLIA_MAX_BATCH_SIZE, 10) : 400
   },
   redis: {
     port: process.env.REDIS_PORT,

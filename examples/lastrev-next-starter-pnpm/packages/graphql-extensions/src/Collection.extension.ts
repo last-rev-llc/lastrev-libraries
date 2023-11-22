@@ -5,7 +5,7 @@ import type { ApolloContext } from './types';
 
 import { pascalCase } from './utils/pascalCase';
 import { collectOptions } from './utils/collectOptions';
-import { queryContentful } from './utils/queryContentful';
+// import { queryContentful } from './utils/queryContentful';
 import { getWinstonLogger } from '@last-rev/logging';
 import { defaultResolver } from './utils/defaultResolver';
 
@@ -27,13 +27,15 @@ export const typeDefs = gql`
     isCarouselTablet: Boolean
     isCarouselMobile: Boolean
     itemsPerRow: Int
-    numItems: Int
+    numItems: Int,
+    algoliaSettings: JSON
   }
 
 
   type CollectionOptions {
     tags: [Option]
     topics: [Option]
+    sector: [Option]
   }
 
   type Option {
@@ -55,6 +57,7 @@ export const typeDefs = gql`
   input CollectionFilterInput {
     topics: [String]
     tags: [String]
+    sector: [String]
     body: String
   }
 
@@ -82,34 +85,46 @@ interface CollectionSettings {
 export const mappers: Mappers = {
   Collection: {
     Collection: {
+      algoliaSettings: async (collection: any, args: any, ctx: ApolloContext) => {
+        return {
+          query: 'viewability',
+          configure: {
+            filters: 'locale:"en-US"'
+          },
+          hierarchicalMenu: {
+            'categories.level-1': ['Advertiser + Agency Solutions']
+          }
+        };
+      },
       items: async (collection: any, args: any, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
-        const itemsVariantFn = defaultResolver('itemsVariant');
-        const itemsVariant = itemsVariantFn(collection, args, ctx);
+        return items;
+        // const itemsVariantFn = defaultResolver('itemsVariant');
+        // const itemsVariant = itemsVariantFn(collection, args, ctx);
 
-        const itemsAspectRatioFn = defaultResolver('itemsAspectRatio');
-        const itemsAspectRatio = itemsAspectRatioFn(collection, args, ctx);
+        // const itemsAspectRatioFn = defaultResolver('itemsAspectRatio');
+        // const itemsAspectRatio = itemsAspectRatioFn(collection, args, ctx);
 
-        try {
-          const { contentType, limit, offset, order, filter } =
-            (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
-          if (contentType) {
-            items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
+        // try {
+        //   const { contentType, limit, offset, order, filter } =
+        //     (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
+        //   if (contentType) {
+        //     // items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
 
-            return ctx.loaders.entryLoader.loadMany(
-              items?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-            );
-          }
-        } catch (error: any) {
-          logger.error(error.message, {
-            caller: 'Collection.items',
-            stack: error.stack
-          });
-        }
+        //     return ctx.loaders.entryLoader.loadMany(
+        //       items?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+        //     );
+        //   }
+        // } catch (error: any) {
+        //   logger.error(error.message, {
+        //     caller: 'Collection.items',
+        //     stack: error.stack
+        //   });
+        // }
 
-        const returnItems = items?.map((x: any) => ({ ...x, aspectRatio: itemsAspectRatio, variant: itemsVariant }));
+        // const returnItems = items?.map((x: any) => ({ ...x, aspectRatio: itemsAspectRatio, variant: itemsVariant }));
 
-        return returnItems;
+        // return returnItems;
       },
 
       isCarouselDesktop: async (collection: any, _args: any, ctx: ApolloContext) => {
@@ -183,52 +198,55 @@ export const mappers: Mappers = {
 
       itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
-        try {
-          const { contentType, filters } =
-            (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
-          // Get all possible items from Contentful
-          // Need all to generate the possible options for all items. Not just the current page.
-          if (contentType) {
-            items = await queryContentful({ contentType, filters, filter, ctx });
-            const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
-              id: contentType,
-              preview: !!ctx.preview
-            });
-            // const options = await collectOptions({ filters, items, ctx });
-            const options = {};
-            const allOptions = await collectOptions({ filters, items: allItems, ctx });
 
-            // Paginate results
-            if (offset || limit) {
-              items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
-            }
+        // try {
+        //   const { contentType, filters } =
+        //     (getLocalizedField(collection.fields, 'settings', ctx) as CollectionSettings) || {};
+        //   // Get all possible items from Contentful
+        //   // Need all to generate the possible options for all items. Not just the current page.
+        //   if (contentType) {
+        //     items = await queryContentful({ contentType, filters, filter, ctx });
+        //     const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
+        //       id: contentType,
+        //       preview: !!ctx.preview
+        //     });
+        //     // const options = await collectOptions({ filters, items, ctx });
+        //     const options = {};
+        //     const allOptions = await collectOptions({ filters, items: allItems, ctx });
 
-            let fullItemsWithVariant = [];
+        //     // Paginate results
+        //     if (offset || limit) {
+        //       items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
+        //     }
 
-            if (!!items?.length) {
-              const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
+        //     let fullItemsWithVariant = [];
 
-              const fullItems = await ctx.loaders.entryLoader.loadMany(
-                items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-              );
+        //     if (!!items?.length) {
+        //       const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
 
-              fullItemsWithVariant = fullItems?.map((x: any) => ({ ...x, variant: itemsVariant }));
-            }
+        //       const fullItems = await ctx.loaders.entryLoader.loadMany(
+        //         items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
+        //       );
 
-            return {
-              pageInfo: {
-                options,
-                allOptions
-              },
-              items: fullItemsWithVariant
-            };
-          }
-        } catch (error: any) {
-          logger.error(error.message, {
-            caller: 'Collection.itemsConnection',
-            stack: error.stack
-          });
-        }
+        //       fullItemsWithVariant = fullItems?.map((x: any) => ({ ...x, variant: itemsVariant }));
+        //     }
+
+        //     return {
+        //       pageInfo: {
+        //         options,
+        //         allOptions
+        //       },
+        //       items: fullItemsWithVariant
+        //     };
+        //   }
+        // } catch (error: any) {
+        //   logger.error(error.message, {
+        //     caller: 'Collection.itemsConnection',
+        //     stack: error.stack
+        //   });
+        // }
+
+        // const returnItems = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
 
         return items;
       }

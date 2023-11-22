@@ -10,6 +10,19 @@ directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
 
 directive @tag(name: String!) on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
 
+type AlgoliaObject {
+  data: JSON!
+  index: String!
+}
+
+type AlgoliaRecord implements Content {
+  algoliaObjects: [AlgoliaObject]
+  animation: JSON
+  id: String
+  sidekickLookup: JSON
+  theme: [Theme]
+}
+
 type Asset {
   description: String
   extension: String
@@ -114,6 +127,7 @@ type CategoryBlog implements Content {
 }
 
 type Collection implements Content {
+  algoliaSettings: JSON
   animation: JSON
   backgroundColor: String
   backgroundImage: Media
@@ -138,6 +152,7 @@ type Collection implements Content {
 }
 
 type CollectionDynamic implements Content {
+  algoliaSettings: JSON
   animation: JSON
   backgroundColor: String
   backgroundImage: Media
@@ -156,8 +171,6 @@ type CollectionDynamic implements Content {
   itemsPerRow: Int
   itemsVariant: String
   numItems: Int
-  numberOfItemsToPull: String
-  pullFromContentType: String
   settings: JSON
   showFilters: Boolean
   sidekickLookup: JSON
@@ -173,6 +186,7 @@ type CollectionDynamicConnectionPageInfo {
 
 input CollectionDynamicFilterInput {
   body: String
+  sector: [String]
   tags: [String]
   topics: [String]
 }
@@ -190,6 +204,7 @@ type CollectionDynamicOption {
 }
 
 type CollectionDynamicOptions {
+  sector: [CollectionDynamicOption]
   tags: [CollectionDynamicOption]
   topics: [CollectionDynamicOption]
 }
@@ -222,6 +237,7 @@ type CollectionExpandableItem implements Content {
 
 input CollectionFilterInput {
   body: String
+  sector: [String]
   tags: [String]
   topics: [String]
 }
@@ -234,6 +250,7 @@ type CollectionItemConnection {
 }
 
 type CollectionOptions {
+  sector: [Option]
   tags: [Option]
   topics: [Option]
 }
@@ -475,6 +492,24 @@ type Page implements Content {
   slug: String
   theme: [Theme]
   title: String
+}
+
+type PageAsset implements Content {
+  address: JSON
+  animation: JSON
+  assetType: String
+  body: RichText
+  id: String
+  mainImage: Media
+  name: String
+  ncreifRegion: String
+  promoImage: Media
+  promoSummary: String
+  sector: String
+  sidekickLookup: JSON
+  strategy: String
+  theme: [Theme]
+  variant: String
 }
 
 type PagePathParam {

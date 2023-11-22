@@ -14,12 +14,10 @@ fragment CollectionDynamic_FieldsFragment on CollectionDynamic {
   isCarouselTablet
   isCarouselMobile
   itemsPerRow
-  numItems
   inheritTopBGOverlap
-  pullFromContentType
-  numberOfItemsToPull
   settings
   showFilters
+  algoliaSettings
 }
 
 # Base fragment used everywhere there's a Collection

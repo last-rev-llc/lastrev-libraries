@@ -1,11 +1,32 @@
 import type { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import Cors from 'cors';
 
-import { cors } from '../../cors';
 import { createAlgoliaSyncHandler } from '@last-rev/graphql-algolia-integration';
 
-import lrConfig from 'graphql-sdk/config.serverless';
+import lrConfig from '../../../../../packages/graphql-sdk/config';
+
+console.log(JSON.stringify(lrConfig.algolia, null, 2));
 
 const maxRecords = process.env.ALGOLIA_MAX_RECORDS ? parseInt(process.env.ALGOLIA_MAX_RECORDS) : undefined;
+
+function initMiddleware(middleware: any) {
+  return (req: NextApiRequest, res: NextApiResponse<any>) =>
+    new Promise((resolve, reject) => {
+      middleware(req, res, (result: any) => {
+        if (result instanceof Error) {
+          return reject(result);
+        }
+        return resolve(result);
+      });
+    });
+}
+
+const cors = initMiddleware(
+  Cors({
+    // Only allow requests with GET, POST and OPTIONS
+    methods: ['POST', 'OPTIONS']
+  })
+);
 
 export const config = {
   api: {
