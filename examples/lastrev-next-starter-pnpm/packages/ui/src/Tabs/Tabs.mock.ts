@@ -2,7 +2,6 @@ import { introTextMock } from '../Text/Text.mock';
 
 import {
   collectionExpandableItemBaseMock,
-  collectionExpandableItemQuotesMock,
   collectionExpandableItemBlocksMock
 } from '../CollectionExpandableItem/CollectionExpandableItem.mock';
 
@@ -17,8 +16,7 @@ export const tabsBaseMock = (override?: Partial<TabsProps>): TabsProps => {
     variant: TabsVariants.default,
     items: [
       collectionExpandableItemBlocksMock({ title: 'Block - Title' }),
-      collectionExpandableItemBaseMock({ title: 'Collection - Title' }),
-      collectionExpandableItemQuotesMock({ title: 'Quote - Title' })
+      collectionExpandableItemBaseMock({ title: 'Collection - Title' })
     ],
     introText: introTextMock()
   };
@@ -39,15 +37,5 @@ export const tabsCollectionMock = ({ ...override } = {}) => ({
   items: [
     collectionExpandableItemBaseMock({ title: 'Collection 1 - Title' }),
     collectionExpandableItemBaseMock({ title: 'Collection 2 - Title' })
-  ]
-});
-
-export const tabsQuotesMock = ({ ...override } = {}) => ({
-  ...tabsBaseMock(override),
-  items: [
-    collectionExpandableItemQuotesMock({ title: 'Quote 1' }),
-    collectionExpandableItemQuotesMock({ title: 'Quote 2' }),
-    collectionExpandableItemQuotesMock({ title: 'Quote 3' }),
-    collectionExpandableItemQuotesMock({ title: 'Quote 4' })
   ]
 });

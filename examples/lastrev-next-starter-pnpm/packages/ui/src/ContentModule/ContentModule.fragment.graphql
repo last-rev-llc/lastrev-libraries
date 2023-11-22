@@ -7,7 +7,6 @@ fragment ContentModule_BaseFragment on Content {
   ...Hero_BaseFragment
   ...Media_BaseFragment
   ...ModuleIntegration_BaseFragment
-  ...Quote_BaseFragment
   ...Section_BaseFragment
   ...Text_BaseFragment
   ...Form_BaseFragment
@@ -42,7 +41,6 @@ fragment ContentModule_SectionFragment on Content {
   ...Hero_BaseFragment
   ...Media_BaseFragment
   ...ModuleIntegration_BaseFragment
-  ...Quote_BaseFragment
   ...Text_BaseFragment
   ...Form_BaseFragment
 }
@@ -56,7 +54,6 @@ fragment ContentModule_RichTextFragment on Content {
   ...Link_BaseFragment
   ...Media_BaseFragment
   ...ModuleIntegration_BaseFragment
-  ...Quote_BaseFragment
   ...Text_RichTextFragment
   ...Form_BaseFragment
 }

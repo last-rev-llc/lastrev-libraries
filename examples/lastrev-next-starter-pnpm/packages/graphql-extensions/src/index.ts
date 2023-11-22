@@ -45,7 +45,6 @@ function loadFiles() {
     modules['Person'] = require('./Person.extension');
     modules['Preview'] = require('./Preview.extension');
     modules['PageProperty'] = require('./Property.extension');
-    modules['Quote'] = require('./Quote.extension');
     modules['RichText'] = require('./RichText.extension');
     modules['Section'] = require('./Section.extension');
     modules['SEO'] = require('./SEO.extension');

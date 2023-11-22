@@ -601,18 +601,9 @@ type Query {
   sitemapPage(contentType: String!, locale: String, page: Int, preview: Boolean, site: String): SitemapPage
 }
 
-type Quote implements Content {
-  animation: JSON
-  authorName: String
-  authorTitle: String
-  id: String
+type Quote {
   image: Media
-  internalTitle: String
   logo: Media
-  quote: String
-  sidekickLookup: JSON
-  theme: [Theme]
-  variant: String
 }
 
 type RichText {

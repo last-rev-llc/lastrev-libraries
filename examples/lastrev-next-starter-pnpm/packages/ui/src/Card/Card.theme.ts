@@ -442,29 +442,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
   },
   {
     props: {
-      variant: CardVariants.pricing
-    },
-    style: {
-      '& [class*=Card-content] > *': {
-        textAlign: 'center',
-        display: 'block'
-      },
-
-      '& [class*=Card-title]': {
-        ...theme.typography.display1,
-        marginTop: theme.spacing(4),
-        marginBottom: theme.spacing(4)
-      },
-
-      '& [class*=Card-subtitle]': {
-        ...theme.typography.h4,
-        marginTop: theme.spacing(2),
-        marginBottom: theme.spacing(2)
-      }
-    }
-  },
-  {
-    props: {
       variant: CardVariants.person
     },
     style: {

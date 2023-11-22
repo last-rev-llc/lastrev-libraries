@@ -26,5 +26,4 @@ export const Logo = { args: { ...cardBaseMock({ variant: CardVariants.logo }) } 
 export const Media = { args: { ...cardBaseMock({ variant: CardVariants.media }) } };
 export const Pricing = { args: { ...cardBaseMock({ variant: CardVariants.pricing }) } };
 export const Person = { args: { ...cardBaseMock({ variant: CardVariants.person }) } };
-export const Quote = { args: { ...cardBaseMock({ variant: CardVariants.quote }) } };
 export const Blog = { args: { ...cardBaseMock({ variant: CardVariants.blog }) } };

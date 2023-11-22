@@ -7,8 +7,8 @@ import { defaultResolver } from './utils/defaultResolver';
 // If there's a mapping use it
 const COLOR_MAPPING: { [key: string]: string } = {};
 
-export const colorResolver = (field: string, root?: true) => async (quote: any, _args: any, ctx: ApolloContext) => {
-  const colorValue: any = getLocalizedField(quote.fields, field, ctx);
+export const colorResolver = (field: string, root?: true) => async (item: any, _args: any, ctx: ApolloContext) => {
+  const colorValue: any = getLocalizedField(item.fields, field, ctx);
   let colorClean = colorValue?.split('_')[0]?.toLowerCase();
   if (COLOR_MAPPING[colorClean]) {
     colorClean = COLOR_MAPPING[colorClean];

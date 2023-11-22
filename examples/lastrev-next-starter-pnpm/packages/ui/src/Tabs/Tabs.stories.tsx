@@ -1,5 +1,5 @@
 import Tabs from './Tabs';
-import { tabsBaseMock, tabsBlocksMock, tabsCollectionMock, tabsQuotesMock } from './Tabs.mock';
+import { tabsBaseMock, tabsBlocksMock, tabsCollectionMock } from './Tabs.mock';
 
 export default {
   title: 'Components/Tabs',
@@ -12,4 +12,3 @@ export default {
 export const Default = { args: { ...tabsBaseMock() } };
 export const Blocks = { args: { ...tabsBlocksMock() } };
 export const Collections = { args: { ...tabsCollectionMock() } };
-export const Quotes = { args: { ...tabsQuotesMock() } };

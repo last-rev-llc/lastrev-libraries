@@ -8,9 +8,7 @@ export enum CardVariants {
   icon = 'icon',
   logo = 'logo',
   media = 'media',
-  pricing = 'pricing',
   person = 'person',
-  quote = 'quote',
   news = 'news',
   timeline = 'timeline',
   searchResult = 'searchResult'
