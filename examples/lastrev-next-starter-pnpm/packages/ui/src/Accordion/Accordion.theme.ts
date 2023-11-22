@@ -60,7 +60,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
       display: 'none'
     },
     '[class*=Accordion-summary]': {
-      color: 'var(--variant-highlight-color)'
+      color: 'var(--mui-palette-accordion-summary)'
     }
   }),
   summaryWrap: {

@@ -71,6 +71,7 @@ const schemes = {
     secondary: colors.sunflower,
     highlightColor: colors.sunflower.main,
     overline: colors.sunflower.main,
+    accordionSummary: colors.sapphire.contrastText,
     cardBackground: colors.white.main,
     cardBackgroundContrastText: colors.black.main
   },
@@ -245,7 +246,8 @@ const schemes = {
     primary: colors.white,
     secondary: colors.sapphire,
     highlightColor: colors.black.main,
-    overline: colors.black.main
+    overline: colors.black.main,
+    accordionSummary: colors.black.main
   }
 };
 

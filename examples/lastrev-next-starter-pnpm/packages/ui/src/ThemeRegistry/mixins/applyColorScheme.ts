@@ -27,7 +27,8 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
       '--mui-palette-background-tab': theme.vars.palette.schemes[paletteColor].primary.main,
       '--mui-palette-overline': theme.vars.palette.schemes[paletteColor].overline,
       '--mui-palette-cardBackground': theme.vars.palette.schemes[paletteColor].cardBackground,
-      '--swiper-theme-color': theme.vars.palette.schemes[paletteColor].overline,
+      '--mui-palette-accordion-summary': theme.vars.palette.schemes[paletteColor].accordionSummary,
+      // '--swiper-theme-color': theme.vars.palette.schemes[paletteColor].overline,
       '*': {
         // Color inversion
         '--mui-palette-text-primary': theme.vars.palette.schemes[paletteColor].primary.contrastText,
@@ -48,6 +49,7 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
         '--mui-palette-divider': theme.vars.palette.schemes[paletteColor].primary.contrastText,
         // Theme colors
         '--variant-highlight-color': theme.vars.palette.schemes[paletteColor].highlightColor,
+        '--variant-accordion-color': theme.vars.palette.schemes[paletteColor].highlightColor,
         '--current-color-text': theme.vars.palette.schemes[paletteColor].primary.main,
         '--current-color-bg': theme.vars.palette.schemes[paletteColor].primary.main
         // '--mui-palette-primary-main': `var(--mui-palette-${paletteColor}-accent)`
