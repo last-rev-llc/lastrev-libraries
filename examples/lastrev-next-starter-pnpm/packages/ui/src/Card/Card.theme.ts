@@ -188,7 +188,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         borderLeft: 'solid 1px var(--mui-palette-text-primary)',
         display: 'grid',
         gridGap: 'var(--grid-gap-half)',
-        gridTemplateColumns: 'minmax(0, max-content) auto'
+        gridTemplateColumns: 'minmax(0, max-content) auto',
+        paddingLeft: 'var(--grid-gap)'
       },
 
       '[class*=contentWrap]': {
@@ -200,7 +201,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
 
       '[class*=cardMedia]': {
         'maxWidth': 48,
-        'paddingLeft': 'var(--grid-gap)',
         'gridRow': '1/3',
         'gridColumn': '1',
 
@@ -222,18 +222,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         gridColumn: 2,
         paddingBottom: 0
       },
-
-      // '& [class*=Card-content]': {
-      //   'display': 'flex',
-      //   'flexDirection': 'column',
-      //   'paddingBottom': 0,
-      //   'paddingLeft': 'var(--grid-gap)',
-      //   'paddingRight': 0,
-
-      //   '& > *': {
-      //     marginTop: 'auto'
-      //   }
-      // },
 
       '& [class*=Card-title]': {
         marginTop: 0

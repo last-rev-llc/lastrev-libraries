@@ -32,7 +32,7 @@ export const mappers = {
 
         const link = await getLink(blog, args, ctx);
 
-        const card = generateCard({
+        const card = await generateCard({
           id: blog.sys.id,
           overline: 'News',
           title,
@@ -91,7 +91,7 @@ export const mappers = {
 
         const link = await getLink(person, args, ctx);
 
-        const card = generateCard({
+        const card = await generateCard({
           id: person.sys.id,
           overline: 'Our Team',
           title,
@@ -147,7 +147,7 @@ export const mappers = {
 
         const link = await getLink(page, args, ctx);
 
-        const card = generateCard({
+        const card = await generateCard({
           id: page.sys.id,
           overline: 'Page',
           title,
@@ -195,7 +195,7 @@ export const mappers = {
 
         const link = await getLink(property, args, ctx);
 
-        const card = generateCard({
+        const card = await generateCard({
           id: property.sys.id,
           overline: 'Case Study',
           title,

@@ -14,10 +14,6 @@ type AlgoliaSearch = {
 };
 
 export const AlgoliaSearch = ({ children, algoliaSettings }: AlgoliaSearch) => {
-  // if (!!algoliaSettings?.indexName) {
-  //   return <>{children}</>;
-  // }
-
   return (
     <InstantSearchNext
       searchClient={searchClient}
