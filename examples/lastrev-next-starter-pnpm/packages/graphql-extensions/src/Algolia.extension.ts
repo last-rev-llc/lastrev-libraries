@@ -136,16 +136,10 @@ export const mappers = {
         const title = getLocalizedField(page.fields, 'title', ctx);
         const body = getLocalizedField(page.fields, 'body', ctx);
         const summary = getLocalizedField(page.fields, 'promoSummary', ctx);
-        const promoImageRef =
-          getLocalizedField(page.fields, 'promoImage', ctx) ?? getLocalizedField(page.fields, 'mainImage', ctx);
-
-        const promoImage = await getMedia(promoImageRef, ctx);
-
-        const entries: any[] = [];
-
+        const promoImage = await getMedia(getLocalizedField(page.fields, 'promoImage', ctx), ctx);
         const contentType = getSysContentTypeName(page);
-
         const link = await getLink(page, args, ctx);
+        const entries: any[] = [];
 
         const card = await generateCard({
           id: page.sys.id,
