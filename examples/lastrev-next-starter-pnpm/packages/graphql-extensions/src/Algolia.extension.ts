@@ -40,7 +40,8 @@ export const mappers = {
           summary,
           link,
           media: promoImage,
-          entries
+          entries,
+          ctx
         });
 
         let pubDateTimestamp;
@@ -100,7 +101,8 @@ export const mappers = {
           summary,
           link,
           media: promoImage,
-          entries
+          entries,
+          ctx
         });
 
         const areaOfExpertise = getLocalizedField(person.fields, 'areaOfExpertise', ctx);
@@ -149,7 +151,8 @@ export const mappers = {
           summary,
           link,
           media: promoImage,
-          entries
+          entries,
+          ctx
         });
 
         return [
@@ -197,7 +200,8 @@ export const mappers = {
           summary,
           link,
           media: promoImage,
-          entries
+          entries,
+          ctx
         });
 
         return [

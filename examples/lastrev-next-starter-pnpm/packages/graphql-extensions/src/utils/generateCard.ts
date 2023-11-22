@@ -2,8 +2,9 @@ import { createRichText } from '@last-rev/graphql-contentful-core';
 
 import { checkAndWrapArray } from './checkAndWrapArray';
 
-import { mappers as richtextMappers } from '../RichText.extension';
+import { mappers as richTextMappers } from '../RichText.extension';
 import { pruneEmpty } from './pruneEmpty';
+import { type ApolloContext } from '@last-rev/types';
 
 type GenerateCardProps = {
   id: string;
@@ -14,6 +15,7 @@ type GenerateCardProps = {
   link?: any; // You should specify a proper type for link
   media?: any; // You should specify a proper type for media
   entries?: any[];
+  ctx: ApolloContext;
 };
 
 export const generateCard = async ({
@@ -24,15 +26,16 @@ export const generateCard = async ({
   summary,
   link,
   media,
-  entries = []
+  entries = [],
+  ctx
 }: GenerateCardProps) => {
   let foundSummary = !!summary;
   let richText: any = {};
   if (foundSummary && summary) {
     const raw = createRichText(summary);
     richText = {
-      json: await (richtextMappers.RichText.RichText.body as Function)(raw),
-      links: await (richtextMappers.RichText.RichText.links as Function)(raw)
+      json: await (richTextMappers.RichText.RichText.json as Function)(raw),
+      links: await (richTextMappers.RichText.RichText.links as Function)(raw, null, ctx)
     };
   }
 
