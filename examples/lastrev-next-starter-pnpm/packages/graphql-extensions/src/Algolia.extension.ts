@@ -8,6 +8,7 @@ import { generateCard } from './utils/generateCard';
 import { getLink } from './utils/getLink';
 import { getMedia } from './utils/getMedia';
 import { getSysContentTypeName } from './utils/getSysContentTypeName';
+import { pruneEmpty } from './utils/pruneEmpty';
 
 const index = 'contentful';
 
@@ -51,7 +52,7 @@ export const mappers = {
         return [
           {
             index,
-            data: {
+            data: pruneEmpty({
               objectID: constructObjectId(blog, ctx),
               locale: ctx.locale || ctx.defaultLocale,
               preview: !!ctx.preview,
@@ -65,7 +66,7 @@ export const mappers = {
               contentType,
               link,
               card
-            }
+            })
           }
         ];
       }
@@ -104,7 +105,7 @@ export const mappers = {
 
         const areaOfExpertise = getLocalizedField(person.fields, 'areaOfExpertise', ctx);
         return [
-          {
+          pruneEmpty({
             index,
             data: {
               objectID: constructObjectId(person, ctx),
@@ -121,7 +122,7 @@ export const mappers = {
               link,
               card
             }
-          }
+          })
         ];
       }
     }
@@ -154,7 +155,7 @@ export const mappers = {
         return [
           {
             index,
-            data: {
+            data: pruneEmpty({
               objectID: constructObjectId(page, ctx),
               locale: ctx.locale || ctx.defaultLocale,
               preview: !!ctx.preview,
@@ -165,7 +166,7 @@ export const mappers = {
               contentType,
               link,
               card
-            }
+            })
           }
         ];
       }
@@ -202,7 +203,7 @@ export const mappers = {
         return [
           {
             index,
-            data: {
+            data: pruneEmpty({
               objectID: constructObjectId(property, ctx),
               locale: ctx.locale || ctx.defaultLocale,
               preview: !!ctx.preview,
@@ -213,7 +214,7 @@ export const mappers = {
               contentType,
               link,
               card
-            }
+            })
           }
         ];
       }

@@ -1,5 +1,6 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import type { ApolloContext } from '../types';
+import { pruneEmpty } from './pruneEmpty';
 
 export const getMedia = async (imageRef: any, ctx: ApolloContext) => {
   if (!imageRef?.sys?.id) return null;
@@ -12,7 +13,9 @@ export const getMedia = async (imageRef: any, ctx: ApolloContext) => {
   if (!image?.fields) return null;
 
   const file = getLocalizedField(image.fields, 'file', ctx);
-  const imageObj = {
+  if (!file) return null;
+
+  return pruneEmpty({
     __typename: 'Media',
     title: getLocalizedField(image.fields, 'title', ctx),
     file: {
@@ -20,7 +23,5 @@ export const getMedia = async (imageRef: any, ctx: ApolloContext) => {
       ...file?.details?.image
     },
     description: getLocalizedField(image.fields, 'description', ctx)
-  };
-
-  return imageObj;
+  });
 };

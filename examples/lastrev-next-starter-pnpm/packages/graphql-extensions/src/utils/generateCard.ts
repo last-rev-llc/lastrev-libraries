@@ -3,6 +3,7 @@ import { createRichText } from '@last-rev/graphql-contentful-core';
 import { checkAndWrapArray } from './checkAndWrapArray';
 
 import { mappers as richtextMappers } from '../RichText.extension';
+import { pruneEmpty } from './pruneEmpty';
 
 type GenerateCardProps = {
   id: string;
@@ -34,7 +35,8 @@ export const generateCard = async ({
       links: await (richtextMappers.RichText.RichText.links as Function)(raw)
     };
   }
-  return {
+
+  return pruneEmpty({
     __typename: 'Card',
     id,
     overline,
@@ -44,5 +46,5 @@ export const generateCard = async ({
     media: checkAndWrapArray(media),
     link,
     actions: [link]
-  };
+  });
 };
