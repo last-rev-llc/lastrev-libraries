@@ -56,8 +56,11 @@ const colors = {
   sunflower: { light: '#FEE8AD', main: '#FED872', dark: '#9B8446', contrastText: '#1F1F1F' },
   sunflowerLight: { light: '#FFFBF1', main: '#FEE8AD', dark: '#FED872', contrastText: '#1F1F1F' },
   fuchsia: { lighter: '#F6ECFF', light: '#C890FF', main: '#A040FF', dark: '#702DB3', contrastText: '#FFF' },
+  fuchsiaLight: { light: '#F6ECFF', main: '#C890FF', dark: '#A040FF', contrastText: '#FFF' },
   mint: { lighter: '#F9FDFC', light: '#DDF2EB', main: '#C4E9DD', dark: '#788E87', contrastText: '#1F1F1F' },
+  mintLight: { light: '#F9FDFC', main: '#DDF2EB', dark: '#C4E9DD', contrastText: '#1F1F1F' },
   orange: { lighter: '#FFF5E9', light: '#FFC37F', main: '#FF9823', dark: '#B36A19', contrastText: '#1F1F1F' },
+  orangeLight: { light: '#FFF5E9', main: '#FFC37F', dark: '#FF9823', contrastText: '#1F1F1F' },
   white: { lighter: '#FFF', light: '#FFF', main: '#FFF', dark: '#FFF', contrastText: '#1F1F1F' },
   black: { lighter: '#1F1F1F', light: '#1F1F1F', main: '#1F1F1F', dark: '#1F1F1F', contrastText: '#FFF' }
 };
@@ -67,7 +70,9 @@ const schemes = {
     primary: colors.sapphire,
     secondary: colors.sunflower,
     highlightColor: colors.sunflower.main,
-    overline: colors.sunflower.main
+    overline: colors.sunflower.main,
+    cardBackground: colors.white.main,
+    cardBackgroundContrastText: colors.black.main
   },
   sapphireLight: {
     primary: colors.sapphireLight,
@@ -80,44 +85,62 @@ const schemes = {
     secondary: { ...colors.sapphire, main: colors.sapphire.dark },
 
     highlightColor: colors.sapphire.main,
-    overline: colors.sapphire.main
+    overline: colors.sapphire.main,
+    cardBackground: colors.sapphireLight.light,
+    cardBackgroundContrastText: colors.black.main
   },
   blueAccent: {
     primary: colors.white,
     secondary: colors.blue,
     highlightColor: colors.blue.dark,
-    overline: colors.blue.main
+    overline: colors.blue.main,
+    cardBackground: colors.blueLight.light,
+    cardBackgroundContrastText: colors.black.main
   },
   greenAccent: {
     primary: colors.white,
     secondary: colors.green,
     highlightColor: colors.green.main,
-    overline: colors.green.main
+    overline: colors.green.main,
+    cardBackground: colors.greenLight.light,
+    cardBackgroundContrastText: colors.black.main
   },
   sunflowerAccent: {
     primary: colors.white,
     secondary: { ...colors.sapphire, main: colors.sapphire.dark },
 
     highlightColor: colors.sunflower.dark,
-    overline: colors.sunflower.dark
+    overline: colors.sunflower.dark,
+
+    cardBackground: colors.sunflowerLight.light,
+    cardBackgroundContrastText: colors.black.main
   },
   orangeAccent: {
     primary: colors.white,
     secondary: colors.orange,
     highlightColor: colors.orange.main,
-    overline: colors.orange.main
+    overline: colors.orange.main,
+
+    cardBackground: colors.orangeLight.light,
+    cardBackgroundContrastText: colors.black.main
   },
   mintAccent: {
     primary: colors.white,
     secondary: colors.mint,
     highlightColor: colors.mint.main,
-    overline: colors.mint.main
+    overline: colors.mint.main,
+
+    cardBackground: colors.mintLight.light,
+    cardBackgroundContrastText: colors.black.main
   },
   fuchsiaAccent: {
     primary: colors.white,
     secondary: colors.fuchsia,
     highlightColor: colors.fuchsia.main,
-    overline: colors.fuchsia.main
+    overline: colors.fuchsia.main,
+
+    cardBackground: colors.fuchsiaLight.light,
+    cardBackgroundContrastText: colors.black.main
   },
   sapphirePinkGradient: {
     primary: colors.sapphirePinkGradient,
@@ -221,8 +244,8 @@ const schemes = {
   white: {
     primary: colors.white,
     secondary: colors.sapphire,
-    highlightColor: colors.sapphire.main,
-    overline: colors.sapphire.main
+    highlightColor: colors.black.main,
+    overline: colors.black.main
   }
 };
 
@@ -241,6 +264,7 @@ const paletteTheme = {
         schemes: schemes,
         ...schemes['sapphire'],
         overline: colors.black.main,
+
         white: colors.white,
         black: colors.black,
         common: {

@@ -254,12 +254,13 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       'textAlign': 'center',
-      'backgroundColor': 'var(--current-color-main, white)',
       '[class*=cardWrap]': {
-        padding: theme.spacing(5, 3),
-        gap: theme.spacing(2),
-
-        color: 'black'
+        'backgroundColor': `${theme.vars.palette.cardBackground}`,
+        '.MuiTypography-body1': {
+          color: `${theme.vars.palette.cardBackgroundContrastText}`
+        },
+        'padding': theme.spacing(5, 3),
+        'gap': theme.spacing(2)
       },
       '[class*=actionsWrap]': {
         // margin: theme.spacing(0, -1)

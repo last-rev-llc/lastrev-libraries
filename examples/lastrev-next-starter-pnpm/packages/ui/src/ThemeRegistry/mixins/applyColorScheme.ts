@@ -26,6 +26,7 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
       '--current-color-main': theme.vars.palette.schemes[paletteColor].primary.main,
       '--mui-palette-background-tab': theme.vars.palette.schemes[paletteColor].primary.main,
       '--mui-palette-overline': theme.vars.palette.schemes[paletteColor].overline,
+      '--mui-palette-cardBackground': theme.vars.palette.schemes[paletteColor].cardBackground,
       '--swiper-theme-color': theme.vars.palette.schemes[paletteColor].overline,
       '*': {
         // Color inversion

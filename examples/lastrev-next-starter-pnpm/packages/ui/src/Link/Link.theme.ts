@@ -6,6 +6,7 @@ const defaultProps: ComponentsProps['Link'] = {};
 const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
   root: ({ ownerState, theme }) => ({
     'display': 'inline-flex',
+    'textTransform': 'unset',
     'alignItems': 'center',
     ...(ownerState?.variant?.includes('Contained') && {
       'color': 'var(--mui-palette-primary-contrastText)',
