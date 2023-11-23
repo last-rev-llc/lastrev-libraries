@@ -94,7 +94,6 @@ type Card implements Content {
   animation: JSON
   aspectRatio: String
   body: RichText
-  bodyRte: JSON
   id: String
   internalTitle: String
   jsonLd: JSON

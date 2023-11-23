@@ -45,7 +45,7 @@ export const mappers: Mappers = {
 
         const body = getLocalizedField(block.fields, 'body', ctx);
 
-        if (body) return createType('Text', { body, variant: 'smallText' });
+        if (body) return createType('Text', { body });
 
         return null;
       }

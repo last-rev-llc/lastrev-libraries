@@ -95,9 +95,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
         }
       },
 
-      'padding': 'var(--section-padding) 0 calc(2 * var(--section-padding))',
-      'gridColumn': 'content-start/full-end',
-      'overflow': 'hidden'
+      '.swiper': {
+        overflow: 'unset'
+      },
+      'padding': '0 0 calc(1.5 * var(--section-padding))',
+      'gridColumn': 'content-start/full-end'
+      // 'overflow': 'hidden'
     };
   },
 

@@ -78,11 +78,11 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
                 --section-padding: calc(var(--grid-gap) * 4);
 
-                --h1-font-size: ${(h1FontSizeBase / 8) * 6}rem;
-                --h2-font-size: ${(h2FontSizeBase / 8) * 6}rem;
-                --h3-font-size: ${(h3FontSizeBase / 8) * 6}rem;
+                --h1-font-size: ${h1FontSizeBase}rem;
+                --h2-font-size: ${h2FontSizeBase}rem;
+                --h3-font-size: ${h3FontSizeBase}rem;
                 --h4-font-size: var(--h3-font-size);
-                --h5-font-size: ${(h5FontSizeBase / 8) * 6}rem;
+                --h5-font-size: ${h5FontSizeBase}rem;
                 --h6-font-size: ${h6FontSizeBase}rem;
                 --display1-font-size: var(--h1-font-size);
                 --display2-font-size: var(--h2-font-size);
@@ -176,7 +176,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --swiper-pagination-bullet-width: var(--grid-gap-half);
                 --swiper-pagination-bullet-height: var(--grid-gap-half);
                 --swiper-pagination-bullet-border-radius: 50%;
-                --swiper-pagination-bullet-inactive-color: var(--mui-palette-text-primary); //var(--swiper-theme-color);
+                --swiper-pagination-bullet-inactive-color: var(--mui-palette-text-primary);
                 --swiper-pagination-bullet-inactive-opacity: 0.2;
                 --swiper-pagination-bullet-opacity: 1;
                 --swiper-pagination-bullet-horizontal-gap: var(--grid-gap-quarter);
@@ -194,68 +194,38 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               }
 
               body * {
-                ${theme.containerBreakpoints.up('sm')} {
-                  --h1-font-size: ${(h1FontSizeBase / 8) * 6}rem;
-                  --h2-font-size: ${(h2FontSizeBase / 8) * 6}rem;
-                  --h3-font-size: ${(h3FontSizeBase / 8) * 6}rem;
-                  /* --h4-font-size: ${(h4FontSizeBase / 8) * 6}rem; */
-                  --h5-font-size: ${(h5FontSizeBase / 8) * 6}rem;
-                  /* --h6-font-size: ${(h6FontSizeBase / 8) * 6}rem; */
-                  /* --display1-font-size: ${(display1FontSizeBase / 8) * 6}rem;
-                --display2-font-size: ${(display2FontSizeBase / 8) * 6}rem;
-                --display3-font-size: ${(display3FontSizeBase / 8) * 6}rem;
-                --display4-font-size: ${(display4FontSizeBase / 8) * 6}rem;
-                --display5-font-size: ${(display5FontSizeBase / 8) * 6}rem;
-                --display6-font-size: ${(display6FontSizeBase / 8) * 6}rem; */
+                ${theme.breakpoints.down('xl')} {
+                  --h1-font-size: ${(h1FontSizeBase / 8) * 8}rem;
+                  --h2-font-size: ${(h2FontSizeBase / 8) * 8}rem;
+                  --h3-font-size: ${(h3FontSizeBase / 8) * 8}rem;
+                  --h4-font-size: var(--h3-font-size);
+                  --h5-font-size: ${(h5FontSizeBase / 8) * 8}rem;
+                  --h6-font-size: ${(h6FontSizeBase / 8) * 8}rem;
                   --section-padding: var(--grid-gap-double);
                 }
 
-                ${theme.containerBreakpoints.up('md')} {
-                  --h1-font-size: ${(h1FontSizeBase / 8) * 7}rem;
-                  --h2-font-size: ${(h2FontSizeBase / 8) * 7}rem;
-                  --h3-font-size: ${(h3FontSizeBase / 8) * 7}rem;
-                  /* --h4-font-size: ${(h4FontSizeBase / 8) * 7}rem; */
-                  --h5-font-size: ${(h5FontSizeBase / 8) * 7}rem;
-                  /* --h6-font-size: ${(h6FontSizeBase / 8) * 7}rem; */
-                  /* --display1-font-size: ${(display1FontSizeBase / 8) * 7}rem;
-                --display2-font-size: ${(display2FontSizeBase / 8) * 7}rem;
-                --display3-font-size: ${(display3FontSizeBase / 8) * 7}rem;
-                --display4-font-size: ${(display4FontSizeBase / 8) * 7}rem;
-                --display5-font-size: ${(display5FontSizeBase / 8) * 7}rem;
-                --display6-font-size: ${(display6FontSizeBase / 8) * 7}rem; */
-                  --section-padding: var(--grid-gap-double);
-                }
-
-                ${theme.containerBreakpoints.up('lg')} {
+                ${theme.breakpoints.down('lg')} {
                   --h1-font-size: ${h1FontSizeBase}rem;
                   --h2-font-size: ${h2FontSizeBase}rem;
                   --h3-font-size: ${h3FontSizeBase}rem;
-                  /* --h4-font-size: ${h4FontSizeBase}rem; */
                   --h5-font-size: ${h5FontSizeBase}rem;
                   --h6-font-size: ${h6FontSizeBase}rem;
-                  /* --display1-font-size: ${display1FontSizeBase}rem;
-                --display2-font-size: ${display2FontSizeBase}rem;
-                --display3-font-size: ${display3FontSizeBase}rem;
-                --display4-font-size: ${display4FontSizeBase}rem;
-                --display5-font-size: ${display5FontSizeBase}rem; */
-                  /* --display6-font-size: ${display6FontSizeBase}rem;
-                --section-padding: var(--grid-gap-double);
-              }
+                }
 
-              ${theme.containerBreakpoints.up('xl')} {
-                /* --h1-font-size: ${(h1FontSizeBase / 8) * 9}rem;
-                --h2-font-size: ${(h2FontSizeBase / 8) * 9}rem;
-                --h3-font-size: ${(h3FontSizeBase / 8) * 9}rem;
-                --h4-font-size: ${(h4FontSizeBase / 8) * 9}rem;
-                --h5-font-size: ${(h5FontSizeBase / 8) * 9}rem; */
-                  /* --h6-font-size: ${(h6FontSizeBase / 8) * 9}rem; */
-                  /* --display1-font-size: ${(display1FontSizeBase / 8) * 9}rem;
-                --display2-font-size: ${(display2FontSizeBase / 8) * 9}rem;
-                --display3-font-size: ${(display3FontSizeBase / 8) * 9}rem;
-                --display4-font-size: ${(display4FontSizeBase / 8) * 9}rem;
-                --display5-font-size: ${(display5FontSizeBase / 8) * 9}rem; */
-                  /* --display6-font-size: ${(display6FontSizeBase / 8) * 9}rem; */
-                  --section-padding: var(--grid-gap-double);
+                ${theme.breakpoints.down('md')} {
+                  --h1-font-size: ${(h1FontSizeBase / 8) * 7}rem;
+                  --h2-font-size: ${(h2FontSizeBase / 8) * 7}rem;
+                  --h3-font-size: ${(h3FontSizeBase / 8) * 7}rem;
+                  --h5-font-size: ${(h5FontSizeBase / 8) * 7}rem;
+                  --h6-font-size: ${(h6FontSizeBase / 8) * 7}rem;
+                }
+
+                ${theme.breakpoints.down('sm')} {
+                  --h1-font-size: ${(h1FontSizeBase / 8) * 6}rem;
+                  --h2-font-size: ${(h2FontSizeBase / 8) * 6}rem;
+                  --h3-font-size: ${(h3FontSizeBase / 8) * 6}rem;
+                  --h5-font-size: ${(h5FontSizeBase / 8) * 6}rem;
+                  --h6-font-size: ${(h6FontSizeBase / 8) * 6}rem;
                 }
               }
             `}
