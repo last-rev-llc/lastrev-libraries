@@ -1,5 +1,6 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import type { ApolloContext } from './types';
+// import client from '../../../packages/graphql-sdk/dist/client';
 
 import { constructObjectId } from '@last-rev/graphql-algolia-integration';
 import { pathResolver } from './utils/pathResolver';
@@ -9,8 +10,40 @@ import { getLink } from './utils/getLink';
 import { getMedia } from './utils/getMedia';
 import { getSysContentTypeName } from './utils/getSysContentTypeName';
 import { pruneEmpty } from './utils/pruneEmpty';
+// import gql from 'graphql-tag';
 
 const index = 'contentful';
+
+// export const resolvers = {
+//   Query: {
+//     contentCard: async (
+//       _: any,
+//       {
+//         id,
+//         locale,
+//         preview = false,
+//         displayType
+//       }: { id?: string; locale?: string; preview?: boolean; displayType?: string },
+//       ctx: ApolloContext
+//     ) => {
+//       if (!id) throw new Error('MissingArgumentId');
+//       ctx.preview = preview;
+//       ctx.locale = locale || ctx.defaultLocale;
+//       ctx.displayType = displayType;
+//       // not locale specific. fieldsResolver handles that
+//       const content = await ctx.loaders.entryLoader.load({ id, preview });
+//       // Add this to the content to be used by mappers and other resolvers
+//       (content as any).displayType = displayType;
+//       return content;
+//     }
+//   }
+// };
+
+// export const typeDefs = gql`
+//   extend type Query {
+//     contentCard(id: String!, locale: String, preview: Boolean, displayType: String): Content
+//   }
+// `;
 
 export const mappers = {
   Blog: {
@@ -136,8 +169,27 @@ export const mappers = {
 
         if (!path) return [];
 
+        // const { data: pageData } = await client.Page({
+        //   path,
+        //   locale: ctx.locale || ctx.defaultLocale,
+        //   preview: !!ctx.preview,
+        //   site: process.env.SITE
+        // });
+
+        // const {
+        //   data: { contentCard }
+        // } = await client.Card({
+        //   id: page.sys.id,
+        //   locale: 'en-US',
+        //   preview: !!ctx.preview,
+        //   displayType: 'Card'
+        // });
+
+        // return [];
+
         const title = getLocalizedField(page.fields, 'title', ctx);
         const body = getLocalizedField(page.fields, 'body', ctx);
+        // const contentBody = await parseRichTextField(getLocalizedField(page.fields, 'contents', ctx), ctx);
         const summary = getLocalizedField(page.fields, 'promoSummary', ctx);
         const promoImage = await getMedia(getLocalizedField(page.fields, 'promoImage', ctx), ctx);
         const contentType = getSysContentTypeName(page);
@@ -154,6 +206,8 @@ export const mappers = {
           entries,
           ctx
         });
+
+        // console.log(contentBody);
 
         return [
           {

@@ -152,14 +152,14 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       '[class*=actionsWrap]': {
-        borderLeft: 'solid 1px',
+        borderLeft: 'solid 1px var(--mui-palette-text-primary)',
         paddingBottom: 0,
         paddingLeft: 'var(--grid-gap)',
         paddingRight: 0
       },
 
       '& [class*=Card-content]': {
-        'borderLeft': 'solid 1px',
+        'borderLeft': 'solid 1px var(--mui-palette-text-primary)',
         'minHeight': '33cqi',
         'display': 'flex',
         'flexDirection': 'column',
@@ -234,7 +234,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       variant: CardVariants.news
     },
     style: {
-      'borderLeft': 'solid 1px',
+      'borderLeft': 'solid 1px var(--mui-palette-text-primary)',
       'paddingLeft': 'var(--grid-gap)',
 
       ':is([class*=Card-cardMedia], [class*=Card-bodyWrap])': {
@@ -446,7 +446,9 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
 
         '& > *': {
           width: '100%',
-          height: '100%'
+          objectFit: 'cover',
+          minHeight: 'inherit',
+          height: 'auto'
         },
 
         '&::after': {
@@ -460,13 +462,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         }
       },
 
-      '[class*=Card-title]': {
-        ...theme.typography.h4
-      },
-
-      '[class*=subtitle]': {
-        ...theme.typography.overline,
-        fontWeight: 700
+      '[class*=Card-overline]': {
+        display: 'none'
       },
 
       [theme.breakpoints.up('sm')]: {
@@ -482,14 +479,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           }
         },
 
-        ':is([class*=Card-title], [class*=subtitle])': {
-          transform: 'translateY(calc(-100% - calc(var(--grid-gap) * 2.5)))'
-        },
-
-        '&:not(:hover)': {
-          '& :is([class*=Card-title], [class*=subtitle])': {
-            marginBottom: 0
-          }
+        '[class*=Card-title]': {
+          transform: 'translateY(calc(-100% - calc(var(--grid-gap) * 1.75)))'
         },
 
         ':is([class*=contentWrap], [class*=actionsWrap])': {
@@ -499,22 +490,23 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           transform: 'translateY(100%)',
           width: '100%',
           zIndex: 20,
-          height: '100%'
+          height: '100%',
+          boxSizing: 'border-box'
         },
 
-        ':is([class*=overline], [class*=body], [class*=actionsWrap])': {
+        ':is([class*=overline], [class*=subtitle], [class*=body], [class*=actionsWrap])': {
           overflow: 'hidden',
           transition: 'inherit'
         },
 
         '&:hover': {
-          ':is([class*=Card-title], [class*=subtitle])': {
+          '[class*=Card-title]': {
             transform: 'translateY(0)',
             height: 'auto'
           },
 
           '[class*=contentWrap]': {
-            transform: 'translateY(calc(var(--grid-gap) * -1.5))',
+            transform: 'translateY(calc(var(--grid-gap) * -1.75))',
             height: 'auto'
           },
 

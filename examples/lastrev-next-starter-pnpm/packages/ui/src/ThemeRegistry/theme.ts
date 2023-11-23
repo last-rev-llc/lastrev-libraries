@@ -62,7 +62,7 @@ const schemes = {
     primary: { main: commonColors.gray1, contrastText: commonColors.gray5 },
     secondary: { main: commonColors.red, contrastText: commonColors.white },
     linkColor: commonColors.gray5,
-    headerColor: commonColors.gray5,
+    headerColor: commonColors.navy,
     text: commonColors.gray5,
     overlay: commonColors.gray1,
     overlayText: commonColors.gray5
@@ -70,17 +70,17 @@ const schemes = {
   navy: {
     primary: { main: commonColors.navy, contrastText: commonColors.gray2 },
     secondary: { main: commonColors.red, contrastText: commonColors.white },
-    linkColor: commonColors.gray2,
+    linkColor: commonColors.gray3,
     headerColor: commonColors.white,
     text: commonColors.gray2,
     overlay: commonColors.navy,
-    overlayText: commonColors.white
+    overlayText: commonColors.gray2
   },
   white: {
     primary: { main: commonColors.white, contrastText: commonColors.gray5 },
     secondary: { main: commonColors.red, contrastText: commonColors.white },
     linkColor: commonColors.gray5,
-    headerColor: commonColors.black,
+    headerColor: commonColors.navy,
     text: commonColors.gray5,
     overlay: commonColors.navy,
     overlayText: commonColors.white
