@@ -57,7 +57,6 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
     };
   }
 
-  // console.log({ backgroundColor });
   return styles;
 };
 

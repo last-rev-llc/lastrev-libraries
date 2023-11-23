@@ -12,7 +12,7 @@ const Hits = ({ ownerState, HitComponent, ...other }: { ownerState: any; HitComp
     <>
       {hits.map((hit, index) => {
         const cardData: CardProps = { ...(hit.card ?? hit), __typename: 'Card' };
-        console.log(cardData);
+
         return (
           <HitComponent
             key={`hit-${index}-${hit.id}`}
