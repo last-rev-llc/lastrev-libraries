@@ -124,11 +124,13 @@ export const mappers = {
 
         const contentType = getSysContentTypeName(person);
 
+        const department = getLocalizedField(person.fields, 'department', ctx);
+
         const link = await getLink(person, args, ctx);
 
         const card = await generateCard({
           id: person.sys.id,
-          overline: 'Our Team',
+          overline: department,
           title,
           subtitle,
           summary,
@@ -138,7 +140,6 @@ export const mappers = {
           ctx
         });
 
-        const areaOfExpertise = getLocalizedField(person.fields, 'areaOfExpertise', ctx);
         return [
           pruneEmpty({
             index,
@@ -149,7 +150,13 @@ export const mappers = {
               title,
               subtitle,
               body: documentToPlainTextString(body),
-              areaOfExpertise,
+              education: getLocalizedField(person.fields, 'education', ctx),
+              email: getLocalizedField(person.fields, 'email', ctx),
+              jobTitle: getLocalizedField(person.fields, 'jobTitle', ctx),
+              previousExperiences: getLocalizedField(person.fields, 'previousExperiences', ctx),
+              department,
+              onInvestmentCommitee: !!getLocalizedField(person.fields, 'onInvestmentCommitee', ctx),
+              isPartner: !!getLocalizedField(person.fields, 'isPartner', ctx),
               summary,
               promoImage,
               path,
@@ -271,7 +278,11 @@ export const mappers = {
               path,
               contentType,
               link,
-              card
+              card,
+              assetType: getLocalizedField(property.fields, 'assetType', ctx),
+              ncreifRegion: getLocalizedField(property.fields, 'ncreifRegion', ctx),
+              sector: getLocalizedField(property.fields, 'sector', ctx),
+              strategy: getLocalizedField(property.fields, 'strategy', ctx)
             })
           }
         ];

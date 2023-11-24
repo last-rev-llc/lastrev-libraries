@@ -15,7 +15,6 @@ export const typeDefs = gql`
     footer: Footer
     path: String
     body: RichText
-    socialLinks: [Link]
     mainImage: Media
     breadcrumbs: [Link]
     hero: Content
@@ -50,6 +49,7 @@ export const mappers: Mappers = {
     },
 
     Card: {
+      overline: 'department',
       title: 'name',
       subtitle: 'jobTitle',
       body: async (person: any, _args: any, ctx: ApolloContext) =>

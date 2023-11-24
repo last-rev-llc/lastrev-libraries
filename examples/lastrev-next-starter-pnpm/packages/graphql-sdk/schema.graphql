@@ -550,6 +550,7 @@ type PageProperty implements Content {
   sector: String
   seo: JSON
   sidekickLookup: JSON
+  size: String
   slug: String
   socialLinks: [Link]
   squareFootage: Int
@@ -581,7 +582,6 @@ type Person implements Content {
   seo: JSON
   sidekickLookup: JSON
   slug: String
-  socialLinks: [Link]
   theme: [Theme]
 }
 

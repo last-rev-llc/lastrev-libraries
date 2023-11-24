@@ -11,6 +11,7 @@ fragment Person_BaseFragment on Person {
   name
   jobTitle
   email
+  department
   education
   previousExperiences
   mainImage {
@@ -18,9 +19,6 @@ fragment Person_BaseFragment on Person {
   }
   body {
     ...RichText_BaseFragment
-  }
-  socialLinks {
-    ...Link_BaseFragment
   }
   hero {
     ...Hero_BaseFragment
@@ -34,13 +32,11 @@ fragment Person_Card_Fragment on Person {
   ...Content_BaseFragment
   slug
   name
+  department
   jobTitle
   email
   mainImage {
     ...Media_BaseFragment
-  }
-  socialLinks {
-    ...Link_BaseFragment
   }
   promoImage {
     ...Media_BaseFragment
