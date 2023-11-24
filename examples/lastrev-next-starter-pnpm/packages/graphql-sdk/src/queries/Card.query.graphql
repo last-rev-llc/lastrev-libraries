@@ -1,9 +1,0 @@
-query Card($id: String!, $locale: String, $preview: Boolean, $displayType: String) {
-  contentCard(id: $id, locale: $locale, preview: $preview, displayType: $displayType) {
-    ...ContentModule_BaseFragment
-    ...ContentModule_PageFragment
-    ...ContentModule_PersonFragment
-    ...ContentModule_BlogFragment
-    ...ContentModule_PropertyFragment
-  }
-}
