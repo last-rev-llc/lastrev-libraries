@@ -74,9 +74,9 @@ export const collectionItemsResolver = async (
       items = matchingItems;
 
       if (items?.length) {
-        items = await ctx.loaders.entryLoader.loadMany(
-          items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-        );
+        items = (
+          await ctx.loaders.entryLoader.loadMany(items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview })))
+        ).filter((entry) => getLocalizedField(entry?.fields, 'excludeFromDynamicLists', ctx) !== true);
       }
 
       const options = await collectOptions({ filters, items, ctx });
