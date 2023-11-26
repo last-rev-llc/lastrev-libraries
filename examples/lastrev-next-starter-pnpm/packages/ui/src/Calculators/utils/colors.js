@@ -1,0 +1,32 @@
+export default {
+    green: '#19A69D',
+    lightGreen: '#DBF8F5',
+    darkTeal: '#148a81',
+    yellow: '#FFCC66',
+    purple: '#7162F0',
+    pink: '#C30B55',
+    blue: '#059EEB',
+    lightGray: '#F6F6F4',
+    gray: '#ababab',
+    strongGreen: '#489A93',
+    errorRed: '#C30B55',
+    borderGray: '#ebebe8',
+    // B2B Pages
+    'light blue': '#D4E4F4',
+    'light grey': '#F4F5F6',
+    'light purple': '#D6D2F1',
+    'light yellow': '#FCF5E3',
+    'light green': '#D1E2E1',
+    'light water': '#e0eaf5',
+    magenta: 'linear-gradient(266.02deg , rgb(153, 11, 96) 1.08%, rgb(195, 11, 85) 99.84%)',
+    // End B2B Pages
+    white: '#ffffff',
+    purpleIcon: '#bf60c8',
+    teal: '#6b9693',
+    blueGradient: 'linear-gradient(95.78deg, #569CDF 3.24%, #1777D3 98.67%)',
+    purpleGradient: 'linear-gradient(95.78deg, #a55ccf 3.24%, #473bc6 98.67%)',
+    strongYellow: '#F3CC70',
+    strongPurple: '#6D58D6',
+    dark: '#1f1f1f',
+    light: '#ffffff', // same as white but needed for the text color selector in the Block content type
+}

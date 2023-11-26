@@ -1,0 +1,77 @@
+@import '../../shared/breakpoints.module';
+.calculatorNavigationContainer {
+  background-color: #7162f0;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.calculatorNavigationActionContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 107px;
+  padding-bottom: 94px;
+  text-align: center;
+  margin-top: 60px;
+}
+
+.actionsContainer {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  @include breakpoint(mediumAlt) {
+    flex-direction: row;
+  }
+}
+
+.actionContainer {
+  display: flex;
+  flex-direction: column;
+  width: 280px;
+  justify-content: center;
+  align-items: center;
+  margin: 24px 64px;
+  padding: 24px 0 12px 12px;
+  img {
+    width: 69px;
+    margin-bottom: 24px;
+  }
+  strong,
+  p {
+    color: #ffffff;
+    text-align: center;
+    height: 54px;
+    font-family: 'Muli';
+  }
+  strong {
+    font-size: 18px;
+    line-height: 23px;
+    font-weight: 600;
+  }
+  p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+    margin-top: 12px;
+  }
+  a {
+    border: 1px solid #ffffff;
+    border-radius: 5px;
+    color: #ffffff;
+    background-color: transparent;
+    margin-top: 5px;
+    padding: 16px 45px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease all;
+    &:hover {
+      background-color: #ffffff;
+      color: #7162f0;
+      border-color: #7162f0;
+    }
+  }
+}

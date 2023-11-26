@@ -1,0 +1,31 @@
+@import '../../shared/breakpoints.module';
+
+.customfieldContainer {
+  display: flex;
+  flex-direction: column;
+  margin: 28px 0px;
+}
+
+.fieldLabelContainer {
+  display: flex;
+  align-items: center;
+  padding-right: 6px;
+  justify-content: space-between;
+  @include breakpoint(large) {
+    width: 41%;
+  }
+}
+
+.labelContainer {
+  margin-right: 12px;
+  font-family: Muli, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 26px;
+  margin-right: 50px;
+}
+
+.disabled {
+  opacity: 0.2;
+}

@@ -34,6 +34,8 @@ const FooterNavigationItemGroup = dynamic(() => import('./Footer/FooterNavigatio
 const SiteMessage = dynamic(() => import('./SiteMessage'));
 const Breadcrumbs = dynamic(() => import('./Breadcrumbs'));
 
+const CalculatorOptimalHSA = dynamic(() => import('./Calculators/OptimalHSACalculator'));
+
 export const contentMapping: {
   [key: string]: any;
 } = {
@@ -78,6 +80,7 @@ export const contentMapping: {
   'NavigationItem:groupFooter': FooterNavigationItemGroup,
   'NavigationItem:inlineNavigation': InlineNavigation,
   'NavigationItem:tableOfContents': InlineNavigation,
+  'ModuleIntegration:calculatorOptimalHSAContribution': CalculatorOptimalHSA,
   SiteMessage,
   Breadcrumbs
 };

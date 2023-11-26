@@ -1,0 +1,28 @@
+@import '../../shared/breakpoints.module';
+
+.listColumn {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include breakpoint(xlarge) {
+    flex-direction: row;
+  }
+}
+
+.accordionContainer {
+  width: 100%;
+  padding: 16px 0px;
+  width: 100%;
+}
+
+.accordionListContainer {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.accordionRow {
+  width: 100%;
+  @include breakpoint(xlarge) {
+    width: 47%;
+  }
+}

@@ -1,0 +1,40 @@
+@import '../../shared/breakpoints.module';
+
+.tooltip {
+  background: #d6d2f1 !important;
+  border-radius: 4px !important;
+  padding: 14px 13px 22px 13px !important;
+  color: #000000 !important;
+  width: 260px !important;
+  opacity: 1 !important;
+  font-family: 'Muli' !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 16px !important;
+  line-height: 24px !important;
+  @include breakpoint(medium) {
+    width: 342px !important;
+  }
+  a {
+    color: #19a69d;
+  }
+}
+
+.disabled {
+  cursor: default;
+  opacity: 0.2;
+}
+
+.tooltipIcon {
+  width: 18px;
+  height: 18px;
+  background-color: #9f97df;
+  border-radius: 100%;
+  display: flex;
+  font-size: 12px;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  font-weight: bold;
+  cursor: pointer;
+}

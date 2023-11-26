@@ -1,0 +1,17 @@
+@import '../../shared/breakpoints.module';
+
+.container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  width: 100%;
+  @include breakpoint(xlarge) {
+    width: 90%;
+  }
+}
+
+.customPaddingContianer {
+  @include breakpoint(xlarge) {
+    padding: 30px 63px 30px 160px;
+  }
+}

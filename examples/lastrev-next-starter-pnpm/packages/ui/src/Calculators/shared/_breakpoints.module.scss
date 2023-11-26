@@ -1,0 +1,34 @@
+$small: 0;
+$medium: 640px;
+$mediumAlt: 800px;
+$large: 1000px;
+$xlarge: 1240px;
+$xxlarge: 1480px;
+
+$breakpoints: (
+        small: $small,
+        medium: $medium,
+        mediumAlt: $mediumAlt,
+        large: $large,
+        xlarge: $xlarge,
+        xxlarge: $xxlarge
+);
+
+// Breakpoint offset
+// Review req: work around the limitations of `min-` and `max-` prefixes and viewports with fractional widths.
+// https://github.com/twbs/bootstrap/blob/master/scss/mixins/_breakpoints.scss#L42
+$breakpoint-offset: .02;
+
+// Mixin for handling various responsive breakpoints will apply @content to the given breakpoint and wider
+// @include breakpoint(large) { your adjustments here }
+@mixin breakpoint($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    $breakpoint-val: map-get($breakpoints, $breakpoint);
+    @media (min-width: $breakpoint-val) {
+      @content;
+    }
+  }
+  @else {
+    @warn 'Invalid breakpoint: #{$breakpoint}.';
+  }
+}

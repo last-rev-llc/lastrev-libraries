@@ -1,0 +1,32 @@
+.error {
+  text-align: center;
+  background: rgba(red, .8);
+  padding: .5rem;
+}
+
+.marketoDisclaimerWithMargins{
+  margin-top: 25px !important;
+  margin-bottom: 30px;
+}
+
+.recaptchaContainer {
+  display: flex;
+  justify-content: center;
+  padding-top: 1rem !important;
+}
+
+@media only screen and (max-width: 410px) {
+  .recaptchaContainer {
+    display: flex;
+    justify-content: center;
+    padding: 0 !important;
+    margin-left: -20px !important;
+  }
+}
+
+@media only screen and (max-width: 370px) {
+  .recaptchaContainer {
+    display: block;
+    margin: 0;
+  }
+}

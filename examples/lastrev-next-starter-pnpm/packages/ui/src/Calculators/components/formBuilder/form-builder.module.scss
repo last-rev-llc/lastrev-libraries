@@ -1,0 +1,9 @@
+@import '../../shared/animations.module';
+
+.input {
+  width: 100%;
+}
+
+.animation {
+  animation: fadeIn 1s linear;
+}

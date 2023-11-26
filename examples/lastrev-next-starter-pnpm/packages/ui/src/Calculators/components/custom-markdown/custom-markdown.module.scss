@@ -1,0 +1,10 @@
+.markdown{
+    a{
+        color: #19a69d;
+    }
+    p{
+        &:nth-child(2) {
+            margin-top: 24px;
+        }
+    }
+}

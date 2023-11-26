@@ -1,0 +1,67 @@
+@import '../../shared/breakpoints.module';
+@import '../../shared/animations.module';
+
+.container {
+  background: #ffffff;
+  border: 1px solid #f2f2f2;
+  box-shadow: 0px 2px 20px 3px rgba(0, 0, 0, 0.0780157);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 36px;
+  padding-bottom: 60px;
+  @include breakpoint(large) {
+    padding-left: 90px;
+    padding-right: 90px;
+  }
+}
+
+.noShadow {
+  box-shadow: none;
+  padding: 0;
+  border: 0;
+  align-items: flex-start;
+}
+
+.description {
+  width: 90%;
+  text-align: left;
+  margin-top: 20px;
+  margin-bottom: 40px;
+  @include breakpoint(large) {
+    text-align: center;
+    width: 80%;
+  }
+}
+
+.noShadowDescription {
+  text-align: left;
+}
+
+.main {
+  width: 90%;
+  margin-top: 30px;
+  @include breakpoint(large) {
+    width: 80%;
+    margin-top: 0px;
+  }
+}
+
+.noShadowMain {
+  width: 100%;
+}
+
+.animate {
+  animation: fadeIn 1s linear;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0;
+}
+
+.end {
+  margin-left: auto;
+}

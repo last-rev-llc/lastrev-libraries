@@ -1,0 +1,74 @@
+@import '../../shared/animations.module';
+
+$modal-shadow-color: rgba(109, 110, 113, 0.3);
+$modal-bg-color: rgba(0, 0, 0, 0.4);
+
+.modal {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  overflow-y: scroll;
+  z-index: 99999; // to combat nav bar z-index
+
+  .container {
+    max-width: 700px;
+    width: 100%;
+    margin: 75px auto;
+    box-shadow: 0 0 30px $modal-shadow-color;
+    background: white;
+    position: relative;
+
+    &.transition {
+      animation: fadeInBottom 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+  }
+
+  .content {
+    margin: 0 auto;
+    position: relative;
+    padding: 2rem 0;
+    width: 100%;
+    ul {
+      font-family: 'Muli', sans-serif;
+      display: inline-block;
+      padding: 2rem;
+      text-align: left;
+      max-width: 500px;
+      margin: auto;
+      line-height: 1.4;
+      display: block;
+
+      li {
+        margin: 1.5rem 0;
+        padding-left: 28px;
+        position: relative;
+      }
+    }
+  }
+
+  .close {
+    position: absolute;
+    top: 25px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    img {
+      width: 15px;
+    }
+  }
+
+  .dimmer {
+    position: fixed;
+    background: $modal-bg-color;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -1;
+  }
+}
