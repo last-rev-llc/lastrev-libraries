@@ -19,6 +19,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     '& > :is([class*=Text-root])': {
       marginTop: theme.spacing(5),
       marginBottom: theme.spacing(5)
+    },
+    '[class*=Media-root]': {
+      margin: 'auto',
+      width: '100%',
+      objectFit: 'contain',
+      height: 'auto'
     }
   }),
 

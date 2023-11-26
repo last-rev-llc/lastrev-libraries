@@ -31,12 +31,15 @@ const PageResource = (props: PageResourceProps) => {
     id,
     header,
     footer,
-    // featuredMedia,
-    // pubDate,
+    subNavigation,
+    contents,
+    sidebarContents,
+    featuredMedia,
     title,
+    subtitle,
     body,
-    // author,
-    // relatedItems,
+    author,
+    relatedItems,
     jsonLd,
     breadcrumbs,
     sidekickLookup,
@@ -61,29 +64,37 @@ const PageResource = (props: PageResourceProps) => {
       )}
 
       {header ? <ContentModule {...(header as any)} /> : null}
-
+      {hero ? <ContentModule {...(hero as any)} /> : null}
       <Root component="main" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+        {subNavigation ? <ContentModule {...(subNavigation as any)} /> : null}
         <ContentOuterGrid ownerState={ownerState}>
-          <HeaderWrap ownerState={ownerState}>
-            {hero ? (
-              <ContentModule {...(hero as any)} />
-            ) : (
-              <>
-                {!!title && (
-                  <Title component="h1" variant="display1" ownerState={ownerState}>
-                    {title}
-                  </Title>
-                )}
-              </>
-            )}
-          </HeaderWrap>
-
+          <SideWrap ownerState={ownerState}>
+            {sidebarContents?.map((content: any) => (
+              <ContentModule key={content?.id} {...content} />
+            ))}
+          </SideWrap>
           <ContentWrap ownerState={ownerState}>
             {!!breadcrumbs?.length ? (
               <BreadcrumbsWrap ownerState={ownerState}>
                 <Breadcrumbs links={breadcrumbs} />
               </BreadcrumbsWrap>
             ) : null}
+            <HeaderWrap ownerState={ownerState}>
+              <>
+                {!!title && (
+                  <Title component="h1" variant="display1" ownerState={ownerState}>
+                    {title}
+                  </Title>
+                )}
+
+                {!!subtitle && <Subtitle ownerState={ownerState}>{subtitle}</Subtitle>}
+              </>
+            </HeaderWrap>
+            {!!featuredMedia && (
+              <FeaturedMediaWrap {...sidekick(sidekickLookup, 'featuredMedia')} ownerState={ownerState}>
+                <FeaturedMedia {...(featuredMedia as MediaProps)} ownerState={ownerState} />
+              </FeaturedMediaWrap>
+            )}
 
             {!!body && (
               <Body
@@ -96,16 +107,15 @@ const PageResource = (props: PageResourceProps) => {
             )}
 
             <ShareLinksWrap ownerState={ownerState}>
-              <ShareLinksLabel ownerState={ownerState}>Share</ShareLinksLabel>
-
-              <ShareLinks ownerState={ownerState}>
-                <ShareLink ownerState={ownerState}>
+              <ShareLinks ownerState={ownerState} disablePadding>
+                <ShareLink ownerState={ownerState} disableGutters disablePadding>
                   <ShareLinkItem
                     __typename="Link"
+                    color="black"
                     href={`http://www.twitter.com/share?url=${encodedShareUrl}`}
                     target="_blank"
-                    icon={TwitterIcon}
-                    text="Twitter"
+                    icon="twitter"
+                    // text="Twitter"
                     ownerState={ownerState}
                   />
                 </ShareLink>
@@ -113,10 +123,11 @@ const PageResource = (props: PageResourceProps) => {
                 <ShareLink ownerState={ownerState}>
                   <ShareLinkItem
                     __typename="Link"
+                    color="black"
                     href={`https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`}
                     target="_blank"
-                    icon={FacebookIcon}
-                    text="Facebook"
+                    icon="facebook"
+                    // text="Facebook"
                     ownerState={ownerState}
                   />
                 </ShareLink>
@@ -124,28 +135,31 @@ const PageResource = (props: PageResourceProps) => {
                 <ShareLink ownerState={ownerState}>
                   <ShareLinkItem
                     __typename="Link"
+                    color="black"
                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedShareUrl}`}
                     target="_blank"
-                    icon={LinkedinIcon}
-                    text="Linkedin"
+                    icon="linkedin"
+                    // text="Linkedin"
                     ownerState={ownerState}
                   />
                 </ShareLink>
 
-                <ShareLink ownerState={ownerState}>
+                {/* <ShareLink ownerState={ownerState}>
                   <ShareLinkItem
                     __typename="Link"
+                    color="black"
                     href={`mailto:?to=&body=${encodedShareUrl}`}
                     target="_blank"
-                    icon={EmailIcon}
-                    text="Email"
+                    icon=
+                    // text="Email"
                     ownerState={ownerState}
                   />
-                </ShareLink>
+                </ShareLink> */}
 
-                <ShareLink ownerState={ownerState}>
+                {/* <ShareLink ownerState={ownerState}>
                   <ShareLinkItem
                     __typename="Link"
+color="secondary"
                     target="_blank"
                     icon={CopyLinkIcon}
                     text="Copy Link"
@@ -154,11 +168,23 @@ const PageResource = (props: PageResourceProps) => {
                       navigator.clipboard.writeText(shareUrl);
                     }}
                   />
-                </ShareLink>
+                </ShareLink> */}
               </ShareLinks>
             </ShareLinksWrap>
           </ContentWrap>
         </ContentOuterGrid>
+        {!!author && (
+          <AuthorWrap ownerState={ownerState}>
+            <Grid>
+              <ContentModule {...author} />
+            </Grid>
+          </AuthorWrap>
+        )}
+        {contents?.map((content: any) => (
+          <ContentModule key={content?.id} {...content} component="section" />
+        ))}
+
+        {!!relatedItems && <RelatedItems {...relatedItems} ownerState={ownerState} backgroundColor="white" />}
       </Root>
 
       {footer ? <ContentModule {...(footer as any)} /> : null}
@@ -167,7 +193,7 @@ const PageResource = (props: PageResourceProps) => {
 };
 
 const Root = styled(Box, {
-  name: 'Page',
+  name: 'PageResource',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: PageResourceOwnerState }>``;
@@ -176,6 +202,12 @@ const ContentOuterGrid = styled(Grid, {
   name: 'PageResource',
   slot: 'ContentOuterGrid',
   overridesResolver: (_, styles) => [styles.contentOuterGrid]
+})<{ ownerState: PageResourceOwnerState }>``;
+
+const ContentsOuterGrid = styled(Grid, {
+  name: 'PageResource',
+  slot: 'ContentsOuterGrid',
+  overridesResolver: (_, styles) => [styles.contentsOuterGrid]
 })<{ ownerState: PageResourceOwnerState }>``;
 
 const HeaderWrap = styled(Box, {
@@ -196,10 +228,10 @@ const Title = styled(Typography, {
   overridesResolver: (_, styles) => [styles.title]
 })<TypographyProps & { ownerState: PageResourceOwnerState }>``;
 
-const PubDate = styled(Typography, {
+const Subtitle = styled(Typography, {
   name: 'PageResource',
-  slot: 'PubDate',
-  overridesResolver: (_, styles) => [styles.pubDate]
+  slot: 'Subtitle',
+  overridesResolver: (_, styles) => [styles.subtitle]
 })<TypographyProps & { ownerState: PageResourceOwnerState }>``;
 
 const Author = styled(Box, {
@@ -274,6 +306,12 @@ const ContentWrap = styled(Box, {
   overridesResolver: (_, styles) => [styles.contentWrap]
 })<{ ownerState: PageResourceOwnerState }>``;
 
+const SideWrap = styled(Box, {
+  name: 'PageResource',
+  slot: 'SideWrap',
+  overridesResolver: (_, styles) => [styles.sideWrap]
+})<{ ownerState: PageResourceOwnerState }>``;
+
 const Body = styled(ContentModule, {
   name: 'PageResource',
   slot: 'Body',
@@ -292,7 +330,7 @@ const RelatedItems = styled(ContentModule, {
   overridesResolver: (_, styles) => [styles.relatedItems]
 })<{ ownerState: PageResourceOwnerState }>``;
 
-const AuthorWrap = styled(Grid, {
+const AuthorWrap = styled(Box, {
   name: 'PageResource',
   slot: 'AuthorWrap',
   overridesResolver: (_, styles) => [styles.authorWrap]

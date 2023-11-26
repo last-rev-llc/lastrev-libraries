@@ -76,21 +76,25 @@ const CollectionFiltered = (props: CollectionFilteredProps) => {
     isLoading,
     error
   };
-
+  const isLoadingInitial = !data && !error;
+  const isLoadingMore = isLoadingInitial && isLoading && (page > 1 || !Object.values(filter).every((x) => !x));
   if (data?.items) {
+    // console.log('CollectionFiltered:WithItems');
     items = data?.items;
     pageInfo = { ...pageInfo, ...data?.pageInfo };
   }
 
-  if (!data) {
+  if (isLoadingInitial || !data) {
+    // console.log('CollectionFiltered:isLoadingInitial');
     items = defaultItems?.map((item: any) => ({
       ...item,
-      loading: isLoading && (page != 1 || !Object.values(filter).every((x) => !x))
+      loading: isLoading && isLoadingMore
     }));
-  } else if (isLoading && !data?.items) {
+  } else if (isLoading && !data?.items && page != 1) {
+    // console.log('CollectionFiltered:isLoadingMOre');
     items = new Array(limit).fill({ __typename: 'Card', variant: props.itemsVariant, loading: true });
-    // items[0] = defaultItems[0];
   }
+  // console.log('CollectionFiltered', { data, items, isLoading, isLoadingInitial, isLoadingMore, pageInfo });
 
   return (
     <ErrorBoundary>
