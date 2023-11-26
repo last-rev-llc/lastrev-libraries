@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import colors from '../../../../utils/colors';
-import responsive from '../../../../utils/responsive';
+import responsive from '../../utils/responsive';
 
 export const Title = styled.div`
   color: #000000;

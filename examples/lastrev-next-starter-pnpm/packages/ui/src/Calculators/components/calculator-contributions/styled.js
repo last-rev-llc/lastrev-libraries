@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import responsive from '../../../../utils/responsive';
-import Text from '../../../text';
+import responsive from '../../utils/responsive';
+import Text from '../text';
 
 export const ContributionsStyle = styled.div`
   max-width: 620px;

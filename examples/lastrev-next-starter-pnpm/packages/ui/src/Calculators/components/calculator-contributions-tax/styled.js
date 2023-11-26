@@ -1,6 +1,6 @@
-import ReactTooltip from 'react-tooltip';
+import { Tooltip as ReactTooltip } from 'react-tooltip';
 import styled from 'styled-components';
-import Text from '../../../text';
+import Text from '../text';
 
 export const TaxContainer = styled.div`
   max-width: 740px;

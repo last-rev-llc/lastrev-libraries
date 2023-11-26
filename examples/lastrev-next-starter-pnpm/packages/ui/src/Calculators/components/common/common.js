@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import responsive from '../../../../utils/responsive';
+import responsive from '../../utils/responsive';
 export const Row = styled.div`
   display: flex;
   height: ${({ isSticky }) => isSticky};

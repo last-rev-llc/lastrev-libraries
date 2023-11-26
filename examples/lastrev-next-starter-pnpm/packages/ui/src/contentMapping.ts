@@ -35,6 +35,7 @@ const SiteMessage = dynamic(() => import('./SiteMessage'));
 const Breadcrumbs = dynamic(() => import('./Breadcrumbs'));
 
 const CalculatorOptimalHSA = dynamic(() => import('./Calculators/OptimalHSACalculator'));
+const HSAContributionCalculator = dynamic(() => import('./Calculators/HSAContributionCalculator'));
 
 export const contentMapping: {
   [key: string]: any;
@@ -81,6 +82,7 @@ export const contentMapping: {
   'NavigationItem:inlineNavigation': InlineNavigation,
   'NavigationItem:tableOfContents': InlineNavigation,
   'ModuleIntegration:calculatorOptimalHSAContribution': CalculatorOptimalHSA,
+  'ModuleIntegration:calculatorHSAContribution': HSAContributionCalculator,
   SiteMessage,
   Breadcrumbs
 };

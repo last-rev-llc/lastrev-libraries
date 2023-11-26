@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
-import CustomButton from '../../../custom-button/custom-buttom';
-import Text from '../../../text';
+import CustomButton from '../custom-button/custom-buttom';
+import Text from '../text';
 import {
   TooltipShow,
   TaxHelpLearnmore,
@@ -12,16 +12,7 @@ import {
   TaxContainer
 } from './styled';
 
-const CalculatorContributionsTax = ({
-  handleTax,
-  options,
-  title,
-  text,
-  toolTip,
-  toolTipText,
-  helText,
-  refe
-}) => (
+const CalculatorContributionsTax = ({ handleTax, options, title, text, toolTip, toolTipText, helText, refe }) => (
   <TaxContainer ref={refe}>
     <TaxYearContainer>
       <TaxYearTitle margin={'0 0 22px 0'}>{title}</TaxYearTitle>
@@ -43,12 +34,7 @@ const CalculatorContributionsTax = ({
       </Text>
       <TaxHelpLearnmore data-tip>{toolTip}</TaxHelpLearnmore>
     </TaxHelpContainer>
-    <TooltipShow
-      place="bottom"
-      effect="solid"
-      arrowColor="#D6D2F1"
-      backgroundColor="#D6D2F1"
-      clickable={true}>
+    <TooltipShow place="bottom" effect="solid" arrowColor="#D6D2F1" backgroundColor="#D6D2F1" clickable={true}>
       <ReactMarkdown>{toolTipText}</ReactMarkdown>
     </TooltipShow>
   </TaxContainer>
