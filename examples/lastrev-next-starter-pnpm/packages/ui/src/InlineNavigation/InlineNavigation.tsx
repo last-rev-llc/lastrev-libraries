@@ -6,14 +6,14 @@ import Box from '@mui/material/Box';
 
 import type { InlineNavigationProps, InlineNavigationOwnerState } from './InlineNavigation.types';
 import ContentModule from '../ContentModule';
-import { useScrollTrigger } from '@mui/material';
+import { Typography, useScrollTrigger } from '@mui/material';
 import { Link } from '../../../graphql-sdk/src/types';
 import Grid from '../Grid';
 import sidekick from '@last-rev/contentful-sidekick-util';
 import { usePathname } from 'next/navigation';
 
 const InlineNavigation = React.forwardRef<any, InlineNavigationProps>(function InlineNavigation(props, ref) {
-  const { subNavigation, id, sidekickLookup, ...other } = props;
+  const { text, subNavigation, id, sidekickLookup, ...other } = props;
   const trigger = useScrollTrigger({
     disableHysteresis: true
   });
@@ -45,6 +45,7 @@ const InlineNavigation = React.forwardRef<any, InlineNavigationProps>(function I
   return (
     <Root ownerState={ownerState} {...sidekick(sidekickLookup)}>
       <LinksWrap ownerState={ownerState}>
+        {text ? <Text ownerState={ownerState}>{text}</Text> : null}
         {subNavigation?.map((link) => (
           <Link
             active={activeLink === link?.id}
@@ -71,6 +72,12 @@ const LinksWrap = styled(Box, {
   name: 'InlineNavigation',
   slot: 'LinksWrap',
   overridesResolver: (_, styles) => [styles.linksWrap]
+})<{ ownerState: InlineNavigationOwnerState }>``;
+
+const Text = styled(Typography, {
+  name: 'InlineNavigation',
+  slot: 'Text',
+  overridesResolver: (_, styles) => [styles.text]
 })<{ ownerState: InlineNavigationOwnerState }>``;
 
 const Link = styled(ContentModule, {

@@ -51,7 +51,7 @@ const createVariants = (theme: Theme): ComponentsVariants['InlineNavigation'] =>
         height: '50%',
         background: `var(--mui-palette-prev-color)`
       },
-      '[class*=link]': {
+      '[class*=InlineNavigation-link]': {
         'color': theme.vars.palette.common.black,
 
         '&:hover': {
@@ -59,7 +59,19 @@ const createVariants = (theme: Theme): ComponentsVariants['InlineNavigation'] =>
         },
         'padding': theme.spacing(2, 3)
       },
-      '[class*=linksWrap]': {
+      '[class*=InlineNavigation-text]': {
+        gridColumn: '1/-1',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '16px',
+        borderBottom: '1px solid grey',
+        borderColor: theme.vars.palette.background.lightOne,
+        textTransform: 'uppercase',
+        color: theme.vars.palette.primary.main,
+        margin: 0
+      },
+      '[class*=InlineNavigation-linksWrap]': {
         margin: 'auto',
         maxWidth: 960,
         padding: 0,
