@@ -33,12 +33,9 @@ const PageResource = (props: PageResourceProps) => {
     footer,
     subNavigation,
     contents,
-    sidebarContents,
     featuredMedia,
     title,
-    subtitle,
     body,
-    author,
     relatedItems,
     jsonLd,
     breadcrumbs,
@@ -68,18 +65,8 @@ const PageResource = (props: PageResourceProps) => {
       <Root component="main" {...sidekick(sidekickLookup)} ownerState={ownerState}>
         {subNavigation ? <ContentModule {...(subNavigation as any)} /> : null}
         <ContentOuterGrid ownerState={ownerState}>
-          <SideWrap ownerState={ownerState}>
-            {sidebarContents?.map((content: any) => (
-              <ContentModule key={content?.id} {...content} />
-            ))}
-          </SideWrap>
           <ContentWrap ownerState={ownerState}>
-            {!!breadcrumbs?.length ? (
-              <BreadcrumbsWrap ownerState={ownerState}>
-                <Breadcrumbs links={breadcrumbs} />
-              </BreadcrumbsWrap>
-            ) : null}
-            {title || subtitle ? (
+            {title ? (
               <HeaderWrap ownerState={ownerState}>
                 <>
                   {!!title && (
@@ -87,8 +74,6 @@ const PageResource = (props: PageResourceProps) => {
                       {title}
                     </Title>
                   )}
-
-                  {!!subtitle && <Subtitle ownerState={ownerState}>{subtitle}</Subtitle>}
                 </>
               </HeaderWrap>
             ) : null}
@@ -109,13 +94,7 @@ const PageResource = (props: PageResourceProps) => {
             )}
           </ContentWrap>
         </ContentOuterGrid>
-        {!!author && (
-          <AuthorWrap ownerState={ownerState}>
-            <Grid>
-              <ContentModule {...author} />
-            </Grid>
-          </AuthorWrap>
-        )}
+
         {contents?.map((content: any) => (
           <ContentModule key={content?.id} {...content} component="section" />
         ))}

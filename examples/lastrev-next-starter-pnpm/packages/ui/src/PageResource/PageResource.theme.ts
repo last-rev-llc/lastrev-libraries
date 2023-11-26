@@ -24,17 +24,17 @@ const styleOverrides: ComponentsOverrides<Theme>['PageResource'] = {
 
   contentOuterGrid: ({ theme }) => ({
     'containerType': 'inline-size',
-    'padding': theme.spacing(8, 0),
+    'padding': theme.spacing(4, 0),
     '> *': {
       // gridColumnStart: 'content-start',
       // gridColumnEnd: 'content-end'
       // [theme.breakpoints.up('md')]: {
-      //   gridColumnStart: 'four-start',
-      //   gridColumnEnd: 'nine-end'
+      //   gridColumnStart: 'three-start',
+      //   gridColumnEnd: 'ten-end'
       // },
       // [theme.breakpoints.up('lg')]: {
-      //   gridColumnStart: 'four-start',
-      //   gridColumnEnd: 'nine-end'
+      //   gridColumnStart: 'three-start',
+      //   gridColumnEnd: 'ten-end'
       // }
     }
   }),
@@ -45,8 +45,8 @@ const styleOverrides: ComponentsOverrides<Theme>['PageResource'] = {
     // gridColumnStart: 'content-start',
     // gridColumnEnd: 'content-end',
     // [theme.breakpoints.up('lg')]: {
-    //   gridColumnStart: 'four-start',
-    //   gridColumnEnd: 'nine-end'
+    //   gridColumnStart: 'three-start',
+    //   gridColumnEnd: 'ten-end'
     // }
   }),
 
@@ -61,12 +61,12 @@ const styleOverrides: ComponentsOverrides<Theme>['PageResource'] = {
       gridColumnStart: 'content-start',
       gridColumnEnd: 'content-end'
       // [theme.breakpoints.up('md')]: {
-      //   gridColumnStart: 'four-start',
-      //   gridColumnEnd: 'nine-end'
+      //   gridColumnStart: 'three-start',
+      //   gridColumnEnd: 'ten-end'
       // },
       // [theme.breakpoints.up('lg')]: {
-      //   gridColumnStart: 'four-start',
-      //   gridColumnEnd: 'nine-end'
+      //   gridColumnStart: 'three-start',
+      //   gridColumnEnd: 'ten-end'
       // }
     }
   }),
@@ -140,8 +140,8 @@ const styleOverrides: ComponentsOverrides<Theme>['PageResource'] = {
       gridColumnStart: 'content-start',
       gridColumnEnd: 'content-end'
       // '&:is([class*=Text-root])': {
-      // gridColumnStart: 'four-start',
-      // gridColumnEnd: 'nine-end'
+      // gridColumnStart: 'three-start',
+      // gridColumnEnd: 'ten-end'
       // }
     }
   }),
@@ -180,12 +180,12 @@ const createVariants = (theme: Theme): ComponentsVariants['PageResource'] => [
           gridColumnStart: 'content-start',
           gridColumnEnd: 'content-end',
           [theme.breakpoints.up('md')]: {
-            gridColumnStart: 'four-start',
-            gridColumnEnd: 'nine-end'
+            gridColumnStart: 'three-start',
+            gridColumnEnd: 'ten-end'
           },
           [theme.breakpoints.up('lg')]: {
-            gridColumnStart: 'four-start',
-            gridColumnEnd: 'nine-end'
+            gridColumnStart: 'three-start',
+            gridColumnEnd: 'ten-end'
           }
         }
       },
@@ -200,19 +200,19 @@ const createVariants = (theme: Theme): ComponentsVariants['PageResource'] => [
           gridColumnEnd: 'content-end',
 
           [theme.breakpoints.up('md')]: {
-            gridColumnStart: 'four-start',
-            gridColumnEnd: 'nine-end'
+            gridColumnStart: 'three-start',
+            gridColumnEnd: 'ten-end'
           },
 
           [theme.breakpoints.up('lg')]: {
-            gridColumnStart: 'four-start',
-            gridColumnEnd: 'nine-end'
+            gridColumnStart: 'three-start',
+            gridColumnEnd: 'ten-end'
           }
         },
 
         '& > div': {
-          gridColumnStart: 'four-start',
-          gridColumnEnd: 'nine-end'
+          gridColumnStart: 'three-start',
+          gridColumnEnd: 'ten-end'
         }
       }
 

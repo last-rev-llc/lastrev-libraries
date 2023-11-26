@@ -51,17 +51,23 @@ const createVariants = (theme: Theme): ComponentsVariants['InlineNavigation'] =>
         height: '50%',
         background: `var(--mui-palette-prev-color)`
       },
+      '[class*=link]': {
+        'color': theme.vars.palette.common.black,
+
+        '&:hover': {
+          color: theme.vars.palette.primary.main
+        },
+        'padding': theme.spacing(2, 3)
+      },
       '[class*=linksWrap]': {
+        margin: 'auto',
+        maxWidth: 960,
         padding: 0,
         background: theme.vars.palette.background.lightTwo,
         borderRadius: 24,
         display: 'grid',
         gridTemplateColumns: 'repeat(3, 1fr)',
         gap: 0
-      },
-      '[class*=link]': {
-        color: theme.vars.palette.common.black,
-        padding: theme.spacing(2)
       }
     }
   }
