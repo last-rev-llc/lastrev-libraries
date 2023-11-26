@@ -52,7 +52,7 @@ const colors = {
   blue: { lighter: '#ECF2FE', light: '#C4D6FB', main: '#407BF2', dark: '#264A91', contrastText: '#FFF' },
   blueLight: { light: '#ECF2FE', main: '#ECF2FE', dark: '#407BF2', contrastText: '#264A91' },
   green: { lighter: '#EAF2EE', light: '#88B19C', main: '#317955', dark: '#1E4A34', contrastText: '#FFF' },
-  greenLight: { light: '#EAF2EE', main: '#88B19C', dark: '#317955', contrastText: '#FFF' },
+  greenLight: { light: '#EAF2EE', main: '#88B19C', dark: '#317955', contrastText: '#000' },
   sunflower: { light: '#FEE8AD', main: '#FED872', dark: '#9B8446', contrastText: '#1F1F1F' },
   sunflowerLight: { light: '#FFFBF1', main: '#FEE8AD', dark: '#FED872', contrastText: '#1F1F1F' },
   fuchsia: { lighter: '#F6ECFF', light: '#C890FF', main: '#A040FF', dark: '#702DB3', contrastText: '#FFF' },
@@ -78,8 +78,10 @@ const schemes = {
   sapphireLight: {
     primary: colors.sapphireLight,
     secondary: colors.blue,
-    highlightColor: colors.blue.dark,
-    overline: colors.blue.main
+    highlightColor: colors.blue.main,
+    overline: colors.blue.main,
+    cardBackground: colors.white.main,
+    cardBackgroundContrastText: colors.black.main
   },
   sapphireAccent: {
     primary: colors.white,
@@ -130,7 +132,6 @@ const schemes = {
     secondary: colors.mint,
     highlightColor: colors.mint.main,
     overline: colors.mint.main,
-
     cardBackground: colors.mintLight.light,
     cardBackgroundContrastText: colors.black.main
   },
@@ -176,13 +177,15 @@ const schemes = {
     primary: colors.green,
     secondary: colors.sunflower,
     highlightColor: colors.sunflower.main,
-    overline: colors.sunflower.light
+    overline: colors.sunflower.light,
+    // cardBackground: colors.mintLight.light,
+    cardBackgroundContrastText: colors.white.main
   },
   greenLight: {
     primary: colors.greenLight,
-    secondary: colors.green,
-    highlightColor: colors.green.main,
-    overline: colors.green.main
+    secondary: colors.sunflower,
+    highlightColor: colors.black.main,
+    overline: colors.black.main
   },
   sunflower: {
     primary: colors.sunflower,
@@ -227,8 +230,8 @@ const schemes = {
   mint: {
     primary: colors.mint,
     secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main,
-    overline: colors.sunflower.main
+    highlightColor: colors.sunflower.dark,
+    overline: colors.sunflower.dark
   },
   mintLight: {
     primary: { main: colors.mint.light },
@@ -266,7 +269,6 @@ const paletteTheme = {
         schemes: schemes,
         ...schemes['sapphire'],
         overline: colors.black.main,
-
         white: colors.white,
         black: colors.black,
         common: {

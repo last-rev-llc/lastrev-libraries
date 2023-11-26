@@ -21,7 +21,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     },
     '.MuiTab-root': {
       'flex': 1,
-      'backgroundColor': `color-mix(in srgb, ${theme.vars.palette.background.tab}, transparent 75%)`,
+
+      'backgroundColor': `color-mix(in srgb, ${theme.vars.palette.background.tab}, transparent 70%)`,
       'color': theme.vars.palette.common.black,
       'borderRadius': '8px 8px 0 0',
       '&.Mui-selected': {}
@@ -34,7 +35,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
       backgroundColor: theme.vars.palette.background.tab
     },
     // TODO: Review and maybe create as new variants
-    '& [class*=Card-cardWrap]': { backgroundColor: 'transparent!important', boxShadow: 'none' },
+    '& [class*=Card-cardWrap]': {
+      'backgroundColor': 'transparent!important',
+      'boxShadow': 'none',
+      '.MuiTypography-body1': {
+        color: `${theme.vars.palette.text.primary}`
+      }
+    },
     '& [class*=Card-title]': { ...theme.typography.h5 },
     '& [class*=Text-title]': { ...theme.typography.h5 },
     '& [class*=Text-subtitle]': { ...theme.typography.h6 },

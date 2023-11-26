@@ -70,32 +70,8 @@ export const typeDefs = gql`
 
 const collectionMappers = {
   items: async (collection: any, args: any, ctx: ApolloContext) => {
-    let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
-    const itemsVariantFn = defaultResolver('itemsVariant');
-    const itemsVariant = itemsVariantFn(collection, args, ctx);
-
-    try {
-      const { contentType, limit, offset, order, filter } = getLocalizedField(collection.fields, 'settings', ctx) || {};
-
-      if (contentType) {
-        items = await queryContentful({ contentType, ctx, order, filter, limit, skip: offset });
-
-        // items = await ctx.loaders.entryLoader.loadMany(
-        //   queryItems?.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-        // );
-      }
-    } catch (error: any) {
-      console.error(error.message, {
-        caller: 'Collection.items',
-        stack: error.stack
-      });
-    }
-    if (items?.length) {
-      items = await ctx.loaders.entryLoader.loadMany(
-        items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-      );
-    }
-    items = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
+    const id = collection?.sys?.id;
+    const { items } = (await collectionItemsResolver(collection, { ...args, id }, ctx)) ?? {};
     return items;
   },
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Grid, Chip, MenuItem, TextField, Button } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import styled from '@mui/system/styled';
+import { styled } from '@mui/material/styles';
+
 import capitalize from 'lodash/capitalize';
 import { CollectionFiltersProps, Option } from './CollectionFilters.types';
 

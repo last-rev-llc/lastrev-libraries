@@ -54,8 +54,9 @@ const Collection = (props: CollectionProps) => {
 
   return (
     <ErrorBoundary>
-      <Root ownerState={ownerState} {...sidekick(sidekickLookup)} data-testid={`Collection-${variant}`}>
-        <CollectionBackground
+
+     <Root ownerState={ownerState} {...sidekick(sidekickLookup)} data-testid={`Collection-${variant}`}>
+         <CollectionBackground
           background={backgroundImage}
           backgroundColor={backgroundColor}
           testId="Collection-background"
@@ -74,7 +75,7 @@ const Collection = (props: CollectionProps) => {
 
         <ContentGrid ownerState={ownerState}>
           {showFilters ? <CollectionFilters {...pageInfo} filters={settings?.filters} setFilter={setFilter} /> : null}
-          {!!items?.length && (
+          {items?.length && (
             <ItemsGrid ownerState={ownerState} id="items">
               {items?.map((item, index) => (
                 <Item

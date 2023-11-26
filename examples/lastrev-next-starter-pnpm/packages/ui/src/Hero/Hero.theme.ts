@@ -78,14 +78,30 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
+    gridRow: 3,
+    [theme.containerBreakpoints.up('md')]: {
+      gridRow: 1,
+      flexDirection: 'row'
+    },
+    [theme.containerBreakpoints.up('lg')]: {
+      gridColumn: 1
+    },
 
     borderRadius: theme.shape.borderRadius,
     overflow: 'hidden',
+
     img: {
       width: '100%',
       height: 'auto',
-      aspectRatio: '1/1',
-      objectFit: 'cover'
+      objectFit: 'cover',
+      objectPosition: 'center',
+      aspectRatio: '16/10',
+      [theme.containerBreakpoints.up('sm')]: {
+        aspectRatio: '21/9'
+      },
+      [theme.containerBreakpoints.up('md')]: {
+        aspectRatio: '1/1'
+      }
     }
   }),
 
@@ -117,7 +133,9 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         gridColumnEnd: 'content-end'
       },
 
-      '[class*=Hero-mediaWrap]': {},
+      '[class*=Hero-mediaWrap] img': {
+        aspectRatio: '21/9'
+      },
       '[class*=Hero-actionsWrap]': {
         justifyContent: 'center'
       }
@@ -129,19 +147,16 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
     },
     style: {
       '[class*=mainContentWrap]': {
-        gridRow: 2,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridRow: 1,
           gridColumnStart: 'content-start',
           gridColumnEnd: 'content-half'
         }
       },
 
       '[class*=mediaWrap]': {
-        gridRow: 1,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
@@ -158,19 +173,16 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
     },
     style: {
       '[class*=mainContentWrap]': {
-        gridRow: 2,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridRow: 1,
           gridColumnStart: 'content-start',
           gridColumnEnd: 'content-half'
         }
       },
 
       '[class*=mediaWrap]': {
-        gridRow: 1,
         gridColumnStart: 'full-start',
         gridColumnEnd: 'full-end',
 
@@ -187,12 +199,10 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
     },
     style: {
       '[class*=mainContentWrap]': {
-        gridRow: 2,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridRow: 1,
           gridColumnStart: 'content-half',
           gridColumnEnd: 'content-end'
         }
@@ -214,12 +224,10 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
     },
     style: {
       '[class*=mainContentWrap]': {
-        gridRow: 2,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridRow: 1,
           gridColumnStart: 'content-half',
           gridColumnEnd: 'content-end'
         }

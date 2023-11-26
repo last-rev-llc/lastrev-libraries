@@ -23,13 +23,15 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
   if (colorScheme && theme.vars.palette.schemes[paletteColor]) {
     styles = {
       [backgroundKey]: theme.vars.palette.schemes[paletteColor].primary.main,
-      '--current-color-main': theme.vars.palette.schemes[paletteColor].primary.main,
-      '--mui-palette-background-tab': theme.vars.palette.schemes[paletteColor].primary.main,
-      '--mui-palette-overline': theme.vars.palette.schemes[paletteColor].overline,
-      '--mui-palette-cardBackground': theme.vars.palette.schemes[paletteColor].cardBackground,
-      '--mui-palette-accordion-summary': theme.vars.palette.schemes[paletteColor].accordionSummary,
+
       // '--swiper-theme-color': theme.vars.palette.schemes[paletteColor].overline,
       '*': {
+        '--mui-palette-accordion-summary': theme.vars.palette.schemes[paletteColor].accordionSummary,
+        '--current-color-main': theme.vars.palette.schemes[paletteColor].primary.main,
+        '--mui-palette-background-tab': theme.vars.palette.schemes[paletteColor].primary.main,
+        '--mui-palette-overline': theme.vars.palette.schemes[paletteColor].overline,
+        '--mui-palette-cardBackground': theme.vars.palette.schemes[paletteColor].cardBackground,
+        '--mui-palette-cardBackgroundContrastText': theme.vars.palette.schemes[paletteColor].cardBackgroundContrastText,
         // Color inversion
         '--mui-palette-text-primary': theme.vars.palette.schemes[paletteColor].primary.contrastText,
         '--mui-palette-background-paper': theme.vars.palette.schemes[paletteColor].dark,
@@ -52,7 +54,7 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
         '--variant-accordion-color': theme.vars.palette.schemes[paletteColor].highlightColor,
         '--current-color-text': theme.vars.palette.schemes[paletteColor].primary.main,
         '--current-color-bg': theme.vars.palette.schemes[paletteColor].primary.main
-        // '--mui-palette-primary-main': `var(--mui-palette-${paletteColor}-accent)`
+        // '--mui-palette-primary-main': `var(--mui-palette-${paletteColor}-accent)`,
       }
     };
   }

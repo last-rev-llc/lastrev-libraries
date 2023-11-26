@@ -22,7 +22,7 @@ export const collectOptions = async ({
   });
   items?.forEach((entry: any) => {
     filters.forEach(({ id }) => {
-      const value: any = getLocalizedField(entry.fields, id, ctx);
+      const value: any = getLocalizedField(entry?.fields, id, ctx);
       if (!!value) {
         // If value is a RichText skip
         if (typeof value === 'object' && value?.nodeType) return;

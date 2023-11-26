@@ -63,7 +63,8 @@ const CollectionFiltered = (props: CollectionFilteredProps) => {
         settings
       })
   );
-
+  // isLoading = true;
+  // data = {};
   const collectionVariant = variant?.replace('Filtered', '');
   let items = [];
   let pageInfo = {

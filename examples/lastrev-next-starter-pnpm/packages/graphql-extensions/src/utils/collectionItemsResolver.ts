@@ -24,29 +24,29 @@ export interface CollectionSettings {
     key: string;
   }>;
 }
+
 export const collectionItemsResolver = async (
-  _: any,
-  { id, locale, settings: querySettings = {}, preview, limit, offset, filter }: ItemsConnectionArgs,
+  collectionEntry: any,
+  { id, locale, settings: querySettings = {}, preview, limit: argsLimit, offset, filter }: ItemsConnectionArgs,
   ctx: ApolloContext
 ) => {
-  ctx.locale = locale;
-  ctx.preview = preview;
-  const collection = id ? await ctx.loaders.entryLoader.load({ id, preview: !!preview }) : null;
+  ctx.locale = locale ?? ctx.locale;
+  ctx.preview = preview ?? ctx.preview;
+  const collection = id ? await ctx.loaders.entryLoader.load({ id, preview: ctx.preview! }) : collectionEntry;
   let items = getLocalizedField(collection?.fields, 'items', ctx) ?? [];
   try {
     const {
       contentType,
       filters,
       order,
-      filter: settingsFilter
+      filter: settingsFilter,
+      limit = argsLimit
     } = (getLocalizedField(collection?.fields, 'settings', ctx) as CollectionSettings) || querySettings;
-    // Get all possible items from Contentful
-    // Need all to generate the possible options for all items. Not just the current page.
     console.log('CollectionItems', {
       id,
-      locale,
+      locale: ctx.locale,
       querySettings,
-      preview,
+      preview: ctx.preview,
       limit,
       offset,
       settingsFilter,
@@ -54,13 +54,13 @@ export const collectionItemsResolver = async (
       filters
     });
 
+    // Get all possible items from Contentful
+    // Need all to generate the possible options for all items. Not just the current page.
     if (contentType) {
       const matchingItems = await queryContentful({
         contentType,
         filters,
         order,
-        // limit,
-        // offset,
         filter: { ...{ ...settingsFilter, ...filter } },
         ctx
       });
@@ -85,11 +85,10 @@ export const collectionItemsResolver = async (
         items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
       }
       console.log('Pagination');
-      console.log(items);
 
       const itemsVariant = getLocalizedField(collection?.fields, 'itemsVariant', ctx) ?? [];
       const fullItemsWithVariant = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
-      console.log(fullItemsWithVariant);
+
       return {
         pageInfo: {
           total: matchingItems?.length,
