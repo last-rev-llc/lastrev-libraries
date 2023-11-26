@@ -451,8 +451,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           width: '100%',
           objectFit: 'cover',
           minHeight: 'inherit',
-          filter: 'grayscale(1)',
-          height: '100%'
+          height: '100%',
+
+          [theme.breakpoints.up('md')]: {
+            filter: 'grayscale(1)'
+          }
 
           // '> img': {
           //   aspectRatio: 'inherit',
