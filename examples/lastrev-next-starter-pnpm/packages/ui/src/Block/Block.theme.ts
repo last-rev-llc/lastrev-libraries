@@ -15,7 +15,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     'width': '100%',
     'display': 'flex',
     'flexDirection': 'column',
-    '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
+    '[class*=Block-"Background-root"] + [class*=Block-Section-contentWrap] & [class*=Block-mainContentWrap]': {
       padding: 'calc(var(--grid-gap) * 2)',
       paddingTop: 0
     },
@@ -103,7 +103,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
       variant: BlockVariants.supportingItemOnRight
     },
     style: {
-      '[class*=mainContentWrap]': {
+      '[class*=Block-mainContentWrap]': {
         gridRow: 2,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
@@ -116,7 +116,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         }
       },
 
-      '[class*=sideContentWrap]': {
+      '[class*=Block-sideContentWrap]': {
         gridRow: 1,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
@@ -133,7 +133,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
       variant: BlockVariants.default
     },
     style: {
-      '[class*=mainContentWrap]': {
+      '[class*=Block-mainContentWrap]': {
         gridRow: 2,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
@@ -146,7 +146,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         }
       },
 
-      '[class*=sideContentWrap]': {
+      '[class*=Block-sideContentWrap]': {
         gridRow: 1,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
@@ -163,7 +163,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
   //     variant: BlockVariants.supportingItemOnRightFullBleed
   //   },
   //   style: {
-  //     '[class*=mainContentWrap]': {
+  //     '[class*=Block-mainContentWrap]': {
   //       gridRow: 2,
   //       gridColumnStart: 'content-start',
   //       gridColumnEnd: 'content-end',
@@ -175,7 +175,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
   //       }
   //     },
 
-  //     '[class*=sideContentWrap]': {
+  //     '[class*=Block-sideContentWrap]': {
   //       gridRow: 1,
   //       gridColumnStart: 'full-start',
   //       gridColumnEnd: 'full-end',
@@ -192,7 +192,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
       variant: BlockVariants.supportingItemOnLeft
     },
     style: {
-      '[class*=mainContentWrap]': {
+      '[class*=Block-mainContentWrap]': {
         gridRow: 2,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
@@ -205,7 +205,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         }
       },
 
-      '[class*=sideContentWrap]': {
+      '[class*=Block-sideContentWrap]': {
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
@@ -221,7 +221,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
   //     variant: BlockVariants.supportingItemOnLeftFullBleed
   //   },
   //   style: {
-  //     '[class*=mainContentWrap]': {
+  //     '[class*=Block-mainContentWrap]': {
   //       gridRow: 2,
   //       gridColumnStart: 'content-start',
   //       gridColumnEnd: 'content-end',
@@ -234,7 +234,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
   //       }
   //     },
 
-  //     '[class*=sideContentWrap]': {
+  //     '[class*=Block-sideContentWrap]': {
   //       gridColumnStart: '1',
   //       gridColumnEnd: '-1',
 
@@ -251,7 +251,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
     },
     style: {
       'textAlign': 'center',
-      '[class*=mainContentWrap]': {
+      '[class*=Block-mainContentWrap]': {
         'gridRow': 2,
         'gridColumnStart': 'content-start',
         'gridColumnEnd': 'content-end',
@@ -261,7 +261,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         }
       },
 
-      '[class*=sideContentWrap]': {
+      '[class*=Block-sideContentWrap]': {
         gridColumn: 'content-start/content-end',
         gridRow: 1
       }
@@ -273,7 +273,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
     },
     style: {
       'textAlign': 'center',
-      '[class*=mainContentWrap]': {
+      '[class*=Block-mainContentWrap]': {
         'gridRow': 1,
         'gridColumnStart': 'content-start',
         'gridColumnEnd': 'content-end',
@@ -282,7 +282,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         }
       },
 
-      '[class*=sideContentWrap]': {
+      '[class*=Block-sideContentWrap]': {
         'gridColumn': 'content-start/content-end',
         'gridRow': 2,
         '[class*=Block-media]': {
@@ -297,7 +297,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
     },
     style: {
       'textAlign': 'center',
-      '[class*=mainContentWrap]': {
+      '[class*=Block-mainContentWrap]': {
         'gridRow': 1,
         'gridColumnStart': 'content-start',
         'gridColumnEnd': 'content-end',
@@ -306,7 +306,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         }
       },
 
-      '[class*=sideContentWrap]': {
+      '[class*=Block-sideContentWrap]': {
         'gridColumn': 'content-start/content-end',
         'gridRow': 2,
         '[class*=Block-media]': {

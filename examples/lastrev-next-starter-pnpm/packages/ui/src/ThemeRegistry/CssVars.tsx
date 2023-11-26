@@ -70,18 +70,14 @@ export const CssVars = () => {
           /* --section-padding: calc(var(--grid-gap) * 2); */
           --section-padding: 80px;
 
-          --h1-font-size-base: 2.75rem;
-          --h2-font-size-base: 2.25rem;
-          --h3-font-size-base: 1.75rem;
-          --h4-font-size-base: 1.5rem;
-          --h5-font-size-base: 1.25rem;
-          --h6-font-size-base: 1rem;
-          --display1-font-size-base: 3rem;
-          --display2-font-size-base: 2rem;
-          --display3-font-size-base: 1.75rem;
-          --display4-font-size-base: 1.5rem;
-          --display5-font-size-base: 1.25rem;
-          --display6-font-size-base: 1rem;
+          --h1-font-size-base: 44px;
+          --h2-font-size-base: 36px;
+          --h3-font-size-base: 28px;
+          --h4-font-size-base: 24px;
+          --h5-font-size-base: 20px;
+          --h6-font-size-base: 16px;
+          --display1-font-size-base: 48px;
+          --display2-font-size-base: 40px;
 
           --h1-font-size: var(--h1-font-size-base);
           --h2-font-size: var(--h2-font-size-base);
@@ -91,13 +87,9 @@ export const CssVars = () => {
           --h6-font-size: var(--h6-font-size-base);
           --display1-font-size: var(--display1-font-size-base);
           --display2-font-size: var(--display2-font-size-base);
-          --display3-font-size: var(--display3-font-size-base);
-          --display4-font-size: var(--display4-font-size-base);
-          --display5-font-size: var(--display5-font-size-base);
-          --display6-font-size: var(--display6-font-size-base);
-          --overline-font-size: 0.75rem;
-          --body1-font-size: 1rem;
-          --body2-font-size: 1.125rem;
+          --overline-font-size: 12px;
+          --body1-font-size: 16px;
+          --body2-font-size: 12px;
           --bodySmall-font-size: 0.75rem;
           --bodyLarge-font-size: 1.25rem;
 

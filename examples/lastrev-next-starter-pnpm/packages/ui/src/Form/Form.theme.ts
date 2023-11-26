@@ -24,7 +24,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
     order: 1,
     margin: '0 auto var(--grid-gap)'
   },
-
+  formDisclaimer: {
+    marginTop: 'var(--grid-gap)',
+    order: 2
+  },
   formWrap: ({ theme, ownerState }) => ({
     'display': 'flex',
     'flexDirection': 'column',
@@ -50,11 +53,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
       },
 
       '.mktoError': {
-        'bottom': '.5em !important',
-        'left': 'var(--grid-gap) !important',
+        'bottom': '-8px!important',
+        'left': '8px !important',
         'right': 'unset !important',
         'top': 'unset !important',
-        'fontSize': '.75em',
+        // TODO: Use typography
+        'fontSize': '12px',
         '*': {
           backgroundColor: 'transparent',
           backgroundImage: 'unset',
@@ -84,7 +88,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
       '.mktoButtonRow': {
         width: '100%',
         margin: 'auto',
-        order: 2
+        order: 2,
+        display: 'flex',
+        justifyContent: 'center'
       },
 
       ':is(select, input, textarea)': {
@@ -139,31 +145,31 @@ const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
         '&.is-placeholder': {
           color: alpha(theme.palette.primary.contrastText, 0.7)
         }
-      },
-
-      'button': {
-        ...theme.typography.body1,
-
-        'backgroundColor': theme.vars.palette.primary.light,
-        'color': theme.vars.palette.primary.contrastText,
-        'border': `3px solid ${theme.vars.palette.primary.contrastText}`,
-        'padding': theme.spacing(0.625, 2.625), // Substract border
-        'borderRadius': theme.spacing(0.5),
-        'textDecoration': 'none',
-        'width': 'unset',
-        'margin': '0 auto',
-        'display': 'block',
-
-        '&:hover': {
-          borderColor: theme.vars.palette.primary.contrastText,
-          backgroundColor: theme.vars.palette.primary.light
-        },
-
-        '&:active': {
-          backgroundColor: theme.vars.palette.primary.light,
-          borderColor: theme.vars.palette.primary.contrastText
-        }
       }
+
+      // 'button': {
+      //   ...theme.typography.body1,
+
+      //   'backgroundColor': theme.vars.palette.primary.light,
+      //   'color': theme.vars.palette.primary.contrastText,
+      //   'border': `3px solid ${theme.vars.palette.primary.contrastText}`,
+      //   'padding': theme.spacing(0.625, 2.625), // Substract border
+      //   'borderRadius': theme.spacing(0.5),
+      //   'textDecoration': 'none',
+      //   'width': 'unset',
+      //   'margin': '0 auto',
+      //   'display': 'block',
+
+      //   '&:hover': {
+      //     borderColor: theme.vars.palette.primary.contrastText,
+      //     backgroundColor: theme.vars.palette.primary.light
+      //   },
+
+      //   '&:active': {
+      //     backgroundColor: theme.vars.palette.primary.light,
+      //     borderColor: theme.vars.palette.primary.contrastText
+      //   }
+      // }
     }
   })
 };
@@ -179,9 +185,19 @@ const createVariants = (theme: Theme): ComponentsVariants['Form'] => [
   {
     props: { variant: FormVariants.default },
     style: {
-      background: theme.vars.palette.background.lightThree,
-      padding: theme.spacing(8),
-      boxShadow: '0px 0px 64px 0px rgba(0, 0, 0, 0.06)'
+      'background': theme.vars.palette.background.lightThree,
+      'padding': theme.spacing(8),
+      'boxShadow': '0px 0px 64px 20px rgba(0, 0, 0, 0.06)',
+
+      '[class*=Text-root] ': {
+        'margin': 0,
+        '[class*=Text-title]': {
+          ...theme.typography.display2
+        },
+        '[class*=Text-subtitle]': {
+          ...theme.typography.body1
+        }
+      }
     }
   }
 ];

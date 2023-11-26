@@ -93,6 +93,13 @@ export const LinkTheme = (theme: Theme): ThemeOptions => ({
       defaultProps,
       styleOverrides,
       variants: createVariants(theme)
+    },
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          textTransform: 'unset'
+        }
+      }
     }
   }
 });

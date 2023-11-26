@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 import { styled } from '@mui/material/styles';
 import ReCAPTCHA from 'react-google-recaptcha';
@@ -14,6 +15,7 @@ import type { FormProps, FormOwnerState } from './Form.types';
 import ErrorBoundary from '../ErrorBoundary';
 import Box from '@mui/material/Box';
 import Script from 'next/script';
+import { Button, Typography } from '@mui/material';
 
 declare global {
   interface Window {
@@ -41,30 +43,39 @@ export const invalidPersonalDomains = [
 
 const Form = (props: FormProps) => {
   const ownerState = { ...props };
-
-  const { introText, sidekickLookup, marketoFormId, confirmationPath, allowPersonalEmailAddresses, hideRecaptcha } =
-    props;
+  const [submitEl, setSubmitEl] = React.useState<Element | null>(null);
+  const [submitText, setSubmitText] = React.useState('Submit');
+  const {
+    introText,
+    sidekickLookup,
+    marketoFormId,
+    confirmationPath,
+    allowPersonalEmailAddresses,
+    hideRecaptcha,
+    disclaimerText
+  } = props;
 
   const handleCaptchaChange = (token?: string | null) => {
     console.log({ token });
   };
 
-  // const [ref, setRef] = useState(false);
-  // const [knownVisitor, setKnownVisitor] = useState(false);
-
-  // useEffect(() => {
-  //   if (knownVisitor) {
-  //     props.onKnownVisitor(knownVisitor);
-  //   }
-  // }, [knownVisitor]);
   React.useEffect(() => {});
   if (!props.marketoFormId) {
     return null;
   }
 
+  const ButtonPortal = submitEl
+    ? ReactDOM.createPortal(
+        <Button type="submit" variant="contained" color="primary" size="large">
+          {submitText}
+        </Button>,
+        submitEl
+      )
+    : null;
   return (
     <ErrorBoundary>
       <Root data-testid="Form" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+        {ButtonPortal}
         {/* <FormBackground background={background} backgroundColor={backgroundColor} testId="Form-background" /> */}
 
         {!!introText && (
@@ -90,6 +101,11 @@ const Form = (props: FormProps) => {
                   process.env.NEXT_PUBLIC_MUNCHKIN_ID,
                   marketoFormId,
                   (form: any) => {
+                    const submitBtnWrap = document.querySelector(`#mktoForm_${marketoFormId} .mktoButtonWrap`)!;
+                    const submitBtn = document.querySelector(`#mktoForm_${marketoFormId} button[type=submit]`)!;
+                    setSubmitText(submitBtn?.innerHTML);
+                    submitBtnWrap.innerHTML = '';
+                    setSubmitEl(submitBtnWrap);
                     // TODO: Go to path or asset?
                     if (confirmationPath) {
                       form.onSuccess(() => {
@@ -157,6 +173,7 @@ const Form = (props: FormProps) => {
                   <ReCAPTCHA sitekey={RECAPTCHA_SITE_KEY} onChange={handleCaptchaChange} />
                 </RecaptchaWrap>
               )}
+              {disclaimerText ? <FormDisclaimer ownerState={ownerState}>{disclaimerText}</FormDisclaimer> : null}
             </FormWrap>
           </MainContentWrap>
         </ContentOuterGrid>
@@ -187,6 +204,12 @@ const FormWrap = styled(Box, {
   name: 'Form',
   slot: 'FormWrap',
   overridesResolver: (_, styles) => [styles.formWrap]
+})<{ ownerState: FormOwnerState }>``;
+
+const FormDisclaimer = styled(Typography, {
+  name: 'Form',
+  slot: 'FormDisclaimer',
+  overridesResolver: (_, styles) => [styles.formDisclaimer]
 })<{ ownerState: FormOwnerState }>``;
 
 const ContentOuterGrid = styled(Grid, {

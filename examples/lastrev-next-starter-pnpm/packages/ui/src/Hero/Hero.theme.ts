@@ -146,7 +146,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.mediaOnRight
     },
     style: {
-      '[class*=mainContentWrap]': {
+      '[class*=Hero-mainContentWrap]': {
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
@@ -156,7 +156,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         }
       },
 
-      '[class*=mediaWrap]': {
+      '[class*=Hero-mediaWrap]': {
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
@@ -172,7 +172,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.mediaOnRightFullBleed
     },
     style: {
-      '[class*=mainContentWrap]': {
+      '[class*=Hero-mainContentWrap]': {
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
@@ -182,7 +182,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         }
       },
 
-      '[class*=mediaWrap]': {
+      '[class*=Hero-mediaWrap]': {
         gridColumnStart: 'full-start',
         gridColumnEnd: 'full-end',
 
@@ -198,7 +198,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.mediaOnLeft
     },
     style: {
-      '[class*=mainContentWrap]': {
+      '[class*=Hero-mainContentWrap]': {
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
@@ -208,7 +208,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         }
       },
 
-      '[class*=mediaWrap]': {
+      '[class*=Hero-mediaWrap]': {
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
@@ -223,7 +223,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.mediaOnLeftFullBleed
     },
     style: {
-      '[class*=mainContentWrap]': {
+      '[class*=Hero-mainContentWrap]': {
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
 
@@ -233,7 +233,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         }
       },
 
-      '[class*=mediaWrap]': {
+      '[class*=Hero-mediaWrap]': {
         gridColumnStart: 'content-half',
         gridColumnEnd: 'content-end',
 
@@ -250,7 +250,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
     },
     style: {
       'textAlign': 'center',
-      '[class*=mainContentWrap]': {
+      '[class*=Hero-mainContentWrap]': {
         'gridRow': 2,
         'gridColumnStart': 'content-start',
         'gridColumnEnd': 'content-end',
@@ -260,7 +260,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         }
       },
 
-      '[class*=mediaWrap]': {
+      '[class*=Hero-mediaWrap]': {
         gridColumn: 'content-start/content-end',
         gridRow: 1
       }
@@ -272,10 +272,10 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
     },
     style: {
       'textAlign': 'center',
-      '[class*=title]': {
+      '[class*=Hero-title]': {
         color: theme.vars.palette.primary.dark
       },
-      '[class*=mainContentWrap]': {
+      '[class*=Hero-mainContentWrap]': {
         'gridRow': 1,
         'gridColumnStart': 'content-start',
         'gridColumnEnd': 'content-end',
@@ -284,7 +284,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         }
       },
 
-      '[class*=mediaWrap]': {
+      '[class*=Hero-mediaWrap]': {
         gridColumn: 'content-start/content-end',
         maxWidth: 800,
         margin: 'auto',

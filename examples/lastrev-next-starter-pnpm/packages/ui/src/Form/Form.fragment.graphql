@@ -5,6 +5,7 @@ fragment Form_BaseFragment on ElementForm {
   }
   variant
   hideRecaptcha
+  disclaimerText
   marketoFormId
   confirmationPath
   allowPersonalEmailAddresses
