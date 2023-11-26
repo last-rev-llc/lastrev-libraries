@@ -11,6 +11,7 @@ fragment Block_BaseFragment on Block {
   overline
   title
   subtitle
+  overlap
   body {
     ...RichText_BaseFragment
   }

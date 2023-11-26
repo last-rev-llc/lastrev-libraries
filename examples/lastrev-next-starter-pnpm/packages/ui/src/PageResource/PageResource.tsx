@@ -64,40 +64,37 @@ const PageResource = (props: PageResourceProps) => {
       {hero ? <ContentModule {...(hero as any)} /> : null}
       <Root component="main" {...sidekick(sidekickLookup)} ownerState={ownerState}>
         {subNavigation ? <ContentModule {...(subNavigation as any)} /> : null}
-        <ContentOuterGrid ownerState={ownerState}>
-          <ContentWrap ownerState={ownerState}>
-            {title ? (
+        {featuredMedia || body ? (
+          <ContentOuterGrid ownerState={ownerState}>
+            <ContentWrap ownerState={ownerState}>
+              {/* {title ? (
               <HeaderWrap ownerState={ownerState}>
-                <>
-                  {!!title && (
-                    <Title component="h1" variant="display1" ownerState={ownerState}>
-                      {title}
-                    </Title>
-                  )}
-                </>
+                <Title component="h1" variant="display1" ownerState={ownerState}>
+                  {title}
+                </Title>
               </HeaderWrap>
-            ) : null}
-            {!!featuredMedia && (
-              <FeaturedMediaWrap {...sidekick(sidekickLookup, 'featuredMedia')} ownerState={ownerState}>
-                <FeaturedMedia {...(featuredMedia as MediaProps)} ownerState={ownerState} />
-              </FeaturedMediaWrap>
-            )}
+            ) : null} */}
+              {!!featuredMedia && (
+                <FeaturedMediaWrap {...sidekick(sidekickLookup, 'featuredMedia')} ownerState={ownerState}>
+                  <FeaturedMedia {...(featuredMedia as MediaProps)} ownerState={ownerState} />
+                </FeaturedMediaWrap>
+              )}
 
-            {!!body && (
-              <Body
-                body={body}
-                sidekickLookup={sidekickLookup}
-                variant="inline"
-                __typename="RichText"
-                ownerState={ownerState}
-              />
-            )}
-          </ContentWrap>
-        </ContentOuterGrid>
+              {!!body && (
+                <Body
+                  body={body}
+                  sidekickLookup={sidekickLookup}
+                  variant="inline"
+                  __typename="RichText"
+                  ownerState={ownerState}
+                />
+              )}
+            </ContentWrap>
+          </ContentOuterGrid>
+        ) : null}
 
-        {contents?.map((content: any) => (
-          <ContentModule key={content?.id} {...content} component="section" />
-        ))}
+        {contents?.length > 0 &&
+          contents?.map((content: any) => <ContentModule key={content?.id} {...content} component="section" />)}
 
         {!!relatedItems && <RelatedItems {...relatedItems} ownerState={ownerState} backgroundColor="white" />}
       </Root>

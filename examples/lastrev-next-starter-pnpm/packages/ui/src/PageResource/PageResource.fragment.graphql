@@ -29,6 +29,9 @@ fragment PageResource_BaseFragment on PageResource {
       }
     }
   }
+  contents {
+    ...Block_BaseFragment
+  }
 }
 
 fragment PageResource_CardFragment on PageResource {

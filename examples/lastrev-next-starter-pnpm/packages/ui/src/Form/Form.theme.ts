@@ -175,6 +175,14 @@ const createVariants = (theme: Theme): ComponentsVariants['Form'] => [
       background: theme.vars.palette.background.lightThree,
       padding: theme.spacing(6, 3)
     }
+  },
+  {
+    props: { variant: FormVariants.default },
+    style: {
+      background: theme.vars.palette.background.lightThree,
+      padding: theme.spacing(8),
+      boxShadow: '0px 0px 64px 0px rgba(0, 0, 0, 0.06)'
+    }
   }
 ];
 

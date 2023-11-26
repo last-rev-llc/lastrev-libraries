@@ -492,6 +492,7 @@ type PageResource implements Content {
   author: Person
   body: RichText
   breadcrumbs: [Link]
+  contents: [Content]
   disableBackToTop: Boolean
   footer: Footer
   footerDisclaimerOverride: RichText

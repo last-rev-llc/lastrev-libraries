@@ -19,6 +19,7 @@ export const typeDefs = gql`
     hero: Hero
     path: String
     jsonLd: JSON
+    contents: [Content]
     breadcrumbs: [Link]
     author: Person
     subNavigation: NavigationItem

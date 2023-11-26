@@ -15,11 +15,25 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     'width': '100%',
     'display': 'flex',
     'flexDirection': 'column',
-
     '[class*="Background-root"] + [class*=Section-contentWrap] & [class*=mainContentWrap]': {
       padding: 'calc(var(--grid-gap) * 2)',
       paddingTop: 0
-    }
+    },
+    ...(ownerState?.overlap
+      ? {
+          'marginTop': '0!important',
+          '&:before': {
+            zIndex: '-1',
+            content: '""',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: theme.spacing(12),
+            background: `var(--mui-palette-prev-color)`
+          }
+        }
+      : {})
     // TODO: Update to check if within a section
     // padding: theme.spacing(0, 4)
     // margin: theme.spacing(0, -4)

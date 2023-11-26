@@ -174,6 +174,9 @@ const createVariants = (theme: Theme): ComponentsVariants['PageResource'] => [
       variant: 'Guide'
     },
     style: {
+      '[class*=contentOuterGrid]': {
+        padding: theme.spacing(8, 0)
+      },
       '[class*=contentWrap]': {
         'display': 'contents',
         '> *': {
