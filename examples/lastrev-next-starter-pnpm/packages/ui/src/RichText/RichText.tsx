@@ -21,6 +21,9 @@ import ContentModule from '../ContentModule';
 
 import type { RichTextProps } from './RichText.types';
 import sidekick from '@last-rev/contentful-sidekick-util';
+import { RichTextLinks } from '../../../graphql-sdk/src/types';
+import { MARKS } from './ReactRichTextRenderer';
+import { Box } from '@mui/material';
 
 const keyBy = (key: string, xs: any[]) => xs.filter(Boolean).reduce((acc, x) => ({ ...acc, [x[key]]: x }), {});
 
@@ -30,35 +33,38 @@ const isHTML = (x?: any) => x?.includes && x?.includes('<');
 const isCmp = (child?: any): any => !!child?.type && typeof child?.type !== 'string';
 const containsHTML = (children?: any) => children?.some((child: any) => isHTML(child) || isCmp(child));
 
-const renderTypography =
-  ({
-    variant
-  }: {
-    variant:
-      | 'button'
-      | 'caption'
-      | 'h1'
-      | 'h2'
-      | 'h3'
-      | 'h4'
-      | 'h5'
-      | 'h6'
-      | 'inherit'
-      | 'overline'
-      | 'subtitle1'
-      | 'subtitle2'
-      | 'body1'
-      | undefined;
-  }) =>
-  (node: any, children: any) => {
+const renderTypography = ({
+  variant
+}: {
+  variant:
+    | 'button'
+    | 'caption'
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'inherit'
+    | 'overline'
+    | 'subtitle1'
+    | 'subtitle2'
+    | 'body1'
+    | undefined;
+}) =>
+  function RichTextTypography(node: any, children: any) {
     if (children?.length === 1 && children[0] === '') {
       return <br />;
     }
     if (containsHTML(children)) {
       const hasEmbed = node?.content?.some((child: any) => child.nodeType?.includes('embedded'));
       return (
-        // Use div as Typography to use the correct styles and avoid invalid DOM nesting when there are embedded entries
-        <Typography variant={variant} {...(hasEmbed && { component: 'span' })} data-testid={`Text-${variant}`}>
+        // Use div as Typograph to use the correct styles and avoid invalid DOM nesting when there embedded entries
+        <TypographyRoot
+          id={node.data.id}
+          variant={variant}
+          {...(hasEmbed && { component: 'span' })}
+          data-testid={`Text-${variant}`}>
           {children.map((child: any) => {
             if (isHTML(child)) {
               return (
@@ -72,28 +78,28 @@ const renderTypography =
             }
             return child;
           })}
-        </Typography>
+        </TypographyRoot>
       );
     }
 
     return (
       <>
-        <Typography variant={variant} data-testid={`Text-${variant}`}>
+        <TypographyRoot id={node.data.id} variant={variant} data-testid={`Text-${variant}`}>
           {children}
-        </Typography>
+        </TypographyRoot>
       </>
     );
   };
 
-const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { links?: TextLinks } & Options) => {
+const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { links?: RichTextLinks } & Options) => {
   const entries = keyBy('id', links?.entries ?? []);
   const assets = keyBy('id', links?.assets ?? []);
 
   return {
     renderNode: {
-      [INLINES.HYPERLINK]: (_: any, children: any) => {
+      [INLINES.HYPERLINK]: (node: any, children: any) => {
         return (
-          <ContentModule __typename="Link" href={_.data.uri} data-testid={`Text-${INLINES.HYPERLINK}`}>
+          <ContentModule __typename="Link" href={node.data.uri} data-testid={`Text-${INLINES.HYPERLINK}`}>
             {children}
           </ContentModule>
         );
@@ -128,7 +134,10 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
         return (
-          <EmbeddedRoot data-testid={`Text-${BLOCKS.EMBEDDED_ENTRY}`}>
+          <EmbeddedRoot
+            component="span"
+            sx={{ display: 'block', mt: 1, mb: 1 }}
+            data-testid={`Text-${BLOCKS.EMBEDDED_ENTRY}`}>
             <ContentModule {...entry} />
           </EmbeddedRoot>
         );
@@ -136,9 +145,8 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
       [INLINES.EMBEDDED_ENTRY]: (node: any) => {
         const id: string = node?.data?.target?.sys?.id;
         const entry = entries[id];
-
         return (
-          <InlineRoot data-testid={`Text-${INLINES.EMBEDDED_ENTRY}`}>
+          <InlineRoot component="span" sx={{ display: 'inline' }} data-testid={`Text-${INLINES.EMBEDDED_ENTRY}`}>
             <ContentModule {...entry} />
           </InlineRoot>
         );
@@ -179,6 +187,9 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
       [BLOCKS.TABLE_CELL]: (_: any, children: any) => {
         return <TableCell>{children}</TableCell>;
       },
+      // [BLOCKS.UL_LIST]: (node: any, children: any) => {
+      //   return <UnorderedList variant={node?.data?.variant}>{children}</UnorderedList>;
+      // },
       ...renderNode
     },
     // Adds ability to override renderText through options
@@ -187,7 +198,26 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
 
       return text;
     },
-    renderMark
+    renderMark: {
+      // [MARKS.COLOR]: (text: any, { value }: Mark) => (
+      //   <Box
+      //     component="span"
+      //     color={(theme) =>
+      //       value && theme.palette[value as keyof Palette]
+      //         ? (theme.palette[value as keyof Palette] as PaletteColor).main
+      //         : undefined
+      //     }>
+      //     {text}
+      //   </Box>
+      // ),
+      // [MARKS.TYPOGRAPHY]: (text: any, mark: any) => (
+      //   <Typography component="span" variant={mark.value}>
+      //     {text}
+      //   </Typography>
+      // ),
+      [MARKS.HIGHLIGHT]: (text: any) => <mark>{text}</mark>,
+      ...renderMark
+    }
   };
 };
 
@@ -228,7 +258,17 @@ const Root = styled('div', {
   white-space: pre-wrap;
   display: contents;
 `;
-
+const TypographyRoot = styled(Typography, {
+  name: 'Text',
+  slot: 'TypographyRoot',
+  overridesResolver: (_, styles) => [styles.typographyRoot]
+})(() => ({
+  b: {
+    '.MuiTypography-root, .MuiTypography-root *': {
+      fontWeight: 700
+    }
+  }
+}));
 const EmbeddedRoot = styled('div', {
   name: 'RichText',
   slot: 'EmbeddedRoot',

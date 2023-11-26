@@ -30,6 +30,7 @@ const Collection = (props: CollectionProps) => {
     introText,
     actions,
 
+    // TODO: Update types for Collection Filters
     settings,
     showFilters,
     pageInfo,

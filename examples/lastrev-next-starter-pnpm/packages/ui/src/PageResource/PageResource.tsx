@@ -79,17 +79,19 @@ const PageResource = (props: PageResourceProps) => {
                 <Breadcrumbs links={breadcrumbs} />
               </BreadcrumbsWrap>
             ) : null}
-            <HeaderWrap ownerState={ownerState}>
-              <>
-                {!!title && (
-                  <Title component="h1" variant="display1" ownerState={ownerState}>
-                    {title}
-                  </Title>
-                )}
+            {title || subtitle ? (
+              <HeaderWrap ownerState={ownerState}>
+                <>
+                  {!!title && (
+                    <Title component="h1" variant="display1" ownerState={ownerState}>
+                      {title}
+                    </Title>
+                  )}
 
-                {!!subtitle && <Subtitle ownerState={ownerState}>{subtitle}</Subtitle>}
-              </>
-            </HeaderWrap>
+                  {!!subtitle && <Subtitle ownerState={ownerState}>{subtitle}</Subtitle>}
+                </>
+              </HeaderWrap>
+            ) : null}
             {!!featuredMedia && (
               <FeaturedMediaWrap {...sidekick(sidekickLookup, 'featuredMedia')} ownerState={ownerState}>
                 <FeaturedMedia {...(featuredMedia as MediaProps)} ownerState={ownerState} />
@@ -105,72 +107,6 @@ const PageResource = (props: PageResourceProps) => {
                 ownerState={ownerState}
               />
             )}
-
-            <ShareLinksWrap ownerState={ownerState}>
-              <ShareLinks ownerState={ownerState} disablePadding>
-                <ShareLink ownerState={ownerState} disableGutters disablePadding>
-                  <ShareLinkItem
-                    __typename="Link"
-                    color="black"
-                    href={`http://www.twitter.com/share?url=${encodedShareUrl}`}
-                    target="_blank"
-                    icon="twitter"
-                    // text="Twitter"
-                    ownerState={ownerState}
-                  />
-                </ShareLink>
-
-                <ShareLink ownerState={ownerState}>
-                  <ShareLinkItem
-                    __typename="Link"
-                    color="black"
-                    href={`https://www.facebook.com/sharer/sharer.php?u=${encodedShareUrl}`}
-                    target="_blank"
-                    icon="facebook"
-                    // text="Facebook"
-                    ownerState={ownerState}
-                  />
-                </ShareLink>
-
-                <ShareLink ownerState={ownerState}>
-                  <ShareLinkItem
-                    __typename="Link"
-                    color="black"
-                    href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodedShareUrl}`}
-                    target="_blank"
-                    icon="linkedin"
-                    // text="Linkedin"
-                    ownerState={ownerState}
-                  />
-                </ShareLink>
-
-                {/* <ShareLink ownerState={ownerState}>
-                  <ShareLinkItem
-                    __typename="Link"
-                    color="black"
-                    href={`mailto:?to=&body=${encodedShareUrl}`}
-                    target="_blank"
-                    icon=
-                    // text="Email"
-                    ownerState={ownerState}
-                  />
-                </ShareLink> */}
-
-                {/* <ShareLink ownerState={ownerState}>
-                  <ShareLinkItem
-                    __typename="Link"
-color="secondary"
-                    target="_blank"
-                    icon={CopyLinkIcon}
-                    text="Copy Link"
-                    ownerState={ownerState}
-                    onClick={() => {
-                      navigator.clipboard.writeText(shareUrl);
-                    }}
-                  />
-                </ShareLink> */}
-              </ShareLinks>
-            </ShareLinksWrap>
           </ContentWrap>
         </ContentOuterGrid>
         {!!author && (

@@ -32,7 +32,40 @@ const styleOverrides: ComponentsOverrides<Theme>['InlineNavigation'] = {
   })
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['InlineNavigation'] => [];
+const createVariants = (theme: Theme): ComponentsVariants['InlineNavigation'] => [
+  {
+    props: { variant: 'tableOfContents' },
+    style: {
+      'position': 'relative',
+      'top': 0,
+      'backgroundColor': 'unset',
+      'padding': 0,
+      'border': 0,
+      '&:before': {
+        zIndex: '-1',
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '50%',
+        background: `var(--mui-palette-prev-color)`
+      },
+      '[class*=linksWrap]': {
+        padding: 0,
+        background: theme.vars.palette.background.lightTwo,
+        borderRadius: 24,
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: 0
+      },
+      '[class*=link]': {
+        color: theme.vars.palette.common.black,
+        padding: theme.spacing(2)
+      }
+    }
+  }
+];
 
 export const InlineNavigationTheme = (theme: Theme): ThemeOptions => ({
   components: {

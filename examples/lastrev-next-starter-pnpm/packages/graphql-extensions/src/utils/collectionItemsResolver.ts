@@ -76,7 +76,7 @@ export const collectionItemsResolver = async (
       if (items?.length) {
         items = (
           await ctx.loaders.entryLoader.loadMany(items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview })))
-        ).filter((entry) => getLocalizedField(entry?.fields, 'excludeFromDynamicLists', ctx) !== true);
+        ).filter((entry) => getLocalizedField((entry as any)?.fields, 'excludeFromDynamicLists', ctx) !== true);
       }
 
       const options = await collectOptions({ filters, items, ctx });
@@ -84,7 +84,6 @@ export const collectionItemsResolver = async (
       if (offset || limit) {
         items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
       }
-      console.log('Pagination');
 
       const itemsVariant = getLocalizedField(collection?.fields, 'itemsVariant', ctx) ?? [];
       const fullItemsWithVariant = items?.map((x: any) => ({ ...x, variant: itemsVariant }));

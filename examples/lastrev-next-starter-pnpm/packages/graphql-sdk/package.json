@@ -8,8 +8,8 @@
   ],
   "sideEffects": false,
   "scripts": {
-    "gql:start": "run-s gql:pm2:kill gql:pm2",
-    "gql:dev": "run-s gql:pm2:kill 'gql:pm2 --watch' sdk:dev",
+    "gql:start": "run-s gql:pm2:kill 'gql:pm2 --watch'",
+    "gql:dev": "run-s sdk:dev",
     "sync:cms": "last-rev cms-sync -c ./config.js",
     "gql:pm2": "pm2 start pm2.json",
     "gql:pm2:kill": "pm2 kill",

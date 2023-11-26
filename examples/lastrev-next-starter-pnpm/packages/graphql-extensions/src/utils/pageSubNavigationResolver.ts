@@ -1,11 +1,15 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
 import { ApolloContext } from '../types';
 import { createType } from './createType';
+import parseRichTextHeadings from './parseRichTextHeadings';
 
 export const pageSubNavigationResolver = async (entry: any, _args: any, ctx: ApolloContext) => {
   const contentType = entry?.sys?.contentType?.sys?.id;
 
   const pageType = getLocalizedField(entry.fields, 'pageType', ctx);
+  const subNavigation = getLocalizedField(entry.fields, 'subNavigation', ctx);
+
+  if (subNavigation) return subNavigation;
 
   if (pageType?.toLowerCase() === 'blog' || contentType === 'blog' || contentType == 'categoryBlog') {
     let allBlogCategories = await ctx.loaders.entriesByContentTypeLoader.load({
@@ -29,5 +33,37 @@ export const pageSubNavigationResolver = async (entry: any, _args: any, ctx: Apo
       // backgroundColor: 'blueLight'
       subNavigation: allBlogCategories
     });
+  }
+  console.log('SubNav', { pageType });
+  if (contentType === 'pageResource') {
+    const resourceType = getLocalizedField(entry.fields, 'resourceType', ctx);
+    console.log('PageResource', { resourceType });
+    if (resourceType?.toLowerCase() === 'guide') {
+    const includeTocTableOfContents = getLocalizedField(entry.fields, 'includeTocTableOfContents', ctx);
+console.log ({includeTocTableOfContents})
+    if(!includeTocTableOfContents) return null;
+      const content = getLocalizedField(entry.fields, 'body', ctx);
+      // Parse throught the RichText to find heading elements and create a subNavigation from them
+      const headings = parseRichTextHeadings(content);
+      console.log('headings', headings);
+      const subNavigationItems = headings.map((heading) =>
+        createType('Link', {
+          text: heading.text,
+          href:  '#'+heading.text
+            // reference: https://gist.github.com/codeguy/6684588
+            .normalize('NFKD')
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .trim()
+            .replace(/[-\s]+/g, '-');
+          // Other properties as needed, e.g., link to the section
+        })
+      );
+
+      return createType('NavigationItem', {
+        variant: 'tableOfContents',
+        subNavigation: subNavigationItems
+      });
+    }
   }
 };

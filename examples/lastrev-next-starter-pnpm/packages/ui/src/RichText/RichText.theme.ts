@@ -49,7 +49,12 @@ const styleOverrides: ComponentsOverrides<Theme>['RichText'] = {
         margin: 'var(--display2-margin)'
       }
     },
-
+    '[class*=Media-root]': {
+      margin: 'auto',
+      width: '100%',
+      objectFit: 'contain',
+      height: 'auto'
+    },
     'overline': {
       'display': 'block',
       'fontWeight': 'var(--overline-font-weight)',

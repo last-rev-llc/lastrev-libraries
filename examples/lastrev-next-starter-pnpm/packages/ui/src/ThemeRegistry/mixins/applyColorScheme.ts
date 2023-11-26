@@ -55,6 +55,9 @@ export const applyColorScheme: ApplyColorScheme = ({ ownerState, theme }: { owne
         '--current-color-text': theme.vars.palette.schemes[paletteColor].primary.main,
         '--current-color-bg': theme.vars.palette.schemes[paletteColor].primary.main
         // '--mui-palette-primary-main': `var(--mui-palette-${paletteColor}-accent)`,
+      },
+      '+ *': {
+        '--mui-palette-prev-color': theme.vars.palette.schemes[paletteColor].primary.main
       }
     };
   }

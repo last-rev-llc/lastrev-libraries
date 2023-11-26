@@ -6,7 +6,8 @@ fragment RichText_BaseFragment on RichText {
     entries {
       ...Content_BaseFragment
       ...Link_BaseFragment
-      #   ...Collection_RichTextFragment
+      ...Collection_RichTextFragment
+      ...CollectionExpandable_NestedFragment
       #   ...Card_RichTextFragment
       #   ...Section_RichTextFragment
       ...Text_RichTextFragment

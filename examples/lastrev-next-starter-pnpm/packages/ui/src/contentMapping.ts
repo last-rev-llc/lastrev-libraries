@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+
 const Block = dynamic(() => import('./Block'));
 const Hero = dynamic(() => import('./Hero'));
 const Link = dynamic(() => import('./Link'));
@@ -76,6 +77,7 @@ export const contentMapping: {
   'NavigationItem:linkBoldedFooter': FooterNavigationItem,
   'NavigationItem:groupFooter': FooterNavigationItemGroup,
   'NavigationItem:inlineNavigation': InlineNavigation,
+  'NavigationItem:tableOfContents': InlineNavigation,
   SiteMessage,
   Breadcrumbs
 };

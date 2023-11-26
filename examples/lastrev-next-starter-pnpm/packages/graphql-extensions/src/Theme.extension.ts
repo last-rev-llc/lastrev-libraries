@@ -50,6 +50,12 @@ export const mappers = {
       color: colorResolver('color', true)
     }
   },
+  CollectionDynamic: {
+    CollectionDynamic: {
+      backgroundColor: colorResolver('backgroundColor', true),
+      color: colorResolver('color', true)
+    }
+  },
   CollectionExpandable: {
     CollectionExpandable: {
       backgroundColor: colorResolver('backgroundColor', true),

@@ -5,6 +5,7 @@ fragment PageResource_BaseFragment on PageResource {
   path
   slug
   title
+  variant
   header {
     ...Header_BaseFragment
   }
@@ -17,8 +18,16 @@ fragment PageResource_BaseFragment on PageResource {
   hero {
     ...ContentModule_BaseFragment
   }
+  subNavigation {
+    ...NavigationItem_BaseFragment
+  }
   body {
     ...RichText_BaseFragment
+    links {
+      entries {
+        ...Block_BaseFragment
+      }
+    }
   }
 }
 

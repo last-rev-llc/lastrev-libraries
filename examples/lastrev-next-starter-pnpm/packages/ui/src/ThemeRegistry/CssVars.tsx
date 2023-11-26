@@ -27,6 +27,10 @@ export const CssVars = () => {
           font-style: normal;
         }
 
+        * {
+          scroll-margin-top: 96px;
+        }
+
         :root {
           --base-spacing: 8px;
           --grid-margin-xs: 24px;

@@ -49,6 +49,7 @@ type Block implements Content {
   supplementalContent: Content
   theme: [Theme]
   title: String
+  titleRTE: RichText
   variant: String
 }
 
@@ -509,10 +510,12 @@ type PageResource implements Content {
   seo: JSON
   sidekickLookup: JSON
   slug: String
+  subNavigation: NavigationItem
   successBody: RichText
   successSlug: String
   theme: [Theme]
   title: String
+  variant: String
 }
 
 type Person implements Content {

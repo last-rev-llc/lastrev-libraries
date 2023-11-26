@@ -40,6 +40,7 @@ const styleOverrides: ComponentsOverrides<Theme>['PageResource'] = {
   }),
 
   headerWrap: ({ theme }) => ({
+    // textAlign: 'center'
     // maxWidth: '680px'
     // gridColumnStart: 'content-start',
     // gridColumnEnd: 'content-end',
@@ -53,32 +54,20 @@ const styleOverrides: ComponentsOverrides<Theme>['PageResource'] = {
   //   gridColumnStart: 'content-start',
   //   gridColumnEnd: 'content-end'
   // },
-  sideWrap: ({ theme }) => ({
-    position: 'sticky',
-    top: 208,
-
-    gridRow: '1/4',
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-    [theme.breakpoints.up('sm')]: {
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'three-end'
-    }
-  }),
 
   contentWrap: ({ theme }) => ({
     'display': 'contents',
     '> *': {
       gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-end',
-      [theme.breakpoints.up('md')]: {
-        gridColumnStart: 'four-start',
-        gridColumnEnd: 'nine-end'
-      },
-      [theme.breakpoints.up('lg')]: {
-        gridColumnStart: 'four-start',
-        gridColumnEnd: 'nine-end'
-      }
+      gridColumnEnd: 'content-end'
+      // [theme.breakpoints.up('md')]: {
+      //   gridColumnStart: 'four-start',
+      //   gridColumnEnd: 'nine-end'
+      // },
+      // [theme.breakpoints.up('lg')]: {
+      //   gridColumnStart: 'four-start',
+      //   gridColumnEnd: 'nine-end'
+      // }
     }
   }),
   featuredMediaWrap: ({ theme }) => ({
@@ -144,25 +133,15 @@ const styleOverrides: ComponentsOverrides<Theme>['PageResource'] = {
       // maxWidth: '680px',
       marginBottom: '0!important',
       gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-end',
-
-      [theme.breakpoints.up('md')]: {
-        gridColumnStart: 'four-start',
-        gridColumnEnd: 'nine-end'
-      },
-
-      [theme.breakpoints.up('lg')]: {
-        gridColumnStart: 'four-start',
-        gridColumnEnd: 'nine-end'
-      }
+      gridColumnEnd: 'content-end'
     },
 
     '& > div': {
-      // 'gridColumnStart': 'content-start',
-      // 'gridColumnEnd': 'content-end',
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-end'
       // '&:is([class*=Text-root])': {
-      gridColumnStart: 'four-start',
-      gridColumnEnd: 'nine-end'
+      // gridColumnStart: 'four-start',
+      // gridColumnEnd: 'nine-end'
       // }
     }
   }),
@@ -189,13 +168,13 @@ const styleOverrides: ComponentsOverrides<Theme>['PageResource'] = {
   // relatedItems: ({}) => ({})
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['PageResource'] => [
+const createVariants = (theme: Theme): ComponentsVariants['PageResource'] => [
   {
     props: {
-      variant: 'guide'
+      variant: 'Guide'
     },
     style: {
-      contentWrap: ({ theme }) => ({
+      '[class*=contentWrap]': {
         'display': 'contents',
         '> *': {
           gridColumnStart: 'content-start',
@@ -209,11 +188,11 @@ const createVariants = (_theme: Theme): ComponentsVariants['PageResource'] => [
             gridColumnEnd: 'nine-end'
           }
         }
-      }),
+      },
 
       // title: {},
 
-      body: ({ theme }) => ({
+      '[class*=body]': {
         '& > *:not(div)': {
           // maxWidth: '680px',
           marginBottom: '0!important',
@@ -235,7 +214,7 @@ const createVariants = (_theme: Theme): ComponentsVariants['PageResource'] => [
           gridColumnStart: 'four-start',
           gridColumnEnd: 'nine-end'
         }
-      }),
+      }
 
       // pageresourceCategories: ({}) => ({}),
 
@@ -244,17 +223,17 @@ const createVariants = (_theme: Theme): ComponentsVariants['PageResource'] => [
       // tags: ({}) => ({}),
 
       // tag: ({}) => ({}),
-      authorWrap: ({ theme }) => ({
-        gridColumnStart: 'full-start',
-        gridColumnEnd: 'full-end',
-        padding: theme.spacing(7, 0),
-        background: theme.vars.palette.background.lightThree
-      }),
-      relatedItemsWrap: {
-        '& > *': {
-          gridColumn: 'full-start / full-end'
-        }
-      }
+      // authorWrap: {
+      //   gridColumnStart: 'full-start',
+      //   gridColumnEnd: 'full-end',
+      //   padding: theme.spacing(7, 0),
+      //   background: theme.vars.palette.background.lightThree
+      // },
+      // relatedItemsWrap: {
+      //   '& > *': {
+      //     gridColumn: 'full-start / full-end'
+      //   }
+      // }
     }
   }
 ];
