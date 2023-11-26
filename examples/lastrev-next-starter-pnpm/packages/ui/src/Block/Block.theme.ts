@@ -3,6 +3,33 @@ import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { BlockVariants } from './Block.types';
 
+interface LayoutConfig {
+  [key: string]: { [breakpoint: string]: number };
+}
+
+export const layoutConfig: LayoutConfig = {
+  [BlockVariants.default]: {
+    xs: 1,
+    sm: 2
+  },
+  [BlockVariants.contentOnRight]: {
+    xs: 1,
+    sm: 2
+  },
+  [BlockVariants.contentOnRightFullBleed]: {
+    xs: 1,
+    sm: 2
+  },
+  [BlockVariants.contentOnLeft]: {
+    xs: 1,
+    sm: 2
+  },
+  [BlockVariants.contentOnLeftFullBleed]: {
+    xs: 1,
+    sm: 2
+  }
+};
+
 const defaultProps: ComponentsProps['Block'] = {
   variant: BlockVariants.contentOnRight
 };
@@ -20,9 +47,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
       padding: 'var(--grid-gap)',
       paddingTop: 0
     },
-    // TODO: Update to check if within a section
-    // padding: theme.spacing(0, 4)
-    // margin: theme.spacing(0, -4)
+
     'ins': {
       textDecoration: 'none',
       color: 'var(--variant-highlight-color)'

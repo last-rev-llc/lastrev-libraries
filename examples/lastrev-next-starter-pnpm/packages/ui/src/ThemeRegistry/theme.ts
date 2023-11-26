@@ -87,14 +87,23 @@ const schemes = {
   }
 };
 
+export const breakpointsMinMax: Record<string, { min: number; max: number }> = {
+  xs: { min: 0, max: 600 },
+  sm: { min: 600, max: 800 },
+  md: { min: 800, max: 1200 },
+  lg: { min: 1200, max: 1500 },
+  xl: { min: 1500, max: 3600 },
+  xxl: { min: 3600, max: 3600 }
+};
+
 const paletteTheme = {
   values: {
-    xs: 0,
-    sm: 600,
-    md: 900,
-    lg: 1200,
-    xl: 1536,
-    xxl: 3840
+    xs: breakpointsMinMax.xs.min,
+    sm: breakpointsMinMax.sm.min,
+    md: breakpointsMinMax.md.min,
+    lg: breakpointsMinMax.lg.min,
+    xl: breakpointsMinMax.xl.min,
+    xxl: breakpointsMinMax.xxl.min
   },
   colorSchemes: {
     light: {

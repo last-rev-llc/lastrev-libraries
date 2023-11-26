@@ -35,7 +35,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'borderRadius': 0,
     'backgroundColor': 'inherit',
     'position': 'relative',
-    'transition': 'all 0.25s ease-in-out',
+    'transition': 'transform 0.25s ease-in-out',
     'willChange': 'transform',
     'color': 'inherit',
 
@@ -53,7 +53,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 
     ...(ownerState?.variant === CardVariants.media &&
       ownerState?.aspectRatio && {
-        '[class*=cardMedia] img': {
+        '[class*=cardMedia] :is(img, picture)': {
           objectFit: 'cover',
           ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
             aspectRatio: '16/9'
@@ -82,7 +82,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     })
   }),
 
-  media: ({ ownerState }) => ({
+  media: ({ ownerState, theme }) => ({
     backgroundColor: 'inherit',
 
     ...((ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person) && {
@@ -91,12 +91,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
         opacity: '.5'
       },
 
+      'maxHeight': '100cqi',
+
       ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
-        minHeight: '56.25cqi'
+        [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '56.25cqi' }
       }),
 
       ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
-        minHeight: '177.78cqi'
+        [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '177.78cqi' }
       }),
 
       ...(ownerState?.aspectRatio === CardAspectRatios.square && {
@@ -212,7 +214,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           maxWidth: 256
         },
 
-        '& > :is(img, svg)': {
+        '& :is(img, svg, picture)': {
           objectFit: 'contain'
         }
       },
@@ -274,11 +276,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         'height': '100%',
         'position': 'relative',
 
-        '& > *': {
+        '&  :is(img, picture)': {
           width: '100%',
           objectFit: 'cover',
           minHeight: 'inherit',
-          height: 'auto'
+          height: '100%'
         },
 
         '&::after': {
@@ -371,7 +373,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         paddingLeft: 'var(--grid-gap)',
 
         [theme.containerBreakpoints.up('lg')]: {
-          '& > :is(img, svg)': {
+          '& > :is(img, svg, picture > img)': {
             objectFit: 'contain'
           }
         }
@@ -393,7 +395,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         'marginRight': 'auto',
         'paddingTop': 'var(--grid-gap)',
 
-        '& > :is(img, svg)': {
+        '& > :is(img, svg, picture > img)': {
           objectFit: 'contain',
           width: '100%',
           height: '100%'
@@ -444,11 +446,19 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         'aspectRatio': '9/16',
         'position': 'relative',
 
-        '& > *': {
+        '& :is(img, picture)': {
+          aspectRatio: 'inherit',
           width: '100%',
           objectFit: 'cover',
           minHeight: 'inherit',
-          height: 'auto'
+          filter: 'grayscale(1)',
+          height: '100%'
+
+          // '> img': {
+          //   aspectRatio: 'inherit',
+          //   objectFit: 'inherit',
+          //   height: 'auto'
+          // }
         },
 
         '&::after': {
@@ -462,7 +472,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         }
       },
 
-      '[class*=Card-overline]': {
+      '[class*=Card-overline], [class*=body]': {
         display: 'none'
       },
 

@@ -26,6 +26,8 @@ export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant' | '
   variant?: CardVariants;
   ownerState?: any;
   aspectRatio?: CardAspectRatios;
+  gridLayout?: any;
+  layoutConfig?: any;
 }
 
 export interface CardOwnerState extends CardProps {

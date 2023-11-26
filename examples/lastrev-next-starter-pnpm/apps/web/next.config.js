@@ -42,7 +42,7 @@ let config = {
     }
   },
   images: {
-    domains: ['images.ctfassets.net'],
+    domains: ['images.ctfassets.net', 'images.contentful.com'],
     formats: ['image/avif', 'image/webp']
   },
   env: {

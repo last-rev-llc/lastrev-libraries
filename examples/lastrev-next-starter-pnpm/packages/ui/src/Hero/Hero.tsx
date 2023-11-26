@@ -11,6 +11,8 @@ import Grid from '../Grid';
 import Background from '../Background';
 import Breadcrumbs from '../Breadcrumbs';
 
+import { layoutConfig } from './Hero.theme';
+
 import type { HeroProps, HeroOwnerState } from './Hero.types';
 
 const Hero = (props: HeroProps) => {
@@ -20,6 +22,7 @@ const Hero = (props: HeroProps) => {
     breadcrumbs,
     bottomContent,
     header,
+    variant,
     background,
     backgroundColor,
     overline,
@@ -100,6 +103,7 @@ const Hero = (props: HeroProps) => {
                 ownerState={ownerState}
                 {...sidekick(sidekickLookup, 'images')}
                 {...image}
+                columns={layoutConfig[variant]}
                 data-testid="Hero-media"
               />
             ))}

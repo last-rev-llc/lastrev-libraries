@@ -18,6 +18,8 @@ import ContentModule from '../ContentModule';
 import type { CardProps, CardOwnerState } from './Card.types';
 import { type LinkProps } from '../Link';
 
+import { generateCardImageSizes } from '../utils/generateCardImageSizes';
+
 const Card = (props: CardProps) => {
   const {
     backgroundColor,
@@ -31,7 +33,9 @@ const Card = (props: CardProps) => {
     link,
     actions,
     variant,
+    gridLayout,
     loading,
+    layoutConfig,
     sidekickLookup
   } = props;
 
@@ -57,6 +61,7 @@ const Card = (props: CardProps) => {
                   __typename="Media"
                   {...sidekick(sidekickLookup, 'media')}
                   {...image}
+                  columns={layoutConfig[gridLayout]}
                   data-testid="Card-media"
                 />
               ) : (

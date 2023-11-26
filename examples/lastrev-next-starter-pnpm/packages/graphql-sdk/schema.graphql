@@ -560,20 +560,22 @@ type PageProperty implements Content {
 
 type Person implements Content {
   animation: JSON
-  areaOfExpertise: String
   body: RichText
   breadcrumbs: [Link]
+  department: String
   education: [String]
   email: String
   footer: Footer
   header: Header
   hero: Content
   id: String
+  isPartner: Boolean
   jobTitle: String
   jsonLd: JSON
   lr__path__: String
   mainImage: Media
   name: String
+  onInvestmentCommitee: Boolean
   path: String
   previousExperiences: [String]
   promoImage: Media
