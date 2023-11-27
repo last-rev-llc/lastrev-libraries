@@ -7,6 +7,7 @@ export const pathResolver = async (content: any, _args: any, ctx: ApolloContext)
   const pathReader = !!ctx.preview ? ctx.pathReaders?.preview : ctx.pathReaders?.prod;
   if (id) {
     const path = await pathReader?.getPathsByContentId(id, undefined, process.env.SITE);
+    console.log({ path });
 
     // TODO: Do we need to support more paths?
     if (!!path?.length) return path[0];
