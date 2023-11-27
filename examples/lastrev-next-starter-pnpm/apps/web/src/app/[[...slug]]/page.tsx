@@ -43,7 +43,20 @@ export default async function Page({ params }: Props) {
   const path = join('/', (params.slug || ['/']).join('/'));
   console.log({ path, params, slug: params.slug });
 
+  // if (!params.slug || (Array.isArray(params.slug) && params.slug.length === 0)) {
+  //   return (
+  //     <AppProvider>
+  //       {/* Add your homepage content here */}
+  //       <h1>Welcome to the Homepage</h1>
+  //       {/* Other homepage content */}
+  //     </AppProvider>
+  //   );
+  // }
+
   const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
+
+  console.log('pageData');
+  console.log(pageData);
 
   if (!pageData?.page) {
     return notFound();
