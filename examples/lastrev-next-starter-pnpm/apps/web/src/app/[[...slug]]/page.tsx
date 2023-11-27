@@ -44,9 +44,9 @@ export default async function Page({ params }: Props) {
 
   console.log({ path, params, slug: params.slug });
 
-  if (!params.slug || (Array.isArray(params.slug) && params.slug.length === 0)) {
-    path = '/';
-  }
+  // if (!params.slug || (Array.isArray(params.slug) && params.slug.length === 0)) {
+  //   path = '/';
+  // }
   console.log({ path, params, slug: params.slug });
 
   const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
