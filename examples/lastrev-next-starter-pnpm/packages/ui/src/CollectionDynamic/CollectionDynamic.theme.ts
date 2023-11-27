@@ -72,14 +72,12 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
   // contentGrid: {},
 
   filtersOuterWrap: ({ theme, ownerState }) => ({
-    '&&': {
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'three-end'
-    },
-    'display': 'flex',
-    'flexDirection': 'column',
-    'gap': 'var(--grid-gap)',
-    'gridRow': 1,
+    gridColumnStart: 'content-start',
+    gridColumnEnd: 'content-end',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 'var(--grid-gap)',
+    gridRow: 1,
 
     [theme.breakpoints.up('md')]: {
       ...(ownerState?.filtersPlacement === 'top' && {
@@ -87,7 +85,9 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
       }),
 
       ...(ownerState?.filtersPlacement === 'left' && {
-        gridColumn: 'content-start/three-end'
+        '&&': {
+          gridColumn: 'content-start/three-end'
+        }
       })
     }
   }),

@@ -12,6 +12,17 @@ import { pruneEmpty } from './utils/pruneEmpty';
 
 const index = 'contentful';
 
+const defaultFacets = {
+  categories: ['N/A'],
+  department: 'N/A',
+  onInvestmentCommitee: false,
+  isPartner: false,
+  ncrefiRegion: 'N/A',
+  sector: 'N/A',
+  strategy: 'N/A',
+  assetType: 'N/A'
+};
+
 export const mappers = {
   Blog: {
     AlgoliaRecord: {
@@ -45,8 +56,6 @@ export const mappers = {
             return getLocalizedField(category?.fields, 'title', ctx);
           });
 
-        console.log({ categories });
-
         const card = await generateCard({
           id: blog.sys.id,
           overline: 'News',
@@ -67,22 +76,25 @@ export const mappers = {
         return [
           {
             index,
-            data: pruneEmpty({
-              objectID: constructObjectId(blog, ctx),
-              locale: ctx.locale || ctx.defaultLocale,
-              preview: !!ctx.preview,
-              title,
-              pubDate,
-              categories,
-              pubDateTimestamp,
-              body: documentToPlainTextString(body),
-              summary,
-              promoImage,
-              path,
-              contentType,
-              link,
-              card
-            })
+            data: {
+              ...defaultFacets,
+              ...pruneEmpty({
+                objectID: constructObjectId(blog, ctx),
+                locale: ctx.locale || ctx.defaultLocale,
+                preview: !!ctx.preview,
+                title,
+                pubDate,
+                categories,
+                pubDateTimestamp,
+                body: documentToPlainTextString(body),
+                summary,
+                promoImage,
+                path,
+                contentType,
+                link,
+                card
+              })
+            }
           }
         ];
       }
@@ -123,31 +135,33 @@ export const mappers = {
         });
 
         return [
-          pruneEmpty({
+          {
             index,
             data: {
-              objectID: constructObjectId(person, ctx),
-              locale: ctx.locale || ctx.defaultLocale,
-              preview: !!ctx.preview,
-              title,
-              subtitle,
-              categories: ['Person'],
-              body: documentToPlainTextString(body),
-              education: getLocalizedField(person.fields, 'education', ctx),
-              email: getLocalizedField(person.fields, 'email', ctx),
-              jobTitle: getLocalizedField(person.fields, 'jobTitle', ctx),
-              previousExperiences: getLocalizedField(person.fields, 'previousExperiences', ctx),
-              department,
-              onInvestmentCommitee: !!getLocalizedField(person.fields, 'onInvestmentCommitee', ctx),
-              isPartner: !!getLocalizedField(person.fields, 'isPartner', ctx),
-              summary,
-              promoImage,
-              path,
-              contentType,
-              link,
-              card
+              ...defaultFacets,
+              ...pruneEmpty({
+                objectID: constructObjectId(person, ctx),
+                locale: ctx.locale || ctx.defaultLocale,
+                preview: !!ctx.preview,
+                title,
+                subtitle,
+                body: documentToPlainTextString(body),
+                education: getLocalizedField(person.fields, 'education', ctx),
+                email: getLocalizedField(person.fields, 'email', ctx),
+                jobTitle: getLocalizedField(person.fields, 'jobTitle', ctx),
+                previousExperiences: getLocalizedField(person.fields, 'previousExperiences', ctx),
+                department,
+                onInvestmentCommitee: !!getLocalizedField(person.fields, 'onInvestmentCommitee', ctx),
+                isPartner: !!getLocalizedField(person.fields, 'isPartner', ctx),
+                summary,
+                promoImage,
+                path,
+                contentType,
+                link,
+                card
+              })
             }
-          })
+          }
         ];
       }
     }
@@ -202,19 +216,21 @@ export const mappers = {
         return [
           {
             index,
-            data: pruneEmpty({
-              objectID: constructObjectId(page, ctx),
-              locale: ctx.locale || ctx.defaultLocale,
-              preview: !!ctx.preview,
-              title,
-              categories: ['Page'],
-              body: documentToPlainTextString(body),
-              summary,
-              path,
-              contentType,
-              link,
-              card
-            })
+            data: {
+              ...defaultFacets,
+              ...pruneEmpty({
+                objectID: constructObjectId(page, ctx),
+                locale: ctx.locale || ctx.defaultLocale,
+                preview: !!ctx.preview,
+                title,
+                body: documentToPlainTextString(body),
+                summary,
+                path,
+                contentType,
+                link,
+                card
+              })
+            }
           }
         ];
       }
@@ -252,23 +268,25 @@ export const mappers = {
         return [
           {
             index,
-            data: pruneEmpty({
-              objectID: constructObjectId(property, ctx),
-              locale: ctx.locale || ctx.defaultLocale,
-              preview: !!ctx.preview,
-              title,
-              summary,
-              categories: ['Asset'],
-              promoImage,
-              path,
-              contentType,
-              link,
-              card,
-              assetType: getLocalizedField(property.fields, 'assetType', ctx),
-              ncreifRegion: getLocalizedField(property.fields, 'ncreifRegion', ctx),
-              sector: getLocalizedField(property.fields, 'sector', ctx),
-              strategy: getLocalizedField(property.fields, 'strategy', ctx)
-            })
+            data: {
+              ...defaultFacets,
+              ...pruneEmpty({
+                objectID: constructObjectId(property, ctx),
+                locale: ctx.locale || ctx.defaultLocale,
+                preview: !!ctx.preview,
+                title,
+                summary,
+                promoImage,
+                path,
+                contentType,
+                link,
+                card,
+                assetType: getLocalizedField(property.fields, 'assetType', ctx),
+                ncreifRegion: getLocalizedField(property.fields, 'ncreifRegion', ctx),
+                sector: getLocalizedField(property.fields, 'sector', ctx),
+                strategy: getLocalizedField(property.fields, 'strategy', ctx)
+              })
+            }
           }
         ];
       }
