@@ -19,10 +19,10 @@ const MenuSelect = ({ attribute, others }: MenuSelectProps) => {
   };
 
   return (
-    <FormControl fullWidth>
-      <InputLabel id={`menu-select-${attribute}-label`} sx={{ textTransform: 'capitalize' }}>
+    <FormControl variant="standard">
+      {/* <InputLabel id={`menu-select-${attribute}-label`} sx={{ textTransform: 'capitalize' }}>
         {attribute}
-      </InputLabel>
+      </InputLabel> */}
       <Select
         id={`menu-select-${attribute}`}
         value={selectedValue}
@@ -30,9 +30,7 @@ const MenuSelect = ({ attribute, others }: MenuSelectProps) => {
         onChange={(event) => {
           refine(event.target.value === 'all' ? '' : event.target.value); // Refine to an empty string for 'all' value
         }}>
-        <MenuItem key={`menu-select-option-${attribute}-view-all`} value="all">
-          View All
-        </MenuItem>
+        <MenuItem value="all">View All</MenuItem>
         {items.map((item) => (
           <MenuItem key={`menu-select-option-${attribute}-${item.value}`} value={item.value}>
             {item.label} ({item.count})
