@@ -10,16 +10,9 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
   const h1FontSizeBase = 4;
   const h2FontSizeBase = 3.375;
   const h3FontSizeBase = 2.5;
-  const h4FontSizeBase = 2.5;
+  // const h4FontSizeBase = 2.5;
   const h5FontSizeBase = 1.5;
   const h6FontSizeBase = 0.875;
-
-  const display1FontSizeBase = h1FontSizeBase;
-  const display2FontSizeBase = h2FontSizeBase;
-  const display3FontSizeBase = h3FontSizeBase;
-  const display4FontSizeBase = h4FontSizeBase;
-  const display5FontSizeBase = h5FontSizeBase;
-  const display6FontSizeBase = h6FontSizeBase;
 
   return (
     <>

@@ -83,56 +83,56 @@ const Property = (props: PropertyProps) => {
 
               {!!name && (
                 <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Property Name:</ListLabel>
+                  <ListLabel>Property Name: </ListLabel>
                   <ListValue>{!!name ? name : 'N/A'}</ListValue>
                 </BodyListItem>
               )}
 
               {!!address && (
                 <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Location:</ListLabel>
+                  <ListLabel>Location: </ListLabel>
                   <ListValue>{!!address ? formatAddress(address) : 'N/A'}</ListValue>
                 </BodyListItem>
               )}
 
               {!!squareFootage && (
                 <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Size:</ListLabel>
+                  <ListLabel>Size: </ListLabel>
                   <ListValue>{!!squareFootage ? `${squareFootage} SF` : 'N/A'}</ListValue>
                 </BodyListItem>
               )}
 
               {!!dateAcquired && (
                 <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Date Acquired:</ListLabel>
+                  <ListLabel>Date Acquired: </ListLabel>
                   <ListValue>{!!dateAcquired ? dateAcquired : 'N/A'}</ListValue>
                 </BodyListItem>
               )}
 
               {!!dateSold && (
                 <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Date Sold:</ListLabel>
+                  <ListLabel>Date Sold: </ListLabel>
                   <ListValue>{!!dateSold ? dateSold : 'N/A'}</ListValue>
                 </BodyListItem>
               )}
 
               {!!market && (
                 <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Market:</ListLabel>
+                  <ListLabel>Market: </ListLabel>
                   <ListValue>{!!market ? market : 'N/A'}</ListValue>
                 </BodyListItem>
               )}
 
               {!!strategy && (
                 <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Fund Strategy:</ListLabel>
+                  <ListLabel>Fund Strategy: </ListLabel>
                   <ListValue>{!!strategy ? strategy : 'N/A'}</ListValue>
                 </BodyListItem>
               )}
 
               {!!assetType && (
                 <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Asset Type:</ListLabel>
+                  <ListLabel>Asset Type: </ListLabel>
                   <ListValue>{!!assetType ? assetType : 'N/A'}</ListValue>
                 </BodyListItem>
               )}

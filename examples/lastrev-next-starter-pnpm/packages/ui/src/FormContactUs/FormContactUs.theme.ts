@@ -72,7 +72,7 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
       'gridColumnEnd': 'content-end',
 
       '*': {
-        ...theme.typography.h4,
+        ...theme.typography.h5,
         fontWeight: 'unset',
         marginBottom: 0,
         lineHeight: 1

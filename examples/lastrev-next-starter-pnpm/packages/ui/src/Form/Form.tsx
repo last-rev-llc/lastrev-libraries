@@ -45,6 +45,7 @@ const Form = (props: FormProps) => {
           />
         </IntroTextGrid>
       )}
+
       <ContentOuterGrid ownerState={ownerState}>
         <MainContentWrap ownerState={ownerState}>
           <HSForm
