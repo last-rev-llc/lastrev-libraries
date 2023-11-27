@@ -98,13 +98,19 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
     gap: 'var(--grid-gap)'
   },
 
-  filtersWrap: {
-    display: 'contents'
-    // display: 'flex',
-    // flexDirection: 'column',
-    // gap: 'var(--grid-gap)',
-    // gridRow: 2
-  },
+  filtersWrap: ({ theme, ownerState }) => ({
+    ...(ownerState?.filtersPlacement === 'left'
+      ? {
+          position: 'sticky',
+          top: 'var(--grid-gap-double)'
+          // flexDirection: 'column',
+          // gap: 'var(--grid-gap)',
+          // gridRow: 2
+        }
+      : {
+          display: 'contents'
+        })
+  }),
 
   // paginationWrap: {},
 
