@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import { fadeIn } from '../../shared/scss/styledAnimations/fadeIn';
+import { fadeIn } from '../../shared/styledAnimations/fadeIn';
 import responsive from '../../utils/responsive';
-import { Text } from '../../Text';
+import { Text } from '../text';
 
 export const Container = styled.div`
   background: #ffffff;
