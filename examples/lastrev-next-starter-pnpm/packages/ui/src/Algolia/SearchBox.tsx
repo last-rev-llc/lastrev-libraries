@@ -13,6 +13,7 @@ const SearchBox = ({ ownerState, searchAsYouType, ...other }: { ownerState: any;
       fullWidth
       label="Keywords"
       value={query}
+      variant="standard"
       onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
         refine(event.target.value);
       }}
