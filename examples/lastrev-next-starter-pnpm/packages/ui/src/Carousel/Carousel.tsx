@@ -18,6 +18,8 @@ import ContentModule from '../ContentModule';
 import type { CarouselProps, CarouselOwnerState } from './Carousel.types';
 import Background from '../Background';
 
+import { layoutConfig } from './Carousel.theme';
+
 import { breakpoints } from '../ThemeRegistry/theme';
 
 const Carousel = (props: CarouselProps) => {
@@ -154,6 +156,8 @@ const Carousel = (props: CarouselProps) => {
                       backgroundColor={backgroundColor}
                       ownerState={ownerState}
                       {...item}
+                      layoutConfig={layoutConfig}
+                      gridLayout={variant}
                       variant={itemsVariant ?? item?.variant}
                       aspectRatio={itemsAspectRatio ?? item?.aspectRatio}
                     />

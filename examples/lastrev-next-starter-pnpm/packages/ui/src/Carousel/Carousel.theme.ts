@@ -6,10 +6,46 @@ import {
 } from '@mui/material/styles';
 import { type Theme } from '../ThemeRegistry/theme.types';
 
+import { CarouselVariants } from './Carousel.types';
+
 import 'swiper/css';
 import 'swiper/css/navigation';
 
 const defaultProps: ComponentsProps['Carousel'] = {};
+
+export interface LayoutConfig {
+  [key: string]: { [breakpoint: string]: number };
+}
+export const layoutConfig: LayoutConfig = {
+  [CarouselVariants.onePerRow]: {
+    xs: 1,
+    sm: 2,
+    md: 1,
+    lg: 1,
+    xl: 1,
+    xxl: 1
+  },
+  [CarouselVariants.twoPerRow]: {
+    xs: 1,
+    sm: 2
+  },
+  [CarouselVariants.threePerRow]: {
+    xs: 1,
+    sm: 2,
+    lg: 3
+  },
+  [CarouselVariants.fourPerRow]: {
+    xs: 1,
+    sm: 2,
+    md: 4
+  },
+  [CarouselVariants.fivePerRow]: {
+    xs: 1,
+    sm: 2,
+    md: 4,
+    lg: 5
+  }
+};
 
 const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
   root: ({ theme, ownerState }) => ({
