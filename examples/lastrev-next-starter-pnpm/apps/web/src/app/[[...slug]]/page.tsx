@@ -19,7 +19,6 @@ export const revalidate = 300;
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const path = join('/', (params.slug || ['/']).join('/'));
-
   const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
   if (!pageData?.page?.id) return {};
 
@@ -40,19 +39,9 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 const locale = 'en-US';
 
 export default async function Page({ params }: Props) {
-  let path = join('/', (params.slug || ['/']).join('/'));
-
-  console.log({ path, params, slug: params.slug });
-
-  // if (!params.slug || (Array.isArray(params.slug) && params.slug.length === 0)) {
-  //   path = '/';
-  // }
-  console.log({ path, params, slug: params.slug });
+  const path = join('/', (params.slug || ['/']).join('/'));
 
   const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
-
-  console.log('pageData');
-  console.log(pageData);
 
   if (!pageData?.page) {
     return notFound();

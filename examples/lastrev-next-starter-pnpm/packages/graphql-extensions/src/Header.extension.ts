@@ -23,7 +23,11 @@ export const mappers = {
         const ctaItems: any = getLocalizedField(header.fields, 'ctaItems', ctx);
         return !!ctaItems.length;
       },
-      backgroundColor: defaultResolver('backgroundColor')
+      backgroundColor: defaultResolver('backgroundColor'),
+      logoUrl: async (header: any, _args: any, ctx: ApolloContext) => {
+        const logoUrlRef: any = getLocalizedField(header.fields, 'logoUrl', ctx);
+        return logoUrlRef;
+      }
     }
   }
 };
