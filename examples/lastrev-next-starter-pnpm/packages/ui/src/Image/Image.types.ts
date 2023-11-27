@@ -2,10 +2,19 @@ import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@
 // TODO: Needed?
 //import type { Image_BaseFragmentFragment } from '@graphql-sdk/types';
 import type { ImageProps as NextImageProps } from 'next/image';
+
+export interface ColumnConfig {
+  xs?: number;
+  sm?: number;
+  md?: number;
+  lg?: number;
+  xl?: number;
+  xxl?: number;
+}
 export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'height'> {
   src?: string;
   className?: string;
-  columns?: number;
+  columns?: ColumnConfig;
   priority?: boolean;
   itemProp?: string;
   testId?: string;
@@ -14,7 +23,7 @@ export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'heig
   height?: number | string | `${number}` | undefined;
   disableInlineSVG?: boolean;
   nextImageOptimization?: boolean;
-  sizes?: string;
+  sizes?: ColumnConfig;
   q?: number;
   unoptimized?: boolean;
   svgContent?: string;

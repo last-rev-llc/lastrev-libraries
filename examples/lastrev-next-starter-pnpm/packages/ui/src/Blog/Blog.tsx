@@ -14,7 +14,21 @@ import type { BlogProps, BlogOwnerState } from './Blog.types';
 
 const Blog = (props: BlogProps) => {
   const ownerState = { ...props, backgroundColor: 'lightGray' };
-  const { id, relatedItems, header, footer, title, body, breadcrumbs, jsonLd, sidekickLookup, hero } = props;
+  const {
+    id,
+    relatedItems,
+    header,
+    footer,
+    title,
+    body,
+    breadcrumbs,
+    jsonLd,
+    sidekickLookup,
+    hero,
+    mediaContactName,
+    mediaContactEmail,
+    mediaContactPhone
+  } = props;
 
   return (
     <>
@@ -34,10 +48,22 @@ const Blog = (props: BlogProps) => {
                 Media Contact
               </DetailsLabel>
 
-              {!!title && (
-                <Title variant="h5" {...sidekick(sidekickLookup, 'name')} ownerState={ownerState}>
-                  {title}
-                </Title>
+              {!!mediaContactName && (
+                <MediaContactName variant="h5" ownerState={ownerState}>
+                  {mediaContactName}
+                </MediaContactName>
+              )}
+
+              {!!mediaContactEmail && (
+                <MediaContactEmail variant="h5" ownerState={ownerState}>
+                  {mediaContactEmail}
+                </MediaContactEmail>
+              )}
+
+              {!!mediaContactPhone && (
+                <MediaContactPhone variant="h5" ownerState={ownerState}>
+                  {mediaContactPhone}
+                </MediaContactPhone>
               )}
             </SideContentInnerWrap>
           </SideContentWrap>
@@ -84,10 +110,22 @@ const DetailsLabel = styled(Typography, {
   overridesResolver: (_, styles) => [styles.detailsLabel]
 })<TypographyProps & { ownerState: BlogOwnerState }>``;
 
-const Title = styled(Typography, {
+const MediaContactName = styled(Typography, {
   name: 'Blog',
-  slot: 'Name',
-  overridesResolver: (_, styles) => [styles.title]
+  slot: 'mediaContactName',
+  overridesResolver: (_, styles) => [styles.mediaContactName]
+})<TypographyProps & { ownerState: BlogOwnerState }>``;
+
+const MediaContactEmail = styled(Typography, {
+  name: 'Blog',
+  slot: 'MediaContactEmail',
+  overridesResolver: (_, styles) => [styles.mediaContactEmail]
+})<TypographyProps & { ownerState: BlogOwnerState }>``;
+
+const MediaContactPhone = styled(Typography, {
+  name: 'Blog',
+  slot: 'MediaContactPhone',
+  overridesResolver: (_, styles) => [styles.mediaContactPhone]
 })<TypographyProps & { ownerState: BlogOwnerState }>``;
 
 const ContentWrap = styled(Box, {

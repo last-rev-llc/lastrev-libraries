@@ -31,7 +31,9 @@ const Card = (props: CardProps) => {
     link,
     actions,
     variant,
+    gridLayout,
     loading,
+    layoutConfig,
     sidekickLookup
   } = props;
 
@@ -57,6 +59,7 @@ const Card = (props: CardProps) => {
                   __typename="Media"
                   {...sidekick(sidekickLookup, 'media')}
                   {...image}
+                  columns={layoutConfig[gridLayout]}
                   data-testid="Card-media"
                 />
               ) : (

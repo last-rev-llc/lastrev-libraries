@@ -11,6 +11,7 @@ import Background from '../Background';
 import ErrorBoundary from '../ErrorBoundary';
 
 import type { BlockProps, BlockOwnerState } from './Block.types';
+import { layoutConfig } from './Block.theme';
 
 const Block = (props: BlockProps) => {
   const ownerState = { ...props };
@@ -20,6 +21,7 @@ const Block = (props: BlockProps) => {
     backgroundImage,
     backgroundColor,
     introText,
+    variant,
     overline,
     title,
     subtitle,
@@ -113,6 +115,7 @@ const Block = (props: BlockProps) => {
                     key={media?.id}
                     {...sidekick(sidekickLookup, 'mediaItems')}
                     {...media}
+                    columns={layoutConfig[variant]}
                   />
                 ))
               ) : (

@@ -19,6 +19,8 @@ import CurrentRefinements from '../Algolia/CurrentRefinements';
 import AlgoliaSearch from '../Algolia/AlgoliaSearch';
 import Card from '../Card';
 
+import { layoutConfig } from '../Collection/Collection.theme';
+
 import type { CollectionDynamicProps, CollectionDynamicOwnerState } from './CollectionDynamic.types';
 
 const CollectionDynamic = (props: CollectionDynamicProps) => {
@@ -82,7 +84,12 @@ const CollectionDynamic = (props: CollectionDynamicProps) => {
 
                 {!!algoliaSettings?.indexName && !algoliaSettings?.useInfiniteHits ? (
                   <>
-                    <Hits ownerState={ownerState} HitComponent={Card} />
+                    <Hits
+                      ownerState={ownerState}
+                      HitComponent={Card}
+                      layoutConfig={layoutConfig}
+                      gridLayout={variant}
+                    />
                     {!!algoliaSettings?.showPagination ? (
                       <PaginationWrap ownerState={ownerState}>
                         <Pagination ownerState={ownerState} />

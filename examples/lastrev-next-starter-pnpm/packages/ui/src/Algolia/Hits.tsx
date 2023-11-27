@@ -4,8 +4,21 @@ import React from 'react';
 import { useHits } from 'react-instantsearch-core';
 import { CardProps } from '../Card/Card.types';
 
+import { LayoutConfig } from '../CollectionDynamic/CollectionDynamic.theme';
+
 // https://www.algolia.com/doc/api-reference/widgets/hits/react/#hook
-const Hits = ({ ownerState, HitComponent, ...other }: { ownerState: any; HitComponent: any }) => {
+const Hits = ({
+  ownerState,
+  HitComponent,
+  layoutConfig,
+  gridLayout,
+  ...other
+}: {
+  layoutConfig: LayoutConfig;
+  gridLayout: string;
+  ownerState: any;
+  HitComponent: any;
+}) => {
   const { hits } = useHits(other);
 
   return (
@@ -16,6 +29,8 @@ const Hits = ({ ownerState, HitComponent, ...other }: { ownerState: any; HitComp
         return (
           <HitComponent
             key={`hit-${index}-${hit.id}`}
+            layoutConfig={layoutConfig}
+            gridLayout={gridLayout}
             {...cardData}
             variant={ownerState.itemsVariant}
             aspectRatio={ownerState.itemsAspectRatio}

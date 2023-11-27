@@ -24,16 +24,6 @@ interface BlogClasses {
   contentWrap: string;
   title: string;
   pubDate: string;
-  featuredMedia: string;
-  featuredMediaWrap: string;
-  authorWrap: string;
-  author: string;
-  authorName: string;
-  authorSummaryWrap: string;
-  authorSummary: string;
-  authorImageWrap: string;
-  authorImage: string;
-  authorSocialLinks: string;
   body: string;
   breadcrumbsWrap: string;
   blogCategories: string;
@@ -42,9 +32,13 @@ interface BlogClasses {
   tag: string;
   relatedItemsWrap: string;
   relatedItems: string;
-  shareLinksWrap: string;
-  shareLinks: string;
-  shareLink: string;
+  mediaContactName: string;
+  mediaContactEmail: string;
+  mediaContactPhone: string;
+  sideContentWrap: string;
+  sideContentInnerWrap: string;
+  detailsLabel: string;
+  bodyHeader: string;
 }
 
 export declare type BlogClassKey = keyof BlogClasses;

@@ -9,6 +9,9 @@ import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
 
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
+import { siteMediaContactEmailResolver } from './utils/siteMediaContactEmailResolver';
+import { siteMediaContactNameResolver } from './utils/siteMediaContactNameResolver';
+import { siteMediaContactPhoneResolver } from './utils/siteMediaContactPhoneResolver';
 // import { siteMediaContactNameResolver } from './utils/siteMediaContactNameResolver';
 // import { siteMediaContactEmailResolver } from './utils/siteMediaContactEmailResolver';
 // import { siteMediaContactPhoneResolver } from './utils/siteMediaContactPhoneResolver';
@@ -38,9 +41,9 @@ export const mappers: Mappers = {
       header: pageHeaderResolver,
       footer: pageFooterResolver,
       breadcrumbs: breadcrumbsResolver,
-      // mediaContactName: siteMediaContactNameResolver,
-      // mediaContactEmail: siteMediaContactEmailResolver,
-      // mediaContactPhone: siteMediaContactPhoneResolver,
+      mediaContactName: siteMediaContactNameResolver,
+      mediaContactEmail: siteMediaContactEmailResolver,
+      mediaContactPhone: siteMediaContactPhoneResolver,
       // aboutText: siteNewsDefaultAboutUsResolver,
       relatedItems: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('CollectionDynamic', {
@@ -49,13 +52,22 @@ export const mappers: Mappers = {
           variant: 'threePerRow',
           itemsVariant: 'news',
           settings: {
-            limit: 3,
-            contentType: 'blog'
+            configure: {
+              facetFilters: ['locale:en-US', 'contentType:Blog'],
+              hitsPerPage: 3
+            },
+            indexName: 'contentful',
+            showFilters: false,
+            showSearchBox: false,
+            showPagination: false,
+            searchAsYouType: false,
+            useInfiniteHits: false,
+            showCurrentRefinements: false
           }
         }),
       hero: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('Hero', {
-          variant: 'mediaOnRightFullBleed',
+          variant: 'simple',
           overline: getLocalizedField(blog.fields, 'pubDate', ctx),
           title: getLocalizedField(blog.fields, 'title', ctx),
           sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx) ?? []
@@ -90,7 +102,7 @@ export const mappers: Mappers = {
       },
 
       actions: async (blog: any, args: any, ctx: ApolloContext) => {
-        const text = getLocalizedField(blog.fields, 'promoLinkText', ctx) ?? 'Read More';
+        const text = getLocalizedField(blog.fields, 'promoLinkText', ctx) ?? 'Read Article';
         return [
           createType('Link', {
             id: blog.id,

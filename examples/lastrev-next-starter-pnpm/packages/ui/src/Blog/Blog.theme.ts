@@ -52,19 +52,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     }
   },
 
-  bodyList: {
-    padding: 0
-  },
-
-  bodyListItem: {
-    'paddingLeft': 0,
-    '&::before': {
-      content: '"– "' /* en dash */,
-      display: ' inline-block',
-      marginRight: '.25em'
-    }
-  },
-
   contentWrap: ({ theme }) => ({
     ...theme.mixins.applyColorScheme({ ownerState: { backgroundColor: 'white' }, theme }),
     padding: 'var(--grid-gap-double)',

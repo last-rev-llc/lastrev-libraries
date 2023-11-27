@@ -3,6 +3,33 @@ import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { HeroVariants } from './Hero.types';
 
+interface LayoutConfig {
+  [key: string]: { [breakpoint: string]: number };
+}
+
+export const layoutConfig: LayoutConfig = {
+  [HeroVariants.mediaOnRight]: {
+    xs: 1,
+    sm: 2
+  },
+  [HeroVariants.mediaOnRightFullBleed]: {
+    xs: 1,
+    sm: 2
+  },
+  [HeroVariants.mediaOnLeft]: {
+    xs: 1,
+    sm: 2
+  },
+  [HeroVariants.mediaOnLeftFullBleed]: {
+    xs: 1,
+    sm: 2
+  },
+  [HeroVariants.mediaSmall]: {
+    xs: 1,
+    sm: 3
+  }
+};
+
 const defaultProps: ComponentsProps['Hero'] = {
   variant: HeroVariants.default
 };
@@ -111,17 +138,15 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.simple
     },
     style: {
-      'textAlign': 'center',
-      'padding': theme.spacing(12, 0),
       '[class*=Hero-mainContentWrap]': {
         gridRow: 1,
         gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end'
-      },
+        gridColumnEnd: 'content-end',
+        padding: 'var(--grid-gap-double) 0',
 
-      '[class*=Hero-mediaWrap]': {},
-      '[class*=Hero-actionsWrap]': {
-        justifyContent: 'center'
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnEnd: 'nine-end'
+        }
       }
     }
   },
