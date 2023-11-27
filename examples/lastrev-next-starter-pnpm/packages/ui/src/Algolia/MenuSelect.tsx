@@ -20,7 +20,9 @@ const MenuSelect = ({ ownerState, attribute, others }: MenuSelectProps) => {
 
   return (
     <FormControl fullWidth>
-      {/* <InputLabel id={`menu-select-${attribute}-label`}>{attribute}</InputLabel> */}
+      <InputLabel id={`menu-select-${attribute}-label`} sx={{ textTransform: 'capitalize' }}>
+        {attribute}
+      </InputLabel>
       <Select
         id={`menu-select-${attribute}`}
         value={selectedValue}
