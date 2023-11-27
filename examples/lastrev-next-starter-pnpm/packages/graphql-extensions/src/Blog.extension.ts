@@ -48,6 +48,7 @@ export const mappers: Mappers = {
           items: getLocalizedField(blog.fields, 'relatedItems', ctx) ?? [],
           variant: 'threePerRow',
           itemsVariant: 'news',
+          backgroundColor: 'navy',
           settings: {
             configure: {
               facetFilters: ['locale:en-US', 'contentType:Blog'],

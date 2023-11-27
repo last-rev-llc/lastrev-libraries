@@ -82,9 +82,9 @@ const Blog = (props: BlogProps) => {
               />
             )}
           </ContentWrap>
-
-          {!!relatedItems && <ContentModule {...relatedItems} />}
         </ContentOuterGrid>
+
+        {!!relatedItems && <ContentModule {...relatedItems} />}
       </Root>
 
       {footer ? <ContentModule {...(footer as any)} /> : null}
