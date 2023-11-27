@@ -72,13 +72,16 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
   // contentGrid: {},
 
   filtersOuterWrap: ({ theme, ownerState }) => ({
-    gridColumn: 'content-start/content-end',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 'var(--grid-gap)',
-    gridRow: 1,
+    '&&': {
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'three-end'
+    },
+    'display': 'flex',
+    'flexDirection': 'column',
+    'gap': 'var(--grid-gap)',
+    'gridRow': 1,
 
-    [theme.containerBreakpoints.up('md')]: {
+    [theme.breakpoints.up('md')]: {
       ...(ownerState?.filtersPlacement === 'top' && {
         flexDirection: 'row'
       }),

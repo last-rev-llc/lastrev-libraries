@@ -11,7 +11,9 @@ const Filters = ({ ownerState, filters }: FiltersProps) => {
   return (
     <>
       {!!filters?.length &&
-        filters.map((filter: any) => <MenuSelect key={filter.attributes} {...filter} ownerState={ownerState} />)}
+        filters.map((filter: any) => (
+          <MenuSelect key={filter.attributes || filter.attribute} {...filter} ownerState={ownerState} />
+        ))}
     </>
   );
 };

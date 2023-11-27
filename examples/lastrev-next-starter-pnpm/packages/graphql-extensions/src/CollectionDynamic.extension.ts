@@ -4,8 +4,6 @@ import type { Mappers } from '@last-rev/types';
 import type { ApolloContext } from './types';
 
 import { pascalCase } from './utils/pascalCase';
-import { collectOptions } from './utils/collectOptions';
-// import { queryContentful } from './utils/queryContentful';
 import { getWinstonLogger } from '@last-rev/logging';
 import { defaultResolver } from './utils/defaultResolver';
 
@@ -93,7 +91,7 @@ export const mappers: Mappers = {
           return {
             indexName: 'contentful',
             ...settings,
-            showFilters,
+            showFilters: true,
             filtersPlacement
           };
         }
