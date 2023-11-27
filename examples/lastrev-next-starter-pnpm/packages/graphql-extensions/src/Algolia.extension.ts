@@ -74,6 +74,7 @@ export const mappers = {
               title,
               pubDate,
               categories,
+              newsCategory: categories,
               pubDateTimestamp,
               body: documentToPlainTextString(body),
               summary,
