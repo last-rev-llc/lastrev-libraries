@@ -31,8 +31,7 @@ export const breadcrumbsResolver = async (item: any, _args: any, ctx: ApolloCont
   let prevSlug = '';
 
   for (let path of paths) {
-    prevSlug = path.slug !== '/' ? `${prevSlug}/${path.slug}` : prevSlug;
-
+    prevSlug = path.slug !== '/' ? `${prevSlug}/${path.slug}` : path.slug;
     links.push(
       createType('Link', {
         id: path.id,
