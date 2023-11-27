@@ -18,8 +18,6 @@ import ContentModule from '../ContentModule';
 import type { CardProps, CardOwnerState } from './Card.types';
 import { type LinkProps } from '../Link';
 
-import { generateCardImageSizes } from '../utils/generateCardImageSizes';
-
 const Card = (props: CardProps) => {
   const {
     backgroundColor,

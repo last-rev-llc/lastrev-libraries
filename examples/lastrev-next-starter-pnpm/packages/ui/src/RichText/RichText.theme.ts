@@ -9,7 +9,7 @@ const styleOverrides: ComponentsOverrides<Theme>['RichText'] = {
   // Set some static styles
   root: {
     'width': '100%',
-    'ol, ul, p': {
+    'ol, ul': {
       'padding': '0 0 0 var(--grid-gap)',
 
       '& > li': {

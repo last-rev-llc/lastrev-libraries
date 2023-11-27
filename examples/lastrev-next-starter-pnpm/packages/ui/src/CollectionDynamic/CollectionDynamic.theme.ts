@@ -5,6 +5,40 @@ import { CollectionDynamicVariants } from './CollectionDynamic.types';
 
 const defaultProps: ComponentsProps['CollectionDynamic'] = {};
 
+export interface LayoutConfig {
+  [key: string]: { [breakpoint: string]: number };
+}
+export const layoutConfig: LayoutConfig = {
+  [CollectionDynamicVariants.onePerRow]: {
+    xs: 1,
+    sm: 2,
+    md: 1,
+    lg: 1,
+    xl: 1,
+    xxl: 1
+  },
+  [CollectionDynamicVariants.twoPerRow]: {
+    xs: 1,
+    sm: 2
+  },
+  [CollectionDynamicVariants.threePerRow]: {
+    xs: 1,
+    sm: 2,
+    lg: 3
+  },
+  [CollectionDynamicVariants.fourPerRow]: {
+    xs: 1,
+    sm: 2,
+    md: 4
+  },
+  [CollectionDynamicVariants.fivePerRow]: {
+    xs: 1,
+    sm: 2,
+    md: 4,
+    lg: 5
+  }
+};
+
 const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyColorScheme({ ownerState, theme }),

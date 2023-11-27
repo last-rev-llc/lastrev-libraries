@@ -5,10 +5,18 @@ import { CollectionVariants, type CollectionOwnerState } from './Collection.type
 
 const defaultProps: ComponentsProps['Collection'] = {};
 
-interface LayoutConfig {
+export interface LayoutConfig {
   [key: string]: { [breakpoint: string]: number };
 }
 export const layoutConfig: LayoutConfig = {
+  [CollectionVariants.onePerRow]: {
+    xs: 1,
+    sm: 2,
+    md: 1,
+    lg: 1,
+    xl: 1,
+    xxl: 1
+  },
   [CollectionVariants.twoPerRow]: {
     xs: 1,
     sm: 2

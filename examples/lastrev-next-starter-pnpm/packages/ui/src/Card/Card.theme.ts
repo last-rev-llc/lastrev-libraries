@@ -276,7 +276,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         'height': '100%',
         'position': 'relative',
 
-        '&  :is(img, picture)': {
+        '& :is(img, picture)': {
           width: '100%',
           objectFit: 'cover',
           minHeight: 'inherit',
@@ -456,12 +456,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           [theme.breakpoints.up('md')]: {
             filter: 'grayscale(1)'
           }
-
-          // '> img': {
-          //   aspectRatio: 'inherit',
-          //   objectFit: 'inherit',
-          //   height: 'auto'
-          // }
         },
 
         '&::after': {

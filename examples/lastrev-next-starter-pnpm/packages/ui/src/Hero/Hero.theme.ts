@@ -138,17 +138,15 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
       variant: HeroVariants.simple
     },
     style: {
-      'textAlign': 'center',
-      'padding': theme.spacing(12, 0),
       '[class*=Hero-mainContentWrap]': {
         gridRow: 1,
         gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end'
-      },
+        gridColumnEnd: 'content-end',
+        padding: 'var(--grid-gap-double) 0',
 
-      '[class*=Hero-mediaWrap]': {},
-      '[class*=Hero-actionsWrap]': {
-        justifyContent: 'center'
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnEnd: 'nine-end'
+        }
       }
     }
   },
