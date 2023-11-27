@@ -29,7 +29,7 @@ export const getDefaultCtaText = async (item: any, _args: any, ctx: ApolloContex
 
       const pubDate = getLocalizedField(item.fields, 'pubDate', ctx);
       if (pubDate) textArray.push(pubDate);
-      return textArray.join('  .  ');
+      return textArray.join(' • ');
     default:
       return 'Read More';
   }

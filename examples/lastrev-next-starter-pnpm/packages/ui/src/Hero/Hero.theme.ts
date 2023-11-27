@@ -139,6 +139,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
     },
     style: {
       '[class*=Hero-mainContentWrap]': {
+        minHeight: '33vh',
         gridRow: 1,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',

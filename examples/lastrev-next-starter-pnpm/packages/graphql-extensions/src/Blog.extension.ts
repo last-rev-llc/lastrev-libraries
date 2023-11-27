@@ -62,13 +62,34 @@ export const mappers: Mappers = {
             showCurrentRefinements: false
           }
         }),
-      hero: async (blog: any, _args: any, ctx: ApolloContext) =>
-        createType('Hero', {
+      hero: async (blog: any, _args: any, ctx: ApolloContext) => {
+        const textArray = [];
+
+        const categoriesRef = getLocalizedField(blog?.fields, 'categories', ctx);
+        const categoriesIds =
+          categoriesRef?.map((content: any) => {
+            return { id: content?.sys.id, preview: !!ctx.preview };
+          }) ?? [];
+
+        const categories: any[] = (await ctx.loaders.entryLoader.loadMany(categoriesIds))
+          .filter(Boolean)
+          .map((category: any) => {
+            return getLocalizedField(category?.fields, 'title', ctx);
+          });
+
+        if (categories.length) textArray.push(categories.join(', '));
+
+        const pubDate = getLocalizedField(blog.fields, 'pubDate', ctx);
+        if (pubDate) textArray.push(pubDate);
+        const body = createRichText(textArray.join(' • '));
+        return createType('Hero', {
           variant: 'simple',
-          overline: getLocalizedField(blog.fields, 'pubDate', ctx),
+          backgroundColor: 'navy',
           title: getLocalizedField(blog.fields, 'title', ctx),
+          body,
           sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx) ?? []
-        })
+        });
+      }
     },
 
     Link: {
