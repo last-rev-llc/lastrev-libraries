@@ -40,18 +40,14 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 const locale = 'en-US';
 
 export default async function Page({ params }: Props) {
-  const path = join('/', (params.slug || ['/']).join('/'));
+  let path = join('/', (params.slug || ['/']).join('/'));
+
   console.log({ path, params, slug: params.slug });
 
-  // if (!params.slug || (Array.isArray(params.slug) && params.slug.length === 0)) {
-  //   return (
-  //     <AppProvider>
-  //       {/* Add your homepage content here */}
-  //       <h1>Welcome to the Homepage</h1>
-  //       {/* Other homepage content */}
-  //     </AppProvider>
-  //   );
-  // }
+  if (!params.slug || (Array.isArray(params.slug) && params.slug.length === 0)) {
+    path = '/';
+  }
+  console.log({ path, params, slug: params.slug });
 
   const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
 
