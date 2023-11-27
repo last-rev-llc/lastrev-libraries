@@ -13,6 +13,7 @@ import { siteMediaContactEmailResolver } from './utils/siteMediaContactEmailReso
 import { siteMediaContactNameResolver } from './utils/siteMediaContactNameResolver';
 import { siteMediaContactPhoneResolver } from './utils/siteMediaContactPhoneResolver';
 import { getDefaultCtaText } from './utils/getDefaultCtaText';
+import { siteNewsDefaultAboutUsResolver } from './utils/siteNewsDefaultAboutUsResolver';
 
 export const typeDefs = gql`
   extend type Blog {
@@ -41,7 +42,7 @@ export const mappers: Mappers = {
       mediaContactName: siteMediaContactNameResolver,
       mediaContactEmail: siteMediaContactEmailResolver,
       mediaContactPhone: siteMediaContactPhoneResolver,
-      // aboutText: siteNewsDefaultAboutUsResolver,
+      aboutText: siteNewsDefaultAboutUsResolver,
       relatedItems: async (blog: any, _args: any, ctx: ApolloContext) =>
         createType('CollectionDynamic', {
           introText: createType('Text', { title: 'Related News' }),

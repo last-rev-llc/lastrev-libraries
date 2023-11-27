@@ -21,6 +21,7 @@ const Blog = (props: BlogProps) => {
     footer,
     title,
     body,
+    aboutText,
     breadcrumbs,
     jsonLd,
     sidekickLookup,
@@ -80,6 +81,21 @@ const Blog = (props: BlogProps) => {
                 __typename="RichText"
                 ownerState={ownerState}
               />
+            )}
+
+            {!!aboutText && (
+              <>
+                <BodyHeader variant="h5" ownerState={ownerState}>
+                  About TA Realty
+                </BodyHeader>
+                <Body
+                  body={aboutText}
+                  sidekickLookup={sidekickLookup}
+                  variant="inline"
+                  __typename="RichText"
+                  ownerState={ownerState}
+                />
+              </>
             )}
           </ContentWrap>
         </ContentOuterGrid>

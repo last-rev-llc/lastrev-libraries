@@ -18,10 +18,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
     paddingBottom: 'var(--grid-gap-double)',
+    gridRow: 2,
 
     [theme.containerBreakpoints.up('lg')]: {
       gridColumnStart: 'content-start',
-      gridColumnEnd: 'four-end'
+      gridColumnEnd: 'four-end',
+      gridRow: 1
     }
   }),
 
@@ -57,6 +59,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     padding: 'var(--grid-gap-double)',
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
+    gridRow: 1,
 
     [theme.containerBreakpoints.up('lg')]: {
       gridColumnStart: 'five-start',
