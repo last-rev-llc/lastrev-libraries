@@ -21,8 +21,8 @@ export const getDefaultCtaText = async (item: any, _args: any, ctx: ApolloContex
 
       const categories: any[] = (await ctx.loaders.entryLoader.loadMany(categoriesIds))
         .filter(Boolean)
-        .map((redirect: any) => {
-          return getLocalizedField(redirect?.fields, 'title', ctx);
+        .map((category: any) => {
+          return getLocalizedField(category?.fields, 'title', ctx);
         });
 
       if (categories.length) textArray.push(categories.join(', '));

@@ -41,9 +41,11 @@ export const mappers = {
 
         const categories: any[] = (await ctx.loaders.entryLoader.loadMany(categoriesIds))
           .filter(Boolean)
-          .map((redirect: any) => {
-            return getLocalizedField(redirect?.fields, 'title', ctx);
+          .map((category: any) => {
+            return getLocalizedField(category?.fields, 'title', ctx);
           });
+
+        console.log({ categories });
 
         const card = await generateCard({
           id: blog.sys.id,
