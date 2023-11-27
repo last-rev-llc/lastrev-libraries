@@ -50,11 +50,15 @@ export const mappers = {
             return { id: content?.sys.id, preview: !!ctx.preview };
           }) ?? [];
 
+        console.log({ categoriesIds });
+
         const categories: any[] = (await ctx.loaders.entryLoader.loadMany(categoriesIds))
           .filter(Boolean)
           .map((category: any) => {
             return getLocalizedField(category?.fields, 'title', ctx);
           });
+
+        console.log({ categories });
 
         const card = await generateCard({
           id: blog.sys.id,
