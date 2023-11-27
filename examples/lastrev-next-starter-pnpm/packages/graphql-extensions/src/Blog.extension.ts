@@ -12,10 +12,7 @@ import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 import { siteMediaContactEmailResolver } from './utils/siteMediaContactEmailResolver';
 import { siteMediaContactNameResolver } from './utils/siteMediaContactNameResolver';
 import { siteMediaContactPhoneResolver } from './utils/siteMediaContactPhoneResolver';
-// import { siteMediaContactNameResolver } from './utils/siteMediaContactNameResolver';
-// import { siteMediaContactEmailResolver } from './utils/siteMediaContactEmailResolver';
-// import { siteMediaContactPhoneResolver } from './utils/siteMediaContactPhoneResolver';
-// import { siteNewsDefaultAboutUsResolver } from './utils/siteNewsDefaultAboutUsResolver';
+import { getDefaultCtaText } from './utils/getDefaultCtaText';
 
 export const typeDefs = gql`
   extend type Blog {
@@ -102,7 +99,7 @@ export const mappers: Mappers = {
       },
 
       actions: async (blog: any, args: any, ctx: ApolloContext) => {
-        const text = getLocalizedField(blog.fields, 'promoLinkText', ctx) ?? 'Read Article';
+        const text = await getDefaultCtaText(blog, args, ctx);
         return [
           createType('Link', {
             id: blog.id,

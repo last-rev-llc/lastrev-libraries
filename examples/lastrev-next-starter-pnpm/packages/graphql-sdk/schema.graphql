@@ -158,6 +158,7 @@ type CollectionDynamic implements Content {
   backgroundImage: Media
   carouselAutoPlay: Boolean
   carouselBreakpoints: [String]
+  filtersPlacement: String
   id: String
   inheritTopBGOverlap: Boolean
   internalTitle: String

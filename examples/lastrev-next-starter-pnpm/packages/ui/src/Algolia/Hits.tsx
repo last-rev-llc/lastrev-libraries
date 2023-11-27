@@ -15,7 +15,7 @@ const Hits = ({
   ...other
 }: {
   layoutConfig: LayoutConfig;
-  gridLayout: string;
+  gridLayout: any;
   ownerState: any;
   HitComponent: any;
 }) => {

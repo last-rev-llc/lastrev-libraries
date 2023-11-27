@@ -26,7 +26,8 @@ import type { CollectionDynamicProps, CollectionDynamicOwnerState } from './Coll
 const CollectionDynamic = (props: CollectionDynamicProps) => {
   const ownerState = { ...props };
 
-  const { backgroundImage, backgroundColor, variant, sidekickLookup, introText, algoliaSettings } = props;
+  const { backgroundImage, filtersPlacement, backgroundColor, variant, sidekickLookup, introText, algoliaSettings } =
+    props;
 
   return (
     <ErrorBoundary>

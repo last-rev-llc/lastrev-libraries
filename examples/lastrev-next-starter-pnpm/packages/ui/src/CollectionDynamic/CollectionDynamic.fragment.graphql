@@ -16,7 +16,7 @@ fragment CollectionDynamic_FieldsFragment on CollectionDynamic {
   itemsPerRow
   inheritTopBGOverlap
   settings
-  showFilters
+  filtersPlacement
   algoliaSettings
 }
 

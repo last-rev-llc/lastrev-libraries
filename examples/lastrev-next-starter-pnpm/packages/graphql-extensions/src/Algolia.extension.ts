@@ -33,6 +33,18 @@ export const mappers = {
 
         const link = await getLink(blog, args, ctx);
 
+        const categoriesRef = getLocalizedField(blog?.fields, 'categories', ctx);
+        const categoriesIds =
+          categoriesRef?.map((content: any) => {
+            return { id: content?.sys.id, preview: !!ctx.preview };
+          }) ?? [];
+
+        const categories: any[] = (await ctx.loaders.entryLoader.loadMany(categoriesIds))
+          .filter(Boolean)
+          .map((redirect: any) => {
+            return getLocalizedField(redirect?.fields, 'title', ctx);
+          });
+
         const card = await generateCard({
           id: blog.sys.id,
           overline: 'News',
@@ -59,6 +71,7 @@ export const mappers = {
               preview: !!ctx.preview,
               title,
               pubDate,
+              categories,
               pubDateTimestamp,
               body: documentToPlainTextString(body),
               summary,

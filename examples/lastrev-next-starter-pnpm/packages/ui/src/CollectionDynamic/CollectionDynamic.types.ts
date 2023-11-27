@@ -13,9 +13,16 @@ export enum CollectionDynamicVariants {
   fivePerRow = 'fivePerRow'
 }
 
+export enum CollectionDynamicFiltersPlacementVariants {
+  noFilters = 'noFilters',
+  left = 'left',
+  top = 'top'
+}
+
 export interface CollectionDynamicProps
-  extends Omit<CollectionDynamic_BaseFragmentFragment, 'variant' | 'itemsVariant'> {
+  extends Omit<CollectionDynamic_BaseFragmentFragment, 'variant' | 'filtersPlacement' | 'itemsVariant'> {
   variant?: CollectionDynamicVariants;
+  filtersPlacement?: CollectionDynamicFiltersPlacementVariants;
   itemsVariant?: CardVariants;
   prevBgColor?: string;
   indexName?: string;

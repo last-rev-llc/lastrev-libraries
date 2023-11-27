@@ -29,6 +29,7 @@ export const typeDefs = gql`
     itemsPerRow: Int
     numItems: Int,
     algoliaSettings: JSON
+    showFilters: Boolean
   }
 
   type CollectionDynamicOptions {
@@ -86,40 +87,18 @@ export const mappers: Mappers = {
     CollectionDynamic: {
       algoliaSettings: async (collection: any, args: any, ctx: ApolloContext) => {
         const settings = getLocalizedField(collection.fields, 'settings', ctx);
-
+        const filtersPlacement = defaultResolver('filtersPlacement')(collection.fields, args, ctx);
+        const showFilters = !!(filtersPlacement && filtersPlacement !== 'noFilters');
         if (settings) {
           return {
             indexName: 'contentful',
-            ...settings
+            ...settings,
+            showFilters,
+            filtersPlacement
           };
         }
 
-        return {
-          indexName: 'contentful',
-          showCurrentRefinements: true,
-          useInfiniteHits: false,
-          showPagination: false,
-          showSearchBox: true,
-          searchAsYouType: false,
-          showFilters: true,
-          filters: [
-            {
-              type: 'hierarchialMenu',
-              limit: 100,
-              attributes: ['contentType']
-            }
-          ],
-          configure: {
-            hitsPerPage: 4,
-            filters: `locale:"en-US"`
-          }
-          // initialUiState: {
-          //   query: 'viewability',
-          //   hierarchicalMenu: {
-          //     'categories.level-1': ['Advertiser + Agency Solutions']
-          //   }
-          // }
-        };
+        return null;
       },
       items: async (collection: any, args: any, ctx: ApolloContext) => {
         let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
@@ -172,8 +151,7 @@ export const mappers: Mappers = {
       },
 
       itemsPerRow: async (collectionDynamic: any, args: any, ctx: ApolloContext) => {
-        const variantFn = defaultResolver('variant');
-        const variant = variantFn(collectionDynamic, args, ctx);
+        const variant = defaultResolver('variant')(collectionDynamic, args, ctx);
         let items = getLocalizedField(collectionDynamic.fields, 'items', ctx) ?? [];
         let itemsPerRow = 3;
         const numItems = items?.length ?? 3;
@@ -209,6 +187,8 @@ export const mappers: Mappers = {
       itemsVariant: defaultResolver('itemsVariant'),
 
       itemsAspectRatio: defaultResolver('itemsAspectRatio'),
+
+      filtersPlacement: defaultResolver('filtersPlacement'),
 
       variant: async (collectionDynamic: any, args: any, ctx: ApolloContext) => {
         let carouselBreakpoints = getLocalizedField(collectionDynamic.fields, 'carouselBreakpoints', ctx) ?? [];

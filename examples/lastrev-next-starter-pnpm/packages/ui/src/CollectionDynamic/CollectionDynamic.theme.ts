@@ -71,15 +71,21 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
 
   // contentGrid: {},
 
-  filtersOuterWrap: ({ theme }) => ({
-    gridColumn: 'content-start/conent-end',
+  filtersOuterWrap: ({ theme, ownerState }) => ({
+    gridColumn: 'content-start/content-end',
     display: 'flex',
     flexDirection: 'column',
     gap: 'var(--grid-gap)',
     gridRow: 1,
 
     [theme.containerBreakpoints.up('md')]: {
-      flexDirection: 'row'
+      ...(ownerState?.filtersPlacement === 'top' && {
+        flexDirection: 'row'
+      }),
+
+      ...(ownerState?.filtersPlacement === 'left' && {
+        gridColumn: 'content-start/three-end'
+      })
     }
   }),
 
@@ -101,11 +107,18 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
 
   // searchBoxWrap: {},
 
-  resultsWrap: {
+  resultsWrap: ({ theme, ownerState }) => ({
     gridColumn: 'content-start/content-end',
     gap: 'inherit',
-    gridRow: 2
-  },
+    gridRow: 2,
+
+    [theme.containerBreakpoints.up('md')]: {
+      ...(ownerState?.filtersPlacement === 'left' && {
+        gridRow: 1,
+        gridColumn: 'four-start/content-end'
+      })
+    }
+  }),
 
   itemsGrid: ({ theme, ownerState }) => ({
     'display': 'grid',
