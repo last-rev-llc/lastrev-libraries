@@ -1,4 +1,4 @@
-import { getBlendedTax } from '../../../utils/taxee';
+import { getBlendedTax } from './taxee';
 import { FV } from './futureValueFormula';
 import { isFormValid } from './isFormValid';
 import { popRandom } from './removeRandomElements';
@@ -24,9 +24,7 @@ export const calculate = async (form, formData, setResults, recalculate = false,
   }
   const years = retirementAge?.value - currentAge?.value;
   const expensesAmmount =
-    (annualHsaExpenses?.value || 0) > annualHsaBalance?.value
-      ? annualHsaBalance?.value
-      : annualHsaExpenses?.value || 0;
+    (annualHsaExpenses?.value || 0) > annualHsaBalance?.value ? annualHsaBalance?.value : annualHsaExpenses?.value || 0;
   const paymentAmount = annualHsaBalance?.value - expensesAmmount;
   const potentialTaxSaving = (blendedTax / 100) * annualHsaBalance?.value * years; // 24 must be changed according to api
   const potentialHsaBalance = FV(
@@ -44,8 +42,7 @@ export const calculate = async (form, formData, setResults, recalculate = false,
   let prevCumulative = 0;
   const steps = Math.floor(years / 10);
   for (let i = 0; i <= years; i += 1) {
-    const endYear =
-      (currentHsaBalance?.value ?? 0) + paymentAmount * (currentYear + i - currentYear);
+    const endYear = (currentHsaBalance?.value ?? 0) + paymentAmount * (currentYear + i - currentYear);
     const growt = prevYear * (annualRateOfReturn?.value / 100) + prevCumulative;
     if (i % steps === 0 || (years < 10 && i < 10) || i === years) {
       cumulativeAssetGrowth.push(Number(endYear.toFixed(2)));
@@ -61,11 +58,7 @@ export const calculate = async (form, formData, setResults, recalculate = false,
     let avaliableYears = allYears.slice(1, -1);
     let deletionsToMake = avaliableAggregatedNetContributionsToDelete.length - (!isMobile ? 7 : 4);
     while (deletionsToMake) {
-      popRandom(
-        avaliableCumulativeAssetGrowthToDelete,
-        avaliableAggregatedNetContributionsToDelete,
-        avaliableYears
-      );
+      popRandom(avaliableCumulativeAssetGrowthToDelete, avaliableAggregatedNetContributionsToDelete, avaliableYears);
       deletionsToMake -= 1;
     }
     const missingYears = currentYear + years - allYears[allYears.length - 1];
@@ -80,8 +73,7 @@ export const calculate = async (form, formData, setResults, recalculate = false,
     const realLastValues = {
       lastYear: currentYear + years,
       lastCumulativeAssetGrowth: currentHsaBalance?.value + paymentAmount * years,
-      lastAggregatedNetContributions:
-        aggregatedNetContributions[aggregatedNetContributions?.length - 1]
+      lastAggregatedNetContributions: aggregatedNetContributions[aggregatedNetContributions?.length - 1]
     };
     cumulativeAssetGrowth = [
       cumulativeAssetGrowth[0],

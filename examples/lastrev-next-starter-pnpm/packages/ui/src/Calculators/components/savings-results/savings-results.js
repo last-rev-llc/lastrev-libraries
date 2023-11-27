@@ -1,7 +1,7 @@
 import gsap from 'gsap';
 import React, { useEffect, useRef } from 'react';
-import { numberWithCommas } from '../../../../utils/helpers';
-import { isScrolledIntoView } from '../../../../utils/scroll-assist';
+import { numberWithCommas } from '../../utils/helpers';
+import { isScrolledIntoView } from '../../utils/scroll-assist';
 import { Result, SavingResult, SavingsResultsContainer, Title } from './styled';
 
 const SavingsResults = ({ results }) => {

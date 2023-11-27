@@ -48,6 +48,8 @@
     "@mui/styled-engine-sc": "^5.14.8",
     "@mui/system": "^5.14.8",
     "gsap": "^3.12.2",
+    "highcharts": "^9.1.2",
+    "highcharts-react-official": "^3.0.0",
     "next": "^13.4.19",
     "react-countup": "^6.5.0",
     "react-datepicker": "^4.23.0",

@@ -1,4 +1,4 @@
-import { numberWithCommas } from '../../../../utils/helpers';
+import { numberWithCommas } from '../../utils/helpers';
 
 const defaultTextStyle = (color, weight = 'normal', fontSize = '14px') => `font-family: Muli;
 font-style: normal;
@@ -14,13 +14,7 @@ const labelTextStyle = `
   font-weight: 700;
 `;
 
-export const chartSavingTemplate = ({
-  isMobile,
-  aggregatedNetContributions,
-  cumulativeAssetGrowth,
-  years,
-  max
-}) => ({
+export const chartSavingTemplate = ({ isMobile, aggregatedNetContributions, cumulativeAssetGrowth, years, max }) => ({
   exporting: {
     enabled: false
   },
@@ -34,7 +28,9 @@ export const chartSavingTemplate = ({
     height: '520px',
     events: {
       render() {
+        console.log('savingChart', this);
         for (const serie of this.series) {
+          if (!serie) continue;
           serie.legendSymbol.attr({
             width: 35
           }),
@@ -133,11 +129,9 @@ export const chartSavingTemplate = ({
       const { total, y, series } = this;
       const isCumulative = series.name === 'Cumulative asset growth';
       return `<div style="padding: 5px 50px 5px 12px;">
-              <span style="${defaultTextStyle(
-                '#489A93',
-                600,
-                '16px'
-              )} ">Total Balance: $${numberWithCommas(Math.round(total))}</span>
+              <span style="${defaultTextStyle('#489A93', 600, '16px')} ">Total Balance: $${numberWithCommas(
+        Math.round(total)
+      )}</span>
               <br>
               <span style="${defaultTextStyle('#569CDF')}">Asset Growth : $${numberWithCommas(
         Math.round(!isCumulative ? total - y : y)
