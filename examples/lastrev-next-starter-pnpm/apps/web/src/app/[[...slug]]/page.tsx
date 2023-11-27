@@ -41,7 +41,7 @@ const locale = 'en-US';
 
 export default async function Page({ params }: Props) {
   const path = join('/', (params.slug || ['/']).join('/'));
-  console.log({ path, slug: params.slug });
+  console.log({ path, params, slug: params.slug });
 
   const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
 
