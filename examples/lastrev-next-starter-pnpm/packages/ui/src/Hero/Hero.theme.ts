@@ -139,15 +139,33 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
     },
     style: {
       '[class*=Hero-mainContentWrap]': {
-        minHeight: '33vh',
         gridRow: 1,
         gridColumnStart: 'content-start',
         gridColumnEnd: 'content-end',
-        padding: 'var(--grid-gap-double) 0',
 
         [theme.containerBreakpoints.up('md')]: {
           gridColumnEnd: 'nine-end'
         }
+      }
+    }
+  },
+  {
+    props: {
+      variant: HeroVariants.news
+    },
+    style: {
+      '[class*=Hero-mainContentWrap]': {
+        gridRow: 1,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnEnd: 'nine-end'
+        }
+      },
+
+      '[class*=Hero-contentInnerWrap]': {
+        padding: 'var(--section-padding) 0 calc(2 * var(--section-padding))'
       }
     }
   },

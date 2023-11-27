@@ -83,7 +83,7 @@ export const mappers: Mappers = {
         if (pubDate) textArray.push(pubDate);
         const body = createRichText(textArray.join(' • '));
         return createType('Hero', {
-          variant: 'simple',
+          variant: 'news',
           backgroundColor: 'navy',
           title: getLocalizedField(blog.fields, 'title', ctx),
           body,

@@ -55,45 +55,54 @@ const Hero = (props: HeroProps) => {
                 </BreadcrumbsWrap>
               ) : null}
 
-              {!!overline && (
-                <Overline ownerState={ownerState} variant="overline">
-                  {overline}
-                </Overline>
-              )}
+              <ContentInnerWrap ownerState={ownerState}>
+                {!!overline && (
+                  <Overline ownerState={ownerState} variant="overline">
+                    {overline}
+                  </Overline>
+                )}
 
-              {!!title && (
-                <Title
-                  {...sidekick(sidekickLookup, 'title')}
-                  component="h1"
-                  variant="h1"
-                  data-testid="Hero-title"
-                  ownerState={ownerState}>
-                  {title}
-                </Title>
-              )}
+                {!!title && (
+                  <Title
+                    {...sidekick(sidekickLookup, 'title')}
+                    component="h1"
+                    variant="h1"
+                    data-testid="Hero-title"
+                    ownerState={ownerState}>
+                    {title}
+                  </Title>
+                )}
 
-              {!!subtitle && (
-                <Subtitle
-                  {...sidekick(sidekickLookup, 'subtitle')}
-                  data-testid="Hero-subtitle"
-                  ownerState={ownerState}
-                  variant="h2">
-                  {subtitle}
-                </Subtitle>
-              )}
+                {!!subtitle && (
+                  <Subtitle
+                    {...sidekick(sidekickLookup, 'subtitle')}
+                    data-testid="Hero-subtitle"
+                    ownerState={ownerState}
+                    variant="h2">
+                    {subtitle}
+                  </Subtitle>
+                )}
 
-              {!!body && (
-                <Body __typename="RichText" ownerState={ownerState} body={body} {...sidekick(sidekickLookup, 'body')} />
-              )}
+                {!!body && (
+                  <Body
+                    __typename="RichText"
+                    ownerState={ownerState}
+                    body={body}
+                    {...sidekick(sidekickLookup, 'body')}
+                  />
+                )}
+                {!!actions?.length && (
+                  <ActionsWrap
+                    {...sidekick(sidekickLookup, 'actions')}
+                    data-testid="Hero-actions"
+                    ownerState={ownerState}>
+                    {actions.map((action) => (
+                      <Action ownerState={ownerState} key={action?.id} {...action} />
+                    ))}
+                  </ActionsWrap>
+                )}
+              </ContentInnerWrap>
             </Content>
-
-            {!!actions?.length && (
-              <ActionsWrap {...sidekick(sidekickLookup, 'actions')} data-testid="Hero-actions" ownerState={ownerState}>
-                {actions.map((action) => (
-                  <Action ownerState={ownerState} key={action?.id} {...action} />
-                ))}
-              </ActionsWrap>
-            )}
           </MainContentWrap>
         ) : null}
 
@@ -161,6 +170,12 @@ const Content = styled(Box, {
   name: 'Hero',
   slot: 'Content',
   overridesResolver: (_, styles) => [styles.content]
+})<{ ownerState: HeroOwnerState }>``;
+
+const ContentInnerWrap = styled(Box, {
+  name: 'Hero',
+  slot: 'ContentInnerWrap',
+  overridesResolver: (_, styles) => [styles.contentInnerWrap]
 })<{ ownerState: HeroOwnerState }>``;
 
 const HeroBackground = styled(Background, {

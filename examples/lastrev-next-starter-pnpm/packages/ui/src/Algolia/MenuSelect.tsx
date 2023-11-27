@@ -6,12 +6,12 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
 type MenuSelectProps = {
-  ownerState: any;
+  ownerState?: any;
   attribute: string;
   others?: UseMenuProps;
 };
 
-const MenuSelect = ({ ownerState, attribute, others }: MenuSelectProps) => {
+const MenuSelect = ({ attribute, others }: MenuSelectProps) => {
   const { items, refine } = useMenu({ attribute, ...others });
 
   const { value: selectedValue } = items.find((item) => item.isRefined) || {
