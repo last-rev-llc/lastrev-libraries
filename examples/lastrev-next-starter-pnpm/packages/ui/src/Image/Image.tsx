@@ -110,7 +110,6 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
         </>
       );
     } else if (width && height && src && !isSVG && columns) {
-      console.log({ width, height, src, isSVG, columns });
       content = <picture>{generateSources()}</picture>;
     } else if (src && !isSVG) {
       content = (
