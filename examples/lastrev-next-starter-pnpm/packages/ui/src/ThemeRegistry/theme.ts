@@ -64,8 +64,8 @@ const schemes = {
     linkColor: commonColors.gray5,
     headerColor: commonColors.navy,
     text: commonColors.gray5,
-    overlay: commonColors.gray1,
-    overlayText: commonColors.gray5
+    overlay: commonColors.navy,
+    overlayText: commonColors.white
   },
   navy: {
     primary: { main: commonColors.navy, contrastText: commonColors.gray2 },
