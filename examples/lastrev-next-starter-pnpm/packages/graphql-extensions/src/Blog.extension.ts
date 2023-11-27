@@ -87,7 +87,7 @@ export const mappers: Mappers = {
           backgroundColor: 'navy',
           title: getLocalizedField(blog.fields, 'title', ctx),
           body,
-          sideImageItems: getLocalizedField(blog.fields, 'featuredMedia', ctx) ?? []
+          images: getLocalizedField(blog.fields, 'featuredMedia', ctx) ?? []
         });
       }
     },
