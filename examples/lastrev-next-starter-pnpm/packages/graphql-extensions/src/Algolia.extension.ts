@@ -58,7 +58,7 @@ export const mappers = {
 
         const card = await generateCard({
           id: blog.sys.id,
-          overline: 'News',
+          //overline: 'News',
           title,
           summary,
           link,
@@ -124,7 +124,7 @@ export const mappers = {
 
         const card = await generateCard({
           id: person.sys.id,
-          overline: department,
+          //overline: department,
           title,
           subtitle,
           summary,
@@ -202,7 +202,7 @@ export const mappers = {
 
         const card = await generateCard({
           id: page.sys.id,
-          overline: 'Page',
+          //overline: 'Page',
           title,
           summary,
           link,
@@ -256,7 +256,7 @@ export const mappers = {
 
         const card = await generateCard({
           id: property.sys.id,
-          overline: 'Case Study',
+          //overline: 'Case Study',
           title,
           summary,
           link,

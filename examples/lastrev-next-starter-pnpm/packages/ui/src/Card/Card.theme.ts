@@ -250,7 +250,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
 
       '& [class*=Card-content]': {
-        'minHeight': '33cqi',
         'display': 'flex',
         'flexDirection': 'column',
         'padding': 0,

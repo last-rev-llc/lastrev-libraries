@@ -119,6 +119,7 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
       ...(ownerState?.filtersPlacement === 'left' && {
         gridRow: 1,
         gridColumn: 'four-start/content-end'
+        // ...theme.mixins.applyColorScheme({ ownerState, backgroundColor: 'white' })
       })
     }
   }),
