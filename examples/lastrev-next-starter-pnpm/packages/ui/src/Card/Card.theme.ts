@@ -399,7 +399,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
 
       '[class*=contentWrap]': {
-        paddingBottom: 'var(--grid-gap)'
+        paddingLeft: 'var(--grid-gap)'
       }
     }
   },
