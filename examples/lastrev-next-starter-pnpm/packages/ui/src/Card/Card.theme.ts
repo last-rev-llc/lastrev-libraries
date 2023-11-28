@@ -531,7 +531,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
             transform: 'scaleY(0)'
           },
 
-          '[class*=Card-title]': {
+          ':is([class*=Card-title], [class*=Card-subtitle])': {
             maxHeight: 'initial',
             transform: 'scaleY(1)'
           }
