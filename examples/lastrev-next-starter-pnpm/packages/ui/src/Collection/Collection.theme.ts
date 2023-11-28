@@ -100,45 +100,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     gap: 'inherit',
 
     ...(ownerState && generateGridStyles(theme, ownerState))
-
-    // ...((ownerState?.variant === CollectionVariants.twoPerRow ||
-    //   ownerState?.variant === CollectionVariants.threePerRow) && {
-    //   [theme.containerBreakpoints.up('sm')]: {
-    //     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-    //   }
-    // }),
-
-    // ...(ownerState?.variant === CollectionVariants.threePerRow && {
-    //   [theme.containerBreakpoints.up('lg')]: {
-    //     gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
-    //   }
-    // }),
-
-    // ...(ownerState?.variant === CollectionVariants.fourPerRow && {
-    //   [theme.containerBreakpoints.up('sm')]: {
-    //     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-    //   },
-
-    //   [theme.containerBreakpoints.up('md')]: {
-    //     gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
-    //   }
-    // }),
-
-    // ...(ownerState?.variant === CollectionVariants.fivePerRow && {
-    //   gridTemplateColumns: 'repeat(1, minmax(0, 1fr))',
-
-    //   [theme.containerBreakpoints.up('sm')]: {
-    //     gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-    //   },
-
-    //   [theme.containerBreakpoints.up('md')]: {
-    //     gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
-    //   },
-
-    //   [theme.containerBreakpoints.up('lg')]: {
-    //     gridTemplateColumns: 'repeat(5, minmax(0, 1fr))'
-    //   }
-    // })
   }),
 
   contentGrid: {}

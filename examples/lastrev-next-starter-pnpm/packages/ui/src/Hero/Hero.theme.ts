@@ -71,7 +71,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   }),
 
   contentOuterGrid: ({ theme, ownerState }) => ({
-    overflow: 'hidden'
+    overflow: 'hidden',
+
+    [theme.containerBreakpoints.up('md')]: {
+      ...(!!ownerState?.images?.length && {
+        maxHeight: '40vh'
+      })
+    }
   }),
 
   title: ({ theme, ownerState }) => ({
@@ -91,10 +97,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     'flexDirection': 'column',
     'minHeight': '10vh',
     'justifyContent': 'center',
-    'margin': 'var(--section-padding) 0',
+    'margin': 'var(--grid-gap) 0',
     'gap': 'var(--grid-gap)',
 
     [theme.containerBreakpoints.up('md')]: {
+      // margin: 'var(--section-padding) 0',
       minHeight: '30vh',
       padding: 0,
       gap: 0
@@ -135,7 +142,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
       display: 'flex',
       height: '100%',
       width: '100%',
-      maxHeight: '30vh'
+
+      [theme.containerBreakpoints.down('md')]: {
+        // minHeight: '30vh',
+        maxHeight: '30vh'
+      }
     },
 
     img: {

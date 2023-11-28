@@ -216,7 +216,6 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                   --h2-font-size: ${(h2FontSizeBase / 8) * 6}rem;
                   --h3-font-size: ${(h3FontSizeBase / 8) * 6}rem;
                   --h5-font-size: ${(h5FontSizeBase / 8) * 6}rem;
-                  --h6-font-size: ${(h6FontSizeBase / 8) * 6}rem;
                 }
 
                 ${theme.breakpoints.down('sm')} {
@@ -224,7 +223,6 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                   --h2-font-size: ${(h2FontSizeBase / 8) * 5}rem;
                   --h3-font-size: ${(h3FontSizeBase / 8) * 5}rem;
                   --h5-font-size: ${(h5FontSizeBase / 8) * 5}rem;
-                  --h6-font-size: ${(h6FontSizeBase / 8) * 5}rem;
                 }
               }
             `}

@@ -376,6 +376,10 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
             objectFit: 'contain'
           }
         }
+      },
+
+      '[class*=contentWrap]': {
+        paddingBottom: 'var(--grid-gap)'
       }
     }
   },
