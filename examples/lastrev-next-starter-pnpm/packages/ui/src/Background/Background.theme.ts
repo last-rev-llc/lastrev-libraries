@@ -20,10 +20,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Background'] = {
       '&::before': {
         content: '""',
         position: 'absolute',
-        width: 'var(--grid-margin)',
-        height: 'calc(2 * var(--section-padding))',
+        width: 'calc(var(--grid-gap) + (var(--grid-margin) / 2))',
+        height: 'calc(1.25 * var(--grid-margin))',
         left: 0,
-        top: 'calc(-2 * var(--section-padding))',
+        top: 'calc(-1.25 * var(--grid-margin))',
         background: 'inherit',
         zIndex: 20
       },
@@ -31,10 +31,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Background'] = {
       '&::after': {
         content: '""',
         position: 'absolute',
-        width: 'var(--grid-margin)',
-        height: 'calc(2 * var(--section-padding))',
+        width: 'calc(var(--grid-gap) + (var(--grid-margin) / 2))',
+        height: 'calc(1.25 * var(--grid-margin))',
         right: 0,
-        top: 'calc(-2 * var(--section-padding))',
+        top: 'calc(-1.25 * var(--grid-margin))',
         background: 'inherit',
         zIndex: 20
       }

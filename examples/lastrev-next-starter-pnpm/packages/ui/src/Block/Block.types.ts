@@ -8,8 +8,8 @@ export enum BlockVariants {
   contentOnRightFullBleed = 'contentOnRightFullBleed',
   contentOnLeft = 'contentOnLeft',
   contentOnLeftFullBleed = 'contentOnLeftFullBleed',
-  contentBelow = 'contentBelow',
-  contentAbove = 'contentAbove'
+  smallContentOnLeft = 'smallContentOnLeft',
+  smallContentOnRight = 'smallContentOnRight'
 }
 
 export interface BlockProps extends Omit<Block_BaseFragmentFragment, 'variant'> {

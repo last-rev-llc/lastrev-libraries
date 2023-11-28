@@ -194,7 +194,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                   --h4-font-size: var(--h3-font-size);
                   --h5-font-size: ${(h5FontSizeBase / 8) * 8}rem;
                   --h6-font-size: ${(h6FontSizeBase / 8) * 8}rem;
-                  --section-padding: var(--grid-gap-double);
+                  /* --section-padding: var(--grid-gap-double); */
                 }
 
                 ${theme.breakpoints.down('lg')} {

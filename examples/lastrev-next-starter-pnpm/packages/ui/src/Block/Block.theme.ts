@@ -10,23 +10,59 @@ interface LayoutConfig {
 export const layoutConfig: LayoutConfig = {
   [BlockVariants.default]: {
     xs: 1,
-    sm: 2
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+    xxl: 2
   },
   [BlockVariants.contentOnRight]: {
     xs: 1,
-    sm: 2
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+    xxl: 2
   },
   [BlockVariants.contentOnRightFullBleed]: {
     xs: 1,
-    sm: 2
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+    xxl: 2
   },
   [BlockVariants.contentOnLeft]: {
     xs: 1,
-    sm: 2
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+    xxl: 2
   },
   [BlockVariants.contentOnLeftFullBleed]: {
     xs: 1,
-    sm: 2
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+    xxl: 2
+  },
+  [BlockVariants.smallContentOnLeft]: {
+    xs: 1,
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+    xxl: 2
+  },
+  [BlockVariants.smallContentOnRight]: {
+    xs: 1,
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+    xxl: 2
   }
 };
 
@@ -271,42 +307,78 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
 
   {
     props: {
-      variant: BlockVariants.contentAbove
+      variant: BlockVariants.smallContentOnLeft
     },
     style: {
       '[class*=mainContentWrap]': {
-        'gridRow': 2,
-        'gridColumnStart': 'content-start',
-        'gridColumnEnd': 'content-end',
+        gridRow: 2,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
 
-        '& *': {
-          alignSelf: 'center'
+        [theme.containerBreakpoints.up('sm')]: {
+          gridRow: 1,
+          gridColumnStart: 'content-half',
+          gridColumnEnd: 'content-end'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridRow: 1,
+          gridColumnStart: 'five-start',
+          gridColumnEnd: 'content-end'
         }
       },
 
       '[class*=sideContentWrap]': {
-        gridColumn: 'content-start/content-end',
-        gridRow: 1
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('sm')]: {
+          gridColumnEnd: 'content-half'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnEnd: 'four-end'
+        }
       }
     }
   },
   {
     props: {
-      variant: BlockVariants.contentBelow
+      variant: BlockVariants.smallContentOnRight
     },
     style: {
       '[class*=mainContentWrap]': {
-        'gridRow': 1,
-        'gridColumnStart': 'content-start',
-        'gridColumnEnd': 'content-end',
-        '& *': {
-          alignSelf: 'center'
+        gridRow: 2,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridRow: 1,
+          gridColumnStart: 'content-start',
+          gridColumnEnd: 'content-half'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridRow: 1,
+          gridColumnStart: 'content-start',
+          gridColumnEnd: 'seven-end'
         }
       },
 
       '[class*=sideContentWrap]': {
-        gridColumn: 'content-start/content-end',
-        gridRow: 2
+        gridRow: 1,
+        gridColumnStart: 'content-start',
+        gridColumnEnd: 'content-end',
+
+        [theme.containerBreakpoints.up('md')]: {
+          gridColumnStart: 'content-half',
+          gridColumnEnd: 'content-end'
+        },
+
+        [theme.containerBreakpoints.up('lg')]: {
+          gridColumnStart: 'eight-start',
+          gridColumnEnd: 'content-end'
+        }
       }
     }
   }

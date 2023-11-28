@@ -25,6 +25,8 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
     ...imageProps
   } = props;
 
+  const quality = 90;
+
   const imgContent = React.useMemo(() => {
     const isSVG = src?.endsWith('.svg');
 
@@ -52,9 +54,8 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
 
       // Iterate over breakpoints and generate sources
       for (const breakpoint in breakpointsMinMax) {
-        // if (breakpointsMinMax.hasOwnProperty(breakpoint)) {
         const breakpointWidth = breakpointsMinMax[breakpoint]?.max;
-        const mediaCondition = `(min-width: ${breakpointsMinMax[breakpoint]?.min}px and max-width: ${
+        const mediaCondition = `(min-width: ${breakpointsMinMax[breakpoint]?.min}px) and (max-width: ${
           breakpointWidth - 0.001
         }px)`;
 
@@ -63,26 +64,36 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
 
           const widthValue = breakpointWidth / columnsValue;
 
-          if (widthValue <= maxWidth && imageWidth < widthValue) {
-            const source = `${src}?${imageWidth > imageHeight ? 'h' : 'w'}=${Math.round(widthValue)}&fm=webp`;
-            sources.push(<source key={breakpoint} media={mediaCondition} srcSet={source} />);
+          if (widthValue <= maxWidth && imageWidth > widthValue) {
+            const source = `${src}?${imageWidth > imageHeight ? 'h' : 'w'}=${Math.round(widthValue)}&q=${quality}`;
+            sources.push(
+              <source key={breakpoint} media={mediaCondition} srcSet={`${source}&fm=avif`} type="image/avif" />
+            );
+            sources.push(
+              <source key={breakpoint} media={mediaCondition} srcSet={`${source}&fm=webp`} type="image/webp" />
+            );
           }
         } else {
-          const source = `${src}?${imageWidth > imageHeight ? 'h' : 'w'}=${Math.round(maxWidth)}&fm=webp`;
-          sources.push(<source key={breakpoint} media={mediaCondition} srcSet={source} />);
+          const source = `${src}?${imageWidth > imageHeight ? 'h' : 'w'}=${Math.round(maxWidth)}&q=${quality}`;
+          sources.push(
+            <source key={breakpoint} media={mediaCondition} srcSet={`${source}&fm=avif`} type="image/avif" />
+          );
+          sources.push(
+            <source key={breakpoint} media={mediaCondition} srcSet={`${source}&fm=webp`} type="image/webp" />
+          );
         }
       }
 
       sources.push(
         <img
           key="fallback"
-          src={`${src}?${imageWidth > imageHeight ? 'h' : 'w'}=${Math.round(maxWidth)}`}
+          src={`${src}?${imageWidth > imageHeight ? 'h' : 'w'}=${Math.round(maxWidth)}&q=${quality}`}
           alt={alt}
           className={className}
           ref={ref}
           data-testid={testId}
           itemProp={itemProp}
-          loading={priority ? 'eager' : 'lazy'}
+          loading="lazy"
           width={Math.round(maxWidth)} // Set fallback width
           height={Math.round(imageHeight * (maxWidth / imageWidth))}
         />
