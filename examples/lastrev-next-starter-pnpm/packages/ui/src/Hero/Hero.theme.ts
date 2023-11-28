@@ -81,6 +81,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   }),
 
   title: ({ theme, ownerState }) => ({
+    whiteSpace: 'pre-line',
     ...(!ownerState?.isHomepage && {
       ...theme.typography.h2
     })
