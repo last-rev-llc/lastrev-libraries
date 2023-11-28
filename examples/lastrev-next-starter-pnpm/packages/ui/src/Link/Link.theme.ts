@@ -89,7 +89,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Link'] => [
       variant: 'footerContactDetailsFooter'
     },
     style: {
-      'textDecoration': 'underline',
+      'textDecoration': 'none',
       '&&': {
         whiteSpace: 'pre'
       }

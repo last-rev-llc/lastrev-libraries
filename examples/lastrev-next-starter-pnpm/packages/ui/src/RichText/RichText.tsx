@@ -86,7 +86,7 @@ const renderTypography =
     );
   };
 
-const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { links?: TextLinks } & Options) => {
+const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { links?: any } & Options) => {
   const entries = keyBy('id', links?.entries ?? []);
   const assets = keyBy('id', links?.assets ?? []);
 
@@ -235,5 +235,7 @@ const TableRoot = styled(TableContainer, {
 
   overridesResolver: (_, styles) => [styles.tableRoot]
 })<{ variant?: string }>``;
+
+RichText.displayName = 'RichText';
 
 export default RichText;

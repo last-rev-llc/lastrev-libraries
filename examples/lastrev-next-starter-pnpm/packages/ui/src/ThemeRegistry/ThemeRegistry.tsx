@@ -84,11 +84,11 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --display5-font-size: var(--h5-font-size);
                 --display6-font-size: var(--h6-font-size);
                 --overline-font-size: var(--h6-font-size);
-                --body1-font-size: 1.0625rem;
-                --body2-font-size: 1.0625rem;
-                --bodyXSmall-font-size: 0.8125rem;
-                --bodySmall-font-size: 0.9375rem;
-                --bodyLarge-font-size: 1.125rem;
+                --body1-font-size: 1.125rem;
+                --body2-font-size: 1.125rem;
+                --bodyXSmall-font-size: 0.875rem;
+                --bodySmall-font-size: 1rem;
+                --bodyLarge-font-size: 1.25rem;
 
                 --h1-line-height: 1.0625em;
                 --h2-line-height: 1.0625em;
@@ -106,8 +106,8 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
                 --body1-line-height: 1.5em;
                 --body2-line-height: 1.5em;
-                --bodyXSmall-line-height: 17px;
-                --bodySmall-line-height: 24px;
+                --bodyXSmall-line-height: 1.5em;
+                --bodySmall-line-height: 1.75em;
                 --bodyLarge-line-height: 1.25em;
 
                 --h1-margin: 0 0 0.5em 0;
@@ -198,27 +198,34 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 }
 
                 ${theme.breakpoints.down('lg')} {
-                  --h1-font-size: ${h1FontSizeBase}rem;
-                  --h2-font-size: ${h2FontSizeBase}rem;
-                  --h3-font-size: ${h3FontSizeBase}rem;
-                  --h5-font-size: ${h5FontSizeBase}rem;
-                  --h6-font-size: ${h6FontSizeBase}rem;
-                }
-
-                ${theme.breakpoints.down('md')} {
                   --h1-font-size: ${(h1FontSizeBase / 8) * 7}rem;
                   --h2-font-size: ${(h2FontSizeBase / 8) * 7}rem;
                   --h3-font-size: ${(h3FontSizeBase / 8) * 7}rem;
+                  --h4-font-size: var(--h3-font-size);
                   --h5-font-size: ${(h5FontSizeBase / 8) * 7}rem;
                   --h6-font-size: ${(h6FontSizeBase / 8) * 7}rem;
+
+                  --body1-font-size: 1rem;
+                  --body2-font-size: 1rem;
+                  --bodyXSmall-font-size: 0.875rem;
+                  --bodySmall-font-size: 1rem;
+                  --bodyLarge-font-size: 1.125rem;
                 }
 
-                ${theme.breakpoints.down('sm')} {
+                ${theme.breakpoints.down('md')} {
                   --h1-font-size: ${(h1FontSizeBase / 8) * 6}rem;
                   --h2-font-size: ${(h2FontSizeBase / 8) * 6}rem;
                   --h3-font-size: ${(h3FontSizeBase / 8) * 6}rem;
                   --h5-font-size: ${(h5FontSizeBase / 8) * 6}rem;
                   --h6-font-size: ${(h6FontSizeBase / 8) * 6}rem;
+                }
+
+                ${theme.breakpoints.down('sm')} {
+                  --h1-font-size: ${(h1FontSizeBase / 8) * 5}rem;
+                  --h2-font-size: ${(h2FontSizeBase / 8) * 5}rem;
+                  --h3-font-size: ${(h3FontSizeBase / 8) * 5}rem;
+                  --h5-font-size: ${(h5FontSizeBase / 8) * 5}rem;
+                  --h6-font-size: ${(h6FontSizeBase / 8) * 5}rem;
                 }
               }
             `}
