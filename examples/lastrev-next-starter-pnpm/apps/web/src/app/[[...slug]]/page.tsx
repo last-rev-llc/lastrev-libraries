@@ -19,6 +19,7 @@ export const revalidate = 300;
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const path = join('/', (params.slug || ['/']).join('/'));
+  console.log('generateMetadata', { path });
   const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
   if (!pageData?.page?.id) return {};
 
@@ -40,6 +41,7 @@ const locale = 'en-US';
 
 export default async function Page({ params }: Props) {
   const path = join('/', (params.slug || ['/']).join('/'));
+  console.log('Page', { path });
 
   const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
 
