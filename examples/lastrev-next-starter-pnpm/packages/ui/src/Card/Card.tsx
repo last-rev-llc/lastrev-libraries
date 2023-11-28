@@ -93,6 +93,7 @@ const Card = (props: CardProps) => {
                   {title}
                 </Title>
               ) : null}
+
               {subtitle ? (
                 <Subtitle
                   {...sidekick(sidekickLookup, 'subtitle')}
@@ -112,6 +113,7 @@ const Card = (props: CardProps) => {
               ) : null}
             </ContentWrap>
           ) : null}
+
           {loading ? (
             <ContentWrap ownerState={ownerState} data-testid="Card-ContentSkeleton">
               <Overline ownerState={ownerState} variant="overline">
@@ -133,6 +135,7 @@ const Card = (props: CardProps) => {
               </BodyWrap>
             </ContentWrap>
           ) : null}
+
           {(actions?.length || loading) && (
             <ActionsWrap
               {...sidekick(sidekickLookup, 'actions')}

@@ -35,7 +35,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'borderRadius': 0,
     'backgroundColor': 'inherit',
     'position': 'relative',
-    'transition': 'transform 0.25s ease-in-out',
+    'transition': 'maxHeight 0.25s ease-in-out',
     'willChange': 'transform',
     'color': 'inherit',
 
@@ -109,19 +109,24 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 
   contentWrap: ({ theme }) => ({
     flex: 1,
-    padding: 'var(--grid-gap)'
+    padding: 'var(--grid-gap-half) 0 0',
+
+    [theme.containerBreakpoints.up('sm')]: {
+      padding: 'var(--grid-gap)'
+    }
   }),
 
   title: {},
 
   bodyWrap: ({ theme }) => ({
+    'paddingBottom': 'var(--grid-gap)',
     '*': {
       ...theme.typography.body1
     }
   }),
 
   actionsWrap: ({ theme }) => ({
-    padding: 'var(--grid-gap)',
+    padding: '0 0 var(--grid-gap)',
 
     [theme.containerBreakpoints.up('sm')]: {
       padding: '0 var(--grid-gap) var(--grid-gap)'
@@ -139,6 +144,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     'left': 0,
     'width': '100%',
     'height': '100%',
+    'zIndex': 100,
     '&:hover': {
       '.MuiCardActionArea-focusHighlight': {
         opacity: 0
@@ -296,8 +302,14 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       [theme.breakpoints.up('sm')]: {
         'overflow': 'hidden',
 
+        '[class*=cardWrap]': {
+          justifyContent: 'flex-end',
+          height: '100%'
+        },
+
         '[class*=Card-cardMedia]': {
           'width': '100%',
+          'position': 'absolute',
 
           '& > *': {
             width: '100%',
@@ -306,40 +318,48 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           }
         },
 
-        '[class*=Card-title]': {
-          transform: 'translateY(calc(-100% - calc(var(--grid-gap) * 1.75)))'
+        '[class*=contentWrap]': {
+          '& > *:last-child': {
+            paddingBottom: 'var(--grid-gap-quarter)'
+          }
         },
 
         ':is([class*=contentWrap], [class*=actionsWrap])': {
-          transition: 'inherit',
-          position: 'absolute',
-          bottom: 0,
-          transform: 'translateY(100%)',
-          width: '100%',
-          zIndex: 20,
-          height: '100%',
-          boxSizing: 'border-box'
+          'padding': '0 var(--grid-gap-half)',
+          'flex': 0,
+          'width': '100%',
+          'zIndex': 20,
+          'boxSizing': 'border-box',
+
+          '& > *': {
+            overflow: 'hidden',
+            maxHeight: 0,
+            transition: 'transform .25s linear',
+            willChange: 'transform, max-height',
+            transformOrigin: 'bottom',
+            transform: 'scaleY(0)'
+          },
+
+          '[class*=Card-title]': {
+            maxHeight: 'initial',
+            transform: 'scaleY(1)'
+          }
         },
 
-        ':is([class*=overline], [class*=subtitle], [class*=body], [class*=actionsWrap])': {
-          overflow: 'hidden',
-          transition: 'inherit'
+        '[class*=bodyWrap]': {
+          paddingBottom: 0
+        },
+
+        '[class*=actionsWrap]': {
+          paddingBottom: 'var(--grid-gap-half)'
         },
 
         '&:hover': {
-          '[class*=Card-title]': {
-            transform: 'translateY(0)',
-            height: 'auto'
-          },
-
-          '[class*=contentWrap]': {
-            transform: 'translateY(calc(var(--grid-gap) * -1.75))',
-            height: 'auto'
-          },
-
-          '[class*=actionsWrap]': {
-            transform: 'translateY(0)',
-            height: 'auto'
+          ':is([class*=contentWrap], [class*=actionsWrap])': {
+            '& > *': {
+              maxHeight: '100%',
+              transform: 'scaleY(1)'
+            }
           }
         }
       }
@@ -479,8 +499,14 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       [theme.breakpoints.up('sm')]: {
         'overflow': 'hidden',
 
+        '[class*=cardWrap]': {
+          justifyContent: 'flex-end',
+          height: '100%'
+        },
+
         '[class*=Card-cardMedia]': {
           'width': '100%',
+          'position': 'absolute',
 
           '& > *': {
             width: '100%',
@@ -489,40 +515,48 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           }
         },
 
-        '[class*=Card-title]': {
-          transform: 'translateY(calc(-100% - calc(var(--grid-gap) * 1.75)))'
-        },
-
         ':is([class*=contentWrap], [class*=actionsWrap])': {
-          transition: 'inherit',
-          position: 'absolute',
-          bottom: 0,
-          transform: 'translateY(100%)',
-          width: '100%',
-          zIndex: 20,
-          height: '100%',
-          boxSizing: 'border-box'
+          'padding': '0 var(--grid-gap-half)',
+          'flex': 0,
+          'width': '100%',
+          'zIndex': 20,
+          'boxSizing': 'border-box',
+
+          '& > *': {
+            overflow: 'hidden',
+            maxHeight: 0,
+            transition: 'transform .25s linear',
+            willChange: 'transform, max-height',
+            transformOrigin: 'bottom',
+            transform: 'scaleY(0)'
+          },
+
+          '[class*=Card-title]': {
+            maxHeight: 'initial',
+            transform: 'scaleY(1)'
+          }
         },
 
-        ':is([class*=overline], [class*=subtitle], [class*=body], [class*=actionsWrap])': {
-          overflow: 'hidden',
-          transition: 'inherit'
+        '[class*=bodyWrap]': {
+          paddingBottom: 0
+        },
+
+        '[class*=contentWrap]': {
+          '& > *:last-child': {
+            paddingBottom: 'var(--grid-gap-quarter)'
+          }
+        },
+
+        '[class*=actionsWrap]': {
+          paddingBottom: 'var(--grid-gap-half)'
         },
 
         '&:hover': {
-          '[class*=Card-title]': {
-            transform: 'translateY(0)',
-            height: 'auto'
-          },
-
-          '[class*=contentWrap]': {
-            transform: 'translateY(calc(var(--grid-gap) * -1.75))',
-            height: 'auto'
-          },
-
-          '[class*=actionsWrap]': {
-            transform: 'translateY(0)',
-            height: 'auto'
+          ':is([class*=contentWrap], [class*=actionsWrap])': {
+            '& > *': {
+              maxHeight: '100%',
+              transform: 'scaleY(1)'
+            }
           }
         }
       }

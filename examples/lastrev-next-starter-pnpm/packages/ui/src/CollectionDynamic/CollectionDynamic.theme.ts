@@ -1,7 +1,7 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
-import { CollectionDynamicVariants } from './CollectionDynamic.types';
+import { CollectionDynamicVariants, type CollectionDynamicOwnerState } from './CollectionDynamic.types';
 
 const defaultProps: ComponentsProps['CollectionDynamic'] = {};
 
@@ -49,6 +49,20 @@ export const layoutConfig: LayoutConfig = {
     xl: 5,
     xxl: 5
   }
+};
+
+export const generateGridStyles = (theme: Theme, ownerState: CollectionDynamicOwnerState) => {
+  const variantConfig = layoutConfig[ownerState.variant || CollectionDynamicVariants.default] || {};
+  let styles = { display: 'grid', gridTemplateColumns: 'repeat(1, minmax(0, 1fr))' };
+
+  Object.entries(variantConfig).forEach(([breakpoint, columns]) => {
+    styles = {
+      ...styles,
+      [theme.containerBreakpoints.up(breakpoint)]: { gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }
+    };
+  });
+
+  return styles;
 };
 
 const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
@@ -143,44 +157,9 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
   }),
 
   itemsGrid: ({ theme, ownerState }) => ({
-    'display': 'grid',
     'gap': 'inherit',
-    'gridTemplateColumns': 'repeat(1, minmax(0, 1fr))',
 
-    ...((ownerState?.variant === CollectionDynamicVariants.twoPerRow ||
-      ownerState?.variant === CollectionDynamicVariants.threePerRow) && {
-      [theme.containerBreakpoints.up('sm')]: {
-        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-      }
-    }),
-
-    ...(ownerState?.variant === CollectionDynamicVariants.threePerRow && {
-      [theme.containerBreakpoints.up('lg')]: {
-        gridTemplateColumns: 'repeat(3, minmax(0, 1fr))'
-      }
-    }),
-
-    ...(ownerState?.variant === CollectionDynamicVariants.fourPerRow && {
-      [theme.containerBreakpoints.up('sm')]: {
-        gridTemplateColumns: 'repeat(2, minmax(0, 1fr))'
-      },
-
-      [theme.containerBreakpoints.up('md')]: {
-        gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
-      }
-    }),
-
-    ...(ownerState?.variant === CollectionDynamicVariants.fivePerRow && {
-      gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-
-      [theme.containerBreakpoints.up('sm')]: {
-        gridTemplateColumns: 'repeat(4, minmax(0, 1fr))'
-      },
-
-      [theme.containerBreakpoints.up('md')]: {
-        gridTemplateColumns: 'repeat(5, minmax(0, 1fr))'
-      }
-    }),
+    ...(ownerState && generateGridStyles(theme, ownerState)),
 
     '& [class*=ais-Hit]': {
       display: 'contents'

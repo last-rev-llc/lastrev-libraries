@@ -52,8 +52,14 @@ export const mappers: Mappers = {
       overline: 'department',
       title: 'name',
       subtitle: 'jobTitle',
-      body: async (person: any, _args: any, ctx: ApolloContext) =>
-        createRichText(getLocalizedField(person.fields, 'promoSummary', ctx)),
+      body: async (person: any, _args: any, ctx: ApolloContext) => {
+        const promoSummary = getLocalizedField(person.fields, 'promoSummary', ctx);
+
+        if (promoSummary) {
+          return await createRichText(promoSummary);
+        }
+        return null;
+      },
 
       media: async (blog: any, _args: any, ctx: ApolloContext) => {
         const promoImage =

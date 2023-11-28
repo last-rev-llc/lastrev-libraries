@@ -48,8 +48,14 @@ export const mappers: Mappers = {
     },
 
     Card: {
-      body: async (page: any, _args: any, ctx: ApolloContext) =>
-        createRichText(getLocalizedField(page.fields, 'promoSummary', ctx)),
+      body: async (page: any, _args: any, ctx: ApolloContext) => {
+        const promoSummary = getLocalizedField(page.fields, 'promoSummary', ctx);
+
+        if (promoSummary) {
+          return await createRichText(promoSummary);
+        }
+        return null;
+      },
 
       media: async (page: any, _args: any, ctx: ApolloContext) => {
         const promoImage =
