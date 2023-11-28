@@ -25,7 +25,7 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
     ...imageProps
   } = props;
 
-  const quality = 90;
+  const quality = q || 90;
 
   const imgContent = React.useMemo(() => {
     const isSVG = src?.endsWith('.svg');
