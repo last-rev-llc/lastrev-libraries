@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   const path = join('/', (params.slug || ['/']).join('/'));
   console.log('generateMetadata', { path });
   const { data: pageData } = await client.Page({
-    path: path === 'index' ? '/' : path,
+    path: path === '/index' ? '/' : path,
     locale,
     preview: isPreview(),
     site
@@ -49,7 +49,7 @@ export default async function Page({ params }: Props) {
   console.log('Page', { path });
 
   const { data: pageData } = await client.Page({
-    path: path === 'index' ? '/' : path,
+    path: path === '/index' ? '/' : path,
     locale,
     preview: isPreview(),
     site
