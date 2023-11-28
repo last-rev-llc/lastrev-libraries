@@ -50,19 +50,14 @@ export const mappers = {
             return { id: content?.sys.id, preview: !!ctx.preview };
           }) ?? [];
 
-        console.log({ categoriesIds });
-
         const categories: any[] = (await ctx.loaders.entryLoader.loadMany(categoriesIds))
           .filter(Boolean)
           .map((category: any) => {
             return getLocalizedField(category?.fields, 'title', ctx);
           });
 
-        console.log({ categories });
-
         const card = await generateCard({
           id: blog.sys.id,
-          //overline: 'News',
           title,
           summary,
           link,
@@ -128,7 +123,6 @@ export const mappers = {
 
         const card = await generateCard({
           id: person.sys.id,
-          //overline: department,
           title,
           subtitle,
           summary,
@@ -197,7 +191,7 @@ export const mappers = {
 
         const title = getLocalizedField(page.fields, 'title', ctx);
         const body = getLocalizedField(page.fields, 'body', ctx);
-        // const contentBody = await parseRichTextField(getLocalizedField(page.fields, 'contents', ctx), ctx);
+
         const summary = getLocalizedField(page.fields, 'promoSummary', ctx);
         const promoImage = await getMedia(getLocalizedField(page.fields, 'promoImage', ctx), ctx);
         const contentType = getSysContentTypeName(page);
@@ -206,7 +200,6 @@ export const mappers = {
 
         const card = await generateCard({
           id: page.sys.id,
-          //overline: 'Page',
           title,
           summary,
           link,
@@ -214,8 +207,6 @@ export const mappers = {
           entries,
           ctx
         });
-
-        // console.log(contentBody);
 
         return [
           {
@@ -260,7 +251,6 @@ export const mappers = {
 
         const card = await generateCard({
           id: property.sys.id,
-          //overline: 'Case Study',
           title,
           summary,
           link,

@@ -195,7 +195,7 @@ const createRenderOptions = ({ links, renderNode, renderMark, renderText }: { li
 const RichText = (props: RichTextProps) => {
   const ownerState = { ...props };
 
-  const { body, variant, sidekickLookup, renderNode, renderMark, renderOptions } = props;
+  const { body, sidekickLookup, renderNode, renderMark, renderOptions } = props;
 
   return (
     <ErrorBoundary>
@@ -212,6 +212,7 @@ const RichText = (props: RichTextProps) => {
 const Root = styled(Box, {
   name: 'RichText',
   slot: 'Root',
+  shouldForwardProp: (prop: string) => prop !== 'sidekickLookup' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.root, styles.richTextContent]
 })<{ ownerState: RichTextOwnerState }>``;
 

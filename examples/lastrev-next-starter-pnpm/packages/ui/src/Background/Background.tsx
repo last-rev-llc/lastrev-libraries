@@ -8,14 +8,14 @@ import type { BackgroundProps, BackgroundOwnerState } from './Background.types';
 
 const Background = (props: BackgroundProps) => {
   const ownerState = { ...props };
-  const { background, backgroundColor } = props;
+  const { background, backgroundColor, testId, className } = props;
 
   if (!background && !backgroundColor) return null;
 
   return (
-    <Root ownerState={ownerState} className={props.className}>
+    <Root ownerState={ownerState} className={className}>
       {background ? (
-        <BackgroundContent {...background} key={background?.id} ownerState={ownerState} fill testId="Hero-background" />
+        <BackgroundContent {...background} key={background?.id} ownerState={ownerState} fill testId={testId} />
       ) : null}
     </Root>
   );
@@ -25,7 +25,7 @@ const Root = styled(Grid, {
   name: 'Background',
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
-})<{ ownerState: BackgroundOwnerState }>``;
+})<{ className?: string; ownerState: BackgroundOwnerState }>``;
 
 const BackgroundContent = styled(ContentModule, {
   name: 'Background',

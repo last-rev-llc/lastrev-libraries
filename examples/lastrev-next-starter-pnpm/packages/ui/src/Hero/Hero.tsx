@@ -35,13 +35,11 @@ const Hero = (props: HeroProps) => {
     hideBreadcrumbs
   } = props;
 
-  console.log(body);
-
   return (
     <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
       {header ? <ContentModule {...(header as any)} backgroundColor={backgroundColor} /> : null}
       <HeroBackground
-        background={{ ...background, priority: true }}
+        background={{ ...background, priority: true } as any}
         backgroundColor={backgroundColor}
         testId="Hero-background"
       />

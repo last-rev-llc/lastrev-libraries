@@ -20,7 +20,6 @@ const ToggleRefinement = ({ attribute, others }: ToggleRefinementProps) => {
   const { value, refine } = useToggleRefinement({ attribute, ...others });
 
   const handleCheckboxChange = () => {
-    console.log(value);
     refine({ isRefined: !value.isRefined });
   };
 

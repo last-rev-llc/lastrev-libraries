@@ -119,45 +119,60 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   return <RootLink {...sharedLinkProps}>{text}</RootLink>;
 });
 
+const shouldForwardProp = (prop: string) =>
+  prop !== 'variant' &&
+  prop !== 'icon' &&
+  prop !== 'iconPosition' &&
+  prop !== 'sidekickLookup' &&
+  prop !== 'passHref' &&
+  prop !== 'ownerState';
+
 const RootButton = styled(Button, {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootButton]
 })<ButtonProps & { ownerState: LinkOwnerState }>``;
 
 const RootIconButton = styled(IconButton, {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootIconButton]
 })<IconButtonProps & { ownerState: LinkOwnerState }>``;
 
 const RootLinkTextIcon = styled(MuiLink, {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootLink]
 })<NextLinkProps & MuiLinkProps & { ownerState: LinkOwnerState }>``;
 
 const RootLink = styled(MuiLink, {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootLink]
 })<MuiLinkProps & { ownerState: LinkOwnerState }>``;
 
 const RootLinkChildren = styled(NextLink, {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootLinkChildren]
 })<{ ownerState: LinkOwnerState }>``;
 
 const RootLinkIcon = styled(Box, {
   name: 'Link',
   slot: 'RootLinkIcon',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootLinkIcon]
 })<{ ownerState: LinkOwnerState }>``;
 
 const RootLinkText = styled(Box, {
   name: 'Link',
   slot: 'RootLinkText',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootLinkText]
 })<{ ownerState: LinkOwnerState }>``;
 

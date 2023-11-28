@@ -5,7 +5,7 @@ import MuiCard from '@mui/material/Card';
 import { default as MuiCardMedia } from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardActionArea from '@mui/material/CardActionArea';
+import CardActionArea, { type CardActionAreaProps } from '@mui/material/CardActionArea';
 import Typography from '@mui/material/Typography';
 import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
@@ -49,7 +49,7 @@ const Card = (props: CardProps) => {
     <ErrorBoundary>
       <Root ownerState={ownerState} data-testid="Card" {...sidekick(sidekickLookup)} className={className}>
         <CardWrap ownerState={ownerState}>
-          {!!link ? <CardLink component={CardActionArea} {...(link as any)} /> : null}
+          {!!link ? <CardActionArea component={CardLink} {...link} /> : null}
 
           {image || loading ? (
             // @ts-ignore: TODO
@@ -141,11 +141,7 @@ const Card = (props: CardProps) => {
               ownerState={ownerState}>
               {!loading ? (
                 actions?.map((link: any, index: number) => (
-                  <Action
-                    key={`card-${id}-link-${link?.id || index}`}
-                    {...(link as LinkProps)}
-                    ownerState={ownerState}
-                  />
+                  <Action key={`card-${id}-link-${link?.id || index}`} {...(link as any)} ownerState={ownerState} />
                 ))
               ) : (
                 <Skeleton variant="text" width="100%" />
@@ -170,11 +166,11 @@ const CardWrap = styled(MuiCard, {
   overridesResolver: (_, styles) => [styles.cardWrap]
 })<{ ownerState: CardOwnerState }>``;
 
-const CardLink = styled(CardActionArea, {
+const CardLink = styled(ContentModule, {
   name: 'Card',
   slot: 'CardLink',
   overridesResolver: (_, styles) => [styles.link]
-})<{ ownerState: CardOwnerState }>``;
+})<CardActionAreaProps & LinkProps & { ownerState: CardOwnerState }>``;
 
 const CardMedia = styled(MuiCardMedia, {
   name: 'Card',
@@ -191,8 +187,9 @@ const ActionsWrap = styled(CardActions, {
 const Action = styled(ContentModule, {
   name: 'Card',
   slot: 'CardAction',
+
   overridesResolver: (_, styles) => [styles.action]
-})<{ ownerState: CardOwnerState }>``;
+})<LinkProps & { ownerState: CardOwnerState }>``;
 
 const ContentWrap = styled(CardContent, {
   name: 'Card',
