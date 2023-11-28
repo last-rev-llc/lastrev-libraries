@@ -16,7 +16,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     containerType: 'inline-size',
     height: '100%',
 
-    ...(ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person
+    ...(ownerState?.variant === CardVariants.hover
       ? {
           [theme.containerBreakpoints.up('sm')]: {
             ...theme.mixins.applyColorSchemeOverlay({ ownerState, theme })
@@ -85,7 +85,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   media: ({ ownerState, theme }) => ({
     backgroundColor: 'inherit',
 
-    ...((ownerState?.variant === CardVariants.hover || ownerState?.variant === CardVariants.person) && {
+    ...(ownerState?.variant === CardVariants.hover && {
       '&::after': {
         backgroundColor: 'inherit',
         opacity: '.5'
@@ -474,11 +474,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           width: '100%',
           objectFit: 'cover',
           minHeight: 'inherit',
-          height: '100%',
-
-          [theme.breakpoints.up('md')]: {
-            filter: 'grayscale(1)'
-          }
+          height: '100%'
         },
 
         '&::after': {
@@ -494,72 +490,72 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
 
       '[class*=Card-overline], [class*=body]': {
         display: 'none'
-      },
-
-      [theme.breakpoints.up('sm')]: {
-        'overflow': 'hidden',
-
-        '[class*=cardWrap]': {
-          justifyContent: 'flex-end',
-          height: '100%'
-        },
-
-        '[class*=Card-cardMedia]': {
-          'width': '100%',
-          'position': 'absolute',
-
-          '& > *': {
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover'
-          }
-        },
-
-        ':is([class*=contentWrap], [class*=actionsWrap])': {
-          'padding': '0 var(--grid-gap-half)',
-          'flex': 0,
-          'width': '100%',
-          'zIndex': 20,
-          'boxSizing': 'border-box',
-
-          '& > *': {
-            overflow: 'hidden',
-            maxHeight: 0,
-            transition: 'transform .25s linear',
-            willChange: 'transform, max-height',
-            transformOrigin: 'bottom',
-            transform: 'scaleY(0)'
-          },
-
-          ':is([class*=Card-title], [class*=Card-subtitle])': {
-            maxHeight: 'initial',
-            transform: 'scaleY(1)'
-          }
-        },
-
-        '[class*=bodyWrap]': {
-          paddingBottom: 0
-        },
-
-        '[class*=contentWrap]': {
-          '& > *:last-child': {
-            paddingBottom: 'var(--grid-gap-quarter)'
-          }
-        },
-
-        '[class*=actionsWrap]': {
-          paddingBottom: 'var(--grid-gap-half)'
-        },
-
-        '&:hover': {
-          ':is([class*=contentWrap], [class*=actionsWrap])': {
-            '& > *': {
-              maxHeight: '100%',
-              transform: 'scaleY(1)'
-            }
-          }
-        }
       }
+
+      // [theme.breakpoints.up('sm')]: {
+      //   'overflow': 'hidden',
+
+      //   '[class*=cardWrap]': {
+      //     justifyContent: 'flex-end',
+      //     height: '100%'
+      //   },
+
+      //   '[class*=Card-cardMedia]': {
+      //     'width': '100%',
+      //     'position': 'absolute',
+
+      //     '& > *': {
+      //       width: '100%',
+      //       height: '100%',
+      //       objectFit: 'cover'
+      //     }
+      //   },
+
+      //   ':is([class*=contentWrap], [class*=actionsWrap])': {
+      //     'padding': '0 var(--grid-gap-half)',
+      //     'flex': 0,
+      //     'width': '100%',
+      //     'zIndex': 20,
+      //     'boxSizing': 'border-box',
+
+      //     '& > *': {
+      //       overflow: 'hidden',
+      //       maxHeight: 0,
+      //       transition: 'transform .25s linear',
+      //       willChange: 'transform, max-height',
+      //       transformOrigin: 'bottom',
+      //       transform: 'scaleY(0)'
+      //     },
+
+      //     ':is([class*=Card-title], [class*=Card-subtitle])': {
+      //       maxHeight: 'initial',
+      //       transform: 'scaleY(1)'
+      //     }
+      //   },
+
+      //   '[class*=bodyWrap]': {
+      //     paddingBottom: 0
+      //   },
+
+      //   '[class*=contentWrap]': {
+      //     '& > *:last-child': {
+      //       paddingBottom: 'var(--grid-gap-quarter)'
+      //     }
+      //   },
+
+      //   '[class*=actionsWrap]': {
+      //     paddingBottom: 'var(--grid-gap-half)'
+      //   },
+
+      //   '&:hover': {
+      //     ':is([class*=contentWrap], [class*=actionsWrap])': {
+      //       '& > *': {
+      //         maxHeight: '100%',
+      //         transform: 'scaleY(1)'
+      //       }
+      //     }
+      //   }
+      // }
     }
   }
 ];
