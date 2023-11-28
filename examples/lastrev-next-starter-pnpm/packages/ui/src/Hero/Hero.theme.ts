@@ -64,16 +64,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   bottomContentWrap: ({ theme }) => ({
     '& > *': {
       [theme.containerBreakpoints.up('sm')]: {
-        margin: 'calc(2 * var(--section-padding)) 0 0 !important',
+        // margin: 'calc(2 * var(--section-padding)) 0 0 !important',
         padding: '0 !important'
       }
     }
   }),
 
-  contentOuterGrid: ({ ownerState }) => ({
-    ...(!!ownerState?.background && {
-      margin: `var(--section-padding) 0 0`
-    })
+  contentOuterGrid: ({ theme, ownerState }) => ({
+    overflow: 'hidden'
   }),
 
   title: ({ theme, ownerState }) => ({
@@ -81,10 +79,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
       ...theme.typography.h2
     })
   }),
-
-  // overline: {},
-
-  // media: {},
 
   overline: ({ theme }) => ({
     [theme.containerBreakpoints.down('md')]: {
@@ -95,10 +89,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   content: ({ theme }) => ({
     'display': 'flex',
     'flexDirection': 'column',
-    'padding': 'var(--section-padding) 0',
+    'minHeight': '10vh',
+    'justifyContent': 'center',
+    'margin': 'var(--section-padding) 0',
     'gap': 'var(--grid-gap)',
 
     [theme.containerBreakpoints.up('md')]: {
+      minHeight: '30vh',
       padding: 0,
       gap: 0
     },
@@ -107,10 +104,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
       marginBottom: 0
     }
   }),
-
-  // subtitle: {},
-
-  // body: {},
 
   breadcrumbsWrap: ({ theme }) => ({
     gridColumnStart: 'content-start',
@@ -135,7 +128,19 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    boxShadow: theme.shadows['L']
+    boxShadow: theme.shadows['L'],
+    maxHeight: 'inherit',
+
+    picture: {
+      display: 'flex',
+      height: '100%',
+      width: '100%',
+      maxHeight: '30vh'
+    },
+
+    img: {
+      objectFit: 'cover'
+    }
   }),
 
   actionsWrap: ({ theme }) => ({
@@ -148,8 +153,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
       flexDirection: 'row'
     }
   })
-
-  // action: {}
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
