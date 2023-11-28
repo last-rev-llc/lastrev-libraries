@@ -27,23 +27,35 @@ export const layoutConfig: LayoutConfig = {
   },
   [CarouselVariants.twoPerRow]: {
     xs: 1,
-    sm: 2
+    sm: 2,
+    md: 2,
+    lg: 2,
+    xl: 2,
+    xxl: 2
   },
   [CarouselVariants.threePerRow]: {
     xs: 1,
     sm: 2,
-    lg: 3
+    md: 2,
+    lg: 3,
+    xl: 3,
+    xxl: 3
   },
   [CarouselVariants.fourPerRow]: {
     xs: 1,
     sm: 2,
-    md: 4
+    md: 4,
+    lg: 4,
+    xl: 4,
+    xxl: 5
   },
   [CarouselVariants.fivePerRow]: {
     xs: 1,
     sm: 2,
     md: 4,
-    lg: 5
+    lg: 5,
+    xl: 5,
+    xxl: 5
   }
 };
 
