@@ -10,32 +10,33 @@ import { siteAddressResolver } from './utils/siteAddressResolver';
 import { siteEmailResolver } from './utils/siteEmailResolver';
 import { sitePhoneResolver } from './utils/sitePhoneResolver';
 import { pathResolver } from './utils/pathResolver';
+import { createPath } from './utils/createPath';
 
 const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem', 'Page', 'Person', 'Blog', 'PageProperty'];
 
-// const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
-//   const href = getLocalizedField(link.fields, 'href', ctx);
-//   const manualUrl = getLocalizedField(link.fields, 'manualUrl', ctx);
-//   if (href || manualUrl) return createPath(href ?? manualUrl);
+const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
+  const href = getLocalizedField(link.fields, 'href', ctx);
+  const manualUrl = getLocalizedField(link.fields, 'manualUrl', ctx);
+  if (href || manualUrl) return createPath(href ?? manualUrl);
 
-//   const contentRef = getLocalizedField(link.fields, 'linkedContent', ctx);
-//   if (contentRef) {
-//     const content = await ctx.loaders.entryLoader.load({ id: contentRef.sys.id, preview: !!ctx.preview });
-//     if (content) {
-//       if (content?.sys?.contentType?.sys?.id === 'media') {
-//         const assetRef = getLocalizedField(content.fields, 'asset', ctx);
-//         const asset = await ctx.loaders.assetLoader.load({ id: assetRef.sys.id, preview: !!ctx.preview });
-//         if (asset) {
-//           return `https:${getLocalizedField(asset.fields, 'file', ctx)?.url}`;
-//         }
-//       }
-//       const slug = getLocalizedField(content?.fields, 'slug', ctx);
+  const contentRef = getLocalizedField(link.fields, 'linkedContent', ctx);
+  if (contentRef) {
+    const content = await ctx.loaders.entryLoader.load({ id: contentRef.sys.id, preview: !!ctx.preview });
+    if (content) {
+      if (content?.sys?.contentType?.sys?.id === 'media') {
+        const assetRef = getLocalizedField(content.fields, 'asset', ctx);
+        const asset = await ctx.loaders.assetLoader.load({ id: assetRef.sys.id, preview: !!ctx.preview });
+        if (asset) {
+          return `https:${getLocalizedField(asset.fields, 'file', ctx)?.url}`;
+        }
+      }
+      const slug = getLocalizedField(content?.fields, 'slug', ctx);
 
-//       if (slug) return createPath(getLocalizedField(content?.fields, 'slug', ctx));
-//     }
-//   }
-//   return '#';
-// };
+      if (slug) return createPath(getLocalizedField(content?.fields, 'slug', ctx));
+    }
+  }
+  return '#';
+};
 
 export const typeDefs = gql`
   extend type NavigationItem {
@@ -55,7 +56,7 @@ export const mappers = {
   NavigationItem: {
     NavigationItem: {
       variant: defaultResolver('variant'),
-      href: pathResolver,
+      href: hrefUrlResolver,
       text: async (navItem: any, args: any, ctx: ApolloContext) => {
         const variantFn = defaultResolver('variant');
         const variant = variantFn(navItem, args, ctx);
