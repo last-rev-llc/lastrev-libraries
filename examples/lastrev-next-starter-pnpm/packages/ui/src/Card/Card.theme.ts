@@ -38,15 +38,33 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     color: 'inherit',
 
     ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
-      [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '56.25cqi' }
+      ...(ownerState?.variant === CardVariants.media
+        ? {
+            [theme.breakpoints.up('md')]: { maxHeight: '56.25cqi' }
+          }
+        : {
+            [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '56.25cqi' }
+          })
     }),
 
     ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
-      [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '177.78cqi' }
+      ...(ownerState?.variant === CardVariants.media
+        ? {
+            [theme.breakpoints.up('md')]: { minHeight: '177.78cqi' }
+          }
+        : {
+            [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '177.78cqi' }
+          })
     }),
 
     ...(ownerState?.aspectRatio === CardAspectRatios.square && {
-      [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '100cqi' }
+      ...(ownerState?.variant === CardVariants.media
+        ? {
+            [theme.breakpoints.up('md')]: { maxHeight: '100cqi' }
+          }
+        : {
+            [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '100cqi' }
+          })
     })
   }),
 
@@ -57,34 +75,33 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
       '&::after': {
         backgroundColor: 'inherit',
         opacity: '.5'
-      },
-
-      'picture': {
-        display: 'flex',
-        height: '100%',
-        width: '100%',
-        aspectRatio: '16/9',
-
-        ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
-          aspectRatio: '16/9'
-        }),
-
-        ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
-          aspectRatio: '1/1',
-          [theme.breakpoints.up('md')]: {
-            aspectRatio: '9/16'
-          }
-        }),
-
-        ...(ownerState?.aspectRatio === CardAspectRatios.square && {
-          [theme.breakpoints.up('md')]: { aspectRatio: '1/1' }
-        })
-      },
-
-      'img': {
-        objectFit: 'cover'
       }
-    })
+    }),
+    picture: {
+      display: 'flex',
+      height: '100%',
+      width: '100%',
+      aspectRatio: '16/9',
+
+      ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
+        aspectRatio: '16/9'
+      }),
+
+      ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
+        aspectRatio: '1/1',
+        [theme.breakpoints.up('md')]: {
+          aspectRatio: '9/16'
+        }
+      }),
+
+      ...(ownerState?.aspectRatio === CardAspectRatios.square && {
+        [theme.breakpoints.up('md')]: { aspectRatio: '1/1' }
+      })
+    },
+
+    img: {
+      objectFit: 'cover'
+    }
   }),
 
   contentWrap: ({ theme }) => ({

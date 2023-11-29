@@ -21,7 +21,7 @@ const Property = (props: PropertyProps) => {
     id,
     assetType,
     address,
-    squareFootage,
+    size,
     imageCarousel,
     header,
     footer,
@@ -86,10 +86,10 @@ const Property = (props: PropertyProps) => {
                   </BodyListItem>
                 )}
 
-                {!!squareFootage && (
+                {!!size && (
                   <BodyListItem ownerState={ownerState}>
                     <ListLabel>Size:&nbsp;</ListLabel>
-                    <ListValue>{!!squareFootage ? `${squareFootage} SF` : 'N/A'}</ListValue>
+                    <ListValue>{!!size ? size : 'N/A'}</ListValue>
                   </BodyListItem>
                 )}
 

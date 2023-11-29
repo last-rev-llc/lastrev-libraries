@@ -11,6 +11,7 @@ import { createType } from './utils/createType';
 import { resolveLocalizedField } from './utils/resolveLocalizedField';
 import { featuredAssetsResolver } from './utils/featuredAssetsResolver';
 import { Asset } from 'contentful';
+import { formatDate } from './utils/formatDate';
 
 export const typeDefs = gql`
   extend type PageProperty {
@@ -58,6 +59,14 @@ export const mappers: Mappers = {
           itemsAspectRatio: 'horizontal',
           backgroundColor: 'white'
         });
+      },
+
+      dateAcquired: async (property: any, _args: any, ctx: ApolloContext) => {
+        return formatDate(getLocalizedField(property.fields, 'dateAcquired', ctx));
+      },
+
+      dateSold: async (property: any, _args: any, ctx: ApolloContext) => {
+        return formatDate(getLocalizedField(property.fields, 'dateSold', ctx));
       },
 
       featuredAssets: async (property: any, args: any, ctx: ApolloContext) => {
