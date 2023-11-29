@@ -92,7 +92,7 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
             })
           }
         }
-      : { ...theme.mixins.applyColorScheme({ ownerState, theme }), padding: 'var(--section-padding) 0' })
+      : { ...theme.mixins.applyColorScheme({ ownerState, theme }) })
   }),
 
   // contentGrid: {},

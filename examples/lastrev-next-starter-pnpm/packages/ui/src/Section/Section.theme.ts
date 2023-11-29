@@ -32,7 +32,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
             })
           }
         }
-      : { ...theme.mixins.applyColorScheme({ ownerState, theme }), padding: 'var(--section-padding) 0' })
+      : { ...theme.mixins.applyColorScheme({ ownerState, theme }) })
   }),
 
   introText: { gridColumn: 'content-start / content-end' },

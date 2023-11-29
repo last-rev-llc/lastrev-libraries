@@ -105,11 +105,16 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   }),
 
   contentWrap: ({ theme }) => ({
-    flex: 1,
-    padding: 'var(--grid-gap-half) 0 0',
+    'flex': 1,
+    'padding': 'var(--grid-gap-half) 0 0',
 
     [theme.containerBreakpoints.up('md')]: {
       padding: 'var(--grid-gap)'
+    },
+
+    '& > *:last-child': {
+      paddingBottom: 0,
+      marginBottom: 0
     }
   }),
 
