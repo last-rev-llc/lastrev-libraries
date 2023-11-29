@@ -286,7 +286,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         },
 
         ':is([class*=contentWrap], [class*=actionsWrap])': {
-          'padding': '0 var(--grid-gap-half)',
+          'padding': '0 var(--grid-gap)',
           'flex': 0,
           'width': '100%',
           'zIndex': 20,

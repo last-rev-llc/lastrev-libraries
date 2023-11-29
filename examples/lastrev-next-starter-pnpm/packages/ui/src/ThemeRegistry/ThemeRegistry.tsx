@@ -45,8 +45,30 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
                 --grid-gap: var(--grid-margin-xs);
                 --grid-gap-double: calc(var(--grid-gap) * 2);
-                --grid-gap-half: calc(var(--grid-gap) / 2);
-                --grid-gap-quarter: calc(var(--grid-gap) / 4);
+                --grid-gap-half: calc(var(--grid-gap) / 1);
+                --grid-gap-quarter: calc(var(--grid-gap) / 2);
+
+                ${theme.breakpoints.up('sm')} {
+                  --grid-gap: var(--grid-gap-sm);
+                  --grid-margin: var(--grid-margin-sm);
+                }
+
+                ${theme.breakpoints.up('md')} {
+                  --grid-gap: var(--grid-gap-md);
+                  --grid-margin: var(--grid-margin-md);
+                  --grid-gap-half: calc(var(--grid-gap) / 2);
+                  --grid-gap-quarter: calc(var(--grid-gap) / 4);
+                }
+
+                ${theme.breakpoints.up('lg')} {
+                  --grid-gap: var(--grid-gap-lg);
+                  --grid-margin: var(--grid-margin-lg);
+                }
+
+                ${theme.breakpoints.up('xl')} {
+                  --grid-gap: var(--grid-gap-xl);
+                  --grid-margin: var(--grid-margin-xl);
+                }
 
                 --section-padding: calc(var(--grid-gap) * 4);
 
@@ -166,26 +188,6 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               }
 
               body * {
-                ${theme.breakpoints.up('sm')} {
-                  --grid-gap: var(--grid-gap-sm);
-                  --grid-margin: var(--grid-margin-sm);
-                }
-
-                ${theme.breakpoints.up('md')} {
-                  --grid-gap: var(--grid-gap-md);
-                  --grid-margin: var(--grid-margin-md);
-                }
-
-                ${theme.breakpoints.up('lg')} {
-                  --grid-gap: var(--grid-gap-lg);
-                  --grid-margin: var(--grid-margin-lg);
-                }
-
-                ${theme.breakpoints.up('xl')} {
-                  --grid-gap: var(--grid-gap-xl);
-                  --grid-margin: var(--grid-margin-xl);
-                }
-
                 ${theme.containerBreakpoints.down('xl')} {
                   --h1-font-size: ${(h1FontSizeBase / 8) * 8}rem;
                   --h2-font-size: ${(h2FontSizeBase / 8) * 8}rem;
@@ -220,9 +222,6 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                   --h1-font-size: ${(h1FontSizeBase / 8) * 4}rem;
                   --h2-font-size: ${(h2FontSizeBase / 8) * 4}rem;
                   --h3-font-size: ${(h3FontSizeBase / 8) * 5}rem;
-
-                  --grid-gap-half: calc(var(--grid-gap) / 1);
-                  --grid-gap-quarter: calc(var(--grid-gap) / 2);
                 }
               }
             `}
