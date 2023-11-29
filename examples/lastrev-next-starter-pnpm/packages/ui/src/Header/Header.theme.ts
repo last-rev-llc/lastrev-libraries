@@ -14,10 +14,21 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'zIndex': 100,
     'gap': 0,
 
-    '--grid-margin-sm': '0px',
-    '--grid-margin-md': '0px',
-    '--grid-margin-lg': '0px',
-    '--grid-margin-xl': '0px',
+    [theme.breakpoints.up('sm')]: {
+      '--grid-margin': 'calc(var(--grid-margin-sm) / 2)'
+    },
+
+    [theme.breakpoints.up('md')]: {
+      '--grid-margin': 'calc(var(--grid-margin-md) / 2)'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      '--grid-margin': 'calc(var(--grid-margin-lg) / 2)'
+    },
+
+    [theme.breakpoints.up('xl')]: {
+      '--grid-margin': 'calc(var(--grid-margin-xl) / 2)'
+    },
 
     '& *': {
       whiteSpace: 'nowrap'
@@ -36,12 +47,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     height: 'auto',
     display: 'block',
 
-    [theme.breakpoints.up(menuMobileBreakpoint)]: {
+    [theme.breakpoints.up('lg')]: {
       gridRow: '2',
-      gridColumn: 'content-start / span 2'
+      gridColumn: 'content-start / span 3'
     },
 
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up('xl')]: {
       gridColumn: 'content-start / span 3'
     }
   }),
@@ -118,12 +129,17 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       ...theme.typography.navLink
     },
 
-    [theme.breakpoints.up(menuMobileBreakpoint)]: {
+    [theme.breakpoints.up('md')]: {
       justifyContent: 'flex-start',
       height: 'auto',
       overflow: 'unset',
       maxHeight: '100%',
       gridRow: 2,
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-end'
+    },
+
+    [theme.breakpoints.up('mlgd')]: {
       gridColumnStart: 'three-start',
       gridColumnEnd: 'content-end'
     }
@@ -171,7 +187,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     flexDirection: 'column',
     width: '100%',
     margin: 'auto',
-    gap: 'var(--grid-gap-half)',
+    gap: 'var(--grid-gap-quarter)',
     textTransform: 'uppercase',
     fontWeight: 700,
 
