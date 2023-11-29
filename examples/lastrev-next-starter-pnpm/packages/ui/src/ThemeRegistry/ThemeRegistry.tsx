@@ -214,7 +214,6 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                   --h1-font-size: ${(h1FontSizeBase / 8) * 6}rem;
                   --h2-font-size: ${(h2FontSizeBase / 8) * 6}rem;
                   --h3-font-size: ${(h3FontSizeBase / 8) * 6}rem;
-                  --h5-font-size: ${(h5FontSizeBase / 8) * 6}rem;
                 }
 
                 ${theme.containerBreakpoints.down('sm')} {

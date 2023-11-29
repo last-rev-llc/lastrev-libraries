@@ -70,6 +70,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
         }),
 
         ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
+          aspectRatio: '1/1',
           [theme.breakpoints.up('md')]: {
             aspectRatio: '9/16'
           }
@@ -438,7 +439,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       '[class*=Card-cardMedia]': {
         'width': '100%',
         'height': '100%',
-        'aspectRatio': '9/16',
         'position': 'relative',
 
         '& :is(img, picture)': {

@@ -34,7 +34,8 @@ const Card = (props: CardProps) => {
     gridLayout,
     loading,
     layoutConfig,
-    sidekickLookup
+    sidekickLookup,
+    aspectRatio
   } = props;
 
   const ownerState = {
@@ -59,6 +60,7 @@ const Card = (props: CardProps) => {
                   __typename="Media"
                   {...sidekick(sidekickLookup, 'media')}
                   {...image}
+                  aspectRatio={aspectRatio}
                   columns={layoutConfig[gridLayout]}
                   data-testid="Card-media"
                 />

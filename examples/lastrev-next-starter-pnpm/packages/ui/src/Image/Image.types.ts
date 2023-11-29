@@ -27,6 +27,7 @@ export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'heig
   q?: number;
   unoptimized?: boolean;
   svgContent?: string;
+  aspectRatio?: string;
 }
 
 //TODO: Use styled for Image

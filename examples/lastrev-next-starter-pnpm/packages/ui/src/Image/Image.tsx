@@ -22,6 +22,7 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
     height,
     alt,
     columns,
+    aspectRatio,
     ...imageProps
   } = props;
 
@@ -44,7 +45,11 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
           const columnsValue = columns[breakpoint];
 
           if (!columnsValue) continue;
-          const widthValue = breakpointWidth / columnsValue;
+          let widthValue = breakpointWidth / columnsValue;
+
+          if (aspectRatio === 'vertical' && breakpointWidth > 800) {
+            widthValue = (widthValue * 16) / 9;
+          }
 
           if (widthValue > maxWidth) {
             maxWidth = widthValue;
@@ -62,7 +67,11 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
         if (breakpointWidth && columns?.hasOwnProperty(breakpoint)) {
           const columnsValue = columns[breakpoint];
 
-          const widthValue = breakpointWidth / columnsValue;
+          let widthValue = breakpointWidth / columnsValue;
+
+          if (aspectRatio === 'vertical' && breakpointWidth > 800) {
+            widthValue = (widthValue * 16) / 9;
+          }
 
           if (widthValue <= maxWidth && imageWidth > widthValue) {
             const source = `${src}?${imageWidth > imageHeight ? 'h' : 'w'}=${Math.round(widthValue)}&q=${quality}`;
