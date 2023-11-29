@@ -11,9 +11,9 @@ function SearchIcon(props: SvgIconProps) {
           d="M16.056,10.278A5.778,5.778,0,1,1,10.278,4.5a5.778,5.778,0,0,1,5.778,5.778Z"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
         <path
           id="Path_221"
@@ -22,9 +22,9 @@ function SearchIcon(props: SvgIconProps) {
           transform="translate(-10.617 -10.617)"
           fill="none"
           stroke="#fff"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="1.5"
         />
       </g>
     </SvgIcon>
