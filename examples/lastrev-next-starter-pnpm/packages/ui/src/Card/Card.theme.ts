@@ -393,29 +393,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       }
     }
   },
-  {
-    props: {
-      variant: CardVariants.logo
-    },
-    style: {
-      '[class*=contentWrap]': {
-        textAlign: 'center'
-      },
-
-      '[class*=cardMedia]': {
-        'maxHeight': 96,
-        'marginLeft': 'auto',
-        'marginRight': 'auto',
-        'paddingTop': 'var(--grid-gap)',
-
-        '& > :is(img, svg, picture > img)': {
-          objectFit: 'contain',
-          width: '100%',
-          height: '100%'
-        }
-      }
-    }
-  },
 
   {
     props: {

@@ -6,7 +6,6 @@ export enum CardVariants {
   default = 'default',
   hover = 'hover',
   icon = 'icon',
-  logo = 'logo',
   media = 'media',
   person = 'person',
   news = 'news',
