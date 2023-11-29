@@ -14,6 +14,7 @@ export const mappers: Mappers = {
   PageAsset: {
     Card: {
       title: 'name',
+
       body: async (propertyAsset: any, _args: any, ctx: ApolloContext) =>
         createRichText(getLocalizedField(propertyAsset.fields, 'promoSummary', ctx)),
 

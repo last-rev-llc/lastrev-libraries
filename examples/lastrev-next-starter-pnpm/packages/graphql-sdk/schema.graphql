@@ -502,9 +502,9 @@ type PageAsset implements Content {
   assetType: String
   body: RichText
   id: String
+  location: String
   mainImage: Media
   name: String
-  ncreifRegion: String
   promoImage: Media
   promoSummary: String
   sector: String
@@ -559,6 +559,19 @@ type PageProperty implements Content {
   theme: [Theme]
 }
 
+type PageResource {
+  author: Person
+  breadcrumbs: [Link]
+  contents: [Content]
+  footer: Footer
+  header: Header
+  hero: Hero
+  jsonLd: JSON
+  path: String
+  subNavigation: NavigationItem
+  variant: String
+}
+
 type Person implements Content {
   animation: JSON
   body: RichText
@@ -588,6 +601,11 @@ type Person implements Content {
   theme: [Theme]
 }
 
+type PricingPlan {
+  actions: [Link]
+  bodyRTE: RichText
+}
+
 type Query {
   _service: _Service!
   availableLocales: Locales
@@ -604,6 +622,7 @@ type Query {
 }
 
 type Quote {
+  actions: [Link]
   image: Media
   logo: Media
 }
