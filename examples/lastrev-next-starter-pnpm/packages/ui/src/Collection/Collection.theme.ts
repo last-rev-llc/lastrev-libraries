@@ -44,7 +44,7 @@ export const layoutConfig: LayoutConfig = {
   [CollectionVariants.fivePerRow]: {
     xs: 1,
     sm: 2,
-    md: 4,
+    md: 3,
     lg: 5,
     xl: 5,
     xxl: 5
