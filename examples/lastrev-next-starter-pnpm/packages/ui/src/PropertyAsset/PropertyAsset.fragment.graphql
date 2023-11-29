@@ -1,10 +1,10 @@
 fragment PropertyAsset_BaseFragment on PageAsset {
   ...Content_BaseFragment
   name
-   location
+  location
   strategy
   sector
-  promoImage {
+
   promoImage {
     ...Media_BaseFragment
   }
