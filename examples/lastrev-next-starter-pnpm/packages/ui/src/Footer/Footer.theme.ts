@@ -17,7 +17,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   contentOuterGrid: {
     '& a': {
-      color: 'inherit',
       alignItems: 'baseline'
     }
   },
