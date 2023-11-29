@@ -18,7 +18,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
 
     ...(ownerState?.variant === CardVariants.hover
       ? {
-          [theme.containerBreakpoints.up('sm')]: {
+          [theme.containerBreakpoints.up('md')]: {
             ...theme.mixins.applyColorSchemeOverlay({ ownerState, theme })
           }
         }
@@ -28,57 +28,25 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   }),
 
   cardWrap: ({ theme, ownerState }) => ({
-    'display': 'flex',
-    'flexDirection': 'column',
-    'height': '100%',
-    'boxShadow': 'initial',
-    'borderRadius': 0,
-    'backgroundColor': 'inherit',
-    'position': 'relative',
-    'transition': 'maxHeight 0.25s ease-in-out',
-    'willChange': 'transform',
-    'color': 'inherit',
-
-    '&:hover': {
-      transform: 'scale(1)'
-    },
-
-    '.swiper-grid &': {
-      'transform': 'translateZ(0) scale(1)',
-
-      '&:hover': {
-        transform: 'scale(1.05)'
-      }
-    },
-
-    ...(ownerState?.variant === CardVariants.media &&
-      ownerState?.aspectRatio && {
-        '[class*=cardMedia] :is(img, picture)': {
-          objectFit: 'cover',
-          ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
-            aspectRatio: '16/9'
-          }),
-
-          ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
-            aspectRatio: '9/16'
-          }),
-
-          ...(ownerState?.aspectRatio === CardAspectRatios.square && {
-            aspectRatio: '1/1'
-          })
-        }
-      }),
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    boxShadow: 'initial',
+    borderRadius: 0,
+    backgroundColor: 'inherit',
+    position: 'relative',
+    color: 'inherit',
 
     ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
-      [theme.breakpoints.up('md')]: { minHeight: '56.25cqi' }
+      [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '56.25cqi' }
     }),
 
     ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
-      [theme.breakpoints.up('md')]: { minHeight: '177.78cqi' }
+      [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '177.78cqi' }
     }),
 
     ...(ownerState?.aspectRatio === CardAspectRatios.square && {
-      minHeight: '100cqi'
+      [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '100cqi' }
     })
   }),
 
@@ -91,19 +59,30 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
         opacity: '.5'
       },
 
-      'maxHeight': '100cqi',
+      'picture': {
+        display: 'flex',
+        height: '100%',
+        width: '100%',
+        aspectRatio: '16/9',
 
-      ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
-        [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '56.25cqi' }
-      }),
+        ...(ownerState?.aspectRatio === CardAspectRatios.horizontal && {
+          aspectRatio: '16/9'
+        }),
 
-      ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
-        [theme.breakpoints.up('md')]: { maxHeight: 'initial', minHeight: '177.78cqi' }
-      }),
+        ...(ownerState?.aspectRatio === CardAspectRatios.vertical && {
+          [theme.breakpoints.up('md')]: {
+            aspectRatio: '9/16'
+          }
+        }),
 
-      ...(ownerState?.aspectRatio === CardAspectRatios.square && {
-        minHeight: '100cqi'
-      })
+        ...(ownerState?.aspectRatio === CardAspectRatios.square && {
+          [theme.breakpoints.up('md')]: { aspectRatio: '1/1' }
+        })
+      },
+
+      'img': {
+        objectFit: 'cover'
+      }
     })
   }),
 
@@ -111,12 +90,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
     flex: 1,
     padding: 'var(--grid-gap-half) 0 0',
 
-    [theme.containerBreakpoints.up('sm')]: {
+    [theme.containerBreakpoints.up('md')]: {
       padding: 'var(--grid-gap)'
     }
   }),
-
-  title: {},
 
   bodyWrap: ({ theme }) => ({
     'paddingBottom': 'var(--grid-gap)',
@@ -128,7 +105,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Card'] = {
   actionsWrap: ({ theme }) => ({
     padding: '0 0 var(--grid-gap)',
 
-    [theme.containerBreakpoints.up('sm')]: {
+    [theme.containerBreakpoints.up('md')]: {
       padding: '0 var(--grid-gap) var(--grid-gap)'
     },
 
@@ -277,17 +254,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
     },
     style: {
       '[class*=Card-cardMedia]': {
-        'width': '100%',
-        'height': '100%',
-        'position': 'relative',
-
-        '& :is(img, picture)': {
-          width: '100%',
-          objectFit: 'cover',
-          minHeight: 'inherit',
-          height: '100%'
-        },
-
         '&::after': {
           content: '""',
           position: 'absolute',
@@ -299,7 +265,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
         }
       },
 
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         'overflow': 'hidden',
 
         '[class*=cardWrap]': {
@@ -315,12 +281,6 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
             width: '100%',
             height: '100%',
             objectFit: 'cover'
-          }
-        },
-
-        '[class*=contentWrap]': {
-          '& > *:last-child': {
-            paddingBottom: 'var(--grid-gap-quarter)'
           }
         },
 
@@ -354,11 +314,23 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           paddingBottom: 'var(--grid-gap-half)'
         },
 
+        '&:not(:hover)': {
+          '[class*=Card-title]': {
+            marginBottom: 0
+          }
+        },
+
         '&:hover': {
           ':is([class*=contentWrap], [class*=actionsWrap])': {
             '& > *': {
               maxHeight: '100%',
               transform: 'scaleY(1)'
+            }
+          },
+
+          '[class*=contentWrap]': {
+            '& > *:last-child': {
+              paddingBottom: 'var(--grid-gap-quarter)'
             }
           }
         }

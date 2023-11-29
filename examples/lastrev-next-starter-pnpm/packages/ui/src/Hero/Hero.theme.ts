@@ -131,7 +131,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     justifyContent: 'center'
   },
 
-  mediaWrap: ({ theme }) => ({
+  mediaWrap: ({ ownerState, theme }) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -145,13 +145,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
       width: '100%',
 
       [theme.containerBreakpoints.down('md')]: {
-        // minHeight: '30vh',
         maxHeight: '30vh'
       }
     },
 
     img: {
-      objectFit: 'cover'
+      objectFit: !!ownerState?.showFullImage ? 'contain' : 'cover'
     }
   }),
 

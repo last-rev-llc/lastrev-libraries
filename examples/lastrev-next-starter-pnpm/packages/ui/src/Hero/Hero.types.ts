@@ -20,6 +20,7 @@ export interface HeroProps extends Omit<Hero_BaseFragmentFragment, 'variant'> {
   variant: HeroVariants;
   header?: any;
   breadcrumbs?: LinkProps[];
+  showFullImage?: boolean;
 }
 
 export interface HeroOwnerState extends HeroProps {}

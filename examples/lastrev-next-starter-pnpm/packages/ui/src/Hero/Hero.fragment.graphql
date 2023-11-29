@@ -6,6 +6,7 @@ fragment Hero_BaseFragment on Hero {
   title
   subtitle
   backgroundColor
+  showFullImage
   background {
     ...Media_BaseFragment
   }

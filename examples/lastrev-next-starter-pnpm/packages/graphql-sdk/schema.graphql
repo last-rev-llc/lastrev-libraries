@@ -371,11 +371,11 @@ type Hero implements Content {
   backgroundColor: String
   body: RichText
   bottomContent: Content
-  contentHeight: String
   hideBreadcrumbs: Boolean
   id: String
   internalTitle: String
   overline: String
+  showFullImage: Boolean
   sideImageItems: [Media]
   sidekickLookup: JSON
   subtitle: String

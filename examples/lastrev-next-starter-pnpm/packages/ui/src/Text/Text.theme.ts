@@ -59,6 +59,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
         : {
             display: 'contents'
           })
+    },
+
+    '& > *:last-child': {
+      marginBottom: 0
     }
   }),
 

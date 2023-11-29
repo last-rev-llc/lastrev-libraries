@@ -48,26 +48,6 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --grid-gap-half: calc(var(--grid-gap) / 2);
                 --grid-gap-quarter: calc(var(--grid-gap) / 4);
 
-                ${theme.breakpoints.up('sm')} {
-                  --grid-gap: var(--grid-gap-sm);
-                  --grid-margin: var(--grid-margin-sm);
-                }
-
-                ${theme.breakpoints.up('md')} {
-                  --grid-gap: var(--grid-gap-md);
-                  --grid-margin: var(--grid-margin-md);
-                }
-
-                ${theme.breakpoints.up('lg')} {
-                  --grid-gap: var(--grid-gap-lg);
-                  --grid-margin: var(--grid-margin-lg);
-                }
-
-                ${theme.breakpoints.up('xl')} {
-                  --grid-gap: var(--grid-gap-xl);
-                  --grid-margin: var(--grid-margin-xl);
-                }
-
                 --section-padding: calc(var(--grid-gap) * 4);
 
                 --h1-font-size: ${h1FontSizeBase}rem;
@@ -186,7 +166,27 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               }
 
               body * {
-                ${theme.breakpoints.down('xl')} {
+                ${theme.breakpoints.up('sm')} {
+                  --grid-gap: var(--grid-gap-sm);
+                  --grid-margin: var(--grid-margin-sm);
+                }
+
+                ${theme.breakpoints.up('md')} {
+                  --grid-gap: var(--grid-gap-md);
+                  --grid-margin: var(--grid-margin-md);
+                }
+
+                ${theme.breakpoints.up('lg')} {
+                  --grid-gap: var(--grid-gap-lg);
+                  --grid-margin: var(--grid-margin-lg);
+                }
+
+                ${theme.breakpoints.up('xl')} {
+                  --grid-gap: var(--grid-gap-xl);
+                  --grid-margin: var(--grid-margin-xl);
+                }
+
+                ${theme.containerBreakpoints.down('xl')} {
                   --h1-font-size: ${(h1FontSizeBase / 8) * 8}rem;
                   --h2-font-size: ${(h2FontSizeBase / 8) * 8}rem;
                   --h3-font-size: ${(h3FontSizeBase / 8) * 8}rem;
@@ -196,7 +196,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                   /* --section-padding: var(--grid-gap-double); */
                 }
 
-                ${theme.breakpoints.down('lg')} {
+                ${theme.containerBreakpoints.down('lg')} {
                   --h1-font-size: ${(h1FontSizeBase / 8) * 7}rem;
                   --h2-font-size: ${(h2FontSizeBase / 8) * 7}rem;
                   --h3-font-size: ${(h3FontSizeBase / 8) * 7}rem;
@@ -210,16 +210,20 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                   --bodyLarge-font-size: 1.125rem;
                 }
 
-                ${theme.breakpoints.down('md')} {
+                ${theme.containerBreakpoints.down('md')} {
                   --h1-font-size: ${(h1FontSizeBase / 8) * 6}rem;
                   --h2-font-size: ${(h2FontSizeBase / 8) * 6}rem;
                   --h3-font-size: ${(h3FontSizeBase / 8) * 6}rem;
+                  --h5-font-size: ${(h5FontSizeBase / 8) * 6}rem;
                 }
 
-                ${theme.breakpoints.down('sm')} {
+                ${theme.containerBreakpoints.down('sm')} {
                   --h1-font-size: ${(h1FontSizeBase / 8) * 4}rem;
                   --h2-font-size: ${(h2FontSizeBase / 8) * 4}rem;
                   --h3-font-size: ${(h3FontSizeBase / 8) * 5}rem;
+
+                  --grid-gap-half: calc(var(--grid-gap) / 1);
+                  --grid-gap-quarter: calc(var(--grid-gap) / 2);
                 }
               }
             `}

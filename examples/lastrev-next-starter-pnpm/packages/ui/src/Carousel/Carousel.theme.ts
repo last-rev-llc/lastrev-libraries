@@ -71,7 +71,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
     '&': {
       ':is(.swiper-button-prev, .swiper-button-next)': {
         // '--swiper-navigation-color': 'var(--mui-palette-text-primary)',
-        border: 'solid',
+        border: 'solid 1px',
         aspectRatio: '1/1',
         width: 'var(--swiper-navigation-size)',
         borderRadius: '50%',

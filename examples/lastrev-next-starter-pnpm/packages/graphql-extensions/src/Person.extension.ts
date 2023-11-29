@@ -31,7 +31,8 @@ export const mappers: Mappers = {
       hero: async (person: any, _args: any, ctx: ApolloContext) =>
         createType('Hero', {
           variant: 'mediaOnRightFullBleed',
-          backgroundColor: 'navy',
+          backgroundColor: 'white',
+          showFullImage: true,
           overline: getLocalizedField(person.fields, 'jobTitle', ctx),
           title: getLocalizedField(person.fields, 'name', ctx),
           sideImageItems: [getLocalizedField(person.fields, 'mainImage', ctx)] ?? []

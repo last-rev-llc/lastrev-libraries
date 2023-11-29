@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Typography, { type TypographyProps } from '@mui/material/Typography';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -34,9 +33,9 @@ const Property = (props: PropertyProps) => {
     dateAcquired,
     dateSold,
     market,
-    ncreifRegion,
+    // ncreifRegion,
     strategy,
-    sector,
+    // sector,
     featuredAssets,
     hero
   } = props;
@@ -56,91 +55,83 @@ const Property = (props: PropertyProps) => {
           <SideContentWrap ownerState={ownerState}>
             <SideContentInnerWrap ownerState={ownerState}>
               {!!body && (
-                <>
-                  <BodyHeader variant="overline" ownerState={ownerState}>
-                    Opportunity
-                  </BodyHeader>
-                  <Body
-                    body={body}
-                    sidekickLookup={sidekickLookup}
-                    {...props}
-                    variant="inline"
-                    __typename="RichText"
-                    ownerState={ownerState}
-                  />
-                </>
+                <BodyHeader
+                  __typename="Text"
+                  title="Opportunity"
+                  variant="introText"
+                  body={body}
+                  ownerState={ownerState}
+                />
               )}
-            </SideContentInnerWrap>
-          </SideContentWrap>
-          <ContentWrap ownerState={ownerState}>
-            <BodyList ownerState={ownerState}>
-              {/* <BodyListItem ownerState={ownerState}>
+
+              <BodyList ownerState={ownerState}>
+                {/* <BodyListItem ownerState={ownerState}>
                 <ListLabel>Tags:</ListLabel>
                 <ListValue>
                   {ncreifRegion} {strategy} {sector}
                 </ListValue>
               </BodyListItem> */}
 
-              {!!name && (
-                <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Property Name:&nbsp;</ListLabel>
-                  <ListValue>{!!name ? name : 'N/A'}</ListValue>
-                </BodyListItem>
-              )}
+                {!!name && (
+                  <BodyListItem ownerState={ownerState}>
+                    <ListLabel>Property Name:&nbsp;</ListLabel>
+                    <ListValue>{!!name ? name : 'N/A'}</ListValue>
+                  </BodyListItem>
+                )}
 
-              {!!address && (
-                <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Location:&nbsp;</ListLabel>
-                  <ListValue>{!!address ? formatAddress(address) : 'N/A'}</ListValue>
-                </BodyListItem>
-              )}
+                {!!address && (
+                  <BodyListItem ownerState={ownerState}>
+                    <ListLabel>Location:&nbsp;</ListLabel>
+                    <ListValue>{!!address ? formatAddress(address) : 'N/A'}</ListValue>
+                  </BodyListItem>
+                )}
 
-              {!!squareFootage && (
-                <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Size:&nbsp;</ListLabel>
-                  <ListValue>{!!squareFootage ? `${squareFootage} SF` : 'N/A'}</ListValue>
-                </BodyListItem>
-              )}
+                {!!squareFootage && (
+                  <BodyListItem ownerState={ownerState}>
+                    <ListLabel>Size:&nbsp;</ListLabel>
+                    <ListValue>{!!squareFootage ? `${squareFootage} SF` : 'N/A'}</ListValue>
+                  </BodyListItem>
+                )}
 
-              {!!dateAcquired && (
-                <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Date Acquired:&nbsp;</ListLabel>
-                  <ListValue>{!!dateAcquired ? dateAcquired : 'N/A'}</ListValue>
-                </BodyListItem>
-              )}
+                {!!dateAcquired && (
+                  <BodyListItem ownerState={ownerState}>
+                    <ListLabel>Date Acquired:&nbsp;</ListLabel>
+                    <ListValue>{!!dateAcquired ? dateAcquired : 'N/A'}</ListValue>
+                  </BodyListItem>
+                )}
 
-              {!!dateSold && (
-                <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Date Sold:&nbsp;</ListLabel>
-                  <ListValue>{!!dateSold ? dateSold : 'N/A'}</ListValue>
-                </BodyListItem>
-              )}
+                {!!dateSold && (
+                  <BodyListItem ownerState={ownerState}>
+                    <ListLabel>Date Sold:&nbsp;</ListLabel>
+                    <ListValue>{!!dateSold ? dateSold : 'N/A'}</ListValue>
+                  </BodyListItem>
+                )}
 
-              {!!market && (
-                <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Market:&nbsp;</ListLabel>
-                  <ListValue>{!!market ? market : 'N/A'}</ListValue>
-                </BodyListItem>
-              )}
+                {!!market && (
+                  <BodyListItem ownerState={ownerState}>
+                    <ListLabel>Market:&nbsp;</ListLabel>
+                    <ListValue>{!!market ? market : 'N/A'}</ListValue>
+                  </BodyListItem>
+                )}
 
-              {!!strategy && (
-                <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Fund Strategy:&nbsp;</ListLabel>
-                  <ListValue>{!!strategy ? strategy : 'N/A'}</ListValue>
-                </BodyListItem>
-              )}
+                {!!strategy && (
+                  <BodyListItem ownerState={ownerState}>
+                    <ListLabel>Fund Strategy:&nbsp;</ListLabel>
+                    <ListValue>{!!strategy ? strategy : 'N/A'}</ListValue>
+                  </BodyListItem>
+                )}
 
-              {!!assetType && (
-                <BodyListItem ownerState={ownerState}>
-                  <ListLabel>Asset Type:&nbsp;</ListLabel>
-                  <ListValue>{!!assetType ? assetType : 'N/A'}</ListValue>
-                </BodyListItem>
-              )}
-            </BodyList>
-          </ContentWrap>
+                {!!assetType && (
+                  <BodyListItem ownerState={ownerState}>
+                    <ListLabel>Asset Type:&nbsp;</ListLabel>
+                    <ListValue>{!!assetType ? assetType : 'N/A'}</ListValue>
+                  </BodyListItem>
+                )}
+              </BodyList>
+            </SideContentInnerWrap>
+          </SideContentWrap>
+          <ContentWrap ownerState={ownerState}>{!!imageCarousel && <ContentModule {...imageCarousel} />}</ContentWrap>
         </ContentOuterGrid>
-
-        {!!imageCarousel && <ContentModule {...imageCarousel} />}
 
         {!!featuredAssets && <ContentModule {...featuredAssets} />}
       </Root>
@@ -186,11 +177,11 @@ const SideContentInnerWrap = styled(Box, {
   overridesResolver: (_, styles) => [styles.sideContentInnerWrap]
 })<{ ownerState: PropertyOwnerState }>``;
 
-const BodyHeader = styled(Typography, {
+const BodyHeader = styled(ContentModule, {
   name: 'Property',
   slot: 'BodyHeader',
   overridesResolver: (_, styles) => [styles.bodyHeader]
-})<TypographyProps & { ownerState: PropertyOwnerState }>``;
+})<{ ownerState: PropertyOwnerState }>``;
 
 const BodyList = styled(List, {
   name: 'Property',
@@ -213,7 +204,7 @@ const ListLabel = styled(Box, {
 const ListValue = styled(Box, {
   name: 'Property',
   slot: 'ListValue',
-  overridesResolver: (_, styles) => [styles.listLabel]
+  overridesResolver: (_, styles) => [styles.listValue]
 })<{ ownerState?: PropertyOwnerState }>``;
 
 export default Property;

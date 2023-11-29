@@ -105,7 +105,7 @@ const Hero = (props: HeroProps) => {
         ) : null}
 
         {!!images?.length ? (
-          <MediaWrap>
+          <MediaWrap ownerState={ownerState}>
             {images?.map((image) => (
               <Media
                 key={image?.id}
@@ -216,7 +216,7 @@ const MediaWrap = styled(Box, {
   name: 'Hero',
   slot: 'MediaWrap ',
   overridesResolver: (_, styles) => [styles.mediaWrap]
-})``;
+})<{ ownerState: HeroOwnerState }>``;
 
 const ActionsWrap = styled(Box, {
   name: 'Hero',

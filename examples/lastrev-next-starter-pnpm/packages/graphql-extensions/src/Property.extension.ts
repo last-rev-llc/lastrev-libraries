@@ -56,7 +56,7 @@ export const mappers: Mappers = {
           variant: mediaItemsLength <= 2 ? 'twoPerRow' : 'threePerRow',
           itemsVariant: 'media',
           itemsAspectRatio: 'horizontal',
-          backgroundColor: 'navy'
+          backgroundColor: 'white'
         });
       },
 
@@ -68,12 +68,14 @@ export const mappers: Mappers = {
         if (!itemsLength) return null;
 
         return createType('Collection', {
-          introText: createType('Text', { title: 'Featured Assets' }),
+          introText: createType('Text', { title: 'Featured Case Studies' }),
           items,
-          variant: itemsLength <= 2 ? 'twoPerRow' : 'threePerRow',
+          variant: itemsLength <= 2 ? 'twoPerRow' : 'fourPerRow',
           itemsVariant: 'hover',
           itemsAspectRatio: 'horizontal',
-          backgroundColor: 'white'
+          backgroundColor: 'navy',
+          inheritTopBGOverlap: true,
+          prevBgColor: 'white'
         });
       },
 
