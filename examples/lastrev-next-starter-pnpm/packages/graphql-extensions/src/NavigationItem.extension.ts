@@ -67,13 +67,10 @@ export const mappers = {
           const phone = await sitePhoneResolver(navItem, args, ctx);
 
           const parts: (string | null | undefined)[] = [
-            address.streetAddress,
-            address.streetAddress2,
-            `${address.city ? (address.state ? `${address.city},` : `${address.city}`) : null} ${address.state} ${
-              address.postalCode
-            }`,
-            phone.phoneNumber,
-            email
+            `${address.streetAddress}${address.streetAddress2 ? `, ${address.streetAddress2}` : ''}`,
+            `${address.city || ''}${address.state ? `, ${address.state}` : ''} ${address.postalCode || ''}`,
+            phone.phoneNumber || '',
+            email || ''
           ];
 
           return parts.filter((part) => part != null && part !== '').join('\n');

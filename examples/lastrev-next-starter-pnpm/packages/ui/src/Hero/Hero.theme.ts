@@ -215,11 +215,11 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnEnd: 'five-end'
+          gridColumnEnd: 'six-end'
         },
 
         [theme.containerBreakpoints.up('lg')]: {
-          gridColumnEnd: 'seven-end'
+          gridColumnEnd: 'nine-end'
         }
       },
 
@@ -229,12 +229,12 @@ const createVariants = (theme: Theme): ComponentsVariants['Hero'] => [
         gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnStart: 'six-start',
+          gridColumnStart: 'seven-start',
           alignItems: 'flex-end'
         },
 
         [theme.containerBreakpoints.up('lg')]: {
-          gridColumnStart: 'eight-start'
+          gridColumnStart: 'ten-start'
         }
       }
     }
