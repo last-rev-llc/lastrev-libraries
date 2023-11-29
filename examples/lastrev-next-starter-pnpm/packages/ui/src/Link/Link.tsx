@@ -68,7 +68,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     ref,
     href,
     variant,
-    passHref: true,
+    target: href?.startsWith('http') ? '_blank' : '_self',
     ...other,
     ...sidekick(sidekickLookup),
     // 'aria-label': text,
