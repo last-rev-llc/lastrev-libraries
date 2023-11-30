@@ -38,18 +38,3 @@ fragment Property_BaseFragment on PageProperty {
     ...Link_BaseFragment
   }
 }
-
-fragment Property_Card_Fragment on PageProperty {
-  ...Content_BaseFragment
-  slug
-  name
-  assetType
-  mainImage {
-    ...Media_BaseFragment
-  }
-  promoImage {
-    ...Media_BaseFragment
-  }
-  promoSummary
-  promoLinkText
-}

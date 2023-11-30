@@ -27,27 +27,3 @@ fragment Person_BaseFragment on Person {
     ...Link_BaseFragment
   }
 }
-
-fragment Person_Card_Fragment on Person {
-  ...Content_BaseFragment
-  slug
-  name
-  department
-  jobTitle
-  email
-  mainImage {
-    ...Media_BaseFragment
-  }
-  promoImage {
-    ...Media_BaseFragment
-  }
-  promoSummary
-  promoLinkText
-}
-
-fragment Person_Blog_Author_Fragment on Person {
-  ...Person_Card_Fragment
-  body {
-    ...RichText_BaseFragment
-  }
-}

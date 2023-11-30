@@ -134,6 +134,7 @@ type Collection implements Content {
   carouselAutoPlay: Boolean
   carouselBreakpoints: [String]
   id: String
+  images: [Media]
   inheritTopBGOverlap: Boolean
   internalTitle: String
   introText: Text

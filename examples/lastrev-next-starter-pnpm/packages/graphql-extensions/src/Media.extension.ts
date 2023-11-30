@@ -45,6 +45,7 @@ export const mappers = {
       url: (asset: any) => (asset?.url?.startsWith('//') ? `https:${asset?.url}` : asset?.url),
       width: (asset: any) => asset?.details?.image?.width,
       height: (asset: any) => asset?.details?.image?.height,
+
       svgContent: async (asset: any, _args: any, _ctx: ApolloContext) => {
         // We load the SVG content and clean it up for use as inline element
         // We remove the SVG width and height and instead use the one from the content
@@ -122,6 +123,11 @@ export const mappers = {
           file = assetFile;
         }
         return file;
+      }
+    },
+    Card: {
+      media: async (asset: any, _args: any, ctx: ApolloContext) => {
+        return [asset];
       }
     }
   }

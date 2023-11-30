@@ -13,9 +13,6 @@ fragment Blog_BaseFragment on Blog {
     ...RichText_BaseFragment
   }
 
-  author {
-    ...Person_Blog_Author_Fragment
-  }
   header {
     ...Header_BaseFragment
   }
@@ -38,19 +35,4 @@ fragment Blog_BaseFragment on Blog {
     ...Link_BaseFragment
   }
   jsonLd
-}
-
-fragment Blog_CardFragment on Blog {
-  ...Content_BaseFragment
-  title
-  slug
-  featuredMedia {
-    ...Media_BaseFragment
-  }
-  promoImage {
-    ...Media_BaseFragment
-  }
-  promoSummary
-  promoLinkText
-  pubDate
 }

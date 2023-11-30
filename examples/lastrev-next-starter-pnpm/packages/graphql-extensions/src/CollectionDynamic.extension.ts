@@ -197,56 +197,6 @@ export const mappers: Mappers = {
         if (!!carouselBreakpoints.length) return `${variant}Carousel`;
 
         return variant;
-      },
-
-      itemsConnection: async (collection: any, { limit, offset, filter }: ItemsConnectionArgs, ctx: ApolloContext) => {
-        let items = getLocalizedField(collection.fields, 'items', ctx) ?? [];
-
-        // try {
-        //   const { contentType, filters } =
-        //     (getLocalizedField(collection.fields, 'settings', ctx) as CollectionDynamicSettings) || {};
-        //   // Get all possible items from Contentful
-        //   // Need all to generate the possible options for all items. Not just the current page.
-        //   if (contentType) {
-        //     items = await queryContentful({ contentType, filters, filter, ctx });
-        //     const allItems = await ctx.loaders.entriesByContentTypeLoader.load({
-        //       id: contentType,
-        //       preview: !!ctx.preview
-        //     });
-        //     // const options = await collectOptions({ filters, items, ctx });
-        //     const options = {};
-        //     const allOptions = await collectOptions({ filters, items: allItems, ctx });
-        //     console.log({ filters, allItems, allOptions });
-
-        //     // Paginate results
-        //     if (offset || limit) {
-        //       items = items?.slice(offset ?? 0, (offset ?? 0) + (limit ?? items?.length));
-        //     }
-
-        //     if (!!items?.length) {
-        //       items = await ctx.loaders.entryLoader.loadMany(
-        //         items.map((x: any) => ({ id: x?.sys?.id, preview: !!ctx.preview }))
-        //       );
-        //     }
-        //     const itemsVariant = getLocalizedField(collection.fields, 'itemsVariant', ctx) ?? [];
-        //     const fullItemsWithVariant = items?.map((x: any) => ({ ...x, variant: itemsVariant }));
-
-        //     return {
-        //       pageInfo: {
-        //         options,
-        //         allOptions
-        //       },
-        //       items: fullItemsWithVariant
-        //     };
-        //   }
-        // } catch (error: any) {
-        //   logger.error(error.message, {
-        //     caller: 'Collection.itemsConnection',
-        //     stack: error.stack
-        //   });
-        // }
-
-        return items;
       }
     }
   }
