@@ -104,9 +104,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
 
   title: {},
 
-  subtitle: {
-    fontWeight: 400
-  },
+  subtitle: {},
 
   // body: {},
 

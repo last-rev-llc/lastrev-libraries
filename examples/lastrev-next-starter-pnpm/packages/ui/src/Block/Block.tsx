@@ -78,7 +78,7 @@ const Block = (props: BlockProps) => {
                     ownerState={ownerState}
                     {...sidekick(sidekickLookup, 'subtitle')}
                     data-testid="Block-subtitle"
-                    variant="h4">
+                    variant="h5">
                     {subtitle}
                   </Subtitle>
                 )}
