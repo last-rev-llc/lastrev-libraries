@@ -14,40 +14,35 @@ export const layoutConfig: LayoutConfig = {
     sm: 2,
     md: 1,
     lg: 1,
-    xl: 1,
-    xxl: 1
+    xl: 1
   },
   [CollectionDynamicVariants.twoPerRow]: {
     xs: 1,
     sm: 2,
     md: 2,
     lg: 2,
-    xl: 2,
-    xxl: 2
+    xl: 2
   },
   [CollectionDynamicVariants.threePerRow]: {
     xs: 1,
     sm: 2,
     md: 2,
     lg: 3,
-    xl: 3,
-    xxl: 3
+    xl: 3
   },
   [CollectionDynamicVariants.fourPerRow]: {
     xs: 1,
     sm: 2,
     md: 4,
     lg: 4,
-    xl: 4,
-    xxl: 4
+    xl: 4
   },
   [CollectionDynamicVariants.fivePerRow]: {
     xs: 1,
     sm: 2,
     md: 3,
     lg: 4,
-    xl: 5,
-    xxl: 5
+    xl: 5
   }
 };
 

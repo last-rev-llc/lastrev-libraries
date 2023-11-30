@@ -9,7 +9,6 @@ export default function gridMixin(theme: Theme) {
     display: 'grid',
     gridGap: theme.spacing(8),
     gridTemplateColumns: `repeat(12, 1fr)`,
-    // gridTemplateColumns: `1fr repeat(12, minmax(0, calc(${theme.breakpoints.values.xxl} / 12 * 1px))) 1fr`,
 
     [theme.containerBreakpoints.down('xl')]: {
       // gridTemplateColumns: `1fr repeat(12, minmax(0, calc(${theme.breakpoints.values.xl} / 12 * 1px))) 1fr`

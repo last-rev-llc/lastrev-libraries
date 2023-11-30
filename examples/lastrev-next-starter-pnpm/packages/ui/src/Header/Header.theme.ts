@@ -14,22 +14,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     'zIndex': 100,
     'gap': 0,
 
-    [theme.breakpoints.up('sm')]: {
-      '--grid-margin': 'calc(var(--grid-margin-sm) / 2)'
-    },
-
-    [theme.breakpoints.up('md')]: {
-      '--grid-margin': 'calc(var(--grid-margin-md) / 2)'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      '--grid-margin': 'calc(var(--grid-margin-lg) / 2)'
-    },
-
-    [theme.breakpoints.up('xl')]: {
-      '--grid-margin': 'calc(var(--grid-margin-xl) / 2)'
-    },
-
     '& *': {
       whiteSpace: 'nowrap'
     }

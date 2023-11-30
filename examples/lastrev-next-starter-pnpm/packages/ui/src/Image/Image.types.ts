@@ -9,7 +9,6 @@ export interface ColumnConfig {
   md?: number;
   lg?: number;
   xl?: number;
-  xxl?: number;
 }
 export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'height'> {
   src?: string;

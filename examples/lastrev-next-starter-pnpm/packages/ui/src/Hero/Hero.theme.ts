@@ -13,40 +13,35 @@ export const layoutConfig: LayoutConfig = {
     sm: 2,
     md: 2,
     lg: 2,
-    xl: 2,
-    xxl: 2
+    xl: 2
   },
   [HeroVariants.mediaOnRightFullBleed]: {
     xs: 1,
     sm: 2,
     md: 2,
     lg: 2,
-    xl: 2,
-    xxl: 2
+    xl: 2
   },
   [HeroVariants.mediaOnLeft]: {
     xs: 1,
     sm: 2,
     md: 2,
     lg: 2,
-    xl: 2,
-    xxl: 2
+    xl: 2
   },
   [HeroVariants.mediaOnLeftFullBleed]: {
     xs: 1,
     sm: 2,
     md: 2,
     lg: 2,
-    xl: 2,
-    xxl: 2
+    xl: 2
   },
   [HeroVariants.mediaSmall]: {
     xs: 1,
     sm: 1,
     md: 3,
     lg: 3,
-    xl: 3,
-    xxl: 3
+    xl: 3
   }
 };
 

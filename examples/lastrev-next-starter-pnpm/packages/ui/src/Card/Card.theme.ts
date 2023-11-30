@@ -409,7 +409,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       '[class*=bodyWrap]': {
         'order': 1,
         '& *': {
-          ...theme.typography.body1
+          ...theme.typography.bodyLarge
         }
       },
 
