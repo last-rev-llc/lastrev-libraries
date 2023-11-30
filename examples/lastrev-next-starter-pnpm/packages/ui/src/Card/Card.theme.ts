@@ -402,7 +402,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       '[class*=contentWrap]': {
         display: 'flex',
         flexDirection: 'column',
-        borderLeft: 'solid 1px var(--mui-palette-text-primary)',
+        borderLeft: 'solid 1px var(--mui-palette-schemes-navy-secondary-main)',
         padding: '0 var(--grid-gap)'
       },
 
@@ -414,7 +414,8 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
       },
 
       '[class*=Card-title]': {
-        ...theme.typography.h2,
+        ...theme.typography.h1,
+        fontSize: 'var(--h2-font-size-base)',
         order: 2,
         marginTop: 'auto',
         marginBottom: 0
@@ -452,6 +453,10 @@ const createVariants = (theme: Theme): ComponentsVariants['Card'] => [
           top: 0,
           left: 0
         }
+      },
+
+      '[class*=Card-subtitle]': {
+        marginBottom: 'var(--grid-gap-half)'
       },
 
       '[class*=Card-overline], [class*=body]': {

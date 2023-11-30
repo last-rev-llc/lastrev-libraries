@@ -99,7 +99,7 @@ const Card = (props: CardProps) => {
               {subtitle ? (
                 <Subtitle
                   {...sidekick(sidekickLookup, 'subtitle')}
-                  component="p"
+                  component="div"
                   variant="h6"
                   data-testid="Card-subtitle"
                   // @ts-ignore: TODO

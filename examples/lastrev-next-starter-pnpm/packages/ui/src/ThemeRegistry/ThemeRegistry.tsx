@@ -72,6 +72,13 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
                 --section-padding: calc(var(--grid-gap) * 4);
 
+                --h1-font-size-base: ${h1FontSizeBase}rem;
+                --h2-font-size-base: ${h2FontSizeBase}rem;
+                --h3-font-size-base: ${h3FontSizeBase}rem;
+                --h4-font-size-base: var(--h3-font-size);
+                --h5-font-size-base: ${h5FontSizeBase}rem;
+                --h6-font-size-base: ${h6FontSizeBase}rem;
+
                 --h1-font-size: ${h1FontSizeBase}rem;
                 --h2-font-size: ${h2FontSizeBase}rem;
                 --h3-font-size: ${h3FontSizeBase}rem;
