@@ -124,6 +124,7 @@ const Carousel = (props: CarouselProps) => {
           backgroundColor={backgroundColor}
           testId="Carousel-background"
         />
+
         {introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText

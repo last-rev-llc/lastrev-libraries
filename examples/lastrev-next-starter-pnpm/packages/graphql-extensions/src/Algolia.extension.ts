@@ -9,6 +9,7 @@ import { getLink } from './utils/getLink';
 import { getMedia } from './utils/getMedia';
 import { getSysContentTypeName } from './utils/getSysContentTypeName';
 import { pruneEmpty } from './utils/pruneEmpty';
+import { formatNameForSorting } from './utils/formatNameForSorting';
 
 const index = 'contentful';
 
@@ -82,6 +83,7 @@ export const mappers = {
                 locale: ctx.locale || ctx.defaultLocale,
                 preview: !!ctx.preview,
                 title,
+                defaultSortField: title,
                 pubDate,
                 categories,
                 pubDateTimestamp,
@@ -106,7 +108,7 @@ export const mappers = {
 
         if (!path) return [];
 
-        const title = getLocalizedField(person.fields, 'name', ctx);
+        const name = getLocalizedField(person.fields, 'name', ctx);
         const subtitle = getLocalizedField(person.fields, 'jobTitle', ctx);
         const body = getLocalizedField(person.fields, 'body', ctx);
         const summary = getLocalizedField(person.fields, 'promoSummary', ctx);
@@ -123,7 +125,7 @@ export const mappers = {
 
         const card = await generateCard({
           id: person.sys.id,
-          title,
+          title: name,
           subtitle,
           summary,
           link,
@@ -141,7 +143,8 @@ export const mappers = {
                 objectID: constructObjectId(person, ctx),
                 locale: ctx.locale || ctx.defaultLocale,
                 preview: !!ctx.preview,
-                title,
+                title: name,
+                defaultSortField: formatNameForSorting(name),
                 subtitle,
                 body: documentToPlainTextString(body),
                 education: getLocalizedField(person.fields, 'education', ctx),
@@ -218,6 +221,7 @@ export const mappers = {
                 locale: ctx.locale || ctx.defaultLocale,
                 preview: !!ctx.preview,
                 title,
+                defaultSortField: title,
                 body: documentToPlainTextString(body),
                 summary,
                 path,
@@ -269,6 +273,7 @@ export const mappers = {
                 locale: ctx.locale || ctx.defaultLocale,
                 preview: !!ctx.preview,
                 title,
+                defaultSortField: title,
                 summary,
                 promoImage,
                 path,
