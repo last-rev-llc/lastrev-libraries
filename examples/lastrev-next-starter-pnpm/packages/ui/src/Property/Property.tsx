@@ -54,15 +54,13 @@ const Property = (props: PropertyProps) => {
         <ContentOuterGrid ownerState={ownerState}>
           <SideContentWrap ownerState={ownerState}>
             <SideContentInnerWrap ownerState={ownerState}>
-              {!!body && (
-                <BodyHeader
-                  __typename="Text"
-                  title="Opportunity"
-                  variant="introText"
-                  body={body}
-                  ownerState={ownerState}
-                />
-              )}
+              <BodyHeader
+                __typename="Text"
+                title="Opportunity"
+                variant="introText"
+                body={body}
+                ownerState={ownerState}
+              />
 
               <BodyList ownerState={ownerState}>
                 {/* <BodyListItem ownerState={ownerState}>
