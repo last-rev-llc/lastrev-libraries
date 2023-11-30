@@ -123,7 +123,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       gridColumnEnd: 'content-end'
     },
 
-    [theme.breakpoints.up('mlgd')]: {
+    [theme.breakpoints.up('lg')]: {
       gridColumnStart: 'three-start',
       gridColumnEnd: 'content-end'
     }
