@@ -103,7 +103,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
             })
           }
         }
-      : { ...theme.mixins.applyColorScheme({ ownerState, theme }) })
+      : { ...theme.mixins.applyColorScheme({ ownerState, theme }), padding: 'var(--section-padding) 0' })
   }),
 
   swiperWrap: ({ theme, ownerState }) => {

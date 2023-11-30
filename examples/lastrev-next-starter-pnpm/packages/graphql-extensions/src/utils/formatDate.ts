@@ -19,5 +19,5 @@ export const formatDate = (inputDateStr: string): string | null => {
   const [year, month, day] = inputDateStr.split('-').map(Number);
   const monthName: string = months[month - 1];
 
-  return `${monthName} ${day}, ${year}`;
+  return `${monthName} ${year}`;
 };

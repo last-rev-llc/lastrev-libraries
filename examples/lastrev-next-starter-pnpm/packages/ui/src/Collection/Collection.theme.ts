@@ -92,7 +92,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
             })
           }
         }
-      : { ...theme.mixins.applyColorScheme({ ownerState, theme }) })
+      : { ...theme.mixins.applyColorScheme({ ownerState, theme }), padding: 'var(--section-padding) 0' })
   }),
 
   itemsGrid: ({ theme, ownerState }) => ({
