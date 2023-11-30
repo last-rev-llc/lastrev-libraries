@@ -2,7 +2,7 @@ import React from 'react';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import Typography, { TypographyProps } from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { useForm } from '@formspree/react';
 
@@ -20,7 +20,7 @@ const FormContactUs = (props: FormContactUsProps) => {
 
   const ownerState = { ...props, hasSuccessMessage: false };
 
-  const { backgroundImage, backgroundColor, id, sidekickLookup, introText } = props;
+  const { backgroundImage, backgroundColor, address, email, sidekickLookup, introText, phone } = props;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -50,62 +50,73 @@ const FormContactUs = (props: FormContactUsProps) => {
       <ContentOuterGrid ownerState={ownerState}>
         <SideContentWrap ownerState={ownerState}>
           <SideContentInnerWrap ownerState={ownerState}>
-            <Typography variant="overline">Contact Details</Typography>
+            <DetailsLabel variant="overline" ownerState={ownerState}>
+              Contact Details
+            </DetailsLabel>
+
+            {!!address && (
+              <Address variant="h5" ownerState={ownerState}>
+                {address}
+              </Address>
+            )}
+
+            {!!email && (
+              <Email variant="h5" ownerState={ownerState}>
+                {email}
+              </Email>
+            )}
+
+            {!!phone && (
+              <Phone variant="h5" ownerState={ownerState}>
+                {phone}
+              </Phone>
+            )}
           </SideContentInnerWrap>
         </SideContentWrap>
         <ContentWrap ownerState={ownerState}>
-          {state.succeeded ? (
-            <>Success!</>
-          ) : (
-            <>
-              <form id={formId} name={formId} onSubmit={onSubmit} style={{ width: '100%' }}>
-                <input type="hidden" name="form-name" value={formId} />
-                <FormFields ownerState={ownerState}>
-                  <TextField
-                    label="First Name"
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    required
-                    variant="standard"
-                  />
-                  <TextField label="Last Name" id="lastName" name="lastName" type="text" required variant="standard" />
-                  <TextField label="Email" id="email" name="email" type="email" required variant="standard" />
-                  <TextField
-                    label="Company Name"
-                    id="companyName"
-                    name="companyName"
-                    type="text"
-                    required
-                    variant="standard"
-                  />
-                  <TextField
-                    label="Message"
-                    id="message"
-                    name="message"
-                    fullWidth
-                    multiline
-                    rows="3"
-                    required
-                    variant="standard"
-                  />
-                </FormFields>
+          {state && state.succeeded ? <>Success!</> : null}
 
-                <FormActions ownerState={ownerState}>
-                  <SubmitButton
-                    ownerState={ownerState}
-                    href="#"
-                    color="navy"
-                    type="submit"
-                    __typename="Link"
-                    text="Submit"
-                    variant="buttonText"
-                    icon="logo"
-                    iconPosition="Left"
-                  />
-                </FormActions>
-              </form>
-            </>
+          {!state?.succeeded && (
+            <Box component="form" id={formId} name={formId} onSubmit={onSubmit} style={{ width: '100%' }}>
+              <input type="hidden" name="form-name" value={formId} />
+              <FormFields ownerState={ownerState}>
+                <TextField label="First Name" id="firstName" name="firstName" type="text" required variant="standard" />
+                <TextField label="Last Name" id="lastName" name="lastName" type="text" required variant="standard" />
+                <TextField label="Email" id="email" name="email" type="email" required variant="standard" />
+                <TextField
+                  label="Company Name"
+                  id="companyName"
+                  name="companyName"
+                  type="text"
+                  required
+                  variant="standard"
+                />
+                <TextField
+                  label="Message"
+                  id="message"
+                  name="message"
+                  fullWidth
+                  multiline
+                  rows="3"
+                  required
+                  variant="standard"
+                />
+              </FormFields>
+
+              <FormActions ownerState={ownerState}>
+                <SubmitButton
+                  ownerState={ownerState}
+                  href="#"
+                  color="navy"
+                  type="submit"
+                  __typename="Link"
+                  text="Submit"
+                  variant="buttonText"
+                  icon="logo"
+                  iconPosition="Left"
+                />
+              </FormActions>
+            </Box>
           )}
         </ContentWrap>
       </ContentOuterGrid>
@@ -166,6 +177,30 @@ const SideContentInnerWrap = styled(Box, {
   slot: 'SideContentInnerWrap',
   overridesResolver: (_, styles) => [styles.sideContentInnerWrap]
 })<{ ownerState: FormContactUsOwnerState }>``;
+
+const DetailsLabel = styled(Typography, {
+  name: 'FormContactUs',
+  slot: 'DetailsLabel',
+  overridesResolver: (_, styles) => [styles.detailsLabel]
+})<TypographyProps & { ownerState: FormContactUsOwnerState }>``;
+
+const Address = styled(Typography, {
+  name: 'FormContactUs',
+  slot: 'Address',
+  overridesResolver: (_, styles) => [styles.address]
+})<TypographyProps & { ownerState: FormContactUsOwnerState }>``;
+
+const Email = styled(Typography, {
+  name: 'FormContactUs',
+  slot: 'Email',
+  overridesResolver: (_, styles) => [styles.email]
+})<TypographyProps & { ownerState: FormContactUsOwnerState }>``;
+
+const Phone = styled(Typography, {
+  name: 'FormContactUs',
+  slot: 'Phone',
+  overridesResolver: (_, styles) => [styles.phone]
+})<TypographyProps & { ownerState: FormContactUsOwnerState }>``;
 
 const IntroTextGrid = styled(Grid, {
   name: 'FormContactUs',

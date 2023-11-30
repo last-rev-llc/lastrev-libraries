@@ -31,6 +31,12 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
     }
   }),
 
+  detailsLabel: {
+    '&': {
+      paddingBottom: 'var(--grid-gap)'
+    }
+  },
+
   sideContentInnerWrap: {
     'display': 'flex',
     'flexDirection': 'column',
@@ -41,6 +47,10 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
     '& > *': {
       marginBottom: 0
     }
+  },
+
+  address: {
+    whiteSpace: 'pre-line'
   },
 
   contentWrap: ({ theme }) => ({

@@ -17,6 +17,10 @@ interface FormContactUsClasses {
   formFields: string;
   formActions: string;
   bodyHeader: string;
+  address: string;
+  phone: string;
+  email: string;
+  detailsLabel: string;
 }
 
 export declare type FormContactUsClassKey = keyof FormContactUsClasses;
