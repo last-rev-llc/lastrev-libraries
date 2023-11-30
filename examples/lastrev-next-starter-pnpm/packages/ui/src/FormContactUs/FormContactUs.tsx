@@ -15,13 +15,12 @@ import ContentModule from '../ContentModule';
 import type { FormContactUsProps, FormContactUsOwnerState } from './FormContactUs.types';
 
 const FormContactUs = (props: FormContactUsProps) => {
-  const formId = 'mwkdzyrq';
-  const [state, handleSubmit] = useForm(formId);
-
   const ownerState = { ...props, hasSuccessMessage: false };
 
-  const { backgroundImage, backgroundColor, address, email, sidekickLookup, introText, phone } = props;
+  const { backgroundImage, backgroundColor, formspreeId, address, email, sidekickLookup, introText, phone } = props;
 
+  const [state, handleSubmit] = useForm(formspreeId || '');
+  if (!formspreeId) return null;
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Submit the form using the handleSubmit function
@@ -77,12 +76,15 @@ const FormContactUs = (props: FormContactUsProps) => {
           {state && state.succeeded ? <>Success!</> : null}
 
           {!state?.succeeded && (
-            <Box component="form" id={formId} name={formId} onSubmit={onSubmit} style={{ width: '100%' }}>
-              <input type="hidden" name="form-name" value={formId} />
+            <Box component="form" id={formspreeId} name={formspreeId} onSubmit={onSubmit} style={{ width: '100%' }}>
+              <input type="hidden" name="form-name" value={formspreeId} />
               <FormFields ownerState={ownerState}>
                 <TextField label="First Name" id="firstName" name="firstName" type="text" required variant="standard" />
+
                 <TextField label="Last Name" id="lastName" name="lastName" type="text" required variant="standard" />
+
                 <TextField label="Email" id="email" name="email" type="email" required variant="standard" />
+
                 <TextField
                   label="Company Name"
                   id="companyName"
@@ -91,6 +93,7 @@ const FormContactUs = (props: FormContactUsProps) => {
                   required
                   variant="standard"
                 />
+
                 <TextField
                   label="Message"
                   id="message"
@@ -107,7 +110,7 @@ const FormContactUs = (props: FormContactUsProps) => {
                 <SubmitButton
                   ownerState={ownerState}
                   href="#"
-                  color="navy"
+                  color="primary"
                   type="submit"
                   __typename="Link"
                   text="Submit"

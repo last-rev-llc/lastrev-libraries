@@ -76,19 +76,39 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
           if (widthValue <= maxWidth && imageWidth > widthValue) {
             const source = `${src}?${imageWidth > imageHeight ? 'h' : 'w'}=${Math.round(widthValue)}&q=${quality}`;
             sources.push(
-              <source key={breakpoint} media={mediaCondition} srcSet={`${source}&fm=avif`} type="image/avif" />
+              <source
+                key={`avif-${src}-${breakpoint}`}
+                media={mediaCondition}
+                srcSet={`${source}&fm=avif`}
+                type="image/avif"
+              />
             );
             sources.push(
-              <source key={breakpoint} media={mediaCondition} srcSet={`${source}&fm=webp`} type="image/webp" />
+              <source
+                key={`webp-${src}-${breakpoint}`}
+                media={mediaCondition}
+                srcSet={`${source}&fm=webp`}
+                type="image/webp"
+              />
             );
           }
         } else {
           const source = `${src}?${imageWidth > imageHeight ? 'h' : 'w'}=${Math.round(maxWidth)}&q=${quality}`;
           sources.push(
-            <source key={breakpoint} media={mediaCondition} srcSet={`${source}&fm=avif`} type="image/avif" />
+            <source
+              key={`avif-${src}-${breakpoint}`}
+              media={mediaCondition}
+              srcSet={`${source}&fm=avif`}
+              type="image/avif"
+            />
           );
           sources.push(
-            <source key={breakpoint} media={mediaCondition} srcSet={`${source}&fm=webp`} type="image/webp" />
+            <source
+              key={`webp-${src}-${breakpoint}`}
+              media={mediaCondition}
+              srcSet={`${source}&fm=webp`}
+              type="image/webp"
+            />
           );
         }
       }

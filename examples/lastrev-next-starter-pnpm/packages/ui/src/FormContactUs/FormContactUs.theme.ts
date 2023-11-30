@@ -2,8 +2,7 @@ import {
   type ThemeOptions,
   type ComponentsProps,
   type ComponentsOverrides,
-  type ComponentsVariants,
-  alpha
+  type ComponentsVariants
 } from '@mui/material/styles';
 
 import { type Theme } from '../ThemeRegistry/theme.types';

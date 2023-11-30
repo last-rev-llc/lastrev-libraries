@@ -14,10 +14,8 @@ const Tabs = dynamic(() => import('./Tabs'));
 const Card = dynamic(() => import('./Card'));
 const Person = dynamic(() => import('./Person'));
 const Property = dynamic(() => import('./Property'));
-const PropertyAsset = dynamic(() => import('./PropertyAsset'));
 const Blog = dynamic(() => import('./Blog'));
 const Accordion = dynamic(() => import('./Accordion'));
-const Form = dynamic(() => import('./Form'));
 const FormContactUs = dynamic(() => import('./FormContactUs'));
 const Section = dynamic(() => import('./Section'));
 const NavigationItem = dynamic(() => import('./NavigationItem'));
@@ -61,7 +59,6 @@ export const contentMapping: {
   FooterNavigationItem,
   FooterNavigationItemGroup,
   'ElementForm:contactUs': FormContactUs,
-  'ElementForm': Form,
   NavigationItem,
   'NavigationItem:link': HeaderNavLink,
   'NavigationItem:linkNested': HeaderNavLinkNested,

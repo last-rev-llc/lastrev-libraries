@@ -1,13 +1,11 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
-import { CollectionVariants, type CollectionOwnerState } from './Collection.types';
+import { CollectionVariants } from './Collection.types';
+import { type LayoutConfig } from '../ThemeRegistry/mixins/generateGridStyles';
 
 const defaultProps: ComponentsProps['Collection'] = {};
 
-export interface LayoutConfig {
-  [key: string]: { [breakpoint: string]: number };
-}
 export const layoutConfig: LayoutConfig = {
   [CollectionVariants.onePerRow]: {
     xs: 1,
@@ -46,20 +44,6 @@ export const layoutConfig: LayoutConfig = {
   }
 };
 
-export const generateGridStyles = (theme: Theme, ownerState: CollectionOwnerState) => {
-  const variantConfig = layoutConfig[ownerState.variant || CollectionVariants.default] || {};
-  let styles = { display: 'grid', gridTemplateColumns: 'repeat(1, minmax(0, 1fr))' };
-
-  Object.entries(variantConfig).forEach(([breakpoint, columns]) => {
-    styles = {
-      ...styles,
-      [theme.containerBreakpoints.up(breakpoint)]: { gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }
-    };
-  });
-
-  return styles;
-};
-
 const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
@@ -94,7 +78,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     gridColumn: 'content-start/content-end',
     gap: 'inherit',
 
-    ...(ownerState && generateGridStyles(theme, ownerState))
+    ...(ownerState &&
+      theme.mixins.generateGridStyles({
+        theme,
+        layoutConfig,
+        variant: ownerState.variant,
+        defaultVariant: 'default'
+      }))
   }),
 
   contentGrid: {}

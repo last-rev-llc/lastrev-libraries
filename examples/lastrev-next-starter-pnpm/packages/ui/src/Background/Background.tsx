@@ -14,7 +14,7 @@ const Background = (props: BackgroundProps) => {
 
   return (
     <Root ownerState={ownerState} className={className}>
-      {background ? (
+      {!!background ? (
         <BackgroundContent {...background} key={background?.id} ownerState={ownerState} fill testId={testId} />
       ) : null}
     </Root>

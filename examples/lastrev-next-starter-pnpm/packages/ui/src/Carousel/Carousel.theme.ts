@@ -4,18 +4,16 @@ import {
   type ComponentsOverrides,
   type ComponentsVariants
 } from '@mui/material/styles';
-import { type Theme } from '../ThemeRegistry/theme.types';
 
+import { type Theme } from '../ThemeRegistry/theme.types';
 import { CarouselVariants } from './Carousel.types';
+import { type LayoutConfig } from '../ThemeRegistry/mixins/generateGridStyles';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
 
 const defaultProps: ComponentsProps['Carousel'] = {};
 
-export interface LayoutConfig {
-  [key: string]: { [breakpoint: string]: number };
-}
 export const layoutConfig: LayoutConfig = {
   [CarouselVariants.onePerRow]: {
     xs: 1,
@@ -143,7 +141,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
       },
       'padding': '0 0 calc(1.5 * var(--section-padding))',
       'gridColumn': 'content-start/full-end'
-      // 'overflow': 'hidden'
     };
   },
 

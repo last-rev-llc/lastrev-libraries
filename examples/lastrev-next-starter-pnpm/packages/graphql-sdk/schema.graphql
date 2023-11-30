@@ -294,6 +294,7 @@ type ElementForm implements Content {
   footerDisclaimerOverride: RichText
   formDisclaimerText: RichText
   formLayout: String
+  formspreeId: String
   header: Header
   hero: Hero
   hubspotFormId: String
@@ -303,6 +304,7 @@ type ElementForm implements Content {
   introText: Text
   lr__path__: String
   path: String
+  phone: String
   seo: JSON
   sidekickLookup: JSON
   slug: String

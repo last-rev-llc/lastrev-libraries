@@ -39,7 +39,7 @@ const Hero = (props: HeroProps) => {
     <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
       {header ? <ContentModule {...(header as any)} backgroundColor={backgroundColor} /> : null}
       <HeroBackground
-        background={{ ...background, priority: true } as any}
+        background={background ? ({ ...background, priority: true } as any) : undefined}
         backgroundColor={backgroundColor}
         testId="Hero-background"
       />

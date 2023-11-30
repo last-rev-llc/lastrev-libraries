@@ -152,7 +152,7 @@ const Carousel = (props: CarouselProps) => {
                 // scrollbar={{ draggable: true }}
               >
                 {items?.map((item, index) => (
-                  <SwiperSlide key={item?.id}>
+                  <SwiperSlide key={`swiper-slide-${item?.id ?? item?.title}-${index}`}>
                     <Item
                       backgroundColor={backgroundColor}
                       ownerState={ownerState}

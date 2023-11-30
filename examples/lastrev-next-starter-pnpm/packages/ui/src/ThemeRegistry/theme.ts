@@ -7,7 +7,7 @@ import {
 
 import { deepmerge } from '@mui/utils';
 import './theme.types';
-import createGridMixin from './mixins/createGridMixin';
+import generateGridStyles from './mixins/generateGridStyles';
 import applyColorScheme from './mixins/applyColorScheme';
 import applyColorSchemeOverlay from './mixins/applyColorSchemeOverlay';
 import themeComponents from './theme.components';
@@ -127,7 +127,7 @@ const baseTheme = {
     borderRadius: defaultBorderRadius
   },
   mixins: {
-    gridContainer: createGridMixin,
+    generateGridStyles,
     applyColorScheme,
     applyColorSchemeOverlay
   },

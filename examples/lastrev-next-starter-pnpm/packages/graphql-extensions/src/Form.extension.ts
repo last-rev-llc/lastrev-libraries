@@ -44,8 +44,11 @@ export const mappers = {
 
         return parts.filter((part) => part != null && part !== '').join('\n');
       },
-      email: siteEmailResolver,
-      phone: sitePhoneResolver
+      phone: async (form: any, args: any, ctx: ApolloContext) => {
+        const phone = await sitePhoneResolver(form, args, ctx);
+        return phone.phoneNumber;
+      },
+      email: siteEmailResolver
     },
     Link: {
       href: pathResolver,

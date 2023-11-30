@@ -7,9 +7,9 @@ fragment Form_BaseFragment on ElementForm {
   }
   address
   email
+  phone
   backgroundColor
-  hubspotPortalId
-  hubspotFormId
+  formspreeId
   formDisclaimerText {
     ...RichText_BaseFragment
   }
@@ -21,7 +21,6 @@ fragment Form_BaseFragment on ElementForm {
 fragment Form_PageFragment on ElementForm {
   ...Form_BaseFragment
   seo
-  #jsonLd
   path
   slug
   header {

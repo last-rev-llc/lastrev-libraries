@@ -58,9 +58,12 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   if (!other.color) delete other.color;
 
   const pathname = usePathname();
+
   const className = clsx(classNameProps, {
     [activeClassName]: pathname?.toLowerCase().startsWith(href?.toLowerCase()) && activeClassName
   });
+
+  // const className = '';
 
   const sharedLinkProps = {
     component: href === '/#' ? Box : NextLink,
@@ -91,7 +94,7 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
     const buttonVariant = variant.replace('button', '').toLowerCase() as 'text' | 'outlined' | 'contained' | undefined;
     let trimmedSharedLinkProps: any = sharedLinkProps;
     if ((sharedLinkProps as { type?: string })?.type === 'submit') {
-      const { component, href, ...rest } = sharedLinkProps;
+      const { component, href, ref, ...rest } = sharedLinkProps;
       trimmedSharedLinkProps = rest;
     }
 

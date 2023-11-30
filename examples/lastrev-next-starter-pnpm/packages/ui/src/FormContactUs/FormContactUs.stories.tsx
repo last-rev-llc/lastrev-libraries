@@ -14,7 +14,7 @@ export default {
     variant: {
       control: {
         type: 'select',
-        options: ['hubspotFormContactUsFooter']
+        options: ['contactUs']
       }
     }
   }

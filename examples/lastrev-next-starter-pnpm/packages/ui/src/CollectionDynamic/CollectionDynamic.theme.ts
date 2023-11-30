@@ -1,17 +1,14 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
 import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
-import { CollectionDynamicVariants, type CollectionDynamicOwnerState } from './CollectionDynamic.types';
-
+import { CollectionDynamicVariants } from './CollectionDynamic.types';
+import { type LayoutConfig } from '../ThemeRegistry/mixins/generateGridStyles';
 const defaultProps: ComponentsProps['CollectionDynamic'] = {};
 
-export interface LayoutConfig {
-  [key: string]: { [breakpoint: string]: number };
-}
 export const layoutConfig: LayoutConfig = {
   [CollectionDynamicVariants.onePerRow]: {
     xs: 1,
-    sm: 2,
+    sm: 1,
     md: 1,
     lg: 1,
     xl: 1
@@ -44,20 +41,6 @@ export const layoutConfig: LayoutConfig = {
     lg: 4,
     xl: 5
   }
-};
-
-export const generateGridStyles = (theme: Theme, ownerState: CollectionDynamicOwnerState) => {
-  const variantConfig = layoutConfig[ownerState.variant || CollectionDynamicVariants.default] || {};
-  let styles = { display: 'grid', gridTemplateColumns: 'repeat(1, minmax(0, 1fr))' };
-
-  Object.entries(variantConfig).forEach(([breakpoint, columns]) => {
-    styles = {
-      ...styles,
-      [theme.containerBreakpoints.up(breakpoint)]: { gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }
-    };
-  });
-
-  return styles;
 };
 
 const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
@@ -133,10 +116,6 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
         })
   }),
 
-  // paginationWrap: {},
-
-  // searchBoxWrap: {},
-
   resultsWrap: ({ theme, ownerState }) => ({
     gridColumn: 'content-start/content-end',
     gap: 'inherit',
@@ -154,7 +133,13 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
   itemsGrid: ({ theme, ownerState }) => ({
     'gap': 'inherit',
 
-    ...(ownerState && generateGridStyles(theme, ownerState)),
+    ...(ownerState &&
+      theme.mixins.generateGridStyles({
+        theme,
+        layoutConfig,
+        variant: ownerState.variant,
+        defaultVariant: 'default'
+      })),
 
     '& [class*=ais-Hit]': {
       display: 'contents'

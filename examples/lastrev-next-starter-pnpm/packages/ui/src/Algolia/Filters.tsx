@@ -4,7 +4,6 @@ import MenuSelect from './MenuSelect';
 import Toggle from './Toggle';
 
 type FiltersProps = {
-  type: 'menuSelect' | 'toggle';
   ownerState: any;
   filters: [string];
 };
