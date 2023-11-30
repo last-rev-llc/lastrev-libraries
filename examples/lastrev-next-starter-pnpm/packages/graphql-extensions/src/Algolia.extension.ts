@@ -83,7 +83,7 @@ export const mappers = {
                 locale: ctx.locale || ctx.defaultLocale,
                 preview: !!ctx.preview,
                 title,
-                defaultSortField: pubDateTimestamp || 1 * -1,
+                defaultSortField: (pubDateTimestamp || 1) * -1,
                 pubDate,
                 categories,
                 pubDateTimestamp,
