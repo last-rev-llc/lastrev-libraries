@@ -8,7 +8,7 @@ const menuMobileBreakpoint = 'md';
 const defaultProps: ComponentsProps['Header'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
-  root: ({ theme, ownerState }) => ({
+  root: {
     'padding': 'var(--grid-gap) 0',
     'width': '100%',
     'zIndex': 100,
@@ -17,11 +17,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     '& *': {
       whiteSpace: 'nowrap'
     }
-  }),
+  },
 
-  contentOuterGrid: ({ theme }) => ({
+  contentOuterGrid: {
     rowGap: 'var(--grid-gap-half)'
-  }),
+  },
 
   logoRoot: ({ theme }) => ({
     gridColumn: 'content-start / content-half',
@@ -40,8 +40,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       gridColumn: 'content-start / span 3'
     }
   }),
-
-  // logo: {},
 
   headerMenuCtas: ({ theme }) => ({
     'padding': 0,
@@ -150,8 +148,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       display: 'none'
     }
   }),
-
-  // iconButton: : {},
 
   menuIcon: ({ menuVisible }) => ({
     display: menuVisible ? 'none' : 'block',

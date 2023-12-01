@@ -2,8 +2,6 @@ import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVari
 
 import { type Theme } from '../ThemeRegistry/theme.types';
 
-import { AccordionVariants } from './Accordion.types';
-
 const defaultProps: ComponentsProps['Accordion'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
@@ -16,8 +14,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
     flexDirection: 'column'
   }),
 
-  // introTextGrid: : {},
-
   introText: { gridColumn: 'content-start / content-end' },
 
   contentOuterGrid: {
@@ -26,23 +22,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
       gridColumnEnd: 'content-end'
     },
     'gridGap': 0
-    // 'display': 'contents'
   }
-  // accordionItem: {},
-  // summaryWrap: {},
-  // summary: {},
-  // detailsWrap: {},
-  // details: {},
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['Accordion'] => [
-  {
-    props: {
-      variant: AccordionVariants.default
-    },
-    style: {}
-  }
-];
+const createVariants = (_theme: Theme): ComponentsVariants['Accordion'] => [];
 
 export const AccordionTheme = (theme: Theme): ThemeOptions => ({
   components: {

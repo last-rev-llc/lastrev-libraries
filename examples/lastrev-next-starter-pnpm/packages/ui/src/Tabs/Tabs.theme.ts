@@ -14,8 +14,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     padding: `var(--section-padding) 0`
   }),
 
-  // introTextGrid: : {},
-
   introText: { gridColumn: 'content-start / content-end' },
 
   contentOuterGrid: {
@@ -24,7 +22,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     }
   },
 
-  // tabsContext: {},
   tabListWrap: ({ theme }) => ({
     'gridColumnStart': 'content-start',
     'gridColumnEnd': 'content-end',
@@ -52,7 +49,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     gridColumnEnd: 'content-end',
     padding: 0
   }
-  // details: {}
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Tabs'] => [];

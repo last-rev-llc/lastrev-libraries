@@ -85,12 +85,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
         variant: ownerState.variant,
         defaultVariant: 'default'
       }))
-  }),
-
-  contentGrid: {}
+  })
 };
 
-const createVariants = (theme: Theme): ComponentsVariants['Collection'] => [];
+const createVariants = (_theme: Theme): ComponentsVariants['Collection'] => [];
 
 const collectionTheme = (theme: Theme): ThemeOptions => ({
   components: {

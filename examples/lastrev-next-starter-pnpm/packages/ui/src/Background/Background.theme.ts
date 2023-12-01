@@ -4,8 +4,7 @@ import { type Theme } from '../ThemeRegistry/theme.types';
 const defaultProps: ComponentsProps['Background'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Background'] = {
-  root: ({ theme, ownerState }) => ({
-    // ...theme.mixins.applyColorScheme({ ownerState, theme }),
+  root: ({ ownerState }) => ({
     'backgroundColor': 'inherit',
     'zIndex': -1,
     'position': 'absolute',

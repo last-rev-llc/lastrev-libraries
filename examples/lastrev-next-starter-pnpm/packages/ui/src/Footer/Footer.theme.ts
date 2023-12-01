@@ -13,8 +13,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     marginBottom: 'var(--section-padding)'
   }),
 
-  // introContent: {},
-
   contentOuterGrid: {
     '& a': {
       alignItems: 'baseline'
@@ -38,13 +36,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     }
   }),
 
-  footerMenuNav: ({ theme, ownerState }) => ({
+  footerMenuNav: {
     gridRow: 2,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end'
-  }),
+  },
 
-  footerMenuNavItems: ({ theme, ownerState }) => ({
+  footerMenuNavItems: ({ theme }) => ({
     display: 'inline-flex',
     padding: 0,
     position: 'unset',

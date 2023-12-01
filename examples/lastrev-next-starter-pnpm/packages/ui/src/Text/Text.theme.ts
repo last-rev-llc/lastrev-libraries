@@ -8,7 +8,6 @@ const defaultProps: ComponentsProps['Text'] = {
 import { TextVariants } from './Text.types';
 
 const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
-  // Set some static styles
   root: {
     'width': '100%',
     'display': 'unset',

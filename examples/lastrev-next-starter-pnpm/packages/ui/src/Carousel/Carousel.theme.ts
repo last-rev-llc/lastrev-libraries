@@ -161,9 +161,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
     overflow: 'unset',
     position: 'relative',
     zIndex: 20
-  },
-
-  contentGrid: {}
+  }
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Carousel'] => [];

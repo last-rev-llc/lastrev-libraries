@@ -78,8 +78,6 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
       : { ...theme.mixins.applyColorScheme({ ownerState, theme }) })
   }),
 
-  // contentGrid: {},
-
   filtersOuterWrap: ({ theme, ownerState }) => ({
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
@@ -152,7 +150,7 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
   })
 };
 
-const createVariants = (theme: Theme): ComponentsVariants['CollectionDynamic'] => [];
+const createVariants = (_theme: Theme): ComponentsVariants['CollectionDynamic'] => [];
 
 const collectionDynamicTheme = (theme: Theme): ThemeOptions => ({
   components: {

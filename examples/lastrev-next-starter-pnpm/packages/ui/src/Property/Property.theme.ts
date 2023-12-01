@@ -5,7 +5,7 @@ import { type Theme } from '../ThemeRegistry/theme.types';
 const defaultProps: ComponentsProps['Property'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Property'] = {
-  root: ({ theme, ownerState }) => ({
+  root: ({ theme }) => ({
     ...theme.mixins.applyColorScheme({ ownerState: { backgroundColor: 'white' }, theme }),
     containerType: 'inline-size',
     position: 'relative',
@@ -26,22 +26,22 @@ const styleOverrides: ComponentsOverrides<Theme>['Property'] = {
     }
   }),
 
-  sideContentInnerWrap: ({ theme }) => ({
+  sideContentInnerWrap: {
     'display': 'flex',
     'flexDirection': 'column',
 
     '& > *': {
       marginBottom: 0
     }
-  }),
+  },
 
-  bodyListItem: ({ theme }) => ({
+  bodyListItem: {
     'padding': 'var(--grid-gap-quarter) 0',
 
     '& *': {
       marginBottom: 0
     }
-  }),
+  },
 
   listLabel: ({ theme }) => ({
     ...theme.typography.bodySmall,

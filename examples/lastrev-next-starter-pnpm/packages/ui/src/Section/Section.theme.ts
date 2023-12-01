@@ -59,34 +59,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
     })
   }),
 
-  contentWrap: ({ theme, ownerState }) => ({
-    zIndex: 2,
-    gridColumn: 'content-start/content-end'
-    // 'gridRow': 1,
-
-    // TEST TO let children blocks flow with main section grid
-    // 'display': 'contents',
-
-    // '& > *': {
-    //   gridColumn: 'unset',
-    //   gridRow: 'auto'
-    //   // ...((ownerState?.variant === SectionVariants.twoPerRow ||
-    //   //   ownerState?.variant === SectionVariants.threePerRow) && {
-    //   //   [theme.containerBreakpoints.up('md')]: {
-    //   //     gridColumn: `span var(--num-columns-md)`
-    //   //   }
-    //   // }),
-    //   // ...(ownerState?.variant === SectionVariants.threePerRow && {
-    //   //   [theme.containerBreakpoints.up('lg')]: {
-    //   //     gridColumn: `span var(--num-columns-lg)`
-    //   //   }
-    //   // })
-    // }
-  }),
+  contentWrap: { zIndex: 2, gridColumn: 'content-start/content-end' },
 
   introTextGrid: { gridColumn: 'content-start/content-end' },
-
-  // introText: { },
 
   itemsGrid: ({ theme, ownerState }) => {
     return {
@@ -109,9 +84,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
         }
       })
     };
-  },
-
-  sectionItem: ({ theme, ownerState }) => ({})
+  }
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Section'] => [];

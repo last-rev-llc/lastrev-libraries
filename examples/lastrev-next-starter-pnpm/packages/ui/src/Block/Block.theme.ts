@@ -83,8 +83,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     }
   }),
 
-  // introTextGrid: : {},
-
   introText: { gridColumn: 'content-start / content-end' },
 
   contentOuterGrid: {
@@ -92,14 +90,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
       gridColumnStart: 'auto'
     }
   },
-
-  // overline: {},
-
-  title: {},
-
-  subtitle: {},
-
-  // body: {},
 
   content: {
     'display': 'flex',
@@ -136,8 +126,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     })
   }),
 
-  // mediaItems: : {},
-
   actionsWrap: ({ theme, ownerState }) => ({
     marginTop: theme.spacing(2),
     display: 'flex',
@@ -148,8 +136,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
       flexDirection: 'row'
     }
   })
-
-  // action: : {}
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Block'] => [

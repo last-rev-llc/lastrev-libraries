@@ -77,10 +77,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
       paddingRight: 'var(--grid-margin)'
     }
   })
-
-  // name: {},
-  // jobTitle: {},
-  // email: {}
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Person'] => [];
