@@ -92,7 +92,8 @@ export const breakpointsMinMax: Record<string, { min: number; max: number }> = {
   sm: { min: 600, max: 800 },
   md: { min: 800, max: 1200 },
   lg: { min: 1200, max: 1500 },
-  xl: { min: 1500, max: 3600 }
+  xl: { min: 1500, max: 1800 },
+  xxl: { min: 1800, max: 1800 }
 };
 
 const paletteTheme = {

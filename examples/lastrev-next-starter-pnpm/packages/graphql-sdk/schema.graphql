@@ -500,9 +500,7 @@ type Page implements Content {
 }
 
 type PageAsset implements Content {
-  address: JSON
   animation: JSON
-  assetType: String
   id: String
   location: String
   name: String

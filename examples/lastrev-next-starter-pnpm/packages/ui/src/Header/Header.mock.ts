@@ -7,11 +7,10 @@ import {
 } from '../NavigationItem/NavigationItem.mock';
 
 import { type HeaderProps, HeaderVariants } from './Header.types';
-import siteMessageBaseMock from '../SiteMessage/SiteMessage.mock';
+
 import { randomId } from '../utils/randomId';
 
 const headerDefaultMock = (): HeaderProps => {
-  const siteMessageMock = siteMessageBaseMock();
   return {
     id: randomId(),
     __typename: 'Header',
@@ -21,9 +20,6 @@ const headerDefaultMock = (): HeaderProps => {
     backgroundColor: 'white',
     ctaItems: [linkButtonMock({ text: 'Header CTA 1' }), linkButtonMock({ text: 'Header CTA 1' })],
     navigationItems: [navigationItemBaseMock(), navigationItemBaseMock(), navigationItemBaseMock()],
-    siteMessageIcon: siteMessageMock.icon,
-    siteMessageLink: siteMessageMock.link,
-    siteMessageText: siteMessageMock.text,
     sidekickLookup: {} // TODO: Mock
   };
 };

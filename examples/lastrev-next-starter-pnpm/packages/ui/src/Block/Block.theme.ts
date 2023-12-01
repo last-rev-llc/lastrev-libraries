@@ -115,7 +115,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     display: 'flex',
     flexDirection: 'column',
     alignSelf: ownerState?.supplementalContent ? 'flex-start' : 'center',
-
     borderLeft: 'solid 1px var(--mui-palette-text-primary)',
     paddingLeft: 'var(--grid-gap)',
 

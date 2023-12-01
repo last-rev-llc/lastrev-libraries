@@ -21,6 +21,7 @@ export interface HeroProps extends Omit<Hero_BaseFragmentFragment, 'variant'> {
   header?: any;
   breadcrumbs?: LinkProps[];
   showFullImage?: boolean;
+  isHomepage?: boolean;
 }
 
 export interface HeroOwnerState extends HeroProps {}
@@ -44,6 +45,7 @@ interface HeroClasses {
   action: string;
   breadcrumbsWrap: string;
   contentInnerWrap: string;
+  scrollToContentWrap: string;
 }
 
 export declare type HeroClassKey = keyof HeroClasses;

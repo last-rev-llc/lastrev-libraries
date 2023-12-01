@@ -78,7 +78,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
     gridColumn: 'content-start/content-end',
     gap: 'inherit',
 
-    ...(ownerState &&
+    ...(ownerState?.variant &&
       theme.mixins.generateGridStyles({
         theme,
         layoutConfig,

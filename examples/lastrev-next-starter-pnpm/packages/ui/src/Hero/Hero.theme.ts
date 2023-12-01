@@ -53,7 +53,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
   root: ({ theme, ownerState }) => ({
     ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
-    position: 'relative'
+    position: 'relative',
+    zIndex: 2
   }),
 
   bottomContentWrap: ({ theme }) => ({
@@ -145,6 +146,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
     },
 
     img: {
+      width: '100%',
       objectFit: !!ownerState?.showFullImage ? 'contain' : 'cover'
     }
   }),
@@ -157,6 +159,30 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 
     [theme.containerBreakpoints.up('sm')]: {
       flexDirection: 'row'
+    }
+  }),
+
+  scrollToContentWrap: ({ theme }) => ({
+    'position': 'absolute',
+    'zIndex': 100,
+    'bottom': 0,
+
+    '& > *': {
+      gridColumn: 'content-start/content-end',
+      justifySelf: 'flex-end',
+      paddingLeft: 'var(--grid-gap-half)',
+      // paddingRight: 'var(--grid-margin)',
+      minHeight: '4em',
+      borderLeft: 'solid 1px var(--mui-palette-schemes-navy-secondary-main)',
+      display: 'flex',
+      transform: 'translate(0, 50%)',
+      marginBottom: 0,
+      whiteSpace: 'noWrap',
+      cursor: 'pointer',
+
+      [theme.containerBreakpoints.up('xl')]: {
+        transform: 'translate(100%, 50%)'
+      }
     }
   })
 };

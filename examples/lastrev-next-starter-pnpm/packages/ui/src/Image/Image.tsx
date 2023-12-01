@@ -25,7 +25,7 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
     aspectRatio,
     ...imageProps
   } = props;
-
+  console.log(columns);
   const quality = q || 100;
 
   const imgContent = React.useMemo(() => {
@@ -115,7 +115,7 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
 
       sources.push(
         <img
-          key="fallback"
+          key={`fallback-${src}`}
           src={`${src}?${imageWidth > imageHeight ? 'h' : 'w'}=${Math.round(maxWidth)}&q=${quality}`}
           alt={alt}
           className={className}

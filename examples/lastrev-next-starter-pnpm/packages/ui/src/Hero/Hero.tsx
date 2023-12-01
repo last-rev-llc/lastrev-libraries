@@ -18,6 +18,14 @@ import type { HeroProps, HeroOwnerState } from './Hero.types';
 const Hero = (props: HeroProps) => {
   const ownerState = { ...props };
 
+  const heroRef = React.useRef<HTMLDivElement | null>(null);
+
+  const scrollToBottom = () => {
+    if (heroRef.current) {
+      window.scrollTo({ top: heroRef.current.scrollHeight, left: 0, behavior: 'smooth' });
+    }
+  };
+
   const {
     breadcrumbs,
     bottomContent,
@@ -32,11 +40,12 @@ const Hero = (props: HeroProps) => {
     actions,
     images,
     sidekickLookup,
-    hideBreadcrumbs
+    hideBreadcrumbs,
+    isHomepage
   } = props;
 
   return (
-    <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)}>
+    <Root data-testid="Hero" ownerState={ownerState} {...sidekick(sidekickLookup)} ref={heroRef}>
       {header ? <ContentModule {...(header as any)} backgroundColor={backgroundColor} /> : null}
       <HeroBackground
         background={background ? ({ ...background, priority: true } as any) : undefined}
@@ -119,10 +128,19 @@ const Hero = (props: HeroProps) => {
           </MediaWrap>
         ) : null}
       </ContentOuterGrid>
+
       {!!bottomContent && (
         <BottomContentWrap ownerState={ownerState}>
           <BottomContent {...bottomContent} ownerState={ownerState} />
         </BottomContentWrap>
+      )}
+
+      {!isHomepage && (
+        <ScrollToContentWrap ownerState={ownerState}>
+          <Typography variant="overline" onClick={scrollToBottom}>
+            Scroll Down
+          </Typography>
+        </ScrollToContentWrap>
       )}
     </Root>
   );
@@ -228,6 +246,12 @@ const Action = styled(ContentModule, {
   name: 'Hero',
   slot: 'Action',
   overridesResolver: (_, styles) => [styles.action]
+})<{ ownerState: HeroOwnerState }>``;
+
+const ScrollToContentWrap = styled(Grid, {
+  name: 'Hero',
+  slot: 'ScrollToContentWrap',
+  overridesResolver: (_, styles) => [styles.scrollToContentWrap]
 })<{ ownerState: HeroOwnerState }>``;
 
 export default Hero;

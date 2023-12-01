@@ -4,12 +4,12 @@ import type { Theme } from '@ui/ThemeRegistry/theme.types';
 const defaultProps: ComponentsProps['Page'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Page'] = {
-  root: ({ theme }) => ({
+  root: {
     '& > *': {
       paddingTop: 'var(--section-padding)',
       paddingBottom: 'var(--section-padding)'
     }
-  })
+  }
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Page'] => [];
