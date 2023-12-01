@@ -206,6 +206,7 @@ export const mappers: Mappers = {
 const ITEM_MAPPING: { [key: string]: string } = {
   Page: 'Card',
   Blog: 'Card',
+  PageAsset: 'Card',
   Media: 'Card',
   Person: 'Card',
   PageProperty: 'Card'

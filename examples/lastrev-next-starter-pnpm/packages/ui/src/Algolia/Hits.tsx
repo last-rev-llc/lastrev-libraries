@@ -4,8 +4,6 @@ import React from 'react';
 import { useHits } from 'react-instantsearch-core';
 import { CardProps } from '../Card/Card.types';
 
-import { LayoutConfig } from '../CollectionDynamic/CollectionDynamic.theme';
-
 // https://www.algolia.com/doc/api-reference/widgets/hits/react/#hook
 const Hits = ({
   ownerState,
@@ -14,7 +12,7 @@ const Hits = ({
   gridLayout,
   ...other
 }: {
-  layoutConfig: LayoutConfig;
+  layoutConfig: any;
   gridLayout: any;
   ownerState: any;
   HitComponent: any;

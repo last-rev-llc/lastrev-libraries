@@ -4,8 +4,6 @@ import type { Mappers } from '@last-rev/types';
 import type { ApolloContext } from './types';
 
 import { pascalCase } from './utils/pascalCase';
-import { collectOptions } from './utils/collectOptions';
-// import { queryContentful } from './utils/queryContentful';
 import { getWinstonLogger } from '@last-rev/logging';
 import { defaultResolver } from './utils/defaultResolver';
 import { createType } from './utils/createType';
@@ -99,6 +97,7 @@ export const mappers: Mappers = {
             .filter((r) => r !== null)
             .map((asset: any) => createType('Media', { asset }));
         const finalItems = (items || []).concat(imageItems || []);
+
         return finalItems;
       },
 
@@ -156,6 +155,7 @@ export const mappers: Mappers = {
 
         return itemsPerRow;
       },
+
       itemsVariant: defaultResolver('itemsVariant'),
 
       itemsAspectRatio: defaultResolver('itemsAspectRatio'),
@@ -178,6 +178,7 @@ export const mappers: Mappers = {
 const ITEM_MAPPING: { [key: string]: string } = {
   Page: 'Card',
   Blog: 'Card',
+  PageAsset: 'Card',
   Media: 'Card',
   Person: 'Card',
   PageProperty: 'Card'

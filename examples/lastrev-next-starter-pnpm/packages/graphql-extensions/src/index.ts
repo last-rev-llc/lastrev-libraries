@@ -40,7 +40,7 @@ function loadFiles() {
     modules['Media'] = require('./Media.extension');
     modules['NavigationItem'] = require('./NavigationItem.extension');
     modules['Page'] = require('./Page.extension');
-    modules['PageAsset'] = require('./PropertyAsset.extension');
+    modules['PageAsset'] = require('./PageAsset.extension');
     modules['PathsConfigs'] = require('./PathsConfigs.extension');
     modules['Person'] = require('./Person.extension');
     modules['Preview'] = require('./Preview.extension');

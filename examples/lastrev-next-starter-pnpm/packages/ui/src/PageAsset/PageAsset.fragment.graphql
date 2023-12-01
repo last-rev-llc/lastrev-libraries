@@ -1,4 +1,4 @@
-fragment PropertyAsset_BaseFragment on PageAsset {
+fragment PageAsset_BaseFragment on PageAsset {
   ...Content_BaseFragment
   name
   location
@@ -8,4 +8,6 @@ fragment PropertyAsset_BaseFragment on PageAsset {
   promoImage {
     ...Media_BaseFragment
   }
+
+  promoSummary
 }

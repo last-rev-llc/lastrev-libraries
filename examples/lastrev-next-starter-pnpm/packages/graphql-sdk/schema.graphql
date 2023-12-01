@@ -503,10 +503,8 @@ type PageAsset implements Content {
   address: JSON
   animation: JSON
   assetType: String
-  body: RichText
   id: String
   location: String
-  mainImage: Media
   name: String
   promoImage: Media
   promoSummary: String
@@ -562,19 +560,6 @@ type PageProperty implements Content {
   theme: [Theme]
 }
 
-type PageResource {
-  author: Person
-  breadcrumbs: [Link]
-  contents: [Content]
-  footer: Footer
-  header: Header
-  hero: Hero
-  jsonLd: JSON
-  path: String
-  subNavigation: NavigationItem
-  variant: String
-}
-
 type Person implements Content {
   animation: JSON
   body: RichText
@@ -607,11 +592,6 @@ type Person implements Content {
   theme: [Theme]
 }
 
-type PricingPlan {
-  actions: [Link]
-  bodyRTE: RichText
-}
-
 type Query {
   _service: _Service!
   availableLocales: Locales
@@ -625,12 +605,6 @@ type Query {
   sitemap(locales: [String!], preview: Boolean, root: String!, site: String): Sitemap
   sitemapIndex(preview: Boolean, site: String): Sitemap
   sitemapPage(contentType: String!, locale: String, page: Int, preview: Boolean, site: String): SitemapPage
-}
-
-type Quote {
-  actions: [Link]
-  image: Media
-  logo: Media
 }
 
 type RichText {
