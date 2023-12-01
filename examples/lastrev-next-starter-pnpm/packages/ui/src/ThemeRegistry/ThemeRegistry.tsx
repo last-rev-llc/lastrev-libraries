@@ -35,6 +35,15 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --grid-margin-lg: 96px;
                 --grid-margin-xl: 128px;
 
+                --container-width-xs: ${theme.containerBreakpoints.values.sm}px;
+                --container-width-sm: ${theme.containerBreakpoints.values.sm}px;
+                --container-width-md: ${theme.containerBreakpoints.values.md}px;
+                --container-width-lg: ${theme.containerBreakpoints.values.lg}px;
+                --container-width-xl: ${theme.containerBreakpoints.values.xl}px;
+                --container-width: var(--container-width-xs);
+                --container-margin: var(--container-width-xs);
+                --content-width: min(var(--container-width), (100vw - (2 * var(--grid-margin))));
+
                 --grid-margin: var(--grid-margin-xs);
 
                 --grid-gap-xs: var(--grid-margin-xs);
@@ -51,6 +60,8 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 ${theme.breakpoints.up('sm')} {
                   --grid-gap: var(--grid-gap-sm);
                   --grid-margin: var(--grid-margin-sm);
+                  --container-width: var(--container-width-sm);
+                  --container-margin: var(--container-width-md);
                 }
 
                 ${theme.breakpoints.up('md')} {
@@ -58,16 +69,22 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                   --grid-margin: var(--grid-margin-md);
                   --grid-gap-half: calc(var(--grid-gap) / 2);
                   --grid-gap-quarter: calc(var(--grid-gap) / 4);
+                  --container-width: var(--container-width-md);
+                  --container-margin: var(--container-width-lg);
                 }
 
                 ${theme.breakpoints.up('lg')} {
                   --grid-gap: var(--grid-gap-lg);
                   --grid-margin: var(--grid-margin-lg);
+                  --container-width: var(--container-width-lg);
+                  --container-margin: var(--container-width-xl);
                 }
 
                 ${theme.breakpoints.up('xl')} {
                   --grid-gap: var(--grid-gap-xl);
                   --grid-margin: var(--grid-margin-xl);
+                  --container-width: var(--container-width-xl);
+                  --container-margin: var(--container-width-xl);
                 }
 
                 --section-padding: calc(var(--grid-gap) * 4);
