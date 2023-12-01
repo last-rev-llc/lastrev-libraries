@@ -582,6 +582,7 @@ type Person implements Content {
   department: String
   education: [String]
   email: String
+  firstName: String
   footer: Footer
   header: Header
   hero: Content
@@ -589,9 +590,11 @@ type Person implements Content {
   isPartner: Boolean
   jobTitle: String
   jsonLd: JSON
+  lastName: String
   lr__path__: String
   mainImage: Media
   name: String
+  nameSuffix: String
   onInvestmentCommitee: Boolean
   path: String
   previousExperiences: [String]

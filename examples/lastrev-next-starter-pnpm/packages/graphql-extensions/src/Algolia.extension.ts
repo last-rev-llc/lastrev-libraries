@@ -109,6 +109,8 @@ export const mappers = {
         if (!path) return [];
 
         const name = getLocalizedField(person.fields, 'name', ctx);
+        const firstName = getLocalizedField(person.fields, 'firstName', ctx);
+        const lastName = getLocalizedField(person.fields, 'lastName', ctx);
         const subtitle = getLocalizedField(person.fields, 'jobTitle', ctx);
         const body = getLocalizedField(person.fields, 'body', ctx);
         const summary = getLocalizedField(person.fields, 'promoSummary', ctx);
@@ -144,7 +146,7 @@ export const mappers = {
                 locale: ctx.locale || ctx.defaultLocale,
                 preview: !!ctx.preview,
                 title: name,
-                defaultSortField: formatNameForSorting(name),
+                defaultSortField: formatNameForSorting(firstName && lastName ? `${lastName}, ${firstName}` : name),
                 subtitle,
                 pubDateTimestamp: new Date(person.sys.createdAt).getTime(),
                 body: documentToPlainTextString(body),
