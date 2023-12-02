@@ -25,7 +25,7 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
     aspectRatio,
     ...imageProps
   } = props;
-  console.log(columns);
+
   const quality = q || 100;
 
   const imgContent = React.useMemo(() => {
