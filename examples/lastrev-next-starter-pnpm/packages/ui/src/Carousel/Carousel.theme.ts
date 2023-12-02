@@ -140,7 +140,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Carousel'] = {
         overflow: 'unset'
       },
       'padding': '0 0 calc(1.5 * var(--section-padding))',
-      'gridColumn': 'content-start/full-end'
+      'gridColumn': 'start/full-end'
     };
   },
 

@@ -35,7 +35,7 @@ declare module '@mui/material/styles' {
   }
 
   interface BreakpointOverrides {
-    // xxl: true; // adds the `xxl` breakpoint
+    xxl: true; // adds the `xxl` breakpoint
   }
 
   interface Theme {

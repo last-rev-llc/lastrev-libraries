@@ -35,7 +35,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
       : { ...theme.mixins.applyColorScheme({ ownerState, theme }) })
   }),
 
-  introText: { gridColumn: 'content-start / content-end' },
+  introText: { gridColumn: 'start / end' },
 
   contentOuterGrid: ({ theme, ownerState }) => ({
     gridColumn: 'full-start/full-end',
@@ -59,9 +59,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
     })
   }),
 
-  contentWrap: { zIndex: 2, gridColumn: 'content-start/content-end' },
+  contentWrap: { zIndex: 2, gridColumn: 'start/end' },
 
-  introTextGrid: { gridColumn: 'content-start/content-end' },
+  introTextGrid: { gridColumn: 'start/end' },
 
   itemsGrid: ({ theme, ownerState }) => {
     return {

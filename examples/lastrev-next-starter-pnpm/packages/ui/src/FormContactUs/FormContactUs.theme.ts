@@ -20,13 +20,12 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
   }),
 
   sideContentWrap: ({ theme }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     paddingBottom: 'var(--grid-gap-double)',
 
     [theme.containerBreakpoints.up('md')]: {
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'four-end'
+      gridColumnEnd: 'half'
     }
   }),
 
@@ -55,11 +54,11 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
   contentWrap: ({ theme }) => ({
     ...theme.mixins.applyColorScheme({ ownerState: { backgroundColor: 'white' }, theme }),
     padding: 'var(--grid-gap-double)',
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
 
     [theme.containerBreakpoints.up('md')]: {
-      gridColumnStart: 'five-start',
+      gridColumnStart: 'half',
       gridColumnEnd: 'full-end',
       paddingRight: 'var(--grid-margin)'
     }
@@ -77,8 +76,8 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
   formFields: ({ theme, ownerState }) => ({
     'paddingBottom': 'var(--grid-gap-double)',
     '& > *': {
-      'gridColumnStart': 'content-start',
-      'gridColumnEnd': 'content-end',
+      'gridColumnStart': 'start',
+      'gridColumnEnd': 'end',
 
       '*': {
         ...theme.typography.h5,
@@ -105,18 +104,18 @@ const styleOverrides: ComponentsOverrides<Theme>['FormContactUs'] = {
       [theme.containerBreakpoints.up('md')]: {
         ...((ownerState?.formLayout === 'twoColumn' || ownerState?.formLayout === 'block') && {
           '&:nth-child(odd)': {
-            gridColumnStart: 'content-start',
-            gridColumnEnd: 'content-half'
+            gridColumnStart: 'start',
+            gridColumnEnd: 'half'
           },
 
           '&:nth-child(even)': {
-            gridColumnStart: 'content-half',
-            gridColumnEnd: 'content-end'
+            gridColumnStart: 'half',
+            gridColumnEnd: 'end'
           },
 
           '&[class*=fullWidth]': {
-            gridColumnStart: 'content-start',
-            gridColumnEnd: 'content-end'
+            gridColumnStart: 'start',
+            gridColumnEnd: 'end'
           }
         })
       }

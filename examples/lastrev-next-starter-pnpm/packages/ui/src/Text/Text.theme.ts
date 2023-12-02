@@ -27,7 +27,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
 
       '& > *': {
         display: 'unset',
-        gridColumn: 'content-start/content-end'
+        gridColumn: 'start/end'
       }
     }
   },
@@ -47,8 +47,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
     '&&': {
       ...(ownerState?.variant === 'thin'
         ? {
-            gridColumnStart: 'content-start',
-            gridColumnEnd: 'content-end',
+            gridColumnStart: 'start',
+            gridColumnEnd: 'end',
 
             [theme.breakpoints.up('lg')]: {
               gridColumnStart: 'two-start',

@@ -79,8 +79,8 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
   }),
 
   filtersOuterWrap: ({ theme, ownerState }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     display: 'flex',
     flexDirection: 'column',
     gap: 'var(--grid-gap)',
@@ -93,7 +93,7 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
 
       ...(ownerState?.filtersPlacement === 'left' && {
         '&&': {
-          gridColumn: 'content-start/three-end'
+          gridColumn: 'start/three-end'
         }
       })
     }
@@ -120,14 +120,14 @@ const styleOverrides: ComponentsOverrides<Theme>['CollectionDynamic'] = {
   }),
 
   resultsWrap: ({ theme, ownerState }) => ({
-    gridColumn: 'content-start/content-end',
+    gridColumn: 'start/end',
     gap: 'inherit',
     gridRow: 2,
 
     [theme.containerBreakpoints.up('md')]: {
       ...(ownerState?.filtersPlacement === 'left' && {
         gridRow: 1,
-        gridColumn: 'four-start/content-end'
+        gridColumn: 'four-start/end'
         // ...theme.mixins.applyColorScheme({ ownerState, backgroundColor: 'white' })
       })
     }

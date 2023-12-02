@@ -15,13 +15,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   }),
 
   sideContentWrap: ({ theme }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     paddingBottom: 'var(--grid-gap-double)',
     gridRow: 2,
 
     [theme.containerBreakpoints.up('lg')]: {
-      gridColumnStart: 'content-start',
+      gridColumnStart: 'start',
       gridColumnEnd: 'four-end',
       gridRow: 1
     }
@@ -57,8 +57,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   contentWrap: ({ theme }) => ({
     ...theme.mixins.applyColorScheme({ ownerState: { backgroundColor: 'white' }, theme }),
     padding: 'var(--grid-gap-double)',
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     gridRow: 1,
 
     [theme.containerBreakpoints.up('lg')]: {

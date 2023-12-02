@@ -15,12 +15,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   }),
 
   sideContentWrap: ({ theme }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     paddingBottom: 'var(--grid-gap-double)',
 
     [theme.containerBreakpoints.up('lg')]: {
-      gridColumnStart: 'content-start',
+      gridColumnStart: 'start',
       gridColumnEnd: 'four-end'
     }
   }),
@@ -68,8 +68,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   contentWrap: ({ theme }) => ({
     ...theme.mixins.applyColorScheme({ ownerState: { backgroundColor: 'white' }, theme }),
     padding: 'var(--grid-gap-double)',
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
 
     [theme.containerBreakpoints.up('lg')]: {
       gridColumnStart: 'five-start',

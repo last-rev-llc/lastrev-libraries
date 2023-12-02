@@ -24,7 +24,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
   },
 
   logoRoot: ({ theme }) => ({
-    gridColumn: 'content-start / content-half',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'half',
     gridRow: 1,
     alignSelf: 'center',
     width: '100%',
@@ -33,11 +34,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
 
     [theme.breakpoints.up('lg')]: {
       gridRow: '2',
-      gridColumn: 'content-start / span 3'
-    },
-
-    [theme.breakpoints.up('xl')]: {
-      gridColumn: 'content-start / span 3'
+      gridColumnEnd: 'three-quarter'
     }
   }),
 
@@ -57,8 +54,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
       marginRight: 'unset',
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-end',
+      gridColumnStart: 'start',
+      gridColumnEnd: 'end',
       justifyContent: 'flex-end',
       gap: 'var(--grid-gap)',
       gridRow: 1
@@ -67,8 +64,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
 
   headerMobileNavWrap: ({ theme, menuVisible }) => ({
     gridRow: 2,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     maxHeight: '100vh',
     overflow: 'hidden',
     height: 'auto',
@@ -117,21 +114,20 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       overflow: 'unset',
       maxHeight: '100%',
       gridRow: 2,
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-end'
+      gridColumnStart: 'start',
+      gridColumnEnd: 'end'
     },
 
     [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'content-end'
+      gridColumnStart: 'three-start'
     }
   }),
 
   iconButtonWrap: ({ theme }) => ({
     'padding': 0,
     'display': 'flex',
-    'gridColumnStart': 'content-half',
-    'gridColumnEnd': 'content-end',
+    'gridColumnStart': 'half',
+    'gridColumnEnd': 'end',
     'gridRow': 1,
     'justifyContent': 'flex-end',
 

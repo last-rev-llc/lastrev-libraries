@@ -30,64 +30,39 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
               :root {
                 --grid-margin-xs: 12px;
-                --grid-margin-sm: 36px;
-                --grid-margin-md: 64px;
+                --grid-margin-sm: 24px;
+                --grid-margin-md: 24px;
                 --grid-margin-lg: 96px;
                 --grid-margin-xl: 128px;
-
-                --container-width-xs: ${theme.containerBreakpoints.values.sm}px;
-                --container-width-sm: ${theme.containerBreakpoints.values.sm}px;
-                --container-width-md: ${theme.containerBreakpoints.values.md}px;
-                --container-width-lg: ${theme.containerBreakpoints.values.lg}px;
-                --container-width-xl: ${theme.containerBreakpoints.values.xl}px;
-                --container-width: var(--container-width-xs);
-                --container-margin: var(--container-width-xs);
-                --content-width: min(var(--container-width), (100vw - (2 * var(--grid-margin))));
-
+                --grid-margin-xxl: 128px;
                 --grid-margin: var(--grid-margin-xs);
 
                 --grid-gap-xs: var(--grid-margin-xs);
                 --grid-gap-sm: calc(var(--grid-margin-sm) / 2);
-                --grid-gap-md: calc(var(--grid-margin-md) / 4);
+                --grid-gap-md: calc(var(--grid-margin-md) / 2);
                 --grid-gap-lg: calc(var(--grid-margin-lg) / 4);
                 --grid-gap-xl: calc(var(--grid-margin-xl) / 4);
+                --grid-gap-xxl: calc(var(--grid-margin-xl) / 4);
 
                 --grid-gap: var(--grid-margin-xs);
                 --grid-gap-double: calc(var(--grid-gap) * 2);
                 --grid-gap-half: calc(var(--grid-gap) / 1);
                 --grid-gap-quarter: calc(var(--grid-gap) / 2);
 
-                ${theme.breakpoints.up('sm')} {
-                  --grid-gap: var(--grid-gap-sm);
-                  --grid-margin: var(--grid-margin-sm);
-                  --container-width: var(--container-width-sm);
-                  --container-margin: var(--container-width-md);
-                }
-
-                ${theme.breakpoints.up('md')} {
-                  --grid-gap: var(--grid-gap-md);
-                  --grid-margin: var(--grid-margin-md);
-                  --grid-gap-half: calc(var(--grid-gap) / 2);
-                  --grid-gap-quarter: calc(var(--grid-gap) / 4);
-                  --container-width: var(--container-width-md);
-                  --container-margin: var(--container-width-lg);
-                }
-
-                ${theme.breakpoints.up('lg')} {
-                  --grid-gap: var(--grid-gap-lg);
-                  --grid-margin: var(--grid-margin-lg);
-                  --container-width: var(--container-width-lg);
-                  --container-margin: var(--container-width-xl);
-                }
-
-                ${theme.breakpoints.up('xl')} {
-                  --grid-gap: var(--grid-gap-xl);
-                  --grid-margin: var(--grid-margin-xl);
-                  --container-width: var(--container-width-xl);
-                  --container-margin: var(--container-width-xl);
-                }
-
-                --section-padding: calc(var(--grid-gap) * 4);
+                --container-width-xs: ${theme.containerBreakpoints.values.sm}px;
+                --container-width-sm: ${theme.containerBreakpoints.values.sm}px;
+                --container-width-md: ${theme.containerBreakpoints.values.md}px;
+                --container-width-lg: ${theme.containerBreakpoints.values.lg}px;
+                --container-width-xl: ${theme.containerBreakpoints.values.xl}px;
+                --container-width-xxl: ${theme.containerBreakpoints.values.xxl}px;
+                --container-width: var(--container-width-xs);
+                --container-margin: var(--container-width-xs);
+                --container-gutter: minmax(
+                  var(--grid-margin),
+                  calc(50vw - var(--grid-margin) - (var(--container-margin) / 2))
+                );
+                --content-width: min(var(--container-width), (100vw - (2 * var(--grid-margin))));
+                --container-max: min(var(--container-width), (100vw - (2 * var(--grid-margin))));
 
                 --h1-font-size-base: ${h1FontSizeBase}rem;
                 --h2-font-size-base: ${h2FontSizeBase}rem;
@@ -104,10 +79,6 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --h6-font-size: ${h6FontSizeBase}rem;
                 --display1-font-size: var(--h1-font-size);
                 --display2-font-size: var(--h2-font-size);
-                --display3-font-size: var(--h3-font-size);
-                --display4-font-size: var(--h3-font-size);
-                --display5-font-size: var(--h5-font-size);
-                --display6-font-size: var(--h6-font-size);
                 --overline-font-size: var(--h6-font-size);
                 --body1-font-size: 1.125rem;
                 --body2-font-size: 1.125rem;
@@ -123,10 +94,6 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --h6-line-height: 15px;
                 --display1-line-height: var(--h1-line-height);
                 --display2-line-height: var(--h2-line-height);
-                --display3-line-height: var(--h3-line-height);
-                --display4-line-height: var(--h4-line-height);
-                --display5-line-height: var(--h5-line-height);
-                --display6-line-height: var(--h6-line-height);
                 --overline-line-height: var(--h6-line-height);
 
                 --body1-line-height: 1.5em;
@@ -143,10 +110,6 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --h6-margin: 0 0 0.5em 0;
                 --display1-margin: var(--h1-margin);
                 --display2-margin: var(--h2-margin);
-                --display3-margin: var(--h3-margin);
-                --display4-margin: var(--h4-margin);
-                --display5-margin: var(--h5-margin);
-                --display6-margin: var(--h6-margin);
                 --overline-margin: 0 0 var(--grid-gap) 0;
                 --body1-margin: 0;
                 --body2-margin: 0;
@@ -162,11 +125,6 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
                 --h6-font-weight: 600;
                 --display1-font-weight: var(--h1-font-weight);
                 --display2-font-weight: var(--h2-font-weight);
-                --display3-font-weight: var(--h3-font-weight);
-                --display4-font-weight: var(--h4-font-weight);
-                --display5-font-weight: var(--h5-font-weight);
-                --display6-font-weight: var(--h6-font-weight);
-                --overline-font-weight: var(--h6-font-weight);
                 --body1-font-weight: 400;
                 --body2-font-weight: 400;
                 --bodyXSmall-font-weight: 400;
@@ -179,7 +137,7 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
 
                 --swiper-navigation-size: var(--grid-gap);
                 --swiper-navigation-top-offset: 100%;
-                --swiper-navigation-sides-offset: 0; //calc(var(--grid-margin) / 2);
+                --swiper-navigation-sides-offset: 0;
                 --swiper-navigation-color: var(--swiper-theme-color);
 
                 --swiper-pagination-color: var(--mui-palette-text-primary);
@@ -212,14 +170,90 @@ export default function ThemeRegistry({ children }: { children: React.ReactNode 
               }
 
               body * {
-                ${theme.containerBreakpoints.down('xl')} {
-                  --h1-font-size: ${(h1FontSizeBase / 8) * 8}rem;
-                  --h2-font-size: ${(h2FontSizeBase / 8) * 8}rem;
-                  --h3-font-size: ${(h3FontSizeBase / 8) * 8}rem;
+                --section-padding: calc(var(--grid-gap) * 4);
+                ${theme.breakpoints.up('sm')} {
+                  --grid-gap: var(--grid-gap-sm);
+                  --grid-margin: var(--grid-margin-sm);
+                  --container-width: var(--container-width-sm);
+                  --container-margin: var(--container-width-md);
+                  --container-gutter: minmax(
+                    var(--grid-margin),
+                    calc(50vw - var(--grid-margin) - (var(--container-margin) / 2))
+                  );
+                }
+
+                ${theme.breakpoints.up('md')} {
+                  --grid-gap: var(--grid-gap-md);
+                  --grid-margin: var(--grid-margin-md);
+                  --grid-gap-half: calc(var(--grid-gap) / 2);
+                  --grid-gap-quarter: calc(var(--grid-gap) / 4);
+                  --container-width: var(--container-width-md);
+                  --container-margin: var(--container-width-lg);
+                  --container-gutter: minmax(
+                    var(--grid-margin),
+                    calc(50vw - var(--grid-margin) - (var(--container-margin) / 2))
+                  );
+                }
+
+                ${theme.breakpoints.up('lg')} {
+                  --grid-gap: var(--grid-gap-lg);
+                  --grid-margin: var(--grid-margin-lg);
+                  --container-width: var(--container-width-lg);
+                  --container-margin: var(--container-width-xl);
+                  --container-gutter: minmax(
+                    var(--grid-margin),
+                    calc(50vw - var(--grid-margin) - (var(--container-margin) / 2))
+                  );
+                }
+
+                ${theme.breakpoints.up('xl')} {
+                  --grid-gap: var(--grid-gap-xl);
+                  --grid-margin: var(--grid-margin-xl);
+                  --container-width: var(--container-width-xl);
+                  --container-margin: var(--container-width-xl);
+                  --container-gutter: minmax(
+                    var(--grid-margin),
+                    calc(50vw - var(--grid-margin) - (var(--container-margin) / 2))
+                  );
+                }
+
+                ${theme.breakpoints.up('xxl')} {
+                  --grid-gap: var(--grid-gap-xxl);
+                  --grid-margin: var(--grid-margin-xxl);
+                  --container-width: var(--container-width-xxl);
+                  --container-margin: var(--container-width-xxl);
+                  --container-gutter: minmax(
+                    var(--grid-margin),
+                    calc(50vw - var(--grid-margin) - (var(--container-margin) / 2))
+                  );
+                }
+
+                ${theme.containerBreakpoints.up('xl')} {
+                  --h1-font-size: ${(h1FontSizeBase / 8) * 9}rem;
+                  --h2-font-size: ${(h2FontSizeBase / 8) * 9}rem;
+                  --h3-font-size: ${(h3FontSizeBase / 8) * 9}rem;
                   --h4-font-size: var(--h3-font-size);
-                  --h5-font-size: ${(h5FontSizeBase / 8) * 8}rem;
-                  --h6-font-size: ${(h6FontSizeBase / 8) * 8}rem;
-                  /* --section-padding: var(--grid-gap-double); */
+                  --h5-font-size: ${(h5FontSizeBase / 8) * 9}rem;
+
+                  --body1-font-size: 1.125rem;
+                  --body2-font-size: 1.125rem;
+                  --bodyXSmall-font-size: 0.875rem;
+                  --bodySmall-font-size: 1rem;
+                  --bodyLarge-font-size: 1.25rem;
+                }
+
+                ${theme.containerBreakpoints.down('lg')} {
+                  --h1-font-size: ${(h1FontSizeBase / 8) * 7}rem;
+                  --h2-font-size: ${(h2FontSizeBase / 8) * 7}rem;
+                  --h3-font-size: ${(h3FontSizeBase / 8) * 7}rem;
+                  --h4-font-size: var(--h3-font-size);
+                  --h5-font-size: ${(h5FontSizeBase / 8) * 7}rem;
+
+                  --body1-font-size: 1rem;
+                  --body2-font-size: 1rem;
+                  --bodyXSmall-font-size: 0.875rem;
+                  --bodySmall-font-size: 1rem;
+                  --bodyLarge-font-size: 1.125rem;
                 }
 
                 ${theme.containerBreakpoints.down('lg')} {
