@@ -17,27 +17,27 @@
     "chromatic": "npx chromatic"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.22.15",
-    "@babel/preset-react": "^7.22.15",
-    "@storybook/addon-essentials": "^7.4.2",
-    "@storybook/addon-interactions": "^7.4.2",
-    "@storybook/addon-links": "^7.4.2",
-    "@storybook/addon-onboarding": "^1.0.8",
-    "@storybook/blocks": "^7.4.2",
-    "@storybook/nextjs": "^7.4.2",
-    "@storybook/react": "^7.4.2",
-    "@storybook/react-webpack5": "^7.4.2",
-    "@storybook/testing-library": "^0.2.1",
+    "@babel/preset-env": "^7.23.5",
+    "@babel/preset-react": "^7.23.3",
+    "@storybook/addon-essentials": "^7.6.3",
+    "@storybook/addon-interactions": "^7.6.3",
+    "@storybook/addon-links": "^7.6.3",
+    "@storybook/addon-onboarding": "^1.0.9",
+    "@storybook/blocks": "^7.6.3",
+    "@storybook/nextjs": "^7.6.3",
+    "@storybook/react": "^7.6.3",
+    "@storybook/react-webpack5": "^7.6.3",
+    "@storybook/testing-library": "^0.2.2",
     "chromatic": "^7.1.0",
-    "cypress": "^13.1.0",
-    "dotenv-cli": "latest",
+    "cypress": "^13.6.0",
+    "dotenv-cli": "^7.3.0",
     "next": "^13.5.6",
     "prettier": "^2.7.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "^7.4.2",
-    "turbo": "latest"
+    "storybook": "^7.6.3",
+    "turbo": "^1.10.16"
   },
   "packageManager": "pnpm@8.6.10",
   "version": "",
@@ -45,7 +45,7 @@
   "_id": "lastrev-next-starter@",
   "pnpm": {
     "patchedDependencies": {
-      "@mui/system@5.14.9": "patches/@mui__system@5.14.9.patch"
+      "@mui/system@5.14.19": "patches/@mui__system@5.14.19.patch"
     }
   }
 }
