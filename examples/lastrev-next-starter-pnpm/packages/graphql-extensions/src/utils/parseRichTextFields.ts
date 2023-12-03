@@ -22,12 +22,12 @@ async function parseEntry(entry: any, ctx: ApolloContext) {
   if (!entry || !entry?.sys?.id) return '';
   switch (entry.sys.contentType.sys.id) {
     case 'section': {
-      const contentIds = (getLocalizedField(entry.fields, 'contents', ctx) || []).map((c: Entry<any>) => c.sys.id);
+      const contentIds = (getLocalizedField(entry.fields, 'contents', ctx) || []).map((c: any) => c.sys.id);
       const loaded = await ctx.loaders.entryLoader.loadMany(
         contentIds.map((id: string) => ({ id, preview: !!ctx.preview }))
       );
       const parsed: string[] = await Promise.all(
-        loaded.filter((l) => !!(l as Entry<any>)?.sys?.id).map((e) => parseEntry(e as Entry<any>, ctx))
+        loaded.filter((l) => !!(l as any)?.sys?.id).map((e) => parseEntry(e as any, ctx))
       );
       return parsed.join(' ');
     }
