@@ -34,7 +34,7 @@ index 3135e6c4211a8bc88c4b5e4fbc38c08a379fd384..30046a4208757b5a565f578d0e98ef66
 +    accessToken,
 +    host: "cdn.contentful.com",
 +  });
-+  const locales = await client.withoutLinkResolution.getLocales();
++  const locales = await client.getLocales();
 +  return locales.items;
  };
  const createContext = async ({ config }) => {

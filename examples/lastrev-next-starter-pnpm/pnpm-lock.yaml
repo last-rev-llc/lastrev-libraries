@@ -18,7 +18,7 @@ patchedDependencies:
     hash: 4ol3x6stvhmla7sf6wmgvez5si
     path: patches/@last-rev__graphql-contentful-core@0.5.17.patch
   '@last-rev/graphql-contentful-helpers@0.4.7':
-    hash: inpdged2ryyat6kpnhfdxmjmli
+    hash: amgtmi54b4q6hcijebtsn72ug4
     path: patches/@last-rev__graphql-contentful-helpers@0.4.7.patch
   '@last-rev/graphql-schema-gen@0.2.4':
     hash: fabpr2adbkcng4qumnsyftac3e
@@ -5082,7 +5082,7 @@ packages:
       '@last-rev/contentful-reports': 0.1.3(encoding@0.1.13)
       '@last-rev/contentful-sync-to-fs': 0.3.11(patch_hash=jzxngnutiqe7fkpmx3h2ip4kue)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/graphql-contentful-core': 0.5.17(patch_hash=4ol3x6stvhmla7sf6wmgvez5si)(encoding@0.1.13)(jest@26.6.3)(next@13.5.6)(typescript@5.3.2)
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=inpdged2ryyat6kpnhfdxmjmli)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/testing-library': 0.1.10(jest@26.6.3)(typescript@5.3.2)
       '@octokit/rest': 18.12.0(encoding@0.1.13)
       '@types/inquirer': 7.3.3
@@ -5259,7 +5259,7 @@ packages:
     resolution: {integrity: sha512-7YgwW+Yjqo8F7b9wpECjNLSL0AYZAB5JeipYxh8HIt+1/GzdyprvgRHFlO4e4FmxCpkvOqWqckNhdH6Asgsp+g==}
     dependencies:
       '@last-rev/contentful-path-util': 0.1.24(encoding@0.1.13)
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=inpdged2ryyat6kpnhfdxmjmli)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/logging': 0.1.4(encoding@0.1.13)
       '@last-rev/timer': 0.2.0
       fs-extra: 10.1.0
@@ -5283,7 +5283,7 @@ packages:
       '@aws-sdk/lib-dynamodb': 3.405.0(@aws-sdk/client-dynamodb@3.405.0)
       '@last-rev/contentful-path-util': 0.1.24(encoding@0.1.13)
       '@last-rev/contentful-webhook-parser': 0.1.4
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=inpdged2ryyat6kpnhfdxmjmli)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       contentful: 9.3.5
       ioredis: 5.3.2
       jsonwebtoken: 9.0.2
@@ -5342,7 +5342,7 @@ packages:
       '@last-rev/contentful-cms-loader': 0.4.3(patch_hash=eiroetazhmnsc36wyh4yly3rey)(encoding@0.1.13)
       '@last-rev/contentful-fs-loader': 0.3.2(encoding@0.1.13)
       '@last-rev/contentful-redis-loader': 0.5.4(encoding@0.1.13)
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=inpdged2ryyat6kpnhfdxmjmli)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/graphql-schema-gen': 0.2.4(patch_hash=fabpr2adbkcng4qumnsyftac3e)(encoding@0.1.13)
       '@last-rev/logging': 0.1.4(encoding@0.1.13)
       '@last-rev/testing-library': 0.1.10(jest@26.6.3)(typescript@5.3.2)
@@ -5377,7 +5377,7 @@ packages:
       '@last-rev/contentful-cms-loader': 0.4.3(patch_hash=eiroetazhmnsc36wyh4yly3rey)(encoding@0.1.13)
       '@last-rev/contentful-fs-loader': 0.3.2(encoding@0.1.13)
       '@last-rev/contentful-redis-loader': 0.5.4(encoding@0.1.13)
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=inpdged2ryyat6kpnhfdxmjmli)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/graphql-schema-gen': 0.2.4(patch_hash=fabpr2adbkcng4qumnsyftac3e)(encoding@0.1.13)
       '@last-rev/logging': 0.1.4(encoding@0.1.13)
       '@last-rev/testing-library': 0.1.10(jest@26.6.3)(typescript@5.3.2)
@@ -5412,7 +5412,7 @@ packages:
       '@last-rev/contentful-cms-loader': 0.4.3(patch_hash=eiroetazhmnsc36wyh4yly3rey)(encoding@0.1.13)
       '@last-rev/contentful-fs-loader': 0.3.2(encoding@0.1.13)
       '@last-rev/contentful-redis-loader': 0.5.4(encoding@0.1.13)
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=inpdged2ryyat6kpnhfdxmjmli)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/graphql-schema-gen': 0.2.4(patch_hash=fabpr2adbkcng4qumnsyftac3e)(encoding@0.1.13)
       '@last-rev/logging': 0.1.4(encoding@0.1.13)
       '@last-rev/testing-library': 0.1.10(jest@26.6.3)(typescript@5.3.2)
@@ -5464,7 +5464,7 @@ packages:
       - typescript
     dev: false
 
-  /@last-rev/graphql-contentful-helpers@0.4.7(patch_hash=inpdged2ryyat6kpnhfdxmjmli)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2):
+  /@last-rev/graphql-contentful-helpers@0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2):
     resolution: {integrity: sha512-qgJ/D4Z2CaQDMNrY3NIs/gFRthQ1TzxjG1noH8NAWyXCNbFF8K82Y1QxJ9NIl496axVyx/PDFcCuvBhhzPSexA==}
     dependencies:
       '@last-rev/app-config': 0.5.1
