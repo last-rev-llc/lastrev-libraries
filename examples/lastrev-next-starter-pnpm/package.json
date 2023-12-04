@@ -17,27 +17,27 @@
     "chromatic": "npx chromatic"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.22.15",
-    "@babel/preset-react": "^7.22.15",
-    "@storybook/addon-essentials": "^7.4.2",
-    "@storybook/addon-interactions": "^7.4.2",
-    "@storybook/addon-links": "^7.4.2",
-    "@storybook/addon-onboarding": "^1.0.8",
-    "@storybook/blocks": "^7.4.2",
-    "@storybook/nextjs": "^7.4.2",
-    "@storybook/react": "^7.4.2",
-    "@storybook/react-webpack5": "^7.4.2",
-    "@storybook/testing-library": "^0.2.1",
-    "chromatic": "^7.1.0",
-    "cypress": "^13.1.0",
-    "dotenv-cli": "latest",
-    "next": "^13.5.6",
-    "prettier": "^2.7.1",
+    "@babel/preset-env": "^7.23.5",
+    "@babel/preset-react": "^7.23.3",
+    "@storybook/addon-essentials": "^7.6.3",
+    "@storybook/addon-interactions": "^7.6.3",
+    "@storybook/addon-links": "^7.6.3",
+    "@storybook/addon-onboarding": "^1.0.9",
+    "@storybook/blocks": "^7.6.3",
+    "@storybook/nextjs": "^7.6.3",
+    "@storybook/react": "^7.6.3",
+    "@storybook/react-webpack5": "^7.6.3",
+    "@storybook/testing-library": "^0.2.2",
+    "chromatic": "^10.0.0",
+    "cypress": "^13.6.0",
+    "dotenv-cli": "^7.3.0",
+    "next": "^14.0.3",
+    "prettier": "^3.1.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "storybook": "^7.4.2",
-    "turbo": "latest"
+    "storybook": "^7.6.3",
+    "turbo": "^1.10.16"
   },
   "packageManager": "pnpm@8.6.10",
   "version": "",
@@ -45,7 +45,19 @@
   "_id": "lastrev-next-starter@",
   "pnpm": {
     "patchedDependencies": {
-      "@mui/system@5.14.9": "patches/@mui__system@5.14.9.patch"
+      "@mui/system@5.14.19": "patches/@mui__system@5.14.19.patch",
+      "@last-rev/contentful-cms-loader@0.4.3": "patches/@last-rev__contentful-cms-loader@0.4.3.patch",
+      "@last-rev/contentful-webhook-handler@0.4.16": "patches/@last-rev__contentful-webhook-handler@0.4.16.patch",
+      "@last-rev/graphql-contentful-core@0.5.17": "patches/@last-rev__graphql-contentful-core@0.5.17.patch",
+      "@last-rev/graphql-contentful-helpers@0.4.7": "patches/@last-rev__graphql-contentful-helpers@0.4.7.patch",
+      "@last-rev/graphql-schema-gen@0.2.4": "patches/@last-rev__graphql-schema-gen@0.2.4.patch",
+      "@last-rev/contentful-sync-to-fs@0.3.11": "patches/@last-rev__contentful-sync-to-fs@0.3.11.patch"
+    }
+  },
+  "overrides": {
+    "dependency-name": {
+      "contentful": "^10.6.13",
+      "graphql": "^16.8.1"
     }
   }
 }

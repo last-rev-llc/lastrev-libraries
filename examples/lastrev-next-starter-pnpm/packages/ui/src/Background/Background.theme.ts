@@ -40,7 +40,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Background'] = {
     }),
 
     '> *': {
-      'gridColumn': '1/-1',
+      'gridColumn': 'full-start/full-end',
       'height': '100%',
       'width': '100%',
       '&:is(img)': {

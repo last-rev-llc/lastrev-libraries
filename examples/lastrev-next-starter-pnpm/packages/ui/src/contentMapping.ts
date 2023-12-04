@@ -26,7 +26,6 @@ const HeaderNavGroup = dynamic(() => import('./Header/HeaderNavGroup/HeaderNavGr
 const HeaderNavLinkNested = dynamic(() => import('./Header/HeaderNavLinkNested/HeaderNavLinkNested'));
 const FooterNavigationItem = dynamic(() => import('./Footer/FooterNavigationItem'));
 const FooterNavigationItemGroup = dynamic(() => import('./Footer/FooterNavigationItemGroup'));
-const Breadcrumbs = dynamic(() => import('./Breadcrumbs'));
 
 export const contentMapping: {
   [key: string]: any;
@@ -40,34 +39,23 @@ export const contentMapping: {
   Page,
   Text,
   RichText,
-  Carousel,
   Collection,
-  'CollectionDynamic:.*Carousel': CollectionDynamic,
+  'CollectionDynamic(:.*Carousel)?': CollectionDynamic,
   'Collection:.*Carousel': Carousel,
-  'CollectionDynamic': CollectionDynamic,
-  'CollectionExpandable:Tabs': Tabs,
+  'CollectionExpandable(:Tabs)?': Tabs,
   'CollectionExpandable:Accordion': Accordion,
-  'CollectionExpandable': Tabs,
   Card,
   Person,
   'PageProperty': Property,
   Blog,
-  Accordion,
-  Tabs,
   Section,
-  FooterNavigationItem,
-  FooterNavigationItemGroup,
   'ElementForm:contactUs': FormContactUs,
   NavigationItem,
   'NavigationItem:link': HeaderNavLink,
   'NavigationItem:linkNested': HeaderNavLinkNested,
   'NavigationItem:group': HeaderNavGroup,
   'NavigationItem:linkFooter': FooterNavigationItem,
-  'NavigationItem:linkBoldedFooter': FooterNavigationItemGroup,
-  'NavigationItem:labelFooter': FooterNavigationItemGroup,
-  'NavigationItem:footerContactDetailsFooter': FooterNavigationItemGroup,
-  'NavigationItem:groupFooter': FooterNavigationItemGroup,
-  Breadcrumbs
+  'NavigationItem:(linkBoldedFooter|labelFooter|footerContactDetailsFooter|groupFooter)': FooterNavigationItemGroup
 };
 
 export default contentMapping;

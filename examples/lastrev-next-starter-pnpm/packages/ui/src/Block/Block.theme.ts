@@ -83,7 +83,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     }
   }),
 
-  introText: { gridColumn: 'content-start / content-end' },
+  introText: { gridColumn: 'start / end' },
 
   contentOuterGrid: {
     '> *': {
@@ -101,12 +101,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     }
   },
 
-  mainContentWrap: ({ ownerState, theme }) => ({
+  mainContentWrap: ({ ownerState }) => ({
     display: 'flex',
     flexDirection: 'column',
     alignSelf: ownerState?.supplementalContent ? 'flex-start' : 'center',
     borderLeft: 'solid 1px var(--mui-palette-text-primary)',
     paddingLeft: 'var(--grid-gap)',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
 
     ...(!ownerState?.media && {
       gridRow: '1 !important'
@@ -118,6 +120,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Block'] = {
     alignItems: ownerState?.supplementalContent ? 'flex-start' : 'center',
     justifyContent: ownerState?.supplementalContent ? 'flex-start' : 'center',
     flexDirection: 'column',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
 
     ...(!ownerState?.media && {
       [theme.containerBreakpoints.down('md')]: {
@@ -146,24 +150,18 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
     style: {
       '[class*=mainContentWrap]': {
         gridRow: 2,
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'half'
         }
       },
 
       '[class*=sideContentWrap]': {
         gridRow: 1,
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnStart: 'half'
         }
       }
     }
@@ -175,24 +173,18 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
     style: {
       '[class*=mainContentWrap]': {
         gridRow: 2,
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'half'
         }
       },
 
       '[class*=sideContentWrap]': {
         gridRow: 1,
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnStart: 'half'
         }
       }
     }
@@ -204,13 +196,10 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
     style: {
       '[class*=mainContentWrap]': {
         gridRow: 2,
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'half'
         }
       },
 
@@ -220,7 +209,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
         gridColumnEnd: 'full-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnStart: 'content-half',
+          gridColumnStart: 'half',
           gridColumnEnd: 'full-end'
         }
       }
@@ -233,22 +222,16 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
     style: {
       '[class*=mainContentWrap]': {
         gridRow: 2,
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnStart: 'half'
         }
       },
 
       '[class*=sideContentWrap]': {
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
-
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'half'
         }
       }
     }
@@ -260,22 +243,19 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
     style: {
       '[class*=mainContentWrap]': {
         gridRow: 2,
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnStart: 'half'
         }
       },
 
       '[class*=sideContentWrap]': {
-        gridColumnStart: '1',
-        gridColumnEnd: '-1',
+        gridColumnStart: 'full-start',
+        gridColumnEnd: 'full-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'half'
         }
       }
     }
@@ -288,28 +268,21 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
     style: {
       '[class*=mainContentWrap]': {
         gridRow: 2,
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('sm')]: {
           gridRow: 1,
-          gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnStart: 'half'
         },
 
         [theme.containerBreakpoints.up('lg')]: {
           gridRow: 1,
-          gridColumnStart: 'five-start',
-          gridColumnEnd: 'content-end'
+          gridColumnStart: 'five-start'
         }
       },
 
       '[class*=sideContentWrap]': {
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
-
         [theme.containerBreakpoints.up('sm')]: {
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'half'
         },
 
         [theme.containerBreakpoints.up('lg')]: {
@@ -325,35 +298,28 @@ const createVariants = (theme: Theme): ComponentsVariants['Block'] => [
     style: {
       '[class*=mainContentWrap]': {
         gridRow: 2,
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
           gridRow: 1,
-          gridColumnStart: 'content-start',
-          gridColumnEnd: 'content-half'
+          gridColumnEnd: 'half'
         },
 
         [theme.containerBreakpoints.up('lg')]: {
           gridRow: 1,
-          gridColumnStart: 'content-start',
+
           gridColumnEnd: 'seven-end'
         }
       },
 
       '[class*=sideContentWrap]': {
         gridRow: 1,
-        gridColumnStart: 'content-start',
-        gridColumnEnd: 'content-end',
 
         [theme.containerBreakpoints.up('md')]: {
-          gridColumnStart: 'content-half',
-          gridColumnEnd: 'content-end'
+          gridColumnStart: 'half'
         },
 
         [theme.containerBreakpoints.up('lg')]: {
-          gridColumnStart: 'eight-start',
-          gridColumnEnd: 'content-end'
+          gridColumnStart: 'eight-start'
         }
       }
     }

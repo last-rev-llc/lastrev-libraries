@@ -75,7 +75,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Collection'] = {
   }),
 
   itemsGrid: ({ theme, ownerState }) => ({
-    gridColumn: 'content-start/content-end',
+    gridColumn: 'start/end',
     gap: 'inherit',
 
     ...(ownerState?.variant &&

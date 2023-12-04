@@ -42,7 +42,20 @@ let config = {
     }
   },
   images: {
-    domains: ['images.ctfassets.net', 'images.contentful.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.ctfassets.net',
+        port: '',
+        pathname: '/eojhq1xf4v9y/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.contentful.com',
+        port: '',
+        pathname: '/eojhq1xf4v9y/**',
+      }
+    ],
     formats: ['image/avif', 'image/webp']
   },
   env: {

@@ -14,12 +14,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Accordion'] = {
     flexDirection: 'column'
   }),
 
-  introText: { gridColumn: 'content-start / content-end' },
+  introText: { gridColumn: 'start / end' },
 
   contentOuterGrid: {
     '> *': {
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-end'
+      gridColumnStart: 'start',
+      gridColumnEnd: 'end'
     },
     'gridGap': 0
   }

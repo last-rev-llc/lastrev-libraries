@@ -20,7 +20,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   },
 
   logoRoot: ({ theme }) => ({
-    gridColumn: 'content-start / content-half',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'half',
     gridRow: 1,
     alignSelf: 'center',
     width: '100%',
@@ -28,18 +29,14 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     display: 'block',
 
     [theme.breakpoints.up('md')]: {
-      gridColumn: 'content-start / span 2'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumn: 'content-start / span 3'
+      gridColumnEnd: 'quarter'
     }
   }),
 
   footerMenuNav: {
     gridRow: 2,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end'
   },
 
   footerMenuNavItems: ({ theme }) => ({
@@ -75,8 +72,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   socialLinks: ({ theme }) => ({
     gridRow: 3,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
 
     display: 'inline-flex',
     justifyContent: 'space-between',
@@ -86,12 +83,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'content-three-quarter',
-      gridColumnEnd: 'content-end',
+      gridColumnStart: 'three-quarter',
       justifyContent: 'flex-end',
       justifySelf: 'flex-end',
-      width: '100%',
-      gridRow: 3
+      width: '100%'
     }
   }),
 
@@ -116,23 +111,22 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   copyrightDisclaimerWrap: ({ theme }) => ({
     gridRow: 4,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     display: 'inline-flex',
     alignItems: 'flex-start',
     height: '100%',
     justifySelf: 'flex-start',
 
     [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-half'
+      gridColumnEnd: 'half'
     }
   }),
 
   legalLinks: ({ theme }) => ({
     gridRow: 3,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     display: 'inline-flex',
     alignItems: 'flex-end',
     height: '100%',
@@ -149,8 +143,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     },
 
     [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-half'
+      gridColumnEnd: 'half'
     }
   }),
 
@@ -174,13 +167,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   disclaimerWrap: ({ theme }) => ({
     gridRow: 5,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
 
     [theme.breakpoints.up('md')]: {
       gridRow: '3 / 5',
-      gridColumnStart: 'content-half',
-      gridColumnEnd: 'content-end'
+      gridColumnStart: 'half'
     }
   })
 };

@@ -1,0 +1,809 @@
+diff --git a/dist/index.esm.js b/dist/index.esm.js
+index 6eac4e6ae971738dd122cf427c250a5202a1fe2a..62a63225c1ea15ddf4cfbcd6bbfff3eebf64b8eb 100644
+--- a/dist/index.esm.js
++++ b/dist/index.esm.js
+@@ -1 +1,390 @@
+-import{__awaiter as e,__generator as n,__assign as t}from"tslib";import r from"lodash/fp/flow";import o from"lodash/flatten";import s from"lodash/map";import i from"lodash/fp/groupBy";import c from"lodash/fp/mapValues";import{join as u}from"path";import{writeFile as l,ensureDir as a,createFile as f,readFile as d}from"fs-extra";import{createClient as v}from"contentful";import m from"@last-rev/timer";import{getWinstonLogger as p}from"@last-rev/logging";import{updateAllPaths as y}from"@last-rev/contentful-path-util";import{createContext as h}from"@last-rev/graphql-contentful-helpers";var w=p({package:"contentful-sync-to-fs",module:"contentfulSyncToFs"}),g=r(i("sys.contentType.sys.id"),c((function(e){return s(e,"sys.id")}))),k=function(t,r,o){return e(void 0,void 0,void 0,(function(){var s;return n(this,(function(i){switch(i.label){case 0:return s=u(r,o),[4,a(s)];case 1:return i.sent(),[4,Promise.all(t.map((function(t){return e(void 0,void 0,void 0,(function(){var e,r;return n(this,(function(n){switch(n.label){case 0:return e=t.sys.id,r=u(s,"".concat(e,".json")),[4,l(r,JSON.stringify(t))];case 1:return n.sent(),[2]}}))}))})))];case 2:return i.sent(),[2]}}))}))},b=function(t,r,o){return e(void 0,void 0,void 0,(function(){var e;return n(this,(function(n){switch(n.label){case 0:return e=u(r,o),[4,a(e)];case 1:return n.sent(),[4,l(u(e,"sync_tokens.json"),JSON.stringify(t))];case 2:return n.sent(),[2]}}))}))},P=function(t,r){return e(void 0,void 0,void 0,(function(){var e,o,s;return n(this,(function(n){switch(n.label){case 0:return n.trys.push([0,2,,3]),e=u(t,r,"sync_tokens.json"),w.info("Using sync tokens from: ".concat(e),{caller:"readContentfulSyncTokens"}),s=(o=JSON).parse,[4,d(e,"utf-8")];case 1:return[2,s.apply(o,[n.sent()])];case 2:return n.sent(),[2,{}];case 3:return[2]}}))}))},T=function(t,r){return e(void 0,void 0,void 0,(function(){var o;return n(this,(function(s){switch(s.label){case 0:return o=u(r,"entry_ids_by_content_type"),[4,a(o)];case 1:return s.sent(),[4,Promise.all(Object.keys(t).map((function(r){return e(void 0,void 0,void 0,(function(){var s,i;return n(this,(function(c){switch(c.label){case 0:return s=u(o,r),[4,a(s)];case 1:return c.sent(),i=t[r],[4,Promise.all(i.map((function(t){return e(void 0,void 0,void 0,(function(){var e;return n(this,(function(n){switch(n.label){case 0:return e=u(o,r),[4,f(u(e,t))];case 1:return n.sent(),[2]}}))}))})))];case 2:return c.sent(),[2]}}))}))})))];case 2:return s.sent(),[2]}}))}))},S=function(e,n){if(!e)throw Error("Missing required argument: ".concat(n))},_=function(r,o,s,i){return e(void 0,void 0,void 0,(function(){return n(this,(function(e){switch(e.label){case 0:return[4,r.sync(t({initial:!s,content_type:o,resolveLinks:!1,nextSyncToken:s},!s&&i&&i.contentful.syncLimit&&{limit:i.contentful.syncLimit}))];case 1:return[2,e.sent()]}}))}))},x=function(t,r){return e(void 0,void 0,void 0,(function(){return n(this,(function(e){switch(e.label){case 0:return[4,t.sync({initial:!r,resolveLinks:!1,nextSyncToken:r,type:"Asset"})];case 1:return[2,e.sent()]}}))}))},D=function(t,r,o,s){return e(void 0,void 0,void 0,(function(){return n(this,(function(i){return[2,Promise.all(r.map((function(r,i){return e(void 0,void 0,void 0,(function(){var e;return n(this,(function(n){switch(n.label){case 0:return e=r.sys.id,o[e]?[3,2]:[4,(c=100*i,new Promise((function(e){return setTimeout(e,c)})))];case 1:n.sent(),n.label=2;case 2:return[2,_(t,e,o[e],s)]}var c}))}))})))]}))}))},j=function(r,s){return e(void 0,void 0,void 0,(function(){var e,i,c,l,a,f,d,p,_,j,L,M,O,I,F;return n(this,(function(n){switch(n.label){case 0:return e=new m,S(r.fs.contentDir,"fs.contentDir"),S(r.contentful.contentDeliveryToken,"contentful.contentDeliveryToken"),S(r.contentful.contentPreviewToken,"contentful.contentPreviewToken"),S(r.contentful.spaceId,"contentful.spaceId"),[4,(i=v({accessToken:r.contentful.usePreview?r.contentful.contentPreviewToken:r.contentful.contentDeliveryToken,space:r.contentful.spaceId,environment:r.contentful.env,host:r.contentful.usePreview?"preview.contentful.com":"cdn.contentful.com",resolveLinks:!1})).getContentTypes()];case 1:return c=n.sent().items,l=u(r.fs.contentDir,r.contentful.spaceId,r.contentful.env,r.contentful.usePreview?"preview":"production"),a=new m,[4,P(l,"")];case 2:return f=n.sent(),[4,Promise.all([D(i,c,f,r),x(i,f.asset)])];case 3:return d=n.sent(),p=d[0],_=d[1],j=o(p.map((function(e){return e.entries}))),L=_.assets,w.debug("fetched entries and assets",{caller:"sync",elapsedMs:a.end().millis,itemsSuccessful:j.length+L.length}),M=g(j),(O=c.reduce((function(e,n,r){var o,s,i;return t(t({},e),((o={})[null===(s=null==n?void 0:n.sys)||void 0===s?void 0:s.id]=null===(i=p[r])||void 0===i?void 0:i.nextSyncToken,o))}),{})).asset=_.nextSyncToken,a=new m,[4,Promise.all([k(j,l,"entries"),k(L,l,"assets"),k(c,l,"content_types"),T(M,l),b(O,l,"")])];case 4:return n.sent(),w.debug("Wrote content files",{caller:"sync",elapsedMs:a.end().millis,itemsSuccessful:j.length+L.length+c.length+Object.keys(M).length}),a=new m,I=y,F={config:r,updateForPreview:!!r.contentful.usePreview,updateForProd:!r.contentful.usePreview},[4,h({config:r})];case 5:return[4,I.apply(void 0,[(F.context=n.sent(),F.sites=s,F)])];case 6:return n.sent(),w.debug("wrote paths tree",{caller:"sync",elapsedMs:a.end().millis}),w.debug("Sync to file system",{caller:"sync",elapsedMs:e.end().millis}),[2]}}))}))};export{j as default};
++import { __awaiter as e, __generator as n, __assign as t } from "tslib";
++import r from "lodash/fp/flow";
++import o from "lodash/flatten";
++import s from "lodash/map";
++import i from "lodash/fp/groupBy";
++import c from "lodash/fp/mapValues";
++import { join as u } from "path";
++import {
++  writeFile as l,
++  ensureDir as a,
++  createFile as f,
++  readFile as d,
++} from "fs-extra";
++import { createClient as v } from "contentful";
++import m from "@last-rev/timer";
++import { getWinstonLogger as p } from "@last-rev/logging";
++import { updateAllPaths as y } from "@last-rev/contentful-path-util";
++import { createContext as h } from "@last-rev/graphql-contentful-helpers";
++var w = p({ package: "contentful-sync-to-fs", module: "contentfulSyncToFs" }),
++  g = r(
++    i("sys.contentType.sys.id"),
++    c(function (e) {
++      return s(e, "sys.id");
++    })
++  ),
++  k = function (t, r, o) {
++    return e(void 0, void 0, void 0, function () {
++      var s;
++      return n(this, function (i) {
++        switch (i.label) {
++          case 0:
++            return (s = u(r, o)), [4, a(s)];
++          case 1:
++            return (
++              i.sent(),
++              [
++                4,
++                Promise.all(
++                  t.map(function (t) {
++                    return e(void 0, void 0, void 0, function () {
++                      var e, r;
++                      return n(this, function (n) {
++                        switch (n.label) {
++                          case 0:
++                            return (
++                              (e = t.sys.id),
++                              (r = u(s, "".concat(e, ".json"))),
++                              [4, l(r, JSON.stringify(t))]
++                            );
++                          case 1:
++                            return n.sent(), [2];
++                        }
++                      });
++                    });
++                  })
++                ),
++              ]
++            );
++          case 2:
++            return i.sent(), [2];
++        }
++      });
++    });
++  },
++  b = function (t, r, o) {
++    return e(void 0, void 0, void 0, function () {
++      var e;
++      return n(this, function (n) {
++        switch (n.label) {
++          case 0:
++            return (e = u(r, o)), [4, a(e)];
++          case 1:
++            return (
++              n.sent(), [4, l(u(e, "sync_tokens.json"), JSON.stringify(t))]
++            );
++          case 2:
++            return n.sent(), [2];
++        }
++      });
++    });
++  },
++  P = function (t, r) {
++    return e(void 0, void 0, void 0, function () {
++      var e, o, s;
++      return n(this, function (n) {
++        switch (n.label) {
++          case 0:
++            return (
++              n.trys.push([0, 2, , 3]),
++              (e = u(t, r, "sync_tokens.json")),
++              w.info("Using sync tokens from: ".concat(e), {
++                caller: "readContentfulSyncTokens",
++              }),
++              (s = (o = JSON).parse),
++              [4, d(e, "utf-8")]
++            );
++          case 1:
++            return [2, s.apply(o, [n.sent()])];
++          case 2:
++            return n.sent(), [2, {}];
++          case 3:
++            return [2];
++        }
++      });
++    });
++  },
++  T = function (t, r) {
++    return e(void 0, void 0, void 0, function () {
++      var o;
++      return n(this, function (s) {
++        switch (s.label) {
++          case 0:
++            return (o = u(r, "entry_ids_by_content_type")), [4, a(o)];
++          case 1:
++            return (
++              s.sent(),
++              [
++                4,
++                Promise.all(
++                  Object.keys(t).map(function (r) {
++                    return e(void 0, void 0, void 0, function () {
++                      var s, i;
++                      return n(this, function (c) {
++                        switch (c.label) {
++                          case 0:
++                            return (s = u(o, r)), [4, a(s)];
++                          case 1:
++                            return (
++                              c.sent(),
++                              (i = t[r]),
++                              [
++                                4,
++                                Promise.all(
++                                  i.map(function (t) {
++                                    return e(
++                                      void 0,
++                                      void 0,
++                                      void 0,
++                                      function () {
++                                        var e;
++                                        return n(this, function (n) {
++                                          switch (n.label) {
++                                            case 0:
++                                              return (
++                                                (e = u(o, r)), [4, f(u(e, t))]
++                                              );
++                                            case 1:
++                                              return n.sent(), [2];
++                                          }
++                                        });
++                                      }
++                                    );
++                                  })
++                                ),
++                              ]
++                            );
++                          case 2:
++                            return c.sent(), [2];
++                        }
++                      });
++                    });
++                  })
++                ),
++              ]
++            );
++          case 2:
++            return s.sent(), [2];
++        }
++      });
++    });
++  },
++  S = function (e, n) {
++    if (!e) throw Error("Missing required argument: ".concat(n));
++  },
++  _ = function (r, o, s, i) {
++    return e(void 0, void 0, void 0, function () {
++      return n(this, function (e) {
++        switch (e.label) {
++          case 0:
++            return [
++              4,
++              r.withoutLinkResolution.sync(
++                t(
++                  {
++                    initial: !s,
++                    content_type: o,
++                    nextSyncToken: s,
++                  },
++                  !s &&
++                    i &&
++                    i.contentful.syncLimit && { limit: i.contentful.syncLimit }
++                )
++              ),
++            ];
++          case 1:
++            return [2, e.sent()];
++        }
++      });
++    });
++  },
++  x = function (t, r) {
++    return e(void 0, void 0, void 0, function () {
++      return n(this, function (e) {
++        switch (e.label) {
++          case 0:
++            return [
++              4,
++              t.withoutLinkResolution.sync({
++                initial: !r,
++                nextSyncToken: r,
++                type: "Asset",
++              }),
++            ];
++          case 1:
++            return [2, e.sent()];
++        }
++      });
++    });
++  },
++  D = function (t, r, o, s) {
++    return e(void 0, void 0, void 0, function () {
++      return n(this, function (i) {
++        return [
++          2,
++          Promise.all(
++            r.map(function (r, i) {
++              return e(void 0, void 0, void 0, function () {
++                var e;
++                return n(this, function (n) {
++                  switch (n.label) {
++                    case 0:
++                      return (
++                        (e = r.sys.id),
++                        o[e]
++                          ? [3, 2]
++                          : [
++                              4,
++                              ((c = 100 * i),
++                              new Promise(function (e) {
++                                return setTimeout(e, c);
++                              })),
++                            ]
++                      );
++                    case 1:
++                      n.sent(), (n.label = 2);
++                    case 2:
++                      return [2, _(t, e, o[e], s)];
++                  }
++                  var c;
++                });
++              });
++            })
++          ),
++        ];
++      });
++    });
++  },
++  j = function (r, s) {
++    return e(void 0, void 0, void 0, function () {
++      var e, i, c, l, a, f, d, p, _, j, L, M, O, I, F;
++      return n(this, function (n) {
++        switch (n.label) {
++          case 0:
++            return (
++              (e = new m()),
++              S(r.fs.contentDir, "fs.contentDir"),
++              S(
++                r.contentful.contentDeliveryToken,
++                "contentful.contentDeliveryToken"
++              ),
++              S(
++                r.contentful.contentPreviewToken,
++                "contentful.contentPreviewToken"
++              ),
++              S(r.contentful.spaceId, "contentful.spaceId"),
++              [
++                4,
++                (i = v({
++                  accessToken: r.contentful.usePreview
++                    ? r.contentful.contentPreviewToken
++                    : r.contentful.contentDeliveryToken,
++                  space: r.contentful.spaceId,
++                  environment: r.contentful.env,
++                  host: r.contentful.usePreview
++                    ? "preview.contentful.com"
++                    : "cdn.contentful.com",
++                }).withoutLinkResolution).getContentTypes(),
++              ]
++            );
++          case 1:
++            return (
++              (c = n.sent().items),
++              (l = u(
++                r.fs.contentDir,
++                r.contentful.spaceId,
++                r.contentful.env,
++                r.contentful.usePreview ? "preview" : "production"
++              )),
++              (a = new m()),
++              [4, P(l, "")]
++            );
++          case 2:
++            return (
++              (f = n.sent()), [4, Promise.all([D(i, c, f, r), x(i, f.asset)])]
++            );
++          case 3:
++            return (
++              (d = n.sent()),
++              (p = d[0]),
++              (_ = d[1]),
++              (j = o(
++                p.map(function (e) {
++                  return e.entries;
++                })
++              )),
++              (L = _.assets),
++              w.debug("fetched entries and assets", {
++                caller: "sync",
++                elapsedMs: a.end().millis,
++                itemsSuccessful: j.length + L.length,
++              }),
++              (M = g(j)),
++              ((O = c.reduce(function (e, n, r) {
++                var o, s, i;
++                return t(
++                  t({}, e),
++                  (((o = {})[
++                    null === (s = null == n ? void 0 : n.sys) || void 0 === s
++                      ? void 0
++                      : s.id
++                  ] =
++                    null === (i = p[r]) || void 0 === i
++                      ? void 0
++                      : i.nextSyncToken),
++                  o)
++                );
++              }, {})).asset = _.nextSyncToken),
++              (a = new m()),
++              [
++                4,
++                Promise.all([
++                  k(j, l, "entries"),
++                  k(L, l, "assets"),
++                  k(c, l, "content_types"),
++                  T(M, l),
++                  b(O, l, ""),
++                ]),
++              ]
++            );
++          case 4:
++            return (
++              n.sent(),
++              w.debug("Wrote content files", {
++                caller: "sync",
++                elapsedMs: a.end().millis,
++                itemsSuccessful:
++                  j.length + L.length + c.length + Object.keys(M).length,
++              }),
++              (a = new m()),
++              (I = y),
++              (F = {
++                config: r,
++                updateForPreview: !!r.contentful.usePreview,
++                updateForProd: !r.contentful.usePreview,
++              }),
++              [4, h({ config: r })]
++            );
++          case 5:
++            return [
++              4,
++              I.apply(void 0, [((F.context = n.sent()), (F.sites = s), F)]),
++            ];
++          case 6:
++            return (
++              n.sent(),
++              w.debug("wrote paths tree", {
++                caller: "sync",
++                elapsedMs: a.end().millis,
++              }),
++              w.debug("Sync to file system", {
++                caller: "sync",
++                elapsedMs: e.end().millis,
++              }),
++              [2]
++            );
++        }
++      });
++    });
++  };
++export { j as default };
+diff --git a/dist/index.js b/dist/index.js
+index 2fba9f76baffbb223347687548b46d53e571b3ab..642321bdb3629cfeaee929f12000015027a5b5ab 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1 +1,407 @@
+-"use strict";var e=require("tslib"),n=require("lodash/fp/flow"),t=require("lodash/flatten"),r=require("lodash/map"),i=require("lodash/fp/groupBy"),s=require("lodash/fp/mapValues"),o=require("path"),u=require("fs-extra"),c=require("contentful"),a=require("@last-rev/timer"),l=require("@last-rev/logging"),f=require("@last-rev/contentful-path-util"),d=require("@last-rev/graphql-contentful-helpers");function v(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var _=v(n),p=v(t),y=v(r),h=v(i),w=v(s),g=v(a),m=l.getWinstonLogger({package:"contentful-sync-to-fs",module:"contentfulSyncToFs"}),b=_.default(h.default("sys.contentType.sys.id"),w.default((function(e){return y.default(e,"sys.id")}))),k=function(n,t,r){return e.__awaiter(void 0,void 0,void 0,(function(){var i;return e.__generator(this,(function(s){switch(s.label){case 0:return i=o.join(t,r),[4,u.ensureDir(i)];case 1:return s.sent(),[4,Promise.all(n.map((function(n){return e.__awaiter(void 0,void 0,void 0,(function(){var t,r;return e.__generator(this,(function(e){switch(e.label){case 0:return t=n.sys.id,r=o.join(i,"".concat(t,".json")),[4,u.writeFile(r,JSON.stringify(n))];case 1:return e.sent(),[2]}}))}))})))];case 2:return s.sent(),[2]}}))}))},P=function(n,t,r){return e.__awaiter(void 0,void 0,void 0,(function(){var i;return e.__generator(this,(function(e){switch(e.label){case 0:return i=o.join(t,r),[4,u.ensureDir(i)];case 1:return e.sent(),[4,u.writeFile(o.join(i,"sync_tokens.json"),JSON.stringify(n))];case 2:return e.sent(),[2]}}))}))},j=function(n,t){return e.__awaiter(void 0,void 0,void 0,(function(){var r,i,s;return e.__generator(this,(function(e){switch(e.label){case 0:return e.trys.push([0,2,,3]),r=o.join(n,t,"sync_tokens.json"),m.info("Using sync tokens from: ".concat(r),{caller:"readContentfulSyncTokens"}),s=(i=JSON).parse,[4,u.readFile(r,"utf-8")];case 1:return[2,s.apply(i,[e.sent()])];case 2:return e.sent(),[2,{}];case 3:return[2]}}))}))},T=function(n,t){return e.__awaiter(void 0,void 0,void 0,(function(){var r;return e.__generator(this,(function(i){switch(i.label){case 0:return r=o.join(t,"entry_ids_by_content_type"),[4,u.ensureDir(r)];case 1:return i.sent(),[4,Promise.all(Object.keys(n).map((function(t){return e.__awaiter(void 0,void 0,void 0,(function(){var i,s;return e.__generator(this,(function(c){switch(c.label){case 0:return i=o.join(r,t),[4,u.ensureDir(i)];case 1:return c.sent(),s=n[t],[4,Promise.all(s.map((function(n){return e.__awaiter(void 0,void 0,void 0,(function(){var i;return e.__generator(this,(function(e){switch(e.label){case 0:return i=o.join(r,t),[4,u.createFile(o.join(i,n))];case 1:return e.sent(),[2]}}))}))})))];case 2:return c.sent(),[2]}}))}))})))];case 2:return i.sent(),[2]}}))}))},q=function(e,n){if(!e)throw Error("Missing required argument: ".concat(n))},S=function(n,t,r,i){return e.__awaiter(void 0,void 0,void 0,(function(){return e.__generator(this,(function(s){switch(s.label){case 0:return[4,n.sync(e.__assign({initial:!r,content_type:t,resolveLinks:!1,nextSyncToken:r},!r&&i&&i.contentful.syncLimit&&{limit:i.contentful.syncLimit}))];case 1:return[2,s.sent()]}}))}))},D=function(n,t){return e.__awaiter(void 0,void 0,void 0,(function(){return e.__generator(this,(function(e){switch(e.label){case 0:return[4,n.sync({initial:!t,resolveLinks:!1,nextSyncToken:t,type:"Asset"})];case 1:return[2,e.sent()]}}))}))},x=function(n,t,r,i){return e.__awaiter(void 0,void 0,void 0,(function(){return e.__generator(this,(function(s){return[2,Promise.all(t.map((function(t,s){return e.__awaiter(void 0,void 0,void 0,(function(){var o;return e.__generator(this,(function(e){switch(e.label){case 0:return o=t.sys.id,r[o]?[3,2]:[4,(u=100*s,new Promise((function(e){return setTimeout(e,u)})))];case 1:e.sent(),e.label=2;case 2:return[2,S(n,o,r[o],i)]}var u}))}))})))]}))}))};module.exports=function(n,t){return e.__awaiter(void 0,void 0,void 0,(function(){var r,i,s,u,a,l,v,_,y,h,w,S,F,L,M;return e.__generator(this,(function(O){switch(O.label){case 0:return r=new g.default,q(n.fs.contentDir,"fs.contentDir"),q(n.contentful.contentDeliveryToken,"contentful.contentDeliveryToken"),q(n.contentful.contentPreviewToken,"contentful.contentPreviewToken"),q(n.contentful.spaceId,"contentful.spaceId"),[4,(i=c.createClient({accessToken:n.contentful.usePreview?n.contentful.contentPreviewToken:n.contentful.contentDeliveryToken,space:n.contentful.spaceId,environment:n.contentful.env,host:n.contentful.usePreview?"preview.contentful.com":"cdn.contentful.com",resolveLinks:!1})).getContentTypes()];case 1:return s=O.sent().items,u=o.join(n.fs.contentDir,n.contentful.spaceId,n.contentful.env,n.contentful.usePreview?"preview":"production"),a=new g.default,[4,j(u,"")];case 2:return l=O.sent(),[4,Promise.all([x(i,s,l,n),D(i,l.asset)])];case 3:return v=O.sent(),_=v[0],y=v[1],h=p.default(_.map((function(e){return e.entries}))),w=y.assets,m.debug("fetched entries and assets",{caller:"sync",elapsedMs:a.end().millis,itemsSuccessful:h.length+w.length}),S=b(h),(F=s.reduce((function(n,t,r){var i,s,o;return e.__assign(e.__assign({},n),((i={})[null===(s=null==t?void 0:t.sys)||void 0===s?void 0:s.id]=null===(o=_[r])||void 0===o?void 0:o.nextSyncToken,i))}),{})).asset=y.nextSyncToken,a=new g.default,[4,Promise.all([k(h,u,"entries"),k(w,u,"assets"),k(s,u,"content_types"),T(S,u),P(F,u,"")])];case 4:return O.sent(),m.debug("Wrote content files",{caller:"sync",elapsedMs:a.end().millis,itemsSuccessful:h.length+w.length+s.length+Object.keys(S).length}),a=new g.default,L=f.updateAllPaths,M={config:n,updateForPreview:!!n.contentful.usePreview,updateForProd:!n.contentful.usePreview},[4,d.createContext({config:n})];case 5:return[4,L.apply(void 0,[(M.context=O.sent(),M.sites=t,M)])];case 6:return O.sent(),m.debug("wrote paths tree",{caller:"sync",elapsedMs:a.end().millis}),m.debug("Sync to file system",{caller:"sync",elapsedMs:r.end().millis}),[2]}}))}))};
++"use strict";
++var e = require("tslib"),
++  n = require("lodash/fp/flow"),
++  t = require("lodash/flatten"),
++  r = require("lodash/map"),
++  i = require("lodash/fp/groupBy"),
++  s = require("lodash/fp/mapValues"),
++  o = require("path"),
++  u = require("fs-extra"),
++  c = require("contentful"),
++  a = require("@last-rev/timer"),
++  l = require("@last-rev/logging"),
++  f = require("@last-rev/contentful-path-util"),
++  d = require("@last-rev/graphql-contentful-helpers");
++function v(e) {
++  return e && "object" == typeof e && "default" in e ? e : { default: e };
++}
++var _ = v(n),
++  p = v(t),
++  y = v(r),
++  h = v(i),
++  w = v(s),
++  g = v(a),
++  m = l.getWinstonLogger({
++    package: "contentful-sync-to-fs",
++    module: "contentfulSyncToFs",
++  }),
++  b = _.default(
++    h.default("sys.contentType.sys.id"),
++    w.default(function (e) {
++      return y.default(e, "sys.id");
++    })
++  ),
++  k = function (n, t, r) {
++    return e.__awaiter(void 0, void 0, void 0, function () {
++      var i;
++      return e.__generator(this, function (s) {
++        switch (s.label) {
++          case 0:
++            return (i = o.join(t, r)), [4, u.ensureDir(i)];
++          case 1:
++            return (
++              s.sent(),
++              [
++                4,
++                Promise.all(
++                  n.map(function (n) {
++                    return e.__awaiter(void 0, void 0, void 0, function () {
++                      var t, r;
++                      return e.__generator(this, function (e) {
++                        switch (e.label) {
++                          case 0:
++                            return (
++                              (t = n.sys.id),
++                              (r = o.join(i, "".concat(t, ".json"))),
++                              [4, u.writeFile(r, JSON.stringify(n))]
++                            );
++                          case 1:
++                            return e.sent(), [2];
++                        }
++                      });
++                    });
++                  })
++                ),
++              ]
++            );
++          case 2:
++            return s.sent(), [2];
++        }
++      });
++    });
++  },
++  P = function (n, t, r) {
++    return e.__awaiter(void 0, void 0, void 0, function () {
++      var i;
++      return e.__generator(this, function (e) {
++        switch (e.label) {
++          case 0:
++            return (i = o.join(t, r)), [4, u.ensureDir(i)];
++          case 1:
++            return (
++              e.sent(),
++              [4, u.writeFile(o.join(i, "sync_tokens.json"), JSON.stringify(n))]
++            );
++          case 2:
++            return e.sent(), [2];
++        }
++      });
++    });
++  },
++  j = function (n, t) {
++    return e.__awaiter(void 0, void 0, void 0, function () {
++      var r, i, s;
++      return e.__generator(this, function (e) {
++        switch (e.label) {
++          case 0:
++            return (
++              e.trys.push([0, 2, , 3]),
++              (r = o.join(n, t, "sync_tokens.json")),
++              m.info("Using sync tokens from: ".concat(r), {
++                caller: "readContentfulSyncTokens",
++              }),
++              (s = (i = JSON).parse),
++              [4, u.readFile(r, "utf-8")]
++            );
++          case 1:
++            return [2, s.apply(i, [e.sent()])];
++          case 2:
++            return e.sent(), [2, {}];
++          case 3:
++            return [2];
++        }
++      });
++    });
++  },
++  T = function (n, t) {
++    return e.__awaiter(void 0, void 0, void 0, function () {
++      var r;
++      return e.__generator(this, function (i) {
++        switch (i.label) {
++          case 0:
++            return (
++              (r = o.join(t, "entry_ids_by_content_type")), [4, u.ensureDir(r)]
++            );
++          case 1:
++            return (
++              i.sent(),
++              [
++                4,
++                Promise.all(
++                  Object.keys(n).map(function (t) {
++                    return e.__awaiter(void 0, void 0, void 0, function () {
++                      var i, s;
++                      return e.__generator(this, function (c) {
++                        switch (c.label) {
++                          case 0:
++                            return (i = o.join(r, t)), [4, u.ensureDir(i)];
++                          case 1:
++                            return (
++                              c.sent(),
++                              (s = n[t]),
++                              [
++                                4,
++                                Promise.all(
++                                  s.map(function (n) {
++                                    return e.__awaiter(
++                                      void 0,
++                                      void 0,
++                                      void 0,
++                                      function () {
++                                        var i;
++                                        return e.__generator(
++                                          this,
++                                          function (e) {
++                                            switch (e.label) {
++                                              case 0:
++                                                return (
++                                                  (i = o.join(r, t)),
++                                                  [
++                                                    4,
++                                                    u.createFile(o.join(i, n)),
++                                                  ]
++                                                );
++                                              case 1:
++                                                return e.sent(), [2];
++                                            }
++                                          }
++                                        );
++                                      }
++                                    );
++                                  })
++                                ),
++                              ]
++                            );
++                          case 2:
++                            return c.sent(), [2];
++                        }
++                      });
++                    });
++                  })
++                ),
++              ]
++            );
++          case 2:
++            return i.sent(), [2];
++        }
++      });
++    });
++  },
++  q = function (e, n) {
++    if (!e) throw Error("Missing required argument: ".concat(n));
++  },
++  S = function (n, t, r, i) {
++    return e.__awaiter(void 0, void 0, void 0, function () {
++      return e.__generator(this, function (s) {
++        switch (s.label) {
++          case 0:
++            return [
++              4,
++              n.withoutLinkResolution.sync(
++                e.__assign(
++                  {
++                    initial: !r,
++                    content_type: t,
++                    nextSyncToken: r,
++                  },
++                  !r &&
++                    i &&
++                    i.contentful.syncLimit && { limit: i.contentful.syncLimit }
++                )
++              ),
++            ];
++          case 1:
++            return [2, s.sent()];
++        }
++      });
++    });
++  },
++  D = function (n, t) {
++    return e.__awaiter(void 0, void 0, void 0, function () {
++      return e.__generator(this, function (e) {
++        switch (e.label) {
++          case 0:
++            return [
++              4,
++              n.withoutLinkResolution.sync({
++                initial: !t,
++                nextSyncToken: t,
++                type: "Asset",
++              }),
++            ];
++          case 1:
++            return [2, e.sent()];
++        }
++      });
++    });
++  },
++  x = function (n, t, r, i) {
++    return e.__awaiter(void 0, void 0, void 0, function () {
++      return e.__generator(this, function (s) {
++        return [
++          2,
++          Promise.all(
++            t.map(function (t, s) {
++              return e.__awaiter(void 0, void 0, void 0, function () {
++                var o;
++                return e.__generator(this, function (e) {
++                  switch (e.label) {
++                    case 0:
++                      return (
++                        (o = t.sys.id),
++                        r[o]
++                          ? [3, 2]
++                          : [
++                              4,
++                              ((u = 100 * s),
++                              new Promise(function (e) {
++                                return setTimeout(e, u);
++                              })),
++                            ]
++                      );
++                    case 1:
++                      e.sent(), (e.label = 2);
++                    case 2:
++                      return [2, S(n, o, r[o], i)];
++                  }
++                  var u;
++                });
++              });
++            })
++          ),
++        ];
++      });
++    });
++  };
++module.exports = function (n, t) {
++  return e.__awaiter(void 0, void 0, void 0, function () {
++    var r, i, s, u, a, l, v, _, y, h, w, S, F, L, M;
++    return e.__generator(this, function (O) {
++      switch (O.label) {
++        case 0:
++          return (
++            (r = new g.default()),
++            q(n.fs.contentDir, "fs.contentDir"),
++            q(
++              n.contentful.contentDeliveryToken,
++              "contentful.contentDeliveryToken"
++            ),
++            q(
++              n.contentful.contentPreviewToken,
++              "contentful.contentPreviewToken"
++            ),
++            q(n.contentful.spaceId, "contentful.spaceId"),
++            [
++              4,
++              (i = c.createClient({
++                accessToken: n.contentful.usePreview
++                  ? n.contentful.contentPreviewToken
++                  : n.contentful.contentDeliveryToken,
++                space: n.contentful.spaceId,
++                environment: n.contentful.env,
++                host: n.contentful.usePreview
++                  ? "preview.contentful.com"
++                  : "cdn.contentful.com",
++              }).withoutLinkResolution).getContentTypes(),
++            ]
++          );
++        case 1:
++          return (
++            (s = O.sent().items),
++            (u = o.join(
++              n.fs.contentDir,
++              n.contentful.spaceId,
++              n.contentful.env,
++              n.contentful.usePreview ? "preview" : "production"
++            )),
++            (a = new g.default()),
++            [4, j(u, "")]
++          );
++        case 2:
++          return (
++            (l = O.sent()), [4, Promise.all([x(i, s, l, n), D(i, l.asset)])]
++          );
++        case 3:
++          return (
++            (v = O.sent()),
++            (_ = v[0]),
++            (y = v[1]),
++            (h = p.default(
++              _.map(function (e) {
++                return e.entries;
++              })
++            )),
++            (w = y.assets),
++            m.debug("fetched entries and assets", {
++              caller: "sync",
++              elapsedMs: a.end().millis,
++              itemsSuccessful: h.length + w.length,
++            }),
++            (S = b(h)),
++            ((F = s.reduce(function (n, t, r) {
++              var i, s, o;
++              return e.__assign(
++                e.__assign({}, n),
++                (((i = {})[
++                  null === (s = null == t ? void 0 : t.sys) || void 0 === s
++                    ? void 0
++                    : s.id
++                ] =
++                  null === (o = _[r]) || void 0 === o
++                    ? void 0
++                    : o.nextSyncToken),
++                i)
++              );
++            }, {})).asset = y.nextSyncToken),
++            (a = new g.default()),
++            [
++              4,
++              Promise.all([
++                k(h, u, "entries"),
++                k(w, u, "assets"),
++                k(s, u, "content_types"),
++                T(S, u),
++                P(F, u, ""),
++              ]),
++            ]
++          );
++        case 4:
++          return (
++            O.sent(),
++            m.debug("Wrote content files", {
++              caller: "sync",
++              elapsedMs: a.end().millis,
++              itemsSuccessful:
++                h.length + w.length + s.length + Object.keys(S).length,
++            }),
++            (a = new g.default()),
++            (L = f.updateAllPaths),
++            (M = {
++              config: n,
++              updateForPreview: !!n.contentful.usePreview,
++              updateForProd: !n.contentful.usePreview,
++            }),
++            [4, d.createContext({ config: n })]
++          );
++        case 5:
++          return [
++            4,
++            L.apply(void 0, [((M.context = O.sent()), (M.sites = t), M)]),
++          ];
++        case 6:
++          return (
++            O.sent(),
++            m.debug("wrote paths tree", {
++              caller: "sync",
++              elapsedMs: a.end().millis,
++            }),
++            m.debug("Sync to file system", {
++              caller: "sync",
++              elapsedMs: r.end().millis,
++            }),
++            [2]
++          );
++      }
++    });
++  });
++};

@@ -16,12 +16,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Property'] = {
   }),
 
   sideContentWrap: ({ theme }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     paddingBottom: 'var(--grid-gap-double)',
 
     [theme.containerBreakpoints.up('lg')]: {
-      gridColumnStart: 'content-start',
       gridColumnEnd: 'five-end'
     }
   }),
@@ -53,8 +52,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Property'] = {
   }),
 
   contentWrap: ({ theme }) => ({
-    'gridColumnStart': 'content-start',
-    'gridColumnEnd': 'content-end',
+    'gridColumnStart': 'start',
+    'gridColumnEnd': 'end',
 
     [theme.containerBreakpoints.up('lg')]: {
       gridColumnStart: 'six-start',

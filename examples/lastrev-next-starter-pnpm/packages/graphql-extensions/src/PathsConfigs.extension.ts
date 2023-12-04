@@ -31,14 +31,14 @@ const generatePaths: ContentfulPathsGenerator = async (
   preview = false,
   _site
 ) => {
-  const slug = getDefaultFieldValue(contentItem, 'slug', defaultLocale);
+  const slug = getDefaultFieldValue(contentItem as any, 'slug', defaultLocale);
 
   const paths = await generateParentPaths(contentItem, loaders, defaultLocale, preview);
 
   paths.reverse().push(slug);
 
   const fullPath = createPath(...paths);
-  const excludedLocales = getDefaultFieldValue(contentItem, 'excludeFromLocale', defaultLocale) || [];
+  const excludedLocales = getDefaultFieldValue(contentItem as any, 'excludeFromLocale', defaultLocale) || [];
 
   return {
     [fullPath]: {
