@@ -59,11 +59,11 @@ let config = {
     formats: ['image/avif', 'image/webp']
   },
   env: {
-    CONTENTFUL_SETTINGS_ID: process.env.CONTENTFUL_SETTINGS_ID,
+    CONTENTFUL_SETTINGS_ID: process.env.CONTENTFUL_SETTINGS_ID ?? '',
     GRAPHQL_SERVER_URL: process.env.GRAPHQL_SERVER_URL,
     CONTENTFUL_USE_PREVIEW: process.env.CONTENTFUL_USE_PREVIEW,
     SITE: process.env.SITE,
-    SITE_SETTINGS: process.env.SITE_SETTINGS,
+    SITE_SETTINGS: process.env.SITE_SETTINGS ?? '',
     DEFAULT_SITE_ID: process.env.DEFAULT_SITE_ID,
     CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
     CONTENTFUL_DELIVERY_TOKEN: process.env.CONTENTFUL_DELIVERY_TOKEN,
@@ -71,7 +71,7 @@ let config = {
     CONTENTFUL_ENV: process.env.CONTENTFUL_ENV,
     ALGOLIA_APPLICATION_ID: process.env.ALGOLIA_APPLICATION_ID,
     ALGOLIA_SEARCH_API_KEY: process.env.ALGOLIA_SEARCH_API_KEY,
-    DEPLOY_URL: process.env.DEPLOY_URL
+    DEPLOY_URL: process.env.DEPLOY_URL ?? ''
   },
   webpack: (config) => {
     config.resolve.alias = {
