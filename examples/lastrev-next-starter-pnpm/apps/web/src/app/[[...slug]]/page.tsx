@@ -25,6 +25,10 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     preview: isPreview(),
     site
   });
+  console.log('pageData start');
+  console.log(pageData);
+  console.log('pageData end');
+
   if (!pageData?.page?.id) return {};
 
   const parentSEO = await parent;
