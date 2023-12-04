@@ -4,10 +4,14 @@ import NextImage from 'next/image';
 import { breakpointsMinMax } from '../ThemeRegistry/theme';
 import ErrorBoundary from '../ErrorBoundary';
 
-
 import type { ImageProps } from './Image.types';
 
-const calculateImageSizeForDiv = (divWidth:number, divHeight:number, originalWidth:number, originalHeight:number) => {
+const calculateImageSizeForDiv = (
+  divWidth: number,
+  divHeight: number,
+  originalWidth: number,
+  originalHeight: number
+) => {
   // Check if the original image is smaller than the div
   if (originalWidth <= divWidth && originalHeight <= divHeight) {
     return {
@@ -36,7 +40,7 @@ const calculateImageSizeForDiv = (divWidth:number, divHeight:number, originalWid
   }
 
   return imageSize;
-}
+};
 
 const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
   const {
@@ -63,8 +67,6 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
   const imgContent = React.useMemo(() => {
     const isSVG = src?.endsWith('.svg');
 
-    
-    
     const generateSources = () => {
       const sources = [];
       let maxWidth = 0;
@@ -90,16 +92,11 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
 
           maxWidth = Math.max(maxWidth, divWidth);
           maxHeight = Math.max(maxHeight, divHeight);
-          
         }
       }
 
       // Get the calculated image size using the calculateImageSize function
       const imageSize = calculateImageSizeForDiv(maxWidth, maxHeight, originalImageWidth, originalImageHeight);
-
-      if (src?.includes('Walking')) {
-        console.log({imageSize, maxWidth, maxHeight, originalImageWidth, originalImageHeight})
-      }
 
       // Iterate over breakpoints and generate sources
       for (const breakpoint in breakpointsMinMax) {
@@ -110,17 +107,15 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
 
         if (breakpointWidth && columns?.hasOwnProperty(breakpoint)) {
           const mediaConditions = [];
-         
+
           const min = breakpointsMinMax[breakpoint]?.min;
           if (!!min) {
             mediaConditions.push(`(min-width: ${min}px)`);
           }
-         
-          
-          mediaConditions.push(`(max-width: ${breakpointWidth -  0.001}px)`);
-          
 
-          const mediaCondition = mediaConditions.join(" and ");
+          mediaConditions.push(`(max-width: ${breakpointWidth - 0.001}px)`);
+
+          const mediaCondition = mediaConditions.join(' and ');
 
           const columnsValue = columns[breakpoint];
 
@@ -135,7 +130,7 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
 
           if (divHeight < originalImageHeight) {
             const source = `${src}?h=${Math.round(divHeight)}&q=${quality}`;
-         
+
             sources.push(
               <source
                 key={`avif-${src}-${breakpoint}`}
@@ -153,15 +148,15 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
             //     type="image/webp"
             //   />
             // );
-            }
+          }
         }
       }
 
       let fallbackSrc = src;
       if (originalImageHeight > maxHeight) {
-        fallbackSrc = `${src}?h=${Math.round(maxHeight)}&q=90`//${quality}`
+        fallbackSrc = `${src}?h=${Math.round(maxHeight)}&q=90`; //${quality}`
       }
-      
+
       sources.push(
         <NextImage
           key={`fallback-${src}`}
@@ -173,7 +168,7 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
           data-testid={testId}
           itemProp={itemProp}
           loading="lazy"
-          width={Math.round(imageSize.width)} 
+          width={Math.round(imageSize.width)}
           height={Math.round(imageSize.height)}
         />
 
@@ -186,7 +181,7 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
         //   data-testid={testId}
         //   itemProp={itemProp}
         //   loading="lazy"
-        //   width={Math.round(imageSize.width)} 
+        //   width={Math.round(imageSize.width)}
         //   height={Math.round(imageSize.height)}
         // />
       );
@@ -232,7 +227,22 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
       );
     }
     return content;
-  }, [alt, aspectRatio, quality, className, columns, disableInlineSVG, height, imageProps, itemProp, priority, src, testId, width, ref]);
+  }, [
+    alt,
+    aspectRatio,
+    quality,
+    className,
+    columns,
+    disableInlineSVG,
+    height,
+    imageProps,
+    itemProp,
+    priority,
+    src,
+    testId,
+    width,
+    ref
+  ]);
 
   return <ErrorBoundary>{imgContent}</ErrorBoundary>;
 });

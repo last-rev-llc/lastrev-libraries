@@ -17,6 +17,7 @@ const Property = dynamic(() => import('./Property'));
 const Blog = dynamic(() => import('./Blog'));
 const Accordion = dynamic(() => import('./Accordion'));
 const FormContactUs = dynamic(() => import('./FormContactUs'));
+const FormPeru = dynamic(() => import('./FormPeru'));
 const Section = dynamic(() => import('./Section'));
 const NavigationItem = dynamic(() => import('./NavigationItem'));
 const Header = dynamic(() => import('./Header'));
@@ -49,6 +50,7 @@ export const contentMapping: {
   'PageProperty': Property,
   Blog,
   Section,
+  'ElementForm:peru': FormPeru,
   'ElementForm:contactUs': FormContactUs,
   NavigationItem,
   'NavigationItem:link': HeaderNavLink,

@@ -28,7 +28,7 @@ fragment Block_BaseFragment on Block {
     ...Text_BaseFragment
     ...Media_BaseFragment
     ...Link_BaseFragment
-    ...Form_BaseFragment
+    ...Form_RichTextFragment
     ...Collection_BaseFragment
   }
 }

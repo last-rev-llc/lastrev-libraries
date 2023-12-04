@@ -42,7 +42,7 @@ fragment ContentModule_SectionFragment on Content {
   ...Media_BaseFragment
   ...ModuleIntegration_BaseFragment
   ...Text_BaseFragment
-  ...Form_BaseFragment
+  ...Form_RichTextFragment
 }
 
 fragment ContentModule_RichTextFragment on Content {
@@ -55,5 +55,5 @@ fragment ContentModule_RichTextFragment on Content {
   ...Media_BaseFragment
   ...ModuleIntegration_BaseFragment
   ...Text_RichTextFragment
-  ...Form_BaseFragment
+  ...Form_RichTextFragment
 }

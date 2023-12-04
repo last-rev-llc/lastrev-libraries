@@ -308,6 +308,7 @@ type ElementForm implements Content {
   seo: JSON
   sidekickLookup: JSON
   slug: String
+  submissionContentItems: [Content]
   theme: [Theme]
   variant: String
 }

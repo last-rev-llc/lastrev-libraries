@@ -1,4 +1,4 @@
-fragment Form_BaseFragment on ElementForm {
+fragment Form_FieldsFragment on ElementForm {
   ...Content_BaseFragment
   variant
   formLayout
@@ -15,6 +15,22 @@ fragment Form_BaseFragment on ElementForm {
   }
   introText {
     ...Text_IntroTextFragment
+  }
+}
+
+fragment Form_BaseFragment on ElementForm {
+  ...Form_FieldsFragment
+  
+  submissionContentItems {
+    ...ContentModule_SectionFragment
+  }
+}
+
+fragment Form_RichTextFragment on ElementForm {
+  ...Form_FieldsFragment
+  
+  submissionContentItems {
+    ...Card_RichTextFragment
   }
 }
 

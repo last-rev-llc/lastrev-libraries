@@ -23,6 +23,7 @@ export const typeDefs = gql`
     address: JSON
     email: String
     phone: String
+    submissionContentItems: [Content]
   }
 `;
 

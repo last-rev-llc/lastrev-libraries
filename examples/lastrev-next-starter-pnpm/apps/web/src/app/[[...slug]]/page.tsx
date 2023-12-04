@@ -25,17 +25,6 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     preview: isPreview(),
     site
   });
-  console.log('pageData start');
-  console.log(
-    {stuff: {
-      path: path === '/index' ? '/' : path,
-      locale,
-      preview: isPreview(),
-      site
-    },
-    pageData
-  });
-  console.log('pageData end');
 
   if (!pageData?.page?.id) return {};
 
@@ -57,12 +46,6 @@ const locale = 'en-US';
 
 export default async function Page({ params }: Props) {
   const path = join('/', (params.slug || ['/']).join('/'));
-  console.log({
-    path: path === '/index' ? '/' : path,
-    locale,
-    preview: isPreview(),
-    site
-  });
 
   const { data: pageData } = await client.Page({
     path: path === '/index' ? '/' : path,
