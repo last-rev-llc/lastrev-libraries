@@ -10,7 +10,7 @@ export interface ColumnConfig {
   lg?: number;
   xl?: number;
 }
-export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'height'> {
+export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'height' | 'sizes'> {
   src?: string;
   className?: string;
   columns?: ColumnConfig;
@@ -22,7 +22,6 @@ export interface ImageProps extends Omit<NextImageProps, 'src' | 'width' | 'heig
   height?: number | string | `${number}` | undefined;
   disableInlineSVG?: boolean;
   nextImageOptimization?: boolean;
-  sizes?: ColumnConfig;
   q?: number;
   unoptimized?: boolean;
   svgContent?: string;

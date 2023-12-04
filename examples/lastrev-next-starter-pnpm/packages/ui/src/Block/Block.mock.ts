@@ -70,20 +70,4 @@ export const blockOnLeftFullBleedMock = (override?: Partial<BlockProps>): BlockP
   };
 };
 
-export const blockBelowMock = (override?: Partial<BlockProps>): BlockProps => {
-  return {
-    ...blockDefaultMock(override),
-    title: 'This is the block title for the "Content Below" variant',
-    variant: BlockVariants.contentBelow
-  };
-};
-
-export const blockAboveMock = (override?: Partial<BlockProps>): BlockProps => {
-  return {
-    ...blockDefaultMock(override),
-    title: 'This is the block title for the "Content Above" variant',
-    variant: BlockVariants.contentAbove
-  };
-};
-
 export default blockBaseMock;

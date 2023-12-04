@@ -1,4 +1,3 @@
-import gql from 'graphql-tag';
 import type { Mappers } from '@last-rev/types';
 import type { ApolloContext } from './types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
@@ -6,7 +5,9 @@ import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-
 export const mappers: Mappers = {
   PageAsset: {
     Card: {
-      title: 'name',
+      title: async (pageAsset: any, _args: any, ctx: ApolloContext) => {
+        return '';
+      },
 
       media: async (pageAsset: any, _args: any, ctx: ApolloContext) => {
         const promoImage = getLocalizedField(pageAsset.fields, 'promoImage', ctx);

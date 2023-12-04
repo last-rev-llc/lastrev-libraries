@@ -54,15 +54,15 @@ const createVariants = (theme: Theme): ComponentsVariants['RichText'] => [
         },
 
         '&[class*=-h2]': {
-          ...theme.typography.display4
+          ...theme.typography.h4
         },
 
         '&[class*=-h3]': {
-          ...theme.typography.display5
+          ...theme.typography.h5
         },
 
         '&[class*=-h4]': {
-          ...theme.typography.display5
+          ...theme.typography.h5
         }
       },
 

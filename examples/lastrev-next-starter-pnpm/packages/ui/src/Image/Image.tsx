@@ -225,9 +225,8 @@ const Image = React.forwardRef<any, ImageProps>(function Image(props, ref) {
           itemProp={itemProp}
           priority={priority}
           loading={priority ? 'eager' : 'lazy'}
-          height={height}
-          width={width}
-          sizes={imageProps.sizes}
+          height={Number(height)}
+          width={Number(width)}
           alt={alt}
         />
       );

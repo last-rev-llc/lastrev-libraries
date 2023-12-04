@@ -36,8 +36,8 @@ export const carouselBaseMock = (override?: Partial<CarouselProps>): CarouselPro
       variantOverride = {};
   }
 
-  const mock = { ...baseMock, ...variantOverride, ...override, numItems: baseMock.items.length } as CarouselProps;
-  mock.numItems = baseMock.items.length;
+  const mock = { ...baseMock, ...variantOverride, ...override } as CarouselProps;
+  mock.numItems = baseMock?.items?.length || 3;
 
   return mock;
 };

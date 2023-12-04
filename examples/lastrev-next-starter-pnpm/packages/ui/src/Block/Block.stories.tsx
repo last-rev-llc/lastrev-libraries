@@ -2,8 +2,6 @@ import Block from './Block';
 
 import {
   blockBaseMock,
-  blockAboveMock,
-  blockBelowMock,
   blockOnLeftFullBleedMock,
   blockOnLeftMock,
   blockOnRightFullBleedMock,
@@ -25,5 +23,3 @@ export const ContentOnRight = { args: { ...blockOnRightMock() } };
 export const ContentOnRightFullBleed = { args: { ...blockOnRightFullBleedMock() } };
 export const ContentOnLeft = { args: { ...blockOnLeftMock() } };
 export const ContentOnLeftFullBleed = { args: { ...blockOnLeftFullBleedMock() } };
-export const ContentBelow = { args: { ...blockBelowMock() } };
-export const ContentAbove = { args: { ...blockAboveMock() } };
