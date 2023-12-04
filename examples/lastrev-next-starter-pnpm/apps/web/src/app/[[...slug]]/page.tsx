@@ -26,7 +26,12 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
     site
   });
   console.log('pageData start');
-  console.log(pageData);
+  console.log(stuff: {
+    path: path === '/index' ? '/' : path,
+    locale,
+    preview: isPreview(),
+    site
+  },pageData);
   console.log('pageData end');
 
   if (!pageData?.page?.id) return {};
