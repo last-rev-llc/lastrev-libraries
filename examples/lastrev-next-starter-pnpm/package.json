@@ -45,13 +45,7 @@
   "_id": "lastrev-next-starter@",
   "pnpm": {
     "patchedDependencies": {
-      "@mui/system@5.14.19": "patches/@mui__system@5.14.19.patch",
-      "@last-rev/contentful-cms-loader@0.4.3": "patches/@last-rev__contentful-cms-loader@0.4.3.patch",
-      "@last-rev/contentful-webhook-handler@0.4.16": "patches/@last-rev__contentful-webhook-handler@0.4.16.patch",
-      "@last-rev/graphql-contentful-core@0.5.17": "patches/@last-rev__graphql-contentful-core@0.5.17.patch",
-      "@last-rev/graphql-contentful-helpers@0.4.7": "patches/@last-rev__graphql-contentful-helpers@0.4.7.patch",
-      "@last-rev/graphql-schema-gen@0.2.4": "patches/@last-rev__graphql-schema-gen@0.2.4.patch",
-      "@last-rev/contentful-sync-to-fs@0.3.11": "patches/@last-rev__contentful-sync-to-fs@0.3.11.patch"
+      "@mui/system@5.14.19": "patches/@mui__system@5.14.19.patch"
     }
   },
   "overrides": {

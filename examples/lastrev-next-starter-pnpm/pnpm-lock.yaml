@@ -5,24 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 patchedDependencies:
-  '@last-rev/contentful-cms-loader@0.4.3':
-    hash: eiroetazhmnsc36wyh4yly3rey
-    path: patches/@last-rev__contentful-cms-loader@0.4.3.patch
-  '@last-rev/contentful-sync-to-fs@0.3.11':
-    hash: jzxngnutiqe7fkpmx3h2ip4kue
-    path: patches/@last-rev__contentful-sync-to-fs@0.3.11.patch
-  '@last-rev/contentful-webhook-handler@0.4.16':
-    hash: 43shuczcgkdrwrovau65gwhxc4
-    path: patches/@last-rev__contentful-webhook-handler@0.4.16.patch
-  '@last-rev/graphql-contentful-core@0.5.17':
-    hash: 4ol3x6stvhmla7sf6wmgvez5si
-    path: patches/@last-rev__graphql-contentful-core@0.5.17.patch
-  '@last-rev/graphql-contentful-helpers@0.4.7':
-    hash: amgtmi54b4q6hcijebtsn72ug4
-    path: patches/@last-rev__graphql-contentful-helpers@0.4.7.patch
-  '@last-rev/graphql-schema-gen@0.2.4':
-    hash: fabpr2adbkcng4qumnsyftac3e
-    path: patches/@last-rev__graphql-schema-gen@0.2.4.patch
   '@mui/system@5.14.19':
     hash: kolshg2kuioly2wvu7cqy6f6hu
     path: patches/@mui__system@5.14.19.patch
@@ -102,13 +84,13 @@ importers:
         version: 4.9.5(encoding@0.1.13)(graphql@16.8.1)
       '@last-rev/contentful-webhook-handler':
         specifier: ^0.4.16
-        version: 0.4.16(patch_hash=43shuczcgkdrwrovau65gwhxc4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+        version: 0.4.16(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/graphql-algolia-integration':
         specifier: ^0.1.13
         version: 0.1.13(encoding@0.1.13)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
       '@last-rev/graphql-contentful-core':
         specifier: ^0.5.17
-        version: 0.5.17(patch_hash=4ol3x6stvhmla7sf6wmgvez5si)(encoding@0.1.13)(jest@26.6.3)(next@14.0.3)(typescript@5.3.2)
+        version: 0.5.17(encoding@0.1.13)(jest@26.6.3)(next@14.0.3)(typescript@5.3.2)
       '@next/bundle-analyzer':
         specifier: ^14.0.3
         version: 14.0.3
@@ -205,7 +187,7 @@ importers:
         version: 0.1.13(encoding@0.1.13)(graphql@16.8.1)(react-dom@18.2.0)(react@18.2.0)
       '@last-rev/graphql-contentful-core':
         specifier: ^0.5.17
-        version: 0.5.17(patch_hash=4ol3x6stvhmla7sf6wmgvez5si)(encoding@0.1.13)(jest@26.6.3)(next@13.5.6)(typescript@5.3.2)
+        version: 0.5.17(encoding@0.1.13)(jest@26.6.3)(next@13.5.6)(typescript@5.3.2)
       '@last-rev/graphql-contentful-extensions':
         specifier: ^0.2.3
         version: 0.2.3(@babel/core@7.23.5)(jest@26.6.3)(next@13.5.6)(postcss@8.4.32)(typescript@5.3.2)
@@ -219,8 +201,8 @@ importers:
         specifier: ^0.3.6
         version: 0.3.6
       contentful:
-        specifier: ^10.6.13
-        version: 10.6.13
+        specifier: ^9.1.3
+        version: 9.3.5
       css:
         specifier: ^3.0.0
         version: 3.0.0
@@ -5080,9 +5062,9 @@ packages:
       '@last-rev/contentful-fragment-gen': 0.2.5(encoding@0.1.13)
       '@last-rev/contentful-import-export': 0.1.5(encoding@0.1.13)
       '@last-rev/contentful-reports': 0.1.3(encoding@0.1.13)
-      '@last-rev/contentful-sync-to-fs': 0.3.11(patch_hash=jzxngnutiqe7fkpmx3h2ip4kue)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
-      '@last-rev/graphql-contentful-core': 0.5.17(patch_hash=4ol3x6stvhmla7sf6wmgvez5si)(encoding@0.1.13)(jest@26.6.3)(next@13.5.6)(typescript@5.3.2)
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/contentful-sync-to-fs': 0.3.11(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-core': 0.5.17(encoding@0.1.13)(jest@26.6.3)(next@13.5.6)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/testing-library': 0.1.10(jest@26.6.3)(typescript@5.3.2)
       '@octokit/rest': 18.12.0(encoding@0.1.13)
       '@types/inquirer': 7.3.3
@@ -5122,7 +5104,7 @@ packages:
       - zenObservable
     dev: false
 
-  /@last-rev/contentful-cms-loader@0.4.3(patch_hash=eiroetazhmnsc36wyh4yly3rey)(encoding@0.1.13):
+  /@last-rev/contentful-cms-loader@0.4.3(encoding@0.1.13):
     resolution: {integrity: sha512-lLCGNz+ex/X4XvvseHxap4f2oELoQB6sLrgwXFLcFYnZS8hcYsujrNe5issgmTw9mTGmgq9crtTyaf7XF3leqQ==}
     dependencies:
       '@last-rev/logging': 0.1.4(encoding@0.1.13)
@@ -5133,7 +5115,6 @@ packages:
     transitivePeerDependencies:
       - encoding
     dev: false
-    patched: true
 
   /@last-rev/contentful-dynamodb-loader@0.3.3(encoding@0.1.13):
     resolution: {integrity: sha512-ZqP5gYlS2nynsK5ENPgeszegFKTzfrMTwdzK/n0Dy0Ui7WjR9Ju7kkClOllQtH9F2h3ZtMelvaABkBTyx9d0PQ==}
@@ -5255,11 +5236,11 @@ packages:
       lodash: 4.17.21
     dev: false
 
-  /@last-rev/contentful-sync-to-fs@0.3.11(patch_hash=jzxngnutiqe7fkpmx3h2ip4kue)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2):
+  /@last-rev/contentful-sync-to-fs@0.3.11(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2):
     resolution: {integrity: sha512-7YgwW+Yjqo8F7b9wpECjNLSL0AYZAB5JeipYxh8HIt+1/GzdyprvgRHFlO4e4FmxCpkvOqWqckNhdH6Asgsp+g==}
     dependencies:
       '@last-rev/contentful-path-util': 0.1.24(encoding@0.1.13)
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/logging': 0.1.4(encoding@0.1.13)
       '@last-rev/timer': 0.2.0
       fs-extra: 10.1.0
@@ -5274,16 +5255,15 @@ packages:
       - supports-color
       - typescript
     dev: false
-    patched: true
 
-  /@last-rev/contentful-webhook-handler@0.4.16(patch_hash=43shuczcgkdrwrovau65gwhxc4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2):
+  /@last-rev/contentful-webhook-handler@0.4.16(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2):
     resolution: {integrity: sha512-7L3Tl7/QkMiedVMxl30Zcs+Vwu6i0Qif4B4/Dh9ZVlXUd66mrrP3hPziJUOmt19TY9vpOrH5V1Poi+caD8FsAg==}
     dependencies:
       '@aws-sdk/client-dynamodb': 3.405.0
       '@aws-sdk/lib-dynamodb': 3.405.0(@aws-sdk/client-dynamodb@3.405.0)
       '@last-rev/contentful-path-util': 0.1.24(encoding@0.1.13)
       '@last-rev/contentful-webhook-parser': 0.1.4
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
       contentful: 9.3.5
       ioredis: 5.3.2
       jsonwebtoken: 9.0.2
@@ -5296,7 +5276,6 @@ packages:
       - supports-color
       - typescript
     dev: false
-    patched: true
 
   /@last-rev/contentful-webhook-parser@0.1.4:
     resolution: {integrity: sha512-nFN6ll6QjgezGE/CRq7vrnym7+988uUboEN9wmCGL2G1g5eSviisx727QhViQXrGgKM4bHNhvbi+L1cvpd9wUA==}
@@ -5329,7 +5308,7 @@ packages:
       - subscriptions-transport-ws
     dev: false
 
-  /@last-rev/graphql-contentful-core@0.5.17(patch_hash=4ol3x6stvhmla7sf6wmgvez5si)(encoding@0.1.13)(jest@26.6.3)(next@13.5.6)(typescript@5.3.2):
+  /@last-rev/graphql-contentful-core@0.5.17(encoding@0.1.13)(jest@26.6.3)(next@13.5.6)(typescript@5.3.2):
     resolution: {integrity: sha512-fnjz5rz9kpD9Vj4GovzfjadGdHzazCnSue16Cp1Hs0BW/+sUVUnsm6Rn/GYneAAX8DMjSTigG1fUPRrtRSAkjQ==}
     dependencies:
       '@apollo/server': 4.9.5(encoding@0.1.13)(graphql@16.8.1)
@@ -5339,11 +5318,11 @@ packages:
       '@graphql-tools/merge': 8.4.2(graphql@16.8.1)
       '@graphql-tools/schema': 8.5.1(graphql@16.8.1)
       '@last-rev/app-config': 0.5.1
-      '@last-rev/contentful-cms-loader': 0.4.3(patch_hash=eiroetazhmnsc36wyh4yly3rey)(encoding@0.1.13)
+      '@last-rev/contentful-cms-loader': 0.4.3(encoding@0.1.13)
       '@last-rev/contentful-fs-loader': 0.3.2(encoding@0.1.13)
       '@last-rev/contentful-redis-loader': 0.5.4(encoding@0.1.13)
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
-      '@last-rev/graphql-schema-gen': 0.2.4(patch_hash=fabpr2adbkcng4qumnsyftac3e)(encoding@0.1.13)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-schema-gen': 0.2.4(encoding@0.1.13)
       '@last-rev/logging': 0.1.4(encoding@0.1.13)
       '@last-rev/testing-library': 0.1.10(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/timer': 0.2.0
@@ -5362,9 +5341,8 @@ packages:
       - supports-color
       - typescript
     dev: false
-    patched: true
 
-  /@last-rev/graphql-contentful-core@0.5.17(patch_hash=4ol3x6stvhmla7sf6wmgvez5si)(encoding@0.1.13)(jest@26.6.3)(next@14.0.3)(typescript@5.3.2):
+  /@last-rev/graphql-contentful-core@0.5.17(encoding@0.1.13)(jest@26.6.3)(next@14.0.3)(typescript@5.3.2):
     resolution: {integrity: sha512-fnjz5rz9kpD9Vj4GovzfjadGdHzazCnSue16Cp1Hs0BW/+sUVUnsm6Rn/GYneAAX8DMjSTigG1fUPRrtRSAkjQ==}
     dependencies:
       '@apollo/server': 4.9.5(encoding@0.1.13)(graphql@16.8.1)
@@ -5374,11 +5352,11 @@ packages:
       '@graphql-tools/merge': 8.4.2(graphql@16.8.1)
       '@graphql-tools/schema': 8.5.1(graphql@16.8.1)
       '@last-rev/app-config': 0.5.1
-      '@last-rev/contentful-cms-loader': 0.4.3(patch_hash=eiroetazhmnsc36wyh4yly3rey)(encoding@0.1.13)
+      '@last-rev/contentful-cms-loader': 0.4.3(encoding@0.1.13)
       '@last-rev/contentful-fs-loader': 0.3.2(encoding@0.1.13)
       '@last-rev/contentful-redis-loader': 0.5.4(encoding@0.1.13)
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
-      '@last-rev/graphql-schema-gen': 0.2.4(patch_hash=fabpr2adbkcng4qumnsyftac3e)(encoding@0.1.13)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-schema-gen': 0.2.4(encoding@0.1.13)
       '@last-rev/logging': 0.1.4(encoding@0.1.13)
       '@last-rev/testing-library': 0.1.10(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/timer': 0.2.0
@@ -5397,9 +5375,8 @@ packages:
       - supports-color
       - typescript
     dev: false
-    patched: true
 
-  /@last-rev/graphql-contentful-core@0.5.17(patch_hash=4ol3x6stvhmla7sf6wmgvez5si)(jest@26.6.3)(next@13.5.6)(typescript@5.3.2):
+  /@last-rev/graphql-contentful-core@0.5.17(jest@26.6.3)(next@13.5.6)(typescript@5.3.2):
     resolution: {integrity: sha512-fnjz5rz9kpD9Vj4GovzfjadGdHzazCnSue16Cp1Hs0BW/+sUVUnsm6Rn/GYneAAX8DMjSTigG1fUPRrtRSAkjQ==}
     dependencies:
       '@apollo/server': 4.9.5(encoding@0.1.13)(graphql@16.8.1)
@@ -5409,11 +5386,11 @@ packages:
       '@graphql-tools/merge': 8.4.2(graphql@16.8.1)
       '@graphql-tools/schema': 8.5.1(graphql@16.8.1)
       '@last-rev/app-config': 0.5.1
-      '@last-rev/contentful-cms-loader': 0.4.3(patch_hash=eiroetazhmnsc36wyh4yly3rey)(encoding@0.1.13)
+      '@last-rev/contentful-cms-loader': 0.4.3(encoding@0.1.13)
       '@last-rev/contentful-fs-loader': 0.3.2(encoding@0.1.13)
       '@last-rev/contentful-redis-loader': 0.5.4(encoding@0.1.13)
-      '@last-rev/graphql-contentful-helpers': 0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
-      '@last-rev/graphql-schema-gen': 0.2.4(patch_hash=fabpr2adbkcng4qumnsyftac3e)(encoding@0.1.13)
+      '@last-rev/graphql-contentful-helpers': 0.4.7(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2)
+      '@last-rev/graphql-schema-gen': 0.2.4(encoding@0.1.13)
       '@last-rev/logging': 0.1.4(encoding@0.1.13)
       '@last-rev/testing-library': 0.1.10(jest@26.6.3)(typescript@5.3.2)
       '@last-rev/timer': 0.2.0
@@ -5432,13 +5409,12 @@ packages:
       - supports-color
       - typescript
     dev: false
-    patched: true
 
   /@last-rev/graphql-contentful-extensions@0.2.3(@babel/core@7.23.5)(jest@26.6.3)(next@13.5.6)(postcss@8.4.32)(typescript@5.3.2):
     resolution: {integrity: sha512-3kj1ApffBaTEpnzBfWhZl9AUmAC/h+Yo78mOQ3XT9MnNjRpKNkWqzrWZhvjPaS3H8SlniIJ26c1gFdhi6PlI5w==}
     dependencies:
       '@graphql-tools/merge': 8.4.2(graphql@16.8.1)
-      '@last-rev/graphql-contentful-core': 0.5.17(patch_hash=4ol3x6stvhmla7sf6wmgvez5si)(jest@26.6.3)(next@13.5.6)(typescript@5.3.2)
+      '@last-rev/graphql-contentful-core': 0.5.17(jest@26.6.3)(next@13.5.6)(typescript@5.3.2)
       '@last-rev/rollup-config': 0.1.5(@babel/core@7.23.5)(postcss@8.4.32)(tslib@2.6.2)
       '@last-rev/types': 0.3.6
       contentful: 8.5.8
@@ -5464,11 +5440,11 @@ packages:
       - typescript
     dev: false
 
-  /@last-rev/graphql-contentful-helpers@0.4.7(patch_hash=amgtmi54b4q6hcijebtsn72ug4)(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2):
+  /@last-rev/graphql-contentful-helpers@0.4.7(encoding@0.1.13)(jest@26.6.3)(typescript@5.3.2):
     resolution: {integrity: sha512-qgJ/D4Z2CaQDMNrY3NIs/gFRthQ1TzxjG1noH8NAWyXCNbFF8K82Y1QxJ9NIl496axVyx/PDFcCuvBhhzPSexA==}
     dependencies:
       '@last-rev/app-config': 0.5.1
-      '@last-rev/contentful-cms-loader': 0.4.3(patch_hash=eiroetazhmnsc36wyh4yly3rey)(encoding@0.1.13)
+      '@last-rev/contentful-cms-loader': 0.4.3(encoding@0.1.13)
       '@last-rev/contentful-dynamodb-loader': 0.3.3(encoding@0.1.13)
       '@last-rev/contentful-fs-loader': 0.3.2(encoding@0.1.13)
       '@last-rev/contentful-path-rules-engine': 0.1.6(encoding@0.1.13)
@@ -5487,9 +5463,8 @@ packages:
       - supports-color
       - typescript
     dev: false
-    patched: true
 
-  /@last-rev/graphql-schema-gen@0.2.4(patch_hash=fabpr2adbkcng4qumnsyftac3e)(encoding@0.1.13):
+  /@last-rev/graphql-schema-gen@0.2.4(encoding@0.1.13):
     resolution: {integrity: sha512-XHZ565zF+QyA+qzH0+SPDMRmdcM3e8tyX2I90a6fqwY8O0yVRw+Oa8ajQhlfLqdbdkuKOp1NcZ9bsqY2iB0UEQ==}
     dependencies:
       '@last-rev/logging': 0.1.4(encoding@0.1.13)
@@ -5501,7 +5476,6 @@ packages:
       - debug
       - encoding
     dev: false
-    patched: true
 
   /@last-rev/logging@0.1.4(encoding@0.1.13):
     resolution: {integrity: sha512-mhRF6Gh6mRCW7TsUesThlAw3k8Or+66EpeXOnO3JWLS33zxRigH/gt58NeavR9oRLXUpjPMB7Z52BkUneL49ww==}
@@ -12127,20 +12101,6 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.isstring: 4.0.1
       p-throttle: 4.1.1
-    dev: false
-
-  /contentful@10.6.13:
-    resolution: {integrity: sha512-cTzAuFrNG8v8mPdfW4elaiRPR+c07UpmKuWxOIfnZpffIWTsxi6Hox9wrEOmy7qp1g9ycoPhfDdpv41YkJE0mA==}
-    engines: {node: '>=12'}
-    dependencies:
-      '@contentful/rich-text-types': 16.3.0
-      axios: 1.6.2
-      contentful-resolve-response: 1.8.1
-      contentful-sdk-core: 8.1.0
-      json-stringify-safe: 5.0.1
-      type-fest: 4.3.1
-    transitivePeerDependencies:
-      - debug
     dev: false
 
   /contentful@8.5.8:
