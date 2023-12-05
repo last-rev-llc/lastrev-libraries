@@ -11,15 +11,18 @@ import ContentModule from '../ContentModule';
 import type { TextProps, TextOwnerState } from './Text.types';
 import Grid from '../Grid';
 import Box from '@mui/material/Box';
+import Background from '../Background';
 
 const Text = (props: TextProps) => {
   const ownerState = { ...props };
 
-  const { body, overline, titleIcon, title, subtitle, variant, sidekickLookup, sx } = props;
+  const { backgroundColor, body, overline, titleIcon, title, subtitle, variant, sidekickLookup, sx } = props;
 
   return (
     <ErrorBoundary>
       <Root data-testid="Text-root" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+        <TextBackground backgroundColor={backgroundColor} testId="Text-background" />
+
         {!!overline && (
           <Overline
             data-testid="Text-overline"
@@ -74,6 +77,12 @@ const Root = styled(Grid, {
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: TextOwnerState }>``;
+
+const TextBackground = styled(Background, {
+  name: 'Block',
+  slot: 'Background',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
 
 const Overline = styled(Typography, {
   name: 'Text',

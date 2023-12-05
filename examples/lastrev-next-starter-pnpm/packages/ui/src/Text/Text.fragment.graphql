@@ -8,6 +8,7 @@ fragment Text_FieldsFragment on Text {
   }
   title
   subtitle
+  backgroundColor
 }
 
 fragment Text_BaseFragment on Text {

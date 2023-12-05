@@ -707,6 +707,7 @@ type Template implements Content {
 type Text implements Content {
   align: String
   animation: JSON
+  backgroundColor: String
   body: RichText
   id: String
   internalTitle: String

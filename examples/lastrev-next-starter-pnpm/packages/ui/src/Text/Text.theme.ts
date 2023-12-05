@@ -8,7 +8,8 @@ const defaultProps: ComponentsProps['Text'] = {
 import { TextVariants } from './Text.types';
 
 const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
-  root: {
+  root: ({ theme, ownerState }) => ({
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'width': '100%',
     'display': 'unset',
     'ol, ul, li': {
@@ -30,7 +31,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
         gridColumn: 'start/end'
       }
     }
-  },
+  }),
 
   titleIcon: ({ theme }) => ({
     maxWidth: '96px',

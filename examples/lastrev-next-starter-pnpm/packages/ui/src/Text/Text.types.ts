@@ -34,6 +34,7 @@ interface TextClasses {
   bodyWrap: string;
   titleIcon: string;
   titleWrap: string;
+  background: string;
 }
 
 export declare type TextClassKey = keyof TextClasses;

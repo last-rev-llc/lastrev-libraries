@@ -80,6 +80,12 @@ export const mappers = {
       backgroundColor: defaultResolver('backgroundColor'),
       color: colorResolver('color', true)
     }
+  },
+  Text: {
+    Text: {
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
   }
 };
 export const resolvers = {
