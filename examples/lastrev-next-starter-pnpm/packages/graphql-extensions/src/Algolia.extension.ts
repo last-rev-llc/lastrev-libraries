@@ -24,6 +24,8 @@ const defaultFacets = {
   assetType: 'N/A'
 };
 
+const defaultImage = { sys: { id: '63wM1MtZyrukjY5NXoSA7' } };
+
 export const mappers = {
   Blog: {
     AlgoliaRecord: {
@@ -37,7 +39,9 @@ export const mappers = {
         const body = getLocalizedField(blog.fields, 'body', ctx);
         const summary = getLocalizedField(blog.fields, 'promoSummary', ctx);
         const promoImageRef =
-          getLocalizedField(blog.fields, 'promoImage', ctx) ?? getLocalizedField(blog.fields, 'featuredMedia', ctx);
+          getLocalizedField(blog.fields, 'promoImage', ctx) ??
+          getLocalizedField(blog.fields, 'featuredMedia', ctx) ??
+          defaultImage;
         const promoImage = await getMedia(promoImageRef, ctx);
         const entries: any[] = [];
 
@@ -83,7 +87,7 @@ export const mappers = {
                 locale: ctx.locale || ctx.defaultLocale,
                 preview: !!ctx.preview,
                 title,
-                defaultSortField: ((pubDateTimestamp || 1) * -1).toString().replace("-", "0"),
+                defaultSortField: ((pubDateTimestamp || 1) * -1).toString().replace('-', '0'),
                 pubDate,
                 categories,
                 pubDateTimestamp,
@@ -115,7 +119,9 @@ export const mappers = {
         const body = getLocalizedField(person.fields, 'body', ctx);
         const summary = getLocalizedField(person.fields, 'promoSummary', ctx);
         const promoImageRef =
-          getLocalizedField(person.fields, 'promoImage', ctx) ?? getLocalizedField(person.fields, 'mainImage', ctx);
+          getLocalizedField(person.fields, 'promoImage', ctx) ??
+          getLocalizedField(person.fields, 'mainImage', ctx) ??
+          defaultImage;
         const promoImage = await getMedia(promoImageRef, ctx);
         const entries: any[] = [];
 
@@ -199,7 +205,7 @@ export const mappers = {
         const body = getLocalizedField(page.fields, 'body', ctx);
 
         const summary = getLocalizedField(page.fields, 'promoSummary', ctx);
-        const promoImage = await getMedia(getLocalizedField(page.fields, 'promoImage', ctx), ctx);
+        const promoImage = (await getMedia(getLocalizedField(page.fields, 'promoImage', ctx), ctx)) ?? defaultImage;
         const contentType = getSysContentTypeName(page);
         const link = await getLink(page, args, ctx);
         const entries: any[] = [];
@@ -249,7 +255,9 @@ export const mappers = {
         const title = getLocalizedField(property.fields, 'name', ctx);
         const summary = getLocalizedField(property.fields, 'promoSummary', ctx);
         const promoImageRef =
-          getLocalizedField(property.fields, 'promoImage', ctx) ?? getLocalizedField(property.fields, 'mainImage', ctx);
+          getLocalizedField(property.fields, 'promoImage', ctx) ??
+          getLocalizedField(property.fields, 'mainImage', ctx) ??
+          defaultImage;
         const promoImage = await getMedia(promoImageRef, ctx);
         const entries: any[] = [];
 
