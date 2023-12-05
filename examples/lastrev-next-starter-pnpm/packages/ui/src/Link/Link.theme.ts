@@ -11,6 +11,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
     alignItems: 'center',
     textUnderlineOffset: '4px',
     marginBottom: 0,
+    borderRadius: 0,
     ...(ownerState?.variant?.includes('Contained') && {
       'color': 'var(--mui-palette-primary-contrastText)',
       'backgroundColor': 'var(--mui-palette-primary-main)',
@@ -61,6 +62,7 @@ const createVariants = (theme: Theme): ComponentsVariants['Link'] => [
       ...theme.typography.h6,
       'margin': 0,
       'paddingBottom': 0,
+      'borderRadius': 0,
 
       '.MuiButton-startIcon ': {
         marginLeft: 0
