@@ -115,6 +115,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Hero'] = {
 
     [theme.containerBreakpoints.up('md')]: {
       position: 'absolute',
+      zIndex: 10000,
       bottom: 'var(--grid-gap)'
     }
   }),
