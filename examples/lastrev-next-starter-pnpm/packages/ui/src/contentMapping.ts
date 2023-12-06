@@ -18,6 +18,7 @@ const Blog = dynamic(() => import('./Blog'));
 const Accordion = dynamic(() => import('./Accordion'));
 const FormContactUs = dynamic(() => import('./FormContactUs'));
 const FormPeru = dynamic(() => import('./FormPeru'));
+const FormAnnualInvestor = dynamic(() => import('./FormAnnualInvestor'));
 const Section = dynamic(() => import('./Section'));
 const NavigationItem = dynamic(() => import('./NavigationItem'));
 const Header = dynamic(() => import('./Header'));
@@ -52,6 +53,7 @@ export const contentMapping: {
   Section,
   'ElementForm:peru': FormPeru,
   'ElementForm:contactUs': FormContactUs,
+  'ElementForm:annualInvestorMeeting2024': FormAnnualInvestor,
   NavigationItem,
   'NavigationItem:link': HeaderNavLink,
   'NavigationItem:linkNested': HeaderNavLinkNested,
