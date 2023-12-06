@@ -152,7 +152,7 @@ export const mappers = {
                 locale: ctx.locale || ctx.defaultLocale,
                 preview: !!ctx.preview,
                 title: name,
-                defaultSortField: formatNameForSorting(firstName && lastName ? `${lastName}, ${firstName}` : name),
+                defaultSortField: `${lastName}, ${firstName}`,
                 subtitle,
                 pubDateTimestamp: new Date(person.sys.createdAt).getTime(),
                 body: documentToPlainTextString(body),
