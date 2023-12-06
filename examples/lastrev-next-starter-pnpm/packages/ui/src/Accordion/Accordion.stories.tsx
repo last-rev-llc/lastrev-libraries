@@ -1,11 +1,6 @@
 import Accordion from './Accordion';
 
-import {
-  accordionBaseMock,
-  accordionBlocksMock,
-  accordionQuotesMock,
-  accordionCollectionsMock
-} from './Accordion.mock';
+import { accordionBaseMock, accordionBlocksMock, accordionCollectionsMock } from './Accordion.mock';
 
 export default {
   title: 'Components/Accordion',
@@ -17,4 +12,3 @@ export default {
 export const Default = { args: { ...accordionBaseMock() } };
 export const Blocks = { args: { ...accordionBlocksMock() } };
 export const Collections = { args: { ...accordionCollectionsMock() } };
-export const Quotes = { args: { ...accordionQuotesMock() } };

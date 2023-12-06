@@ -4,13 +4,21 @@ import type { Form_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum FormVariants {
   default = 'default',
-  footer = 'footer'
+  contactUs = 'contactUs'
 }
 
-export interface FormProps extends Form_BaseFragmentFragment {
+export enum FormLayouts {
+  default = 'default',
+  block = 'block',
+  oneColumn = 'oneColumn',
+  twoColumn = 'twoColumn'
+}
+
+export interface FormProps extends Omit<Form_BaseFragmentFragment, 'variant' | 'formLayout'> {
   submitted?: boolean;
   hasSuccessMessage?: boolean;
   variant: FormVariants;
+  formLayout: FormLayouts;
 }
 
 export interface FormOwnerState extends FormProps {}

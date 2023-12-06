@@ -9,14 +9,25 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import Grid from '../Grid';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-
-import type { CollectionProps, CollectionOwnerState } from './Collection.types';
 import Background from '../Background';
+
+import { layoutConfig } from './Collection.theme';
+
+import { type CollectionProps, type CollectionOwnerState } from './Collection.types';
 
 const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
 
-  const { backgroundImage, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;
+  const {
+    backgroundImage,
+    backgroundColor,
+    items,
+    variant = 'threePerRow',
+    itemsAspectRatio,
+    itemsVariant,
+    sidekickLookup,
+    introText
+  } = props;
 
   return (
     <ErrorBoundary>
@@ -47,7 +58,10 @@ const Collection = (props: CollectionProps) => {
                   backgroundColor={backgroundColor}
                   key={item?.id}
                   {...item}
+                  layoutConfig={layoutConfig}
+                  gridLayout={variant}
                   variant={itemsVariant ?? item?.variant}
+                  aspectRatio={itemsAspectRatio ?? item?.aspectRatio}
                   position={index + 1}
                 />
               ))}

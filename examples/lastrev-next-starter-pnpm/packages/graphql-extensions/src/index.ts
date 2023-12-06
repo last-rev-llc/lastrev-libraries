@@ -1,5 +1,6 @@
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import type { Source, DocumentNode, GraphQLSchema } from 'graphql';
+import { typeDefs as algoliaTypeDefs } from '@last-rev/graphql-algolia-integration';
 
 import fs from 'fs';
 import path from 'path';
@@ -28,6 +29,7 @@ function loadFiles() {
     modules['Card'] = require('./Card.extension');
     modules['CategoryBlog'] = require('./CategoryBlog.extension');
     modules['Collection'] = require('./Collection.extension');
+    modules['CollectionDynamic'] = require('./CollectionDynamic.extension');
     modules['CollectionExpandable'] = require('./CollectionExpandable.extension');
     modules['CollectionExpandableItem'] = require('./CollectionExpandableItem.extension');
     modules['Footer'] = require('./Footer.extension');
@@ -38,14 +40,16 @@ function loadFiles() {
     modules['Media'] = require('./Media.extension');
     modules['NavigationItem'] = require('./NavigationItem.extension');
     modules['Page'] = require('./Page.extension');
+    modules['PageAsset'] = require('./PageAsset.extension');
     modules['PathsConfigs'] = require('./PathsConfigs.extension');
     modules['Person'] = require('./Person.extension');
     modules['Preview'] = require('./Preview.extension');
-    modules['Quote'] = require('./Quote.extension');
+    modules['PageProperty'] = require('./Property.extension');
     modules['RichText'] = require('./RichText.extension');
     modules['Section'] = require('./Section.extension');
     modules['SEO'] = require('./SEO.extension');
     modules['Sidekick'] = require('./Sidekick.extension');
+    modules['Site'] = require('./Site.extension');
     modules['Text'] = require('./Text.extension');
     modules['Theme'] = require('./Theme.extension');
 
@@ -82,6 +86,7 @@ function loadFiles() {
 }
 
 const extensions: GraphQlExtension[] = loadFiles();
+extensions.push({ typeDefs: algoliaTypeDefs });
 
 const getNonNullPropertiesFromExtensions = (property: any) =>
   extensions.map((ext: GraphQlExtension) => ext[property]).filter(Boolean);

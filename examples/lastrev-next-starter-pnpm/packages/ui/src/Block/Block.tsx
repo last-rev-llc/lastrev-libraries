@@ -11,14 +11,17 @@ import Background from '../Background';
 import ErrorBoundary from '../ErrorBoundary';
 
 import type { BlockProps, BlockOwnerState } from './Block.types';
+import { layoutConfig } from './Block.theme';
 
 const Block = (props: BlockProps) => {
   const ownerState = { ...props };
 
   const {
+    inheritTopBGOverlap,
     backgroundImage,
     backgroundColor,
     introText,
+    variant,
     overline,
     title,
     subtitle,
@@ -31,8 +34,13 @@ const Block = (props: BlockProps) => {
 
   return (
     <ErrorBoundary>
-      <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState}>
-        <BlockBackground background={backgroundImage} backgroundColor={backgroundColor} testId="Block-background" />
+      <Root data-testid="Block" {...sidekick(sidekickLookup)} ownerState={ownerState} data-variant={props.variant}>
+        <BlockBackground
+          background={backgroundImage}
+          backgroundColor={backgroundColor}
+          overlap={inheritTopBGOverlap}
+          testId="Block-background"
+        />
 
         {!!introText && (
           <IntroTextGrid ownerState={ownerState}>
@@ -60,7 +68,7 @@ const Block = (props: BlockProps) => {
                     ownerState={ownerState}
                     {...sidekick(sidekickLookup, 'title')}
                     data-testid="Block-title"
-                    variant="h1"
+                    variant="h3"
                     dangerouslySetInnerHTML={{ __html: title }}
                   />
                 )}
@@ -70,7 +78,7 @@ const Block = (props: BlockProps) => {
                     ownerState={ownerState}
                     {...sidekick(sidekickLookup, 'subtitle')}
                     data-testid="Block-subtitle"
-                    variant="display5">
+                    variant="h5">
                     {subtitle}
                   </Subtitle>
                 )}
@@ -107,6 +115,7 @@ const Block = (props: BlockProps) => {
                     key={media?.id}
                     {...sidekick(sidekickLookup, 'mediaItems')}
                     {...media}
+                    columns={layoutConfig[variant]}
                   />
                 ))
               ) : (
@@ -189,7 +198,6 @@ const Body = styled(ContentModule, {
 const SideContentWrap = styled('div', {
   name: 'Block',
   slot: 'SideContentWrap',
-
   overridesResolver: (_, styles) => [styles.sideContentWrap]
 })<{ ownerState: BlockOwnerState }>``;
 
@@ -202,7 +210,6 @@ const Media = styled(ContentModule, {
 const ActionsWrap = styled(Box, {
   name: 'Block',
   slot: 'ActionsWrap',
-
   overridesResolver: (_, styles) => [styles.actionsWrap]
 })<{ ownerState: BlockOwnerState }>``;
 

@@ -1,5 +1,6 @@
 import gql from 'graphql-tag';
-import type { Mappers, ApolloContext } from '@last-rev/types';
+import type { Mappers } from '@last-rev/types';
+import type { ApolloContext } from './types';
 import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-core';
 
 import { pathResolver } from './utils/pathResolver';
@@ -19,6 +20,7 @@ export const typeDefs = gql`
     contents: [Content]
     breadcrumbs: [Link]
     footerDisclaimerOverride: RichText
+    isHomepage: Boolean
   }
 `;
 
@@ -28,7 +30,11 @@ export const mappers: Mappers = {
       path: pathResolver,
       header: pageHeaderResolver,
       footer: pageFooterResolver,
-      breadcrumbs: breadcrumbsResolver
+      breadcrumbs: breadcrumbsResolver,
+      isHomepage: async (page: any, _args: any, ctx: ApolloContext) => {
+        const slug = getLocalizedField(page.fields, 'slug', ctx);
+        return slug === '/';
+      }
     },
 
     Link: {
@@ -42,8 +48,14 @@ export const mappers: Mappers = {
     },
 
     Card: {
-      body: async (page: any, _args: any, ctx: ApolloContext) =>
-        createRichText(getLocalizedField(page.fields, 'promoSummary', ctx)),
+      body: async (page: any, _args: any, ctx: ApolloContext) => {
+        const promoSummary = getLocalizedField(page.fields, 'promoSummary', ctx);
+
+        if (promoSummary) {
+          return await createRichText(promoSummary);
+        }
+        return null;
+      },
 
       media: async (page: any, _args: any, ctx: ApolloContext) => {
         const promoImage =
@@ -52,19 +64,22 @@ export const mappers: Mappers = {
         return [promoImage];
       },
 
-      variant: () => 'default',
+      variant: () => 'buttonText',
 
       link: async (page: any, _args: any, ctx: ApolloContext) => {
         return page;
       },
 
       actions: async (page: any, args: any, ctx: ApolloContext) => {
+        const text = getLocalizedField(page.fields, 'promoLinkText', ctx) ?? 'Read More';
         return [
           createType('Link', {
             id: page.id,
-            text: 'Read More',
+            text,
+            icon: 'logo',
+            iconPosition: 'Left',
             href: await pathResolver(page, args, ctx),
-            variant: 'buttonContained'
+            variant: 'buttonText'
           })
         ];
       }

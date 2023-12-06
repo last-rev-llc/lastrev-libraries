@@ -1,11 +1,17 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import { Theme } from '@ui/ThemeRegistry/theme.types';
+import type { Theme } from '../../ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['FooterNavigationItem'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['FooterNavigationItem'] = {
-  root: ({ theme }) => ({
-    ...theme.typography.body2
+  root: ({ theme, ownerState }) => ({
+    ...(ownerState.variant === 'linkBoldedFooter' || ownerState.variant === 'labelFooter'
+      ? {
+          ...theme.typography.navLink
+        }
+      : {
+          ...theme.typography.bodyXSmall
+        })
   })
 
   // rootLinkButton: : {},

@@ -1,20 +1,42 @@
-fragment Form_BaseFragment on ElementForm {
+fragment Form_FieldsFragment on ElementForm {
   ...Content_BaseFragment
   variant
-  hubspotPortalId
-  hubspotFormId
+  formLayout
+  backgroundImage {
+    ...Media_BaseFragment
+  }
+  address
+  email
+  phone
+  backgroundColor
+  formspreeId
+  formDisclaimerText {
+    ...RichText_BaseFragment
+  }
   introText {
     ...Text_IntroTextFragment
   }
 }
 
+fragment Form_BaseFragment on ElementForm {
+  ...Form_FieldsFragment
+  
+  submissionContentItems {
+    ...ContentModule_SectionFragment
+  }
+}
+
+fragment Form_RichTextFragment on ElementForm {
+  ...Form_FieldsFragment
+  
+  submissionContentItems {
+    ...Card_RichTextFragment
+  }
+}
+
 fragment Form_PageFragment on ElementForm {
-  ...Content_BaseFragment
-  variant
-  hubspotPortalId
-  hubspotFormId
-  #seo
-  #jsonLd
+  ...Form_BaseFragment
+  seo
   path
   slug
   header {
@@ -25,5 +47,8 @@ fragment Form_PageFragment on ElementForm {
   }
   footerDisclaimerOverride {
     ...RichText_BaseFragment
+  }
+  hero {
+    ...ContentModule_BaseFragment
   }
 }

@@ -19,10 +19,18 @@ export const revalidate = 300;
 
 export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
   const path = join('/', (params.slug || ['/']).join('/'));
-  const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
+  const { data: pageData } = await client.Page({
+    path: path === '/index' ? '/' : path,
+    locale,
+    preview: isPreview(),
+    site
+  });
+
+  if (!pageData?.page?.id) return {};
+
   const parentSEO = await parent;
   const seo = (pageData?.page as any)?.seo;
-  return getPageMetadata({ parentSEO, seo });
+  return getPageMetadata({ parentSEO, seo, pageId: pageData.page.id });
 }
 
 // export async function generateStaticParams() {
@@ -39,7 +47,12 @@ const locale = 'en-US';
 export default async function Page({ params }: Props) {
   const path = join('/', (params.slug || ['/']).join('/'));
 
-  const { data: pageData } = await client.Page({ path, locale, preview: isPreview(), site });
+  const { data: pageData } = await client.Page({
+    path: path === '/index' ? '/' : path,
+    locale,
+    preview: isPreview(),
+    site
+  });
 
   if (!pageData?.page) {
     return notFound();

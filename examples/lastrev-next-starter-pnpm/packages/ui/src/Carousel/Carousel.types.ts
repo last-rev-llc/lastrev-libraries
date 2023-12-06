@@ -16,6 +16,7 @@ export enum CarouselVariants {
 export interface CarouselProps extends Omit<Collection_BaseFragmentFragment, 'variant' | 'itemsVariant'> {
   variant?: CarouselVariants;
   itemsVariant?: CardVariants;
+  prevBgColor?: string;
 }
 
 export interface CarouselOwnerState extends CarouselProps {}

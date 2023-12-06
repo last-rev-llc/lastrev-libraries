@@ -1,11 +1,27 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import { Theme } from '@ui/ThemeRegistry/theme.types';
+
+import { type Theme } from '../ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Breadcrumbs'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Breadcrumbs'] = {
-  root: {},
-  breadcrumb: {}
+  root: ({ theme }) => ({
+    '& *': {
+      ...theme.typography.bodyXSmall,
+      'color': 'var(--mui-palette-text-primary)',
+
+      '[class*=separator]': {
+        padding: `0 var(--grid-gap-quarter)`
+      }
+    },
+
+    // Hides 3rd+ occurence of breadcrumbs
+    [theme.containerBreakpoints.down('sm')]: {
+      '& .MuiBreadcrumbs-ol li:not(:nth-of-type(-n+3))': {
+        display: 'none'
+      }
+    }
+  })
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Breadcrumbs'] => [];

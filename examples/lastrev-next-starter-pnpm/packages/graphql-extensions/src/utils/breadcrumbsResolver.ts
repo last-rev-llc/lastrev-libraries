@@ -1,4 +1,4 @@
-import type { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from '../types';
 import { getLocalizedField, getDefaultFieldValue } from '@last-rev/graphql-contentful-core';
 
 import { createType } from './createType';
@@ -31,8 +31,7 @@ export const breadcrumbsResolver = async (item: any, _args: any, ctx: ApolloCont
   let prevSlug = '';
 
   for (let path of paths) {
-    prevSlug = path.slug !== '/' ? `${prevSlug}/${path.slug}` : prevSlug;
-
+    prevSlug = path.slug !== '/' ? `${prevSlug}/${path.slug}` : path.slug;
     links.push(
       createType('Link', {
         id: path.id,

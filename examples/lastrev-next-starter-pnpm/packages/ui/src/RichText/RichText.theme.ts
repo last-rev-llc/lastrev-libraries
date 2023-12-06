@@ -1,5 +1,7 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import { Theme } from '@ui/ThemeRegistry/theme.types';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
+
+import { RichTextVariants } from './RichText.types';
 
 const defaultProps: ComponentsProps['RichText'] = {};
 
@@ -8,7 +10,7 @@ const styleOverrides: ComponentsOverrides<Theme>['RichText'] = {
   root: {
     'width': '100%',
     'ol, ul': {
-      'padding': '0 0 0 calc(var(--grid-gap) * 4)',
+      'padding': '0 0 0 var(--grid-gap)',
 
       '& > li': {
         marginBottom: '1em',
@@ -22,11 +24,10 @@ const createVariants = (theme: Theme): ComponentsVariants['RichText'] => [
   // Use prop matching to set variant styles
   {
     props: {
-      variant: 'inline'
+      variant: RichTextVariants.inline
     },
     style: {
-      // TODO: Pulled from Text, but adds default padding around elements.   Classes may be wrong
-      '& > [class*=Text-root] > *:not(:first-child)': {
+      '& > *:not(:first-child)': {
         '&:not(:is(ul, ol, li))': {
           marginTop: '1em',
           marginBottom: '1em'
@@ -53,15 +54,15 @@ const createVariants = (theme: Theme): ComponentsVariants['RichText'] => [
         },
 
         '&[class*=-h2]': {
-          ...theme.typography.display4
+          ...theme.typography.h4
         },
 
         '&[class*=-h3]': {
-          ...theme.typography.display5
+          ...theme.typography.h5
         },
 
         '&[class*=-h4]': {
-          ...theme.typography.display5
+          ...theme.typography.h5
         }
       },
 
@@ -78,10 +79,21 @@ const createVariants = (theme: Theme): ComponentsVariants['RichText'] => [
 
   {
     props: {
-      variant: 'introText'
+      variant: RichTextVariants.introText
     },
     style: ({ theme }: { theme: Theme }) => ({
       marginBottom: theme.spacing(4)
+    })
+  },
+
+  {
+    props: {
+      variant: RichTextVariants.smallText
+    },
+    style: ({ theme }: { theme: Theme }) => ({
+      '& *': {
+        ...theme.typography.bodySmall
+      }
     })
   }
 ];

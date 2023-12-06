@@ -18,10 +18,19 @@ import ContentModule from '../ContentModule';
 import type { CarouselProps, CarouselOwnerState } from './Carousel.types';
 import Background from '../Background';
 
+import { layoutConfig } from './Carousel.theme';
+
 import { breakpoints } from '../ThemeRegistry/theme';
 
 const Carousel = (props: CarouselProps) => {
-  const ownerState = { ...props };
+  const ownerState: CarouselOwnerState = { ...props };
+  const [jsEnabled, setJsEnabled] = React.useState<boolean>(false);
+
+  const refSwiperWrap = React.useRef<HTMLElement | null>(null);
+
+  React.useEffect(() => {
+    setJsEnabled(true);
+  }, []);
 
   const {
     backgroundImage,
@@ -32,6 +41,7 @@ const Carousel = (props: CarouselProps) => {
     items,
     variant,
     itemsVariant,
+    itemsAspectRatio,
     sidekickLookup,
     introText,
     itemsPerRow = 3,
@@ -114,6 +124,7 @@ const Carousel = (props: CarouselProps) => {
           backgroundColor={backgroundColor}
           testId="Carousel-background"
         />
+
         {introText && (
           <IntroTextGrid ownerState={ownerState}>
             <IntroText
@@ -126,28 +137,30 @@ const Carousel = (props: CarouselProps) => {
         )}
 
         <ContentGrid ownerState={ownerState}>
-          <SwiperWrap ownerState={ownerState}>
+          <SwiperWrap ownerState={ownerState} ref={refSwiperWrap} className={jsEnabled ? '' : 'no-js'}>
             <SwiperInnerWrap ownerState={ownerState}>
               <Swiper
                 rewind={true}
                 breakpointsBase="container"
                 cssMode={true}
+                className="swiper-horizontal swiper-css-mode"
                 modules={[Navigation, SwiperGrid, Pagination, A11y]}
                 spaceBetween={24}
                 breakpoints={swiperBreakpoints}
                 navigation
                 // pagination={{ clickable: true }}
                 // scrollbar={{ draggable: true }}
-                // onSwiper={(swiper) => console.log(swiper)}
-                // onSlideChange={() => console.log('slide change')}
               >
                 {items?.map((item, index) => (
-                  <SwiperSlide key={item?.id}>
+                  <SwiperSlide key={`swiper-slide-${item?.id ?? item?.title}-${index}`}>
                     <Item
                       backgroundColor={backgroundColor}
                       ownerState={ownerState}
                       {...item}
+                      layoutConfig={layoutConfig}
+                      gridLayout={variant}
                       variant={itemsVariant ?? item?.variant}
+                      aspectRatio={itemsAspectRatio ?? item?.aspectRatio}
                     />
                   </SwiperSlide>
                 ))}
@@ -193,7 +206,7 @@ const IntroText = styled(ContentModule, {
 const SwiperWrap = styled(Box, {
   name: 'Carousel',
   slot: 'SwiperWrap',
-  overridesResolver: (_, styles) => [styles.swiperWrap]
+  overridesResolver: (props, styles) => [styles.swiperWrap]
 })<{ ownerState: CarouselOwnerState }>``;
 
 const SwiperInnerWrap = styled(Box, {

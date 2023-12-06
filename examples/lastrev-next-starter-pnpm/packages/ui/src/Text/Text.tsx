@@ -10,15 +10,19 @@ import ContentModule from '../ContentModule';
 
 import type { TextProps, TextOwnerState } from './Text.types';
 import Grid from '../Grid';
+import Box from '@mui/material/Box';
+import Background from '../Background';
 
 const Text = (props: TextProps) => {
   const ownerState = { ...props };
 
-  const { body, overline, title, subtitle, variant, sidekickLookup, sx } = props;
+  const { backgroundColor, body, overline, titleIcon, title, subtitle, variant, sidekickLookup, sx } = props;
 
   return (
     <ErrorBoundary>
       <Root data-testid="Text-root" {...sidekick(sidekickLookup)} ownerState={ownerState}>
+        <TextBackground backgroundColor={backgroundColor} testId="Text-background" />
+
         {!!overline && (
           <Overline
             data-testid="Text-overline"
@@ -29,11 +33,18 @@ const Text = (props: TextProps) => {
           </Overline>
         )}
 
-        {!!title && (
-          <Title data-testid="Text-title" {...sidekick(sidekickLookup, 'title')} ownerState={ownerState}>
-            {title}
-          </Title>
-        )}
+        {!!titleIcon || title ? (
+          <TitleWrap>
+            {!!titleIcon ? (
+              <TitleIcon ownerState={ownerState} {...sidekick(sidekickLookup, 'titleIcon')}>
+                <ContentModule {...titleIcon} data-testid="Text-titleIcon" />
+              </TitleIcon>
+            ) : null}
+            <Title data-testid="Text-title" {...sidekick(sidekickLookup, 'title')} ownerState={ownerState}>
+              {!!title ? title : null}
+            </Title>
+          </TitleWrap>
+        ) : null}
 
         {!!subtitle && (
           <Subtitle
@@ -46,47 +57,67 @@ const Text = (props: TextProps) => {
         )}
 
         {!!body && (
-          <ContentModule
-            body={body}
-            sidekickLookup={sidekickLookup}
-            variant={variant}
-            {...props}
-            __typename="RichText"
-            ownerState={ownerState}
-          />
+          <BodyWrap ownerState={ownerState}>
+            <ContentModule
+              body={body}
+              sidekickLookup={sidekickLookup}
+              variant={variant}
+              __typename="RichText"
+              ownerState={{ ...ownerState, variant: variant === 'thin' ? 'inline' : variant }}
+            />
+          </BodyWrap>
         )}
       </Root>
     </ErrorBoundary>
   );
 };
 
-// Support for \n in text
 const Root = styled(Grid, {
   name: 'Text',
   slot: 'Root',
-  shouldForwardProp: (prop) => prop !== 'variant' && prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.root]
 })<{ ownerState: TextOwnerState }>``;
+
+const TextBackground = styled(Background, {
+  name: 'Block',
+  slot: 'Background',
+  overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
 
 const Overline = styled(Typography, {
   name: 'Text',
   slot: 'Overline',
-  shouldForwardProp: (prop: string) => prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.overline]
 })<TypographyProps & { ownerState: TextOwnerState }>``;
+
+const TitleWrap = styled(Box, {
+  name: 'Text',
+  slot: 'TitleWrap',
+  overridesResolver: (_, styles) => [styles.titleWrap]
+})<{ ownerState: TextOwnerState }>``;
 
 const Title = styled(Typography, {
   name: 'Text',
   slot: 'Title',
-  shouldForwardProp: (prop: string) => prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.title]
 })<TypographyProps & { ownerState: TextOwnerState }>``;
+
+const TitleIcon = styled(Box, {
+  name: 'Text',
+  slot: 'TitleIcon',
+  overridesResolver: (_, styles) => [styles.titleIcon]
+})<{ ownerState: TextOwnerState }>``;
 
 const Subtitle = styled(Typography, {
   name: 'Text',
   slot: 'Subtitle',
-  shouldForwardProp: (prop: string) => prop !== 'ownerState',
   overridesResolver: (_, styles) => [styles.subtitle]
+})<TypographyProps & { ownerState: TextOwnerState }>``;
+
+const BodyWrap = styled(Box, {
+  name: 'Text',
+  slot: 'BodyWrap',
+  overridesResolver: (_, styles) => [styles.bodyWrap]
 })<TypographyProps & { ownerState: TextOwnerState }>``;
 
 export default Text;

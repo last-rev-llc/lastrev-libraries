@@ -19,7 +19,7 @@ const Breadcrumbs = (props: BreadcrumbsProps) => {
 
   return (
     <ErrorBoundary>
-      <Root aria-label="breadcrumb" ownerState={ownerState}>
+      <Root aria-label="breadcrumb" ownerState={ownerState} separator="&bull;">
         {links?.map((link: any, index: number) => (
           <Breadcrumb key={`breadcrumb-${index}-${link?.id}`} {...(link as LinkProps)} ownerState={ownerState} />
         ))}

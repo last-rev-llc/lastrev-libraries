@@ -1,148 +1,123 @@
-import { DM_Sans } from 'next/font/google';
 import {
   type Breakpoint,
-  type ThemeOptions,
   experimental_extendTheme as extendTheme,
-  CssVarsThemeOptions
+  CssVarsThemeOptions,
+  createTheme
 } from '@mui/material/styles';
-import deepmerge from '@mui/utils/deepmerge';
+
+import { deepmerge } from '@mui/utils';
 import './theme.types';
-import createGridMixin from './mixins/createGridMixin';
-import applyBackgroundColor from './mixins/applyBackgroundColor';
+import generateGridStyles from './mixins/generateGridStyles';
+import applyColorScheme from './mixins/applyColorScheme';
+import applyColorSchemeOverlay from './mixins/applyColorSchemeOverlay';
 import themeComponents from './theme.components';
 
-export const dmSans = DM_Sans({
-  weight: ['300', '400', '500', '700'],
-  subsets: ['latin'],
-  display: 'swap'
-});
+import { Inter_Tight } from 'next/font/google';
 
-export const mainColors = ['sapphire', 'blue', 'green'];
+export const interTight = Inter_Tight({
+  weight: ['200', '300', '400', '600', '700'],
+  subsets: ['latin'],
+  display: 'swap',
+  // fallback: ['Courier'],
+  adjustFontFallback: false
+});
 
 const defaultSpacing = 8;
 const defaultBorderRadius = 4;
 
-const colors = {
-  // sapphireLight: '#5368D2',
-  // sapphireMain: '#3049C9',
-  // sapphireDark: '#22338D',
-  // sunflowerLighter: '#FFFBF1',
-  // sunflowerMain: '#FED872',
-  // sunflowerLight: '#FEE8AD',
-  // sunflowerDark: '#9B8446',
-  // greenLighter: '#EAF2EE',
-  // greenLight: '#88B19C',
-  // greenMain: '#317955',
-  // greenDark: '#1E4A34',
-  // blueLighter: '#ECF2FE',
-  // blueLight: '#C4D6FB',
-  // blueMain: '#407BF2',
-  // blueDark: '#264A91'
-  sapphirePinkGradient: { main: 'linear-gradient(281deg, #E82163 0%, #3049C9 100%)', contrastText: '#FFF' },
-  sapphire: { light: '#5368D2', main: '#3049C9', dark: '#22338D', contrastText: '#FFF' },
-  sapphireLight: { light: '#EAEDFA', main: '#5368D2', dark: '#3049C9', contrastText: '#FFF' },
-  blue: { lighter: '#ECF2FE', light: '#C4D6FB', main: '#407BF2', dark: '#264A91', contrastText: '#FFF' },
-  blueLight: { light: '#ECF2FE', main: '#C4D6FB', dark: '#407BF2', contrastText: '#000' },
-  green: { lighter: '#EAF2EE', light: '#88B19C', main: '#317955', dark: '#1E4A34', contrastText: '#FFF' },
-  sunflower: { light: '#FEE8AD', main: '#FED872', dark: '#9B8446', contrastText: '#000' },
-  sunflowerLight: { light: '#FFFBF1', main: '#FEE8AD', dark: '#FED872', contrastText: '#000' },
-  fuchsia: { lighter: '#F6ECFF', light: '#C890FF', main: '#A040FF', dark: '#702DB3', contrastText: '#000' },
-  mint: { lighter: '#F9FDFC', light: '#DDF2EB', main: '#C4E9DD', dark: '#788E87', contrastText: '#000' },
-  orange: { lighter: '#FFF5E9', light: '#FFC37F', main: '#FF9823', dark: '#B36A19', contrastText: '#000' }
+const commonColors = {
+  black: '#000000',
+  navy: '#03263C',
+  red: '#eb183d',
+  white: '#ffffff',
+  gray1: '#f8f8f8',
+  gray2: '#E5E6E8',
+  gray3: '#BBC5CB',
+  gray4: '#7D909B',
+  gray5: '#3C586A',
+  transparentLight: 'rgba(0, 0, 0, 0)',
+  transparentDark: 'rgba(255, 255, 255, 0)'
 };
 
 const schemes = {
-  sapphire: {
-    primary: colors.sapphire,
-    secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main
+  transparentLight: {
+    primary: { main: commonColors.transparentLight, contrastText: commonColors.navy },
+    secondary: { main: commonColors.red, contrastText: commonColors.white },
+    linkColor: commonColors.navy,
+    headerColor: commonColors.black,
+    text: commonColors.navy,
+    overlay: commonColors.navy,
+    overlayText: commonColors.white
   },
-  sapphireLight: {
-    primary: { main: colors.sapphireLight.light, contrastText: '#000' },
-    secondary: colors.sapphire,
-    highlightColor: colors.sapphire.main
+  transparentDark: {
+    primary: { main: commonColors.transparentDark, contrastText: commonColors.white },
+    secondary: { main: commonColors.red, contrastText: commonColors.white },
+    linkColor: commonColors.white,
+    headerColor: commonColors.white,
+    text: commonColors.white,
+    overlay: commonColors.gray2,
+    overlayText: commonColors.black
   },
-  blue: {
-    primary: colors.blue,
-    secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main
+  lightGray: {
+    primary: { main: commonColors.gray1, contrastText: commonColors.gray5 },
+    secondary: { main: commonColors.red, contrastText: commonColors.white },
+    linkColor: commonColors.gray5,
+    headerColor: commonColors.navy,
+    text: commonColors.gray5,
+    overlay: commonColors.navy,
+    overlayText: commonColors.white
   },
-  blueLight: {
-    primary: { main: colors.blueLight.main },
-    secondary: {
-      light: colors.blueLight.light,
-      main: colors.blue.main,
-      dark: colors.blue.dark,
-      contrastText: colors.blue.contrastText
-    },
-    highlightColor: colors.blue.main
+  navy: {
+    primary: { main: commonColors.navy, contrastText: commonColors.gray2 },
+    secondary: { main: commonColors.red, contrastText: commonColors.white },
+    linkColor: commonColors.gray3,
+    headerColor: commonColors.white,
+    text: commonColors.gray2,
+    overlay: commonColors.navy,
+    overlayText: commonColors.gray2
   },
-  green: {
-    primary: colors.green,
-    secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main
-  },
-  greenLight: {
-    primary: { main: colors.green.light },
-    secondary: colors.green,
-    highlightColor: colors.green.main
-  },
-  sunflower: {
-    primary: colors.sunflower,
-    secondary: colors.green,
-    highlightColor: colors.green.main
-  },
-  sunflowerLight: {
-    primary: { main: colors.sunflower.light, contrastText: colors.sunflower.contrastText },
-    secondary: colors.sunflower,
-    highlightColor: colors.green.main,
-    text: {
-      primary: '#000',
-      secondary: '#000'
-    }
-  },
-  orange: {
-    primary: colors.orange,
-    secondary: colors.sunflower,
-    highlightColor: colors.green.main
-  },
-  orangeLight: {
-    primary: { main: colors.orange.light },
-    secondary: colors.orange,
-    highlightColor: colors.orange.main
-  },
-  fuchsia: {
-    primary: colors.fuchsia,
-    secondary: colors.sunflower,
-    highlightColor: colors.sunflower.main
-  },
-  fuchsiaLight: {
-    primary: { main: colors.fuchsia.light },
-    secondary: colors.fuchsia,
-    highlightColor: colors.fuchsia.main
+  white: {
+    primary: { main: commonColors.white, contrastText: commonColors.gray5 },
+    secondary: { main: commonColors.red, contrastText: commonColors.white },
+    linkColor: commonColors.gray5,
+    headerColor: commonColors.navy,
+    text: commonColors.gray5,
+    overlay: commonColors.navy,
+    overlayText: commonColors.white
   }
 };
 
+export const breakpointsMinMax: Record<string, { min: number; max: number }> = {
+  xs: { min: 0, max: 600 },
+  sm: { min: 600, max: 800 },
+  md: { min: 900, max: 1200 },
+  lg: { min: 1200, max: 1920 },
+  xl: { min: 1920, max: 2800 },
+  xxl: { min: 2800, max: 3840 }
+};
+
 const paletteTheme = {
-  values: {
-    xs: 0,
-    sm: 600,
-    md: 900,
-    lg: 1200,
-    xl: 1536,
-    xxl: 3840
+  breakpoints: {
+    values: {
+      xs: breakpointsMinMax.xs.min,
+      sm: breakpointsMinMax.sm.min,
+      md: breakpointsMinMax.md.min,
+      lg: breakpointsMinMax.lg.min,
+      xl: breakpointsMinMax.xl.min,
+      xxl: breakpointsMinMax.xxl.min
+    }
   },
   colorSchemes: {
     light: {
       palette: {
         schemes: schemes,
-        ...schemes['sapphire']
+        ...schemes['white']
       }
     },
     dark: {
       palette: {
         schemes: schemes,
-        ...schemes['sapphire']
+        ...schemes['navy']
       }
     }
   }
@@ -151,158 +126,170 @@ const paletteTheme = {
 const muiTheme = extendTheme(paletteTheme);
 const baseTheme = {
   ...paletteTheme,
-
   spacing: defaultSpacing,
   shape: {
     borderRadius: defaultBorderRadius
   },
   mixins: {
-    gridContainer: createGridMixin,
-    applyBackgroundColor
+    generateGridStyles,
+    applyColorScheme,
+    applyColorSchemeOverlay
   },
   typography: {
-    fontFamily: dmSans.style.fontFamily,
+    fontFamily: interTight.style.fontFamily,
+
+    navLink: {
+      fontWeight: 600,
+      lineHeight: 'var(--bodyXSmall-line-height)',
+      letterSpacing: '1px',
+      textTransform: 'uppercase',
+      fontFamily: interTight.style.fontFamily,
+      fontSize: 'var(--bodyXSmall-font-size)',
+      color: 'var(--mui-palette-text-primary, inherit)'
+    },
+
     body1: {
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--body1-font-weight)',
       fontSize: 'var(--body1-font-size)',
       lineHeight: 'var(--body1-line-height)',
       margin: 'var(--body1-margin)',
-      color: 'inherit'
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     body2: {
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--body2-font-weight)',
       fontSize: 'var(--body2-font-size)',
       lineHeight: 'var(--body2-line-height)',
       margin: 'var(--body2-margin)',
-      color: 'inherit'
+      color: 'var(--mui-palette-text-primary, inherit)'
+    },
+    bodyXSmall: {
+      fontFamily: interTight.style.fontFamily,
+      fontWeight: 'var(--bodyXSmall-font-weight)',
+      fontSize: 'var(--bodyXSmall-font-size)',
+      lineHeight: 'var(--bodyXSmall-line-height)',
+      margin: 'var(--bodyXSmall-margin)',
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     bodySmall: {
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--bodySmall-font-weight)',
       fontSize: 'var(--bodySmall-font-size)',
       lineHeight: 'var(--bodySmall-line-height)',
       margin: 'var(--bodySmall-margin)',
-      color: 'inherit'
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     bodyLarge: {
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--bodyLarge-font-weight)',
       fontSize: 'var(--bodyLarge-font-size)',
       lineHeight: 'var(--bodyLarge-line-height)',
       margin: 'var(--bodyLarge-margin)',
-      color: 'inherit'
-    },
-
-    h1: {
-      fontWeight: 'var(--h1-font-weight)',
-      fontSize: 'var(--h1-font-size)',
-      lineHeight: 'var(--h1-line-height)',
-      margin: 'var(--h1-margin)',
-      fontStyle: 'normal'
-    },
-    h2: {
-      fontWeight: 'var(--h2-font-weight)',
-      fontSize: 'var(--h2-font-size)',
-      lineHeight: 'var(--h2-line-height)',
-      margin: 'var(--h2-margin)',
-      fontStyle: 'normal'
-    },
-    h3: {
-      fontWeight: 'var(--h3-font-weight)',
-      fontSize: 'var(--h3-font-size)',
-      lineHeight: 'var(--h3-line-height)',
-      margin: 'var(--h3-margin)',
-      fontStyle: 'normal'
-    },
-    h4: {
-      fontWeight: 'var(--h4-font-weight)',
-      fontSize: 'var(--h4-font-size)',
-      lineHeight: 'var(--h4-line-height)',
-      margin: 'var(--h4-margin)',
-      fontStyle: 'normal'
-    },
-    h5: {
-      fontWeight: 'var(--h5-font-weight)',
-      fontSize: 'var(--h5-font-size)',
-      lineHeight: 'var(--h5-line-height)',
-      margin: 'var(--h5-margin)',
-      fontStyle: 'normal'
-    },
-    h6: {
-      fontWeight: 'var(--h6-font-weight)',
-      fontSize: 'var(--h6-font-size)',
-      lineHeight: 'var(--h6-line-height)',
-      margin: 'var(--h6-margin)',
-      color: '#000000'
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     display1: {
       display: 'block',
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--display1-font-weight)',
       fontSize: 'var(--display1-font-size)',
       lineHeight: 'var(--display1-line-height)',
       margin: 'var(--display1-margin)',
-      color: muiTheme?.vars?.palette?.tertiary?.main
+      color: 'var(--mui-palette-text-primary-header, inherit)',
+      letterSpacing: '1px'
     },
     display2: {
       display: 'block',
+      fontFamily: interTight.style.fontFamily,
       fontWeight: 'var(--display2-font-weight)',
       fontSize: 'var(--display2-font-size)',
       lineHeight: 'var(--display2-line-height)',
       margin: 'var(--display2-margin)',
-      color: muiTheme?.vars?.palette?.tertiary?.main
+      letterSpacing: '1px',
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
-    display3: {
-      display: 'block',
-      fontWeight: 'var(--display3-font-weight)',
-      fontSize: 'var(--display3-font-size)',
-      lineHeight: 'var(--display3-line-height)',
-      margin: 'var(--display3-margin)',
-      color: muiTheme?.vars?.palette?.tertiary?.main
+    h1: {
+      fontFamily: interTight.style.fontFamily,
+      fontWeight: 'var(--h1-font-weight)',
+      fontSize: 'var(--h1-font-size)',
+      lineHeight: 'var(--h1-line-height)',
+      margin: 'var(--h1-margin)',
+      fontStyle: 'normal',
+      letterSpacing: '1px',
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
-    display4: {
-      display: 'block',
-      fontWeight: 'var(--display4-font-weight)',
-      fontSize: 'var(--display4-font-size)',
-      lineHeight: 'var(--display4-line-height)',
-      margin: 'var(--display4-margin)',
-      color: muiTheme?.vars?.palette?.tertiary?.main
+    h2: {
+      fontFamily: interTight.style.fontFamily,
+      fontWeight: 'var(--h2-font-weight)',
+      fontSize: 'var(--h2-font-size)',
+      lineHeight: 'var(--h2-line-height)',
+      margin: 'var(--h2-margin)',
+      fontStyle: 'normal',
+      letterSpacing: '1px',
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
-    display5: {
-      display: 'block',
-      fontWeight: 'var(--display5-font-weight)',
-      fontSize: 'var(--display5-font-size)',
-      lineHeight: 'var(--display5-line-height)',
-      margin: 'var(--display5-margin)',
-      color: muiTheme?.vars?.palette?.tertiary?.main
+    h3: {
+      fontFamily: interTight.style.fontFamily,
+      fontWeight: 'var(--h3-font-weight)',
+      fontSize: 'var(--h3-font-size)',
+      lineHeight: 'var(--h3-line-height)',
+      margin: 'var(--h3-margin)',
+      fontStyle: 'normal',
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
-    display6: {
-      display: 'block',
-      fontWeight: 'var(--display6-font-weight)',
-      fontSize: 'var(--display6-font-size)',
-      lineHeight: 'var(--display6-line-height)',
-      margin: 'var(--display6-margin)',
-      color: muiTheme?.vars?.palette?.tertiary?.main
+    h4: {
+      fontFamily: interTight.style.fontFamily,
+      fontWeight: 'var(--h4-font-weight)',
+      fontSize: 'var(--h4-font-size)',
+      lineHeight: 'var(--h4-line-height)',
+      margin: 'var(--h4-margin)',
+      fontStyle: 'normal',
+      color: 'var(--mui-palette-text-primary-header, inherit)'
     },
+    h5: {
+      fontFamily: interTight.style.fontFamily,
+      fontWeight: 'var(--h5-font-weight)',
+      fontSize: 'var(--h5-font-size)',
+      lineHeight: 'var(--h5-line-height)',
+      margin: 'var(--h5-margin)',
+      fontStyle: 'normal',
+      color: 'var(--mui-palette-text-primary-header, inherit)'
+    },
+    h6: {
+      fontFamily: interTight.style.fontFamily,
+      fontWeight: 'var(--h6-font-weight)',
+      fontSize: 'var(--h6-font-size)',
+      lineHeight: 'var(--h6-line-height)',
+      margin: 'var(--h6-margin)',
+      color: 'var(--mui-palette-text-primary-header, inherit)'
+    },
+    subtitle1: {},
+    subtitle2: {},
     overline: {
       display: 'block',
+      fontFamily: interTight.style.fontFamily,
+      letterSpacing: '1px',
       fontWeight: 'var(--overline-font-weight)',
       fontSize: 'var(--overline-font-size)',
       lineHeight: 'var(--overline-line-height)',
       textTransform: 'uppercase',
       margin: 'var(--overline-margin)',
-      color: 'inherit'
+      color: 'var(--mui-palette-text-primary, inherit)'
     },
     button: {},
     caption: {}
   },
   containerBreakpoints: {
     ...muiTheme.breakpoints,
-    up(key: number | Breakpoint) {
+    up: (key: Breakpoint | number) => {
       return muiTheme.breakpoints.up(key)?.replace('@media', '@container');
     },
-    down(key: number | Breakpoint) {
+    down: (key: Breakpoint | number) => {
       return muiTheme.breakpoints.down(key)?.replace('@media', '@container');
     }
   }
 };
+
 const coreTheme = extendTheme(baseTheme);
 
 export const theme = extendTheme(
@@ -316,14 +303,3 @@ export const theme = extendTheme(
 );
 
 export const breakpoints = theme.breakpoints.values;
-
-// export const theme = merge(coreTheme, ...Object.values(themeComponents).map((t) => t(coreTheme)), {
-//   containerBreakpoints: {
-//     up(key: any) {
-//       return muiTheme.breakpoints.up(key)?.replace('@media', '@container');
-//     },
-//     down(key: any) {
-//       return paletteTheme.breakpoints.down(key)?.replace('@media', '@container');
-//     }
-//   }
-// });

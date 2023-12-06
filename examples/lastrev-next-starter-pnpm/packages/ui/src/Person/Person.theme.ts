@@ -1,11 +1,11 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import { Theme } from '@ui/ThemeRegistry/theme.types';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Person'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
     width: '100%',
@@ -15,12 +15,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   }),
 
   sideContentWrap: ({ theme }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-    paddingBottom: 'calc(2 * var(--grid-gap))',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
+    paddingBottom: 'var(--grid-gap-double)',
 
     [theme.containerBreakpoints.up('lg')]: {
-      gridColumnStart: 'content-start',
+      gridColumnStart: 'start',
       gridColumnEnd: 'four-end'
     }
   }),
@@ -37,6 +37,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
     }
   },
 
+  detailsLabel: {
+    '&': {
+      paddingBottom: 'var(--grid-gap)'
+    }
+  },
+
   bodyHeader: {
     '&:not(:first-of-type)': {
       paddingTop: 'var(--grid-gap)',
@@ -44,6 +50,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
       borderTop: 'solid',
       borderTopWidth: '1px'
     }
+  },
+
+  bodyList: {
+    padding: 0
   },
 
   bodyListItem: {
@@ -56,10 +66,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
   },
 
   contentWrap: ({ theme }) => ({
-    backgroundColor: theme.palette.white.main,
-    padding: 'calc(2 * var(--grid-gap))',
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    ...theme.mixins.applyColorScheme({ ownerState: { backgroundColor: 'white' }, theme }),
+    padding: 'var(--grid-gap-double)',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
 
     [theme.containerBreakpoints.up('lg')]: {
       gridColumnStart: 'five-start',
@@ -67,10 +77,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Person'] = {
       paddingRight: 'var(--grid-margin)'
     }
   })
-
-  // name: {},
-  // jobTitle: {},
-  // email: {}
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Person'] => [];

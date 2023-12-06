@@ -1,11 +1,11 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import { Theme } from '@ui/ThemeRegistry/theme.types';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Tabs'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
     position: 'relative',
     width: '100%',
@@ -14,9 +14,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     padding: `var(--section-padding) 0`
   }),
 
-  // introTextGrid: : {},
-
-  introText: { gridColumn: 'content-start / content-end' },
+  introText: { gridColumn: 'start / end' },
 
   contentOuterGrid: {
     '> *': {
@@ -24,35 +22,33 @@ const styleOverrides: ComponentsOverrides<Theme>['Tabs'] = {
     }
   },
 
-  // tabsContext: {},
   tabListWrap: ({ theme }) => ({
-    'gridColumnStart': 'content-start',
-    'gridColumnEnd': 'content-end',
+    'gridColumnStart': 'start',
+    'gridColumnEnd': 'end',
     '.MuiTabs-flexContainer': { gap: 'var(--grid-gap)' },
 
     '.MuiTab-root': {
       borderBottomWidth: '1px',
       borderBottomStyle: 'solid',
-      paddingRight: 'calc(3 * var(--grid-gap))',
+      paddingRight: 'var(--grid-gap-double)',
       paddingLeft: 0,
       whiteSpace: 'nowrap',
-      opacity: 0.5,
-      ...theme.typography.h4
+      opacity: 0.3,
+      textTransform: 'unset',
+      ...theme.typography.h5
     },
 
     '.Mui-selected': {
       opacity: 1,
-      fontWeight: 700,
-      color: 'currentColor'
+      color: 'var(--mui-palette-text-primary)'
     }
   }),
 
   detailsWrap: {
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     padding: 0
   }
-  // details: {}
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Tabs'] => [];

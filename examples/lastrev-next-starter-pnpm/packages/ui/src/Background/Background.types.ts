@@ -9,6 +9,9 @@ export enum BackgroundVariants {
 export interface BackgroundProps {
   background?: ContentModule_BaseFragmentFragment;
   backgroundColor?: string;
+  overlap?: boolean;
+  testId?: string;
+  className?: string;
 }
 
 export interface BackgroundOwnerState extends BackgroundProps {}

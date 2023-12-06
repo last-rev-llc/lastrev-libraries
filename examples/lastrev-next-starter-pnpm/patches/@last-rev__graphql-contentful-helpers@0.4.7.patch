@@ -1,0 +1,164 @@
+diff --git a/dist/createContext.js b/dist/createContext.js
+index 3135e6c4211a8bc88c4b5e4fbc38c08a379fd384..30046a4208757b5a565f578d0e98ef6690cf4c59 100644
+--- a/dist/createContext.js
++++ b/dist/createContext.js
+@@ -1,7 +1,9 @@
+ "use strict";
+-var __importDefault = (this && this.__importDefault) || function (mod) {
+-    return (mod && mod.__esModule) ? mod : { "default": mod };
+-};
++var __importDefault =
++  (this && this.__importDefault) ||
++  function (mod) {
++    return mod && mod.__esModule ? mod : { default: mod };
++  };
+ Object.defineProperty(exports, "__esModule", { value: true });
+ const lodash_1 = require("lodash");
+ const contentful_1 = require("contentful");
+@@ -9,72 +11,82 @@ const createLoaders_1 = __importDefault(require("./createLoaders"));
+ const createPathReaders_1 = __importDefault(require("./createPathReaders"));
+ const contentful_path_rules_engine_1 = require("@last-rev/contentful-path-rules-engine");
+ const getLocales = async (space, environment, accessToken) => {
+-    const client = (0, contentful_1.createClient)({
+-        space,
+-        environment,
+-        accessToken,
+-        host: 'cdn.contentful.com',
+-        resolveLinks: false
+-    });
+-    const locales = await client.getLocales();
+-    return locales.items;
++  const client = (0, contentful_1.createClient)({
++    space,
++    environment,
++    accessToken,
++    host: "cdn.contentful.com",
++  });
++  const locales = await client.getLocales();
++  return locales.items;
+ };
+ const createContext = async ({ config }) => {
+-    const pathReaders = (0, createPathReaders_1.default)(config);
+-    const locales = await getLocales(config.contentful.spaceId, config.contentful.env, config.contentful.contentDeliveryToken);
+-    const defaultLocale = (0, lodash_1.get)((0, lodash_1.find)(locales, (locale) => locale.default), 'code', 'en-US');
+-    const contentful = {
+-        prod: (0, contentful_1.createClient)({
+-            accessToken: config.contentful.contentDeliveryToken,
+-            space: config.contentful.spaceId,
+-            environment: config.contentful.env,
+-            host: 'cdn.contentful.com',
+-            resolveLinks: false
+-        }),
+-        preview: (0, contentful_1.createClient)({
+-            accessToken: config.contentful.contentPreviewToken,
+-            space: config.contentful.spaceId,
+-            environment: config.contentful.env,
+-            host: 'preview.contentful.com',
+-            resolveLinks: false
+-        })
+-    };
+-    const pathToContentLoader = config.features.enablePathsV2
+-        ? new contentful_path_rules_engine_1.PathToContentLoader(config.extensions.pathsConfigs)
+-        : null;
+-    const contentToPathsLoader = config.features.enablePathsV2
+-        ? new contentful_path_rules_engine_1.ContentToPathsLoader(config.extensions.pathsConfigs)
+-        : null;
+-    return {
+-        contentful,
+-        loadEntriesForPath: async (path, ctx, site) => {
+-            if (pathToContentLoader) {
+-                return pathToContentLoader.getItemsForPath(path, ctx, site);
+-            }
+-            else if (pathReaders) {
+-                const node = await pathReaders[ctx.preview ? 'preview' : 'prod'].getNodeByPath(path, site);
+-                if (!node)
+-                    return [];
+-                return node.getPathEntries(ctx);
+-            }
+-            return [];
+-        },
+-        loadPathsForContent: async (entry, ctx, site) => {
+-            if (contentToPathsLoader) {
+-                return contentToPathsLoader.loadPathsFromContent(entry, ctx, site);
+-            }
+-            else if (pathReaders) {
+-                return pathReaders[ctx.preview ? 'preview' : 'prod'].getPathInfosByContentId(entry.sys.id, ctx, site);
+-            }
+-            return [];
+-        },
+-        locales: (0, lodash_1.map)(locales, 'code'),
+-        loaders: (0, createLoaders_1.default)(config, defaultLocale),
+-        mappers: config.extensions.mappers,
+-        defaultLocale,
+-        pathReaders,
+-        typeMappings: config.extensions.typeMappings
+-    };
++  const pathReaders = (0, createPathReaders_1.default)(config);
++  const locales = await getLocales(
++    config.contentful.spaceId,
++    config.contentful.env,
++    config.contentful.contentDeliveryToken
++  );
++  const defaultLocale = (0, lodash_1.get)(
++    (0, lodash_1.find)(locales, (locale) => locale.default),
++    "code",
++    "en-US"
++  );
++  const contentful = {
++    prod: (0, contentful_1.createClient)({
++      accessToken: config.contentful.contentDeliveryToken,
++      space: config.contentful.spaceId,
++      environment: config.contentful.env,
++      host: "cdn.contentful.com",
++    }).withoutLinkResolution,
++    preview: (0, contentful_1.createClient)({
++      accessToken: config.contentful.contentPreviewToken,
++      space: config.contentful.spaceId,
++      environment: config.contentful.env,
++      host: "preview.contentful.com",
++    }).withoutLinkResolution,
++  };
++  const pathToContentLoader = config.features.enablePathsV2
++    ? new contentful_path_rules_engine_1.PathToContentLoader(
++        config.extensions.pathsConfigs
++      )
++    : null;
++  const contentToPathsLoader = config.features.enablePathsV2
++    ? new contentful_path_rules_engine_1.ContentToPathsLoader(
++        config.extensions.pathsConfigs
++      )
++    : null;
++  return {
++    contentful,
++    loadEntriesForPath: async (path, ctx, site) => {
++      if (pathToContentLoader) {
++        return pathToContentLoader.getItemsForPath(path, ctx, site);
++      } else if (pathReaders) {
++        const node = await pathReaders[
++          ctx.preview ? "preview" : "prod"
++        ].getNodeByPath(path, site);
++        if (!node) return [];
++        return node.getPathEntries(ctx);
++      }
++      return [];
++    },
++    loadPathsForContent: async (entry, ctx, site) => {
++      if (contentToPathsLoader) {
++        return contentToPathsLoader.loadPathsFromContent(entry, ctx, site);
++      } else if (pathReaders) {
++        return pathReaders[
++          ctx.preview ? "preview" : "prod"
++        ].getPathInfosByContentId(entry.sys.id, ctx, site);
++      }
++      return [];
++    },
++    locales: (0, lodash_1.map)(locales, "code"),
++    loaders: (0, createLoaders_1.default)(config, defaultLocale),
++    mappers: config.extensions.mappers,
++    defaultLocale,
++    pathReaders,
++    typeMappings: config.extensions.typeMappings,
++  };
+ };
+ exports.default = createContext;
+ //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY3JlYXRlQ29udGV4dC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uL3NyYy9jcmVhdGVDb250ZXh0LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUEsbUNBQXdDO0FBQ3hDLDJDQUEwQztBQUcxQyxvRUFBNEM7QUFDNUMsNEVBQW9EO0FBRXBELHlGQUFtRztBQUVuRyxNQUFNLFVBQVUsR0FBRyxLQUFLLEVBQUUsS0FBYSxFQUFFLFdBQW1CLEVBQUUsV0FBbUIsRUFBRSxFQUFFO0lBQ25GLE1BQU0sTUFBTSxHQUFHLElBQUEseUJBQVksRUFBQztRQUMxQixLQUFLO1FBQ0wsV0FBVztRQUNYLFdBQVc7UUFDWCxJQUFJLEVBQUUsb0JBQW9CO1FBQzFCLFlBQVksRUFBRSxLQUFLO0tBQ3BCLENBQUMsQ0FBQztJQUNILE1BQU0sT0FBTyxHQUFHLE1BQU0sTUFBTSxDQUFDLFVBQVUsRUFBRSxDQUFDO0lBQzFDLE9BQU8sT0FBTyxDQUFDLEtBQUssQ0FBQztBQUN2QixDQUFDLENBQUM7QUFpQkYsTUFBTSxhQUFhLEdBQUcsS0FBSyxFQUFFLEVBQUUsTUFBTSxFQUFzQixFQUEwQixFQUFFO0lBQ3JGLE1BQU0sV0FBVyxHQUFHLElBQUEsMkJBQWlCLEVBQUMsTUFBTSxDQUFDLENBQUM7SUFFOUMsTUFBTSxPQUFPLEdBQUcsTUFBTSxVQUFVLENBQzlCLE1BQU0sQ0FBQyxVQUFVLENBQUMsT0FBTyxFQUN6QixNQUFNLENBQUMsVUFBVSxDQUFDLEdBQUcsRUFDckIsTUFBTSxDQUFDLFVBQVUsQ0FBQyxvQkFBb0IsQ0FDdkMsQ0FBQztJQUVGLE1BQU0sYUFBYSxHQUFHLElBQUEsWUFBRyxFQUN2QixJQUFBLGFBQUksRUFBQyxPQUFPLEVBQUUsQ0FBQyxNQUFNLEVBQUUsRUFBRSxDQUFDLE1BQU0sQ0FBQyxPQUFPLENBQUMsRUFDekMsTUFBTSxFQUNOLE9BQU8sQ0FDUixDQUFDO0lBRUYsTUFBTSxVQUFVLEdBQUc7UUFDakIsSUFBSSxFQUFFLElB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

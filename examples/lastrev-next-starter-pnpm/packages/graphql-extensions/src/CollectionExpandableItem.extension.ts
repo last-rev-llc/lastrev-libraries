@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-import type { ApolloContext, Mappers } from '@last-rev/types';
+import type { Mappers } from '@last-rev/types';
 
 export const typeDefs = gql`
   extend type CollectionExpandableItem {

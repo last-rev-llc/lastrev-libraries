@@ -54,7 +54,7 @@ const Tabs = (props: TabsProps) => {
                   orientation="horizontal"
                   aria-label="TODO"
                   textColor="primary"
-                  indicatorColor="primary">
+                  indicatorColor="unset">
                   {items?.map(
                     (
                       item: any,

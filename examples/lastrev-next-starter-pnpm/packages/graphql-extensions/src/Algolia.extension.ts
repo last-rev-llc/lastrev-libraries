@@ -1,42 +1,307 @@
-// Uncomment if using Algolia
-// import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-// import type { ApolloContext } from '@last-rev/types';
-// import { constructObjectId } from '@last-rev/graphql-algolia-integration';
-// import { BLOCKS } from '@contentful/rich-text-types';
-// import createPermaLink from './utils/createPermaLink';
-// import parseRichTextField from './utils/parseRichTextField';
+import { getLocalizedField } from '@last-rev/graphql-contentful-core';
+import type { ApolloContext } from './types';
+
+import { constructObjectId } from '@last-rev/graphql-algolia-integration';
+import { pathResolver } from './utils/pathResolver';
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
+import { generateCard } from './utils/generateCard';
+import { getLink } from './utils/getLink';
+import { getMedia } from './utils/getMedia';
+import { getSysContentTypeName } from './utils/getSysContentTypeName';
+import { pruneEmpty } from './utils/pruneEmpty';
+import { formatNameForSorting } from './utils/formatNameForSorting';
+
+const index = 'contentful';
+
+const defaultFacets = {
+  categories: ['N/A'],
+  department: 'N/A',
+  investmentCommitee: false,
+  partner: false,
+  ncrefiRegion: 'N/A',
+  sector: 'N/A',
+  strategy: 'N/A',
+  assetType: 'N/A'
+};
+
+const defaultImage = { sys: { id: '63wM1MtZyrukjY5NXoSA7' } };
 
 export const mappers = {
-  //
-  // Blog: {
-  //   AlgoliaRecord: {
-  //     algoliaObjects: async (blog: any, _args: any, ctx: ApolloContext) => {
-  //       const previewString = ctx.preview ? 'preview' : 'prod';
-  //       const pathReader = ctx.pathReaders?.[previewString];
-  //       const paths = await pathReader?.getPathsByContentId(
-  //         blog.sys.id,
-  //         ctx.locale || ctx.defaultLocale,
-  //         process.env.SITE
-  //       );
-  //       const path = paths && paths.length ? paths[0] : '';
-  //       const url = `${process.env.DOMAIN}${path}`;
-  //       const objects = parseRichTextField(getLocalizedField(blog.fields, 'body', ctx), {
-  //         sectionDelimiter: BLOCKS.HEADING_2
-  //       });
-  //       const title = getLocalizedField(blog.fields, 'title', ctx);
-  //       return objects.map(({ section, content }, objectIndex) => ({
-  //         index: 'blogs',
-  //         data: {
-  //           objectID: constructObjectId(blog, ctx, objectIndex),
-  //           locale: ctx.locale || ctx.defaultLocale,
-  //           preview: !!ctx.preview,
-  //           title,
-  //           section,
-  //           content,
-  //           permalink: `${url}${createPermaLink(section)}`
-  //         }
-  //       }));
-  //     }
-  //   }
-  // }
+  Blog: {
+    AlgoliaRecord: {
+      algoliaObjects: async (blog: any, args: any, ctx: ApolloContext) => {
+        const path = await pathResolver(blog, args, ctx);
+
+        if (!path) return [];
+
+        const title = getLocalizedField(blog.fields, 'title', ctx);
+        const pubDate = getLocalizedField(blog.fields, 'pubDate', ctx);
+        const body = getLocalizedField(blog.fields, 'body', ctx);
+        const summary = getLocalizedField(blog.fields, 'promoSummary', ctx);
+        const promoImageRef =
+          getLocalizedField(blog.fields, 'promoImage', ctx) ??
+          getLocalizedField(blog.fields, 'featuredMedia', ctx) ??
+          defaultImage;
+        const promoImage = await getMedia(promoImageRef, ctx);
+        const entries: any[] = [];
+
+        const contentType = getSysContentTypeName(blog);
+
+        const link = await getLink(blog, args, ctx);
+
+        const categoriesRef = getLocalizedField(blog?.fields, 'categories', ctx);
+        const categoriesIds =
+          categoriesRef?.map((content: any) => {
+            return { id: content?.sys.id, preview: !!ctx.preview };
+          }) ?? [];
+
+        const categories: any[] = (await ctx.loaders.entryLoader.loadMany(categoriesIds))
+          .filter(Boolean)
+          .map((category: any) => {
+            return getLocalizedField(category?.fields, 'title', ctx);
+          });
+
+        const card = await generateCard({
+          id: blog.sys.id,
+          title,
+          summary,
+          link,
+          media: promoImage,
+          entries,
+          ctx
+        });
+
+        let pubDateTimestamp;
+
+        try {
+          pubDateTimestamp = new Date(pubDate).getTime();
+        } catch (err) {}
+
+        return [
+          {
+            index,
+            data: {
+              ...defaultFacets,
+              ...pruneEmpty({
+                objectID: constructObjectId(blog, ctx),
+                locale: ctx.locale || ctx.defaultLocale,
+                preview: !!ctx.preview,
+                title,
+                defaultSortField: ((pubDateTimestamp || 1) * -1).toString().replace('-', '0'),
+                pubDate,
+                categories,
+                pubDateTimestamp,
+                body: documentToPlainTextString(body),
+                summary,
+                promoImage,
+                path,
+                contentType,
+                link,
+                card
+              })
+            }
+          }
+        ];
+      }
+    }
+  },
+  Person: {
+    AlgoliaRecord: {
+      algoliaObjects: async (person: any, args: any, ctx: ApolloContext) => {
+        const path = await pathResolver(person, args, ctx);
+
+        if (!path) return [];
+
+        const name = getLocalizedField(person.fields, 'name', ctx);
+        const firstName = getLocalizedField(person.fields, 'firstName', ctx);
+        const lastName = getLocalizedField(person.fields, 'lastName', ctx);
+        const subtitle = getLocalizedField(person.fields, 'jobTitle', ctx);
+        const body = getLocalizedField(person.fields, 'body', ctx);
+        const summary = getLocalizedField(person.fields, 'promoSummary', ctx);
+        const promoImageRef =
+          getLocalizedField(person.fields, 'promoImage', ctx) ??
+          getLocalizedField(person.fields, 'mainImage', ctx) ??
+          defaultImage;
+        const promoImage = await getMedia(promoImageRef, ctx);
+        const entries: any[] = [];
+
+        const contentType = getSysContentTypeName(person);
+
+        const department = getLocalizedField(person.fields, 'department', ctx);
+
+        const link = await getLink(person, args, ctx);
+
+        const card = await generateCard({
+          id: person.sys.id,
+          title: name,
+          subtitle,
+          summary,
+          link,
+          media: promoImage,
+          entries,
+          ctx
+        });
+
+        return [
+          {
+            index,
+            data: {
+              ...defaultFacets,
+              ...pruneEmpty({
+                objectID: constructObjectId(person, ctx),
+                locale: ctx.locale || ctx.defaultLocale,
+                preview: !!ctx.preview,
+                title: name,
+                defaultSortField: `${lastName}, ${firstName}`,
+                subtitle,
+                pubDateTimestamp: new Date(person.sys.createdAt).getTime(),
+                body: documentToPlainTextString(body),
+                education: getLocalizedField(person.fields, 'education', ctx),
+                email: getLocalizedField(person.fields, 'email', ctx),
+                jobTitle: getLocalizedField(person.fields, 'jobTitle', ctx),
+                previousExperiences: getLocalizedField(person.fields, 'previousExperiences', ctx),
+                department,
+                investmentCommitee: !!getLocalizedField(person.fields, 'onInvestmentCommitee', ctx),
+                partner: !!getLocalizedField(person.fields, 'isPartner', ctx),
+                summary,
+                promoImage,
+                path,
+                contentType,
+                link,
+                card
+              })
+            }
+          }
+        ];
+      }
+    }
+  },
+  Page: {
+    AlgoliaRecord: {
+      algoliaObjects: async (page: any, args: any, ctx: ApolloContext) => {
+        const path = await pathResolver(page, args, ctx);
+
+        if (!path) return [];
+
+        // const { data: pageData } = await client.Page({
+        //   path,
+        //   locale: ctx.locale || ctx.defaultLocale,
+        //   preview: !!ctx.preview,
+        //   site: process.env.SITE
+        // });
+
+        // const {
+        //   data: { contentCard }
+        // } = await client.Card({
+        //   id: page.sys.id,
+        //   locale: 'en-US',
+        //   preview: !!ctx.preview,
+        //   displayType: 'Card'
+        // });
+
+        // return [];
+
+        const title = getLocalizedField(page.fields, 'title', ctx);
+        const body = getLocalizedField(page.fields, 'body', ctx);
+
+        const summary = getLocalizedField(page.fields, 'promoSummary', ctx);
+        const promoImage = (await getMedia(getLocalizedField(page.fields, 'promoImage', ctx), ctx)) ?? defaultImage;
+        const contentType = getSysContentTypeName(page);
+        const link = await getLink(page, args, ctx);
+        const entries: any[] = [];
+
+        const card = await generateCard({
+          id: page.sys.id,
+          title,
+          summary,
+          link,
+          media: promoImage,
+          entries,
+          ctx
+        });
+
+        return [
+          {
+            index,
+            data: {
+              ...defaultFacets,
+              ...pruneEmpty({
+                objectID: constructObjectId(page, ctx),
+                locale: ctx.locale || ctx.defaultLocale,
+                preview: !!ctx.preview,
+                pubDateTimestamp: new Date(page.sys.createdAt).getTime(),
+                title,
+                defaultSortField: title,
+                body: documentToPlainTextString(body),
+                summary,
+                path,
+                contentType,
+                link,
+                card
+              })
+            }
+          }
+        ];
+      }
+    }
+  },
+  PageProperty: {
+    AlgoliaRecord: {
+      algoliaObjects: async (property: any, args: any, ctx: ApolloContext) => {
+        const path = await pathResolver(property, args, ctx);
+
+        if (!path) return [];
+
+        const title = getLocalizedField(property.fields, 'name', ctx);
+        const summary = getLocalizedField(property.fields, 'promoSummary', ctx);
+        const promoImageRef =
+          getLocalizedField(property.fields, 'promoImage', ctx) ??
+          getLocalizedField(property.fields, 'mainImage', ctx) ??
+          defaultImage;
+        const promoImage = await getMedia(promoImageRef, ctx);
+        const entries: any[] = [];
+
+        const contentType = getSysContentTypeName(property);
+
+        const link = await getLink(property, args, ctx);
+
+        const card = await generateCard({
+          id: property.sys.id,
+          title,
+          summary,
+          link,
+          media: promoImage,
+          entries,
+          ctx
+        });
+
+        return [
+          {
+            index,
+            data: {
+              ...defaultFacets,
+              ...pruneEmpty({
+                objectID: constructObjectId(property, ctx),
+                locale: ctx.locale || ctx.defaultLocale,
+                preview: !!ctx.preview,
+                title,
+                defaultSortField: title,
+                pubDateTimestamp: new Date(property.sys.createdAt).getTime(),
+                summary,
+                promoImage,
+                path,
+                contentType,
+                link,
+                card,
+                assetType: getLocalizedField(property.fields, 'assetType', ctx),
+                ncreifRegion: getLocalizedField(property.fields, 'ncreifRegion', ctx),
+                sector: getLocalizedField(property.fields, 'sector', ctx),
+                strategy: getLocalizedField(property.fields, 'strategy', ctx)
+              })
+            }
+          }
+        ];
+      }
+    }
+  }
 };

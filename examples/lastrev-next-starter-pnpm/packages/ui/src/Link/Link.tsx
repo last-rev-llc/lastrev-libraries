@@ -2,14 +2,14 @@ import React from 'react';
 import clsx from 'clsx';
 
 import { usePathname } from 'next/navigation';
-import NextLink from 'next/link';
+import NextLink, { type LinkProps as NextLinkProps } from 'next/link';
 
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import { Icon } from '../Icons/Icon';
-import IconButton from '@mui/material/IconButton';
-import MuiLink from '@mui/material/Link';
-import Button, { ButtonProps } from '@mui/material/Button';
+import IconButton, { type IconButtonProps } from '@mui/material/IconButton';
+import MuiLink, { type LinkProps as MuiLinkProps } from '@mui/material/Link';
+import Button, { type ButtonProps } from '@mui/material/Button';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -55,23 +55,27 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   } = props;
 
   // Color prop fails if it's null
-  // if (!other.color) delete other.color;
+  if (!other.color) delete other.color;
 
   const pathname = usePathname();
+
   const className = clsx(classNameProps, {
     [activeClassName]: pathname?.toLowerCase().startsWith(href?.toLowerCase()) && activeClassName
   });
 
+  // const className = '';
+
   const sharedLinkProps = {
-    'component': NextLink,
+    component: href === '/#' ? Box : NextLink,
     className,
     ref,
     href,
     variant,
+    target: href?.startsWith('http') ? '_blank' : '_self',
     ...other,
     ...sidekick(sidekickLookup),
-    'aria-label': text,
-    'ownerState': ownerState
+    // 'aria-label': text,
+    ownerState: ownerState
   };
 
   if (children) {
@@ -88,11 +92,15 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
 
   if (variant?.includes('button')) {
     const buttonVariant = variant.replace('button', '').toLowerCase() as 'text' | 'outlined' | 'contained' | undefined;
+    let trimmedSharedLinkProps: any = sharedLinkProps;
+    if ((sharedLinkProps as { type?: string })?.type === 'submit') {
+      const { component, href, ref, ...rest } = sharedLinkProps;
+      trimmedSharedLinkProps = rest;
+    }
 
     return (
       <RootButton
-        {...sharedLinkProps}
-        variant={buttonVariant}
+        {...trimmedSharedLinkProps}
         startIcon={icon && iconPosition === 'Left' && <Icon iconName={icon} />}
         endIcon={icon && iconPosition !== 'Left' && <Icon iconName={icon} />}>
         {text || children}
@@ -114,45 +122,60 @@ const Link = React.forwardRef<any, LinkProps>(function Link(props, ref) {
   return <RootLink {...sharedLinkProps}>{text}</RootLink>;
 });
 
+const shouldForwardProp = (prop: string) =>
+  prop !== 'variant' &&
+  prop !== 'icon' &&
+  prop !== 'iconPosition' &&
+  prop !== 'sidekickLookup' &&
+  prop !== 'passHref' &&
+  prop !== 'ownerState';
+
 const RootButton = styled(Button, {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootButton]
 })<ButtonProps & { ownerState: LinkOwnerState }>``;
 
 const RootIconButton = styled(IconButton, {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootIconButton]
-})<{ ownerState: LinkOwnerState }>``;
+})<IconButtonProps & { ownerState: LinkOwnerState }>``;
 
 const RootLinkTextIcon = styled(MuiLink, {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootLink]
-})<{ ownerState: LinkOwnerState }>``;
+})<NextLinkProps & MuiLinkProps & { ownerState: LinkOwnerState }>``;
 
 const RootLink = styled(MuiLink, {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootLink]
-})<{ ownerState: LinkOwnerState }>``;
+})<MuiLinkProps & { ownerState: LinkOwnerState }>``;
 
 const RootLinkChildren = styled(NextLink, {
   name: 'Link',
   slot: 'Root',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootLinkChildren]
 })<{ ownerState: LinkOwnerState }>``;
 
 const RootLinkIcon = styled(Box, {
   name: 'Link',
   slot: 'RootLinkIcon',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootLinkIcon]
 })<{ ownerState: LinkOwnerState }>``;
 
 const RootLinkText = styled(Box, {
   name: 'Link',
   slot: 'RootLinkText',
+  shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root, styles.rootLinkText]
 })<{ ownerState: LinkOwnerState }>``;
 

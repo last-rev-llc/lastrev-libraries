@@ -1,5 +1,5 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import type { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from './types';
 import { defaultResolver } from './utils/defaultResolver';
 
 // This is a example of a extension to normalize the color values from the CMS
@@ -7,8 +7,8 @@ import { defaultResolver } from './utils/defaultResolver';
 // If there's a mapping use it
 const COLOR_MAPPING: { [key: string]: string } = {};
 
-export const colorResolver = (field: string, root?: true) => async (quote: any, _args: any, ctx: ApolloContext) => {
-  const colorValue: any = getLocalizedField(quote.fields, field, ctx);
+export const colorResolver = (field: string, root?: true) => async (item: any, _args: any, ctx: ApolloContext) => {
+  const colorValue: any = getLocalizedField(item.fields, field, ctx);
   let colorClean = colorValue?.split('_')[0]?.toLowerCase();
   if (COLOR_MAPPING[colorClean]) {
     colorClean = COLOR_MAPPING[colorClean];
@@ -44,6 +44,13 @@ export const mappers = {
       color: colorResolver('color', true)
     }
   },
+
+  CollectionDynamic: {
+    CollectionDynamic: {
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
+  },
   CollectionExpandable: {
     CollectionExpandable: {
       backgroundColor: defaultResolver('backgroundColor'),
@@ -62,14 +69,20 @@ export const mappers = {
       color: colorResolver('color', true)
     }
   },
-  Form: {
-    Form: {
+  ElementForm: {
+    ElementForm: {
       backgroundColor: defaultResolver('backgroundColor'),
       color: colorResolver('color', true)
     }
   },
   Section: {
     Section: {
+      backgroundColor: defaultResolver('backgroundColor'),
+      color: colorResolver('color', true)
+    }
+  },
+  Text: {
+    Text: {
       backgroundColor: defaultResolver('backgroundColor'),
       color: colorResolver('color', true)
     }

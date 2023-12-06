@@ -1,11 +1,11 @@
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import type { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from '../types';
 import type { Asset, Entry } from 'contentful';
 
 interface FieldReferenceValue {
   sys: { linkType: string };
 }
-type ResolvedValue = Asset | Entry<any> | null | Array<Asset | Entry<any> | null>;
+export type ResolvedValue = Asset | any | null | Array<Asset | any | null>;
 
 export const resolveLocalizedField = async (fields: any, field: string, ctx: ApolloContext): Promise<ResolvedValue> => {
   const { loaders, preview } = ctx;
@@ -18,12 +18,12 @@ export const resolveLocalizedField = async (fields: any, field: string, ctx: Apo
       // contentful cannot have mixed arrays, so it is okay to make assumptions based on the first item
       return (await loaders.entryLoader.loadMany(value.map((x) => ({ id: x.sys.id, preview: !!preview }))))
         .filter((r) => r !== null)
-        .map((r) => r as Entry<any>);
+        .map((r) => r as any);
     }
     if (firstItem?.sys?.linkType === 'Asset') {
       return (await loaders.assetLoader.loadMany(value.map((x) => ({ id: x.sys.id, preview: !!preview }))))
         .filter((r) => r !== null)
-        .map((r) => r as Entry<any>);
+        .map((r) => r as any);
     }
   }
 

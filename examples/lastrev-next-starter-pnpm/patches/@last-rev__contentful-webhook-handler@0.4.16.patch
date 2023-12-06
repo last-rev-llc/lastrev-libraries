@@ -1,0 +1,661 @@
+diff --git a/dist/helpers.esm.js b/dist/helpers.esm.js
+index 778c0a6e812e96231cf7a9b0a9e40bbb0994ca8f..f50efe9f81c445e069efe8118701ba3eca3c3801 100644
+--- a/dist/helpers.esm.js
++++ b/dist/helpers.esm.js
+@@ -1 +1,96 @@
+-import{__assign as n}from"tslib";import t from"lodash/each";import{createClient as o}from"contentful";import{getWinstonLogger as r}from"@last-rev/logging";var e=r({package:"contentful-webhook-handler",module:"helpers"}),i=function(n){var o=n.fields.file;try{t(o,(function(n){if(!n.url)throw Error()}))}catch(n){return!1}return!0},c=function(n){return{contentfulPreviewClient:o({space:n.contentful.spaceId,accessToken:n.contentful.contentPreviewToken,environment:n.contentful.env,host:"preview.contentful.com",resolveLinks:!1}),contentfulProdClient:o({space:n.contentful.spaceId,accessToken:n.contentful.contentDeliveryToken,environment:n.contentful.env,host:"cdn.contentful.com",resolveLinks:!1})}},l=function(n){return n instanceof Error},u=function(n){return null==n},s=function(n){var t;return"Error"===(null===(t=null==n?void 0:n.sys)||void 0===t?void 0:t.type)},f=function(n){var t,o,r;return"Entry"===(null===(t=null==n?void 0:n.sys)||void 0===t?void 0:t.type)||"Asset"===(null===(o=null==n?void 0:n.sys)||void 0===o?void 0:o.type)||"ContentType"===(null===(r=null==n?void 0:n.sys)||void 0===r?void 0:r.type)},a=function(t){return n(n({},t),{lastrev_metadata:{insert_date:(new Date).toISOString(),source:"contentfulWebhook"}})},v=function(n,t){try{if(u(n))throw Error("nil");if(l(n))throw Error(n.message);if(s(n))throw Error("Contentful Error: ".concat(n.sys.id));if(!f(n))throw Error("Not contentful Object: ".concat(n));return JSON.stringify(a(n))}catch(n){return void e.error("Error stringifying ".concat(t,": ").concat(n.message),{caller:"stringify",stack:n.stack})}};export{i as assetHasUrl,c as createContentfulClients,a as enhanceContentfulObjectWithMetadata,s as isContentfulError,f as isContentfulObject,l as isError,u as isNil,v as stringify};
++import { __assign as n } from "tslib";
++import t from "lodash/each";
++import { createClient as o } from "contentful";
++import { getWinstonLogger as r } from "@last-rev/logging";
++var e = r({ package: "contentful-webhook-handler", module: "helpers" }),
++  i = function (n) {
++    var o = n.fields.file;
++    try {
++      t(o, function (n) {
++        if (!n.url) throw Error();
++      });
++    } catch (n) {
++      return !1;
++    }
++    return !0;
++  },
++  c = function (n) {
++    return {
++      contentfulPreviewClient: o({
++        space: n.contentful.spaceId,
++        accessToken: n.contentful.contentPreviewToken,
++        environment: n.contentful.env,
++        host: "preview.contentful.com",
++      }).withoutLinkResolution,
++      contentfulProdClient: o({
++        space: n.contentful.spaceId,
++        accessToken: n.contentful.contentDeliveryToken,
++        environment: n.contentful.env,
++        host: "cdn.contentful.com",
++      }).withoutLinkResolution,
++    };
++  },
++  l = function (n) {
++    return n instanceof Error;
++  },
++  u = function (n) {
++    return null == n;
++  },
++  s = function (n) {
++    var t;
++    return (
++      "Error" ===
++      (null === (t = null == n ? void 0 : n.sys) || void 0 === t
++        ? void 0
++        : t.type)
++    );
++  },
++  f = function (n) {
++    var t, o, r;
++    return (
++      "Entry" ===
++        (null === (t = null == n ? void 0 : n.sys) || void 0 === t
++          ? void 0
++          : t.type) ||
++      "Asset" ===
++        (null === (o = null == n ? void 0 : n.sys) || void 0 === o
++          ? void 0
++          : o.type) ||
++      "ContentType" ===
++        (null === (r = null == n ? void 0 : n.sys) || void 0 === r
++          ? void 0
++          : r.type)
++    );
++  },
++  a = function (t) {
++    return n(n({}, t), {
++      lastrev_metadata: {
++        insert_date: new Date().toISOString(),
++        source: "contentfulWebhook",
++      },
++    });
++  },
++  v = function (n, t) {
++    try {
++      if (u(n)) throw Error("nil");
++      if (l(n)) throw Error(n.message);
++      if (s(n)) throw Error("Contentful Error: ".concat(n.sys.id));
++      if (!f(n)) throw Error("Not contentful Object: ".concat(n));
++      return JSON.stringify(a(n));
++    } catch (n) {
++      return void e.error(
++        "Error stringifying ".concat(t, ": ").concat(n.message),
++        { caller: "stringify", stack: n.stack }
++      );
++    }
++  };
++export {
++  i as assetHasUrl,
++  c as createContentfulClients,
++  a as enhanceContentfulObjectWithMetadata,
++  s as isContentfulError,
++  f as isContentfulObject,
++  l as isError,
++  u as isNil,
++  v as stringify,
++};
+diff --git a/dist/helpers.js b/dist/helpers.js
+index dc59310887c20f139673878da06f6afc27931610..9e4bcbb08d17f301f0dee3f5c409b017046d4ca5 100644
+--- a/dist/helpers.js
++++ b/dist/helpers.js
+@@ -1 +1,100 @@
+-"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("tslib"),t=require("lodash/each"),n=require("contentful"),r=require("@last-rev/logging");function o(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var i=o(t),s=r.getWinstonLogger({package:"contentful-webhook-handler",module:"helpers"}),c=function(e){return e instanceof Error},l=function(e){return null==e},u=function(e){var t;return"Error"===(null===(t=null==e?void 0:e.sys)||void 0===t?void 0:t.type)},a=function(e){var t,n,r;return"Entry"===(null===(t=null==e?void 0:e.sys)||void 0===t?void 0:t.type)||"Asset"===(null===(n=null==e?void 0:e.sys)||void 0===n?void 0:n.type)||"ContentType"===(null===(r=null==e?void 0:e.sys)||void 0===r?void 0:r.type)},f=function(t){return e.__assign(e.__assign({},t),{lastrev_metadata:{insert_date:(new Date).toISOString(),source:"contentfulWebhook"}})};exports.assetHasUrl=function(e){var t=e.fields.file;try{i.default(t,(function(e){if(!e.url)throw Error()}))}catch(e){return!1}return!0},exports.createContentfulClients=function(e){return{contentfulPreviewClient:n.createClient({space:e.contentful.spaceId,accessToken:e.contentful.contentPreviewToken,environment:e.contentful.env,host:"preview.contentful.com",resolveLinks:!1}),contentfulProdClient:n.createClient({space:e.contentful.spaceId,accessToken:e.contentful.contentDeliveryToken,environment:e.contentful.env,host:"cdn.contentful.com",resolveLinks:!1})}},exports.enhanceContentfulObjectWithMetadata=f,exports.isContentfulError=u,exports.isContentfulObject=a,exports.isError=c,exports.isNil=l,exports.stringify=function(e,t){try{if(l(e))throw Error("nil");if(c(e))throw Error(e.message);if(u(e))throw Error("Contentful Error: ".concat(e.sys.id));if(!a(e))throw Error("Not contentful Object: ".concat(e));return JSON.stringify(f(e))}catch(e){return void s.error("Error stringifying ".concat(t,": ").concat(e.message),{caller:"stringify",stack:e.stack})}};
++"use strict";
++Object.defineProperty(exports, "__esModule", { value: !0 });
++var e = require("tslib"),
++  t = require("lodash/each"),
++  n = require("contentful"),
++  r = require("@last-rev/logging");
++function o(e) {
++  return e && "object" == typeof e && "default" in e ? e : { default: e };
++}
++var i = o(t),
++  s = r.getWinstonLogger({
++    package: "contentful-webhook-handler",
++    module: "helpers",
++  }),
++  c = function (e) {
++    return e instanceof Error;
++  },
++  l = function (e) {
++    return null == e;
++  },
++  u = function (e) {
++    var t;
++    return (
++      "Error" ===
++      (null === (t = null == e ? void 0 : e.sys) || void 0 === t
++        ? void 0
++        : t.type)
++    );
++  },
++  a = function (e) {
++    var t, n, r;
++    return (
++      "Entry" ===
++        (null === (t = null == e ? void 0 : e.sys) || void 0 === t
++          ? void 0
++          : t.type) ||
++      "Asset" ===
++        (null === (n = null == e ? void 0 : e.sys) || void 0 === n
++          ? void 0
++          : n.type) ||
++      "ContentType" ===
++        (null === (r = null == e ? void 0 : e.sys) || void 0 === r
++          ? void 0
++          : r.type)
++    );
++  },
++  f = function (t) {
++    return e.__assign(e.__assign({}, t), {
++      lastrev_metadata: {
++        insert_date: new Date().toISOString(),
++        source: "contentfulWebhook",
++      },
++    });
++  };
++(exports.assetHasUrl = function (e) {
++  var t = e.fields.file;
++  try {
++    i.default(t, function (e) {
++      if (!e.url) throw Error();
++    });
++  } catch (e) {
++    return !1;
++  }
++  return !0;
++}),
++  (exports.createContentfulClients = function (e) {
++    return {
++      contentfulPreviewClient: n.createClient({
++        space: e.contentful.spaceId,
++        accessToken: e.contentful.contentPreviewToken,
++        environment: e.contentful.env,
++        host: "preview.contentful.com",
++      }).withoutLinkResolution,
++      contentfulProdClient: n.createClient({
++        space: e.contentful.spaceId,
++        accessToken: e.contentful.contentDeliveryToken,
++        environment: e.contentful.env,
++        host: "cdn.contentful.com",
++      }).withoutLinkResolution,
++    };
++  }),
++  (exports.enhanceContentfulObjectWithMetadata = f),
++  (exports.isContentfulError = u),
++  (exports.isContentfulObject = a),
++  (exports.isError = c),
++  (exports.isNil = l),
++  (exports.stringify = function (e, t) {
++    try {
++      if (l(e)) throw Error("nil");
++      if (c(e)) throw Error(e.message);
++      if (u(e)) throw Error("Contentful Error: ".concat(e.sys.id));
++      if (!a(e)) throw Error("Not contentful Object: ".concat(e));
++      return JSON.stringify(f(e));
++    } catch (e) {
++      return void s.error(
++        "Error stringifying ".concat(t, ": ").concat(e.message),
++        { caller: "stringify", stack: e.stack }
++      );
++    }
++  });
+diff --git a/dist/index.esm.js b/dist/index.esm.js
+index 74ee417eb5b8a18800d59c0daeb52e9d14283d40..73ab8c4a1ec1b2bfc49b113a7e3b859ca1913411 100644
+--- a/dist/index.esm.js
++++ b/dist/index.esm.js
+@@ -1 +1,169 @@
+-import{__awaiter as e,__generator as t}from"tslib";import{createClient as n}from"contentful";import r from"lodash/map";import{createHandlers as o}from"./handlers.esm.js";import s,{supportedActions as c,supportedTypes as a}from"@last-rev/contentful-webhook-parser";import{getWinstonLogger as i}from"@last-rev/logging";import u from"jsonwebtoken";var l=i({package:"contentful-webhook-handler",module:"index"}),d=function(r,o,s,c){return e(void 0,void 0,void 0,(function(){var e;return t(this,(function(t){switch(e=n({space:r.contentful.spaceId,accessToken:r.contentful.usePreview?r.contentful.contentPreviewToken:r.contentful.contentDeliveryToken,host:r.contentful.usePreview?"preview.contentful.com":"cdn.contentful.com",environment:s,resolveLinks:!1}),o){case"Entry":return[2,e.getEntry(c,{include:0,locale:"*"})];case"Asset":return[2,e.getAsset(c)];case"ContentType":return[2,e.getContentType(c)]}return[2]}))}))},f=function(n,i,f){return e(void 0,void 0,void 0,(function(){var v,p,h,m,w,k,g,b,y,T,E,I,P,S;return t(this,(function(j){switch(j.label){case 0:if(v=null===(S=f.authorization)||void 0===S?void 0:S.split(" ")[1],p=s(n,i,f),h=p.type,m=p.action,w=p.contentStates,k=p.env,g=p.itemId,b=p.isTruncated,!c.includes(m)||!w.length||!a.includes(h))return[2];if(k!==n.contentful.env&&(n=n.clone({contentful:{env:k}})),y=o(n),!n.jwtSigningSecret)return[3,4];j.label=1;case 1:if(j.trys.push([1,3,,4]),!v)throw Error("No authorization token provided.");return[4,u.verify(v,n.jwtSigningSecret)];case 2:if((null==(T=j.sent())?void 0:T.spaceId)!==n.contentful.spaceId)throw new Error("Invalid spaceId in JWT Token");return[3,4];case 3:throw E=j.sent(),l.error(E.message,{caller:"handleWebhook",stack:E.stack}),E;case 4:return b?[4,d(n,h,k,g)]:[3,6];case 5:return P=j.sent(),[3,7];case 6:P=i,j.label=7;case 7:return I=P,[4,Promise.all(r(w,(function(n){return e(void 0,void 0,void 0,(function(){var e,r;return t(this,(function(t){switch(t.label){case 0:switch(t.trys.push([0,9,,10]),e={isPreview:"preview"===n,action:m,data:I},h){case"Asset":return[3,1];case"Entry":return[3,3];case"ContentType":return[3,5]}return[3,7];case 1:return[4,y.asset(e)];case 2:return t.sent(),[3,8];case 3:return[4,y.entry(e)];case 4:return t.sent(),[3,8];case 5:return[4,y.contentType(e)];case 6:return t.sent(),[3,8];case 7:l.debug("Unsupported type! ".concat(h),{caller:"handleWebhook"}),t.label=8;case 8:return[3,10];case 9:throw r=t.sent(),l.error("Error handling webhook: ".concat(r.message),{caller:"handleWebhook",stack:r.stack}),r;case 10:return[2]}}))}))})))];case 8:return j.sent(),[4,y.paths(w.includes("preview"),w.includes("production"))];case 9:return j.sent(),[2]}}))}))};export{f as default};
++import { __awaiter as e, __generator as t } from "tslib";
++import { createClient as n } from "contentful";
++import r from "lodash/map";
++import { createHandlers as o } from "./handlers.esm.js";
++import s, {
++  supportedActions as c,
++  supportedTypes as a,
++} from "@last-rev/contentful-webhook-parser";
++import { getWinstonLogger as i } from "@last-rev/logging";
++import u from "jsonwebtoken";
++var l = i({ package: "contentful-webhook-handler", module: "index" }),
++  d = function (r, o, s, c) {
++    return e(void 0, void 0, void 0, function () {
++      var e;
++      return t(this, function (t) {
++        switch (
++          ((e = n({
++            space: r.contentful.spaceId,
++            accessToken: r.contentful.usePreview
++              ? r.contentful.contentPreviewToken
++              : r.contentful.contentDeliveryToken,
++            host: r.contentful.usePreview
++              ? "preview.contentful.com"
++              : "cdn.contentful.com",
++            environment: s,
++          }).withoutLinkResolution),
++          o)
++        ) {
++          case "Entry":
++            return [2, e.getEntry(c, { include: 0, locale: "*" })];
++          case "Asset":
++            return [2, e.getAsset(c)];
++          case "ContentType":
++            return [2, e.getContentType(c)];
++        }
++        return [2];
++      });
++    });
++  },
++  f = function (n, i, f) {
++    return e(void 0, void 0, void 0, function () {
++      var v, p, h, m, w, k, g, b, y, T, E, I, P, S;
++      return t(this, function (j) {
++        switch (j.label) {
++          case 0:
++            if (
++              ((v =
++                null === (S = f.authorization) || void 0 === S
++                  ? void 0
++                  : S.split(" ")[1]),
++              (p = s(n, i, f)),
++              (h = p.type),
++              (m = p.action),
++              (w = p.contentStates),
++              (k = p.env),
++              (g = p.itemId),
++              (b = p.isTruncated),
++              !c.includes(m) || !w.length || !a.includes(h))
++            )
++              return [2];
++            if (
++              (k !== n.contentful.env &&
++                (n = n.clone({ contentful: { env: k } })),
++              (y = o(n)),
++              !n.jwtSigningSecret)
++            )
++              return [3, 4];
++            j.label = 1;
++          case 1:
++            if ((j.trys.push([1, 3, , 4]), !v))
++              throw Error("No authorization token provided.");
++            return [4, u.verify(v, n.jwtSigningSecret)];
++          case 2:
++            if (
++              (null == (T = j.sent()) ? void 0 : T.spaceId) !==
++              n.contentful.spaceId
++            )
++              throw new Error("Invalid spaceId in JWT Token");
++            return [3, 4];
++          case 3:
++            throw (
++              ((E = j.sent()),
++              l.error(E.message, { caller: "handleWebhook", stack: E.stack }),
++              E)
++            );
++          case 4:
++            return b ? [4, d(n, h, k, g)] : [3, 6];
++          case 5:
++            return (P = j.sent()), [3, 7];
++          case 6:
++            (P = i), (j.label = 7);
++          case 7:
++            return (
++              (I = P),
++              [
++                4,
++                Promise.all(
++                  r(w, function (n) {
++                    return e(void 0, void 0, void 0, function () {
++                      var e, r;
++                      return t(this, function (t) {
++                        switch (t.label) {
++                          case 0:
++                            switch (
++                              (t.trys.push([0, 9, , 10]),
++                              (e = {
++                                isPreview: "preview" === n,
++                                action: m,
++                                data: I,
++                              }),
++                              h)
++                            ) {
++                              case "Asset":
++                                return [3, 1];
++                              case "Entry":
++                                return [3, 3];
++                              case "ContentType":
++                                return [3, 5];
++                            }
++                            return [3, 7];
++                          case 1:
++                            return [4, y.asset(e)];
++                          case 2:
++                            return t.sent(), [3, 8];
++                          case 3:
++                            return [4, y.entry(e)];
++                          case 4:
++                            return t.sent(), [3, 8];
++                          case 5:
++                            return [4, y.contentType(e)];
++                          case 6:
++                            return t.sent(), [3, 8];
++                          case 7:
++                            l.debug("Unsupported type! ".concat(h), {
++                              caller: "handleWebhook",
++                            }),
++                              (t.label = 8);
++                          case 8:
++                            return [3, 10];
++                          case 9:
++                            throw (
++                              ((r = t.sent()),
++                              l.error(
++                                "Error handling webhook: ".concat(r.message),
++                                { caller: "handleWebhook", stack: r.stack }
++                              ),
++                              r)
++                            );
++                          case 10:
++                            return [2];
++                        }
++                      });
++                    });
++                  })
++                ),
++              ]
++            );
++          case 8:
++            return (
++              j.sent(),
++              [4, y.paths(w.includes("preview"), w.includes("production"))]
++            );
++          case 9:
++            return j.sent(), [2];
++        }
++      });
++    });
++  };
++export { f as default };
+diff --git a/dist/index.js b/dist/index.js
+index 89be4150db019ad14400b61df99eea867ef93ddf..a098224c95aa06e6c7f04542ea7e27d12cbd28ca 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1 +1,177 @@
+-"use strict";var e=require("tslib"),t=require("contentful"),n=require("lodash/map"),r=require("./handlers.js"),o=require("@last-rev/contentful-webhook-parser"),s=require("@last-rev/logging"),a=require("jsonwebtoken");function c(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var u=c(n),i=c(o),l=c(a),d=s.getWinstonLogger({package:"contentful-webhook-handler",module:"index"}),v=function(n,r,o,s){return e.__awaiter(void 0,void 0,void 0,(function(){var a;return e.__generator(this,(function(e){switch(a=t.createClient({space:n.contentful.spaceId,accessToken:n.contentful.usePreview?n.contentful.contentPreviewToken:n.contentful.contentDeliveryToken,host:n.contentful.usePreview?"preview.contentful.com":"cdn.contentful.com",environment:o,resolveLinks:!1}),r){case"Entry":return[2,a.getEntry(s,{include:0,locale:"*"})];case"Asset":return[2,a.getAsset(s)];case"ContentType":return[2,a.getContentType(s)]}return[2]}))}))};module.exports=function(t,n,s){return e.__awaiter(void 0,void 0,void 0,(function(){var a,c,f,p,h,w,g,k,y,b,_,T,m,q;return e.__generator(this,(function(E){switch(E.label){case 0:if(a=null===(q=s.authorization)||void 0===q?void 0:q.split(" ")[1],c=i.default(t,n,s),f=c.type,p=c.action,h=c.contentStates,w=c.env,g=c.itemId,k=c.isTruncated,!o.supportedActions.includes(p)||!h.length||!o.supportedTypes.includes(f))return[2];if(w!==t.contentful.env&&(t=t.clone({contentful:{env:w}})),y=r.createHandlers(t),!t.jwtSigningSecret)return[3,4];E.label=1;case 1:if(E.trys.push([1,3,,4]),!a)throw Error("No authorization token provided.");return[4,l.default.verify(a,t.jwtSigningSecret)];case 2:if((null==(b=E.sent())?void 0:b.spaceId)!==t.contentful.spaceId)throw new Error("Invalid spaceId in JWT Token");return[3,4];case 3:throw _=E.sent(),d.error(_.message,{caller:"handleWebhook",stack:_.stack}),_;case 4:return k?[4,v(t,f,w,g)]:[3,6];case 5:return m=E.sent(),[3,7];case 6:m=n,E.label=7;case 7:return T=m,[4,Promise.all(u.default(h,(function(t){return e.__awaiter(void 0,void 0,void 0,(function(){var n,r;return e.__generator(this,(function(e){switch(e.label){case 0:switch(e.trys.push([0,9,,10]),n={isPreview:"preview"===t,action:p,data:T},f){case"Asset":return[3,1];case"Entry":return[3,3];case"ContentType":return[3,5]}return[3,7];case 1:return[4,y.asset(n)];case 2:return e.sent(),[3,8];case 3:return[4,y.entry(n)];case 4:return e.sent(),[3,8];case 5:return[4,y.contentType(n)];case 6:return e.sent(),[3,8];case 7:d.debug("Unsupported type! ".concat(f),{caller:"handleWebhook"}),e.label=8;case 8:return[3,10];case 9:throw r=e.sent(),d.error("Error handling webhook: ".concat(r.message),{caller:"handleWebhook",stack:r.stack}),r;case 10:return[2]}}))}))})))];case 8:return E.sent(),[4,y.paths(h.includes("preview"),h.includes("production"))];case 9:return E.sent(),[2]}}))}))};
++"use strict";
++var e = require("tslib"),
++  t = require("contentful"),
++  n = require("lodash/map"),
++  r = require("./handlers.js"),
++  o = require("@last-rev/contentful-webhook-parser"),
++  s = require("@last-rev/logging"),
++  a = require("jsonwebtoken");
++function c(e) {
++  return e && "object" == typeof e && "default" in e ? e : { default: e };
++}
++var u = c(n),
++  i = c(o),
++  l = c(a),
++  d = s.getWinstonLogger({
++    package: "contentful-webhook-handler",
++    module: "index",
++  }),
++  v = function (n, r, o, s) {
++    return e.__awaiter(void 0, void 0, void 0, function () {
++      var a;
++      return e.__generator(this, function (e) {
++        switch (
++          ((a = t.createClient({
++            space: n.contentful.spaceId,
++            accessToken: n.contentful.usePreview
++              ? n.contentful.contentPreviewToken
++              : n.contentful.contentDeliveryToken,
++            host: n.contentful.usePreview
++              ? "preview.contentful.com"
++              : "cdn.contentful.com",
++            environment: o,
++          }).withoutLinkResolution),
++          r)
++        ) {
++          case "Entry":
++            return [2, a.getEntry(s, { include: 0, locale: "*" })];
++          case "Asset":
++            return [2, a.getAsset(s)];
++          case "ContentType":
++            return [2, a.getContentType(s)];
++        }
++        return [2];
++      });
++    });
++  };
++module.exports = function (t, n, s) {
++  return e.__awaiter(void 0, void 0, void 0, function () {
++    var a, c, f, p, h, w, g, k, y, b, _, T, m, q;
++    return e.__generator(this, function (E) {
++      switch (E.label) {
++        case 0:
++          if (
++            ((a =
++              null === (q = s.authorization) || void 0 === q
++                ? void 0
++                : q.split(" ")[1]),
++            (c = i.default(t, n, s)),
++            (f = c.type),
++            (p = c.action),
++            (h = c.contentStates),
++            (w = c.env),
++            (g = c.itemId),
++            (k = c.isTruncated),
++            !o.supportedActions.includes(p) ||
++              !h.length ||
++              !o.supportedTypes.includes(f))
++          )
++            return [2];
++          if (
++            (w !== t.contentful.env &&
++              (t = t.clone({ contentful: { env: w } })),
++            (y = r.createHandlers(t)),
++            !t.jwtSigningSecret)
++          )
++            return [3, 4];
++          E.label = 1;
++        case 1:
++          if ((E.trys.push([1, 3, , 4]), !a))
++            throw Error("No authorization token provided.");
++          return [4, l.default.verify(a, t.jwtSigningSecret)];
++        case 2:
++          if (
++            (null == (b = E.sent()) ? void 0 : b.spaceId) !==
++            t.contentful.spaceId
++          )
++            throw new Error("Invalid spaceId in JWT Token");
++          return [3, 4];
++        case 3:
++          throw (
++            ((_ = E.sent()),
++            d.error(_.message, { caller: "handleWebhook", stack: _.stack }),
++            _)
++          );
++        case 4:
++          return k ? [4, v(t, f, w, g)] : [3, 6];
++        case 5:
++          return (m = E.sent()), [3, 7];
++        case 6:
++          (m = n), (E.label = 7);
++        case 7:
++          return (
++            (T = m),
++            [
++              4,
++              Promise.all(
++                u.default(h, function (t) {
++                  return e.__awaiter(void 0, void 0, void 0, function () {
++                    var n, r;
++                    return e.__generator(this, function (e) {
++                      switch (e.label) {
++                        case 0:
++                          switch (
++                            (e.trys.push([0, 9, , 10]),
++                            (n = {
++                              isPreview: "preview" === t,
++                              action: p,
++                              data: T,
++                            }),
++                            f)
++                          ) {
++                            case "Asset":
++                              return [3, 1];
++                            case "Entry":
++                              return [3, 3];
++                            case "ContentType":
++                              return [3, 5];
++                          }
++                          return [3, 7];
++                        case 1:
++                          return [4, y.asset(n)];
++                        case 2:
++                          return e.sent(), [3, 8];
++                        case 3:
++                          return [4, y.entry(n)];
++                        case 4:
++                          return e.sent(), [3, 8];
++                        case 5:
++                          return [4, y.contentType(n)];
++                        case 6:
++                          return e.sent(), [3, 8];
++                        case 7:
++                          d.debug("Unsupported type! ".concat(f), {
++                            caller: "handleWebhook",
++                          }),
++                            (e.label = 8);
++                        case 8:
++                          return [3, 10];
++                        case 9:
++                          throw (
++                            ((r = e.sent()),
++                            d.error(
++                              "Error handling webhook: ".concat(r.message),
++                              { caller: "handleWebhook", stack: r.stack }
++                            ),
++                            r)
++                          );
++                        case 10:
++                          return [2];
++                      }
++                    });
++                  });
++                })
++              ),
++            ]
++          );
++        case 8:
++          return (
++            E.sent(),
++            [4, y.paths(h.includes("preview"), h.includes("production"))]
++          );
++        case 9:
++          return E.sent(), [2];
++      }
++    });
++  });
++};
+diff --git a/src/helpers.ts b/src/helpers.ts
+index a93df3cff76ac5f70facaf69feb6eb219dda5fd1..2ee0041ab405150f3af20f1a5d2e963d50310135 100644
+--- a/src/helpers.ts
++++ b/src/helpers.ts
+@@ -1,11 +1,11 @@
+-import { each } from 'lodash';
+-import { Asset, createClient, Entry, ContentType } from 'contentful';
+-import LastRevAppConfig from '@last-rev/app-config';
+-import { getWinstonLogger } from '@last-rev/logging';
++import { each } from "lodash";
++import { Asset, createClient, Entry, ContentType } from "contentful";
++import LastRevAppConfig from "@last-rev/app-config";
++import { getWinstonLogger } from "@last-rev/logging";
+ 
+ const logger = getWinstonLogger({
+-  package: 'contentful-webhook-handler',
+-  module: 'helpers'
++  package: "contentful-webhook-handler",
++  module: "helpers",
+ });
+ 
+ export const assetHasUrl = (asset: any): boolean => {
+@@ -30,17 +30,15 @@ export const createContentfulClients = (config: LastRevAppConfig) => {
+     space: config.contentful.spaceId,
+     accessToken: config.contentful.contentPreviewToken,
+     environment: config.contentful.env,
+-    host: 'preview.contentful.com',
+-    resolveLinks: false
+-  });
++    host: "preview.contentful.com",
++  }).withoutLinkResolution;
+ 
+   const contentfulProdClient = createClient({
+     space: config.contentful.spaceId,
+     accessToken: config.contentful.contentDeliveryToken,
+     environment: config.contentful.env,
+-    host: 'cdn.contentful.com',
+-    resolveLinks: false
+-  });
++    host: "cdn.contentful.com",
++  }).withoutLinkResolution;
+ 
+   return { contentfulPreviewClient, contentfulProdClient };
+ };
+@@ -50,11 +48,17 @@ export const isError = (x: any): x is Error => x instanceof Error;
+ export const isNil = (x: any): x is null | undefined => x == null;
+ 
+ export const isContentfulError = (item: any) => {
+-  return item?.sys?.type === 'Error';
++  return item?.sys?.type === "Error";
+ };
+ 
+-export const isContentfulObject = (item: any): item is Entry<any> | Asset | ContentType => {
+-  return item?.sys?.type === 'Entry' || item?.sys?.type === 'Asset' || item?.sys?.type === 'ContentType';
++export const isContentfulObject = (
++  item: any
++): item is Entry<any> | Asset | ContentType => {
++  return (
++    item?.sys?.type === "Entry" ||
++    item?.sys?.type === "Asset" ||
++    item?.sys?.type === "ContentType"
++  );
+ };
+ 
+ export const enhanceContentfulObjectWithMetadata = (item: any) => {
+@@ -62,15 +66,15 @@ export const enhanceContentfulObjectWithMetadata = (item: any) => {
+     ...item,
+     lastrev_metadata: {
+       insert_date: new Date().toISOString(),
+-      source: 'contentfulWebhook'
+-    }
++      source: "contentfulWebhook",
++    },
+   };
+ };
+ 
+ export const stringify = (r: any, errorKey: string) => {
+   try {
+     if (isNil(r)) {
+-      throw Error('nil');
++      throw Error("nil");
+     }
+ 
+     if (isError(r)) {
+@@ -88,8 +92,8 @@ export const stringify = (r: any, errorKey: string) => {
+     return JSON.stringify(enhanceContentfulObjectWithMetadata(r));
+   } catch (err: any) {
+     logger.error(`Error stringifying ${errorKey}: ${err.message}`, {
+-      caller: 'stringify',
+-      stack: err.stack
++      caller: "stringify",
++      stack: err.stack,
+     });
+     return undefined;
+   }

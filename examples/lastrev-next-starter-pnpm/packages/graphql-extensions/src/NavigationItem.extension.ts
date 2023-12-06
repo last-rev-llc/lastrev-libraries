@@ -1,13 +1,18 @@
 import gql from 'graphql-tag';
 
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import { type ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from './types';
 
-import { createPath } from './utils/createPath';
+// import { createPath } from './utils/createPath';
 import { pascalCase } from './utils/pascalCase';
 import { defaultResolver } from './utils/defaultResolver';
+import { siteAddressResolver } from './utils/siteAddressResolver';
+import { siteEmailResolver } from './utils/siteEmailResolver';
+import { sitePhoneResolver } from './utils/sitePhoneResolver';
+import { pathResolver } from './utils/pathResolver';
+import { createPath } from './utils/createPath';
 
-const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem', 'Page', 'Person', 'Blog'];
+const SUB_NAVIGATION_ITEM_TYPES = ['Link', 'NavigationItem', 'Page', 'Person', 'Blog', 'PageProperty'];
 
 const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
   const href = getLocalizedField(link.fields, 'href', ctx);
@@ -26,7 +31,8 @@ const hrefUrlResolver = async (link: any, _: never, ctx: ApolloContext) => {
         }
       }
       const slug = getLocalizedField(content?.fields, 'slug', ctx);
-      if (slug) return createPath(getLocalizedField(content?.fields, 'slug', ctx));
+
+      if (slug) return pathResolver(content, _, ctx);
     }
   }
   return '#';
@@ -50,14 +56,31 @@ export const mappers = {
   NavigationItem: {
     NavigationItem: {
       variant: defaultResolver('variant'),
-      // image: (item: any, _args: any, ctx: ApolloContext) => {
-      //   const mediaRef: any = getLocalizedField(item.fields, 'media', ctx);
-      //   return mediaRef;
-      // },
-      href: hrefUrlResolver
+      href: hrefUrlResolver,
+      text: async (navItem: any, args: any, ctx: ApolloContext) => {
+        const variantFn = defaultResolver('variant');
+        const variant = variantFn(navItem, args, ctx);
+
+        if (variant === 'footerContactDetails') {
+          const address = await siteAddressResolver(navItem, args, ctx);
+          const email = await siteEmailResolver(navItem, args, ctx);
+          const phone = await sitePhoneResolver(navItem, args, ctx);
+
+          const parts: (string | null | undefined)[] = [
+            `${address.streetAddress}${address.streetAddress2 ? `, ${address.streetAddress2}` : ''}`,
+            `${address.city || ''}${address.state ? `, ${address.state}` : ''} ${address.postalCode || ''}`,
+            phone.phoneNumber || '',
+            email || ''
+          ];
+
+          return parts.filter((part) => part != null && part !== '').join('\n');
+        }
+
+        return getLocalizedField(navItem.fields, 'text', ctx);
+      }
     },
     Link: {
-      href: hrefUrlResolver,
+      href: pathResolver,
       variant: defaultResolver('variant')
     }
   }
@@ -68,6 +91,7 @@ const ITEM_MAPPING: { [key: string]: string } = {
   Link: 'Link',
   Page: 'Link',
   Person: 'Link',
+  PageProperty: 'Link',
   Blog: 'Link'
 };
 

@@ -1,5 +1,5 @@
 diff --git a/createStyled.js b/createStyled.js
-index 3eeece45a4cd91c1dc5d9ac33d953cc54c5fb725..cb12cba50e9c8d4b7811b953d2864e65bf562a26 100644
+index 3eeece45a4cd91c1dc5d9ac33d953cc54c5fb725..44622d59ddd3e9d9bd10919d56fd687c58f57423 100644
 --- a/createStyled.js
 +++ b/createStyled.js
 @@ -2,47 +2,106 @@
@@ -224,7 +224,7 @@ index 3eeece45a4cd91c1dc5d9ac33d953cc54c5fb725..cb12cba50e9c8d4b7811b953d2864e65
      const {
          name: componentName,
          slot: componentSlot,
-@@ -122,29 +193,39 @@ function createStyled(input = {}) {
+@@ -122,29 +193,42 @@ function createStyled(input = {}) {
          skipSx: inputSkipSx,
          // TODO v6: remove `lowercaseFirstLetter()` in the next major release
          // For more details: https://github.com/mui/material-ui/pull/37908
@@ -261,6 +261,8 @@ index 3eeece45a4cd91c1dc5d9ac33d953cc54c5fb725..cb12cba50e9c8d4b7811b953d2864e65
 -        // For more details: https://github.com/mui/material-ui/pull/37908
 -        label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
 -      }
++    // LR Remove
++    // if (process.env.NODE_ENV !== 'production') {
 +    if (componentName) {
 +      // TODO v6: remove `lowercaseFirstLetter()` in the next major release
 +      // For more details: https://github.com/mui/material-ui/pull/37908
@@ -268,6 +270,7 @@ index 3eeece45a4cd91c1dc5d9ac33d953cc54c5fb725..cb12cba50e9c8d4b7811b953d2864e65
 +        componentSlot || "Root"
 +      )}`;
      }
++    // }
      let shouldForwardPropOption = shouldForwardProp;
  
      // TODO v6: remove `Root` in the next major release
@@ -277,7 +280,7 @@ index 3eeece45a4cd91c1dc5d9ac33d953cc54c5fb725..cb12cba50e9c8d4b7811b953d2864e65
        shouldForwardPropOption = rootShouldForwardProp;
      } else if (componentSlot) {
        // any other slot specified
-@@ -153,38 +234,60 @@ function createStyled(input = {}) {
+@@ -153,38 +237,60 @@ function createStyled(input = {}) {
        // for string (html) tag, preserve the behavior in emotion & styled-components.
        shouldForwardPropOption = undefined;
      }
@@ -363,7 +366,7 @@ index 3eeece45a4cd91c1dc5d9ac33d953cc54c5fb725..cb12cba50e9c8d4b7811b953d2864e65
              });
              return overridesResolver(props, resolvedStyleOverrides);
            }
-@@ -192,41 +295,61 @@ function createStyled(input = {}) {
+@@ -192,41 +298,61 @@ function createStyled(input = {}) {
          });
        }
        if (componentName && !skipVariantsResolver) {
@@ -448,7 +451,7 @@ index 3eeece45a4cd91c1dc5d9ac33d953cc54c5fb725..cb12cba50e9c8d4b7811b953d2864e65
          if (displayName === undefined) {
            displayName = `Styled(${(0, _utils.getDisplayName)(tag)})`;
 diff --git a/esm/createStyled.js b/esm/createStyled.js
-index 3d2709581c987d415338974006de14fb9d588a4b..432eb06443795d4e019ae89bcd78dd0270991497 100644
+index 3d2709581c987d415338974006de14fb9d588a4b..e8a0b9e4067be22948e6891da27bed0f20622ff7 100644
 --- a/esm/createStyled.js
 +++ b/esm/createStyled.js
 @@ -1,37 +1,56 @@
@@ -614,7 +617,7 @@ index 3d2709581c987d415338974006de14fb9d588a4b..432eb06443795d4e019ae89bcd78dd02
      const {
          name: componentName,
          slot: componentSlot,
-@@ -110,29 +139,36 @@ export default function createStyled(input = {}) {
+@@ -110,29 +139,39 @@ export default function createStyled(input = {}) {
          skipSx: inputSkipSx,
          // TODO v6: remove `lowercaseFirstLetter()` in the next major release
          // For more details: https://github.com/mui/material-ui/pull/37908
@@ -647,6 +650,8 @@ index 3d2709581c987d415338974006de14fb9d588a4b..432eb06443795d4e019ae89bcd78dd02
 -        // For more details: https://github.com/mui/material-ui/pull/37908
 -        label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
 -      }
++    // LR Remove
++    // if (process.env.NODE_ENV !== 'production') {
 +    if (componentName) {
 +      // TODO v6: remove `lowercaseFirstLetter()` in the next major release
 +      // For more details: https://github.com/mui/material-ui/pull/37908
@@ -654,6 +659,7 @@ index 3d2709581c987d415338974006de14fb9d588a4b..432eb06443795d4e019ae89bcd78dd02
 +        componentSlot || "Root"
 +      )}`;
      }
++    // }
      let shouldForwardPropOption = shouldForwardProp;
  
      // TODO v6: remove `Root` in the next major release
@@ -663,7 +669,7 @@ index 3d2709581c987d415338974006de14fb9d588a4b..432eb06443795d4e019ae89bcd78dd02
        shouldForwardPropOption = rootShouldForwardProp;
      } else if (componentSlot) {
        // any other slot specified
-@@ -141,38 +177,60 @@ export default function createStyled(input = {}) {
+@@ -141,38 +180,60 @@ export default function createStyled(input = {}) {
        // for string (html) tag, preserve the behavior in emotion & styled-components.
        shouldForwardPropOption = undefined;
      }
@@ -749,7 +755,7 @@ index 3d2709581c987d415338974006de14fb9d588a4b..432eb06443795d4e019ae89bcd78dd02
              });
              return overridesResolver(props, resolvedStyleOverrides);
            }
-@@ -180,41 +238,59 @@ export default function createStyled(input = {}) {
+@@ -180,41 +241,59 @@ export default function createStyled(input = {}) {
          });
        }
        if (componentName && !skipVariantsResolver) {
@@ -831,8 +837,402 @@ index 3d2709581c987d415338974006de14fb9d588a4b..432eb06443795d4e019ae89bcd78dd02
          }
          if (displayName === undefined) {
            displayName = `Styled(${getDisplayName(tag)})`;
+diff --git a/legacy/createStyled.js b/legacy/createStyled.js
+index 6b60a1252faf84bf193d6cb921983a1ee89c920f..cf5b4c8d156a9cf912a0972e3193b5e9747827c2 100644
+--- a/legacy/createStyled.js
++++ b/legacy/createStyled.js
+@@ -3,32 +3,45 @@ import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
+ import _objectWithoutProperties from "@babel/runtime/helpers/esm/objectWithoutProperties";
+ import _extends from "@babel/runtime/helpers/esm/extends";
+ /* eslint-disable no-underscore-dangle */
+-import styledEngineStyled, { internal_processStyles as processStyles } from '@mui/styled-engine';
+-import { getDisplayName, unstable_capitalize as capitalize } from '@mui/utils';
+-import createTheme from './createTheme';
+-import propsToClassKey from './propsToClassKey';
+-import styleFunctionSx from './styleFunctionSx';
++import styledEngineStyled, {
++  internal_processStyles as processStyles,
++} from "@mui/styled-engine";
++import { getDisplayName, unstable_capitalize as capitalize } from "@mui/utils";
++import createTheme from "./createTheme";
++import propsToClassKey from "./propsToClassKey";
++import styleFunctionSx from "./styleFunctionSx";
+ function isEmpty(obj) {
+   return Object.keys(obj).length === 0;
+ }
+ 
+ // https://github.com/emotion-js/emotion/blob/26ded6109fcd8ca9875cc2ce4564fee678a3f3c5/packages/styled/src/utils.js#L40
+ function isStringTag(tag) {
+-  return typeof tag === 'string' &&
+-  // 96 is one less than the char code
+-  // for "a" so this is checking that
+-  // it's a lowercase character
+-  tag.charCodeAt(0) > 96;
++  return (
++    typeof tag === "string" &&
++    // 96 is one less than the char code
++    // for "a" so this is checking that
++    // it's a lowercase character
++    tag.charCodeAt(0) > 96
++  );
+ }
+ var getStyleOverrides = function getStyleOverrides(name, theme) {
+-  if (theme.components && theme.components[name] && theme.components[name].styleOverrides) {
++  if (
++    theme.components &&
++    theme.components[name] &&
++    theme.components[name].styleOverrides
++  ) {
+     return theme.components[name].styleOverrides;
+   }
+   return null;
+ };
+ var getVariantStyles = function getVariantStyles(name, theme) {
+   var variants = [];
+-  if (theme && theme.components && theme.components[name] && theme.components[name].variants) {
++  if (
++    theme &&
++    theme.components &&
++    theme.components[name] &&
++    theme.components[name].variants
++  ) {
+     variants = theme.components[name].variants;
+   }
+   var variantsStyles = {};
+@@ -43,12 +56,20 @@ var variantsResolver = function variantsResolver(props, styles, theme, name) {
+   var _props$ownerState = props.ownerState,
+     ownerState = _props$ownerState === void 0 ? {} : _props$ownerState;
+   var variantsStyles = [];
+-  var themeVariants = theme == null || (_theme$components = theme.components) == null || (_theme$components = _theme$components[name]) == null ? void 0 : _theme$components.variants;
++  var themeVariants =
++    theme == null ||
++    (_theme$components = theme.components) == null ||
++    (_theme$components = _theme$components[name]) == null
++      ? void 0
++      : _theme$components.variants;
+   if (themeVariants) {
+     themeVariants.forEach(function (themeVariant) {
+       var isMatch = true;
+       Object.keys(themeVariant.props).forEach(function (key) {
+-        if (ownerState[key] !== themeVariant.props[key] && props[key] !== themeVariant.props[key]) {
++        if (
++          ownerState[key] !== themeVariant.props[key] &&
++          props[key] !== themeVariant.props[key]
++        ) {
+           isMatch = false;
+         }
+       });
+@@ -62,7 +83,9 @@ var variantsResolver = function variantsResolver(props, styles, theme, name) {
+ 
+ // Update /system/styled/#api in case if this changes
+ export function shouldForwardProp(prop) {
+-  return prop !== 'ownerState' && prop !== 'theme' && prop !== 'sx' && prop !== 'as';
++  return (
++    prop !== "ownerState" && prop !== "theme" && prop !== "sx" && prop !== "as"
++  );
+ }
+ export var systemDefaultTheme = createTheme();
+ var lowercaseFirstLetter = function lowercaseFirstLetter(string) {
+@@ -86,25 +109,38 @@ function defaultOverridesResolver(slot) {
+   };
+ }
+ export default function createStyled() {
+-  var input = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
++  var input =
++    arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+   var themeId = input.themeId,
+     _input$defaultTheme = input.defaultTheme,
+-    defaultTheme = _input$defaultTheme === void 0 ? systemDefaultTheme : _input$defaultTheme,
++    defaultTheme =
++      _input$defaultTheme === void 0 ? systemDefaultTheme : _input$defaultTheme,
+     _input$rootShouldForw = input.rootShouldForwardProp,
+-    rootShouldForwardProp = _input$rootShouldForw === void 0 ? shouldForwardProp : _input$rootShouldForw,
++    rootShouldForwardProp =
++      _input$rootShouldForw === void 0
++        ? shouldForwardProp
++        : _input$rootShouldForw,
+     _input$slotShouldForw = input.slotShouldForwardProp,
+-    slotShouldForwardProp = _input$slotShouldForw === void 0 ? shouldForwardProp : _input$slotShouldForw;
++    slotShouldForwardProp =
++      _input$slotShouldForw === void 0
++        ? shouldForwardProp
++        : _input$slotShouldForw;
+   var systemSx = function systemSx(props) {
+-    return styleFunctionSx(_extends({}, props, {
+-      theme: resolveTheme(_extends({}, props, {
+-        defaultTheme: defaultTheme,
+-        themeId: themeId
+-      }))
+-    }));
++    return styleFunctionSx(
++      _extends({}, props, {
++        theme: resolveTheme(
++          _extends({}, props, {
++            defaultTheme: defaultTheme,
++            themeId: themeId,
++          })
++        ),
++      })
++    );
+   };
+   systemSx.__mui_systemSx = true;
+   return function (tag) {
+-    var inputOptions = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
++    var inputOptions =
++      arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+     // Filter out the `sx` style function from the previous styled component to prevent unnecessary styles generated by the composite components.
+     processStyles(tag, function (styles) {
+       return styles.filter(function (style) {
+@@ -116,26 +152,43 @@ export default function createStyled() {
+       inputSkipVariantsResolver = inputOptions.skipVariantsResolver,
+       inputSkipSx = inputOptions.skipSx,
+       _inputOptions$overrid = inputOptions.overridesResolver,
+-      overridesResolver = _inputOptions$overrid === void 0 ? defaultOverridesResolver(lowercaseFirstLetter(componentSlot)) : _inputOptions$overrid,
+-      options = _objectWithoutProperties(inputOptions, ["name", "slot", "skipVariantsResolver", "skipSx", "overridesResolver"]); // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
+-    var skipVariantsResolver = inputSkipVariantsResolver !== undefined ? inputSkipVariantsResolver :
+-    // TODO v6: remove `Root` in the next major release
+-    // For more details: https://github.com/mui/material-ui/pull/37908
+-    componentSlot && componentSlot !== 'Root' && componentSlot !== 'root' || false;
++      overridesResolver =
++        _inputOptions$overrid === void 0
++          ? defaultOverridesResolver(lowercaseFirstLetter(componentSlot))
++          : _inputOptions$overrid,
++      options = _objectWithoutProperties(inputOptions, [
++        "name",
++        "slot",
++        "skipVariantsResolver",
++        "skipSx",
++        "overridesResolver",
++      ]); // if skipVariantsResolver option is defined, take the value, otherwise, true for root and false for other slots.
++    var skipVariantsResolver =
++      inputSkipVariantsResolver !== undefined
++        ? inputSkipVariantsResolver
++        : // TODO v6: remove `Root` in the next major release
++          // For more details: https://github.com/mui/material-ui/pull/37908
++          (componentSlot &&
++            componentSlot !== "Root" &&
++            componentSlot !== "root") ||
++          false;
+     var skipSx = inputSkipSx || false;
+     var label;
+-    if (process.env.NODE_ENV !== 'production') {
+-      if (componentName) {
+-        // TODO v6: remove `lowercaseFirstLetter()` in the next major release
+-        // For more details: https://github.com/mui/material-ui/pull/37908
+-        label = "".concat(componentName, "-").concat(lowercaseFirstLetter(componentSlot || 'Root'));
+-      }
++    // LR Remove
++    // if (process.env.NODE_ENV !== 'production') {
++    if (componentName) {
++      // TODO v6: remove `lowercaseFirstLetter()` in the next major release
++      // For more details: https://github.com/mui/material-ui/pull/37908
++      label = ""
++        .concat(componentName, "-")
++        .concat(lowercaseFirstLetter(componentSlot || "Root"));
+     }
++    // }
+     var shouldForwardPropOption = shouldForwardProp;
+ 
+     // TODO v6: remove `Root` in the next major release
+     // For more details: https://github.com/mui/material-ui/pull/37908
+-    if (componentSlot === 'Root' || componentSlot === 'root') {
++    if (componentSlot === "Root" || componentSlot === "root") {
+       shouldForwardPropOption = rootShouldForwardProp;
+     } else if (componentSlot) {
+       // any other slot specified
+@@ -144,34 +197,57 @@ export default function createStyled() {
+       // for string (html) tag, preserve the behavior in emotion & styled-components.
+       shouldForwardPropOption = undefined;
+     }
+-    var defaultStyledResolver = styledEngineStyled(tag, _extends({
+-      shouldForwardProp: shouldForwardPropOption,
+-      label: label
+-    }, options));
++    var defaultStyledResolver = styledEngineStyled(
++      tag,
++      _extends(
++        {
++          shouldForwardProp: shouldForwardPropOption,
++          label: label,
++        },
++        options
++      )
++    );
+     var muiStyledResolver = function muiStyledResolver(styleArg) {
+-      for (var _len = arguments.length, expressions = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
++      for (
++        var _len = arguments.length,
++          expressions = new Array(_len > 1 ? _len - 1 : 0),
++          _key = 1;
++        _key < _len;
++        _key++
++      ) {
+         expressions[_key - 1] = arguments[_key];
+       }
+-      var expressionsWithDefaultTheme = expressions ? expressions.map(function (stylesArg) {
+-        // On the server Emotion doesn't use React.forwardRef for creating components, so the created
+-        // component stays as a function. This condition makes sure that we do not interpolate functions
+-        // which are basically components used as a selectors.
+-        return typeof stylesArg === 'function' && stylesArg.__emotion_real !== stylesArg ? function (props) {
+-          return stylesArg(_extends({}, props, {
+-            theme: resolveTheme(_extends({}, props, {
+-              defaultTheme: defaultTheme,
+-              themeId: themeId
+-            }))
+-          }));
+-        } : stylesArg;
+-      }) : [];
++      var expressionsWithDefaultTheme = expressions
++        ? expressions.map(function (stylesArg) {
++            // On the server Emotion doesn't use React.forwardRef for creating components, so the created
++            // component stays as a function. This condition makes sure that we do not interpolate functions
++            // which are basically components used as a selectors.
++            return typeof stylesArg === "function" &&
++              stylesArg.__emotion_real !== stylesArg
++              ? function (props) {
++                  return stylesArg(
++                    _extends({}, props, {
++                      theme: resolveTheme(
++                        _extends({}, props, {
++                          defaultTheme: defaultTheme,
++                          themeId: themeId,
++                        })
++                      ),
++                    })
++                  );
++                }
++              : stylesArg;
++          })
++        : [];
+       var transformedStyleArg = styleArg;
+       if (componentName && overridesResolver) {
+         expressionsWithDefaultTheme.push(function (props) {
+-          var theme = resolveTheme(_extends({}, props, {
+-            defaultTheme: defaultTheme,
+-            themeId: themeId
+-          }));
++          var theme = resolveTheme(
++            _extends({}, props, {
++              defaultTheme: defaultTheme,
++              themeId: themeId,
++            })
++          );
+           var styleOverrides = getStyleOverrides(componentName, theme);
+           if (styleOverrides) {
+             var resolvedStyleOverrides = {};
+@@ -179,9 +255,14 @@ export default function createStyled() {
+               var _ref3 = _slicedToArray(_ref2, 2),
+                 slotKey = _ref3[0],
+                 slotStyle = _ref3[1];
+-              resolvedStyleOverrides[slotKey] = typeof slotStyle === 'function' ? slotStyle(_extends({}, props, {
+-                theme: theme
+-              })) : slotStyle;
++              resolvedStyleOverrides[slotKey] =
++                typeof slotStyle === "function"
++                  ? slotStyle(
++                      _extends({}, props, {
++                        theme: theme,
++                      })
++                    )
++                  : slotStyle;
+             });
+             return overridesResolver(props, resolvedStyleOverrides);
+           }
+@@ -190,42 +271,69 @@ export default function createStyled() {
+       }
+       if (componentName && !skipVariantsResolver) {
+         expressionsWithDefaultTheme.push(function (props) {
+-          var theme = resolveTheme(_extends({}, props, {
+-            defaultTheme: defaultTheme,
+-            themeId: themeId
+-          }));
+-          return variantsResolver(props, getVariantStyles(componentName, theme), theme, componentName);
++          var theme = resolveTheme(
++            _extends({}, props, {
++              defaultTheme: defaultTheme,
++              themeId: themeId,
++            })
++          );
++          return variantsResolver(
++            props,
++            getVariantStyles(componentName, theme),
++            theme,
++            componentName
++          );
+         });
+       }
+       if (!skipSx) {
+         expressionsWithDefaultTheme.push(systemSx);
+       }
+-      var numOfCustomFnsApplied = expressionsWithDefaultTheme.length - expressions.length;
++      var numOfCustomFnsApplied =
++        expressionsWithDefaultTheme.length - expressions.length;
+       if (Array.isArray(styleArg) && numOfCustomFnsApplied > 0) {
+-        var placeholders = new Array(numOfCustomFnsApplied).fill('');
++        var placeholders = new Array(numOfCustomFnsApplied).fill("");
+         // If the type is array, than we need to add placeholders in the template for the overrides, variants and the sx styles.
+-        transformedStyleArg = [].concat(_toConsumableArray(styleArg), _toConsumableArray(placeholders));
+-        transformedStyleArg.raw = [].concat(_toConsumableArray(styleArg.raw), _toConsumableArray(placeholders));
+-      } else if (typeof styleArg === 'function' &&
+-      // On the server Emotion doesn't use React.forwardRef for creating components, so the created
+-      // component stays as a function. This condition makes sure that we do not interpolate functions
+-      // which are basically components used as a selectors.
+-      styleArg.__emotion_real !== styleArg) {
++        transformedStyleArg = [].concat(
++          _toConsumableArray(styleArg),
++          _toConsumableArray(placeholders)
++        );
++        transformedStyleArg.raw = [].concat(
++          _toConsumableArray(styleArg.raw),
++          _toConsumableArray(placeholders)
++        );
++      } else if (
++        typeof styleArg === "function" &&
++        // On the server Emotion doesn't use React.forwardRef for creating components, so the created
++        // component stays as a function. This condition makes sure that we do not interpolate functions
++        // which are basically components used as a selectors.
++        styleArg.__emotion_real !== styleArg
++      ) {
+         // If the type is function, we need to define the default theme.
+         transformedStyleArg = function transformedStyleArg(props) {
+-          return styleArg(_extends({}, props, {
+-            theme: resolveTheme(_extends({}, props, {
+-              defaultTheme: defaultTheme,
+-              themeId: themeId
+-            }))
+-          }));
++          return styleArg(
++            _extends({}, props, {
++              theme: resolveTheme(
++                _extends({}, props, {
++                  defaultTheme: defaultTheme,
++                  themeId: themeId,
++                })
++              ),
++            })
++          );
+         };
+       }
+-      var Component = defaultStyledResolver.apply(void 0, [transformedStyleArg].concat(_toConsumableArray(expressionsWithDefaultTheme)));
+-      if (process.env.NODE_ENV !== 'production') {
++      var Component = defaultStyledResolver.apply(
++        void 0,
++        [transformedStyleArg].concat(
++          _toConsumableArray(expressionsWithDefaultTheme)
++        )
++      );
++      if (process.env.NODE_ENV !== "production") {
+         var displayName;
+         if (componentName) {
+-          displayName = "".concat(componentName).concat(capitalize(componentSlot || ''));
++          displayName = ""
++            .concat(componentName)
++            .concat(capitalize(componentSlot || ""));
+         }
+         if (displayName === undefined) {
+           displayName = "Styled(".concat(getDisplayName(tag), ")");
 diff --git a/modern/createStyled.js b/modern/createStyled.js
-index 18de350e5f2fb98d18dfa57d1167f61acaf18e8e..db8b946affdfa19d08e06c7b34291bce92714218 100644
+index 18de350e5f2fb98d18dfa57d1167f61acaf18e8e..f6ce81ec2cc4f3871f7f765353c65f01f5fb4805 100644
 --- a/modern/createStyled.js
 +++ b/modern/createStyled.js
 @@ -1,53 +1,73 @@
@@ -991,7 +1391,7 @@ index 18de350e5f2fb98d18dfa57d1167f61acaf18e8e..db8b946affdfa19d08e06c7b34291bce
      const {
          name: componentName,
          slot: componentSlot,
-@@ -109,29 +133,37 @@ export default function createStyled(input = {}) {
+@@ -109,29 +133,39 @@ export default function createStyled(input = {}) {
          skipSx: inputSkipSx,
          // TODO v6: remove `lowercaseFirstLetter()` in the next major release
          // For more details: https://github.com/mui/material-ui/pull/37908
@@ -1024,7 +1424,8 @@ index 18de350e5f2fb98d18dfa57d1167f61acaf18e8e..db8b946affdfa19d08e06c7b34291bce
 -        // For more details: https://github.com/mui/material-ui/pull/37908
 -        label = `${componentName}-${lowercaseFirstLetter(componentSlot || 'Root')}`;
 -      }
-+
++    // LR Remove
++    // if (process.env.NODE_ENV !== 'production') {
 +    if (componentName) {
 +      // TODO v6: remove `lowercaseFirstLetter()` in the next major release
 +      // For more details: https://github.com/mui/material-ui/pull/37908
@@ -1032,6 +1433,7 @@ index 18de350e5f2fb98d18dfa57d1167f61acaf18e8e..db8b946affdfa19d08e06c7b34291bce
 +        componentSlot || "Root"
 +      )}`;
      }
++    // }
      let shouldForwardPropOption = shouldForwardProp;
  
      // TODO v6: remove `Root` in the next major release
@@ -1041,7 +1443,7 @@ index 18de350e5f2fb98d18dfa57d1167f61acaf18e8e..db8b946affdfa19d08e06c7b34291bce
        shouldForwardPropOption = rootShouldForwardProp;
      } else if (componentSlot) {
        // any other slot specified
-@@ -140,38 +172,60 @@ export default function createStyled(input = {}) {
+@@ -140,38 +174,60 @@ export default function createStyled(input = {}) {
        // for string (html) tag, preserve the behavior in emotion & styled-components.
        shouldForwardPropOption = undefined;
      }
@@ -1127,7 +1529,7 @@ index 18de350e5f2fb98d18dfa57d1167f61acaf18e8e..db8b946affdfa19d08e06c7b34291bce
              });
              return overridesResolver(props, resolvedStyleOverrides);
            }
-@@ -179,41 +233,59 @@ export default function createStyled(input = {}) {
+@@ -179,41 +235,59 @@ export default function createStyled(input = {}) {
          });
        }
        if (componentName && !skipVariantsResolver) {

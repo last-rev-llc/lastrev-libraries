@@ -6,6 +6,7 @@ fragment Hero_BaseFragment on Hero {
   title
   subtitle
   backgroundColor
+  showFullImage
   background {
     ...Media_BaseFragment
   }
@@ -18,4 +19,8 @@ fragment Hero_BaseFragment on Hero {
   actions {
     ...Link_BaseFragment
   }
+  bottomContent {
+    ...ContentModule_RichTextFragment
+  }
+  hideBreadcrumbs
 }

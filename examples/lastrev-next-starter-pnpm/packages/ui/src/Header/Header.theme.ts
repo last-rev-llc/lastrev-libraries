@@ -1,5 +1,5 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import { Theme } from '@ui/ThemeRegistry/theme.types';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const SUPERNAV_TIMEOUT = '15s';
 
@@ -8,53 +8,55 @@ const menuMobileBreakpoint = 'md';
 const defaultProps: ComponentsProps['Header'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
-  root: ({ theme, ownerState }) => ({
+  root: {
     'padding': 'var(--grid-gap) 0',
-
-    ':is(&, & [class*=navItemSubMenu])': {
-      ...theme.mixins.applyBackgroundColor({ ownerState, theme })
-    },
+    'width': '100%',
+    'zIndex': 100,
+    'gap': 0,
 
     '& *': {
       whiteSpace: 'nowrap'
     }
-  }),
+  },
 
-  contentOuterGrid: ({ theme }) => ({
-    [theme.breakpoints.down(menuMobileBreakpoint)]: {
-      rowGap: 0
-    }
-  }),
+  contentOuterGrid: {
+    rowGap: 'var(--grid-gap-half)'
+  },
 
   logoRoot: ({ theme }) => ({
-    gridColumn: 'content-start / content-half',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'half',
     gridRow: 1,
     alignSelf: 'center',
     width: '100%',
     height: 'auto',
     display: 'block',
 
-    [theme.breakpoints.up(menuMobileBreakpoint)]: {
-      gridColumn: 'content-start / span 2'
+    [theme.breakpoints.up('lg')]: {
+      gridRow: '2',
+      gridColumnEnd: 'three-quarter'
     }
   }),
 
-  // logo: {},
-
   headerMenuCtas: ({ theme }) => ({
-    padding: 0,
-    display: 'inline-flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: '100%',
-    justifySelf: 'flex-end',
-    gridRow: 3,
+    'padding': 0,
+    'display': 'inline-flex',
+    'justifyContent': 'space-between',
+    'alignItems': 'center',
+    'height': '100%',
+    'justifySelf': 'flex-end',
+    'gridRow': 3,
+    'margin': 'auto',
+
+    '& *': {
+      ...theme.typography.bodyXSmall
+    },
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
-      gridColumnStart: 'eleven-start',
-      gridColumnEnd: 'content-end',
+      marginRight: 'unset',
+      gridColumnStart: 'start',
+      gridColumnEnd: 'end',
       justifyContent: 'flex-end',
-      width: '100%',
       gap: 'var(--grid-gap)',
       gridRow: 1
     }
@@ -62,8 +64,8 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
 
   headerMobileNavWrap: ({ theme, menuVisible }) => ({
     gridRow: 2,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     maxHeight: '100vh',
     overflow: 'hidden',
     height: 'auto',
@@ -73,7 +75,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     borderBottom: `solid 2px ${theme.vars.palette.primary.main}`,
     paddingTop: 'var(--grid-gap)',
     paddingBottom: 'var(--grid-gap)',
-    gap: theme.spacing(2),
+    gap: 'var(--grid-gap)',
 
     [theme.breakpoints.down(menuMobileBreakpoint)]: {
       ...(!menuVisible && {
@@ -94,7 +96,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     justifyContent: 'center'
   },
 
-  headerMenuNav: ({ theme, ownerState }) => ({
+  headerMenuNav: ({ theme }) => ({
     'justifyItems': 'center',
     'justifyContent': 'flex-end',
     'position': 'unset',
@@ -102,27 +104,36 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
 
     '& a': {
       whiteSpace: 'nowrap',
-      color: 'inherit'
+      color: 'inherit',
+      ...theme.typography.navLink
     },
 
-    [theme.breakpoints.up(menuMobileBreakpoint)]: {
+    [theme.breakpoints.up('md')]: {
       justifyContent: 'flex-start',
       height: 'auto',
       overflow: 'unset',
       maxHeight: '100%',
-      gridRow: 1,
-      gridColumnStart: 'three-start',
-      gridColumnEnd: ownerState.hasCtaItems ? 'ten-end' : 'content-end'
+      gridRow: 2,
+      gridColumnStart: 'start',
+      gridColumnEnd: 'end'
+    },
+
+    [theme.breakpoints.up('lg')]: {
+      gridColumnStart: 'three-start'
     }
   }),
 
   iconButtonWrap: ({ theme }) => ({
     'padding': 0,
     'display': 'flex',
-    'gridColumnStart': 'content-half',
-    'gridColumnEnd': 'content-end',
+    'gridColumnStart': 'half',
+    'gridColumnEnd': 'end',
     'gridRow': 1,
     'justifyContent': 'flex-end',
+
+    '& *': {
+      fill: 'var(--mui-palette-text-primary) !important'
+    },
 
     '& > *': {
       paddingTop: 0,
@@ -133,8 +144,6 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
       display: 'none'
     }
   }),
-
-  // iconButton: : {},
 
   menuIcon: ({ menuVisible }) => ({
     display: menuVisible ? 'none' : 'block',
@@ -154,13 +163,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Header'] = {
     flexDirection: 'column',
     width: '100%',
     margin: 'auto',
-    gap: 'var(--grid-gap)',
+    gap: 'var(--grid-gap-quarter)',
+    textTransform: 'uppercase',
+    fontWeight: 700,
 
     [theme.breakpoints.up(menuMobileBreakpoint)]: {
       'height': '100%',
       'flexDirection': 'row',
       'width': 'auto',
-      'marginLeft': 'unset',
+      'marginRight': 'unset',
 
       '& > *:last-child a': {
         paddingRight: 0

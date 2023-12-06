@@ -45,10 +45,10 @@ const Person = (props: PersonProps) => {
         <ContentOuterGrid ownerState={ownerState}>
           <SideContentWrap ownerState={ownerState}>
             <SideContentInnerWrap ownerState={ownerState}>
-              <Typography variant="overline">Contact Details</Typography>
+              <DetailsLabel variant="overline">Contact Details</DetailsLabel>
 
               {!!name && (
-                <Name variant="h4" {...sidekick(sidekickLookup, 'name')} ownerState={ownerState}>
+                <Name variant="h5" {...sidekick(sidekickLookup, 'name')} ownerState={ownerState}>
                   {name}
                 </Name>
               )}
@@ -65,7 +65,7 @@ const Person = (props: PersonProps) => {
             </SideContentInnerWrap>
           </SideContentWrap>
           <ContentWrap ownerState={ownerState}>
-            <BodyHeader variant="h3" ownerState={ownerState}>
+            <BodyHeader variant="h5" ownerState={ownerState}>
               Biography
             </BodyHeader>
             {!!body && (
@@ -81,7 +81,7 @@ const Person = (props: PersonProps) => {
 
             {!!education?.length && (
               <>
-                <BodyHeader variant="h3" ownerState={ownerState}>
+                <BodyHeader variant="h5" ownerState={ownerState}>
                   Education
                 </BodyHeader>
                 <BodyList ownerState={ownerState}>
@@ -96,7 +96,7 @@ const Person = (props: PersonProps) => {
 
             {!!previousExperiences?.length && (
               <>
-                <BodyHeader variant="h3" ownerState={ownerState}>
+                <BodyHeader variant="h5" ownerState={ownerState}>
                   Previous Experiences
                 </BodyHeader>
                 <BodyList ownerState={ownerState}>
@@ -128,6 +128,12 @@ const ContentOuterGrid = styled(Grid, {
   slot: 'ContentOuterGrid',
   overridesResolver: (_, styles) => [styles.contentOuterGrid]
 })<{ ownerState: PersonOwnerState }>``;
+
+const DetailsLabel = styled(Typography, {
+  name: 'Person',
+  slot: 'DetailsLabel',
+  overridesResolver: (_, styles) => [styles.detailsLabel]
+})<TypographyProps & { ownerState: PersonOwnerState }>``;
 
 const Name = styled(Typography, {
   name: 'Person',

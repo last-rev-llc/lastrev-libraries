@@ -4,19 +4,29 @@ import type { Card_BaseFragmentFragment } from '@graphql-sdk/types';
 
 export enum CardVariants {
   default = 'default',
+  hover = 'hover',
   icon = 'icon',
-  logo = 'logo',
   media = 'media',
-  pricing = 'pricing',
   person = 'person',
-  quote = 'quote',
-  blog = 'blog'
+  news = 'news',
+  timeline = 'timeline',
+  searchResult = 'searchResult'
 }
 
-export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant'> {
+export enum CardAspectRatios {
+  default = 'default',
+  square = 'square',
+  horizontal = 'horizontal',
+  vertical = 'vertical'
+}
+
+export interface CardProps extends Omit<Card_BaseFragmentFragment, 'variant' | 'aspectRatio'> {
   loading?: boolean;
   variant?: CardVariants;
   ownerState?: any;
+  aspectRatio?: CardAspectRatios;
+  gridLayout?: any;
+  layoutConfig?: any;
 }
 
 export interface CardOwnerState extends CardProps {

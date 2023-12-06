@@ -13,6 +13,7 @@ interface BreadcrumbsClasses {
   /** Styles applied to the root element. */
   root: string;
   breadcrumb: string;
+  separator: string;
 }
 
 export declare type BreadcrumbsClassKey = keyof BreadcrumbsClasses;

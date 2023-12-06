@@ -29,14 +29,6 @@ export const cardBaseMock = (override?: Partial<CardProps>): CardProps => {
   let variantOverride: Partial<CardProps>;
 
   switch (override?.variant) {
-    case CardVariants.pricing:
-      variantOverride = {
-        overline: 'Plan 1',
-        title: '$69.99',
-        subtitle: 'Our best deal!'
-      };
-      break;
-
     case CardVariants.media:
       variantOverride = {
         overline: undefined,

@@ -1,22 +1,41 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import { Theme } from '@ui/ThemeRegistry/theme.types';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 import { SectionVariants } from './Section.types';
 
 const defaultProps: ComponentsProps['Section'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
-  root: {
+  root: ({ theme, ownerState }) => ({
     'containerType': 'inline-size',
     'width': '100%',
     'position': 'relative',
 
     'main > &:last-of-type': {
       marginBottom: 0
-    }
-  },
+    },
 
-  introText: { gridColumn: 'content-start / content-end' },
+    ...(ownerState?.prevBgColor && ownerState.inheritTopBGOverlap
+      ? {
+          'paddingTop': 0,
+          'paddingLeft': 0,
+          'paddingRight': 0,
+          '&::before': {
+            content: '""',
+            position: 'absolute',
+            display: 'block',
+            height: 'var(--section-padding)',
+            width: '100%',
+            ...theme.mixins.applyColorScheme({
+              ownerState: { ...ownerState, backgroundColor: ownerState?.prevBgColor ?? 'navy' },
+              theme
+            })
+          }
+        }
+      : { ...theme.mixins.applyColorScheme({ ownerState, theme }) })
+  }),
+
+  introText: { gridColumn: 'start / end' },
 
   contentOuterGrid: ({ theme, ownerState }) => ({
     gridColumn: 'full-start/full-end',
@@ -40,38 +59,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
     })
   }),
 
-  contentWrap: ({ theme, ownerState }) => ({
-    zIndex: 2,
-    gridColumn: 'content-start/content-end'
-    // 'gridRow': 1,
+  contentWrap: { zIndex: 2, gridColumn: 'start/end' },
 
-    // TEST TO let children blocks flow with main section grid
-    // 'display': 'contents',
-
-    // '& > *': {
-    //   gridColumn: 'unset',
-    //   gridRow: 'auto'
-    //   // ...((ownerState?.variant === SectionVariants.twoPerRow ||
-    //   //   ownerState?.variant === SectionVariants.threePerRow) && {
-    //   //   [theme.containerBreakpoints.up('md')]: {
-    //   //     gridColumn: `span var(--num-columns-md)`
-    //   //   }
-    //   // }),
-    //   // ...(ownerState?.variant === SectionVariants.threePerRow && {
-    //   //   [theme.containerBreakpoints.up('lg')]: {
-    //   //     gridColumn: `span var(--num-columns-lg)`
-    //   //   }
-    //   // })
-    // }
-  }),
-
-  introTextGrid: { gridColumn: 'content-start/content-end' },
-
-  // introText: { },
+  introTextGrid: { gridColumn: 'start/end' },
 
   itemsGrid: ({ theme, ownerState }) => {
     return {
-      // gridColumn: 'full-start/full-end',
+      zIndex: 10,
       display: 'grid',
       gridGap: 'inherit',
       gridRowGap: 0,
@@ -90,9 +84,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Section'] = {
         }
       })
     };
-  },
-
-  sectionItem: ({ theme, ownerState }) => ({})
+  }
 };
 
 const createVariants = (theme: Theme): ComponentsVariants['Section'] => [];

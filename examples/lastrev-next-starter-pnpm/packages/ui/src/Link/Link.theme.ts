@@ -1,5 +1,7 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import { Theme } from '@ui/ThemeRegistry/theme.types';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
+
+import { LinkVariants } from './Link.types';
 
 const defaultProps: ComponentsProps['Link'] = {};
 
@@ -7,6 +9,9 @@ const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
   root: ({ ownerState, theme }) => ({
     display: 'inline-flex',
     alignItems: 'center',
+    textUnderlineOffset: '4px',
+    marginBottom: 0,
+    borderRadius: 0,
     ...(ownerState?.variant?.includes('Contained') && {
       'color': 'var(--mui-palette-primary-contrastText)',
       'backgroundColor': 'var(--mui-palette-primary-main)',
@@ -34,10 +39,40 @@ const styleOverrides: ComponentsOverrides<Theme>['Link'] = {
   })
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
+const createVariants = (theme: Theme): ComponentsVariants['Link'] => [
   {
     props: {
-      variant: 'link'
+      variant: LinkVariants.link
+    },
+    style: {
+      '&:not(:hover)': { textDecoration: 'none' },
+      '&.MuiLink-selected': {
+        textDecoration: 'underline'
+      }
+    }
+  },
+
+  {
+    props: {
+      variant: LinkVariants.buttonText
+    },
+    style: {
+      'paddingLeft': 0,
+      'alignSelf': 'flex-start',
+      ...theme.typography.h6,
+      'margin': 0,
+      'paddingBottom': 0,
+      'borderRadius': 0,
+
+      '.MuiButton-startIcon ': {
+        marginLeft: 0
+      }
+    }
+  },
+
+  {
+    props: {
+      variant: LinkVariants.default
     },
     style: {
       textDecoration: 'underline'
@@ -45,7 +80,7 @@ const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
   },
   {
     props: {
-      variant: 'default'
+      variant: LinkVariants.text
     },
     style: {
       textDecoration: 'underline'
@@ -53,10 +88,13 @@ const createVariants = (_theme: Theme): ComponentsVariants['Link'] => [
   },
   {
     props: {
-      variant: 'text'
+      variant: 'footerContactDetailsFooter'
     },
     style: {
-      textDecoration: 'underline'
+      'textDecoration': 'none',
+      '&&': {
+        whiteSpace: 'pre'
+      }
     }
   }
 ];

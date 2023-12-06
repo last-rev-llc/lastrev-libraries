@@ -3,11 +3,16 @@ import dynamic from 'next/dynamic';
 import { default as MuiIcon } from '@mui/material/Icon';
 
 const LogoIcon = dynamic(() => import('./LogoIcon'));
+const SearchIcon = dynamic(() => import('./SearchIcon'));
 
 export const Icon = ({ iconName }: { iconName: string }) => {
   switch (iconName) {
     case 'logo':
       return <LogoIcon />;
+      break;
+
+    case 'search':
+      return <SearchIcon />;
       break;
 
     default:

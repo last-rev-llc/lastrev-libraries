@@ -1,0 +1,403 @@
+diff --git a/dist/index.esm.js b/dist/index.esm.js
+index 1fcbe246a0420c3b8853ee1c74626dbac0ee0def..1241e85d34c1d47dbfa556cf12818e1ebf3c648e 100644
+--- a/dist/index.esm.js
++++ b/dist/index.esm.js
+@@ -1 +1,185 @@
+-import{__awaiter as n,__generator as e,__assign as t,__spreadArray as r,__makeTemplateObject as o}from"tslib";import{gql as i}from"graphql-tag";import{createClient as a}from"contentful";import c from"lodash/has";import s from"lodash/some";import u from"lodash/upperFirst";import l from"@last-rev/timer";import{getWinstonLogger as m}from"@last-rev/logging";var f,p=function(n){switch(n.type){case"Symbol":case"Text":return"String";case"Integer":return"Int";case"Number":return"Float";case"Date":return"Date";case"Location":return"Location";case"Object":return"JSON";case"Boolean":return"Boolean";case"RichText":return"RichText";case"Link":return"Asset"===n.linkType?"Media":"Content";case"Array":return"[".concat(p(n.items),"]")}},d={sidekickLookup:"JSON",id:"String",theme:"[Theme]",animation:"JSON",variant:"String"},h={sidekickLookup:"JSON",id:"String",theme:"[Theme]",animation:"JSON",slug:"String",lr__path__:"String"},g=function(n,e,t){return"\n".concat(n.map((function(n){return"\ntype ".concat(u(n.sys.id)," implements Content {\n  ").concat(Object.keys(e).map((function(n){return"\n  ".concat(n,": ").concat(e[n],"\n  ")})),"\n  ").concat(n.fields.filter((function(n){return-1===Object.keys(e).indexOf(n.id)})).filter((function(n){if(!t)return!0;var e=p(n);return"Content"!=e&&"[Content]"!=e})).map((function(n){return"\n  ".concat(n.id,": ").concat(p(n),"\n  ")})),"\n}\n")})),"\n")},v=function(n,e,o){var i=e.map((function(e){return function(n,e){var r=n.sys.id;return c(e,r)&&(r=e[r]),t(t({},n),{sys:t(t({},n.sys),{id:r})})}(e,n)})),a=i.reduce((function(n,e){var t=n[0],o=n[1];return s(e.fields,(function(n){return"slug"===n.id}))?[r(r([],t,!0),[e],!1),o]:[t,r(r([],o,!0),[e],!1)]}),[[],[]]),u=a[0],l=a[1],m=g(u,h,o),f=g(l,d,o);return"\n  ".concat(f,"\n  ").concat(m,"\n  ")},y=function(r,o,i){return n(void 0,void 0,void 0,(function(){var n,c,s;return e(this,(function(e){switch(e.label){case 0:return n=a(t(t({},o),{resolveLinks:!1})),c=v,s=[r],[4,n.getContentTypes()];case 1:return[2,c.apply(void 0,s.concat([e.sent().items,i]))]}}))}))},k=m({package:"graphql-schema-gen",module:"fetchers"}),S=function(t,r,a,c,s){return n(void 0,void 0,void 0,(function(){var n,t,u;return e(this,(function(e){switch(e.label){case 0:if(!s&&!c)throw Error("Must pass one of params or contentTypes to generate schema");return n=new l,s?(u=v(r,s,a),[3,3]):[3,1];case 1:return[4,y(r,c,a)];case 2:u=e.sent(),e.label=3;case 3:return t=u,k.debug("Schema Generated",{caller:"fetchers",elapsedMs:n.end().millis}),[2,i(f||(f=o(["\n    ","\n  "],["\n    ","\n  "])),t)]}}))}))},b=m({package:"graphql-schema-gen",module:"index"}),O=function(t){var r=t.source,o=void 0===r?"Contentful":r,i=t.typeMappings,a=t.connectionParams,c=t.contentTypes,s=t.skipReferenceFields;return n(void 0,void 0,void 0,(function(){return e(this,(function(n){switch(n.label){case 0:return b.info("generating schema from ".concat(o,"..."),{caller:"generateSchema"}),[4,S(0,i,s,a,c)];case 1:return[2,n.sent()]}}))}))};export{O as default};
++import {
++  __awaiter as n,
++  __generator as e,
++  __assign as t,
++  __spreadArray as r,
++  __makeTemplateObject as o,
++} from "tslib";
++import { gql as i } from "graphql-tag";
++import { createClient as a } from "contentful";
++import c from "lodash/has";
++import s from "lodash/some";
++import u from "lodash/upperFirst";
++import l from "@last-rev/timer";
++import { getWinstonLogger as m } from "@last-rev/logging";
++var f,
++  p = function (n) {
++    switch (n.type) {
++      case "Symbol":
++      case "Text":
++        return "String";
++      case "Integer":
++        return "Int";
++      case "Number":
++        return "Float";
++      case "Date":
++        return "Date";
++      case "Location":
++        return "Location";
++      case "Object":
++        return "JSON";
++      case "Boolean":
++        return "Boolean";
++      case "RichText":
++        return "RichText";
++      case "Link":
++        return "Asset" === n.linkType ? "Media" : "Content";
++      case "Array":
++        return "[".concat(p(n.items), "]");
++    }
++  },
++  d = {
++    sidekickLookup: "JSON",
++    id: "String",
++    theme: "[Theme]",
++    animation: "JSON",
++    variant: "String",
++  },
++  h = {
++    sidekickLookup: "JSON",
++    id: "String",
++    theme: "[Theme]",
++    animation: "JSON",
++    slug: "String",
++    lr__path__: "String",
++  },
++  g = function (n, e, t) {
++    return "\n".concat(
++      n.map(function (n) {
++        return "\ntype "
++          .concat(u(n.sys.id), " implements Content {\n  ")
++          .concat(
++            Object.keys(e).map(function (n) {
++              return "\n  ".concat(n, ": ").concat(e[n], "\n  ");
++            }),
++            "\n  "
++          )
++          .concat(
++            n.fields
++              .filter(function (n) {
++                return -1 === Object.keys(e).indexOf(n.id);
++              })
++              .filter(function (n) {
++                if (!t) return !0;
++                var e = p(n);
++                return "Content" != e && "[Content]" != e;
++              })
++              .map(function (n) {
++                return "\n  ".concat(n.id, ": ").concat(p(n), "\n  ");
++              }),
++            "\n}\n"
++          );
++      }),
++      "\n"
++    );
++  },
++  v = function (n, e, o) {
++    var i = e.map(function (e) {
++        return (function (n, e) {
++          var r = n.sys.id;
++          return (
++            c(e, r) && (r = e[r]),
++            t(t({}, n), { sys: t(t({}, n.sys), { id: r }) })
++          );
++        })(e, n);
++      }),
++      a = i.reduce(
++        function (n, e) {
++          var t = n[0],
++            o = n[1];
++          return s(e.fields, function (n) {
++            return "slug" === n.id;
++          })
++            ? [r(r([], t, !0), [e], !1), o]
++            : [t, r(r([], o, !0), [e], !1)];
++        },
++        [[], []]
++      ),
++      u = a[0],
++      l = a[1],
++      m = g(u, h, o),
++      f = g(l, d, o);
++    return "\n  ".concat(f, "\n  ").concat(m, "\n  ");
++  },
++  y = function (r, o, i) {
++    return n(void 0, void 0, void 0, function () {
++      var n, c, s;
++      return e(this, function (e) {
++        switch (e.label) {
++          case 0:
++            return (
++              (n = a(t(t({}, o), {})).withoutLinkResolution),
++              (c = v),
++              (s = [r]),
++              [4, n.getContentTypes()]
++            );
++          case 1:
++            return [2, c.apply(void 0, s.concat([e.sent().items, i]))];
++        }
++      });
++    });
++  },
++  k = m({ package: "graphql-schema-gen", module: "fetchers" }),
++  S = function (t, r, a, c, s) {
++    return n(void 0, void 0, void 0, function () {
++      var n, t, u;
++      return e(this, function (e) {
++        switch (e.label) {
++          case 0:
++            if (!s && !c)
++              throw Error(
++                "Must pass one of params or contentTypes to generate schema"
++              );
++            return (n = new l()), s ? ((u = v(r, s, a)), [3, 3]) : [3, 1];
++          case 1:
++            return [4, y(r, c, a)];
++          case 2:
++            (u = e.sent()), (e.label = 3);
++          case 3:
++            return (
++              (t = u),
++              k.debug("Schema Generated", {
++                caller: "fetchers",
++                elapsedMs: n.end().millis,
++              }),
++              [2, i(f || (f = o(["\n    ", "\n  "], ["\n    ", "\n  "])), t)]
++            );
++        }
++      });
++    });
++  },
++  b = m({ package: "graphql-schema-gen", module: "index" }),
++  O = function (t) {
++    var r = t.source,
++      o = void 0 === r ? "Contentful" : r,
++      i = t.typeMappings,
++      a = t.connectionParams,
++      c = t.contentTypes,
++      s = t.skipReferenceFields;
++    return n(void 0, void 0, void 0, function () {
++      return e(this, function (n) {
++        switch (n.label) {
++          case 0:
++            return (
++              b.info("generating schema from ".concat(o, "..."), {
++                caller: "generateSchema",
++              }),
++              [4, S(0, i, s, a, c)]
++            );
++          case 1:
++            return [2, n.sent()];
++        }
++      });
++    });
++  };
++export { O as default };
+diff --git a/dist/index.js b/dist/index.js
+index ded417240c94d0e75b3053e728f64f654b8366ed..e89a243eb23cb253452a29b2d4e721daceb7314c 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1 +1,206 @@
+-"use strict";var e=require("tslib"),n=require("graphql-tag"),t=require("contentful"),r=require("lodash/has"),a=require("lodash/some"),i=require("lodash/upperFirst"),c=require("@last-rev/timer"),s=require("@last-rev/logging");function o(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var u,l=o(r),d=o(a),f=o(i),g=o(c),_=function(e){switch(e.type){case"Symbol":case"Text":return"String";case"Integer":return"Int";case"Number":return"Float";case"Date":return"Date";case"Location":return"Location";case"Object":return"JSON";case"Boolean":return"Boolean";case"RichText":return"RichText";case"Link":return"Asset"===e.linkType?"Media":"Content";case"Array":return"[".concat(_(e.items),"]")}},p={sidekickLookup:"JSON",id:"String",theme:"[Theme]",animation:"JSON",variant:"String"},m={sidekickLookup:"JSON",id:"String",theme:"[Theme]",animation:"JSON",slug:"String",lr__path__:"String"},h=function(e,n,t){return"\n".concat(e.map((function(e){return"\ntype ".concat(f.default(e.sys.id)," implements Content {\n  ").concat(Object.keys(n).map((function(e){return"\n  ".concat(e,": ").concat(n[e],"\n  ")})),"\n  ").concat(e.fields.filter((function(e){return-1===Object.keys(n).indexOf(e.id)})).filter((function(e){if(!t)return!0;var n=_(e);return"Content"!=n&&"[Content]"!=n})).map((function(e){return"\n  ".concat(e.id,": ").concat(_(e),"\n  ")})),"\n}\n")})),"\n")},v=function(n,t,r){var a=t.map((function(t){return function(n,t){var r=n.sys.id;return l.default(t,r)&&(r=t[r]),e.__assign(e.__assign({},n),{sys:e.__assign(e.__assign({},n.sys),{id:r})})}(t,n)})),i=a.reduce((function(n,t){var r,a=n[0],i=n[1];return r=t,d.default(r.fields,(function(e){return"slug"===e.id}))?[e.__spreadArray(e.__spreadArray([],a,!0),[t],!1),i]:[a,e.__spreadArray(e.__spreadArray([],i,!0),[t],!1)]}),[[],[]]),c=i[0],s=i[1],o=h(c,m,r),u=h(s,p,r);return"\n  ".concat(u,"\n  ").concat(o,"\n  ")},y=function(n,r,a){return e.__awaiter(void 0,void 0,void 0,(function(){var i,c,s;return e.__generator(this,(function(o){switch(o.label){case 0:return i=t.createClient(e.__assign(e.__assign({},r),{resolveLinks:!1})),c=v,s=[n],[4,i.getContentTypes()];case 1:return[2,c.apply(void 0,s.concat([o.sent().items,a]))]}}))}))},k=s.getWinstonLogger({package:"graphql-schema-gen",module:"fetchers"}),S=function(t,r,a,i,c){return e.__awaiter(void 0,void 0,void 0,(function(){var t,s,o;return e.__generator(this,(function(l){switch(l.label){case 0:if(!c&&!i)throw Error("Must pass one of params or contentTypes to generate schema");return t=new g.default,c?(o=v(r,c,a),[3,3]):[3,1];case 1:return[4,y(r,i,a)];case 2:o=l.sent(),l.label=3;case 3:return s=o,k.debug("Schema Generated",{caller:"fetchers",elapsedMs:t.end().millis}),[2,n.gql(u||(u=e.__makeTemplateObject(["\n    ","\n  "],["\n    ","\n  "])),s)]}}))}))},b=s.getWinstonLogger({package:"graphql-schema-gen",module:"index"});module.exports=function(n){var t=n.source,r=void 0===t?"Contentful":t,a=n.typeMappings,i=n.connectionParams,c=n.contentTypes,s=n.skipReferenceFields;return e.__awaiter(void 0,void 0,void 0,(function(){return e.__generator(this,(function(e){switch(e.label){case 0:return b.info("generating schema from ".concat(r,"..."),{caller:"generateSchema"}),[4,S(0,a,s,i,c)];case 1:return[2,e.sent()]}}))}))};
++"use strict";
++var e = require("tslib"),
++  n = require("graphql-tag"),
++  t = require("contentful"),
++  r = require("lodash/has"),
++  a = require("lodash/some"),
++  i = require("lodash/upperFirst"),
++  c = require("@last-rev/timer"),
++  s = require("@last-rev/logging");
++function o(e) {
++  return e && "object" == typeof e && "default" in e ? e : { default: e };
++}
++var u,
++  l = o(r),
++  d = o(a),
++  f = o(i),
++  g = o(c),
++  _ = function (e) {
++    switch (e.type) {
++      case "Symbol":
++      case "Text":
++        return "String";
++      case "Integer":
++        return "Int";
++      case "Number":
++        return "Float";
++      case "Date":
++        return "Date";
++      case "Location":
++        return "Location";
++      case "Object":
++        return "JSON";
++      case "Boolean":
++        return "Boolean";
++      case "RichText":
++        return "RichText";
++      case "Link":
++        return "Asset" === e.linkType ? "Media" : "Content";
++      case "Array":
++        return "[".concat(_(e.items), "]");
++    }
++  },
++  p = {
++    sidekickLookup: "JSON",
++    id: "String",
++    theme: "[Theme]",
++    animation: "JSON",
++    variant: "String",
++  },
++  m = {
++    sidekickLookup: "JSON",
++    id: "String",
++    theme: "[Theme]",
++    animation: "JSON",
++    slug: "String",
++    lr__path__: "String",
++  },
++  h = function (e, n, t) {
++    return "\n".concat(
++      e.map(function (e) {
++        return "\ntype "
++          .concat(f.default(e.sys.id), " implements Content {\n  ")
++          .concat(
++            Object.keys(n).map(function (e) {
++              return "\n  ".concat(e, ": ").concat(n[e], "\n  ");
++            }),
++            "\n  "
++          )
++          .concat(
++            e.fields
++              .filter(function (e) {
++                return -1 === Object.keys(n).indexOf(e.id);
++              })
++              .filter(function (e) {
++                if (!t) return !0;
++                var n = _(e);
++                return "Content" != n && "[Content]" != n;
++              })
++              .map(function (e) {
++                return "\n  ".concat(e.id, ": ").concat(_(e), "\n  ");
++              }),
++            "\n}\n"
++          );
++      }),
++      "\n"
++    );
++  },
++  v = function (n, t, r) {
++    var a = t.map(function (t) {
++        return (function (n, t) {
++          var r = n.sys.id;
++          return (
++            l.default(t, r) && (r = t[r]),
++            e.__assign(e.__assign({}, n), {
++              sys: e.__assign(e.__assign({}, n.sys), { id: r }),
++            })
++          );
++        })(t, n);
++      }),
++      i = a.reduce(
++        function (n, t) {
++          var r,
++            a = n[0],
++            i = n[1];
++          return (
++            (r = t),
++            d.default(r.fields, function (e) {
++              return "slug" === e.id;
++            })
++              ? [e.__spreadArray(e.__spreadArray([], a, !0), [t], !1), i]
++              : [a, e.__spreadArray(e.__spreadArray([], i, !0), [t], !1)]
++          );
++        },
++        [[], []]
++      ),
++      c = i[0],
++      s = i[1],
++      o = h(c, m, r),
++      u = h(s, p, r);
++    return "\n  ".concat(u, "\n  ").concat(o, "\n  ");
++  },
++  y = function (n, r, a) {
++    return e.__awaiter(void 0, void 0, void 0, function () {
++      var i, c, s;
++      return e.__generator(this, function (o) {
++        switch (o.label) {
++          case 0:
++            return (
++              (i = t.createClient(
++                e.__assign(e.__assign({}, r), {})
++              ).withoutLinkResolution),
++              (c = v),
++              (s = [n]),
++              [4, i.getContentTypes()]
++            );
++          case 1:
++            return [2, c.apply(void 0, s.concat([o.sent().items, a]))];
++        }
++      });
++    });
++  },
++  k = s.getWinstonLogger({ package: "graphql-schema-gen", module: "fetchers" }),
++  S = function (t, r, a, i, c) {
++    return e.__awaiter(void 0, void 0, void 0, function () {
++      var t, s, o;
++      return e.__generator(this, function (l) {
++        switch (l.label) {
++          case 0:
++            if (!c && !i)
++              throw Error(
++                "Must pass one of params or contentTypes to generate schema"
++              );
++            return (
++              (t = new g.default()), c ? ((o = v(r, c, a)), [3, 3]) : [3, 1]
++            );
++          case 1:
++            return [4, y(r, i, a)];
++          case 2:
++            (o = l.sent()), (l.label = 3);
++          case 3:
++            return (
++              (s = o),
++              k.debug("Schema Generated", {
++                caller: "fetchers",
++                elapsedMs: t.end().millis,
++              }),
++              [
++                2,
++                n.gql(
++                  u ||
++                    (u = e.__makeTemplateObject(
++                      ["\n    ", "\n  "],
++                      ["\n    ", "\n  "]
++                    )),
++                  s
++                ),
++              ]
++            );
++        }
++      });
++    });
++  },
++  b = s.getWinstonLogger({ package: "graphql-schema-gen", module: "index" });
++module.exports = function (n) {
++  var t = n.source,
++    r = void 0 === t ? "Contentful" : t,
++    a = n.typeMappings,
++    i = n.connectionParams,
++    c = n.contentTypes,
++    s = n.skipReferenceFields;
++  return e.__awaiter(void 0, void 0, void 0, function () {
++    return e.__generator(this, function (e) {
++      switch (e.label) {
++        case 0:
++          return (
++            b.info("generating schema from ".concat(r, "..."), {
++              caller: "generateSchema",
++            }),
++            [4, S(0, a, s, i, c)]
++          );
++        case 1:
++          return [2, e.sent()];
++      }
++    });
++  });
++};

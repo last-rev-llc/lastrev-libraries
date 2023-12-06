@@ -16,6 +16,7 @@ export enum CollectionVariants {
 export interface CollectionProps extends Omit<Collection_BaseFragmentFragment, 'variant' | 'itemsVariant'> {
   variant?: CollectionVariants;
   itemsVariant?: CardVariants;
+  prevBgColor?: string;
 }
 
 export interface CollectionOwnerState extends CollectionProps {}

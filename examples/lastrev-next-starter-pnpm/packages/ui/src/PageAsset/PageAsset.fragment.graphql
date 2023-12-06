@@ -1,0 +1,13 @@
+fragment PageAsset_BaseFragment on PageAsset {
+  ...Content_BaseFragment
+  name
+  location
+  strategy
+  sector
+
+  promoImage {
+    ...Media_BaseFragment
+  }
+
+  promoSummary
+}

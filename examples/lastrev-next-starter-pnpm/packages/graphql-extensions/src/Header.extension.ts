@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 import { getLocalizedField } from '@last-rev/graphql-contentful-core';
-import type { ApolloContext } from '@last-rev/types';
+import type { ApolloContext } from './types';
 import { defaultResolver } from './utils/defaultResolver';
 
 export const typeDefs = gql`
@@ -23,7 +23,11 @@ export const mappers = {
         const ctaItems: any = getLocalizedField(header.fields, 'ctaItems', ctx);
         return !!ctaItems.length;
       },
-      backgroundColor: defaultResolver('backgroundColor')
+      backgroundColor: defaultResolver('backgroundColor'),
+      logoUrl: async (header: any, _args: any, ctx: ApolloContext) => {
+        const logoUrlRef: any = getLocalizedField(header.fields, 'logoUrl', ctx);
+        return logoUrlRef;
+      }
     }
   }
 };

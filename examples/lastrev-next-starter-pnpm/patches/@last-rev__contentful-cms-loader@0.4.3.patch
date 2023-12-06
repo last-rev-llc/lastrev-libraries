@@ -1,0 +1,1770 @@
+diff --git a/dist/index.esm.js b/dist/index.esm.js
+index fcee4c2a5235ddac418c2c661082f7ad74915b77..ec5c3ccdc3910cb5a1dbe1dcbdd5c80836ceb7dd 100644
+--- a/dist/index.esm.js
++++ b/dist/index.esm.js
+@@ -1 +1,553 @@
+-import e from"dataloader";import{createClient as t}from"contentful";import n from"lodash/find";import r from"lodash/map";import i from"lodash/partition";import{getWinstonLogger as l}from"@last-rev/logging";import s from"@last-rev/timer";function o(e,t,n,r,i,l,s){try{var o=e[l](s),c=o.value}catch(e){return void n(e)}o.done?t(c):Promise.resolve(c).then(r,i)}function c(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}const u=(a=function*(e,t,n,r,i=0,l=[]){const s=yield e[t](function(e){for(var t=1;t<arguments.length;t++){var n=null!=arguments[t]?arguments[t]:{},r=Object.keys(n);"function"==typeof Object.getOwnPropertySymbols&&(r=r.concat(Object.getOwnPropertySymbols(n).filter((function(e){return Object.getOwnPropertyDescriptor(n,e).enumerable})))),r.forEach((function(t){c(e,t,n[t])}))}return e}({},r,{skip:i,limit:n})),{items:o=[],total:a}=s;return l.push(...o),l.length>=a?l:u(e,t,n,r,i+n,l)},d=function(){var e=this,t=arguments;return new Promise((function(n,r){var i=a.apply(e,t);function l(e){o(i,n,r,l,s,"next",e)}function s(e){o(i,n,r,l,s,"throw",e)}l(void 0)}))},function(e,t,n,r){return d.apply(this,arguments)});var a,d;function p(e,t,n,r,i,l,s){try{var o=e[l](s),c=o.value}catch(e){return void n(e)}o.done?t(c):Promise.resolve(c).then(r,i)}function f(e){return function(){var t=this,n=arguments;return new Promise((function(r,i){var l=e.apply(t,n);function s(e){p(l,r,i,s,o,"next",e)}function o(e){p(l,r,i,s,o,"throw",e)}s(void 0)}))}}const y=l({package:"contentful-cms-loader",module:"index",strategy:"Cms"}),v={cacheKeyFn:e=>e.preview?`${e.id}-preview`:`${e.id}-prod`},m={cacheKeyFn:e=>{const t=`${e.contentType}-${e.field}-${e.value}`;return e.preview?`${t}-preview`:`${t}-prod`}},h={cacheKeyFn:e=>{const t=`${e.contentType}-${e.field}-${e.id}`;return e.preview?`${t}-preview`:`${t}-prod`}},g=e=>"fulfilled"===e.status,w=(l,o)=>{const c=t({accessToken:l.contentful.contentDeliveryToken,space:l.contentful.spaceId,environment:l.contentful.env,host:"cdn.contentful.com",resolveLinks:!1}),a=t({accessToken:l.contentful.contentPreviewToken,space:l.contentful.spaceId,environment:l.contentful.env,host:"preview.contentful.com",resolveLinks:!1}),d=l.contentful.maxBatchSize||1e3,p=(w=f((function*(e,t,n,r){const i=new s,l=t.substring(3).toLowerCase(),o=((e,t)=>{const n=[];let r=0;for(;r<e.length;)n.push(e.slice(r,r+=t));return n})(e,r),c=yield Promise.allSettled(o.map(function(){var e=f((function*(e){const i={"sys.id[in]":e.join(","),include:0,locale:"*"};return yield u(n,t,r,i)}));return function(t){return e.apply(this,arguments)}}())),a=c.flatMap(((e,t)=>{if("rejected"===e.status){var n;const r=o[t].length;return y.error(`Unable to fetch ${r} ${l}. Reason: ${e.reason.message} ${((null===(n=e.reason.details)||void 0===n?void 0:n.errors)||[]).map((e=>`${e.name}: ${e.value}`))}`,{caller:"fetchBatchItems"}),[]}return e.value||[]}));return y.debug(`Fetched ${t.substring(3).toLowerCase()}`,{caller:"fetchBatchItems",elapesedMs:i.end().millis,itemsAttempted:e.length,itemsSuccessful:a.length}),a})),function(e,t,n,r){return w.apply(this,arguments)});var w;const b=e=>function(){var t=f((function*(t){const l=new s,[o,u]=i(t,(e=>e.preview)),f="entries"===e?"getEntries":"getAssets",[v,m]=yield Promise.all([p(r(o,"id"),f,a,d),p(r(u,"id"),f,c,d)]),h=t.map((({id:e,preview:t})=>n(v,(n=>t&&n.sys.id===e))||n(m,(n=>!t&&n.sys.id===e))||null));return y.debug(`Fetched ${e}`,{caller:"getBatchItemFetcher",elapsedMs:l.end().millis,itemsAttempted:t.length,itemsSuccessful:h.length}),h}));return function(e){return t.apply(this,arguments)}}(),$=new e(b("entries"),v),T=new e(b("assets"),v),F=new e(function(){var e=f((function*(e){const t=new s,n=yield Promise.allSettled(r(e,(e=>f((function*(){const{preview:t,id:n}=e;return yield u(t?a:c,"getEntries",d,{content_type:n,include:0,locale:"*"})}))())));t.end();let i=0,l=0;const o=n.map(((t,n)=>{var r;return"rejected"===t.status?(y.error(`Unable to fetch content type ${e[n].id}. Reason: ${t.reason.message} ${((null===(r=t.reason.details)||void 0===r?void 0:r.errors)||[]).map((e=>`${e.name}: ${e.value}`))}`,{caller:"getBatchEntriesByContentTypeFetcher"}),[]):(i++,l+=(t.value||[]).length,t.value)}));return y.debug("Fetched entries for contenttypes (types)",{caller:"getBatchEntriesByContentTypeFetcher",elapsedMs:t.millis,itemsSuccessful:i,itemsAttempted:e.length}),y.debug("Fetched entries by contentType (entries)",{caller:"getBatchEntriesByContentTypeFetcher",elapsedMs:t.millis,itemsSuccessful:l}),o}));return function(t){return e.apply(this,arguments)}}(),v),P=function(){var e=f((function*(e){try{const t=new s,n=yield(e?a:c).getContentTypes();return y.debug("Fetched all content types",{caller:"fetchAllContentTypes",elapsedMs:t.end().millis,itemsSuccessful:n.items.length}),n.items}catch(e){return y.error(`Unable to fetch content types : ${e.message}`,{caller:"fetchAllContentTypes",stack:e.stack}),[]}}));return function(t){return e.apply(this,arguments)}}(),B=new e((j=f((function*(e){const t=new s,n=e.reduce(((e,{contentType:t,field:n,value:r,preview:i})=>{const l=i?"preview":"prod";return e[l]||(e[l]={}),e[l][t]||(e[l][t]={}),e[l][t][n]||(e[l][t][n]=[]),e[l][t][n].push(r),e}),{}),r=Object.entries(n).reduce(((e,[t,n])=>{const r=Object.entries(n).reduce(((e,[t,n])=>(Object.entries(n).forEach((([n,r])=>{e.push({content_type:t,field:n,values:r.join(",")})})),e)),[]);return"preview"===t?e.preview.push(...r):"prod"===t&&e.prod.push(...r),e}),{prod:[],preview:[]}),[i,l]=yield Promise.all([Promise.allSettled(r.prod.map(function(){var e=f((function*({content_type:e,field:t,values:n}){const{items:r}=yield c.getEntries({content_type:e,locale:"*",include:0,[`fields.${t}[in]`]:n});return r}));return function(t){return e.apply(this,arguments)}}())),Promise.allSettled(r.preview.map(function(){var e=f((function*({content_type:e,field:t,values:n}){const{items:r}=yield a.getEntries({content_type:e,locale:"*",include:0,[`fields.${t}[in]`]:n});return r}));return function(t){return e.apply(this,arguments)}}()))]);t.end();const u=l.filter(g),d=i.filter(g),p=u.flatMap((e=>e.value||[])),v=d.flatMap((e=>e.value||[]));return y.debug("Fetched entries by field value",{caller:"getBatchEntriesByFieldValueFetcher",elapsedMs:t.millis,itemsAttempted:e.length,itemsSuccessful:p.length+v.length}),e.map((({preview:e,field:t,value:n,contentType:r})=>(e?p:v).find((e=>{var i;return e.sys.contentType.sys.id===r&&(null===(i=e.fields[t])||void 0===i?void 0:i[o])===n}))||null))})),function(e){return j.apply(this,arguments)}),m);var j;const S=new e((E=f((function*(e){const t=new s,n=e.reduce(((e,{contentType:t,field:n,id:r,preview:i})=>{const l=i?"preview":"prod";return e[l]||(e[l]={}),e[l][t]||(e[l][t]={}),e[l][t][n]||(e[l][t][n]=[]),e[l][t][n].push(r),e}),{}),r=Object.entries(n).reduce(((e,[t,n])=>{const r=Object.entries(n).reduce(((e,[t,n])=>(Object.entries(n).forEach((([n,r])=>{e.push({content_type:t,field:n,ids:r.join(",")})})),e)),[]);return"preview"===t?e.preview.push(...r):"prod"===t&&e.prod.push(...r),e}),{prod:[],preview:[]}),[i,l]=yield Promise.all([Promise.allSettled(r.prod.map(function(){var e=f((function*({content_type:e,field:t,ids:n}){const{items:r}=yield c.getEntries({content_type:e,locale:"*",include:0,[`fields.${t}.sys.id[in]`]:n});return r}));return function(t){return e.apply(this,arguments)}}())),Promise.allSettled(r.preview.map(function(){var e=f((function*({content_type:e,field:t,ids:n}){const{items:r}=yield a.getEntries({content_type:e,locale:"*",include:0,[`fields.${t}.sys.id[in]`]:n});return r}));return function(t){return e.apply(this,arguments)}}()))]);t.end();const u=l.filter(g),d=i.filter(g),p=u.flatMap((e=>e.value||[])),v=d.flatMap((e=>e.value||[])),m=e.map((({preview:e,field:t,id:n,contentType:r})=>(e?p:v).reduce(((e,i)=>{if(i.sys.contentType.sys.id===r){var l,s,c;const r=null===(l=i.fields[t])||void 0===l?void 0:l[o];Array.isArray(r)?r.some((e=>{var t,r;return"Link"===(null==e||null===(t=e.sys)||void 0===t?void 0:t.type)&&(null==e||null===(r=e.sys)||void 0===r?void 0:r.id)===n}))&&e.push(i):"Link"===(null==r||null===(s=r.sys)||void 0===s?void 0:s.type)&&(null==r||null===(c=r.sys)||void 0===c?void 0:c.id)===n&&e.push(i)}return e}),[])));return y.debug("Fetched entries by ref by",{caller:"getBatchEntriesRefByFetcher",elapsedMs:t.millis,itemsAttempted:e.length,itemsSuccessful:p.length+v.length}),m})),function(e){return E.apply(this,arguments)}),h);var E;return{entryLoader:$,assetLoader:T,entriesByContentTypeLoader:F,entryByFieldValueLoader:B,entriesRefByLoader:S,fetchAllContentTypes:P}};export{w as default};
++import e from "dataloader";
++import { createClient as t } from "contentful";
++import n from "lodash/find";
++import r from "lodash/map";
++import i from "lodash/partition";
++import { getWinstonLogger as l } from "@last-rev/logging";
++import s from "@last-rev/timer";
++function o(e, t, n, r, i, l, s) {
++  try {
++    var o = e[l](s),
++      c = o.value;
++  } catch (e) {
++    return void n(e);
++  }
++  o.done ? t(c) : Promise.resolve(c).then(r, i);
++}
++function c(e, t, n) {
++  return (
++    t in e
++      ? Object.defineProperty(e, t, {
++          value: n,
++          enumerable: !0,
++          configurable: !0,
++          writable: !0,
++        })
++      : (e[t] = n),
++    e
++  );
++}
++const u =
++  ((a = function* (e, t, n, r, i = 0, l = []) {
++    const s = yield e[t](
++        (function (e) {
++          for (var t = 1; t < arguments.length; t++) {
++            var n = null != arguments[t] ? arguments[t] : {},
++              r = Object.keys(n);
++            "function" == typeof Object.getOwnPropertySymbols &&
++              (r = r.concat(
++                Object.getOwnPropertySymbols(n).filter(function (e) {
++                  return Object.getOwnPropertyDescriptor(n, e).enumerable;
++                })
++              )),
++              r.forEach(function (t) {
++                c(e, t, n[t]);
++              });
++          }
++          return e;
++        })({}, r, { skip: i, limit: n })
++      ),
++      { items: o = [], total: a } = s;
++    return l.push(...o), l.length >= a ? l : u(e, t, n, r, i + n, l);
++  }),
++  (d = function () {
++    var e = this,
++      t = arguments;
++    return new Promise(function (n, r) {
++      var i = a.apply(e, t);
++      function l(e) {
++        o(i, n, r, l, s, "next", e);
++      }
++      function s(e) {
++        o(i, n, r, l, s, "throw", e);
++      }
++      l(void 0);
++    });
++  }),
++  function (e, t, n, r) {
++    return d.apply(this, arguments);
++  });
++var a, d;
++function p(e, t, n, r, i, l, s) {
++  try {
++    var o = e[l](s),
++      c = o.value;
++  } catch (e) {
++    return void n(e);
++  }
++  o.done ? t(c) : Promise.resolve(c).then(r, i);
++}
++function f(e) {
++  return function () {
++    var t = this,
++      n = arguments;
++    return new Promise(function (r, i) {
++      var l = e.apply(t, n);
++      function s(e) {
++        p(l, r, i, s, o, "next", e);
++      }
++      function o(e) {
++        p(l, r, i, s, o, "throw", e);
++      }
++      s(void 0);
++    });
++  };
++}
++const y = l({
++    package: "contentful-cms-loader",
++    module: "index",
++    strategy: "Cms",
++  }),
++  v = { cacheKeyFn: (e) => (e.preview ? `${e.id}-preview` : `${e.id}-prod`) },
++  m = {
++    cacheKeyFn: (e) => {
++      const t = `${e.contentType}-${e.field}-${e.value}`;
++      return e.preview ? `${t}-preview` : `${t}-prod`;
++    },
++  },
++  h = {
++    cacheKeyFn: (e) => {
++      const t = `${e.contentType}-${e.field}-${e.id}`;
++      return e.preview ? `${t}-preview` : `${t}-prod`;
++    },
++  },
++  g = (e) => "fulfilled" === e.status,
++  w = (l, o) => {
++    const c = t({
++        accessToken: l.contentful.contentDeliveryToken,
++        space: l.contentful.spaceId,
++        environment: l.contentful.env,
++        host: "cdn.contentful.com",
++      }),
++      a = t({
++        accessToken: l.contentful.contentPreviewToken,
++        space: l.contentful.spaceId,
++        environment: l.contentful.env,
++        host: "preview.contentful.com",
++      }).withoutLinkResolution,
++      d = l.contentful.maxBatchSize || 1e3,
++      p =
++        ((w = f(function* (e, t, n, r) {
++          const i = new s(),
++            l = t.substring(3).toLowerCase(),
++            o = ((e, t) => {
++              const n = [];
++              let r = 0;
++              for (; r < e.length; ) n.push(e.slice(r, (r += t)));
++              return n;
++            })(e, r),
++            c = yield Promise.allSettled(
++              o.map(
++                (function () {
++                  var e = f(function* (e) {
++                    const i = {
++                      "sys.id[in]": e.join(","),
++                      include: 0,
++                      locale: "*",
++                    };
++                    return yield u(n, t, r, i);
++                  });
++                  return function (t) {
++                    return e.apply(this, arguments);
++                  };
++                })()
++              )
++            ),
++            a = c.flatMap((e, t) => {
++              if ("rejected" === e.status) {
++                var n;
++                const r = o[t].length;
++                return (
++                  y.error(
++                    `Unable to fetch ${r} ${l}. Reason: ${e.reason.message} ${(
++                      (null === (n = e.reason.details) || void 0 === n
++                        ? void 0
++                        : n.errors) || []
++                    ).map((e) => `${e.name}: ${e.value}`)}`,
++                    { caller: "fetchBatchItems" }
++                  ),
++                  []
++                );
++              }
++              return e.value || [];
++            });
++          return (
++            y.debug(`Fetched ${t.substring(3).toLowerCase()}`, {
++              caller: "fetchBatchItems",
++              elapesedMs: i.end().millis,
++              itemsAttempted: e.length,
++              itemsSuccessful: a.length,
++            }),
++            a
++          );
++        })),
++        function (e, t, n, r) {
++          return w.apply(this, arguments);
++        });
++    var w;
++    const b = (e) =>
++        (function () {
++          var t = f(function* (t) {
++            const l = new s(),
++              [o, u] = i(t, (e) => e.preview),
++              f = "entries" === e ? "getEntries" : "getAssets",
++              [v, m] = yield Promise.all([
++                p(r(o, "id"), f, a, d),
++                p(r(u, "id"), f, c, d),
++              ]),
++              h = t.map(
++                ({ id: e, preview: t }) =>
++                  n(v, (n) => t && n.sys.id === e) ||
++                  n(m, (n) => !t && n.sys.id === e) ||
++                  null
++              );
++            return (
++              y.debug(`Fetched ${e}`, {
++                caller: "getBatchItemFetcher",
++                elapsedMs: l.end().millis,
++                itemsAttempted: t.length,
++                itemsSuccessful: h.length,
++              }),
++              h
++            );
++          });
++          return function (e) {
++            return t.apply(this, arguments);
++          };
++        })(),
++      $ = new e(b("entries"), v),
++      T = new e(b("assets"), v),
++      F = new e(
++        (function () {
++          var e = f(function* (e) {
++            const t = new s(),
++              n = yield Promise.allSettled(
++                r(e, (e) =>
++                  f(function* () {
++                    const { preview: t, id: n } = e;
++                    return yield u(t ? a : c, "getEntries", d, {
++                      content_type: n,
++                      include: 0,
++                      locale: "*",
++                    });
++                  })()
++                )
++              );
++            t.end();
++            let i = 0,
++              l = 0;
++            const o = n.map((t, n) => {
++              var r;
++              return "rejected" === t.status
++                ? (y.error(
++                    `Unable to fetch content type ${e[n].id}. Reason: ${
++                      t.reason.message
++                    } ${(
++                      (null === (r = t.reason.details) || void 0 === r
++                        ? void 0
++                        : r.errors) || []
++                    ).map((e) => `${e.name}: ${e.value}`)}`,
++                    { caller: "getBatchEntriesByContentTypeFetcher" }
++                  ),
++                  [])
++                : (i++, (l += (t.value || []).length), t.value);
++            });
++            return (
++              y.debug("Fetched entries for contenttypes (types)", {
++                caller: "getBatchEntriesByContentTypeFetcher",
++                elapsedMs: t.millis,
++                itemsSuccessful: i,
++                itemsAttempted: e.length,
++              }),
++              y.debug("Fetched entries by contentType (entries)", {
++                caller: "getBatchEntriesByContentTypeFetcher",
++                elapsedMs: t.millis,
++                itemsSuccessful: l,
++              }),
++              o
++            );
++          });
++          return function (t) {
++            return e.apply(this, arguments);
++          };
++        })(),
++        v
++      ),
++      P = (function () {
++        var e = f(function* (e) {
++          try {
++            const t = new s(),
++              n = yield (e ? a : c).getContentTypes();
++            return (
++              y.debug("Fetched all content types", {
++                caller: "fetchAllContentTypes",
++                elapsedMs: t.end().millis,
++                itemsSuccessful: n.items.length,
++              }),
++              n.items
++            );
++          } catch (e) {
++            return (
++              y.error(`Unable to fetch content types : ${e.message}`, {
++                caller: "fetchAllContentTypes",
++                stack: e.stack,
++              }),
++              []
++            );
++          }
++        });
++        return function (t) {
++          return e.apply(this, arguments);
++        };
++      })(),
++      B = new e(
++        ((j = f(function* (e) {
++          const t = new s(),
++            n = e.reduce(
++              (e, { contentType: t, field: n, value: r, preview: i }) => {
++                const l = i ? "preview" : "prod";
++                return (
++                  e[l] || (e[l] = {}),
++                  e[l][t] || (e[l][t] = {}),
++                  e[l][t][n] || (e[l][t][n] = []),
++                  e[l][t][n].push(r),
++                  e
++                );
++              },
++              {}
++            ),
++            r = Object.entries(n).reduce(
++              (e, [t, n]) => {
++                const r = Object.entries(n).reduce(
++                  (e, [t, n]) => (
++                    Object.entries(n).forEach(([n, r]) => {
++                      e.push({
++                        content_type: t,
++                        field: n,
++                        values: r.join(","),
++                      });
++                    }),
++                    e
++                  ),
++                  []
++                );
++                return (
++                  "preview" === t
++                    ? e.preview.push(...r)
++                    : "prod" === t && e.prod.push(...r),
++                  e
++                );
++              },
++              { prod: [], preview: [] }
++            ),
++            [i, l] = yield Promise.all([
++              Promise.allSettled(
++                r.prod.map(
++                  (function () {
++                    var e = f(function* ({
++                      content_type: e,
++                      field: t,
++                      values: n,
++                    }) {
++                      const { items: r } = yield c.getEntries({
++                        content_type: e,
++                        locale: "*",
++                        include: 0,
++                        [`fields.${t}[in]`]: n,
++                      });
++                      return r;
++                    });
++                    return function (t) {
++                      return e.apply(this, arguments);
++                    };
++                  })()
++                )
++              ),
++              Promise.allSettled(
++                r.preview.map(
++                  (function () {
++                    var e = f(function* ({
++                      content_type: e,
++                      field: t,
++                      values: n,
++                    }) {
++                      const { items: r } = yield a.getEntries({
++                        content_type: e,
++                        locale: "*",
++                        include: 0,
++                        [`fields.${t}[in]`]: n,
++                      });
++                      return r;
++                    });
++                    return function (t) {
++                      return e.apply(this, arguments);
++                    };
++                  })()
++                )
++              ),
++            ]);
++          t.end();
++          const u = l.filter(g),
++            d = i.filter(g),
++            p = u.flatMap((e) => e.value || []),
++            v = d.flatMap((e) => e.value || []);
++          return (
++            y.debug("Fetched entries by field value", {
++              caller: "getBatchEntriesByFieldValueFetcher",
++              elapsedMs: t.millis,
++              itemsAttempted: e.length,
++              itemsSuccessful: p.length + v.length,
++            }),
++            e.map(
++              ({ preview: e, field: t, value: n, contentType: r }) =>
++                (e ? p : v).find((e) => {
++                  var i;
++                  return (
++                    e.sys.contentType.sys.id === r &&
++                    (null === (i = e.fields[t]) || void 0 === i
++                      ? void 0
++                      : i[o]) === n
++                  );
++                }) || null
++            )
++          );
++        })),
++        function (e) {
++          return j.apply(this, arguments);
++        }),
++        m
++      );
++    var j;
++    const S = new e(
++      ((E = f(function* (e) {
++        const t = new s(),
++          n = e.reduce((e, { contentType: t, field: n, id: r, preview: i }) => {
++            const l = i ? "preview" : "prod";
++            return (
++              e[l] || (e[l] = {}),
++              e[l][t] || (e[l][t] = {}),
++              e[l][t][n] || (e[l][t][n] = []),
++              e[l][t][n].push(r),
++              e
++            );
++          }, {}),
++          r = Object.entries(n).reduce(
++            (e, [t, n]) => {
++              const r = Object.entries(n).reduce(
++                (e, [t, n]) => (
++                  Object.entries(n).forEach(([n, r]) => {
++                    e.push({ content_type: t, field: n, ids: r.join(",") });
++                  }),
++                  e
++                ),
++                []
++              );
++              return (
++                "preview" === t
++                  ? e.preview.push(...r)
++                  : "prod" === t && e.prod.push(...r),
++                e
++              );
++            },
++            { prod: [], preview: [] }
++          ),
++          [i, l] = yield Promise.all([
++            Promise.allSettled(
++              r.prod.map(
++                (function () {
++                  var e = f(function* ({ content_type: e, field: t, ids: n }) {
++                    const { items: r } = yield c.getEntries({
++                      content_type: e,
++                      locale: "*",
++                      include: 0,
++                      [`fields.${t}.sys.id[in]`]: n,
++                    });
++                    return r;
++                  });
++                  return function (t) {
++                    return e.apply(this, arguments);
++                  };
++                })()
++              )
++            ),
++            Promise.allSettled(
++              r.preview.map(
++                (function () {
++                  var e = f(function* ({ content_type: e, field: t, ids: n }) {
++                    const { items: r } = yield a.getEntries({
++                      content_type: e,
++                      locale: "*",
++                      include: 0,
++                      [`fields.${t}.sys.id[in]`]: n,
++                    });
++                    return r;
++                  });
++                  return function (t) {
++                    return e.apply(this, arguments);
++                  };
++                })()
++              )
++            ),
++          ]);
++        t.end();
++        const u = l.filter(g),
++          d = i.filter(g),
++          p = u.flatMap((e) => e.value || []),
++          v = d.flatMap((e) => e.value || []),
++          m = e.map(({ preview: e, field: t, id: n, contentType: r }) =>
++            (e ? p : v).reduce((e, i) => {
++              if (i.sys.contentType.sys.id === r) {
++                var l, s, c;
++                const r =
++                  null === (l = i.fields[t]) || void 0 === l ? void 0 : l[o];
++                Array.isArray(r)
++                  ? r.some((e) => {
++                      var t, r;
++                      return (
++                        "Link" ===
++                          (null == e || null === (t = e.sys) || void 0 === t
++                            ? void 0
++                            : t.type) &&
++                        (null == e || null === (r = e.sys) || void 0 === r
++                          ? void 0
++                          : r.id) === n
++                      );
++                    }) && e.push(i)
++                  : "Link" ===
++                      (null == r || null === (s = r.sys) || void 0 === s
++                        ? void 0
++                        : s.type) &&
++                    (null == r || null === (c = r.sys) || void 0 === c
++                      ? void 0
++                      : c.id) === n &&
++                    e.push(i);
++              }
++              return e;
++            }, [])
++          );
++        return (
++          y.debug("Fetched entries by ref by", {
++            caller: "getBatchEntriesRefByFetcher",
++            elapsedMs: t.millis,
++            itemsAttempted: e.length,
++            itemsSuccessful: p.length + v.length,
++          }),
++          m
++        );
++      })),
++      function (e) {
++        return E.apply(this, arguments);
++      }),
++      h
++    );
++    var E;
++    return {
++      entryLoader: $,
++      assetLoader: T,
++      entriesByContentTypeLoader: F,
++      entryByFieldValueLoader: B,
++      entriesRefByLoader: S,
++      fetchAllContentTypes: P,
++    };
++  };
++export { w as default };
+diff --git a/dist/index.js b/dist/index.js
+index c9be7766b38d51ef735f531752ffc77840f6d43a..c01458ea9b79fd4692cb52a9e425532c134c15af 100644
+--- a/dist/index.js
++++ b/dist/index.js
+@@ -1 +1,557 @@
+-"use strict";var e=require("dataloader"),t=require("contentful"),n=require("lodash/find"),r=require("lodash/map"),i=require("lodash/partition"),l=require("@last-rev/logging"),s=require("@last-rev/timer");function o(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var c=o(e),u=o(n),a=o(r),d=o(i),p=o(s);function f(e,t,n,r,i,l,s){try{var o=e[l](s),c=o.value}catch(e){return void n(e)}o.done?t(c):Promise.resolve(c).then(r,i)}function y(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}const v=(h=function*(e,t,n,r,i=0,l=[]){const s=yield e[t](function(e){for(var t=1;t<arguments.length;t++){var n=null!=arguments[t]?arguments[t]:{},r=Object.keys(n);"function"==typeof Object.getOwnPropertySymbols&&(r=r.concat(Object.getOwnPropertySymbols(n).filter((function(e){return Object.getOwnPropertyDescriptor(n,e).enumerable})))),r.forEach((function(t){y(e,t,n[t])}))}return e}({},r,{skip:i,limit:n})),{items:o=[],total:c}=s;return l.push(...o),l.length>=c?l:v(e,t,n,r,i+n,l)},m=function(){var e=this,t=arguments;return new Promise((function(n,r){var i=h.apply(e,t);function l(e){f(i,n,r,l,s,"next",e)}function s(e){f(i,n,r,l,s,"throw",e)}l(void 0)}))},function(e,t,n,r){return m.apply(this,arguments)});var h,m;function g(e,t,n,r,i,l,s){try{var o=e[l](s),c=o.value}catch(e){return void n(e)}o.done?t(c):Promise.resolve(c).then(r,i)}function w(e){return function(){var t=this,n=arguments;return new Promise((function(r,i){var l=e.apply(t,n);function s(e){g(l,r,i,s,o,"next",e)}function o(e){g(l,r,i,s,o,"throw",e)}s(void 0)}))}}const b=l.getWinstonLogger({package:"contentful-cms-loader",module:"index",strategy:"Cms"}),$={cacheKeyFn:e=>e.preview?`${e.id}-preview`:`${e.id}-prod`},T={cacheKeyFn:e=>{const t=`${e.contentType}-${e.field}-${e.value}`;return e.preview?`${t}-preview`:`${t}-prod`}},F={cacheKeyFn:e=>{const t=`${e.contentType}-${e.field}-${e.id}`;return e.preview?`${t}-preview`:`${t}-prod`}},P=e=>"fulfilled"===e.status;module.exports=(e,n)=>{const r=t.createClient({accessToken:e.contentful.contentDeliveryToken,space:e.contentful.spaceId,environment:e.contentful.env,host:"cdn.contentful.com",resolveLinks:!1}),i=t.createClient({accessToken:e.contentful.contentPreviewToken,space:e.contentful.spaceId,environment:e.contentful.env,host:"preview.contentful.com",resolveLinks:!1}),l=e.contentful.maxBatchSize||1e3,s=(o=w((function*(e,t,n,r){const i=new p.default,l=t.substring(3).toLowerCase(),s=((e,t)=>{const n=[];let r=0;for(;r<e.length;)n.push(e.slice(r,r+=t));return n})(e,r),o=yield Promise.allSettled(s.map(function(){var e=w((function*(e){const i={"sys.id[in]":e.join(","),include:0,locale:"*"};return yield v(n,t,r,i)}));return function(t){return e.apply(this,arguments)}}())),c=o.flatMap(((e,t)=>{if("rejected"===e.status){var n;const r=s[t].length;return b.error(`Unable to fetch ${r} ${l}. Reason: ${e.reason.message} ${((null===(n=e.reason.details)||void 0===n?void 0:n.errors)||[]).map((e=>`${e.name}: ${e.value}`))}`,{caller:"fetchBatchItems"}),[]}return e.value||[]}));return b.debug(`Fetched ${t.substring(3).toLowerCase()}`,{caller:"fetchBatchItems",elapesedMs:i.end().millis,itemsAttempted:e.length,itemsSuccessful:c.length}),c})),function(e,t,n,r){return o.apply(this,arguments)});var o;const f=e=>function(){var t=w((function*(t){const n=new p.default,[o,c]=d.default(t,(e=>e.preview)),f="entries"===e?"getEntries":"getAssets",[y,v]=yield Promise.all([s(a.default(o,"id"),f,i,l),s(a.default(c,"id"),f,r,l)]),h=t.map((({id:e,preview:t})=>u.default(y,(n=>t&&n.sys.id===e))||u.default(v,(n=>!t&&n.sys.id===e))||null));return b.debug(`Fetched ${e}`,{caller:"getBatchItemFetcher",elapsedMs:n.end().millis,itemsAttempted:t.length,itemsSuccessful:h.length}),h}));return function(e){return t.apply(this,arguments)}}(),y=new c.default(f("entries"),$),h=new c.default(f("assets"),$),m=new c.default(function(){var e=w((function*(e){const t=new p.default,n=yield Promise.allSettled(a.default(e,(e=>w((function*(){const{preview:t,id:n}=e;return yield v(t?i:r,"getEntries",l,{content_type:n,include:0,locale:"*"})}))())));t.end();let s=0,o=0;const c=n.map(((t,n)=>{var r;return"rejected"===t.status?(b.error(`Unable to fetch content type ${e[n].id}. Reason: ${t.reason.message} ${((null===(r=t.reason.details)||void 0===r?void 0:r.errors)||[]).map((e=>`${e.name}: ${e.value}`))}`,{caller:"getBatchEntriesByContentTypeFetcher"}),[]):(s++,o+=(t.value||[]).length,t.value)}));return b.debug("Fetched entries for contenttypes (types)",{caller:"getBatchEntriesByContentTypeFetcher",elapsedMs:t.millis,itemsSuccessful:s,itemsAttempted:e.length}),b.debug("Fetched entries by contentType (entries)",{caller:"getBatchEntriesByContentTypeFetcher",elapsedMs:t.millis,itemsSuccessful:o}),c}));return function(t){return e.apply(this,arguments)}}(),$),g=function(){var e=w((function*(e){try{const t=new p.default,n=yield(e?i:r).getContentTypes();return b.debug("Fetched all content types",{caller:"fetchAllContentTypes",elapsedMs:t.end().millis,itemsSuccessful:n.items.length}),n.items}catch(e){return b.error(`Unable to fetch content types : ${e.message}`,{caller:"fetchAllContentTypes",stack:e.stack}),[]}}));return function(t){return e.apply(this,arguments)}}(),j=new c.default((B=w((function*(e){const t=new p.default,l=e.reduce(((e,{contentType:t,field:n,value:r,preview:i})=>{const l=i?"preview":"prod";return e[l]||(e[l]={}),e[l][t]||(e[l][t]={}),e[l][t][n]||(e[l][t][n]=[]),e[l][t][n].push(r),e}),{}),s=Object.entries(l).reduce(((e,[t,n])=>{const r=Object.entries(n).reduce(((e,[t,n])=>(Object.entries(n).forEach((([n,r])=>{e.push({content_type:t,field:n,values:r.join(",")})})),e)),[]);return"preview"===t?e.preview.push(...r):"prod"===t&&e.prod.push(...r),e}),{prod:[],preview:[]}),[o,c]=yield Promise.all([Promise.allSettled(s.prod.map(function(){var e=w((function*({content_type:e,field:t,values:n}){const{items:i}=yield r.getEntries({content_type:e,locale:"*",include:0,[`fields.${t}[in]`]:n});return i}));return function(t){return e.apply(this,arguments)}}())),Promise.allSettled(s.preview.map(function(){var e=w((function*({content_type:e,field:t,values:n}){const{items:r}=yield i.getEntries({content_type:e,locale:"*",include:0,[`fields.${t}[in]`]:n});return r}));return function(t){return e.apply(this,arguments)}}()))]);t.end();const u=c.filter(P),a=o.filter(P),d=u.flatMap((e=>e.value||[])),f=a.flatMap((e=>e.value||[]));return b.debug("Fetched entries by field value",{caller:"getBatchEntriesByFieldValueFetcher",elapsedMs:t.millis,itemsAttempted:e.length,itemsSuccessful:d.length+f.length}),e.map((({preview:e,field:t,value:r,contentType:i})=>(e?d:f).find((e=>{var l;return e.sys.contentType.sys.id===i&&(null===(l=e.fields[t])||void 0===l?void 0:l[n])===r}))||null))})),function(e){return B.apply(this,arguments)}),T);var B;const S=new c.default((E=w((function*(e){const t=new p.default,l=e.reduce(((e,{contentType:t,field:n,id:r,preview:i})=>{const l=i?"preview":"prod";return e[l]||(e[l]={}),e[l][t]||(e[l][t]={}),e[l][t][n]||(e[l][t][n]=[]),e[l][t][n].push(r),e}),{}),s=Object.entries(l).reduce(((e,[t,n])=>{const r=Object.entries(n).reduce(((e,[t,n])=>(Object.entries(n).forEach((([n,r])=>{e.push({content_type:t,field:n,ids:r.join(",")})})),e)),[]);return"preview"===t?e.preview.push(...r):"prod"===t&&e.prod.push(...r),e}),{prod:[],preview:[]}),[o,c]=yield Promise.all([Promise.allSettled(s.prod.map(function(){var e=w((function*({content_type:e,field:t,ids:n}){const{items:i}=yield r.getEntries({content_type:e,locale:"*",include:0,[`fields.${t}.sys.id[in]`]:n});return i}));return function(t){return e.apply(this,arguments)}}())),Promise.allSettled(s.preview.map(function(){var e=w((function*({content_type:e,field:t,ids:n}){const{items:r}=yield i.getEntries({content_type:e,locale:"*",include:0,[`fields.${t}.sys.id[in]`]:n});return r}));return function(t){return e.apply(this,arguments)}}()))]);t.end();const u=c.filter(P),a=o.filter(P),d=u.flatMap((e=>e.value||[])),f=a.flatMap((e=>e.value||[])),y=e.map((({preview:e,field:t,id:r,contentType:i})=>(e?d:f).reduce(((e,l)=>{if(l.sys.contentType.sys.id===i){var s,o,c;const i=null===(s=l.fields[t])||void 0===s?void 0:s[n];Array.isArray(i)?i.some((e=>{var t,n;return"Link"===(null==e||null===(t=e.sys)||void 0===t?void 0:t.type)&&(null==e||null===(n=e.sys)||void 0===n?void 0:n.id)===r}))&&e.push(l):"Link"===(null==i||null===(o=i.sys)||void 0===o?void 0:o.type)&&(null==i||null===(c=i.sys)||void 0===c?void 0:c.id)===r&&e.push(l)}return e}),[])));return b.debug("Fetched entries by ref by",{caller:"getBatchEntriesRefByFetcher",elapsedMs:t.millis,itemsAttempted:e.length,itemsSuccessful:d.length+f.length}),y})),function(e){return E.apply(this,arguments)}),F);var E;return{entryLoader:y,assetLoader:h,entriesByContentTypeLoader:m,entryByFieldValueLoader:j,entriesRefByLoader:S,fetchAllContentTypes:g}};
++"use strict";
++var e = require("dataloader"),
++  t = require("contentful"),
++  n = require("lodash/find"),
++  r = require("lodash/map"),
++  i = require("lodash/partition"),
++  l = require("@last-rev/logging"),
++  s = require("@last-rev/timer");
++function o(e) {
++  return e && "object" == typeof e && "default" in e ? e : { default: e };
++}
++var c = o(e),
++  u = o(n),
++  a = o(r),
++  d = o(i),
++  p = o(s);
++function f(e, t, n, r, i, l, s) {
++  try {
++    var o = e[l](s),
++      c = o.value;
++  } catch (e) {
++    return void n(e);
++  }
++  o.done ? t(c) : Promise.resolve(c).then(r, i);
++}
++function y(e, t, n) {
++  return (
++    t in e
++      ? Object.defineProperty(e, t, {
++          value: n,
++          enumerable: !0,
++          configurable: !0,
++          writable: !0,
++        })
++      : (e[t] = n),
++    e
++  );
++}
++const v =
++  ((h = function* (e, t, n, r, i = 0, l = []) {
++    const s = yield e[t](
++        (function (e) {
++          for (var t = 1; t < arguments.length; t++) {
++            var n = null != arguments[t] ? arguments[t] : {},
++              r = Object.keys(n);
++            "function" == typeof Object.getOwnPropertySymbols &&
++              (r = r.concat(
++                Object.getOwnPropertySymbols(n).filter(function (e) {
++                  return Object.getOwnPropertyDescriptor(n, e).enumerable;
++                })
++              )),
++              r.forEach(function (t) {
++                y(e, t, n[t]);
++              });
++          }
++          return e;
++        })({}, r, { skip: i, limit: n })
++      ),
++      { items: o = [], total: c } = s;
++    return l.push(...o), l.length >= c ? l : v(e, t, n, r, i + n, l);
++  }),
++  (m = function () {
++    var e = this,
++      t = arguments;
++    return new Promise(function (n, r) {
++      var i = h.apply(e, t);
++      function l(e) {
++        f(i, n, r, l, s, "next", e);
++      }
++      function s(e) {
++        f(i, n, r, l, s, "throw", e);
++      }
++      l(void 0);
++    });
++  }),
++  function (e, t, n, r) {
++    return m.apply(this, arguments);
++  });
++var h, m;
++function g(e, t, n, r, i, l, s) {
++  try {
++    var o = e[l](s),
++      c = o.value;
++  } catch (e) {
++    return void n(e);
++  }
++  o.done ? t(c) : Promise.resolve(c).then(r, i);
++}
++function w(e) {
++  return function () {
++    var t = this,
++      n = arguments;
++    return new Promise(function (r, i) {
++      var l = e.apply(t, n);
++      function s(e) {
++        g(l, r, i, s, o, "next", e);
++      }
++      function o(e) {
++        g(l, r, i, s, o, "throw", e);
++      }
++      s(void 0);
++    });
++  };
++}
++const b = l.getWinstonLogger({
++    package: "contentful-cms-loader",
++    module: "index",
++    strategy: "Cms",
++  }),
++  $ = { cacheKeyFn: (e) => (e.preview ? `${e.id}-preview` : `${e.id}-prod`) },
++  T = {
++    cacheKeyFn: (e) => {
++      const t = `${e.contentType}-${e.field}-${e.value}`;
++      return e.preview ? `${t}-preview` : `${t}-prod`;
++    },
++  },
++  F = {
++    cacheKeyFn: (e) => {
++      const t = `${e.contentType}-${e.field}-${e.id}`;
++      return e.preview ? `${t}-preview` : `${t}-prod`;
++    },
++  },
++  P = (e) => "fulfilled" === e.status;
++module.exports = (e, n) => {
++  const r = t.createClient({
++      accessToken: e.contentful.contentDeliveryToken,
++      space: e.contentful.spaceId,
++      environment: e.contentful.env,
++      host: "cdn.contentful.com",
++    }).withoutLinkResolution,
++    i = t.createClient({
++      accessToken: e.contentful.contentPreviewToken,
++      space: e.contentful.spaceId,
++      environment: e.contentful.env,
++      host: "preview.contentful.com",
++    }).withoutLinkResolution,
++    l = e.contentful.maxBatchSize || 1e3,
++    s =
++      ((o = w(function* (e, t, n, r) {
++        const i = new p.default(),
++          l = t.substring(3).toLowerCase(),
++          s = ((e, t) => {
++            const n = [];
++            let r = 0;
++            for (; r < e.length; ) n.push(e.slice(r, (r += t)));
++            return n;
++          })(e, r),
++          o = yield Promise.allSettled(
++            s.map(
++              (function () {
++                var e = w(function* (e) {
++                  const i = {
++                    "sys.id[in]": e.join(","),
++                    include: 0,
++                    locale: "*",
++                  };
++                  return yield v(n, t, r, i);
++                });
++                return function (t) {
++                  return e.apply(this, arguments);
++                };
++              })()
++            )
++          ),
++          c = o.flatMap((e, t) => {
++            if ("rejected" === e.status) {
++              var n;
++              const r = s[t].length;
++              return (
++                b.error(
++                  `Unable to fetch ${r} ${l}. Reason: ${e.reason.message} ${(
++                    (null === (n = e.reason.details) || void 0 === n
++                      ? void 0
++                      : n.errors) || []
++                  ).map((e) => `${e.name}: ${e.value}`)}`,
++                  { caller: "fetchBatchItems" }
++                ),
++                []
++              );
++            }
++            return e.value || [];
++          });
++        return (
++          b.debug(`Fetched ${t.substring(3).toLowerCase()}`, {
++            caller: "fetchBatchItems",
++            elapesedMs: i.end().millis,
++            itemsAttempted: e.length,
++            itemsSuccessful: c.length,
++          }),
++          c
++        );
++      })),
++      function (e, t, n, r) {
++        return o.apply(this, arguments);
++      });
++  var o;
++  const f = (e) =>
++      (function () {
++        var t = w(function* (t) {
++          const n = new p.default(),
++            [o, c] = d.default(t, (e) => e.preview),
++            f = "entries" === e ? "getEntries" : "getAssets",
++            [y, v] = yield Promise.all([
++              s(a.default(o, "id"), f, i, l),
++              s(a.default(c, "id"), f, r, l),
++            ]),
++            h = t.map(
++              ({ id: e, preview: t }) =>
++                u.default(y, (n) => t && n.sys.id === e) ||
++                u.default(v, (n) => !t && n.sys.id === e) ||
++                null
++            );
++          return (
++            b.debug(`Fetched ${e}`, {
++              caller: "getBatchItemFetcher",
++              elapsedMs: n.end().millis,
++              itemsAttempted: t.length,
++              itemsSuccessful: h.length,
++            }),
++            h
++          );
++        });
++        return function (e) {
++          return t.apply(this, arguments);
++        };
++      })(),
++    y = new c.default(f("entries"), $),
++    h = new c.default(f("assets"), $),
++    m = new c.default(
++      (function () {
++        var e = w(function* (e) {
++          const t = new p.default(),
++            n = yield Promise.allSettled(
++              a.default(e, (e) =>
++                w(function* () {
++                  const { preview: t, id: n } = e;
++                  return yield v(t ? i : r, "getEntries", l, {
++                    content_type: n,
++                    include: 0,
++                    locale: "*",
++                  });
++                })()
++              )
++            );
++          t.end();
++          let s = 0,
++            o = 0;
++          const c = n.map((t, n) => {
++            var r;
++            return "rejected" === t.status
++              ? (b.error(
++                  `Unable to fetch content type ${e[n].id}. Reason: ${
++                    t.reason.message
++                  } ${(
++                    (null === (r = t.reason.details) || void 0 === r
++                      ? void 0
++                      : r.errors) || []
++                  ).map((e) => `${e.name}: ${e.value}`)}`,
++                  { caller: "getBatchEntriesByContentTypeFetcher" }
++                ),
++                [])
++              : (s++, (o += (t.value || []).length), t.value);
++          });
++          return (
++            b.debug("Fetched entries for contenttypes (types)", {
++              caller: "getBatchEntriesByContentTypeFetcher",
++              elapsedMs: t.millis,
++              itemsSuccessful: s,
++              itemsAttempted: e.length,
++            }),
++            b.debug("Fetched entries by contentType (entries)", {
++              caller: "getBatchEntriesByContentTypeFetcher",
++              elapsedMs: t.millis,
++              itemsSuccessful: o,
++            }),
++            c
++          );
++        });
++        return function (t) {
++          return e.apply(this, arguments);
++        };
++      })(),
++      $
++    ),
++    g = (function () {
++      var e = w(function* (e) {
++        try {
++          const t = new p.default(),
++            n = yield (e ? i : r).getContentTypes();
++          return (
++            b.debug("Fetched all content types", {
++              caller: "fetchAllContentTypes",
++              elapsedMs: t.end().millis,
++              itemsSuccessful: n.items.length,
++            }),
++            n.items
++          );
++        } catch (e) {
++          return (
++            b.error(`Unable to fetch content types : ${e.message}`, {
++              caller: "fetchAllContentTypes",
++              stack: e.stack,
++            }),
++            []
++          );
++        }
++      });
++      return function (t) {
++        return e.apply(this, arguments);
++      };
++    })(),
++    j = new c.default(
++      ((B = w(function* (e) {
++        const t = new p.default(),
++          l = e.reduce(
++            (e, { contentType: t, field: n, value: r, preview: i }) => {
++              const l = i ? "preview" : "prod";
++              return (
++                e[l] || (e[l] = {}),
++                e[l][t] || (e[l][t] = {}),
++                e[l][t][n] || (e[l][t][n] = []),
++                e[l][t][n].push(r),
++                e
++              );
++            },
++            {}
++          ),
++          s = Object.entries(l).reduce(
++            (e, [t, n]) => {
++              const r = Object.entries(n).reduce(
++                (e, [t, n]) => (
++                  Object.entries(n).forEach(([n, r]) => {
++                    e.push({ content_type: t, field: n, values: r.join(",") });
++                  }),
++                  e
++                ),
++                []
++              );
++              return (
++                "preview" === t
++                  ? e.preview.push(...r)
++                  : "prod" === t && e.prod.push(...r),
++                e
++              );
++            },
++            { prod: [], preview: [] }
++          ),
++          [o, c] = yield Promise.all([
++            Promise.allSettled(
++              s.prod.map(
++                (function () {
++                  var e = w(function* ({
++                    content_type: e,
++                    field: t,
++                    values: n,
++                  }) {
++                    const { items: i } = yield r.getEntries({
++                      content_type: e,
++                      locale: "*",
++                      include: 0,
++                      [`fields.${t}[in]`]: n,
++                    });
++                    return i;
++                  });
++                  return function (t) {
++                    return e.apply(this, arguments);
++                  };
++                })()
++              )
++            ),
++            Promise.allSettled(
++              s.preview.map(
++                (function () {
++                  var e = w(function* ({
++                    content_type: e,
++                    field: t,
++                    values: n,
++                  }) {
++                    const { items: r } = yield i.getEntries({
++                      content_type: e,
++                      locale: "*",
++                      include: 0,
++                      [`fields.${t}[in]`]: n,
++                    });
++                    return r;
++                  });
++                  return function (t) {
++                    return e.apply(this, arguments);
++                  };
++                })()
++              )
++            ),
++          ]);
++        t.end();
++        const u = c.filter(P),
++          a = o.filter(P),
++          d = u.flatMap((e) => e.value || []),
++          f = a.flatMap((e) => e.value || []);
++        return (
++          b.debug("Fetched entries by field value", {
++            caller: "getBatchEntriesByFieldValueFetcher",
++            elapsedMs: t.millis,
++            itemsAttempted: e.length,
++            itemsSuccessful: d.length + f.length,
++          }),
++          e.map(
++            ({ preview: e, field: t, value: r, contentType: i }) =>
++              (e ? d : f).find((e) => {
++                var l;
++                return (
++                  e.sys.contentType.sys.id === i &&
++                  (null === (l = e.fields[t]) || void 0 === l
++                    ? void 0
++                    : l[n]) === r
++                );
++              }) || null
++          )
++        );
++      })),
++      function (e) {
++        return B.apply(this, arguments);
++      }),
++      T
++    );
++  var B;
++  const S = new c.default(
++    ((E = w(function* (e) {
++      const t = new p.default(),
++        l = e.reduce((e, { contentType: t, field: n, id: r, preview: i }) => {
++          const l = i ? "preview" : "prod";
++          return (
++            e[l] || (e[l] = {}),
++            e[l][t] || (e[l][t] = {}),
++            e[l][t][n] || (e[l][t][n] = []),
++            e[l][t][n].push(r),
++            e
++          );
++        }, {}),
++        s = Object.entries(l).reduce(
++          (e, [t, n]) => {
++            const r = Object.entries(n).reduce(
++              (e, [t, n]) => (
++                Object.entries(n).forEach(([n, r]) => {
++                  e.push({ content_type: t, field: n, ids: r.join(",") });
++                }),
++                e
++              ),
++              []
++            );
++            return (
++              "preview" === t
++                ? e.preview.push(...r)
++                : "prod" === t && e.prod.push(...r),
++              e
++            );
++          },
++          { prod: [], preview: [] }
++        ),
++        [o, c] = yield Promise.all([
++          Promise.allSettled(
++            s.prod.map(
++              (function () {
++                var e = w(function* ({ content_type: e, field: t, ids: n }) {
++                  const { items: i } = yield r.getEntries({
++                    content_type: e,
++                    locale: "*",
++                    include: 0,
++                    [`fields.${t}.sys.id[in]`]: n,
++                  });
++                  return i;
++                });
++                return function (t) {
++                  return e.apply(this, arguments);
++                };
++              })()
++            )
++          ),
++          Promise.allSettled(
++            s.preview.map(
++              (function () {
++                var e = w(function* ({ content_type: e, field: t, ids: n }) {
++                  const { items: r } = yield i.getEntries({
++                    content_type: e,
++                    locale: "*",
++                    include: 0,
++                    [`fields.${t}.sys.id[in]`]: n,
++                  });
++                  return r;
++                });
++                return function (t) {
++                  return e.apply(this, arguments);
++                };
++              })()
++            )
++          ),
++        ]);
++      t.end();
++      const u = c.filter(P),
++        a = o.filter(P),
++        d = u.flatMap((e) => e.value || []),
++        f = a.flatMap((e) => e.value || []),
++        y = e.map(({ preview: e, field: t, id: r, contentType: i }) =>
++          (e ? d : f).reduce((e, l) => {
++            if (l.sys.contentType.sys.id === i) {
++              var s, o, c;
++              const i =
++                null === (s = l.fields[t]) || void 0 === s ? void 0 : s[n];
++              Array.isArray(i)
++                ? i.some((e) => {
++                    var t, n;
++                    return (
++                      "Link" ===
++                        (null == e || null === (t = e.sys) || void 0 === t
++                          ? void 0
++                          : t.type) &&
++                      (null == e || null === (n = e.sys) || void 0 === n
++                        ? void 0
++                        : n.id) === r
++                    );
++                  }) && e.push(l)
++                : "Link" ===
++                    (null == i || null === (o = i.sys) || void 0 === o
++                      ? void 0
++                      : o.type) &&
++                  (null == i || null === (c = i.sys) || void 0 === c
++                    ? void 0
++                    : c.id) === r &&
++                  e.push(l);
++            }
++            return e;
++          }, [])
++        );
++      return (
++        b.debug("Fetched entries by ref by", {
++          caller: "getBatchEntriesRefByFetcher",
++          elapsedMs: t.millis,
++          itemsAttempted: e.length,
++          itemsSuccessful: d.length + f.length,
++        }),
++        y
++      );
++    })),
++    function (e) {
++      return E.apply(this, arguments);
++    }),
++    F
++  );
++  var E;
++  return {
++    entryLoader: y,
++    assetLoader: h,
++    entriesByContentTypeLoader: m,
++    entryByFieldValueLoader: j,
++    entriesRefByLoader: S,
++    fetchAllContentTypes: g,
++  };
++};
+diff --git a/src/index.ts b/src/index.ts
+index 2331be233dc82ccbf5c83ad5eed72b8f4b20e24f..e682aaef36497a18ca0a6d9d60894ae1a76cb29e 100644
+--- a/src/index.ts
++++ b/src/index.ts
+@@ -1,58 +1,65 @@
+-import DataLoader, { Options } from 'dataloader';
+-import { Entry, Asset, createClient, ContentfulClientApi } from 'contentful';
+-import { find, map, partition } from 'lodash';
+-import { getWinstonLogger } from '@last-rev/logging';
+-import Timer from '@last-rev/timer';
+-import { ItemKey, ContentfulLoaders, FVLKey, RefByKey } from '@last-rev/types';
+-import LastRevAppConfig from '@last-rev/app-config';
+-import { chunk, makeContentfulRequest } from './helpers';
+-
+-const logger = getWinstonLogger({ package: 'contentful-cms-loader', module: 'index', strategy: 'Cms' });
++import DataLoader, { Options } from "dataloader";
++import { Entry, Asset, createClient, ContentfulClientApi } from "contentful";
++import { find, map, partition } from "lodash";
++import { getWinstonLogger } from "@last-rev/logging";
++import Timer from "@last-rev/timer";
++import { ItemKey, ContentfulLoaders, FVLKey, RefByKey } from "@last-rev/types";
++import LastRevAppConfig from "@last-rev/app-config";
++import { chunk, makeContentfulRequest } from "./helpers";
++
++const logger = getWinstonLogger({
++  package: "contentful-cms-loader",
++  module: "index",
++  strategy: "Cms",
++});
+ 
+ const options: Options<ItemKey, any, string> = {
+   cacheKeyFn: (key: ItemKey) => {
+     return key.preview ? `${key.id}-preview` : `${key.id}-prod`;
+-  }
++  },
+ };
+ 
+ const fvlOptions: Options<FVLKey, any, string> = {
+   cacheKeyFn: (key: FVLKey) => {
+     const baseKey = `${key.contentType}-${key.field}-${key.value}`;
+     return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
+-  }
++  },
+ };
+ 
+ const refByOptions: Options<RefByKey, any, string> = {
+   cacheKeyFn: (key: RefByKey) => {
+     const baseKey = `${key.contentType}-${key.field}-${key.id}`;
+     return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
+-  }
++  },
+ };
+ 
+-const isFulFilled = <T>(p: PromiseSettledResult<T>): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
++const isFulFilled = <T>(
++  p: PromiseSettledResult<T>
++): p is PromiseFulfilledResult<T> => p.status === "fulfilled";
+ 
+-const createLoaders = (config: LastRevAppConfig, defaultLocale: string): ContentfulLoaders => {
++const createLoaders = (
++  config: LastRevAppConfig,
++  defaultLocale: string
++): ContentfulLoaders => {
+   const prodClient = createClient({
+     accessToken: config.contentful.contentDeliveryToken,
+     space: config.contentful.spaceId,
+     environment: config.contentful.env,
+-    host: 'cdn.contentful.com',
+-    resolveLinks: false
+-  });
++    host: "cdn.contentful.com",
++  }).withoutLinkResolution;
+ 
+   const previewClient = createClient({
+     accessToken: config.contentful.contentPreviewToken,
+     space: config.contentful.spaceId,
+     environment: config.contentful.env,
+-    host: 'preview.contentful.com',
+-    resolveLinks: false
+-  });
++    host: "preview.contentful.com",
++  }).withoutLinkResolution;
+ 
+   const maxBatchSize = config.contentful.maxBatchSize || 1000;
+ 
+   const fetchBatchItems = async (
+     ids: string[],
+-    command: 'getEntries' | 'getAssets',
++    command: "getEntries" | "getAssets",
+     client: ContentfulClientApi,
+     maxBatchSize: number
+   ) => {
+@@ -61,19 +68,26 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+     const chunks = chunk(ids, maxBatchSize);
+     const settled = await Promise.allSettled(
+       chunks.map(async (idz) => {
+-        const query = { 'sys.id[in]': idz.join(','), 'include': 0, 'locale': '*' };
+-        return await makeContentfulRequest(client, command, maxBatchSize, query);
++        const query = { "sys.id[in]": idz.join(","), include: 0, locale: "*" };
++        return await makeContentfulRequest(
++          client,
++          command,
++          maxBatchSize,
++          query
++        );
+       })
+     );
+ 
+     const results = settled.flatMap((p, idx) => {
+-      if (p.status === 'rejected') {
++      if (p.status === "rejected") {
+         const batchSize = chunks[idx].length;
+         logger.error(
+-          `Unable to fetch ${batchSize} ${commandString}. Reason: ${p.reason.message} ${(
+-            p.reason.details?.errors || []
+-          ).map((e: any) => `${e.name}: ${e.value}`)}`,
+-          { caller: 'fetchBatchItems' }
++          `Unable to fetch ${batchSize} ${commandString}. Reason: ${
++            p.reason.message
++          } ${(p.reason.details?.errors || []).map(
++            (e: any) => `${e.name}: ${e.value}`
++          )}`,
++          { caller: "fetchBatchItems" }
+         );
+         return [];
+       }
+@@ -81,24 +95,29 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+     });
+ 
+     logger.debug(`Fetched ${command.substring(3).toLowerCase()}`, {
+-      caller: 'fetchBatchItems',
++      caller: "fetchBatchItems",
+       elapesedMs: timer.end().millis,
+       itemsAttempted: ids.length,
+-      itemsSuccessful: results.length
++      itemsSuccessful: results.length,
+     });
+     return results;
+   };
+ 
+   const getBatchItemFetcher = <T extends Entry<any> | Asset>(
+-    dirname: 'entries' | 'assets'
++    dirname: "entries" | "assets"
+   ): DataLoader.BatchLoadFn<ItemKey, T | null> => {
+     return async (keys): Promise<(T | null)[]> => {
+       const timer = new Timer();
+       const [previewKeys, prodKeys] = partition(keys, (k) => k.preview);
+-      const command = dirname === 'entries' ? 'getEntries' : 'getAssets';
++      const command = dirname === "entries" ? "getEntries" : "getAssets";
+       const [previewItems, prodItems] = await Promise.all([
+-        fetchBatchItems(map(previewKeys, 'id'), command, previewClient, maxBatchSize),
+-        fetchBatchItems(map(prodKeys, 'id'), command, prodClient, maxBatchSize)
++        fetchBatchItems(
++          map(previewKeys, "id"),
++          command,
++          previewClient,
++          maxBatchSize
++        ),
++        fetchBatchItems(map(prodKeys, "id"), command, prodClient, maxBatchSize),
+       ]);
+ 
+       // need to return items in same order as list of ids, replacing items not found with null values
+@@ -115,49 +134,62 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+       }) as T[];
+ 
+       logger.debug(`Fetched ${dirname}`, {
+-        caller: 'getBatchItemFetcher',
++        caller: "getBatchItemFetcher",
+         elapsedMs: timer.end().millis,
+         itemsAttempted: keys.length,
+-        itemsSuccessful: items.length
++        itemsSuccessful: items.length,
+       });
+       return items;
+     };
+   };
+ 
+-  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
++  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<
++    FVLKey,
++    Entry<any> | null
++  > => {
+     return async (keys) => {
+       const timer = new Timer();
+-      const fvlRequests = keys.reduce((acc, { contentType, field, value, preview }) => {
+-        const clientType = preview ? 'preview' : 'prod';
+-        if (!acc[clientType]) {
+-          acc[clientType] = {};
+-        }
+-        if (!acc[clientType][contentType]) {
+-          acc[clientType][contentType] = {};
+-        }
+-        if (!acc[clientType][contentType][field]) {
+-          acc[clientType][contentType][field] = [];
++      const fvlRequests = keys.reduce(
++        (acc, { contentType, field, value, preview }) => {
++          const clientType = preview ? "preview" : "prod";
++          if (!acc[clientType]) {
++            acc[clientType] = {};
++          }
++          if (!acc[clientType][contentType]) {
++            acc[clientType][contentType] = {};
++          }
++          if (!acc[clientType][contentType][field]) {
++            acc[clientType][contentType][field] = [];
++          }
++          acc[clientType][contentType][field].push(value);
++          return acc;
++        },
++        {} as {
++          [clientType: string]: {
++            [contentType: string]: { [field: string]: string[] };
++          };
+         }
+-        acc[clientType][contentType][field].push(value);
+-        return acc;
+-      }, {} as { [clientType: string]: { [contentType: string]: { [field: string]: string[] } } });
++      );
+ 
+       const requests = Object.entries(fvlRequests).reduce(
+         (acc, [clientType, requestObject]) => {
+-          const requestObjects = Object.entries(requestObject).reduce((acc, [content_type, fieldValues]) => {
+-            Object.entries(fieldValues).forEach(([field, values]) => {
+-              acc.push({
+-                content_type,
+-                field,
+-                values: values.join(',')
++          const requestObjects = Object.entries(requestObject).reduce(
++            (acc, [content_type, fieldValues]) => {
++              Object.entries(fieldValues).forEach(([field, values]) => {
++                acc.push({
++                  content_type,
++                  field,
++                  values: values.join(","),
++                });
+               });
+-            });
+-            return acc;
+-          }, [] as { content_type: string; field: string; values: string }[]);
++              return acc;
++            },
++            [] as { content_type: string; field: string; values: string }[]
++          );
+ 
+-          if (clientType === 'preview') {
++          if (clientType === "preview") {
+             acc.preview.push(...requestObjects);
+-          } else if (clientType === 'prod') {
++          } else if (clientType === "prod") {
+             acc.prod.push(...requestObjects);
+           }
+           return acc;
+@@ -168,30 +200,32 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+         }
+       );
+ 
+-      const [collectedProdSettled, collectedPreviewSettled] = await Promise.all([
+-        Promise.allSettled(
+-          requests.prod.map(async ({ content_type, field, values }) => {
+-            const { items } = await prodClient.getEntries<any>({
+-              content_type,
+-              locale: '*',
+-              include: 0,
+-              [`fields.${field}[in]`]: values
+-            });
+-            return items;
+-          })
+-        ),
+-        Promise.allSettled(
+-          requests.preview.map(async ({ content_type, field, values }) => {
+-            const { items } = await previewClient.getEntries<any>({
+-              content_type,
+-              locale: '*',
+-              include: 0,
+-              [`fields.${field}[in]`]: values
+-            });
+-            return items;
+-          })
+-        )
+-      ]);
++      const [collectedProdSettled, collectedPreviewSettled] = await Promise.all(
++        [
++          Promise.allSettled(
++            requests.prod.map(async ({ content_type, field, values }) => {
++              const { items } = await prodClient.getEntries<any>({
++                content_type,
++                locale: "*",
++                include: 0,
++                [`fields.${field}[in]`]: values,
++              });
++              return items;
++            })
++          ),
++          Promise.allSettled(
++            requests.preview.map(async ({ content_type, field, values }) => {
++              const { items } = await previewClient.getEntries<any>({
++                content_type,
++                locale: "*",
++                include: 0,
++                [`fields.${field}[in]`]: values,
++              });
++              return items;
++            })
++          ),
++        ]
++      );
+ 
+       timer.end();
+ 
+@@ -201,18 +235,21 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+       const prev = collectedPreview.flatMap((p) => p.value || []);
+       const prod = collectedProd.flatMap((p) => p.value || []);
+ 
+-      logger.debug('Fetched entries by field value', {
+-        caller: 'getBatchEntriesByFieldValueFetcher',
++      logger.debug("Fetched entries by field value", {
++        caller: "getBatchEntriesByFieldValueFetcher",
+         elapsedMs: timer.millis,
+         itemsAttempted: keys.length,
+-        itemsSuccessful: prev.length + prod.length
++        itemsSuccessful: prev.length + prod.length,
+       });
+ 
+       const result = keys.map(({ preview, field, value, contentType }) => {
+         const arr = preview ? prev : prod;
+         return (
+           arr.find((i: Entry<any>) => {
+-            return i.sys.contentType.sys.id === contentType && i.fields[field]?.[defaultLocale] === value;
++            return (
++              i.sys.contentType.sys.id === contentType &&
++              i.fields[field]?.[defaultLocale] === value
++            );
+           }) || null
+         );
+       });
+@@ -221,40 +258,53 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+     };
+   };
+ 
+-  const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, Entry<any>[]> => {
++  const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<
++    RefByKey,
++    Entry<any>[]
++  > => {
+     return async (keys) => {
+       const timer = new Timer();
+-      const refByRequests = keys.reduce((acc, { contentType, field, id, preview }) => {
+-        const clientType = preview ? 'preview' : 'prod';
+-        if (!acc[clientType]) {
+-          acc[clientType] = {};
+-        }
+-        if (!acc[clientType][contentType]) {
+-          acc[clientType][contentType] = {};
+-        }
+-        if (!acc[clientType][contentType][field]) {
+-          acc[clientType][contentType][field] = [];
++      const refByRequests = keys.reduce(
++        (acc, { contentType, field, id, preview }) => {
++          const clientType = preview ? "preview" : "prod";
++          if (!acc[clientType]) {
++            acc[clientType] = {};
++          }
++          if (!acc[clientType][contentType]) {
++            acc[clientType][contentType] = {};
++          }
++          if (!acc[clientType][contentType][field]) {
++            acc[clientType][contentType][field] = [];
++          }
++          acc[clientType][contentType][field].push(id);
++          return acc;
++        },
++        {} as {
++          [clientType: string]: {
++            [contentType: string]: { [field: string]: string[] };
++          };
+         }
+-        acc[clientType][contentType][field].push(id);
+-        return acc;
+-      }, {} as { [clientType: string]: { [contentType: string]: { [field: string]: string[] } } });
++      );
+ 
+       const requests = Object.entries(refByRequests).reduce(
+         (acc, [clientType, requestObject]) => {
+-          const requestObjects = Object.entries(requestObject).reduce((acc, [content_type, fieldValues]) => {
+-            Object.entries(fieldValues).forEach(([field, ids]) => {
+-              acc.push({
+-                content_type,
+-                field,
+-                ids: ids.join(',')
++          const requestObjects = Object.entries(requestObject).reduce(
++            (acc, [content_type, fieldValues]) => {
++              Object.entries(fieldValues).forEach(([field, ids]) => {
++                acc.push({
++                  content_type,
++                  field,
++                  ids: ids.join(","),
++                });
+               });
+-            });
+-            return acc;
+-          }, [] as { content_type: string; field: string; ids: string }[]);
++              return acc;
++            },
++            [] as { content_type: string; field: string; ids: string }[]
++          );
+ 
+-          if (clientType === 'preview') {
++          if (clientType === "preview") {
+             acc.preview.push(...requestObjects);
+-          } else if (clientType === 'prod') {
++          } else if (clientType === "prod") {
+             acc.prod.push(...requestObjects);
+           }
+           return acc;
+@@ -265,30 +315,32 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+         }
+       );
+ 
+-      const [collectedProdSettled, collectedPreviewSettled] = await Promise.all([
+-        Promise.allSettled(
+-          requests.prod.map(async ({ content_type, field, ids }) => {
+-            const { items } = await prodClient.getEntries<any>({
+-              content_type,
+-              locale: '*',
+-              include: 0,
+-              [`fields.${field}.sys.id[in]`]: ids
+-            });
+-            return items;
+-          })
+-        ),
+-        Promise.allSettled(
+-          requests.preview.map(async ({ content_type, field, ids }) => {
+-            const { items } = await previewClient.getEntries<any>({
+-              content_type,
+-              locale: '*',
+-              include: 0,
+-              [`fields.${field}.sys.id[in]`]: ids
+-            });
+-            return items;
+-          })
+-        )
+-      ]);
++      const [collectedProdSettled, collectedPreviewSettled] = await Promise.all(
++        [
++          Promise.allSettled(
++            requests.prod.map(async ({ content_type, field, ids }) => {
++              const { items } = await prodClient.getEntries<any>({
++                content_type,
++                locale: "*",
++                include: 0,
++                [`fields.${field}.sys.id[in]`]: ids,
++              });
++              return items;
++            })
++          ),
++          Promise.allSettled(
++            requests.preview.map(async ({ content_type, field, ids }) => {
++              const { items } = await previewClient.getEntries<any>({
++                content_type,
++                locale: "*",
++                include: 0,
++                [`fields.${field}.sys.id[in]`]: ids,
++              });
++              return items;
++            })
++          ),
++        ]
++      );
+ 
+       timer.end();
+ 
+@@ -304,10 +356,17 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+           if (x.sys.contentType.sys.id === contentType) {
+             const fieldValue = x.fields[field]?.[defaultLocale];
+             if (Array.isArray(fieldValue)) {
+-              if (fieldValue.some((f) => f?.sys?.type === 'Link' && f?.sys?.id === id)) {
++              if (
++                fieldValue.some(
++                  (f) => f?.sys?.type === "Link" && f?.sys?.id === id
++                )
++              ) {
+                 acc.push(x);
+               }
+-            } else if (fieldValue?.sys?.type === 'Link' && fieldValue?.sys?.id === id) {
++            } else if (
++              fieldValue?.sys?.type === "Link" &&
++              fieldValue?.sys?.id === id
++            ) {
+               acc.push(x);
+             }
+           }
+@@ -315,29 +374,37 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+         }, [] as Entry<any>[]);
+       });
+ 
+-      logger.debug('Fetched entries by ref by', {
+-        caller: 'getBatchEntriesRefByFetcher',
++      logger.debug("Fetched entries by ref by", {
++        caller: "getBatchEntriesRefByFetcher",
+         elapsedMs: timer.millis,
+         itemsAttempted: keys.length,
+-        itemsSuccessful: prev.length + prod.length
++        itemsSuccessful: prev.length + prod.length,
+       });
+ 
+       return result;
+     };
+   };
+ 
+-  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
++  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<
++    ItemKey,
++    Entry<any>[]
++  > => {
+     return async (keys) => {
+       const timer = new Timer();
+       const out = await Promise.allSettled(
+         map(keys, (key) =>
+           (async () => {
+             const { preview, id } = key;
+-            return (await makeContentfulRequest(preview ? previewClient : prodClient, 'getEntries', maxBatchSize, {
+-              content_type: id,
+-              include: 0,
+-              locale: '*'
+-            })) as Entry<any>[];
++            return (await makeContentfulRequest(
++              preview ? previewClient : prodClient,
++              "getEntries",
++              maxBatchSize,
++              {
++                content_type: id,
++                include: 0,
++                locale: "*",
++              }
++            )) as Entry<any>[];
+           })()
+         )
+       );
+@@ -348,13 +415,15 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+       let numSuccessfulEntries = 0;
+ 
+       const finalOut = out.map((settledArrOfEntries, idx) => {
+-        if (settledArrOfEntries.status === 'rejected') {
++        if (settledArrOfEntries.status === "rejected") {
+           logger.error(
+-            `Unable to fetch content type ${keys[idx].id}. Reason: ${settledArrOfEntries.reason.message} ${(
+-              settledArrOfEntries.reason.details?.errors || []
+-            ).map((e: any) => `${e.name}: ${e.value}`)}`,
++            `Unable to fetch content type ${keys[idx].id}. Reason: ${
++              settledArrOfEntries.reason.message
++            } ${(settledArrOfEntries.reason.details?.errors || []).map(
++              (e: any) => `${e.name}: ${e.value}`
++            )}`,
+             {
+-              caller: 'getBatchEntriesByContentTypeFetcher'
++              caller: "getBatchEntriesByContentTypeFetcher",
+             }
+           );
+           return [];
+@@ -365,46 +434,64 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+       });
+ 
+       logger.debug(`Fetched entries for contenttypes (types)`, {
+-        caller: 'getBatchEntriesByContentTypeFetcher',
++        caller: "getBatchEntriesByContentTypeFetcher",
+         elapsedMs: timer.millis,
+         itemsSuccessful: numSuccessfulTypes,
+-        itemsAttempted: keys.length
++        itemsAttempted: keys.length,
+       });
+ 
+       logger.debug(`Fetched entries by contentType (entries)`, {
+-        caller: 'getBatchEntriesByContentTypeFetcher',
++        caller: "getBatchEntriesByContentTypeFetcher",
+         elapsedMs: timer.millis,
+-        itemsSuccessful: numSuccessfulEntries
++        itemsSuccessful: numSuccessfulEntries,
+       });
+ 
+       return finalOut;
+     };
+   };
+ 
+-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
+-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+-  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
++  const entryLoader = new DataLoader(
++    getBatchItemFetcher<Entry<any>>("entries"),
++    options
++  );
++  const assetLoader = new DataLoader(
++    getBatchItemFetcher<Asset>("assets"),
++    options
++  );
++  const entriesByContentTypeLoader = new DataLoader(
++    getBatchEntriesByContentTypeFetcher(),
++    options
++  );
+   const fetchAllContentTypes = async (preview: boolean) => {
+     try {
+       const timer = new Timer();
+-      const result = await (preview ? previewClient : prodClient).getContentTypes();
+-      logger.debug('Fetched all content types', {
+-        caller: 'fetchAllContentTypes',
++      const result = await (preview
++        ? previewClient
++        : prodClient
++      ).getContentTypes();
++      logger.debug("Fetched all content types", {
++        caller: "fetchAllContentTypes",
+         elapsedMs: timer.end().millis,
+-        itemsSuccessful: result.items.length
++        itemsSuccessful: result.items.length,
+       });
+       return result.items;
+     } catch (err: any) {
+       logger.error(`Unable to fetch content types : ${err.message}`, {
+-        caller: 'fetchAllContentTypes',
+-        stack: err.stack
++        caller: "fetchAllContentTypes",
++        stack: err.stack,
+       });
+       return [];
+     }
+   };
+ 
+-  const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), fvlOptions);
+-  const entriesRefByLoader = new DataLoader(getBatchEntriesRefByFetcher(), refByOptions);
++  const entryByFieldValueLoader = new DataLoader(
++    getBatchEntriesByFieldValueFetcher(),
++    fvlOptions
++  );
++  const entriesRefByLoader = new DataLoader(
++    getBatchEntriesRefByFetcher(),
++    refByOptions
++  );
+ 
+   return {
+     entryLoader,
+@@ -412,7 +499,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
+     entriesByContentTypeLoader,
+     entryByFieldValueLoader,
+     entriesRefByLoader,
+-    fetchAllContentTypes
++    fetchAllContentTypes,
+   };
+ };
+ 

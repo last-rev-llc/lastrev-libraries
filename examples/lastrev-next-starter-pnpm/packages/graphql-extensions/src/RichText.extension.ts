@@ -1,5 +1,6 @@
-import type { ApolloContext, Mappers } from '@last-rev/types';
-import type { Entry, RichTextContent } from 'contentful';
+import type { Mappers } from '@last-rev/types';
+import type { ApolloContext } from './types';
+import type { Entry } from 'contentful';
 import { FilterXSS } from 'xss';
 import { isHTML } from './utils/isHTML';
 
@@ -15,7 +16,7 @@ const bodyXSS = new FilterXSS({
 export const mappers: Mappers = {
   RichText: {
     RichText: {
-      json: async (raw: RichTextContent) => {
+      json: async (raw: any) => {
         let sanitized = raw; // Sanitize RichText Contentful JSOn
         // It will add extra empty lines almost all the times
         const { content } = sanitized;
@@ -85,7 +86,7 @@ export const mappers: Mappers = {
         ]);
 
         // Loop through entries and if included in hyperlinks will change type to a "Link" to utilize mappers for that type
-        const tidiedEntries = await entries.filter(Boolean).map(async (entry: Entry<any> | Error | null) => {
+        const tidiedEntries = await entries.filter(Boolean).map(async (entry: any | Error | null) => {
           if (!entry) return entry;
 
           const id = (entry as any)?.sys?.id;

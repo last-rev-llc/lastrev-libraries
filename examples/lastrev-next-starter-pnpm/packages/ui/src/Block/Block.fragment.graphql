@@ -23,10 +23,12 @@ fragment Block_BaseFragment on Block {
   link {
     ...Link_BaseFragment
   }
+  inheritTopBGOverlap
   supplementalContent {
     ...Text_BaseFragment
     ...Media_BaseFragment
     ...Link_BaseFragment
-    ...Form_BaseFragment
+    ...Form_RichTextFragment
+    ...Collection_BaseFragment
   }
 }

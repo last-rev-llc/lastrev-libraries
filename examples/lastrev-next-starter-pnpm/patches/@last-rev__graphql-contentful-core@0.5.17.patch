@@ -1,0 +1,21 @@
+diff --git a/dist/contentful-client.js b/dist/contentful-client.js
+index 26a8b3fabbcf618bc7a4af28de50782d4e4655ba..386adc0a97c6475fc598db6aadef61d09173b096 100644
+--- a/dist/contentful-client.js
++++ b/dist/contentful-client.js
+@@ -2,11 +2,10 @@
+ Object.defineProperty(exports, "__esModule", { value: true });
+ const contentful_1 = require("contentful");
+ const client = (0, contentful_1.createClient)({
+-    space: process.env.CONTENTFUL_SPACE_ID || '',
+-    accessToken: process.env.CONTENTFUL_ACCESSTOKEN || '',
+-    environment: process.env.CONTENTFUL_ENV || 'master',
+-    host: process.env.CONTENTFUL_HOST || 'cdn.contentful.com',
+-    resolveLinks: false
+-});
++  space: process.env.CONTENTFUL_SPACE_ID || "",
++  accessToken: process.env.CONTENTFUL_ACCESSTOKEN || "",
++  environment: process.env.CONTENTFUL_ENV || "master",
++  host: process.env.CONTENTFUL_HOST || "cdn.contentful.com",
++}).withoutLinkResolution;
+ exports.default = client;
+ //# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29udGVudGZ1bC1jbGllbnQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi9zcmMvY29udGVudGZ1bC1jbGllbnQudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSwyQ0FBMEM7QUFFMUMsTUFBTSxNQUFNLEdBQUcsSUFBQSx5QkFBWSxFQUFDO0lBQzFCLEtBQUssRUFBRSxPQUFPLENBQUMsR0FBRyxDQUFDLG1CQUFtQixJQUFJLEVBQUU7SUFDNUMsV0FBVyxFQUFFLE9BQU8sQ0FBQyxHQUFHLENBQUMsc0JBQXNCLElBQUksRUFBRTtJQUNyRCxXQUFXLEVBQUUsT0FBTyxDQUFDLEdBQUcsQ0FBQyxjQUFjLElBQUksUUFBUTtJQUNuRCxJQUFJLEVBQUUsT0FBTyxDQUFDLEdBQUcsQ0FBQyxlQUFlLElBQUksb0JBQW9CO0lBQ3pELFlBQVksRUFBRSxLQUFLO0NBQ3BCLENBQUMsQ0FBQztBQUVILGtCQUFlLE1BQU0sQ0FBQyJ9

@@ -1,29 +1,27 @@
 import type { ThemeOptions, ComponentsProps, ComponentsOverrides, ComponentsVariants } from '@mui/material/styles';
-import { Theme } from '@ui/ThemeRegistry/theme.types';
+import type { Theme } from '@ui/ThemeRegistry/theme.types';
 
 const defaultProps: ComponentsProps['Footer'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    padding: `var(--section-padding) 0 0`
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
+    padding: `var(--section-padding) 0 var(--section-padding)`
   }),
 
   introContentsWrap: ({ theme }) => ({
     marginBottom: 'var(--section-padding)'
   }),
 
-  // introContent: {},
-
   contentOuterGrid: {
     '& a': {
-      whiteSpace: 'nowrap',
-      color: 'inherit'
+      alignItems: 'baseline'
     }
   },
 
   logoRoot: ({ theme }) => ({
-    gridColumn: 'content-start / content-half',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'half',
     gridRow: 1,
     alignSelf: 'center',
     width: '100%',
@@ -31,45 +29,51 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     display: 'block',
 
     [theme.breakpoints.up('md')]: {
-      gridColumn: 'content-start / span 2'
+      gridColumnEnd: 'quarter'
     }
   }),
 
-  footerMenuNav: ({ theme, ownerState }) => ({
+  footerMenuNav: {
     gridRow: 2,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
-  }),
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end'
+  },
 
-  footerMenuNavItems: ({ theme, ownerState }) => ({
+  footerMenuNavItems: ({ theme }) => ({
     display: 'inline-flex',
-    alignItems: 'center',
     padding: 0,
     position: 'unset',
     flexDirection: 'row',
     width: '100%',
     margin: 'auto',
     gap: 'var(--grid-gap)',
+    flexWrap: 'wrap',
+    alignItems: 'baseline',
 
-    [theme.breakpoints.up('sm')]: {
-      height: '100%',
-      width: 'auto'
+    [theme.breakpoints.up('md')]: {
+      flexWrap: 'unset',
+      height: '100%'
     }
   }),
 
   footerMenuNavItem: ({ theme }) => ({
     padding: 0,
     position: 'unset',
+    alignItems: 'flex-start',
 
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.only('sm')]: {
+      width: 'calc(50% - var(--grid-gap))'
+    },
+
+    [theme.breakpoints.up('md')]: {
       height: '100%'
     }
   }),
 
   socialLinks: ({ theme }) => ({
     gridRow: 3,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
 
     display: 'inline-flex',
     justifyContent: 'space-between',
@@ -79,12 +83,10 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gap: 'var(--grid-gap)',
 
     [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'content-three-quarter',
-      gridColumnEnd: 'content-end',
+      gridColumnStart: 'three-quarter',
       justifyContent: 'flex-end',
       justifySelf: 'flex-end',
-      width: '100%',
-      gridRow: 3
+      width: '100%'
     }
   }),
 
@@ -102,63 +104,77 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   legalSection: ({ theme }) => ({
     'display': 'contents', // take out of flow,
-
     '& *': {
-      ...theme.typography.bodySmall
+      ...theme.typography.bodyXSmall
     }
   }),
 
   copyrightDisclaimerWrap: ({ theme }) => ({
-    gridRow: 5,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridRow: 4,
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
+    display: 'inline-flex',
+    alignItems: 'flex-start',
+    height: '100%',
+    justifySelf: 'flex-start',
 
     [theme.breakpoints.up('md')]: {
-      gridRow: 3,
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-quarter'
+      gridColumnEnd: 'half'
     }
   }),
 
   legalLinks: ({ theme }) => ({
-    gridRow: 4,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
+    gridRow: 3,
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
     display: 'inline-flex',
-    alignItems: 'center',
+    alignItems: 'flex-end',
     height: '100%',
-    justifySelf: 'center',
-    gap: 'var(--grid-gap)',
+    justifySelf: 'flex-start',
+    padding: 0,
+    flexDirection: 'column',
+
+    a: {
+      whiteSpace: 'nowrap'
+    },
+
+    [theme.breakpoints.up('sm')]: {
+      flexDirection: 'row'
+    },
 
     [theme.breakpoints.up('md')]: {
-      gridColumn: 'content-quarter / content-three-quarter',
-      gridRow: 3
+      gridColumnEnd: 'half'
+    }
+  }),
+
+  legalLink: {
+    marginBottom: 0
+  },
+
+  legalLinkWrap: ({ theme }) => ({
+    padding: 0,
+
+    [theme.breakpoints.up('sm')]: {
+      '&:not(:first-of-type)': {
+        '&::before': {
+          content: '"•"',
+          display: 'block',
+          padding: '0 var(--grid-gap-quarter)'
+        }
+      }
     }
   }),
 
   disclaimerWrap: ({ theme }) => ({
-    ...theme.mixins.applyBackgroundColor({
-      ownerState: {
-        backgroundColor: 'black'
-      },
-      theme
-    }),
-    'gridRow': 6,
-    'gridColumnStart': 'full-start',
-    'gridColumnEnd': 'full-end',
-    'padding': 'var(--grid-gap) 0',
+    gridRow: 5,
+    gridColumnStart: 'start',
+    gridColumnEnd: 'end',
 
     [theme.breakpoints.up('md')]: {
-      gridRow: 4
-    },
-
-    '& [class*=disclaimer] > *': {
-      gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-end'
+      gridRow: '3 / 5',
+      gridColumnStart: 'half'
     }
   })
-
-  // legalLink: : {}
 };
 
 const createVariants = (_theme: Theme): ComponentsVariants['Footer'] => [];
