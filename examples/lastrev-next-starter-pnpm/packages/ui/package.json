@@ -1,0 +1,56 @@
+{
+  "name": "ui",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "not-build": "tsup src/index.tsx --format esm,cjs --dts --external react",
+    "clean": "rm -rf dist",
+    "not-dev": "tsup src/index.tsx --format esm,cjs --watch --dts --external react",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-presets/jest/node"
+  },
+  "devDependencies": {
+    "@cypress/react18": "^2.0.0",
+    "@types/jest": "^26.0.22",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "css-loader": "^6.8.1",
+    "eslint": "^7.32.0",
+    "eslint-config-custom": "workspace:*",
+    "eslint-plugin-storybook": "^0.6.13",
+    "jest": "^26.6.3",
+    "jest-presets": "workspace:*",
+    "react": "^18.2.0",
+    "schema-dts": "^1.1.2",
+    "tsconfig": "workspace:*",
+    "tsup": "^6.2.3",
+    "typescript": "^4.8.3"
+  },
+  "dependencies": {
+    "@contentful/rich-text-react-renderer": "^15.17.1",
+    "styled-components": "^6",
+    "@last-rev/contentful-sidekick-util": "^0.1.3",
+    "@mui/icons-material": "^5.14.8",
+    "@mui/material": "^5.14.8",
+    "@mui/system": "^5.14.8",
+    "@mui/lab": "^5.0.0-alpha.144",
+    "@mui/styled-engine-sc": "^5.14.8",
+    "next": "^13.4.19",
+    "react-dom": "^18.2.0",
+    "react-hubspot-form": "^1.3.7",
+    "react-schemaorg": "^2.0.0",
+    "swiper": "^10.3.1",
+    "@egjs/flicking": "^4.11.0"
+  }
+}

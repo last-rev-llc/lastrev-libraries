@@ -1,0 +1,33 @@
+fragment Collection_FieldsFragment on Collection {
+  ...Content_BaseFragment
+  introText {
+    ...Text_IntroTextFragment
+  }
+  variant
+  itemsVariant
+  backgroundImage {
+    ...Media_BaseFragment
+  }
+  backgroundColor
+  isCarouselDesktop
+  isCarouselTablet
+  isCarouselMobile
+  itemsPerRow
+  numItems
+}
+
+# Base fragment used everywhere there's a Collection
+fragment Collection_BaseFragment on Collection {
+  ...Collection_FieldsFragment
+  items {
+    ...Card_BaseFragment
+  }
+}
+
+# Specific fragment used for the RichText embedded entries
+fragment Collection_RichTextFragment on Collection {
+  ...Collection_FieldsFragment
+  items {
+    ...Card_RichTextFragment
+  }
+}

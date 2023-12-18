@@ -1,0 +1,5 @@
+generates:
+  ./schema.graphql:
+    schema: ${GRAPHQL_SERVER_URL:"http://localhost:8888/graphql"}
+    plugins:
+      - schema-ast

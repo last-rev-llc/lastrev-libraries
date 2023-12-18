@@ -86,7 +86,7 @@ For a full example of the file structure please refer to the code in the [@last-
     - Update any type errors that are now visible!
 
 - Common issues:
-  - `@lrns/web:dev: Module not found: Can't resolve '../components/GoogleFormIntegration/GoogleFormIntegration.theme'`
+  - `web:dev: Module not found: Can't resolve '../components/GoogleFormIntegration/GoogleFormIntegration.theme'`
 
 ## Migrating the variants
 

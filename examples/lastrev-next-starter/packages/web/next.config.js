@@ -116,12 +116,14 @@ const nextConfig = {
     // formats: ['image/avif', 'image/webp']
     formats: ['image/webp']
   },
-  sentry: {
-    disableServerWebpackPlugin: !hasAllSentryVars,
-    disableClientWebpackPlugin: !hasAllSentryVars,
-    hideSourceMaps: true,
-    widenClientFileUpload: true
-  },
+  ...(hasAllSentryVars && {
+    sentry: {
+      disableServerWebpackPlugin: !hasAllSentryVars,
+      disableClientWebpackPlugin: !hasAllSentryVars,
+      hideSourceMaps: true,
+      widenClientFileUpload: true
+    }
+  }),
   webpack: (config, { webpack }) => {
     // Important: return the modified config
     config.resolve.alias = {

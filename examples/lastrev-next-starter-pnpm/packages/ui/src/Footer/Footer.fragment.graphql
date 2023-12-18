@@ -1,0 +1,31 @@
+fragment Footer_BaseFragment on Footer {
+  ...Content_BaseFragment
+  logo {
+    ...Media_BaseFragment
+  }
+  logoUrl {
+    ...Link_BaseFragment
+  }
+  disclaimerText {
+    ...RichText_BaseFragment
+  }
+  socialLinks {
+    ...Link_BaseFragment
+  }
+  navigationItems {
+    ...NavigationItem_BaseFragment
+  }
+  introContents {
+    ...ContentModule_RichTextFragment
+  }
+  copyrightDisclaimer {
+    ...RichText_BaseFragment
+  }
+  legalLinks {
+    ...Link_BaseFragment
+  }
+  backgroundColor
+  # localeLinks {
+  #  ...Link_BaseFragment
+  #}
+}

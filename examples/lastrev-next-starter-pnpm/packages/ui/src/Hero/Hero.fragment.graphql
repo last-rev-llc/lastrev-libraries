@@ -1,0 +1,21 @@
+fragment Hero_BaseFragment on Hero {
+  ...Content_BaseFragment
+  variant
+  internalTitle
+  overline
+  title
+  subtitle
+  backgroundColor
+  background {
+    ...Media_BaseFragment
+  }
+  body {
+    ...RichText_BaseFragment
+  }
+  images: sideImageItems {
+    ...Media_BaseFragment
+  }
+  actions {
+    ...Link_BaseFragment
+  }
+}

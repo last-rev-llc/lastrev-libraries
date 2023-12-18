@@ -1,0 +1,32 @@
+fragment Block_BaseFragment on Block {
+  ...Content_BaseFragment
+  variant
+  introText {
+    ...Text_IntroTextFragment
+  }
+  backgroundColor
+  backgroundImage {
+    ...Media_BaseFragment
+  }
+  overline
+  title
+  subtitle
+  body {
+    ...RichText_BaseFragment
+  }
+  mediaItems {
+    ...Media_BaseFragment
+  }
+  actions {
+    ...Link_BaseFragment
+  }
+  link {
+    ...Link_BaseFragment
+  }
+  supplementalContent {
+    ...Text_BaseFragment
+    ...Media_BaseFragment
+    ...Link_BaseFragment
+    ...Form_BaseFragment
+  }
+}

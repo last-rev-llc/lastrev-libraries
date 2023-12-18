@@ -1,0 +1,43 @@
+{
+  "name": "graphql-extensions",
+  "version": "0.1.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "dev": "tsc -w",
+    "gql:dev": "tsc -w",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "@babel/plugin-transform-runtime": "^7.16.5",
+    "@contentful/rich-text-from-markdown": "^15.10.0",
+    "@contentful/rich-text-types": "^15.11.1",
+    "@graphql-tools/merge": "^8.4.0",
+    "@last-rev/graphql-algolia-integration": "^0.1.10",
+    "@last-rev/graphql-contentful-core": "^0.5.17",
+    "@last-rev/graphql-contentful-extensions": "^0.2.0",
+    "@last-rev/rollup-config": "^0.1.4",
+    "@last-rev/types": "^0.3.6",
+    "@last-rev/logging": "^0.1.4",
+    "contentful": "^9.1.3",
+    "date-fns": "^2.25.0",
+    "graphql": "^16.6.0",
+    "graphql-tag": "^2.12.5",
+    "xss": "^1.0.14",
+    "fast-xml-parser": "^4.2.7",
+    "css": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/css": "^0.0.34",
+    "schema-dts": "^1.1.2",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.8.3"
+  }
+}

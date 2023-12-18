@@ -1,0 +1,33 @@
+fragment Page_BaseFragment on Page {
+  ...Content_BaseFragment
+  seo
+  jsonLd
+  path
+  slug
+  title
+  header {
+    ...Header_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+  footerDisclaimerOverride {
+    ...RichText_BaseFragment
+  }
+  hero {
+    ...ContentModule_BaseFragment
+  }
+  contents {
+    ...ContentModule_BaseFragment
+  }
+}
+
+fragment Page_CardFragment on Page {
+  ...Content_BaseFragment
+  title
+  slug
+  promoImage {
+    ...Media_BaseFragment
+  }
+  promoSummary
+}
