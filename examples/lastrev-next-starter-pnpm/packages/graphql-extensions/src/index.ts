@@ -22,6 +22,7 @@ function loadFiles() {
     dirPath = path.resolve(process.cwd(), '../../packages/graphql-extensions/src');
     console.warn('Dynamic Extension Files are not supported in NextJS');
     console.warn('Update graphql-extensions/src/index.ts to load ALL extension files manually');
+
     modules['Algolia'] = require('./Algolia.extension');
     modules['Block'] = require('./Block.extension');
     modules['Blog'] = require('./Blog.extension');
@@ -31,7 +32,7 @@ function loadFiles() {
     modules['CollectionExpandable'] = require('./CollectionExpandable.extension');
     modules['CollectionExpandableItem'] = require('./CollectionExpandableItem.extension');
     modules['Footer'] = require('./Footer.extension');
-    modules['ElementForm'] = require('./Form.extension');
+    modules['Form'] = require('./Form.extension');
     modules['Header'] = require('./Header.extension');
     modules['Hero'] = require('./Hero.extension');
     modules['Link'] = require('./Link.extension');
@@ -41,11 +42,16 @@ function loadFiles() {
     modules['PathsConfigs'] = require('./PathsConfigs.extension');
     modules['Person'] = require('./Person.extension');
     modules['Preview'] = require('./Preview.extension');
+    modules['PageResource'] = require('./PageResource.extension');
+    modules['ModuleIntegration'] = require('./ModuleIntegration.extension');
     modules['Quote'] = require('./Quote.extension');
+    modules['PricingPlan'] = require('./PricingPlan.extension');
     modules['RichText'] = require('./RichText.extension');
+    modules['Redirect'] = require('./Redirect.extension');
     modules['Section'] = require('./Section.extension');
     modules['SEO'] = require('./SEO.extension');
     modules['Sidekick'] = require('./Sidekick.extension');
+    modules['Site'] = require('./Site.extension');
     modules['Text'] = require('./Text.extension');
     modules['Theme'] = require('./Theme.extension');
 

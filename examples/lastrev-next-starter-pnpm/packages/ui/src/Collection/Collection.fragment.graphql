@@ -12,8 +12,12 @@ fragment Collection_FieldsFragment on Collection {
   isCarouselDesktop
   isCarouselTablet
   isCarouselMobile
+  carouselAutoPlay
   itemsPerRow
   numItems
+  actions {
+    ...Link_BaseFragment
+  }
 }
 
 # Base fragment used everywhere there's a Collection
@@ -21,6 +25,8 @@ fragment Collection_BaseFragment on Collection {
   ...Collection_FieldsFragment
   items {
     ...Card_BaseFragment
+    ...Quote_BaseFragment
+    ...CardPricing_BaseFragment
   }
 }
 

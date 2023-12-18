@@ -86,6 +86,29 @@ const generatePaths: ContentfulPathsGenerator = async (
     }
   };
 };
+// TODO: Implement a more dynamic way of creating paths for categories without extra parent page items
+const generatePathsCategoryBlog: ContentfulPathsGenerator = async (
+  contentItem,
+  loaders,
+  defaultLocale,
+  _locales,
+  preview = false,
+  _site
+) => {
+  const slug = getDefaultFieldValue(contentItem, 'slug', defaultLocale);
+
+  const fullPath = createPath(`/blog/category`, slug);
+  const excludedLocales = getDefaultFieldValue(contentItem, 'excludeFromLocale', defaultLocale) || [];
+
+  return {
+    [fullPath]: {
+      fullPath,
+      isPrimary: true,
+      contentId: contentItem?.sys?.id,
+      excludedLocales
+    }
+  };
+};
 
 // // Used to generate the path for Blog topics and blog posts
 // const blogsLandingSlug = async (loaders: ContentfulLoaders, defaultLocale: string, preview?: boolean) => {
@@ -100,7 +123,8 @@ const generatePaths: ContentfulPathsGenerator = async (
 
 export const pathsConfigs = {
   page: generatePaths,
+  pageResource: generatePaths,
   blog: generatePaths,
   person: generatePaths,
-  categoryBlog: generatePaths
+  categoryBlog: generatePathsCategoryBlog
 };

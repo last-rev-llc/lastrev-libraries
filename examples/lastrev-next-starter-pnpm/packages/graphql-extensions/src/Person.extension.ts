@@ -5,7 +5,6 @@ import { createRichText, getLocalizedField } from '@last-rev/graphql-contentful-
 import { pageFooterResolver } from './utils/pageFooterResolver';
 import { pageHeaderResolver } from './utils/pageHeaderResolver';
 import { pathResolver } from './utils/pathResolver';
-import { resolveField } from './utils/resolveField';
 import { breadcrumbsResolver } from './utils/breadcrumbsResolver';
 import { createType } from './utils/createType';
 
@@ -37,20 +36,18 @@ export const mappers: Mappers = {
           sideImageItems: [getLocalizedField(person.fields, 'mainImage', ctx)]
         })
     },
-
     Link: {
       text: 'name',
       href: pathResolver
     },
-
     NavigationItem: {
       text: 'name',
       href: pathResolver
     },
-
     Card: {
+      title: 'name',
       body: async (person: any, _args: any, ctx: ApolloContext) =>
-        createRichText(getLocalizedField(person.fields, 'promoSummary', ctx)),
+        createRichText(getLocalizedField(person.fields, 'bioDetails', ctx)),
 
       media: async (blog: any, _args: any, ctx: ApolloContext) => {
         const promoImage =
@@ -58,23 +55,23 @@ export const mappers: Mappers = {
         if (!promoImage) return null;
         return [promoImage];
       },
-
-      variant: () => 'default',
+      // color: () => 'white',
+      variant: () => 'person',
 
       link: async (person: any, _args: any, ctx: ApolloContext) => {
         return person;
-      },
-
-      actions: async (person: any, args: any, ctx: ApolloContext) => {
-        return [
-          createType('Link', {
-            id: person.id,
-            text: 'Read More',
-            href: await pathResolver(person, args, ctx),
-            variant: 'buttonContained'
-          })
-        ];
       }
+
+      // actions: async (person: any, args: any, ctx: ApolloContext) => {
+      //   return [
+      //     createType('Link', {
+      //       id: person.id,
+      //       text: 'Read More',
+      //       href: await pathResolver(person, args, ctx),
+      //       variant: 'buttonContained'
+      //     })
+      //   ];
+      // }
     }
   }
 };

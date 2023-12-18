@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 'use client';
 import React, { useMemo } from 'react';
-import { useContentModuleContext } from './ContentModuleContext';
+// import { useContentModuleContext } from './ContentModuleContext';
+
 import type { ContentModuleProps } from './ContentModule.types';
 import ErrorBoundary from '../ErrorBoundary';
+import contentMapping from '../contentMapping';
 
 const getComponentForContentType = (
   contentType: string,
@@ -28,23 +30,24 @@ const ContentModule = React.forwardRef(function ContentModule(
   { __typename, theme, ...fields }: ContentModuleProps,
   ref: any
 ) {
-  const contentMapping = useContentModuleContext();
+  // const contentMapping = useContentModuleContext();
 
   const contentMappingKey =
     fields?.variant && getComponentForContentType(`${__typename}:${fields?.variant}`, contentMapping)
       ? `${__typename}:${fields?.variant}`
       : __typename;
-
   const Main = useMemo(
     () => contentMappingKey && getComponentForContentType(contentMappingKey, contentMapping),
-    [contentMappingKey, contentMapping]
+    [contentMappingKey]
   );
+  // console.log('Render', { contentMappingKey, Main });
 
   if (!Main) {
     console.info(
       `Did not find mapping for Content Type "${__typename}"${
         fields?.variant ? ` with a variant "${fields?.variant}"` : ``
-      }. Please add a mapping in the ContentModuleProvider`
+      }. Please add a mapping in the ContentModuleProvider`,
+      fields
     );
     return null;
   }

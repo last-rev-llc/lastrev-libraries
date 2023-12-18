@@ -56,7 +56,7 @@ let config = {
     CONTENTFUL_DELIVERY_TOKEN: process.env.CONTENTFUL_DELIVERY_TOKEN,
     CONTENTFUL_PREVIEW_TOKEN: process.env.CONTENTFUL_PREVIEW_TOKEN,
     CONTENTFUL_ENV: process.env.CONTENTFUL_ENV,
-    DEPLOY_URL: process.env.DEPLOY_URL
+    VERCEL_URL: process.env.VERCEL_URL
   },
   webpack: (config) => {
     config.resolve.alias = {
@@ -66,6 +66,7 @@ let config = {
     return config;
   },
   experimental: {
+    serverActions: true,
     turbo: {
       resolveAlias: {
         '@mui/styled-engine': '@mui/styled-engine-sc'
@@ -78,7 +79,12 @@ let config = {
   },
   async rewrites() {
     const { data } = await client.Rewrites({ preview });
-    return data?.rewrites ?? [];
+    const rewrites = data?.rewrites ?? [];
+    if (!Array.isArray(rewrites)) return [];
+
+    const newRewrites = [...(data?.rewrites ?? [])];
+
+    return newRewrites;
   }
 };
 

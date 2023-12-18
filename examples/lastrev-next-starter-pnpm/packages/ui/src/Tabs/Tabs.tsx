@@ -3,6 +3,7 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -46,44 +47,45 @@ const Tabs = (props: TabsProps) => {
 
         {!!items?.length && (
           <ContentOuterGrid ownerState={ownerState}>
-            <TabsContext value={value} ownerState={ownerState}>
-              <TabListWrap ownerState={ownerState}>
-                {/* TODO: Add "orientation" to the expanding content type */}
-                <TabList
-                  onChange={handleChange}
-                  orientation="horizontal"
-                  aria-label="TODO"
-                  textColor="primary"
-                  indicatorColor="primary">
-                  {items?.map(
-                    (
-                      item: any,
-                      index: number // TODO: Fix type
-                    ) => (
-                      <Tab label={item.title} value={index.toString()} key={`${!id}-tab-${item?.id}-${index}`} />
-                    )
-                  )}
-                </TabList>
-              </TabListWrap>
-
-              {items?.map(
-                (
-                  item: any,
-                  index: number // TODO: Fix type
-                ) => (
-                  <DetailsWrap
-                    value={index.toString()}
-                    key={`${!id}-tab-panel-${item?.id}-${index}`}
-                    ownerState={ownerState}>
-                    {item.body ? (
-                      <Details __typename="RichText" body={item.body} ownerState={ownerState} />
-                    ) : (
-                      <Details {...item.content} ownerState={ownerState} backgroundColor={backgroundColor} />
+            <TabsWrap ownerState={ownerState}>
+              <TabsContext value={value} ownerState={ownerState}>
+                <TabListWrap ownerState={ownerState}>
+                  {/* TODO: Add "orientation" to the expanding content type */}
+                  <TabList
+                    onChange={handleChange}
+                    orientation="horizontal"
+                    aria-label="TODO"
+                    textColor="primary"
+                    indicatorColor="primary">
+                    {items?.map(
+                      (
+                        item: any,
+                        index: number // TODO: Fix type
+                      ) => (
+                        <Tab label={item.title} value={index.toString()} key={`${!id}-tab-${item?.id}-${index}`} />
+                      )
                     )}
-                  </DetailsWrap>
-                )
-              )}
-            </TabsContext>
+                  </TabList>
+                </TabListWrap>
+                {items?.map(
+                  (
+                    item: any,
+                    index: number // TODO: Fix type
+                  ) => (
+                    <DetailsWrap
+                      value={index.toString()}
+                      key={`${!id}-tab-panel-${item?.id}-${index}`}
+                      ownerState={ownerState}>
+                      {item.body ? (
+                        <Details __typename="RichText" body={item.body} ownerState={ownerState} />
+                      ) : (
+                        <Details {...item.content} ownerState={ownerState} backgroundColor={backgroundColor} />
+                      )}
+                    </DetailsWrap>
+                  )
+                )}
+              </TabsContext>
+            </TabsWrap>
           </ContentOuterGrid>
         )}
       </Root>
@@ -125,6 +127,12 @@ const TabsContext = styled(TabContext, {
   name: 'Tabs',
   slot: 'TabsContext',
   overridesResolver: (_, styles) => [styles.tabsContext]
+})<{ ownerState: TabsOwnerState }>``;
+
+const TabsWrap = styled(Paper, {
+  name: 'Tabs',
+  slot: 'TabsWrap',
+  overridesResolver: (_, styles) => [styles.tabsWrap]
 })<{ ownerState: TabsOwnerState }>``;
 
 const TabListWrap = styled(Box, {

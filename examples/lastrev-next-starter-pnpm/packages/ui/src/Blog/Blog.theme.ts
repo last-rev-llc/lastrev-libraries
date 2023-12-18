@@ -4,70 +4,125 @@ import { Theme } from '@ui/ThemeRegistry/theme.types';
 const defaultProps: ComponentsProps['Blog'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
-  // root: {},
+  root: ({ theme }) => ({
+    // 'paddingTop': 'var(--section-padding)',
+    // 'paddingBottom': 'var(--section-padding)',
+    '& > :is([class*=Collection-root],[class*=Section-root],[class*=Block-root],[class*=Carousel-root])': {
+      marginTop: 'var(--section-padding)',
+      marginBottom: 'var(--section-padding)'
+    },
 
-  contentOuterGrid: {
-    'containerType': 'inline-size',
-    '> *': {
-      gridColumn: 'full-start / full-end'
+    '& > :is([class*=Form-root])': {
+      marginTop: theme.spacing(7),
+      marginBottom: theme.spacing(7)
+    },
+    '& > :is([class*=Text-root])': {
+      marginTop: theme.spacing(5),
+      marginBottom: theme.spacing(5)
+    },
+    '[class*=Media-root]': {
+      margin: 'auto',
+      width: '100%',
+      objectFit: 'contain',
+      height: 'auto'
     }
-  },
+  }),
+
+  contentOuterGrid: ({ theme }) => ({
+    'containerType': 'inline-size',
+    'padding': theme.spacing(8, 0),
+    '> *': {
+      // gridColumnStart: 'content-start',
+      // gridColumnEnd: 'content-end'
+      // [theme.breakpoints.up('md')]: {
+      //   gridColumnStart: 'four-start',
+      //   gridColumnEnd: 'content-end'
+      // },
+      // [theme.breakpoints.up('lg')]: {
+      //   gridColumnStart: 'four-start',
+      //   gridColumnEnd: 'content-end'
+      // }
+    }
+  }),
 
   headerWrap: ({ theme }) => ({
+    // maxWidth: '680px'
+    // gridColumnStart: 'content-start',
+    // gridColumnEnd: 'content-end',
+    // [theme.breakpoints.up('lg')]: {
+    //   gridColumnStart: 'three-start',
+    //   gridColumnEnd: 'ten-end'
+    // }
+  }),
+
+  // breadcrumbsWrap: {
+  //   gridColumnStart: 'content-start',
+  //   gridColumnEnd: 'content-end'
+  // },
+  sideWrap: ({ theme }) => ({
+    position: 'sticky',
+    top: 208,
+
+    gridRow: '1/4',
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'ten-end'
+    [theme.breakpoints.up('sm')]: {
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'three-end'
     }
   }),
 
-  breadcrumbsWrap: {
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end'
-  },
-
-  contentWrap: {
-    display: 'contents'
-  },
-
+  contentWrap: ({ theme }) => ({
+    'display': 'contents',
+    '> *': {
+      gridColumnStart: 'content-start',
+      gridColumnEnd: 'content-end',
+      [theme.breakpoints.up('md')]: {
+        gridColumnStart: 'four-start',
+        gridColumnEnd: 'content-end'
+      },
+      [theme.breakpoints.up('lg')]: {
+        gridColumnStart: 'four-start',
+        gridColumnEnd: 'content-end'
+      }
+    }
+  }),
   featuredMediaWrap: ({ theme }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'ten-end'
-    }
+    // maxWidth: '680px'
   }),
 
-  // featuredMedia: {},
+  featuredMedia: {
+    width: '100%',
+    aspectRatio: '16/10'
+    // maxWidth: '680px'
+  },
 
   // pubDate: {},
 
   shareLinksWrap: ({ theme }) => ({
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'two-start',
-      gridColumnEnd: 'seven-end'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'content-quarter',
-      gridColumnEnd: 'content-three-quarter'
-    }
+    // maxWidth: '680px'
+    // gridColumnStart: 'content-start',
+    // gridColumnEnd: 'content-end',
+    // [theme.breakpoints.up('md')]: {
+    //   gridColumnStart: 'two-start',
+    //   gridColumnEnd: 'seven-end'
+    // },
+    // [theme.breakpoints.up('lg')]: {
+    //   gridColumnStart: 'content-quarter',
+    //   gridColumnEnd: 'content-three-quarter'
+    // }
   }),
 
   shareLinks: ({ theme }) => ({
     display: 'flex',
     alignItems: 'flex-start',
+    justifyContent: 'flex-end',
     gap: 'var(--grid-gap)'
   }),
 
   shareLink: ({ theme }) => ({
+    'width': 'unset',
+    'padding': 0,
     'gap': 'var(--grid-gap)',
 
     '& svg': {
@@ -88,98 +143,23 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
     }
   }),
 
-  authorImageWrap: ({ theme }) => ({
-    gridRow: 1,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-quarter',
-
-    [theme.breakpoints.up('md')]: {
-      gridRow: '1/ span 3',
-      gridColumnStart: 'two-start',
-      gridColumnEnd: 'two-end'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridRow: '1/ span 3',
-      gridColumnStart: 'four-start',
-      gridColumnEnd: 'four-end'
-    }
-  }),
-
-  authorName: ({ theme }) => ({
-    gridRow: 1,
-    alignSelf: 'center',
-    marginBottom: 0,
-
-    gridColumnStart: 'content-quarter',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'seven-end',
-      alignSelf: 'self-end'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'five-start',
-      gridColumnEnd: 'content-three-quarter',
-      alignSelf: 'self-end'
-    }
-  }),
-
-  authorSummaryWrap: ({ theme }) => ({
-    display: 'flex',
-    alignSelf: 'center',
-    marginBottom: 0,
-
-    gridRow: 2,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'seven-end'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'five-start',
-      gridColumnEnd: 'content-three-quarter'
-    }
-  }),
-
-  authorSocialLinks: ({ theme }) => ({
-    alignSelf: 'self-start',
-
-    gridRow: 3,
-    gridColumnStart: 'content-start',
-    gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'three-start',
-      gridColumnEnd: 'seven-end'
-    },
-
-    [theme.breakpoints.up('lg')]: {
-      gridColumnStart: 'five-start',
-      gridColumnEnd: 'content-three-quarter'
-    }
-  }),
-
   // title: {},
 
   body: ({ theme }) => ({
     '& > *:not(div)': {
+      // maxWidth: '680px',
+      marginBottom: '0!important',
       gridColumnStart: 'content-start',
       gridColumnEnd: 'content-end',
 
       [theme.breakpoints.up('md')]: {
-        gridColumnStart: 'two-start',
-        gridColumnEnd: 'seven-end'
+        gridColumnStart: 'four-start',
+        gridColumnEnd: 'content-end'
       },
 
       [theme.breakpoints.up('lg')]: {
-        gridColumnStart: 'content-quarter',
-        gridColumnEnd: 'content-three-quarter'
+        gridColumnStart: 'four-start',
+        gridColumnEnd: 'content-end'
       }
     },
 
@@ -196,7 +176,12 @@ const styleOverrides: ComponentsOverrides<Theme>['Blog'] = {
   // tags: ({}) => ({}),
 
   // tag: ({}) => ({}),
-
+  authorWrap: ({ theme }) => ({
+    gridColumnStart: 'full-start',
+    gridColumnEnd: 'full-end',
+    padding: theme.spacing(7, 0),
+    background: theme.vars.palette.background.lightThree
+  }),
   relatedItemsWrap: {
     '& > *': {
       gridColumn: 'full-start / full-end'

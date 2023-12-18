@@ -3,6 +3,13 @@ require('dotenv').config();
 const LastRevAppConfig = require('@last-rev/app-config');
 const extensions = require('graphql-extensions');
 const { resolve } = require('path');
+// const { ApolloServerPluginInlineTrace } = require('@apollo/server/plugin/inlineTrace');
+// const Keyv = require('keyv');
+// const { KeyvAdapter } = require('@apollo/utils.keyvadapter');
+// const { ErrorsAreMissesCache } = require('@apollo/utils.keyvaluecache');
+// const KeyvRedis = require('@keyv/redis');
+
+// const Redis = require('ioredis');
 
 const testForEnvVar = (name) => {
   const envVar = process.env[name];
@@ -30,8 +37,8 @@ const parseBooleanEnvVar = (value = '') => {
 
 const config = new LastRevAppConfig({
   cms: 'Contentful',
-  contentStrategy: 'fs',
-  // cmsCacheStrategy: 'redis',
+  contentStrategy: process.env.NODE_ENV !== 'production' ? 'fs' : undefined,
+  cmsCacheStrategy: 'redis',
   sites: [process.env.SITE],
   extensions,
   graphql: { port: 8888 },
@@ -49,6 +56,7 @@ const config = new LastRevAppConfig({
     contentTypeIds: ['blog'],
     indexDraftContent: parseBooleanEnvVar(process.env.ALGOLIA_INDEX_DRAFT_CONTENT)
   },
+
   redis: {
     port: process.env.REDIS_PORT,
     host: process.env.REDIS_HOST,
@@ -67,6 +75,22 @@ const config = new LastRevAppConfig({
   },
   apolloServerOptions: {
     introspection: true
+    // plugins: [ApolloServerPluginInlineTrace()],
+    // cache: new ErrorsAreMissesCache(
+    //   new KeyvAdapter(
+    //     new Keyv({
+    //       store: new KeyvRedis(
+    //         new Redis({
+    //           port: process.env.REDIS_PORT,
+    //           host: process.env.REDIS_HOST,
+    //           password: process.env.REDIS_PASSWORD,
+    //           username: process.env.REDIS_USERNAME,
+    //           tls: {}
+    //         })
+    //       )
+    //     })
+    //   )
+    // )
   },
   features: {
     disableCoreSidekickLookup: true

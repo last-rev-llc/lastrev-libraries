@@ -17,3 +17,10 @@ fragment CollectionExpandable_BaseFragment on CollectionExpandable {
     ...CollectionExpandableItem_BaseFragment
   }
 }
+# Nested fragment used everywhere there's a CollectionExpandable
+fragment CollectionExpandable_NestedFragment on CollectionExpandable {
+  ...CollectionExpandable_FieldsFragment
+  items {
+    ...CollectionExpandableItem_NestedFragment
+  }
+}

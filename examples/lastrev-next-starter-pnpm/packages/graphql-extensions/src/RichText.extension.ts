@@ -2,6 +2,7 @@ import type { ApolloContext, Mappers } from '@last-rev/types';
 import type { Entry, RichTextContent } from 'contentful';
 import { FilterXSS } from 'xss';
 import { isHTML } from './utils/isHTML';
+import { richTextFromMarkdown } from '@contentful/rich-text-from-markdown';
 
 const ALLOWED_TAGS = ['div', 'span'];
 const ALLOWED_ATTRIBUTES = ['id', 'style'];
@@ -17,6 +18,11 @@ export const mappers: Mappers = {
     RichText: {
       json: async (raw: RichTextContent) => {
         let sanitized = raw; // Sanitize RichText Contentful JSOn
+        // if it's markdown convert it to Contentful rich text
+        if (typeof sanitized === 'string') {
+          sanitized = (await richTextFromMarkdown(sanitized)) as any;
+        }
+
         // It will add extra empty lines almost all the times
         const { content } = sanitized;
         if (content) {
@@ -45,7 +51,7 @@ export const mappers: Mappers = {
         };
 
         traverseRichText(sanitized);
-        return raw;
+        return sanitized;
       },
       links: async (raw: any, _args: any, ctx: ApolloContext) => {
         const entriesLinks = new Map();

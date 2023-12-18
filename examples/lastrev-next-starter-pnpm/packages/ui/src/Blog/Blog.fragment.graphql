@@ -4,13 +4,17 @@ fragment Blog_BaseFragment on Blog {
   jsonLd
   path
   title
+  subtitle
   slug
   pubDate
   author {
-    ...Person_Blog_Author_Fragment
+    ...Card_BaseFragment
   }
   header {
     ...Header_BaseFragment
+  }
+  subNavigation {
+    ...NavigationItem_BaseFragment
   }
   footer {
     ...Footer_BaseFragment
@@ -23,6 +27,15 @@ fragment Blog_BaseFragment on Blog {
   }
   relatedItems {
     ...Collection_BaseFragment
+  }
+  hero {
+    ...Hero_BaseFragment
+  }
+  sidebarContents {
+    ...ContentModule_BaseFragment
+  }
+  contents {
+    ...ContentModule_BaseFragment
   }
   jsonLd
 }

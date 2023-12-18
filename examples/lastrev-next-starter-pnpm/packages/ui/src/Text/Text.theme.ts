@@ -9,7 +9,7 @@ import { TextVariants } from './Text.types';
 
 const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // Set some static styles
-  root: {
+  root: ({ theme, ownerState }) => ({
     'width': '100%',
     'display': 'unset',
     'ol, ul, li': {
@@ -18,6 +18,11 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
       padding: 'revert'
     },
 
+    '> *:not(:last-child)': {
+      '&:is(p)': {
+        marginBottom: 'var(--grid-gap)'
+      }
+    },
     'main > &': {
       'display': 'grid',
 
@@ -25,9 +30,15 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
         display: 'unset',
         gridColumn: 'content-start/content-end'
       }
-    }
-  },
+    },
+    ...(ownerState?.align && {
+      textAlign: ownerState?.align?.toLowerCase()
+    })
+  }),
 
+  overline: {
+    color: 'var(--mui-palette-overline, #1E1E1E)'
+  },
   title: ({ theme, ownerState }) => ({
     ...(ownerState?.variant === TextVariants.default && {
       ...theme.typography.h2
@@ -56,8 +67,41 @@ const styleOverrides: ComponentsOverrides<Theme>['Text'] = {
   // }
 };
 
-const createVariants = (_theme: Theme): ComponentsVariants['Text'] => [
+const createVariants = (theme: Theme): ComponentsVariants['Text'] => [
   // Use prop matching to set variant styles
+  {
+    props: {
+      variant: 'disclaimer'
+    },
+    style: {
+      ...theme.typography.overline,
+      'textTransform': 'unset',
+      '.MuiTypography-root': {
+        color: theme.vars.palette.text.two
+      },
+      // TODO: Pulled from Text, but adds default padding around elements.   Classes may be wrong
+      '& > [class*=Text-root] > *:not(:first-child)': {
+        '&:not(:is(ul, ol, li))': {
+          marginTop: '1em',
+          marginBottom: '2em'
+        },
+
+        '&:is(ul, ol)': {
+          marginTop: '-1em',
+          marginBottom: '3em'
+        }
+      },
+
+      '& > [class*=Text-root] > *:first-child': {
+        marginTop: '0'
+      },
+
+      '[class*=MuiTypography-h]': {
+        marginBottom: '.5em',
+        marginTop: '2em'
+      }
+    }
+  },
   {
     props: {
       variant: 'inline'
@@ -91,9 +135,43 @@ const createVariants = (_theme: Theme): ComponentsVariants['Text'] => [
     props: {
       variant: 'introText'
     },
-    style: ({ theme }: { theme: Theme }) => ({
-      marginBottom: theme.spacing(4)
-    })
+    style: {
+      // 'textAlign': 'center',
+      'marginBottom': theme.spacing(5),
+      '> *': {
+        '&:is(p)': {
+          marginBottom: theme.spacing(2)
+        },
+        '&:is(ul, ol)': {
+          margin: 0,
+          marginBottom: theme.spacing(2)
+        },
+        '[class*=MuiTypography-h1]': {
+          margin: 'var(--h1-margin)'
+        },
+        '[class*=MuiTypography-h2]': {
+          margin: 'var(--h2-margin)'
+        },
+        '[class*=MuiTypography-h3]': {
+          margin: 'var(--h3-margin)'
+        },
+        '[class*=MuiTypography-h4]': {
+          margin: 'var(--h4-margin)'
+        },
+        '[class*=MuiTypography-h5]': {
+          margin: 'var(--h5-margin)'
+        },
+        '[class*=MuiTypography-h6]': {
+          margin: 'var(--h6-margin)'
+        },
+        '[class*=MuiTypography-display1]': {
+          margin: 'var(--display2-margin)'
+        },
+        '[class*=MuiTypography-display2]': {
+          margin: 'var(--display2-margin)'
+        }
+      }
+    }
   }
 ];
 
@@ -103,6 +181,21 @@ export const textTheme = (theme: Theme): ThemeOptions => ({
       defaultProps,
       styleOverrides,
       variants: createVariants(theme)
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          ins: {
+            // textDecoration: 'none',
+            color: 'red'
+          },
+          mark: {
+            textDecoration: 'none',
+            color: 'var(--variant-highlight-color)',
+            backgroundColor: 'unset'
+          }
+        }
+      }
     }
   }
 });

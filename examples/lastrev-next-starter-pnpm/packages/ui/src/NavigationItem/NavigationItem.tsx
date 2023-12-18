@@ -93,26 +93,7 @@ const Root = styled(Box, {
   slot: 'Root',
   // shouldForwardProp,
   overridesResolver: (_, styles) => [styles.root]
-})<{ variant?: string; open: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>`
-  // ${({ open, theme, menuBreakpoint }) => `
-  //   @media (max-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
-  //     [class$=NavigationItem-menuRoot] {
-  //       ${visibleStyles(open)}
-  //     }
-  //   }
-  //   @media (min-width: ${theme.breakpoints.values[menuBreakpoint]}px) {
-  //     [class$=NavigationItem-menuRoot] {
-  //       max-height: 0px;
-  //     }
-  //     &:hover {
-  //       background: rgba(0,0,0,0.05);
-  //       [class$=NavigationItem-menuRoot] {
-  //         max-height: 300px;
-  //       }
-  //     }
-  //  }
-  // `}
-`;
+})<{ variant?: string; open: boolean; menuBreakpoint: 'xs' | 'sm' | 'md' | 'lg' | 'xl' }>``;
 
 const NavItemSubMenu = styled(List, {
   name: 'NavigationItem',

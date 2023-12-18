@@ -1,12 +1,13 @@
+import { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-export function middleware() {
+export function middleware(request: NextRequest) {
   const cspHeader = `
-    default-src 'self'  *.sentry.io  *.facebook.com vitals.vercel-insights.com *.hubapi.com *.hsforms.com *.hs-scripts.com *.hsforms.net *.hscollectedforms.net;
-    style-src 'self' 'unsafe-inline'  *.sentry.io  fonts.googleapis.com vitals.vercel-insights.com *.hs-scripts.com *.hsforms.net;
-    script-src 'self' 'unsafe-inline' 'unsafe-eval' *.sentry.io  *.google-analytics.com *.googletagmanager.com vitals.vercel-insights.com *.hs-analytics.net *.hs-banner.com *.hsadspixel.net *.hscollectedforms.net *.jquery.com *.hs-scripts.com *.hsforms.net;
+    default-src 'self'  *.contentful.com *.vercel.app localhost:8888 *.sentry.io  *.facebook.com vitals.vercel-insights.com *.hubapi.com *.hsforms.com *.hs-scripts.com *.hsforms.net *.hscollectedforms.net;
+    style-src 'self' 'unsafe-inline'  *.sentry.io  ${process.env.NEXT_PUBLIC_MARKETO_BASE_URL} fonts.googleapis.com vitals.vercel-insights.com *.hs-scripts.com *.hsforms.net;
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' ${process.env.NEXT_PUBLIC_MARKETO_BASE_URL}  *.gstatic.com *.google.com *.google-analytics.com *.googletagmanager.com vitals.vercel-insights.com *.hs-analytics.net *.hs-banner.com *.hsadspixel.net *.hscollectedforms.net *.jquery.com *.hs-scripts.com *.hsforms.net;
     font-src 'self'  *.sentry.io  fonts.gstatic.com *.hs-scripts.com *.hsforms.net data:;
-    frame-src  https://forms.hsforms.com;
+    frame-src  https://forms.hsforms.com ${process.env.NEXT_PUBLIC_MARKETO_BASE_URL} *.google.com;
     img-src * data:;
     media-src * data:;
     object-src 'none';
@@ -44,6 +45,8 @@ export function middleware() {
   securityHeaders.forEach(({ key, value }) => {
     requestHeaders.set(key, value);
   });
+
+  requestHeaders.set('x-url', request.url);
 
   return NextResponse.next({
     headers: requestHeaders,

@@ -1,0 +1,20 @@
+fragment CardPricing_FieldsFragment on PricingPlan {
+  ...Content_BaseFragment
+
+  overline
+  price
+  textBelowPrice
+  disclaimerText
+  actions {
+    ...Link_BaseFragment
+  }
+  variant
+}
+
+# Base fragment used everywhere there's a CardPricing
+fragment CardPricing_BaseFragment on PricingPlan {
+  ...CardPricing_FieldsFragment
+  body: bodyRTE {
+    ...RichText_BaseFragment
+  }
+}

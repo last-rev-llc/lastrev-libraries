@@ -9,3 +9,13 @@ fragment CollectionExpandableItem_BaseFragment on CollectionExpandableItem {
     ...Collection_BaseFragment
   }
 }
+fragment CollectionExpandableItem_NestedFragment on CollectionExpandableItem {
+  title
+  body {
+    ...RichText_RichTextFragment
+  }
+  content {
+    #...Block_BaseFragment
+    ...Quote_BaseFragment
+  }
+}

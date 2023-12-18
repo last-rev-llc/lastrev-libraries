@@ -1,0 +1,45 @@
+fragment PageResource_BaseFragment on PageResource {
+  ...Content_BaseFragment
+  seo
+  jsonLd
+  path
+  slug
+  title
+  variant
+  header {
+    ...Header_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+  footerDisclaimerOverride {
+    ...RichText_BaseFragment
+  }
+  hero {
+    ...ContentModule_BaseFragment
+  }
+  subNavigation {
+    ...NavigationItem_BaseFragment
+  }
+  body {
+    ...RichText_BaseFragment
+    links {
+      entries {
+        ...Block_BaseFragment
+      }
+    }
+  }
+  contents {
+    ...Block_BaseFragment
+  }
+}
+
+fragment PageResource_CardFragment on PageResource {
+  ...Content_BaseFragment
+  title
+  slug
+  promoImage {
+    ...Media_BaseFragment
+  }
+  promoSummary
+}

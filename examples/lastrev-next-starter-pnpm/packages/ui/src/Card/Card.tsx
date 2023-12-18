@@ -19,26 +19,12 @@ import type { CardProps, CardOwnerState } from './Card.types';
 import { type LinkProps } from '../Link';
 
 const Card = (props: CardProps) => {
-  const {
-    backgroundColor,
-    className,
-    id,
-    media,
-    overline,
-    title,
-    subtitle,
-    body,
-    link,
-    actions,
-    variant,
-    loading,
-    sidekickLookup
-  } = props;
+  const { id, media, overline, className, title, subtitle, body, link, actions, variant, loading, sidekickLookup } =
+    props;
 
   const ownerState = {
     ...props,
-    variant,
-    backgroundColor: backgroundColor
+    variant
   };
 
   const image = getFirstOfArray(media);
@@ -47,7 +33,7 @@ const Card = (props: CardProps) => {
     <ErrorBoundary>
       <Root ownerState={ownerState} data-testid="Card" {...sidekick(sidekickLookup)} className={className}>
         <CardWrap ownerState={ownerState}>
-          {!!link ? <CardLink component={CardActionArea} {...(link as any)} /> : null}
+          {!!link ? <CardLink component={CardActionArea} {...(link as any)} variant="link" /> : null}
 
           {image || loading ? (
             // @ts-ignore: TODO
@@ -60,7 +46,7 @@ const Card = (props: CardProps) => {
                   data-testid="Card-media"
                 />
               ) : (
-                <Skeleton variant="rectangular" width={210} height={118} />
+                <Skeleton variant="rectangular" />
               )}
             </CardMedia>
           ) : null}
@@ -83,7 +69,6 @@ const Card = (props: CardProps) => {
                 <Title
                   {...sidekick(sidekickLookup, 'title')}
                   component="p"
-                  variant="h3"
                   data-testid="Card-title"
                   // @ts-ignore: TODO
                   ownerState={ownerState}>
@@ -95,7 +80,6 @@ const Card = (props: CardProps) => {
                 <Subtitle
                   {...sidekick(sidekickLookup, 'subtitle')}
                   component="p"
-                  variant="h4"
                   data-testid="Card-subtitle"
                   // @ts-ignore: TODO
                   ownerState={ownerState}>
@@ -126,9 +110,7 @@ const Card = (props: CardProps) => {
               </Subtitle>
 
               <BodyWrap ownerState={ownerState} {...sidekick(sidekickLookup, 'body')}>
-                <Body ownerState={ownerState} variant="bodySmall">
-                  <Skeleton variant="text" width="100%" />
-                </Body>
+                <Skeleton variant="text" width="100%" height="64px" />
               </BodyWrap>
             </ContentWrap>
           ) : null}
@@ -138,17 +120,17 @@ const Card = (props: CardProps) => {
               data-testid="Card-actions"
               // @ts-ignore: TODO
               ownerState={ownerState}>
-              {!loading ? (
-                actions?.map((link: any, index: number) => (
-                  <Action
-                    key={`card-${id}-link-${link?.id || index}`}
-                    {...(link as LinkProps)}
-                    ownerState={ownerState}
-                  />
-                ))
-              ) : (
-                <Skeleton variant="text" width="100%" />
-              )}
+              {!loading
+                ? actions?.map((link: any, index: number) => (
+                    <Action
+                      key={`card-${id}-link-${link?.id || index}`}
+                      {...(link as LinkProps)}
+                      ownerState={ownerState}
+                    />
+                  ))
+                : null
+                  // <Skeleton variant="text" width="100%" />
+              }
             </ActionsWrap>
           )}
         </CardWrap>
@@ -169,7 +151,7 @@ const CardWrap = styled(MuiCard, {
   overridesResolver: (props, styles) => [styles.cardWrap]
 })<{ ownerState: CardOwnerState }>``;
 
-const CardLink = styled(CardActionArea, {
+const CardLink = styled(ContentModule, {
   name: 'Card',
   slot: 'CardLink',
   overridesResolver: (_, styles) => [styles.link]
@@ -178,7 +160,7 @@ const CardLink = styled(CardActionArea, {
 const CardMedia = styled(MuiCardMedia, {
   name: 'Card',
   slot: 'CardMedia',
-  overridesResolver: (_, styles) => [styles.media]
+  overridesResolver: (_, styles) => [styles.cardMedia]
 })<{ ownerState: CardOwnerState }>``;
 
 const ActionsWrap = styled(CardActions, {

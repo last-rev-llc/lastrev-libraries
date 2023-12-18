@@ -1,3 +1,5 @@
+directive @cacheControl(inheritMaxAge: Boolean, maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | INTERFACE | OBJECT | UNION
+
 directive @extends on INTERFACE | OBJECT
 
 directive @external(reason: String) on FIELD_DEFINITION | OBJECT
@@ -39,7 +41,7 @@ type Block implements Content {
   link: Link
   longText: String
   mediaItems: [Media]
-  overlapWithPreviousModule: Boolean
+  overlap: Boolean
   overline: String
   shortText: String
   sidekickLookup: JSON
@@ -47,15 +49,17 @@ type Block implements Content {
   supplementalContent: Content
   theme: [Theme]
   title: String
+  titleRTE: RichText
   variant: String
 }
 
 type Blog implements Content {
   animation: JSON
-  author: Person
+  author: Card
   body: RichText
   breadcrumbs: [Link]
   categories: [CategoryBlog]
+  contents: [Content]
   disableBackToTop: Boolean
   excludeFromDynamicLists: Boolean
   featuredMedia: Media
@@ -65,6 +69,7 @@ type Blog implements Content {
   id: String
   jsonLd: JSON
   lr__path__: String
+  originalSourceBody: String
   path: String
   persona: [String]
   promoImage: Media
@@ -72,12 +77,19 @@ type Blog implements Content {
   pubDate: Date
   relatedItems: Content
   seo: JSON
+  sidebarContents: [Content]
   sidekickLookup: JSON
   slug: String
+  subNavigation: NavigationItem
+  subtitle: String
   summary: String
-  tags: [String]
   theme: [Theme]
   title: String
+}
+
+enum CacheControlScope {
+  PRIVATE
+  PUBLIC
 }
 
 type Card implements Content {
@@ -88,6 +100,8 @@ type Card implements Content {
   animation: JSON
   body: RichText
   bodyRte: JSON
+  category: String
+  color: String
   id: String
   internalTitle: String
   jsonLd: JSON
@@ -109,6 +123,7 @@ type CategoryBlog implements Content {
   header: Header
   hero: Hero
   id: String
+  jsonLd: JSON
   lr__path__: String
   path: String
   promoImage: Media
@@ -116,6 +131,7 @@ type CategoryBlog implements Content {
   seo: JSON
   sidekickLookup: JSON
   slug: String
+  subNavigation: NavigationItem
   theme: [Theme]
   title: String
 }
@@ -132,6 +148,7 @@ type CategoryTag implements Content {
 }
 
 type Collection implements Content {
+  actions: [Link]
   animation: JSON
   backgroundColor: String
   backgroundImage: Media
@@ -149,20 +166,33 @@ type Collection implements Content {
   itemsPerRow: Int
   itemsVariant: String
   numItems: Int
+  pageInfo: CollectionPageInfo
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
 }
 
 type CollectionDynamic implements Content {
+  actions: [Link]
   animation: JSON
   backgroundColor: String
+  backgroundImage: Media
   id: String
   internalTitle: String
+  introText: Text
+  isCarouselDesktop: Boolean
+  isCarouselMobile: Boolean
+  isCarouselTablet: Boolean
+  items: [CollectionItem]
+  itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
+  itemsPerRow: Int
   itemsVariant: String
+  numItems: Int
   numberOfItemsToPull: String
+  pageInfo: CollectionPageInfo
   pullFromContentType: String
   settings: JSON
+  showFilters: Boolean
   sidekickLookup: JSON
   theme: [Theme]
   variant: String
@@ -201,21 +231,21 @@ input CollectionFilterInput {
   topics: [String]
 }
 
-union CollectionItem = Card
+union CollectionItem = Card | PricingPlan | Quote
 
 type CollectionItemConnection {
   items: [CollectionItem]
-  pageInfo: ConnectionPageInfo
+  pageInfo: CollectionPageInfo
 }
 
-type CollectionOptions {
-  tags: [Option]
-  topics: [Option]
+type CollectionOption {
+  key: String
+  values: [JSON]
 }
 
-type ConnectionPageInfo {
-  allOptions: CollectionOptions
-  options: CollectionOptions
+type CollectionPageInfo {
+  allOptions: [CollectionOption]
+  options: [CollectionOption]
   total: Int
 }
 
@@ -331,6 +361,7 @@ type Hero implements Content {
   contentHeight: String
   id: String
   internalTitle: String
+  overlap: Boolean
   overline: String
   sideImageItems: [Media]
   sidekickLookup: JSON
@@ -421,11 +452,6 @@ type NavigationItem implements Content {
   variant: String
 }
 
-type Option {
-  label: String
-  value: String
-}
-
 type Page implements Content {
   animation: JSON
   breadcrumbs: [Link]
@@ -434,11 +460,12 @@ type Page implements Content {
   footer: Footer
   footerDisclaimerOverride: RichText
   header: Header
-  hero: Hero
+  hero: Content
   id: String
   internalTitle: String
   jsonLd: JSON
   lr__path__: String
+  pageType: String
   path: String
   persona: [String]
   promoImage: Media
@@ -446,6 +473,7 @@ type Page implements Content {
   seo: JSON
   sidekickLookup: JSON
   slug: String
+  subNavigation: NavigationItem
   theme: [Theme]
   title: String
 }
@@ -461,13 +489,21 @@ type PagePathParams {
 
 type PageResource implements Content {
   animation: JSON
+  author: Person
   body: RichText
+  breadcrumbs: [Link]
+  contents: [Content]
   disableBackToTop: Boolean
+  footer: Footer
   footerDisclaimerOverride: RichText
+  header: Header
+  hero: Hero
   id: String
   includeTocTableOfContents: Boolean
   internalTitle: String
+  jsonLd: JSON
   lr__path__: String
+  path: String
   persona: [String]
   promoImage: Media
   promoSummary: String
@@ -475,12 +511,17 @@ type PageResource implements Content {
   seo: JSON
   sidekickLookup: JSON
   slug: String
+  subNavigation: NavigationItem
+  successBody: RichText
+  successSlug: String
   theme: [Theme]
   title: String
+  variant: String
 }
 
 type Person implements Content {
   animation: JSON
+  bioDetails: RichText
   body: RichText
   breadcrumbs: [Link]
   email: String
@@ -505,8 +546,10 @@ type Person implements Content {
 }
 
 type PricingPlan implements Content {
+  actions: [Link]
   animation: JSON
   body: String
+  bodyRTE: RichText
   disclaimerText: String
   id: String
   internalTitle: String
@@ -521,6 +564,7 @@ type PricingPlan implements Content {
 type Query {
   _service: _Service!
   availableLocales: Locales
+  collectionItems(filter: CollectionFilterInput, id: String, limit: Int, locale: String, offset: Int, preview: Boolean, settings: JSON): CollectionItemConnection
   content(displayType: String, id: String!, locale: String, preview: Boolean): Content
   contentPreview(displayType: String, id: String!, locale: String, overrideContent: JSON): Content
   contents(filter: ContentsFilter!): [Content]
@@ -536,6 +580,7 @@ type Query {
 type Quote implements Content {
   OLDauthorName: String
   OLDauthorTitle: String
+  actions: [Link]
   animation: JSON
   authorName: String
   authorTitle: String
@@ -604,6 +649,7 @@ type SiteRedirect implements Content {
   permanent: Boolean
   sidekickLookup: JSON
   source: String
+  sourceList: [String]
   theme: [Theme]
   variant: String
 }

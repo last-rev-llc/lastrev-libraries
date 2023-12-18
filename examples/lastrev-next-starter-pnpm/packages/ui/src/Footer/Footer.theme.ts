@@ -5,20 +5,20 @@ const defaultProps: ComponentsProps['Footer'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    padding: `var(--section-padding) 0 0`
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
+    position: 'relative',
+    padding: theme.spacing(10, 0)
   }),
 
   introContentsWrap: ({ theme }) => ({
-    marginBottom: 'var(--section-padding)'
+    // marginBottom: 'var(--section-padding)'
   }),
 
   // introContent: {},
 
   contentOuterGrid: {
     '& a': {
-      whiteSpace: 'nowrap',
-      color: 'inherit'
+      whiteSpace: 'nowrap'
     }
   },
 
@@ -27,6 +27,7 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     gridRow: 1,
     alignSelf: 'center',
     width: '100%',
+    maxWidth: 120,
     height: 'auto',
     display: 'block',
 
@@ -43,13 +44,13 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
 
   footerMenuNavItems: ({ theme, ownerState }) => ({
     display: 'inline-flex',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     padding: 0,
     position: 'unset',
     flexDirection: 'row',
     width: '100%',
     margin: 'auto',
-    gap: 'var(--grid-gap)',
+    gap: theme.spacing(5),
 
     [theme.breakpoints.up('sm')]: {
       height: '100%',
@@ -60,31 +61,30 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
   footerMenuNavItem: ({ theme }) => ({
     padding: 0,
     position: 'unset',
-
+    alignItems: 'flex-start',
     [theme.breakpoints.up('sm')]: {
       height: '100%'
     }
   }),
 
   socialLinks: ({ theme }) => ({
-    gridRow: 3,
+    gridRow: 4,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
 
     display: 'inline-flex',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     height: '100%',
     justifySelf: 'center',
     gap: 'var(--grid-gap)',
 
-    [theme.breakpoints.up('md')]: {
-      gridColumnStart: 'content-three-quarter',
+    [theme.breakpoints.up('sm')]: {
+      gridColumnStart: 'content-half',
       gridColumnEnd: 'content-end',
       justifyContent: 'flex-end',
-      justifySelf: 'flex-end',
       width: '100%',
-      gridRow: 3
+      gridRow: 4
     }
   }),
 
@@ -94,29 +94,32 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     'width': 30,
     '&:hover': {
       backgroundColor: theme.vars.palette.primary.main
-    },
-    '> svg': {
-      fontSize: 30
     }
   }),
 
   legalSection: ({ theme }) => ({
     'display': 'contents', // take out of flow,
 
-    '& *': {
-      ...theme.typography.bodySmall
+    '& .MuiTypography-root': {
+      ...theme.typography.bodySmall,
+      margin: 0
     }
+  }),
+  copyrightDivider: ({ theme }) => ({
+    gridColumn: 'content-start/content-end',
+    gridRow: 3
   }),
 
   copyrightDisclaimerWrap: ({ theme }) => ({
     gridRow: 5,
     gridColumnStart: 'content-start',
     gridColumnEnd: 'content-end',
-
-    [theme.breakpoints.up('md')]: {
-      gridRow: 3,
+    display: 'flex',
+    alignItems: 'center',
+    [theme.breakpoints.up('sm')]: {
+      gridRow: 4,
       gridColumnStart: 'content-start',
-      gridColumnEnd: 'content-quarter'
+      gridColumnEnd: 'content-half'
     }
   }),
 
@@ -127,29 +130,23 @@ const styleOverrides: ComponentsOverrides<Theme>['Footer'] = {
     display: 'inline-flex',
     alignItems: 'center',
     height: '100%',
-    justifySelf: 'center',
     gap: 'var(--grid-gap)',
 
-    [theme.breakpoints.up('md')]: {
-      gridColumn: 'content-quarter / content-three-quarter',
-      gridRow: 3
+    [theme.breakpoints.up('sm')]: {
+      gridColumn: 'content-start / content-end',
+      justifySelf: 'center',
+      gridRow: 4
     }
   }),
 
   disclaimerWrap: ({ theme }) => ({
-    ...theme.mixins.applyBackgroundColor({
-      ownerState: {
-        backgroundColor: 'black'
-      },
-      theme
-    }),
     'gridRow': 6,
     'gridColumnStart': 'full-start',
     'gridColumnEnd': 'full-end',
-    'padding': 'var(--grid-gap) 0',
 
-    [theme.breakpoints.up('md')]: {
-      gridRow: 4
+    [theme.breakpoints.up('sm')]: {
+      gridRow: 5,
+      marginTop: theme.spacing(5)
     },
 
     '& [class*=disclaimer] > *': {

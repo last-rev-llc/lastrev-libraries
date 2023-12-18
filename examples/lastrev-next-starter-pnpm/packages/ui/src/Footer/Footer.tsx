@@ -15,6 +15,7 @@ import type { FooterProps, FooterOwnerState } from './Footer.types';
 import type { NavigationItemProps } from '../NavigationItem';
 import type { LinkProps } from '../Link';
 import Background from '../Background';
+import { Divider } from '@mui/material';
 
 const Footer = (props: FooterProps) => {
   const ownerState = { ...props };
@@ -91,7 +92,7 @@ const Footer = (props: FooterProps) => {
               />
             </DisclaimerWrap>
           )}
-
+          <CopyrightDivider ownerState={ownerState} />
           {!!copyrightDisclaimer && (
             <CopyrightDisclaimerWrap ownerState={ownerState}>
               <CopyrightDisclaimer
@@ -164,6 +165,12 @@ const SocialLinks = styled(Box, {
   name: 'Footer',
   slot: 'SocialLinks',
   overridesResolver: (_, styles) => [styles.socialLinks]
+})<{ ownerState: FooterOwnerState }>``;
+
+const CopyrightDivider = styled(Divider, {
+  name: 'Footer',
+  slot: 'CopyrightDivider',
+  overridesResolver: (_, styles) => [styles.copyrightDivider]
 })<{ ownerState: FooterOwnerState }>``;
 
 const SocialLink = styled(ContentModule, {

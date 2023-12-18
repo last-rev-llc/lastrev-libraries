@@ -13,17 +13,20 @@ export const collectOptions = async ({
   filters: { id: string; key: string }[];
   items: any;
   ctx: ApolloContext;
-}): Promise<{ [key: string]: Option[] }> => {
+}): Promise<Array<{ key: string; values: any }>> => {
   const optionsSets: { [key: string]: Set<any> } = {};
-  if (!filters?.length) return {};
+  if (!filters?.length) return [];
 
   filters.forEach(({ id }) => {
     optionsSets[id] = new Set();
   });
   items?.forEach((entry: any) => {
     filters.forEach(({ id }) => {
-      const value: any = getLocalizedField(entry.fields, id, ctx);
+      const value: any = getLocalizedField(entry?.fields, id, ctx);
       if (!!value) {
+        // If value is a RichText skip
+        if (typeof value === 'object' && value?.nodeType) return;
+
         if (Array.isArray(value))
           value.forEach((val) => {
             optionsSets[id].add(val);
@@ -39,25 +42,25 @@ export const collectOptions = async ({
   // Resolve unexpanded links
   // Map to option objects
   // Remove duplicates
+
   await Promise.all(
     Object.keys(optionsSets).map(async (key: string) => {
       options[key] = await Promise.all(Array.from(optionsSets[key].values()).map(toOption(ctx))).then((items) =>
         uniqBy(
-          items?.sort((a, b) => (a.label.toString().toLowerCase() < b.label.toString().toLowerCase() ? -1 : 1)),
+          items?.sort((a, b) => (a?.label?.toString()?.toLowerCase() < b?.label?.toString()?.toLowerCase() ? -1 : 1)),
           (x) => x.value
         )
       );
     })
   );
-
-  return options;
+  return Object.entries(options).map(([key, values]) => ({ key, values }));
 };
 
 export const toOption = (ctx: ApolloContext) => async (value: string | any) => {
   // Check if option is a reference
   if (typeof value === 'object' && value?.sys && value?.fields) {
     return {
-      label: value?.fields?.title ?? value?.fields?.internalTitle,
+      label: value?.fields?.title ?? value?.fields?.name ?? value?.fields?.internalTitle,
       value: value?.sys?.id
     };
   } else if (typeof value === 'object' && value?.sys) {
@@ -65,7 +68,10 @@ export const toOption = (ctx: ApolloContext) => async (value: string | any) => {
     const item = await ctx.loaders.entryLoader.load({ id: value?.sys?.id, preview: !!ctx.preview });
     if (item) {
       return {
-        label: getLocalizedField(item.fields, 'title', ctx) ?? getLocalizedField(item.fields, 'internalTitle', ctx),
+        label:
+          getLocalizedField(item.fields, 'title', ctx) ??
+          getLocalizedField(item.fields, 'name', ctx) ??
+          getLocalizedField(item.fields, 'internalTitle', ctx),
         value: item?.sys?.id
       };
     }

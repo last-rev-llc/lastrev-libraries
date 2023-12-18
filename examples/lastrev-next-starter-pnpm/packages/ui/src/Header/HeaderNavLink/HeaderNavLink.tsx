@@ -14,6 +14,7 @@ import ContentModule from '../../ContentModule';
 // import { getFirstOfArray } from '../../utils/getFirstOfArray';
 
 import type { HeaderNavLinkProps, HeaderNavLinkOwnerState } from './HeaderNavLink.types';
+import Grid from '../../Grid';
 
 const HeaderNavLink = (props: HeaderNavLinkProps) => {
   const ownerState = {
@@ -21,18 +22,19 @@ const HeaderNavLink = (props: HeaderNavLinkProps) => {
     numOfCols: props.subNavigation?.length || 1
   };
 
-  const { variant, subNavigation, sidekickLookup, onRequestClose, id: navItemId } = props;
+  const { variant, subNavigation, sidekickLookup, onRequestClose, id: navItemId, open, onClickNav } = props;
 
   const onNavItemClick = (evt: any) => {
-    if (subNavigation?.length) {
-      evt.preventDefault();
-      evt.stopPropagation();
-      if (document.activeElement instanceof HTMLElement) {
-        evt?.target?.blur();
-      }
-    } else {
-      if (onRequestClose) onRequestClose();
-    }
+    onClickNav(evt);
+    // if (subNavigation?.length) {
+    //   evt.preventDefault();
+    //   evt.stopPropagation();
+    //   if (document.activeElement instanceof HTMLElement) {
+    //     evt?.target?.blur();
+    //   }
+    // } else {
+    //   if (onRequestClose) onRequestClose();
+    // }
   };
 
   const onSubNavItemClick = () => {
@@ -53,21 +55,25 @@ const HeaderNavLink = (props: HeaderNavLinkProps) => {
             subNavigation={undefined}
             ownerState={ownerState}
           />
-
-          <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState}>
-            {subNavigation?.map((subNavItem: any, index: number) => (
-              <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
-                <NavItemGroup
-                  {...subNavItem}
-                  variant="group"
-                  __typename="NavigationItem"
-                  onClick={onSubNavItemClick}
-                  onRequestClose={onRequestClose}
+          <NavItemSubMenuGrid ownerState={ownerState} overrideNested>
+            <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState} disablePadding>
+              {subNavigation?.map((subNavItem: any, index: number) => (
+                <NavItemSubMenuItem
+                  key={`${navItemId}-nav-item-${subNavItem.id}-${index}`}
                   ownerState={ownerState}
-                />
-              </NavItemSubMenuItem>
-            ))}
-          </NavItemSubMenu>
+                  disablePadding>
+                  <NavItemGroup
+                    {...subNavItem}
+                    variant="group"
+                    __typename="NavigationItem"
+                    onClick={onSubNavItemClick}
+                    onRequestClose={onRequestClose}
+                    ownerState={ownerState}
+                  />
+                </NavItemSubMenuItem>
+              ))}
+            </NavItemSubMenu>
+          </NavItemSubMenuGrid>
         </Root>
       ) : (
         <NavItemLink
@@ -89,6 +95,12 @@ const Root = styled(Box, {
   slot: 'Root',
   overridesResolver: (_, styles) => [styles.root]
 })<{ open?: boolean; ownerState: HeaderNavLinkOwnerState }>``;
+
+const NavItemSubMenuGrid = styled(Grid, {
+  name: 'HeaderNavLink',
+  slot: 'NavItemSubMenuGrid',
+  overridesResolver: (_, styles) => [styles.navItemSubMenuGrid]
+})<{ ownerState: HeaderNavLinkOwnerState }>``;
 
 const NavItemSubMenu = styled(List, {
   name: 'HeaderNavLink',

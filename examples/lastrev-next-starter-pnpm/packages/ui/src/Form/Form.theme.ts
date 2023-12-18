@@ -6,216 +6,201 @@ import {
   type ComponentsVariants,
   alpha
 } from '@mui/material/styles';
+import { FormVariants } from './Form.types';
 
 const defaultProps: ComponentsProps['Form'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Form'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
-    'containerType': 'inline-size',
-    'position': 'relative',
-    'width': '100%',
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
+    containerType: 'inline-size',
+    position: 'relative',
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'column'
+  }),
+
+  recaptchaWrap: {
+    order: 1,
+    margin: '0 auto var(--grid-gap)'
+  },
+  formDisclaimer: {
+    marginTop: 'var(--grid-gap)',
+    order: 2
+  },
+  formWrap: ({ theme, ownerState }) => ({
     'display': 'flex',
     'flexDirection': 'column',
+    'justifyContent': 'space-between',
 
-    '& form': {
-      'border': 'solid 10px blue',
-      'display': 'grid',
-      'gap': 'var(--grid-gap)',
+    '&& form': {
+      'display': 'contents',
+      ':is( .mktoPlaceholder, .mktoOffset, .mktoClear, .mktoGutter, .mktoButtonWrap,  .mktoClear, .mktoGutter, .mktoOffset)':
+        {
+          display: 'contents'
+        },
 
-      '& .hs-recaptcha': {
+      '.mktoFormRow': {
+        display: 'flex',
+        flexDirection: 'row',
+        gap: 'var(--grid-gap)'
+      },
+
+      '.mktoFormCol': {
+        float: 'unset',
+        width: '100%',
+        marginBottom: 'var(--grid-gap) !important'
+      },
+
+      '.mktoError': {
+        'bottom': '-8px!important',
+        'left': '8px !important',
+        'right': 'unset !important',
+        'top': 'unset !important',
+        // TODO: Use typography
+        'fontSize': '12px',
+        '*': {
+          backgroundColor: 'transparent',
+          backgroundImage: 'unset',
+          border: 'unset !important',
+          textShadow: 'unset',
+          boxShadow: 'unset',
+          color: theme.palette.error.main,
+          fontSize: 'inherit',
+          padding: 0,
+          margin: 0,
+          display: 'inline !important'
+        }
+      },
+
+      ':is(label)': {
         display: 'none'
       },
 
-      '& fieldset': {
-        maxWidth: '100%',
-        display: 'grid',
-        margin: 0,
-
-        grid: 'none',
-        gap: 'var(--grid-gap)',
-
-        [theme.containerBreakpoints.up('lg')]: {
-          gridTemplateColumns: 'repeat(auto-fit, minmax(0, 1fr))'
-        }
+      '.mktoFieldWrap': {
+        order: 0,
+        float: 'unset',
+        width: '100%',
+        height: '100%',
+        position: 'relative'
       },
 
-      '& .field.hs-form-field': {
-        'marginRight': 0,
-        'position': 'relative',
-        'width': '100%',
-        'float': 'none',
-        'background': 'transparent',
-
-        '& .input': {
-          'marginRight': 0,
-
-          '& .hs-input': {
-            'width': '100%',
-            'maxWidth': '100%',
-            'padding': theme.spacing(2),
-            'color': 'blue', //theme.palette.text.text,
-            'border': `solid 2px ${theme.palette.common.black}`,
-            'borderRadius': theme.spacing(0.5),
-
-            '&:hover': {
-              borderColor: theme.palette.common.black,
-              boxShadow: theme.shadows[1]
-            },
-
-            '&:focus': {
-              borderColor: theme.palette.common.black,
-              boxShadow: theme.shadows[1]
-            },
-
-            '&:focus-visible': {
-              outline: `${theme.palette.common.black} auto 0px`
-            }
-          },
-
-          'input': {
-            '&': {
-              ...theme.typography.bodySmall,
-              'height': 'auto',
-
-              '&::placeholder': {
-                opacity: 0.7
-              }
-            }
-          },
-
-          'textarea': {
-            ...theme.typography.bodySmall,
-            'height': 300,
-            'maxHeight': '80vh',
-
-            '&::placeholder': {
-              opacity: 0.7
-            }
-          },
-
-          'select': {
-            '&': {
-              ...theme.typography.bodySmall,
-
-              'appearance': 'none',
-              'backgroundImage':
-                'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxNyAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gXAogICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMS45OTc1IDAuNzM3NTQ5TDguNSA2LjQ2MjU1TDE1LjAwMjUgMC43Mzc1NDlMMTcgMi41MDAwNUw4LjUgMTBMMCAyLjUwMDA1TDEuOTk3NSAwLjczNzU0OVoiIGZpbGw9IiNBNEE0QTQiLz4gXAogICAgICAgICAgICAgICAgICAgIDwvc3ZnPg==)',
-              'backgroundPosition': 'right center',
-              'backgroundRepeat': 'no-repeat',
-              'backgroundSize': 17,
-              'backgroundOrigin': 'content-box',
-
-              '&.is-placeholder': {
-                color: alpha(theme.palette.common.black, 0.7)
-              }
-            }
-          },
-
-          '&.error': {
-            borderColor: theme.palette.error.main,
-            borderWidth: 1
-          }
-        }
+      '.mktoButtonRow': {
+        width: '100%',
+        margin: 'auto',
+        order: 2,
+        display: 'flex',
+        justifyContent: 'center'
       },
-      '& .hs-fieldtype-checkbox.field.hs-form-field': {
-        'ul': {
-          listStyleType: 'none',
-          padding: 0
+
+      ':is(select, input, textarea)': {
+        ...theme.typography.body1,
+        'height': 'auto',
+        'width': '100% !important',
+        'maxWidth': '100%',
+        'padding': 'var(--grid-gap)',
+        'border': 'unset',
+        'borderBottomStyle': `solid`,
+        'borderBottomWidth': `2px`,
+        'borderRadius': 0,
+        'backgroundColor': '#efefef',
+
+        '&[aria-invalid=true]': {
+          borderBottomColor: theme.palette.error.main
         },
 
-        '& .hs-form-checkbox': {
-          width: 'fit-content',
-          marginBottom: 'var(--grid-gap)'
+        '&::placeholder': {
+          opacity: 0.7
         },
 
-        '& .hs-form-checkbox-display': {
-          'display': 'flex',
-          'alignItems': 'center',
-          'cursor': 'pointer',
+        '&:hover': {
+          borderColor: theme.vars.palette.primary.contrastText,
+          boxShadow: theme.shadows[1]
+        },
 
-          '& .hs-input': {
-            visibility: 'hidden',
-            width: 20,
-            height: 20,
-            padding: 0,
-            margin: 0
-          },
+        '&:focus': {
+          borderColor: theme.vars.palette.primary.contrastText,
+          boxShadow: theme.shadows[1]
+        },
 
-          '& span': {
-            ...theme.typography.bodySmall,
-            color: theme.palette.common.black,
-            paddingLeft: 'var(--grid-gap)'
-          },
-
-          "& input[type='checkbox']::before": {
-            width: 20,
-            height: 20,
-            position: 'absolute',
-            cursor: 'pointer',
-            backgroundImage:
-              'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSIxOSIgaGVpZ2h0PSIxOSIgcng9IjEuNSIgc3Ryb2tlPSIjQkVCRUJFIi8+Cjwvc3ZnPgo=)',
-            content: '""',
-            visibility: 'visible'
-          },
-
-          "& input[type='checkbox']:checked::before": {
-            backgroundImage:
-              'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3QgeD0iMC41IiB5PSIwLjUiIHdpZHRoPSIxOSIgaGVpZ2h0PSIxOSIgcng9IjEuNSIgZmlsbD0iIzA1ODBFOCIvPgo8cmVjdCB4PSIwLjUiIHk9IjAuNSIgd2lkdGg9IjE5IiBoZWlnaHQ9IjE5IiByeD0iMS41IiBzdHJva2U9IiNCRUJFQkUiLz4KPHBhdGggZD0iTTE2Ljk1NTEgNi40NzYxMkwxNS4zODc4IDVMNy45MTI3NCAxMi4wNDc2TDQuNTY3MjcgOC44OTMzMkwzIDEwLjM2OTRMNy45MTI3NyAxNUwxNi45NTUxIDYuNDc2MTJaIiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K)'
-          }
+        '&:focus-visible': {
+          outline: `${theme.vars.palette.primary.contrastText} auto 0px`
         }
       },
 
-      '& .actions': {
-        '& input': {
-          ...theme.typography.bodySmall,
-
-          'backgroundColor': theme.palette.common.white,
-          'color': theme.palette.common.black,
-          'border': `3px solid ${theme.palette.common.black}`,
-          'padding': theme.spacing(0.625, 2.625), // Substract border
-          'borderRadius': theme.spacing(0.5),
-          'textDecoration': 'none',
-          'width': '100%',
-
-          '&:hover': {
-            borderColor: theme.palette.common.black,
-            backgroundColor: theme.palette.common.white
-          },
-
-          '&:active': {
-            backgroundColor: theme.palette.common.white,
-            borderColor: theme.palette.common.black
-          }
-        }
+      'textarea': {
+        height: 300,
+        maxHeight: '80vh'
       },
 
-      '& .hs-error-msgs': {
-        'top': 'auto',
-        'left': theme.spacing(2),
-        'right': theme.spacing(2),
+      'select': {
+        'appearance': 'none',
+        'backgroundImage':
+          'url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTciIGhlaWdodD0iMTAiIHZpZXdCb3g9IjAgMCAxNyAxMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4gXAogICAgICAgICAgICAgICAgICAgICA8cGF0aCBkPSJNMS45OTc1IDAuNzM3NTQ5TDguNSA2LjQ2MjU1TDE1LjAwMjUgMC43Mzc1NDlMMTcgMi41MDAwNUw4LjUgMTBMMCAyLjUwMDA1TDEuOTk3NSAwLjczNzU0OVoiIGZpbGw9IiNBNEE0QTQiLz4gXAogICAgICAgICAgICAgICAgICAgIDwvc3ZnPg==)',
+        'backgroundPosition': 'right center',
+        'backgroundRepeat': 'no-repeat',
+        'backgroundSize': 17,
+        'backgroundOrigin': 'content-box',
+
+        '&.is-placeholder': {
+          color: alpha(theme.palette.primary.contrastText, 0.7)
+        }
+      }
+
+      // 'button': {
+      //   ...theme.typography.body1,
+
+      //   'backgroundColor': theme.vars.palette.primary.light,
+      //   'color': theme.vars.palette.primary.contrastText,
+      //   'border': `3px solid ${theme.vars.palette.primary.contrastText}`,
+      //   'padding': theme.spacing(0.625, 2.625), // Substract border
+      //   'borderRadius': theme.spacing(0.5),
+      //   'textDecoration': 'none',
+      //   'width': 'unset',
+      //   'margin': '0 auto',
+      //   'display': 'block',
+
+      //   '&:hover': {
+      //     borderColor: theme.vars.palette.primary.contrastText,
+      //     backgroundColor: theme.vars.palette.primary.light
+      //   },
+
+      //   '&:active': {
+      //     backgroundColor: theme.vars.palette.primary.light,
+      //     borderColor: theme.vars.palette.primary.contrastText
+      //   }
+      // }
+    }
+  })
+};
+
+const createVariants = (theme: Theme): ComponentsVariants['Form'] => [
+  {
+    props: { variant: FormVariants.sidebarNewsletter },
+    style: {
+      background: theme.vars.palette.background.lightThree,
+      padding: theme.spacing(6, 3)
+    }
+  },
+  {
+    props: { variant: FormVariants.default },
+    style: {
+      'background': theme.vars.palette.background.lightThree,
+      'padding': theme.spacing(8),
+      'boxShadow': '0px 0px 64px 20px rgba(0, 0, 0, 0.06)',
+
+      '[class*=Text-root] ': {
         'margin': 0,
-        'padding': 0,
-        'border': 0,
-        'listStyle': 'none',
-
-        '& li label': {
-          ...theme.typography.bodySmall,
-          display: 'block !important',
-          padding: theme.spacing(0.25, 0, 0),
-          color: theme.vars.palette.error.main,
-          textAlign: 'left'
+        '[class*=Text-title]': {
+          ...theme.typography.display2
+        },
+        '[class*=Text-subtitle]': {
+          ...theme.typography.body1
         }
       }
     }
-  })
-
-  // formContainer: ({ theme, ownerState }) => ({
-  //   display: ownerState?.submitted && ownerState?.hasSuccessMessage ? 'none' : 'block'
-  // })
-};
-
-const createVariants = (_theme: Theme): ComponentsVariants['Form'] => [];
+  }
+];
 
 export const formTheme = (theme: Theme): ThemeOptions => ({
   components: {

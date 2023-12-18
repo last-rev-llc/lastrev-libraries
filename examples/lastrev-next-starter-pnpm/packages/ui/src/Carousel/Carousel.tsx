@@ -1,14 +1,12 @@
+'use client';
 import React from 'react';
 
 // import Swiper core and required modules
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, A11y, Grid as SwiperGrid } from 'swiper/modules';
+import { Navigation, Pagination, A11y, Grid as SwiperGrid, Autoplay } from 'swiper/modules';
 import { type SwiperOptions } from 'swiper/types';
-
 import { styled } from '@mui/material/styles';
-
 import Box from '@mui/material/Box';
-
 import sidekick from '@last-rev/contentful-sidekick-util';
 
 import Grid from '../Grid';
@@ -29,6 +27,7 @@ const Carousel = (props: CarouselProps) => {
     isCarouselDesktop,
     isCarouselTablet,
     isCarouselMobile,
+    carouselAutoPlay,
     items,
     variant,
     itemsVariant,
@@ -39,6 +38,13 @@ const Carousel = (props: CarouselProps) => {
   } = props;
 
   const swiperBreakpoints: { [width: number]: SwiperOptions } = {};
+  let spaceBetween = 24;
+  let slidesPerView = Math.min(itemsPerRow, numItems);
+  switch (itemsVariant) {
+    case 'logo':
+      spaceBetween = 80;
+      break;
+  }
 
   // Can change the slidePerView below if you don't want to show a partial for the next slide
   swiperBreakpoints['1'] = {
@@ -46,8 +52,8 @@ const Carousel = (props: CarouselProps) => {
       rows: isCarouselMobile ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: 1.25,
-    spaceBetween: 16
+    slidesPerView: 2,
+    spaceBetween
   };
 
   swiperBreakpoints[breakpoints.sm] = {
@@ -55,8 +61,8 @@ const Carousel = (props: CarouselProps) => {
       rows: isCarouselTablet ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: 1.25,
-    spaceBetween: 16
+    slidesPerView: 3,
+    spaceBetween
   };
 
   swiperBreakpoints[breakpoints.md] = {
@@ -64,8 +70,8 @@ const Carousel = (props: CarouselProps) => {
       rows: isCarouselDesktop ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: itemsPerRow > 1 ? 2.5 : 1,
-    spaceBetween: 12
+    slidesPerView: itemsPerRow > 1 ? slidesPerView : 1,
+    spaceBetween
   };
 
   swiperBreakpoints[breakpoints.lg] = {
@@ -73,8 +79,8 @@ const Carousel = (props: CarouselProps) => {
       rows: isCarouselDesktop ? 1 : numItems,
       fill: 'row'
     },
-    slidesPerView: itemsPerRow > 2 ? 3.5 : 2.5,
-    spaceBetween: 16
+    slidesPerView: itemsPerRow > 2 ? slidesPerView : slidesPerView,
+    spaceBetween
   };
 
   if (itemsPerRow === 4) {
@@ -83,8 +89,8 @@ const Carousel = (props: CarouselProps) => {
         rows: isCarouselDesktop ? 1 : numItems,
         fill: 'row'
       },
-      slidesPerView: 2.5,
-      spaceBetween: 20
+      slidesPerView: 4,
+      spaceBetween
     };
 
     swiperBreakpoints[breakpoints.lg] = {
@@ -92,8 +98,8 @@ const Carousel = (props: CarouselProps) => {
         rows: isCarouselDesktop ? 1 : numItems,
         fill: 'row'
       },
-      slidesPerView: 4.5,
-      spaceBetween: 20
+      slidesPerView: slidesPerView,
+      spaceBetween
     };
   } else if (itemsPerRow >= 5) {
     swiperBreakpoints[breakpoints.xl] = {
@@ -101,8 +107,8 @@ const Carousel = (props: CarouselProps) => {
         rows: isCarouselDesktop ? 1 : numItems,
         fill: 'row'
       },
-      slidesPerView: 5.5,
-      spaceBetween: 20
+      slidesPerView: slidesPerView,
+      spaceBetween
     };
   }
 
@@ -132,11 +138,12 @@ const Carousel = (props: CarouselProps) => {
                 rewind={true}
                 breakpointsBase="container"
                 cssMode={true}
-                modules={[Navigation, SwiperGrid, Pagination, A11y]}
+                modules={[Navigation, SwiperGrid, Pagination, A11y, Autoplay]}
                 spaceBetween={24}
                 breakpoints={swiperBreakpoints}
+                pagination={{ clickable: true }}
                 navigation
-                // pagination={{ clickable: true }}
+                autoplay={carouselAutoPlay}
                 // scrollbar={{ draggable: true }}
                 // onSwiper={(swiper) => console.log(swiper)}
                 // onSlideChange={() => console.log('slide change')}

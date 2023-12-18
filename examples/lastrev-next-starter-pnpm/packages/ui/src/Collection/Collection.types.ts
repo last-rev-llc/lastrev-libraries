@@ -1,6 +1,6 @@
 import type { ComponentsOverrides, ComponentsVariants, ComponentsProps } from '@mui/material';
 
-import type { Collection_BaseFragmentFragment } from '@graphql-sdk/types';
+import type { CollectionDynamic_BaseFragmentFragment, Collection_BaseFragmentFragment } from '@graphql-sdk/types';
 
 import { CardVariants } from '../Card/Card.types';
 
@@ -13,7 +13,8 @@ export enum CollectionVariants {
   fivePerRow = 'fivePerRow'
 }
 
-export interface CollectionProps extends Omit<Collection_BaseFragmentFragment, 'variant' | 'itemsVariant'> {
+export interface CollectionProps
+  extends Omit<Collection_BaseFragmentFragment | CollectionDynamic_BaseFragmentFragment, 'variant' | 'itemsVariant'> {
   variant?: CollectionVariants;
   itemsVariant?: CardVariants;
 }
@@ -28,6 +29,7 @@ interface CollectionClasses {
   itemsGrid: string;
   item: string;
   actionsContainer: string;
+  actionsWrap: string;
   action: string;
 }
 

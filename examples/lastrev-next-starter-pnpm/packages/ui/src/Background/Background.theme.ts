@@ -5,7 +5,7 @@ const defaultProps: ComponentsProps['Background'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Background'] = {
   root: ({ theme, ownerState }) => ({
-    // ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    // ...theme.mixins.applyColorScheme({ ownerState, theme }),
     'backgroundColor': 'inherit',
     'zIndex': -1,
     'position': 'absolute',

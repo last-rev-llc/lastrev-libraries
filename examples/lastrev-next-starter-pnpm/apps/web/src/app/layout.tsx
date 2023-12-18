@@ -5,14 +5,19 @@ if (!process.env.DOMAIN) throw new Error('DOMAIN environment variable is require
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.DOMAIN!),
   title: {
-    template: '%s | LastRev Next Starter',
-    default: 'LastRev Next Starter'
+    template: '%s | Starter',
+    default: 'Starter'
+  },
+  other: {
+    contentful_space: process.env.NEXT_PUBLIC_CONTENTFUL_SPACE_ID ?? '',
+    contentful_environment: process.env.NEXT_PUBLIC_CONTENTFUL_ENV ?? ''
   }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
+      <head></head>
       <body>{children}</body>
     </html>
   );

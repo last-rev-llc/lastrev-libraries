@@ -18,10 +18,11 @@ import SiteMessage from '../SiteMessage';
 import type { HeaderProps, HeaderOwnerState } from './Header.types';
 import type { NavigationItemProps } from '../NavigationItem';
 import Background from '../Background';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 const Header = (props: HeaderProps) => {
   const ownerState = { ...props };
-
+  const [open, setOpen] = React.useState('');
   const {
     backgroundColor,
     logo,
@@ -42,79 +43,93 @@ const Header = (props: HeaderProps) => {
   // const menuBreakpoint: Breakpoint = theme?.components?.Header?.mobileMenuBreakpoint ?? 'sm';
 
   const [menuVisible, setMenuVisible] = React.useState(false);
+  const handleClickAway = () => {
+    setOpen('');
+  };
 
   return (
-    <Root
-      {...sidekick(sidekickLookup)}
-      ownerState={ownerState}
-      // elevation={trigger ? 2 : 0}
-      menuVisible={menuVisible}
-      // menuBreakpoint={menuBreakpoint}
-    >
-      <HeaderBackground backgroundColor={backgroundColor} testId="Header-background" />
-      {siteMessageText && (
-        <SiteMessageWrap ownerState={ownerState}>
-          <SiteMessage icon={siteMessageIcon} text={siteMessageText} link={siteMessageLink} />
-        </SiteMessageWrap>
-      )}
+    <ClickAwayListener onClickAway={handleClickAway}>
+      <Root
+        {...sidekick(sidekickLookup)}
+        ownerState={ownerState}
+        // elevation={trigger ? 2 : 0}
+        menuVisible={menuVisible}
+        // menuBreakpoint={menuBreakpoint}
+      >
+        <HeaderBackground backgroundColor={backgroundColor} testId="Header-background" />
+        {siteMessageText && (
+          <SiteMessageWrap ownerState={ownerState}>
+            <SiteMessage icon={siteMessageIcon} text={siteMessageText} link={siteMessageLink} />
+          </SiteMessageWrap>
+        )}
 
-      <ContentOuterGrid ownerState={ownerState}>
-        {logo ? (
-          <LogoRoot {...logoUrl} aria-label={'Go to homepage'} ownerState={ownerState} text={undefined}>
-            <Logo {...logo} __typename="Media" priority alt={logo?.title ?? 'Go to homepage'} ownerState={ownerState} />
-          </LogoRoot>
-        ) : null}
+        <ContentOuterGrid ownerState={ownerState} overrideNested={true}>
+          {logo ? (
+            <LogoRoot {...logoUrl} aria-label={'Go to homepage'} ownerState={ownerState} text={undefined}>
+              <Logo
+                {...logo}
+                __typename="Media"
+                priority
+                alt={logo?.title ?? 'Go to homepage'}
+                ownerState={ownerState}
+              />
+            </LogoRoot>
+          ) : null}
 
-        <HeaderMobileNavWrap ownerState={ownerState} menuVisible={menuVisible}>
-          {!!navigationItems?.length && (
-            <HeaderMenuNav component="nav" ownerState={ownerState}>
-              <HeaderMenuNavItems ownerState={ownerState}>
-                {navigationItems.map((navItem: any, index: number) => (
-                  <HeaderMenuNavItem key={`${navItem.id}-${index}`} ownerState={ownerState}>
-                    <HeaderMenuNavLink
-                      {...(navItem as NavigationItemProps)}
-                      variant="link"
-                      onRequestClose={() => {
-                        setMenuVisible(false);
-                        if (document.activeElement instanceof HTMLElement) {
-                          document.activeElement.blur();
-                        }
-                      }}
-                      ownerState={ownerState}
-                      __typename="NavigationItem"
-                      menuVisible={menuVisible}
-                    />
-                  </HeaderMenuNavItem>
+          <HeaderMobileNavWrap ownerState={ownerState} menuVisible={menuVisible}>
+            {!!navigationItems?.length && (
+              <HeaderMenuNav component="nav" ownerState={ownerState}>
+                <HeaderMenuNavItems ownerState={ownerState}>
+                  {navigationItems.map((navItem: any, index: number) => (
+                    <HeaderMenuNavItem key={`${navItem.id}-${index}`} ownerState={ownerState}>
+                      <HeaderMenuNavLink
+                        {...(navItem as NavigationItemProps)}
+                        variant="link"
+                        open={open === navItem.id}
+                        onClickNav={() => setOpen(navItem.id)}
+                        onRequestClose={() => {
+                          setOpen('');
+                          setMenuVisible(false);
+                          if (document.activeElement instanceof HTMLElement) {
+                            document.activeElement.blur();
+                          }
+                        }}
+                        ownerState={ownerState}
+                        __typename="NavigationItem"
+                        menuVisible={menuVisible}
+                      />
+                    </HeaderMenuNavItem>
+                  ))}
+                </HeaderMenuNavItems>
+              </HeaderMenuNav>
+            )}
+
+            {!!ctaItems?.length && (
+              <HeaderMenuCtas ownerState={ownerState}>
+                {ctaItems?.map((ctaItem: any, index: number) => (
+                  <HeaderMenuCtaItem key={`${ctaItem.id}-${index}`} ownerState={ownerState}>
+                    <ContentModule {...ctaItem} size="small" />
+                  </HeaderMenuCtaItem>
                 ))}
-              </HeaderMenuNavItems>
-            </HeaderMenuNav>
-          )}
+              </HeaderMenuCtas>
+            )}
+          </HeaderMobileNavWrap>
 
-          {!!ctaItems?.length && (
-            <HeaderMenuCtas ownerState={ownerState}>
-              {ctaItems?.map((ctaItem: any, index: number) => (
-                <HeaderMenuCtaItem key={`${ctaItem.id}-${index}`} ownerState={ownerState}>
-                  <ContentModule {...ctaItem} size="small" />
-                </HeaderMenuCtaItem>
-              ))}
-            </HeaderMenuCtas>
-          )}
-        </HeaderMobileNavWrap>
-
-        <IconButtonWrap ownerState={ownerState}>
-          <IconButton
-            ownerState={ownerState}
-            edge="end"
-            color="inherit"
-            aria-label="menu"
-            onClick={() => setMenuVisible(!menuVisible)}
-            size="large">
-            <MenuIcon ownerState={ownerState} sx={{ display: menuVisible ? 'none' : 'block' }} />
-            <CloseIcon ownerState={ownerState} sx={{ display: !menuVisible ? 'none' : 'block' }} />
-          </IconButton>
-        </IconButtonWrap>
-      </ContentOuterGrid>
-    </Root>
+          <IconButtonWrap ownerState={ownerState}>
+            <IconButton
+              ownerState={ownerState}
+              edge="end"
+              color="inherit"
+              aria-label="menu"
+              onClick={() => setMenuVisible(!menuVisible)}
+              size="large">
+              <MenuIcon ownerState={ownerState} sx={{ display: menuVisible ? 'none' : 'block' }} />
+              <CloseIcon ownerState={ownerState} sx={{ display: !menuVisible ? 'none' : 'block' }} />
+            </IconButton>
+          </IconButtonWrap>
+        </ContentOuterGrid>
+      </Root>
+    </ClickAwayListener>
   );
 };
 

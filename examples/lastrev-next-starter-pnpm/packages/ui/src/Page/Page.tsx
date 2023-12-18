@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import dynamic from 'next/dynamic';
 
@@ -10,7 +11,18 @@ import sidekick from '@last-rev/contentful-sidekick-util';
 import type { PageProps } from './Page.types';
 
 const Page = (props: PageProps) => {
-  const { header, hero, contents, footer, disableBackToTop, sidekickLookup, jsonLd, footerDisclaimerOverride } = props;
+  const {
+    header,
+    hero,
+    subNavigation,
+    contents,
+    footer,
+    disableBackToTop,
+    sidekickLookup,
+    jsonLd,
+    footerDisclaimerOverride,
+    searchParams
+  } = props;
 
   const ownerState = {
     ...props
@@ -27,8 +39,9 @@ const Page = (props: PageProps) => {
       {hero ? <ContentModule {...(hero as any)} /> : null}
 
       <Main {...sidekick(sidekickLookup, 'contents')}>
+        {subNavigation ? <ContentModule {...(subNavigation as any)} /> : null}
         {contents?.map((content: any) => (
-          <ContentModule key={content?.id} {...content} component="section" />
+          <ContentModule key={content?.id} {...content} component="section" searchParams={searchParams} />
         ))}
         {!disableBackToTop ? <BackToTop /> : null}
       </Main>

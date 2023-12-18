@@ -5,80 +5,66 @@ const defaultProps: ComponentsProps['Quote'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Quote'] = {
   root: ({ theme, ownerState }) => ({
-    ...theme.mixins.applyBackgroundColor({ ownerState, theme }),
+    ...theme.mixins.applyColorScheme({ ownerState, theme }),
     containerType: 'inline-size',
-    padding: `var(--section-padding) 0`
+    height: '100%'
   }),
 
-  // contentGrid: : {},
+  contentOuterGrid: ({ theme }) => ({
+    height: '100%',
+    alignItems: 'center',
+    gridRowGap: theme.spacing(5)
+  }),
 
-  logo: ({ theme }) => ({
-    gridRow: 1,
-    gridColumn: 'content-quarter/content-three-quarter',
-
-    [theme.containerBreakpoints.up('sm')]: {
-      gridColumn: 'four-start/five-end'
-    },
-
-    [theme.containerBreakpoints.up('md')]: {
-      gridColumn: 'six-start/seven-end'
-    },
-
-    [theme.containerBreakpoints.up('lg')]: {
-      gridColumn: 'six-start/seven-end'
-    }
+  actionsWrap: ({ theme }) => ({
+    display: 'flex',
+    gap: theme.spacing(2),
+    justifyContent: 'center'
   }),
 
   quoteText: ({ theme }) => ({
-    gridRow: 2,
+    gridRow: 1,
     gridColumn: 'content-start/content-end',
     textAlign: 'center',
-    ...theme.typography.display4,
+    ...theme.typography.h3,
 
     [theme.containerBreakpoints.up('sm')]: {
-      gridColumn: 'content-quarter/content-three-quarter'
+      gridColumn: 'content-start/content-end'
     }
   }),
 
   // quoteSymbol: : {},
 
-  authorRoot: {
-    display: 'contents'
-  },
+  authorRoot: ({ theme }) => ({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: theme.spacing(3)
+    // alignItems: 'center',
+    // display: 'grid',
+    // gridColumnGap: theme.spacing(3)
+    // gridTemplateColumns: '1fr 1fr',
+    // gridTemplateAreas: `
+    //     "image authorName"
+    //     "image authorTitle"
+    // `
+  }),
 
   image: ({ theme }) => ({
-    gridRow: '3/5',
-    gridColumn: 'content-start/one-end',
-
-    [theme.containerBreakpoints.up('md')]: {
-      gridColumn: 'content-quarter/content-half'
-    },
-
-    [theme.containerBreakpoints.up('lg')]: {
-      gridColumn: 'six-start/content-half'
-    }
+    width: 56,
+    height: 56,
+    borderRadius: '50%'
+    // gridArea: 'image',
+    // justifySelf: 'end'
   }),
 
   authorName: ({ theme }) => ({
-    gridRow: 3,
-    gridColumn: 'two-start/content-end',
-    lineHeight: 1,
-    alignSelf: 'flex-end',
-
-    [theme.containerBreakpoints.up('md')]: {
-      gridColumn: 'content-half/content-end'
-    }
+    gridArea: 'authorName',
+    fontWeight: 'bold'
   }),
 
   authorTitle: ({ theme }) => ({
-    gridRow: 4,
-    gridColumn: 'two-start/content-end',
-    fontStyle: 'italic',
-    lineHeight: 1,
-
-    [theme.containerBreakpoints.up('md')]: {
-      gridColumn: 'content-half/content-end'
-    }
+    gridArea: 'authorTitle'
   })
 };
 

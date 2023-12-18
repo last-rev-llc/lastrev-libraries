@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Box from '@mui/material/Link';
 import Link from '@mui/material/Link';
@@ -7,6 +8,7 @@ import { CircularProgress } from '@mui/material';
 
 import ContentModule from '../ContentModule';
 import type { ContentPreviewProps } from './ContentPreview.types';
+import { useRouter } from 'next/navigation';
 
 const ContentPreview = ({
   id,
@@ -17,8 +19,10 @@ const ContentPreview = ({
   spaceId,
   locale = 'en-US',
   pageURL,
-  livePreview = false
+  livePreview = false,
+  searchParams
 }: ContentPreviewProps) => {
+  const router = useRouter();
   const [viewportW, setViewportW] = React.useState(0);
   React.useLayoutEffect(() => {
     setViewportW(window.innerWidth);
@@ -26,9 +30,18 @@ const ContentPreview = ({
       setViewportW(window.innerWidth);
     });
   });
+  // React.useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     router.refresh();
+  //   }, 5_000);
+  //   return () => {
+  //     clearInterval(interval);
+  //   };
+  // });
   return (
     <>
-      {content ? <ContentModule {...content} /> : null}
+      {content ? <ContentModule {...content} searchParams={searchParams} /> : null}
+
       {!content ? (
         <Container
           maxWidth="lg"
@@ -77,10 +90,11 @@ const ContentPreview = ({
           <Link
             target="_blank"
             href={`//app.contentful.com/spaces/${spaceId}/environments/${environment}/entries/${id}?locale=${locale}`}>
+            Edit{' '}
             <Box component="span" sx={{ textTransform: 'capitalize' }}>
               {content?.__typename}
-            </Box>{' '}
-            ID:${id} in Contentful
+            </Box>
+            {''}:{id} in Contentful
           </Link>
           <br />
           {pageURL && (

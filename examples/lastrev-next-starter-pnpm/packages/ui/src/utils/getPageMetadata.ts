@@ -31,10 +31,12 @@ interface SEOValue {
 
 export const getPageMetadata = ({
   seo,
-  parentSEO
+  parentSEO,
+  pageId
 }: {
   seo: SEOValue | undefined;
   parentSEO: ResolvedMetadata;
+  pageId: string;
 }): Metadata => {
   if (!seo) return {} as Metadata;
   const canonical = seo['canonical']?.value;
@@ -76,6 +78,9 @@ export const getPageMetadata = ({
             }
           ]
         : undefined
+    },
+    other: {
+      pageId
     }
   };
 };

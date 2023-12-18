@@ -28,6 +28,7 @@ const query = async ({
     select: 'sys.id',
     ...parseFilters(filter, filters)
   };
+  console.log('QueryContentful', contentfulQuery);
   if (ctx.preview) {
     items = (await ctx.contentful.preview.getEntries(contentfulQuery)).items;
   } else {
@@ -76,10 +77,11 @@ function parseFilters(filter: any, filters: { id: string; key: string }[] | unde
         !!filter[id] && (Array.isArray(filter[id]) ? filter[id] : [filter[id]])?.length
           ? {
               ...accum,
+              [id]: undefined,
               [key]: (Array.isArray(filter[id]) ? filter[id] : [filter[id]]).join(',')
             }
           : accum,
-      {}
+      filter
     );
   } else if (filter) {
     return filter;

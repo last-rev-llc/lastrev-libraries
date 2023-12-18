@@ -1,0 +1,46 @@
+fragment CollectionDynamic_FieldsFragment on CollectionDynamic {
+  ...Content_BaseFragment
+  introText {
+    ...Text_IntroTextFragment
+  }
+  variant
+  itemsVariant
+  backgroundImage {
+    ...Media_BaseFragment
+  }
+  settings
+  pageInfo {
+    total
+    options {
+      key
+      values
+    }
+  }
+  backgroundColor
+  isCarouselDesktop
+  isCarouselTablet
+  isCarouselMobile
+  itemsPerRow
+  numItems
+  showFilters
+
+  actions {
+    ...Link_BaseFragment
+  }
+}
+
+# Base fragment used everywhere there's a Collection
+fragment CollectionDynamic_BaseFragment on CollectionDynamic {
+  ...CollectionDynamic_FieldsFragment
+  items {
+    ...Card_BaseFragment
+  }
+}
+
+# Specific fragment used for the RichText embedded entries
+fragment CollectionDynamic_RichTextFragment on CollectionDynamic {
+  ...CollectionDynamic_FieldsFragment
+  items {
+    ...Card_RichTextFragment
+  }
+}

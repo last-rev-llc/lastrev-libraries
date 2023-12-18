@@ -1,9 +1,10 @@
-import type { ApolloContext } from '@last-rev/types';
 import gql from 'graphql-tag';
 import { deepMerge } from './utils/deepMerge';
 import { createType } from './utils/createType';
+import type { ApolloContext } from './types';
 
 export const typeMappings = {};
+const SITE_ID = process.env.DEFAULT_SITE_ID || process.env.SITE_ID;
 
 export const resolvers = {
   Query: {
@@ -21,6 +22,9 @@ export const resolvers = {
       ctx.preview = true;
       ctx.locale = locale || ctx.defaultLocale;
       ctx.displayType = displayType;
+
+      const siteSettings = await ctx.loaders.entryLoader.load({ id: SITE_ID!, preview: !!ctx.preview });
+      ctx.siteSettings = siteSettings;
 
       const content = await ctx.loaders.entryLoader.load({ id, preview: true });
 

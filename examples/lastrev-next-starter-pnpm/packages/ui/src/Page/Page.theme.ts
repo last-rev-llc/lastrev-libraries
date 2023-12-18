@@ -5,10 +5,12 @@ const defaultProps: ComponentsProps['Page'] = {};
 
 const styleOverrides: ComponentsOverrides<Theme>['Page'] = {
   root: ({ theme }) => ({
-    '& > *': {
-      paddingTop: 'var(--section-padding)',
-      paddingBottom: 'var(--section-padding)'
-    }
+    ...theme.mixins.applyColorScheme({ theme, ownerState: { color: 'blueAccent' } }),
+    '& > :is([class*=Accordion-root],[class*=Collection-root],[class*=Section-root],[class*=Block-root],[class*=Carousel-root],[class*=Text-root])':
+      {
+        paddingTop: 'var(--section-padding)',
+        paddingBottom: 'var(--section-padding)'
+      }
   })
 };
 

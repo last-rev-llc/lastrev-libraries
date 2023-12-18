@@ -7,6 +7,7 @@ import MuiAccordion from '@mui/material/Accordion';
 import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import sidekick from '@last-rev/contentful-sidekick-util';
 
@@ -22,7 +23,10 @@ const Accordion = (props: AccordionProps) => {
 
   const { background, backgroundColor, id, items, variant, sidekickLookup, introText } = props;
 
-  const [expanded, setExpanded] = React.useState<string | false>('panel1');
+  const [expanded, setExpanded] = React.useState<string | false>(() => {
+    const [item] = items;
+    return `${id}-accordion-panel-${item?.id}-0`;
+  });
 
   const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
     setExpanded(newExpanded ? panel : false);
@@ -52,19 +56,21 @@ const Accordion = (props: AccordionProps) => {
                 index: number // TODO: Fix type
               ) => (
                 <AccordionItem
-                  expanded={expanded === `${!id}-accordion-panel-${item?.id}-${index}`}
-                  onChange={handleChange(`${!id}-accordion-panel-${item?.id}-${index}`)}
-                  key={`${!id}-accordion-panel-${item?.id}-${index}`}
+                  disableGutters
+                  expanded={expanded === `${id}-accordion-panel-${item?.id}-${index}`}
+                  onChange={handleChange(`${id}-accordion-panel-${item?.id}-${index}`)}
+                  key={`${id}-accordion-panel-${item?.id}-${index}`}
                   ownerState={ownerState}>
-                  <SummaryWrap aria-controls="panel1d-content" id="panel1d-header" ownerState={ownerState}>
+                  <SummaryWrap
+                    aria-controls="panel1d-content"
+                    id="panel1d-header"
+                    ownerState={ownerState}
+                    expandIcon={<ExpandMoreIcon />}>
                     <Summary ownerState={ownerState}>{item.title}</Summary>
                   </SummaryWrap>
                   <DetailsWrap ownerState={ownerState}>
-                    {item.body ? (
-                      <Details __typename="RichText" body={item.body} ownerState={ownerState} />
-                    ) : (
-                      <Details {...item.content} ownerState={ownerState} />
-                    )}
+                    {item.body ? <Details __typename="RichText" body={item.body} ownerState={ownerState} /> : null}
+                    {!item.body && item.content ? <Details {...item.content} ownerState={ownerState} /> : null}
                   </DetailsWrap>
                 </AccordionItem>
               )

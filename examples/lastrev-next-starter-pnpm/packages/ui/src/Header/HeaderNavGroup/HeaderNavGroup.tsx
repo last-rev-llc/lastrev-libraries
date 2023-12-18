@@ -43,13 +43,13 @@ const HeaderNavGroup = (props: HeaderNavGroupProps) => {
             subNavigation={undefined}
             ownerState={ownerState}
           />
-          <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState}>
+          <NavItemSubMenu key={`${navItemId}-nav-item-submenu`} ownerState={ownerState} disablePadding>
             {subNavigation?.map((subNavItem: any, index: number) => (
               <NavItemSubMenuItem key={`${navItemId}-nav-item-${subNavItem.id}-${index}`} ownerState={ownerState}>
                 <NavItemGroup
                   {...subNavItem}
-                  variant="linkNested"
-                  __typename="NavigationItem"
+                  // variant="linkNested"
+                  // __typename="NavigationItem"
                   onClick={onSubNavItemClick}
                   onRequestClose={onRequestClose}
                   ownerState={ownerState}

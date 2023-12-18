@@ -12,16 +12,52 @@ import ContentModule from '../ContentModule';
 
 import type { CollectionProps, CollectionOwnerState } from './Collection.types';
 import Background from '../Background';
+import { Pagination, PaginationItem, Typography } from '@mui/material';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import CollectionFilters from '../CollectionFilters';
 
 const Collection = (props: CollectionProps) => {
   const ownerState = { ...props };
+  const router = useRouter();
+  const {
+    backgroundImage,
+    backgroundColor,
+    items,
+    variant,
+    itemsVariant,
+    sidekickLookup,
+    introText,
+    actions,
 
-  const { backgroundImage, backgroundColor, items, variant, itemsVariant, sidekickLookup, introText } = props;
+    // TODO: Update types for Collection Filters
+    settings,
+    showFilters,
+    pageInfo,
+    searchParams,
+    setFilter
+  } = props;
+  const pathname = usePathname();
+
+  const getURL = (params: { page?: number }) => {
+    // Add new search params
+    // return the final url taking into account the current path
+    const newSearchParams = new URLSearchParams(searchParams);
+    if (params.page) {
+      newSearchParams.set('page', params.page.toString());
+    }
+    return `${pathname}?${newSearchParams.toString()}`;
+  };
+
+  // Parse filter from search params
+
+  // Create filter with values that are filter, not pagination
 
   return (
     <ErrorBoundary>
-      <Root ownerState={ownerState} {...sidekick(sidekickLookup)} data-testid={`Collection-${variant}`}>
-        <CollectionBackground
+
+     <Root ownerState={ownerState} {...sidekick(sidekickLookup)} data-testid={`Collection-${variant}`}>
+         <CollectionBackground
           background={backgroundImage}
           backgroundColor={backgroundColor}
           testId="Collection-background"
@@ -39,19 +75,52 @@ const Collection = (props: CollectionProps) => {
         )}
 
         <ContentGrid ownerState={ownerState}>
-          {!!items?.length && (
+          {showFilters ? <CollectionFilters {...pageInfo} filters={settings?.filters} setFilter={setFilter} /> : null}
+          {items?.length && (
             <ItemsGrid ownerState={ownerState} id="items">
               {items?.map((item, index) => (
                 <Item
-                  ownerState={ownerState}
-                  backgroundColor={backgroundColor}
+                  // ownerState={ownerState}
                   key={item?.id}
                   {...item}
-                  variant={itemsVariant ?? item?.variant}
+                  variant={itemsVariant ?? (item as any)?.variant}
                   position={index + 1}
                 />
               ))}
             </ItemsGrid>
+          )}
+
+          {pageInfo?.error ? (
+            <Typography variant="h3" component="h3" align="center">
+              {JSON.stringify(pageInfo.error)}
+            </Typography>
+          ) : null}
+
+          {/* {!!pageInfo?.page && pageInfo.page !== 1 ? (
+            <Typography variant="h3" component="h3" align="center">
+              No results found for this page
+            </Typography>
+          ) : null} */}
+          {pageInfo?.total === 0 ? (
+            <Typography variant="h3" component="h3" align="center">
+              No results found
+            </Typography>
+          ) : null}
+          {showFilters && pageInfo?.total ? (
+            <CollectionPagination
+              page={pageInfo?.page}
+              count={Math.ceil(pageInfo?.total / pageInfo?.limit)}
+              renderItem={(item) => (
+                <CollectionPaginationItem component={Link} href={getURL({ page: item.page! })} {...item} />
+              )}
+            />
+          ) : null}
+          {!!actions?.length && (
+            <ActionsWrap {...sidekick(sidekickLookup, 'actions')} data-testid="Hero-actions" ownerState={ownerState}>
+              {actions.map((action) => (
+                <Action ownerState={ownerState} key={action?.id} {...action} />
+              ))}
+            </ActionsWrap>
           )}
         </ContentGrid>
       </Root>
@@ -69,6 +138,16 @@ const CollectionBackground = styled(Background, {
   name: 'Collection',
   slot: 'Background',
   overridesResolver: (_, styles) => [styles.background]
+})<{}>``;
+const CollectionPagination = styled(Pagination, {
+  name: 'Collection',
+  slot: 'Pagination',
+  overridesResolver: (_, styles) => [styles.pagination]
+})<{}>``;
+const CollectionPaginationItem = styled(PaginationItem, {
+  name: 'Collection',
+  slot: 'PaginationItem',
+  overridesResolver: (_, styles) => [styles.paginationItem]
 })<{}>``;
 
 const ContentGrid = styled(Grid, {
@@ -99,6 +178,18 @@ const Item = styled(ContentModule, {
   name: 'Collection',
   slot: 'Item',
   overridesResolver: (_, styles) => [styles.item]
+})<{ ownerState: CollectionOwnerState }>``;
+
+const ActionsWrap = styled(Box, {
+  name: 'Collection',
+  slot: 'ActionsWrap',
+  overridesResolver: (_, styles) => [styles.actionsWrap]
+})<{ ownerState: CollectionOwnerState }>``;
+
+const Action = styled(ContentModule, {
+  name: 'Collection',
+  slot: 'Action',
+  overridesResolver: (_, styles) => [styles.action]
 })<{ ownerState: CollectionOwnerState }>``;
 
 export default Collection;
