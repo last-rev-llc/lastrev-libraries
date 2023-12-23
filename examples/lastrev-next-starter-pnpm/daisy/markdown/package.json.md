@@ -1,0 +1,51 @@
+{
+  "name": "lastrev-next-starter",
+  "private": true,
+  "scripts": {
+    "start": "dotenv -- turbo start",
+    "build": "STAGE=build dotenv -- turbo build",
+    "dev": "dotenv -- turbo sync:cms dev gql:dev --continue --concurrency 15",
+    "gql:dev": "dotenv -- turbo sync:cms gql:dev --continue --concurrency 15",
+    "sync:cms": "dotenv -- turbo sync:cms",
+    "gql:logs": "dotenv -- turbo gql:logs",
+    "clean": "turbo clean",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "chromatic": "npx chromatic"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.15",
+    "@babel/preset-react": "^7.22.15",
+    "@storybook/addon-essentials": "^7.4.2",
+    "@storybook/addon-interactions": "^7.4.2",
+    "@storybook/addon-links": "^7.4.2",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.4.2",
+    "@storybook/nextjs": "^7.4.2",
+    "@storybook/react": "^7.4.2",
+    "@storybook/react-webpack5": "^7.4.2",
+    "@storybook/testing-library": "^0.2.1",
+    "chromatic": "^7.1.0",
+    "cypress": "^13.1.0",
+    "dotenv-cli": "latest",
+    "next": "^13.4.19",
+    "prettier": "^2.7.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "storybook": "^7.4.2",
+    "turbo": "latest"
+  },
+  "packageManager": "pnpm@8.6.10",
+  "version": "",
+  "readme": "ERROR: No README data found!",
+  "_id": "lastrev-next-starter@",
+  "pnpm": {
+    "patchedDependencies": {
+      "@mui/system@5.14.9": "patches/@mui__system@5.14.9.patch"
+    }
+  }
+}

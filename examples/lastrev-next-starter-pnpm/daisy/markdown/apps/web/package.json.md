@@ -1,0 +1,38 @@
+{
+  "name": "web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "build": "next build",
+    "clean": "rm -rf .next",
+    "dev": "next dev",
+    "lint": "next lint",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@apollo/server": "^4.9.3",
+    "@last-rev/graphql-contentful-core": "^0.5.17",
+    "@last-rev/contentful-webhook-handler": "^0.4.16",
+    "@next/bundle-analyzer": "^13.4.19",
+    "@sentry/nextjs": "^7.68.0",
+    "cors": "^2.8.5",
+    "graphql-sdk": "workspace:*",
+    "graphql-extensions": "workspace:*",
+    "next": "^13.4.19",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^6",
+    "ui": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.14",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^17.0.12",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "encoding": "^0.1.13",
+    "eslint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "typescript": "^4.8.3"
+  }
+}
