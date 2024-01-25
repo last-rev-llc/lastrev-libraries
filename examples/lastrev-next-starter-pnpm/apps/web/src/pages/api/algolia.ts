@@ -16,9 +16,12 @@ export const config = {
 
 const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   await cors(req, res);
+  // Determine the URL based on environment variables
   const url = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}/api/graphql`
-    : 'http://localhost:8888/graphql';
+    : process.env.DEPLOY_URL
+      ? `${process.env.DEPLOY_URL}/api/graphql`
+      : 'http://localhost:8888/graphql';
 
   try {
     await createAlgoliaSyncHandler(
