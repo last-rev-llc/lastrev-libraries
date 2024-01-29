@@ -7,7 +7,22 @@ const { execSync } = require('child_process');
 const isCIEnvironment = process.env.NETLIFY === 'true' || process.env.VERCEL === 'true';
 
 // Common environment variables that are not directly related to the app's configuration and can be excluded.
-const envCheckExclusions = ['DEPLOY_URL', 'VERCEL_URL', 'EXAMPLE_EXCLUDED_VARIABLE'];
+const envCheckExclusions = [
+  'ALGOLIA_MAX_RECORDS',
+  'ANALYZE_BUNDLE',
+  'CONTENTFUL_SETTINGS_ID',
+  'fsaStoreKey',
+  'fsaStoreURL',
+  'GRAPHQL_SERVER_URL',
+  'HEAD',
+  'NEXT_PUBLIC_SENTRY_DSN',
+  'NODE_ENV',
+  'PAGES_REVALIDATE',
+  'PORT',
+  'REDIS_USERNAME',
+  'SITE_SETTINGS',
+  'VERCEL_URL'
+];
 
 // Function to read and parse turbo.json to get required environment variables
 const getRequiredEnvVars = () => {
@@ -67,10 +82,12 @@ if (missingVars.length > 0) {
   // Instructions for pulling environment variables from envkey
   console.log(
     '\n\x1b[33m%s\x1b[0m',
-    'IMPORTANT: If you have access to envkey, you can pull the required environment variables by running "pnpm env:pull".'
+    'IMPORTANT: If you have access to envkey, you can pull the required environment variables by running "pnpm run env:pull". '
   );
-  console.log('\x1b[36m%s\x1b[0m', 'NOTE: Running "pnpm env:pull" will override all local .env files.');
-  console.log('Please ensure to backup your .env file before running this command if necessary.');
+  console.log(
+    '\x1b[36m%s\x1b[0m',
+    'NOTE: Running "pnpm run env:pull" will append the required environment variables to your local .env file.\nNOTE: Existing variables in your local .env file will not be overwritten, but the newly appended variables will be used in your application.\nNOTE: If you do not have access to envkey, please set the required environment variables manually and rerun your original command.'
+  );
 
   // Setting up a prompt for user interaction
   const prompt = readline.createInterface({
@@ -88,7 +105,7 @@ if (missingVars.length > 0) {
 
   // Asking the user if they want to pull environment variables now
   prompt.question(
-    'Would you like to pull the missing environment variables from envkey now? (yes/no)\nThis MAY override any local .env files. ',
+    'Would you like to append all required environment variables to your local .env file? (yes/no): ',
     (answer) => {
       clearTimeout(timer);
       prompt.close();
