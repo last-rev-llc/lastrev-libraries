@@ -219,6 +219,12 @@ importers:
       '@types/css':
         specifier: ^0.0.34
         version: 0.0.34
+      jest:
+        specifier: ^26.6.3
+        version: 26.6.3
+      jest-presets:
+        specifier: workspace:*
+        version: link:../jest-presets
       schema-dts:
         specifier: ^1.1.2
         version: 1.1.2(typescript@4.9.5)
@@ -16697,6 +16703,7 @@ packages:
   /import-local@3.1.0:
     resolution: {integrity: sha512-ASB07uLtnDs1o6EHjKpX34BKYDSqnFerfTOJL2HvMqF70LnxpjkzDB8J44oT9pu4AMPkQwf8jl6szgvNd2tRIg==}
     engines: {node: '>=8'}
+    hasBin: true
     dependencies:
       pkg-dir: 4.2.0
       resolve-cwd: 3.0.0
