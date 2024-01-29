@@ -7,22 +7,7 @@ const { execSync } = require('child_process');
 const isCIEnvironment = process.env.NETLIFY === 'true' || process.env.VERCEL === 'true';
 
 // Common environment variables that are not directly related to the app's configuration and can be excluded.
-const envCheckExclusions = [
-  'ALGOLIA_MAX_RECORDS',
-  'ANALYZE_BUNDLE',
-  'CONTENTFUL_SETTINGS_ID',
-  'fsaStoreKey',
-  'fsaStoreURL',
-  'GRAPHQL_SERVER_URL',
-  'HEAD',
-  'NEXT_PUBLIC_SENTRY_DSN',
-  'NODE_ENV',
-  'PAGES_REVALIDATE',
-  'PORT',
-  'REDIS_USERNAME',
-  'SITE_SETTINGS',
-  'VERCEL_URL'
-];
+const envCheckExclusions = ['EXAMPLE_EXCLUDED_VARIABLE', 'DEPLOY_URL', 'VERCEL_URL'];
 
 // Function to read and parse turbo.json to get required environment variables
 const getRequiredEnvVars = () => {
