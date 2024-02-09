@@ -1,0 +1,57 @@
+name: 🧪 Unit Tests
+
+on: [pull_request]
+
+jobs:
+  test:
+    if: github.actor != 'dependabot'
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: test
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Dependencies cache
+        uses: actions/cache@v2
+        id: pnpm-cache # use this to check for `cache-hit` (`steps.pnpm-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: |
+            **/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Turbo Cache
+        id: turbo-cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules/.cache/turbo
+          key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ github.job }}-${{ github.ref_name }}-
+
+      - name: Install project dependencies
+        run: pnpm --prefer-offline
+
+      - name: Run the tests
+        run: 'pnpm turbo run test lint --output-logs=new-only'
+
+      - name: Collect coverage
+        run: 'pnpm combine:reports'
+
+      - name: Archive code coverage results
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: coverage

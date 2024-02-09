@@ -27,14 +27,14 @@ nvm use
 3. Install the dependencies
 
 ```bash
-yarn install
+pnpm install
 ```
 
 4. Copy the `.env.sample` file located at the root and add the required variables to a file named `.env` See below for information on each variable
 5. Do a full build
 
 ```bash
-yarn build
+pnpm build
 ```
 
 ### Running the site locally
@@ -42,7 +42,7 @@ yarn build
 1. Start the dev server that starts the GraphQL server and the local version of NextJS
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 2. Go to [http://localhost:3000/](http://localhost:3000/) to see the site
@@ -56,7 +56,7 @@ If you are just doing front-end development, you may only need to start up story
 2. Run this command to start storybook
 
 ```bash
-yarn storybook
+pnpm storybook
 ```
 
 3. Go to [http://localhost:6006/](http://localhost:6006/)
@@ -66,10 +66,10 @@ yarn storybook
 You can open the GraphQL playground where you can run queries on the data layer to see what data is being dsiplayed for a page.
 
 1. Ensure you have followed the same instructions for first time setup.
-2. Start the GraphQL server (if not already started using `yarn dev`)
+2. Start the GraphQL server (if not already started using `pnpm dev`)
 
 ```bash
-yarn gql:dev # Runs the GraphQL server by itself
+pnpm gql:dev # Runs the GraphQL server by itself
 ```
 
 3. You can go to [http://localhost:5000/graphql](http://localhost:5000/graphql)
@@ -150,10 +150,10 @@ fragment Page_Base on Page {
 
 If you make any changes in Contentful you will need to sync the content with your local machine.
 
-1. Open a new terminal (if running `yarn dev` already)
+1. Open a new terminal (if running `pnpm dev` already)
 
 ```bash
-yarn symc:cms
+pnpm symc:cms
 ```
 
 ## Packages Overview
@@ -195,7 +195,7 @@ yarn symc:cms
 Ensure you have the appropiate environment variables set.
 
 ```bash
-yarn build
+pnpm build
 ```
 
 ## Starting the app
@@ -205,7 +205,7 @@ First, make sure that the [graphql server has been started](#starting-the-graphq
 This builds and exports the web project
 
 ```bash
-yarn start
+pnpm start
 ```
 
 # Automated Tests
@@ -235,14 +235,14 @@ This file can then be manually update to remove pages or add new ones. Once crea
 First you need to ensure you have a local version of the site running and it's port matches the one in your `cypress.json` file (3000).
 
 ```bash
-yarn test:e2e
+pnpm test:e2e
 ```
 
 **To open the Cypress UI and work with tests:**
 Go to the `packages/web` or `packages/components` folder and run:
 
 ```bash
-yarn cypress:open
+pnpm cypress:open
 ```
 
 **To run Cypress tests with visual regression testing enabled**
@@ -250,7 +250,7 @@ yarn cypress:open
 Go to the `packages/web` or `packages/components` folder and run:
 
 ```bash
-PERCY_TOKEN=aaabbbcccdddeeefff yarn test:e2e
+PERCY_TOKEN=aaabbbcccdddeeefff pnpm test:e2e
 ```
 
 This will run the Cypress tests and upload the results to Percy, allowing for easy visual regression testing.

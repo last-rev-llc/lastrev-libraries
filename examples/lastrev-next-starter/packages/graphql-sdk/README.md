@@ -19,7 +19,7 @@ This is also ran as part of the `dev` and `build` scripts.
 Trigger manually by running:
 
 ```
-yarn download:schema
+pnpm download:schema
 ```
 
 If the GraphQL server is not available, the existing file will be used for code generation.

@@ -1,0 +1,81 @@
+<!-- Card.stories.mdx -->
+
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import { ArgsTable } from '@storybook/blocks';
+
+import Card from './Card';
+import cardBaseMock, { cardWithTags } from './Card.mock';
+
+<Meta
+  title="Components / Card"
+  component={Card}
+  parameters={{
+    viewMode: 'docs'
+  }}
+  argTypes={{
+    variant: {
+      description: 'Controls the variant to be displayed',
+      options: [],
+      table: {
+        defaultValue: {}
+      }
+    },
+    loading: {
+      defaultValue: false,
+      control: 'boolean'
+    },
+    __typename: { table: { disable: true } },
+    id: { table: { disable: true } },
+    actions: { table: { disable: true } },
+    sidekickLookup: { table: { disable: true } },
+    link: { table: { disable: true } },
+    tags: { table: { disable: true } },
+    classes: { table: { disable: true } },
+    square: { table: { disable: true } },
+    children: { table: { disable: true } },
+    elevation: { table: { disable: true } },
+    raised: { table: { disable: true } },
+    sx: { table: { disable: true } },
+    ref: { table: { disable: true } }
+  }}
+/>
+
+export const Template = (args) => <Card {...args} />;
+
+# Card
+
+The Card component is the main type of display for a website.
+It represents one unit of content, such as a blog post, a product, a human or a service.
+
+<Canvas>
+  <Story name="base" args={{ ...cardBaseMock(), actions: undefined }} />
+</Canvas>
+
+## Props
+
+<ArgsTable story="base" />
+
+## Stories
+
+### Actions
+
+Cards can have actions to be displayed on the bottom side of the card.
+
+<Canvas>
+  <Story name="with-actions" args={cardBaseMock()} />
+</Canvas>
+
+### Tags
+
+Cards can have tags to be displayed on the top of the card content.
+These tags are `Link` so they can be clicked too.
+
+<Canvas>
+  <Story
+    name="with-tags"
+    args={{
+      ...cardWithTags(),
+      actions: null
+    }}
+  />
+</Canvas>

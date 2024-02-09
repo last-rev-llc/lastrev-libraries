@@ -1,6 +1,23 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "globalDependencies": [],
+  "globalEnv": [
+    "CONTENTFUL_DELIVERY_TOKEN",
+    "CONTENTFUL_ENV",
+    "CONTENTFUL_PREVIEW_TOKEN",
+    "CONTENTFUL_SPACE_ID",
+    "CONTENTFUL_USE_PREVIEW",
+    "DEFAULT_SITE_ID",
+    "DEPLOY_URL",
+    "DEPLOY_URL",
+    "GRAPHQL_SERVER_URL",
+    "NODE_ENV",
+    "SITE",
+    "SITE_SETTINGS",
+    "VERCEL_URL",
+    "VERCEL_URL",
+    "EXAMPLE_EXCLUDED_VARIABLE"
+  ],
   "pipeline": {
     "test": {
       "dependsOn": ["^build"],

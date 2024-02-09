@@ -1,0 +1,6 @@
+query Rewrites($preview: Boolean!) {
+  rewrites(preview: $preview) {
+    source
+    destination
+  }
+}

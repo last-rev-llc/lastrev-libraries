@@ -1,0 +1,52 @@
+fragment Person_BaseFragment on Person {
+  ...Content_BaseFragment
+  path
+  slug
+  header {
+    ...Header_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+  name
+  jobTitle
+  email
+  #education
+  #previousExperiences
+  mainImage {
+    ...Media_BaseFragment
+  }
+  body {
+    ...RichText_BaseFragment
+  }
+  socialLinks {
+    ...Link_BaseFragment
+  }
+  hero {
+    ...Hero_BaseFragment
+  }
+  breadcrumbs {
+    ...Link_BaseFragment
+  }
+}
+
+fragment Person_Card_Fragment on Person {
+  ...Content_BaseFragment
+  slug
+  name
+  jobTitle
+  email
+  mainImage {
+    ...Media_BaseFragment
+  }
+  socialLinks {
+    ...Link_BaseFragment
+  }
+}
+
+fragment Person_Blog_Author_Fragment on Person {
+  ...Person_Card_Fragment
+  body {
+    ...RichText_BaseFragment
+  }
+}

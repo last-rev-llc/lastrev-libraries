@@ -1,0 +1,29 @@
+fragment Form_BaseFragment on ElementForm {
+  ...Content_BaseFragment
+  variant
+  hubspotPortalId
+  hubspotFormId
+  introText {
+    ...Text_IntroTextFragment
+  }
+}
+
+fragment Form_PageFragment on ElementForm {
+  ...Content_BaseFragment
+  variant
+  hubspotPortalId
+  hubspotFormId
+  #seo
+  #jsonLd
+  path
+  slug
+  header {
+    ...Header_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+  footerDisclaimerOverride {
+    ...RichText_BaseFragment
+  }
+}

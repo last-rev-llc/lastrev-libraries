@@ -1,0 +1,54 @@
+<!-- Quote.stories.mdx -->
+
+import { Canvas, Meta, Story } from '@storybook/addon-docs';
+import { ArgsTable } from '@storybook/blocks';
+
+import Quote from './Quote';
+import { type QuoteClasses } from './Quote.types';
+import quoteMock, { mockQuoteBase } from './Quote.mock';
+
+<Meta
+  title="Components / Quote"
+  component={Quote}
+  parameters={{
+    viewMode: 'docs'
+  }}
+  argTypes={{
+    variant: {
+      description: 'Controls the variant to be displayed',
+      options: []
+    },
+    __typename: { table: { disable: true } },
+    id: { table: { disable: true } },
+    sidekickLookup: { table: { disable: true } },
+    quoteImage: { name: 'Image' },
+    authorName: { name: 'Author Name' },
+    authorTitle: { name: 'Author Title' },
+    sx: { table: { disable: true } },
+    ref: { table: { disable: true } }
+  }}
+/>
+
+export const Template = (args) => <Quote {...args} />;
+
+# Quote
+
+The Quote component shows the text together with the author and some basic info.
+
+<Canvas>
+  <Story name="base" args={{ ...mockQuoteBase(), logo: undefined }} />
+</Canvas>
+
+## Props
+
+<ArgsTable story="base" />
+
+## Stories
+
+### Logo
+
+Quotes can have logo to be displayed on the bottom side of the quote.
+
+<Canvas>
+  <Story name="with-logo" args={quoteMock()} />
+</Canvas>

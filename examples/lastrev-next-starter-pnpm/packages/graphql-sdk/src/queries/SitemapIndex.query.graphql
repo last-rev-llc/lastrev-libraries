@@ -1,0 +1,10 @@
+query SitemapIndex($preview: Boolean) {
+  sitemapIndex(preview: $preview) {
+    pages {
+      contentType
+      locale
+      page
+      lastmod
+    }
+  }
+}

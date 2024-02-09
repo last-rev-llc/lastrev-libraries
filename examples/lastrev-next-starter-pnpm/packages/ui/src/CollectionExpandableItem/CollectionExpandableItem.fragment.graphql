@@ -1,0 +1,11 @@
+fragment CollectionExpandableItem_BaseFragment on CollectionExpandableItem {
+  title
+  body {
+    ...RichText_BaseFragment
+  }
+  content {
+    ...Block_BaseFragment
+    ...Quote_BaseFragment
+    ...Collection_BaseFragment
+  }
+}

@@ -27,11 +27,6 @@ export default {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
     fallback: {
       path: require.resolve('path-browserify')
-    },
-    alias: {
-      'react': toPath('../../node_modules/react'),
-      '@emotion/core': toPath('../../node_modules/@emotion/react'),
-      'emotion-theming': toPath('../../node_modules/@emotion/react')
     }
   },
   plugins: [

@@ -28,14 +28,13 @@ if [[ "${GRAPHQL_RUNNER_STRATEGY}" == "fs" ]] || [[ -z "${GRAPHQL_RUNNER_STRATEG
         fi
     fi
 
-
     if [ -f "$GITIGNORE" ]; then
-        mv ${GITIGNORE} ${NOT_GITIGNORE} 
+        mv ${GITIGNORE} ${NOT_GITIGNORE}
         echo "Renamed .gitignore to !gitignore"
     fi
 
     echo "Syncing CMS data.."
-    yarn turbo:sync:cms --output-logs=new-only
+    pnpm turbo:sync:cms --output-logs=new-only
 else
     echo "Graphql strategy is '${GRAPHQL_RUNNER_STRATEGY}'. Skipping cms sync."
 fi

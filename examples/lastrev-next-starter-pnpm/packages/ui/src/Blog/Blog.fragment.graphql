@@ -1,0 +1,42 @@
+fragment Blog_BaseFragment on Blog {
+  ...Content_BaseFragment
+  seo
+  jsonLd
+  path
+  title
+  slug
+  pubDate
+  author {
+    ...Person_Blog_Author_Fragment
+  }
+  header {
+    ...Header_BaseFragment
+  }
+  footer {
+    ...Footer_BaseFragment
+  }
+  featuredMedia {
+    ...Media_BaseFragment
+  }
+  body {
+    ...RichText_BaseFragment
+  }
+  relatedItems {
+    ...Collection_BaseFragment
+  }
+  jsonLd
+}
+
+fragment Blog_CardFragment on Blog {
+  ...Content_BaseFragment
+  title
+  slug
+  featuredMedia {
+    ...Media_BaseFragment
+  }
+  promoImage {
+    ...Media_BaseFragment
+  }
+  promoSummary
+  pubDate
+}

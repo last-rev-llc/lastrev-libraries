@@ -1,0 +1,367 @@
+### TODO: Extract into LR workflows
+name: '🧪 E2E Tests'
+
+on:
+  workflow_call:
+    inputs:
+      provider:
+        required: true
+        type: string
+      record:
+        required: false
+        type: boolean
+        default: true
+      parallel-jobs:
+        required: false
+        type: number
+        default: 5
+      preview-max-timeout:
+        required: false
+        type: number
+        default: 600
+      working-directory:
+        required: false
+        type: string
+        default: './packages/web/'
+    secrets:
+      CYPRESS_PROJECT_ID:
+        required: true
+      CYPRESS_RECORD_KEY:
+        required: true
+      SITE:
+        required: true
+      VERCEL_PREVIEW_DEPLOYMENT_PASSWORD:
+        required: false
+      PERCY_TOKEN:
+        required: false
+      PGP_SECRET_SIGNING_PASSPHRASE:
+        required: false
+      NETLIFY_SITE_ID:
+        required: false
+      NETLIFY_TOKEN:
+        required: false
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.save-matrix-value.outputs.result }}
+    steps:
+      - name: 🔢 Generate matrix values
+        run: |
+          output="["
+          for i in $(seq 1 "${{ inputs.parallel-jobs }}"); do
+            output+="$i,"
+          done
+          output=${output%,}
+          output+="]"
+          echo "$output" > matrix.txt
+
+      - name: Save matrix value
+        id: save-matrix-value
+        run: echo "result=$(cat matrix.txt)" >> $GITHUB_OUTPUT
+
+  # Nonce for re-runs: https://docs.percy.io/docs/parallel-test-suites#github-actions
+  nonce:
+    runs-on: ubuntu-latest
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'qa-ready') }}
+    outputs:
+      result: ${{ steps.nonce.outputs.result }}
+    env:
+      percy-token: ${{ secrets.PERCY_TOKEN }}
+    steps:
+      - name: 🔍 Check if Percy token exists
+        if: ${{ env.percy-token == '' }}
+        run: |
+          echo "::error title=Percy token not set::Percy token not available as secret, please make sure the right one is set on the project and passed as secret."
+      - id: nonce
+        # Don't use deprecated set-output as per https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+        run: echo "result=${{ github.run_id }}-$(date +%s)" >> $GITHUB_OUTPUT
+
+  install-and-cache-dependencies:
+    needs:
+      - generate-matrix
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node18.12.0-chrome107
+      options: --user 1001
+    env:
+      percy-token: ${{ secrets.PERCY_TOKEN }}
+    steps:
+      - name: 🕸 Warning missing Percy token
+        if: ${{ contains(github.event.pull_request.labels.*.name, 'qa-ready') &&
+          env.percy-token == '' }}
+        run: |
+          echo "::error title=Percy token not set::Percy token not available as secret, please make sure the right one is set on the project and passed as secret."
+
+        ## SETUP ##
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: |
+            ~/.cache/Cypress
+            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: v2-${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            v2-${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: 🔍 Print Cypress info
+        working-directory: ${{ inputs.working-directory }}
+        run: pnpm cypress info
+
+  wait-for-preview:
+    needs:
+      - install-and-cache-dependencies
+    runs-on: ubuntu-latest
+    outputs:
+      preview-url: ${{ steps.wait-for-netflify-preview.outputs.url ||
+        steps.wait-for-vercel-preview.outputs.url }}
+      encrypted-vercel-jwt: ${{ steps.encrypt-vercel-jwt.outputs.encrypted-jwt }}
+    steps:
+      - name: 🔍 Check if provider is valid
+        if: ${{ !contains(fromJSON('["netlify","vercel"]'), inputs.provider) }}
+        run: |
+          echo "::error title=Invalid provider::Invalid provider, please make sure you enter a valid option."
+          exit 1
+
+      - name: ⏳ Wait for Vercel Preview
+        if: ${{ inputs.provider == 'vercel' }}
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.1
+        id: wait-for-vercel-preview
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: ${{ inputs.preview-max-timeout }}
+          vercel_password: ${{ secrets.VERCEL_PREVIEW_DEPLOYMENT_PASSWORD }}
+
+      - name: 🔒 Encrypt Vercel JWT
+        if: ${{ inputs.provider == 'vercel' && env.PASSPHRASE }}
+        id: encrypt-vercel-jwt
+        env:
+          PASSPHRASE: ${{ secrets.PGP_SECRET_SIGNING_PASSPHRASE }}
+          JWT: ${{ steps.wait-for-vercel-preview.outputs.vercel_jwt }}
+        run: |
+          encrypted_jwt=$(gpg --symmetric --batch --passphrase "${{ env.PASSPHRASE }}" --output - <(echo "${{ env.JWT }}") | base64 -w0)
+          echo "encrypted-jwt=$encrypted_jwt" >> $GITHUB_OUTPUT
+
+      - name: ⏳ Wait for Netlify Preview
+        if: ${{ inputs.provider == 'netlify' }}
+        uses: jlevy-io/wait-for-netlify-deploy-with-headers@3.0.3
+        id: wait-for-netflify-preview
+        with:
+          site_id: ${{ secrets.NETLIFY_SITE_ID }}
+          max_timeout: ${{ inputs.preview-max-timeout }}
+        env:
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+
+  cypress-ui-chrome-tests:
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'qa-ready') }}
+    needs:
+      - generate-matrix
+      - wait-for-preview
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node18.12.0-chrome107
+      options: --user 1001
+    strategy:
+      # when one test fails, DO NOT cancel the other
+      # containers, because this will kill Cypress processes
+      # leaving the Dashboard hanging ...
+      # https://github.com/cypress-io/github-action/issues/48
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
+
+    steps:
+      ## SETUP ##
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: |
+            ~/.cache/Cypress
+            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: v2-${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            v2-${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: 🔓 Decrypt Vercel JWT
+        if: ${{ inputs.provider == 'vercel' && env.PASSPHRASE }}
+        id: decrypt-vercel-jwt
+        env:
+          PASSPHRASE: ${{ secrets.PGP_SECRET_SIGNING_PASSPHRASE }}
+          ENCRYPTED_JWT: ${{ needs.wait-for-preview.outputs.encrypted-vercel-jwt }}
+        run: |
+          echo $ENCRYPTED_JWT | base64 --decode > encrypted_jwt
+          decrypted_jwt=$(gpg --decrypt --quiet --batch --passphrase "${{ env.PASSPHRASE }}" --output - encrypted_jwt)
+          echo "::add-mask::$decrypted_jwt"
+          echo "decrypted-jwt=$decrypted_jwt" >> $GITHUB_OUTPUT
+
+      - name: 🧪 Website Tests - Chrome
+        uses: cypress-io/github-action@v5
+        with:
+          install: false
+          project: ${{ inputs.working-directory }}
+          browser: chrome
+          record: ${{ inputs.record }}
+          parallel: true
+          group: 'UI - Chrome'
+        env:
+          SITE: ${{ secrets.SITE }}
+          CYPRESS_BASE_URL: ${{ needs.wait-for-preview.outputs.preview-url }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          VERCEL_JWT: _vercel_jwt=${{ steps.decrypt-vercel-jwt.outputs.decrypted-jwt }}
+          COMMIT_INFO_BRANCH: ${{ github.head_ref }}
+          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
+          COMMIT_INFO_AUTHOR: ${{ github.triggering_actor }}
+          # Recommended: passing the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Separate job for running Percy so we can have this set as a required check
+  # for merging to main branch
+  percy-cypress-ui-chrome-tests:
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'qa-ready') }}
+    needs:
+      - generate-matrix
+      - nonce
+      - wait-for-preview
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/browsers:node18.12.0-chrome107
+      options: --user 1001
+    strategy:
+      # when one test fails, DO NOT cancel the other
+      # containers, because this will kill Cypress processes
+      # leaving the Dashboard hanging ...
+      # https://github.com/cypress-io/github-action/issues/48
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: ${{ fromJSON(needs.generate-matrix.outputs.matrix) }}
+
+    steps:
+      ## SETUP ##
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: |
+            ~/.cache/Cypress
+            ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: v2-${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            v2-${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: 🔓 Decrypt Vercel JWT
+        if: ${{ inputs.provider == 'vercel' && env.PASSPHRASE }}
+        id: decrypt-vercel-jwt
+        env:
+          PASSPHRASE: ${{ secrets.PGP_SECRET_SIGNING_PASSPHRASE }}
+          ENCRYPTED_JWT: ${{ needs.wait-for-preview.outputs.encrypted-vercel-jwt }}
+        run: |
+          echo $ENCRYPTED_JWT | base64 --decode > encrypted_jwt
+          decrypted_jwt=$(gpg --decrypt --quiet --batch --passphrase "${{ env.PASSPHRASE }}" --output - encrypted_jwt)
+          echo "::add-mask::$decrypted_jwt"
+          echo "decrypted-jwt=$decrypted_jwt" >> $GITHUB_OUTPUT
+
+      - name: 🧪 Website Tests - Chrome
+        uses: cypress-io/github-action@v5
+        with:
+          command-prefix: 'percy exec -- npx'
+          install: false
+          project: ${{ inputs.working-directory }}
+          browser: chrome
+          record: ${{ inputs.record }}
+          parallel: true
+          group: 'UI - Chrome'
+        env:
+          SITE: ${{ secrets.SITE }}
+          CYPRESS_BASE_URL: ${{ needs.wait-for-preview.outputs.preview-url }}
+          CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          VERCEL_JWT: _vercel_jwt=${{ steps.decrypt-vercel-jwt.outputs.decrypted-jwt }}
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
+          PERCY_PARALLEL_TOTAL: ${{ inputs.parallel-jobs }}
+          COMMIT_INFO_BRANCH: ${{ github.head_ref }}
+          COMMIT_INFO_MESSAGE: ${{ github.event.pull_request.title }}
+          COMMIT_INFO_AUTHOR: ${{ github.triggering_actor }}
+          # Recommended: passing the GitHub token lets this action correctly
+          # determine the unique run id necessary to re-run the checks
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}

@@ -12,7 +12,7 @@
   "version": "independent",
   "useWorkspaces": true,
   "registry": "https://registry.npmjs.org",
-  "npmClient": "yarn",
+  "npmClient": "pnpm",
   "ignoreChanges": [
     "**/*.md",
     "**/*.test.js",

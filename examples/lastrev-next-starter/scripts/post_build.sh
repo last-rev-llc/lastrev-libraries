@@ -12,11 +12,11 @@ if [[ "${GRAPHQL_RUNNER_STRATEGY}" == "fs" ]] || [[ -z "${GRAPHQL_RUNNER_STRATEG
     echo $RUNNER_FOLDER
 
     if [ -f "$NOT_GITIGNORE" ]; then
-        mv ${NOT_GITIGNORE} ${GITIGNORE}  || echo "Failed to clean !gitignore"
+        mv ${NOT_GITIGNORE} ${GITIGNORE} || echo "Failed to clean !gitignore"
         echo "Renamed !gitignore to .gitignore"
     else
         echo "!gitignore is missing, check graphql-runner"
     fi
 fi
 
-yarn gql:pm2:kill
+pnpm gql:pm2:kill

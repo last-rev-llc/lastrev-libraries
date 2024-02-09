@@ -1,0 +1,52 @@
+fragment ContentModule_BaseFragment on Content {
+  ...Content_BaseFragment
+  ...Block_BaseFragment
+  ...Collection_BaseFragment
+  ...CollectionExpandable_BaseFragment
+  ...Hero_BaseFragment
+  ...Media_BaseFragment
+  ...ModuleIntegration_BaseFragment
+  ...Quote_BaseFragment
+  ...Section_BaseFragment
+  ...Text_BaseFragment
+}
+
+fragment ContentModule_PageFragment on Content {
+  ...Page_BaseFragment
+}
+
+fragment ContentModule_PersonFragment on Content {
+  ...Person_BaseFragment
+}
+
+fragment ContentModule_BlogFragment on Content {
+  ...Blog_BaseFragment
+}
+
+fragment ContentModule_FormFragment on Content {
+  ...Form_PageFragment
+}
+
+fragment ContentModule_SectionFragment on Content {
+  ...Content_BaseFragment
+  ...Block_BaseFragment
+  ...Collection_BaseFragment
+  ...CollectionExpandable_BaseFragment
+  ...Hero_BaseFragment
+  ...Media_BaseFragment
+  ...ModuleIntegration_BaseFragment
+  ...Quote_BaseFragment
+  ...Text_BaseFragment
+}
+
+fragment ContentModule_RichTextFragment on Content {
+  ...Content_BaseFragment
+  ...Block_BaseFragment
+  ...Collection_BaseFragment
+  ...CollectionExpandable_BaseFragment
+  ...Link_BaseFragment
+  ...Media_BaseFragment
+  ...ModuleIntegration_BaseFragment
+  ...Quote_BaseFragment
+  ...Text_RichTextFragment
+}

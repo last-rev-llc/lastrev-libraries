@@ -1,0 +1,679 @@
+directive @extends on INTERFACE | OBJECT
+
+directive @external(reason: String) on FIELD_DEFINITION | OBJECT
+
+directive @key(fields: _FieldSet!, resolvable: Boolean = true) on INTERFACE | OBJECT
+
+directive @provides(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @requires(fields: _FieldSet!) on FIELD_DEFINITION
+
+directive @tag(name: String!) on ARGUMENT_DEFINITION | ENUM | ENUM_VALUE | FIELD_DEFINITION | INPUT_FIELD_DEFINITION | INPUT_OBJECT | INTERFACE | OBJECT | SCALAR | UNION
+
+type Asset {
+  description: String
+  extension: String
+  fileName: String
+  height: String
+  id: String
+  svgContent: String
+  title: String
+  url: String
+  width: String
+}
+
+type Block implements Content {
+  OLDoverline: String
+  OLDsubtitle: String
+  OLDtitle: String
+  actions: [Link]
+  animation: JSON
+  asset: Media
+  backgroundColor: String
+  backgroundImage: Media
+  body: RichText
+  disclaimerText: String
+  id: String
+  internalTitle: String
+  introText: Text
+  link: Link
+  longText: String
+  mediaItems: [Media]
+  overlapWithPreviousModule: Boolean
+  overline: String
+  shortText: String
+  sidekickLookup: JSON
+  subtitle: String
+  supplementalContent: Content
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type Blog implements Content {
+  animation: JSON
+  author: Person
+  body: RichText
+  breadcrumbs: [Link]
+  categories: [CategoryBlog]
+  disableBackToTop: Boolean
+  excludeFromDynamicLists: Boolean
+  featuredMedia: Media
+  footer: Footer
+  header: Header
+  hero: Content
+  id: String
+  jsonLd: JSON
+  lr__path__: String
+  path: String
+  persona: [String]
+  promoImage: Media
+  promoSummary: String
+  pubDate: Date
+  relatedItems: Content
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  summary: String
+  tags: [String]
+  theme: [Theme]
+  title: String
+}
+
+type Card implements Content {
+  OLDoverline: String
+  OLDsubtitle: String
+  OLDtitle: String
+  actions: [Link]
+  animation: JSON
+  body: RichText
+  bodyRte: JSON
+  id: String
+  internalTitle: String
+  jsonLd: JSON
+  link: Link
+  media: [Media]
+  overline: String
+  sidekickLookup: JSON
+  subtitle: String
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type CategoryBlog implements Content {
+  animation: JSON
+  body: RichText
+  contents: [Content]
+  footer: Footer
+  header: Header
+  hero: Hero
+  id: String
+  lr__path__: String
+  path: String
+  promoImage: Media
+  promoSummary: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+  title: String
+}
+
+type CategoryTag implements Content {
+  animation: JSON
+  id: String
+  lr__path__: String
+  name: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+}
+
+type Collection implements Content {
+  animation: JSON
+  backgroundColor: String
+  backgroundImage: Media
+  carouselAutoPlay: Boolean
+  carouselBreakpoints: [String]
+  disclaimerText: String
+  id: String
+  internalTitle: String
+  introText: Text
+  isCarouselDesktop: Boolean
+  isCarouselMobile: Boolean
+  isCarouselTablet: Boolean
+  items: [CollectionItem]
+  itemsConnection(filter: CollectionFilterInput, limit: Int, offset: Int): CollectionItemConnection
+  itemsPerRow: Int
+  itemsVariant: String
+  numItems: Int
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type CollectionDynamic implements Content {
+  animation: JSON
+  backgroundColor: String
+  id: String
+  internalTitle: String
+  itemsVariant: String
+  numberOfItemsToPull: String
+  pullFromContentType: String
+  settings: JSON
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type CollectionExpandable implements Content {
+  animation: JSON
+  backgroundColor: String
+  backgroundImage: Media
+  id: String
+  internalTitle: String
+  introText: Text
+  items: [CollectionExpandableItem]
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type CollectionExpandableItem implements Content {
+  OLDtitle: String
+  animation: JSON
+  body: RichText
+  bodyRte: JSON
+  content: Content
+  id: String
+  internalTitle: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+input CollectionFilterInput {
+  body: String
+  tags: [String]
+  topics: [String]
+}
+
+union CollectionItem = Card
+
+type CollectionItemConnection {
+  items: [CollectionItem]
+  pageInfo: ConnectionPageInfo
+}
+
+type CollectionOptions {
+  tags: [Option]
+  topics: [Option]
+}
+
+type ConnectionPageInfo {
+  allOptions: CollectionOptions
+  options: CollectionOptions
+  total: Int
+}
+
+interface Content {
+  animation: JSON
+  id: String
+  sidekickLookup: JSON
+  theme: [Theme]
+}
+
+input ContentsFilter {
+  contentTypes: [String]
+  displayType: String
+  ids: [String]
+  locale: String
+  preview: Boolean
+}
+
+"""Date custom scalar type"""
+scalar Date
+
+type ElementForm implements Content {
+  allowPersonalEmailAddresses: Boolean
+  animation: JSON
+  breadcrumbs: [Link]
+  confirmationPath: String
+  contents: [Content]
+  disclaimerText: String
+  footer: Footer
+  footerDisclaimerOverride: RichText
+  header: Header
+  hero: Hero
+  hideRecaptcha: Boolean
+  hubspotFormId: String
+  hubspotPortalId: String
+  id: String
+  internalTitle: String
+  introText: Text
+  lr__path__: String
+  marketoFormId: String
+  path: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+  variant: String
+}
+
+type ElementVideo implements Content {
+  altText: String
+  animation: JSON
+  asset: Media
+  assetURL: String
+  autoplay: Boolean
+  id: String
+  internalTitle: String
+  mobile: Media
+  placeholder: Media
+  sidekickLookup: JSON
+  tablet: Media
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type Footer implements Content {
+  animation: JSON
+  backgroundColor: String
+  copyrightDisclaimer: RichText
+  disclaimerText: RichText
+  hasSocialLinks: Boolean
+  id: String
+  internalTitle: String
+  introContents: [Content]
+  legalLinks: [Link]
+  logo: Media
+  logoUrl: Link
+  navigationItems: [NavigationItem]
+  sidekickLookup: JSON
+  socialLinks: [Link]
+  theme: [Theme]
+  variant: String
+}
+
+type Header implements Content {
+  animation: JSON
+  backgroundColor: String
+  ctaItems: [Link]
+  hasCtaItems: Boolean
+  id: String
+  internalTitle: String
+  logo: Media
+  logoUrl: Link
+  navigationItems: [NavigationItem]
+  sidekickLookup: JSON
+  supernavIcon: Media
+  supernavLink: Link
+  supernavMobileText: String
+  supernavText: RichText
+  theme: [Theme]
+  variant: String
+}
+
+type Hero implements Content {
+  OLDoverline: String
+  OLDsubtitle: String
+  OLDtitle: String
+  actions: [Link]
+  animation: JSON
+  background: Media
+  backgroundColor: String
+  body: RichText
+  contentHeight: String
+  id: String
+  internalTitle: String
+  overline: String
+  sideImageItems: [Media]
+  sidekickLookup: JSON
+  subtitle: String
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Link implements Content {
+  altText: String
+  animation: JSON
+  color: String
+  href: String!
+  icon: String
+  iconPosition: String
+  id: String
+  internalTitle: String
+  manualUrl: String
+  sidekickLookup: JSON
+  target: String
+  text: String
+  theme: [Theme]
+  variant: String
+}
+
+type Locales {
+  available: [String!]!
+  default: String!
+}
+
+type Location {
+  lat: String
+  lon: String
+}
+
+type Media implements Content {
+  alt: String
+  altText: String
+  animation: JSON
+  asset: Media
+  description: String
+  file: Asset
+  fileMobile: Asset
+  fileTablet: Asset
+  id: String
+  internalTitle: String
+  mobile: Media
+  sidekickLookup: JSON
+  source: String
+  tablet: Media
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type ModuleIntegration implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  settings: JSON
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type NavigationItem implements Content {
+  actions: [Link]
+  altText: String
+  animation: JSON
+  href: String!
+  icon: String
+  iconPosition: String
+  id: String
+  internalTitle: String
+  manualUrl: String
+  navMedia: Media
+  sidekickLookup: JSON
+  subNavigation: [SubNavigationItem]
+  summary: RichText
+  text: String
+  theme: [Theme]
+  variant: String
+}
+
+type Option {
+  label: String
+  value: String
+}
+
+type Page implements Content {
+  animation: JSON
+  breadcrumbs: [Link]
+  contents: [Content]
+  disableBackToTop: Boolean
+  footer: Footer
+  footerDisclaimerOverride: RichText
+  header: Header
+  hero: Hero
+  id: String
+  internalTitle: String
+  jsonLd: JSON
+  lr__path__: String
+  path: String
+  persona: [String]
+  promoImage: Media
+  promoSummary: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+  title: String
+}
+
+type PagePathParam {
+  slug: [String!]
+}
+
+type PagePathParams {
+  locale: String
+  params: PagePathParam!
+}
+
+type PageResource implements Content {
+  animation: JSON
+  body: RichText
+  disableBackToTop: Boolean
+  footerDisclaimerOverride: RichText
+  id: String
+  includeTocTableOfContents: Boolean
+  internalTitle: String
+  lr__path__: String
+  persona: [String]
+  promoImage: Media
+  promoSummary: String
+  resourceType: String
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  theme: [Theme]
+  title: String
+}
+
+type Person implements Content {
+  animation: JSON
+  body: RichText
+  breadcrumbs: [Link]
+  email: String
+  footer: Footer
+  header: Header
+  hero: Hero
+  id: String
+  jobTitle: String
+  jsonLd: JSON
+  lr__path__: String
+  mainImage: Media
+  name: String
+  path: String
+  promoImage: Media
+  promoSummary: String
+  rolloverImage: Media
+  seo: JSON
+  sidekickLookup: JSON
+  slug: String
+  socialLinks: [Link]
+  theme: [Theme]
+}
+
+type PricingPlan implements Content {
+  animation: JSON
+  body: String
+  disclaimerText: String
+  id: String
+  internalTitle: String
+  overline: String
+  price: String
+  sidekickLookup: JSON
+  textBelowPrice: String
+  theme: [Theme]
+  variant: String
+}
+
+type Query {
+  _service: _Service!
+  availableLocales: Locales
+  content(displayType: String, id: String!, locale: String, preview: Boolean): Content
+  contentPreview(displayType: String, id: String!, locale: String, overrideContent: JSON): Content
+  contents(filter: ContentsFilter!): [Content]
+  page(locale: String, path: String!, preview: Boolean, site: String): Content
+  paths(locales: [String!], preview: Boolean, site: String): [PagePathParams!]
+  redirects(preview: Boolean!): [SiteRedirect]
+  rewrites(preview: Boolean!): [SiteRedirect]
+  sitemap(locales: [String!], preview: Boolean, root: String!, site: String): Sitemap
+  sitemapIndex(preview: Boolean, site: String): Sitemap
+  sitemapPage(contentType: String!, locale: String, page: Int, preview: Boolean, site: String): SitemapPage
+}
+
+type Quote implements Content {
+  OLDauthorName: String
+  OLDauthorTitle: String
+  animation: JSON
+  authorName: String
+  authorTitle: String
+  id: String
+  image: Media
+  internalTitle: String
+  logo: Media
+  quote: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type RichText {
+  id: String
+  json: JSON
+  links: RichTextLinks
+}
+
+type RichTextLinks {
+  assets: [Media]
+  entries: [Content]
+}
+
+type Section implements Content {
+  anchorName: String
+  animation: JSON
+  background: Media
+  backgroundColor: String
+  contents: [Content]
+  disclaimerText: String
+  hasBackground: Boolean
+  id: String
+  internalTitle: String
+  introText: Text
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type Settings implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  liveEditorSettings: JSON
+  sidekickLookup: JSON
+  theme: [Theme]
+  variant: String
+}
+
+type Site implements Content {
+  animation: JSON
+  id: String
+  internalTitle: String
+  seo: JSON
+  sidekickLookup: JSON
+  siteKey: String
+  theme: [Theme]
+  variant: String
+}
+
+type SiteRedirect implements Content {
+  animation: JSON
+  destination: String
+  id: String
+  permanent: Boolean
+  sidekickLookup: JSON
+  source: String
+  theme: [Theme]
+  variant: String
+}
+
+type Sitemap {
+  pages: [SitemapPage]
+}
+
+type SitemapEntry {
+  lastmod: String
+  loc: String
+}
+
+type SitemapPage {
+  contentType: String
+  entries: [SitemapEntry]
+  filename: String
+  lastmod: String
+  loc: String
+  locale: String
+  page: Int
+}
+
+union SubNavigationItem = Blog | Link | NavigationItem | Page | Person
+
+type Template implements Content {
+  animation: JSON
+  category: String
+  id: String
+  image: Media
+  sidekickLookup: JSON
+  templateName: String
+  theme: [Theme]
+  variant: String
+}
+
+type Text implements Content {
+  OLDoverline: String
+  OLDsubtitle: String
+  OLDtitle: String
+  align: String
+  animation: JSON
+  body: RichText
+  id: String
+  internalTitle: String
+  overline: String
+  sidekickLookup: JSON
+  subtitle: String
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+type Theme {
+  variant: String
+}
+
+type ZTemporaryTemplatesToBeDeleted implements Content {
+  animation: JSON
+  id: String
+  sidekickLookup: JSON
+  theme: [Theme]
+  title: String
+  variant: String
+}
+
+scalar _Any
+
+scalar _FieldSet
+
+type _Service {
+  sdl: String
+}

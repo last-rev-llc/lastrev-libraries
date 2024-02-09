@@ -1,0 +1,24 @@
+schema:
+  - 'schema.graphql'
+documents:
+  - './src/**/*.graphql'
+  - './src/**/*.ts'
+  - '../**/*.graphql'
+generates:
+  ./src/generated/sdk.ts:
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-graphql-request'
+    config:
+      documentMode: 'string'
+      dedupeFragments: true
+      pureMagicComment: true
+      maybeValue: T | undefined
+      inlineFragmentTypes: combine
+      preResolveTypes: true
+      enumsAsTypes: false
+      rawRequest: true
+  ./src/generated/fragmentTypes.json:
+    plugins:
+      - fragment-matcher
