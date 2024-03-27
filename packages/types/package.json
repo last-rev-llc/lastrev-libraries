@@ -8,7 +8,7 @@
   "license": "ISC",
   "devDependencies": {
     "apollo-server-core": "^3.10.1",
-    "contentful": "^8.4.2",
+    "contentful": "^9.3.6",
     "dataloader": "^2.0.0",
     "graphql": "^16.6.0"
   }

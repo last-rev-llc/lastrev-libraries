@@ -23,10 +23,10 @@ jobs:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
-      - name: Setup Node.js 18
+      - name: Setup Node.js 20
         uses: actions/setup-node@master
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Dependencies cache
         uses: actions/cache@v3
@@ -35,9 +35,9 @@ jobs:
           path: |
             **/node_modules
             ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-1818-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-20-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-18
+            ${{ runner.os }}-yarn-20
 
       # - name: Turbo Cache
       #   id: turbo-cache

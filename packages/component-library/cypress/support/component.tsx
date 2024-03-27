@@ -16,7 +16,7 @@
 // Import commands.js using ES2015 syntax:
 import '@percy/cypress';
 
-import faker from 'faker';
+// import faker from 'faker';
 import '../../src/styles.scss';
 import mount from '../mount';
 
@@ -33,7 +33,7 @@ declare global {
   }
 }
 
-faker.seed(123);
+// faker.seed(123);
 
 Cypress.Commands.add('mount', mount);
 

@@ -3,34 +3,42 @@
   "globalDependencies": [],
   "pipeline": {
     "test": {
+      "outputMode": "new-only",
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
     "test:e2e": {
+      "outputMode": "new-only",
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
     "test:e2e:record": {
+      "outputMode": "new-only",
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
     "build-storybook": {
+      "outputMode": "new-only",
       "dependsOn": ["^build"],
       "outputs": ["storybook-static/**"]
     },
     "test:watch": {
+      "outputMode": "new-only",
       "dependsOn": ["^build"],
       "cache": false,
       "outputs": []
     },
     "lint": {
+      "outputMode": "new-only",
       "outputs": []
     },
     "build": {
+      "outputMode": "new-only",
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
     "dev": {
+      "outputMode": "new-only",
       "cache": false,
       "dependsOn": ["^build"]
     }

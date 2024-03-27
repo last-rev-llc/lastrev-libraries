@@ -32,7 +32,7 @@
     "@last-rev/contentful-path-util": "^0.1.22",
     "@last-rev/timer": "^0.2.0",
     "@last-rev/types": "^0.3.6",
-    "contentful": "^8.4.2",
+    "contentful": "^9.3.6",
     "lodash": "^4.17.21"
   }
 }
