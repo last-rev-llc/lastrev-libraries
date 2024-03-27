@@ -5273,12 +5273,12 @@
     rimraf "^3.0.2"
     ws "^8.0.0"
 
-"@percy/cypress@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@percy/cypress/-/cypress-3.1.1.tgz#4e7c5bdeccf1240b2150fc9d608df72c2f213d4b"
-  integrity sha512-khvWmCOJW7pxwDZPB5ovvbSe11FfNtH8Iyq8PHRYLD9ibAkiAWHZVs07bLK5wju1Q9X8s7zg5uj2yWxIlB1yjA==
+"@percy/cypress@^3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@percy/cypress/-/cypress-3.1.2.tgz#a087d3c59a6b155eab5fdb4c237526b9cfacbc22"
+  integrity sha512-JXrGDZbqwkzQd2h5T5D7PvqoucNaiMh4ChPp8cLQiEtRuLHta9nf1lEuXH+jnatGL2j+3jJFIHJ0L7XrgVnvQA==
   dependencies:
-    "@percy/sdk-utils" "^1.0.0-beta.44"
+    "@percy/sdk-utils" "^1.3.1"
 
 "@percy/dom@1.5.1":
   version "1.5.1"
@@ -5290,22 +5290,15 @@
   resolved "https://registry.yarnpkg.com/@percy/env/-/env-1.5.1.tgz#75111266ccab354d29b7504b6d7042cc4992217f"
   integrity sha512-UnLLS7EcfEQiMvTVy1itvppf5aP0C8sSfRWgaXsrVAoOan0+gzPBK4J2kJIbrbGRfhe6NLF3Gg/uZrUMsO/wiA==
 
-"@percy/logger@1.0.0-beta.75":
-  version "1.0.0-beta.75"
-  resolved "https://registry.yarnpkg.com/@percy/logger/-/logger-1.0.0-beta.75.tgz#7217f9b792ef09eb6fbce41be93b7fd6ad7cd827"
-  integrity sha512-/0otHJcPUAiJwOzyFwwlolp2lGz2Bx11rHy27kUYZpzMoA6mx/9uY6q2rfhuG8/dWbkgAt1Upc7fuMkaGK4P0g==
-
 "@percy/logger@1.5.1":
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/@percy/logger/-/logger-1.5.1.tgz#401f567c8ac93b84e00cd61a38c96bbfba2afaf6"
   integrity sha512-JZvrhowDe/zRULNztXbnlxB0usVKoFHqC8xrT1fE6QSu3oiHWj6AuNVV34VzRQeK32W/feXym5/p7I5dCHHakA==
 
-"@percy/sdk-utils@^1.0.0-beta.44":
-  version "1.0.0-beta.75"
-  resolved "https://registry.yarnpkg.com/@percy/sdk-utils/-/sdk-utils-1.0.0-beta.75.tgz#a9e3f858244e6953360610315b82c7857280612e"
-  integrity sha512-DlrgBq5pA2H2/zy8ejFpLUtiJZUk20qK8VpBwnvXhN9GvL9lhrhoMypWgaqgbm8Ta0EQk5sD+iFx8xDhwEBzWg==
-  dependencies:
-    "@percy/logger" "1.0.0-beta.75"
+"@percy/sdk-utils@^1.3.1":
+  version "1.28.2"
+  resolved "https://registry.yarnpkg.com/@percy/sdk-utils/-/sdk-utils-1.28.2.tgz#22d48ab0a281bbf39add303fcb1687ccac0e91a1"
+  integrity sha512-cMFz8AjZ2KunN0dVwzA+Wosk4B+6G9dUkh2YPhYvqs0KLcCyYs3s91IzOQmtBOYwAUVja/W/u6XmBHw0jaxg0A==
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
