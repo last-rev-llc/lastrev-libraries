@@ -1,5 +1,12 @@
 # @last-rev/component-library
 
+## 0.5.18
+
+### Patch Changes
+
+- Updated dependencies [6c0dc760]
+  - @last-rev/contentful-sidekick-util@0.2.0
+
 ## 0.5.17
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 {
   "name": "@last-rev/graphql-contentful-helpers",
   "private": false,
-  "version": "0.4.7",
+  "version": "0.5.0",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -23,15 +23,15 @@
   "license": "ISC",
   "dependencies": {
     "@last-rev/app-config": "^0.5.0",
-    "@last-rev/contentful-cms-loader": "^0.4.1",
-    "@last-rev/contentful-dynamodb-loader": "^0.3.1",
-    "@last-rev/contentful-fs-loader": "^0.3.1",
-    "@last-rev/contentful-redis-loader": "^0.5.3",
-    "@last-rev/contentful-path-rules-engine": "^0.1.5",
+    "@last-rev/contentful-cms-loader": "^0.5.0",
+    "@last-rev/contentful-dynamodb-loader": "^0.4.0",
+    "@last-rev/contentful-fs-loader": "^0.4.0",
+    "@last-rev/contentful-redis-loader": "^0.6.0",
+    "@last-rev/contentful-path-rules-engine": "^0.2.0",
     "@last-rev/testing-library": "^0.1.10",
-    "@last-rev/contentful-path-util": "^0.1.22",
+    "@last-rev/contentful-path-util": "^0.2.0",
     "@last-rev/timer": "^0.2.0",
-    "@last-rev/types": "^0.3.6",
+    "@last-rev/types": "^0.4.0",
     "contentful": "^9.3.6",
     "lodash": "^4.17.21"
   }

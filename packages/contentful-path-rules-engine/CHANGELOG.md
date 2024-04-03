@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-rules-engine
 
+## 0.2.0
+
+### Minor Changes
+
+- 6c0dc760: Updated packages with vulnerabilities to the safest
+
 ## 0.1.6
 
 ### Patch Changes

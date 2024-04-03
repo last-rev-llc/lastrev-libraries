@@ -1,5 +1,16 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.2.0
+
+### Minor Changes
+
+- 6c0dc760: Updated packages with vulnerabilities to the safest
+
+### Patch Changes
+
+- Updated dependencies [6c0dc760]
+  - @last-rev/contentful-webhook-parser@0.2.0
+
 ## 0.1.13
 
 ### Patch Changes

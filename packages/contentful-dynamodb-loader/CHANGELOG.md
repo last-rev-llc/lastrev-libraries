@@ -1,5 +1,11 @@
 # @last-rev/contentful-dynamodb-loader
 
+## 0.4.0
+
+### Minor Changes
+
+- 6c0dc760: Updated packages with vulnerabilities to the safest
+
 ## 0.3.3
 
 ### Patch Changes

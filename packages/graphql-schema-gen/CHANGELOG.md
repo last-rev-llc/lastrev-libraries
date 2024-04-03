@@ -1,5 +1,11 @@
 # @last-rev/graphql-schema-gen
 
+## 0.3.0
+
+### Minor Changes
+
+- 6c0dc760: Updated packages with vulnerabilities to the safest
+
 ## 0.2.4
 
 ### Patch Changes

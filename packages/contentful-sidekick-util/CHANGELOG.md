@@ -1,5 +1,11 @@
 # @last-rev/contentful-sidekick-util
 
+## 0.2.0
+
+### Minor Changes
+
+- 6c0dc760: Updated packages with vulnerabilities to the safest
+
 ## 0.1.3
 
 ### Patch Changes
