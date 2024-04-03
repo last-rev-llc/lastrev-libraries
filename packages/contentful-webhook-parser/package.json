@@ -22,6 +22,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "contentful": "^9.0.0"
+    "contentful": "^9.3.6"
   }
 }

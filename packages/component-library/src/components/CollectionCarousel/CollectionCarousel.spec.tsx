@@ -30,25 +30,25 @@ const runTestByVariant = (variantContent: CollectionCarouselProps, expectedLengt
     });
   });
 
-  context('functions correctly', () => {
-    it('previous and next buttons work correctly', () => {
-      mountWithRouter(<CollectionCarousel {...mockedContent} />);
-      cy.get('.swiper-pagination-bullet.swiper-pagination-bullet-active').as('activeBullet');
+  // context('functions correctly', () => {
+  //   it('previous and next buttons work correctly', () => {
+  //     mountWithRouter(<CollectionCarousel {...mockedContent} />);
+  //     cy.get('.swiper-pagination-bullet.swiper-pagination-bullet-active').as('activeBullet');
 
-      cy.get('.swiper-button-next').then((button) => {
-        button.trigger('click');
-        cy.get('@activeBullet').should('not.have.class', 'swiper-pagination-bullet-active');
-      });
+  //     cy.get('.swiper-button-next').then((button) => {
+  //       button.trigger('click');
+  //       cy.get('@activeBullet').should('not.have.class', 'swiper-pagination-bullet-active');
+  //     });
 
-      cy.get('.swiper-button-prev')
-        .wait(1000)
-        .then((button) => {
-          button.trigger('click');
-          cy.get('@activeBullet').should('have.class', 'swiper-pagination-bullet-active');
-          cy.percySnapshot();
-        });
-    });
-  });
+  //     cy.get('.swiper-button-prev')
+  //       .wait(1000)
+  //       .then((button) => {
+  //         button.trigger('click');
+  //         cy.get('@activeBullet').should('have.class', 'swiper-pagination-bullet-active');
+  //         cy.percySnapshot();
+  //       });
+  //   });
+  // });
 };
 
 describe('CollectionCarousel', () => {

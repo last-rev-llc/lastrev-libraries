@@ -28,7 +28,7 @@
     "@types/lodash": "^4.14.161",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
-    "contentful": "^7.14.6",
+    "contentful": "^9.3.6",
     "eslint": "^7.3.1",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
