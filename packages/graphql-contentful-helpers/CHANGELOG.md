@@ -1,5 +1,22 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.5.0
+
+### Minor Changes
+
+- 6c0dc760: Updated packages with vulnerabilities to the safest
+
+### Patch Changes
+
+- Updated dependencies [6c0dc760]
+  - @last-rev/contentful-cms-loader@0.5.0
+  - @last-rev/contentful-dynamodb-loader@0.4.0
+  - @last-rev/contentful-fs-loader@0.4.0
+  - @last-rev/contentful-path-rules-engine@0.2.0
+  - @last-rev/contentful-path-util@0.2.0
+  - @last-rev/contentful-redis-loader@0.6.0
+  - @last-rev/types@0.4.0
+
 ## 0.4.7
 
 ### Patch Changes

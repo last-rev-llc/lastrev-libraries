@@ -1,5 +1,21 @@
 # @last-rev/cli
 
+## 0.6.0
+
+### Minor Changes
+
+- 6c0dc760: Updated packages with vulnerabilities to the safest
+
+### Patch Changes
+
+- Updated dependencies [6c0dc760]
+  - @last-rev/contentful-fragment-gen@0.3.0
+  - @last-rev/contentful-import-export@0.2.0
+  - @last-rev/contentful-reports@0.2.0
+  - @last-rev/contentful-sync-to-fs@0.4.0
+  - @last-rev/graphql-contentful-core@0.6.0
+  - @last-rev/graphql-contentful-helpers@0.5.0
+
 ## 0.5.20
 
 ### Patch Changes

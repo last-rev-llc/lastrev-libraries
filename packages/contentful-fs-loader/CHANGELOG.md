@@ -1,5 +1,11 @@
 # @last-rev/contentful-fs-loader
 
+## 0.4.0
+
+### Minor Changes
+
+- 6c0dc760: Updated packages with vulnerabilities to the safest
+
 ## 0.3.2
 
 ### Patch Changes

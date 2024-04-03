@@ -1,5 +1,17 @@
 # @last-rev/graphql-contentful-extensions
 
+## 0.3.0
+
+### Minor Changes
+
+- 6c0dc760: Updated packages with vulnerabilities to the safest
+
+### Patch Changes
+
+- Updated dependencies [6c0dc760]
+  - @last-rev/graphql-contentful-core@0.6.0
+  - @last-rev/types@0.4.0
+
 ## 0.2.3
 
 ### Patch Changes

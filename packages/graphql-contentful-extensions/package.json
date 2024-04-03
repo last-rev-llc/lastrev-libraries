@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/graphql-contentful-extensions",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "main": "dist/index.js",
   "files": [
     "dist"
@@ -17,9 +17,9 @@
   },
   "dependencies": {
     "@graphql-tools/merge": "^8.4.0",
-    "@last-rev/graphql-contentful-core": "^0.5.15",
+    "@last-rev/graphql-contentful-core": "^0.6.0",
     "@last-rev/rollup-config": "^0.1.4",
-    "@last-rev/types": "^0.3.6",
+    "@last-rev/types": "^0.4.0",
     "contentful": "^9.3.6",
     "css": "^3.0.0",
     "fast-xml-parser": "^4.0.8",
@@ -29,7 +29,7 @@
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@last-rev/types": "^0.3.6",
+    "@last-rev/types": "^0.4.0",
     "@types/css": "^0.0.33",
     "@types/lodash": "^4.14.170",
     "contentful": "^9.3.6"
