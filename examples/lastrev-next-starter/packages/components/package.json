@@ -93,6 +93,6 @@
     "sass-loader": "^10",
     "style-loader": "^2.0.0",
     "webpack": "5",
-    "webpack-dev-server": "3"
+    "webpack-dev-server": "5"
   }
 }
