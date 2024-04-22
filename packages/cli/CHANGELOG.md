@@ -1,5 +1,11 @@
 # @last-rev/cli
 
+## 0.6.1
+
+### Patch Changes
+
+- e7b63a42: Updated create-app to use new starter
+
 ## 0.6.0
 
 ### Minor Changes
