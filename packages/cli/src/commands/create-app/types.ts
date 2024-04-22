@@ -18,7 +18,6 @@ export type CmsOptions = {
 export type CreateAppConfig = {
   app?: {
     name?: string;
-    starter?: string;
     contentfulSpaceId?: string;
     contentfulEnv?: string;
     repoName?: string;
@@ -30,7 +29,6 @@ export type CreateAppConfig = {
     host?: string;
     port?: number;
     password?: string;
-    username?: string;
   };
   netlify?: {
     accountSlug?: string;

@@ -1,17 +1,7 @@
 import BaseApiWrapper from './BaseApiWrapper';
 import { prompt } from 'inquirer';
 import Redis from 'ioredis';
-import LastRevConfig, {
-  VAL_CREATE_APP_CONFIG,
-  VAL_REDIS_HOST,
-  VAL_REDIS_PASSWORD,
-  VAL_REDIS_PORT,
-  VAL_REDIS_USERNAME
-} from '../LastRevConfig';
-import { CreateAppConfig } from '../types';
-import Messager from '../Messager';
-
-const messager = Messager.getInstance();
+import LastRevConfig, { VAL_REDIS_HOST, VAL_REDIS_PASSWORD, VAL_REDIS_PORT } from '../LastRevConfig';
 
 const REDIS_PORT_REGEX = /^[0-9]{4,5}$/;
 const REDIS_PASSWORD_REGEX = /^[a-zA-Z0-9]+$/;
@@ -72,27 +62,6 @@ export default class RedisApiWrapper extends BaseApiWrapper {
       this.config.updateStateValue(VAL_REDIS_PASSWORD, pass);
     } catch (err: any) {
       throw Error(`Error generating ACL password: ${err.message}`);
-    }
-  }
-
-  async createAclUser(): Promise<void> {
-    await this.ensureLoggedIn();
-    try {
-      const { app }: CreateAppConfig = this.config.getStateValue(VAL_CREATE_APP_CONFIG);
-
-      const contentfulSpaceId = app?.contentfulSpaceId!;
-
-      const username = `${app?.name}-redis-user`;
-      this.config.updateStateValue(VAL_REDIS_USERNAME, username);
-
-      const pass = this.config.getStateValue(VAL_REDIS_PASSWORD);
-
-      const rules = ['on', `~${contentfulSpaceId}:*`, `+@all`, `-@dangerous`, `+info`, `>${pass}`];
-
-      await redis.acl('SETUSER', username, ...rules);
-      messager.log(`Created Redis ACL user: ${username}`);
-    } catch (err: any) {
-      throw Error(`Error creating Redis ACL user: ${err.message}`);
     }
   }
 

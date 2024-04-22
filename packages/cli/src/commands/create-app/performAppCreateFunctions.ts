@@ -24,20 +24,14 @@ import { CreateAppConfig } from './types';
 
 const messager = Messager.getInstance();
 
-const downloadAndExtractArchive = async (
-  config: LastRevConfig,
-  { app }: CreateAppConfig,
-  githubApiWrapper: GithubApiWrapper
-): Promise<void> => {
+const downloadAndExtractArchive = async (config: LastRevConfig, githubApiWrapper: GithubApiWrapper): Promise<void> => {
   if (config.hasCompletedAction(ACTION_EXTRACT_ARCHIVE)) {
     return;
   }
 
   const root = process.cwd();
-  const example = app!.starter || 'lastrev-next-starter';
 
-  const result = await githubApiWrapper.downloadLastrevLibrariesTarballArchive();
-  const regex = new RegExp(`^[^/]*/examples/${example}/.*`);
+  const result = await githubApiWrapper.downloadLastrevStarterTarballArchive();
 
   const spinner = ora('Extracting code from archive').start();
   try {
@@ -50,15 +44,14 @@ const downloadAndExtractArchive = async (
         res.pipe(
           tar.extract({
             cwd: root,
-            strip: 3,
-            filter: (path: string) => regex.test(path)
+            strip: 1
           })
         );
       });
     });
     spinner.succeed();
     config.completeAction(ACTION_EXTRACT_ARCHIVE);
-  } catch (err: any) {
+  } catch (err) {
     spinner.fail();
     throw Error(`Error untarring archive: ${err.message}`);
   }
@@ -95,7 +88,7 @@ const createApp = async (
     return;
   }
 
-  await downloadAndExtractArchive(config, createAppConfig, githubApiWrapper);
+  await downloadAndExtractArchive(config, githubApiWrapper);
   await renamePackages(createAppConfig);
 
   config.completeAction(ACTION_CREATE_APP);
@@ -141,7 +134,7 @@ const initGitRepo = async (config: LastRevConfig): Promise<void> => {
     if (repoGitUrl) {
       await git.addRemote('origin', repoGitUrl);
     }
-  } catch (err: any) {
+  } catch (err) {
     if (err.message.includes('remote origin already exists')) {
       messager.warn(
         `Remote origin already exists in the git repo. Skipping. Please add the origin ${repoGitUrl} manually.`
@@ -172,7 +165,7 @@ const pushFirstCommitToGithub = async (config: LastRevConfig): Promise<void> => 
     await git.push('origin', 'main', ['-u']);
     messager.log('Initial commit pushed to git repo.');
     config.completeAction(ACTION_PUSH_REPO_TO_GITHUB);
-  } catch (err: any) {
+  } catch (err) {
     throw Error(`git pushFirstCommitToGithub error: ${err.message}`);
   }
 };
@@ -235,7 +228,7 @@ const writeLocalEnvFile = async (config: LastRevConfig): Promise<void> => {
     await writeFile(envFilePath, content);
     spinner.succeed('Wrote local .env file');
     config.completeAction(ACTION_WRITE_LOCAL_ENV_FILE);
-  } catch (err: any) {
+  } catch (err) {
     spinner.fail();
     throw Error(`writeLocalEnvFile error: ${err.message}`);
   }

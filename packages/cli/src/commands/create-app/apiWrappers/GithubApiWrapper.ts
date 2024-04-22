@@ -101,7 +101,7 @@ export default class GithubApiWrapper extends BaseApiWrapper {
       });
 
       spinner.succeed();
-    } catch (error: any) {
+    } catch (error) {
       spinner.fail();
       let message = `Github createDeployKey Failed: ${error.message}`;
       if (error.status === 404) {
@@ -132,7 +132,7 @@ export default class GithubApiWrapper extends BaseApiWrapper {
         active: true
       });
       spinner.succeed();
-    } catch (error: any) {
+    } catch (error) {
       if (!error.message.includes('Hook already exists on this repository')) {
         spinner.fail();
         let message = `Failed creating repo hook for ${type} site: ${error.message}`;
@@ -166,7 +166,7 @@ export default class GithubApiWrapper extends BaseApiWrapper {
         repo: repoName
       });
       return data && data.name === repoName;
-    } catch (error: any) {
+    } catch (error) {
       return false;
     }
   }
@@ -181,7 +181,7 @@ export default class GithubApiWrapper extends BaseApiWrapper {
       });
       this.config.updateStateValue(VAL_GITHUB_REPO, data);
       spinner.succeed();
-    } catch (error: any) {
+    } catch (error) {
       spinner.fail();
       let message = `Github loadGithubRepo error: ${error.message}`;
       if (error.status === 404) {
@@ -191,18 +191,18 @@ export default class GithubApiWrapper extends BaseApiWrapper {
     }
   }
 
-  async downloadLastrevLibrariesTarballArchive(): Promise<any> {
+  async downloadLastrevStarterTarballArchive(): Promise<any> {
     await this.ensureLoggedIn();
-    const spinner = ora('Downloading example tarball archive from Github').start();
+    const spinner = ora('Downloading starter tarball archive from Github').start();
     try {
       const archive = await this.octokit.rest.repos.downloadTarballArchive({
         owner: 'last-rev-llc',
-        repo: 'lastrev-libraries',
+        repo: 'lastrev-starter-v2',
         ref: 'main'
       });
       spinner.succeed();
       return archive;
-    } catch (err: any) {
+    } catch (err) {
       spinner.fail();
       throw Error(`Github downloadTarballArchive error: ${err.message}`);
     }
@@ -213,7 +213,7 @@ export default class GithubApiWrapper extends BaseApiWrapper {
     try {
       const orgs = await this.octokit.orgs.listForAuthenticatedUser();
       return orgs.data;
-    } catch (err: any) {
+    } catch (err) {
       throw Error(`Github listOrgsForAuthenticatedUser error: ${err.message}`);
     }
   }
@@ -223,7 +223,7 @@ export default class GithubApiWrapper extends BaseApiWrapper {
     try {
       const { data } = await this.octokit.orgs.listForAuthenticatedUser();
       return data.some((org) => org.login === repoOwner);
-    } catch (err: any) {
+    } catch (err) {
       throw Error(`Github listOrgsForAuthenticatedUser error: ${err.message}`);
     }
   }
@@ -233,7 +233,7 @@ export default class GithubApiWrapper extends BaseApiWrapper {
     try {
       const { data } = await this.octokit.users.getAuthenticated();
       return data.login;
-    } catch (err: any) {
+    } catch (err) {
       throw Error(`Github getCurrentUserLogin error: ${err.message}`);
     }
   }
@@ -259,28 +259,9 @@ export default class GithubApiWrapper extends BaseApiWrapper {
       messager.delayed(`Your github repository can be found at ${githubRepo.html_url}`);
       this.config.updateStateValue(VAL_GITHUB_REPO, githubRepo);
       spinner.succeed();
-    } catch (err: any) {
+    } catch (err) {
       spinner.fail();
       throw Error(`Github createInOrg error: ${err.message}`);
-    }
-  }
-
-  async checkExampleExists(example: string): Promise<void> {
-    await this.ensureLoggedIn();
-    const spinner = ora('Checking for example').start();
-    try {
-      await this.octokit.rest.repos.getContent({
-        owner: 'last-rev-llc',
-        repo: 'lastrev-libraries',
-        ref: 'main',
-        path: `examples/${example}`
-      });
-      spinner.succeed();
-    } catch (err: any) {
-      spinner.fail();
-      if (err.message === 'Not Found')
-        throw Error(`Github checkExampleExists error: ${example} does not exist in the repo`);
-      throw Error(`Github checkExampleExists error: ${err.message}`);
     }
   }
 
@@ -305,7 +286,7 @@ export default class GithubApiWrapper extends BaseApiWrapper {
         restrictions: null
       });
       spinner.succeed();
-    } catch (err: any) {
+    } catch (err) {
       spinner.fail();
       messager.error(`Github updateBranchProtectionRules error: ${err.message}. Skipping this step.`);
     }

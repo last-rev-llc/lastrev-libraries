@@ -61,13 +61,13 @@ By CMS:
 
 ### Description
 
-This command will create an app from one of last-rev's [example apps](../../../../../examples).
+This command will create an app from the lastrev starter.
 
-The command will prompt you for the name of the new project, and will then authenticate you into github to access the lastrev-libraries repo.
+The command will prompt you for the name of the new project, and will then authenticate you into github to access the lastrev-starter-v2 repo.
 
 This will then do a couple things:
 
-1. Extract the contents of the example archive to the targeted directory
+1. Extract the contents of the starter archive to the targeted directory
 2. Rename the packages based on the provided project name
 3. Create a github repo if one does not exist
 4. Create the netlify sites associated with the project

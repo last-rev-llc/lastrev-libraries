@@ -21,7 +21,6 @@ export const VAL_CONTENTFUL_DEFAULT_SITE_ID = 'contentfulDefaultSiteId';
 export const VAL_CONTENTFUL_DEFAULT_SITE_KEY = 'contentfulDefaultSiteKey';
 
 export const VAL_REDIS_PASSWORD = 'redisPassword';
-export const VAL_REDIS_USERNAME = 'redisUsername';
 export const VAL_REDIS_HOST = 'redisHost';
 export const VAL_REDIS_PORT = 'redisPort';
 
