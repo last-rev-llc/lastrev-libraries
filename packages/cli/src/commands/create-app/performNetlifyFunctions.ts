@@ -6,7 +6,6 @@ import LastRevConfig, {
   ACTION_NETLIFY_ADD_DEPLOY_HOOK,
   ACTION_NETLIFY_ADD_NOTIFICATION_HOOKS,
   ACTION_ADD_GITHUB_REPO_TO_NETLIFY,
-  ACTION_UPDATE_NETLIFY_BUILD_ENV,
   VAL_CREATE_APP_CONFIG,
   ACTION_CREATE_NETLIFY_SITE
 } from './LastRevConfig';
@@ -118,19 +117,6 @@ const addGithubRepoToSite = async (
   config.completeAction(action);
 };
 
-const updateNetlifyBuildEnvForSite = async (
-  config: LastRevConfig,
-  type: string,
-  netlifyApiWrapper: NetlifyApiWrapper
-) => {
-  const action = `${ACTION_UPDATE_NETLIFY_BUILD_ENV}-${type}`;
-  if (config.hasCompletedAction(action)) {
-    return;
-  }
-  await netlifyApiWrapper.updateSiteWithEnvVars(type);
-  config.completeAction(action);
-};
-
 const performNetlifyFunctions = async (
   config: LastRevConfig,
   netlifyApiWrapper: NetlifyApiWrapper,
@@ -144,7 +130,7 @@ const performNetlifyFunctions = async (
   for (const type of siteTypes) {
     await createNetlifySite(config, createAppConfig, type, netlifyApiWrapper);
     await addGithubRepoToSite(config, type, githubApiWrapper, netlifyApiWrapper);
-    await updateNetlifyBuildEnvForSite(config, type, netlifyApiWrapper);
+    // TODO: update netlify with env key
   }
 };
 

@@ -20,13 +20,6 @@ const validateCreateAppConfig = async (
     }
   }
 
-  if (app.starter) {
-    // TODO: validate this dynamically from examples dir in github.
-    if (app.starter !== 'lastrev-next-starter') {
-      errors.push('[app.starter] Only lastrev-next-starter is currently supported');
-    }
-  }
-
   if (!app.contentfulSpaceId) {
     errors.push('[contentfulSpaceId] You must specify a contentful space id');
   }

@@ -16,10 +16,6 @@ const validateRedisConfig = async ({ redis }: CreateAppConfig, errors: string[])
   if (!redis.password) {
     errors.push('[redis.password] You must specify a redis password if you are providing a redis config');
   }
-
-  if (!redis.username) {
-    errors.push('[redis.username] You must specify a redis username if you are providing a redis config');
-  }
 };
 
 export default validateRedisConfig;

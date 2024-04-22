@@ -39,7 +39,6 @@ const run = async (directory: string, source: string, target: string) => {
     }
     // Find the diff between the two commits
     const PATCH_FILE = join(TEMP_DIR, 'patch.diff');
-    const STARTER_FOLDER = join(REPO_DIR, 'examples', 'lastrev-next-starter');
 
     // cd $REPO_DIR
     await git.cwd({ path: REPO_DIR, root: true });
@@ -57,8 +56,8 @@ const run = async (directory: string, source: string, target: string) => {
     // git commit -a -m "Update from $SOURCE_COMMIT to $TARGET_COMMIT" -q
     await git.raw(['commit', '-a', '-m', `Update from ${SOURCE_COMMIT} to ${TARGET_COMMIT}`, '-q']);
 
-    // git format-patch $SOURCE_COMMIT --relative --stdout -- $STARTER_FOLDER > $PATCH_FILE
-    execSync(`git format-patch ${SOURCE_COMMIT} --relative --stdout -- ${STARTER_FOLDER} > ${PATCH_FILE}`, {
+    // git format-patch $SOURCE_COMMIT --relative --stdout > $PATCH_FILE
+    execSync(`git format-patch ${SOURCE_COMMIT} --relative --stdout > ${PATCH_FILE}`, {
       cwd: REPO_DIR
     });
 
@@ -123,7 +122,7 @@ const run = async (directory: string, source: string, target: string) => {
       let AM_OUTPUT = '';
       try {
         AM_OUTPUT = execSync(`git am --${ACTION} 2>&1`, { cwd: TARGET_DIRECTORY, encoding: 'utf8' });
-      } catch (err: any) {
+      } catch (err) {
         AM_OUTPUT = err.stdout;
       }
 
