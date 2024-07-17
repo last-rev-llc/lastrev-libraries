@@ -31,26 +31,36 @@ const performAlgoliaQuery = async (
 
   const idsResults = await Promise.allSettled(
     idsQueryFilters.map(async (filter) => {
-      const timerQuery = new Timer();
-      const result = await client.query({
-        query: idsQuery,
-        variables: {
+      try {
+        const timerQuery = new Timer();
+        const result = await client.query({
+          query: idsQuery,
+          variables: {
+            filter
+          }
+        });
+  
+        logger.debug('Query for Ids', {
+          caller: 'performAlgoliaQuery',
+          emapsedMs: timerQuery.end().millis,
+          itemsSuccessful: result.data.contents.length,
+          query: filter
+        });
+  
+        const {
+          data: { contents: algoliaResults }
+        } = result;
+  
+        return algoliaResults;
+
+      } catch(err) {
+        logger.error('[ERROR] Query for algolia objects by ids', {
+          caller: 'performAlgoliaQuery',
+          idsQuery,
           filter
-        }
-      });
-
-      logger.debug('Query for Ids', {
-        caller: 'performAlgoliaQuery',
-        emapsedMs: timerQuery.end().millis,
-        itemsSuccessful: result.data.contents.length,
-        query: filter
-      });
-
-      const {
-        data: { contents: algoliaResults }
-      } = result;
-
-      return algoliaResults;
+        });
+        throw err
+      }
     })
   );
 

@@ -64,18 +64,32 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
 
       const { errors: queryErrors, results } = await performAlgoliaQuery(apolloClient, config, contentStates);
 
+      if(!!queryErrors?.length) {
+        logger.error('[ERROR] performAlgoliaQuery, stopping execution', {
+          caller: 'createAlgoliaSyncHandler',
+          errorCount: queryErrors.length
+        });
+        return {
+          statusCode: 400,
+          headers: { 'Content-Type': 'text/plain' },
+          body: {
+            message: "[ERROR] performAlgoliaQuery",
+            errorCount: queryErrors.length
+          }
+        };
+      }
+
       const algoliaObjectsByIndex = groupAlgoliaObjectsByIndex(results);
 
       const updateErrors = await updateAlgoliaIndices(algoliaClient, algoliaObjectsByIndex, maxRecords);
 
-      const allErrors = [...queryErrors, ...updateErrors];
       logger.debug('Algolia sync handler', {
         caller: 'createAlgoliaSyncHandler',
         elapsedMs: timer.end().millis
       });
 
-      if (allErrors.length) {
-        allErrors.map((error) =>
+      if (updateErrors.length) {
+        updateErrors.map((error) =>
           logger.error(`Error syncing to Algolia: ${error.message}`, {
             caller: 'createAlgoliaSyncHandler',
             stack: error.stack
