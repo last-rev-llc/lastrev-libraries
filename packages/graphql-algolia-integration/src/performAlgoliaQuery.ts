@@ -39,27 +39,26 @@ const performAlgoliaQuery = async (
             filter
           }
         });
-  
+
         logger.debug('Query for Ids', {
           caller: 'performAlgoliaQuery',
           emapsedMs: timerQuery.end().millis,
           itemsSuccessful: result.data.contents.length,
           query: filter
         });
-  
+
         const {
           data: { contents: algoliaResults }
         } = result;
-  
-        return algoliaResults;
 
-      } catch(err) {
+        return algoliaResults;
+      } catch (err) {
         logger.error('[ERROR] Query for algolia objects by ids', {
           caller: 'performAlgoliaQuery',
           idsQuery,
           filter
         });
-        throw err
+        throw err;
       }
     })
   );

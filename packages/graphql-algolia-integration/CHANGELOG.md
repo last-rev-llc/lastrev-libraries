@@ -1,5 +1,11 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.3.0
+
+### Minor Changes
+
+- d23444ad: Stop Algolia sync if there is at least one error
+
 ## 0.2.0
 
 ### Minor Changes
