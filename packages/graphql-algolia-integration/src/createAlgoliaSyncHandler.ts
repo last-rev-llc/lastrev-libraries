@@ -64,7 +64,7 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
 
       const { errors: queryErrors, results } = await performAlgoliaQuery(apolloClient, config, contentStates);
 
-      if(!!queryErrors?.length) {
+      if (!!queryErrors?.length) {
         logger.error('[ERROR] performAlgoliaQuery, stopping execution', {
           caller: 'createAlgoliaSyncHandler',
           errorCount: queryErrors.length
@@ -73,7 +73,7 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
           statusCode: 400,
           headers: { 'Content-Type': 'text/plain' },
           body: {
-            message: "[ERROR] performAlgoliaQuery",
+            message: '[ERROR] performAlgoliaQuery',
             errorCount: queryErrors.length
           }
         };
