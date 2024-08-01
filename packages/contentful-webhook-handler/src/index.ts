@@ -71,7 +71,7 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
     }
   }
 
-  const data = isTruncated ? await getData(config, type, env, itemId) : body;
+  const data = isTruncated && action !== 'delete' ? await getData(config, type, env, itemId) : body;
 
   await Promise.all(
     map(contentStates, async (env) => {
