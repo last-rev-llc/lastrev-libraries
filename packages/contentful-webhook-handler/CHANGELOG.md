@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.6.0
+
+### Minor Changes
+
+- abf2c2c5: Prevent getData if action is delete
+
 ## 0.5.0
 
 ### Minor Changes
