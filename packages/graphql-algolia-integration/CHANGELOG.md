@@ -1,5 +1,11 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.4.0
+
+### Minor Changes
+
+- 9db7883b: Add batchSize option to Algolia replaceAllObjects method
+
 ## 0.3.0
 
 ### Minor Changes
