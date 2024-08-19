@@ -1,4 +1,5 @@
 import { SearchClient } from 'algoliasearch';
+import LastRevAppConfig from '@last-rev/app-config';
 import { AlgoliaObjectsByIndex } from './types';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
@@ -11,7 +12,7 @@ const logger = getWinstonLogger({
 const updateAlgoliaIndices = async (
   algoliaClient: SearchClient,
   algoliaObjectsByIndex: AlgoliaObjectsByIndex,
-  maxRecords?: number
+  config: LastRevAppConfig
 ): Promise<any[]> => {
   const timer = new Timer();
   const toProcess = Object.keys(algoliaObjectsByIndex).map((index) => ({
@@ -21,8 +22,8 @@ const updateAlgoliaIndices = async (
 
   const finalResults = await Promise.allSettled(
     toProcess.map(async ({ objects, index }) => {
-      const indexObject = await algoliaClient.initIndex(index);
-      await indexObject.replaceAllObjects(maxRecords ? objects.slice(0, maxRecords) : objects);
+      const indexObject = algoliaClient.initIndex(index);
+      await indexObject.replaceAllObjects(objects, { batchSize: config.algolia.maxBatchSize ?? 200 });
     })
   );
 

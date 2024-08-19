@@ -15,7 +15,7 @@ const logger = getWinstonLogger({
   module: 'createAlgoliaSyncHandler'
 });
 
-const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, maxRecords?: number) => {
+const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string) => {
   const { algolia } = config;
 
   const algoliaClient = algoliasearch(algolia.applicationId, algolia.adminApiKey);
@@ -81,7 +81,7 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string, 
 
       const algoliaObjectsByIndex = groupAlgoliaObjectsByIndex(results);
 
-      const updateErrors = await updateAlgoliaIndices(algoliaClient, algoliaObjectsByIndex, maxRecords);
+      const updateErrors = await updateAlgoliaIndices(algoliaClient, algoliaObjectsByIndex, config);
 
       logger.debug('Algolia sync handler', {
         caller: 'createAlgoliaSyncHandler',
