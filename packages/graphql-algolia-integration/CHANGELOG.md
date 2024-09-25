@@ -1,5 +1,12 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.4.1
+
+### Patch Changes
+
+- dbb51ef7: Fixed issue with algolia draft content
+- 1478cd3d: Fix null value not being checked
+
 ## 0.4.0
 
 ### Minor Changes
