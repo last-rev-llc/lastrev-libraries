@@ -50,7 +50,7 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string) 
           return;
         }
         contentStates = parsed.contentStates;
-        if (algolia.indexDraftContent && !contentStates.includes('production')) {
+        if (!algolia.indexDraftContent && !contentStates.includes('production')) {
           // nothing to index
           return {
             statusCode: 200,
