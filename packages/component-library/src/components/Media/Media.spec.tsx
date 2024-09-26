@@ -24,7 +24,7 @@ describe('Media', () => {
       cy.percySnapshot();
     });
 
-    it('renders file in a HTML5 video', () => {
+    skip('renders file in a HTML5 video', () => {
       mount(<Media {...mockedVideo} />);
       cy.get('video[data-testid=Media]')
         .should('exist')

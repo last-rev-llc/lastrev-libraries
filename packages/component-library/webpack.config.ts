@@ -26,6 +26,9 @@ export default {
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
     fallback: {
+      zlib:false,
+      stream:false,
+      fs:false,
       path: require.resolve('path-browserify')
     },
     alias: {
