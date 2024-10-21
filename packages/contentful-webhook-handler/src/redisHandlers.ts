@@ -64,20 +64,14 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
     contentType: async (command) => {
       const { data, isPreview } = command;
       const key = `${isPreview ? 'preview' : 'production'}:content_types`;
-      if (command.action === 'update') {
-        const val = stringify(data, data.sys.id);
-        if (val) {
-          const multi = redis.multi();
-          await multi
-            .hset(key, {
-              [data.sys.id]: val
-            })
-            .expire(key, ttlSeconds)
-            .exec();
-        }
-      } else if (command.action === 'delete') {
-        await redis.hdel(key, data.sys.id);
-      }
+      const multi = redis.multi();
+
+      const deleteObj = (data.items || []).reduce((acc, item) => {
+        acc[item.sys.id] = stringify(item, item.sys.id) || '';
+        return acc;
+      }, {} as Record<string, string>);
+
+      await multi.del(key).hset(key, deleteObj).expire(key, ttlSeconds).exec();
     },
     paths: async (updateForPreview, updateForProd) => {
       const context = await createContext({ config });

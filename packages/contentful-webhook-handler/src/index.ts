@@ -1,4 +1,4 @@
-import { Entry, Asset, ContentType, createClient } from 'contentful';
+import { Entry, Asset, createClient, ContentTypeCollection } from 'contentful';
 import { map } from 'lodash';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ProcessCommand } from './types';
@@ -37,7 +37,7 @@ const getData = async (
     case 'Asset':
       return client.getAsset(itemId);
     case 'ContentType':
-      return client.getContentType(itemId);
+      return client.getContentTypes();
   }
 };
 
@@ -71,7 +71,8 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
     }
   }
 
-  const data = isTruncated && action !== 'delete' ? await getData(config, type, env, itemId) : body;
+  const data =
+    type === 'ContentType' || (isTruncated && action !== 'delete') ? await getData(config, type, env, itemId) : body;
 
   await Promise.all(
     map(contentStates, async (env) => {
@@ -89,7 +90,7 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
             await handlers.entry(command as ProcessCommand<Entry<any>>);
             break;
           case 'ContentType':
-            await handlers.contentType(command as ProcessCommand<ContentType>);
+            await handlers.contentType(command as ProcessCommand<ContentTypeCollection>);
             break;
           default:
             logger.debug(`Unsupported type! ${type}`, { caller: 'handleWebhook' });
