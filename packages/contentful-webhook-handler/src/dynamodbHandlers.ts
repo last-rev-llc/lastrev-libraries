@@ -74,18 +74,21 @@ export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
     );
 
     // refresh content models
-    await Promise.all(
-      map(contentTypes, async (data) =>
-        dynamoDB.put({
-          TableName: config.dynamodb.tableName,
-          Item: {
-            pk: pk(isPreview),
-            sk: `content_types:${data.sys.id}`,
-            data
-          }
-        })
-      )
-    );
+    const putRequests = contentTypes.map((data) => ({
+      PutRequest: {
+        Item: {
+          pk: pk(isPreview),
+          sk: `content_types:${data.sys.id}`,
+          data
+        }
+      }
+    }));
+
+    await dynamoDB.batchWrite({
+      RequestItems: {
+        [config.dynamodb.tableName]: putRequests
+      }
+    });
   };
 
   const refreshEntriesByContentType = async (contentTypeId: string, isPreview: boolean) => {
