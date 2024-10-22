@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.7.0
+
+### Minor Changes
+
+- 56a18bed: Refresh all content types when any single one changes
+
 ## 0.6.0
 
 ### Minor Changes
