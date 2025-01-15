@@ -30,7 +30,11 @@
   "resolutions": {
     "@types/react": "^17.0.0",
     "lodash-es": "^4.17.19",
-    "lodash": "^4.17.19"
+    "lodash": "^4.17.19",
+    "micromatch": "^4.0.8",
+    "braces": "^3.0.3",
+    "ansi-regex": "^5.0.1",
+    "unset-value": "^2.0.1"
   },
   "browserslist": [
     "last 2 Chrome versions",
