@@ -32,6 +32,7 @@
     "@last-rev/contentful-path-util": "^0.2.0",
     "@last-rev/timer": "^0.2.0",
     "@last-rev/types": "^0.4.0",
+    "@sanity/client": "^5.3.4",
     "contentful": "^9.3.6",
     "lodash": "^4.17.21"
   }

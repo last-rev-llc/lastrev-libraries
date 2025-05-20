@@ -3,6 +3,10 @@ import { createPathStore, PathReader } from '@last-rev/contentful-path-util';
 import LastRevAppConfig from '@last-rev/app-config';
 
 const createPathReaders = (config: LastRevAppConfig): PathReaders | undefined => {
+  if (config.cms === 'Sanity') {
+    return undefined;
+  }
+
   if (config.paths.generateFullPathTree) {
     const [previewPathStore, prodPathStore] = [true, false].map((usePreview) =>
       createPathStore(config.clone({ contentful: { usePreview } }))

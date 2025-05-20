@@ -110,6 +110,13 @@ export type ContentfulClients = {
   preview: ContentfulClientApi;
 };
 
+export type CmsClients =
+  | ContentfulClients
+  | {
+      prod: any;
+      preview: any;
+    };
+
 export type PathEntries = (Entry<any> | null)[];
 
 export type PathInfo = {
@@ -136,7 +143,7 @@ export type ApolloContext = {
   path?: string;
   locales: string[];
   preview?: boolean;
-  contentful: ContentfulClients;
+  contentful: CmsClients;
   pathReaders?: PathReaders;
   displayType?: string;
 

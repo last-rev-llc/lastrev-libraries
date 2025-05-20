@@ -1,8 +1,10 @@
 import { find, get, map } from 'lodash';
 import { createClient } from 'contentful';
+import sanityClient, { SanityClient } from '@sanity/client';
 import { ApolloContext } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import createLoaders from './createLoaders';
+import createSanityLoaders from './createSanityLoaders';
 import createPathReaders from './createPathReaders';
 
 import { PathToContentLoader, ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
@@ -17,6 +19,18 @@ const getLocales = async (space: string, environment: string, accessToken: strin
   });
   const locales = await client.getLocales();
   return locales.items;
+};
+
+const getSanityLocales = async (client: SanityClient) => {
+  try {
+    const results = await client.fetch(`*[_type == "i18n.locale"]{code}`);
+    if (Array.isArray(results) && results.length > 0) {
+      return results.map((r: any) => r.code);
+    }
+  } catch (err) {
+    // i18n plugin may not be installed
+  }
+  return ['en-US'];
 };
 
 export type ExtraContextData = {
@@ -37,34 +51,64 @@ export type CreateContextProps = {
 const createContext = async ({ config }: CreateContextProps): Promise<ApolloContext> => {
   const pathReaders = createPathReaders(config);
 
-  const locales = await getLocales(
-    config.contentful.spaceId,
-    config.contentful.env,
-    config.contentful.contentDeliveryToken
-  );
+  let locales: string[] = [];
+  let defaultLocale: string = 'en-US';
+  let clients: { prod: any; preview: any };
+  let loaders;
 
-  const defaultLocale = get(
-    find(locales, (locale) => locale.default),
-    'code',
-    'en-US'
-  );
+  if (config.cms === 'Sanity') {
+    const sanityCfg = (config as any).sanity || {};
+    const prodClient = sanityClient({
+      projectId: sanityCfg.projectId,
+      dataset: sanityCfg.dataset,
+      apiVersion: sanityCfg.apiVersion || '2021-03-25',
+      token: sanityCfg.token,
+      useCdn: !sanityCfg.usePreview
+    });
+    const previewClient = sanityClient({
+      projectId: sanityCfg.projectId,
+      dataset: sanityCfg.dataset,
+      apiVersion: sanityCfg.apiVersion || '2021-03-25',
+      token: sanityCfg.token,
+      useCdn: false
+    });
 
-  const contentful = {
-    prod: createClient({
-      accessToken: config.contentful.contentDeliveryToken,
-      space: config.contentful.spaceId,
-      environment: config.contentful.env,
-      host: 'cdn.contentful.com',
-      resolveLinks: false
-    }),
-    preview: createClient({
-      accessToken: config.contentful.contentPreviewToken,
-      space: config.contentful.spaceId,
-      environment: config.contentful.env,
-      host: 'preview.contentful.com',
-      resolveLinks: false
-    })
-  };
+    locales = await getSanityLocales(prodClient);
+    defaultLocale = locales[0] || 'en-US';
+    clients = { prod: prodClient, preview: previewClient };
+    loaders = createSanityLoaders(config, defaultLocale);
+  } else {
+    const cLocales = await getLocales(
+      config.contentful.spaceId,
+      config.contentful.env,
+      config.contentful.contentDeliveryToken
+    );
+
+    locales = map(cLocales, 'code');
+    defaultLocale = get(
+      find(cLocales, (locale) => locale.default),
+      'code',
+      'en-US'
+    );
+
+    clients = {
+      prod: createClient({
+        accessToken: config.contentful.contentDeliveryToken,
+        space: config.contentful.spaceId,
+        environment: config.contentful.env,
+        host: 'cdn.contentful.com',
+        resolveLinks: false
+      }),
+      preview: createClient({
+        accessToken: config.contentful.contentPreviewToken,
+        space: config.contentful.spaceId,
+        environment: config.contentful.env,
+        host: 'preview.contentful.com',
+        resolveLinks: false
+      })
+    };
+    loaders = createLoaders(config, defaultLocale);
+  }
 
   const pathToContentLoader = config.features.enablePathsV2
     ? new PathToContentLoader(config.extensions.pathsConfigs)
@@ -75,7 +119,7 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
     : null;
 
   return {
-    contentful,
+    contentful: clients,
     loadEntriesForPath: async (path: any, ctx: any, site: any) => {
       if (pathToContentLoader) {
         return pathToContentLoader.getItemsForPath(path, ctx, site);
@@ -94,8 +138,8 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
       }
       return [];
     },
-    locales: map(locales, 'code'),
-    loaders: createLoaders(config, defaultLocale),
+    locales,
+    loaders,
     mappers: config.extensions.mappers,
     defaultLocale,
     pathReaders,
