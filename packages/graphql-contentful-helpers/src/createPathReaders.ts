@@ -4,6 +4,7 @@ import LastRevAppConfig from '@last-rev/app-config';
 
 const createPathReaders = (config: LastRevAppConfig): PathReaders | undefined => {
   if (config.cms === 'Sanity') {
+    console.warn('Path resolution is not supported when using Sanity CMS.');
     return undefined;
   }
 

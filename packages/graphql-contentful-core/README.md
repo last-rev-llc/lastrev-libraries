@@ -175,6 +175,8 @@ const mappers = {
 
 PathsConfigs allow you to define how a path is constructed from a specific content type. There are two ways to define these:
 
+**Important:** When using Sanity as the CMS, path resolution is not currently supported. Any queries relying on path readers will return no results.
+
 1. A mapping from a contentType name to a string representing the root of the path. This will append the `slug` field of the content item to the root in order to construct the path for a specific content item:
 
 ```javascript
