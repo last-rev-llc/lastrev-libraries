@@ -29,8 +29,19 @@ const contentful = () => ({
   maxBatchSize: 500
 });
 
+const sanity = () => ({
+  projectId: 'projectId',
+  dataset: 'dataset',
+  token: 'token',
+  apiVersion: '2021-06-07'
+});
+
 export const redisConfig = (): LastRevAppConfigArgs => ({
   redis: { ...redis() }
+});
+
+export const sanityConfig = (): LastRevAppConfigArgs => ({
+  sanity: { ...sanity() }
 });
 
 export default (): LastRevAppConfigArgs => ({
@@ -38,6 +49,7 @@ export default (): LastRevAppConfigArgs => ({
   dynamodb: { ...dynamodb() },
   fs: { ...fs() },
   contentful: { ...contentful() },
+  sanity: { ...sanity() },
   extensions: {
     typeDefs: 'typeDefs',
     resolvers: {},
