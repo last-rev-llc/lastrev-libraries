@@ -1,12 +1,12 @@
 import constructObjectId from './constructObjectId';
-import { Entry } from 'contentful';
+import { CmsEntry } from '@last-rev/types';
 import { ApolloContext } from '@last-rev/types';
 
 const content = {
   sys: {
     id: 'foo'
   }
-} as unknown as Entry<any>;
+} as unknown as CmsEntry<any>;
 
 let context: ApolloContext;
 

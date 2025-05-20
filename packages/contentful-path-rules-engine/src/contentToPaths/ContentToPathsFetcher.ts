@@ -1,4 +1,4 @@
-import { Entry } from 'contentful';
+import { CmsEntry } from '@last-rev/types';
 import { ApolloContext, PathInfo } from '@last-rev/types';
 import traversePathRule, { PathVisitor } from '../core/traversePathRule';
 import {
@@ -163,7 +163,7 @@ export default class ContentToPathsFetcher {
     this._validator = new RelationShipValidator(pathRule);
   }
 
-  async fetch({ entry, apolloContext }: { entry: Entry<any>; apolloContext: ApolloContext }): Promise<PathInfo[]> {
+  async fetch({ entry, apolloContext }: { entry: CmsEntry<any>; apolloContext: ApolloContext }): Promise<PathInfo[]> {
     const pathInfos = await this._tree.fetch(entry, apolloContext);
     const validator = this._validator;
     return asyncFilter(pathInfos, async (pathInfo) => {

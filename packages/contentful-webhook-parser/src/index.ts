@@ -1,4 +1,5 @@
-import { Entry, Asset, ContentType } from 'contentful';
+import { ContentType } from 'contentful';
+import { CmsEntry, CmsAsset } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { getWinstonLogger } from '@last-rev/logging';
 
@@ -37,7 +38,7 @@ const actionMappings: ActionMappings = {
   archive: { action: 'delete', envs: ['preview', 'production'] }
 };
 
-export type WebhookBody = (Entry<any> | Asset | ContentType) & HasEnv;
+export type WebhookBody = (CmsEntry<any> | CmsAsset<any> | ContentType) & HasEnv;
 export type WebhookHeaders = Record<string, string>;
 export type WebhookParserResult = {
   action: 'update' | 'delete';

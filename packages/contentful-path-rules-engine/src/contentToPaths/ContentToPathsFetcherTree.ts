@@ -1,4 +1,4 @@
-import { Entry } from 'contentful';
+import { CmsEntry } from '@last-rev/types';
 import { ApolloContext, ItemKey, PathInfo, RefByKey } from '@last-rev/types';
 
 export type ContentToPathTreeStaticNode = {
@@ -44,7 +44,7 @@ const isRootNode = (node: any): node is ContentToPathTreeRootNode => !node.type;
 
 const getRefNodeKeyObjects = (
   nodes: ContentToPathTreeRefNode[],
-  entries: Entry<any>[],
+  entries: CmsEntry<any>[],
   ctx: ApolloContext
 ): RefNodeKeyObject[] => {
   return entries
@@ -74,7 +74,7 @@ const getRefNodeKeyObjects = (
 
 const getRefByNodeKeyObjects = (
   nodes: ContentToPathTreeRefByNode[],
-  entries: Entry<any>[],
+  entries: CmsEntry<any>[],
   ctx: ApolloContext
 ): RefByNodeKeyObject[] => {
   return entries
@@ -110,7 +110,7 @@ export type ContentToPathsHasChildrenNode =
 
 export type SegmentInfo = {
   value: string;
-  entry: Entry<any> | null;
+  entry: CmsEntry<any> | null;
 };
 
 /**
@@ -124,7 +124,7 @@ const deepLoad = async ({
   delayedFields
 }: {
   node: ContentToPathTreeRefNode | ContentToPathTreeRefByNode;
-  entry: Entry<any>;
+  entry: CmsEntry<any>;
   ctx: ApolloContext;
   resolvedSlugs: (SegmentInfo | null)[][];
   delayedFields: { info: SegmentInfo; segmentIndex: number }[];
@@ -140,21 +140,21 @@ const deepLoad = async ({
     ctx.loaders.entriesRefByLoader.loadMany(refByNodeKeyObjects.map(({ key }) => key))
   ]);
 
-  const loadedRefNodes: { node: ContentToPathTreeRefNode; entry: Entry<any> }[] = [];
+  const loadedRefNodes: { node: ContentToPathTreeRefNode; entry: CmsEntry<any> }[] = [];
   const loadedRefByNodes: {
     node: ContentToPathTreeRefByNode;
-    entry: Entry<any>;
+    entry: CmsEntry<any>;
   }[] = [];
 
   refNodeKeyObjects.forEach(({ node }, i) => {
     const entry = loadedRefEntries[i];
-    if (entry && (entry as Entry<any>).sys.contentType.sys.id === node.contentType) {
-      loadedRefNodes.push({ node, entry: entry as Entry<any> });
+    if (entry && (entry as CmsEntry<any>).sys.contentType.sys.id === node.contentType) {
+      loadedRefNodes.push({ node, entry: entry as CmsEntry<any> });
     }
   });
 
   refByNodeKeyObjects.forEach(({ node }, i) => {
-    const entries = (loadedRefByEntries[i] as Entry<any>[]) || [];
+    const entries = (loadedRefByEntries[i] as CmsEntry<any>[]) || [];
     entries.forEach((entry) => {
       loadedRefByNodes.push({ node, entry });
     });
@@ -241,7 +241,7 @@ export default class ContentToPathsFetcherTree {
   private readonly _root: ContentToPathTreeRootNode = { children: [] };
   private _numSegments: number = 0;
 
-  async fetch(entry: Entry<any>, ctx: ApolloContext): Promise<PathInfo[]> {
+  async fetch(entry: CmsEntry<any>, ctx: ApolloContext): Promise<PathInfo[]> {
     const resolvedSlugs: (SegmentInfo | null)[][] = new Array(this._numSegments);
 
     for (var i = 0; i < resolvedSlugs.length; i++) {

@@ -1,4 +1,5 @@
-import { Entry, Asset, createClient, ContentTypeCollection } from 'contentful';
+import { createClient, ContentTypeCollection } from 'contentful';
+import { CmsEntry, CmsAsset } from '@last-rev/types';
 import { map } from 'lodash';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ProcessCommand } from './types';
@@ -84,10 +85,10 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
         };
         switch (type) {
           case 'Asset':
-            await handlers.asset(command as ProcessCommand<Asset>);
+            await handlers.asset(command as ProcessCommand<CmsAsset<any>>);
             break;
           case 'Entry':
-            await handlers.entry(command as ProcessCommand<Entry<any>>);
+            await handlers.entry(command as ProcessCommand<CmsEntry<any>>);
             break;
           case 'ContentType':
             await handlers.contentType(command as ProcessCommand<ContentTypeCollection>);

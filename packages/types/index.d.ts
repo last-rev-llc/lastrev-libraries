@@ -1,6 +1,25 @@
 import DataLoader from 'dataloader';
-import { Entry, Asset, ContentType, ContentfulClientApi } from 'contentful';
+import { ContentType, ContentfulClientApi } from 'contentful';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
+
+export interface CmsSys {
+  id: string;
+  contentType?: { sys: { id: string } };
+  updatedAt?: string;
+  [key: string]: any;
+}
+
+export interface CmsEntry<T = any> {
+  sys: CmsSys;
+  fields: T;
+  [key: string]: any;
+}
+
+export interface CmsAsset<T = any> {
+  sys: CmsSys;
+  fields: T;
+  [key: string]: any;
+}
 
 export type ItemKey = {
   id: string;
@@ -39,11 +58,11 @@ export type RefByKey = {
 };
 
 export type CmsLoaders = {
-  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
-  entriesRefByLoader: DataLoader<RefByKey, Entry<any>[]>;
-  entryByFieldValueLoader: DataLoader<FVLKey, Entry<any> | null>;
-  assetLoader: DataLoader<ItemKey, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
+  entryLoader: DataLoader<ItemKey, CmsEntry<any> | null>;
+  entriesRefByLoader: DataLoader<RefByKey, CmsEntry<any>[]>;
+  entryByFieldValueLoader: DataLoader<FVLKey, CmsEntry<any> | null>;
+  assetLoader: DataLoader<ItemKey, CmsAsset<any> | null>;
+  entriesByContentTypeLoader: DataLoader<ItemKey, CmsEntry<any>[]>;
   // pathLoader: DataLoader<PathKey, PathData2 | null>;
   fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
 };
@@ -53,7 +72,7 @@ export type TypeMappings = {
 };
 
 export type ContentfulPathsGenerator = (
-  resolvedItem: Entry<any>,
+  resolvedItem: CmsEntry<any>,
   loaders: CmsLoaders,
   defaultLocale: string,
   locales: string[],
@@ -117,7 +136,7 @@ export type CmsClients =
       preview: any;
     };
 
-export type PathEntries = (Entry<any> | null)[];
+export type PathEntries = (CmsEntry<any> | null)[];
 
 export type PathInfo = {
   path: string;
@@ -130,7 +149,7 @@ export type LoadEntriesForPathFunction = (
   site?: string
 ) => Promise<PathEntries | null>;
 
-export type loadPathsForContentFunction = (entry: Entry<any>, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
+export type loadPathsForContentFunction = (entry: CmsEntry<any>, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
 
 export type ApolloContext = {
   loaders: CmsLoaders;

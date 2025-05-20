@@ -1,4 +1,4 @@
-import { Entry } from 'contentful';
+import { CmsEntry } from '@last-rev/types';
 
 const content = {
   sys: {
@@ -72,6 +72,6 @@ const content = {
       ]
     }
   }
-} as unknown as Entry<any>;
+} as unknown as CmsEntry<any>;
 
 export default content;

@@ -1,5 +1,5 @@
 import DataLoader, { Options } from 'dataloader';
-import { Entry, Asset } from 'contentful';
+import { CmsEntry, CmsAsset } from '@last-rev/types';
 import { readJSON, readdir } from 'fs-extra';
 import { filter, identity, isNil } from 'lodash';
 import { join } from 'path';
@@ -32,7 +32,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
     return join(config.fs.contentDir, config.contentful.spaceId, config.contentful.env, ...args);
   };
 
-  const getBatchItemFetcher = <T extends Entry<any> | Asset>(
+  const getBatchItemFetcher = <T extends CmsEntry<any> | CmsAsset<any>>(
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<ItemKey, T | null> => {
     return async (keys): Promise<(T | null)[]> => {
@@ -85,9 +85,9 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
   };
 
   const getBatchEntriesByContentTypeFetcher = (
-    eLoader: DataLoader<ItemKey, Entry<any> | null>,
+    eLoader: DataLoader<ItemKey, CmsEntry<any> | null>,
     idsLoader: DataLoader<ItemKey, (string | null)[]>
-  ): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
+  ): DataLoader.BatchLoadFn<ItemKey, CmsEntry<any>[]> => {
     return async (keys) => {
       const idsArrays = await idsLoader.loadMany(keys);
 
@@ -99,19 +99,19 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
         keysArray.map((entryKeys) =>
           (async () => {
             const entries = await eLoader.loadMany(entryKeys);
-            return filter(entries, identity) as Entry<any>[];
+            return filter(entries, identity) as CmsEntry<any>[];
           })()
         )
       );
     };
   };
 
-  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, CmsEntry<any> | null> => {
     return async (keys) => fallbackLoaders.entryByFieldValueLoader.loadMany(keys);
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+  const entryLoader = new DataLoader(getBatchItemFetcher<CmsEntry<any>>('entries'), options);
+  const assetLoader = new DataLoader(getBatchItemFetcher<CmsAsset<any>>('assets'), options);
   const entryIdsByContentTypeLoader = new DataLoader(getBatchEntryIdsByContentTypeFetcher(), options);
   const entriesByContentTypeLoader = new DataLoader(
     getBatchEntriesByContentTypeFetcher(entryLoader, entryIdsByContentTypeLoader),

@@ -5,7 +5,8 @@ import groupBy from 'lodash/fp/groupBy';
 import mapValues from 'lodash/fp/mapValues';
 import { join } from 'path';
 import { readFile, ensureDir, writeFile, createFile } from 'fs-extra';
-import { Asset, Entry, createClient, ContentfulClientApi, ContentType, SyncCollection } from 'contentful';
+import { createClient, ContentfulClientApi, ContentType, SyncCollection } from 'contentful';
+import { CmsEntry, CmsAsset } from '@last-rev/types';
 import Timer from '@last-rev/timer';
 import { getWinstonLogger } from '@last-rev/logging';
 import LastRevAppConfig from '@last-rev/app-config';
@@ -43,7 +44,7 @@ const groupByContentTypeAndMapToIds = flow(
 );
 
 const writeContentfulItems = async (
-  items: (Entry<any> | Asset | ContentType)[],
+  items: (CmsEntry<any> | CmsAsset<any> | ContentType)[],
   root: string,
   dirname: string
 ): Promise<void> => {

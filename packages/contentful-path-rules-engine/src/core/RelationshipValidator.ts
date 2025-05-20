@@ -1,13 +1,13 @@
 import { PathRule, RefByExpression, ReferenceExpression, SegmentReference } from '../types';
 import traversePathRule, { PathVisitor } from '../core/traversePathRule';
-import { Entry } from 'contentful';
+import { CmsEntry } from '@last-rev/types';
 import { ApolloContext, PathEntries } from '@last-rev/types';
 import { getWinstonLogger } from '@last-rev/logging';
 
 const logger = getWinstonLogger({ package: 'contentful-path-rules-engine', module: 'RelationshipValidator' });
 
-type SegmentValidator = (item: Entry<any>, pathEntries: PathEntries, ctx: ApolloContext) => Promise<string | null>;
-type ResolutionRootsResolver = (pathEntries: PathEntries, ctx: ApolloContext) => Promise<Entry<any>[]>;
+type SegmentValidator = (item: CmsEntry<any>, pathEntries: PathEntries, ctx: ApolloContext) => Promise<string | null>;
+type ResolutionRootsResolver = (pathEntries: PathEntries, ctx: ApolloContext) => Promise<CmsEntry<any>[]>;
 
 type Context = {
   currentSegmentIndex: number;
@@ -36,7 +36,7 @@ const createRefResolutionRootsResolver = (
 
       return loaded.filter((a: any) => {
         return !!a?.sys?.id && a?.sys?.contentType?.sys?.id === contentType;
-      }) as Entry<any>[];
+      }) as CmsEntry<any>[];
     } catch (err: any) {
       logger.error(`Error resolving referce resolution roots: ${err.message}`, {
         caller: 'createRefResolutionRootsResolver',
@@ -62,7 +62,7 @@ const createRefbyResolutionRootsResolver = (
       );
       return settled
         .filter((s) => s.status === 'fulfilled')
-        .map((s) => (s as PromiseFulfilledResult<Entry<any>[]>).value)
+        .map((s) => (s as PromiseFulfilledResult<CmsEntry<any>[]>).value)
         .flat();
     } catch (err: any) {
       logger.error(`Error resolving refBy resolution roots: ${err.message}`, {
@@ -125,7 +125,7 @@ const relationshipValidationVisitor: PathVisitor<Context> = {
 
       context.getResolutionRoots = async (pathEntries) => {
         const lastValidEntry = pathEntries.reduce(
-          (acc: Entry<any> | null, curr: Entry<any> | null) => (curr ? curr : acc),
+          (acc: CmsEntry<any> | null, curr: CmsEntry<any> | null) => (curr ? curr : acc),
           null
         );
         return lastValidEntry ? [lastValidEntry] : [];

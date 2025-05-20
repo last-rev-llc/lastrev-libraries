@@ -1,7 +1,7 @@
-import { Entry } from 'contentful';
+import { CmsEntry } from '@last-rev/types';
 import { ApolloContext, ItemKey, RefByKey, FVLKey } from '@last-rev/types';
 
-export const createMockEntry = (id: string, contentType: string, fields: Record<string, any>): Entry<any> => {
+export const createMockEntry = (id: string, contentType: string, fields: Record<string, any>): CmsEntry<any> => {
   return {
     sys: {
       id,
@@ -17,7 +17,7 @@ export const createMockEntry = (id: string, contentType: string, fields: Record<
       };
       return acc;
     }, {} as Record<string, any>)
-  } as unknown as Entry<any>;
+  } as unknown as CmsEntry<any>;
 };
 
 export const entryMocks = {

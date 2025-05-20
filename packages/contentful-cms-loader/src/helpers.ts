@@ -1,8 +1,9 @@
-import { Asset, ContentfulClientApi, Entry } from 'contentful';
+import { ContentfulClientApi } from 'contentful';
+import { CmsEntry, CmsAsset } from '@last-rev/types';
 
 export const isRejected = (r: PromiseSettledResult<unknown>): r is PromiseRejectedResult => r.status === 'rejected';
 
-export const makeContentfulRequest = async <T extends Entry<any> | Asset>(
+export const makeContentfulRequest = async <T extends CmsEntry<any> | CmsAsset<any>>(
   client: ContentfulClientApi,
   command: 'getEntries' | 'getAssets',
   limit: number,

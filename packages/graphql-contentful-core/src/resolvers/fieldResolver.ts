@@ -1,4 +1,4 @@
-import { Entry } from 'contentful';
+import { CmsEntry } from '@last-rev/types';
 import { GraphQLResolveInfo } from 'graphql';
 import { ApolloContext } from '@last-rev/types';
 import getTypeName from '../utils/getTypeName';
@@ -20,7 +20,7 @@ export type Resolver<TSource, TContext> = (
   info: GraphQLResolveInfo
 ) => Promise<any>;
 
-type FieldResolver = <T>(displayType: string) => Resolver<Entry<T>, ApolloContext>;
+type FieldResolver = <T>(displayType: string) => Resolver<CmsEntry<T>, ApolloContext>;
 
 const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content, args, ctx, info) => {
   const { fieldName: field } = info;
