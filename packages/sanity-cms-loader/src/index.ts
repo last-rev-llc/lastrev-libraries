@@ -1,12 +1,93 @@
 import DataLoader, { Options } from 'dataloader';
 import { createClient, SanityClient } from '@sanity/client';
 import { map, partition } from 'lodash';
+import { promises as fs } from 'fs';
+import { join, dirname } from 'path';
+import * as ts from 'typescript';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import { ItemKey, ContentfulLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 
 const logger = getWinstonLogger({ package: 'sanity-cms-loader', module: 'index', strategy: 'Cms' });
+
+const loadSchema = async (filePath: string): Promise<any> => {
+  const source = await fs.readFile(filePath, 'utf8');
+  const { outputText } = ts.transpileModule(source, {
+    compilerOptions: { module: ts.ModuleKind.CommonJS }
+  });
+  const module = { exports: {} } as any;
+  const fn = new Function('exports', 'require', 'module', '__filename', '__dirname', outputText);
+  fn(module.exports, require, module, filePath, dirname(filePath));
+  return module.exports.default || module.exports;
+};
+
+const mapSanityField = (field: any): any => {
+  let type = 'Symbol';
+  let linkType;
+  let items;
+
+  switch (field.type) {
+    case 'string':
+    case 'slug':
+    case 'url':
+      type = 'Symbol';
+      break;
+    case 'text':
+      type = 'Text';
+      break;
+    case 'number':
+    case 'integer':
+      type = 'Number';
+      break;
+    case 'boolean':
+      type = 'Boolean';
+      break;
+    case 'datetime':
+    case 'date':
+      type = 'Date';
+      break;
+    case 'object':
+      type = 'Object';
+      break;
+    case 'image':
+    case 'file':
+      type = 'Link';
+      linkType = 'Asset';
+      break;
+    case 'reference':
+      type = 'Link';
+      linkType = 'Entry';
+      break;
+    case 'array':
+      type = 'Array';
+      if (field.of && field.of.length) {
+        const first = mapSanityField(field.of[0]);
+        items = { type: first.type } as any;
+        if (first.linkType) items.linkType = first.linkType;
+      }
+      break;
+    case 'richText':
+    case 'block':
+      type = 'RichText';
+      break;
+    default:
+      type = 'Symbol';
+  }
+
+  const out: any = { id: field.name, name: field.title, type };
+  if (linkType) out.linkType = linkType;
+  if (items) out.items = items;
+  return out;
+};
+
+const schemaToContentType = (schema: any): any => {
+  return {
+    sys: { id: schema.name },
+    name: schema.title,
+    fields: (schema.fields || []).map(mapSanityField)
+  };
+};
 
 const options: Options<ItemKey, any, string> = {
   cacheKeyFn: (key: ItemKey) => {
@@ -141,9 +222,44 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
   const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), fvlOptions);
   const entriesRefByLoader = new DataLoader(getBatchEntriesRefByFetcher(), refByOptions);
 
-  const fetchAllContentTypes = async (_preview: boolean) => {
-    logger.warn('fetchAllContentTypes not implemented for Sanity');
-    return [] as any[];
+  const fetchAllContentTypes = async (preview: boolean) => {
+    try {
+      const timer = new Timer();
+      const schemaDir = join(process.cwd(), 'sanity', 'schemas');
+      let types: any[] = [];
+
+      try {
+        const files = await fs.readdir(schemaDir);
+        const schemas = await Promise.all(
+          files.filter((f) => f.endsWith('.ts') && f !== 'index.ts').map((f) => loadSchema(join(schemaDir, f)))
+        );
+        types = schemas.map(schemaToContentType);
+        logger.debug('Fetched all content types from local schemas', {
+          caller: 'fetchAllContentTypes',
+          elapsedMs: timer.end().millis,
+          itemsSuccessful: types.length
+        });
+        return types;
+      } catch {
+        // ignore and fallback to client fetch
+      }
+
+      const query = 'array::unique(*[]._type)';
+      const names: string[] = await (preview ? previewClient : prodClient).fetch(query);
+      types = names.map((n) => ({ sys: { id: n }, name: n, fields: [] }));
+      logger.debug('Fetched all content types from Sanity', {
+        caller: 'fetchAllContentTypes',
+        elapsedMs: timer.end().millis,
+        itemsSuccessful: types.length
+      });
+      return types;
+    } catch (err: any) {
+      logger.error(`Unable to fetch content types: ${err.message}`, {
+        caller: 'fetchAllContentTypes',
+        stack: err.stack
+      });
+      return [];
+    }
   };
 
   return {
