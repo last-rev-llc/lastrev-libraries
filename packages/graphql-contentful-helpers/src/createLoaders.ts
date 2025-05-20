@@ -2,6 +2,7 @@ import createFsLoaders from '@last-rev/contentful-fs-loader';
 import createContentfulCmsLoaders from '@last-rev/contentful-cms-loader';
 import createRedisLoaders from '@last-rev/contentful-redis-loader';
 import createDynamoDbLoaders from '@last-rev/contentful-dynamodb-loader';
+import createSanityLoaders from './createSanityLoaders';
 
 import { CmsLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
@@ -11,6 +12,9 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
 
   let cmsLoaders: CmsLoaders;
   switch (config.cms) {
+    case 'Sanity':
+      cmsLoaders = createSanityLoaders(config, defaultLocale);
+      break;
     case 'Contentful':
     default:
       cmsLoaders = createContentfulCmsLoaders(config, defaultLocale);
