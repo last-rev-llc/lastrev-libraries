@@ -9,6 +9,15 @@ import Timer from '@last-rev/timer';
 import { ItemKey, ContentfulLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 
+const convertSanityDoc = (doc: any) => {
+  if (!doc) return null;
+  const { _id, _type, _updatedAt, ...fields } = doc;
+  return {
+    sys: { id: _id, updatedAt: _updatedAt, contentType: { sys: { id: _type } } },
+    fields
+  };
+};
+
 const logger = getWinstonLogger({ package: 'sanity-cms-loader', module: 'index', strategy: 'Cms' });
 
 const loadSchema = async (filePath: string): Promise<any> => {
@@ -142,7 +151,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
         fetchBatchItems(map(prodKeys, 'id'), prodClient)
       ]);
       const all = [...previewDocs, ...prodDocs];
-      const items = keys.map(({ id }) => all.find((d) => d && d._id === id) || null);
+      const items = keys.map(({ id }) => convertSanityDoc(all.find((d) => d && d._id === id)));
       logger.debug('Fetched docs', {
         caller: 'getBatchItemFetcher',
         elapsedMs: timer.end().millis,
@@ -161,7 +170,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
           const client = preview ? previewClient : prodClient;
           const query = '*[_type == $type]';
           const docs = await client.fetch(query, { type: id });
-          return docs as any[];
+          return docs.map(convertSanityDoc) as any[];
         })
       );
       logger.debug('Fetched docs by type', {
@@ -182,7 +191,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
           const client = preview ? previewClient : prodClient;
           const query = `*[_type == $type && ${field} == $value][0]`;
           const doc = await client.fetch(query, { type: contentType, value });
-          return doc || null;
+          return convertSanityDoc(doc);
         })
       );
       logger.debug('Fetched doc by field value', {
@@ -203,7 +212,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
           const client = preview ? previewClient : prodClient;
           const query = `*[_type == $type && (${field}._ref == $id || $id in ${field}[]._ref)]`;
           const docs = await client.fetch(query, { type: contentType, id });
-          return docs as any[];
+          return docs.map(convertSanityDoc) as any[];
         })
       );
       logger.debug('Fetched docs ref by', {

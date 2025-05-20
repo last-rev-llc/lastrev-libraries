@@ -22,6 +22,19 @@ async function () {
 
 `entryLoader`, `assetLoader`, and `entriesByContentTypeLoader` are all instances of [dataloader](https://github.com/graphql/dataloader). `entryLoader` and `assetLoader` are both keyed by Sanity ID (`string`), and `entriesByContentTypeLoader` is keyed by a Sanity content type ID (`string`).
 
+Each returned document is converted to the following shape:
+
+```ts
+{
+  sys: {
+    id: '<sanity id>',
+    updatedAt: '<sanity updatedAt>',
+    contentType: { sys: { id: '<sanity _type>' } }
+  },
+  fields: { /* original document fields */ }
+}
+```
+
 ```Javascript
 const myEntry = await entryLoader('my-content-id-1234');
 const myAsset = await assetLoader('my-asset-id-5432');
