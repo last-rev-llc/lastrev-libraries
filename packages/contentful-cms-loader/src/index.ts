@@ -3,7 +3,7 @@ import { Entry, Asset, createClient, ContentfulClientApi } from 'contentful';
 import { find, map, partition } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
-import { ItemKey, ContentfulLoaders, FVLKey, RefByKey } from '@last-rev/types';
+import { ItemKey, CmsLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { chunk, makeContentfulRequest } from './helpers';
 
@@ -31,7 +31,7 @@ const refByOptions: Options<RefByKey, any, string> = {
 
 const isFulFilled = <T>(p: PromiseSettledResult<T>): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
 
-const createLoaders = (config: LastRevAppConfig, defaultLocale: string): ContentfulLoaders => {
+const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoaders => {
   const prodClient = createClient({
     accessToken: config.contentful.contentDeliveryToken,
     space: config.contentful.spaceId,

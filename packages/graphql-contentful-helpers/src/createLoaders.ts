@@ -1,15 +1,21 @@
 import createFsLoaders from '@last-rev/contentful-fs-loader';
-import createCmsLoaders from '@last-rev/contentful-cms-loader';
+import createContentfulCmsLoaders from '@last-rev/contentful-cms-loader';
 import createRedisLoaders from '@last-rev/contentful-redis-loader';
 import createDynamoDbLoaders from '@last-rev/contentful-dynamodb-loader';
 
-import { ContentfulLoaders } from '@last-rev/types';
+import { CmsLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 
-const createLoaders = (config: LastRevAppConfig, defaultLocale: string): ContentfulLoaders => {
+const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoaders => {
   let loaders;
 
-  const cmsLoaders = createCmsLoaders(config, defaultLocale);
+  let cmsLoaders: CmsLoaders;
+  switch (config.cms) {
+    case 'Contentful':
+    default:
+      cmsLoaders = createContentfulCmsLoaders(config, defaultLocale);
+      break;
+  }
 
   if (config.contentStrategy === 'fs') {
     loaders = createFsLoaders(config, cmsLoaders);

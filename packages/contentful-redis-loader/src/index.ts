@@ -3,7 +3,7 @@ import { Entry, Asset, ContentType } from 'contentful';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
-import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
+import { ItemKey, CmsLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { getKey, isError, isNil, parse, stringify } from './helpers';
 import { primeRedisEntriesByContentType, primeRedisEntriesOrAssets } from './primers';
@@ -37,7 +37,7 @@ const getClient = (config: LastRevAppConfig) => {
   return clients[key];
 };
 
-const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoaders): ContentfulLoaders => {
+const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): CmsLoaders => {
   const client = getClient(config);
 
   const maxBatchSize = config.redis.maxBatchSize || 1000;
