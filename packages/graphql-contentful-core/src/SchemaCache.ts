@@ -16,7 +16,10 @@ export default class SchemaCache {
   };
 
   public getSchema = async (config: LastRevAppConfig) => {
-    const key = JSON.stringify([config.contentful.spaceId, config.contentful.env]);
+    const key =
+      config.cms === 'Sanity'
+        ? JSON.stringify([config.sanity.projectId, config.sanity.dataset])
+        : JSON.stringify([config.contentful.spaceId, config.contentful.env]);
     if (!this.schemaMap[key]) {
       this.schemaMap[key] = await buildSchema(config);
     }
