@@ -1,6 +1,6 @@
 import DataLoader from 'dataloader';
 import sanityClient, { SanityClient } from '@sanity/client';
-import { ContentfulLoaders, ItemKey, FVLKey, RefByKey } from '@last-rev/types';
+import { CmsLoaders, ItemKey, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 
 const createSanityClient = (config: any, useCdn: boolean): SanityClient => {
@@ -13,10 +13,7 @@ const createSanityClient = (config: any, useCdn: boolean): SanityClient => {
   });
 };
 
-const createSanityLoaders = (
-  config: LastRevAppConfig,
-  _defaultLocale: string
-): ContentfulLoaders => {
+const createSanityLoaders = (config: LastRevAppConfig, _defaultLocale: string): CmsLoaders => {
   const sanityCfg = (config as any).sanity || {};
   const prodClient = createSanityClient(sanityCfg, true);
   const previewClient = createSanityClient(sanityCfg, false);
@@ -25,27 +22,21 @@ const createSanityLoaders = (
 
   const entryLoader = new DataLoader<ItemKey, any | null>(async (keys) => {
     const results = await Promise.all(
-      keys.map(({ id, preview }) =>
-        getClient(preview).fetch('*[_id == $id][0]', { id })
-      )
+      keys.map(({ id, preview }) => getClient(preview).fetch('*[_id == $id][0]', { id }))
     );
     return results;
   });
 
   const assetLoader = new DataLoader<ItemKey, any | null>(async (keys) => {
     const results = await Promise.all(
-      keys.map(({ id, preview }) =>
-        getClient(preview).fetch('*[_id == $id][0]', { id })
-      )
+      keys.map(({ id, preview }) => getClient(preview).fetch('*[_id == $id][0]', { id }))
     );
     return results;
   });
 
   const entriesByContentTypeLoader = new DataLoader<ItemKey, any[]>(async (keys) => {
     const results = await Promise.all(
-      keys.map(({ id, preview }) =>
-        getClient(preview).fetch('*[_type == $type]', { type: id })
-      )
+      keys.map(({ id, preview }) => getClient(preview).fetch('*[_type == $type]', { type: id }))
     );
     return results;
   });
@@ -64,7 +55,7 @@ const createSanityLoaders = (
 
   const entriesRefByLoader = new DataLoader<RefByKey, any[]>(async (keys) => {
     const results = await Promise.all(
-      keys.map(({ contentType, field, id, preview }) =>
+      keys.map(({ contentType, id, preview }) =>
         getClient(preview).fetch(`*[_type == $type && references($id)]`, {
           type: contentType,
           id
