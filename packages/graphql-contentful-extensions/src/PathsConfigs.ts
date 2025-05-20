@@ -1,5 +1,5 @@
 import { getDefaultFieldValue } from '@last-rev/graphql-contentful-core';
-import { ContentfulLoaders, ContentTypePathRuleConfig, LegacyContentfulPathsConfigs } from '@last-rev/types';
+import { CmsLoaders, ContentTypePathRuleConfig, LegacyContentfulPathsConfigs } from '@last-rev/types';
 import { Entry } from 'contentful';
 import createPath from './utils/createPath';
 
@@ -8,7 +8,7 @@ const BLOGS_LANDING_ID = process.env.BLOGS_LANDING_ID;
 // Path generation
 const validateSite = async (_args: {
   item: Entry<any>;
-  loaders: ContentfulLoaders;
+  loaders: CmsLoaders;
   defaultLocale: string;
   locales: string[];
   preview: boolean;
@@ -41,7 +41,7 @@ const validateSite = async (_args: {
 };
 
 // Used to generate the path for Blog topics and blog posts
-const blogsLandingSlug = async (loaders: ContentfulLoaders, defaultLocale: string, preview?: boolean) => {
+const blogsLandingSlug = async (loaders: CmsLoaders, defaultLocale: string, preview?: boolean) => {
   if (BLOGS_LANDING_ID) {
     const blogsLanding = await loaders.entryLoader.load({ id: BLOGS_LANDING_ID, preview: !!preview });
     if (blogsLanding) {

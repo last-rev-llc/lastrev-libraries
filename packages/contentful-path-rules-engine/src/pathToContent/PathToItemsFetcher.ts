@@ -1,5 +1,5 @@
 import { Entry } from 'contentful';
-import { ApolloContext, ContentfulLoaders } from '@last-rev/types';
+import { ApolloContext, CmsLoaders } from '@last-rev/types';
 import RelationShipValidator from '../core/RelationshipValidator';
 import traversePathRule, { PathVisitor } from '../core/traversePathRule';
 import { Field, PathRule, RefByExpression, ReferenceExpression } from '../types';
@@ -31,7 +31,7 @@ export type PathToItemsFetcherContext = {
   slugs: (string | null)[];
   currentSlugIndex: number;
   promises: Promise<FieldValueResult>[];
-  fieldValueLoader: ContentfulLoaders['entryByFieldValueLoader'];
+  fieldValueLoader: CmsLoaders['entryByFieldValueLoader'];
 };
 
 const pathToItemsFetcherVisitor: PathVisitor<PathToItemsFetcherContext> = {

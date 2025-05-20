@@ -38,7 +38,7 @@ export type RefByKey = {
   field: string;
 };
 
-export type ContentfulLoaders = {
+export type CmsLoaders = {
   entryLoader: DataLoader<ItemKey, Entry<any> | null>;
   entriesRefByLoader: DataLoader<RefByKey, Entry<any>[]>;
   entryByFieldValueLoader: DataLoader<FVLKey, Entry<any> | null>;
@@ -54,7 +54,7 @@ export type TypeMappings = {
 
 export type ContentfulPathsGenerator = (
   resolvedItem: Entry<any>,
-  loaders: ContentfulLoaders,
+  loaders: CmsLoaders,
   defaultLocale: string,
   locales: string[],
   preview?: boolean,
@@ -126,7 +126,7 @@ export type LoadEntriesForPathFunction = (
 export type loadPathsForContentFunction = (entry: Entry<any>, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
 
 export type ApolloContext = {
-  loaders: ContentfulLoaders;
+  loaders: CmsLoaders;
   mappers: Mappers;
   defaultLocale: string;
   typeMappings: TypeMappings;

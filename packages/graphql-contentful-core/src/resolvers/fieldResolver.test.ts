@@ -1,4 +1,4 @@
-import { ApolloContext, ContentfulLoaders, Mappers, TypeMapper, TypeMappings } from '@last-rev/types';
+import { ApolloContext, CmsLoaders, Mappers, TypeMapper, TypeMappings } from '@last-rev/types';
 import content from './contentItem.mock';
 import fieldResolver from './fieldResolver';
 import { getWinstonLogger } from '@last-rev/logging';
@@ -20,7 +20,7 @@ const createMockLoader = () => {
 describe('fieldResolver.ts', () => {
   const resolver = fieldResolver('Foo');
   const typeMappings: TypeMappings = {};
-  const loaders: ContentfulLoaders = {
+  const loaders: CmsLoaders = {
     entryLoader: createMockLoader(),
     assetLoader: createMockLoader(),
     entriesByContentTypeLoader: createMockLoader(),

@@ -2,7 +2,7 @@ import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import generateSchema from '@last-rev/graphql-schema-gen';
 import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
-import { ContentfulLoaders } from '@last-rev/types';
+import { CmsLoaders } from '@last-rev/types';
 import { GraphQLSchema } from 'graphql';
 
 import { buildSubgraphSchema } from '@apollo/subgraph';
@@ -10,7 +10,7 @@ import { addResolversToSchema, makeExecutableSchema } from '@graphql-tools/schem
 import LastRevAppConfig from '@last-rev/app-config';
 import { createLoaders } from '@last-rev/graphql-contentful-helpers';
 
-const fetchAllContentTypes = async (loaders: ContentfulLoaders) => {
+const fetchAllContentTypes = async (loaders: CmsLoaders) => {
   // may not have production content, if none there, use preview (only needed for filesystem builds)
   const contentTypes = await loaders.fetchAllContentTypes(false);
   if (!contentTypes || !contentTypes.length) {

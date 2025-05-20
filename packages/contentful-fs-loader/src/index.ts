@@ -5,7 +5,7 @@ import { filter, identity, isNil } from 'lodash';
 import { join } from 'path';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
-import { ItemKey, ContentfulLoaders, FVLKey } from '@last-rev/types';
+import { ItemKey, CmsLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 
 const logger = getWinstonLogger({
@@ -27,7 +27,7 @@ const flvOptions: Options<FVLKey, any, string> = {
   }
 };
 
-const createLoaders = (config: LastRevAppConfig, fallbackLoaders: ContentfulLoaders): ContentfulLoaders => {
+const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): CmsLoaders => {
   const getUri = (...args: string[]) => {
     return join(config.fs.contentDir, config.contentful.spaceId, config.contentful.env, ...args);
   };
