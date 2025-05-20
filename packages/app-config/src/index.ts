@@ -40,6 +40,19 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       if (!this.config.contentful?.contentPreviewToken) {
         throw new Error('Contentful CMS: contentful.contentPreviewToken is required.');
       }
+    } else if (this.config.cms === 'Sanity') {
+      if (!this.config.sanity?.projectId) {
+        throw new Error('Sanity CMS: sanity.projectId is required.');
+      }
+      if (!this.config.sanity?.dataset) {
+        throw new Error('Sanity CMS: sanity.dataset is required.');
+      }
+      if (!this.config.sanity?.token) {
+        throw new Error('Sanity CMS: sanity.token is required.');
+      }
+      if (!this.config.sanity?.apiVersion) {
+        throw new Error('Sanity CMS: sanity.apiVersion is required.');
+      }
     } else {
       throw new Error(`Invalid CMS: ${this.config.cms}`);
     }
@@ -132,6 +145,15 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       usePreview: !!this.config.contentful?.usePreview,
       maxBatchSize: this.config.contentful?.maxBatchSize || 1000,
       syncLimit: this.config.contentful?.syncLimit
+    };
+  }
+
+  get sanity() {
+    return {
+      projectId: this.config.sanity?.projectId!,
+      dataset: this.config.sanity?.dataset!,
+      token: this.config.sanity?.token!,
+      apiVersion: this.config.sanity?.apiVersion!
     };
   }
 

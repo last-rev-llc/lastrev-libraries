@@ -21,6 +21,12 @@ describe('LastRevAppConfig', () => {
       expect(appConfig.cms).toBe('Contentful');
     });
 
+    test('cms is Sanity when provided', () => {
+      mockedConfig.cms = 'Sanity';
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(appConfig.cms).toBe('Sanity');
+    });
+
     test('stategy is fs when not provided', () => {
       const appConfig = new LastRevAppConfig(mockedConfig);
       expect(appConfig.contentStrategy).toBe('fs');
@@ -114,6 +120,46 @@ describe('LastRevAppConfig', () => {
       }
       expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
         'Contentful CMS: contentful.contentPreviewToken is required.'
+      );
+    });
+
+    test('throws error if sanity.projectId is not provided', () => {
+      mockedConfig.cms = 'Sanity';
+      if (mockedConfig.sanity) {
+        mockedConfig.sanity.projectId = undefined;
+      }
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'Sanity CMS: sanity.projectId is required.'
+      );
+    });
+
+    test('throws error if sanity.dataset is not provided', () => {
+      mockedConfig.cms = 'Sanity';
+      if (mockedConfig.sanity) {
+        mockedConfig.sanity.dataset = undefined;
+      }
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'Sanity CMS: sanity.dataset is required.'
+      );
+    });
+
+    test('throws error if sanity.token is not provided', () => {
+      mockedConfig.cms = 'Sanity';
+      if (mockedConfig.sanity) {
+        mockedConfig.sanity.token = undefined;
+      }
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'Sanity CMS: sanity.token is required.'
+      );
+    });
+
+    test('throws error if sanity.apiVersion is not provided', () => {
+      mockedConfig.cms = 'Sanity';
+      if (mockedConfig.sanity) {
+        mockedConfig.sanity.apiVersion = undefined;
+      }
+      expect(() => new LastRevAppConfig(mockedConfig)).toThrowError(
+        'Sanity CMS: sanity.apiVersion is required.'
       );
     });
 
@@ -284,6 +330,12 @@ describe('LastRevAppConfig', () => {
       }
       const appConfig = new LastRevAppConfig(mockedConfig);
       expect(JSON.stringify(appConfig.contentful)).toBe(JSON.stringify(appConfig.contentful));
+    });
+
+    test('sanity returns sanity object', () => {
+      mockedConfig.cms = 'Sanity';
+      const appConfig = new LastRevAppConfig(mockedConfig);
+      expect(JSON.stringify(appConfig.sanity)).toBe(JSON.stringify(appConfig.sanity));
     });
 
     test('logLevel returns logLevel', () => {
