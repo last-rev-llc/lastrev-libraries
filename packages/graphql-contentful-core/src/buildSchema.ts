@@ -8,7 +8,7 @@ import { GraphQLSchema } from 'graphql';
 import { buildSubgraphSchema } from '@apollo/subgraph';
 import { addResolversToSchema, makeExecutableSchema } from '@graphql-tools/schema';
 import LastRevAppConfig from '@last-rev/app-config';
-import { createLoaders } from '@last-rev/graphql-contentful-helpers';
+import { createLoaders, createSanityLoaders } from '@last-rev/graphql-contentful-helpers';
 
 const fetchAllContentTypes = async (loaders: CmsLoaders) => {
   // may not have production content, if none there, use preview (only needed for filesystem builds)
@@ -21,7 +21,8 @@ const fetchAllContentTypes = async (loaders: CmsLoaders) => {
 
 const buildSchema = async (config: LastRevAppConfig): Promise<GraphQLSchema> => {
   // locale doesn't matter for this use case
-  const loaders = createLoaders(config, 'en-US');
+  const loaders =
+    config.cms === 'Sanity' ? createSanityLoaders(config, 'en-US') : createLoaders(config, 'en-US');
   const contentTypes = await fetchAllContentTypes(loaders);
 
   const baseTypeDefs = await generateSchema({

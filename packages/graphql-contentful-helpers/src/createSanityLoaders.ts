@@ -2,6 +2,8 @@ import DataLoader from 'dataloader';
 import sanityClient, { SanityClient } from '@sanity/client';
 import { CmsLoaders, ItemKey, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
+import fs from 'fs';
+import path from 'path';
 
 const createSanityClient = (config: any, useCdn: boolean): SanityClient => {
   return sanityClient({
@@ -65,8 +67,27 @@ const createSanityLoaders = (config: LastRevAppConfig, _defaultLocale: string): 
     return results;
   });
 
-  const fetchAllContentTypes = async () => {
-    return [];
+  const fetchAllContentTypes = async (_preview: boolean) => {
+    try {
+      const schemaDir = path.resolve(process.cwd(), sanityCfg.schemasPath || 'sanity/schemas');
+      const files = fs
+        .readdirSync(schemaDir)
+        .filter((f) => f.endsWith('.js') || f.endsWith('.ts'));
+      const schemas = files.map((file) => {
+        const mod = require(path.join(schemaDir, file));
+        return mod.default || mod;
+      });
+      if (schemas.length) return schemas;
+    } catch (err) {
+      // ignore and fall back to API
+    }
+
+    try {
+      const types = await prodClient.fetch('array::unique(*._type)');
+      return (types || []).map((name: string) => ({ name }));
+    } catch (err) {
+      return [];
+    }
   };
 
   return {
