@@ -146,6 +146,13 @@ fragment Page_Base on Page {
 // Add ALL fragments reference from the query or any other fragments below
 ```
 
+### Switching to Sanity
+
+To use Sanity instead of Contentful:
+
+1. Set `CMS=Sanity` in your `.env` file.
+2. Fill in `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_TOKEN` and `SANITY_API_VERSION`.
+
 ### Making Changes in Contentful
 
 If you make any changes in Contentful you will need to sync the content with your local machine.
@@ -288,6 +295,11 @@ In order to use visual testing to verify that the page has not changed you need 
 | CONTENTFUL_PREVIEW_TOKEN        | Preview token from Contentful (ask your admin for this value)                                                                                                                                                               |
 | CONTENTFUL_SPACE_ID             | The ID of the Contentful space. This value depends on the client’s contentful set up, you can grab this from the Contentful URL (e.g. https://app.contentful.com/spaces/{CONTENTFUL_SPACE_ID}/settings/space)               |
 | CONTENTFUL_USE_PREVIEW          | This can be true or false. If you set it to true, it means that the framework is going to pull draft and published content. If you set it to false, the framework is only going to pull published content (aka production). |
+| CMS                             | Set to `Sanity` to use Sanity. Defaults to Contentful. |
+| SANITY_PROJECT_ID               | The Sanity project ID. |
+| SANITY_DATASET                  | Dataset to query in Sanity. |
+| SANITY_TOKEN                    | Token for accessing the Sanity API. |
+| SANITY_API_VERSION              | API version to use with the Sanity client. |
 | GRAPHQL_SERVER_URL              | This is the URL that the GraphQL client is going to use to connect to the server. For your local environment it should be http://localhost:5000/graphql, for Netlify it should be /.netlify/functions/graphql.              |
 | LOG_LEVEL                       | Log level for the different processes, usually debug for the local environment.                                                                                                                                             |
 | NEXT_PUBLIC_CONTENTFUL_ENV      | Same as CONTENTFUL_ENV, this is the public environment variable used for Sidekick                                                                                                                                           |
