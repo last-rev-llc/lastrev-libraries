@@ -1,4 +1,4 @@
-# @last-rev/contentful-cms-loader
+# @last-rev/sanity-cms-loader
 
 ## 0.5.0
 
