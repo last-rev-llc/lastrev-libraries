@@ -37,6 +37,11 @@ yarn install
 yarn build
 ```
 
+### Using Sanity
+
+1. Set `CMS=Sanity` in your `.env`.
+2. Fill `SANITY_PROJECT_ID`, `SANITY_DATASET`, `SANITY_TOKEN` and `SANITY_API_VERSION`.
+
 ### Running the site locally
 
 1. Start the dev server that starts the GraphQL server and the local version of NextJS
@@ -280,26 +285,29 @@ In order to use visual testing to verify that the page has not changed you need 
 - Check the latest build for differences
 
 ## Environment Variables
-
-| Variable                        | Description                                                                                                                                                                                                                 |
-| ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| CONTENTFUL_DELIVERY_TOKEN       | Delivery token from Contentful (ask your admin for this value)                                                                                                                                                              |
-| CONTENTFUL_ENV                  | The Contentful environment you want to use. Usually set to master, but can be any environment (make sure the environment is allowed for your API key in the Contentful dashboard)                                           |
-| CONTENTFUL_PREVIEW_TOKEN        | Preview token from Contentful (ask your admin for this value)                                                                                                                                                               |
-| CONTENTFUL_SPACE_ID             | The ID of the Contentful space. This value depends on the client’s contentful set up, you can grab this from the Contentful URL (e.g. https://app.contentful.com/spaces/{CONTENTFUL_SPACE_ID}/settings/space)               |
+| Variable                        | Description |
+| ------------------------------- | -------------------------------------------------------------------------------- |
+| CMS                             | Set to `Sanity` to use Sanity instead of Contentful |
+| CONTENTFUL_DELIVERY_TOKEN       | Delivery token from Contentful (ask your admin for this value) |
+| CONTENTFUL_ENV                  | The Contentful environment you want to use. Usually set to master, but can be any environment (make sure the environment is allowed for your API key in the Contentful dashboard) |
+| CONTENTFUL_PREVIEW_TOKEN        | Preview token from Contentful (ask your admin for this value) |
+| CONTENTFUL_SPACE_ID             | The ID of the Contentful space. This value depends on the client’s contentful set up, you can grab this from the Contentful URL (e.g. https://app.contentful.com/spaces/{CONTENTFUL_SPACE_ID}/settings/space) |
 | CONTENTFUL_USE_PREVIEW          | This can be true or false. If you set it to true, it means that the framework is going to pull draft and published content. If you set it to false, the framework is only going to pull published content (aka production). |
-| GRAPHQL_SERVER_URL              | This is the URL that the GraphQL client is going to use to connect to the server. For your local environment it should be http://localhost:5000/graphql, for Netlify it should be /.netlify/functions/graphql.              |
-| LOG_LEVEL                       | Log level for the different processes, usually debug for the local environment.                                                                                                                                             |
-| NEXT_PUBLIC_CONTENTFUL_ENV      | Same as CONTENTFUL_ENV, this is the public environment variable used for Sidekick                                                                                                                                           |
-| NEXT_PUBLIC_CONTENTFUL_SPACE_ID | Same as CONTENTFUL_SPACE_ID, this is the public environment variable used for Sidekick                                                                                                                                      |
-| REDIS_HOST                      | Host for the Redis instance, this is used for the preview functionality.                                                                                                                                                    |
-| REDIS_PASSWORD                  | Password for the Redis instance, this is used for the preview functionality.                                                                                                                                                |
-| REDIS_PORT                      | Port for the Redis instance, this is used for the preview functionality.                                                                                                                                                    |
-| SITE                            | The framework is enabled to process multiple sites using the same project. Set this variable to the site you want to build.                                                                                                 |
-| SITE                            | The framework is enabled to process multiple sites using the same project. Set this variable to the site you want to build.                                                                                                 |
-| DEFAULT_SITE_ID                 | This is the content ID of the `Site` content entry. Use this when you only have one Site                                                                                                                                    |
-| SITE_SETTINGS                   | ID of the site settings content (in Contentful)                                                                                                                                                                             |
-| DOMAIN                          | Base domain of the web app, this is to be able to build the sitemap.                                                                                                                                                        |
+| SANITY_PROJECT_ID               | Sanity project ID when using Sanity |
+| SANITY_DATASET                  | Sanity dataset name |
+| SANITY_TOKEN                    | Token for Sanity API access |
+| SANITY_API_VERSION              | Sanity API version |
+| GRAPHQL_SERVER_URL              | This is the URL that the GraphQL client is going to use to connect to the server. For your local environment it should be http://localhost:5000/graphql, for Netlify it should be /.netlify/functions/graphql. |
+| LOG_LEVEL                       | Log level for the different processes, usually debug for the local environment. |
+| NEXT_PUBLIC_CONTENTFUL_ENV      | Same as CONTENTFUL_ENV, this is the public environment variable used for Sidekick |
+| NEXT_PUBLIC_CONTENTFUL_SPACE_ID | Same as CONTENTFUL_SPACE_ID, this is the public environment variable used for Sidekick |
+| REDIS_HOST                      | Host for the Redis instance, this is used for the preview functionality. |
+| REDIS_PASSWORD                  | Password for the Redis instance, this is used for the preview functionality. |
+| REDIS_PORT                      | Port for the Redis instance, this is used for the preview functionality. |
+| SITE                            | The framework is enabled to process multiple sites using the same project. Set this variable to the site you want to build. |
+| DEFAULT_SITE_ID                 | This is the content ID of the `Site` content entry. Use this when you only have one Site |
+| SITE_SETTINGS                   | ID of the site settings content (in Contentful) |
+| DOMAIN                          | Base domain of the web app, this is to be able to build the sitemap. |
 
 ## Troubleshooting
 
