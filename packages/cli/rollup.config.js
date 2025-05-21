@@ -9,7 +9,8 @@ export default config({
     './src/commands/gen-fragments/gen-fragments.ts',
     './src/commands/develop/develop.ts',
     './src/commands/framework-update/framework-update.ts',
-    './src/commands/reports/reports.ts'
+    './src/commands/reports/reports.ts',
+    './src/commands/sanity-import/sanity-import.ts'
   ],
   babelHelpers: 'runtime'
 });
