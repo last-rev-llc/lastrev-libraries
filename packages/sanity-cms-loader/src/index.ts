@@ -1,35 +1,25 @@
 import DataLoader, { Options } from 'dataloader';
 import { createClient, SanityClient } from '@sanity/client';
 import { map, partition } from 'lodash';
-import { promises as fs } from 'fs';
-import { join, dirname } from 'path';
-import * as ts from 'typescript';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
-import { ItemKey, ContentfulLoaders, FVLKey, RefByKey } from '@last-rev/types';
+import { ItemKey, CmsLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 
-const convertSanityDoc = (doc: any) => {
+const convertSanityDoc = (doc: any, defaultLocale: string) => {
   if (!doc) return null;
   const { _id, _type, _updatedAt, ...fields } = doc;
   return {
-    sys: { id: _id, updatedAt: _updatedAt, contentType: { sys: { id: _type } } },
-    fields
+    sys: { id: _id, updatedAt: _updatedAt, contentType: { sys: { id: _type, type: 'Entry' } } },
+    fields: Object.entries(fields).reduce((acc: any, [name, value]: [string, any]) => {
+      // TODO: implment using actual locales
+      acc[name] = { [defaultLocale]: value };
+      return acc;
+    }, {})
   };
 };
 
 const logger = getWinstonLogger({ package: 'sanity-cms-loader', module: 'index', strategy: 'Cms' });
-
-const loadSchema = async (filePath: string): Promise<any> => {
-  const source = await fs.readFile(filePath, 'utf8');
-  const { outputText } = ts.transpileModule(source, {
-    compilerOptions: { module: ts.ModuleKind.CommonJS }
-  });
-  const module = { exports: {} } as any;
-  const fn = new Function('exports', 'require', 'module', '__filename', '__dirname', outputText);
-  fn(module.exports, require, module, filePath, dirname(filePath));
-  return module.exports.default || module.exports;
-};
 
 const mapSanityField = (field: any): any => {
   let type = 'Symbol';
@@ -90,12 +80,61 @@ const mapSanityField = (field: any): any => {
   return out;
 };
 
-const schemaToContentType = (schema: any): any => {
-  return {
-    sys: { id: schema.name },
-    name: schema.title,
-    fields: (schema.fields || []).map(mapSanityField)
-  };
+const mapSanityTypesToContentfulTypes = (schemaTypes: any[]): any[] => {
+  return schemaTypes.map((type) => {
+    const fields = type.fields.map((field: any) => {
+      const contentTypeField: any = {
+        id: field.name,
+        name: field.title,
+        type: mapSanityField(field).type,
+        localized: false,
+        required: field.validation?.required || false,
+        validations: [] as any[],
+        disabled: false,
+        omitted: false
+      };
+
+      // Handle reference fields
+      if (field.type === 'reference' && field.to) {
+        contentTypeField.validations.push({
+          linkContentType: field.to.map((t: any) => t.type)
+        });
+      }
+
+      // Handle array fields
+      if (field.type === 'array' && field.of) {
+        contentTypeField.items = {
+          type: 'Link',
+          linkType: 'Entry',
+          validations: [
+            {
+              linkContentType: field.of
+                .map((item: any) => {
+                  if (item.type === 'reference' && item.to) {
+                    return item.to.map((t: any) => t.type);
+                  }
+                  return item.type;
+                })
+                .flat()
+            }
+          ]
+        };
+      }
+
+      return contentTypeField;
+    });
+
+    return {
+      sys: {
+        id: type.name,
+        type: 'ContentType'
+      },
+      displayField: 'internalTitle',
+      name: type.title,
+      description: type.description || '',
+      fields
+    };
+  });
 };
 
 const options: Options<ItemKey, any, string> = {
@@ -118,7 +157,7 @@ const refByOptions: Options<RefByKey, any, string> = {
   }
 };
 
-const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
+const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoaders => {
   const sanity = (config as any).sanity || {};
 
   const prodClient = createClient({
@@ -151,7 +190,12 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
         fetchBatchItems(map(prodKeys, 'id'), prodClient)
       ]);
       const all = [...previewDocs, ...prodDocs];
-      const items = keys.map(({ id }) => convertSanityDoc(all.find((d) => d && d._id === id)));
+      const items = keys.map(({ id }) =>
+        convertSanityDoc(
+          all.find((d) => d && d._id === id),
+          defaultLocale
+        )
+      );
       logger.debug('Fetched docs', {
         caller: 'getBatchItemFetcher',
         elapsedMs: timer.end().millis,
@@ -191,7 +235,7 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
           const client = preview ? previewClient : prodClient;
           const query = `*[_type == $type && ${field} == $value][0]`;
           const doc = await client.fetch(query, { type: contentType, value });
-          return convertSanityDoc(doc);
+          return convertSanityDoc(doc, defaultLocale);
         })
       );
       logger.debug('Fetched doc by field value', {
@@ -231,37 +275,23 @@ const createLoaders = (config: LastRevAppConfig): ContentfulLoaders => {
   const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), fvlOptions);
   const entriesRefByLoader = new DataLoader(getBatchEntriesRefByFetcher(), refByOptions);
 
-  const fetchAllContentTypes = async (preview: boolean) => {
+  const fetchAllContentTypes = async (_preview: boolean) => {
     try {
       const timer = new Timer();
-      const schemaDir = join(process.cwd(), 'sanity', 'schemas');
-      let types: any[] = [];
 
       try {
-        const files = await fs.readdir(schemaDir);
-        const schemas = await Promise.all(
-          files.filter((f) => f.endsWith('.ts') && f !== 'index.ts').map((f) => loadSchema(join(schemaDir, f)))
-        );
-        types = schemas.map(schemaToContentType);
+        const types = mapSanityTypesToContentfulTypes(config.sanity.schemaTypes);
         logger.debug('Fetched all content types from local schemas', {
           caller: 'fetchAllContentTypes',
           elapsedMs: timer.end().millis,
           itemsSuccessful: types.length
         });
         return types;
-      } catch {
-        // ignore and fallback to client fetch
+      } catch (err: any) {
+        console.log('Error fetching content types from local schemas', err.message);
+        console.log(JSON.stringify(config.sanity.schemaTypes, null, 2));
+        throw err;
       }
-
-      const query = 'array::unique(*[]._type)';
-      const names: string[] = await (preview ? previewClient : prodClient).fetch(query);
-      types = names.map((n) => ({ sys: { id: n }, name: n, fields: [] }));
-      logger.debug('Fetched all content types from Sanity', {
-        caller: 'fetchAllContentTypes',
-        elapsedMs: timer.end().millis,
-        itemsSuccessful: types.length
-      });
-      return types;
     } catch (err: any) {
       logger.error(`Unable to fetch content types: ${err.message}`, {
         caller: 'fetchAllContentTypes',

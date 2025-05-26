@@ -2,7 +2,7 @@ import createFsLoaders from '@last-rev/contentful-fs-loader';
 import createContentfulCmsLoaders from '@last-rev/contentful-cms-loader';
 import createRedisLoaders from '@last-rev/contentful-redis-loader';
 import createDynamoDbLoaders from '@last-rev/contentful-dynamodb-loader';
-import createSanityLoaders from './createSanityLoaders';
+import createSanityLoaders from '@last-rev/sanity-cms-loader';
 
 import { CmsLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';

@@ -25,7 +25,7 @@ const buildSchema = async (config: LastRevAppConfig): Promise<GraphQLSchema> => 
   const contentTypes = await fetchAllContentTypes(loaders);
 
   const baseTypeDefs = await generateSchema({
-    source: 'Contentful',
+    source: config.cms,
     typeMappings: config.extensions.typeMappings,
     contentTypes,
     skipReferenceFields: true

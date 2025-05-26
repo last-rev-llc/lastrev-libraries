@@ -4,7 +4,6 @@ import sanityClient, { SanityClient } from '@sanity/client';
 import { ApolloContext } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import createLoaders from './createLoaders';
-import createSanityLoaders from './createSanityLoaders';
 import createPathReaders from './createPathReaders';
 
 import { PathToContentLoader, ContentToPathsLoader } from '@last-rev/contentful-path-rules-engine';
@@ -76,7 +75,7 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
     locales = await getSanityLocales(prodClient);
     defaultLocale = locales[0] || 'en-US';
     clients = { prod: prodClient, preview: previewClient };
-    loaders = createSanityLoaders(config, defaultLocale);
+    loaders = createLoaders(config, defaultLocale);
   } else {
     const cLocales = await getLocales(
       config.contentful.spaceId,

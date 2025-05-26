@@ -18,7 +18,7 @@ export type TypeName =
   | 'Location';
 
 // in the future, these should support other sources
-export type Source = 'Contentful';
+export type Source = 'Contentful' | 'Sanity';
 export type ConnectionParams = CreateClientParams;
 
 export type GqlField = {

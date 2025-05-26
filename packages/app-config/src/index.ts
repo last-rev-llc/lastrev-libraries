@@ -53,6 +53,9 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       if (!this.config.sanity?.apiVersion) {
         throw new Error('Sanity CMS: sanity.apiVersion is required.');
       }
+      if (!this.config.sanity?.schemaTypes) {
+        throw new Error('Sanity CMS: sanity.schemaTypes is required.');
+      }
     } else {
       throw new Error(`Invalid CMS: ${this.config.cms}`);
     }
@@ -153,7 +156,8 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       projectId: this.config.sanity?.projectId!,
       dataset: this.config.sanity?.dataset!,
       token: this.config.sanity?.token!,
-      apiVersion: this.config.sanity?.apiVersion!
+      apiVersion: this.config.sanity?.apiVersion!,
+      schemaTypes: this.config.sanity?.schemaTypes!
     };
   }
 

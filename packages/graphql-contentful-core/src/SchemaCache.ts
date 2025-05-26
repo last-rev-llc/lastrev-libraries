@@ -16,7 +16,7 @@ export default class SchemaCache {
   };
 
   public getSchema = async (config: LastRevAppConfig) => {
-    const keyParts = [config.cms];
+    const keyParts: string[] = [config.cms];
     if (config.cms === 'Sanity') {
       keyParts.push(config.sanity.projectId, config.sanity.dataset);
     } else {
