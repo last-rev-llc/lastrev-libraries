@@ -1,5 +1,6 @@
 import { GraphQLScalarType } from 'graphql';
-import { ContentType, Entry } from 'contentful';
+import { ContentType } from 'contentful';
+import { CmsEntry } from '@last-rev/types';
 import GraphQLJSON from 'graphql-type-json';
 import getContentResolvers from './getContentResolvers';
 import fieldsResolver from './fieldsResolver';
@@ -104,7 +105,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           if (contentTypes.length) {
             const results = (
               await ctx.loaders.entriesByContentTypeLoader.loadMany(contentTypes.map((type) => ({ id: type, preview })))
-            ).filter((r: any) => !isError(r)) as unknown as Entry<any>[];
+            ).filter((r: any) => !isError(r)) as unknown as CmsEntry<any>[];
 
             return results.flat();
           }
@@ -201,11 +202,11 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
               skip: (page - 1) * maxPageSize,
               order: 'sys.updatedAt'
             })
-          ).items.map((item: Entry<any>) => item.sys.id);
+          ).items.map((item: CmsEntry<any>) => item.sys.id);
 
           const entries = (await ctx.loaders.entryLoader.loadMany(ids.map((id: string) => ({ id, preview })))).filter(
             (e: any) => !!e && !isError(e)
-          ) as Entry<any>[];
+          ) as CmsEntry<any>[];
 
           const sitemapEntries = (
             await Promise.all(

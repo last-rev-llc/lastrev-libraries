@@ -1,5 +1,6 @@
 import DataLoader, { Options } from 'dataloader';
-import { Entry, Asset, createClient, ContentfulClientApi } from 'contentful';
+import { createClient, ContentfulClientApi } from 'contentful';
+import { CmsEntry, CmsAsset } from '@last-rev/types';
 import { find, map, partition } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
@@ -89,7 +90,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     return results;
   };
 
-  const getBatchItemFetcher = <T extends Entry<any> | Asset>(
+  const getBatchItemFetcher = <T extends CmsEntry<any> | CmsAsset<any>>(
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<ItemKey, T | null> => {
     return async (keys): Promise<(T | null)[]> => {
@@ -105,10 +106,10 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
       const items = keys.map(({ id, preview }) => {
         return (
           find(previewItems, (item) => {
-            return preview && (item as Entry<any> | Asset).sys.id === id;
+            return preview && (item as CmsEntry<any> | CmsAsset<any>).sys.id === id;
           }) ||
           find(prodItems, (item) => {
-            return !preview && (item as Entry<any> | Asset).sys.id === id;
+            return !preview && (item as CmsEntry<any> | CmsAsset<any>).sys.id === id;
           }) ||
           null
         );
@@ -124,7 +125,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     };
   };
 
-  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, CmsEntry<any> | null> => {
     return async (keys) => {
       const timer = new Timer();
       const fvlRequests = keys.reduce((acc, { contentType, field, value, preview }) => {
@@ -211,7 +212,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
       const result = keys.map(({ preview, field, value, contentType }) => {
         const arr = preview ? prev : prod;
         return (
-          arr.find((i: Entry<any>) => {
+          arr.find((i: CmsEntry<any>) => {
             return i.sys.contentType.sys.id === contentType && i.fields[field]?.[defaultLocale] === value;
           }) || null
         );
@@ -221,7 +222,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     };
   };
 
-  const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, Entry<any>[]> => {
+  const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, CmsEntry<any>[]> => {
     return async (keys) => {
       const timer = new Timer();
       const refByRequests = keys.reduce((acc, { contentType, field, id, preview }) => {
@@ -312,7 +313,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
             }
           }
           return acc;
-        }, [] as Entry<any>[]);
+        }, [] as CmsEntry<any>[]);
       });
 
       logger.debug('Fetched entries by ref by', {
@@ -326,7 +327,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     };
   };
 
-  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
+  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, CmsEntry<any>[]> => {
     return async (keys) => {
       const timer = new Timer();
       const out = await Promise.allSettled(
@@ -337,7 +338,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
               content_type: id,
               include: 0,
               locale: '*'
-            })) as Entry<any>[];
+            })) as CmsEntry<any>[];
           })()
         )
       );
@@ -381,8 +382,8 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     };
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+  const entryLoader = new DataLoader(getBatchItemFetcher<CmsEntry<any>>('entries'), options);
+  const assetLoader = new DataLoader(getBatchItemFetcher<CmsAsset<any>>('assets'), options);
   const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
   const fetchAllContentTypes = async (preview: boolean) => {
     try {

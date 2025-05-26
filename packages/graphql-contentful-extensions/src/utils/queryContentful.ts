@@ -1,5 +1,4 @@
-import { ApolloContext } from '@last-rev/types';
-import { Entry } from 'contentful';
+import { ApolloContext, CmsEntry } from '@last-rev/types';
 
 interface QueryArgs {
   contentType: string;
@@ -18,7 +17,7 @@ const query = async ({
   limit = 1000,
   skip = 0,
   ctx
-}: QueryArgs): Promise<Entry<unknown>[]> => {
+}: QueryArgs): Promise<CmsEntry<unknown>[]> => {
   let items;
   const contentfulQuery = {
     content_type: contentType,
@@ -57,7 +56,7 @@ export const queryContentful = async ({
   limit = 1000,
   skip = 0,
   ctx
-}: QueryArgs): Promise<Entry<unknown>[]> => {
+}: QueryArgs): Promise<CmsEntry<unknown>[]> => {
   return query({
     contentType,
     filters,

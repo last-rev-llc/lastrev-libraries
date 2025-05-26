@@ -1,4 +1,4 @@
-import { Entry } from 'contentful';
+import { CmsEntry } from '@last-rev/types';
 import { ApolloContext, CmsLoaders } from '@last-rev/types';
 import RelationShipValidator from '../core/RelationshipValidator';
 import traversePathRule, { PathVisitor } from '../core/traversePathRule';
@@ -14,7 +14,7 @@ export type NoMatchFieldValueResult = {
 export type MatchedFieldValueResult = {
   found: true;
   segmentIndex: number;
-  entry: Entry<any>;
+  entry: CmsEntry<any>;
 };
 
 const isNoMatchFieldValueResult = (x: any): x is NoMatchFieldValueResult => {
@@ -118,7 +118,7 @@ export default class PathToItemsFetcher {
     const results = (resolved as MatchedFieldValueResult[]).reduce((acc, curr) => {
       acc[curr.segmentIndex] = curr.entry;
       return acc;
-    }, new Array(slugs.length).fill(null) as (Entry<any> | null)[]);
+    }, new Array(slugs.length).fill(null) as (CmsEntry<any> | null)[]);
 
     const errors = await this._relationshipValidator.validate(results, apolloContext);
 

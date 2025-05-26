@@ -5,7 +5,7 @@ import { DynamoDB, QueryCommandOutput } from '@aws-sdk/client-dynamodb';
 import { updateAllPaths } from '@last-rev/contentful-path-util';
 import { createContext } from '@last-rev/graphql-contentful-helpers';
 import { assetHasUrl, createContentfulClients } from './helpers';
-import { Entry } from 'contentful';
+import { CmsEntry } from '@last-rev/types';
 import { map } from 'lodash';
 
 export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
@@ -94,7 +94,7 @@ export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
   const refreshEntriesByContentType = async (contentTypeId: string, isPreview: boolean) => {
     const client = isPreview ? contentfulPreviewClient : contentfulProdClient;
 
-    const makeRequest = async (skip: number = 0, existing: Entry<any>[] = []): Promise<Entry<any>[]> => {
+    const makeRequest = async (skip: number = 0, existing: CmsEntry<any>[] = []): Promise<CmsEntry<any>[]> => {
       const results = await client.getEntries({
         content_type: contentTypeId,
         locale: '*',

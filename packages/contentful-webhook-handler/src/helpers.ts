@@ -1,5 +1,6 @@
 import { each } from 'lodash';
-import { Asset, createClient, Entry, ContentType } from 'contentful';
+import { createClient, ContentType } from 'contentful';
+import { CmsEntry, CmsAsset } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { getWinstonLogger } from '@last-rev/logging';
 
@@ -53,7 +54,7 @@ export const isContentfulError = (item: any) => {
   return item?.sys?.type === 'Error';
 };
 
-export const isContentfulObject = (item: any): item is Entry<any> | Asset | ContentType => {
+export const isContentfulObject = (item: any): item is CmsEntry<any> | CmsAsset<any> | ContentType => {
   return item?.sys?.type === 'Entry' || item?.sys?.type === 'Asset' || item?.sys?.type === 'ContentType';
 };
 

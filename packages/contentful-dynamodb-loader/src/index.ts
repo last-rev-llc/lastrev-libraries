@@ -1,5 +1,6 @@
 import DataLoader, { Options } from 'dataloader';
-import { Entry, Asset, ContentType } from 'contentful';
+import { ContentType } from 'contentful';
+import { CmsEntry, CmsAsset } from '@last-rev/types';
 import { transform, omitBy, filter, negate, isEmpty, isError, isNil, map, some } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
@@ -74,7 +75,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
   ): Promise<(T | null)[]> => {
     let timer = new Timer();
 
-    const results: (Entry<any> | Asset)[] = map(
+    const results: (CmsEntry<any> | CmsAsset<any>)[] = map(
       await Promise.all(
         keys.map(({ preview, id }) =>
           dynamoDB.get({
@@ -105,7 +106,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
       timer = new Timer();
       const sourceResults = filter(await fallbackLoader.loadMany(cacheMissIds), (r) => {
         return r && !isError(r);
-      }) as unknown as (Entry<any> | Asset)[];
+      }) as unknown as (CmsEntry<any> | CmsAsset<any>)[];
 
       keyedResults = {
         ...keyedResults,
@@ -140,7 +141,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
   };
 
   const getBatchItemFetcher =
-    <T extends Entry<any> | Asset>(dirname: 'entries' | 'assets'): DataLoader.BatchLoadFn<ItemKey, T | null> =>
+    <T extends CmsEntry<any> | CmsAsset<any>>(dirname: 'entries' | 'assets'): DataLoader.BatchLoadFn<ItemKey, T | null> =>
     async (keys) =>
       fetchAndSet<T>(
         keys,
@@ -148,7 +149,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
         dirname
       );
 
-  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => async (keys) => {
+  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, CmsEntry<any>[]> => async (keys) => {
     let timer = new Timer();
 
     if (!keys.length) return [];
@@ -171,7 +172,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
           IndexName: 'pkTypeIndex'
         }
       });
-      const entries = map(itemList, 'data') as unknown as Entry<any>[];
+      const entries = map(itemList, 'data') as unknown as CmsEntry<any>[];
       return {
         entries,
         key
@@ -188,7 +189,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
       (accum, v) => {
         accum[`${v.key.id}::${v.key.preview}`] = v.entries;
       },
-      {} as Record<string, Entry<any>[]>
+      {} as Record<string, CmsEntry<any>[]>
     );
 
     logger.debug(`Fetch entries by contentType`, {
@@ -209,10 +210,10 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
 
       timer = new Timer();
 
-      const filtered = filter(sourceResults, negate(isError)) as Entry<any>[][];
+      const filtered = filter(sourceResults, negate(isError)) as CmsEntry<any>[][];
 
       await Promise.all(
-        map(filtered, async (entries: Entry<any>[], i) => {
+        map(filtered, async (entries: CmsEntry<any>[], i) => {
           const key = cacheMissIds[i];
           return await Promise.all(
             map(entries, async (entry) =>
@@ -239,19 +240,19 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
 
       keyedResults = {
         ...keyedResults,
-        ...(omitBy(keyedSourceResults, (v) => isError(v)) as Record<string, Entry<any>[]>)
+        ...(omitBy(keyedSourceResults, (v) => isError(v)) as Record<string, CmsEntry<any>[]>)
       };
     }
 
     return map(keys, (key) => keyedResults[`${key.id}::${key.preview}`] ?? []);
   };
 
-  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, CmsEntry<any> | null> => {
     return async (keys) => fallbackLoaders.entryByFieldValueLoader.loadMany(keys);
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+  const entryLoader = new DataLoader(getBatchItemFetcher<CmsEntry<any>>('entries'), options);
+  const assetLoader = new DataLoader(getBatchItemFetcher<CmsAsset<any>>('assets'), options);
   const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
   const fetchAllContentTypes = async (preview: boolean): Promise<ContentType[]> => {
     try {

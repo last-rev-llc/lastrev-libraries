@@ -1,13 +1,12 @@
 import { getDefaultFieldValue } from '@last-rev/graphql-contentful-core';
-import { CmsLoaders, ContentTypePathRuleConfig, LegacyContentfulPathsConfigs } from '@last-rev/types';
-import { Entry } from 'contentful';
+import { CmsLoaders, ContentTypePathRuleConfig, LegacyContentfulPathsConfigs, CmsEntry } from '@last-rev/types';
 import createPath from './utils/createPath';
 
 const BLOGS_LANDING_ID = process.env.BLOGS_LANDING_ID;
 
 // Path generation
 const validateSite = async (_args: {
-  item: Entry<any>;
+  item: CmsEntry<any>;
   loaders: CmsLoaders;
   defaultLocale: string;
   locales: string[];
