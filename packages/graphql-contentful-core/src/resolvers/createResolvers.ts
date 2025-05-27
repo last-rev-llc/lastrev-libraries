@@ -238,7 +238,10 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
         __resolveType: (content: any, ctx: ApolloContext) => {
           if (ctx.displayType) return ctx.displayType;
           if (content.sys && (content.sys.linkType == 'Asset' || content.sys.type === 'Asset')) return 'Media';
-          const contentTypeId = content.__typename ? content.__typename : content.sys.contentType.sys.id;
+          let contentTypeId = content.__typename ? content.__typename : content.sys.contentType.sys.id;
+          if (config.cms === 'Sanity' && /^Contentful_/i.test(contentTypeId)) {
+            contentTypeId = contentTypeId.replace(/^Contentful_/i, '');
+          }
           return getTypeName(contentTypeId, config.extensions.typeMappings);
         }
       },

@@ -4,7 +4,14 @@ import isString from 'lodash/isString';
 import capitalizeFirst from './capitalizeFirst';
 
 const getTypeName = (contentType: ContentType | string, typeMappings: TypeMappings): string => {
-  const contentTypeId = isString(contentType) ? contentType : contentType.sys.id;
+  let contentTypeId = isString(contentType) ? contentType : contentType.sys.id;
+
+  // Sanity migrations may prefix types with "Contentful_". Normalize these back
+  // to the original name so that existing code expecting the Contentful styled
+  // names continues to work.
+  if (/^Contentful_/i.test(contentTypeId)) {
+    contentTypeId = contentTypeId.replace(/^Contentful_/i, '');
+  }
 
   return capitalizeFirst(typeMappings[contentTypeId] ?? contentTypeId);
 };

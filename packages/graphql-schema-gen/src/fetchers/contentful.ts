@@ -82,6 +82,11 @@ type ${upperFirst(contentType.sys.id)} implements Content {
 
 const mapContentTypeIds = (type: ContentType, typeMappings: Record<string, string>): ContentType => {
   let contentTypeId = type.sys.id;
+  // Sanity migrations may prefix schema type names with "Contentful_". Strip the
+  // prefix so that the generated GraphQL schema uses the original type name.
+  if (/^Contentful_/i.test(contentTypeId)) {
+    contentTypeId = contentTypeId.replace(/^Contentful_/i, '');
+  }
   if (has(typeMappings, contentTypeId)) {
     contentTypeId = typeMappings[contentTypeId];
   }
