@@ -164,6 +164,13 @@ const syncAllEntries = async (
 };
 
 const sync = async (config: LastRevAppConfig, sites?: string[]) => {
+  if (config.cms === 'Sanity') {
+    logger.info('Sanity file sync is not supported yet', {
+      caller: 'sync'
+    });
+    return;
+  }
+
   const totalTimer = new Timer();
 
   validateArg(config.fs.contentDir, 'fs.contentDir');
