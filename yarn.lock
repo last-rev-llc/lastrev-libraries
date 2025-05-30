@@ -5523,10 +5523,10 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@sanity/client@^7.3.0":
-  version "7.3.0"
-  resolved "https://registry.yarnpkg.com/@sanity/client/-/client-7.3.0.tgz#7c19bc54a5af4ec578953833acfdb973691ec2cf"
-  integrity sha512-VmzlvGwvWRNxEqAYHNDdvB6u0460C38fPJSHUaIcdBCTBWKMeCgIE8QI1w4PxO0PiYuWgERexRS2OrF+OYh3tQ==
+"@sanity/client@^7.4.0":
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/@sanity/client/-/client-7.4.0.tgz#cc76e5c1da5b5d870bdf1d242cc26884925b8f8b"
+  integrity sha512-GGvt6NJq203or4h4sjKLPmGhyppIIRCsd6JuSrk3dUzD02YZRDOI+J2JgR6Rl/WwtFzXaYQk1MaqZ9fs1Ddc4Q==
   dependencies:
     "@sanity/eventsource" "^5.0.2"
     get-it "^8.6.9"

@@ -33,7 +33,7 @@
     "@last-rev/sanity-cms-loader": "^0.1.0",
     "@last-rev/timer": "^0.2.0",
     "@last-rev/types": "^0.4.0",
-    "@sanity/client": "^7.3.0",
+    "@sanity/client": "^7.4.0",
     "contentful": "^9.3.6",
     "lodash": "^4.17.21"
   }

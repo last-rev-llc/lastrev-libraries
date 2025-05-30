@@ -17,7 +17,7 @@
     "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/testing-library": "^0.1.10",
     "@last-rev/types": "^0.4.0",
-    "@sanity/client": "^7.3.0"
+    "@sanity/client": "^7.4.0"
   },
   "keywords": [],
   "author": "",
