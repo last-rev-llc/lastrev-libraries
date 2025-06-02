@@ -215,12 +215,10 @@ const mapSanityValueToContentful = (value: any, defaultLocale: string): any => {
     // Handle Sanity asset reference (image/file)
     if (value._type === 'image' && value.asset?._ref) {
       return {
-        asset: {
-          sys: {
-            type: 'Link',
-            linkType: 'Asset',
-            id: value.asset._ref
-          }
+        sys: {
+          type: 'Link',
+          linkType: 'Asset',
+          id: value.asset._ref
         }
       };
     }
@@ -237,6 +235,60 @@ const mapSanityValueToContentful = (value: any, defaultLocale: string): any => {
 const convertSanityDoc = (doc: any, defaultLocale: string) => {
   if (!doc) return null;
   const { _id, _type, _updatedAt, ...fields } = doc;
+
+  // Detect top-level asset (Sanity image or file asset)
+  if (
+    _type === 'sanity.imageAsset' ||
+    _type === 'sanity.fileAsset' ||
+    _type === 'imageAsset' ||
+    _type === 'fileAsset'
+  ) {
+    // Map to Contentful asset structure
+    const assetFields: any = {
+      title: { [defaultLocale]: fields.alt || fields.title || '' },
+      file: {
+        [defaultLocale]: {
+          contentType: fields.mimeType || fields.contentType || '',
+          fileName: fields.originalFilename || fields.fileName || '',
+          url: fields.url || '',
+          details: {}
+        }
+      }
+    };
+    if (fields.metadata && fields.metadata.dimensions) {
+      assetFields.file[defaultLocale].details.image = {
+        width: fields.metadata.dimensions.width,
+        height: fields.metadata.dimensions.height
+      };
+    }
+    if (fields.size) {
+      assetFields.file[defaultLocale].details.size = fields.size;
+    }
+    // Optionally map tags if present
+    const metadata: any = {};
+    if (fields.tags && Array.isArray(fields.tags)) {
+      metadata.tags = fields.tags.map((tag: any) => ({
+        sys: {
+          type: 'Link',
+          linkType: 'Tag',
+          id: tag._ref || tag._id || tag.id || tag
+        }
+      }));
+    }
+    return {
+      fields: assetFields,
+      metadata,
+      sys: {
+        id: _id,
+        type: 'Asset',
+        createdAt: doc._createdAt,
+        updatedAt: _updatedAt,
+        revision: doc._rev
+        // Optionally add space if you have a mapping
+      }
+    };
+  }
+
   return {
     sys: { id: _id, updatedAt: _updatedAt, contentType: { sys: { id: _type, type: 'Entry' } } },
     fields: Object.entries(fields).reduce((acc: any, [name, value]: [string, any]) => {
