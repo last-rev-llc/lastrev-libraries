@@ -52,7 +52,7 @@ const mapSanityValueToContentful = (value: any, defaultLocale: string): any => {
 
 const convertSanityDoc = (doc: any, defaultLocale: string) => {
   if (!doc) return null;
-  const { _id, _type, _updatedAt, ...fields } = doc;
+  const { _id, _type, _updatedAt, _createdAt, ...fields } = doc;
 
   // Detect top-level asset (Sanity image or file asset)
   if (
@@ -99,7 +99,7 @@ const convertSanityDoc = (doc: any, defaultLocale: string) => {
       sys: {
         id: _id,
         type: 'Asset',
-        createdAt: doc._createdAt,
+        createdAt: _createdAt,
         updatedAt: _updatedAt,
         revision: doc._rev
         // Optionally add space if you have a mapping
@@ -107,14 +107,27 @@ const convertSanityDoc = (doc: any, defaultLocale: string) => {
     };
   }
 
-  return {
-    sys: { id: _id, updatedAt: _updatedAt, contentType: { sys: { id: _type, type: 'Entry' } } },
+  const entry = {
+    sys: {
+      id: _id,
+      type: 'Entry',
+      updatedAt: _updatedAt,
+      createdAt: _createdAt,
+      contentType: {
+        sys: {
+          type: 'Link',
+          linkType: 'ContentType',
+          id: _type
+        }
+      }
+    },
     fields: Object.entries(fields).reduce((acc: any, [name, value]: [string, any]) => {
       // Recursively map all values, including references and rich text
       acc[name] = { [defaultLocale]: mapSanityValueToContentful(value, defaultLocale) };
       return acc;
     }, {})
   };
+  return entry;
 };
 
 const logger = getWinstonLogger({ package: 'sanity-cms-loader', module: 'index', strategy: 'Cms' });
