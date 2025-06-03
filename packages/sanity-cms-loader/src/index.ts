@@ -5,194 +5,12 @@ import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import { ItemKey, CmsLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
-
-// Helper to map Sanity block style to Contentful nodeType
-const blockStyleToNodeType = (style: string) => {
-  switch (style) {
-    case 'h1':
-      return 'heading-1';
-    case 'h2':
-      return 'heading-2';
-    case 'h3':
-      return 'heading-3';
-    case 'h4':
-      return 'heading-4';
-    case 'h5':
-      return 'heading-5';
-    case 'h6':
-      return 'heading-6';
-    case 'blockquote':
-      return 'blockquote';
-    default:
-      return 'paragraph';
-  }
-};
-
-// Helper to map Sanity list type to Contentful nodeType
-const listTypeToNodeType = (listType: string) => {
-  switch (listType) {
-    case 'bullet':
-      return 'unordered-list';
-    case 'number':
-      return 'ordered-list';
-    default:
-      return 'unordered-list';
-  }
-};
-
-// Convert Sanity Portable Text (Block[]) to Contentful Rich Text
-const sanityBlocksToContentfulRichText = (blocks: any[]): any => {
-  const content: any[] = [];
-  let currentList: any = null;
-
-  (blocks || []).forEach((block) => {
-    if (block._type === 'block' && block.listItem) {
-      // Handle lists
-      const nodeType = listTypeToNodeType(block.listItem);
-      if (!currentList || currentList.nodeType !== nodeType) {
-        currentList = {
-          nodeType,
-          content: [],
-          data: {}
-        };
-        content.push(currentList);
-      }
-      currentList.content.push({
-        nodeType: 'list-item',
-        content: [blockToContentfulParagraph(block)],
-        data: {}
-      });
-    } else {
-      currentList = null;
-      if (block._type === 'block') {
-        content.push(blockToContentfulParagraph(block));
-      } else if (block._type === 'reference' && block._ref) {
-        content.push({
-          nodeType: 'embedded-entry-block',
-          content: [],
-          data: {
-            target: {
-              sys: {
-                type: 'Link',
-                linkType: 'Entry',
-                id: block._ref
-              }
-            }
-          }
-        });
-      } else if (block._type === 'image' && block.asset?._ref) {
-        content.push({
-          nodeType: 'embedded-asset-block',
-          content: [],
-          data: {
-            target: {
-              sys: {
-                type: 'Link',
-                linkType: 'Asset',
-                id: block.asset._ref
-              }
-            }
-          }
-        });
-      }
-    }
-  });
-
-  return {
-    nodeType: 'document',
-    data: {},
-    content
-  };
-};
-
-// Helper to map a single block to a Contentful paragraph/heading/etc.
-const blockToContentfulParagraph = (block: any) => {
-  const nodeType = blockStyleToNodeType(block.style || 'normal');
-  const children = (block.children || [])
-    .map((child: any) => {
-      if (child._type === 'span') {
-        // Map marks (including links)
-        let marks = (child.marks || []).map((mark: string) => {
-          if (mark === 'strong') return 'bold';
-          if (mark === 'em') return 'italic';
-          if (mark === 'underline') return 'underline';
-          if (mark === 'code') return 'code';
-          return mark;
-        });
-        // Handle links (markDefs)
-        if (block.markDefs && child.marks && child.marks.length > 0) {
-          child.marks.forEach((mark: string) => {
-            const def = block.markDefs.find((d: any) => d._key === mark);
-            if (def && def._type === 'link' && def.href) {
-              marks = marks.filter((m: string) => m !== mark); // Remove the mark, add as hyperlink
-              // Wrap the text node in a hyperlink node
-              return {
-                nodeType: 'hyperlink',
-                content: [
-                  {
-                    nodeType: 'text',
-                    value: child.text,
-                    marks,
-                    data: {}
-                  }
-                ],
-                data: { uri: def.href }
-              };
-            }
-          });
-        }
-        return {
-          nodeType: 'text',
-          value: child.text,
-          marks,
-          data: {}
-        };
-      }
-      // Inline embedded entry/asset
-      if (child._type === 'reference' && child._ref) {
-        return {
-          nodeType: 'embedded-entry-inline',
-          content: [],
-          data: {
-            target: {
-              sys: {
-                type: 'Link',
-                linkType: 'Entry',
-                id: child._ref
-              }
-            }
-          }
-        };
-      }
-      if (child._type === 'image' && child.asset?._ref) {
-        return {
-          nodeType: 'embedded-asset-inline',
-          content: [],
-          data: {
-            target: {
-              sys: {
-                type: 'Link',
-                linkType: 'Asset',
-                id: child.asset._ref
-              }
-            }
-          }
-        };
-      }
-      return null;
-    })
-    .filter(Boolean);
-  return {
-    nodeType,
-    content: children,
-    data: {}
-  };
-};
+import { mapSanityPortableTextArrayToContentfulRichText } from './richTextHelpers';
 
 const mapSanityValueToContentful = (value: any, defaultLocale: string): any => {
   // Detect Sanity rich text (Block[])
-  if (Array.isArray(value) && value[0] && value[0]._type === 'block') {
-    return sanityBlocksToContentfulRichText(value);
+  if (Array.isArray(value) && value[0] && (value[0]._type === 'block' || value[0]._type === 'break')) {
+    return mapSanityPortableTextArrayToContentfulRichText(value);
   }
   if (Array.isArray(value)) {
     return value.map((item) => mapSanityValueToContentful(item, defaultLocale));
@@ -434,6 +252,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     projectId: sanity.projectId,
     dataset: sanity.dataset,
     apiVersion: sanity.apiVersion || '2021-10-21',
+    token: sanity.token,
     useCdn: true
   });
 
@@ -441,8 +260,9 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     projectId: sanity.projectId,
     dataset: sanity.dataset,
     apiVersion: sanity.apiVersion || '2021-10-21',
-    token: sanity.previewToken,
-    useCdn: false
+    token: sanity.token,
+    useCdn: false,
+    perspective: 'drafts'
   });
 
   const fetchBatchItems = async (ids: string[], client: SanityClient) => {

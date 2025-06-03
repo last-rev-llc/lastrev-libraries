@@ -40,7 +40,7 @@ export interface LastRevAppConfiguration {
     dataset: string;
     token: string;
     apiVersion: string;
-    // TODO: use the actual sanity type
+    usePreview: boolean;
     schemaTypes: any[];
   };
   algolia: {
@@ -114,6 +114,7 @@ export type LastRevAppConfigArgs = {
     dataset?: string;
     token?: string;
     apiVersion?: string;
+    usePreview?: boolean;
     schemaTypes?: any[];
   };
   algolia?: {

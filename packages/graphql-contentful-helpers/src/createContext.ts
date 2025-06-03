@@ -1,6 +1,6 @@
 import { find, get, map } from 'lodash';
 import { createClient } from 'contentful';
-import sanityClient, { SanityClient } from '@sanity/client';
+import { SanityClient, createClient as createSanityClient } from '@sanity/client';
 import { ApolloContext } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import createLoaders from './createLoaders';
@@ -57,19 +57,20 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
 
   if (config.cms === 'Sanity') {
     const sanityCfg = (config as any).sanity || {};
-    const prodClient = sanityClient({
+    const prodClient = createSanityClient({
       projectId: sanityCfg.projectId,
       dataset: sanityCfg.dataset,
       apiVersion: sanityCfg.apiVersion || '2021-03-25',
       token: sanityCfg.token,
-      useCdn: !sanityCfg.usePreview
+      useCdn: true
     });
-    const previewClient = sanityClient({
+    const previewClient = createSanityClient({
       projectId: sanityCfg.projectId,
       dataset: sanityCfg.dataset,
       apiVersion: sanityCfg.apiVersion || '2021-03-25',
       token: sanityCfg.token,
-      useCdn: false
+      useCdn: false,
+      perspective: 'drafts'
     });
 
     locales = await getSanityLocales(prodClient);

@@ -157,6 +157,7 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       dataset: this.config.sanity?.dataset!,
       token: this.config.sanity?.token!,
       apiVersion: this.config.sanity?.apiVersion!,
+      usePreview: !!this.config.sanity?.usePreview,
       schemaTypes: this.config.sanity?.schemaTypes!
     };
   }
