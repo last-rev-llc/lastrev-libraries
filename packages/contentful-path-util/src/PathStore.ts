@@ -15,7 +15,7 @@ export interface PathStore {
 }
 
 const clients: Record<string, Redis> = {};
-const getClient = (config: LastRevAppConfig) => {
+const getContentfulClient = (config: LastRevAppConfig) => {
   const key = JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
   if (!clients[key]) {
     clients[key] = new Redis({
@@ -28,17 +28,30 @@ const getClient = (config: LastRevAppConfig) => {
   return clients[key];
 };
 
+const getBasePath = (config: LastRevAppConfig) => {
+  if (config.cms === 'Sanity') {
+    return join(
+      config.fs.contentDir,
+      config.sanity.projectId,
+      config.sanity.dataset,
+      config.sanity.usePreview ? 'preview' : 'production',
+      'path_data'
+    );
+  }
+  return join(
+    config.fs.contentDir,
+    config.contentful.spaceId,
+    config.contentful.env,
+    config.contentful.usePreview ? 'preview' : 'production',
+    'path_data'
+  );
+};
+
 export class FsPathStore implements PathStore {
   basePath: string;
 
   constructor(config: LastRevAppConfig) {
-    this.basePath = join(
-      config.fs.contentDir,
-      config.contentful.spaceId,
-      config.contentful.env,
-      config.contentful.usePreview ? 'preview' : 'production',
-      'path_data'
-    );
+    this.basePath = getBasePath(config);
   }
 
   getFilePath(site: string) {
@@ -66,7 +79,7 @@ export class FsPathStore implements PathStore {
 export class RedisPathStore implements PathStore {
   client: Redis;
   constructor(config: LastRevAppConfig) {
-    this.client = getClient(config);
+    this.client = getContentfulClient(config);
   }
 
   getKey(site: string) {
@@ -174,6 +187,10 @@ export class DummyStore implements PathStore {
 export const createPathStore = (config: LastRevAppConfig) => {
   switch (config.contentStrategy) {
     case 'cms': {
+      if (config.cms === 'Sanity') {
+        console.warn('Path resolution is not supported when using Sanity CMS with cms cache strategy.');
+        return new DummyStore();
+      }
       switch (config.cmsCacheStrategy) {
         case 'redis':
           return new RedisPathStore(config);

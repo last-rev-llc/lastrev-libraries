@@ -237,6 +237,9 @@ const updatePathsForSite = async ({
       config.clone({
         contentful: {
           usePreview: true
+        },
+        sanity: {
+          usePreview: true
         }
       })
     );
@@ -256,6 +259,9 @@ const updatePathsForSite = async ({
     const pathStore = createPathStore(
       config.clone({
         contentful: {
+          usePreview: false
+        },
+        sanity: {
           usePreview: false
         }
       })

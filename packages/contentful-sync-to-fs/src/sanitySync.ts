@@ -105,7 +105,7 @@ const sanitySync = async (config: LastRevAppConfig, usePreview: boolean, sites?:
     token: config.sanity.token,
     projectId: config.sanity.projectId,
     dataset: config.sanity.dataset,
-    ...(usePreview ? { perspective: 'previewDrafts', useCdn: false } : { useCdn: true }),
+    ...(usePreview ? { perspective: 'drafts', useCdn: false } : { useCdn: true }),
     apiVersion: config.sanity.apiVersion
   });
 
