@@ -158,20 +158,20 @@ describe('mapSanityPortableTextArrayToContentfulRichText', () => {
 });
 
 describe('normalizeSanityId', () => {
-  it('removes draft. prefix from id', () => {
+  it('removes drafts. prefix from id', () => {
     // Block-level entry
     const content = [
-      { _type: 'reference', _ref: 'draft.entry123' },
-      { _type: 'image', asset: { _ref: 'draft.asset456' } }
+      { _type: 'reference', _ref: 'drafts.entry123' },
+      { _type: 'image', asset: { _ref: 'drafts.asset456' } }
     ];
     const doc = mapSanityPortableTextArrayToContentfulRichText(content);
     expect(doc.content[0].data.target.sys.id).toBe('entry123');
     expect(doc.content[1].data.target.sys.id).toBe('asset456');
   });
 
-  it('removes draft. prefix from inline entry and asset hyperlinks', () => {
+  it('removes drafts. prefix from inline entry and asset hyperlinks', () => {
     // Inline entry hyperlink
-    const markDefs = [{ _key: 'a', _type: 'reference', _ref: 'draft.entry789' }];
+    const markDefs = [{ _key: 'a', _type: 'reference', _ref: 'drafts.entry789' }];
     const node = mapSanityPortableTextNodeToContentfulRichTextNode(
       { _type: 'span', text: 'abc', marks: ['a'] },
       undefined,
@@ -181,7 +181,7 @@ describe('normalizeSanityId', () => {
     expect(node.data.target.sys.id).toBe('entry789');
 
     // Inline asset hyperlink
-    const markDefs2 = [{ _key: 'a', sys: { id: 'draft.asset789', linkType: 'Asset' } }];
+    const markDefs2 = [{ _key: 'a', sys: { id: 'drafts.asset789', linkType: 'Asset' } }];
     const node2 = mapSanityPortableTextNodeToContentfulRichTextNode(
       { _type: 'span', text: 'abc', marks: ['a'] },
       undefined,
@@ -191,13 +191,16 @@ describe('normalizeSanityId', () => {
     expect(node2.data.target.sys.id).toBe('asset789');
   });
 
-  it('removes draft. prefix from embedded-entry-inline and embedded-asset-inline', () => {
-    const entryNode = mapSanityPortableTextNodeToContentfulRichTextNode({ _type: 'reference', _ref: 'draft.entry456' });
+  it('removes drafts. prefix from embedded-entry-inline and embedded-asset-inline', () => {
+    const entryNode = mapSanityPortableTextNodeToContentfulRichTextNode({
+      _type: 'reference',
+      _ref: 'drafts.entry456'
+    });
     expect(entryNode.nodeType).toBe('embedded-entry-inline');
     expect(entryNode.data.target.sys.id).toBe('entry456');
     const assetNode = mapSanityPortableTextNodeToContentfulRichTextNode({
       _type: 'reference',
-      sys: { id: 'draft.asset456', linkType: 'Asset' }
+      sys: { id: 'drafts.asset456', linkType: 'Asset' }
     });
     expect(assetNode.nodeType).toBe('embedded-asset-inline');
     expect(assetNode.data.target.sys.id).toBe('asset456');

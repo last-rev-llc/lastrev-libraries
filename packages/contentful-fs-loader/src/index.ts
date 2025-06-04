@@ -7,6 +7,7 @@ import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import { ItemKey, CmsLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
+import { getGetUriFunction } from './utils';
 
 const logger = getWinstonLogger({
   package: 'contentful-fs-loader',
@@ -28,9 +29,7 @@ const flvOptions: Options<FVLKey, any, string> = {
 };
 
 const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): CmsLoaders => {
-  const getUri = (...args: string[]) => {
-    return join(config.fs.contentDir, config.contentful.spaceId, config.contentful.env, ...args);
-  };
+  const getUri = getGetUriFunction(config);
 
   const getBatchItemFetcher = <T extends Entry<any> | Asset>(
     dirname: 'entries' | 'assets'

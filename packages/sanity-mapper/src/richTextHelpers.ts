@@ -57,9 +57,9 @@ export const mapSanityBlockToContentfulRichTextNode = (block: any) => {
   };
 };
 
-// Helper to normalize Sanity IDs (strip 'draft.' prefix if present)
+// Helper to normalize Sanity IDs (strip 'drafts.' prefix if present)
 function normalizeSanityId(id: string) {
-  return id && id.startsWith('draft.') ? id.slice(6) : id;
+  return id && id.startsWith('drafts.') ? id.slice(6) : id;
 }
 
 export const mapSanityPortableTextNodeToContentfulRichTextNode = (
@@ -245,7 +245,8 @@ function groupBlocksToContentfulNodes(blocks: any[]): any[] {
   while (i < blocks.length) {
     const block = blocks[i];
     if (!block || typeof block !== 'object' || !block._type) {
-      throw new Error(`Invalid block in groupBlocksToContentfulNodes: ${JSON.stringify(block)}`);
+      i++;
+      continue;
     }
     if (block._type === 'block' && block.listItem) {
       const [listNode, nextIndex] = collectList(blocks, i);
