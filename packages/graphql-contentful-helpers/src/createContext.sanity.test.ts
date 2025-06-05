@@ -25,8 +25,8 @@ describe('createContext with Sanity CMS', () => {
     expect(ctx.locales).toEqual(['en-US', 'es']);
     expect(ctx.defaultLocale).toBe('en-US');
     expect(ctx.loaders.entryLoader).toBeDefined();
-    expect(ctx.contentful.prod).toBeDefined();
-    expect(ctx.contentful.preview).toBeDefined();
+    expect(ctx.contentful!.prod).toBeDefined();
+    expect(ctx.contentful!.preview).toBeDefined();
     expect(fetchMock).toHaveBeenCalledWith('*[_type == "i18n.locale"]{code}');
   });
 
@@ -50,8 +50,7 @@ describe('createContext with Sanity CMS', () => {
     `);
 
     const root = {
-      entry: (_: any, { id }: any, context: any) =>
-        context.loaders.entryLoader.load({ id, preview: false })
+      entry: (_: any, { id }: any, context: any) => context.loaders.entryLoader.load({ id, preview: false })
     };
 
     const result = await graphql({
@@ -64,4 +63,3 @@ describe('createContext with Sanity CMS', () => {
     expect(result.data).toEqual({ entry: { _id: '123' } });
   });
 });
-

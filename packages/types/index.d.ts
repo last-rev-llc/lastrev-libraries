@@ -143,10 +143,10 @@ export type ApolloContext = {
   path?: string;
   locales: string[];
   preview?: boolean;
-  contentful: CmsClients;
+  contentful?: CmsClients;
+  sanity?: CmsClients;
   pathReaders?: PathReaders;
   displayType?: string;
-
   pathEntries?: PathEntries;
 };
 

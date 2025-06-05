@@ -56,6 +56,9 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       if (!this.config.sanity?.schemaTypes) {
         throw new Error('Sanity CMS: sanity.schemaTypes is required.');
       }
+      if (!this.config.sanity?.supportedLanguages) {
+        throw new Error('Sanity CMS: sanity.supportedLanguages is required.');
+      }
     } else {
       throw new Error(`Invalid CMS: ${this.config.cms}`);
     }
@@ -158,7 +161,8 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       token: this.config.sanity?.token!,
       apiVersion: this.config.sanity?.apiVersion!,
       usePreview: !!this.config.sanity?.usePreview,
-      schemaTypes: this.config.sanity?.schemaTypes!
+      schemaTypes: this.config.sanity?.schemaTypes!,
+      supportedLanguages: this.config.sanity?.supportedLanguages!
     };
   }
 

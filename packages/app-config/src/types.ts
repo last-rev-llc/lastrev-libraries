@@ -8,6 +8,11 @@ export type CmsCacheStrategy = 'redis' | 'dynamodb' | 'none';
 
 export type PathVersion = 'v1' | 'v2';
 
+export type SupportedLanguage = {
+  id: string;
+  title: string;
+};
+
 export interface LastRevAppConfiguration {
   cms: 'Contentful' | 'Sanity';
   contentStrategy: ContentStrategy;
@@ -42,6 +47,7 @@ export interface LastRevAppConfiguration {
     apiVersion: string;
     usePreview: boolean;
     schemaTypes: any[];
+    supportedLanguages: SupportedLanguage[];
   };
   algolia: {
     applicationId: string;
@@ -116,6 +122,7 @@ export type LastRevAppConfigArgs = {
     apiVersion?: string;
     usePreview?: boolean;
     schemaTypes?: any[];
+    supportedLanguages?: SupportedLanguage[];
   };
   algolia?: {
     applicationId?: string;

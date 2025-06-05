@@ -1,6 +1,6 @@
 import { find, get, map } from 'lodash';
 import { createClient } from 'contentful';
-import { SanityClient, createClient as createSanityClient } from '@sanity/client';
+import { createClient as createSanityClient } from '@sanity/client';
 import { ApolloContext } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import createLoaders from './createLoaders';
@@ -18,18 +18,6 @@ const getLocales = async (space: string, environment: string, accessToken: strin
   });
   const locales = await client.getLocales();
   return locales.items;
-};
-
-const getSanityLocales = async (client: SanityClient) => {
-  try {
-    const results = await client.fetch(`*[_type == "i18n.locale"]{code}`);
-    if (Array.isArray(results) && results.length > 0) {
-      return results.map((r: any) => r.code);
-    }
-  } catch (err) {
-    // i18n plugin may not be installed
-  }
-  return ['en-US'];
 };
 
 export type ExtraContextData = {
@@ -54,8 +42,9 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
   let defaultLocale: string = 'en-US';
   let clients: { prod: any; preview: any };
   let loaders;
+  const isSanity = config.cms === 'Sanity';
 
-  if (config.cms === 'Sanity') {
+  if (isSanity) {
     const sanityCfg = (config as any).sanity || {};
     const prodClient = createSanityClient({
       projectId: sanityCfg.projectId,
@@ -73,7 +62,7 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
       perspective: 'drafts'
     });
 
-    locales = await getSanityLocales(prodClient);
+    locales = config.sanity.supportedLanguages.map((l) => l.id);
     defaultLocale = locales[0] || 'en-US';
     clients = { prod: prodClient, preview: previewClient };
     loaders = createLoaders(config, defaultLocale);
@@ -119,7 +108,8 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
     : null;
 
   return {
-    contentful: clients,
+    contentful: isSanity ? undefined : clients,
+    sanity: isSanity ? clients : undefined,
     loadEntriesForPath: async (path: any, ctx: any, site: any) => {
       if (pathToContentLoader) {
         return pathToContentLoader.getItemsForPath(path, ctx, site);

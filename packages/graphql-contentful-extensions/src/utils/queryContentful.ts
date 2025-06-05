@@ -29,9 +29,9 @@ const query = async ({
     ...parseFilters(filter, filters)
   };
   if (ctx.preview) {
-    items = (await ctx.contentful.preview.getEntries(contentfulQuery)).items;
+    items = (await ctx.contentful!.preview.getEntries(contentfulQuery)).items;
   } else {
-    items = (await ctx.contentful.prod.getEntries(contentfulQuery)).items;
+    items = (await ctx.contentful!.prod.getEntries(contentfulQuery)).items;
   }
   if (items.length === 1000)
     return [

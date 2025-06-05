@@ -75,7 +75,9 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           // not locale specific. fieldsResolver handles that
           const content = await ctx.loaders.entryLoader.load({ id, preview });
           // Add this to the content to be used by mappers and other resolvers
-          (content as any).displayType = displayType;
+          if (content) {
+            (content as any).displayType = displayType;
+          }
           return content;
         },
         contents: async (
@@ -130,42 +132,67 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
         },
         sitemapIndex: async (_: never, { preview = false }: { preview?: boolean }, ctx: ApolloContext) => {
           ctx.preview = !!preview;
-          const client = ctx.contentful[preview ? 'preview' : 'prod'];
-
-          const pages: { contentType: string; page: number; locale: string; lastmod: string }[] = [];
-
+          const isSanity = config.cms === 'Sanity';
+          const pages: any[] = [];
           const pathPageTypes = Object.keys(config.extensions?.pathsConfigs || {});
+          if (isSanity) {
+            const client = ctx.sanity![preview ? 'preview' : 'prod'];
 
-          await Promise.all(
-            pathPageTypes.map(async (contentType) => {
-              const { total, items } = await client.getEntries({
-                content_type: contentType,
-                select: `sys.id,sys.updatedAt`,
-                limit: 1,
-                skip: 0,
-                order: 'sys.updatedAt'
-              });
-
-              if (!total || !items.length) return;
-
-              const lastmod = items[0].sys.updatedAt;
-
-              const numPages = Math.ceil(total / config.sitemap.maxPageSize);
-
-              for (const locale of ctx.locales) {
-                for (let i = 1; i <= numPages; i++) {
-                  // returning each of these instead of a constructed path allows the
-                  // consumer to construct the path however they want
-                  pages.push({
-                    contentType,
-                    page: i,
-                    locale,
-                    lastmod
-                  });
+            await Promise.all(
+              pathPageTypes.map(async (contentType) => {
+                const { total, items } = await client.fetch(
+                  `*[_type == $contentType] | order(_updatedAt desc)[0...1] {
+                      _id,
+                      _updatedAt
+                    }`,
+                  { contentType }
+                );
+                if (!total || !items.length) return;
+                const lastmod = items[0]._updatedAt;
+                const numPages = Math.ceil(total / config.sitemap.maxPageSize);
+                for (const locale of ctx.locales) {
+                  for (let i = 1; i <= numPages; i++) {
+                    // returning each of these instead of a constructed path allows the
+                    // consumer to construct the path however they want
+                    pages.push({
+                      contentType,
+                      page: i,
+                      locale,
+                      lastmod
+                    });
+                  }
                 }
-              }
-            })
-          );
+              })
+            );
+          } else {
+            const client = ctx.contentful![preview ? 'preview' : 'prod'];
+            await Promise.all(
+              pathPageTypes.map(async (contentType) => {
+                const { total, items } = await client.getEntries({
+                  content_type: contentType,
+                  select: `sys.id,sys.updatedAt`,
+                  limit: 1,
+                  skip: 0,
+                  order: 'sys.updatedAt'
+                });
+                if (!total || !items.length) return;
+                const lastmod = items[0].sys.updatedAt;
+                const numPages = Math.ceil(total / config.sitemap.maxPageSize);
+                for (const locale of ctx.locales) {
+                  for (let i = 1; i <= numPages; i++) {
+                    // returning each of these instead of a constructed path allows the
+                    // consumer to construct the path however they want
+                    pages.push({
+                      contentType,
+                      page: i,
+                      locale,
+                      lastmod
+                    });
+                  }
+                }
+              })
+            );
+          }
 
           return { pages };
         },
@@ -193,15 +220,29 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           const buildSitemapPath = (path: string) =>
             `${locale === ctx.defaultLocale ? '' : `${locale}/`}${path.replace(/^\//, '')}`;
 
-          const ids = (
-            await ctx.contentful[preview ? 'preview' : 'prod'].getEntries({
-              content_type: contentType,
-              select: `sys.id`,
-              limit: maxPageSize,
-              skip: (page - 1) * maxPageSize,
-              order: 'sys.updatedAt'
-            })
-          ).items.map((item: Entry<any>) => item.sys.id);
+          const ids =
+            config.cms === 'Sanity'
+              ? (
+                  await ctx.sanity![preview ? 'preview' : 'prod'].fetch(
+                    `*[_type == $contentType] | order(_updatedAt desc)[$skip...$limit] {
+                _id
+              }`,
+                    {
+                      contentType,
+                      skip: (page - 1) * maxPageSize,
+                      limit: maxPageSize
+                    }
+                  )
+                ).items.map((item: Entry<any>) => item.sys.id)
+              : (
+                  await ctx.contentful![preview ? 'preview' : 'prod'].getEntries({
+                    content_type: contentType,
+                    select: `sys.id`,
+                    limit: maxPageSize,
+                    skip: (page - 1) * maxPageSize,
+                    order: 'sys.updatedAt'
+                  })
+                ).items.map((item: Entry<any>) => item.sys.id);
 
           const entries = (await ctx.loaders.entryLoader.loadMany(ids.map((id: string) => ({ id, preview })))).filter(
             (e: any) => !!e && !isError(e)
