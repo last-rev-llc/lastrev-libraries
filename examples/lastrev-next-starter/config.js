@@ -18,29 +18,50 @@ const parseNumberEnvVar = (value = '') => {
   return isNaN(result) ? undefined : result;
 };
 
-const spaceId = testForEnvVar('CONTENTFUL_SPACE_ID');
-const contentDeliveryToken = testForEnvVar('CONTENTFUL_DELIVERY_TOKEN');
-const contentPreviewToken = testForEnvVar('CONTENTFUL_PREVIEW_TOKEN');
-const env = testForEnvVar('CONTENTFUL_ENV');
 const parseBooleanEnvVar = (value = '') => {
   // values parsed as true: true, 1, yes, y, => ignore caps
   const val = value.toString().toLowerCase();
   return /^(true|1|yes|y)$/.test(val);
 };
 
-const config = new LastRevAppConfig({
-  cms: 'Contentful',
-  strategy: process.env.GRAPHQL_RUNNER_STRATEGY || 'fs',
-  sites: [process.env.SITE],
-  extensions,
-  contentful: {
+const cms = process.env.CMS || 'Contentful';
+
+let contentfulConfig;
+let sanityConfig;
+
+if (cms === 'Contentful') {
+  const spaceId = testForEnvVar('CONTENTFUL_SPACE_ID');
+  const contentDeliveryToken = testForEnvVar('CONTENTFUL_DELIVERY_TOKEN');
+  const contentPreviewToken = testForEnvVar('CONTENTFUL_PREVIEW_TOKEN');
+  const env = testForEnvVar('CONTENTFUL_ENV');
+  contentfulConfig = {
     contentPreviewToken,
     contentDeliveryToken,
     spaceId,
     env,
     usePreview: parseBooleanEnvVar(process.env.CONTENTFUL_USE_PREVIEW),
     maxBatchSize: parseNumberEnvVar(process.env.CONTENTFUL_MAX_BATCH_SIZE)
-  },
+  };
+} else if (cms === 'Sanity') {
+  const projectId = testForEnvVar('SANITY_PROJECT_ID');
+  const dataset = testForEnvVar('SANITY_DATASET');
+  const token = testForEnvVar('SANITY_TOKEN');
+  const apiVersion = testForEnvVar('SANITY_API_VERSION');
+  sanityConfig = {
+    projectId,
+    dataset,
+    token,
+    apiVersion
+  };
+}
+
+const config = new LastRevAppConfig({
+  cms,
+  strategy: process.env.GRAPHQL_RUNNER_STRATEGY || 'fs',
+  sites: [process.env.SITE],
+  extensions,
+  ...(contentfulConfig ? { contentful: contentfulConfig } : {}),
+  ...(sanityConfig ? { sanity: sanityConfig } : {}),
   algolia: {
     applicationId: process.env.ALGOLIA_APPLICATION_ID,
     adminApiKey: process.env.ALGOLIA_ADMIN_API_KEY,
