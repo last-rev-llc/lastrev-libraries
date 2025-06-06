@@ -1,7 +1,14 @@
 require('dotenv').config();
 
-const handleWebhook = require('@last-rev/contentful-webhook-handler');
 const config = require('../../../../config');
+
+let handleWebhook;
+
+if (process.env.CMS === 'Sanity') {
+  handleWebhook = require('@last-rev/sanity-webhook-handler');
+} else {
+  handleWebhook = require('@last-rev/contentful-webhook-handler');
+}
 
 module.exports.handler = async (event) => {
   try {

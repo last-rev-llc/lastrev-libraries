@@ -5,6 +5,7 @@
   "scripts": {},
   "dependencies": {
     "@last-rev/contentful-webhook-handler": "^0.4.11",
+    "@last-rev/sanity-webhook-handler": "^0.1.0",
     "@last-rev/graphql-algolia-integration": "^0.1.10",
     "@last-rev/graphql-contentful-core": "^0.5.14",
     "@lrns/graphql-extensions": "^0.1.0",
