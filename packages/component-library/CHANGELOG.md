@@ -5,7 +5,7 @@
 ### Patch Changes
 
 - Updated dependencies [6c0dc760]
-  - @last-rev/contentful-sidekick-util@0.2.0
+  - @last-rev/cms-sidekick-util@0.2.0
 
 ## 0.5.17
 
@@ -57,7 +57,7 @@
 
 - ddc6e6e: Update component to new sidekick util usage
 - Updated dependencies [ddc6e6e]
-  - @last-rev/contentful-sidekick-util@0.1.2
+  - @last-rev/cms-sidekick-util@0.1.2
 
 ## 0.5.9
 
@@ -132,7 +132,7 @@
 - 3ba98cd: Make Header and NavigationItem links use color inherit as a default
   Fix as prop for Link
 - Updated dependencies [3ba98cd]
-  - @last-rev/contentful-sidekick-util@0.1.1
+  - @last-rev/cms-sidekick-util@0.1.1
   - @last-rev/rollup-config@0.1.4
   - @last-rev/testing-library@0.1.10
 
@@ -240,7 +240,7 @@
 
 - f3fe612: Add basic video support for Media content module
 - Updated dependencies [e657cb0]
-  - @last-rev/contentful-sidekick-util@0.1.0
+  - @last-rev/cms-sidekick-util@0.1.0
 
 ## 0.3.8
 

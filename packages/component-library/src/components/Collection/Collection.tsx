@@ -5,7 +5,7 @@ import styled from '@mui/system/styled';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 import Section from '../Section';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from 'packages/cms-sidekick-util/dist';
 import ConditionalWrapper from '../ConditionalWrapper';
 import { CollectionProps } from './Collection.types';
 
@@ -31,16 +31,14 @@ export const Collection = ({
         data-testid="Collection"
         {...props}
         {...sidekick(sidekickLookup)}
-        sx={styles?.root}
-      >
+        sx={styles?.root}>
         <ConditionalWrapper
           condition={!!itemsWidth}
           wrapper={(children) => (
             <ContentContainer data-testid="Collection-contentContainer" maxWidth={itemsWidth}>
               {children}
             </ContentContainer>
-          )}
-        >
+          )}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup, 'introText')} data-testid="Collection-introText" />
           )}

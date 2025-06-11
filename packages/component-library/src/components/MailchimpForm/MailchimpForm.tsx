@@ -8,7 +8,7 @@ import Link from '../Link';
 import ContentModule from '../ContentModule';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import snakeCase from 'lodash/snakeCase';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from 'packages/cms-sidekick-util/dist';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import { CustomFormProps, MailchimpFormProps, SubscribeFormData } from './MailchimpForm.types';
 const url = '//strong365.us3.list-manage.com/subscribe/post?u=d86f5abb669bd78efab8bbf17&id=a842d73410';
@@ -112,8 +112,7 @@ const CustomForm = ({
             height: '100%',
             opacity: status === 'success' ? 1 : 0,
             pointerEvents: status === 'success' ? 'initial' : 'none'
-          }}
-        >
+          }}>
           {successMessage ? (
             <ContentModule
               __typename="Text"

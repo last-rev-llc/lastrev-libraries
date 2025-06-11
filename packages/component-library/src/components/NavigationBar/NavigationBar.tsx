@@ -5,7 +5,7 @@ import { useTheme } from '@mui/system';
 
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from 'packages/cms-sidekick-util/dist';
 import { NavigationBarProps } from './NavigationBar.types';
 
 export const NavigationBar = ({
@@ -27,8 +27,7 @@ export const NavigationBar = ({
         variant={variant}
         data-testid="NavigationBar"
         menuBreakpoint={menuBreakpoint}
-        sx={color ? { backgroundColor: `${color}.main`, color: `${color}.contrastText` } : null}
-      >
+        sx={color ? { backgroundColor: `${color}.main`, color: `${color}.contrastText` } : null}>
         <Grid container sx={{ alignItems: 'center' }}>
           {itemsWithVariant?.map((item, index) => (
             <Grid item key={`${item.id}-${index}`} sx={{ md: { justifyContent: 'center', alignItems: 'center' } }}>

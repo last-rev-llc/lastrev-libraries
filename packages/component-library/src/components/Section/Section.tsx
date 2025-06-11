@@ -12,7 +12,7 @@ import get from 'lodash/get';
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
 
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from 'packages/cms-sidekick-util/dist';
 import ConditionalWrapper from '../ConditionalWrapper';
 import { SectionProps } from './Section.types';
 import useThemeProps from '../../utils/useThemeProps';
@@ -54,21 +54,18 @@ const Section = (inProps: SectionProps) => {
         backgroundColor={backgroundColor}
         variant={variant}
         // TODO: Fix this workaround needed to prevent the theme from breaking the root styles
-        {...props}
-      >
+        {...props}>
         {background ? <BackgroundMedia {...background} /> : null}
         <ConditionalWrapper
           condition={!!contentWidth}
-          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}
-        >
+          wrapper={(children) => <ContentContainer maxWidth={contentWidth}>{children}</ContentContainer>}>
           {introText && (
             <IntroText {...introText} {...sidekick(sidekickLookup, 'introText')} data-testid="Section-introText" />
           )}
           <GridContainer
             container
             sx={{ ...styles?.gridContainer, flexDirection: contentDirection }}
-            {...(contentSpacing && { spacing: contentSpacing })}
-          >
+            {...(contentSpacing && { spacing: contentSpacing })}>
             {contents?.map((content, idx) => {
               const itemStyle = get(styles?.gridItems, idx);
               if (!content) return null;
@@ -87,8 +84,7 @@ const Section = (inProps: SectionProps) => {
                     ...styles?.gridItem,
                     ...itemStyle
                   }}
-                  data-testid="Section-ContentItem"
-                >
+                  data-testid="Section-ContentItem">
                   <ContentModule {...content} />
                 </GridItem>
               );

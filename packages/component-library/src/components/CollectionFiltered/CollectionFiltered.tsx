@@ -10,7 +10,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import Section from '../Section';
 import { CardProps } from '../Card';
 import CollectionFilters from '../CollectionFilters';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from 'packages/cms-sidekick-util/dist';
 import { CollectionFilteredProps, FilterFormData, Options } from './CollectionFiltered.types';
 
 const useQueryState = (defaultValue: any): [any, any] => {
@@ -185,8 +185,7 @@ export const CollectionFiltered = ({
                 <Button
                   variant="contained"
                   onClick={() => setSize(size + 1)}
-                  data-testid="CollectionFiltered-LoadMoreButton"
-                >
+                  data-testid="CollectionFiltered-LoadMoreButton">
                   {loadMoreText ?? 'LOAD MORE'}
                 </Button>
               </Grid>

@@ -16,7 +16,7 @@ import ErrorBoundary from '../ErrorBoundary';
 
 import { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from 'packages/cms-sidekick-util/dist';
 import getFirstOfArray from '../../utils/getFirstOfArray';
 import { CardProps } from './Card.types';
 import useThemeProps from '../../utils/useThemeProps';
@@ -67,8 +67,7 @@ export const Card = (inProps: CardProps) => {
                 {...sidekick(sidekickLookup, 'subtitle')}
                 variant="h4"
                 component="h4"
-                data-testid="Card-subtitle"
-              >
+                data-testid="Card-subtitle">
                 {subtitle}
               </Typography>
             ) : null}

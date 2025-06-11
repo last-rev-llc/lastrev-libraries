@@ -9,7 +9,7 @@ This utility outputs an object whose properties can be passed to a React html el
 The default export is a single function that takes 4 parameters:
 
 ```javascript
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from '@last-rev/cms-sidekick-util';
 
 const out = sidekick({ contentId, fieldName, contentTypeId, displayText });
 ```
@@ -36,7 +36,7 @@ The object can be spread and passed to a react element in the following way:
 
 ```javascript
 import React from 'react';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from '@last-rev/cms-sidekick-util';
 
 export default function MyComponent(id, title, sections) {
   return (

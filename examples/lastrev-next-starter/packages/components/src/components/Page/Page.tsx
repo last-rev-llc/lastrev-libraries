@@ -4,7 +4,7 @@ import ContentModule from '@last-rev/component-library/dist/components/ContentMo
 const BackToTop = dynamic(() => import('@last-rev/component-library/dist/components/BackToTop/BackToTop'));
 import { Page as PageContent } from '@lrns/graphql-sdk/dist';
 import { styled } from '@mui/material/styles';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from '@last-rev/cms-sidekick-util';
 
 export interface PageProps extends PageContent {}
 

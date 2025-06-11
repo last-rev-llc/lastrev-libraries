@@ -9,7 +9,7 @@ import { useTheme } from '@mui/system';
 import ErrorBoundary from '../ErrorBoundary';
 import { LinkProps } from '../Link';
 import ContentModule from '../ContentModule';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from 'packages/cms-sidekick-util/dist';
 import { NavigationItemProps } from './NavigationItem.types';
 
 export const NavigationItem = ({ subNavigation, sidekickLookup, onRequestClose, ...props }: NavigationItemProps) => {

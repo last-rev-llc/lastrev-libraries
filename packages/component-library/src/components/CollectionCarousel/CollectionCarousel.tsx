@@ -6,7 +6,7 @@ import SwiperCore, { Navigation, Pagination, A11y } from 'swiper/core';
 
 import ErrorBoundary from '../ErrorBoundary';
 import ContentModule from '../ContentModule';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from 'packages/cms-sidekick-util/dist';
 import { CollectionCarouselProps } from './CollectionCarousel.types';
 
 SwiperCore.use([Navigation, Pagination, A11y]);

@@ -1,4 +1,4 @@
-# @last-rev/contentful-sidekick-util
+# @last-rev/cms-sidekick-util
 
 ## 0.2.0
 

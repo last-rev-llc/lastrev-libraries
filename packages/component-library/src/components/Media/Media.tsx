@@ -4,7 +4,7 @@ import { useAmp } from 'next/amp';
 import ErrorBoundary from '../ErrorBoundary';
 import Image from '../Image';
 import ArtDirectedImage from '../ArtDirectedImage';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from 'packages/cms-sidekick-util/dist';
 
 import { MediaProps, MediaVideoProps } from './Media.types';
 import useThemeProps from '../../utils/useThemeProps';
@@ -63,8 +63,7 @@ const Media = (inProps: MediaProps & MediaVideoProps) => {
           preload="auto"
           data-testid={testId || 'Media'}
           {...(props as MediaVideoProps)}
-          sx={{ width: '100%', height: '100%', ...props.sx }}
-        >
+          sx={{ width: '100%', height: '100%', ...props.sx }}>
           <source src={file?.url} />
           Your browser does not support the video tag.
         </VideoRoot>

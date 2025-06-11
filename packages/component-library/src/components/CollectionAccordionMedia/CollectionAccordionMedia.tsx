@@ -2,7 +2,7 @@ import React from 'react';
 import { Grid } from '@mui/material';
 import ErrorBoundary from '../ErrorBoundary';
 import styled from '@mui/system/styled';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from 'packages/cms-sidekick-util/dist';
 import Accordion from '../Accordion';
 import ContentModule from '../ContentModule';
 import { CollectionAccordionMediaProps } from './CollectionAccordionMedia.types';
@@ -25,8 +25,7 @@ export const CollectionAccordionMedia = ({
         spacing={itemsSpacing ?? 0}
         {...sidekick(sidekickLookup)}
         variant={variant}
-        data-testid="CollectionAccordionMedia"
-      >
+        data-testid="CollectionAccordionMedia">
         <SelectedMediaRoot>
           <SelectedMedia
             __typename="Media"

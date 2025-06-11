@@ -6,7 +6,7 @@ import ErrorBoundary from '../ErrorBoundary';
 import { MediaProps } from '../Media';
 import ContentModule from '../ContentModule';
 import Link from '../Link';
-import sidekick from '@last-rev/contentful-sidekick-util';
+import sidekick from '@last-rev/cms-sidekick-util';
 import { QuoteProps } from './Quote.types';
 
 export const Quote = ({
