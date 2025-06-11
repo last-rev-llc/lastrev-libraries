@@ -12,6 +12,7 @@
     "lint": "tslint --project tsconfig.json"
   },
   "devDependencies": {
+    "@contentful/rich-text-types": "^17.0.0",
     "@types/lodash": "4.14.168",
     "@types/node": "^14.14.35",
     "jest": "^26.6.3",
@@ -27,12 +28,13 @@
     "@apollo/subgraph": "^2.4.1",
     "@as-integrations/aws-lambda": "^1.1.0",
     "@as-integrations/next": "^1.2.0",
+    "@contentful/rich-text-plain-text-renderer": "^17.0.0",
     "@graphql-tools/merge": "^8.4.0",
     "@graphql-tools/schema": "^8.4.0",
     "@last-rev/app-config": "^0.5.0",
-    "@last-rev/contentful-cms-loader": "^0.5.0",
     "@last-rev/cms-fs-loader": "^0.1.0",
     "@last-rev/cms-redis-loader": "^0.1.0",
+    "@last-rev/contentful-cms-loader": "^0.5.0",
     "@last-rev/graphql-cms-helpers": "^0.1.0",
     "@last-rev/graphql-schema-gen": "^0.3.0",
     "@last-rev/logging": "^0.1.3",

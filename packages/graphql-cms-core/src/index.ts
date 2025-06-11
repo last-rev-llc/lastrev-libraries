@@ -8,6 +8,8 @@ import getTypeName from './utils/getTypeName';
 import capitalizeFirst from './utils/capitalizeFirst';
 import buildSchema from './buildSchema';
 import SchemaCache from './SchemaCache';
+import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
+import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
 
 export {
   createServer,
@@ -19,5 +21,9 @@ export {
   getTypeName,
   capitalizeFirst,
   buildSchema,
-  SchemaCache
+  SchemaCache,
+  documentToPlainTextString,
+  BLOCKS,
+  INLINES,
+  MARKS
 };

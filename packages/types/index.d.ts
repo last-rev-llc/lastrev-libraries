@@ -11,6 +11,7 @@ import {
   FieldItem,
   RichTextContent
 } from 'contentful';
+import { Block, Inline, Mark, Node, Text, Document } from '@contentful/rich-text-types';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
 
 export type ItemKey = {
@@ -60,10 +61,10 @@ export type CmsLoaders = {
 };
 
 export type TypeMappings = {
-  [contentfulType: string]: string;
+  [cmsType: string]: string;
 };
 
-export type ContentfulPathsGenerator = (
+export type CmsPathsGenerator = (
   resolvedItem: Entry<any>,
   loaders: CmsLoaders,
   defaultLocale: string,
@@ -72,10 +73,10 @@ export type ContentfulPathsGenerator = (
   site?: string
 ) => Promise<PathDataMap>;
 
-export type ContentfulPathsConfig = string | ContentfulPathsGenerator;
+export type CmsPathsConfig = string | CmsPathsGenerator;
 
-export type LegacyContentfulPathsConfigs = {
-  [contentTypeId: string]: ContentfulPathsConfig;
+export type LegacyCmsPathsConfigs = {
+  [contentTypeId: string]: CmsPathsConfig;
 };
 
 export type PathRuleDefinition = {
@@ -106,14 +107,14 @@ export type PathRuleConfig = {
   [contentType: string]: ContentTypePathRuleConfig;
 };
 
-export type ContentfulPathsConfigs = LegacyContentfulPathsConfigs | PathRuleConfig;
+export type CmsPathsConfigs = LegacyCmsPathsConfigs | PathRuleConfig;
 
 export type Extensions = {
   typeDefs: string | DocumentNode | Source | GraphQLSchema;
   resolvers: Record<string, any>;
   mappers: Mappers;
-  typeMappings: { [contentfulType: string]: string };
-  pathsConfigs: ContentfulPathsConfigs;
+  typeMappings: { [cmsType: string]: string };
+  pathsConfigs: CmsPathsConfigs;
 };
 
 export type ContentfulClients = {
@@ -255,3 +256,5 @@ export type {
   FieldItem,
   RichTextContent
 };
+
+export type { Block, Inline, Mark, Node, Text, Document };
