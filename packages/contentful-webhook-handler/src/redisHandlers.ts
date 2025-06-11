@@ -1,8 +1,8 @@
 import LastRevAppConfig from '@last-rev/app-config';
 import { Handlers } from './types';
 import Redis from 'ioredis';
-import { updateAllPaths } from '@last-rev/contentful-path-util';
-import { createContext } from '@last-rev/graphql-contentful-helpers';
+import { updateAllPaths } from '@last-rev/cms-path-util';
+import { createContext } from '@last-rev/graphql-cms-helpers';
 import { assetHasUrl, stringify } from './helpers';
 
 const clients: Record<string, Redis> = {};

@@ -1,4 +1,4 @@
-import { Entry, Asset, ContentType } from 'contentful';
+import { Entry, Asset, ContentType } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { getWinstonLogger } from '@last-rev/logging';
 

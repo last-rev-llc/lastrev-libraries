@@ -2,10 +2,10 @@ import LastRevAppConfig from '@last-rev/app-config';
 import { Handlers } from './types';
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';
 import { DynamoDB, QueryCommandOutput } from '@aws-sdk/client-dynamodb';
-import { updateAllPaths } from '@last-rev/contentful-path-util';
-import { createContext } from '@last-rev/graphql-contentful-helpers';
+import { updateAllPaths } from '@last-rev/cms-path-util';
+import { createContext } from '@last-rev/graphql-cms-helpers';
 import { assetHasUrl, createContentfulClients } from './helpers';
-import { Entry } from 'contentful';
+import { Entry } from '@last-rev/types';
 import { map } from 'lodash';
 
 export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {

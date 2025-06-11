@@ -1,5 +1,6 @@
 import DataLoader, { Options } from 'dataloader';
-import { Entry, Asset, createClient, ContentfulClientApi } from 'contentful';
+import { createClient, ContentfulClientApi } from 'contentful';
+import { Entry, Asset } from '@last-rev/types';
 import { find, map, partition } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';

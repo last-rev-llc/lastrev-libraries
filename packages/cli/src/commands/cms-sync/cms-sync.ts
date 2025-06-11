@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import sync from '@last-rev/contentful-sync-to-fs';
+import sync from '@last-rev/cms-sync-to-fs';
 import { resolve } from 'path';
 import LastRevAppConfig from '@last-rev/app-config';
 

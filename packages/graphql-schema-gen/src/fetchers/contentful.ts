@@ -1,4 +1,5 @@
-import { ContentType, createClient, CreateClientParams, Field, FieldItem } from 'contentful';
+import { createClient, CreateClientParams } from 'contentful';
+import { ContentType, Field, FieldItem } from '@last-rev/types';
 import { has, some, upperFirst } from 'lodash';
 import { Fetcher } from '../types';
 
@@ -28,6 +29,8 @@ const getFieldType = (typeData: Field | FieldItem): string => {
       return 'Content';
     case 'Array':
       return `[${getFieldType(typeData.items as FieldItem)}]`;
+    default:
+      return 'String';
   }
 };
 

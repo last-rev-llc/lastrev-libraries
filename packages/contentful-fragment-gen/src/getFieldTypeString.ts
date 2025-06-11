@@ -1,4 +1,4 @@
-import { Field } from 'contentful';
+import { Field } from '@last-rev/types';
 
 const getFieldTypeString = (field: Field): string => {
   let segments = [];

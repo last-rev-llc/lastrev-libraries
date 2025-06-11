@@ -1,4 +1,5 @@
-import { Entry, Asset, createClient, ContentTypeCollection } from 'contentful';
+import { createClient } from 'contentful';
+import { Entry, Asset, ContentTypeCollection } from '@last-rev/types';
 import { map } from 'lodash';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ProcessCommand } from './types';

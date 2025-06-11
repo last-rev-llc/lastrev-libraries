@@ -1,4 +1,4 @@
-import { Entry, Asset, ContentTypeCollection } from 'contentful';
+import { Entry, Asset, ContentTypeCollection } from '@last-rev/types';
 
 export type ProcessCommand<T extends Entry<any> | Asset | ContentTypeCollection> = {
   isPreview: boolean;

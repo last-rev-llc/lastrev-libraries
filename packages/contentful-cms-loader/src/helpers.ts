@@ -1,4 +1,5 @@
-import { Asset, ContentfulClientApi, Entry } from 'contentful';
+import { ContentfulClientApi } from 'contentful';
+import { Entry, Asset } from '@last-rev/types';
 
 export const isRejected = (r: PromiseSettledResult<unknown>): r is PromiseRejectedResult => r.status === 'rejected';
 

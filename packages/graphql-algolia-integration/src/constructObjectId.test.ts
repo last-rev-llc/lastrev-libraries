@@ -1,6 +1,5 @@
 import constructObjectId from './constructObjectId';
-import { Entry } from 'contentful';
-import { ApolloContext } from '@last-rev/types';
+import { Entry, ApolloContext } from '@last-rev/types';
 
 const content = {
   sys: {

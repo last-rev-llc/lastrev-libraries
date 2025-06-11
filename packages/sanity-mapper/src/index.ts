@@ -1,5 +1,5 @@
 import { mapSanityPortableTextArrayToContentfulRichText } from './richTextHelpers';
-import { type Asset, type Entry, type ContentType } from 'contentful';
+import { type Asset, type Entry, type ContentType } from '@last-rev/types';
 
 export const mapSanityValueToContentful = (value: any, defaultLocale: string): any => {
   // Detect Sanity rich text (Block[])

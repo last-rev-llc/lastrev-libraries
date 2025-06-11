@@ -1,5 +1,6 @@
 import { each } from 'lodash';
-import { Asset, createClient, Entry, ContentType } from 'contentful';
+import { createClient } from 'contentful';
+import { Asset, Entry, ContentType } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { getWinstonLogger } from '@last-rev/logging';
 

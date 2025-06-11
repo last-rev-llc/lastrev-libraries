@@ -1,5 +1,16 @@
 import DataLoader from 'dataloader';
-import { Entry, Asset, ContentType, ContentfulClientApi } from 'contentful';
+import {
+  Asset,
+  AssetCollection,
+  ContentfulClientApi,
+  ContentType,
+  ContentTypeCollection,
+  Entry,
+  EntryCollection,
+  Field,
+  FieldItem,
+  RichTextContent
+} from 'contentful';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
 
 export type ItemKey = {
@@ -230,4 +241,17 @@ export type SitemapPage = {
 
 export type Sitemap = {
   pages: SitemapPage[];
+};
+
+// Re-export main Contentful types for abstraction
+export type {
+  Entry,
+  Asset,
+  ContentType,
+  Field,
+  ContentTypeCollection,
+  EntryCollection,
+  AssetCollection,
+  FieldItem,
+  RichTextContent
 };

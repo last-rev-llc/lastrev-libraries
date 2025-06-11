@@ -2,7 +2,7 @@ import { Source, ConnectionParams } from '../types';
 import { DocumentNode } from 'graphql';
 import { gql } from 'graphql-tag';
 import contentfulFetcher, { generateContentfulSchema } from './contentful';
-import { ContentType } from 'contentful';
+import { ContentType } from '@last-rev/types';
 import Timer from '@last-rev/timer';
 import { getWinstonLogger } from '@last-rev/logging';
 

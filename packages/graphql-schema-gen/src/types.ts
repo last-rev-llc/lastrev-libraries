@@ -1,4 +1,4 @@
-import { ContentType, CreateClientParams } from 'contentful';
+import { ContentType } from '@last-rev/types';
 
 export type TypeName =
   | 'String'
@@ -19,7 +19,7 @@ export type TypeName =
 
 // in the future, these should support other sources
 export type Source = 'Contentful' | 'Sanity';
-export type ConnectionParams = CreateClientParams;
+export type ConnectionParams = any;
 
 export type GqlField = {
   fieldName: string;

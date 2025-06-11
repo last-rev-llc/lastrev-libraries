@@ -1,10 +1,10 @@
-import { createServer } from '@last-rev/graphql-contentful-core';
+import { createServer } from '@last-rev/graphql-cms-core';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { resolve } from 'path';
 
 import program from 'commander';
 import LastRevAppConfig from '@last-rev/app-config';
-import { contextFunction } from '@last-rev/graphql-contentful-helpers';
+import { contextFunction } from '@last-rev/graphql-cms-helpers';
 import { URL } from 'url';
 
 const run = async (configFile: string) => {
