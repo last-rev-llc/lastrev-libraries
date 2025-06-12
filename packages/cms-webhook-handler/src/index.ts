@@ -4,12 +4,16 @@ import { map } from 'lodash';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ProcessCommand } from './types';
 import { createHandlers } from './handlers';
-import parseWebhook, { supportedTypes, supportedActions } from '@last-rev/contentful-webhook-parser';
+import parseContentfulWebhook, { WebhookParserResult } from '@last-rev/contentful-webhook-parser';
+import parseSanityWebhook from '@last-rev/sanity-webhook-parser';
 import { getWinstonLogger } from '@last-rev/logging';
 import jwt from 'jsonwebtoken';
 
+export const supportedTypes = ['Entry', 'Asset', 'ContentType'];
+export const supportedActions = ['update', 'delete'];
+
 const logger = getWinstonLogger({
-  package: 'contentful-webhook-handler',
+  package: 'cms-webhook-handler',
   module: 'index'
 });
 
@@ -45,12 +49,30 @@ const getData = async (
 const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Record<string, string>) => {
   const token = headers['authorization']?.split(' ')[1];
 
-  const { type, action, contentStates, env, itemId, isTruncated } = parseWebhook(config, body, headers);
+  let result: WebhookParserResult | undefined;
+
+  switch (config.cms) {
+    case 'Contentful':
+      result = parseContentfulWebhook(config, body, headers);
+      break;
+    case 'Sanity':
+      result = parseSanityWebhook(config, body, headers);
+      break;
+  }
+
+  if (!result) {
+    logger.error('Unsupported CMS', { caller: 'handleWebhook' });
+    return;
+  }
+
+  const { type, action, contentStates, env, itemId, isTruncated } = result;
 
   if (!supportedActions.includes(action) || !contentStates.length || !supportedTypes.includes(type)) return;
 
-  if (env !== config.contentful.env) {
+  if (env !== config.contentful.env && config.cms === 'Contentful') {
     config = config.clone({ contentful: { env } });
+  } else if (env !== config.sanity.dataset && config.cms === 'Sanity') {
+    config = config.clone({ sanity: { dataset: env } });
   }
 
   const handlers = createHandlers(config);

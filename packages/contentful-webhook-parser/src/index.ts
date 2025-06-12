@@ -48,9 +48,6 @@ export type WebhookParserResult = {
   isTruncated: boolean;
 };
 
-export const supportedTypes = ['Entry', 'Asset', 'ContentType'];
-export const supportedActions = ['update', 'delete'];
-
 const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeaders): WebhookParserResult => {
   const topics = headers['x-contentful-topic']?.split('.');
 
@@ -71,8 +68,6 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
   const type = topics[1] as 'Entry' | 'Asset' | 'ContentType';
 
   if (!type) throw Error(`No type matched for ${headers['x-contentful-topic']}`);
-
-  if (!supportedTypes.includes(type)) logger.debug(`Unsupported type! ${type}`, { caller: 'parseWebhook' });
 
   const contentfulAction: string = topics[2];
 
