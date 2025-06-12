@@ -28,6 +28,8 @@
     "@last-rev/cms-path-util": "^0.1.0",
     "@last-rev/contentful-webhook-parser": "^0.2.0",
     "@last-rev/graphql-cms-helpers": "^0.1.0",
+    "@last-rev/logging": "^0.1.0",
+    "@last-rev/sanity-mapper": "^0.1.0",
     "@last-rev/sanity-webhook-parser": "^0.1.0",
     "contentful": "^9.3.6",
     "ioredis": "^5.0.4",

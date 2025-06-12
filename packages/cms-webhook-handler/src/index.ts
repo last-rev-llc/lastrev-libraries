@@ -1,4 +1,5 @@
-import { createClient } from 'contentful';
+import { createClient, createClient as createContentfulClient } from 'contentful';
+import { createClient as createSanityClient } from '@sanity/client';
 import { Entry, Asset, ContentTypeCollection } from '@last-rev/types';
 import { map } from 'lodash';
 import LastRevAppConfig from '@last-rev/app-config';
@@ -8,6 +9,7 @@ import parseContentfulWebhook, { WebhookParserResult } from '@last-rev/contentfu
 import parseSanityWebhook from '@last-rev/sanity-webhook-parser';
 import { getWinstonLogger } from '@last-rev/logging';
 import jwt from 'jsonwebtoken';
+import { convertSanityDoc } from '@last-rev/sanity-mapper';
 
 export const supportedTypes = ['Entry', 'Asset', 'ContentType'];
 export const supportedActions = ['update', 'delete'];
@@ -23,27 +25,41 @@ const getData = async (
   env: string,
   itemId: string
 ) => {
-  const client = createClient({
-    space: config.contentful.spaceId,
-    accessToken: config.contentful.usePreview
-      ? config.contentful.contentPreviewToken
-      : config.contentful.contentDeliveryToken,
-    host: config.contentful.usePreview ? 'preview.contentful.com' : 'cdn.contentful.com',
-    environment: env,
-    resolveLinks: false
-  });
+  if (config.cms === 'Contentful') {
+    const client = createContentfulClient({
+      space: config.contentful.spaceId,
+      accessToken: config.contentful.usePreview
+        ? config.contentful.contentPreviewToken
+        : config.contentful.contentDeliveryToken,
+      host: config.contentful.usePreview ? 'preview.contentful.com' : 'cdn.contentful.com',
+      environment: env,
+      resolveLinks: false
+    });
 
-  switch (type) {
-    case 'Entry':
-      return client.getEntry(itemId, {
-        include: 0,
-        locale: '*'
-      });
-    case 'Asset':
-      return client.getAsset(itemId);
-    case 'ContentType':
-      return client.getContentTypes();
+    switch (type) {
+      case 'Entry':
+        return client.getEntry(itemId, {
+          include: 0,
+          locale: '*'
+        });
+      case 'Asset':
+        return client.getAsset(itemId);
+      case 'ContentType':
+        return client.getContentTypes();
+    }
+  } else if (config.cms === 'Sanity') {
+    const client = createSanityClient({
+      projectId: config.sanity.projectId,
+      dataset: env,
+      apiVersion: '2024-03-18'
+    });
+
+    let doc: any;
+    doc = await client.getDocument(itemId);
+
+    return convertSanityDoc(doc, config.sanity.supportedLanguages[0].id);
   }
+  throw new Error('Unsupported CMS');
 };
 
 const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Record<string, string>) => {
