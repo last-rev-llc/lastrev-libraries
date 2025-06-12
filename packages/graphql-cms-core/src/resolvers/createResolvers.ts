@@ -9,6 +9,8 @@ import isError from 'lodash/isError';
 import LastRevAppConfig from '@last-rev/app-config';
 import buildSitemapFromEntries from '../utils/buildSitemapFromEntries';
 import { getWinstonLogger } from '@last-rev/logging';
+import getLocalizedField from '../utils/getLocalizedField';
+import { pathNodeResolver } from '../utils/pathNodeResolver';
 
 const logger = getWinstonLogger({
   package: 'graphql-cms-core',
@@ -134,19 +136,19 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           const pathPageTypes = Object.keys(config.extensions?.pathsConfigs || {});
           if (isSanity) {
             const client = ctx.sanity![preview ? 'preview' : 'prod'];
-
             await Promise.all(
               pathPageTypes.map(async (contentType) => {
-                const { total, items } = await client.fetch(
+                const items = await client.fetch(
                   `*[_type == $contentType] | order(_updatedAt desc)[0...1] {
                       _id,
                       _updatedAt
                     }`,
                   { contentType }
                 );
-                if (!total || !items.length) return;
+                if (!items.length) return;
                 const lastmod = items[0]._updatedAt;
-                const numPages = Math.ceil(total / config.sitemap.maxPageSize);
+                const numPages = Math.ceil(items.length / config.sitemap.maxPageSize);
+                // todo: support locales
                 for (const locale of ctx.locales) {
                   for (let i = 1; i <= numPages; i++) {
                     // returning each of these instead of a constructed path allows the
@@ -217,29 +219,35 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           const buildSitemapPath = (path: string) =>
             `${locale === ctx.defaultLocale ? '' : `${locale}/`}${path.replace(/^\//, '')}`;
 
-          const ids =
-            config.cms === 'Sanity'
-              ? (
-                  await ctx.sanity![preview ? 'preview' : 'prod'].fetch(
-                    `*[_type == $contentType] | order(_updatedAt desc)[$skip...$limit] {
-                _id
-              }`,
-                    {
-                      contentType,
-                      skip: (page - 1) * maxPageSize,
-                      limit: maxPageSize
-                    }
-                  )
-                ).items.map((item: Entry<any>) => item.sys.id)
-              : (
-                  await ctx.contentful![preview ? 'preview' : 'prod'].getEntries({
-                    content_type: contentType,
-                    select: `sys.id`,
-                    limit: maxPageSize,
-                    skip: (page - 1) * maxPageSize,
-                    order: 'sys.updatedAt'
-                  })
-                ).items.map((item: Entry<any>) => item.sys.id);
+          let ids: string[] = [];
+
+          switch (config.cms) {
+            case 'Sanity': {
+              const items = await ctx.sanity![preview ? 'preview' : 'prod'].fetch(
+                `*[_type == $contentType] | order(_updatedAt desc)[$skip...$limit] {
+            _id
+          }`,
+                {
+                  contentType,
+                  skip: (page - 1) * maxPageSize,
+                  limit: maxPageSize
+                }
+              );
+              ids = items.map((item: any) => item._id);
+              break;
+            }
+            case 'Contentful': {
+              const { items } = await ctx.contentful![preview ? 'preview' : 'prod'].getEntries({
+                content_type: contentType,
+                select: `sys.id`,
+                limit: maxPageSize,
+                skip: (page - 1) * maxPageSize,
+                order: 'sys.updatedAt'
+              });
+              ids = items.map((item: any) => item.sys.id);
+              break;
+            }
+          }
 
           const entries = (await ctx.loaders.entryLoader.loadMany(ids.map((id: string) => ({ id, preview })))).filter(
             (e: any) => !!e && !isError(e)
@@ -248,6 +256,18 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           const sitemapEntries = (
             await Promise.all(
               entries.map(async (entry) => {
+                // Filter out entries with seo.robots starting with 'noindex'
+                const seo = getLocalizedField(entry.fields, 'seo', ctx);
+                if (seo?.['robots']?.value?.startsWith('noindex')) {
+                  return [];
+                }
+
+                const pathNode = await pathNodeResolver(entry.sys.id, ctx);
+
+                if (pathNode?.data?.excludedLocales?.includes(locale)) {
+                  return [];
+                }
+
                 const paths = await ctx.loadPathsForContent(entry, ctx, site);
 
                 return paths.map((p: any) => ({

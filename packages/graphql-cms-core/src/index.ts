@@ -4,6 +4,7 @@ import { createVercelHandler } from './vercelHandler';
 import createRichText from './utils/createRichText';
 import getLocalizedField from './utils/getLocalizedField';
 import getDefaultFieldValue from './utils/getDefaultFieldValue';
+import { pathNodeResolver } from './utils/pathNodeResolver';
 import getTypeName from './utils/getTypeName';
 import capitalizeFirst from './utils/capitalizeFirst';
 import buildSchema from './buildSchema';
@@ -16,6 +17,7 @@ export {
   getLocalizedField,
   createHandler,
   getDefaultFieldValue,
+  pathNodeResolver,
   createVercelHandler,
   createRichText,
   getTypeName,
