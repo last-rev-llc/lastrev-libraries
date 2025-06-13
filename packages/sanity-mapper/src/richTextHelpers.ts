@@ -19,7 +19,7 @@ function findMarkDef(markDefs: any[], key: string) {
 }
 
 export const mapSanityBlockToContentfulRichTextNode = (block: any) => {
-  if (!block || typeof block !== 'object' || !block._type) {
+  if (!block || typeof block !== 'object') {
     throw new Error(`Invalid block passed to mapSanityBlockToContentfulRichTextNode: ${JSON.stringify(block)}`);
   }
   let nodeType = 'paragraph';
@@ -59,7 +59,7 @@ export const mapSanityBlockToContentfulRichTextNode = (block: any) => {
 
 // Helper to normalize Sanity IDs (strip 'drafts.' prefix if present)
 function normalizeSanityId(id: string) {
-  return id && id.startsWith('drafts.') ? id.slice(6) : id;
+  return id?.replace(/^drafts\./, '') || id;
 }
 
 export const mapSanityPortableTextNodeToContentfulRichTextNode = (

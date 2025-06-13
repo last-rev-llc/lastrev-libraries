@@ -34,17 +34,32 @@ const logger = getWinstonLogger({
 const syncAllEntriesForSchemaType = async (
   client: SanityClient,
   contentTypeId: string,
+  config: LastRevAppConfig,
   syncToken?: string
 ): Promise<SanitySyncCollection> => {
-  const query = `*[_type == $contentTypeId${syncToken ? ' && _updatedAt > $syncToken' : ''}]`;
+  const locales = config.sanity.supportedLanguages.map((locale) => locale.id);
+  const defaultLocale = locales[0];
+  const query = `*[_type == $contentTypeId${syncToken ? ' && _updatedAt > $syncToken' : ''} &&
+  (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
+  ...,
+  "_translations": *[
+    _type == "translation.metadata" &&
+    references(^._id)
+  ].translations[]{
+    "doc": value->{
+      ...
+    }
+  }[doc.__i18n_lang != $defaultLocale && defined(doc)]
+}`;
   const params = {
     contentTypeId,
+    defaultLocale,
     ...(syncToken && { syncToken })
   };
 
   const entries = await client.fetch(query, params);
   // TODO: remove this part when we fix localization
-  const items = entries.map((entry: any) => convertSanityDoc(entry, 'en-US'));
+  const items = entries.map((entry: any) => convertSanityDoc(entry, defaultLocale, locales));
   const currentDate = new Date().toISOString();
 
   return {
@@ -53,17 +68,35 @@ const syncAllEntriesForSchemaType = async (
   };
 };
 
-const syncAllAssets = async (client: SanityClient, syncToken?: string): Promise<SanitySyncCollection> => {
+const syncAllAssets = async (
+  client: SanityClient,
+  config: LastRevAppConfig,
+  syncToken?: string
+): Promise<SanitySyncCollection> => {
+  const locales = config.sanity.supportedLanguages.map((locale) => locale.id);
+  const defaultLocale = locales[0];
   const query = `*[_type in ['sanity.imageAsset', 'sanity.fileAsset']${
     syncToken ? ' && _updatedAt > $syncToken' : ''
-  }]`;
+  } &&
+  (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
+  ...,
+  "_translations": *[
+    _type == "translation.metadata" &&
+    references(^._id)
+  ].translations[]{
+    "doc": value->{
+      ...
+    }
+  }[doc.__i18n_lang != $defaultLocale && defined(doc)]
+}`;
   const params = {
+    defaultLocale,
     ...(syncToken && { syncToken })
   };
 
   const assets = await client.fetch(query, params);
   // TODO: remove this part when we fix localization
-  const items = assets.map((asset: any) => convertSanityDoc(asset, 'en-US'));
+  const items = assets.map((asset: any) => convertSanityDoc(asset, defaultLocale, locales));
   const currentDate = new Date().toISOString();
 
   return {
@@ -75,7 +108,8 @@ const syncAllAssets = async (client: SanityClient, syncToken?: string): Promise<
 const syncAllEntries = async (
   client: SanityClient,
   contentTypes: ContentType[],
-  syncTokens: ContentTypeIdToSyncTokensLookup
+  syncTokens: ContentTypeIdToSyncTokensLookup,
+  config: LastRevAppConfig
 ): Promise<SanitySyncCollection[]> => {
   return Promise.all(
     contentTypes.map((contentType, index) =>
@@ -88,7 +122,7 @@ const syncAllEntries = async (
           await delay(index * 100);
         }
 
-        return syncAllEntriesForSchemaType(client, contentTypeId, syncTokens[contentTypeId]);
+        return syncAllEntriesForSchemaType(client, contentTypeId, config, syncTokens[contentTypeId]);
       })()
     )
   );
@@ -121,8 +155,8 @@ const sanitySync = async (config: LastRevAppConfig, usePreview: boolean, sites?:
   let timer = new Timer();
   const syncTokens = await readSyncTokens(root, SYNC_TOKEN_DIRNAME);
   const [entriesResults, assetsResult] = await Promise.all([
-    syncAllEntries(client, contentTypes, syncTokens),
-    syncAllAssets(client, syncTokens['asset'])
+    syncAllEntries(client, contentTypes, syncTokens, config),
+    syncAllAssets(client, config, syncTokens['asset'])
   ]);
 
   const entries = flatten(entriesResults.map((result) => result.items));

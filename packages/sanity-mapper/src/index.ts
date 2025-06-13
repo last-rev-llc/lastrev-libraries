@@ -44,9 +44,57 @@ export const mapSanityValueToContentful = (value: any, defaultLocale: string): a
   return value;
 };
 
-export const convertSanityDoc = (doc: any, defaultLocale: string): Entry<any> | Asset | null => {
+const processTranslations = (translations: any[], defaultLocale: string, locales: string[]): Record<string, any> => {
+  if (!translations?.length) return {};
+
+  const translatedFields: Record<string, any> = {};
+
+  translations.forEach((translation) => {
+    const { doc } = translation;
+    if (!doc) return;
+
+    const locale = doc.__i18n_lang || defaultLocale;
+    if (!locales.includes(locale)) return;
+
+    const { _id, _type, _updatedAt, _createdAt, __i18n_lang, _translations, ...fields } = doc;
+
+    Object.entries(fields).forEach(([name, value]) => {
+      if (!translatedFields[name]) {
+        translatedFields[name] = {};
+      }
+
+      // Special handling for file fields in assets
+      if (name === 'url' || name === 'originalFilename' || name === 'mimeType') {
+        if (!translatedFields.file) {
+          translatedFields.file = {};
+        }
+        if (!translatedFields.file[locale]) {
+          translatedFields.file[locale] = {};
+        }
+        // Map Sanity fields to Contentful fields
+        if (name === 'mimeType') {
+          translatedFields.file[locale].contentType = value;
+        } else if (name === 'originalFilename') {
+          translatedFields.file[locale].fileName = value;
+        } else {
+          translatedFields.file[locale][name] = value;
+        }
+      } else {
+        translatedFields[name][locale] = mapSanityValueToContentful(value, defaultLocale);
+      }
+    });
+  });
+
+  return translatedFields;
+};
+
+export const convertSanityDoc = (doc: any, defaultLocale: string, locales: string[]): Entry<any> | Asset | null => {
   if (!doc) return null;
-  const { _id, _type, _updatedAt, _createdAt, ...fields } = doc;
+
+  // Extract the actual default locale from the document if present
+  const docDefaultLocale = doc.__i18n_lang || defaultLocale;
+
+  const { _id, _type, _updatedAt, _createdAt, __i18n_lang, _translations, ...fields } = doc;
 
   // Detect top-level asset (Sanity image or file asset)
   if (
@@ -55,26 +103,54 @@ export const convertSanityDoc = (doc: any, defaultLocale: string): Entry<any> | 
     _type === 'imageAsset' ||
     _type === 'fileAsset'
   ) {
+    // Process translations for assets
+    const translatedFields = processTranslations(_translations || [], docDefaultLocale, locales);
+
     // Map to Contentful asset structure
     const assetFields: any = {
-      title: { [defaultLocale]: fields.alt || fields.title || '' },
+      title: { [docDefaultLocale]: fields.title || '' },
+      alt: { [docDefaultLocale]: fields.alt || '' },
       file: {
-        [defaultLocale]: {
-          contentType: fields.mimeType || fields.contentType || '',
-          fileName: fields.originalFilename || fields.fileName || '',
+        [docDefaultLocale]: {
+          contentType: fields.mimeType || '',
+          fileName: fields.originalFilename || '',
           url: fields.url || '',
           details: {}
         }
       }
     };
+
+    // Merge translations for title and alt
+    if (translatedFields.title) {
+      assetFields.title = { ...assetFields.title, ...translatedFields.title };
+    }
+    if (translatedFields.alt) {
+      assetFields.alt = { ...assetFields.alt, ...translatedFields.alt };
+    }
+
+    // Copy file data to all locales
+    locales.forEach((locale) => {
+      if (locale !== docDefaultLocale) {
+        assetFields.file[locale] = {
+          ...assetFields.file[docDefaultLocale]
+        };
+      }
+    });
+
     if (fields.metadata && fields.metadata.dimensions) {
-      assetFields.file[defaultLocale].details.image = {
-        width: fields.metadata.dimensions.width,
-        height: fields.metadata.dimensions.height
-      };
+      // Add dimensions to all locales
+      Object.keys(assetFields.file).forEach((locale) => {
+        assetFields.file[locale].details.image = {
+          width: fields.metadata.dimensions.width,
+          height: fields.metadata.dimensions.height
+        };
+      });
     }
     if (fields.size) {
-      assetFields.file[defaultLocale].details.size = fields.size;
+      // Add size to all locales
+      Object.keys(assetFields.file).forEach((locale) => {
+        assetFields.file[locale].details.size = fields.size;
+      });
     }
     // Optionally map tags if present
     const metadata: any = {};
@@ -96,10 +172,12 @@ export const convertSanityDoc = (doc: any, defaultLocale: string): Entry<any> | 
         createdAt: _createdAt,
         updatedAt: _updatedAt,
         revision: doc._rev
-        // Optionally add space if you have a mapping
       }
     } as Asset;
   }
+
+  // Process translations for entries
+  const translatedFields = processTranslations(_translations || [], docDefaultLocale, locales);
 
   const entry = {
     sys: {
@@ -116,8 +194,14 @@ export const convertSanityDoc = (doc: any, defaultLocale: string): Entry<any> | 
       }
     },
     fields: Object.entries(fields).reduce((acc: any, [name, value]: [string, any]) => {
-      // Recursively map all values, including references and rich text
-      acc[name] = { [defaultLocale]: mapSanityValueToContentful(value, defaultLocale) };
+      // Start with the default locale value
+      acc[name] = { [docDefaultLocale]: mapSanityValueToContentful(value, docDefaultLocale) };
+
+      // Merge any translations for this field
+      if (translatedFields[name]) {
+        Object.assign(acc[name], translatedFields[name]);
+      }
+
       return acc;
     }, {})
   };

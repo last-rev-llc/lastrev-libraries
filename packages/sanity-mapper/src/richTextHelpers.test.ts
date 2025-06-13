@@ -28,7 +28,7 @@ describe('mapSanityBlockToContentfulRichTextNode', () => {
     });
   });
   it('defaults to paragraph for unknown style', () => {
-    const block = { style: 'foo', children: [{ _type: 'span', text: 'Test' }] };
+    const block = { _type: 'block', style: 'foo', children: [{ _type: 'span', text: 'Test' }] };
     const node = mapSanityBlockToContentfulRichTextNode(block);
     expect(node.nodeType).toBe('paragraph');
   });

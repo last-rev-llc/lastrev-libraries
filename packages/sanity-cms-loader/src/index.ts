@@ -30,6 +30,7 @@ const refByOptions: Options<RefByKey, any, string> = {
 };
 
 const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoaders => {
+  const locales = config.sanity.supportedLanguages.map((locale) => locale.id);
   const sanity = (config as any).sanity || {};
 
   const prodClient = createClient({
@@ -51,8 +52,18 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
 
   const fetchBatchItems = async (ids: string[], client: SanityClient) => {
     if (!ids.length) return [] as any[];
-    const query = '*[_id in $ids]';
-    return client.fetch(query, { ids });
+    const query = `*[_id in $ids && (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
+      ...,
+      "_translations": *[
+        _type == "translation.metadata" &&
+        references(^._id)
+      ].translations[]{
+        "doc": value->{
+          ...
+        }
+      }[doc.__i18n_lang != $defaultLocale && defined(doc)]
+    }`;
+    return client.fetch(query, { ids, defaultLocale });
   };
 
   const getBatchItemFetcher = (): DataLoader.BatchLoadFn<ItemKey, any | null> => {
@@ -67,7 +78,8 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
       const items = keys.map(({ id }) =>
         convertSanityDoc(
           all.find((d) => d && d._id === id),
-          defaultLocale
+          defaultLocale,
+          locales
         )
       );
       logger.debug('Fetched docs', {
@@ -86,9 +98,19 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
       const results = await Promise.all(
         keys.map(async ({ id, preview }) => {
           const client = preview ? previewClient : prodClient;
-          const query = '*[_type == $type]';
-          const docs = await client.fetch(query, { type: id });
-          return docs.map(convertSanityDoc) as any[];
+          const query = `*[_type == $type && (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
+            ...,
+            "_translations": *[
+              _type == "translation.metadata" &&
+              references(^._id)
+            ].translations[]{
+              "doc": value->{
+                ...
+              }
+            }[doc.__i18n_lang != $defaultLocale && defined(doc)]
+          }`;
+          const docs = await client.fetch(query, { type: id, defaultLocale });
+          return docs.map((doc: any) => convertSanityDoc(doc, defaultLocale, locales)) as any[];
         })
       );
       logger.debug('Fetched docs by type', {
@@ -107,9 +129,19 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
       const results = await Promise.all(
         keys.map(async ({ contentType, field, value, preview }) => {
           const client = preview ? previewClient : prodClient;
-          const query = `*[_type == $type && ${field} == $value][0]`;
-          const doc = await client.fetch(query, { type: contentType, value });
-          return convertSanityDoc(doc, defaultLocale);
+          const query = `*[_type == $type && ${field} == $value && (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
+            ...,
+            "_translations": *[
+              _type == "translation.metadata" &&
+              references(^._id)
+            ].translations[]{
+              "doc": value->{
+                ...
+              }
+            }[doc.__i18n_lang != $defaultLocale && defined(doc)]
+          }[0]`;
+          const doc = await client.fetch(query, { type: contentType, value, defaultLocale });
+          return convertSanityDoc(doc, defaultLocale, locales);
         })
       );
       logger.debug('Fetched doc by field value', {
@@ -128,9 +160,19 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
       const results = await Promise.all(
         keys.map(async ({ contentType, field, id, preview }) => {
           const client = preview ? previewClient : prodClient;
-          const query = `*[_type == $type && (${field}._ref == $id || $id in ${field}[]._ref)]`;
-          const docs = await client.fetch(query, { type: contentType, id });
-          return docs.map(convertSanityDoc) as any[];
+          const query = `*[_type == $type && (${field}._ref == $id || $id in ${field}[]._ref) && (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
+            ...,
+            "_translations": *[
+              _type == "translation.metadata" &&
+              references(^._id)
+            ].translations[]{
+              "doc": value->{
+                ...
+              }
+            }[doc.__i18n_lang != $defaultLocale && defined(doc)]
+          }`;
+          const docs = await client.fetch(query, { type: contentType, id, defaultLocale });
+          return docs.map((doc: any) => convertSanityDoc(doc, defaultLocale, locales)) as any[];
         })
       );
       logger.debug('Fetched docs ref by', {

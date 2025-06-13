@@ -62,10 +62,11 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
   else contentStates = ['production'];
 
   // Get defaultLocale from config.sanity.supportedLanguages
-  const defaultLocale = config.sanity.supportedLanguages[0]?.id || 'en-US';
+  const locales = config.sanity.supportedLanguages.map((locale) => locale.id);
+  const defaultLocale = locales[0];
 
   // Convert doc
-  convertSanityDoc(body, defaultLocale);
+  convertSanityDoc(body, defaultLocale, locales);
 
   return {
     action,

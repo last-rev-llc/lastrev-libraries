@@ -48,6 +48,8 @@ const getData = async (
         return client.getContentTypes();
     }
   } else if (config.cms === 'Sanity') {
+    const locales = config.sanity.supportedLanguages.map((locale) => locale.id);
+    const defaultLocale = locales[0];
     const client = createSanityClient({
       projectId: config.sanity.projectId,
       dataset: env,
@@ -55,9 +57,21 @@ const getData = async (
     });
 
     let doc: any;
-    doc = await client.getDocument(itemId);
-
-    return convertSanityDoc(doc, config.sanity.supportedLanguages[0].id);
+    doc = await client.fetch(
+      `*[_id == $id && (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
+      ...,
+      "_translations": *[
+        _type == "translation.metadata" &&
+        references(^._id)
+      ].translations[]{
+        "doc": value->{
+          ...
+        }
+      }[doc.__i18n_lang != $defaultLocale && defined(doc)]
+    }`,
+      { id: itemId, defaultLocale }
+    );
+    return convertSanityDoc(doc, defaultLocale, locales);
   }
   throw new Error('Unsupported CMS');
 };

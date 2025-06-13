@@ -139,7 +139,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
             await Promise.all(
               pathPageTypes.map(async (contentType) => {
                 const items = await client.fetch(
-                  `*[_type == $contentType] | order(_updatedAt desc)[0...1] {
+                  `*[_type == $contentType] | order(_updatedAt desc)[0...1] { 
                       _id,
                       _updatedAt
                     }`,
@@ -148,7 +148,6 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
                 if (!items.length) return;
                 const lastmod = items[0]._updatedAt;
                 const numPages = Math.ceil(items.length / config.sitemap.maxPageSize);
-                // todo: support locales
                 for (const locale of ctx.locales) {
                   for (let i = 1; i <= numPages; i++) {
                     // returning each of these instead of a constructed path allows the
