@@ -160,6 +160,7 @@ export type ApolloContext = {
   pathReaders?: PathReaders;
   displayType?: string;
   pathEntries?: PathEntries;
+  cms: 'Contentful' | 'Sanity';
 };
 
 export type TypeMapper = {

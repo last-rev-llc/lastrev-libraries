@@ -284,7 +284,9 @@ export const mapSanityField = (field: any): any => {
       type = 'RichText';
       break;
     default:
-      type = 'Symbol';
+      // this will capture all custom object types.
+      // may have to revisit.
+      type = 'Object';
   }
 
   return {

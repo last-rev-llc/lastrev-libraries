@@ -108,6 +108,7 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
     : null;
 
   return {
+    cms: config.cms,
     contentful: isSanity ? undefined : clients,
     sanity: isSanity ? clients : undefined,
     loadEntriesForPath: async (path: any, ctx: any, site: any) => {
