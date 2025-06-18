@@ -25,7 +25,7 @@ export const mapSanityValueToContentful = (value: any, defaultLocale: string): a
       };
     }
     // Handle Sanity asset reference (image/file)
-    if (value._type === 'image' && value.asset?._ref) {
+    if ((value._type === 'image' || value._type === 'file') && value.asset?._ref) {
       return {
         sys: {
           type: 'Link',
@@ -101,7 +101,8 @@ export const convertSanityDoc = (doc: any, defaultLocale: string, locales: strin
     _type === 'sanity.imageAsset' ||
     _type === 'sanity.fileAsset' ||
     _type === 'imageAsset' ||
-    _type === 'fileAsset'
+    _type === 'fileAsset' ||
+    _type === 'file'
   ) {
     // Process translations for assets
     const translatedFields = processTranslations(_translations || [], docDefaultLocale, locales);
