@@ -14,6 +14,9 @@ import {
 import { Block, Inline, Mark, Node, Text, Document } from '@contentful/rich-text-types';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
 
+export type BaseEntry = Entry<any, 'WITH_ALL_LOCALES' | 'WITHOUT_LINK_RESOLUTION'>;
+export type BaseAsset = Asset<'WITH_ALL_LOCALES' | 'WITHOUT_LINK_RESOLUTION'>;
+
 export type ItemKey = {
   id: string;
   preview: boolean;
@@ -51,11 +54,11 @@ export type RefByKey = {
 };
 
 export type CmsLoaders = {
-  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
-  entriesRefByLoader: DataLoader<RefByKey, Entry<any>[]>;
-  entryByFieldValueLoader: DataLoader<FVLKey, Entry<any> | null>;
-  assetLoader: DataLoader<ItemKey, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
+  entryLoader: DataLoader<ItemKey, BaseEntry | null>;
+  entriesRefByLoader: DataLoader<RefByKey, BaseEntry[]>;
+  entryByFieldValueLoader: DataLoader<FVLKey, BaseEntry | null>;
+  assetLoader: DataLoader<ItemKey, BaseAsset | null>;
+  entriesByContentTypeLoader: DataLoader<ItemKey, BaseEntry[]>;
   // pathLoader: DataLoader<PathKey, PathData2 | null>;
   fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
 };
@@ -65,7 +68,7 @@ export type TypeMappings = {
 };
 
 export type CmsPathsGenerator = (
-  resolvedItem: Entry<any>,
+  resolvedItem: BaseEntry,
   loaders: CmsLoaders,
   defaultLocale: string,
   locales: string[],
@@ -129,7 +132,7 @@ export type CmsClients =
       preview: any;
     };
 
-export type PathEntries = (Entry<any> | null)[];
+export type PathEntries = (BaseEntry | null)[];
 
 export type PathInfo = {
   path: string;
@@ -142,7 +145,7 @@ export type LoadEntriesForPathFunction = (
   site?: string
 ) => Promise<PathEntries | null>;
 
-export type loadPathsForContentFunction = (entry: Entry<any>, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
+export type loadPathsForContentFunction = (entry: BaseEntry, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
 
 export type ApolloContext = {
   loaders: CmsLoaders;

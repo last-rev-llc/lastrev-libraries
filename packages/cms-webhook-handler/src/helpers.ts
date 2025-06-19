@@ -1,6 +1,6 @@
 import { each } from 'lodash';
 import { createClient } from 'contentful';
-import { Asset, Entry, ContentType } from '@last-rev/types';
+import { ContentType, BaseAsset, BaseEntry } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { getWinstonLogger } from '@last-rev/logging';
 
@@ -31,17 +31,15 @@ export const createContentfulClients = (config: LastRevAppConfig) => {
     space: config.contentful.spaceId,
     accessToken: config.contentful.contentPreviewToken,
     environment: config.contentful.env,
-    host: 'preview.contentful.com',
-    resolveLinks: false
-  });
+    host: 'preview.contentful.com'
+  }).withoutLinkResolution.withAllLocales;
 
   const contentfulProdClient = createClient({
     space: config.contentful.spaceId,
     accessToken: config.contentful.contentDeliveryToken,
     environment: config.contentful.env,
-    host: 'cdn.contentful.com',
-    resolveLinks: false
-  });
+    host: 'cdn.contentful.com'
+  }).withoutLinkResolution.withAllLocales;
 
   return { contentfulPreviewClient, contentfulProdClient };
 };
@@ -54,7 +52,7 @@ export const isContentfulError = (item: any) => {
   return item?.sys?.type === 'Error';
 };
 
-export const isContentfulObject = (item: any): item is Entry<any> | Asset | ContentType => {
+export const isContentfulObject = (item: any): item is BaseEntry | BaseAsset | ContentType => {
   return item?.sys?.type === 'Entry' || item?.sys?.type === 'Asset' || item?.sys?.type === 'ContentType';
 };
 

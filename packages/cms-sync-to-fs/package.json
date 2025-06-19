@@ -32,7 +32,7 @@
     "@last-rev/sanity-mapper": "^0.1.0",
     "@last-rev/timer": "^0.2.0",
     "@sanity/client": "^7.4.0",
-    "contentful": "^9.3.6",
+    "contentful": "^11.7.2",
     "fs-extra": "^10.0.0",
     "lodash": "^4.17.21",
     "ora": "^5.4.1",

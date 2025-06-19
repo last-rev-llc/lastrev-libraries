@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { ApolloContext, Entry } from '@last-rev/types';
+import { ApolloContext, BaseEntry } from '@last-rev/types';
 import getTypeName from '../utils/getTypeName';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
@@ -19,7 +19,7 @@ export type Resolver<TSource, TContext> = (
   info: GraphQLResolveInfo
 ) => Promise<any>;
 
-type FieldResolver = <T>(displayType: string) => Resolver<Entry<T>, ApolloContext>;
+type FieldResolver = (displayType: string) => Resolver<BaseEntry, ApolloContext>;
 
 const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content, args, ctx, info) => {
   const { fieldName: field } = info;

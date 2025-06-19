@@ -41,7 +41,7 @@
     "@last-rev/testing-library": "^0.1.10",
     "@last-rev/timer": "^0.2.0",
     "@last-rev/types": "^0.4.0",
-    "contentful": "^9.3.6",
+    "contentful": "^11.7.2",
     "graphql": "^16.6.0",
     "graphql-type-json": "^0.3.2",
     "lodash": "^4.17.21",

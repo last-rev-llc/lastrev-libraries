@@ -34,7 +34,7 @@
     "@last-rev/timer": "^0.2.0",
     "@last-rev/types": "^0.4.0",
     "@sanity/client": "^7.4.0",
-    "contentful": "^9.3.6",
+    "contentful": "^11.7.2",
     "lodash": "^4.17.21"
   }
 }

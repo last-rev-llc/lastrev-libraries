@@ -1,4 +1,4 @@
-import { Entry } from '@last-rev/types';
+import { BaseEntry } from '@last-rev/types';
 
 const content = {
   sys: {
@@ -72,6 +72,6 @@ const content = {
       ]
     }
   }
-} as unknown as Entry<any>;
+} as unknown as BaseEntry;
 
 export default content;

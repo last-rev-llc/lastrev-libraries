@@ -1,9 +1,8 @@
 import Redis from 'ioredis';
 import Timer from '@last-rev/timer';
-import { ItemKey } from '@last-rev/types';
+import { BaseEntry, ItemKey } from '@last-rev/types';
 import { getKey, isNil, isRejected, stringify } from './helpers';
 import { getWinstonLogger } from '@last-rev/logging';
-import { Entry } from '@last-rev/types';
 
 const logger = getWinstonLogger({ package: 'cms-redis-loader', module: 'primers' });
 
@@ -76,7 +75,7 @@ export const primeRedisEntriesOrAssets = async <T>(
 
 export const primeRedisEntriesByContentType = async (
   client: Redis,
-  filtered: (Entry<any>[] | Error)[],
+  filtered: (BaseEntry[] | Error)[],
   cacheMissContentTypeIds: ItemKey[],
   maxBatchSize: number,
   ttlSeconds: number
@@ -89,7 +88,7 @@ export const primeRedisEntriesByContentType = async (
     let count = 0;
     let msetKeys: Record<string, string> = {};
 
-    (filtered as Entry<any>[][]).forEach((entries, index) => {
+    (filtered as BaseEntry[][]).forEach((entries, index) => {
       const { id: contentType, preview } = cacheMissContentTypeIds[index];
       const rootKey = getKey({ preview, id: contentType }, 'entry_ids_by_content_type');
 

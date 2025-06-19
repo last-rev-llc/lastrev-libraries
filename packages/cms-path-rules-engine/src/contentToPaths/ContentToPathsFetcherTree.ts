@@ -1,4 +1,4 @@
-import { Entry, ApolloContext, ItemKey, PathInfo, RefByKey } from '@last-rev/types';
+import { ApolloContext, ItemKey, PathInfo, RefByKey, BaseEntry } from '@last-rev/types';
 
 export type ContentToPathTreeStaticNode = {
   type: 'static';
@@ -43,7 +43,7 @@ const isRootNode = (node: any): node is ContentToPathTreeRootNode => !node.type;
 
 const getRefNodeKeyObjects = (
   nodes: ContentToPathTreeRefNode[],
-  entries: Entry<any>[],
+  entries: BaseEntry[],
   ctx: ApolloContext
 ): RefNodeKeyObject[] => {
   return entries
@@ -51,7 +51,7 @@ const getRefNodeKeyObjects = (
       return nodes
         .map((node) => {
           const refFieldName = node.field;
-          let ref = entry.fields[refFieldName]?.[ctx.defaultLocale];
+          let ref = (entry.fields as any)[refFieldName]?.[ctx.defaultLocale];
           if (!ref) return [];
           if (!Array.isArray(ref)) {
             ref = [ref];
@@ -73,7 +73,7 @@ const getRefNodeKeyObjects = (
 
 const getRefByNodeKeyObjects = (
   nodes: ContentToPathTreeRefByNode[],
-  entries: Entry<any>[],
+  entries: BaseEntry[],
   ctx: ApolloContext
 ): RefByNodeKeyObject[] => {
   return entries
@@ -109,7 +109,7 @@ export type ContentToPathsHasChildrenNode =
 
 export type SegmentInfo = {
   value: string;
-  entry: Entry<any> | null;
+  entry: BaseEntry | null;
 };
 
 /**
@@ -123,7 +123,7 @@ const deepLoad = async ({
   delayedFields
 }: {
   node: ContentToPathTreeRefNode | ContentToPathTreeRefByNode;
-  entry: Entry<any>;
+  entry: BaseEntry;
   ctx: ApolloContext;
   resolvedSlugs: (SegmentInfo | null)[][];
   delayedFields: { info: SegmentInfo; segmentIndex: number }[];
@@ -139,21 +139,21 @@ const deepLoad = async ({
     ctx.loaders.entriesRefByLoader.loadMany(refByNodeKeyObjects.map(({ key }) => key))
   ]);
 
-  const loadedRefNodes: { node: ContentToPathTreeRefNode; entry: Entry<any> }[] = [];
+  const loadedRefNodes: { node: ContentToPathTreeRefNode; entry: BaseEntry }[] = [];
   const loadedRefByNodes: {
     node: ContentToPathTreeRefByNode;
-    entry: Entry<any>;
+    entry: BaseEntry;
   }[] = [];
 
   refNodeKeyObjects.forEach(({ node }, i) => {
     const entry = loadedRefEntries[i];
-    if (entry && (entry as Entry<any>).sys.contentType.sys.id === node.contentType) {
-      loadedRefNodes.push({ node, entry: entry as Entry<any> });
+    if (entry && (entry as BaseEntry).sys.contentType.sys.id === node.contentType) {
+      loadedRefNodes.push({ node, entry: entry as BaseEntry });
     }
   });
 
   refByNodeKeyObjects.forEach(({ node }, i) => {
-    const entries = (loadedRefByEntries[i] as Entry<any>[]) || [];
+    const entries = (loadedRefByEntries[i] as BaseEntry[]) || [];
     entries.forEach((entry) => {
       loadedRefByNodes.push({ node, entry });
     });
@@ -184,7 +184,7 @@ const deepLoad = async ({
   }
 
   node.children.filter(isFieldNode).forEach(({ segmentIndex, field }) => {
-    const fieldValue = entry.fields[field]?.[ctx.defaultLocale];
+    const fieldValue = (entry.fields as any)[field]?.[ctx.defaultLocale];
     if (fieldValue) {
       if (isFinal) {
         resolvedSlugs[segmentIndex]!.push({
@@ -240,7 +240,7 @@ export default class ContentToPathsFetcherTree {
   private readonly _root: ContentToPathTreeRootNode = { children: [] };
   private _numSegments: number = 0;
 
-  async fetch(entry: Entry<any>, ctx: ApolloContext): Promise<PathInfo[]> {
+  async fetch(entry: BaseEntry, ctx: ApolloContext): Promise<PathInfo[]> {
     const resolvedSlugs: (SegmentInfo | null)[][] = new Array(this._numSegments);
 
     for (var i = 0; i < resolvedSlugs.length; i++) {

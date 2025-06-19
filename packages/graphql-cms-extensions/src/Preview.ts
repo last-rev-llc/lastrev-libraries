@@ -4,7 +4,7 @@ import { merge } from 'lodash';
 import createType from './utils/createType';
 export const typeMappings = {};
 
-export const resolvers = {
+export const resolvers: any = {
   Query: {
     contentPreview: async (
       _: any,

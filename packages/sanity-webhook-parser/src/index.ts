@@ -1,4 +1,4 @@
-import { Entry, Asset, ContentType } from '@last-rev/types';
+import { ContentType, BaseAsset, BaseEntry } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { convertSanityDoc } from '@last-rev/sanity-mapper';
 
@@ -14,7 +14,7 @@ type HasEnv = {
   };
 };
 
-export type WebhookBody = (Entry<any> | Asset | ContentType) & HasEnv;
+export type WebhookBody = (BaseEntry | BaseAsset | ContentType) & HasEnv;
 export type WebhookHeaders = Record<string, string>;
 export type WebhookParserResult = {
   action: 'update' | 'delete';

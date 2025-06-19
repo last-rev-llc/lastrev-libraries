@@ -1,5 +1,5 @@
 import { GraphQLScalarType } from 'graphql';
-import { ContentType, Entry, ApolloContext } from '@last-rev/types';
+import { ContentType, ApolloContext, BaseEntry } from '@last-rev/types';
 import GraphQLJSON from 'graphql-type-json';
 import getContentResolvers from './getContentResolvers';
 import fieldsResolver from './fieldsResolver';
@@ -105,7 +105,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           if (contentTypes.length) {
             const results = (
               await ctx.loaders.entriesByContentTypeLoader.loadMany(contentTypes.map((type) => ({ id: type, preview })))
-            ).filter((r: any) => !isError(r)) as unknown as Entry<any>[];
+            ).filter((r: any) => !isError(r)) as unknown as BaseEntry[];
 
             return results.flat();
           }
@@ -250,7 +250,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
 
           const entries = (await ctx.loaders.entryLoader.loadMany(ids.map((id: string) => ({ id, preview })))).filter(
             (e: any) => !!e && !isError(e)
-          ) as Entry<any>[];
+          ) as BaseEntry[];
 
           const sitemapEntries = (
             await Promise.all(

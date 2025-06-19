@@ -1,4 +1,4 @@
-import { Entry, ApolloContext, CmsLoaders } from '@last-rev/types';
+import { ApolloContext, CmsLoaders, BaseEntry } from '@last-rev/types';
 import RelationShipValidator from '../core/RelationshipValidator';
 import traversePathRule, { PathVisitor } from '../core/traversePathRule';
 import { Field, PathRule, RefByExpression, ReferenceExpression } from '../types';
@@ -13,7 +13,7 @@ export type NoMatchFieldValueResult = {
 export type MatchedFieldValueResult = {
   found: true;
   segmentIndex: number;
-  entry: Entry<any>;
+  entry: BaseEntry;
 };
 
 const isNoMatchFieldValueResult = (x: any): x is NoMatchFieldValueResult => {
@@ -117,7 +117,7 @@ export default class PathToItemsFetcher {
     const results = (resolved as MatchedFieldValueResult[]).reduce((acc, curr) => {
       acc[curr.segmentIndex] = curr.entry;
       return acc;
-    }, new Array(slugs.length).fill(null) as (Entry<any> | null)[]);
+    }, new Array(slugs.length).fill(null) as (BaseEntry | null)[]);
 
     const errors = await this._relationshipValidator.validate(results, apolloContext);
 

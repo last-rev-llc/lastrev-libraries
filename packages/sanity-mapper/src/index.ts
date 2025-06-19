@@ -1,5 +1,5 @@
 import { mapSanityPortableTextArrayToContentfulRichText } from './richTextHelpers';
-import { type Asset, type Entry, type ContentType } from '@last-rev/types';
+import type { ContentType, BaseAsset, BaseEntry } from '@last-rev/types';
 
 export const mapSanityValueToContentful = (value: any, defaultLocale: string): any => {
   // Detect Sanity rich text (Block[])
@@ -88,7 +88,7 @@ const processTranslations = (translations: any[], defaultLocale: string, locales
   return translatedFields;
 };
 
-export const convertSanityDoc = (doc: any, defaultLocale: string, locales: string[]): Entry<any> | Asset | null => {
+export const convertSanityDoc = (doc: any, defaultLocale: string, locales: string[]): BaseEntry | BaseAsset | null => {
   if (!doc) return null;
 
   // Extract the actual default locale from the document if present
@@ -174,7 +174,7 @@ export const convertSanityDoc = (doc: any, defaultLocale: string, locales: strin
         updatedAt: _updatedAt,
         revision: doc._rev
       }
-    } as Asset;
+    } as BaseAsset;
   }
 
   // Process translations for entries
@@ -206,7 +206,7 @@ export const convertSanityDoc = (doc: any, defaultLocale: string, locales: strin
       return acc;
     }, {})
   };
-  return entry as Entry<any>;
+  return entry as BaseEntry;
 };
 
 export const mapSanityField = (field: any): any => {

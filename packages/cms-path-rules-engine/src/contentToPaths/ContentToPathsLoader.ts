@@ -1,4 +1,4 @@
-import { ApolloContext, PathFilterFunction, PathInfo, PathRuleConfig, Entry } from '@last-rev/types';
+import { ApolloContext, PathFilterFunction, PathInfo, PathRuleConfig, BaseEntry } from '@last-rev/types';
 import { InternalRootConfig, PathRule } from '../types';
 import PathRuleParser from '../core/PathRuleParser';
 import ContentToPathsFetcher from './ContentToPathsFetcher';
@@ -45,10 +45,10 @@ export default class ContentToPathsLoader {
     this._rootConfig = getRootConfig(config);
   }
 
-  async loadPathsFromContent(entry: Entry<any>, ctx: ApolloContext, site?: string): Promise<PathInfo[]> {
+  async loadPathsFromContent(entry: BaseEntry, ctx: ApolloContext, site?: string): Promise<PathInfo[]> {
     if (this._rootConfig) {
       const { field, value, contentType } = this._rootConfig;
-      if (entry.sys.contentType.sys.id === contentType && entry.fields[field]?.[ctx.defaultLocale] === value) {
+      if (entry.sys.contentType.sys.id === contentType && (entry.fields as any)[field]?.[ctx.defaultLocale] === value) {
         return [
           {
             path: '/',

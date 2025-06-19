@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 import { getLocalizedField } from '@last-rev/graphql-cms-core';
-import { ApolloContext, Entry } from '@last-rev/types';
+import { ApolloContext, BaseEntry } from '@last-rev/types';
 import resolveLocalizedField from './utils/resolveLocalizedField';
 import { blogV1, categoryBlogV1, pageV1 } from './PathsConfigs';
 export const typeMappings = {};
@@ -44,7 +44,7 @@ const createType = (type: string, content: any) => ({
 
 const pageContentsResolver = async (page: any, _args: any, ctx: ApolloContext) => {
   // Get the PAge contents
-  const contents = (await resolveLocalizedField(page.fields, 'contents', ctx)) as Entry<any>[];
+  const contents = (await resolveLocalizedField(page.fields, 'contents', ctx)) as BaseEntry[];
 
   // Map the Page contents (if not a Section wrap it)
   return contents?.map((content) => {

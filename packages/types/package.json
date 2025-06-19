@@ -9,7 +9,7 @@
   "devDependencies": {
     "@contentful/rich-text-types": "^17.0.0",
     "apollo-server-core": "^3.10.1",
-    "contentful": "^9.3.6",
+    "contentful": "^11.7.2",
     "dataloader": "^2.0.0",
     "graphql": "^16.6.0"
   }

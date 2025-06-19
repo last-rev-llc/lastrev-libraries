@@ -1,6 +1,6 @@
-import { createClient, createClient as createContentfulClient } from 'contentful';
+import { createClient as createContentfulClient } from 'contentful';
 import { createClient as createSanityClient } from '@sanity/client';
-import { Entry, Asset, ContentTypeCollection } from '@last-rev/types';
+import { ContentTypeCollection, BaseAsset, BaseEntry } from '@last-rev/types';
 import { map } from 'lodash';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ProcessCommand } from './types';
@@ -32,15 +32,13 @@ const getData = async (
         ? config.contentful.contentPreviewToken
         : config.contentful.contentDeliveryToken,
       host: config.contentful.usePreview ? 'preview.contentful.com' : 'cdn.contentful.com',
-      environment: env,
-      resolveLinks: false
-    });
+      environment: env
+    }).withoutLinkResolution.withAllLocales;
 
     switch (type) {
       case 'Entry':
         return client.getEntry(itemId, {
-          include: 0,
-          locale: '*'
+          include: 0
         });
       case 'Asset':
         return client.getAsset(itemId);
@@ -137,10 +135,10 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
         };
         switch (type) {
           case 'Asset':
-            await handlers.asset(command as ProcessCommand<Asset>);
+            await handlers.asset(command as ProcessCommand<BaseAsset>);
             break;
           case 'Entry':
-            await handlers.entry(command as ProcessCommand<Entry<any>>);
+            await handlers.entry(command as ProcessCommand<BaseEntry>);
             break;
           case 'ContentType':
             await handlers.contentType(command as ProcessCommand<ContentTypeCollection>);

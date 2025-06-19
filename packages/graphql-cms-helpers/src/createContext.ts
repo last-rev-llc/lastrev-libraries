@@ -13,9 +13,8 @@ const getLocales = async (space: string, environment: string, accessToken: strin
     space,
     environment,
     accessToken,
-    host: 'cdn.contentful.com',
-    resolveLinks: false
-  });
+    host: 'cdn.contentful.com'
+  }).withoutLinkResolution.withAllLocales;
   const locales = await client.getLocales();
   return locales.items;
 };
@@ -85,16 +84,14 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
         accessToken: config.contentful.contentDeliveryToken,
         space: config.contentful.spaceId,
         environment: config.contentful.env,
-        host: 'cdn.contentful.com',
-        resolveLinks: false
-      }),
+        host: 'cdn.contentful.com'
+      }).withoutLinkResolution.withAllLocales,
       preview: createClient({
         accessToken: config.contentful.contentPreviewToken,
         space: config.contentful.spaceId,
         environment: config.contentful.env,
-        host: 'preview.contentful.com',
-        resolveLinks: false
-      })
+        host: 'preview.contentful.com'
+      }).withoutLinkResolution.withAllLocales
     };
     loaders = createLoaders(config, defaultLocale);
   }

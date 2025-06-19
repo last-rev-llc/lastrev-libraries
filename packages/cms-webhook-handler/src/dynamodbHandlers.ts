@@ -5,7 +5,7 @@ import { DynamoDB, QueryCommandOutput } from '@aws-sdk/client-dynamodb';
 import { updateAllPaths } from '@last-rev/cms-path-util';
 import { createContext } from '@last-rev/graphql-cms-helpers';
 import { assetHasUrl, createContentfulClients } from './helpers';
-import { Entry } from '@last-rev/types';
+import { BaseEntry } from '@last-rev/types';
 import { map } from 'lodash';
 
 export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
@@ -94,10 +94,9 @@ export const createDynamoDbHandlers = (config: LastRevAppConfig): Handlers => {
   const refreshEntriesByContentType = async (contentTypeId: string, isPreview: boolean) => {
     const client = isPreview ? contentfulPreviewClient : contentfulProdClient;
 
-    const makeRequest = async (skip: number = 0, existing: Entry<any>[] = []): Promise<Entry<any>[]> => {
+    const makeRequest = async (skip: number = 0, existing: BaseEntry[] = []): Promise<BaseEntry[]> => {
       const results = await client.getEntries({
         content_type: contentTypeId,
-        locale: '*',
         include: 0,
         skip,
         limit: 1000

@@ -4,7 +4,7 @@ import mapValues from 'lodash/fp/mapValues';
 import flow from 'lodash/fp/flow';
 import { writeFile, ensureDir, createFile, readFile } from 'fs-extra';
 import { join } from 'path';
-import { Asset, ContentType, Entry } from '@last-rev/types';
+import { BaseAsset, BaseEntry, ContentType } from '@last-rev/types';
 import { ContentTypeIdToContentIdsLookup, ContentTypeIdToSyncTokensLookup } from './types';
 import { CONTENT_TYPE_ENTRIES_DIRNAME } from './constants';
 import { getWinstonLogger } from '@last-rev/logging';
@@ -26,7 +26,7 @@ export const groupByContentTypeAndMapToIds = flow(
 );
 
 export const writeItems = async (
-  items: (Entry<any> | Asset | ContentType)[],
+  items: (BaseEntry | BaseAsset | ContentType)[],
   root: string,
   dirname: string
 ): Promise<void> => {

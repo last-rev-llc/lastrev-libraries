@@ -1,6 +1,4 @@
-import { ApolloContext, iPathNode, ItemKey, PathData, PathEntries } from '@last-rev/types';
-import { Entry } from '@last-rev/types';
-
+import { ApolloContext, BaseEntry, iPathNode, ItemKey, PathData, PathEntries } from '@last-rev/types';
 export class PathNode implements iPathNode {
   data?: PathData;
   key: string;
@@ -40,10 +38,10 @@ export class PathNode implements iPathNode {
     const fetchedEntries = await ctx.loaders.entryLoader.loadMany(keysToFetch);
     const entriesById = fetchedEntries.reduce((acc: any, entry: any) => {
       if (entry) {
-        acc[(entry as Entry<any>).sys.id] = entry as Entry<any>;
+        acc[(entry as BaseEntry).sys.id] = entry as BaseEntry;
       }
       return acc;
-    }, {} as Record<string, Entry<any>>);
+    }, {} as Record<string, BaseEntry>);
 
     node = this;
 

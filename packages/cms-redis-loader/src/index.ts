@@ -1,5 +1,5 @@
 import DataLoader, { Options } from 'dataloader';
-import { Entry, Asset, ContentType } from '@last-rev/types';
+import { ContentType, BaseEntry, BaseAsset } from '@last-rev/types';
 import { getWinstonLogger } from '@last-rev/logging';
 import Timer from '@last-rev/timer';
 import Redis from 'ioredis';
@@ -99,7 +99,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
   };
 
   const getBatchItemFetcher =
-    <T extends Entry<any> | Asset>(dirname: 'entries' | 'assets'): DataLoader.BatchLoadFn<ItemKey, T | null> =>
+    <T extends BaseEntry | BaseAsset>(dirname: 'entries' | 'assets'): DataLoader.BatchLoadFn<ItemKey, T | null> =>
     async (keys) =>
       fetchAndSet<T>(
         keys,
@@ -108,7 +108,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
       );
 
   const getBatchEntriesByContentTypeFetcher =
-    ({ entryLoader }: { entryLoader: DataLoader<ItemKey, any> }): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> =>
+    ({ entryLoader }: { entryLoader: DataLoader<ItemKey, any> }): DataLoader.BatchLoadFn<ItemKey, BaseEntry[]> =>
     async (keys) => {
       // keys are content types [{ id: 'contentTypeId', preview: true}]
       if (!keys.length) return [];
@@ -118,7 +118,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
       let timer = new Timer();
 
       // Map of contentTypeId -> entries to be used as return
-      const out: { [contentType: string]: Entry<any>[] } = {};
+      const out: { [contentType: string]: BaseEntry[] } = {};
       // Content type ids for which we don't have Redis data
       const cacheMissContentTypeIds: ItemKey[] = [];
       // Entry ids from Redis that are ready to load
@@ -195,7 +195,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
         primeRedisEntriesByContentType(client, filtered, cacheMissContentTypeIds, maxBatchSize, ttlSeconds);
 
         // Add all the fallback results in the out map
-        (filtered as Entry<any>[][]).forEach((entryArray, idx) => {
+        (filtered as BaseEntry[][]).forEach((entryArray, idx) => {
           const { id: contentType } = cacheMissContentTypeIds[idx];
           out[contentType] = entryArray;
         });
@@ -206,14 +206,14 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
       return outArray;
     };
 
-  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, BaseEntry | null> => {
     return async (keys) => fallbackLoaders.entryByFieldValueLoader.loadMany(keys);
   };
 
   const options = getOptions(maxBatchSize);
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+  const entryLoader = new DataLoader(getBatchItemFetcher<BaseEntry>('entries'), options);
+  const assetLoader = new DataLoader(getBatchItemFetcher<BaseAsset>('assets'), options);
   const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher({ entryLoader }), options);
   const fetchAllContentTypes = async (preview: boolean) => {
     try {

@@ -150,9 +150,8 @@ const run = async ({
     space: contentfulSpaceId,
     accessToken: contentfulDeliveryToken,
     environment: contentfulEnvironment,
-    host: 'cdn.contentful.com',
-    resolveLinks: false
-  });
+    host: 'cdn.contentful.com'
+  }).withoutLinkResolution.withAllLocales;
 
   const { items } = await client.getContentTypes();
 

@@ -1,12 +1,12 @@
 import { getDefaultFieldValue } from '@last-rev/graphql-cms-core';
-import { CmsLoaders, ContentTypePathRuleConfig, LegacyContentfulPathsConfigs, Entry } from '@last-rev/types';
+import { CmsLoaders, ContentTypePathRuleConfig, LegacyCmsPathsConfigs, BaseEntry } from '@last-rev/types';
 import createPath from './utils/createPath';
 
 const BLOGS_LANDING_ID = process.env.BLOGS_LANDING_ID;
 
 // Path generation
 const validateSite = async (_args: {
-  item: Entry<any>;
+  item: BaseEntry;
   loaders: CmsLoaders;
   defaultLocale: string;
   locales: string[];
@@ -50,7 +50,7 @@ const blogsLandingSlug = async (loaders: CmsLoaders, defaultLocale: string, prev
   return 'blogs';
 };
 
-export const pageV1: LegacyContentfulPathsConfigs = {
+export const pageV1: LegacyCmsPathsConfigs = {
   page: async (pageItem, loaders, defaultLocale, locales, preview = false, site) => {
     if (await validateSite({ item: pageItem, loaders, preview, site, defaultLocale, locales })) {
       const slug = getDefaultFieldValue(pageItem, 'slug', defaultLocale);
@@ -68,7 +68,7 @@ export const pageV1: LegacyContentfulPathsConfigs = {
   }
 };
 
-export const blogV1: LegacyContentfulPathsConfigs = {
+export const blogV1: LegacyCmsPathsConfigs = {
   blog: async (blogItem, loaders, defaultLocale, _locales, preview) => {
     const slug = getDefaultFieldValue(blogItem, 'slug', defaultLocale);
     const blogLandingSlug = await blogsLandingSlug(loaders, defaultLocale, preview);
@@ -84,7 +84,7 @@ export const blogV1: LegacyContentfulPathsConfigs = {
   }
 };
 
-export const categoryBlogV1: LegacyContentfulPathsConfigs = {
+export const categoryBlogV1: LegacyCmsPathsConfigs = {
   categoryBlog: async (categoryBlogItem, loaders, defaultLocale, _locales, preview) => {
     const slug = getDefaultFieldValue(categoryBlogItem, 'slug', defaultLocale);
     const blogLandingSlug = await blogsLandingSlug(loaders, defaultLocale, preview);

@@ -1,6 +1,6 @@
 import { each, get, has, isFunction, isString, map, transform } from 'lodash';
 import { join } from 'path';
-import { ApolloContext, TypeMappings, ContentfulPathsConfigs, PathRuleConfig, PathData } from '@last-rev/types';
+import { ApolloContext, TypeMappings, CmsPathsConfigs, PathRuleConfig, PathData } from '@last-rev/types';
 import PathTree from './PathTree';
 import { DEFAULT_SITE_KEY } from './constants';
 import { createPathStore, PathStore } from './PathStore';
@@ -8,7 +8,7 @@ import LastRevAppConfig from '@last-rev/app-config';
 import { ContentToPathsLoader } from '@last-rev/cms-path-rules-engine';
 
 type PathUpdaterProps = {
-  pathsConfigs: ContentfulPathsConfigs;
+  pathsConfigs: CmsPathsConfigs;
   context: ApolloContext;
   preview: boolean;
   site?: string;
@@ -21,7 +21,7 @@ export default class PathUpdater {
   context: ApolloContext;
   preview: boolean;
   site: string;
-  pathsConfigs: ContentfulPathsConfigs;
+  pathsConfigs: CmsPathsConfigs;
   typeMappings: TypeMappings = {};
   pathStore: PathStore;
   enablePathsV2: boolean;
@@ -142,7 +142,7 @@ export default class PathUpdater {
 
         if (isString(config)) {
           each(pages, (page) => {
-            const slug = get(page, ['fields', 'slug', defaultLocale]);
+            const slug = get(page, ['fields', 'slug', defaultLocale]) as string | undefined;
             if (!slug) return;
             const fullPath = join(config, slug);
             const contentId = page.sys.id;
@@ -229,7 +229,7 @@ const updatePathsForSite = async ({
   updateForPreview: boolean;
   updateForProd: boolean;
   site: string;
-  pathsConfigs: ContentfulPathsConfigs;
+  pathsConfigs: CmsPathsConfigs;
   context: ApolloContext;
 }) => {
   if (updateForPreview) {

@@ -1,6 +1,6 @@
-import { Entry, ApolloContext, ItemKey, RefByKey, FVLKey } from '@last-rev/types';
+import { ApolloContext, ItemKey, RefByKey, FVLKey, BaseEntry } from '@last-rev/types';
 
-export const createMockEntry = (id: string, contentType: string, fields: Record<string, any>): Entry<any> => {
+export const createMockEntry = (id: string, contentType: string, fields: Record<string, any>): BaseEntry => {
   return {
     sys: {
       id,
@@ -16,7 +16,7 @@ export const createMockEntry = (id: string, contentType: string, fields: Record<
       };
       return acc;
     }, {} as Record<string, any>)
-  } as unknown as Entry<any>;
+  } as unknown as BaseEntry;
 };
 
 export const entryMocks = {
@@ -102,7 +102,7 @@ export const mockApolloContext = (locale?: string) => {
       entryByFieldValueLoader: {
         load: async ({ field, value, contentType }: FVLKey) => {
           const res = entries.find(
-            (entry) => entry.sys.contentType.sys.id === contentType && entry.fields[field]?.['en-US'] === value
+            (entry) => entry.sys.contentType.sys.id === contentType && (entry.fields as any)[field]?.['en-US'] === value
           );
           return Promise.resolve(res || null);
         },
@@ -110,7 +110,8 @@ export const mockApolloContext = (locale?: string) => {
           const res = keys.map(({ field, value, contentType }: FVLKey) => {
             return (
               entries.find(
-                (entry) => entry.sys.contentType.sys.id === contentType && entry.fields[field]?.['en-US'] === value
+                (entry) =>
+                  entry.sys.contentType.sys.id === contentType && (entry.fields as any)[field]?.['en-US'] === value
               ) || null
             );
           });
@@ -122,7 +123,7 @@ export const mockApolloContext = (locale?: string) => {
           const loaded =
             entries.filter((e) => {
               if (e.sys.contentType.sys.id !== contentType) return false;
-              let fieldValues = e.fields[field]?.['en-US'];
+              let fieldValues = (e.fields as any)[field]?.['en-US'];
               if (!fieldValues) return false;
               if (!Array.isArray(fieldValues)) {
                 fieldValues = [fieldValues];
@@ -137,7 +138,7 @@ export const mockApolloContext = (locale?: string) => {
             return (
               entries.filter((e) => {
                 if (e.sys.contentType.sys.id !== contentType) return false;
-                let fieldValues = e.fields[field]?.['en-US'];
+                let fieldValues = (e.fields as any)[field]?.['en-US'];
                 if (!fieldValues) return false;
                 if (!Array.isArray(fieldValues)) {
                   fieldValues = [fieldValues];

@@ -20,43 +20,44 @@ import { ENTRIES_DIRNAME, ASSETS_DIRNAME, CONTENT_TYPES_DIRNAME, SYNC_TOKEN_DIRN
 import { ContentTypeIdToSyncTokensLookup } from './types';
 import { groupByContentTypeAndMapToIds } from './utils';
 
+type ClientApi = ContentfulClientApi<'WITHOUT_LINK_RESOLUTION' | 'WITH_ALL_LOCALES'>;
+type SyncCollectionType = SyncCollection<any, 'WITHOUT_LINK_RESOLUTION' | 'WITH_ALL_LOCALES'>;
+
 const logger = getWinstonLogger({
   package: 'cms-sync-to-fs',
   module: 'contentfulSync'
 });
 
 const syncAllEntriesForContentType = async (
-  client: ContentfulClientApi,
+  client: ClientApi,
   contentTypeId: string,
   nextSyncToken?: string,
   config?: LastRevAppConfig
-): Promise<SyncCollection> => {
+): Promise<SyncCollectionType> => {
   const result = await client.sync({
-    initial: !nextSyncToken,
+    ...(!nextSyncToken && { initial: true }),
     content_type: contentTypeId,
-    resolveLinks: false,
     nextSyncToken,
     ...(!nextSyncToken && config && config.contentful.syncLimit && { limit: config.contentful.syncLimit })
   });
 
-  return result;
+  return result as SyncCollectionType;
 };
 
-const syncAllAssets = async (client: ContentfulClientApi, nextSyncToken?: string): Promise<SyncCollection> => {
+const syncAllAssets = async (client: ClientApi, nextSyncToken?: string): Promise<SyncCollectionType> => {
   return await client.sync({
-    initial: !nextSyncToken,
-    resolveLinks: false,
+    ...(!nextSyncToken && { initial: true }),
     nextSyncToken,
     type: 'Asset'
   });
 };
 
 const syncAllEntries = async (
-  client: ContentfulClientApi,
+  client: ClientApi,
   contentTypes: ContentType[],
   syncTokens: ContentTypeIdToSyncTokensLookup,
   config: LastRevAppConfig
-): Promise<SyncCollection[]> => {
+): Promise<SyncCollectionType[]> => {
   return Promise.all(
     contentTypes.map((contentType, index) =>
       (async () => {
@@ -85,9 +86,8 @@ const contentfulSync = async (config: LastRevAppConfig, usePreview: boolean, sit
     accessToken: usePreview ? config.contentful.contentPreviewToken : config.contentful.contentDeliveryToken,
     space: config.contentful.spaceId,
     environment: config.contentful.env,
-    host: usePreview ? `preview.contentful.com` : `cdn.contentful.com`,
-    resolveLinks: false
-  });
+    host: usePreview ? `preview.contentful.com` : `cdn.contentful.com`
+  }).withoutLinkResolution.withAllLocales;
 
   const { items: contentTypes } = await client.getContentTypes();
 
@@ -122,7 +122,10 @@ const contentfulSync = async (config: LastRevAppConfig, usePreview: boolean, sit
     }),
     {}
   );
-  nextSyncTokens['asset'] = assetsResult.nextSyncToken;
+
+  if (assetsResult.nextSyncToken) {
+    nextSyncTokens['asset'] = assetsResult.nextSyncToken;
+  }
 
   timer = new Timer();
   await Promise.all([

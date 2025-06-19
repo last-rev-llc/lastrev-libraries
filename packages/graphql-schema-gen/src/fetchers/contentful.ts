@@ -123,9 +123,13 @@ const contentfulFetcher: Fetcher = async (
   clientParams: CreateClientParams,
   skipReferenceFields: boolean
 ) => {
-  const client = createClient({ ...clientParams, resolveLinks: false });
+  const client = createClient({ ...clientParams });
 
-  return generateContentfulSchema(typeMappings, (await client.getContentTypes()).items, skipReferenceFields);
+  return generateContentfulSchema(
+    typeMappings,
+    (await client.withoutLinkResolution.getContentTypes()).items,
+    skipReferenceFields
+  );
 };
 
 export default contentfulFetcher;

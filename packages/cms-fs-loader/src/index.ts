@@ -1,5 +1,5 @@
 import DataLoader, { Options } from 'dataloader';
-import { Entry, Asset } from '@last-rev/types';
+import { BaseEntry, BaseAsset } from '@last-rev/types';
 import { readJSON, readdir } from 'fs-extra';
 import { filter, identity, isNil } from 'lodash';
 import { join } from 'path';
@@ -31,7 +31,7 @@ const flvOptions: Options<FVLKey, any, string> = {
 const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): CmsLoaders => {
   const getUri = getGetUriFunction(config);
 
-  const getBatchItemFetcher = <T extends Entry<any> | Asset>(
+  const getBatchItemFetcher = <T extends BaseEntry | BaseAsset>(
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<ItemKey, T | null> => {
     return async (keys): Promise<(T | null)[]> => {
@@ -84,9 +84,9 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
   };
 
   const getBatchEntriesByContentTypeFetcher = (
-    eLoader: DataLoader<ItemKey, Entry<any> | null>,
+    eLoader: DataLoader<ItemKey, BaseEntry | null>,
     idsLoader: DataLoader<ItemKey, (string | null)[]>
-  ): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
+  ): DataLoader.BatchLoadFn<ItemKey, BaseEntry[]> => {
     return async (keys) => {
       const idsArrays = await idsLoader.loadMany(keys);
 
@@ -98,19 +98,19 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
         keysArray.map((entryKeys) =>
           (async () => {
             const entries = await eLoader.loadMany(entryKeys);
-            return filter(entries, identity) as Entry<any>[];
+            return filter(entries, identity) as BaseEntry[];
           })()
         )
       );
     };
   };
 
-  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, BaseEntry | null> => {
     return async (keys) => fallbackLoaders.entryByFieldValueLoader.loadMany(keys);
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+  const entryLoader = new DataLoader(getBatchItemFetcher<BaseEntry>('entries'), options);
+  const assetLoader = new DataLoader(getBatchItemFetcher<BaseAsset>('assets'), options);
   const entryIdsByContentTypeLoader = new DataLoader(getBatchEntryIdsByContentTypeFetcher(), options);
   const entriesByContentTypeLoader = new DataLoader(
     getBatchEntriesByContentTypeFetcher(entryLoader, entryIdsByContentTypeLoader),

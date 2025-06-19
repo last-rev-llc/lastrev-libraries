@@ -1,14 +1,14 @@
-import { Entry, Asset, ContentTypeCollection } from '@last-rev/types';
+import { BaseEntry, BaseAsset, ContentTypeCollection } from '@last-rev/types';
 
-export type ProcessCommand<T extends Entry<any> | Asset | ContentTypeCollection> = {
+export type ProcessCommand<T extends BaseEntry | BaseAsset | ContentTypeCollection> = {
   isPreview: boolean;
   action: 'update' | 'delete';
   data: T;
 };
 
 export type Handlers = {
-  entry: (data: ProcessCommand<Entry<any>>) => Promise<void>;
-  asset: (data: ProcessCommand<Asset>) => Promise<void>;
+  entry: (data: ProcessCommand<BaseEntry>) => Promise<void>;
+  asset: (data: ProcessCommand<BaseAsset>) => Promise<void>;
   contentType: (data: ProcessCommand<ContentTypeCollection>) => Promise<void>;
   paths: (applyToPreview: boolean, applyToProduction: boolean) => Promise<void>;
 };

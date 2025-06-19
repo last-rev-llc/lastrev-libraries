@@ -1,6 +1,7 @@
-import { Entry, Asset, ContentType } from '@last-rev/types';
+import { ContentType, BaseAsset } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { getWinstonLogger } from '@last-rev/logging';
+import { BaseEntry } from 'contentful';
 
 const logger = getWinstonLogger({
   package: 'contentful-webhook-parser',
@@ -37,7 +38,7 @@ const actionMappings: ActionMappings = {
   archive: { action: 'delete', envs: ['preview', 'production'] }
 };
 
-export type WebhookBody = (Entry<any> | Asset | ContentType) & HasEnv;
+export type WebhookBody = (BaseEntry | BaseAsset | ContentType) & HasEnv;
 export type WebhookHeaders = Record<string, string>;
 export type WebhookParserResult = {
   action: 'update' | 'delete';

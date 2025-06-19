@@ -1,17 +1,17 @@
-import { ContentfulClientApi } from 'contentful';
-import { Entry, Asset } from '@last-rev/types';
+import { BaseEntry, ContentfulClientApi } from 'contentful';
+import { BaseAsset } from '@last-rev/types';
 
 export const isRejected = (r: PromiseSettledResult<unknown>): r is PromiseRejectedResult => r.status === 'rejected';
 
-export const makeContentfulRequest = async <T extends Entry<any> | Asset>(
-  client: ContentfulClientApi,
+export const makeContentfulRequest = async <T extends BaseEntry | BaseAsset>(
+  client: ContentfulClientApi<'WITHOUT_LINK_RESOLUTION' | 'WITH_ALL_LOCALES'>,
   command: 'getEntries' | 'getAssets',
   limit: number,
   query: Record<string, any>,
   skip: number = 0,
   existing: T[] = []
 ): Promise<T[]> => {
-  const results = await client[command]({
+  const results = await (client as any)[command]({
     ...query,
     skip,
     limit
