@@ -1,1 +1,0 @@
-ignores: ["@graphql-codegen/*", "@lrns/graphql-runner", "@lrns/graphql-extensions", "rollup"]
