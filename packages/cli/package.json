@@ -57,7 +57,7 @@
     "cross-spawn": "^7.0.3",
     "dotenv": "^10.0.0",
     "env-paths": "2.2.1",
-    "express": "^4.17.1",
+    "express": "^5.1.0",
     "fs-extra": "^10.0.0",
     "got": "^14.2.1",
     "graphql": "^16.6.0",
