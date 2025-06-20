@@ -15,9 +15,9 @@
     "@contentful/rich-text-types": "^17.0.0",
     "@types/lodash": "4.14.168",
     "@types/node": "^14.14.35",
-    "jest": "^26.6.3",
+    "jest": "^30.0.2",
     "next": "^15.3.4",
-    "ts-jest": "^26.5.4",
+    "ts-jest": "^29.4.0",
     "tslint": "^5.20.1",
     "typescript": "^5.8.3"
   },
@@ -25,7 +25,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/server": "^4.3.0",
+    "@apollo/server": "^4.12.2",
     "@apollo/subgraph": "^2.4.1",
     "@as-integrations/aws-lambda": "^1.1.0",
     "@as-integrations/next": "^1.2.0",

@@ -15,8 +15,8 @@
   "devDependencies": {
     "@last-rev/rollup-config": "^0.1.4",
     "@last-rev/testing-library": "^0.1.10",
-    "jest": "^26.5.4",
-    "libxmljs2": "^0.33.0",
+    "jest": "^30.0.2",
+    "libxmljs2": "^0.35.0",
     "rollup-plugin-copy": "^3.4.0"
   },
   "keywords": [],

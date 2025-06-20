@@ -41,6 +41,22 @@
       "outputMode": "new-only",
       "cache": false,
       "dependsOn": ["^build"]
+    },
+    "clean": {
+      "outputMode": "new-only",
+      "cache": false,
+      "outputs": []
+    },
+    "start": {
+      "outputMode": "new-only",
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "storybook": {
+      "outputMode": "new-only",
+      "cache": false,
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static/**"]
     }
   }
 }
