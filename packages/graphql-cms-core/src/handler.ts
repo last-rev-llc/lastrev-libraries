@@ -1,6 +1,6 @@
 import { startServerAndCreateLambdaHandler, IncomingEvent } from '@as-integrations/aws-lambda';
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { contextFunction } from '@last-rev/graphql-cms-helpers';
 
 import LastRevAppConfig from '@last-rev/app-config';

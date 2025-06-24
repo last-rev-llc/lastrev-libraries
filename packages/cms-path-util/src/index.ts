@@ -1,5 +1,5 @@
 import PathReader from './PathReader';
-import PathUpdater, { updateAllPaths } from './PathUpdater';
+import { PathUpdater, updateAllPaths } from './PathUpdater';
 import PathTree from './PathTree';
 import { createPathStore } from './PathStore';
 

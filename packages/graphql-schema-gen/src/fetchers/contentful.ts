@@ -118,7 +118,7 @@ export const generateContentfulSchema = (
   `;
 };
 
-const contentfulFetcher: Fetcher = async (
+export const contentfulFetcher: Fetcher = async (
   typeMappings: Record<string, string>,
   clientParams: CreateClientParams,
   skipReferenceFields: boolean
@@ -131,5 +131,3 @@ const contentfulFetcher: Fetcher = async (
     skipReferenceFields
   );
 };
-
-export default contentfulFetcher;

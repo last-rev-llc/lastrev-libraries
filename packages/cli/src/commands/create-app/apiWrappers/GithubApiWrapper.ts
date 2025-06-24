@@ -6,7 +6,8 @@ import querystring from 'querystring';
 import { isString } from 'lodash';
 import ora from 'ora';
 import BaseApiWrapper from './BaseApiWrapper';
-import LastRevConfig, {
+import {
+  LastRevConfig,
   VAL_GITHUB_REPO,
   VAL_NETLIFY_SITE,
   VAL_NETLIFY_DEPLOY_KEY,

@@ -1,5 +1,5 @@
 import { prompt } from 'inquirer';
-import LastRevConfig, { VAL_CREATE_APP_CONFIG } from './LastRevConfig';
+import { LastRevConfig, VAL_CREATE_APP_CONFIG } from './LastRevConfig';
 import Messager from './Messager';
 import { CreateAppConfig } from './types';
 

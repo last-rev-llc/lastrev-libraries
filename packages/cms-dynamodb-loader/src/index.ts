@@ -2,7 +2,7 @@ import DataLoader, { Options } from 'dataloader';
 import { ContentType, BaseEntry, BaseAsset } from '@last-rev/types';
 import { transform, omitBy, filter, negate, isEmpty, isError, isNil, map, some } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { ItemKey, CmsLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { DynamoDBDocument } from '@aws-sdk/lib-dynamodb';

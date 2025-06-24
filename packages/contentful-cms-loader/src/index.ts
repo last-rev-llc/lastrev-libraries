@@ -3,7 +3,7 @@ import { createClient, ContentfulClientApi } from 'contentful';
 import { BaseAsset, BaseEntry } from '@last-rev/types';
 import { find, map, partition } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { ItemKey, CmsLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { chunk, makeContentfulRequest } from './helpers';

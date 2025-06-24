@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import getLastRevConfig from '../../../helpers/getLastRevConfig';
+import { getLastRevConfig } from '../../../helpers/getLastRevConfig';
 import output from '../utils/output';
 import { EvaluatedLib, Lib } from '../types';
 import determineLibraryStatus from '../utils/determineLibraryStatus';
@@ -16,7 +16,7 @@ const listErrors = (lib: EvaluatedLib): string => {
   return `(${lib.errors.map((err) => err.toString()).join(') (')})`;
 };
 
-const displayInfo = async () => {
+export const displayInfo = async () => {
   const config = getLastRevConfig();
   const cwd = process.cwd();
   const librariesLocation = config.get('develop.librariesLocation');
@@ -80,5 +80,3 @@ export const performDisplayInfo = async (existingLibs: string[], allLibs: Lib[],
     output.howToRunDev(existingLibs);
   }
 };
-
-export default displayInfo;

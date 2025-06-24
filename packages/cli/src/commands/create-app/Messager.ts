@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import LastRevConfig from './LastRevConfig';
+import { LastRevConfig } from './LastRevConfig';
 
 export default class Messager {
   messages: string[] = [];

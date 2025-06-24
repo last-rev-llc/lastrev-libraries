@@ -74,7 +74,7 @@ const getData = async (
   throw new Error('Unsupported CMS');
 };
 
-const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Record<string, string>) => {
+export const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Record<string, string>) => {
   const token = headers['authorization']?.split(' ')[1];
 
   let result: WebhookParserResult | undefined;
@@ -158,5 +158,3 @@ const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Recor
 
   await handlers.paths(contentStates.includes('preview'), contentStates.includes('production'));
 };
-
-export default handleWebhook;

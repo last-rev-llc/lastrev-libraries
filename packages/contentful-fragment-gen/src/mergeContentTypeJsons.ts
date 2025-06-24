@@ -1,5 +1,5 @@
 import { each, get, has, isNil, map, set } from 'lodash';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import getFieldTypeString from './getFieldTypeString';
 import { ContentTypeMap, MergedJsonRepresentationMap, QueryJson } from './types';
 import { getWinstonLogger } from '@last-rev/logging';

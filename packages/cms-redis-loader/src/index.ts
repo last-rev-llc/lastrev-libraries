@@ -1,7 +1,7 @@
 import DataLoader, { Options } from 'dataloader';
 import { ContentType, BaseEntry, BaseAsset } from '@last-rev/types';
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import Redis from 'ioredis';
 import { ItemKey, CmsLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';

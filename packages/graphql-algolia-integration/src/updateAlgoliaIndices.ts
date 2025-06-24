@@ -2,7 +2,7 @@ import { SearchClient } from 'algoliasearch';
 import LastRevAppConfig from '@last-rev/app-config';
 import { AlgoliaObjectsByIndex } from './types';
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 
 const logger = getWinstonLogger({
   package: 'graphql-algolia-integration',

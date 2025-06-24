@@ -1,6 +1,6 @@
 import program, { Command } from 'commander';
 import configure from './commands/configure';
-import displayInfo from './commands/displayInfo';
+import { displayInfo } from './commands/displayInfo';
 import fix from './commands/fix';
 import restore from './commands/restore';
 

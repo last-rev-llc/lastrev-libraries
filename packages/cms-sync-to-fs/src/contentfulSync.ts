@@ -3,7 +3,7 @@ import flatten from 'lodash/flatten';
 import { join } from 'path';
 import { createClient, ContentfulClientApi, SyncCollection } from 'contentful';
 import { ContentType } from '@last-rev/types';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { getWinstonLogger } from '@last-rev/logging';
 import LastRevAppConfig from '@last-rev/app-config';
 import { updateAllPaths } from '@last-rev/cms-path-util';

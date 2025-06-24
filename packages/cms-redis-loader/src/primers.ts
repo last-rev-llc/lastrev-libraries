@@ -1,5 +1,5 @@
 import Redis from 'ioredis';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { BaseEntry, ItemKey } from '@last-rev/types';
 import { getKey, isNil, isRejected, stringify } from './helpers';
 import { getWinstonLogger } from '@last-rev/logging';

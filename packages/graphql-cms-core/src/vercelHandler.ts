@@ -1,5 +1,5 @@
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { startServerAndCreateNextHandler } from '@as-integrations/next';
 import { contextFunction } from '@last-rev/graphql-cms-helpers';
 import { NextApiRequest, NextApiResponse } from 'next';

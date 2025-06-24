@@ -5,7 +5,7 @@ import performNetlifyFunctions from './performNetlifyFunctions';
 import ContentfulApiWrapper from './apiWrappers/ContentfulApiWrapper';
 import NetlifyApiWrapper from './apiWrappers/NetlifyApiWrapper';
 import GithubApiWrapper from './apiWrappers/GithubApiWrapper';
-import LastRevConfig, { VAL_CREATE_APP_CONFIG } from './LastRevConfig';
+import { LastRevConfig, VAL_CREATE_APP_CONFIG } from './LastRevConfig';
 import continueIfInProgress from './continueIfInProgress';
 import Messager from './Messager';
 import populateEnvVars from './populateEnvVars';

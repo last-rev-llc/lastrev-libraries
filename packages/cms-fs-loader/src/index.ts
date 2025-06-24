@@ -4,7 +4,7 @@ import { readJSON, readdir } from 'fs-extra';
 import { filter, identity, isNil } from 'lodash';
 import { join } from 'path';
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { ItemKey, CmsLoaders, FVLKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { getGetUriFunction } from './utils';

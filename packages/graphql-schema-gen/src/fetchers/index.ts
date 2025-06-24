@@ -1,9 +1,9 @@
 import { Source, ConnectionParams } from '../types';
 import { DocumentNode } from 'graphql';
 import { gql } from 'graphql-tag';
-import contentfulFetcher, { generateContentfulSchema } from './contentful';
+import { contentfulFetcher, generateContentfulSchema } from './contentful';
 import { ContentType } from '@last-rev/types';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { getWinstonLogger } from '@last-rev/logging';
 
 const logger = getWinstonLogger({
@@ -11,7 +11,7 @@ const logger = getWinstonLogger({
   module: 'fetchers'
 });
 
-const fetchers = async (
+export const fetchers = async (
   _source: Source,
   typeMappings: Record<string, string>,
   skipReferenceFields: boolean,
@@ -36,5 +36,3 @@ const fetchers = async (
     ${gqlStatements}
   `;
 };
-
-export default fetchers;

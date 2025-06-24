@@ -5,7 +5,7 @@ import {
   ApolloServerPluginLandingPageLocalDefault
 } from '@apollo/server/plugin/landingPage/default';
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import LastRevAppConfig from '@last-rev/app-config';
 import SchemaCache from './SchemaCache';
 import merge from 'lodash/merge';

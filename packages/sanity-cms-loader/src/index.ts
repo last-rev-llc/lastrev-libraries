@@ -2,7 +2,7 @@ import DataLoader, { Options } from 'dataloader';
 import { createClient, SanityClient } from '@sanity/client';
 import { map, partition } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { ItemKey, CmsLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { convertSanityDoc, mapSanityTypesToContentfulTypes } from '@last-rev/sanity-mapper';

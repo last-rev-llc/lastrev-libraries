@@ -2,7 +2,8 @@ import open from 'open';
 import NetlifyApi from 'netlify';
 import BaseApiWrapper from './BaseApiWrapper';
 import ora from 'ora';
-import LastRevConfig, {
+import {
+  LastRevConfig,
   VAL_GITHUB_REPO,
   VAL_NETLIFY_DEPLOY_KEY,
   VAL_ENV_VARS,

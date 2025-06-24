@@ -1,5 +1,5 @@
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
-import generateSchema from '@last-rev/graphql-schema-gen';
+import { generateSchema } from '@last-rev/graphql-schema-gen';
 import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
 import { CmsLoaders } from '@last-rev/types';

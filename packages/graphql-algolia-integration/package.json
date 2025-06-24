@@ -29,14 +29,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/client": "^3.7.12",
     "@contentful/rich-text-plain-text-renderer": "^15.11.1",
     "@contentful/rich-text-types": "^15.11.1",
     "@last-rev/contentful-webhook-parser": "^0.2.0",
     "algoliasearch": "^4.12.0",
     "axios": "^1.10.0",
     "cross-fetch": "^3.1.5",
-    "graphql-tag": "^2.12.5",
+    "graphql-request": "^6.1.0",
     "lodash": "^4.17.21"
   }
 }

@@ -1,5 +1,5 @@
 import chalk from 'chalk';
-import getLastRevConfig from '../../../helpers/getLastRevConfig';
+import { getLastRevConfig } from '../../../helpers/getLastRevConfig';
 import output from '../utils/output';
 import updateLibraries from '../utils/updateLibraries';
 import getAllLibraries from '../utils/getAllLibraries';

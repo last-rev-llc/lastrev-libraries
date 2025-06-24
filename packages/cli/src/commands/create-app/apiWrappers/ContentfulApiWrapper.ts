@@ -3,7 +3,8 @@ import open from 'open';
 // import { Space } from 'contentful';
 import { createClient, ClientAPI } from 'contentful-management';
 import BaseApiWrapper from './BaseApiWrapper';
-import LastRevConfig, {
+import {
+  LastRevConfig,
   VAL_CONTENTFUL_DELIVERY_KEY,
   VAL_CONTENTFUL_PREVIEW_KEY,
   VAL_CONTENTFUL_DEFAULT_SITE_ID,

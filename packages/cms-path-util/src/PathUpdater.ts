@@ -16,7 +16,7 @@ type PathUpdaterProps = {
   enablePathsV2: boolean;
 };
 
-export default class PathUpdater {
+export class PathUpdater {
   tree: PathTree = new PathTree();
   context: ApolloContext;
   preview: boolean;

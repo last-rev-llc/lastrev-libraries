@@ -37,7 +37,9 @@ const omitOpts = omit([
   `babelHelpers`,
   `filename`,
   'disableTerser',
-  'enableSourcemap'
+  'enableSourcemap',
+  'preserveModules',
+  'preserveModulesRoot'
 ]);
 
 const defaultExternal = (id) => {
@@ -90,14 +92,18 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       browser: true
     }),
     commonjs({
-      include: /\/node_modules\//
+      include: /\/node_modules\//,
+      transformMixedEsModules: true,
+      requireReturnsDefault: 'auto',
+      esmExternals: true
       // namedExports: {
       //   '../../../../node_modules/graphql-request/dist/types.dom': ['HeadersInit']
       // }
     }),
     json(),
     typescriptR({
-      sourceMap: !isProduction || defaultOpts.enableSourcemap
+      sourceMap: !isProduction || defaultOpts.enableSourcemap,
+      tsconfig: './tsconfig.json'
     }),
     swc(
       defineRollupSwcOption({
@@ -133,7 +139,24 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       })
     ),
     (!isProduction || defaultOpts.enableSourcemap) && sourcemap(),
-    isProduction && !defaultOpts.disableTerser && terser(),
+    isProduction &&
+      !defaultOpts.disableTerser &&
+      terser({
+        compress: {
+          drop_console: false,
+          drop_debugger: false,
+          pure_funcs: [],
+          passes: 1
+        },
+        mangle: {
+          keep_fnames: true,
+          keep_classnames: true
+        },
+        format: {
+          comments: true,
+          beautify: false
+        }
+      }),
     // size(dir),
     progress({
       clearLine: false
@@ -152,6 +175,9 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       chunkFileNames: filename ? `${filename}.js` : `[name].js`,
       entryFileNames: filename ? `${filename}.js` : `[name].js`,
       exports: 'auto',
+      interop: 'auto',
+      preserveModules: true,
+      preserveModulesRoot: 'src',
       ...output
     },
     {
@@ -161,13 +187,13 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       chunkFileNames: filename ? `${filename}.esm.js` : `[name].esm.js`,
       entryFileNames: filename ? `${filename}.esm.js` : `[name].esm.js`,
       exports: 'auto',
+      preserveModules: true,
+      preserveModulesRoot: 'src',
       ...output
     }
   ];
 
   return {
-    preserveModules: true,
-    disableTerser: true,
     ...opts,
     external: external || defaultExternal,
     plugins: defaultPlugins.filter(Boolean).concat(plugins),
