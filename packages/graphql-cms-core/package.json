@@ -20,7 +20,8 @@
     "next": "^15.3.4",
     "ts-jest": "^29.4.0",
     "tslint": "^5.20.1",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "next": "^14.2.3"
   },
   "keywords": [],
   "author": "",

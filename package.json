@@ -85,5 +85,6 @@
     "turbo": "^1.13.1",
     "typescript": "^5.8.3"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "packageManager": "pnpm@9.5.0"
 }

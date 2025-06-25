@@ -1,5 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { ApolloContext, BaseEntry } from '@last-rev/types';
+import { ApolloContext, BaseAsset, BaseEntry } from '@last-rev/types';
 import getTypeName from '../utils/getTypeName';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
@@ -19,7 +19,7 @@ export type Resolver<TSource, TContext> = (
   info: GraphQLResolveInfo
 ) => Promise<any>;
 
-type FieldResolver = (displayType: string) => Resolver<BaseEntry, ApolloContext>;
+type FieldResolver = (displayType: string) => Resolver<BaseEntry | BaseAsset | any, ApolloContext>;
 
 const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content, args, ctx, info) => {
   const { fieldName: field } = info;
@@ -56,8 +56,10 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
       });
       return null;
     }
-  } else {
+  } else if (content.fields) {
     fieldValue = getLocalizedField(content.fields, field, ctx);
+  } else if (content[field]) {
+    fieldValue = content[field];
   }
 
   //Check if the field is a reference then resolve it

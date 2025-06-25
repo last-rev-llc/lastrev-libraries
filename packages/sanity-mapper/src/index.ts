@@ -262,7 +262,16 @@ export const mapSanityField = (field: any): any => {
             items = {
               type: 'Link',
               linkType: 'Entry',
-              validations: [{ linkContentType: field.of.map((item: any) => item.to.map((t: any) => t.type)) }]
+              validations:
+                field.of.length > 1
+                  ? [
+                      {
+                        linkContentType: field.of.map((item: any) =>
+                          item.to ? item.to.map((t: any) => t.type) : item.type
+                        )
+                      }
+                    ]
+                  : []
             };
             break;
           case 'file':
