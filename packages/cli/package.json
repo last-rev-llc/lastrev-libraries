@@ -72,11 +72,5 @@
     "simple-git": "^3.3.0",
     "tar": "^6.1.0",
     "uuid": "^8.3.2"
-  },
-  "resolutions": {
-    "micromatch": "^4.0.8",
-    "braces": "^3.0.3",
-    "ansi-regex": "^5.0.1",
-    "unset-value": "^2.0.1"
   }
 }
