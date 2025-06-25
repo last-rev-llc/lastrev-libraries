@@ -49,7 +49,7 @@ export type WebhookParserResult = {
   isTruncated: boolean;
 };
 
-const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeaders): WebhookParserResult => {
+export const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeaders): WebhookParserResult => {
   const topics = headers['x-contentful-topic']?.split('.');
 
   if (!topics || topics.length < 3) {
@@ -84,5 +84,3 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
     isTruncated
   };
 };
-
-export default parseWebhook;

@@ -61,7 +61,7 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
       perspective: 'drafts'
     });
 
-    locales = config.sanity.supportedLanguages.map((l) => l.id);
+    locales = config.sanity.supportedLanguages.map((l: any) => l.id);
     defaultLocale = locales[0] || 'en-US';
     clients = { prod: prodClient, preview: previewClient };
     loaders = createLoaders(config, defaultLocale);

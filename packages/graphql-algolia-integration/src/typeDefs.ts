@@ -1,6 +1,6 @@
-import gql from 'graphql-tag';
+import { gql } from 'graphql-tag';
 
-const typeDefs = gql`
+const typeDefs: any = gql`
   type AlgoliaObject {
     index: String!
     data: JSON!

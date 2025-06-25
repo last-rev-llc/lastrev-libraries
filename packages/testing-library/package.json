@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "dotenv": "^16.0.0",
+    "esbuild": "^0.25.5",
     "fs-extra": "^10.0.1",
     "handlebars": "^4.7.7"
   }

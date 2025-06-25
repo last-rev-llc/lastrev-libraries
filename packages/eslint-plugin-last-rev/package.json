@@ -19,13 +19,16 @@
     "eslint-plugin-json-es": "^1.5.4"
   },
   "devDependencies": {
-    "@last-rev/rollup-config": "^0.1.4",
-    "@last-rev/testing-library": "^0.1.10",
+    "@last-rev/rollup-config": "workspace:*",
+    "@last-rev/testing-library": "workspace:*",
     "@types/eslint": "^9.6.1",
+    "@types/estree": "^1.0.8",
     "@typescript-eslint/types": "^5.13.0",
+    "esbuild": "^0.25.5",
     "jest": "^30.0.2",
     "ts-jest": "^29.4.0",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "rollup": "^4.44.0"
   },
   "peerDependencies": {
     "eslint": ">= 9.29.0"

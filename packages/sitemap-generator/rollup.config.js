@@ -1,7 +1,7 @@
-import { config } from '@last-rev/rollup-config';
-import copy from 'rollup-plugin-copy';
+const { config } = require('@last-rev/rollup-config');
+const copy = require('rollup-plugin-copy');
 
-export default config({
+module.exports = config({
   input: './src/index.ts',
   babelHelpers: 'runtime',
   plugins: [

@@ -13,10 +13,12 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@last-rev/rollup-config": "^0.1.0",
-    "@last-rev/testing-library": "^0.1.2",
-    "@last-rev/types": "^0.4.0",
+    "@last-rev/rollup-config": "workspace:*",
+    "@last-rev/testing-library": "workspace:*",
+    "@last-rev/types": "workspace:*",
+    "esbuild": "^0.25.5",
     "jest": "^30.0.2",
+    "rollup": "^4.44.0",
     "ts-jest": "^29.4.0",
     "typescript": "^5.8.3"
   },
@@ -24,6 +26,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@last-rev/logging": "^0.1.3"
+    "@last-rev/logging": "workspace:*"
   }
 }

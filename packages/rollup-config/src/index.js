@@ -2,28 +2,19 @@ const { omit } = require(`lodash/fp`);
 const path = require('path');
 
 const replace = require(`@rollup/plugin-replace`);
-// const typescript = require(`rollup-plugin-typescript2`);
-// const { babel } = require(`@rollup/plugin-babel`);
-const json = require(`@rollup/plugin-json`);
+const jsonlint = require('rollup-plugin-jsonlint');
 const commonjs = require(`@rollup/plugin-commonjs`);
 const { nodeResolve } = require(`@rollup/plugin-node-resolve`);
 const alias = require(`@rollup/plugin-alias`);
 const postcss = require(`rollup-plugin-postcss`);
 const autoprefixer = require(`autoprefixer`);
 const progress = require(`rollup-plugin-progress`);
-const { terser } = require(`rollup-plugin-terser`);
+const terser = require(`@rollup/plugin-terser`);
 const sourcemap = require(`rollup-plugin-sourcemaps`);
 const peerDepsExternal = require('rollup-plugin-peer-deps-external');
-// const analyze = require('rollup-plugin-analyzer');
-// const { visualizer } = require('rollup-plugin-visualizer');
 const { swc, defineRollupSwcOption } = require('rollup-plugin-swc3');
-const typescriptR = require('@rollup/plugin-typescript');
-// const { plugins: swcPlugins } = require('@swc/core');
 const PluginTransformImport = require('swc-plugin-transform-import').default;
-// const multi = require(`@rollup/plugin-multi-entry`);
-// const clean = require(`./plugins/clean`);
-// const size = require(`./plugins/size`);
-// const copy = require(`./plugins/copy`);
+const generateDeclarations = require('rollup-plugin-generate-declarations');
 
 const env = process.env.NODE_ENV;
 const isProduction = env === `production`;
@@ -63,9 +54,10 @@ const createOutput = (dir = `dist`, defaultOpts) => {
   } = defaultOpts;
 
   const defaultPlugins = [
-    // isProduction && clean(dir),
-    // multi(),
-    isProduction && peerDepsExternal(),
+    isProduction &&
+      peerDepsExternal({
+        includeDependencies: true
+      }),
     replace({
       'preventAssignment': true,
       'process.env.NODE_ENV': JSON.stringify(isProduction ? `production` : `development`)
@@ -83,7 +75,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     }),
     Object.keys(moduleAlias || {}).length > 0 &&
       alias({
-        ...moduleAlias,
+        entries: Object.entries(moduleAlias).map(([find, replacement]) => ({ find, replacement })),
         resolve: EXTENSIONS
       }),
     nodeResolve({
@@ -94,17 +86,10 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     commonjs({
       include: /\/node_modules\//,
       transformMixedEsModules: true,
-      requireReturnsDefault: 'auto',
+      defaultIsModuleExports: 'auto',
       esmExternals: true
-      // namedExports: {
-      //   '../../../../node_modules/graphql-request/dist/types.dom': ['HeadersInit']
-      // }
     }),
-    json(),
-    typescriptR({
-      sourceMap: !isProduction || defaultOpts.enableSourcemap,
-      tsconfig: './tsconfig.json'
-    }),
+    jsonlint({ mode: 'json5' }),
     swc(
       defineRollupSwcOption({
         sourceMaps: !isProduction || defaultOpts.enableSourcemap,
@@ -160,11 +145,8 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     // size(dir),
     progress({
       clearLine: false
-    })
-    // analyze(),
-    // visualizer({
-    // template: 'sunburst'
-    // })
+    }),
+    generateDeclarations()
   ];
 
   const outputs = [
@@ -201,7 +183,6 @@ const createOutput = (dir = `dist`, defaultOpts) => {
   };
 };
 
-// exports.copy = copy;
 exports.config = (opts) => {
   const inputs = Array.isArray(opts) ? opts : [opts];
   return inputs.map(({ dest: dir, ...o }) => {

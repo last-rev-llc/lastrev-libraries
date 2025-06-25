@@ -19,7 +19,6 @@ export type TypeName =
 
 // in the future, these should support other sources
 export type Source = 'Contentful' | 'Sanity';
-export type ConnectionParams = any;
 
 export type GqlField = {
   fieldName: string;
@@ -27,16 +26,11 @@ export type GqlField = {
   isArray: boolean;
 };
 
-export type Fetcher = (
-  typeMappings: Record<string, string>,
-  connectionParams: ConnectionParams,
-  skipReferenceFields: boolean
-) => Promise<string>;
+export type Fetcher = (typeMappings: Record<string, string>, skipReferenceFields?: boolean) => Promise<string>;
 
 export type GenerateSchemaParams = {
   source: Source;
   typeMappings: Record<string, string>;
   skipReferenceFields: boolean;
-  connectionParams?: ConnectionParams;
-  contentTypes?: ContentType[];
+  contentTypes: ContentType[];
 };

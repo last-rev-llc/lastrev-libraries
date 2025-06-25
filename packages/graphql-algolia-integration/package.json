@@ -16,12 +16,16 @@
     "lr-algolia-updater": "./bin/lr-algolia-updater"
   },
   "devDependencies": {
-    "@last-rev/app-config": "^0.5.1",
-    "@last-rev/rollup-config": "^0.1.5",
-    "@last-rev/testing-library": "^0.1.10",
-    "@last-rev/timer": "^0.2.0",
-    "@last-rev/types": "^0.4.0",
+    "@last-rev/app-config": "workspace:*",
+    "@last-rev/logging": "workspace:*",
+    "@last-rev/rollup-config": "workspace:*",
+    "@last-rev/testing-library": "workspace:*",
+    "@last-rev/timer": "workspace:*",
+    "@last-rev/types": "workspace:*",
+    "@types/lodash": "^4.17.18",
+    "esbuild": "^0.25.5",
     "jest": "^30.0.2",
+    "rollup": "^4.44.0",
     "ts-jest": "^29.4.0",
     "typescript": "^5.8.3"
   },
@@ -31,11 +35,12 @@
   "dependencies": {
     "@contentful/rich-text-plain-text-renderer": "^15.11.1",
     "@contentful/rich-text-types": "^15.11.1",
-    "@last-rev/contentful-webhook-parser": "^0.2.0",
+    "@last-rev/contentful-webhook-parser": "workspace:*",
     "algoliasearch": "^4.12.0",
     "axios": "^1.10.0",
     "cross-fetch": "^3.1.5",
     "graphql-request": "^6.1.0",
+    "graphql-tag": "^2.12.6",
     "lodash": "^4.17.21"
   }
 }

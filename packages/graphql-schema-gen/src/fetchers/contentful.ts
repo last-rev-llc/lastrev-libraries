@@ -1,7 +1,5 @@
-import { createClient, CreateClientParams } from 'contentful';
 import { ContentType, Field, FieldItem } from '@last-rev/types';
 import { has, some, upperFirst } from 'lodash';
-import { Fetcher } from '../types';
 
 const getFieldType = (typeData: Field | FieldItem): string => {
   switch (typeData.type) {
@@ -116,18 +114,4 @@ export const generateContentfulSchema = (
   ${contentTypeDefs}
   ${pageTypeDefs}
   `;
-};
-
-export const contentfulFetcher: Fetcher = async (
-  typeMappings: Record<string, string>,
-  clientParams: CreateClientParams,
-  skipReferenceFields: boolean
-) => {
-  const client = createClient({ ...clientParams });
-
-  return generateContentfulSchema(
-    typeMappings,
-    (await client.withoutLinkResolution.getContentTypes()).items,
-    skipReferenceFields
-  );
 };

@@ -6,6 +6,7 @@ import {
 } from '@apollo/server/plugin/landingPage/default';
 import { getWinstonLogger } from '@last-rev/logging';
 import { SimpleTimer as Timer } from '@last-rev/timer';
+import { contextFunction } from '@last-rev/graphql-cms-helpers';
 import LastRevAppConfig from '@last-rev/app-config';
 import SchemaCache from './SchemaCache';
 import merge from 'lodash/merge';
@@ -28,6 +29,16 @@ export const createServer = async (config: LastRevAppConfig) => {
         csrfPrevention: process.env.STAGE !== 'build' && process.env.NODE_ENV === 'production',
         cache: 'bounded',
         persistedQueries: process.env.APOLLO_PERSISTED_QUERIES_ENABLED === 'true',
+        context: contextFunction({
+          config,
+          extractFromArgs: (lambdaArg) => {
+            return lambdaArg.event.queryStringParameters?.env
+              ? {
+                  environment: lambdaArg.event.queryStringParameters?.env
+                }
+              : {};
+          }
+        }),
         plugins: config.apolloServerOptions?.plugins || [
           ApolloServerPluginInlineTrace(),
           process.env.NODE_ENV === 'production'

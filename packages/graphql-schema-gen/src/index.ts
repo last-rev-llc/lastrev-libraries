@@ -11,12 +11,11 @@ const logger = getWinstonLogger({
 export const generateSchema = async ({
   source = 'Contentful',
   typeMappings,
-  connectionParams,
   contentTypes,
   skipReferenceFields
 }: GenerateSchemaParams): Promise<DocumentNode> => {
   logger.info(`generating schema from ${source}...`, {
     caller: 'generateSchema'
   });
-  return await fetch(source, typeMappings, skipReferenceFields, connectionParams, contentTypes);
+  return await fetch(source, typeMappings, contentTypes, skipReferenceFields);
 };
