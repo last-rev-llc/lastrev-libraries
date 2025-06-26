@@ -15,9 +15,12 @@
   "devDependencies": {
     "@last-rev/rollup-config": "workspace:*",
     "@last-rev/testing-library": "workspace:*",
+    "@types/jest": "^30.0.0",
     "esbuild": "^0.25.5",
     "jest": "^30.0.2",
-    "rollup": "^4.44.0"
+    "rollup": "^4.44.0",
+    "ts-jest": "^29.4.0",
+    "typescript": "^5.8.3"
   },
   "keywords": [],
   "author": "",

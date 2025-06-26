@@ -1,4 +1,4 @@
-import LastRevAppConfig from 'packages/app-config/dist';
+import LastRevAppConfig from '@last-rev/app-config';
 import { join } from 'path';
 
 export const getGetUriFunction =

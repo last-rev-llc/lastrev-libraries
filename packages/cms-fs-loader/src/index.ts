@@ -121,7 +121,7 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
       const timer = new Timer();
       const dir = getUri(preview ? 'preview' : 'production', 'content_types');
       const contentTypeFilenames = await readdir(dir);
-      const out = Promise.all(
+      const out = await Promise.all(
         contentTypeFilenames.map(async (filename) => {
           try {
             return readJSON(join(dir, filename));

@@ -1,0 +1,148 @@
+
+> @last-rev/cms-path-rules-engine@0.1.0 test /Users/jaime.morales/dev/lastrev-libraries/packages/cms-path-rules-engine
+> jest --passWithNoTests
+
+PASS src/core/PathRuleParser.test.ts (6.563 s)
+  PathParser
+    ✓ throws an error when no string follows a colon (44 ms)
+    ✓ throws an error when segment has no content (1 ms)
+    ✓ throws an error when path does not start with slash (1 ms)
+    ✓ throws an error when reference expression has no contentType (2 ms)
+    ✓ throws an error when reference expression has too many strings (2 ms)
+    ✓ throws an error when reference expression is not followed by a field (3 ms)
+    ✓ throws an error when refby expression has no contentType or field name (11 ms)
+    ✓ throws an error when refby expression has only one identifier (2 ms)
+    ✓ throws an error when refby expression has too many identifiers (2 ms)
+    ✓ throws an error when segment expression has no index (2 ms)
+    ✓ throws an error when segment expression has a non-number value (3 ms)
+    ✓ returns an error when segment references exist with cycles (1 ms)
+    ✓ throws an error when segment references exist with indirect cycles (2 ms)
+    ✓ parses a rule with simple slug (2 ms)
+    ✓ parses a rule with static segment and a simple slug
+    ✓ parses a rule with reference expression
+    ✓ parses a rule with deeply nested direct member expressions (1 ms)
+    ✓ parses a rule with a segment reference (1 ms)
+    ✓ parses a rule with multiple segment references (1 ms)
+    ✓ parses a rule with a refBy expression (1 ms)
+    ✓ parses a rule with nested linking expressions (2 ms)
+
+PASS src/pathToContent/PathMatcher.test.ts (6.596 s)
+  PathMatcher
+    ✓ throws error when full path is used but more than one dynamic segment (35 ms)
+    ✓ throws error when full path is used but a reference field is used (2 ms)
+    ✓ throws error when full path is used but a refBy field is used (2 ms)
+    ✓ matches a rule with simple slug (2 ms)
+    ✓ does not match when too many segments exist
+    ✓ matches a rule with static and dynamic segment (1 ms)
+    ✓ does not match a rule with static and dynamic segments with the wrong static string
+    ✓ does not match a rule with static and dynamic segments with the wrong number of segments (1 ms)
+    ✓ matches a rule with reference segments (1 ms)
+    ✓ matches a rule with refBy segments (9 ms)
+    ✓ matches a rule with inter-mixed static and dynamic segments (1 ms)
+    ✓ matches a full path rule
+    ✓ matches a full path rule with static segment (1 ms)
+
+PASS src/contentToPaths/ContentToPathsFetcher.test.ts (6.652 s)
+  ContentToPathsFetcher
+    ✓ fetches path with a simple slug (12 ms)
+    ✓ fails to fetch a simple slug if field doesn't exist  (1 ms)
+    ✓ fetches path with a static segment and simple slug (1 ms)
+    ✓ fetches all paths for an item with a reference expression (1 ms)
+    ✓ fails to fetfh paths for an item with a reference expression but wrong content type (1 ms)
+    ✓ fetches all paths for an item with nested reference expressions (5 ms)
+    ✓ fetches all paths for an item with nested reference expressions using segment references (2 ms)
+    ✓ fetches all paths for an item with a refBy expression (2 ms)
+    ✓ fetches all paths for an item with nested refBy expressions (1 ms)
+    ✓ fetches all paths for an item with nested refBy expressions using segment references (1 ms)
+
+PASS src/pathToContent/PathtoItemsFetcher.test.ts (6.714 s)
+  PathToItemsFetcher
+    ✓ fetches items from a simple path (9 ms)
+    ✓ fails to fetch from simple path if content type does not match (1 ms)
+    ✓ fails to fetch from simple path if slug does not match
+    ✓ fails to fetch from simple path if path segment length does not match (1 ms)
+    ✓ fails to fetch from simple path if field does not match
+    ✓ fetches items from a simple path with a static segment (1 ms)
+    ✓ fetches items from a path with reference expression (1 ms)
+    ✓ fetches items from a path with refBy expression (1 ms)
+
+PASS src/core/RelationshipValidator.test.ts (6.749 s)
+  RelationshipValidator
+    ✓ has no errors with a simple matching slug (16 ms)
+    ✓ has error when a simple slug does not match (4 ms)
+    ✓ has no errors with a simple matching slug and static segment (1 ms)
+    ✓ has error when a simple slug and static segment does not match (1 ms)
+    ✓ has no errors with a nested reference (1 ms)
+    ✓ has error when a nested reference exists but is not the right content type (1 ms)
+    ✓ has error when the reference field does not exist or has no value
+    ✓ has no errors with a deeply nested reference (1 ms)
+    ✓ has no errors with a deeply nested reference even when there is not a segment relationship (1 ms)
+    ✓ has error with a deeply nested reference with segment references if segment relationship is not honored (1 ms)
+    ✓ has no errors with a refBy field (1 ms)
+    ✓ has errors with a refBy field when content exists but does not have the reference to the item
+    ✓ has errors with a refBy field when reference is valid, but does not match specified content type
+    ✓ has no errors with deeply nested refBy fields (1 ms)
+    ✓ has no errors with combined reference and refBy fields
+
+FAIL src/contentToPaths/ContentToPathsLoader.test.ts
+  ● Test suite failed to run
+
+    [96msrc/contentToPaths/ContentToPathsLoader.test.ts[0m:[93m11[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'includes' does not exist on type 'string | number | true | (string | UnresolvedLink<"Entry"> | { sys: ResourceLink<"Contentful:Entry">; } | { sys: ResourceLink<string>; } | UnresolvedLink<...>)[] | ... 6 more ... | readonly JsonValue[]'.
+      Property 'includes' does not exist on type 'number'.
+
+    [7m11[0m       return !excludedLocales.includes(ctx.locale);
+    [7m  [0m [91m                              ~~~~~~~~[0m
+    [96msrc/contentToPaths/ContentToPathsLoader.test.ts[0m:[93m24[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'includes' does not exist on type 'string | number | true | (string | UnresolvedLink<"Entry"> | { sys: ResourceLink<"Contentful:Entry">; } | { sys: ResourceLink<string>; } | UnresolvedLink<...>)[] | ... 6 more ... | readonly JsonValue[]'.
+      Property 'includes' does not exist on type 'number'.
+
+    [7m24[0m       return !excludedLocales.includes(ctx.locale);
+    [7m  [0m [91m                              ~~~~~~~~[0m
+    [96msrc/contentToPaths/ContentToPathsLoader.test.ts[0m:[93m38[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'includes' does not exist on type 'string | number | true | (string | UnresolvedLink<"Entry"> | { sys: ResourceLink<"Contentful:Entry">; } | { sys: ResourceLink<string>; } | UnresolvedLink<...>)[] | ... 6 more ... | readonly JsonValue[]'.
+      Property 'includes' does not exist on type 'number'.
+
+    [7m38[0m       return !excludedLocales.includes(ctx.locale);
+    [7m  [0m [91m                              ~~~~~~~~[0m
+
+FAIL src/pathToContent/PathToContentLoader.test.ts
+  ● Test suite failed to run
+
+    [96msrc/pathToContent/PathToContentLoader.test.ts[0m:[93m11[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'includes' does not exist on type 'string | number | true | (string | UnresolvedLink<"Entry"> | { sys: ResourceLink<"Contentful:Entry">; } | { sys: ResourceLink<string>; } | UnresolvedLink<...>)[] | ... 6 more ... | readonly JsonValue[]'.
+      Property 'includes' does not exist on type 'number'.
+
+    [7m11[0m       return !excludedLocales.includes(ctx.locale);
+    [7m  [0m [91m                              ~~~~~~~~[0m
+    [96msrc/pathToContent/PathToContentLoader.test.ts[0m:[93m24[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'includes' does not exist on type 'string | number | true | (string | UnresolvedLink<"Entry"> | { sys: ResourceLink<"Contentful:Entry">; } | { sys: ResourceLink<string>; } | UnresolvedLink<...>)[] | ... 6 more ... | readonly JsonValue[]'.
+      Property 'includes' does not exist on type 'number'.
+
+    [7m24[0m       return !excludedLocales.includes(ctx.locale);
+    [7m  [0m [91m                              ~~~~~~~~[0m
+    [96msrc/pathToContent/PathToContentLoader.test.ts[0m:[93m38[0m:[93m31[0m - [91merror[0m[90m TS2339: [0mProperty 'includes' does not exist on type 'string | number | true | (string | UnresolvedLink<"Entry"> | { sys: ResourceLink<"Contentful:Entry">; } | { sys: ResourceLink<string>; } | UnresolvedLink<...>)[] | ... 6 more ... | readonly JsonValue[]'.
+      Property 'includes' does not exist on type 'number'.
+
+    [7m38[0m       return !excludedLocales.includes(ctx.locale);
+    [7m  [0m [91m                              ~~~~~~~~[0m
+
+-------------------------------|---------|----------|---------|---------|---------------------------------
+File                           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s               
+-------------------------------|---------|----------|---------|---------|---------------------------------
+All files                      |   95.71 |    93.18 |   94.44 |   95.71 |                                 
+ src                           |   88.75 |    81.25 |      75 |   88.75 |                                 
+  testUtils.ts                 |   88.75 |    81.25 |      75 |   88.75 | 110-119,129-130,144-145,156-160 
+ src/contentToPaths            |   99.13 |    96.15 |     100 |   99.13 |                                 
+  ContentToPathsFetcher.ts     |     100 |      100 |     100 |     100 |                                 
+  ContentToPathsFetcherTree.ts |    98.6 |    94.82 |     100 |    98.6 | 57-58,183-184                   
+ src/core                      |   95.34 |    94.57 |    92.3 |   95.34 |                                 
+  PathRuleParser.ts            |   98.07 |      100 |   93.33 |   98.07 | 70-74                           
+  PathRuleTokenizer.ts         |   95.23 |    93.33 |   83.33 |   95.23 | 80-81,102-104                   
+  RelationshipValidator.ts     |   91.13 |    90.74 |   93.33 |   91.13 | 40-45,67-72,94-99               
+  traversePathRule.ts          |   98.18 |    94.44 |     100 |   98.18 | 38                              
+ src/pathToContent             |      95 |     92.5 |     100 |      95 |                                 
+  PathMatcher.ts               |     100 |      100 |     100 |     100 |                                 
+  PathToItemsFetcher.ts        |   91.24 |    83.33 |     100 |   91.24 | 64-66,125-133                   
+-------------------------------|---------|----------|---------|---------|---------------------------------
+Test Suites: 2 failed, 5 passed, 7 total
+Tests:       67 passed, 67 total
+Snapshots:   0 total
+Time:        11.807 s
+Ran all test suites.
+ ELIFECYCLE  Test failed. See above for more details.

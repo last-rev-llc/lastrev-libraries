@@ -17,6 +17,7 @@
     "@last-rev/rollup-config": "workspace:*",
     "@last-rev/testing-library": "workspace:*",
     "@last-rev/types": "workspace:*",
+    "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.6",
     "@types/lodash": "^4.17.18",
     "jest": "^30.0.2",
