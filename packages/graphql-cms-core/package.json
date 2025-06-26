@@ -13,6 +13,7 @@
   },
   "devDependencies": {
     "@contentful/rich-text-types": "^17.0.0",
+    "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.18",
     "@types/node": "^24.0.4",
     "esbuild": "^0.25.5",
@@ -20,8 +21,7 @@
     "next": "^15.3.4",
     "ts-jest": "^29.4.0",
     "tslint": "^5.20.1",
-    "typescript": "^5.8.3",
-    "next": "^14.2.3"
+    "typescript": "^5.8.3"
   },
   "keywords": [],
   "author": "",

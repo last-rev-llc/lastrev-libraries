@@ -10,7 +10,7 @@ describe('PathMatcher', () => {
           pathRule: parser.PathRule(),
           allowFullPaths: true
         })
-    ).toThrowError('Only one simple field can be used in a full path');
+    ).toThrow('Only one simple field can be used in a full path');
   });
 
   it('throws error when full path is used but a reference field is used', () => {
@@ -21,7 +21,7 @@ describe('PathMatcher', () => {
           pathRule: parser.PathRule(),
           allowFullPaths: true
         })
-    ).toThrowError('No references or refBy segments allowed when using a full path');
+    ).toThrow('No references or refBy segments allowed when using a full path');
   });
 
   it('throws error when full path is used but a refBy field is used', () => {
@@ -32,7 +32,7 @@ describe('PathMatcher', () => {
           pathRule: parser.PathRule(),
           allowFullPaths: true
         })
-    ).toThrowError('No references or refBy segments allowed when using a full path');
+    ).toThrow('No references or refBy segments allowed when using a full path');
   });
   it('matches a rule with simple slug', () => {
     const parser = new PathRuleParser(`/:slug`);

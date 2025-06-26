@@ -19,6 +19,7 @@
     "@last-rev/types": "workspace:*",
     "@types/lodash": "^4.17.18",
     "contentful": "^11.7.2",
+    "jest": "^30.0.2",
     "rollup": "^4.44.0"
   },
   "keywords": [],

@@ -16,6 +16,7 @@
     "@last-rev/rollup-config": "workspace:*",
     "@last-rev/testing-library": "workspace:*",
     "@last-rev/types": "workspace:*",
+    "@types/jest": "^30.0.0",
     "esbuild": "^0.25.5",
     "jest": "^30.0.2",
     "rollup": "^4.44.0",

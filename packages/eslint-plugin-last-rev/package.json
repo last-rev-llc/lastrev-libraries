@@ -23,6 +23,7 @@
     "@last-rev/testing-library": "workspace:*",
     "@types/eslint": "^9.6.1",
     "@types/estree": "^1.0.8",
+    "@types/jest": "^30.0.0",
     "@typescript-eslint/types": "^5.13.0",
     "esbuild": "^0.25.5",
     "jest": "^30.0.2",

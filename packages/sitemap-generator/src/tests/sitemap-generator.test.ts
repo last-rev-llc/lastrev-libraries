@@ -20,7 +20,7 @@ describe('sitemap-generator (legacy)', () => {
     expect(validateSchema('./schemas/sitemap.xsd', page3)).toBeTruthy();
 
     expect(sitemap).toMatchInlineSnapshot(`
-      "<sitemapindex xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\">
+      "<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         <sitemap>
           <loc>https://site.com/page1.xml</loc>
           <lastmod>2022-02-08</lastmod>
@@ -36,7 +36,7 @@ describe('sitemap-generator (legacy)', () => {
       </sitemapindex>"
     `);
     expect(page1).toMatchInlineSnapshot(`
-      "<urlset xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xmlns:image=\\"http://www.google.com/schemas/sitemap-image/1.1\\" xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd\\" xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\">
+      "<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         <url>
           <loc>https://site.com/page1-a</loc>
           <lastmod>2022-02-01</lastmod>
@@ -52,7 +52,7 @@ describe('sitemap-generator (legacy)', () => {
       </urlset>"
     `);
     expect(page2).toMatchInlineSnapshot(`
-      "<urlset xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xmlns:image=\\"http://www.google.com/schemas/sitemap-image/1.1\\" xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd\\" xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\">
+      "<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         <url>
           <loc>https://site.com/page2-a</loc>
           <lastmod>2022-02-01</lastmod>
@@ -68,7 +68,7 @@ describe('sitemap-generator (legacy)', () => {
       </urlset>"
     `);
     expect(page3).toMatchInlineSnapshot(`
-      "<urlset xmlns:xsi=\\"http://www.w3.org/2001/XMLSchema-instance\\" xmlns:image=\\"http://www.google.com/schemas/sitemap-image/1.1\\" xsi:schemaLocation=\\"http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd\\" xmlns=\\"http://www.sitemaps.org/schemas/sitemap/0.9\\">
+      "<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd http://www.google.com/schemas/sitemap-image/1.1 http://www.google.com/schemas/sitemap-image/1.1/sitemap-image.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         <url>
           <loc>https://site.com/page3-a</loc>
           <lastmod>2022-02-01</lastmod>

@@ -13,7 +13,8 @@ const createMockLoader = () => {
     loadMany: jest.fn(),
     clear: jest.fn(),
     clearAll: jest.fn(),
-    prime: jest.fn()
+    prime: jest.fn(),
+    name: 'mockLoader'
   };
 };
 

@@ -22,6 +22,7 @@
     "@last-rev/rollup-config": "workspace:*",
     "@last-rev/testing-library": "workspace:*",
     "@types/datadog-winston": "^1.0.5",
+    "@types/jest": "^30.0.0",
     "esbuild": "^0.25.5",
     "jest": "^30.0.2",
     "rollup": "^4.44.0"

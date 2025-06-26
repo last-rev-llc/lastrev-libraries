@@ -7,8 +7,8 @@ const pathLoader = new PathLoader({
     rules: [{ rule: '/:slug', isCanonical: true, allowFullPaths: true }],
     filter: async ({ pathEntries, ctx }) => {
       const item = pathEntries[pathEntries.length - 1];
-      const excludedLocales = (item && item.fields.excludeFromLocales['en-US']) || [];
-      return !excludedLocales.includes(ctx.locale);
+      const excludedLocales = ((item && item.fields.excludeFromLocales['en-US']) || []) as string[];
+      return !ctx.locale || !excludedLocales.includes(ctx.locale);
     }
   },
   blog: {
@@ -20,8 +20,8 @@ const pathLoader = new PathLoader({
     filter: async ({ pathEntries, ctx, site }) => {
       if (site && site === 'no-blog-site') return false;
       const item = pathEntries[pathEntries.length - 1];
-      const excludedLocales = (item && item.fields.excludeFromLocales['en-US']) || [];
-      return !excludedLocales.includes(ctx.locale);
+      const excludedLocales = ((item && item.fields.excludeFromLocales['en-US']) || []) as string[];
+      return !ctx.locale || !excludedLocales.includes(ctx.locale);
     }
   },
   topic: {
@@ -34,8 +34,8 @@ const pathLoader = new PathLoader({
     ],
     filter: async ({ pathEntries, ctx }) => {
       const item = pathEntries[pathEntries.length - 1];
-      const excludedLocales = (item && item.fields.excludeFromLocales['en-US']) || [];
-      return !excludedLocales.includes(ctx.locale);
+      const excludedLocales = ((item && item.fields.excludeFromLocales['en-US']) || []) as string[];
+      return !ctx.locale || !excludedLocales.includes(ctx.locale);
     }
   }
 });

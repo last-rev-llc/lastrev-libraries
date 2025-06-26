@@ -1,18 +1,30 @@
-import { Linter, Rule } from 'eslint';
+import { Linter } from 'eslint';
 import parser from 'eslint-plugin-json-es';
 import noOutsideWorkspacesRule from './noOutsideWorkspaces';
 
 const linter = new Linter();
 
-linter.defineParser('eslint-plugin-json-es', parser);
-linter.defineRule('@last-rev/last-rev/no-outside-workspaces', noOutsideWorkspacesRule as Rule.RuleModule);
-
-const config: Linter.BaseConfig = {
-  parser: 'eslint-plugin-json-es',
-  rules: {
-    '@last-rev/last-rev/no-outside-workspaces': ['error']
+// ESLint 9+ flat config
+const config = [
+  {
+    files: ['**/*.json'],
+    languageOptions: {
+      parser: parser,
+      ecmaVersion: 2020,
+      sourceType: 'module'
+    },
+    plugins: {
+      '@last-rev/last-rev': {
+        rules: {
+          'no-outside-workspaces': noOutsideWorkspacesRule
+        }
+      }
+    },
+    rules: {
+      '@last-rev/last-rev/no-outside-workspaces': ['error']
+    }
   }
-};
+] as any; // Type assertion for compatibility
 
 const verify = (packageJson: string) => {
   return linter.verify(packageJson, config, { filename: 'test.json' });
