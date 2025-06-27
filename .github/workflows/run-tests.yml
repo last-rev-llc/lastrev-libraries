@@ -56,7 +56,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Run the tests
-        run: 'pnpm turbo run test lint'
+        run: 'pnpm turbo run test test:e2e:record lint'
 
       - name: Collect coverage
         run: 'pnpm combine:reports'
