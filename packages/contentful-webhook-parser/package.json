@@ -21,7 +21,8 @@
     "@types/jest": "^30.0.0",
     "esbuild": "^0.25.5",
     "jest": "^30.0.2",
-    "rollup": "^4.44.0"
+    "rollup": "^4.44.0",
+    "tslint": "^5.20.1"
   },
   "keywords": [],
   "author": "",

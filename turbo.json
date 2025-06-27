@@ -7,16 +7,6 @@
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
-    "test:e2e": {
-      "outputMode": "new-only",
-      "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
-    },
-    "test:e2e:record": {
-      "outputMode": "new-only",
-      "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
-    },
     "build-storybook": {
       "outputMode": "new-only",
       "dependsOn": ["^build"],

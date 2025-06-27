@@ -23,7 +23,8 @@
     "esbuild": "^0.25.5",
     "ioredis": "^5.0.4",
     "jest": "^30.0.2",
-    "rollup": "^4.44.0"
+    "rollup": "^4.44.0",
+    "tslint": "^5.20.1"
   },
   "dependencies": {
     "lodash": "^4.17.21"

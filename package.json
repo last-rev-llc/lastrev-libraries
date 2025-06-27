@@ -14,7 +14,7 @@
     "release": "pnpm build && changeset publish",
     "start": "turbo run start",
     "test:watch": "turbo run test:watch",
-    "test": "turbo run test:e2e test",
+    "test": "turbo run test",
     "posttest": "pnpm combine:reports",
     "preinstall": "npx only-allow pnpm",
     "version-packages": "changeset version && pnpm prettier",
