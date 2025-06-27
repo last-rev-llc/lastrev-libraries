@@ -21,6 +21,7 @@
     "@types/lodash": "^4.17.18",
     "@types/node": "^14.14.35",
     "contentful": "^11.7.2",
+    "esbuild": "^0.25.5",
     "jest": "^30.0.2",
     "rollup": "^4.44.0",
     "ts-jest": "^29.4.0",

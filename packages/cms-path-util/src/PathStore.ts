@@ -152,7 +152,7 @@ export class DynamoDbPathStore implements PathStore {
         },
         AttributesToGet: ['data']
       });
-      return Item?.data as PathDataMap;
+      return (Item?.data as PathDataMap) || {};
     } catch (e) {
       logger.info(`No path data found in dynamodb`, {
         caller: 'DynamoDbPathStore.load'

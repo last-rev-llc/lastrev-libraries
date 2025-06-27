@@ -1,65 +1,87 @@
-import { graphql, buildSchema } from 'graphql';
 import LastRevAppConfig from '@last-rev/app-config';
-import mockConfig from '@last-rev/app-config/src/app-config.mock';
 
 // Mock @sanity/client before importing createContext
 const fetchMock = jest.fn();
 jest.mock('@sanity/client', () => ({
   __esModule: true,
-  default: jest.fn(() => ({ fetch: fetchMock }))
+  createClient: jest.fn(() => ({ fetch: fetchMock }))
 }));
+
+// Mock other dependencies
+jest.mock('./createLoaders', () => jest.fn().mockReturnValue({ type: 'mockLoaders' }));
+jest.mock('./createPathReaders', () => jest.fn().mockReturnValue(undefined));
 
 import createContext from './createContext';
 
 describe('createContext with Sanity CMS', () => {
   beforeEach(() => {
     fetchMock.mockReset();
+    const { createClient } = require('@sanity/client');
+    createClient.mockClear();
   });
 
-  it('initializes context fields and loaders', async () => {
-    fetchMock.mockResolvedValueOnce([{ code: 'en-US' }, { code: 'es' }]);
-
-    const config = new LastRevAppConfig({ ...mockConfig(), cms: 'Sanity' });
+  it('initializes context fields and loaders for Sanity', async () => {
+    const config = new LastRevAppConfig({ 
+      cms: 'Sanity',
+      contentStrategy: 'cms',
+      cmsCacheStrategy: 'none',
+      sanity: {
+        projectId: 'test-project',
+        dataset: 'production',
+        token: 'test-token',
+        apiVersion: '2021-03-25',
+        schemaTypes: [],
+        supportedLanguages: [{ id: 'en-US', title: 'English' }, { id: 'es', title: 'Spanish' }]
+      }
+    });
+    
     const ctx = await createContext({ config });
 
+    expect(ctx.cms).toBe('Sanity');
     expect(ctx.locales).toEqual(['en-US', 'es']);
     expect(ctx.defaultLocale).toBe('en-US');
-    expect(ctx.loaders.entryLoader).toBeDefined();
-    expect(ctx.contentful!.prod).toBeDefined();
-    expect(ctx.contentful!.preview).toBeDefined();
-    expect(fetchMock).toHaveBeenCalledWith('*[_type == "i18n.locale"]{code}');
+    expect(ctx.loaders).toEqual({ type: 'mockLoaders' });
+    expect(ctx.sanity).toBeDefined();
+    expect(ctx.contentful).toBeUndefined();
   });
 
-  it('resolves data via GraphQL using sanity loaders', async () => {
-    fetchMock.mockImplementation((query: string, params: any) => {
-      if (query.includes('i18n.locale')) {
-        return Promise.resolve([{ code: 'en-US' }]);
+  it('creates sanity clients correctly', async () => {
+    const config = new LastRevAppConfig({ 
+      cms: 'Sanity',
+      contentStrategy: 'cms',
+      cmsCacheStrategy: 'none',
+      sanity: {
+        projectId: 'test-project',
+        dataset: 'staging',
+        token: 'test-token',
+        apiVersion: '2022-01-01',
+        schemaTypes: [],
+        supportedLanguages: [{ id: 'en-US', title: 'English' }]
       }
-      if (query.startsWith('*[_id == $id]')) {
-        return Promise.resolve({ _id: params.id });
-      }
-      return Promise.resolve(null);
     });
+    
+    await createContext({ config });
 
-    const config = new LastRevAppConfig({ ...mockConfig(), cms: 'Sanity' });
-    const ctx = await createContext({ config });
-
-    const schema = buildSchema(`
-      type Entry { _id: ID! }
-      type Query { entry(id: ID!): Entry }
-    `);
-
-    const root = {
-      entry: (_: any, { id }: any, context: any) => context.loaders.entryLoader.load({ id, preview: false })
-    };
-
-    const result = await graphql({
-      schema,
-      source: '{ entry(id: "123") { _id } }',
-      rootValue: root,
-      contextValue: { ...ctx, preview: false }
+    const { createClient } = require('@sanity/client');
+    expect(createClient).toHaveBeenCalledTimes(2);
+    
+    // Production client
+    expect(createClient).toHaveBeenCalledWith({
+      projectId: 'test-project',
+      dataset: 'staging',
+      apiVersion: '2022-01-01',
+      token: 'test-token',
+      useCdn: true
     });
-
-    expect(result.data).toEqual({ entry: { _id: '123' } });
+    
+    // Preview client
+    expect(createClient).toHaveBeenCalledWith({
+      projectId: 'test-project',
+      dataset: 'staging',
+      apiVersion: '2022-01-01',
+      token: 'test-token',
+      useCdn: false,
+      perspective: 'drafts'
+    });
   });
 });

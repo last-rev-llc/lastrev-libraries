@@ -13,12 +13,14 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
+    "@apollo/server": "^4.12.2",
     "@last-rev/rollup-config": "workspace:*",
     "@last-rev/testing-library": "workspace:*",
     "@last-rev/types": "workspace:*",
     "@testing-library/jest-dom": "^5.16.4",
     "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.18",
+    "esbuild": "^0.25.5",
     "ioredis": "^5.0.4",
     "jest": "^30.0.2",
     "rollup": "^4.44.0"

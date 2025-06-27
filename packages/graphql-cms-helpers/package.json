@@ -7,12 +7,17 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc -w",
-    "lint": "tslint --project tsconfig.json"
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
+    "@last-rev/logging": "^0.1.4",
+    "@types/jest": "^30.0.0",
     "@types/lodash": "4.17.18",
     "@types/node": "^14.14.35",
     "esbuild": "^0.25.5",
+    "graphql": "^16.6.0",
     "jest": "^30.0.2",
     "ts-jest": "^29.4.0",
     "tslint": "^5.20.1",
@@ -24,14 +29,14 @@
   "dependencies": {
     "@apollo/server": "^4.12.2",
     "@last-rev/app-config": "workspace:*",
-    "@last-rev/contentful-cms-loader": "workspace:*",
     "@last-rev/cms-dynamodb-loader": "workspace:*",
     "@last-rev/cms-fs-loader": "workspace:*",
-    "@last-rev/cms-redis-loader": "workspace:*",
     "@last-rev/cms-path-rules-engine": "workspace:*",
-    "@last-rev/testing-library": "workspace:*",
     "@last-rev/cms-path-util": "workspace:*",
+    "@last-rev/cms-redis-loader": "workspace:*",
+    "@last-rev/contentful-cms-loader": "workspace:*",
     "@last-rev/sanity-cms-loader": "workspace:*",
+    "@last-rev/testing-library": "workspace:*",
     "@last-rev/timer": "workspace:*",
     "@last-rev/types": "workspace:*",
     "@sanity/client": "^7.4.0",
