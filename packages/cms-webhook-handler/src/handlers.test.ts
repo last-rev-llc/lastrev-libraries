@@ -27,7 +27,7 @@ describe('handlers', () => {
 
     mockCreateRedisHandlers.mockReturnValue(mockHandlers);
     mockCreateDynamoDbHandlers.mockReturnValue(mockHandlers);
-    
+
     baseConfig = new LastRevAppConfig(mockAppConfig());
   });
 
@@ -55,6 +55,5 @@ describe('handlers', () => {
 
       expect(() => createHandlers(config)).toThrow('cmsCacheStrategy "none" does not need a webhook handler');
     });
-
   });
 });

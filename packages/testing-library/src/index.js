@@ -2,12 +2,15 @@ exports.config = (options = {}) => {
   return {
     preset: 'ts-jest',
     transform: {
-      '^.+\\.tsx?$': ['ts-jest', {
-        tsconfig: {
-          target: 'ES2020',
-          jsx: 'react'
+      '^.+\\.tsx?$': [
+        'ts-jest',
+        {
+          tsconfig: {
+            target: 'ES2020',
+            jsx: 'react'
+          }
         }
-      }]
+      ]
     },
     testPathIgnorePatterns: ['<rootDir>/node_modules/'],
     moduleNameMapper: {

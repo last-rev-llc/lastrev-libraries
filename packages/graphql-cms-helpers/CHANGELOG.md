@@ -1,5 +1,26 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.2.0
+
+### Minor Changes
+
+- 5a8c889: Added support for Sanity, renamed some packages, added more test coverage, switched to PNPM
+
+### Patch Changes
+
+- Updated dependencies [5a8c889]
+  - @last-rev/cms-path-rules-engine@0.2.0
+  - @last-rev/contentful-cms-loader@0.6.0
+  - @last-rev/cms-dynamodb-loader@0.2.0
+  - @last-rev/sanity-cms-loader@0.2.0
+  - @last-rev/cms-redis-loader@0.2.0
+  - @last-rev/testing-library@0.2.0
+  - @last-rev/cms-fs-loader@0.2.0
+  - @last-rev/cms-path-util@0.2.0
+  - @last-rev/app-config@0.6.0
+  - @last-rev/timer@0.3.0
+  - @last-rev/types@0.5.0
+
 ## 0.5.0
 
 ### Minor Changes

@@ -43,14 +43,7 @@ describe('primers', () => {
         { sys: { type: 'Entry', id: 'entry2' }, fields: { title: 'Entry 2' } }
       ];
 
-      await primeRedisEntriesOrAssets(
-        mockClient as any,
-        cacheMissIds,
-        'entries',
-        sourceResults,
-        1000,
-        3600
-      );
+      await primeRedisEntriesOrAssets(mockClient as any, cacheMissIds, 'entries', sourceResults, 1000, 3600);
 
       // Check that entries were set in Redis
       const entry1 = await mockClient.get('production:entries:entry1');
@@ -75,14 +68,7 @@ describe('primers', () => {
         new Error('Failed to fetch')
       ];
 
-      await primeRedisEntriesOrAssets(
-        mockClient as any,
-        cacheMissIds,
-        'entries',
-        sourceResults,
-        1000,
-        3600
-      );
+      await primeRedisEntriesOrAssets(mockClient as any, cacheMissIds, 'entries', sourceResults, 1000, 3600);
 
       // Only valid entry should be in Redis
       const entry1 = await mockClient.get('production:entries:entry1');
@@ -96,14 +82,7 @@ describe('primers', () => {
       const cacheMissIds: ItemKey[] = [];
       const sourceResults: any[] = [];
 
-      await primeRedisEntriesOrAssets(
-        mockClient as any,
-        cacheMissIds,
-        'entries',
-        sourceResults,
-        1000,
-        3600
-      );
+      await primeRedisEntriesOrAssets(mockClient as any, cacheMissIds, 'entries', sourceResults, 1000, 3600);
 
       // Should not throw and complete successfully
       expect(true).toBe(true);
@@ -154,17 +133,9 @@ describe('primers', () => {
         ]
       ];
 
-      const cacheMissContentTypeIds: ItemKey[] = [
-        { id: 'blog', preview: false }
-      ];
+      const cacheMissContentTypeIds: ItemKey[] = [{ id: 'blog', preview: false }];
 
-      await primeRedisEntriesByContentType(
-        mockClient as any,
-        mockEntries,
-        cacheMissContentTypeIds,
-        1000,
-        3600
-      );
+      await primeRedisEntriesByContentType(mockClient as any, mockEntries, cacheMissContentTypeIds, 1000, 3600);
 
       // Check that entries were primed
       const entry1 = await mockClient.get('production:entries:entry1');
@@ -190,17 +161,9 @@ describe('primers', () => {
         ]
       ];
 
-      const cacheMissContentTypeIds: ItemKey[] = [
-        { id: 'page', preview: true }
-      ];
+      const cacheMissContentTypeIds: ItemKey[] = [{ id: 'page', preview: true }];
 
-      await primeRedisEntriesByContentType(
-        mockClient as any,
-        mockEntries,
-        cacheMissContentTypeIds,
-        1000,
-        3600
-      );
+      await primeRedisEntriesByContentType(mockClient as any, mockEntries, cacheMissContentTypeIds, 1000, 3600);
 
       // Check preview entry was primed
       const previewEntry = await mockClient.get('preview:entries:preview1');
@@ -214,17 +177,9 @@ describe('primers', () => {
     it('should handle empty content type arrays', async () => {
       const mockEntries: BaseEntry[][] = [[]]; // Empty array for content type
 
-      const cacheMissContentTypeIds: ItemKey[] = [
-        { id: 'empty', preview: false }
-      ];
+      const cacheMissContentTypeIds: ItemKey[] = [{ id: 'empty', preview: false }];
 
-      await primeRedisEntriesByContentType(
-        mockClient as any,
-        mockEntries,
-        cacheMissContentTypeIds,
-        1000,
-        3600
-      );
+      await primeRedisEntriesByContentType(mockClient as any, mockEntries, cacheMissContentTypeIds, 1000, 3600);
 
       // Should complete without error
       const contentTypeIds = await mockClient.smembers('production:entry_ids_by_content_type:empty');
@@ -240,9 +195,7 @@ describe('primers', () => {
 
       const mockEntries: BaseEntry[][] = [largeEntrySet];
 
-      const cacheMissContentTypeIds: ItemKey[] = [
-        { id: 'large', preview: false }
-      ];
+      const cacheMissContentTypeIds: ItemKey[] = [{ id: 'large', preview: false }];
 
       await primeRedisEntriesByContentType(
         mockClient as any,
@@ -286,13 +239,7 @@ describe('primers', () => {
         { id: 'page', preview: false }
       ];
 
-      await primeRedisEntriesByContentType(
-        mockClient as any,
-        mockEntries,
-        cacheMissContentTypeIds,
-        1000,
-        3600
-      );
+      await primeRedisEntriesByContentType(mockClient as any, mockEntries, cacheMissContentTypeIds, 1000, 3600);
 
       // Check both content types were primed
       const blogIds = await mockClient.smembers('production:entry_ids_by_content_type:blog');

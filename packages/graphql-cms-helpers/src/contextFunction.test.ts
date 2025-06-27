@@ -3,12 +3,14 @@ import LastRevAppConfig from '@last-rev/app-config';
 import mockAppConfig from '@last-rev/app-config/src/app-config.mock';
 
 // Mock createContext
-jest.mock('./createContext', () => jest.fn().mockResolvedValue({ 
-  defaultMockContext: true,
-  cms: 'Contentful',
-  locales: ['en-US'],
-  defaultLocale: 'en-US'
-}));
+jest.mock('./createContext', () =>
+  jest.fn().mockResolvedValue({
+    defaultMockContext: true,
+    cms: 'Contentful',
+    locales: ['en-US'],
+    defaultLocale: 'en-US'
+  })
+);
 
 import createContext from './createContext';
 
@@ -25,10 +27,10 @@ describe('contextFunction', () => {
   describe('basic functionality', () => {
     it('should create context function with extractFromArgs', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: undefined });
-      
-      const contextFunc = contextFunction({ 
-        config: baseConfig, 
-        extractFromArgs 
+
+      const contextFunc = contextFunction({
+        config: baseConfig,
+        extractFromArgs
       });
 
       const result = await contextFunc('arg1', 'arg2');
@@ -45,10 +47,10 @@ describe('contextFunction', () => {
 
     it('should pass through extracted arguments', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: undefined });
-      
-      const contextFunc = contextFunction({ 
-        config: baseConfig, 
-        extractFromArgs 
+
+      const contextFunc = contextFunction({
+        config: baseConfig,
+        extractFromArgs
       });
 
       await contextFunc('test1', 'test2', { key: 'value' });
@@ -61,10 +63,10 @@ describe('contextFunction', () => {
     it('should override environment when provided', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: 'staging' });
       const cloneSpy = jest.spyOn(baseConfig, 'clone').mockReturnValue(baseConfig);
-      
-      const contextFunc = contextFunction({ 
-        config: baseConfig, 
-        extractFromArgs 
+
+      const contextFunc = contextFunction({
+        config: baseConfig,
+        extractFromArgs
       });
 
       await contextFunc();
@@ -78,10 +80,10 @@ describe('contextFunction', () => {
     it('should use original config when no environment provided', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: undefined });
       const cloneSpy = jest.spyOn(baseConfig, 'clone');
-      
-      const contextFunc = contextFunction({ 
-        config: baseConfig, 
-        extractFromArgs 
+
+      const contextFunc = contextFunction({
+        config: baseConfig,
+        extractFromArgs
       });
 
       await contextFunc();
@@ -93,10 +95,10 @@ describe('contextFunction', () => {
     it('should handle empty string environment', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: '' });
       const cloneSpy = jest.spyOn(baseConfig, 'clone');
-      
-      const contextFunc = contextFunction({ 
-        config: baseConfig, 
-        extractFromArgs 
+
+      const contextFunc = contextFunction({
+        config: baseConfig,
+        extractFromArgs
       });
 
       await contextFunc();
@@ -108,10 +110,10 @@ describe('contextFunction', () => {
     it('should handle null environment', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: null });
       const cloneSpy = jest.spyOn(baseConfig, 'clone');
-      
-      const contextFunc = contextFunction({ 
-        config: baseConfig, 
-        extractFromArgs 
+
+      const contextFunc = contextFunction({
+        config: baseConfig,
+        extractFromArgs
       });
 
       await contextFunc();
@@ -125,16 +127,16 @@ describe('contextFunction', () => {
     it('should merge extra context when apolloServerOptions.context exists', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: undefined });
       const apolloContext = jest.fn().mockResolvedValue({ extraField: 'extraValue' });
-      
+
       const configWithApollo = baseConfig.clone({
         apolloServerOptions: {
           context: apolloContext
         }
       });
 
-      const contextFunc = contextFunction({ 
-        config: configWithApollo, 
-        extractFromArgs 
+      const contextFunc = contextFunction({
+        config: configWithApollo,
+        extractFromArgs
       });
 
       const result = await contextFunc('arg1', 'arg2');
@@ -152,16 +154,16 @@ describe('contextFunction', () => {
     it('should handle apollo context returning undefined', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: undefined });
       const apolloContext = jest.fn().mockResolvedValue(undefined);
-      
+
       const configWithApollo = baseConfig.clone({
         apolloServerOptions: {
           context: apolloContext
         }
       });
 
-      const contextFunc = contextFunction({ 
-        config: configWithApollo, 
-        extractFromArgs 
+      const contextFunc = contextFunction({
+        config: configWithApollo,
+        extractFromArgs
       });
 
       const result = await contextFunc();
@@ -178,16 +180,16 @@ describe('contextFunction', () => {
     it('should handle apollo context throwing error', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: undefined });
       const apolloContext = jest.fn().mockRejectedValue(new Error('Apollo context error'));
-      
+
       const configWithApollo = baseConfig.clone({
         apolloServerOptions: {
           context: apolloContext
         }
       });
 
-      const contextFunc = contextFunction({ 
-        config: configWithApollo, 
-        extractFromArgs 
+      const contextFunc = contextFunction({
+        config: configWithApollo,
+        extractFromArgs
       });
 
       await expect(contextFunc()).rejects.toThrow('Apollo context error');
@@ -195,10 +197,10 @@ describe('contextFunction', () => {
 
     it('should not call apollo context when not configured', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: undefined });
-      
-      const contextFunc = contextFunction({ 
-        config: baseConfig, 
-        extractFromArgs 
+
+      const contextFunc = contextFunction({
+        config: baseConfig,
+        extractFromArgs
       });
 
       const result = await contextFunc();
@@ -216,19 +218,19 @@ describe('contextFunction', () => {
     it('should handle environment override with apollo context', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: 'production' });
       const apolloContext = jest.fn().mockResolvedValue({ userId: '123' });
-      
+
       const configWithApollo = new LastRevAppConfig({
         ...baseConfig.config,
         apolloServerOptions: {
           context: apolloContext
         }
       });
-      
+
       const cloneSpy = jest.spyOn(configWithApollo, 'clone').mockReturnValue(configWithApollo);
 
-      const contextFunc = contextFunction({ 
-        config: configWithApollo, 
-        extractFromArgs 
+      const contextFunc = contextFunction({
+        config: configWithApollo,
+        extractFromArgs
       });
 
       const result = await contextFunc('request', 'response');
@@ -251,10 +253,10 @@ describe('contextFunction', () => {
     it('should propagate createContext errors', async () => {
       const extractFromArgs = jest.fn().mockReturnValue({ environment: undefined });
       mockCreateContext.mockRejectedValue(new Error('Create context failed'));
-      
-      const contextFunc = contextFunction({ 
-        config: baseConfig, 
-        extractFromArgs 
+
+      const contextFunc = contextFunction({
+        config: baseConfig,
+        extractFromArgs
       });
 
       await expect(contextFunc()).rejects.toThrow('Create context failed');
@@ -264,10 +266,10 @@ describe('contextFunction', () => {
       const extractFromArgs = jest.fn().mockImplementation(() => {
         throw new Error('Extract args failed');
       });
-      
-      const contextFunc = contextFunction({ 
-        config: baseConfig, 
-        extractFromArgs 
+
+      const contextFunc = contextFunction({
+        config: baseConfig,
+        extractFromArgs
       });
 
       await expect(contextFunc()).rejects.toThrow('Extract args failed');

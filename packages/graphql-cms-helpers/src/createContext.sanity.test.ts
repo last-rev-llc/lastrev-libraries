@@ -21,7 +21,7 @@ describe('createContext with Sanity CMS', () => {
   });
 
   it('initializes context fields and loaders for Sanity', async () => {
-    const config = new LastRevAppConfig({ 
+    const config = new LastRevAppConfig({
       cms: 'Sanity',
       contentStrategy: 'cms',
       cmsCacheStrategy: 'none',
@@ -31,10 +31,13 @@ describe('createContext with Sanity CMS', () => {
         token: 'test-token',
         apiVersion: '2021-03-25',
         schemaTypes: [],
-        supportedLanguages: [{ id: 'en-US', title: 'English' }, { id: 'es', title: 'Spanish' }]
+        supportedLanguages: [
+          { id: 'en-US', title: 'English' },
+          { id: 'es', title: 'Spanish' }
+        ]
       }
     });
-    
+
     const ctx = await createContext({ config });
 
     expect(ctx.cms).toBe('Sanity');
@@ -46,7 +49,7 @@ describe('createContext with Sanity CMS', () => {
   });
 
   it('creates sanity clients correctly', async () => {
-    const config = new LastRevAppConfig({ 
+    const config = new LastRevAppConfig({
       cms: 'Sanity',
       contentStrategy: 'cms',
       cmsCacheStrategy: 'none',
@@ -59,12 +62,12 @@ describe('createContext with Sanity CMS', () => {
         supportedLanguages: [{ id: 'en-US', title: 'English' }]
       }
     });
-    
+
     await createContext({ config });
 
     const { createClient } = require('@sanity/client');
     expect(createClient).toHaveBeenCalledTimes(2);
-    
+
     // Production client
     expect(createClient).toHaveBeenCalledWith({
       projectId: 'test-project',
@@ -73,7 +76,7 @@ describe('createContext with Sanity CMS', () => {
       token: 'test-token',
       useCdn: true
     });
-    
+
     // Preview client
     expect(createClient).toHaveBeenCalledWith({
       projectId: 'test-project',

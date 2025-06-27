@@ -27,7 +27,7 @@ describe('cms-sync-to-fs', () => {
 
   describe('sync', () => {
     it('should call contentfulSync for Contentful CMS', async () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         fs: { contentDir: '/test/content' }
       });
@@ -41,7 +41,7 @@ describe('cms-sync-to-fs', () => {
     });
 
     it('should call sanitySync for Sanity CMS', async () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Sanity',
         fs: { contentDir: '/test/content' },
         sanity: {
@@ -59,7 +59,7 @@ describe('cms-sync-to-fs', () => {
     });
 
     it('should use usePreview from contentful config for Contentful CMS', async () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         fs: { contentDir: '/test/content' },
         contentful: {
@@ -74,7 +74,7 @@ describe('cms-sync-to-fs', () => {
     });
 
     it('should use usePreview from sanity config for Sanity CMS', async () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Sanity',
         fs: { contentDir: '/test/content' },
         sanity: {
@@ -89,7 +89,7 @@ describe('cms-sync-to-fs', () => {
     });
 
     it('should pass sites parameter correctly', async () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         fs: { contentDir: '/test/content' }
       });
@@ -101,7 +101,7 @@ describe('cms-sync-to-fs', () => {
     });
 
     it('should work without sites parameter', async () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         fs: { contentDir: '/test/content' }
       });
@@ -112,7 +112,7 @@ describe('cms-sync-to-fs', () => {
     });
 
     it('should validate contentDir argument', async () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         fs: { contentDir: '/test/content' }
       });
@@ -123,11 +123,11 @@ describe('cms-sync-to-fs', () => {
     });
 
     it('should throw error if contentDir validation fails', async () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         fs: { contentDir: '/test/content' }
       });
-      
+
       mockValidateArg.mockImplementation((_arg, argname) => {
         if (argname === 'fs.contentDir') {
           throw new Error(`Missing required argument: ${argname}`);

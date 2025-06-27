@@ -1,5 +1,23 @@
 # @last-rev/cli
 
+## 0.7.0
+
+### Minor Changes
+
+- 5a8c889: Added support for Sanity, renamed some packages, added more test coverage, switched to PNPM
+
+### Patch Changes
+
+- Updated dependencies [5a8c889]
+  - @last-rev/contentful-import-export@0.3.0
+  - @last-rev/contentful-fragment-gen@0.4.0
+  - @last-rev/graphql-cms-helpers@0.2.0
+  - @last-rev/contentful-reports@0.3.0
+  - @last-rev/graphql-cms-core@0.2.0
+  - @last-rev/testing-library@0.2.0
+  - @last-rev/cms-sync-to-fs@0.2.0
+  - @last-rev/app-config@0.6.0
+
 ## 0.6.2
 
 ### Patch Changes

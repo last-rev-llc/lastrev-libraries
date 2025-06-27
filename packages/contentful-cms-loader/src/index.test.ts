@@ -50,7 +50,7 @@ describe('contentful-cms-loader', () => {
     mockCreateClient.mockImplementation((config: any) => {
       const isPreview = config.host === 'preview.contentful.com';
       const client = isPreview ? mockPreviewClient : mockProdClient;
-      
+
       return {
         withoutLinkResolution: {
           withAllLocales: client
@@ -102,7 +102,7 @@ describe('contentful-cms-loader', () => {
       createLoaders(config, 'en-US');
 
       expect(mockCreateClient).toHaveBeenCalledTimes(2);
-      
+
       // Production client
       expect(mockCreateClient).toHaveBeenCalledWith({
         accessToken: 'delivery-token',
@@ -111,7 +111,7 @@ describe('contentful-cms-loader', () => {
         host: 'cdn.contentful.com'
       });
 
-      // Preview client  
+      // Preview client
       expect(mockCreateClient).toHaveBeenCalledWith({
         accessToken: 'preview-token',
         space: 'test-space',
@@ -342,16 +342,11 @@ describe('contentful-cms-loader', () => {
       const result = await loaders.entriesByContentTypeLoader.load({ id: 'blog', preview: false });
 
       expect(result).toEqual(mockEntries);
-      expect(mockMakeContentfulRequest).toHaveBeenCalledWith(
-        mockProdClient,
-        'getEntries',
-        500,
-        {
-          content_type: 'blog',
-          include: 0,
-          locale: '*'
-        }
-      );
+      expect(mockMakeContentfulRequest).toHaveBeenCalledWith(mockProdClient, 'getEntries', 500, {
+        content_type: 'blog',
+        include: 0,
+        locale: '*'
+      });
     });
 
     it('should handle preview mode', async () => {
@@ -365,9 +360,7 @@ describe('contentful-cms-loader', () => {
         }
       });
 
-      const mockEntries = [
-        { sys: { id: 'entry1', contentType: { sys: { id: 'blog' } } }, fields: {} }
-      ];
+      const mockEntries = [{ sys: { id: 'entry1', contentType: { sys: { id: 'blog' } } }, fields: {} }];
 
       mockMakeContentfulRequest.mockResolvedValue(mockEntries as any);
 
@@ -375,16 +368,11 @@ describe('contentful-cms-loader', () => {
       const result = await loaders.entriesByContentTypeLoader.load({ id: 'blog', preview: true });
 
       expect(result).toEqual(mockEntries);
-      expect(mockMakeContentfulRequest).toHaveBeenCalledWith(
-        mockPreviewClient,
-        'getEntries',
-        500,
-        {
-          content_type: 'blog',
-          include: 0,
-          locale: '*'
-        }
-      );
+      expect(mockMakeContentfulRequest).toHaveBeenCalledWith(mockPreviewClient, 'getEntries', 500, {
+        content_type: 'blog',
+        include: 0,
+        locale: '*'
+      });
     });
 
     it('should use custom maxBatchSize', async () => {
@@ -404,12 +392,7 @@ describe('contentful-cms-loader', () => {
       const loaders = createLoaders(config, 'en-US');
       await loaders.entriesByContentTypeLoader.load({ id: 'blog', preview: false });
 
-      expect(mockMakeContentfulRequest).toHaveBeenCalledWith(
-        mockProdClient,
-        'getEntries',
-        500,
-        expect.any(Object)
-      );
+      expect(mockMakeContentfulRequest).toHaveBeenCalledWith(mockProdClient, 'getEntries', 500, expect.any(Object));
     });
   });
 
@@ -444,8 +427,8 @@ describe('contentful-cms-loader', () => {
 
       expect(result).toEqual(mockEntry);
       expect(mockProdClient.getEntries).toHaveBeenCalledWith({
-        content_type: 'blog',
-        include: 0,
+        'content_type': 'blog',
+        'include': 0,
         'fields.slug[in]': 'test-slug'
       });
     });
@@ -506,8 +489,8 @@ describe('contentful-cms-loader', () => {
 
       expect(result).toEqual(mockEntry);
       expect(mockPreviewClient.getEntries).toHaveBeenCalledWith({
-        content_type: 'blog',
-        include: 0,
+        'content_type': 'blog',
+        'include': 0,
         'fields.slug[in]': 'preview-slug'
       });
     });
@@ -552,9 +535,7 @@ describe('contentful-cms-loader', () => {
         }
       });
 
-      const mockContentTypes = [
-        { sys: { id: 'blog' }, name: 'Blog' }
-      ];
+      const mockContentTypes = [{ sys: { id: 'blog' }, name: 'Blog' }];
 
       mockPreviewClient.getContentTypes.mockResolvedValue({
         items: mockContentTypes
@@ -600,11 +581,11 @@ describe('contentful-cms-loader', () => {
       });
 
       const mockReferencingEntries = [
-        { 
+        {
           sys: { id: 'ref1', contentType: { sys: { id: 'article' } } },
           fields: { author: { 'en-US': { sys: { id: 'author1', type: 'Link' } } } }
         },
-        { 
+        {
           sys: { id: 'ref2', contentType: { sys: { id: 'article' } } },
           fields: { author: { 'en-US': { sys: { id: 'author1', type: 'Link' } } } }
         }
@@ -631,8 +612,8 @@ describe('contentful-cms-loader', () => {
 
       expect(result).toEqual(mockReferencingEntries);
       expect(mockProdClient.getEntries).toHaveBeenCalledWith({
-        content_type: 'article',
-        include: 0,
+        'content_type': 'article',
+        'include': 0,
         'fields.author.sys.id[in]': 'author1'
       });
     });
@@ -649,7 +630,7 @@ describe('contentful-cms-loader', () => {
       });
 
       const mockReferencingEntries = [
-        { 
+        {
           sys: { id: 'ref1', contentType: { sys: { id: 'article' } } },
           fields: { category: { 'en-US': { sys: { id: 'cat1', type: 'Link' } } } }
         }
@@ -676,8 +657,8 @@ describe('contentful-cms-loader', () => {
 
       expect(result).toEqual(mockReferencingEntries);
       expect(mockPreviewClient.getEntries).toHaveBeenCalledWith({
-        content_type: 'article',
-        include: 0,
+        'content_type': 'article',
+        'include': 0,
         'fields.category.sys.id[in]': 'cat1'
       });
     });
@@ -736,7 +717,7 @@ describe('contentful-cms-loader', () => {
       });
 
       const loaders = createLoaders(config, 'en-US');
-      
+
       // Load both versions
       const prodResult = await loaders.entryLoader.load({ id: 'entry1', preview: false });
       const previewResult = await loaders.entryLoader.load({ id: 'entry1', preview: true });

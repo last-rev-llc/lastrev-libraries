@@ -21,7 +21,7 @@ const execPromise = (command) =>
 (async function () {
   try {
     console.log('Starting coverage combination...');
-    
+
     if (!fs.existsSync(REPORTS_PATH)) {
       fs.mkdirSync(REPORTS_PATH, { recursive: true });
     }
@@ -55,19 +55,19 @@ const execPromise = (command) =>
 
     console.log('Merging coverage reports...');
     await execPromise('npx nyc merge reports');
-    
+
     // Check if coverage.json was created before trying to move it
     if (!fs.existsSync('coverage.json')) {
       console.log('No coverage.json generated, skipping HTML report generation...');
       return;
     }
-    
+
     console.log('Moving coverage.json...');
     await execPromise('mv coverage.json .nyc_output/out.json');
-    
+
     console.log('Generating HTML report...');
     await execPromise('npx nyc -t ./.nyc_output report --reporter=html');
-    
+
     console.log('Coverage combination complete!');
   } catch (error) {
     console.error('Error combining coverage reports:', error);

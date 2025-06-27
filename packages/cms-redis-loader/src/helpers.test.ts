@@ -127,7 +127,7 @@ describe('helpers', () => {
     it('should add lastrev_metadata to object', () => {
       const item = { sys: { id: 'test' }, fields: {} };
       const enhanced = enhanceContentfulObjectWithMetadata(item);
-      
+
       expect(enhanced).toHaveProperty('lastrev_metadata');
       expect(enhanced.lastrev_metadata).toHaveProperty('insert_date');
       expect(enhanced.lastrev_metadata).toHaveProperty('source', 'RedisLoader');
@@ -137,7 +137,7 @@ describe('helpers', () => {
     it('should preserve original object properties', () => {
       const item = { sys: { id: 'test' }, fields: { title: 'Test' } };
       const enhanced = enhanceContentfulObjectWithMetadata(item);
-      
+
       expect(enhanced.sys).toEqual(item.sys);
       expect(enhanced.fields).toEqual(item.fields);
     });
@@ -185,10 +185,10 @@ describe('helpers', () => {
         sys: { type: 'Entry', id: 'test' },
         fields: { title: 'Test Entry' }
       };
-      
+
       const result = stringify(entry, 'test-key');
       expect(result).toBeDefined();
-      
+
       const parsed = JSON.parse(result!);
       expect(parsed.sys).toEqual(entry.sys);
       expect(parsed.fields).toEqual(entry.fields);
@@ -200,10 +200,10 @@ describe('helpers', () => {
         sys: { type: 'Asset', id: 'test-asset' },
         fields: { file: { url: 'https://example.com/image.jpg' } }
       };
-      
+
       const result = stringify(asset, 'test-key');
       expect(result).toBeDefined();
-      
+
       const parsed = JSON.parse(result!);
       expect(parsed.sys).toEqual(asset.sys);
       expect(parsed.fields).toEqual(asset.fields);

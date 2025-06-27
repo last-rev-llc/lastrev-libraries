@@ -2,73 +2,77 @@ import { PathNode } from './PathNode';
 import { ApolloContext, BaseEntry, PathData } from '@last-rev/types';
 
 // Realistic CMS content entries
-const createProductEntry = (id: string, name: string): BaseEntry => ({
-  sys: {
-    id,
-    contentType: { sys: { id: 'product' } },
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z',
-    revision: 1,
-    type: 'Entry',
-    space: { sys: { id: 'test-space' } },
-    environment: { sys: { id: 'master' } },
-    publishedVersion: 1
-  },
-  fields: {
-    title: { 'en-US': name },
-    slug: { 'en-US': id }
-  },
-  metadata: { tags: [] }
-} as unknown as BaseEntry);
+const createProductEntry = (id: string, name: string): BaseEntry =>
+  ({
+    sys: {
+      id,
+      contentType: { sys: { id: 'product' } },
+      createdAt: '2024-01-01T00:00:00Z',
+      updatedAt: '2024-01-01T00:00:00Z',
+      revision: 1,
+      type: 'Entry',
+      space: { sys: { id: 'test-space' } },
+      environment: { sys: { id: 'master' } },
+      publishedVersion: 1
+    },
+    fields: {
+      title: { 'en-US': name },
+      slug: { 'en-US': id }
+    },
+    metadata: { tags: [] }
+  } as unknown as BaseEntry);
 
-const createCategoryEntry = (id: string, name: string): BaseEntry => ({
-  sys: {
-    id,
-    contentType: { sys: { id: 'category' } },
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z',
-    revision: 1,
-    type: 'Entry',
-    space: { sys: { id: 'test-space' } },
-    environment: { sys: { id: 'master' } },
-    publishedVersion: 1
-  },
-  fields: {
-    title: { 'en-US': name },
-    slug: { 'en-US': id }
-  },
-  metadata: { tags: [] }
-} as unknown as BaseEntry);
+const createCategoryEntry = (id: string, name: string): BaseEntry =>
+  ({
+    sys: {
+      id,
+      contentType: { sys: { id: 'category' } },
+      createdAt: '2024-01-01T00:00:00Z',
+      updatedAt: '2024-01-01T00:00:00Z',
+      revision: 1,
+      type: 'Entry',
+      space: { sys: { id: 'test-space' } },
+      environment: { sys: { id: 'master' } },
+      publishedVersion: 1
+    },
+    fields: {
+      title: { 'en-US': name },
+      slug: { 'en-US': id }
+    },
+    metadata: { tags: [] }
+  } as unknown as BaseEntry);
 
-const createPageEntry = (id: string, title: string): BaseEntry => ({
-  sys: {
-    id,
-    contentType: { sys: { id: 'page' } },
-    createdAt: '2024-01-01T00:00:00Z',
-    updatedAt: '2024-01-01T00:00:00Z',
-    revision: 1,
-    type: 'Entry',
-    space: { sys: { id: 'test-space' } },
-    environment: { sys: { id: 'master' } },
-    publishedVersion: 1
-  },
-  fields: {
-    title: { 'en-US': title },
-    slug: { 'en-US': id }
-  },
-  metadata: { tags: [] }
-} as unknown as BaseEntry);
+const createPageEntry = (id: string, title: string): BaseEntry =>
+  ({
+    sys: {
+      id,
+      contentType: { sys: { id: 'page' } },
+      createdAt: '2024-01-01T00:00:00Z',
+      updatedAt: '2024-01-01T00:00:00Z',
+      revision: 1,
+      type: 'Entry',
+      space: { sys: { id: 'test-space' } },
+      environment: { sys: { id: 'master' } },
+      publishedVersion: 1
+    },
+    fields: {
+      title: { 'en-US': title },
+      slug: { 'en-US': id }
+    },
+    metadata: { tags: [] }
+  } as unknown as BaseEntry);
 
 // Mock Apollo context with realistic loader behavior
-const createMockContext = (preview = false) => ({
-  preview,
-  loaders: {
-    entryLoader: {
-      load: jest.fn(),
-      loadMany: jest.fn()
+const createMockContext = (preview = false) =>
+  ({
+    preview,
+    loaders: {
+      entryLoader: {
+        load: jest.fn(),
+        loadMany: jest.fn()
+      }
     }
-  }
-} as unknown as ApolloContext);
+  } as unknown as ApolloContext);
 
 describe('PathNode - CMS Content Hierarchy Loading', () => {
   beforeEach(() => {
@@ -79,21 +83,21 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
     it('should load content hierarchy for product page breadcrumbs', async () => {
       // Scenario: User visits /products/shoes/nike-air-max
       // Need to load: Products page + Shoes category + Nike product
-      
+
       const productsPageData: PathData = {
         fullPath: '/products',
         contentId: 'products-page',
         excludedLocales: [],
         isPrimary: true
       };
-      
+
       const shoesCategoryData: PathData = {
         fullPath: '/products/shoes',
         contentId: 'shoes-category',
         excludedLocales: [],
         isPrimary: true
       };
-      
+
       const nikeProductData: PathData = {
         fullPath: '/products/shoes/nike-air-max',
         contentId: 'nike-product',
@@ -105,7 +109,7 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
       const productsNode = new PathNode('products', productsPageData);
       const shoesNode = new PathNode('shoes', shoesCategoryData);
       const nikeNode = new PathNode('nike-air-max', nikeProductData);
-      
+
       shoesNode.parent = productsNode;
       nikeNode.parent = shoesNode;
 
@@ -114,7 +118,7 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
       const nikeEntry = createProductEntry('nike-product', 'Nike Air Max');
 
       const ctx = createMockContext();
-      
+
       // Mock the loader responses
       ctx.loaders.entryLoader.load = jest.fn().mockResolvedValue(nikeEntry);
       ctx.loaders.entryLoader.loadMany = jest.fn().mockResolvedValue([nikeEntry, shoesEntry]);
@@ -126,10 +130,10 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
         { id: 'nike-product', preview: false },
         { id: 'shoes-category', preview: false }
       ]);
-      
+
       // Result should contain entries that can be used for breadcrumbs
       expect(result).toHaveLength(3);
-      expect(result.every(entry => entry && entry.sys)).toBe(true);
+      expect(result.every((entry) => entry && entry.sys)).toBe(true);
     });
 
     it('should handle missing category content gracefully', async () => {
@@ -140,7 +144,7 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
         excludedLocales: [],
         isPrimary: true
       };
-      
+
       const nikeData: PathData = {
         fullPath: '/products/shoes/nike-air-max',
         contentId: 'nike-product',
@@ -154,7 +158,7 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
 
       const nikeEntry = createProductEntry('nike-product', 'Nike Air Max');
       const ctx = createMockContext();
-      
+
       ctx.loaders.entryLoader.load = jest.fn().mockResolvedValue(nikeEntry);
       // loadMany returns null for missing category
       ctx.loaders.entryLoader.loadMany = jest.fn().mockResolvedValue([nikeEntry, null]);
@@ -178,7 +182,7 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
         excludedLocales: [],
         isPrimary: true
       };
-      
+
       const postData: PathData = {
         fullPath: '/blog/technology/ai-trends',
         contentId: 'ai-post',
@@ -215,14 +219,14 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
         excludedLocales: [],
         isPrimary: true
       };
-      
+
       const parent2Data: PathData = {
         fullPath: '/section1/section2',
         contentId: 'section2-content',
         excludedLocales: [],
         isPrimary: true
       };
-      
+
       const childData: PathData = {
         fullPath: '/section1/section2/page',
         contentId: 'page-content',
@@ -233,16 +237,13 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
       const parent1 = new PathNode('section1', parent1Data);
       const parent2 = new PathNode('section2', parent2Data);
       const child = new PathNode('page', childData);
-      
+
       parent2.parent = parent1;
       child.parent = parent2;
 
       const ctx = createMockContext();
-      const mockEntries = [
-        createPageEntry('page-content', 'Page'),
-        createPageEntry('section2-content', 'Section 2')
-      ];
-      
+      const mockEntries = [createPageEntry('page-content', 'Page'), createPageEntry('section2-content', 'Section 2')];
+
       ctx.loaders.entryLoader.load = jest.fn().mockResolvedValue(mockEntries[0]);
       ctx.loaders.entryLoader.loadMany = jest.fn().mockResolvedValue(mockEntries);
 
@@ -251,7 +252,7 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
       // Should make only ONE batch request, not multiple individual requests
       expect(ctx.loaders.entryLoader.loadMany).toHaveBeenCalledTimes(1);
       expect(ctx.loaders.entryLoader.load).toHaveBeenCalledTimes(1);
-      
+
       // Batch should contain multiple content IDs
       const loadManyArgs = (ctx.loaders.entryLoader.loadMany as jest.Mock).mock.calls[0][0];
       expect(loadManyArgs.length).toBeGreaterThan(1);
@@ -267,7 +268,7 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
 
       const node = new PathNode('test-page', pageData);
       const ctx = createMockContext(true); // preview = true
-      
+
       const testEntry = createPageEntry('test-content', 'Test Page');
       ctx.loaders.entryLoader.load = jest.fn().mockResolvedValue(testEntry);
       ctx.loaders.entryLoader.loadMany = jest.fn().mockResolvedValue([testEntry]);
@@ -279,7 +280,7 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
         id: 'test-content',
         preview: true
       });
-      
+
       // For single node without parents, loadMany is called with empty array
       expect(ctx.loaders.entryLoader.loadMany).toHaveBeenCalledWith([]);
     });
@@ -326,7 +327,7 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
 
       const node = new PathNode('test-page', pageData);
       const ctx = createMockContext();
-      
+
       // Mock loader failure
       ctx.loaders.entryLoader.load = jest.fn().mockRejectedValue(new Error('Content not found'));
       ctx.loaders.entryLoader.loadMany = jest.fn().mockResolvedValue([]);
@@ -340,10 +341,10 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
     it('should correctly maintain parent-child relationships', () => {
       const parent = new PathNode('parent');
       const child = new PathNode('child');
-      
+
       child.parent = parent;
       parent.children.set('child', child);
-      
+
       expect(child.parent).toBe(parent);
       expect(parent.children.get('child')).toBe(child);
       expect(parent.hasChildren()).toBe(true);
@@ -354,15 +355,15 @@ describe('PathNode - CMS Content Hierarchy Loading', () => {
       const level1 = new PathNode('level1');
       const level2a = new PathNode('level2a');
       const level2b = new PathNode('level2b');
-      
+
       level1.parent = root;
       level2a.parent = level1;
       level2b.parent = level1;
-      
+
       root.children.set('level1', level1);
       level1.children.set('level2a', level2a);
       level1.children.set('level2b', level2b);
-      
+
       expect(level1.hasChildren()).toBe(true);
       expect(level1.children.size).toBe(2);
       expect(level2a.parent).toBe(level1);

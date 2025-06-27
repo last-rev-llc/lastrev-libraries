@@ -47,16 +47,17 @@ const createMockPathStore = (): jest.Mocked<PathStore> => ({
 });
 
 // Mock ApolloContext
-const createMockContext = (locale = 'en-US', preview = false): ApolloContext => ({
-  locale,
-  preview,
-  loaders: {
-    entryLoader: {
-      load: jest.fn(),
-      loadMany: jest.fn()
+const createMockContext = (locale = 'en-US', preview = false): ApolloContext =>
+  ({
+    locale,
+    preview,
+    loaders: {
+      entryLoader: {
+        load: jest.fn(),
+        loadMany: jest.fn()
+      }
     }
-  }
-} as any);
+  } as any);
 
 describe('PathReader', () => {
   let mockPathStore: jest.Mocked<PathStore>;
@@ -83,7 +84,7 @@ describe('PathReader', () => {
 
       expect(mockPathStore.load).toHaveBeenCalledWith(DEFAULT_SITE_KEY);
       expect(pathReader.trees[DEFAULT_SITE_KEY]).toBeInstanceOf(PathTree);
-      
+
       const tree = pathReader.trees[DEFAULT_SITE_KEY];
       expect(tree.getNodeByPath('/')?.data).toEqual(mockPathData1);
       expect(tree.getNodeByPath('/about')?.data).toEqual(mockPathData2);
@@ -113,11 +114,11 @@ describe('PathReader', () => {
 
     it('should not reload if tree already exists', async () => {
       mockPathStore.load.mockResolvedValue(mockSerializedData);
-      
+
       // First load
       await pathReader.ensureLoaded(DEFAULT_SITE_KEY);
       expect(mockPathStore.load).toHaveBeenCalledTimes(1);
-      
+
       // Second call should not reload
       await pathReader.ensureLoaded(DEFAULT_SITE_KEY);
       expect(mockPathStore.load).toHaveBeenCalledTimes(1);
@@ -197,17 +198,19 @@ describe('PathReader', () => {
     it('should return path infos for content ID', async () => {
       const ctx = createMockContext();
       const mockPathEntries = [{ id: 'entry1' }, { id: 'entry2' }];
-      
+
       // Mock the getPathEntries method
       const originalGetPathEntries = PathNode.prototype.getPathEntries;
       PathNode.prototype.getPathEntries = jest.fn().mockResolvedValue(mockPathEntries);
 
       const pathInfos = await pathReader.getPathInfosByContentId('about-456', ctx);
 
-      expect(pathInfos).toEqual([{
-        path: '/about',
-        pathEntries: mockPathEntries
-      }]);
+      expect(pathInfos).toEqual([
+        {
+          path: '/about',
+          pathEntries: mockPathEntries
+        }
+      ]);
 
       // Restore original method
       PathNode.prototype.getPathEntries = originalGetPathEntries;
@@ -215,7 +218,7 @@ describe('PathReader', () => {
 
     it('should break early if node has no data', async () => {
       const ctx = createMockContext();
-      
+
       // Mock a tree where getNodesById returns a node without data
       const mockTree = {
         getNodesById: jest.fn().mockReturnValue([{ data: null }])
@@ -453,21 +456,21 @@ describe('PathReader', () => {
     it('should work with multiple sites concurrently', async () => {
       const site1 = 'site1';
       const site2 = 'site2';
-      
+
       const site1PathData: PathData = {
         fullPath: '/site1',
         contentId: 'home-123',
         excludedLocales: [],
         isPrimary: true
       };
-      
+
       const site2PathData: PathData = {
         fullPath: '/site2',
         contentId: 'about-456',
         excludedLocales: [],
         isPrimary: true
       };
-      
+
       mockPathStore.load.mockImplementation((site) => {
         if (site === site1) {
           return Promise.resolve({ '/site1': site1PathData });
@@ -476,10 +479,7 @@ describe('PathReader', () => {
         }
       });
 
-      await Promise.all([
-        pathReader.ensureLoaded(site1),
-        pathReader.ensureLoaded(site2)
-      ]);
+      await Promise.all([pathReader.ensureLoaded(site1), pathReader.ensureLoaded(site2)]);
 
       expect(pathReader.trees[site1]).toBeInstanceOf(PathTree);
       expect(pathReader.trees[site2]).toBeInstanceOf(PathTree);

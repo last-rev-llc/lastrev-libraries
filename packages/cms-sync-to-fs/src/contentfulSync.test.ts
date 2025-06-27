@@ -44,13 +44,13 @@ describe('contentfulSync', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     baseConfig = new LastRevAppConfig(mockAppConfig());
-    
+
     mockTimerInstance = {
       end: jest.fn().mockReturnValue({ millis: 100 })
     };
-    
+
     mockTimer.mockImplementation(() => mockTimerInstance);
 
     // Mock Contentful client
@@ -79,19 +79,25 @@ describe('contentfulSync', () => {
 
   it('should validate required Contentful configuration', async () => {
     const config = baseConfig.clone({ cms: 'Contentful' });
-    
+
     mockClient.getContentTypes.mockResolvedValue({ items: [] });
     mockClient.sync.mockResolvedValue({ assets: [], nextSyncToken: 'token' });
 
     await contentfulSync(config, false);
 
-    expect(utils.validateArg).toHaveBeenCalledWith(config.contentful.contentDeliveryToken, 'contentful.contentDeliveryToken');
-    expect(utils.validateArg).toHaveBeenCalledWith(config.contentful.contentPreviewToken, 'contentful.contentPreviewToken');
+    expect(utils.validateArg).toHaveBeenCalledWith(
+      config.contentful.contentDeliveryToken,
+      'contentful.contentDeliveryToken'
+    );
+    expect(utils.validateArg).toHaveBeenCalledWith(
+      config.contentful.contentPreviewToken,
+      'contentful.contentPreviewToken'
+    );
     expect(utils.validateArg).toHaveBeenCalledWith(config.contentful.spaceId, 'contentful.spaceId');
   });
 
   it('should create Contentful client with production settings', async () => {
-    const config = baseConfig.clone({ 
+    const config = baseConfig.clone({
       cms: 'Contentful',
       contentful: {
         spaceId: 'test-space',
@@ -100,7 +106,7 @@ describe('contentfulSync', () => {
         contentPreviewToken: 'preview-token'
       }
     });
-    
+
     mockClient.getContentTypes.mockResolvedValue({ items: [] });
     mockClient.sync.mockResolvedValue({ assets: [], nextSyncToken: 'token' });
 
@@ -115,7 +121,7 @@ describe('contentfulSync', () => {
   });
 
   it('should create Contentful client with preview settings', async () => {
-    const config = baseConfig.clone({ 
+    const config = baseConfig.clone({
       cms: 'Contentful',
       contentful: {
         spaceId: 'test-space',
@@ -124,7 +130,7 @@ describe('contentfulSync', () => {
         contentPreviewToken: 'preview-token'
       }
     });
-    
+
     mockClient.getContentTypes.mockResolvedValue({ items: [] });
     mockClient.sync.mockResolvedValue({ assets: [], nextSyncToken: 'token' });
 
@@ -140,11 +146,8 @@ describe('contentfulSync', () => {
 
   it('should fetch content types and sync data', async () => {
     const config = baseConfig.clone({ cms: 'Contentful' });
-    const mockContentTypes = [
-      { sys: { id: 'blog' } },
-      { sys: { id: 'page' } }
-    ];
-    
+    const mockContentTypes = [{ sys: { id: 'blog' } }, { sys: { id: 'page' } }];
+
     mockClient.getContentTypes.mockResolvedValue({ items: mockContentTypes });
     mockClient.sync.mockImplementation((params: any) => {
       if (params.content_type === 'blog') {
@@ -164,16 +167,16 @@ describe('contentfulSync', () => {
   });
 
   it('should write content files to filesystem', async () => {
-    const config = baseConfig.clone({ 
+    const config = baseConfig.clone({
       cms: 'Contentful',
       fs: { contentDir: '/test/content' },
       contentful: { spaceId: 'test-space', env: 'master' }
     });
-    
+
     const mockEntries = [{ sys: { id: 'entry1' } }];
     const mockAssets = [{ sys: { id: 'asset1' } }];
     const mockContentTypes = [{ sys: { id: 'blog' } }];
-    
+
     mockClient.getContentTypes.mockResolvedValue({ items: mockContentTypes });
     mockClient.sync.mockImplementation((params: any) => {
       if (params.content_type === 'blog') {
@@ -187,19 +190,19 @@ describe('contentfulSync', () => {
     await contentfulSync(config, false);
 
     const expectedRoot = '/test/content/test-space/master/production';
-    
+
     expect(utils.writeItems).toHaveBeenCalledWith(mockEntries, expectedRoot, 'entries');
     expect(utils.writeItems).toHaveBeenCalledWith(mockAssets, expectedRoot, 'assets');
     expect(utils.writeItems).toHaveBeenCalledWith(mockContentTypes, expectedRoot, 'content_types');
   });
 
   it('should handle preview mode directory structure', async () => {
-    const config = baseConfig.clone({ 
+    const config = baseConfig.clone({
       cms: 'Contentful',
       fs: { contentDir: '/test/content' },
       contentful: { spaceId: 'test-space', env: 'staging' }
     });
-    
+
     mockClient.getContentTypes.mockResolvedValue({ items: [] });
     mockClient.sync.mockResolvedValue({ assets: [], nextSyncToken: 'token' });
 
@@ -213,7 +216,7 @@ describe('contentfulSync', () => {
     const config = baseConfig.clone({ cms: 'Contentful' });
     const mockContext = { config } as any;
     const sites = ['site1', 'site2'];
-    
+
     mockClient.getContentTypes.mockResolvedValue({ items: [] });
     mockClient.sync.mockResolvedValue({ assets: [], nextSyncToken: 'token' });
     mockCreateContext.mockResolvedValue(mockContext);
@@ -232,7 +235,7 @@ describe('contentfulSync', () => {
 
   it('should update paths for preview mode', async () => {
     const config = baseConfig.clone({ cms: 'Contentful' });
-    
+
     mockClient.getContentTypes.mockResolvedValue({ items: [] });
     mockClient.sync.mockResolvedValue({ assets: [], nextSyncToken: 'token' });
 
@@ -249,13 +252,13 @@ describe('contentfulSync', () => {
   it('should handle sync with existing sync tokens', async () => {
     const config = baseConfig.clone({ cms: 'Contentful' });
     const existingSyncTokens = {
-      'blog': 'existing-blog-token',
-      'asset': 'existing-asset-token'
+      blog: 'existing-blog-token',
+      asset: 'existing-asset-token'
     };
-    
+
     (utils.readSyncTokens as jest.Mock).mockResolvedValue(existingSyncTokens);
-    mockClient.getContentTypes.mockResolvedValue({ 
-      items: [{ sys: { id: 'blog' } }] 
+    mockClient.getContentTypes.mockResolvedValue({
+      items: [{ sys: { id: 'blog' } }]
     });
     mockClient.sync.mockImplementation((params: any) => {
       if (params.content_type === 'blog') {
@@ -283,14 +286,14 @@ describe('contentfulSync', () => {
   });
 
   it('should save new sync tokens', async () => {
-    const config = baseConfig.clone({ 
+    const config = baseConfig.clone({
       cms: 'Contentful',
       fs: { contentDir: '/test' },
       contentful: { spaceId: 'space', env: 'env' }
     });
-    
-    mockClient.getContentTypes.mockResolvedValue({ 
-      items: [{ sys: { id: 'blog' } }] 
+
+    mockClient.getContentTypes.mockResolvedValue({
+      items: [{ sys: { id: 'blog' } }]
     });
     mockClient.sync.mockImplementation((params: any) => {
       if (params.content_type === 'blog') {
@@ -304,14 +307,10 @@ describe('contentfulSync', () => {
     await contentfulSync(config, false);
 
     const expectedTokens = {
-      'blog': 'new-blog-token',
-      'asset': 'new-asset-token'
+      blog: 'new-blog-token',
+      asset: 'new-asset-token'
     };
-    
-    expect(utils.writeSyncTokens).toHaveBeenCalledWith(
-      expectedTokens,
-      '/test/space/env/production',
-      ''
-    );
+
+    expect(utils.writeSyncTokens).toHaveBeenCalledWith(expectedTokens, '/test/space/env/production', '');
   });
 });

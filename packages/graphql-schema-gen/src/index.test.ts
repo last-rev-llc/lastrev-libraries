@@ -22,9 +22,9 @@ const mockFetchers = fetchers as jest.MockedFunction<typeof fetchers>;
 describe('generateSchema', () => {
   const mockContentTypes: ContentType[] = [
     {
-      sys: { 
-        id: 'page', 
-        type: 'ContentType', 
+      sys: {
+        id: 'page',
+        type: 'ContentType',
         environment: { sys: { id: 'master', type: 'Link', linkType: 'Environment' } },
         space: { sys: { id: 'space', type: 'Link', linkType: 'Space' } },
         createdAt: '2021-01-01T00:00:00.000Z',
@@ -35,21 +35,21 @@ describe('generateSchema', () => {
       name: 'Page',
       description: 'A content page',
       fields: [
-        { 
-          id: 'title', 
-          name: 'Title', 
-          type: 'Symbol', 
-          required: true, 
+        {
+          id: 'title',
+          name: 'Title',
+          type: 'Symbol',
+          required: true,
           localized: false,
           disabled: false,
           omitted: false,
           validations: []
         },
-        { 
-          id: 'slug', 
-          name: 'Slug', 
-          type: 'Symbol', 
-          required: true, 
+        {
+          id: 'slug',
+          name: 'Slug',
+          type: 'Symbol',
+          required: true,
           localized: false,
           disabled: false,
           omitted: false,
@@ -79,12 +79,7 @@ describe('generateSchema', () => {
 
     const result = await generateSchema(params);
 
-    expect(mockFetchers).toHaveBeenCalledWith(
-      'Contentful',
-      {},
-      mockContentTypes,
-      false
-    );
+    expect(mockFetchers).toHaveBeenCalledWith('Contentful', {}, mockContentTypes, false);
     expect(result).toBe(mockDocumentNode);
   });
 
@@ -99,12 +94,7 @@ describe('generateSchema', () => {
 
     const result = await generateSchema(params);
 
-    expect(mockFetchers).toHaveBeenCalledWith(
-      'Contentful',
-      typeMappings,
-      mockContentTypes,
-      true
-    );
+    expect(mockFetchers).toHaveBeenCalledWith('Contentful', typeMappings, mockContentTypes, true);
     expect(result).toBe(mockDocumentNode);
   });
 
@@ -118,12 +108,7 @@ describe('generateSchema', () => {
 
     const result = await generateSchema(params);
 
-    expect(mockFetchers).toHaveBeenCalledWith(
-      'Sanity',
-      {},
-      mockContentTypes,
-      false
-    );
+    expect(mockFetchers).toHaveBeenCalledWith('Sanity', {}, mockContentTypes, false);
     expect(result).toBe(mockDocumentNode);
   });
 

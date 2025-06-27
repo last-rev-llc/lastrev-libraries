@@ -1,5 +1,16 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.5.0
+
+### Minor Changes
+
+- 5a8c889: Added support for Sanity, renamed some packages, added more test coverage, switched to PNPM
+
+### Patch Changes
+
+- Updated dependencies [5a8c889]
+  - @last-rev/contentful-webhook-parser@0.3.0
+
 ## 0.4.1
 
 ### Patch Changes
