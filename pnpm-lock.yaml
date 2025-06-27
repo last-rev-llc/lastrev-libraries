@@ -1409,8 +1409,8 @@ importers:
         version: 4.17.21
     devDependencies:
       '@last-rev/logging':
-        specifier: ^0.1.4
-        version: 0.1.4(encoding@0.1.13)
+        specifier: workspace:*
+        version: link:../logging
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -3928,12 +3928,6 @@ packages:
 
   '@kwsites/promise-deferred@1.1.1':
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
-
-  '@last-rev/app-config@0.5.1':
-    resolution: {integrity: sha512-PjNarp933PYuhgvLdJ6MFIkrcHD5SDRuAAXICZq4D9gveQhAP5cDVAnJFfLIdDsRtr9DaEDifsLv37vpppVfPg==}
-
-  '@last-rev/logging@0.1.4':
-    resolution: {integrity: sha512-mhRF6Gh6mRCW7TsUesThlAw3k8Or+66EpeXOnO3JWLS33zxRigH/gt58NeavR9oRLXUpjPMB7Z52BkUneL49ww==}
 
   '@manypkg/cli@0.21.3':
     resolution: {integrity: sha512-ro6j5b+44dN2AfId23voWxdlOqUCSbCwUHrUwq0LpoN/oZy6zQFAHDwYHbw50j2nL9EgpwIA03ZjaBceuUcMrw==}
@@ -15055,19 +15049,6 @@ snapshots:
       - supports-color
 
   '@kwsites/promise-deferred@1.1.1': {}
-
-  '@last-rev/app-config@0.5.1':
-    dependencies:
-      lodash: 4.17.21
-
-  '@last-rev/logging@0.1.4(encoding@0.1.13)':
-    dependencies:
-      '@last-rev/app-config': 0.5.1
-      datadog-winston: 1.5.1(encoding@0.1.13)
-      dotenv: 10.0.0
-      winston: 3.8.2
-    transitivePeerDependencies:
-      - encoding
 
   '@manypkg/cli@0.21.3':
     dependencies:
