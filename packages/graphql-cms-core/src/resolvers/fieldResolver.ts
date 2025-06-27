@@ -27,14 +27,13 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
 
   const displayType = overrideDisplayType || displayTypeArg;
 
-  const contentType = content?.sys?.contentType?.sys?.id || '';
+  const contentType = content?.sys?.contentType?.sys?.id || content?.sys?.type || '';
 
   const typeName = contentType ? getTypeName(contentType, typeMappings) : displayType;
 
   const mapper = mappers?.[typeName]?.[displayType] as TypeMapper;
 
   let fieldValue: any;
-
   if (mapper && mapper[field]) {
     const fieldMapper = mapper[field];
     if (isFunction(fieldMapper)) {
