@@ -58,20 +58,20 @@ describe('utils', () => {
 
     it('should delay for specified milliseconds', async () => {
       const delayPromise = delay(1000);
-      
+
       // Fast-forward time
       jest.advanceTimersByTime(1000);
-      
+
       await expect(delayPromise).resolves.toBeUndefined();
     });
 
     it('should delay for different durations', async () => {
       const delay500 = delay(500);
       const delay1500 = delay(1500);
-      
+
       jest.advanceTimersByTime(500);
       await expect(delay500).resolves.toBeUndefined();
-      
+
       jest.advanceTimersByTime(1000);
       await expect(delay1500).resolves.toBeUndefined();
     });
@@ -145,14 +145,8 @@ describe('utils', () => {
 
       expect(mockEnsureDir).toHaveBeenCalledWith('/test/root/entries');
       expect(mockWriteFile).toHaveBeenCalledTimes(2);
-      expect(mockWriteFile).toHaveBeenCalledWith(
-        '/test/root/entries/item1.json',
-        JSON.stringify(items[0])
-      );
-      expect(mockWriteFile).toHaveBeenCalledWith(
-        '/test/root/entries/item2.json',
-        JSON.stringify(items[1])
-      );
+      expect(mockWriteFile).toHaveBeenCalledWith('/test/root/entries/item1.json', JSON.stringify(items[0]));
+      expect(mockWriteFile).toHaveBeenCalledWith('/test/root/entries/item2.json', JSON.stringify(items[1]));
     });
 
     it('should handle empty items array', async () => {
@@ -163,9 +157,7 @@ describe('utils', () => {
     });
 
     it('should create directory structure', async () => {
-      const items = [
-        { sys: { id: 'test-item' }, fields: {} }
-      ] as any[];
+      const items = [{ sys: { id: 'test-item' }, fields: {} }] as any[];
 
       await writeItems(items, '/deep/nested/path', 'content');
 
@@ -186,10 +178,7 @@ describe('utils', () => {
 
       await writeItems([item], '/test', 'items');
 
-      expect(mockWriteFile).toHaveBeenCalledWith(
-        '/test/items/complex-item.json',
-        JSON.stringify(item)
-      );
+      expect(mockWriteFile).toHaveBeenCalledWith('/test/items/complex-item.json', JSON.stringify(item));
     });
   });
 });

@@ -1,4 +1,4 @@
-# @last-rev/eslint-plugin-last-rev
+# @last-rev/sanity-mapper
 
 ## 0.2.0
 
@@ -6,8 +6,8 @@
 
 - 5a8c889: Added support for Sanity, renamed some packages, added more test coverage, switched to PNPM
 
-## 0.1.1
-
 ### Patch Changes
 
-- 3ba98cd: Bump testing-library version
+- Updated dependencies [5a8c889]
+  - @last-rev/logging@0.2.0
+  - @last-rev/timer@0.3.0

@@ -41,9 +41,17 @@ describe('cms-redis-loader', () => {
       entryLoader: new DataLoader(async (keys) => {
         return keys.map((key: any) => {
           if (key.id === 'entry1') {
-            return { sys: { type: 'Entry', id: 'entry1' }, fields: { title: 'Entry 1' }, metadata: { tags: [] } } as any;
+            return {
+              sys: { type: 'Entry', id: 'entry1' },
+              fields: { title: 'Entry 1' },
+              metadata: { tags: [] }
+            } as any;
           } else if (key.id === 'entry2') {
-            return { sys: { type: 'Entry', id: 'entry2' }, fields: { title: 'Entry 2' }, metadata: { tags: [] } } as any;
+            return {
+              sys: { type: 'Entry', id: 'entry2' },
+              fields: { title: 'Entry 2' },
+              metadata: { tags: [] }
+            } as any;
           }
           return null;
         });
@@ -51,7 +59,11 @@ describe('cms-redis-loader', () => {
       assetLoader: new DataLoader(async (keys) => {
         return keys.map((key: any) => {
           if (key.id === 'asset1') {
-            return { sys: { type: 'Asset', id: 'asset1' }, fields: { file: { url: 'test.jpg' } }, metadata: { tags: [] } } as any;
+            return {
+              sys: { type: 'Asset', id: 'asset1' },
+              fields: { file: { url: 'test.jpg' } },
+              metadata: { tags: [] }
+            } as any;
           }
           return null;
         });
@@ -60,8 +72,16 @@ describe('cms-redis-loader', () => {
         return keys.map((key: any) => {
           if (key.id === 'blog') {
             return [
-              { sys: { type: 'Entry', id: 'blog1', contentType: { sys: { id: 'blog' } } }, fields: { title: 'Blog 1' }, metadata: { tags: [] } } as any,
-              { sys: { type: 'Entry', id: 'blog2', contentType: { sys: { id: 'blog' } } }, fields: { title: 'Blog 2' }, metadata: { tags: [] } } as any
+              {
+                sys: { type: 'Entry', id: 'blog1', contentType: { sys: { id: 'blog' } } },
+                fields: { title: 'Blog 1' },
+                metadata: { tags: [] }
+              } as any,
+              {
+                sys: { type: 'Entry', id: 'blog2', contentType: { sys: { id: 'blog' } } },
+                fields: { title: 'Blog 2' },
+                metadata: { tags: [] }
+              } as any
             ];
           }
           return [];
@@ -70,16 +90,21 @@ describe('cms-redis-loader', () => {
       entryByFieldValueLoader: new DataLoader(async (keys) => {
         return keys.map((key: any) => {
           if (key.contentType === 'blog' && key.field === 'slug' && key.value === 'test-slug') {
-            return { sys: { type: 'Entry', id: 'blog1' }, fields: { slug: 'test-slug', title: 'Test Blog' }, metadata: { tags: [] } } as any;
+            return {
+              sys: { type: 'Entry', id: 'blog1' },
+              fields: { slug: 'test-slug', title: 'Test Blog' },
+              metadata: { tags: [] }
+            } as any;
           }
           return null;
         });
       }) as any,
       entriesRefByLoader: new DataLoader(async () => []),
-      fetchAllContentTypes: async (_preview: boolean) => [
-        { sys: { type: 'ContentType', id: 'blog' }, name: 'Blog' },
-        { sys: { type: 'ContentType', id: 'page' }, name: 'Page' }
-      ] as ContentType[]
+      fetchAllContentTypes: async (_preview: boolean) =>
+        [
+          { sys: { type: 'ContentType', id: 'blog' }, name: 'Blog' },
+          { sys: { type: 'ContentType', id: 'page' }, name: 'Page' }
+        ] as ContentType[]
     };
   });
 
@@ -413,7 +438,7 @@ describe('cms-redis-loader', () => {
       });
 
       const loaders = createLoaders(config, mockFallbackLoaders);
-      
+
       // The current Redis mock doesn't actually simulate Redis errors perfectly,
       // but the loader is designed to handle them gracefully
       expect(loaders.fetchAllContentTypes).toBeDefined();
@@ -432,23 +457,27 @@ describe('cms-redis-loader', () => {
       });
 
       const loaders = createLoaders(config, mockFallbackLoaders);
-      
+
       // Test that loaders handle preview and production requests differently
       const prodResult = await loaders.entryLoader.load({ id: 'entry1', preview: false });
       const previewResult = await loaders.entryLoader.load({ id: 'entry1', preview: true });
 
       expect(prodResult).toBeDefined();
       expect(previewResult).toBeDefined();
-      
+
       // Both should have the same basic structure but may have different metadata timestamps
-      expect(prodResult).toEqual(expect.objectContaining({
-        sys: { type: 'Entry', id: 'entry1' },
-        fields: { title: 'Entry 1' }
-      }));
-      expect(previewResult).toEqual(expect.objectContaining({
-        sys: { type: 'Entry', id: 'entry1' },
-        fields: { title: 'Entry 1' }
-      }));
+      expect(prodResult).toEqual(
+        expect.objectContaining({
+          sys: { type: 'Entry', id: 'entry1' },
+          fields: { title: 'Entry 1' }
+        })
+      );
+      expect(previewResult).toEqual(
+        expect.objectContaining({
+          sys: { type: 'Entry', id: 'entry1' },
+          fields: { title: 'Entry 1' }
+        })
+      );
     });
 
     it('should use custom maxBatchSize from config', () => {
@@ -462,7 +491,7 @@ describe('cms-redis-loader', () => {
       });
 
       const loaders = createLoaders(config, mockFallbackLoaders);
-      
+
       // Verify loaders are created successfully with custom config
       expect(loaders.entryLoader).toBeDefined();
       expect(loaders.assetLoader).toBeDefined();
@@ -478,7 +507,7 @@ describe('cms-redis-loader', () => {
       });
 
       const loaders = createLoaders(config, mockFallbackLoaders);
-      
+
       // Verify loaders are created successfully with default config
       expect(loaders.entryLoader).toBeDefined();
       expect(loaders.assetLoader).toBeDefined();
@@ -511,7 +540,7 @@ describe('cms-redis-loader', () => {
       });
 
       const loaders = createLoaders(config, mockFallbackLoaders);
-      
+
       // Should fallback to source loaders when Redis fails
       const result = await loaders.entryLoader.load({ id: 'entry1', preview: false });
       expect(result).toEqual(

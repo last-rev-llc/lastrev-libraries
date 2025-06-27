@@ -35,7 +35,7 @@ describe('cms-fs-loader', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     baseConfig = new LastRevAppConfig(mockAppConfig());
-    
+
     // Mock fallback loaders
     mockFallbackLoaders = {
       entryLoader: {
@@ -183,9 +183,7 @@ describe('cms-fs-loader', () => {
       const mockEntry1 = { sys: { id: 'entry1' }, fields: { title: 'Entry 1' } };
       const mockEntry2 = { sys: { id: 'entry2' }, fields: { title: 'Entry 2' } };
 
-      mockReadJSON
-        .mockResolvedValueOnce(mockEntry1)
-        .mockResolvedValueOnce(mockEntry2);
+      mockReadJSON.mockResolvedValueOnce(mockEntry1).mockResolvedValueOnce(mockEntry2);
 
       const loaders = createLoaders(config, mockFallbackLoaders);
       const results = await loaders.entryLoader.loadMany([
@@ -235,7 +233,6 @@ describe('cms-fs-loader', () => {
     });
   });
 
-
   describe('entriesByContentTypeLoader', () => {
     it('should load entries by content type', async () => {
       const config = baseConfig.clone({
@@ -251,9 +248,7 @@ describe('cms-fs-loader', () => {
       // Mock readdir for entry IDs by content type
       mockReaddir.mockResolvedValue(mockIds);
       // Mock readJSON for individual entries
-      mockReadJSON
-        .mockResolvedValueOnce(mockEntry1)
-        .mockResolvedValueOnce(mockEntry2);
+      mockReadJSON.mockResolvedValueOnce(mockEntry1).mockResolvedValueOnce(mockEntry2);
 
       const loaders = createLoaders(config, mockFallbackLoaders);
       const result = await loaders.entriesByContentTypeLoader.load({ id: 'blog', preview: false });
@@ -319,12 +314,14 @@ describe('cms-fs-loader', () => {
       });
 
       expect(result).toEqual(mockResult);
-      expect(mockFallbackLoaders.entryByFieldValueLoader.loadMany).toHaveBeenCalledWith([{
-        contentType: 'blog',
-        field: 'slug',
-        value: 'test-slug',
-        preview: false
-      }]);
+      expect(mockFallbackLoaders.entryByFieldValueLoader.loadMany).toHaveBeenCalledWith([
+        {
+          contentType: 'blog',
+          field: 'slug',
+          value: 'test-slug',
+          preview: false
+        }
+      ]);
     });
   });
 
@@ -341,9 +338,7 @@ describe('cms-fs-loader', () => {
       const mockFilenames = ['blog.json', 'page.json'];
 
       mockReaddir.mockResolvedValue(mockFilenames as any);
-      mockReadJSON
-        .mockResolvedValueOnce(mockContentType1)
-        .mockResolvedValueOnce(mockContentType2);
+      mockReadJSON.mockResolvedValueOnce(mockContentType1).mockResolvedValueOnce(mockContentType2);
 
       const loaders = createLoaders(config, mockFallbackLoaders);
       const result = await loaders.fetchAllContentTypes(false);
@@ -434,7 +429,7 @@ describe('cms-fs-loader', () => {
       mockReadJSON.mockResolvedValue(mockEntry);
 
       const loaders = createLoaders(config, mockFallbackLoaders);
-      
+
       // Load both preview and production versions
       await loaders.entryLoader.load({ id: 'entry1', preview: false });
       await loaders.entryLoader.load({ id: 'entry1', preview: true });
@@ -455,7 +450,7 @@ describe('cms-fs-loader', () => {
       mockFallbackLoaders.entryByFieldValueLoader.loadMany = jest.fn().mockResolvedValue([mockResult]);
 
       const loaders = createLoaders(config, mockFallbackLoaders);
-      
+
       // Load same key twice
       const key = { contentType: 'blog', field: 'slug', value: 'test', preview: false };
       await loaders.entryByFieldValueLoader.load(key);

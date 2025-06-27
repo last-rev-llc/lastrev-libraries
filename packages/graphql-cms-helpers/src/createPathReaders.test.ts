@@ -32,7 +32,7 @@ describe('createPathReaders', () => {
       const result = createPathReaders(config);
 
       expect(mockCreatePathStore).toHaveBeenCalledTimes(2);
-      
+
       // Check preview configuration
       expect(mockCreatePathStore).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -74,7 +74,7 @@ describe('createPathReaders', () => {
       expect(mockCreatePathStore).toHaveBeenCalledWith(
         expect.objectContaining({
           cms: 'Contentful',
-          contentful: expect.objectContaining({ 
+          contentful: expect.objectContaining({
             usePreview: true,
             spaceId: 'test-space',
             env: 'master'
@@ -85,7 +85,7 @@ describe('createPathReaders', () => {
       expect(mockCreatePathStore).toHaveBeenCalledWith(
         expect.objectContaining({
           cms: 'Contentful',
-          contentful: expect.objectContaining({ 
+          contentful: expect.objectContaining({
             usePreview: false,
             spaceId: 'test-space',
             env: 'master'
@@ -111,7 +111,7 @@ describe('createPathReaders', () => {
       expect(mockCreatePathStore).toHaveBeenCalledWith(
         expect.objectContaining({
           cms: 'Sanity',
-          sanity: expect.objectContaining({ 
+          sanity: expect.objectContaining({
             usePreview: true,
             projectId: 'test-project',
             dataset: 'production'
@@ -122,7 +122,7 @@ describe('createPathReaders', () => {
       expect(mockCreatePathStore).toHaveBeenCalledWith(
         expect.objectContaining({
           cms: 'Sanity',
-          sanity: expect.objectContaining({ 
+          sanity: expect.objectContaining({
             usePreview: false,
             projectId: 'test-project',
             dataset: 'production'
@@ -177,13 +177,13 @@ describe('createPathReaders', () => {
       createPathReaders(config);
 
       expect(cloneSpy).toHaveBeenCalledTimes(2);
-      expect(cloneSpy).toHaveBeenCalledWith({ 
-        contentful: { usePreview: true }, 
-        sanity: { usePreview: true } 
+      expect(cloneSpy).toHaveBeenCalledWith({
+        contentful: { usePreview: true },
+        sanity: { usePreview: true }
       });
-      expect(cloneSpy).toHaveBeenCalledWith({ 
-        contentful: { usePreview: false }, 
-        sanity: { usePreview: false } 
+      expect(cloneSpy).toHaveBeenCalledWith({
+        contentful: { usePreview: false },
+        sanity: { usePreview: false }
       });
 
       cloneSpy.mockRestore();

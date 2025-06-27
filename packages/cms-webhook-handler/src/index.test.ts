@@ -54,7 +54,7 @@ describe('cms-webhook-handler', () => {
     };
 
     mockCreateHandlers.mockReturnValue(mockHandlers);
-    
+
     // Create a base config using the mock
     baseConfig = new LastRevAppConfig(mockAppConfig());
   });
@@ -207,7 +207,7 @@ describe('cms-webhook-handler', () => {
 
     describe('JWT authentication', () => {
       it('should verify JWT token when signing secret is provided', async () => {
-        const config = baseConfig.clone({ 
+        const config = baseConfig.clone({
           cms: 'Contentful',
           jwtSigningSecret: 'test-secret'
         });
@@ -235,7 +235,7 @@ describe('cms-webhook-handler', () => {
       });
 
       it('should throw error when no authorization token provided', async () => {
-        const config = baseConfig.clone({ 
+        const config = baseConfig.clone({
           cms: 'Contentful',
           jwtSigningSecret: 'test-secret'
         });
@@ -254,7 +254,7 @@ describe('cms-webhook-handler', () => {
       });
 
       it('should throw error when JWT spaceId does not match config', async () => {
-        const config = baseConfig.clone({ 
+        const config = baseConfig.clone({
           cms: 'Contentful',
           jwtSigningSecret: 'test-secret'
         });
@@ -290,7 +290,6 @@ describe('cms-webhook-handler', () => {
         expect(mockHandlers.entry).not.toHaveBeenCalled();
       });
 
-
       it('should propagate handler errors', async () => {
         const config = baseConfig.clone({ cms: 'Contentful' });
         const webhookResult = {
@@ -308,6 +307,5 @@ describe('cms-webhook-handler', () => {
         await expect(handleWebhook(config, mockBody, mockHeaders)).rejects.toThrow('Handler failed');
       });
     });
-
   });
 });

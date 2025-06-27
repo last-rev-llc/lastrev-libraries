@@ -79,7 +79,7 @@ export const mapSanityPortableTextNodeToContentfulRichTextNode = (
 
   // Create cache key for memoization
   const cacheKey = `${node._type}:${node._key || ''}:${wrapInType || ''}:${JSON.stringify(markDefs)}`;
-  
+
   // Check cache first for performance optimization
   if (nodeMapCache.has(node)) {
     const cachedResults = nodeMapCache.get(node);
@@ -336,7 +336,7 @@ function groupBlocksToContentfulNodes(blocks: any[]): any[] {
       i++;
     }
   }
-  
+
   // Cache the result for future use
   blockGroupCache.set(blocks, result);
   return result;

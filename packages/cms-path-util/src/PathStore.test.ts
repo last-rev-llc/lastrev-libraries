@@ -1,10 +1,4 @@
-import {
-  FsPathStore,
-  RedisPathStore,
-  DynamoDbPathStore,
-  DummyStore,
-  createPathStore
-} from './PathStore';
+import { FsPathStore, RedisPathStore, DynamoDbPathStore, DummyStore, createPathStore } from './PathStore';
 import { PathDataMap } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 // Mock fs-extra
@@ -69,7 +63,7 @@ const mockPathDataMap: PathDataMap = {
 };
 
 // Mock configs
-const createMockContentfulConfig = (overrides = {}): LastRevAppConfig => 
+const createMockContentfulConfig = (overrides = {}): LastRevAppConfig =>
   new LastRevAppConfig({
     cms: 'Contentful',
     contentStrategy: 'fs',
@@ -96,7 +90,7 @@ const createMockContentfulConfig = (overrides = {}): LastRevAppConfig =>
     ...overrides
   });
 
-const createMockSanityConfig = (overrides = {}): LastRevAppConfig => 
+const createMockSanityConfig = (overrides = {}): LastRevAppConfig =>
   new LastRevAppConfig({
     cms: 'Sanity',
     contentStrategy: 'fs',
@@ -131,15 +125,13 @@ describe('PathStore', () => {
 
     describe('constructor', () => {
       it('should set basePath for Contentful', () => {
-        expect(store.basePath).toBe(
-          join('/test/content', 'test-space', 'master', 'production', 'path_data')
-        );
+        expect(store.basePath).toBe(join('/test/content', 'test-space', 'master', 'production', 'path_data'));
       });
 
       it('should set basePath for Sanity', () => {
         const sanityConfig = createMockSanityConfig();
         const sanityStore = new FsPathStore(sanityConfig);
-        
+
         expect(sanityStore.basePath).toBe(
           join('/test/content', 'test-project', 'production', 'production', 'path_data')
         );
@@ -156,10 +148,8 @@ describe('PathStore', () => {
           }
         });
         const previewStore = new FsPathStore(previewConfig);
-        
-        expect(previewStore.basePath).toBe(
-          join('/test/content', 'test-space', 'master', 'preview', 'path_data')
-        );
+
+        expect(previewStore.basePath).toBe(join('/test/content', 'test-space', 'master', 'preview', 'path_data'));
       });
 
       it('should handle preview mode for Sanity', () => {
@@ -175,10 +165,8 @@ describe('PathStore', () => {
           }
         });
         const previewStore = new FsPathStore(previewConfig);
-        
-        expect(previewStore.basePath).toBe(
-          join('/test/content', 'test-project', 'production', 'preview', 'path_data')
-        );
+
+        expect(previewStore.basePath).toBe(join('/test/content', 'test-project', 'production', 'preview', 'path_data'));
       });
     });
 
@@ -195,10 +183,7 @@ describe('PathStore', () => {
 
         const result = await store.load('default');
 
-        expect(mockReadFile).toHaveBeenCalledWith(
-          join(store.basePath, 'default.json'),
-          'utf8'
-        );
+        expect(mockReadFile).toHaveBeenCalledWith(join(store.basePath, 'default.json'), 'utf8');
         expect(result).toEqual(mockPathDataMap);
       });
 
@@ -295,13 +280,10 @@ describe('PathStore', () => {
 
         expect(mockRedisClient.multi).toHaveBeenCalled();
         expect(mockMulti.del).toHaveBeenCalledWith(':path_data:default');
-        expect(mockMulti.hmset).toHaveBeenCalledWith(
-          ':path_data:default',
-          {
-            '/': JSON.stringify(mockPathDataMap['/']),
-            '/about': JSON.stringify(mockPathDataMap['/about'])
-          }
-        );
+        expect(mockMulti.hmset).toHaveBeenCalledWith(':path_data:default', {
+          '/': JSON.stringify(mockPathDataMap['/']),
+          '/about': JSON.stringify(mockPathDataMap['/about'])
+        });
         expect(mockMulti.exec).toHaveBeenCalled();
       });
 
@@ -348,7 +330,7 @@ describe('PathStore', () => {
           }
         });
         const previewStore = new DynamoDbPathStore(previewConfig);
-        
+
         expect(previewStore.pk).toBe('test-space:master:preview');
       });
     });
@@ -445,62 +427,62 @@ describe('PathStore', () => {
     it('should create FsPathStore for fs content strategy', () => {
       const config = createMockContentfulConfig({ contentStrategy: 'fs' });
       const store = createPathStore(config);
-      
+
       expect(store).toBeInstanceOf(FsPathStore);
     });
 
     it('should create RedisPathStore for cms strategy with redis cache', () => {
-      const config = createMockContentfulConfig({ 
-        contentStrategy: 'cms', 
-        cmsCacheStrategy: 'redis' 
+      const config = createMockContentfulConfig({
+        contentStrategy: 'cms',
+        cmsCacheStrategy: 'redis'
       });
       const store = createPathStore(config);
-      
+
       expect(store).toBeInstanceOf(RedisPathStore);
     });
 
     it('should create DynamoDbPathStore for cms strategy with dynamodb cache', () => {
-      const config = createMockContentfulConfig({ 
-        contentStrategy: 'cms', 
-        cmsCacheStrategy: 'dynamodb' 
+      const config = createMockContentfulConfig({
+        contentStrategy: 'cms',
+        cmsCacheStrategy: 'dynamodb'
       });
       const store = createPathStore(config);
-      
+
       expect(store).toBeInstanceOf(DynamoDbPathStore);
     });
 
     it('should create DummyStore for cms strategy with none cache', () => {
-      const config = createMockContentfulConfig({ 
-        contentStrategy: 'cms', 
-        cmsCacheStrategy: 'none' 
+      const config = createMockContentfulConfig({
+        contentStrategy: 'cms',
+        cmsCacheStrategy: 'none'
       });
       const store = createPathStore(config);
-      
+
       expect(store).toBeInstanceOf(DummyStore);
     });
 
     it('should create DummyStore for Sanity CMS with cms strategy', () => {
-      const config = createMockSanityConfig({ 
-        contentStrategy: 'cms' 
+      const config = createMockSanityConfig({
+        contentStrategy: 'cms'
       });
-      
+
       // Mock console.warn to test the warning
       const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-      
+
       const store = createPathStore(config);
-      
+
       expect(store).toBeInstanceOf(DummyStore);
       expect(consoleSpy).toHaveBeenCalledWith(
         'Path resolution is not supported when using Sanity CMS with cms cache strategy.'
       );
-      
+
       consoleSpy.mockRestore();
     });
 
     it('should create FsPathStore for Sanity with fs strategy', () => {
       const config = createMockSanityConfig({ contentStrategy: 'fs' });
       const store = createPathStore(config);
-      
+
       expect(store).toBeInstanceOf(FsPathStore);
     });
   });

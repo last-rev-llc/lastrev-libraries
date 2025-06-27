@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.5.0
+
+### Minor Changes
+
+- 5a8c889: Added support for Sanity, renamed some packages, added more test coverage, switched to PNPM
+
 ## 0.4.0
 
 ### Minor Changes

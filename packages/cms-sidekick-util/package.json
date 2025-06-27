@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/cms-sidekick-util",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A utility to help generate the tags necessary to use the LastRev sidekick",
   "main": "dist/index.js",
   "scripts": {

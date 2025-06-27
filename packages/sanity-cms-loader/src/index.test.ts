@@ -25,8 +25,8 @@ jest.mock('@last-rev/sanity-mapper', () => ({
   convertSanityDoc: jest.fn((doc, _defaultLocale, _locales) => {
     if (!doc) return null;
     return {
-      sys: { 
-        id: doc._id, 
+      sys: {
+        id: doc._id,
         type: doc._type === 'sanityImageAsset' ? 'Asset' : 'Entry',
         contentType: { sys: { id: doc._type } }
       },
@@ -39,11 +39,13 @@ jest.mock('@last-rev/sanity-mapper', () => ({
     };
   }),
   mapSanityTypesToContentfulTypes: jest.fn((schemaTypes) => {
-    return schemaTypes?.map((type: any) => ({
-      sys: { type: 'ContentType', id: type.name },
-      name: type.title || type.name,
-      fields: []
-    })) || [];
+    return (
+      schemaTypes?.map((type: any) => ({
+        sys: { type: 'ContentType', id: type.name },
+        name: type.title || type.name,
+        fields: []
+      })) || []
+    );
   })
 }));
 
@@ -423,9 +425,7 @@ describe('sanity-cms-loader', () => {
         }
       });
 
-      const mockDocs = [
-        { _id: 'blog1', _type: 'blog', title: 'Preview Blog' }
-      ];
+      const mockDocs = [{ _id: 'blog1', _type: 'blog', title: 'Preview Blog' }];
 
       mockPreviewClient.fetch.mockResolvedValue(mockDocs);
 
@@ -494,10 +494,10 @@ describe('sanity-cms-loader', () => {
       );
       expect(mockProdClient.fetch).toHaveBeenCalledWith(
         expect.stringContaining('*[_type == $type && slug.current == $value'),
-        expect.objectContaining({ 
-          type: 'blog', 
-          value: 'test-slug', 
-          defaultLocale: 'en' 
+        expect.objectContaining({
+          type: 'blog',
+          value: 'test-slug',
+          defaultLocale: 'en'
         })
       );
     });
@@ -600,10 +600,10 @@ describe('sanity-cms-loader', () => {
       );
       expect(mockProdClient.fetch).toHaveBeenCalledWith(
         expect.stringContaining('*[_type == $type && (author._ref == $id || $id in author[]._ref)'),
-        expect.objectContaining({ 
-          type: 'article', 
-          id: 'author1', 
-          defaultLocale: 'en' 
+        expect.objectContaining({
+          type: 'article',
+          id: 'author1',
+          defaultLocale: 'en'
         })
       );
     });
@@ -620,9 +620,7 @@ describe('sanity-cms-loader', () => {
         }
       });
 
-      const mockReferencingDocs = [
-        { _id: 'article1', _type: 'article', category: { _ref: 'cat1' } }
-      ];
+      const mockReferencingDocs = [{ _id: 'article1', _type: 'article', category: { _ref: 'cat1' } }];
 
       mockPreviewClient.fetch.mockResolvedValue(mockReferencingDocs);
 
@@ -704,9 +702,7 @@ describe('sanity-cms-loader', () => {
           dataset: 'production',
           token: 'test-token',
           supportedLanguages: [{ id: 'en', title: 'English' }],
-          schemaTypes: [
-            { name: 'blog', title: 'Blog Post' }
-          ]
+          schemaTypes: [{ name: 'blog', title: 'Blog Post' }]
         }
       });
 
@@ -758,12 +754,12 @@ describe('sanity-cms-loader', () => {
       });
 
       const mockDoc = { _id: 'doc1', _type: 'blog', title: 'Test' };
-      
+
       mockProdClient.fetch.mockResolvedValue([mockDoc]);
       mockPreviewClient.fetch.mockResolvedValue([mockDoc]);
 
       const loaders = createLoaders(config, 'en');
-      
+
       // Load both versions
       const prodResult = await loaders.entryLoader.load({ id: 'doc1', preview: false });
       const previewResult = await loaders.entryLoader.load({ id: 'doc1', preview: true });

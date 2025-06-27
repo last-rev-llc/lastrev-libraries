@@ -33,9 +33,9 @@ const mockGql = gql as jest.MockedFunction<typeof gql>;
 describe('fetchers', () => {
   const mockContentTypes: ContentType[] = [
     {
-      sys: { 
-        id: 'page', 
-        type: 'ContentType', 
+      sys: {
+        id: 'page',
+        type: 'ContentType',
         environment: { sys: { id: 'master', type: 'Link', linkType: 'Environment' } },
         space: { sys: { id: 'space', type: 'Link', linkType: 'Space' } },
         createdAt: '2021-01-01T00:00:00.000Z',
@@ -46,11 +46,11 @@ describe('fetchers', () => {
       name: 'Page',
       description: 'A content page',
       fields: [
-        { 
-          id: 'title', 
-          name: 'Title', 
-          type: 'Symbol', 
-          required: true, 
+        {
+          id: 'title',
+          name: 'Title',
+          type: 'Symbol',
+          required: true,
           localized: false,
           disabled: false,
           omitted: false,
@@ -80,11 +80,7 @@ describe('fetchers', () => {
   it('should generate schema for Contentful source', async () => {
     const result = await fetchers('Contentful', mockTypeMappings, mockContentTypes, false);
 
-    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(
-      mockTypeMappings,
-      mockContentTypes,
-      false
-    );
+    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(mockTypeMappings, mockContentTypes, false);
     expect(mockGql).toHaveBeenCalled();
     expect(result).toBe(mockDocumentNode);
   });
@@ -92,41 +88,25 @@ describe('fetchers', () => {
   it('should handle skipReferenceFields parameter', async () => {
     await fetchers('Contentful', mockTypeMappings, mockContentTypes, true);
 
-    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(
-      mockTypeMappings,
-      mockContentTypes,
-      true
-    );
+    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(mockTypeMappings, mockContentTypes, true);
   });
 
   it('should work with empty type mappings', async () => {
     await fetchers('Contentful', {}, mockContentTypes, false);
 
-    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(
-      {},
-      mockContentTypes,
-      false
-    );
+    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith({}, mockContentTypes, false);
   });
 
   it('should work with empty content types', async () => {
     await fetchers('Contentful', mockTypeMappings, [], false);
 
-    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(
-      mockTypeMappings,
-      [],
-      false
-    );
+    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(mockTypeMappings, [], false);
   });
 
   it('should handle Sanity source (currently uses Contentful implementation)', async () => {
     const result = await fetchers('Sanity', mockTypeMappings, mockContentTypes, false);
 
-    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(
-      mockTypeMappings,
-      mockContentTypes,
-      false
-    );
+    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(mockTypeMappings, mockContentTypes, false);
     expect(result).toBe(mockDocumentNode);
   });
 });

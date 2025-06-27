@@ -25,7 +25,7 @@ describe('createLoaders', () => {
 
   describe('CMS loader selection', () => {
     it('should create Sanity loaders when cms is Sanity', () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Sanity',
         contentStrategy: 'cms',
         cmsCacheStrategy: 'none'
@@ -38,7 +38,7 @@ describe('createLoaders', () => {
     });
 
     it('should create Contentful loaders when cms is Contentful', () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         contentStrategy: 'cms',
         cmsCacheStrategy: 'none'
@@ -72,7 +72,7 @@ describe('createLoaders', () => {
 
   describe('content strategy selection', () => {
     it('should use fs loaders when contentStrategy is fs', () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         contentStrategy: 'fs'
       });
@@ -85,7 +85,7 @@ describe('createLoaders', () => {
     });
 
     it('should use redis loaders when cmsCacheStrategy is redis', () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         cmsCacheStrategy: 'redis',
         contentStrategy: 'cms'
@@ -99,7 +99,7 @@ describe('createLoaders', () => {
     });
 
     it('should use dynamodb loaders when cmsCacheStrategy is dynamodb', () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         cmsCacheStrategy: 'dynamodb',
         contentStrategy: 'cms'
@@ -113,7 +113,7 @@ describe('createLoaders', () => {
     });
 
     it('should use cms loaders directly when cmsCacheStrategy is none', () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         cmsCacheStrategy: 'none',
         contentStrategy: 'cms' // Override the fs default
@@ -132,7 +132,7 @@ describe('createLoaders', () => {
   describe('error handling', () => {
     it('should throw error when no loaders are found', () => {
       // Mock a scenario where loaders would be undefined
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Contentful',
         cmsCacheStrategy: 'unknown' as any,
         contentStrategy: 'cms' // Not fs strategy
@@ -144,7 +144,7 @@ describe('createLoaders', () => {
 
   describe('combined scenarios', () => {
     it('should use fs loaders with Sanity cms', () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Sanity',
         contentStrategy: 'fs'
       });
@@ -157,7 +157,7 @@ describe('createLoaders', () => {
     });
 
     it('should use redis loaders with Sanity cms', () => {
-      const config = baseConfig.clone({ 
+      const config = baseConfig.clone({
         cms: 'Sanity',
         cmsCacheStrategy: 'redis',
         contentStrategy: 'cms'
