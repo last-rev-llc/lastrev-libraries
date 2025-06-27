@@ -71,7 +71,19 @@ const getData = async (
     );
     return convertSanityDoc(doc, defaultLocale, locales);
   }
-  throw new Error('Unsupported CMS');
+
+  // Provide clear error message for debugging unsupported CMS types
+  const supportedCMS = ['Contentful', 'Sanity'];
+  const currentCMS = config.cms || 'undefined';
+  logger.error(`Unsupported CMS type: ${currentCMS}`, {
+    caller: 'getData',
+    supportedTypes: supportedCMS,
+    requestedType: currentCMS,
+    type,
+    env,
+    itemId
+  });
+  throw new Error(`Unsupported CMS type: ${currentCMS}. Supported CMS types are: ${supportedCMS.join(', ')}`);
 };
 
 export const handleWebhook = async (config: LastRevAppConfig, body: any, headers: Record<string, string>) => {
@@ -86,16 +98,63 @@ export const handleWebhook = async (config: LastRevAppConfig, body: any, headers
     case 'Sanity':
       result = parseSanityWebhook(config, body, headers);
       break;
+    default:
+      // Graceful degradation for unsupported CMS types
+      const supportedCMS = ['Contentful', 'Sanity'];
+      const currentCMS = config.cms || 'undefined';
+      logger.error(`Unsupported CMS type in webhook handler: ${currentCMS}`, {
+        caller: 'handleWebhook',
+        supportedTypes: supportedCMS,
+        requestedType: currentCMS,
+        bodyType: typeof body,
+        hasHeaders: !!headers
+      });
+      return {
+        error: `Unsupported CMS type: ${currentCMS}. Supported CMS types are: ${supportedCMS.join(', ')}`,
+        supportedTypes: supportedCMS
+      };
   }
 
   if (!result) {
-    logger.error('Unsupported CMS', { caller: 'handleWebhook' });
-    return;
+    const cmsType = config.cms || 'unknown';
+    logger.error(`Failed to parse webhook for CMS: ${cmsType}`, {
+      caller: 'handleWebhook',
+      cmsType,
+      bodyType: typeof body,
+      hasHeaders: !!headers
+    });
+    return {
+      error: `Failed to parse webhook for CMS: ${cmsType}`,
+      details: 'Check webhook payload format and headers'
+    };
   }
 
   const { type, action, contentStates, env, itemId, isTruncated } = result;
 
-  if (!supportedActions.includes(action) || !contentStates.length || !supportedTypes.includes(type)) return;
+  if (!supportedActions.includes(action) || !contentStates.length || !supportedTypes.includes(type)) {
+    logger.warn('Webhook skipped due to unsupported action, type, or empty content states', {
+      caller: 'handleWebhook',
+      action,
+      type,
+      contentStatesCount: contentStates.length,
+      supportedActions,
+      supportedTypes,
+      isActionSupported: supportedActions.includes(action),
+      isTypeSupported: supportedTypes.includes(type),
+      hasContentStates: contentStates.length > 0
+    });
+    return {
+      skipped: true,
+      reason: 'Unsupported action, type, or empty content states',
+      details: {
+        action,
+        type,
+        contentStatesCount: contentStates.length,
+        supportedActions,
+        supportedTypes
+      }
+    };
+  }
 
   if (env !== config.contentful.env && config.cms === 'Contentful') {
     config = config.clone({ contentful: { env } });
@@ -122,8 +181,22 @@ export const handleWebhook = async (config: LastRevAppConfig, body: any, headers
     }
   }
 
-  const data =
-    type === 'ContentType' || (isTruncated && action !== 'delete') ? await getData(config, type, env, itemId) : body;
+  let data;
+  try {
+    data =
+      type === 'ContentType' || (isTruncated && action !== 'delete') ? await getData(config, type, env, itemId) : body;
+  } catch (error: any) {
+    logger.error('Failed to retrieve data from CMS', {
+      caller: 'handleWebhook',
+      error: error.message,
+      stack: error.stack,
+      type,
+      env,
+      itemId,
+      cms: config.cms
+    });
+    throw new Error(`Failed to retrieve data from CMS: ${error.message}`);
+  }
 
   await Promise.all(
     map(contentStates, async (env) => {
@@ -157,4 +230,15 @@ export const handleWebhook = async (config: LastRevAppConfig, body: any, headers
   );
 
   await handlers.paths(contentStates.includes('preview'), contentStates.includes('production'));
+
+  return {
+    success: true,
+    processed: {
+      type,
+      action,
+      itemId,
+      env,
+      contentStates
+    }
+  };
 };

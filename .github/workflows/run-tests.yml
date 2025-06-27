@@ -18,30 +18,36 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
       - name: Setup Node.js 20
-        uses: actions/setup-node@master
+        uses: actions/setup-node@v4
         with:
           node-version: 20
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Dependencies cache
-        uses: actions/cache@v3
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        uses: actions/cache@v4
+        id: pnpm-cache
         with:
           path: |
             **/node_modules
             ~/.cache/Cypress
-          key: ${{ runner.os }}-yarn-20-${{ hashFiles('**/yarn.lock') }}
+            ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-20-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-yarn-20
+            ${{ runner.os }}-pnpm-20
 
       # - name: Turbo Cache
       #   id: turbo-cache
-      #   uses: actions/cache@v2
+      #   uses: actions/cache@v4
       #   with:
       #     path: node_modules/.cache/turbo
       #     key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
@@ -49,16 +55,16 @@ jobs:
       #       turbo-${{ github.job }}-${{ github.ref_name }}-
 
       - name: Install project dependencies
-        run: yarn --prefer-offline
+        run: pnpm install --frozen-lockfile
 
       - name: Run the tests
-        run: 'yarn turbo run test test:e2e:record lint'
+        run: 'pnpm turbo run test test:e2e:record lint'
 
       - name: Collect coverage
-        run: 'yarn combine:reports'
+        run: 'pnpm combine:reports'
 
       - name: Archive code coverage results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: code-coverage-report
           path: coverage
@@ -74,4 +80,4 @@ jobs:
 
       # Disable build because it already happens in Netlify
       # - name: Build modules
-      #   run: yarn build
+      #   run: pnpm build

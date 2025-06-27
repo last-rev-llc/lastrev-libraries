@@ -36,7 +36,7 @@ jobs:
       result: ${{ steps.nonce.outputs.result }}
     steps:
       - id: nonce
-        run: echo "::set-output name=result::${{ github.run_id }}-$(date +%s)"
+        run: echo "result=${{ github.run_id }}-$(date +%s)" >> $GITHUB_OUTPUT
 
   install:
     if: github.actor != 'github-actions[bot]'
@@ -45,12 +45,12 @@ jobs:
         working-directory: ./examples/lastrev-next-starter
     runs-on: ubuntu-latest
     container:
-      image: cypress/browsers:node16.14.0-slim-chrome99-ff97
+      image: cypress/browsers:node-20.12.0-chrome-123.0.6312.86-1-ff-124.0.2-edge-123.0.2420.97-1
       options: --user 1001
     steps:
       # Enforce label on PR to prevent unnecesary testing
       - name: Enforce labels
-        uses: mheap/github-action-required-labels@v1
+        uses: mheap/github-action-required-labels@v5
         if: ${{ github.event_name == 'pull_request' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -60,30 +60,36 @@ jobs:
           labels: 'qa-ready'
 
       - name: Checkout Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
-      - name: Setup Node.js 16
-        uses: actions/setup-node@master
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Dependencies cache
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        uses: actions/cache@v4
+        id: pnpm-cache
         with:
           path: |
             **/node_modules
             ~/.cache/Cypress
-          key: ${{ runner.os }}-starter-yarn-${{ hashFiles('**/yarn.lock') }}
+            ~/.pnpm-store
+          key: ${{ runner.os }}-starter-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-starter-yarn-
+            ${{ runner.os }}-starter-pnpm-
 
       - name: Turbo Cache
         id: turbo-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: node_modules/.cache/turbo
           key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
@@ -91,15 +97,15 @@ jobs:
             turbo-${{ github.job }}-${{ github.ref_name }}-
 
       - name: Install project dependencies
-        run: yarn --prefer-offline
+        run: pnpm install --frozen-lockfile
 
       # report machine parameters
       - run: npx cypress info
       # - run: node -p 'os.cpus()'
-      # - run: yarn types
-      # - run: yarn lint
-      # - run: yarn test:unit:ci
-      # - run: yarn turbo run build
+      # - run: pnpm types
+      # - run: pnpm lint
+      # - run: pnpm test:unit:ci
+      # - run: pnpm turbo run build
 
       # - name: Save build folder
       #   uses: actions/upload-artifact@v2
@@ -115,7 +121,7 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
-      image: cypress/browsers:node16.14.0-slim-chrome99-ff97
+      image: cypress/browsers:node-20.12.0-chrome-123.0.6312.86-1-ff-124.0.2-edge-123.0.2420.97-1
       options: --user 1001
     needs:
       - install
@@ -134,22 +140,33 @@ jobs:
     steps:
       ## SETUP
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
       - name: Dependencies cache
-        uses: actions/cache@v2
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        uses: actions/cache@v4
+        id: pnpm-cache
         with:
           path: |
             **/node_modules
             ~/.cache/Cypress
-          key: ${{ runner.os }}-starter-yarn-${{ hashFiles('**/yarn.lock') }}
+            ~/.pnpm-store
+          key: ${{ runner.os }}-starter-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-starter-yarn-
+            ${{ runner.os }}-starter-pnpm-
 
       - name: Turbo Cache
         id: turbo-cache
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ./examples/lastrev-next-starter/node_modules/.cache/turbo
           key: turbo-${{ github.job }}-${{ github.ref_name }}-${{ github.sha }}
@@ -157,7 +174,7 @@ jobs:
             turbo-${{ github.job }}-${{ github.ref_name }}-
 
       - name: Install project dependencies
-        run: yarn --prefer-offline
+        run: pnpm install --frozen-lockfile
 
       ## RUN TESTS
       - name: Wait for Netlify Deploy Preview Commit
@@ -169,7 +186,7 @@ jobs:
           NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
 
       - name: 'Website Tests - Chrome'
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v6
         with:
           working-directory: ./examples/lastrev-next-starter
           install: false

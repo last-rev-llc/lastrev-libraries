@@ -1,3 +1,7 @@
+// Memoization cache for recursive mapping performance optimization
+let nodeMapCache = new WeakMap<any, any>();
+let blockGroupCache = new WeakMap<any[], any[]>();
+
 export const mapSanityPortableTextMarkToContentfulRichTextMark = (mark: any) => {
   switch (mark) {
     case 'strong':
@@ -72,12 +76,40 @@ export const mapSanityPortableTextNodeToContentfulRichTextNode = (
       `Invalid node passed to mapSanityPortableTextNodeToContentfulRichTextNode: ${JSON.stringify(node)}`
     );
   }
+
+  // Create cache key for memoization
+  const cacheKey = `${node._type}:${node._key || ''}:${wrapInType || ''}:${JSON.stringify(markDefs)}`;
+  
+  // Check cache first for performance optimization
+  if (nodeMapCache.has(node)) {
+    const cachedResults = nodeMapCache.get(node);
+    if (cachedResults && cachedResults[cacheKey]) {
+      return cachedResults[cacheKey];
+    }
+  }
+
+  let result: any;
+
   if (wrapInType) {
-    return {
+    result = {
       nodeType: wrapInType,
       content: [mapSanityPortableTextNodeToContentfulRichTextNode(node, undefined, markDefs)]
     };
+  } else {
+    result = mapNodeToContentful(node, markDefs);
   }
+
+  // Cache the result
+  if (!nodeMapCache.has(node)) {
+    nodeMapCache.set(node, {});
+  }
+  nodeMapCache.get(node)[cacheKey] = result;
+
+  return result;
+};
+
+// Extracted main mapping logic for better performance and readability
+const mapNodeToContentful = (node: any, markDefs: any[] = []): any => {
   switch (node._type) {
     case 'block':
       return mapSanityBlockToContentfulRichTextNode(node);
@@ -240,6 +272,11 @@ export const mapSanityPortableTextNodeToContentfulRichTextNode = (
 
 // Helper to group and nest Sanity blocks into Contentful's nested list structure
 function groupBlocksToContentfulNodes(blocks: any[]): any[] {
+  // Check cache first for performance optimization with large documents
+  if (blockGroupCache.has(blocks)) {
+    return blockGroupCache.get(blocks)!;
+  }
+
   const result: any[] = [];
   let i = 0;
   while (i < blocks.length) {
@@ -299,6 +336,9 @@ function groupBlocksToContentfulNodes(blocks: any[]): any[] {
       i++;
     }
   }
+  
+  // Cache the result for future use
+  blockGroupCache.set(blocks, result);
   return result;
 }
 
@@ -367,4 +407,10 @@ export const mapSanityPortableTextArrayToContentfulRichText = (content: any[]) =
     data: {},
     content: groupBlocksToContentfulNodes(content)
   };
+};
+
+// Export function to clear memoization cache for memory management
+export const clearRichTextMappingCache = () => {
+  nodeMapCache = new WeakMap();
+  blockGroupCache = new WeakMap();
 };
