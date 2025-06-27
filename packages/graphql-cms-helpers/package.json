@@ -12,7 +12,7 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@last-rev/logging": "^0.2.0",
+    "@last-rev/logging": "workspace:*",
     "@types/jest": "^30.0.0",
     "@types/lodash": "4.17.18",
     "@types/node": "^14.14.35",
