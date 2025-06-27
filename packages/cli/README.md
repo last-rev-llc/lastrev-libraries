@@ -303,6 +303,28 @@ Options:
   -h, --help                                                  display help for command
 ```
 
+## sanity-import
+
+### Description
+
+Pulls Contentful content types from a space and environment and generates matching Sanity schema files.
+
+### Usage
+
+```text
+Usage: sanity-import [options]
+
+Options:
+  -s, --space-id <spaceId>                Contentful space id
+  -e, --environment <environment>         Contentful environment (default: "master")
+  -m, --management-token <managementToken>  Contentful management token
+  -p, --sanity-project-id <sanityProjectId> Sanity project id
+  -d, --sanity-dataset <sanityDataset>    Sanity dataset
+  -t, --sanity-token <sanityToken>        Sanity token
+  -o, --output-dir <outputDir>            Output directory (default: "schemas")
+  -h, --help                              display help for command
+```
+
 ## gql-serve
 
 ### Description
