@@ -13,16 +13,20 @@
     "test:watch": "jest --watch"
   },
   "dependencies": {
-    "@last-rev/app-config": "^0.5.0",
+    "@last-rev/app-config": "workspace:*",
     "datadog-winston": "^1.5.1",
     "dotenv": "^10.0.0",
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "@last-rev/rollup-config": "^0.1.4",
-    "@last-rev/testing-library": "^0.1.10",
+    "@last-rev/rollup-config": "workspace:*",
+    "@last-rev/testing-library": "workspace:*",
     "@types/datadog-winston": "^1.0.5",
-    "jest": "^26.6.3"
+    "@types/jest": "^30.0.0",
+    "esbuild": "^0.25.5",
+    "jest": "^30.0.2",
+    "rollup": "^4.44.0",
+    "tslint": "^5.20.1"
   },
   "keywords": [],
   "author": "",

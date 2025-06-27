@@ -60,5 +60,3 @@ export class HumanReadableTimer {
     return `${this.name} in ${this.timer.getElapsedString(units)} ${units}`;
   }
 }
-
-export default SimpleTimer;

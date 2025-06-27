@@ -1,14 +1,13 @@
 import LastRevAppConfig from '@last-rev/app-config';
 import algoliasearch from 'algoliasearch';
 import parseWebhook from '@last-rev/contentful-webhook-parser';
-import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
-import fetch from 'cross-fetch';
+import { GraphQLClient } from 'graphql-request';
 import groupAlgoliaObjectsByIndex from './groupAlgoliaObjectsByIndex';
 import performAlgoliaQuery from './performAlgoliaQuery';
 import updateAlgoliaIndices from './updateAlgoliaIndices';
 import { getWinstonLogger } from '@last-rev/logging';
 import extractDomainUrlFromEvent from './extractDomainUrlFromEvent';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 
 const logger = getWinstonLogger({
   package: 'graphql-algolia-integration',
@@ -31,10 +30,7 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string) 
 
       const uri = graphQlUrl.startsWith('/') ? `${domainUrl}${graphQlUrl}` : graphQlUrl;
 
-      const apolloClient = new ApolloClient({
-        link: new HttpLink({ uri, fetch }),
-        cache: new InMemoryCache()
-      });
+      const graphqlClient = new GraphQLClient(uri);
 
       const body = event.body ? JSON.parse(event.body) : null;
       const headers = event?.headers;
@@ -62,7 +58,7 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string) 
         // manually triggered. ignore, and use the default envs.
       }
 
-      const { errors: queryErrors, results } = await performAlgoliaQuery(apolloClient, config, contentStates);
+      const { errors: queryErrors, results } = await performAlgoliaQuery(graphqlClient, config, contentStates);
 
       if (!!queryErrors?.length) {
         logger.error('[ERROR] performAlgoliaQuery, stopping execution', {

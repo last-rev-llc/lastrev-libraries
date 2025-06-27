@@ -1,0 +1,35 @@
+{
+  "name": "@last-rev/sanity-webhook-parser",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "run-s clean build:prod",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@last-rev/app-config": "workspace:*",
+    "@last-rev/rollup-config": "workspace:*",
+    "@last-rev/testing-library": "workspace:*",
+    "@last-rev/sanity-mapper": "workspace:*",
+    "@last-rev/types": "workspace:*",
+    "@types/jest": "^30.0.0",
+    "esbuild": "^0.25.5",
+    "jest": "^30.0.2",
+    "rollup": "^4.44.0",
+    "ts-jest": "^29.4.0",
+    "tslint": "^5.20.1",
+    "typescript": "^5.8.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "sanity": "^3.40.0"
+  }
+}

@@ -1,9 +1,10 @@
 import DataLoader, { Options } from 'dataloader';
-import { Entry, Asset, createClient, ContentfulClientApi } from 'contentful';
+import { createClient, ContentfulClientApi } from 'contentful';
+import { BaseAsset, BaseEntry } from '@last-rev/types';
 import { find, map, partition } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
-import { ItemKey, ContentfulLoaders, FVLKey, RefByKey } from '@last-rev/types';
+import { SimpleTimer as Timer } from '@last-rev/timer';
+import { ItemKey, CmsLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { chunk, makeContentfulRequest } from './helpers';
 
@@ -31,29 +32,27 @@ const refByOptions: Options<RefByKey, any, string> = {
 
 const isFulFilled = <T>(p: PromiseSettledResult<T>): p is PromiseFulfilledResult<T> => p.status === 'fulfilled';
 
-const createLoaders = (config: LastRevAppConfig, defaultLocale: string): ContentfulLoaders => {
+const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoaders => {
   const prodClient = createClient({
     accessToken: config.contentful.contentDeliveryToken,
     space: config.contentful.spaceId,
     environment: config.contentful.env,
-    host: 'cdn.contentful.com',
-    resolveLinks: false
-  });
+    host: 'cdn.contentful.com'
+  }).withoutLinkResolution.withAllLocales;
 
   const previewClient = createClient({
     accessToken: config.contentful.contentPreviewToken,
     space: config.contentful.spaceId,
     environment: config.contentful.env,
-    host: 'preview.contentful.com',
-    resolveLinks: false
-  });
+    host: 'preview.contentful.com'
+  }).withoutLinkResolution.withAllLocales;
 
   const maxBatchSize = config.contentful.maxBatchSize || 1000;
 
   const fetchBatchItems = async (
     ids: string[],
     command: 'getEntries' | 'getAssets',
-    client: ContentfulClientApi,
+    client: ContentfulClientApi<'WITHOUT_LINK_RESOLUTION' | 'WITH_ALL_LOCALES'>,
     maxBatchSize: number
   ) => {
     const timer = new Timer();
@@ -89,7 +88,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     return results;
   };
 
-  const getBatchItemFetcher = <T extends Entry<any> | Asset>(
+  const getBatchItemFetcher = <T extends BaseEntry | BaseAsset>(
     dirname: 'entries' | 'assets'
   ): DataLoader.BatchLoadFn<ItemKey, T | null> => {
     return async (keys): Promise<(T | null)[]> => {
@@ -105,10 +104,10 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
       const items = keys.map(({ id, preview }) => {
         return (
           find(previewItems, (item) => {
-            return preview && (item as Entry<any> | Asset).sys.id === id;
+            return preview && (item as BaseEntry | BaseAsset).sys.id === id;
           }) ||
           find(prodItems, (item) => {
-            return !preview && (item as Entry<any> | Asset).sys.id === id;
+            return !preview && (item as BaseEntry | BaseAsset).sys.id === id;
           }) ||
           null
         );
@@ -124,7 +123,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     };
   };
 
-  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, Entry<any> | null> => {
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, BaseEntry | null> => {
     return async (keys) => {
       const timer = new Timer();
       const fvlRequests = keys.reduce((acc, { contentType, field, value, preview }) => {
@@ -173,7 +172,6 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
           requests.prod.map(async ({ content_type, field, values }) => {
             const { items } = await prodClient.getEntries<any>({
               content_type,
-              locale: '*',
               include: 0,
               [`fields.${field}[in]`]: values
             });
@@ -184,7 +182,6 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
           requests.preview.map(async ({ content_type, field, values }) => {
             const { items } = await previewClient.getEntries<any>({
               content_type,
-              locale: '*',
               include: 0,
               [`fields.${field}[in]`]: values
             });
@@ -211,8 +208,8 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
       const result = keys.map(({ preview, field, value, contentType }) => {
         const arr = preview ? prev : prod;
         return (
-          arr.find((i: Entry<any>) => {
-            return i.sys.contentType.sys.id === contentType && i.fields[field]?.[defaultLocale] === value;
+          arr.find((i: BaseEntry) => {
+            return i.sys.contentType.sys.id === contentType && (i.fields as any)[field]?.[defaultLocale] === value;
           }) || null
         );
       });
@@ -221,7 +218,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     };
   };
 
-  const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, Entry<any>[]> => {
+  const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, BaseEntry[]> => {
     return async (keys) => {
       const timer = new Timer();
       const refByRequests = keys.reduce((acc, { contentType, field, id, preview }) => {
@@ -270,7 +267,6 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
           requests.prod.map(async ({ content_type, field, ids }) => {
             const { items } = await prodClient.getEntries<any>({
               content_type,
-              locale: '*',
               include: 0,
               [`fields.${field}.sys.id[in]`]: ids
             });
@@ -281,7 +277,6 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
           requests.preview.map(async ({ content_type, field, ids }) => {
             const { items } = await previewClient.getEntries<any>({
               content_type,
-              locale: '*',
               include: 0,
               [`fields.${field}.sys.id[in]`]: ids
             });
@@ -304,15 +299,15 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
           if (x.sys.contentType.sys.id === contentType) {
             const fieldValue = x.fields[field]?.[defaultLocale];
             if (Array.isArray(fieldValue)) {
-              if (fieldValue.some((f) => f?.sys?.type === 'Link' && f?.sys?.id === id)) {
+              if (fieldValue.some((f) => (f as any)?.sys?.type === 'Link' && (f as any)?.sys?.id === id)) {
                 acc.push(x);
               }
-            } else if (fieldValue?.sys?.type === 'Link' && fieldValue?.sys?.id === id) {
+            } else if ((fieldValue as any)?.sys?.type === 'Link' && (fieldValue as any)?.sys?.id === id) {
               acc.push(x);
             }
           }
           return acc;
-        }, [] as Entry<any>[]);
+        }, [] as BaseEntry[]);
       });
 
       logger.debug('Fetched entries by ref by', {
@@ -326,7 +321,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     };
   };
 
-  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, Entry<any>[]> => {
+  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, BaseEntry[]> => {
     return async (keys) => {
       const timer = new Timer();
       const out = await Promise.allSettled(
@@ -337,7 +332,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
               content_type: id,
               include: 0,
               locale: '*'
-            })) as Entry<any>[];
+            })) as BaseEntry[];
           })()
         )
       );
@@ -381,8 +376,8 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Content
     };
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher<Entry<any>>('entries'), options);
-  const assetLoader = new DataLoader(getBatchItemFetcher<Asset>('assets'), options);
+  const entryLoader = new DataLoader(getBatchItemFetcher<BaseEntry>('entries'), options);
+  const assetLoader = new DataLoader(getBatchItemFetcher<BaseAsset>('assets'), options);
   const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
   const fetchAllContentTypes = async (preview: boolean) => {
     try {

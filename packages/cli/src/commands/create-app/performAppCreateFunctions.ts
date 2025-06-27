@@ -3,7 +3,8 @@ import { replaceInFile } from 'replace-in-file';
 import { writeFile, readFile } from 'fs-extra';
 import GithubApiWrapper from './apiWrappers/GithubApiWrapper';
 import simpleGit from 'simple-git';
-import LastRevConfig, {
+import {
+  LastRevConfig,
   VAL_CREATE_APP_CONFIG,
   VAL_SKIP_GIT_PUSH,
   VAL_GITHUB_REPO,

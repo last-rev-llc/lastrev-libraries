@@ -1,6 +1,6 @@
 import { FragmentDataMapping, MergedJsonRepresentationMap } from './types';
 import Node from './Node';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { each } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
 

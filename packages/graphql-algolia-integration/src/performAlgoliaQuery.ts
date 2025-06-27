@@ -1,8 +1,8 @@
-import { ApolloClient } from '@apollo/client';
+import { GraphQLClient } from 'graphql-request';
 import LastRevAppConfig from '@last-rev/app-config';
 import { algoliaQuery, avaliableLocalesQuery, idsQuery } from './queries';
 import { AlgoliaRecord, QueryConfig } from './types';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import { getWinstonLogger } from '@last-rev/logging';
 
 const logger = getWinstonLogger({
@@ -11,16 +11,14 @@ const logger = getWinstonLogger({
 });
 
 const performAlgoliaQuery = async (
-  client: ApolloClient<any>,
+  client: GraphQLClient,
   config: LastRevAppConfig,
   envs: ('preview' | 'production')[]
 ): Promise<{ errors: any[]; results: AlgoliaRecord[][] }> => {
   let timer = new Timer();
   const {
-    data: {
-      availableLocales: { available: locales }
-    }
-  } = await client.query<{ availableLocales: { available: string[] } }>({ query: avaliableLocalesQuery });
+    availableLocales: { available: locales }
+  } = await client.request<{ availableLocales: { available: string[] } }>(avaliableLocalesQuery);
 
   const idsQueryFilters: QueryConfig[] = envs.flatMap((env) =>
     config.algolia.contentTypeIds.flatMap((contentType: string) => ({
@@ -33,23 +31,18 @@ const performAlgoliaQuery = async (
     idsQueryFilters.map(async (filter) => {
       try {
         const timerQuery = new Timer();
-        const result = await client.query({
-          query: idsQuery,
-          variables: {
-            filter
-          }
+        const result = await client.request<{ contents: { id: string }[] }>(idsQuery, {
+          filter
         });
 
         logger.debug('Query for Ids', {
           caller: 'performAlgoliaQuery',
           emapsedMs: timerQuery.end().millis,
-          itemsSuccessful: result.data.contents.length,
+          itemsSuccessful: result.contents.length,
           query: filter
         });
 
-        const {
-          data: { contents: algoliaResults }
-        } = result;
+        const { contents: algoliaResults } = result;
 
         return algoliaResults;
       } catch (err) {
@@ -66,7 +59,9 @@ const performAlgoliaQuery = async (
   const idsErrors = (idsResults.filter((result) => result.status === 'rejected') as PromiseRejectedResult[]).map(
     (r) => r.reason
   );
-  const ids = (idsResults.filter((result) => result.status === 'fulfilled') as PromiseFulfilledResult<{ id: string }>[])
+  const ids = (
+    idsResults.filter((result) => result.status === 'fulfilled') as PromiseFulfilledResult<{ id: string }[]>[]
+  )
     .map((r) => r.value)
     .flat()
     .map((r) => r.id);
@@ -96,20 +91,15 @@ const performAlgoliaQuery = async (
   const results = await Promise.allSettled(
     queryFilters.map(async (filter) => {
       const timerQuery = new Timer();
-      const result = await client.query({
-        query: algoliaQuery,
-        variables: {
-          filter
-        }
+      const result = await client.request<{ contents: AlgoliaRecord[] }>(algoliaQuery, {
+        filter
       });
       logger.debug('Query for algolia objects by ids', {
         caller: 'performAlgoliaQuery',
         emapsedMs: timerQuery.end().millis,
-        itemsSuccessful: result.data.contents.length
+        itemsSuccessful: result.contents.length
       });
-      const {
-        data: { contents: algoliaResults }
-      } = result;
+      const { contents: algoliaResults } = result;
       return algoliaResults;
     })
   );

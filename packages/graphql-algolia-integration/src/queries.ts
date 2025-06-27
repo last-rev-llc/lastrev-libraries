@@ -1,4 +1,4 @@
-import gql from 'graphql-tag';
+import { gql } from 'graphql-request';
 
 export const algoliaQuery = gql`
   query AlgoliaQuery($filter: ContentsFilter!) {

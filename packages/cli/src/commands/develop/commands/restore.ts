@@ -1,4 +1,4 @@
-import getLastRevConfig from '../../../helpers/getLastRevConfig';
+import { getLastRevConfig } from '../../../helpers/getLastRevConfig';
 import output from '../utils/output';
 import updateLibraries from '../utils/updateLibraries';
 import { CONFIG_LIBRARIES_LOCATION, CONFIG_PROJECTS } from '../utils/constants';

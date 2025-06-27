@@ -1,0 +1,39 @@
+{
+  "name": "@last-rev/sanity-mapper",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "run-s clean build:prod",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@last-rev/app-config": "workspace:*",
+    "@last-rev/rollup-config": "workspace:*",
+    "@last-rev/testing-library": "workspace:*",
+    "@last-rev/types": "workspace:*",
+    "@sanity/client": "^7.4.0",
+    "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.17.18",
+    "esbuild": "^0.25.5",
+    "jest": "^30.0.2",
+    "rollup": "^4.44.0",
+    "ts-jest": "^29.4.0",
+    "tslint": "^5.20.1",
+    "typescript": "^5.8.3"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@last-rev/logging": "workspace:*",
+    "@last-rev/timer": "workspace:*",
+    "lodash": "^4.17.21",
+    "tslib": "^2.3.0"
+  }
+}

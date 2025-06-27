@@ -42,9 +42,7 @@ const defaults = {
   }
 };
 
-const getLastRevConfig = () => {
+export const getLastRevConfig = () => {
   const configPath = join(OSBasedPaths.config, 'config.json');
   return new Configstore('', defaults, { configPath });
 };
-
-export default getLastRevConfig;

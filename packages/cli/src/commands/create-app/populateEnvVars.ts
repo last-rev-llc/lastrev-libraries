@@ -1,6 +1,7 @@
 import ContentfulApiWrapper from './apiWrappers/ContentfulApiWrapper';
 import RedisApiWrapper from './apiWrappers/RedisApiWrapper';
-import LastRevConfig, {
+import {
+  LastRevConfig,
   VAL_CONTENTFUL_PREVIEW_KEY,
   VAL_CONTENTFUL_DELIVERY_KEY,
   VAL_ENV_VARS,

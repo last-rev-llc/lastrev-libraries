@@ -1,5 +1,5 @@
 import { prompt } from 'inquirer';
-import LastRevConfig from '../LastRevConfig';
+import { LastRevConfig } from '../LastRevConfig';
 
 export default abstract class BaseApiWrapper {
   config: LastRevConfig;

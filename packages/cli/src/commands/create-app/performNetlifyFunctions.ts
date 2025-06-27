@@ -1,6 +1,7 @@
 import NetlifyApiWrapper from './apiWrappers/NetlifyApiWrapper';
 import GithubApiWrapper from './apiWrappers/GithubApiWrapper';
-import LastRevConfig, {
+import {
+  LastRevConfig,
   VAL_GITHUB_REPO,
   ACTION_NETLIFY_ADD_DEPLOY_KEY,
   ACTION_NETLIFY_ADD_DEPLOY_HOOK,

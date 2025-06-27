@@ -1,5 +1,5 @@
 import { GenerateSchemaParams } from './types';
-import fetch from './fetchers';
+import { fetchers as fetch } from './fetchers';
 import { DocumentNode } from 'graphql';
 import { getWinstonLogger } from '@last-rev/logging';
 
@@ -8,17 +8,14 @@ const logger = getWinstonLogger({
   module: 'index'
 });
 
-const generateSchema = async ({
+export const generateSchema = async ({
   source = 'Contentful',
   typeMappings,
-  connectionParams,
   contentTypes,
   skipReferenceFields
 }: GenerateSchemaParams): Promise<DocumentNode> => {
   logger.info(`generating schema from ${source}...`, {
     caller: 'generateSchema'
   });
-  return await fetch(source, typeMappings, skipReferenceFields, connectionParams, contentTypes);
+  return await fetch(source, typeMappings, contentTypes, skipReferenceFields);
 };
-
-export default generateSchema;

@@ -2,28 +2,19 @@ const { omit } = require(`lodash/fp`);
 const path = require('path');
 
 const replace = require(`@rollup/plugin-replace`);
-// const typescript = require(`rollup-plugin-typescript2`);
-// const { babel } = require(`@rollup/plugin-babel`);
-const json = require(`@rollup/plugin-json`);
+const jsonlint = require('rollup-plugin-jsonlint');
 const commonjs = require(`@rollup/plugin-commonjs`);
 const { nodeResolve } = require(`@rollup/plugin-node-resolve`);
 const alias = require(`@rollup/plugin-alias`);
 const postcss = require(`rollup-plugin-postcss`);
 const autoprefixer = require(`autoprefixer`);
 const progress = require(`rollup-plugin-progress`);
-const { terser } = require(`rollup-plugin-terser`);
+const terser = require(`@rollup/plugin-terser`);
 const sourcemap = require(`rollup-plugin-sourcemaps`);
 const peerDepsExternal = require('rollup-plugin-peer-deps-external');
-// const analyze = require('rollup-plugin-analyzer');
-// const { visualizer } = require('rollup-plugin-visualizer');
 const { swc, defineRollupSwcOption } = require('rollup-plugin-swc3');
-const typescriptR = require('@rollup/plugin-typescript');
-// const { plugins: swcPlugins } = require('@swc/core');
 const PluginTransformImport = require('swc-plugin-transform-import').default;
-// const multi = require(`@rollup/plugin-multi-entry`);
-// const clean = require(`./plugins/clean`);
-// const size = require(`./plugins/size`);
-// const copy = require(`./plugins/copy`);
+const generateDeclarations = require('rollup-plugin-generate-declarations');
 
 const env = process.env.NODE_ENV;
 const isProduction = env === `production`;
@@ -37,7 +28,9 @@ const omitOpts = omit([
   `babelHelpers`,
   `filename`,
   'disableTerser',
-  'enableSourcemap'
+  'enableSourcemap',
+  'preserveModules',
+  'preserveModulesRoot'
 ]);
 
 const defaultExternal = (id) => {
@@ -61,9 +54,10 @@ const createOutput = (dir = `dist`, defaultOpts) => {
   } = defaultOpts;
 
   const defaultPlugins = [
-    // isProduction && clean(dir),
-    // multi(),
-    isProduction && peerDepsExternal(),
+    isProduction &&
+      peerDepsExternal({
+        includeDependencies: true
+      }),
     replace({
       'preventAssignment': true,
       'process.env.NODE_ENV': JSON.stringify(isProduction ? `production` : `development`)
@@ -81,7 +75,7 @@ const createOutput = (dir = `dist`, defaultOpts) => {
     }),
     Object.keys(moduleAlias || {}).length > 0 &&
       alias({
-        ...moduleAlias,
+        entries: Object.entries(moduleAlias).map(([find, replacement]) => ({ find, replacement })),
         resolve: EXTENSIONS
       }),
     nodeResolve({
@@ -90,15 +84,12 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       browser: true
     }),
     commonjs({
-      include: /\/node_modules\//
-      // namedExports: {
-      //   '../../../../node_modules/graphql-request/dist/types.dom': ['HeadersInit']
-      // }
+      include: /\/node_modules\//,
+      transformMixedEsModules: true,
+      defaultIsModuleExports: 'auto',
+      esmExternals: true
     }),
-    json(),
-    typescriptR({
-      sourceMap: !isProduction || defaultOpts.enableSourcemap
-    }),
+    jsonlint({ mode: 'json5' }),
     swc(
       defineRollupSwcOption({
         sourceMaps: !isProduction || defaultOpts.enableSourcemap,
@@ -133,15 +124,29 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       })
     ),
     (!isProduction || defaultOpts.enableSourcemap) && sourcemap(),
-    isProduction && !defaultOpts.disableTerser && terser(),
+    isProduction &&
+      !defaultOpts.disableTerser &&
+      terser({
+        compress: {
+          drop_console: false,
+          drop_debugger: false,
+          pure_funcs: [],
+          passes: 1
+        },
+        mangle: {
+          keep_fnames: true,
+          keep_classnames: true
+        },
+        format: {
+          comments: true,
+          beautify: false
+        }
+      }),
     // size(dir),
     progress({
       clearLine: false
-    })
-    // analyze(),
-    // visualizer({
-    // template: 'sunburst'
-    // })
+    }),
+    generateDeclarations()
   ];
 
   const outputs = [
@@ -152,6 +157,9 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       chunkFileNames: filename ? `${filename}.js` : `[name].js`,
       entryFileNames: filename ? `${filename}.js` : `[name].js`,
       exports: 'auto',
+      interop: 'auto',
+      preserveModules: true,
+      preserveModulesRoot: 'src',
       ...output
     },
     {
@@ -161,13 +169,13 @@ const createOutput = (dir = `dist`, defaultOpts) => {
       chunkFileNames: filename ? `${filename}.esm.js` : `[name].esm.js`,
       entryFileNames: filename ? `${filename}.esm.js` : `[name].esm.js`,
       exports: 'auto',
+      preserveModules: true,
+      preserveModulesRoot: 'src',
       ...output
     }
   ];
 
   return {
-    preserveModules: true,
-    disableTerser: true,
     ...opts,
     external: external || defaultExternal,
     plugins: defaultPlugins.filter(Boolean).concat(plugins),
@@ -175,7 +183,6 @@ const createOutput = (dir = `dist`, defaultOpts) => {
   };
 };
 
-// exports.copy = copy;
 exports.config = (opts) => {
   const inputs = Array.isArray(opts) ? opts : [opts];
   return inputs.map(({ dest: dir, ...o }) => {

@@ -8,7 +8,7 @@ import { ContentTypeMap, FragmentDataMapping, MergedJsonRepresentationMap, Query
 import writeFragmentData from './writeFragmentData';
 import writePageQuery from './writePageQuery';
 import { getWinstonLogger } from '@last-rev/logging';
-import Timer from '@last-rev/timer';
+import { SimpleTimer as Timer } from '@last-rev/timer';
 import writeStandardFragments from './writeStandardFragments';
 import writeLinkFragment from './writeLinkFragment';
 import extractNonReferenceFields from './extractNonReferenceFields';
@@ -150,9 +150,8 @@ const run = async ({
     space: contentfulSpaceId,
     accessToken: contentfulDeliveryToken,
     environment: contentfulEnvironment,
-    host: 'cdn.contentful.com',
-    resolveLinks: false
-  });
+    host: 'cdn.contentful.com'
+  }).withoutLinkResolution.withAllLocales;
 
   const { items } = await client.getContentTypes();
 

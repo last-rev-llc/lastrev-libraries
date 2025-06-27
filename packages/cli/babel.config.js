@@ -1,10 +1,6 @@
 module.exports = {
   presets: [['@babel/env', { modules: false }], '@babel/preset-typescript'],
-  plugins: [
-    '@babel/plugin-proposal-optional-chaining',
-    '@babel/plugin-transform-runtime',
-    '@babel/plugin-proposal-nullish-coalescing-operator'
-  ],
+  plugins: ['@babel/plugin-transform-runtime'],
   exclude: /node_modules/
   // env: {
   //   test: {

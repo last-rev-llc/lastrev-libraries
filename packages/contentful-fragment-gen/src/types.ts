@@ -1,4 +1,4 @@
-import { ContentType } from 'contentful';
+import { ContentType } from '@last-rev/types';
 
 export type FragementFileData = {
   contentType: string;

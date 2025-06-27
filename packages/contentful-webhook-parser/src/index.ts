@@ -1,6 +1,7 @@
-import { Entry, Asset, ContentType } from 'contentful';
+import { ContentType, BaseAsset } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { getWinstonLogger } from '@last-rev/logging';
+import { BaseEntry } from 'contentful';
 
 const logger = getWinstonLogger({
   package: 'contentful-webhook-parser',
@@ -37,7 +38,7 @@ const actionMappings: ActionMappings = {
   archive: { action: 'delete', envs: ['preview', 'production'] }
 };
 
-export type WebhookBody = (Entry<any> | Asset | ContentType) & HasEnv;
+export type WebhookBody = (BaseEntry | BaseAsset | ContentType) & HasEnv;
 export type WebhookHeaders = Record<string, string>;
 export type WebhookParserResult = {
   action: 'update' | 'delete';
@@ -48,10 +49,7 @@ export type WebhookParserResult = {
   isTruncated: boolean;
 };
 
-export const supportedTypes = ['Entry', 'Asset', 'ContentType'];
-export const supportedActions = ['update', 'delete'];
-
-const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeaders): WebhookParserResult => {
+export const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeaders): WebhookParserResult => {
   const topics = headers['x-contentful-topic']?.split('.');
 
   if (!topics || topics.length < 3) {
@@ -72,8 +70,6 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
 
   if (!type) throw Error(`No type matched for ${headers['x-contentful-topic']}`);
 
-  if (!supportedTypes.includes(type)) logger.debug(`Unsupported type! ${type}`, { caller: 'parseWebhook' });
-
   const contentfulAction: string = topics[2];
 
   if (!actionMappings[contentfulAction])
@@ -88,5 +84,3 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
     isTruncated
   };
 };
-
-export default parseWebhook;

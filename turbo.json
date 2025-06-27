@@ -7,16 +7,6 @@
       "dependsOn": ["^build"],
       "outputs": ["coverage/**"]
     },
-    "test:e2e": {
-      "outputMode": "new-only",
-      "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
-    },
-    "test:e2e:record": {
-      "outputMode": "new-only",
-      "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
-    },
     "build-storybook": {
       "outputMode": "new-only",
       "dependsOn": ["^build"],
@@ -41,6 +31,22 @@
       "outputMode": "new-only",
       "cache": false,
       "dependsOn": ["^build"]
+    },
+    "clean": {
+      "outputMode": "new-only",
+      "cache": false,
+      "outputs": []
+    },
+    "start": {
+      "outputMode": "new-only",
+      "cache": false,
+      "dependsOn": ["^build"]
+    },
+    "storybook": {
+      "outputMode": "new-only",
+      "cache": false,
+      "dependsOn": ["^build"],
+      "outputs": ["storybook-static/**"]
     }
   }
 }

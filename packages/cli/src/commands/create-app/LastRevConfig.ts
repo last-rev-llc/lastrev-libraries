@@ -3,7 +3,7 @@ import { DistinctQuestion, prompt } from 'inquirer';
 import Messager from './Messager';
 
 import { version } from '../../../package.json';
-import getLastRevConfig, { emptyState } from '../../helpers/getLastRevConfig';
+import { getLastRevConfig, emptyState } from '../../helpers/getLastRevConfig';
 import Configstore from 'configstore';
 
 const messager = Messager.getInstance();
@@ -53,7 +53,7 @@ export const ACTION_CREATE_REDIS_USER = 'createRedisUser';
 
 const stateRootKey = 'cli.state';
 
-export default class LastRevConfig {
+export class LastRevConfig {
   private _config: Configstore;
 
   constructor() {

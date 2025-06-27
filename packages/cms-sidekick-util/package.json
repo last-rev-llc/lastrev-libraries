@@ -1,0 +1,38 @@
+{
+  "name": "@last-rev/cms-sidekick-util",
+  "version": "0.1.0",
+  "description": "A utility to help generate the tags necessary to use the LastRev sidekick",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "run-s clean build:prod",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "lint": "tslint --project tsconfig.json"
+  },
+  "author": "Jaime Morales",
+  "license": "ISC",
+  "dependencies": {
+    "lodash": "^4.17.20"
+  },
+  "devDependencies": {
+    "@last-rev/app-config": "workspace:*",
+    "@last-rev/rollup-config": "workspace:*",
+    "@last-rev/testing-library": "workspace:*",
+    "@last-rev/types": "workspace:*",
+    "@types/faker": "^5.1.0",
+    "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.17.18",
+    "contentful": "^11.7.2",
+    "esbuild": "^0.25.5",
+    "faker": "^5.1.0",
+    "jest": "^30.0.2",
+    "rollup": "^4.44.0",
+    "ts-jest": "^29.4.0",
+    "tslint": "^5.20.1",
+    "typescript": "^5.8.3"
+  }
+}

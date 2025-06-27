@@ -1,6 +1,6 @@
-import { config } from '@last-rev/rollup-config';
+const { config } = require('@last-rev/rollup-config');
 
-export default config({
+module.exports = config({
   input: `./src/index.ts`,
   babelHelpers: 'runtime',
   preserveModules: true,

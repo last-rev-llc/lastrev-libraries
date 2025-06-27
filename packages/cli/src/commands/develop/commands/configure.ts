@@ -1,4 +1,4 @@
-import getLastRevConfig from '../../../helpers/getLastRevConfig';
+import { getLastRevConfig } from '../../../helpers/getLastRevConfig';
 import readJsonFileInDir from '../utils/readJsonFileInDir';
 import { resolve } from 'path';
 import getAllLibraries from '../utils/getAllLibraries';

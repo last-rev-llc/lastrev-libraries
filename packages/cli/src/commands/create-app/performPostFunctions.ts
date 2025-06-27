@@ -1,6 +1,7 @@
 import ContentfulApiWrapper from './apiWrappers/ContentfulApiWrapper';
 import NetlifyApiWrapper from './apiWrappers/NetlifyApiWrapper';
-import LastRevConfig, {
+import {
+  LastRevConfig,
   ACTION_CREATE_CONTENTFUL_CACHE_WEBHOOK,
   ACTION_CREATE_CONTENTFUL_PROD_WEBHOOK,
   VAL_NETLIFY_SITE

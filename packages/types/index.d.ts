@@ -1,6 +1,21 @@
 import DataLoader from 'dataloader';
-import { Entry, Asset, ContentType, ContentfulClientApi } from 'contentful';
+import {
+  Asset,
+  AssetCollection,
+  ContentfulClientApi,
+  ContentType,
+  ContentTypeCollection,
+  Entry,
+  EntryCollection,
+  Field,
+  FieldItem,
+  RichTextContent
+} from 'contentful';
+import { Block, Inline, Mark, Node, Text, Document } from '@contentful/rich-text-types';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
+
+export type BaseEntry = Entry<any, 'WITH_ALL_LOCALES' | 'WITHOUT_LINK_RESOLUTION'>;
+export type BaseAsset = Asset<'WITH_ALL_LOCALES' | 'WITHOUT_LINK_RESOLUTION'>;
 
 export type ItemKey = {
   id: string;
@@ -38,33 +53,33 @@ export type RefByKey = {
   field: string;
 };
 
-export type ContentfulLoaders = {
-  entryLoader: DataLoader<ItemKey, Entry<any> | null>;
-  entriesRefByLoader: DataLoader<RefByKey, Entry<any>[]>;
-  entryByFieldValueLoader: DataLoader<FVLKey, Entry<any> | null>;
-  assetLoader: DataLoader<ItemKey, Asset | null>;
-  entriesByContentTypeLoader: DataLoader<ItemKey, Entry<any>[]>;
+export type CmsLoaders = {
+  entryLoader: DataLoader<ItemKey, BaseEntry | null>;
+  entriesRefByLoader: DataLoader<RefByKey, BaseEntry[]>;
+  entryByFieldValueLoader: DataLoader<FVLKey, BaseEntry | null>;
+  assetLoader: DataLoader<ItemKey, BaseAsset | null>;
+  entriesByContentTypeLoader: DataLoader<ItemKey, BaseEntry[]>;
   // pathLoader: DataLoader<PathKey, PathData2 | null>;
   fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
 };
 
 export type TypeMappings = {
-  [contentfulType: string]: string;
+  [cmsType: string]: string;
 };
 
-export type ContentfulPathsGenerator = (
-  resolvedItem: Entry<any>,
-  loaders: ContentfulLoaders,
+export type CmsPathsGenerator = (
+  resolvedItem: BaseEntry,
+  loaders: CmsLoaders,
   defaultLocale: string,
   locales: string[],
   preview?: boolean,
   site?: string
 ) => Promise<PathDataMap>;
 
-export type ContentfulPathsConfig = string | ContentfulPathsGenerator;
+export type CmsPathsConfig = string | CmsPathsGenerator;
 
-export type LegacyContentfulPathsConfigs = {
-  [contentTypeId: string]: ContentfulPathsConfig;
+export type LegacyCmsPathsConfigs = {
+  [contentTypeId: string]: CmsPathsConfig;
 };
 
 export type PathRuleDefinition = {
@@ -95,14 +110,14 @@ export type PathRuleConfig = {
   [contentType: string]: ContentTypePathRuleConfig;
 };
 
-export type ContentfulPathsConfigs = LegacyContentfulPathsConfigs | PathRuleConfig;
+export type CmsPathsConfigs = LegacyCmsPathsConfigs | PathRuleConfig;
 
 export type Extensions = {
   typeDefs: string | DocumentNode | Source | GraphQLSchema;
   resolvers: Record<string, any>;
   mappers: Mappers;
-  typeMappings: { [contentfulType: string]: string };
-  pathsConfigs: ContentfulPathsConfigs;
+  typeMappings: { [cmsType: string]: string };
+  pathsConfigs: CmsPathsConfigs;
 };
 
 export type ContentfulClients = {
@@ -110,7 +125,14 @@ export type ContentfulClients = {
   preview: ContentfulClientApi;
 };
 
-export type PathEntries = (Entry<any> | null)[];
+export type CmsClients =
+  | ContentfulClients
+  | {
+      prod: any;
+      preview: any;
+    };
+
+export type PathEntries = (BaseEntry | null)[];
 
 export type PathInfo = {
   path: string;
@@ -123,10 +145,10 @@ export type LoadEntriesForPathFunction = (
   site?: string
 ) => Promise<PathEntries | null>;
 
-export type loadPathsForContentFunction = (entry: Entry<any>, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
+export type loadPathsForContentFunction = (entry: BaseEntry, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
 
 export type ApolloContext = {
-  loaders: ContentfulLoaders;
+  loaders: CmsLoaders;
   mappers: Mappers;
   defaultLocale: string;
   typeMappings: TypeMappings;
@@ -136,11 +158,12 @@ export type ApolloContext = {
   path?: string;
   locales: string[];
   preview?: boolean;
-  contentful: ContentfulClients;
+  contentful?: CmsClients;
+  sanity?: CmsClients;
   pathReaders?: PathReaders;
   displayType?: string;
-
   pathEntries?: PathEntries;
+  cms: 'Contentful' | 'Sanity';
 };
 
 export type TypeMapper = {
@@ -224,3 +247,18 @@ export type SitemapPage = {
 export type Sitemap = {
   pages: SitemapPage[];
 };
+
+// Re-export main Contentful types for abstraction
+export type {
+  Entry,
+  Asset,
+  ContentType,
+  Field,
+  ContentTypeCollection,
+  EntryCollection,
+  AssetCollection,
+  FieldItem,
+  RichTextContent
+};
+
+export type { Block, Inline, Mark, Node, Text, Document };

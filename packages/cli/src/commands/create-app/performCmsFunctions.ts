@@ -1,7 +1,8 @@
 import copyEnvironment from '@last-rev/contentful-import-export';
 import chalk from 'chalk';
 import ContentfulApiWrapper from './apiWrappers/ContentfulApiWrapper';
-import LastRevConfig, {
+import {
+  LastRevConfig,
   VAL_CONTENTFUL_PROCEED_WITH_MIGRATION,
   ACTION_CONTENTFUL_MIGRATION,
   VAL_CREATE_APP_CONFIG,

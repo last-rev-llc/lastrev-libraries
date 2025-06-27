@@ -8,8 +8,13 @@ export type CmsCacheStrategy = 'redis' | 'dynamodb' | 'none';
 
 export type PathVersion = 'v1' | 'v2';
 
+export type SupportedLanguage = {
+  id: string;
+  title: string;
+};
+
 export interface LastRevAppConfiguration {
-  cms: 'Contentful';
+  cms: 'Contentful' | 'Sanity';
   contentStrategy: ContentStrategy;
   cmsCacheStrategy: CmsCacheStrategy;
   jwtSigningSecret?: string;
@@ -34,6 +39,15 @@ export interface LastRevAppConfiguration {
     usePreview: boolean;
     maxBatchSize: number;
     syncLimit?: number;
+  };
+  sanity: {
+    projectId: string;
+    dataset: string;
+    token: string;
+    apiVersion: string;
+    usePreview: boolean;
+    schemaTypes: any[];
+    supportedLanguages: SupportedLanguage[];
   };
   algolia: {
     applicationId: string;
@@ -71,7 +85,7 @@ type LRApolloServerOptions = Partial<ApolloServerOptions<ApolloContext>> & {
   context?: ContextFunction<any, ApolloContext>;
 };
 export type LastRevAppConfigArgs = {
-  cms?: 'Contentful';
+  cms?: 'Contentful' | 'Sanity';
   /*
     @deprecated use contentStrategy and cmsCacheStrategy instead
   */
@@ -100,6 +114,15 @@ export type LastRevAppConfigArgs = {
     usePreview?: boolean;
     maxBatchSize?: number;
     syncLimit?: number;
+  };
+  sanity?: {
+    projectId?: string;
+    dataset?: string;
+    token?: string;
+    apiVersion?: string;
+    usePreview?: boolean;
+    schemaTypes?: any[];
+    supportedLanguages?: SupportedLanguage[];
   };
   algolia?: {
     applicationId?: string;

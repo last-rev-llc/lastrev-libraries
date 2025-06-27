@@ -1,4 +1,4 @@
-import { ContentType, CreateClientParams } from 'contentful';
+import { ContentType } from '@last-rev/types';
 
 export type TypeName =
   | 'String'
@@ -18,8 +18,7 @@ export type TypeName =
   | 'Location';
 
 // in the future, these should support other sources
-export type Source = 'Contentful';
-export type ConnectionParams = CreateClientParams;
+export type Source = 'Contentful' | 'Sanity';
 
 export type GqlField = {
   fieldName: string;
@@ -27,16 +26,11 @@ export type GqlField = {
   isArray: boolean;
 };
 
-export type Fetcher = (
-  typeMappings: Record<string, string>,
-  connectionParams: ConnectionParams,
-  skipReferenceFields: boolean
-) => Promise<string>;
+export type Fetcher = (typeMappings: Record<string, string>, skipReferenceFields?: boolean) => Promise<string>;
 
 export type GenerateSchemaParams = {
   source: Source;
   typeMappings: Record<string, string>;
   skipReferenceFields: boolean;
-  connectionParams?: ConnectionParams;
-  contentTypes?: ContentType[];
+  contentTypes: ContentType[];
 };

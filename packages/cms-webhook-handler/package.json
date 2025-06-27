@@ -1,0 +1,46 @@
+{
+  "name": "@last-rev/cms-webhook-handler",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "run-s clean build:prod",
+    "dev": "cross-env NODE_ENV=development rollup -cw",
+    "build:prod": "cross-env NODE_ENV=production rollup -c",
+    "lint": "tslint --project tsconfig.json",
+    "test": "jest --passWithNoTests",
+    "test:watch": "jest --watch"
+  },
+  "devDependencies": {
+    "@last-rev/app-config": "workspace:*",
+    "@last-rev/rollup-config": "workspace:*",
+    "@last-rev/testing-library": "workspace:*",
+    "@last-rev/types": "workspace:*",
+    "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/lodash": "^4.17.18",
+    "jest": "^30.0.2",
+    "rollup": "^4.44.0",
+    "tslint": "^5.20.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.303.0",
+    "@aws-sdk/lib-dynamodb": "^3.303.0",
+    "@last-rev/cms-path-util": "workspace:*",
+    "@last-rev/contentful-webhook-parser": "workspace:*",
+    "@last-rev/graphql-cms-helpers": "workspace:*",
+    "@last-rev/logging": "workspace:*",
+    "@last-rev/sanity-mapper": "workspace:*",
+    "@last-rev/sanity-webhook-parser": "workspace:*",
+    "@sanity/client": "^7.4.0",
+    "contentful": "^11.7.2",
+    "ioredis": "^5.0.4",
+    "jsonwebtoken": "^9.0.0",
+    "lodash": "^4.17.21",
+    "sanity": "^3.40.0"
+  }
+}

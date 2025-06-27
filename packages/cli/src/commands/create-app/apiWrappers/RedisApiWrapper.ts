@@ -1,7 +1,7 @@
 import BaseApiWrapper from './BaseApiWrapper';
 import { prompt } from 'inquirer';
 import Redis from 'ioredis';
-import LastRevConfig, { VAL_REDIS_HOST, VAL_REDIS_PASSWORD, VAL_REDIS_PORT } from '../LastRevConfig';
+import { LastRevConfig, VAL_REDIS_HOST, VAL_REDIS_PASSWORD, VAL_REDIS_PORT } from '../LastRevConfig';
 
 const REDIS_PORT_REGEX = /^[0-9]{4,5}$/;
 const REDIS_PASSWORD_REGEX = /^[a-zA-Z0-9]+$/;
