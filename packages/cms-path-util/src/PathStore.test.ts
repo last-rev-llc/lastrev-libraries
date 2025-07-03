@@ -461,24 +461,6 @@ describe('PathStore', () => {
       expect(store).toBeInstanceOf(DummyStore);
     });
 
-    it('should create DummyStore for Sanity CMS with cms strategy', () => {
-      const config = createMockSanityConfig({
-        contentStrategy: 'cms'
-      });
-
-      // Mock console.warn to test the warning
-      const consoleSpy = jest.spyOn(console, 'warn').mockImplementation();
-
-      const store = createPathStore(config);
-
-      expect(store).toBeInstanceOf(DummyStore);
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'Path resolution is not supported when using Sanity CMS with cms cache strategy.'
-      );
-
-      consoleSpy.mockRestore();
-    });
-
     it('should create FsPathStore for Sanity with fs strategy', () => {
       const config = createMockSanityConfig({ contentStrategy: 'fs' });
       const store = createPathStore(config);

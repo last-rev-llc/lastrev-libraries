@@ -14,18 +14,26 @@ export interface PathStore {
   save: (pathDataMap: PathDataMap, site: string) => Promise<void>;
 }
 
-const clients: Record<string, Redis> = {};
-const getContentfulClient = (config: LastRevAppConfig) => {
-  const key = JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
-  if (!clients[key]) {
-    clients[key] = new Redis({
+const redisClients: Record<string, Redis> = {};
+
+const getRedisClient = (config: LastRevAppConfig) => {
+  const key =
+    config.cms === 'Sanity'
+      ? JSON.stringify([config.redis, config.sanity.projectId, config.sanity.dataset])
+      : JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
+
+  if (!redisClients[key]) {
+    redisClients[key] = new Redis({
       ...config.redis,
-      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:${
-        config.contentful.usePreview ? 'preview' : 'production'
-      }`
+      keyPrefix:
+        config.cms === 'Sanity'
+          ? `${config.sanity.projectId}:${config.sanity.dataset}:`
+          : `${config.contentful.spaceId}:${config.contentful.env}:${
+              config.contentful.usePreview ? 'preview' : 'production'
+            }`
     });
   }
-  return clients[key];
+  return redisClients[key];
 };
 
 const getBasePath = (config: LastRevAppConfig) => {
@@ -78,8 +86,11 @@ export class FsPathStore implements PathStore {
 
 export class RedisPathStore implements PathStore {
   client: Redis;
+  config: LastRevAppConfig;
+
   constructor(config: LastRevAppConfig) {
-    this.client = getContentfulClient(config);
+    this.client = getRedisClient(config);
+    this.config = config;
   }
 
   getKey(site: string) {
@@ -123,9 +134,13 @@ export class DynamoDbPathStore implements PathStore {
 
   constructor(config: LastRevAppConfig) {
     this.tableName = config.dynamodb.tableName;
-    this.pk = `${config.contentful.spaceId}:${config.contentful.env}:${
-      config.contentful.usePreview ? 'preview' : 'production'
-    }`;
+
+    this.pk =
+      config.cms === 'Sanity'
+        ? `${config.sanity.projectId}:${config.sanity.dataset}:${config.sanity.usePreview ? 'preview' : 'production'}`
+        : `${config.contentful.spaceId}:${config.contentful.env}:${
+            config.contentful.usePreview ? 'preview' : 'production'
+          }`;
 
     this.dynamoDB = DynamoDBDocument.from(
       new DynamoDB({
@@ -187,10 +202,6 @@ export class DummyStore implements PathStore {
 export const createPathStore = (config: LastRevAppConfig) => {
   switch (config.contentStrategy) {
     case 'cms': {
-      if (config.cms === 'Sanity') {
-        console.warn('Path resolution is not supported when using Sanity CMS with cms cache strategy.');
-        return new DummyStore();
-      }
       switch (config.cmsCacheStrategy) {
         case 'redis':
           return new RedisPathStore(config);

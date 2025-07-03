@@ -223,4 +223,131 @@ describe('convertSanityDoc', () => {
       metadata: {}
     });
   });
+
+  it('should strip drafts. prefix from document ID for entries', () => {
+    const doc = {
+      _id: 'drafts.123',
+      _type: 'link',
+      _updatedAt: '2025-06-13T13:12:36Z',
+      _createdAt: '2021-12-16T19:21:12Z',
+      text: 'Draft Link',
+      variant: 'button-outlined'
+    };
+
+    const result = convertSanityDoc(doc, defaultLocale, locales);
+
+    expect(result).toEqual({
+      sys: {
+        id: '123',  // Should be stripped of 'drafts.' prefix
+        type: 'Entry',
+        updatedAt: '2025-06-13T13:12:36Z',
+        createdAt: '2021-12-16T19:21:12Z',
+        contentType: {
+          sys: {
+            type: 'Link',
+            linkType: 'ContentType',
+            id: 'link'
+          }
+        }
+      },
+      fields: {
+        text: { 'en-US': 'Draft Link' },
+        variant: { 'en-US': 'button-outlined' }
+      }
+    });
+  });
+
+  it('should strip drafts. prefix from document ID for assets', () => {
+    const doc = {
+      _id: 'drafts.456',
+      _type: 'sanity.imageAsset',
+      _updatedAt: '2025-06-13T13:12:36Z',
+      _createdAt: '2021-12-16T19:21:12Z',
+      title: 'Draft Image',
+      alt: 'Draft Alt Text',
+      url: 'https://example.com/draft-image.jpg',
+      mimeType: 'image/jpeg',
+      originalFilename: 'draft-image.jpg',
+      metadata: {
+        dimensions: {
+          width: 400,
+          height: 300
+        }
+      }
+    };
+
+    const result = convertSanityDoc(doc, defaultLocale, locales);
+
+    expect(result).toEqual({
+      sys: {
+        id: '456',  // Should be stripped of 'drafts.' prefix
+        type: 'Asset',
+        updatedAt: '2025-06-13T13:12:36Z',
+        createdAt: '2021-12-16T19:21:12Z',
+        revision: undefined
+      },
+      fields: {
+        title: { 'en-US': 'Draft Image' },
+        alt: { 'en-US': 'Draft Alt Text' },
+        file: {
+          'en-US': {
+            contentType: 'image/jpeg',
+            fileName: 'draft-image.jpg',
+            url: 'https://example.com/draft-image.jpg',
+            details: {
+              image: {
+                width: 400,
+                height: 300
+              }
+            }
+          },
+          'es-ES': {
+            contentType: 'image/jpeg',
+            fileName: 'draft-image.jpg',
+            url: 'https://example.com/draft-image.jpg',
+            details: {
+              image: {
+                width: 400,
+                height: 300
+              }
+            }
+          }
+        }
+      },
+      metadata: {}
+    });
+  });
+
+  it('should not modify document ID that does not start with drafts.', () => {
+    const doc = {
+      _id: 'published-123',
+      _type: 'link',
+      _updatedAt: '2025-06-13T13:12:36Z',
+      _createdAt: '2021-12-16T19:21:12Z',
+      text: 'Published Link',
+      variant: 'button-outlined'
+    };
+
+    const result = convertSanityDoc(doc, defaultLocale, locales);
+
+    expect(result).toEqual({
+      sys: {
+        id: 'published-123',  // Should remain unchanged
+        type: 'Entry',
+        updatedAt: '2025-06-13T13:12:36Z',
+        createdAt: '2021-12-16T19:21:12Z',
+        contentType: {
+          sys: {
+            type: 'Link',
+            linkType: 'ContentType',
+            id: 'link'
+          }
+        }
+      },
+      fields: {
+        text: { 'en-US': 'Published Link' },
+        variant: { 'en-US': 'button-outlined' }
+      }
+    });
+  });
 });

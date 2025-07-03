@@ -94,7 +94,10 @@ export const convertSanityDoc = (doc: any, defaultLocale: string, locales: strin
   // Extract the actual default locale from the document if present
   const docDefaultLocale = doc.__i18n_lang || defaultLocale;
 
-  const { _id, _type, _updatedAt, _createdAt, __i18n_lang, _translations, ...fields } = doc;
+  const { _id: rawId, _type, _updatedAt, _createdAt, __i18n_lang, _translations, ...fields } = doc;
+  
+  // Strip 'drafts.' prefix from document ID if present
+  const _id = rawId?.startsWith('drafts.') ? rawId.substring(7) : rawId;
 
   // Detect top-level asset (Sanity image or file asset)
   if (

@@ -51,7 +51,8 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
     throw Error('Project id in webhook does not match configuration.');
   }
 
-  const itemId = headers['sanity-document-id'] || body?._id;
+  let itemId = headers['sanity-document-id'] || body?._id;
+  if (itemId?.startsWith('drafts.')) itemId = itemId.substring(7);
 
   // isTruncated: true if body is empty or has no fields
   const isTruncated = body?._lr_truncated === true;

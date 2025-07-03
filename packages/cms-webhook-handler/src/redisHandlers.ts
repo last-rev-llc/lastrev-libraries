@@ -8,11 +8,16 @@ import { assetHasUrl, stringify } from './helpers';
 const clients: Record<string, Redis> = {};
 
 const getClient = (config: LastRevAppConfig) => {
-  const key = JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
+  const key =
+    config.cms === 'Sanity'
+      ? JSON.stringify([config.redis, config.sanity.projectId, config.sanity.dataset])
+      : JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
   if (!clients[key]) {
     clients[key] = new Redis({
       ...config.redis,
-      keyPrefix: `${config.contentful.spaceId}:${config.contentful.env}:`
+      keyPrefix: `${config.cms === 'Sanity' ? config.sanity.projectId : config.contentful.spaceId}:${
+        config.cms === 'Sanity' ? config.sanity.dataset : config.contentful.env
+      }:`
     });
   }
   return clients[key];

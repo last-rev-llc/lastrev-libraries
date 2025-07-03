@@ -68,7 +68,7 @@ describe('parseWebhook', () => {
       contentStates: ['preview'],
       type: 'Entry',
       env: 'production',
-      itemId: 'drafts.someId',
+      itemId: 'someId',
       isTruncated: true
     });
   });
