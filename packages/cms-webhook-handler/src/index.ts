@@ -184,7 +184,15 @@ export const handleWebhook = async (config: LastRevAppConfig, body: any, headers
   let data;
   try {
     data =
-      type === 'ContentType' || (isTruncated && action !== 'delete') ? await getData(config, type, env, itemId) : body;
+      type === 'ContentType' || (isTruncated && action !== 'delete')
+        ? await getData(config, type, env, itemId)
+        : config.cms === 'Sanity'
+        ? convertSanityDoc(
+            body,
+            config.sanity.supportedLanguages[0].id,
+            config.sanity.supportedLanguages.map((l) => l.id)
+          )
+        : body;
   } catch (error: any) {
     logger.error('Failed to retrieve data from CMS', {
       caller: 'handleWebhook',

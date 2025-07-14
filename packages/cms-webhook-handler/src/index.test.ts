@@ -5,6 +5,7 @@ import { parseWebhook as parseContentfulWebhook } from '@last-rev/contentful-web
 import parseSanityWebhook from '@last-rev/sanity-webhook-parser';
 import { createHandlers } from './handlers';
 import jwt from 'jsonwebtoken';
+import { convertSanityDoc } from '@last-rev/sanity-mapper';
 
 // Mock external dependencies
 jest.mock('@last-rev/contentful-webhook-parser');
@@ -164,6 +165,13 @@ describe('cms-webhook-handler', () => {
     describe('Sanity webhooks', () => {
       it('should handle valid Sanity webhook', async () => {
         const config = baseConfig.clone({ cms: 'Sanity' });
+        const sanityMockBody = {
+          _id: 'test-sanity-id',
+          _type: 'page',
+          _updatedAt: '2023-01-01T00:00:00Z',
+          _createdAt: '2023-01-01T00:00:00Z',
+          title: 'Test Page'
+        };
         const webhookResult = {
           type: 'Entry' as const,
           action: 'update' as const,
@@ -175,13 +183,19 @@ describe('cms-webhook-handler', () => {
 
         mockParseSanityWebhook.mockReturnValue(webhookResult);
 
-        await handleWebhook(config, mockBody, mockHeaders);
+        await handleWebhook(config, sanityMockBody, mockHeaders);
 
-        expect(mockParseSanityWebhook).toHaveBeenCalledWith(config, mockBody, mockHeaders);
+        const expectedConvertedData = convertSanityDoc(
+          sanityMockBody,
+          config.sanity.supportedLanguages[0].id,
+          config.sanity.supportedLanguages.map(l => l.id)
+        );
+
+        expect(mockParseSanityWebhook).toHaveBeenCalledWith(config, sanityMockBody, mockHeaders);
         expect(mockHandlers.entry).toHaveBeenCalledWith({
           isPreview: false,
           action: 'update',
-          data: mockBody
+          data: expectedConvertedData
         });
       });
 
