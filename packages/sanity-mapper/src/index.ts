@@ -95,7 +95,7 @@ export const convertSanityDoc = (doc: any, defaultLocale: string, locales: strin
   const docDefaultLocale = doc.__i18n_lang || defaultLocale;
 
   const { _id: rawId, _type, _updatedAt, _createdAt, __i18n_lang, _translations, ...fields } = doc;
-  
+
   // Strip 'drafts.' prefix from document ID if present
   const _id = rawId?.startsWith('drafts.') ? rawId.substring(7) : rawId;
 

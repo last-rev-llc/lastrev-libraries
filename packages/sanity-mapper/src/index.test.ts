@@ -238,7 +238,7 @@ describe('convertSanityDoc', () => {
 
     expect(result).toEqual({
       sys: {
-        id: '123',  // Should be stripped of 'drafts.' prefix
+        id: '123', // Should be stripped of 'drafts.' prefix
         type: 'Entry',
         updatedAt: '2025-06-13T13:12:36Z',
         createdAt: '2021-12-16T19:21:12Z',
@@ -280,7 +280,7 @@ describe('convertSanityDoc', () => {
 
     expect(result).toEqual({
       sys: {
-        id: '456',  // Should be stripped of 'drafts.' prefix
+        id: '456', // Should be stripped of 'drafts.' prefix
         type: 'Asset',
         updatedAt: '2025-06-13T13:12:36Z',
         createdAt: '2021-12-16T19:21:12Z',
@@ -332,7 +332,7 @@ describe('convertSanityDoc', () => {
 
     expect(result).toEqual({
       sys: {
-        id: 'published-123',  // Should remain unchanged
+        id: 'published-123', // Should remain unchanged
         type: 'Entry',
         updatedAt: '2025-06-13T13:12:36Z',
         createdAt: '2021-12-16T19:21:12Z',

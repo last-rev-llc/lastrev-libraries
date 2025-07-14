@@ -1,5 +1,13 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [6dbe9f4]
+  - @last-rev/cms-path-util@0.2.1
+  - @last-rev/sanity-cms-loader@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

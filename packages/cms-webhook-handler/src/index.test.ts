@@ -188,7 +188,7 @@ describe('cms-webhook-handler', () => {
         const expectedConvertedData = convertSanityDoc(
           sanityMockBody,
           config.sanity.supportedLanguages[0].id,
-          config.sanity.supportedLanguages.map(l => l.id)
+          config.sanity.supportedLanguages.map((l) => l.id)
         );
 
         expect(mockParseSanityWebhook).toHaveBeenCalledWith(config, sanityMockBody, mockHeaders);
