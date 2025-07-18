@@ -1,5 +1,18 @@
 # @last-rev/contentful-redis-loader
 
+## 0.2.1
+
+### Patch Changes
+
+- 2b8b6f2: Fix Redis key prefix generation for Sanity CMS configurations
+
+  - Add proper support for Sanity CMS in Redis client creation
+  - Use correct projectId:dataset key prefix for Sanity instead of defaulting to Contentful format
+  - Prevents Redis entries from being created with incorrect "undefined:master" paths
+  - Maintains backward compatibility with existing Contentful configurations
+
+  Fixes DIL-24
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.2.2
+
+### Patch Changes
+
+- @last-rev/graphql-cms-helpers@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes
