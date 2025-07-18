@@ -23,4 +23,7 @@ program
   .command('reports', 'Runs reports', {
     executableFile: resolve(__dirname, './commands/reports/reports.js')
   })
+  .command('sanity-import', 'Import Contentful content types into a Sanity project', {
+    executableFile: resolve(__dirname, './commands/sanity-import/sanity-import.js')
+  })
   .parse(process.argv);
