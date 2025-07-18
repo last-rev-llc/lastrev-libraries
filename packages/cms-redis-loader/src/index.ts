@@ -27,10 +27,11 @@ const flvOptions: Options<FVLKey, any, string> = {
 };
 
 const getClient = (config: LastRevAppConfig) => {
-  const key = config.cms === 'Sanity'
-    ? JSON.stringify([config.redis, config.sanity.projectId, config.sanity.dataset])
-    : JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
-    
+  const key =
+    config.cms === 'Sanity'
+      ? JSON.stringify([config.redis, config.sanity.projectId, config.sanity.dataset])
+      : JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
+
   if (!clients[key]) {
     clients[key] = new Redis({
       ...config.redis,
