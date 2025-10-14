@@ -1,5 +1,11 @@
 # @last-rev/contentful-cms-loader
 
+## 0.6.1
+
+### Patch Changes
+
+- e710d48: Remove locale option from Contentful sdk
+
 ## 0.6.0
 
 ### Minor Changes
