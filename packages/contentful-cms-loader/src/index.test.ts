@@ -344,8 +344,7 @@ describe('contentful-cms-loader', () => {
       expect(result).toEqual(mockEntries);
       expect(mockMakeContentfulRequest).toHaveBeenCalledWith(mockProdClient, 'getEntries', 500, {
         content_type: 'blog',
-        include: 0,
-        locale: '*'
+        include: 0
       });
     });
 
@@ -370,8 +369,7 @@ describe('contentful-cms-loader', () => {
       expect(result).toEqual(mockEntries);
       expect(mockMakeContentfulRequest).toHaveBeenCalledWith(mockPreviewClient, 'getEntries', 500, {
         content_type: 'blog',
-        include: 0,
-        locale: '*'
+        include: 0
       });
     });
 

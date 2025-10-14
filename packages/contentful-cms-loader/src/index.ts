@@ -60,7 +60,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     const chunks = chunk(ids, maxBatchSize);
     const settled = await Promise.allSettled(
       chunks.map(async (idz) => {
-        const query = { 'sys.id[in]': idz.join(','), 'include': 0, 'locale': '*' };
+        const query = { 'sys.id[in]': idz.join(','), 'include': 0 };
         return await makeContentfulRequest(client, command, maxBatchSize, query);
       })
     );
@@ -330,8 +330,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
             const { preview, id } = key;
             return (await makeContentfulRequest(preview ? previewClient : prodClient, 'getEntries', maxBatchSize, {
               content_type: id,
-              include: 0,
-              locale: '*'
+              include: 0
             })) as BaseEntry[];
           })()
         )
