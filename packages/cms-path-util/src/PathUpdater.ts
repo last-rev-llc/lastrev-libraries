@@ -1,11 +1,27 @@
 import { each, get, has, isFunction, isString, map, transform } from 'lodash';
 import { join } from 'path';
-import { ApolloContext, TypeMappings, CmsPathsConfigs, PathRuleConfig, PathData } from '@last-rev/types';
+import {
+  ApolloContext,
+  TypeMappings,
+  CmsPathsConfigs,
+  PathRuleConfig,
+  PathData,
+  CmsPathsConfig,
+  ObjectBasedCmsPathsGenerator
+} from '@last-rev/types';
 import PathTree from './PathTree';
 import { DEFAULT_SITE_KEY } from './constants';
 import { createPathStore, PathStore } from './PathStore';
 import LastRevAppConfig from '@last-rev/app-config';
 import { ContentToPathsLoader } from '@last-rev/cms-path-rules-engine';
+
+function isObjectBasedCmsPathsGenerator(config: CmsPathsConfig): config is ObjectBasedCmsPathsGenerator {
+  if (typeof config !== 'function') return false;
+
+  // Check the function's parameter signature
+  // Object-based generators have 1 parameter, legacy generators have 7 parameters
+  return config.length === 1;
+}
 
 type PathUpdaterProps = {
   pathsConfigs: CmsPathsConfigs;
@@ -129,6 +145,7 @@ export class PathUpdater {
     const loaders = this.context.loaders;
     const preview = this.preview;
     const site = this.site;
+    const ctx = this.context;
 
     const tree = new PathTree();
 
@@ -152,7 +169,9 @@ export class PathUpdater {
         } else if (isFunction(config)) {
           await Promise.all(
             map(pages, async (page) => {
-              const pathToIdMapping = await config(page, loaders, defaultLocale, locales, preview, site);
+              const pathToIdMapping = isObjectBasedCmsPathsGenerator(config)
+                ? await config({ ctx, item: page, site, preview })
+                : await config(page, loaders, defaultLocale, locales, preview, site);
 
               each(pathToIdMapping, (pathData) => {
                 tree.appendNewNode(pathData);

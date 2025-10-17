@@ -76,12 +76,23 @@ export type CmsPathsGenerator = (
   site?: string
 ) => Promise<PathDataMap>;
 
-export type CmsPathsConfig = string | CmsPathsGenerator;
+export type ObjectBasedCmsPathsGenerator = ({
+  ctx,
+  item,
+  site,
+  preview
+}: {
+  ctx: ApolloContext;
+  item: BaseEntry;
+  site?: string;
+  preview?: boolean;
+}) => Promise<PathDataMap>;
+
+export type CmsPathsConfig = string | CmsPathsGenerator | ObjectBasedCmsPathsGenerator;
 
 export type LegacyCmsPathsConfigs = {
   [contentTypeId: string]: CmsPathsConfig;
 };
-
 export type PathRuleDefinition = {
   rule: string;
   isCanonical?: boolean;
