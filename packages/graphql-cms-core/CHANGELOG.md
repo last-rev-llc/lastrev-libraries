@@ -1,5 +1,18 @@
 # @last-rev/graphql-contentful-core
 
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies [78d8909]
+  - @last-rev/types@0.5.1
+  - @last-rev/graphql-cms-helpers@0.2.4
+  - @last-rev/app-config@0.6.0
+  - @last-rev/cms-fs-loader@0.2.0
+  - @last-rev/cms-redis-loader@0.2.1
+  - @last-rev/contentful-cms-loader@0.6.1
+  - @last-rev/graphql-schema-gen@0.4.0
+
 ## 0.2.3
 
 ### Patch Changes
