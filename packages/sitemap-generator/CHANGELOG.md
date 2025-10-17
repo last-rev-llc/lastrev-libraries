@@ -1,5 +1,13 @@
 # @last-rev/sitemap-generator
 
+## 0.4.1
+
+### Patch Changes
+
+- Updated dependencies [78d8909]
+  - @last-rev/types@0.5.1
+  - @last-rev/app-config@0.6.0
+
 ## 0.4.0
 
 ### Minor Changes

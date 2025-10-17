@@ -1,5 +1,12 @@
 # @last-rev/contentful-path-util
 
+## 0.2.2
+
+### Patch Changes
+
+- 78d8909: Added object based path generator to get access to the apollo context
+  - @last-rev/cms-path-rules-engine@0.2.0
+
 ## 0.2.1
 
 ### Patch Changes

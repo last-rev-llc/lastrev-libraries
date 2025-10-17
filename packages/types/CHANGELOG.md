@@ -1,5 +1,11 @@
 # @last-rev/types
 
+## 0.5.1
+
+### Patch Changes
+
+- 78d8909: Added object based path generator to get access to the apollo context
+
 ## 0.5.0
 
 ### Minor Changes

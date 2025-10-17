@@ -1,5 +1,16 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.2.4
+
+### Patch Changes
+
+- Updated dependencies [78d8909]
+  - @last-rev/cms-path-util@0.2.2
+  - @last-rev/graphql-cms-helpers@0.2.4
+  - @last-rev/contentful-webhook-parser@0.3.0
+  - @last-rev/sanity-mapper@0.2.1
+  - @last-rev/sanity-webhook-parser@0.2.1
+
 ## 0.2.3
 
 ### Patch Changes
