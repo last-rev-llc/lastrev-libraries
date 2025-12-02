@@ -14,6 +14,17 @@ export const mapSanityValueToContentful = (value: any, defaultLocale: string): a
     if ((value._type === 'slug' || Object.keys(value).length === 1) && typeof value.current === 'string') {
       return value.current;
     }
+    // Handle Sanity asset reference (image/file) - must come before reference check
+    // since image.asset has _type: 'reference'
+    if ((value._type === 'image' || value._type === 'file') && value.asset?._ref) {
+      return {
+        sys: {
+          type: 'Link',
+          linkType: 'Asset',
+          id: value.asset._ref
+        }
+      };
+    }
     // Handle Sanity reference
     if (value._type === 'reference' && value._ref) {
       return {
@@ -21,16 +32,6 @@ export const mapSanityValueToContentful = (value: any, defaultLocale: string): a
           type: 'Link',
           linkType: 'Entry',
           id: value._ref
-        }
-      };
-    }
-    // Handle Sanity asset reference (image/file)
-    if ((value._type === 'image' || value._type === 'file') && value.asset?._ref) {
-      return {
-        sys: {
-          type: 'Link',
-          linkType: 'Asset',
-          id: value.asset._ref
         }
       };
     }
