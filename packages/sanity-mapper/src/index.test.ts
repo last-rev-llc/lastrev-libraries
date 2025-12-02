@@ -350,4 +350,63 @@ describe('convertSanityDoc', () => {
       }
     });
   });
+
+  it('should convert nested image asset references to Contentful asset links', () => {
+    const doc = {
+      _id: '123',
+      _type: 'article',
+      _updatedAt: '2025-06-13T13:12:36Z',
+      _createdAt: '2021-12-16T19:21:12Z',
+      title: 'Test Article',
+      featuredMedia: {
+        altText: 'Compliance team members discussing updates',
+        deviceFrameType: 'none',
+        image: {
+          _type: 'image',
+          asset: {
+            _ref: 'image-1ff3c597c85162538013f74a808054519e4f994f-806x514-svg',
+            _type: 'reference'
+          }
+        },
+        isDecorative: false,
+        roundedCorners: false
+      }
+    };
+
+    const result = convertSanityDoc(doc, defaultLocale, locales);
+
+    expect(result).toEqual({
+      sys: {
+        id: '123',
+        type: 'Entry',
+        updatedAt: '2025-06-13T13:12:36Z',
+        createdAt: '2021-12-16T19:21:12Z',
+        contentType: {
+          sys: {
+            type: 'Link',
+            linkType: 'ContentType',
+            id: 'article'
+          }
+        }
+      },
+      fields: {
+        title: { 'en-US': 'Test Article' },
+        featuredMedia: {
+          'en-US': {
+            altText: 'Compliance team members discussing updates',
+            deviceFrameType: 'none',
+            image: {
+              sys: {
+                type: 'Link',
+                linkType: 'Asset',
+                id: 'image-1ff3c597c85162538013f74a808054519e4f994f-806x514-svg'
+              }
+            },
+            isDecorative: false,
+            roundedCorners: false
+          }
+        }
+      }
+    });
+  });
 });
