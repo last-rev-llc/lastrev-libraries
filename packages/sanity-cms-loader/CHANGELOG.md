@@ -1,5 +1,12 @@
 # @last-rev/sanity-cms-loader
 
+## 0.2.2
+
+### Patch Changes
+
+- Updated dependencies [ef969ba]
+  - @last-rev/sanity-mapper@0.2.2
+
 ## 0.2.1
 
 ### Patch Changes
