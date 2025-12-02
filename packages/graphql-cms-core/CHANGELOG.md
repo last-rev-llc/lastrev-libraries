@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.2.5
+
+### Patch Changes
+
+- @last-rev/graphql-cms-helpers@0.2.5
+
 ## 0.2.4
 
 ### Patch Changes

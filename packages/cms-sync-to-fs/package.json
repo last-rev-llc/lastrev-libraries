@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/cms-sync-to-fs",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "",
   "main": "dist/index.js",
   "scripts": {

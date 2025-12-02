@@ -1,5 +1,13 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.2.5
+
+### Patch Changes
+
+- Updated dependencies [ef969ba]
+  - @last-rev/sanity-mapper@0.2.2
+  - @last-rev/graphql-cms-helpers@0.2.5
+
 ## 0.2.4
 
 ### Patch Changes

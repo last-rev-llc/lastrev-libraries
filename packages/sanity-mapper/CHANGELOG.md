@@ -1,5 +1,11 @@
 # @last-rev/sanity-mapper
 
+## 0.2.2
+
+### Patch Changes
+
+- ef969ba: Handling nested image references
+
 ## 0.2.1
 
 ### Patch Changes

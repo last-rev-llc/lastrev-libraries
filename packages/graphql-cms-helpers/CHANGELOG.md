@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.2.5
+
+### Patch Changes
+
+- @last-rev/sanity-cms-loader@0.2.2
+
 ## 0.2.4
 
 ### Patch Changes
