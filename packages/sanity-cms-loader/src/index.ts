@@ -3,9 +3,9 @@ import { createClient, SanityClient } from '@sanity/client';
 import { map, partition } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
 import { SimpleTimer as Timer } from '@last-rev/timer';
-import { ItemKey, CmsLoaders, FVLKey, RefByKey } from '@last-rev/types';
+import { ItemKey, SanityLoaders, FVLKey, RefByKey, SchemaType } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
-import { convertSanityDoc, mapSanityTypesToContentfulTypes } from '@last-rev/sanity-mapper';
+import type { SanityDocument } from '@sanity/types';
 
 const logger = getWinstonLogger({ package: 'sanity-cms-loader', module: 'index', strategy: 'Cms' });
 
@@ -29,9 +29,9 @@ const refByOptions: Options<RefByKey, any, string> = {
   }
 };
 
-const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoaders => {
-  const locales = config.sanity.supportedLanguages.map((locale) => locale.id);
-  const sanity = (config as any).sanity || {};
+const createLoaders = (config: LastRevAppConfig, _defaultLocale: string): SanityLoaders => {
+  // defaultLocale kept for interface compatibility; field-level i18n handles locales at resolver level
+  const sanity = config.sanity || {};
 
   const prodClient = createClient({
     projectId: sanity.projectId,
@@ -50,24 +50,15 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     perspective: 'drafts'
   });
 
-  const fetchBatchItems = async (ids: string[], client: SanityClient) => {
-    if (!ids.length) return [] as any[];
-    const query = `*[_id in $ids && (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
-      ...,
-      "_translations": *[
-        _type == "translation.metadata" &&
-        references(^._id)
-      ].translations[]{
-        "doc": value->{
-          ...
-        }
-      }[doc.__i18n_lang != $defaultLocale && defined(doc)]
-    }`;
-    return client.fetch(query, { ids, defaultLocale });
+  const fetchBatchItems = async (ids: string[], client: SanityClient): Promise<SanityDocument[]> => {
+    if (!ids.length) return [];
+    // Simple query - field-level i18n handles locales at resolver level
+    const query = `*[_id in $ids]`;
+    return client.fetch<SanityDocument[]>(query, { ids });
   };
 
-  const getBatchItemFetcher = (): DataLoader.BatchLoadFn<ItemKey, any | null> => {
-    return async (keys) => {
+  const getBatchItemFetcher = (): DataLoader.BatchLoadFn<ItemKey, SanityDocument | null> => {
+    return async (keys): Promise<(SanityDocument | null)[]> => {
       const timer = new Timer();
       const [previewKeys, prodKeys] = partition(keys, (k) => k.preview);
       const [previewDocs, prodDocs] = await Promise.all([
@@ -75,13 +66,13 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
         fetchBatchItems(map(prodKeys, 'id'), prodClient)
       ]);
       const all = [...previewDocs, ...prodDocs];
-      const items = keys.map(({ id }) =>
-        convertSanityDoc(
-          all.find((d) => d && d._id === id),
-          defaultLocale,
-          locales
-        )
-      );
+
+      // Return native Sanity documents - no conversion
+      const items = keys.map(({ id }) => {
+        const doc = all.find((d) => d && d._id === id);
+        return doc || null;
+      });
+
       logger.debug('Fetched docs', {
         caller: 'getBatchItemFetcher',
         elapsedMs: timer.end().millis,
@@ -92,25 +83,14 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     };
   };
 
-  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, any[]> => {
-    return async (keys) => {
+  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, SanityDocument[]> => {
+    return async (keys): Promise<SanityDocument[][]> => {
       const timer = new Timer();
       const results = await Promise.all(
         keys.map(async ({ id, preview }) => {
           const client = preview ? previewClient : prodClient;
-          const query = `*[_type == $type && (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
-            ...,
-            "_translations": *[
-              _type == "translation.metadata" &&
-              references(^._id)
-            ].translations[]{
-              "doc": value->{
-                ...
-              }
-            }[doc.__i18n_lang != $defaultLocale && defined(doc)]
-          }`;
-          const docs = await client.fetch(query, { type: id, defaultLocale });
-          return docs.map((doc: any) => convertSanityDoc(doc, defaultLocale, locales)) as any[];
+          const query = `*[_type == $type]`;
+          return client.fetch<SanityDocument[]>(query, { type: id });
         })
       );
       logger.debug('Fetched docs by type', {
@@ -123,25 +103,14 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     };
   };
 
-  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, any | null> => {
-    return async (keys) => {
+  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, SanityDocument | null> => {
+    return async (keys): Promise<(SanityDocument | null)[]> => {
       const timer = new Timer();
       const results = await Promise.all(
         keys.map(async ({ contentType, field, value, preview }) => {
           const client = preview ? previewClient : prodClient;
-          const query = `*[_type == $type && ${field} == $value && (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
-            ...,
-            "_translations": *[
-              _type == "translation.metadata" &&
-              references(^._id)
-            ].translations[]{
-              "doc": value->{
-                ...
-              }
-            }[doc.__i18n_lang != $defaultLocale && defined(doc)]
-          }[0]`;
-          const doc = await client.fetch(query, { type: contentType, value, defaultLocale });
-          return convertSanityDoc(doc, defaultLocale, locales);
+          const query = `*[_type == $type && ${field} == $value][0]`;
+          return client.fetch<SanityDocument | null>(query, { type: contentType, value });
         })
       );
       logger.debug('Fetched doc by field value', {
@@ -154,25 +123,14 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     };
   };
 
-  const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, any[]> => {
-    return async (keys) => {
+  const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, SanityDocument[]> => {
+    return async (keys): Promise<SanityDocument[][]> => {
       const timer = new Timer();
       const results = await Promise.all(
         keys.map(async ({ contentType, field, id, preview }) => {
           const client = preview ? previewClient : prodClient;
-          const query = `*[_type == $type && (${field}._ref == $id || $id in ${field}[]._ref) && (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
-            ...,
-            "_translations": *[
-              _type == "translation.metadata" &&
-              references(^._id)
-            ].translations[]{
-              "doc": value->{
-                ...
-              }
-            }[doc.__i18n_lang != $defaultLocale && defined(doc)]
-          }`;
-          const docs = await client.fetch(query, { type: contentType, id, defaultLocale });
-          return docs.map((doc: any) => convertSanityDoc(doc, defaultLocale, locales)) as any[];
+          const query = `*[_type == $type && (${field}._ref == $id || $id in ${field}[]._ref)]`;
+          return client.fetch<SanityDocument[]>(query, { type: contentType, id });
         })
       );
       logger.debug('Fetched docs ref by', {
@@ -191,23 +149,17 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
   const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), fvlOptions);
   const entriesRefByLoader = new DataLoader(getBatchEntriesRefByFetcher(), refByOptions);
 
-  const fetchAllContentTypes = async (_preview: boolean) => {
+  const fetchAllContentTypes = async (_preview: boolean): Promise<SchemaType[]> => {
     try {
       const timer = new Timer();
-
-      try {
-        const types = mapSanityTypesToContentfulTypes(config.sanity.schemaTypes);
-        logger.debug('Fetched all content types from local schemas', {
-          caller: 'fetchAllContentTypes',
-          elapsedMs: timer.end().millis,
-          itemsSuccessful: types.length
-        });
-        return types;
-      } catch (err: any) {
-        console.log('Error fetching content types from local schemas', err.message);
-        console.log(JSON.stringify(config.sanity.schemaTypes, null, 2));
-        throw err;
-      }
+      // Return native Sanity schema types - no conversion
+      const types = config.sanity.schemaTypes || [];
+      logger.debug('Fetched all content types from local schemas', {
+        caller: 'fetchAllContentTypes',
+        elapsedMs: timer.end().millis,
+        itemsSuccessful: types.length
+      });
+      return types;
     } catch (err: any) {
       logger.error(`Unable to fetch content types: ${err.message}`, {
         caller: 'fetchAllContentTypes',

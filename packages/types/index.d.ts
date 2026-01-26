@@ -93,14 +93,35 @@ export type RefByKey = {
   field: string;
 };
 
-export type CmsLoaders = {
+/**
+ * Contentful-specific loaders using Contentful types.
+ */
+export type ContentfulLoaders = {
   entryLoader: DataLoader<ItemKey, BaseEntry | null>;
   entriesRefByLoader: DataLoader<RefByKey, BaseEntry[]>;
   entryByFieldValueLoader: DataLoader<FVLKey, BaseEntry | null>;
   assetLoader: DataLoader<ItemKey, BaseAsset | null>;
   entriesByContentTypeLoader: DataLoader<ItemKey, BaseEntry[]>;
-  // pathLoader: DataLoader<PathKey, PathData2 | null>;
   fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
+};
+
+/**
+ * Legacy alias for backward compatibility.
+ * @deprecated Use ContentfulLoaders or SanityLoaders directly.
+ */
+export type CmsLoaders = ContentfulLoaders;
+
+/**
+ * Sanity-specific loaders returning native Sanity documents.
+ * Field-level i18n is handled at the resolver level via sanity-plugin-internationalized-array.
+ */
+export type SanityLoaders = {
+  entryLoader: DataLoader<ItemKey, SanityDocument | null>;
+  entriesRefByLoader: DataLoader<RefByKey, SanityDocument[]>;
+  entryByFieldValueLoader: DataLoader<FVLKey, SanityDocument | null>;
+  assetLoader: DataLoader<ItemKey, SanityDocument | null>;
+  entriesByContentTypeLoader: DataLoader<ItemKey, SanityDocument[]>;
+  fetchAllContentTypes: (preview: boolean) => Promise<SchemaType[]>;
 };
 
 export type TypeMappings = {
@@ -199,7 +220,16 @@ export type LoadEntriesForPathFunction = (
 export type loadPathsForContentFunction = (entry: BaseEntry, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
 
 export type ApolloContext = {
-  loaders: CmsLoaders;
+  /**
+   * Legacy loaders field for Contentful backward compatibility.
+   * Always points to ContentfulLoaders.
+   */
+  loaders: ContentfulLoaders;
+
+  /** CMS-specific loaders keyed by name */
+  contentfulLoaders?: ContentfulLoaders;
+  sanityLoaders?: SanityLoaders;
+
   mappers: Mappers;
   defaultLocale: string;
   typeMappings: TypeMappings;
