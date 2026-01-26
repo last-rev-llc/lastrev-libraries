@@ -4,32 +4,41 @@ import createRedisLoaders from '@last-rev/cms-redis-loader';
 import createDynamoDbLoaders from '@last-rev/cms-dynamodb-loader';
 import createSanityLoaders from '@last-rev/sanity-cms-loader';
 
-import { CmsLoaders } from '@last-rev/types';
+import { ContentfulLoaders, SanityLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 
-const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoaders => {
-  let loaders;
+export type LoadersResult = {
+  loaders: ContentfulLoaders | SanityLoaders;
+  sanityLoaders?: SanityLoaders;
+  contentfulLoaders?: ContentfulLoaders;
+};
 
-  let cmsLoaders: CmsLoaders;
-  switch (config.cms) {
-    case 'Sanity':
-      cmsLoaders = createSanityLoaders(config, defaultLocale);
-      break;
-    case 'Contentful':
-    default:
-      cmsLoaders = createContentfulCmsLoaders(config, defaultLocale);
-      break;
+const createLoaders = (config: LastRevAppConfig, defaultLocale: string): LoadersResult => {
+  const isSanity = config.cms === 'Sanity';
+
+  let baseLoaders: ContentfulLoaders | SanityLoaders;
+
+  if (isSanity) {
+    baseLoaders = createSanityLoaders(config, defaultLocale);
+  } else {
+    baseLoaders = createContentfulCmsLoaders(config, defaultLocale);
   }
 
-  if (config.contentStrategy === 'fs') {
-    loaders = createFsLoaders(config, cmsLoaders);
-  } else {
-    if (config.cmsCacheStrategy === 'redis') {
-      loaders = createRedisLoaders(config, cmsLoaders);
-    } else if (config.cmsCacheStrategy === 'dynamodb') {
-      loaders = createDynamoDbLoaders(config, cmsLoaders);
-    } else if (config.cmsCacheStrategy === 'none') {
-      loaders = cmsLoaders;
+  let loaders = baseLoaders;
+
+  // Cache strategies currently only support Contentful loaders
+  // TODO: Add Sanity support for fs/redis/dynamodb strategies
+  if (!isSanity) {
+    if (config.contentStrategy === 'fs') {
+      loaders = createFsLoaders(config, baseLoaders as ContentfulLoaders);
+    } else {
+      if (config.cmsCacheStrategy === 'redis') {
+        loaders = createRedisLoaders(config, baseLoaders as ContentfulLoaders);
+      } else if (config.cmsCacheStrategy === 'dynamodb') {
+        loaders = createDynamoDbLoaders(config, baseLoaders as ContentfulLoaders);
+      } else if (config.cmsCacheStrategy === 'none') {
+        loaders = baseLoaders;
+      }
     }
   }
 
@@ -37,6 +46,11 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): CmsLoad
     throw new Error('No loaders found');
   }
 
-  return loaders;
+  return {
+    loaders,
+    sanityLoaders: isSanity ? (loaders as SanityLoaders) : undefined,
+    contentfulLoaders: isSanity ? undefined : (loaders as ContentfulLoaders)
+  };
 };
+
 export default createLoaders;

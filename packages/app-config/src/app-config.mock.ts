@@ -42,7 +42,9 @@ const sanity = () => ({
     { id: 'en', title: 'English' },
     { id: 'es', title: 'Spanish' },
     { id: 'fr', title: 'French' }
-  ]
+  ],
+  useInternationalizedArrays: true,
+  fallbackToDefaultLocale: false
 });
 
 export const redisConfig = (): LastRevAppConfigArgs => ({

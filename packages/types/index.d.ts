@@ -202,6 +202,16 @@ export type SanityClients = {
   preview: SanityClient;
 };
 
+/**
+ * Sanity config subset for utilities that need access to i18n settings.
+ */
+export type SanityContextConfig = {
+  /** Controls field access pattern: true = i18n array [{ _key, value }], false = direct access */
+  useInternationalizedArrays?: boolean;
+  /** Controls locale fallback: true = fallback to default, false = return null */
+  fallbackToDefaultLocale?: boolean;
+};
+
 export type CmsClients = ContentfulClients | SanityClients;
 
 export type PathEntries = (BaseEntry | null)[];
@@ -229,6 +239,9 @@ export type ApolloContext = {
   /** CMS-specific loaders keyed by name */
   contentfulLoaders?: ContentfulLoaders;
   sanityLoaders?: SanityLoaders;
+
+  /** Sanity config for utilities that need i18n settings */
+  sanityConfig?: SanityContextConfig;
 
   mappers: Mappers;
   defaultLocale: string;

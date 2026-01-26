@@ -48,6 +48,10 @@ export interface LastRevAppConfiguration {
     usePreview: boolean;
     schemaTypes: any[];
     supportedLanguages: SupportedLanguage[];
+    /** Controls field access pattern: true = i18n array format [{ _key, value }], false = direct access */
+    useInternationalizedArrays: boolean;
+    /** Controls locale fallback: true = fallback to default locale, false = return null if locale not found */
+    fallbackToDefaultLocale: boolean;
   };
   algolia: {
     applicationId: string;
@@ -123,6 +127,10 @@ export type LastRevAppConfigArgs = {
     usePreview?: boolean;
     schemaTypes?: any[];
     supportedLanguages?: SupportedLanguage[];
+    /** Controls field access pattern: true = i18n array format [{ _key, value }], false = direct access */
+    useInternationalizedArrays?: boolean;
+    /** Controls locale fallback: true = fallback to default locale, false = return null if locale not found */
+    fallbackToDefaultLocale?: boolean;
   };
   algolia?: {
     applicationId?: string;

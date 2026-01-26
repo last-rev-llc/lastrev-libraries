@@ -34,7 +34,9 @@ describe('createLoaders', () => {
       const result = createLoaders(config, 'en-US');
 
       expect(createSanityLoaders).toHaveBeenCalledWith(config, 'en-US');
-      expect(result).toEqual({ type: 'sanity' });
+      expect(result.loaders).toEqual({ type: 'sanity' });
+      expect(result.sanityLoaders).toEqual({ type: 'sanity' });
+      expect(result.contentfulLoaders).toBeUndefined();
     });
 
     it('should create Contentful loaders when cms is Contentful', () => {
@@ -47,7 +49,9 @@ describe('createLoaders', () => {
       const result = createLoaders(config, 'en-US');
 
       expect(createContentfulCmsLoaders).toHaveBeenCalledWith(config, 'en-US');
-      expect(result).toEqual({ type: 'contentful' });
+      expect(result.loaders).toEqual({ type: 'contentful' });
+      expect(result.sanityLoaders).toBeUndefined();
+      expect(result.contentfulLoaders).toEqual({ type: 'contentful' });
     });
 
     it('should default to Contentful loaders for unknown cms', () => {
@@ -66,7 +70,8 @@ describe('createLoaders', () => {
       const result = createLoaders(config, 'en-US');
 
       expect(createContentfulCmsLoaders).toHaveBeenCalledWith(config, 'en-US');
-      expect(result).toEqual({ type: 'contentful' });
+      expect(result.loaders).toEqual({ type: 'contentful' });
+      expect(result.contentfulLoaders).toEqual({ type: 'contentful' });
     });
   });
 
@@ -81,7 +86,8 @@ describe('createLoaders', () => {
 
       expect(createContentfulCmsLoaders).toHaveBeenCalledWith(config, 'en-US');
       expect(createFsLoaders).toHaveBeenCalledWith(config, { type: 'contentful' });
-      expect(result).toEqual({ type: 'fs' });
+      expect(result.loaders).toEqual({ type: 'fs' });
+      expect(result.contentfulLoaders).toEqual({ type: 'fs' });
     });
 
     it('should use redis loaders when cmsCacheStrategy is redis', () => {
@@ -95,7 +101,8 @@ describe('createLoaders', () => {
 
       expect(createContentfulCmsLoaders).toHaveBeenCalledWith(config, 'en-US');
       expect(createRedisLoaders).toHaveBeenCalledWith(config, { type: 'contentful' });
-      expect(result).toEqual({ type: 'redis' });
+      expect(result.loaders).toEqual({ type: 'redis' });
+      expect(result.contentfulLoaders).toEqual({ type: 'redis' });
     });
 
     it('should use dynamodb loaders when cmsCacheStrategy is dynamodb', () => {
@@ -109,7 +116,8 @@ describe('createLoaders', () => {
 
       expect(createContentfulCmsLoaders).toHaveBeenCalledWith(config, 'en-US');
       expect(createDynamoDbLoaders).toHaveBeenCalledWith(config, { type: 'contentful' });
-      expect(result).toEqual({ type: 'dynamodb' });
+      expect(result.loaders).toEqual({ type: 'dynamodb' });
+      expect(result.contentfulLoaders).toEqual({ type: 'dynamodb' });
     });
 
     it('should use cms loaders directly when cmsCacheStrategy is none', () => {
@@ -125,49 +133,43 @@ describe('createLoaders', () => {
       expect(createRedisLoaders).not.toHaveBeenCalled();
       expect(createDynamoDbLoaders).not.toHaveBeenCalled();
       expect(createFsLoaders).not.toHaveBeenCalled();
-      expect(result).toEqual({ type: 'contentful' });
+      expect(result.loaders).toEqual({ type: 'contentful' });
+      expect(result.contentfulLoaders).toEqual({ type: 'contentful' });
     });
   });
 
-  describe('error handling', () => {
-    it('should throw error when no loaders are found', () => {
-      // Mock a scenario where loaders would be undefined
+  describe('fallback behavior', () => {
+    it('should use base loaders when cmsCacheStrategy is unknown', () => {
+      // Unknown cache strategy falls through to base loaders
       const config = baseConfig.clone({
         cms: 'Contentful',
         cmsCacheStrategy: 'unknown' as any,
         contentStrategy: 'cms' // Not fs strategy
       });
 
-      expect(() => createLoaders(config, 'en-US')).toThrow('No loaders found');
+      const result = createLoaders(config, 'en-US');
+
+      // Falls back to base contentful loaders
+      expect(result.loaders).toEqual({ type: 'contentful' });
+      expect(result.contentfulLoaders).toEqual({ type: 'contentful' });
     });
   });
 
   describe('combined scenarios', () => {
-    it('should use fs loaders with Sanity cms', () => {
+    it('should not apply cache strategies to Sanity (cache strategies only support Contentful)', () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
-        contentStrategy: 'fs'
+        contentStrategy: 'cms',
+        cmsCacheStrategy: 'none'
       });
 
       const result = createLoaders(config, 'es');
 
       expect(createSanityLoaders).toHaveBeenCalledWith(config, 'es');
-      expect(createFsLoaders).toHaveBeenCalledWith(config, { type: 'sanity' });
-      expect(result).toEqual({ type: 'fs' });
-    });
-
-    it('should use redis loaders with Sanity cms', () => {
-      const config = baseConfig.clone({
-        cms: 'Sanity',
-        cmsCacheStrategy: 'redis',
-        contentStrategy: 'cms'
-      });
-
-      const result = createLoaders(config, 'fr');
-
-      expect(createSanityLoaders).toHaveBeenCalledWith(config, 'fr');
-      expect(createRedisLoaders).toHaveBeenCalledWith(config, { type: 'sanity' });
-      expect(result).toEqual({ type: 'redis' });
+      // Cache strategies don't apply to Sanity yet
+      expect(createFsLoaders).not.toHaveBeenCalled();
+      expect(result.loaders).toEqual({ type: 'sanity' });
+      expect(result.sanityLoaders).toEqual({ type: 'sanity' });
     });
   });
 

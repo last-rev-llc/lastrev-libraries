@@ -162,7 +162,9 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
       apiVersion: this.config.sanity?.apiVersion!,
       usePreview: !!this.config.sanity?.usePreview,
       schemaTypes: this.config.sanity?.schemaTypes!,
-      supportedLanguages: this.config.sanity?.supportedLanguages!
+      supportedLanguages: this.config.sanity?.supportedLanguages!,
+      useInternationalizedArrays: this.config.sanity?.useInternationalizedArrays ?? true,
+      fallbackToDefaultLocale: this.config.sanity?.fallbackToDefaultLocale ?? false
     };
   }
 

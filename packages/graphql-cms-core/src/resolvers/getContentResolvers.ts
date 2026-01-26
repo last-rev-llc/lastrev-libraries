@@ -1,4 +1,3 @@
-import { ContentType } from '@last-rev/types';
 import fieldsResolver from './fieldsResolver';
 import { Mappers, TypeMappings } from '@last-rev/types';
 import getTypeName from '../utils/getTypeName';
@@ -9,6 +8,21 @@ import { sideKickLookupResolver } from './sideKickLookupResolver';
 type ContentTypeRepresentation = {
   typeName: string;
   fields: string[];
+};
+
+/**
+ * Extract field names from content type (handles both Contentful and Sanity)
+ */
+const getFieldNames = (contentType: any): string[] => {
+  // Contentful: contentType.fields[].id
+  if (contentType.fields && Array.isArray(contentType.fields) && contentType.fields[0]?.id) {
+    return contentType.fields.map((x: any) => x.id);
+  }
+  // Sanity: contentType.fields[].name
+  if (contentType.fields && Array.isArray(contentType.fields) && contentType.fields[0]?.name) {
+    return contentType.fields.map((x: any) => x.name);
+  }
+  return [];
 };
 
 const collectVirtualTypes = (
@@ -39,7 +53,7 @@ const collectVirtualTypes = (
 };
 
 const collectContentTypes = (
-  contentTypes: ContentType[],
+  contentTypes: any[],
   mappers: Mappers,
   typeMappings: TypeMappings
 ): ContentTypeRepresentation[] => {
@@ -59,7 +73,7 @@ const collectContentTypes = (
 
     return {
       typeName,
-      fields: uniq([...contentType.fields.map((x) => x.id), ...additionalFields])
+      fields: uniq([...getFieldNames(contentType), ...additionalFields])
     };
   });
 };
@@ -69,7 +83,7 @@ const getContentResolvers = ({
 
   config
 }: {
-  contentTypes: ContentType[];
+  contentTypes: any[];
   config: LastRevAppConfig | { extensions: { mappers: Mappers; typeMappings: TypeMappings }; features?: any };
 }): { [typeName: string]: { [fieldName: string]: Function } } => {
   const {

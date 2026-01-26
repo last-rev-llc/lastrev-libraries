@@ -2,7 +2,7 @@ import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import { generateSchema } from '@last-rev/graphql-schema-gen';
 import lastRevTypeDefs from './typeDefs';
 import createResolvers from './resolvers/createResolvers';
-import { CmsLoaders } from '@last-rev/types';
+import { ContentfulLoaders, SanityLoaders } from '@last-rev/types';
 import { GraphQLSchema } from 'graphql';
 
 import { buildSubgraphSchema } from '@apollo/subgraph';
@@ -10,7 +10,7 @@ import { addResolversToSchema, makeExecutableSchema } from '@graphql-tools/schem
 import LastRevAppConfig from '@last-rev/app-config';
 import { createLoaders } from '@last-rev/graphql-cms-helpers';
 
-const fetchAllContentTypes = async (loaders: CmsLoaders) => {
+const fetchAllContentTypes = async (loaders: ContentfulLoaders | SanityLoaders) => {
   // may not have production content, if none there, use preview (only needed for filesystem builds)
   const contentTypes = await loaders.fetchAllContentTypes(false);
   if (!contentTypes || !contentTypes.length) {
@@ -21,8 +21,9 @@ const fetchAllContentTypes = async (loaders: CmsLoaders) => {
 
 const buildSchema = async (config: LastRevAppConfig): Promise<GraphQLSchema> => {
   // locale doesn't matter for this use case
-  const loaders = createLoaders(config, 'en-US');
-  const contentTypes = await fetchAllContentTypes(loaders);
+  const { loaders } = createLoaders(config, 'en-US');
+  // contentTypes type depends on CMS - generateSchema/createResolvers handle both via source param
+  const contentTypes = (await fetchAllContentTypes(loaders)) as any[];
 
   const baseTypeDefs = await generateSchema({
     source: config.cms,

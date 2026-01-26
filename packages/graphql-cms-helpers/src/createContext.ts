@@ -1,12 +1,19 @@
 import { find, get, map } from 'lodash';
 import { createClient } from 'contentful';
 import { createClient as createSanityClient } from '@sanity/client';
-import { ApolloContext } from '@last-rev/types';
+import { ApolloContext, ContentfulLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import createLoaders from './createLoaders';
 import createPathReaders from './createPathReaders';
 
 import { PathToContentLoader, ContentToPathsLoader } from '@last-rev/cms-path-rules-engine';
+
+/**
+ * Get entry ID based on CMS type
+ */
+const getEntryId = (entry: any, isSanity: boolean): string | undefined => {
+  return isSanity ? entry?._id : entry?.sys?.id;
+};
 
 const getLocales = async (space: string, environment: string, accessToken: string) => {
   const client = createClient({
@@ -40,7 +47,6 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
   let locales: string[] = [];
   let defaultLocale: string = 'en-US';
   let clients: { prod: any; preview: any };
-  let loaders;
   const isSanity = config.cms === 'Sanity';
 
   if (isSanity) {
@@ -64,7 +70,6 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
     locales = config.sanity.supportedLanguages.map((l: any) => l.id);
     defaultLocale = locales[0] || 'en-US';
     clients = { prod: prodClient, preview: previewClient };
-    loaders = createLoaders(config, defaultLocale);
   } else {
     const cLocales = await getLocales(
       config.contentful.spaceId,
@@ -93,8 +98,10 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
         host: 'preview.contentful.com'
       }).withoutLinkResolution.withAllLocales
     };
-    loaders = createLoaders(config, defaultLocale);
   }
+
+  // Create loaders after determining default locale
+  const { loaders, sanityLoaders, contentfulLoaders } = createLoaders(config, defaultLocale);
 
   const pathToContentLoader = config.features.enablePathsV2
     ? new PathToContentLoader(config.extensions.pathsConfigs)
@@ -108,6 +115,22 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
     cms: config.cms,
     contentful: isSanity ? undefined : clients,
     sanity: isSanity ? clients : undefined,
+
+    // Legacy loaders field (for backward compat)
+    loaders: loaders as ContentfulLoaders,
+
+    // CMS-specific loaders
+    sanityLoaders,
+    contentfulLoaders,
+
+    // Sanity config for utilities (i18n strategy, etc.)
+    sanityConfig: isSanity
+      ? {
+          useInternationalizedArrays: config.sanity.useInternationalizedArrays,
+          fallbackToDefaultLocale: config.sanity.fallbackToDefaultLocale
+        }
+      : undefined,
+
     loadEntriesForPath: async (path: any, ctx: any, site: any) => {
       if (pathToContentLoader) {
         return pathToContentLoader.getItemsForPath(path, ctx, site);
@@ -119,15 +142,16 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
       return [];
     },
     loadPathsForContent: async (entry: any, ctx: any, site: any) => {
+      // Use CMS-agnostic ID access
+      const entryId = getEntryId(entry, isSanity);
       if (contentToPathsLoader) {
         return contentToPathsLoader.loadPathsFromContent(entry, ctx, site);
-      } else if (pathReaders) {
-        return pathReaders[ctx.preview ? 'preview' : 'prod'].getPathInfosByContentId(entry.sys.id, ctx, site);
+      } else if (pathReaders && entryId) {
+        return pathReaders[ctx.preview ? 'preview' : 'prod'].getPathInfosByContentId(entryId, ctx, site);
       }
       return [];
     },
     locales,
-    loaders,
     mappers: config.extensions.mappers,
     defaultLocale,
     pathReaders,
