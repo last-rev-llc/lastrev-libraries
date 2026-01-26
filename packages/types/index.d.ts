@@ -13,9 +13,49 @@ import {
 } from 'contentful';
 import { Block, Inline, Mark, Node, Text, Document } from '@contentful/rich-text-types';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
+import {
+  SanityDocument,
+  SanityImageAsset,
+  SanityFileAsset,
+  Reference,
+  Slug,
+  PortableTextBlock,
+  SchemaType
+} from '@sanity/types';
+import { SanityClient } from '@sanity/client';
 
 export type BaseEntry = Entry<any, 'WITH_ALL_LOCALES' | 'WITHOUT_LINK_RESOLUTION'>;
 export type BaseAsset = Asset<'WITH_ALL_LOCALES' | 'WITHOUT_LINK_RESOLUTION'>;
+
+// Sanity type aliases (avoid naming collisions)
+export type SanityReference = Reference;
+export type SanitySlug = Slug;
+
+/**
+ * Helper type for internationalized array fields from sanity-plugin-internationalized-array.
+ *
+ * @example
+ * interface BlogPost extends SanityDocument {
+ *   title: InternationalizedValue<string>[];
+ *   body: InternationalizedValue<PortableTextBlock[]>[];
+ * }
+ */
+export interface InternationalizedValue<T> {
+  /** Locale code (e.g., 'en-US', 'es-ES') */
+  _key: string;
+  /** The localized value */
+  value: T;
+}
+
+/**
+ * CMS-agnostic entry type - handles content from either Contentful or Sanity.
+ */
+export type CmsEntry = BaseEntry | SanityDocument;
+
+/**
+ * CMS-agnostic asset type - handles assets from either Contentful or Sanity.
+ */
+export type CmsAsset = BaseAsset | SanityImageAsset | SanityFileAsset;
 
 export type ItemKey = {
   id: string;
@@ -136,12 +176,12 @@ export type ContentfulClients = {
   preview: ContentfulClientApi;
 };
 
-export type CmsClients =
-  | ContentfulClients
-  | {
-      prod: any;
-      preview: any;
-    };
+export type SanityClients = {
+  prod: SanityClient;
+  preview: SanityClient;
+};
+
+export type CmsClients = ContentfulClients | SanityClients;
 
 export type PathEntries = (BaseEntry | null)[];
 
@@ -169,8 +209,8 @@ export type ApolloContext = {
   path?: string;
   locales: string[];
   preview?: boolean;
-  contentful?: CmsClients;
-  sanity?: CmsClients;
+  contentful?: ContentfulClients;
+  sanity?: SanityClients;
   pathReaders?: PathReaders;
   displayType?: string;
   pathEntries?: PathEntries;
@@ -273,3 +313,6 @@ export type {
 };
 
 export type { Block, Inline, Mark, Node, Text, Document };
+
+// Re-export Sanity types
+export type { SanityDocument, SanityImageAsset, SanityFileAsset, PortableTextBlock, SchemaType };
