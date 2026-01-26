@@ -4,16 +4,14 @@ import {
   ApolloContext,
   TypeMappings,
   CmsPathsConfigs,
-  PathRuleConfig,
-  PathData,
   CmsPathsConfig,
-  ObjectBasedCmsPathsGenerator
+  ObjectBasedCmsPathsGenerator,
+  SanityContextConfig
 } from '@last-rev/types';
 import PathTree from './PathTree';
 import { DEFAULT_SITE_KEY } from './constants';
 import { createPathStore, PathStore } from './PathStore';
 import LastRevAppConfig from '@last-rev/app-config';
-import { ContentToPathsLoader } from '@last-rev/cms-path-rules-engine';
 
 function isObjectBasedCmsPathsGenerator(config: CmsPathsConfig): config is ObjectBasedCmsPathsGenerator {
   if (typeof config !== 'function') return false;
@@ -23,13 +21,72 @@ function isObjectBasedCmsPathsGenerator(config: CmsPathsConfig): config is Objec
   return config.length === 1;
 }
 
+/**
+ * Get entry ID based on CMS type
+ */
+const getEntryId = (entry: any, isSanity: boolean): string | undefined => {
+  return isSanity ? entry?._id : entry?.sys?.id;
+};
+
+/**
+ * Check if entry has a slug field
+ */
+const hasSlug = (entry: any, isSanity: boolean): boolean => {
+  if (isSanity) {
+    // Check for direct slug or i18n array slug
+    return !!entry?.slug || (Array.isArray(entry?.slug) && entry.slug.length > 0);
+  }
+  return has(entry, 'fields.slug');
+};
+
+/**
+ * Get slug value from entry for a specific locale
+ */
+const getSlug = (
+  entry: any,
+  locale: string,
+  isSanity: boolean,
+  sanityConfig?: SanityContextConfig
+): string | undefined => {
+  if (isSanity) {
+    const fieldValue = entry?.slug;
+    if (fieldValue === undefined) return undefined;
+
+    // Check config for i18n strategy
+    const useI18nArrays = sanityConfig?.useInternationalizedArrays ?? true;
+
+    if (!useI18nArrays) {
+      // Direct access - no i18n array processing (slug is typically a string)
+      return typeof fieldValue === 'string' ? fieldValue : fieldValue?.current;
+    }
+
+    // Check if this is an i18n array format
+    if (!Array.isArray(fieldValue) || !fieldValue[0]?._key) {
+      // Not an i18n array - return as-is
+      return typeof fieldValue === 'string' ? fieldValue : fieldValue?.current;
+    }
+
+    // i18n array format: find by locale key
+    const localized = fieldValue.find((v: any) => v._key === locale);
+    if (localized?.value !== undefined) {
+      return typeof localized.value === 'string' ? localized.value : localized.value?.current;
+    }
+
+    return undefined;
+  }
+
+  // Contentful: entry.fields.slug[locale]
+  return get(entry, ['fields', 'slug', locale]);
+};
+
 type PathUpdaterProps = {
   pathsConfigs: CmsPathsConfigs;
   context: ApolloContext;
   preview: boolean;
   site?: string;
   pathStore: PathStore;
-  enablePathsV2: boolean;
+  isSanity: boolean;
+  sanityConfig?: SanityContextConfig;
 };
 
 export class PathUpdater {
@@ -40,15 +97,17 @@ export class PathUpdater {
   pathsConfigs: CmsPathsConfigs;
   typeMappings: TypeMappings = {};
   pathStore: PathStore;
-  enablePathsV2: boolean;
+  isSanity: boolean;
+  sanityConfig?: SanityContextConfig;
 
-  constructor({ pathsConfigs, context, preview, site, pathStore, enablePathsV2 }: PathUpdaterProps) {
+  constructor({ pathsConfigs, context, preview, site, pathStore, isSanity, sanityConfig }: PathUpdaterProps) {
     this.pathsConfigs = pathsConfigs;
     this.context = context;
     this.preview = preview;
     this.site = site || DEFAULT_SITE_KEY;
     this.pathStore = pathStore;
-    this.enablePathsV2 = enablePathsV2;
+    this.isSanity = isSanity;
+    this.sanityConfig = sanityConfig;
   }
 
   get reverseTypeMappings() {
@@ -63,11 +122,7 @@ export class PathUpdater {
   }
 
   async updatePaths() {
-    if (this.enablePathsV2) {
-      await this.loadFromV2Content();
-    } else {
-      await this.loadFromV1Content();
-    }
+    await this.loadContent();
     await this.save();
   }
 
@@ -76,76 +131,15 @@ export class PathUpdater {
     await this.pathStore.save(serialized, this.site);
   }
 
-  async loadFromV2Content() {
-    const pathRuleConfig = this.pathsConfigs as PathRuleConfig;
-
-    const tree = new PathTree();
-    const pathLoader = new ContentToPathsLoader(pathRuleConfig);
-    const context = this.context;
-    const locales = this.context.locales;
-    const site = this.site;
-
-    await Promise.all(
-      Object.keys(pathRuleConfig).map(async (contentTypeId) => {
-        const allItems = await this.context.loaders.entriesByContentTypeLoader.load({
-          id: contentTypeId,
-          preview: this.preview
-        });
-        const pathDatas = (
-          await Promise.all(
-            allItems.map(async (item) => {
-              const pathToLocales: Record<string, string[]> = {};
-
-              await Promise.all(
-                locales.map(async (locale) => {
-                  const pathInfos = await pathLoader.loadPathsFromContent(
-                    item,
-                    {
-                      ...context,
-                      locale
-                    },
-                    site
-                  );
-                  pathInfos.forEach((pathInfo) => {
-                    const path = pathInfo.path;
-                    if (!pathToLocales[path]) {
-                      pathToLocales[path] = [];
-                    }
-                    pathToLocales[path].push(locale);
-                  });
-                })
-              );
-
-              const pathDatas: PathData[] = Object.keys(pathToLocales).reduce((accum, path) => {
-                const excludedLocales = locales.filter((locale) => !pathToLocales[path].includes(locale));
-                accum.push({
-                  fullPath: path,
-                  contentId: item.sys.id,
-                  excludedLocales,
-                  isPrimary: true // ???
-                });
-                return accum;
-              }, [] as PathData[]);
-
-              return pathDatas;
-            })
-          )
-        ).flat();
-
-        pathDatas.forEach((pathData) => tree.appendNewNode(pathData));
-      })
-    );
-
-    this.tree = tree;
-  }
-
-  async loadFromV1Content() {
+  async loadContent() {
     const defaultLocale = this.context.defaultLocale;
     const locales = this.context.locales;
     const loaders = this.context.loaders;
     const preview = this.preview;
     const site = this.site;
     const ctx = this.context;
+    const isSanity = this.isSanity;
+    const sanityConfig = this.sanityConfig;
 
     const tree = new PathTree();
 
@@ -155,14 +149,20 @@ export class PathUpdater {
 
         let pages = await this.context.loaders.entriesByContentTypeLoader.load({ id: typeKey, preview: this.preview });
 
-        pages = pages.filter((entry) => has(entry, 'fields.slug'));
+        // CMS-agnostic slug check
+        pages = pages.filter((entry) => hasSlug(entry, isSanity));
 
         if (isString(config)) {
           each(pages, (page) => {
-            const slug = get(page, ['fields', 'slug', defaultLocale]) as string | undefined;
+            // CMS-agnostic slug access
+            const slug = getSlug(page, defaultLocale, isSanity, sanityConfig);
             if (!slug) return;
+
+            // CMS-agnostic ID access
+            const contentId = getEntryId(page, isSanity);
+            if (!contentId) return;
+
             const fullPath = join(config, slug);
-            const contentId = page.sys.id;
             const excludedLocales: string[] = [];
             tree.appendNewNode({ fullPath, contentId, excludedLocales, isPrimary: true });
           });
@@ -251,6 +251,14 @@ const updatePathsForSite = async ({
   pathsConfigs: CmsPathsConfigs;
   context: ApolloContext;
 }) => {
+  const isSanity = config.cms === 'Sanity';
+  const sanityConfig = isSanity
+    ? {
+        useInternationalizedArrays: config.sanity.useInternationalizedArrays,
+        fallbackToDefaultLocale: config.sanity.fallbackToDefaultLocale
+      }
+    : undefined;
+
   if (updateForPreview) {
     const pathStore = createPathStore(
       config.clone({
@@ -270,7 +278,8 @@ const updatePathsForSite = async ({
       pathsConfigs,
       context,
       preview: true,
-      enablePathsV2: config.features.enablePathsV2
+      isSanity,
+      sanityConfig
     });
     await updater.updatePaths();
   }
@@ -293,7 +302,8 @@ const updatePathsForSite = async ({
       pathsConfigs,
       context,
       preview: false,
-      enablePathsV2: config.features.enablePathsV2
+      isSanity,
+      sanityConfig
     });
     await updater.updatePaths();
   }

@@ -1,5 +1,5 @@
 import { LastRevAppConfigArgs, LastRevAppConfiguration } from './types';
-import { merge, isNil } from 'lodash';
+import { merge } from 'lodash';
 import { RedisOptions } from 'ioredis';
 
 const defaultConfig: LastRevAppConfigArgs = {
@@ -129,8 +129,8 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
   }
 
   validatePaths() {
-    if (this.config.paths?.version !== 'v2' && this.config.paths?.generateFullPathTree === false) {
-      throw new Error(`Invalid paths configuration: generateFullPathTree must be true when using paths v1`);
+    if (this.config.paths?.generateFullPathTree === false) {
+      throw new Error(`Invalid paths configuration: generateFullPathTree must be true`);
     }
   }
 
@@ -273,15 +273,9 @@ export default class LastRevAppConfig implements LastRevAppConfiguration {
         'The SidekickLookupResolver in the core is being deprecated. See how to migrate: https://lastrev.atlassian.net/wiki/spaces/KB/pages/108167187/Sidekick+Lookup+Migration'
       );
     }
-    if (this.config.paths?.version) {
-      console.warn('The paths.version config option is deprecated. Use the features.enablePathsV2 option instead');
-    }
     return {
       disableCoreSidekickLookup: !!this.config.features?.disableCoreSidekickLookup,
-      disableFederatedSchema: !!this.config.features?.disableFederatedSchema,
-      enablePathsV2: isNil(this.config.features?.enablePathsV2)
-        ? this.config.paths?.version === 'v2'
-        : !!this.config.features?.enablePathsV2
+      disableFederatedSchema: !!this.config.features?.disableFederatedSchema
     };
   }
 }

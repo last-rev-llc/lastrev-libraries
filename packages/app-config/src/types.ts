@@ -6,8 +6,6 @@ export type LastRevStrategy = 'fs' | 'redis' | 'dynamodb';
 export type ContentStrategy = 'fs' | 'cms';
 export type CmsCacheStrategy = 'redis' | 'dynamodb' | 'none';
 
-export type PathVersion = 'v1' | 'v2';
-
 export type SupportedLanguage = {
   id: string;
   title: string;
@@ -81,7 +79,6 @@ export interface LastRevAppConfiguration {
   features: {
     disableCoreSidekickLookup: boolean;
     disableFederatedSchema: boolean;
-    enablePathsV2: boolean;
   };
 }
 
@@ -148,10 +145,6 @@ export type LastRevAppConfigArgs = {
   apolloServerOptions?: LRApolloServerOptions;
   sites?: string[];
   paths?: {
-    /*
-      @deprecated use features.enablePathsV2 instead
-    */
-    version?: PathVersion;
     generateFullPathTree?: boolean;
   };
   sitemap?: {
@@ -164,6 +157,5 @@ export type LastRevAppConfigArgs = {
   features?: {
     disableCoreSidekickLookup?: boolean;
     disableFederatedSchema?: boolean;
-    enablePathsV2?: boolean;
   };
 };

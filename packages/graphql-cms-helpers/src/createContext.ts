@@ -6,8 +6,6 @@ import LastRevAppConfig from '@last-rev/app-config';
 import createLoaders from './createLoaders';
 import createPathReaders from './createPathReaders';
 
-import { PathToContentLoader, ContentToPathsLoader } from '@last-rev/cms-path-rules-engine';
-
 /**
  * Get entry ID based on CMS type
  */
@@ -103,14 +101,6 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
   // Create loaders after determining default locale
   const { loaders, sanityLoaders, contentfulLoaders } = createLoaders(config, defaultLocale);
 
-  const pathToContentLoader = config.features.enablePathsV2
-    ? new PathToContentLoader(config.extensions.pathsConfigs)
-    : null;
-
-  const contentToPathsLoader = config.features.enablePathsV2
-    ? new ContentToPathsLoader(config.extensions.pathsConfigs)
-    : null;
-
   return {
     cms: config.cms,
     contentful: isSanity ? undefined : clients,
@@ -132,9 +122,7 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
       : undefined,
 
     loadEntriesForPath: async (path: any, ctx: any, site: any) => {
-      if (pathToContentLoader) {
-        return pathToContentLoader.getItemsForPath(path, ctx, site);
-      } else if (pathReaders) {
+      if (pathReaders) {
         const node = await pathReaders[ctx.preview ? 'preview' : 'prod'].getNodeByPath(path, site);
         if (!node) return [];
         return node.getPathEntries(ctx);
@@ -144,9 +132,7 @@ const createContext = async ({ config }: CreateContextProps): Promise<ApolloCont
     loadPathsForContent: async (entry: any, ctx: any, site: any) => {
       // Use CMS-agnostic ID access
       const entryId = getEntryId(entry, isSanity);
-      if (contentToPathsLoader) {
-        return contentToPathsLoader.loadPathsFromContent(entry, ctx, site);
-      } else if (pathReaders && entryId) {
+      if (pathReaders && entryId) {
         return pathReaders[ctx.preview ? 'preview' : 'prod'].getPathInfosByContentId(entryId, ctx, site);
       }
       return [];
