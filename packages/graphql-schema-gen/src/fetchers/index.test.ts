@@ -1,11 +1,16 @@
 import { fetchers } from './index';
 import { generateContentfulSchema } from './contentful';
+import { generateSanitySchema } from './sanity';
 import { ContentType } from '@last-rev/types';
 import { gql } from 'graphql-tag';
 
 // Mock dependencies
 jest.mock('./contentful', () => ({
   generateContentfulSchema: jest.fn()
+}));
+
+jest.mock('./sanity', () => ({
+  generateSanitySchema: jest.fn()
 }));
 
 jest.mock('graphql-tag', () => ({
@@ -28,6 +33,7 @@ jest.mock('@last-rev/logging', () => ({
 }));
 
 const mockGenerateContentfulSchema = generateContentfulSchema as jest.MockedFunction<typeof generateContentfulSchema>;
+const mockGenerateSanitySchema = generateSanitySchema as jest.MockedFunction<typeof generateSanitySchema>;
 const mockGql = gql as jest.MockedFunction<typeof gql>;
 
 describe('fetchers', () => {
@@ -74,6 +80,14 @@ describe('fetchers', () => {
     title: String
   }
   `);
+    mockGenerateSanitySchema.mockReturnValue(`
+  type Page implements Content {
+    sidekickLookup: JSON
+    id: String
+    theme: [Theme]
+    animation: JSON
+  }
+  `);
     mockGql.mockReturnValue(mockDocumentNode);
   });
 
@@ -103,10 +117,15 @@ describe('fetchers', () => {
     expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(mockTypeMappings, [], false);
   });
 
-  it('should handle Sanity source (currently uses Contentful implementation)', async () => {
-    const result = await fetchers('Sanity', mockTypeMappings, mockContentTypes, false);
+  it('should handle Sanity source with Sanity schema generator', async () => {
+    const sanitySchemaTypes = [
+      { name: 'page', type: 'document' },
+      { name: 'hero', type: 'object' }
+    ];
+    const result = await fetchers('Sanity', mockTypeMappings, sanitySchemaTypes, false);
 
-    expect(mockGenerateContentfulSchema).toHaveBeenCalledWith(mockTypeMappings, mockContentTypes, false);
+    expect(mockGenerateSanitySchema).toHaveBeenCalledWith(mockTypeMappings, sanitySchemaTypes);
+    expect(mockGenerateContentfulSchema).not.toHaveBeenCalled();
     expect(result).toBe(mockDocumentNode);
   });
 });
