@@ -8,7 +8,7 @@ import {
   validateArg,
   delay,
   writeItems,
-  writeEntriesByContentTypeFiles,
+  writeDocumentIdsByTypeFiles,
   readSyncTokens,
   writeSyncTokens,
   groupSanityDocsByTypeAndMapToIds
@@ -33,8 +33,8 @@ const mockCreateContext = createContext as jest.MockedFunction<typeof createCont
 const mockValidateArg = validateArg as jest.MockedFunction<typeof validateArg>;
 const mockDelay = delay as jest.MockedFunction<typeof delay>;
 const mockWriteItems = writeItems as jest.MockedFunction<typeof writeItems>;
-const mockWriteEntriesByContentTypeFiles = writeEntriesByContentTypeFiles as jest.MockedFunction<
-  typeof writeEntriesByContentTypeFiles
+const mockWriteDocumentIdsByTypeFiles = writeDocumentIdsByTypeFiles as jest.MockedFunction<
+  typeof writeDocumentIdsByTypeFiles
 >;
 const mockReadSyncTokens = readSyncTokens as jest.MockedFunction<typeof readSyncTokens>;
 const mockWriteSyncTokens = writeSyncTokens as jest.MockedFunction<typeof writeSyncTokens>;
@@ -46,12 +46,6 @@ const mockGroupSanityDocsByTypeAndMapToIds = groupSanityDocsByTypeAndMapToIds as
 const mockSanityClient = {
   fetch: jest.fn()
 };
-
-// Sanity schema types (native format)
-const mockSchemaTypes = [
-  { name: 'page', type: 'document' },
-  { name: 'article', type: 'document' }
-];
 
 const mockSanityEntries = [
   {
@@ -242,22 +236,14 @@ describe('sanitySync', () => {
     it('should store plain Sanity documents (no conversion)', async () => {
       await sanitySync(mockConfig, false);
 
-      // Should write plain Sanity entries (with normalized IDs)
+      // Should write all documents to unified 'documents' directory (entries + assets combined)
       expect(mockWriteItems).toHaveBeenCalledWith(
         expect.arrayContaining([
-          expect.objectContaining({ _id: 'entry1', _type: 'page' })
-        ]),
-        expect.any(String),
-        'entries'
-      );
-
-      // Should write plain Sanity assets
-      expect(mockWriteItems).toHaveBeenCalledWith(
-        expect.arrayContaining([
+          expect.objectContaining({ _id: 'entry1', _type: 'page' }),
           expect.objectContaining({ _id: 'asset1', _type: 'sanity.imageAsset' })
         ]),
         expect.any(String),
-        'assets'
+        'documents'
       );
     });
   });
@@ -268,32 +254,21 @@ describe('sanitySync', () => {
 
       const expectedRoot = '/test/content/test-project/production/production';
 
-      // Should write plain Sanity entries
+      // Should write all documents to unified 'documents' directory (entries + assets combined)
       expect(mockWriteItems).toHaveBeenCalledWith(
         expect.arrayContaining([
-          expect.objectContaining({ _id: 'entry1', _type: 'page' })
-        ]),
-        expectedRoot,
-        'entries'
-      );
-
-      // Should write plain Sanity assets
-      expect(mockWriteItems).toHaveBeenCalledWith(
-        expect.arrayContaining([
+          expect.objectContaining({ _id: 'entry1', _type: 'page' }),
           expect.objectContaining({ _id: 'asset1', _type: 'sanity.imageAsset' })
         ]),
         expectedRoot,
-        'assets'
+        'documents'
       );
-
-      // Should write native Sanity schema types (third call)
-      expect(mockWriteItems).toHaveBeenNthCalledWith(3, mockSchemaTypes, expectedRoot, 'content_types');
     });
 
-    it('should write entries by content type files', async () => {
+    it('should write document IDs by type files', async () => {
       await sanitySync(mockConfig, false);
 
-      expect(mockWriteEntriesByContentTypeFiles).toHaveBeenCalledWith(
+      expect(mockWriteDocumentIdsByTypeFiles).toHaveBeenCalledWith(
         {
           page: ['entry1'],
           article: ['entry2']
@@ -432,12 +407,12 @@ describe('sanitySync', () => {
       mockSanityClient.fetch.mockResolvedValue(mockSanityEntries);
       mockReadSyncTokens.mockResolvedValue({});
       mockWriteItems.mockResolvedValue(undefined);
-      mockWriteEntriesByContentTypeFiles.mockResolvedValue(undefined);
+      mockWriteDocumentIdsByTypeFiles.mockResolvedValue(undefined);
       mockWriteSyncTokens.mockResolvedValue(undefined);
       mockUpdateAllPaths.mockResolvedValue(undefined);
     });
 
-    it('should handle empty entries response', async () => {
+    it('should handle empty documents response', async () => {
       // Create a fresh mock client for this test
       const freshMockClient = {
         fetch: jest
@@ -458,24 +433,24 @@ describe('sanitySync', () => {
       mockCreateContext.mockResolvedValue({} as any);
       mockValidateArg.mockImplementation(() => {});
       mockWriteItems.mockResolvedValue(undefined);
-      mockWriteEntriesByContentTypeFiles.mockResolvedValue(undefined);
+      mockWriteDocumentIdsByTypeFiles.mockResolvedValue(undefined);
       mockWriteSyncTokens.mockResolvedValue(undefined);
       mockUpdateAllPaths.mockResolvedValue(undefined);
 
       await sanitySync(mockConfig, false);
 
-      // Check that entries were written with empty array (first call)
-      expect(mockWriteItems).toHaveBeenNthCalledWith(1, [], expect.any(String), 'entries');
+      // Check that documents were written with empty array (unified documents directory)
+      expect(mockWriteItems).toHaveBeenCalledWith([], expect.any(String), 'documents');
     });
 
-    it('should handle empty assets response', async () => {
+    it('should handle entries with no assets', async () => {
       // Create a fresh mock client for this test
       const freshMockClient = {
         fetch: jest
           .fn()
-          .mockResolvedValueOnce([]) // page entries
-          .mockResolvedValueOnce([]) // article entries
-          .mockResolvedValueOnce([]) // assets
+          .mockResolvedValueOnce(mockSanityEntries.filter((e) => e._type === 'page')) // page entries
+          .mockResolvedValueOnce(mockSanityEntries.filter((e) => e._type === 'article')) // article entries
+          .mockResolvedValueOnce([]) // no assets
       };
 
       // Clear previous mock calls and setup fresh mocks
@@ -485,26 +460,36 @@ describe('sanitySync', () => {
       mockCreateClient.mockReturnValue(freshMockClient as any);
       mockSimpleTimer.mockImplementation(() => mockTimer as any);
       mockReadSyncTokens.mockResolvedValue(mockSyncTokens);
-      mockGroupSanityDocsByTypeAndMapToIds.mockReturnValue({});
+      mockGroupSanityDocsByTypeAndMapToIds.mockReturnValue({
+        page: ['entry1'],
+        article: ['entry2']
+      });
       mockCreateContext.mockResolvedValue({} as any);
       mockValidateArg.mockImplementation(() => {});
       mockWriteItems.mockResolvedValue(undefined);
-      mockWriteEntriesByContentTypeFiles.mockResolvedValue(undefined);
+      mockWriteDocumentIdsByTypeFiles.mockResolvedValue(undefined);
       mockWriteSyncTokens.mockResolvedValue(undefined);
       mockUpdateAllPaths.mockResolvedValue(undefined);
 
       await sanitySync(mockConfig, false);
 
-      // Check that assets were written with empty array (second call)
-      expect(mockWriteItems).toHaveBeenNthCalledWith(2, [], expect.any(String), 'assets');
+      // Check that documents were written with only entries (no assets)
+      expect(mockWriteItems).toHaveBeenCalledWith(
+        expect.arrayContaining([
+          expect.objectContaining({ _id: 'entry1', _type: 'page' }),
+          expect.objectContaining({ _id: 'entry2', _type: 'article' })
+        ]),
+        expect.any(String),
+        'documents'
+      );
     });
 
-    it('should handle content types without entries', async () => {
+    it('should handle document types without documents', async () => {
       mockGroupSanityDocsByTypeAndMapToIds.mockReturnValue({});
 
       await sanitySync(mockConfig, false);
 
-      expect(mockWriteEntriesByContentTypeFiles).toHaveBeenCalledWith({}, expect.any(String));
+      expect(mockWriteDocumentIdsByTypeFiles).toHaveBeenCalledWith({}, expect.any(String));
     });
 
     it('should handle single locale configuration', async () => {
@@ -522,7 +507,7 @@ describe('sanitySync', () => {
       mockCreateContext.mockResolvedValue({} as any);
       mockValidateArg.mockImplementation(() => {});
       mockWriteItems.mockResolvedValue(undefined);
-      mockWriteEntriesByContentTypeFiles.mockResolvedValue(undefined);
+      mockWriteDocumentIdsByTypeFiles.mockResolvedValue(undefined);
       mockWriteSyncTokens.mockResolvedValue(undefined);
       mockUpdateAllPaths.mockResolvedValue(undefined);
 
@@ -545,10 +530,11 @@ describe('sanitySync', () => {
       // Should store plain Sanity documents regardless of locale configuration
       expect(mockWriteItems).toHaveBeenCalledWith(
         expect.arrayContaining([
-          expect.objectContaining({ _id: 'entry1', _type: 'page' })
+          expect.objectContaining({ _id: 'entry1', _type: 'page' }),
+          expect.objectContaining({ _id: 'asset1', _type: 'sanity.imageAsset' })
         ]),
         expect.any(String),
-        'entries'
+        'documents'
       );
     });
 
@@ -577,7 +563,7 @@ describe('sanitySync', () => {
       mockSanityClient.fetch.mockResolvedValue(mockSanityEntries);
       mockReadSyncTokens.mockResolvedValue({});
       mockWriteItems.mockResolvedValue(undefined);
-      mockWriteEntriesByContentTypeFiles.mockResolvedValue(undefined);
+      mockWriteDocumentIdsByTypeFiles.mockResolvedValue(undefined);
       mockWriteSyncTokens.mockResolvedValue(undefined);
       mockUpdateAllPaths.mockResolvedValue(undefined);
     });

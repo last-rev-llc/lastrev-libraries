@@ -114,14 +114,19 @@ export type CmsLoaders = ContentfulLoaders;
 /**
  * Sanity-specific loaders returning native Sanity documents.
  * Field-level i18n is handled at the resolver level via sanity-plugin-internationalized-array.
+ *
+ * Uses unified document model - no entry/asset distinction since Sanity treats
+ * all content (including assets) as documents with a _type field.
  */
 export type SanityLoaders = {
-  entryLoader: DataLoader<ItemKey, SanityDocument | null>;
-  entriesRefByLoader: DataLoader<RefByKey, SanityDocument[]>;
-  entryByFieldValueLoader: DataLoader<FVLKey, SanityDocument | null>;
-  assetLoader: DataLoader<ItemKey, SanityDocument | null>;
-  entriesByContentTypeLoader: DataLoader<ItemKey, SanityDocument[]>;
-  fetchAllContentTypes: (preview: boolean) => Promise<SchemaType[]>;
+  /** Load any Sanity document by _id (entries, assets, or any document type) */
+  documentLoader: DataLoader<ItemKey, SanityDocument | null>;
+  /** Load all documents of a specific _type */
+  documentsByTypeLoader: DataLoader<ItemKey, SanityDocument[]>;
+  /** Load document by field value match */
+  documentByFieldValueLoader: DataLoader<FVLKey, SanityDocument | null>;
+  /** Load documents that reference a given document ID */
+  documentsRefByLoader: DataLoader<RefByKey, SanityDocument[]>;
 };
 
 export type TypeMappings = {

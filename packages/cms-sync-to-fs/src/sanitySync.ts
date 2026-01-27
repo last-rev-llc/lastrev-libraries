@@ -12,12 +12,12 @@ import {
   validateArg,
   delay,
   writeItems,
-  writeEntriesByContentTypeFiles,
+  writeDocumentIdsByTypeFiles,
   readSyncTokens,
   writeSyncTokens,
   groupSanityDocsByTypeAndMapToIds
 } from './utils';
-import { ENTRIES_DIRNAME, ASSETS_DIRNAME, CONTENT_TYPES_DIRNAME, SYNC_TOKEN_DIRNAME } from './constants';
+import { DOCUMENTS_DIRNAME, SYNC_TOKEN_DIRNAME } from './constants';
 import { ContentTypeIdToSyncTokensLookup } from './types';
 
 export type SanitySyncCollection = {
@@ -140,14 +140,17 @@ const sanitySync = async (config: LastRevAppConfig, usePreview: boolean, sites?:
   const entries = flatten(entriesResults.map((result) => result.items));
   const assets = assetsResult.items;
 
-  logger.debug(`fetched entries and assets`, {
+  // Combine entries and assets into single documents array (unified document model)
+  const allDocuments = [...entries, ...assets];
+
+  logger.debug(`fetched documents`, {
     caller: 'sync',
     elapsedMs: timer.end().millis,
-    itemsSuccessful: entries.length + assets.length
+    itemsSuccessful: allDocuments.length
   });
 
-  // Group Sanity documents by _type for entry lookup
-  const entryIdsByContentTypeLookup = groupSanityDocsByTypeAndMapToIds(entries);
+  // Group all documents by _type (includes both entries and asset types like sanity.imageAsset)
+  const documentIdsByTypeLookup = groupSanityDocsByTypeAndMapToIds(allDocuments);
   const nextSyncTokens: ContentTypeIdToSyncTokensLookup = contentTypes.reduce(
     (accum, contentType, idx) => ({
       ...accum,
@@ -159,17 +162,18 @@ const sanitySync = async (config: LastRevAppConfig, usePreview: boolean, sites?:
 
   timer = new Timer();
   await Promise.all([
-    writeItems(entries, root, ENTRIES_DIRNAME),
-    writeItems(assets, root, ASSETS_DIRNAME),
-    writeItems(contentTypes, root, CONTENT_TYPES_DIRNAME),
-    writeEntriesByContentTypeFiles(entryIdsByContentTypeLookup, root),
+    // Unified documents directory (no separate entries/assets)
+    writeItems(allDocuments, root, DOCUMENTS_DIRNAME),
+    // document_ids_by_type replaces entry_ids_by_content_type
+    writeDocumentIdsByTypeFiles(documentIdsByTypeLookup, root),
+    // Sync tokens for incremental sync
     writeSyncTokens(nextSyncTokens, root, SYNC_TOKEN_DIRNAME)
+    // Note: contentTypes not written - Sanity schemas come from config.sanity.schemaTypes
   ]);
   logger.debug('Wrote content files', {
     caller: 'sync',
     elapsedMs: timer.end().millis,
-    itemsSuccessful:
-      entries.length + assets.length + contentTypes.length + Object.keys(entryIdsByContentTypeLookup).length
+    itemsSuccessful: allDocuments.length + Object.keys(documentIdsByTypeLookup).length
   });
 
   timer = new Timer();

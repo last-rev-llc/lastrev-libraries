@@ -6,7 +6,7 @@ import { writeFile, ensureDir, createFile, readFile } from 'fs-extra';
 import { join } from 'path';
 import { BaseAsset, BaseEntry, ContentType } from '@last-rev/types';
 import { ContentTypeIdToContentIdsLookup, ContentTypeIdToSyncTokensLookup } from './types';
-import { CONTENT_TYPE_ENTRIES_DIRNAME } from './constants';
+import { CONTENT_TYPE_ENTRIES_DIRNAME, DOCUMENT_IDS_BY_TYPE_DIRNAME } from './constants';
 import { getWinstonLogger } from '@last-rev/logging';
 
 const logger = getWinstonLogger({
@@ -86,6 +86,28 @@ export const writeEntriesByContentTypeFiles = async (
             })()
           )
         );
+      })()
+    )
+  );
+};
+
+/**
+ * Write document IDs grouped by _type for Sanity (unified document model).
+ * Creates: document_ids_by_type/{typeName}/{docId} files
+ */
+export const writeDocumentIdsByTypeFiles = async (
+  lookup: Record<string, string[]>,
+  root: string
+): Promise<void> => {
+  const dir = join(root, DOCUMENT_IDS_BY_TYPE_DIRNAME);
+  await ensureDir(dir);
+
+  await Promise.all(
+    Object.entries(lookup).map(([typeName, ids]) =>
+      (async () => {
+        const typeDir = join(dir, typeName);
+        await ensureDir(typeDir);
+        await Promise.all(ids.map((id) => createFile(join(typeDir, id))));
       })()
     )
   );

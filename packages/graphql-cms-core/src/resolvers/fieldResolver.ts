@@ -5,7 +5,7 @@ import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
 import { TypeMapper } from '@last-rev/types';
 import getLocalizedField from '../utils/getLocalizedField';
-import { getRefInfo, getContentType, getLoaders } from '../utils/contentUtils';
+import { getRefInfo, getContentType, loadDocument, loadDocuments } from '../utils/contentUtils';
 import { getWinstonLogger } from '@last-rev/logging';
 
 const logger = getWinstonLogger({
@@ -28,8 +28,6 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
 
   const displayType = overrideDisplayType || displayTypeArg;
 
-  // Utilities read ctx.cms internally - no cms variable needed
-  const loaders = getLoaders(ctx);
   const contentType = getContentType(content, ctx) || '';
   const typeName = contentType ? getTypeName(contentType, typeMappings) : displayType;
   const mapper = mappers?.[typeName]?.[displayType] as TypeMapper;
@@ -63,16 +61,13 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
     fieldValue = getLocalizedField(content, field, ctx);
   }
 
-  // Resolve single reference
+  // Resolve single reference - uses CMS-aware loadDocument utility
   const refInfo = getRefInfo(fieldValue, ctx);
   if (refInfo.isReference && refInfo.id) {
-    if (refInfo.isAsset) {
-      return loaders.assetLoader.load({ id: refInfo.id, preview });
-    }
-    return loaders.entryLoader.load({ id: refInfo.id, preview });
+    return loadDocument(ctx, refInfo.id, preview, refInfo.isAsset);
   }
 
-  // Resolve array of references
+  // Resolve array of references - uses CMS-aware loadDocuments utility
   if (Array.isArray(fieldValue) && fieldValue.length > 0) {
     const firstRefInfo = getRefInfo(fieldValue[0], ctx);
     if (firstRefInfo.isReference) {
@@ -81,10 +76,7 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
         .filter((info) => info.isReference && info.id)
         .map((info) => ({ id: info.id!, preview }));
 
-      if (firstRefInfo.isAsset) {
-        return (await loaders.assetLoader.loadMany(ids)).filter((r) => r !== null);
-      }
-      return (await loaders.entryLoader.loadMany(ids)).filter((r) => r !== null);
+      return loadDocuments(ctx, ids, firstRefInfo.isAsset);
     }
   }
 

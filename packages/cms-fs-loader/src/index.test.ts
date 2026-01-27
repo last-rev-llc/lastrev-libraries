@@ -1,7 +1,7 @@
 import createLoaders from './index';
 import LastRevAppConfig from '@last-rev/app-config';
 import mockAppConfig from '@last-rev/app-config/src/app-config.mock';
-import { CmsLoaders } from '@last-rev/types';
+import { CmsLoaders, SanityLoaders } from '@last-rev/types';
 import { readJSON, readdir } from 'fs-extra';
 
 // Mock dependencies
@@ -31,12 +31,13 @@ jest.mock('@last-rev/timer', () => ({
 describe('cms-fs-loader', () => {
   let baseConfig: LastRevAppConfig;
   let mockFallbackLoaders: CmsLoaders;
+  let mockSanityFallbackLoaders: SanityLoaders;
 
   beforeEach(() => {
     jest.clearAllMocks();
     baseConfig = new LastRevAppConfig(mockAppConfig());
 
-    // Mock fallback loaders
+    // Mock fallback loaders for Contentful
     mockFallbackLoaders = {
       entryLoader: {
         load: jest.fn(),
@@ -56,6 +57,26 @@ describe('cms-fs-loader', () => {
       } as any,
       fetchAllContentTypes: jest.fn(),
       entriesRefByLoader: {
+        load: jest.fn(),
+        loadMany: jest.fn()
+      } as any
+    };
+
+    // Mock fallback loaders for Sanity
+    mockSanityFallbackLoaders = {
+      documentLoader: {
+        load: jest.fn(),
+        loadMany: jest.fn()
+      } as any,
+      documentsByTypeLoader: {
+        load: jest.fn(),
+        loadMany: jest.fn()
+      } as any,
+      documentByFieldValueLoader: {
+        load: jest.fn(),
+        loadMany: jest.fn()
+      } as any,
+      documentsRefByLoader: {
         load: jest.fn(),
         loadMany: jest.fn()
       } as any
@@ -93,14 +114,15 @@ describe('cms-fs-loader', () => {
         }
       });
 
-      const loaders = createLoaders(config, mockFallbackLoaders);
+      const loaders = createLoaders(config, mockSanityFallbackLoaders);
 
-      expect(loaders).toHaveProperty('entryLoader');
-      expect(loaders).toHaveProperty('assetLoader');
-      expect(loaders).toHaveProperty('entriesByContentTypeLoader');
-      expect(loaders).toHaveProperty('entryByFieldValueLoader');
-      expect(loaders).toHaveProperty('fetchAllContentTypes');
-      expect(loaders).toHaveProperty('entriesRefByLoader');
+      // Sanity uses unified document model - no entry/asset distinction
+      expect(loaders).toHaveProperty('documentLoader');
+      expect(loaders).toHaveProperty('documentsByTypeLoader');
+      expect(loaders).toHaveProperty('documentByFieldValueLoader');
+      expect(loaders).toHaveProperty('documentsRefByLoader');
+      // Sanity does NOT have fetchAllContentTypes - schemas come from config
+      expect(loaders).not.toHaveProperty('fetchAllContentTypes');
     });
 
     it('should preserve entriesRefByLoader from fallback', () => {
@@ -349,9 +371,9 @@ describe('cms-fs-loader', () => {
 
     it('should fetch content types for preview mode', async () => {
       const config = baseConfig.clone({
-        cms: 'Sanity',
+        cms: 'Contentful',
         fs: { contentDir: '/test' },
-        sanity: { projectId: 'project', dataset: 'dataset' }
+        contentful: { spaceId: 'space', env: 'env' }
       });
 
       const mockContentType = { sys: { id: 'blog' }, name: 'Blog' };
@@ -364,7 +386,7 @@ describe('cms-fs-loader', () => {
       const result = await loaders.fetchAllContentTypes(true);
 
       expect(result).toEqual([mockContentType]);
-      expect(mockReaddir).toHaveBeenCalledWith('/test/project/dataset/preview/content_types');
+      expect(mockReaddir).toHaveBeenCalledWith('/test/space/env/preview/content_types');
     });
 
     it('should return empty array when content types directory does not exist', async () => {
@@ -458,6 +480,185 @@ describe('cms-fs-loader', () => {
 
       // Should only call fallback once due to caching
       expect(mockFallbackLoaders.entryByFieldValueLoader.loadMany).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('Sanity documentLoader', () => {
+    it('should load document from unified documents directory', async () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        fs: { contentDir: '/test' },
+        sanity: { projectId: 'project', dataset: 'dataset' }
+      });
+
+      const mockDocument = {
+        _id: 'doc1',
+        _type: 'page',
+        title: 'Test Page'
+      };
+
+      mockReadJSON.mockResolvedValue(mockDocument);
+
+      const loaders = createLoaders(config, mockSanityFallbackLoaders) as SanityLoaders;
+      const result = await loaders.documentLoader.load({ id: 'doc1', preview: false });
+
+      expect(result).toEqual(mockDocument);
+      expect(mockReadJSON).toHaveBeenCalledWith('/test/project/dataset/production/documents/doc1.json');
+    });
+
+    it('should load preview document from preview directory', async () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        fs: { contentDir: '/test' },
+        sanity: { projectId: 'project', dataset: 'dataset' }
+      });
+
+      const mockDocument = {
+        _id: 'doc1',
+        _type: 'page',
+        title: 'Preview Page'
+      };
+
+      mockReadJSON.mockResolvedValue(mockDocument);
+
+      const loaders = createLoaders(config, mockSanityFallbackLoaders) as SanityLoaders;
+      const result = await loaders.documentLoader.load({ id: 'doc1', preview: true });
+
+      expect(result).toEqual(mockDocument);
+      expect(mockReadJSON).toHaveBeenCalledWith('/test/project/dataset/preview/documents/doc1.json');
+    });
+
+    it('should return null when document does not exist', async () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        fs: { contentDir: '/test' },
+        sanity: { projectId: 'project', dataset: 'dataset' }
+      });
+
+      mockReadJSON.mockRejectedValue(new Error('File not found'));
+
+      const loaders = createLoaders(config, mockSanityFallbackLoaders) as SanityLoaders;
+      const result = await loaders.documentLoader.load({ id: 'nonexistent', preview: false });
+
+      expect(result).toBeNull();
+    });
+  });
+
+  describe('Sanity documentsByTypeLoader', () => {
+    it('should load documents by type from document_ids_by_type directory', async () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        fs: { contentDir: '/test' },
+        sanity: { projectId: 'project', dataset: 'dataset' }
+      });
+
+      const mockIds = ['doc1', 'doc2'];
+      const mockDoc1 = { _id: 'doc1', _type: 'page', title: 'Page 1' };
+      const mockDoc2 = { _id: 'doc2', _type: 'page', title: 'Page 2' };
+
+      mockReaddir.mockResolvedValue(mockIds);
+      mockReadJSON.mockResolvedValueOnce(mockDoc1).mockResolvedValueOnce(mockDoc2);
+
+      const loaders = createLoaders(config, mockSanityFallbackLoaders) as SanityLoaders;
+      const result = await loaders.documentsByTypeLoader.load({ id: 'page', preview: false });
+
+      expect(result).toEqual([mockDoc1, mockDoc2]);
+      expect(mockReaddir).toHaveBeenCalledWith('/test/project/dataset/production/document_ids_by_type/page');
+    });
+
+    it('should return empty array when type directory does not exist', async () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        fs: { contentDir: '/test' },
+        sanity: { projectId: 'project', dataset: 'dataset' }
+      });
+
+      mockReaddir.mockRejectedValue(new Error('Directory not found'));
+
+      const loaders = createLoaders(config, mockSanityFallbackLoaders) as SanityLoaders;
+      const result = await loaders.documentsByTypeLoader.load({ id: 'nonexistent', preview: false });
+
+      expect(result).toEqual([]);
+    });
+
+    it('should load assets from sanity.imageAsset type', async () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        fs: { contentDir: '/test' },
+        sanity: { projectId: 'project', dataset: 'dataset' }
+      });
+
+      const mockIds = ['asset1'];
+      const mockAsset = { _id: 'asset1', _type: 'sanity.imageAsset', url: 'https://example.com/image.jpg' };
+
+      mockReaddir.mockResolvedValue(mockIds);
+      mockReadJSON.mockResolvedValue(mockAsset);
+
+      const loaders = createLoaders(config, mockSanityFallbackLoaders) as SanityLoaders;
+      const result = await loaders.documentsByTypeLoader.load({ id: 'sanity.imageAsset', preview: false });
+
+      expect(result).toEqual([mockAsset]);
+      expect(mockReaddir).toHaveBeenCalledWith(
+        '/test/project/dataset/production/document_ids_by_type/sanity.imageAsset'
+      );
+    });
+  });
+
+  describe('Sanity documentByFieldValueLoader', () => {
+    it('should delegate to fallback loader', async () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        fs: { contentDir: '/test' },
+        sanity: { projectId: 'project', dataset: 'dataset' }
+      });
+
+      const mockDoc = { _id: 'doc1', _type: 'page', slug: 'test-slug' };
+      mockSanityFallbackLoaders.documentByFieldValueLoader.loadMany = jest.fn().mockResolvedValue([mockDoc]);
+
+      const loaders = createLoaders(config, mockSanityFallbackLoaders) as SanityLoaders;
+      const result = await loaders.documentByFieldValueLoader.load({
+        contentType: 'page',
+        field: 'slug',
+        value: 'test-slug',
+        preview: false
+      });
+
+      expect(result).toEqual(mockDoc);
+      expect(mockSanityFallbackLoaders.documentByFieldValueLoader.loadMany).toHaveBeenCalledWith([
+        {
+          contentType: 'page',
+          field: 'slug',
+          value: 'test-slug',
+          preview: false
+        }
+      ]);
+    });
+  });
+
+  describe('Sanity documentsRefByLoader', () => {
+    it('should delegate to fallback loader', async () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        fs: { contentDir: '/test' },
+        sanity: { projectId: 'project', dataset: 'dataset' }
+      });
+
+      const mockDocs = [
+        { _id: 'doc1', _type: 'page', parent: { _ref: 'parent1' } },
+        { _id: 'doc2', _type: 'page', parent: { _ref: 'parent1' } }
+      ];
+      mockSanityFallbackLoaders.documentsRefByLoader.loadMany = jest.fn().mockResolvedValue([mockDocs]);
+
+      const loaders = createLoaders(config, mockSanityFallbackLoaders) as SanityLoaders;
+      const result = await loaders.documentsRefByLoader.load({
+        id: 'parent1',
+        contentType: 'page',
+        field: 'parent',
+        preview: false
+      });
+
+      expect(result).toEqual(mockDocs);
+      expect(mockSanityFallbackLoaders.documentsRefByLoader.loadMany).toHaveBeenCalled();
     });
   });
 });

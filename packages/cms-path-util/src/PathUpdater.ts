@@ -13,6 +13,16 @@ import { DEFAULT_SITE_KEY } from './constants';
 import { createPathStore, PathStore } from './PathStore';
 import LastRevAppConfig from '@last-rev/app-config';
 
+/**
+ * CMS-agnostic loadDocumentsByType utility
+ */
+const loadDocumentsByType = async (ctx: ApolloContext, typeId: string, preview: boolean): Promise<any[]> => {
+  if (ctx.cms === 'Sanity') {
+    return ctx.sanityLoaders!.documentsByTypeLoader.load({ id: typeId, preview });
+  }
+  return ctx.loaders.entriesByContentTypeLoader.load({ id: typeId, preview });
+};
+
 function isObjectBasedCmsPathsGenerator(config: CmsPathsConfig): config is ObjectBasedCmsPathsGenerator {
   if (typeof config !== 'function') return false;
 
@@ -147,7 +157,8 @@ export class PathUpdater {
       map(this.pathsConfigs, async (config, contentTypeId) => {
         const typeKey = get(this.reverseTypeMappings, contentTypeId, contentTypeId);
 
-        let pages = await this.context.loaders.entriesByContentTypeLoader.load({ id: typeKey, preview: this.preview });
+        // Use CMS-agnostic loadDocumentsByType
+        let pages = await loadDocumentsByType(ctx, typeKey, this.preview);
 
         // CMS-agnostic slug check
         pages = pages.filter((entry) => hasSlug(entry, isSanity));

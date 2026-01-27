@@ -3,7 +3,7 @@ import { Handlers } from './types';
 import Redis from 'ioredis';
 import { updateAllPaths } from '@last-rev/cms-path-util';
 import { createContext } from '@last-rev/graphql-cms-helpers';
-import { assetHasUrl, stringify } from './helpers';
+import { assetHasUrl, stringify, stringifySanityDocument } from './helpers';
 
 const clients: Record<string, Redis> = {};
 
@@ -23,13 +23,63 @@ const getClient = (config: LastRevAppConfig) => {
   return clients[key];
 };
 
-export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
+/**
+ * Create Sanity-specific Redis handlers using unified documents key
+ */
+const createSanityRedisHandlers = (config: LastRevAppConfig): Handlers => {
+  const redis = getClient(config);
+  const { ttlSeconds } = config.redis;
+
+  const deleteDocumentIdsByType = async (typeName: string, isPreview: boolean) => {
+    const setKey = `${isPreview ? 'preview' : 'production'}:document_ids_by_type:${typeName}`;
+    await redis.del(setKey);
+  };
+
+  /**
+   * Handle Sanity document webhook (unified document model)
+   * Sanity data has _id and _type instead of sys.id and sys.contentType.sys.id
+   */
+  const handleDocument = async (command: any) => {
+    const { data, isPreview } = command;
+    const docId = data._id;
+    const typeName = data._type;
+    const key = `${isPreview ? 'preview' : 'production'}:documents:${docId}`;
+
+    if (command.action === 'update') {
+      const val = stringifySanityDocument(data, key);
+      if (val) {
+        await redis.set(key, val, 'EX', ttlSeconds);
+      }
+    } else if (command.action === 'delete') {
+      await redis.del(key);
+    }
+
+    // Invalidate the document_ids_by_type set for this type
+    await deleteDocumentIdsByType(typeName, isPreview);
+  };
+
+  return {
+    // For Sanity, entry and asset both route to the unified document handler
+    entry: handleDocument,
+    asset: handleDocument,
+    // No-op for Sanity - schemas come from config, not stored in Redis
+    contentType: async () => {},
+    paths: async (updateForPreview, updateForProd) => {
+      const context = await createContext({ config });
+      await updateAllPaths({ config, updateForPreview, updateForProd, context });
+    }
+  };
+};
+
+/**
+ * Create Contentful-specific Redis handlers using separate entries/assets keys
+ */
+const createContentfulRedisHandlers = (config: LastRevAppConfig): Handlers => {
   const redis = getClient(config);
   const { ttlSeconds } = config.redis;
 
   const deleteEntriesByContentType = async (contentTypeId: string, isPreview: boolean) => {
     const setKey = `${isPreview ? 'preview' : 'production'}:entry_ids_by_content_type:${contentTypeId}`;
-
     await redis.del(setKey);
   };
 
@@ -83,4 +133,14 @@ export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
       await updateAllPaths({ config, updateForPreview, updateForProd, context });
     }
   };
+};
+
+/**
+ * Create Redis handlers based on CMS type
+ */
+export const createRedisHandlers = (config: LastRevAppConfig): Handlers => {
+  if (config.cms === 'Sanity') {
+    return createSanityRedisHandlers(config);
+  }
+  return createContentfulRedisHandlers(config);
 };

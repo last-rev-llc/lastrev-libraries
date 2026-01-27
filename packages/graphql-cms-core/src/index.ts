@@ -11,6 +11,18 @@ import buildSchema from './buildSchema';
 import SchemaCache from './SchemaCache';
 import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
 import { BLOCKS, INLINES, MARKS } from '@contentful/rich-text-types';
+import {
+  getContentId,
+  getContentType,
+  getUpdatedAt,
+  getRefInfo,
+  getLoaders,
+  loadDocument,
+  loadDocuments,
+  loadDocumentsByType,
+  loadDocumentByFieldValue,
+  loadDocumentsRefBy
+} from './utils/contentUtils';
 
 export {
   createServer,
@@ -27,5 +39,16 @@ export {
   documentToPlainTextString,
   BLOCKS,
   INLINES,
-  MARKS
+  MARKS,
+  // CMS-agnostic content utilities
+  getContentId,
+  getContentType,
+  getUpdatedAt,
+  getRefInfo,
+  getLoaders,
+  loadDocument,
+  loadDocuments,
+  loadDocumentsByType,
+  loadDocumentByFieldValue,
+  loadDocumentsRefBy
 };

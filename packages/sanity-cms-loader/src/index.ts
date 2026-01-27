@@ -3,7 +3,7 @@ import { createClient, SanityClient } from '@sanity/client';
 import { map, partition } from 'lodash';
 import { getWinstonLogger } from '@last-rev/logging';
 import { SimpleTimer as Timer } from '@last-rev/timer';
-import { ItemKey, SanityLoaders, FVLKey, RefByKey, SchemaType } from '@last-rev/types';
+import { ItemKey, SanityLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import type { SanityDocument } from '@sanity/types';
 
@@ -57,7 +57,7 @@ const createLoaders = (config: LastRevAppConfig, _defaultLocale: string): Sanity
     return client.fetch<SanityDocument[]>(query, { ids });
   };
 
-  const getBatchItemFetcher = (): DataLoader.BatchLoadFn<ItemKey, SanityDocument | null> => {
+  const getBatchDocumentFetcher = (): DataLoader.BatchLoadFn<ItemKey, SanityDocument | null> => {
     return async (keys): Promise<(SanityDocument | null)[]> => {
       const timer = new Timer();
       const [previewKeys, prodKeys] = partition(keys, (k) => k.preview);
@@ -73,8 +73,8 @@ const createLoaders = (config: LastRevAppConfig, _defaultLocale: string): Sanity
         return doc || null;
       });
 
-      logger.debug('Fetched docs', {
-        caller: 'getBatchItemFetcher',
+      logger.debug('Fetched documents', {
+        caller: 'getBatchDocumentFetcher',
         elapsedMs: timer.end().millis,
         itemsAttempted: keys.length,
         itemsSuccessful: items.filter((x) => x).length
@@ -83,7 +83,7 @@ const createLoaders = (config: LastRevAppConfig, _defaultLocale: string): Sanity
     };
   };
 
-  const getBatchEntriesByContentTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, SanityDocument[]> => {
+  const getBatchDocumentsByTypeFetcher = (): DataLoader.BatchLoadFn<ItemKey, SanityDocument[]> => {
     return async (keys): Promise<SanityDocument[][]> => {
       const timer = new Timer();
       const results = await Promise.all(
@@ -93,8 +93,8 @@ const createLoaders = (config: LastRevAppConfig, _defaultLocale: string): Sanity
           return client.fetch<SanityDocument[]>(query, { type: id });
         })
       );
-      logger.debug('Fetched docs by type', {
-        caller: 'getBatchEntriesByContentTypeFetcher',
+      logger.debug('Fetched documents by type', {
+        caller: 'getBatchDocumentsByTypeFetcher',
         elapsedMs: timer.end().millis,
         itemsAttempted: keys.length,
         itemsSuccessful: results.reduce((a, c) => a + c.length, 0)
@@ -103,7 +103,7 @@ const createLoaders = (config: LastRevAppConfig, _defaultLocale: string): Sanity
     };
   };
 
-  const getBatchEntriesByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, SanityDocument | null> => {
+  const getBatchDocumentByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, SanityDocument | null> => {
     return async (keys): Promise<(SanityDocument | null)[]> => {
       const timer = new Timer();
       const results = await Promise.all(
@@ -113,8 +113,8 @@ const createLoaders = (config: LastRevAppConfig, _defaultLocale: string): Sanity
           return client.fetch<SanityDocument | null>(query, { type: contentType, value });
         })
       );
-      logger.debug('Fetched doc by field value', {
-        caller: 'getBatchEntriesByFieldValueFetcher',
+      logger.debug('Fetched document by field value', {
+        caller: 'getBatchDocumentByFieldValueFetcher',
         elapsedMs: timer.end().millis,
         itemsAttempted: keys.length,
         itemsSuccessful: results.filter((x) => x).length
@@ -123,7 +123,7 @@ const createLoaders = (config: LastRevAppConfig, _defaultLocale: string): Sanity
     };
   };
 
-  const getBatchEntriesRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, SanityDocument[]> => {
+  const getBatchDocumentsRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, SanityDocument[]> => {
     return async (keys): Promise<SanityDocument[][]> => {
       const timer = new Timer();
       const results = await Promise.all(
@@ -133,8 +133,8 @@ const createLoaders = (config: LastRevAppConfig, _defaultLocale: string): Sanity
           return client.fetch<SanityDocument[]>(query, { type: contentType, id });
         })
       );
-      logger.debug('Fetched docs ref by', {
-        caller: 'getBatchEntriesRefByFetcher',
+      logger.debug('Fetched documents ref by', {
+        caller: 'getBatchDocumentsRefByFetcher',
         elapsedMs: timer.end().millis,
         itemsAttempted: keys.length,
         itemsSuccessful: results.reduce((a, c) => a + c.length, 0)
@@ -143,39 +143,19 @@ const createLoaders = (config: LastRevAppConfig, _defaultLocale: string): Sanity
     };
   };
 
-  const entryLoader = new DataLoader(getBatchItemFetcher(), options);
-  const assetLoader = new DataLoader(getBatchItemFetcher(), options);
-  const entriesByContentTypeLoader = new DataLoader(getBatchEntriesByContentTypeFetcher(), options);
-  const entryByFieldValueLoader = new DataLoader(getBatchEntriesByFieldValueFetcher(), fvlOptions);
-  const entriesRefByLoader = new DataLoader(getBatchEntriesRefByFetcher(), refByOptions);
+  // Single document loader - Sanity treats all content (entries, assets) as documents
+  const documentLoader = new DataLoader(getBatchDocumentFetcher(), options);
+  const documentsByTypeLoader = new DataLoader(getBatchDocumentsByTypeFetcher(), options);
+  const documentByFieldValueLoader = new DataLoader(getBatchDocumentByFieldValueFetcher(), fvlOptions);
+  const documentsRefByLoader = new DataLoader(getBatchDocumentsRefByFetcher(), refByOptions);
 
-  const fetchAllContentTypes = async (_preview: boolean): Promise<SchemaType[]> => {
-    try {
-      const timer = new Timer();
-      // Return native Sanity schema types - no conversion
-      const types = config.sanity.schemaTypes || [];
-      logger.debug('Fetched all content types from local schemas', {
-        caller: 'fetchAllContentTypes',
-        elapsedMs: timer.end().millis,
-        itemsSuccessful: types.length
-      });
-      return types;
-    } catch (err: any) {
-      logger.error(`Unable to fetch content types: ${err.message}`, {
-        caller: 'fetchAllContentTypes',
-        stack: err.stack
-      });
-      return [];
-    }
-  };
+  // Note: fetchAllContentTypes removed - Sanity schemas come from config.sanity.schemaTypes
 
   return {
-    entryLoader,
-    assetLoader,
-    entriesByContentTypeLoader,
-    entryByFieldValueLoader,
-    entriesRefByLoader,
-    fetchAllContentTypes
+    documentLoader,
+    documentsByTypeLoader,
+    documentByFieldValueLoader,
+    documentsRefByLoader
   };
 };
 

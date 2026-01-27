@@ -1,4 +1,34 @@
-import { ApolloContext, BaseEntry, iPathNode, ItemKey, PathData, PathEntries } from '@last-rev/types';
+import { ApolloContext, iPathNode, ItemKey, PathData, PathEntries } from '@last-rev/types';
+
+/**
+ * Get entry ID based on CMS type
+ */
+const getEntryId = (entry: any, ctx: ApolloContext): string | undefined => {
+  return ctx.cms === 'Sanity' ? entry?._id : entry?.sys?.id;
+};
+
+/**
+ * CMS-agnostic loadDocument utility
+ */
+const loadDocument = async (ctx: ApolloContext, id: string, preview: boolean): Promise<any> => {
+  if (ctx.cms === 'Sanity') {
+    return ctx.sanityLoaders!.documentLoader.load({ id, preview });
+  }
+  return ctx.loaders.entryLoader.load({ id, preview });
+};
+
+/**
+ * CMS-agnostic loadDocuments utility
+ */
+const loadDocuments = async (ctx: ApolloContext, keys: ItemKey[]): Promise<any[]> => {
+  if (ctx.cms === 'Sanity') {
+    const results = await ctx.sanityLoaders!.documentLoader.loadMany(keys);
+    return results.filter((r) => r !== null && !(r instanceof Error));
+  }
+  const results = await ctx.loaders.entryLoader.loadMany(keys);
+  return results.filter((r) => r !== null && !(r instanceof Error));
+};
+
 export class PathNode implements iPathNode {
   data?: PathData;
   key: string;
@@ -23,7 +53,8 @@ export class PathNode implements iPathNode {
       return entries;
     }
 
-    entries.push(await ctx.loaders.entryLoader.load({ id: node.data.contentId, preview: !!ctx.preview }));
+    // Use CMS-agnostic loadDocument
+    entries.push(await loadDocument(ctx, node.data.contentId, !!ctx.preview));
 
     const keysToFetch: ItemKey[] = [];
 
@@ -35,13 +66,16 @@ export class PathNode implements iPathNode {
       node = node.parent;
     }
 
-    const fetchedEntries = await ctx.loaders.entryLoader.loadMany(keysToFetch);
+    // Use CMS-agnostic loadDocuments
+    const fetchedEntries = await loadDocuments(ctx, keysToFetch);
     const entriesById = fetchedEntries.reduce((acc: any, entry: any) => {
       if (entry) {
-        acc[(entry as BaseEntry).sys.id] = entry as BaseEntry;
+        // Use CMS-agnostic ID access
+        const id = getEntryId(entry, ctx);
+        if (id) acc[id] = entry;
       }
       return acc;
-    }, {} as Record<string, BaseEntry>);
+    }, {} as Record<string, any>);
 
     node = this;
 

@@ -10,7 +10,7 @@ import LastRevAppConfig from '@last-rev/app-config';
 import buildSitemapFromEntries from '../utils/buildSitemapFromEntries';
 import { getWinstonLogger } from '@last-rev/logging';
 import getLocalizedField from '../utils/getLocalizedField';
-import { getContentId, getUpdatedAt, getLoaders } from '../utils/contentUtils';
+import { getContentId, getUpdatedAt, loadDocument, loadDocuments, loadDocumentsByType } from '../utils/contentUtils';
 import { pathNodeResolver } from '../utils/pathNodeResolver';
 
 const logger = getWinstonLogger({
@@ -73,8 +73,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: any[]; config
           ctx.locale = locale || ctx.defaultLocale;
           ctx.displayType = displayType;
           // not locale specific. fieldsResolver handles that
-          const loaders = getLoaders(ctx);
-          const content = await loaders.entryLoader.load({ id, preview });
+          const content = await loadDocument(ctx, id, preview);
           // Add this to the content to be used by mappers and other resolvers
           if (content) {
             (content as any).displayType = displayType;
@@ -100,18 +99,15 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: any[]; config
           ctx.locale = locale || ctx.defaultLocale;
           ctx.displayType = displayType;
 
-          const loaders = getLoaders(ctx);
-
           if (ids.length) {
-            return loaders.entryLoader.loadMany(ids.map((id) => ({ id, preview })));
+            return loadDocuments(ctx, ids.map((id) => ({ id, preview })));
           }
 
           if (contentTypes.length) {
-            const results = (
-              await loaders.entriesByContentTypeLoader.loadMany(contentTypes.map((type) => ({ id: type, preview })))
-            ).filter((r: any) => !isError(r)) as unknown as BaseEntry[];
-
-            return results.flat();
+            const results = await Promise.all(
+              contentTypes.map((typeId) => loadDocumentsByType(ctx, typeId, preview))
+            );
+            return results.flat().filter((r: any) => !isError(r));
           }
 
           return null;
@@ -252,8 +248,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: any[]; config
             }
           }
 
-          const loaders = getLoaders(ctx);
-          const entries = (await loaders.entryLoader.loadMany(ids.map((id: string) => ({ id, preview })))).filter(
+          const entries = (await loadDocuments(ctx, ids.map((id: string) => ({ id, preview })))).filter(
             (e: any) => !!e && !isError(e)
           ) as BaseEntry[];
 

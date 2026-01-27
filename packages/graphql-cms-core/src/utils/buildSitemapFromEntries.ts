@@ -4,7 +4,7 @@ import flow from 'lodash/fp/flow';
 import filter from 'lodash/fp/filter';
 import groupBy from 'lodash/fp/groupBy';
 import getLocalizedField from './getLocalizedField';
-import { getContentType, getUpdatedAt, getLoaders } from './contentUtils';
+import { getContentType, getUpdatedAt, loadDocument } from './contentUtils';
 
 const toSnakeCase = (str: string) => {
   return str.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
@@ -34,10 +34,9 @@ const buildSitemapFromEntries = async (
   const buildUrl = (e: SitemapPathEntry) =>
     `${root}${e.locale === ctx.defaultLocale ? '' : `${e.locale}/`}${e.path.replace(/^\//, '')}`;
 
-  const loaders = getLoaders(ctx);
   const fleshedOut = await Promise.all(
     map(entries, async (entry) => {
-      const content = await loaders.entryLoader.load({ id: entry.contentId, preview });
+      const content = await loadDocument(ctx, entry.contentId, preview);
       const seo = content ? getLocalizedField(content, 'seo', ctx) : undefined;
       return {
         entry,
