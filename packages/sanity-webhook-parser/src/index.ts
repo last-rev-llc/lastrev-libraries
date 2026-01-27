@@ -1,6 +1,5 @@
 import { ContentType, BaseAsset, BaseEntry } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
-import { convertSanityDoc } from '@last-rev/sanity-mapper';
 
 type HasEnv = {
   sys: {
@@ -61,13 +60,6 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
   let contentStates: ('preview' | 'production')[] = [];
   if (body?._id?.startsWith('drafts.')) contentStates = ['preview'];
   else contentStates = ['production'];
-
-  // Get defaultLocale from config.sanity.supportedLanguages
-  const locales = config.sanity.supportedLanguages.map((locale) => locale.id);
-  const defaultLocale = locales[0];
-
-  // Convert doc
-  convertSanityDoc(body, defaultLocale, locales);
 
   return {
     action,

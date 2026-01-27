@@ -5,7 +5,6 @@ import { parseWebhook as parseContentfulWebhook } from '@last-rev/contentful-web
 import parseSanityWebhook from '@last-rev/sanity-webhook-parser';
 import { createHandlers } from './handlers';
 import jwt from 'jsonwebtoken';
-import { convertSanityDoc } from '@last-rev/sanity-mapper';
 
 // Mock external dependencies
 jest.mock('@last-rev/contentful-webhook-parser');
@@ -163,7 +162,7 @@ describe('cms-webhook-handler', () => {
     });
 
     describe('Sanity webhooks', () => {
-      it('should handle valid Sanity webhook', async () => {
+      it('should handle valid Sanity webhook with plain document', async () => {
         const config = baseConfig.clone({ cms: 'Sanity' });
         const sanityMockBody = {
           _id: 'test-sanity-id',
@@ -185,17 +184,12 @@ describe('cms-webhook-handler', () => {
 
         await handleWebhook(config, sanityMockBody, mockHeaders);
 
-        const expectedConvertedData = convertSanityDoc(
-          sanityMockBody,
-          config.sanity.supportedLanguages[0].id,
-          config.sanity.supportedLanguages.map((l) => l.id)
-        );
-
+        // Sanity documents are now passed through directly (no conversion)
         expect(mockParseSanityWebhook).toHaveBeenCalledWith(config, sanityMockBody, mockHeaders);
         expect(mockHandlers.entry).toHaveBeenCalledWith({
           isPreview: false,
           action: 'update',
-          data: expectedConvertedData
+          data: sanityMockBody
         });
       });
 
@@ -290,6 +284,59 @@ describe('cms-webhook-handler', () => {
         mockJwtVerify.mockResolvedValue({ spaceId: 'wrong-space-id' });
 
         await expect(handleWebhook(config, mockBody, headersWithAuth)).rejects.toThrow('Invalid spaceId in JWT Token');
+      });
+
+      it('should verify JWT projectId for Sanity webhooks', async () => {
+        const config = baseConfig.clone({
+          cms: 'Sanity',
+          jwtSigningSecret: 'test-secret'
+        });
+        const webhookResult = {
+          type: 'Entry' as const,
+          action: 'update' as const,
+          contentStates: ['production' as const],
+          env: 'production',
+          itemId: 'test-sanity-id',
+          isTruncated: false
+        };
+
+        const headersWithAuth = {
+          ...mockHeaders,
+          authorization: 'Bearer valid-token'
+        };
+
+        mockParseSanityWebhook.mockReturnValue(webhookResult);
+        mockJwtVerify.mockResolvedValue({ projectId: config.sanity.projectId });
+
+        await handleWebhook(config, mockBody, headersWithAuth);
+
+        expect(mockJwtVerify).toHaveBeenCalledWith('valid-token', 'test-secret');
+        expect(mockHandlers.entry).toHaveBeenCalled();
+      });
+
+      it('should throw error when JWT projectId does not match config for Sanity', async () => {
+        const config = baseConfig.clone({
+          cms: 'Sanity',
+          jwtSigningSecret: 'test-secret'
+        });
+        const webhookResult = {
+          type: 'Entry' as const,
+          action: 'update' as const,
+          contentStates: ['production' as const],
+          env: 'production',
+          itemId: 'test-sanity-id',
+          isTruncated: false
+        };
+
+        const headersWithAuth = {
+          ...mockHeaders,
+          authorization: 'Bearer invalid-token'
+        };
+
+        mockParseSanityWebhook.mockReturnValue(webhookResult);
+        mockJwtVerify.mockResolvedValue({ projectId: 'wrong-project-id' });
+
+        await expect(handleWebhook(config, mockBody, headersWithAuth)).rejects.toThrow('Invalid projectId in JWT Token');
       });
     });
 

@@ -34,7 +34,6 @@
     "@last-rev/contentful-webhook-parser": "workspace:*",
     "@last-rev/graphql-cms-helpers": "workspace:*",
     "@last-rev/logging": "workspace:*",
-    "@last-rev/sanity-mapper": "workspace:*",
     "@last-rev/sanity-webhook-parser": "workspace:*",
     "@sanity/client": "^7.4.0",
     "contentful": "^11.7.2",
