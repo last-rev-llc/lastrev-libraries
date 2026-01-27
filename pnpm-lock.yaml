@@ -197,7 +197,7 @@ importers:
         version: 5.0.6
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
@@ -357,7 +357,7 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       mock-fs:
         specifier: ^5.1.2
         version: 5.1.2
@@ -415,7 +415,7 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
@@ -510,13 +510,13 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -586,13 +586,13 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -641,13 +641,13 @@ importers:
         version: 8.9.0(@types/ioredis-mock@8.2.6(ioredis@5.0.6))(ioredis@5.0.6)
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -693,13 +693,13 @@ importers:
         version: 5.5.3
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -718,9 +718,6 @@ importers:
       '@last-rev/logging':
         specifier: workspace:*
         version: link:../logging
-      '@last-rev/sanity-mapper':
-        specifier: workspace:*
-        version: link:../sanity-mapper
       '@last-rev/timer':
         specifier: workspace:*
         version: link:../timer
@@ -776,6 +773,9 @@ importers:
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
+      sanity:
+        specifier: ^3.40.0
+        version: 3.92.0(@emotion/is-prop-valid@1.2.2)(@types/node@14.18.12)(@types/react@17.0.87)(immer@10.1.1)(jiti@2.4.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(terser@5.29.2)(typescript@5.8.3)(yaml@2.8.0)
       ts-jest:
         specifier: ^29.4.0
         version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
@@ -806,9 +806,6 @@ importers:
       '@last-rev/logging':
         specifier: workspace:*
         version: link:../logging
-      '@last-rev/sanity-mapper':
-        specifier: workspace:*
-        version: link:../sanity-mapper
       '@last-rev/sanity-webhook-parser':
         specifier: workspace:*
         version: link:../sanity-webhook-parser
@@ -854,7 +851,7 @@ importers:
         version: 4.17.18
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0)(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
@@ -970,7 +967,7 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
@@ -979,7 +976,7 @@ importers:
         version: 3.5.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -1022,7 +1019,7 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
@@ -1130,7 +1127,7 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
@@ -1170,13 +1167,13 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -1243,13 +1240,13 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -1346,7 +1343,7 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0)(node-notifier@8.0.2)
       next:
         specifier: ^15.3.4
         version: 15.3.4(@babel/core@7.27.4)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -1483,13 +1480,13 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -1529,7 +1526,7 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
@@ -1642,13 +1639,13 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -1697,13 +1694,13 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -1723,9 +1720,6 @@ importers:
       '@last-rev/rollup-config':
         specifier: workspace:*
         version: link:../rollup-config
-      '@last-rev/sanity-mapper':
-        specifier: workspace:*
-        version: link:../sanity-mapper
       '@last-rev/testing-library':
         specifier: workspace:*
         version: link:../testing-library
@@ -1740,7 +1734,7 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0)(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
@@ -1795,7 +1789,7 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       libxmljs2:
         specifier: ^0.35.0
         version: 0.35.0
@@ -1813,10 +1807,10 @@ importers:
     dependencies:
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
     devDependencies:
       dotenv:
         specifier: ^16.0.0
@@ -1847,13 +1841,13 @@ importers:
         version: 0.25.5
       jest:
         specifier: ^30.0.2
-        version: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+        version: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
       rollup:
         specifier: ^4.44.0
         version: 4.44.0
       ts-jest:
         specifier: ^29.4.0
-        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
+        version: 29.4.0(@babel/core@7.27.4)(@jest/transform@30.0.2)(@jest/types@30.0.1)(babel-jest@30.0.2(@babel/core@7.27.4))(esbuild@0.25.5)(jest-util@30.0.2)(jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2))(typescript@5.8.3)
       tslint:
         specifier: ^5.20.1
         version: 5.20.1(typescript@5.8.3)
@@ -14695,6 +14689,16 @@ snapshots:
   '@img/sharp-win32-x64@0.34.2':
     optional: true
 
+  '@inquirer/checkbox@4.1.8(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/figures': 1.0.12
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+      ansi-escapes: 4.3.2
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 14.18.12
+
   '@inquirer/checkbox@4.1.8(@types/node@24.0.4)':
     dependencies:
       '@inquirer/core': 10.1.13(@types/node@24.0.4)
@@ -14705,12 +14709,32 @@ snapshots:
     optionalDependencies:
       '@types/node': 24.0.4
 
+  '@inquirer/confirm@5.1.12(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+    optionalDependencies:
+      '@types/node': 14.18.12
+
   '@inquirer/confirm@5.1.12(@types/node@24.0.4)':
     dependencies:
       '@inquirer/core': 10.1.13(@types/node@24.0.4)
       '@inquirer/type': 3.0.7(@types/node@24.0.4)
     optionalDependencies:
       '@types/node': 24.0.4
+
+  '@inquirer/core@10.1.13(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/figures': 1.0.12
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+      ansi-escapes: 4.3.2
+      cli-width: 4.1.0
+      mute-stream: 2.0.0
+      signal-exit: 4.1.0
+      wrap-ansi: 6.2.0
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 14.18.12
 
   '@inquirer/core@10.1.13(@types/node@24.0.4)':
     dependencies:
@@ -14725,6 +14749,14 @@ snapshots:
     optionalDependencies:
       '@types/node': 24.0.4
 
+  '@inquirer/editor@4.2.13(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+      external-editor: 3.1.0
+    optionalDependencies:
+      '@types/node': 14.18.12
+
   '@inquirer/editor@4.2.13(@types/node@24.0.4)':
     dependencies:
       '@inquirer/core': 10.1.13(@types/node@24.0.4)
@@ -14732,6 +14764,14 @@ snapshots:
       external-editor: 3.1.0
     optionalDependencies:
       '@types/node': 24.0.4
+
+  '@inquirer/expand@4.0.15(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 14.18.12
 
   '@inquirer/expand@4.0.15(@types/node@24.0.4)':
     dependencies:
@@ -14743,12 +14783,26 @@ snapshots:
 
   '@inquirer/figures@1.0.12': {}
 
+  '@inquirer/input@4.1.12(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+    optionalDependencies:
+      '@types/node': 14.18.12
+
   '@inquirer/input@4.1.12(@types/node@24.0.4)':
     dependencies:
       '@inquirer/core': 10.1.13(@types/node@24.0.4)
       '@inquirer/type': 3.0.7(@types/node@24.0.4)
     optionalDependencies:
       '@types/node': 24.0.4
+
+  '@inquirer/number@3.0.15(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+    optionalDependencies:
+      '@types/node': 14.18.12
 
   '@inquirer/number@3.0.15(@types/node@24.0.4)':
     dependencies:
@@ -14757,6 +14811,14 @@ snapshots:
     optionalDependencies:
       '@types/node': 24.0.4
 
+  '@inquirer/password@4.0.15(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+      ansi-escapes: 4.3.2
+    optionalDependencies:
+      '@types/node': 14.18.12
+
   '@inquirer/password@4.0.15(@types/node@24.0.4)':
     dependencies:
       '@inquirer/core': 10.1.13(@types/node@24.0.4)
@@ -14764,6 +14826,21 @@ snapshots:
       ansi-escapes: 4.3.2
     optionalDependencies:
       '@types/node': 24.0.4
+
+  '@inquirer/prompts@7.5.3(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/checkbox': 4.1.8(@types/node@14.18.12)
+      '@inquirer/confirm': 5.1.12(@types/node@14.18.12)
+      '@inquirer/editor': 4.2.13(@types/node@14.18.12)
+      '@inquirer/expand': 4.0.15(@types/node@14.18.12)
+      '@inquirer/input': 4.1.12(@types/node@14.18.12)
+      '@inquirer/number': 3.0.15(@types/node@14.18.12)
+      '@inquirer/password': 4.0.15(@types/node@14.18.12)
+      '@inquirer/rawlist': 4.1.3(@types/node@14.18.12)
+      '@inquirer/search': 3.0.15(@types/node@14.18.12)
+      '@inquirer/select': 4.2.3(@types/node@14.18.12)
+    optionalDependencies:
+      '@types/node': 14.18.12
 
   '@inquirer/prompts@7.5.3(@types/node@24.0.4)':
     dependencies:
@@ -14780,6 +14857,14 @@ snapshots:
     optionalDependencies:
       '@types/node': 24.0.4
 
+  '@inquirer/rawlist@4.1.3(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 14.18.12
+
   '@inquirer/rawlist@4.1.3(@types/node@24.0.4)':
     dependencies:
       '@inquirer/core': 10.1.13(@types/node@24.0.4)
@@ -14787,6 +14872,15 @@ snapshots:
       yoctocolors-cjs: 2.1.2
     optionalDependencies:
       '@types/node': 24.0.4
+
+  '@inquirer/search@3.0.15(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/figures': 1.0.12
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 14.18.12
 
   '@inquirer/search@3.0.15(@types/node@24.0.4)':
     dependencies:
@@ -14797,6 +14891,16 @@ snapshots:
     optionalDependencies:
       '@types/node': 24.0.4
 
+  '@inquirer/select@4.2.3(@types/node@14.18.12)':
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/figures': 1.0.12
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+      ansi-escapes: 4.3.2
+      yoctocolors-cjs: 2.1.2
+    optionalDependencies:
+      '@types/node': 14.18.12
+
   '@inquirer/select@4.2.3(@types/node@24.0.4)':
     dependencies:
       '@inquirer/core': 10.1.13(@types/node@24.0.4)
@@ -14806,6 +14910,10 @@ snapshots:
       yoctocolors-cjs: 2.1.2
     optionalDependencies:
       '@types/node': 24.0.4
+
+  '@inquirer/type@3.0.7(@types/node@14.18.12)':
+    optionalDependencies:
+      '@types/node': 14.18.12
 
   '@inquirer/type@3.0.7(@types/node@24.0.4)':
     optionalDependencies:
@@ -14849,7 +14957,7 @@ snapshots:
       jest-util: 30.0.2
       slash: 3.0.0
 
-  '@jest/core@30.0.2(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)':
+  '@jest/core@30.0.2(esbuild-register@3.6.0)(node-notifier@8.0.2)':
     dependencies:
       '@jest/console': 30.0.2
       '@jest/pattern': 30.0.1
@@ -14864,7 +14972,7 @@ snapshots:
       exit-x: 0.2.2
       graceful-fs: 4.2.11
       jest-changed-files: 30.0.2
-      jest-config: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))
+      jest-config: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0)
       jest-haste-map: 30.0.2
       jest-message-util: 30.0.2
       jest-regex-util: 30.0.1
@@ -15613,6 +15721,44 @@ snapshots:
       nanoid: 3.3.11
       rxjs: 7.8.2
 
+  '@sanity/cli@3.92.0(@types/node@14.18.12)(@types/react@17.0.87)(react@19.1.0)(terser@5.29.2)(typescript@5.8.3)(yaml@2.8.0)':
+    dependencies:
+      '@babel/traverse': 7.27.4
+      '@sanity/client': 7.5.0(debug@4.4.1)
+      '@sanity/codegen': 3.92.0
+      '@sanity/runtime-cli': 8.0.3(@types/node@14.18.12)(terser@5.29.2)(typescript@5.8.3)(yaml@2.8.0)
+      '@sanity/telemetry': 0.8.1(react@19.1.0)
+      '@sanity/template-validator': 2.4.3
+      '@sanity/util': 3.92.0(@types/react@17.0.87)(debug@4.4.1)
+      chalk: 4.1.2
+      debug: 4.4.1(supports-color@8.1.1)
+      decompress: 4.2.1
+      esbuild: 0.25.5
+      esbuild-register: 3.6.0(esbuild@0.25.5)
+      get-it: 8.6.9(debug@4.4.1)
+      groq-js: 1.17.0
+      pkg-dir: 5.0.0
+      prettier: 3.5.3
+      semver: 7.7.2
+      validate-npm-package-name: 3.0.0
+    transitivePeerDependencies:
+      - '@types/node'
+      - '@types/react'
+      - bufferutil
+      - less
+      - lightningcss
+      - react
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - typescript
+      - utf-8-validate
+      - yaml
+
   '@sanity/cli@3.92.0(@types/node@24.0.4)(@types/react@17.0.87)(react@19.1.0)(terser@5.29.2)(typescript@5.8.3)(yaml@2.8.0)':
     dependencies:
       '@babel/traverse': 7.27.4
@@ -15847,6 +15993,41 @@ snapshots:
     dependencies:
       '@sanity/client': 7.5.0(debug@4.4.1)
       '@sanity/uuid': 3.0.2
+
+  '@sanity/runtime-cli@8.0.3(@types/node@14.18.12)(terser@5.29.2)(typescript@5.8.3)(yaml@2.8.0)':
+    dependencies:
+      '@oclif/core': 4.3.3
+      '@oclif/plugin-help': 6.2.28
+      adm-zip: 0.5.16
+      array-treeify: 0.1.5
+      cardinal: 2.1.1
+      chalk: 5.4.1
+      eventsource: 4.0.0
+      find-up: 7.0.0
+      groq-js: 1.17.0
+      inquirer: 12.6.3(@types/node@14.18.12)
+      jiti: 2.4.2
+      mime-types: 3.0.1
+      ora: 8.2.0
+      vite: 6.3.5(@types/node@14.18.12)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0)
+      vite-tsconfig-paths: 5.1.4(typescript@5.8.3)(vite@6.3.5(@types/node@14.18.12)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0))
+      ws: 8.18.2
+      xdg-basedir: 5.1.0
+    transitivePeerDependencies:
+      - '@types/node'
+      - bufferutil
+      - less
+      - lightningcss
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - typescript
+      - utf-8-validate
+      - yaml
 
   '@sanity/runtime-cli@8.0.3(@types/node@24.0.4)(terser@5.29.2)(typescript@5.8.3)(yaml@2.8.0)':
     dependencies:
@@ -16108,7 +16289,7 @@ snapshots:
 
   '@swc/helpers@0.5.15':
     dependencies:
-      tslib: 2.8.1
+      tslib: 2.5.0
 
   '@swc/types@0.1.23':
     dependencies:
@@ -16650,6 +16831,18 @@ snapshots:
     optional: true
 
   '@vercel/stega@0.1.2': {}
+
+  '@vitejs/plugin-react@4.5.2(vite@6.3.5(@types/node@14.18.12)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0))':
+    dependencies:
+      '@babel/core': 7.27.4
+      '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.27.4)
+      '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.27.4)
+      '@rolldown/pluginutils': 1.0.0-beta.11
+      '@types/babel__core': 7.20.5
+      react-refresh: 0.17.0
+      vite: 6.3.5(@types/node@14.18.12)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0)
+    transitivePeerDependencies:
+      - supports-color
 
   '@vitejs/plugin-react@4.5.2(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0))':
     dependencies:
@@ -20032,6 +20225,18 @@ snapshots:
 
   ini@4.1.1: {}
 
+  inquirer@12.6.3(@types/node@14.18.12):
+    dependencies:
+      '@inquirer/core': 10.1.13(@types/node@14.18.12)
+      '@inquirer/prompts': 7.5.3(@types/node@14.18.12)
+      '@inquirer/type': 3.0.7(@types/node@14.18.12)
+      ansi-escapes: 4.3.2
+      mute-stream: 2.0.0
+      run-async: 3.0.0
+      rxjs: 7.8.2
+    optionalDependencies:
+      '@types/node': 14.18.12
+
   inquirer@12.6.3(@types/node@24.0.4):
     dependencies:
       '@inquirer/core': 10.1.13(@types/node@24.0.4)
@@ -20549,7 +20754,7 @@ snapshots:
 
   jest-cli@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2):
     dependencies:
-      '@jest/core': 30.0.2(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+      '@jest/core': 30.0.2(esbuild-register@3.6.0)(node-notifier@8.0.2)
       '@jest/test-result': 30.0.2
       '@jest/types': 30.0.1
       chalk: 4.1.2
@@ -20568,15 +20773,15 @@ snapshots:
       - supports-color
       - ts-node
 
-  jest-cli@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2):
+  jest-cli@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0)(node-notifier@8.0.2):
     dependencies:
-      '@jest/core': 30.0.2(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+      '@jest/core': 30.0.2(esbuild-register@3.6.0)(node-notifier@8.0.2)
       '@jest/test-result': 30.0.2
       '@jest/types': 30.0.1
       chalk: 4.1.2
       exit-x: 0.2.2
       import-local: 3.2.0
-      jest-config: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))
+      jest-config: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0)
       jest-util: 30.0.2
       jest-validate: 30.0.2
       yargs: 17.7.2
@@ -20622,7 +20827,7 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  jest-config@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5)):
+  jest-config@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0):
     dependencies:
       '@babel/core': 7.27.4
       '@jest/get-type': 30.0.1
@@ -20872,7 +21077,7 @@ snapshots:
 
   jest@30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2):
     dependencies:
-      '@jest/core': 30.0.2(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+      '@jest/core': 30.0.2(esbuild-register@3.6.0)(node-notifier@8.0.2)
       '@jest/types': 30.0.1
       import-local: 3.2.0
       jest-cli: 30.0.2(@types/node@14.18.12)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
@@ -20885,12 +21090,12 @@ snapshots:
       - supports-color
       - ts-node
 
-  jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2):
+  jest@30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0)(node-notifier@8.0.2):
     dependencies:
-      '@jest/core': 30.0.2(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+      '@jest/core': 30.0.2(esbuild-register@3.6.0)(node-notifier@8.0.2)
       '@jest/types': 30.0.1
       import-local: 3.2.0
-      jest-cli: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+      jest-cli: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0)(node-notifier@8.0.2)
     optionalDependencies:
       node-notifier: 8.0.2
     transitivePeerDependencies:
@@ -23396,6 +23601,170 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
+  sanity@3.92.0(@emotion/is-prop-valid@1.2.2)(@types/node@14.18.12)(@types/react@17.0.87)(immer@10.1.1)(jiti@2.4.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(terser@5.29.2)(typescript@5.8.3)(yaml@2.8.0):
+    dependencies:
+      '@dnd-kit/core': 6.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@dnd-kit/modifiers': 6.0.1(@dnd-kit/core@6.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+      '@dnd-kit/sortable': 7.0.2(@dnd-kit/core@6.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(react@19.1.0)
+      '@dnd-kit/utilities': 3.2.2(react@19.1.0)
+      '@juggle/resize-observer': 3.4.0
+      '@portabletext/block-tools': 1.1.30(@sanity/types@3.92.0(@types/react@17.0.87)(debug@4.4.1))(@types/react@17.0.87)
+      '@portabletext/editor': 1.52.6(@sanity/schema@3.92.0(@types/react@17.0.87)(debug@4.4.1))(@sanity/types@3.92.0(@types/react@17.0.87)(debug@4.4.1))(@types/react@17.0.87)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(rxjs@7.8.2)
+      '@portabletext/react': 3.2.1(react@19.1.0)
+      '@portabletext/toolkit': 2.0.17
+      '@rexxars/react-json-inspector': 9.0.1(react@19.1.0)
+      '@sanity/asset-utils': 2.2.1
+      '@sanity/bifur-client': 0.4.1
+      '@sanity/cli': 3.92.0(@types/node@14.18.12)(@types/react@17.0.87)(react@19.1.0)(terser@5.29.2)(typescript@5.8.3)(yaml@2.8.0)
+      '@sanity/client': 7.5.0(debug@4.4.1)
+      '@sanity/color': 3.0.6
+      '@sanity/comlink': 3.0.5
+      '@sanity/diff': 3.92.0
+      '@sanity/diff-match-patch': 3.2.0
+      '@sanity/diff-patch': 5.0.0
+      '@sanity/eventsource': 5.0.2
+      '@sanity/export': 3.44.0(@types/react@17.0.87)
+      '@sanity/icons': 3.7.0(react@19.1.0)
+      '@sanity/id-utils': 1.0.0
+      '@sanity/image-url': 1.1.0
+      '@sanity/import': 3.38.2(@types/react@17.0.87)
+      '@sanity/insert-menu': 1.1.12(@emotion/is-prop-valid@1.2.2)(@sanity/types@3.92.0(@types/react@17.0.87)(debug@4.4.1))(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
+      '@sanity/logos': 2.2.0(@sanity/color@3.0.6)(react@19.1.0)
+      '@sanity/message-protocol': 0.13.3
+      '@sanity/migrate': 3.92.0(@types/react@17.0.87)
+      '@sanity/mutator': 3.92.0(@types/react@17.0.87)
+      '@sanity/presentation-comlink': 1.0.21(@sanity/client@7.5.0(debug@4.4.1))(@sanity/types@3.92.0(@types/react@17.0.87)(debug@4.4.1))
+      '@sanity/preview-url-secret': 2.1.11(@sanity/client@7.5.0(debug@4.4.1))
+      '@sanity/schema': 3.92.0(@types/react@17.0.87)(debug@4.4.1)
+      '@sanity/sdk': 0.0.0-alpha.25(@types/react@17.0.87)(debug@4.4.1)(immer@10.1.1)(react@19.1.0)(use-sync-external-store@1.5.0(react@19.1.0))
+      '@sanity/telemetry': 0.8.1(react@19.1.0)
+      '@sanity/types': 3.92.0(@types/react@17.0.87)(debug@4.4.1)
+      '@sanity/ui': 2.15.18(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react-is@18.3.1)(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
+      '@sanity/util': 3.92.0(@types/react@17.0.87)(debug@4.4.1)
+      '@sanity/uuid': 3.0.2
+      '@sentry/react': 8.55.0(react@19.1.0)
+      '@tanstack/react-table': 8.21.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@tanstack/react-virtual': 3.13.10(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@types/react-is': 19.0.0
+      '@types/shallow-equals': 1.0.3
+      '@types/speakingurl': 13.0.6
+      '@types/tar-stream': 3.1.4
+      '@types/use-sync-external-store': 1.5.0
+      '@types/which': 3.0.4
+      '@vitejs/plugin-react': 4.5.2(vite@6.3.5(@types/node@14.18.12)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0))
+      '@xstate/react': 5.0.5(@types/react@17.0.87)(react@19.1.0)(xstate@5.19.4)
+      archiver: 7.0.1
+      arrify: 2.0.1
+      async-mutex: 0.4.1
+      chalk: 4.1.2
+      chokidar: 3.6.0
+      classnames: 2.5.1
+      color2k: 2.0.3
+      configstore: 5.0.1
+      console-table-printer: 2.14.3
+      dataloader: 2.2.3
+      date-fns: 2.30.0
+      debug: 4.4.1(supports-color@8.1.1)
+      esbuild: 0.25.5
+      esbuild-register: 3.6.0(esbuild@0.25.5)
+      execa: 2.1.0
+      exif-component: 1.0.1
+      fast-deep-equal: 3.1.3
+      form-data: 4.0.0
+      framer-motion: 12.17.3(@emotion/is-prop-valid@1.2.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      get-it: 8.6.9(debug@4.4.1)
+      get-random-values-esm: 1.0.2
+      groq-js: 1.17.0
+      gunzip-maybe: 1.4.2
+      history: 5.3.0
+      i18next: 23.16.8
+      import-fresh: 3.3.0
+      is-hotkey-esm: 1.0.0
+      is-tar: 1.0.0
+      isomorphic-dompurify: 2.25.0
+      jsdom: 23.2.0
+      jsdom-global: 3.0.2(jsdom@23.2.0)
+      json-lexer: 1.2.0
+      json-reduce: 3.0.0
+      json5: 2.2.3
+      lodash: 4.17.21
+      log-symbols: 2.2.0
+      mendoza: 3.0.8
+      module-alias: 2.2.3
+      nano-pubsub: 3.0.0
+      nanoid: 3.3.11
+      node-html-parser: 6.1.13
+      observable-callback: 1.0.3(rxjs@7.8.2)
+      oneline: 1.0.4
+      open: 8.4.0
+      p-map: 7.0.3
+      path-to-regexp: 6.3.0
+      peek-stream: 1.1.3
+      pirates: 4.0.7
+      pluralize-esm: 9.0.5
+      polished: 4.3.1
+      preferred-pm: 4.1.1
+      pretty-ms: 7.0.1
+      quick-lru: 5.1.1
+      raf: 3.4.1
+      react: 19.1.0
+      react-compiler-runtime: 19.1.0-rc.2(react@19.1.0)
+      react-dom: 19.1.0(react@19.1.0)
+      react-fast-compare: 3.2.0
+      react-focus-lock: 2.13.6(@types/react@17.0.87)(react@19.1.0)
+      react-i18next: 14.0.2(i18next@23.16.8)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      react-is: 18.3.1
+      react-refractor: 2.2.0(react@19.1.0)
+      react-rx: 4.1.29(react@19.1.0)(rxjs@7.8.2)
+      read-pkg-up: 7.0.1
+      refractor: 3.6.0
+      resolve-from: 5.0.0
+      resolve.exports: 2.0.3
+      rimraf: 5.0.10
+      rxjs: 7.8.2
+      rxjs-exhaustmap-with-trailing: 2.1.1(rxjs@7.8.2)
+      rxjs-mergemap-array: 0.1.0(rxjs@7.8.2)
+      scroll-into-view-if-needed: 3.1.0
+      scrollmirror: 1.2.2
+      semver: 7.7.2
+      shallow-equals: 1.0.0
+      speakingurl: 14.0.1
+      styled-components: 6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      tar-fs: 2.1.3
+      tar-stream: 3.1.7
+      tinyglobby: 0.2.14
+      urlpattern-polyfill: 10.1.0
+      use-device-pixel-ratio: 1.1.2(react@19.1.0)
+      use-effect-event: 1.0.2(react@19.1.0)
+      use-hot-module-reload: 2.0.0(react@19.1.0)
+      use-sync-external-store: 1.5.0(react@19.1.0)
+      uuid: 11.1.0
+      vite: 6.3.5(@types/node@14.18.12)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0)
+      which: 5.0.0
+      xstate: 5.19.4
+      yargs: 17.7.2
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - '@types/node'
+      - '@types/react'
+      - bufferutil
+      - canvas
+      - immer
+      - jiti
+      - less
+      - lightningcss
+      - react-native
+      - sass
+      - sass-embedded
+      - stylus
+      - sugarss
+      - supports-color
+      - terser
+      - tsx
+      - typescript
+      - utf-8-validate
+      - yaml
+
   sanity@3.92.0(@emotion/is-prop-valid@1.2.2)(@types/node@24.0.4)(@types/react@17.0.87)(immer@10.1.1)(jiti@2.4.2)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(styled-components@6.1.19(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(terser@5.29.2)(typescript@5.8.3)(yaml@2.8.0):
     dependencies:
       '@dnd-kit/core': 6.3.1(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -24480,7 +24849,7 @@ snapshots:
       bs-logger: 0.2.6
       ejs: 3.1.10
       fast-json-stable-stringify: 2.1.0
-      jest: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0(esbuild@0.25.5))(node-notifier@8.0.2)
+      jest: 30.0.2(@types/node@24.0.4)(esbuild-register@3.6.0)(node-notifier@8.0.2)
       json5: 2.2.3
       lodash.memoize: 4.1.2
       make-error: 1.3.6
@@ -24901,6 +25270,17 @@ snapshots:
       unist-util-stringify-position: 2.0.3
       vfile-message: 2.0.4
 
+  vite-tsconfig-paths@5.1.4(typescript@5.8.3)(vite@6.3.5(@types/node@14.18.12)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0)):
+    dependencies:
+      debug: 4.4.1(supports-color@8.1.1)
+      globrex: 0.1.2
+      tsconfck: 3.1.6(typescript@5.8.3)
+    optionalDependencies:
+      vite: 6.3.5(@types/node@14.18.12)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0)
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
+
   vite-tsconfig-paths@5.1.4(typescript@5.8.3)(vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0)):
     dependencies:
       debug: 4.4.1(supports-color@8.1.1)
@@ -24911,6 +25291,21 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  vite@6.3.5(@types/node@14.18.12)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0):
+    dependencies:
+      esbuild: 0.25.5
+      fdir: 6.4.6(picomatch@4.0.2)
+      picomatch: 4.0.2
+      postcss: 8.5.5
+      rollup: 4.44.0
+      tinyglobby: 0.2.14
+    optionalDependencies:
+      '@types/node': 14.18.12
+      fsevents: 2.3.3
+      jiti: 2.4.2
+      terser: 5.29.2
+      yaml: 2.8.0
 
   vite@6.3.5(@types/node@24.0.4)(jiti@2.4.2)(terser@5.29.2)(yaml@2.8.0):
     dependencies:

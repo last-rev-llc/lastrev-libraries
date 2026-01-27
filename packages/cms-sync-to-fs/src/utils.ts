@@ -25,8 +25,17 @@ export const groupByContentTypeAndMapToIds = flow(
   mapValues((entries) => map(entries, 'sys.id'))
 );
 
+/**
+ * Group Sanity documents by _type and map to _id arrays.
+ * Used for building entry_ids_by_content_type lookup.
+ */
+export const groupSanityDocsByTypeAndMapToIds = flow(
+  groupBy('_type'),
+  mapValues((docs) => map(docs, '_id'))
+);
+
 export const writeItems = async (
-  items: (BaseEntry | BaseAsset | ContentType)[],
+  items: (BaseEntry | BaseAsset | ContentType | Record<string, any>)[],
   root: string,
   dirname: string
 ): Promise<void> => {
@@ -35,9 +44,20 @@ export const writeItems = async (
   await Promise.all(
     items.map((item) =>
       (async () => {
-        const {
-          sys: { id }
-        } = item;
+        // Handle both Contentful (sys.id) and Sanity (_id or name) formats
+        let id: string | undefined;
+        if ('sys' in item && (item as any).sys?.id) {
+          id = (item as any).sys.id;
+        } else if ('_id' in item) {
+          id = (item as any)._id;
+        } else if ('name' in item) {
+          id = (item as any).name;
+        }
+
+        if (!id) {
+          logger.warn('Item has no identifiable id field', { item });
+          return;
+        }
         const filename = join(dir, `${id}.json`);
         await writeFile(filename, JSON.stringify(item));
       })()
