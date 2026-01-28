@@ -6,11 +6,12 @@ import createSanityLoaders from '@last-rev/sanity-cms-loader';
 
 import { ContentfulLoaders, SanityLoaders } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
+import { createUnavailableLoaderProxy } from './loaderProxy';
 
 export type LoadersResult = {
-  loaders: ContentfulLoaders | SanityLoaders;
-  sanityLoaders?: SanityLoaders;
-  contentfulLoaders?: ContentfulLoaders;
+  loaders: ContentfulLoaders;
+  sanityLoaders: SanityLoaders;
+  contentfulLoaders: ContentfulLoaders;
 };
 
 const createLoaders = (config: LastRevAppConfig, defaultLocale: string): LoadersResult => {
@@ -46,10 +47,14 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string): Loaders
     throw new Error('No loaders found');
   }
 
+  // Create proxies that throw helpful errors for inactive CMS loaders
+  const contentfulProxy = createUnavailableLoaderProxy<ContentfulLoaders>('Contentful');
+  const sanityProxy = createUnavailableLoaderProxy<SanityLoaders>('Sanity');
+
   return {
-    loaders,
-    sanityLoaders: isSanity ? (loaders as SanityLoaders) : undefined,
-    contentfulLoaders: isSanity ? undefined : (loaders as ContentfulLoaders)
+    loaders: isSanity ? contentfulProxy : (loaders as ContentfulLoaders),
+    sanityLoaders: isSanity ? (loaders as SanityLoaders) : sanityProxy,
+    contentfulLoaders: isSanity ? contentfulProxy : (loaders as ContentfulLoaders)
   };
 };
 

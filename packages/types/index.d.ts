@@ -241,9 +241,9 @@ export type ApolloContext = {
    */
   loaders: ContentfulLoaders;
 
-  /** CMS-specific loaders keyed by name */
-  contentfulLoaders?: ContentfulLoaders;
-  sanityLoaders?: SanityLoaders;
+  /** CMS-specific loaders - always available, throws error if wrong CMS accessed */
+  contentfulLoaders: ContentfulLoaders;
+  sanityLoaders: SanityLoaders;
 
   /** Sanity config for utilities that need i18n settings */
   sanityConfig?: SanityContextConfig;
