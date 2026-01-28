@@ -78,13 +78,17 @@ function getTransformsToApply(
   options: CodemodRunOptions
 ): Record<string, Transform> {
   const { all, transforms: transformsOption } = options;
+  // selectedTransforms comes from interactive prompts
+  const selectedTransforms = (options as Record<string, unknown>).selectedTransforms as
+    | string[]
+    | undefined;
 
   // If --all flag, return all transforms
   if (all) {
     return codemod.transforms;
   }
 
-  // If specific transforms specified
+  // If specific transforms specified via CLI --transforms option
   if (transformsOption) {
     const selectedNames = transformsOption.split(',').map((s) => s.trim());
     const selected: Record<string, Transform> = {};
@@ -100,7 +104,20 @@ function getTransformsToApply(
     return selected;
   }
 
-  // Default: return all transforms (will be filtered by prompts in interactive mode)
+  // If transforms selected via interactive prompts
+  if (selectedTransforms && Array.isArray(selectedTransforms) && selectedTransforms.length > 0) {
+    const selected: Record<string, Transform> = {};
+
+    for (const name of selectedTransforms) {
+      if (codemod.transforms[name]) {
+        selected[name] = codemod.transforms[name];
+      }
+    }
+
+    return selected;
+  }
+
+  // Default: return all transforms
   return codemod.transforms;
 }
 
@@ -178,6 +195,21 @@ async function processFile(
 }
 
 /**
+ * Get the appropriate jscodeshift parser for a file
+ */
+function getParserForFile(filePath: string): ReturnType<typeof jscodeshift.withParser> {
+  const ext = path.extname(filePath).toLowerCase();
+
+  // Use tsx parser for TypeScript files (handles both .ts and .tsx)
+  if (ext === '.ts' || ext === '.tsx') {
+    return jscodeshift.withParser('tsx');
+  }
+
+  // Use default parser for JavaScript files
+  return jscodeshift;
+}
+
+/**
  * Apply a single transform to source code
  */
 function applyTransform(
@@ -191,9 +223,12 @@ function applyTransform(
     source
   };
 
+  // Use appropriate parser based on file extension
+  const j = getParserForFile(filePath);
+
   const api = {
-    jscodeshift,
-    j: jscodeshift,
+    jscodeshift: j,
+    j,
     stats: () => {},
     report: () => {}
   };
