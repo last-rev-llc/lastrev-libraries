@@ -19,7 +19,8 @@ export const sanityV2Codemod: CodemodDefinition = {
     removeMapper: transforms.removeMapper,
     i18nMigration: transforms.i18nMigration,
     configMigration: transforms.configMigration,
-    groqTransformation: transformGroqQuery
+    groqTransformation: transformGroqQuery,
+    utilityMigration: transforms.utilityMigration
   },
 
   getPrompts,

@@ -12,6 +12,7 @@ export interface SanityV2Options {
   configMigration: boolean;
   groqTransformation: boolean;
   removeMapper: boolean;
+  utilityMigration: boolean;
   useInternationalizedArrays: boolean;
   fallbackToDefaultLocale: boolean;
 }
@@ -37,7 +38,8 @@ export function getPrompts(options: CodemodRunOptions): QuestionCollection {
         { name: 'Directory/key constants', value: 'directoryKeys', checked: true },
         { name: 'Config file updates', value: 'configMigration', checked: true },
         { name: 'GROQ query transformation', value: 'groqTransformation', checked: true },
-        { name: 'Remove sanity-mapper (convertSanityDoc, etc.)', value: 'removeMapper', checked: true }
+        { name: 'Remove sanity-mapper (convertSanityDoc, etc.)', value: 'removeMapper', checked: true },
+        { name: 'Utility migration (entry.fields → entry)', value: 'utilityMigration', checked: true }
       ]
     },
     {
@@ -80,6 +82,7 @@ export function processAnswers(answers: Record<string, unknown>): Partial<Sanity
     configMigration: selectedTransforms.includes('configMigration'),
     groqTransformation: selectedTransforms.includes('groqTransformation'),
     removeMapper: selectedTransforms.includes('removeMapper'),
+    utilityMigration: selectedTransforms.includes('utilityMigration'),
     useInternationalizedArrays: answers.useInternationalizedArrays as boolean ?? true,
     fallbackToDefaultLocale: answers.fallbackToDefaultLocale as boolean ?? false
   };
