@@ -20,7 +20,8 @@ export const sanityV2Codemod: CodemodDefinition = {
     i18nMigration: transforms.i18nMigration,
     configMigration: transforms.configMigration,
     groqTransformation: transformGroqQuery,
-    utilityMigration: transforms.utilityMigration
+    utilityMigration: transforms.utilityMigration,
+    genericTypes: transforms.genericTypes
   },
 
   getPrompts,

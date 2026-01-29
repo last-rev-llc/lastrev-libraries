@@ -55,10 +55,11 @@ const collectVirtualTypes = (
 const collectContentTypes = (
   contentTypes: any[],
   mappers: Mappers,
-  typeMappings: TypeMappings
+  typeMappings: TypeMappings,
+  cms: 'Contentful' | 'Sanity'
 ): ContentTypeRepresentation[] => {
   return contentTypes.map((contentType) => {
-    const typeName = getTypeName(contentType, typeMappings);
+    const typeName = getTypeName(contentType, typeMappings, cms);
 
     // if there are any virtual fields when contentType === displayType, collect those here.
     const additionalFields = Object.keys(mappers).reduce((accum, mapperKey) => {
@@ -78,26 +79,34 @@ const collectContentTypes = (
   });
 };
 
+type MinimalConfig = {
+  cms?: 'Contentful' | 'Sanity';
+  extensions: { mappers: Mappers; typeMappings: TypeMappings };
+  features?: { disableCoreSidekickLookup?: boolean };
+};
+
 const getContentResolvers = ({
   contentTypes,
-
   config
 }: {
   contentTypes: any[];
-  config: LastRevAppConfig | { extensions: { mappers: Mappers; typeMappings: TypeMappings }; features?: any };
+  config: LastRevAppConfig | MinimalConfig;
 }): { [typeName: string]: { [fieldName: string]: Function } } => {
-  const {
-    features,
-    extensions: { mappers, typeMappings }
-  } = config;
-  const contentTypeReps = collectContentTypes(contentTypes, mappers, typeMappings);
+  const cms = config.cms ?? 'Contentful';
+  const features = config.features;
+  const { mappers, typeMappings } = config.extensions;
+  const contentTypeReps = collectContentTypes(contentTypes, mappers, typeMappings, cms);
   const virtualTypeReps = collectVirtualTypes(mappers, contentTypeReps);
+
+  const idResolver = cms === 'Sanity'
+    ? (content: any) => content?._id
+    : (content: any) => content?.sys?.id;
 
   const contentResolvers = [...virtualTypeReps, ...contentTypeReps].reduce((acc, { typeName, fields }) => {
     return {
       ...acc,
       [typeName]: {
-        id: (content: any) => content?.sys?.id,
+        id: idResolver,
         ...(features?.disableCoreSidekickLookup
           ? {}
           : {

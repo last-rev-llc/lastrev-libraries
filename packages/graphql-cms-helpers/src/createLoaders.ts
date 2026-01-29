@@ -14,47 +14,68 @@ export type LoadersResult = {
   contentfulLoaders: ContentfulLoaders;
 };
 
+/**
+ * Apply cache strategy to Sanity loaders
+ * Note: DynamoDB cache is not yet supported for Sanity
+ */
+const applySanityCacheStrategy = (
+  config: LastRevAppConfig,
+  baseLoaders: SanityLoaders
+): SanityLoaders => {
+  if (config.contentStrategy === 'fs') {
+    return createFsLoaders(config, baseLoaders);
+  }
+  if (config.cmsCacheStrategy === 'redis') {
+    return createRedisLoaders(config, baseLoaders);
+  }
+  // DynamoDB not yet supported for Sanity - use base loaders
+  return baseLoaders;
+};
+
+/**
+ * Apply cache strategy to Contentful loaders
+ */
+const applyContentfulCacheStrategy = (
+  config: LastRevAppConfig,
+  baseLoaders: ContentfulLoaders
+): ContentfulLoaders => {
+  if (config.contentStrategy === 'fs') {
+    return createFsLoaders(config, baseLoaders);
+  }
+  if (config.cmsCacheStrategy === 'redis') {
+    return createRedisLoaders(config, baseLoaders);
+  }
+  if (config.cmsCacheStrategy === 'dynamodb') {
+    return createDynamoDbLoaders(config, baseLoaders);
+  }
+  return baseLoaders;
+};
+
 const createLoaders = (config: LastRevAppConfig, defaultLocale: string): LoadersResult => {
   const isSanity = config.cms === 'Sanity';
-
-  let baseLoaders: ContentfulLoaders | SanityLoaders;
-
-  if (isSanity) {
-    baseLoaders = createSanityLoaders(config, defaultLocale);
-  } else {
-    baseLoaders = createContentfulCmsLoaders(config, defaultLocale);
-  }
-
-  let loaders = baseLoaders;
-
-  // Cache strategies currently only support Contentful loaders
-  // TODO: Add Sanity support for fs/redis/dynamodb strategies
-  if (!isSanity) {
-    if (config.contentStrategy === 'fs') {
-      loaders = createFsLoaders(config, baseLoaders as ContentfulLoaders);
-    } else {
-      if (config.cmsCacheStrategy === 'redis') {
-        loaders = createRedisLoaders(config, baseLoaders as ContentfulLoaders);
-      } else if (config.cmsCacheStrategy === 'dynamodb') {
-        loaders = createDynamoDbLoaders(config, baseLoaders as ContentfulLoaders);
-      } else if (config.cmsCacheStrategy === 'none') {
-        loaders = baseLoaders;
-      }
-    }
-  }
-
-  if (!loaders) {
-    throw new Error('No loaders found');
-  }
 
   // Create proxies that throw helpful errors for inactive CMS loaders
   const contentfulProxy = createUnavailableLoaderProxy<ContentfulLoaders>('Contentful');
   const sanityProxy = createUnavailableLoaderProxy<SanityLoaders>('Sanity');
 
+  if (isSanity) {
+    const baseLoaders = createSanityLoaders(config, defaultLocale);
+    const loaders = applySanityCacheStrategy(config, baseLoaders);
+
+    return {
+      loaders: contentfulProxy,
+      sanityLoaders: loaders,
+      contentfulLoaders: contentfulProxy
+    };
+  }
+
+  const baseLoaders = createContentfulCmsLoaders(config, defaultLocale);
+  const loaders = applyContentfulCacheStrategy(config, baseLoaders);
+
   return {
-    loaders: isSanity ? contentfulProxy : (loaders as ContentfulLoaders),
-    sanityLoaders: isSanity ? (loaders as SanityLoaders) : sanityProxy,
-    contentfulLoaders: isSanity ? contentfulProxy : (loaders as ContentfulLoaders)
+    loaders,
+    sanityLoaders: sanityProxy,
+    contentfulLoaders: loaders
   };
 };
 

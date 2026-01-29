@@ -133,23 +133,23 @@ export type TypeMappings = {
   [cmsType: string]: string;
 };
 
-export type CmsPathsGenerator = (
-  resolvedItem: BaseEntry,
-  loaders: CmsLoaders,
+export type CmsPathsGenerator<T extends CmsEntry = BaseEntry> = (
+  resolvedItem: T,
+  loaders: T extends SanityDocument ? SanityLoaders : CmsLoaders,
   defaultLocale: string,
   locales: string[],
   preview?: boolean,
   site?: string
 ) => Promise<PathDataMap>;
 
-export type ObjectBasedCmsPathsGenerator = ({
+export type ObjectBasedCmsPathsGenerator<T extends CmsEntry = BaseEntry> = ({
   ctx,
   item,
   site,
   preview
 }: {
   ctx: ApolloContext;
-  item: BaseEntry;
+  item: T;
   site?: string;
   preview?: boolean;
 }) => Promise<PathDataMap>;
@@ -219,7 +219,7 @@ export type SanityContextConfig = {
 
 export type CmsClients = ContentfulClients | SanityClients;
 
-export type PathEntries = (BaseEntry | null)[];
+export type PathEntries<T extends CmsEntry = BaseEntry> = (T | null)[];
 
 export type PathInfo = {
   path: string;
@@ -232,7 +232,7 @@ export type LoadEntriesForPathFunction = (
   site?: string
 ) => Promise<PathEntries | null>;
 
-export type loadPathsForContentFunction = (entry: BaseEntry, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
+export type loadPathsForContentFunction<T extends CmsEntry = BaseEntry> = (entry: T, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
 
 export type ApolloContext = {
   /**

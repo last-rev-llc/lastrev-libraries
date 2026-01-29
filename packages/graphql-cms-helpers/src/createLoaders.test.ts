@@ -34,9 +34,10 @@ describe('createLoaders', () => {
       const result = createLoaders(config, 'en-US');
 
       expect(createSanityLoaders).toHaveBeenCalledWith(config, 'en-US');
-      expect(result.loaders).toEqual({ type: 'sanity' });
       expect(result.sanityLoaders).toEqual({ type: 'sanity' });
-      expect(result.contentfulLoaders).toBeUndefined();
+      // Contentful loaders are proxies that throw when accessed
+      expect(() => (result.loaders as any).entryLoader).toThrow('Cannot access Contentful loaders');
+      expect(() => (result.contentfulLoaders as any).entryLoader).toThrow('Cannot access Contentful loaders');
     });
 
     it('should create Contentful loaders when cms is Contentful', () => {
@@ -50,8 +51,9 @@ describe('createLoaders', () => {
 
       expect(createContentfulCmsLoaders).toHaveBeenCalledWith(config, 'en-US');
       expect(result.loaders).toEqual({ type: 'contentful' });
-      expect(result.sanityLoaders).toBeUndefined();
       expect(result.contentfulLoaders).toEqual({ type: 'contentful' });
+      // Sanity loaders are proxies that throw when accessed
+      expect(() => (result.sanityLoaders as any).documentLoader).toThrow('Cannot access Sanity loaders');
     });
 
     it('should default to Contentful loaders for unknown cms', () => {
@@ -156,7 +158,50 @@ describe('createLoaders', () => {
   });
 
   describe('combined scenarios', () => {
-    it('should not apply cache strategies to Sanity (cache strategies only support Contentful)', () => {
+    it('should apply fs cache strategy to Sanity', () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        contentStrategy: 'fs',
+        cmsCacheStrategy: 'none'
+      });
+
+      const result = createLoaders(config, 'es');
+
+      expect(createSanityLoaders).toHaveBeenCalledWith(config, 'es');
+      expect(createFsLoaders).toHaveBeenCalledWith(config, { type: 'sanity' });
+      expect(result.sanityLoaders).toEqual({ type: 'fs' });
+    });
+
+    it('should apply redis cache strategy to Sanity', () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        contentStrategy: 'cms',
+        cmsCacheStrategy: 'redis'
+      });
+
+      const result = createLoaders(config, 'es');
+
+      expect(createSanityLoaders).toHaveBeenCalledWith(config, 'es');
+      expect(createRedisLoaders).toHaveBeenCalledWith(config, { type: 'sanity' });
+      expect(result.sanityLoaders).toEqual({ type: 'redis' });
+    });
+
+    it('should not apply dynamodb cache strategy to Sanity (not yet supported)', () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        contentStrategy: 'cms',
+        cmsCacheStrategy: 'dynamodb'
+      });
+
+      const result = createLoaders(config, 'es');
+
+      expect(createSanityLoaders).toHaveBeenCalledWith(config, 'es');
+      // DynamoDB not yet supported for Sanity - falls back to base loaders
+      expect(createDynamoDbLoaders).not.toHaveBeenCalled();
+      expect(result.sanityLoaders).toEqual({ type: 'sanity' });
+    });
+
+    it('should use base Sanity loaders when cmsCacheStrategy is none', () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         contentStrategy: 'cms',
@@ -166,9 +211,8 @@ describe('createLoaders', () => {
       const result = createLoaders(config, 'es');
 
       expect(createSanityLoaders).toHaveBeenCalledWith(config, 'es');
-      // Cache strategies don't apply to Sanity yet
       expect(createFsLoaders).not.toHaveBeenCalled();
-      expect(result.loaders).toEqual({ type: 'sanity' });
+      expect(createRedisLoaders).not.toHaveBeenCalled();
       expect(result.sanityLoaders).toEqual({ type: 'sanity' });
     });
   });

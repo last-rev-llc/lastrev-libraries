@@ -132,3 +132,13 @@ export const IGNORE_PATTERNS = [
   '**/.cache/**',
   '**/coverage/**'
 ];
+
+/**
+ * Type names that should have <SanityDocument> generic added
+ */
+export const GENERIC_TYPE_NAMES = [
+  'CmsPathsGenerator',
+  'ObjectBasedCmsPathsGenerator',
+  'loadPathsForContentFunction',
+  'PathEntries'
+];

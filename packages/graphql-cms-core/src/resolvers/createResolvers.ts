@@ -303,7 +303,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: any[]; config
               return 'Media';
             }
             const contentTypeId = content.__typename || content._type;
-            return getTypeName(contentTypeId, config.extensions.typeMappings);
+            return getTypeName(contentTypeId, config.extensions.typeMappings, ctx.cms);
           }
 
           // Contentful assets
@@ -312,7 +312,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: any[]; config
           }
 
           const contentTypeId = content.__typename || content.sys.contentType.sys.id;
-          return getTypeName(contentTypeId, config.extensions.typeMappings);
+          return getTypeName(contentTypeId, config.extensions.typeMappings, ctx.cms);
         }
       },
       // Scalars
