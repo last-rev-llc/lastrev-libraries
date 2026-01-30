@@ -1,10 +1,8 @@
-import { BaseEntry, ApolloContext } from '@last-rev/types';
+import { BaseEntry, ApolloContext, SanityDocument } from '@last-rev/types';
 import { get } from 'lodash';
 
 /**
  * Get a field value from a CMS entry using the default locale.
- *
- * @deprecated Use getLocalizedField from contentUtils instead for CMS-agnostic field access.
  *
  * @param item - The CMS entry
  * @param fieldName - The field name to retrieve
@@ -12,7 +10,7 @@ import { get } from 'lodash';
  * @param ctx - Optional ApolloContext for CMS-aware field access
  */
 const getDefaultFieldValue = (
-  item: BaseEntry,
+  item: BaseEntry | SanityDocument,
   fieldName: string,
   defaultLocale: string,
   ctx?: ApolloContext
@@ -20,7 +18,7 @@ const getDefaultFieldValue = (
   // If context provided, use CMS-aware access
   if (ctx?.cms === 'Sanity') {
     // Sanity fields are directly on the document
-    return get(item, [fieldName], null);
+    return (item as SanityDocument)[fieldName];
   }
 
   // Contentful: fields are in item.fields[fieldName][locale]
