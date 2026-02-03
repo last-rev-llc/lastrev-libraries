@@ -6,6 +6,7 @@ export { default as i18nMigrationTransform } from './i18nMigration';
 export { default as configMigrationTransform } from './configMigration';
 export { default as utilityMigrationTransform } from './utilityMigration';
 export { default as genericTypesTransform } from './genericTypes';
+export { default as sysPropertyAccessTransform } from './sysPropertyAccess';
 
 import loaderApiTransform from './loaderApi';
 import typeChangesTransform from './typeChanges';
@@ -15,6 +16,7 @@ import i18nMigrationTransform from './i18nMigration';
 import configMigrationTransform from './configMigration';
 import utilityMigrationTransform from './utilityMigration';
 import genericTypesTransform from './genericTypes';
+import sysPropertyAccessTransform from './sysPropertyAccess';
 import type { Transform } from '../../../types';
 
 /**
@@ -28,7 +30,8 @@ export const transforms: Record<string, Transform> = {
   i18nMigration: i18nMigrationTransform,
   configMigration: configMigrationTransform,
   utilityMigration: utilityMigrationTransform,
-  genericTypes: genericTypesTransform
+  genericTypes: genericTypesTransform,
+  sysPropertyAccess: sysPropertyAccessTransform
 };
 
 /**

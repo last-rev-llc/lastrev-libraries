@@ -29,6 +29,7 @@ const getLocalizedField = (entry: CmsEntry, field: string, ctx: ApolloContext): 
  *   - false: Return null if requested locale not found
  */
 const getSanityField = (doc: any, field: string, ctx: ApolloContext): any => {
+  if (!doc) return null;
   const fieldValue = doc[field];
   if (fieldValue === undefined) return null;
 
@@ -42,8 +43,10 @@ const getSanityField = (doc: any, field: string, ctx: ApolloContext): any => {
   }
 
   // Check if this is an i18n array format
-  if (!Array.isArray(fieldValue) || !fieldValue[0]?._key) {
-    // Not an i18n array - return as-is (supports mixed fields)
+  // i18n arrays have both _key (locale code) AND value property
+  // Regular Sanity arrays have _key (random ID) but no value property
+  if (!Array.isArray(fieldValue) || !fieldValue[0]?._key || !('value' in fieldValue[0])) {
+    // Not an i18n array - return as-is (supports regular arrays, references, etc.)
     return fieldValue;
   }
 

@@ -14,6 +14,7 @@ export interface SanityV2Options {
   removeMapper: boolean;
   utilityMigration: boolean;
   genericTypes: boolean;
+  sysPropertyAccess: boolean;
   useInternationalizedArrays: boolean;
   fallbackToDefaultLocale: boolean;
 }
@@ -22,8 +23,8 @@ export interface SanityV2Options {
  * Get interactive prompts for sanity-v2 codemod
  */
 export function getPrompts(options: CodemodRunOptions): QuestionCollection {
-  // If --all flag is set, skip prompts
-  if (options.all || options.nonInteractive) {
+  // If --all flag is set, or --transforms specified, skip prompts
+  if (options.all || options.nonInteractive || options.transforms) {
     return [];
   }
 
@@ -41,7 +42,8 @@ export function getPrompts(options: CodemodRunOptions): QuestionCollection {
         { name: 'GROQ query transformation', value: 'groqTransformation', checked: true },
         { name: 'Remove sanity-mapper (convertSanityDoc, etc.)', value: 'removeMapper', checked: true },
         { name: 'Utility migration (entry.fields → entry)', value: 'utilityMigration', checked: true },
-        { name: 'Generic types (add <SanityDocument> parameter)', value: 'genericTypes', checked: true }
+        { name: 'Generic types (add <SanityDocument> parameter)', value: 'genericTypes', checked: true },
+        { name: 'Sys property access (.sys.id → ._id, .sys.contentType.sys.id → ._type)', value: 'sysPropertyAccess', checked: true }
       ]
     },
     {
@@ -86,6 +88,7 @@ export function processAnswers(answers: Record<string, unknown>): Partial<Sanity
     removeMapper: selectedTransforms.includes('removeMapper'),
     utilityMigration: selectedTransforms.includes('utilityMigration'),
     genericTypes: selectedTransforms.includes('genericTypes'),
+    sysPropertyAccess: selectedTransforms.includes('sysPropertyAccess'),
     useInternationalizedArrays: answers.useInternationalizedArrays as boolean ?? true,
     fallbackToDefaultLocale: answers.fallbackToDefaultLocale as boolean ?? false
   };

@@ -21,7 +21,8 @@ export const sanityV2Codemod: CodemodDefinition = {
     configMigration: transforms.configMigration,
     groqTransformation: transformGroqQuery,
     utilityMigration: transforms.utilityMigration,
-    genericTypes: transforms.genericTypes
+    genericTypes: transforms.genericTypes,
+    sysPropertyAccess: transforms.sysPropertyAccess
   },
 
   getPrompts,

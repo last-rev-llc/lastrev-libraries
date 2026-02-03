@@ -142,3 +142,20 @@ export const GENERIC_TYPE_NAMES = [
   'loadPathsForContentFunction',
   'PathEntries'
 ];
+
+/**
+ * Sys property access mappings from Contentful to Sanity
+ * Order matters: longer patterns first to avoid partial matches
+ */
+export const SYS_PROPERTY_MAPPINGS = [
+  // Must come first: .sys.contentType.sys.id -> ._type
+  {
+    pattern: ['sys', 'contentType', 'sys', 'id'],
+    replacement: '_type'
+  },
+  // Second: .sys.id -> ._id
+  {
+    pattern: ['sys', 'id'],
+    replacement: '_id'
+  }
+];
