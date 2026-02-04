@@ -29,7 +29,15 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
   const displayType = overrideDisplayType || displayTypeArg;
 
   const contentType = getContentType(content, ctx) || '';
-  const typeName = contentType ? getTypeName(contentType, typeMappings) : displayType;
+
+  // Handle Sanity assets - align with __resolveType in createResolvers
+  let typeName: string;
+  if (ctx.cms === 'Sanity' && (contentType === 'sanity.imageAsset' || contentType === 'sanity.fileAsset')) {
+    typeName = 'Media';
+  } else {
+    typeName = contentType ? getTypeName(contentType, typeMappings) : displayType;
+  }
+
   const mapper = mappers?.[typeName]?.[displayType] as TypeMapper;
 
   let fieldValue: any;
