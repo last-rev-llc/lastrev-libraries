@@ -299,7 +299,12 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: any[]; config
           // Handle Sanity documents
           if (ctx.cms === 'Sanity') {
             // Sanity image/file assets
-            if (content._type === 'sanity.imageAsset' || content._type === 'sanity.fileAsset') {
+            if (
+              content._type === 'sanity.imageAsset' ||
+              content._type === 'sanity.fileAsset' ||
+              content._type === 'image' ||
+              content._type === 'file'
+            ) {
               return 'Media';
             }
             const contentTypeId = content.__typename || content._type;
