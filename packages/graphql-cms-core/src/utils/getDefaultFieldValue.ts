@@ -6,23 +6,32 @@ import { get } from 'lodash';
  *
  * @param item - The CMS entry
  * @param fieldName - The field name to retrieve
- * @param defaultLocale - The default locale
- * @param ctx - Optional ApolloContext for CMS-aware field access
+ * @param ctxOrDefaultLocale - ApolloContext (required for Sanity) or default locale string (Contentful)
  */
 const getDefaultFieldValue = (
   item: BaseEntry | SanityDocument,
   fieldName: string,
-  defaultLocale: string,
-  ctx?: ApolloContext
+  ctxOrDefaultLocale: ApolloContext | string
 ): any | null => {
-  // If context provided, use CMS-aware access
-  if (ctx?.cms === 'Sanity') {
+  // If string passed, treat as defaultLocale (Contentful path)
+  if (typeof ctxOrDefaultLocale === 'string') {
+    return get(item, ['fields', fieldName, ctxOrDefaultLocale], null);
+  }
+
+  const ctx = ctxOrDefaultLocale;
+
+  // Sanity requires full context
+  if (ctx.cms === 'Sanity') {
     // Sanity fields are directly on the document
-    return (item as SanityDocument)[fieldName];
+    const val = (item as SanityDocument)[fieldName];
+    if (ctx.sanityConfig?.useInternationalizedArrays && Array.isArray(val) && val[0]?._key) {
+      return val;
+    }
+    return val;
   }
 
   // Contentful: fields are in item.fields[fieldName][locale]
-  return get(item, ['fields', fieldName, defaultLocale], null);
+  return get(item, ['fields', fieldName, ctx.defaultLocale], null);
 };
 
 export default getDefaultFieldValue;

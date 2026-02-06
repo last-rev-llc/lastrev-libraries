@@ -94,6 +94,11 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
     }
   }
 
+  // Handle Sanity slug fields - extract .current value
+  if (ctx.cms === 'Sanity' && fieldValue?._type === 'slug' && fieldValue?.current !== undefined) {
+    return fieldValue.current;
+  }
+
   return fieldValue;
 };
 
