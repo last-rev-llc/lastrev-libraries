@@ -66,10 +66,14 @@ const getSanityField = (doc: any, field: string, ctx: ApolloContext): any => {
 
 /**
  * Get field from Contentful entry.
- * Expects entry.fields[fieldName][locale] structure.
+ * Backwards compatible: accepts either full entry or fields object directly.
+ * - Full entry: { sys: {...}, fields: { fieldName: { locale: value } } }
+ * - Fields object: { fieldName: { locale: value } }
  */
-const getContentfulField = (entry: any, field: string, ctx: ApolloContext): any => {
-  const fields = entry.fields;
+const getContentfulField = (entryOrFields: any, field: string, ctx: ApolloContext): any => {
+  // Detect if we received a full entry or just the fields object
+  // Full entry has sys property; fields object does not
+  const fields = entryOrFields.sys ? entryOrFields.fields : entryOrFields;
   if (!fields) return null;
 
   const defaultLocaleValue = get(fields, [field, ctx.defaultLocale]);
