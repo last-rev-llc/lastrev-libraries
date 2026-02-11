@@ -15,4 +15,4 @@
 '@last-rev/types': minor
 ---
 
-Major update to Sanity path for libraries. Sanity object structure willnow be preserved instead of mapping to contentful ibjects.
+Major update to Sanity path for libraries. Sanity object structure will now be preserved instead of mapping to Contentful objects.
