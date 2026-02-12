@@ -291,10 +291,7 @@ describe('sanity-cms-loader', () => {
       await loaders.documentLoader.load({ id: 'doc1', preview: false });
 
       // Should NOT include _translations or __i18n_lang filters
-      expect(mockProdClient.fetch).toHaveBeenCalledWith(
-        '*[_id in $ids]',
-        expect.objectContaining({ ids: ['doc1'] })
-      );
+      expect(mockProdClient.fetch).toHaveBeenCalledWith('*[_id in $ids]', expect.objectContaining({ ids: ['doc1'] }));
     });
 
     it('should load asset documents (unified document model)', async () => {

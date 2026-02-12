@@ -336,7 +336,9 @@ describe('cms-webhook-handler', () => {
         mockParseSanityWebhook.mockReturnValue(webhookResult);
         mockJwtVerify.mockResolvedValue({ projectId: 'wrong-project-id' });
 
-        await expect(handleWebhook(config, mockBody, headersWithAuth)).rejects.toThrow('Invalid projectId in JWT Token');
+        await expect(handleWebhook(config, mockBody, headersWithAuth)).rejects.toThrow(
+          'Invalid projectId in JWT Token'
+        );
       });
     });
 

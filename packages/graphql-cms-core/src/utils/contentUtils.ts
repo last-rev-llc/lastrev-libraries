@@ -98,11 +98,7 @@ export const loadDocument = async (
  * For Sanity: uses documentLoader (unified document model)
  * For Contentful: uses entryLoader or assetLoader based on isAsset flag
  */
-export const loadDocuments = async (
-  ctx: ApolloContext,
-  keys: ItemKey[],
-  isAsset: boolean = false
-): Promise<any[]> => {
+export const loadDocuments = async (ctx: ApolloContext, keys: ItemKey[], isAsset: boolean = false): Promise<any[]> => {
   if (ctx.cms === 'Sanity') {
     // Sanity uses unified documentLoader for all document types
     const results = await ctx.sanityLoaders!.documentLoader.loadMany(keys);
@@ -119,11 +115,7 @@ export const loadDocuments = async (
  * For Sanity: uses documentsByTypeLoader
  * For Contentful: uses entriesByContentTypeLoader
  */
-export const loadDocumentsByType = async (
-  ctx: ApolloContext,
-  typeId: string,
-  preview: boolean
-): Promise<any[]> => {
+export const loadDocumentsByType = async (ctx: ApolloContext, typeId: string, preview: boolean): Promise<any[]> => {
   if (ctx.cms === 'Sanity') {
     return ctx.sanityLoaders!.documentsByTypeLoader.load({ id: typeId, preview });
   }

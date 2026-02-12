@@ -5,6 +5,7 @@
 This document analyzes the architectural changes required to support **native Sanity objects** in the LastRev libraries. The analysis covers migration from document-based internationalization to `sanity-plugin-internationalized-array` and restructuring the codebase to handle Sanity content natively.
 
 **Key Goals:**
+
 1. Allow Sanity objects to remain in their native format (eliminate conversion to Contentful structure)
 2. Migrate from document-based i18n to field-level internationalized arrays
 3. Maintain full backward compatibility with existing Contentful implementations
@@ -68,6 +69,7 @@ Every query includes translation joins:
 ```
 
 This pattern repeats in:
+
 - `fetchBatchItems()` - lines 55-66
 - `getBatchEntriesByContentTypeFetcher()` - lines 101-111
 - `getBatchEntriesByFieldValueFetcher()` - lines 132-142
@@ -169,31 +171,31 @@ Uses types directly from `@sanity/types`:
 
 ### Tier 1: Core Changes
 
-| Package | Required Changes |
-|---------|------------------|
-| `@last-rev/types` | Add Sanity-specific type exports (re-export from `@sanity/types`), create CMS-agnostic interfaces |
-| `@last-rev/sanity-cms-loader` | **Major rewrite**: Remove all conversion logic, simplify GROQ queries, return native Sanity documents |
-| `@last-rev/sanity-mapper` | **Remove or deprecate** - no longer needed |
-| `@last-rev/graphql-cms-core` | **Major restructure**: Split resolvers into CMS-specific implementations or packages |
-| `@last-rev/graphql-cms-helpers` | Update context creation for Sanity-specific context |
+| Package                         | Required Changes                                                                                      |
+| ------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `@last-rev/types`               | Add Sanity-specific type exports (re-export from `@sanity/types`), create CMS-agnostic interfaces     |
+| `@last-rev/sanity-cms-loader`   | **Major rewrite**: Remove all conversion logic, simplify GROQ queries, return native Sanity documents |
+| `@last-rev/sanity-mapper`       | **Remove or deprecate** - no longer needed                                                            |
+| `@last-rev/graphql-cms-core`    | **Major restructure**: Split resolvers into CMS-specific implementations or packages                  |
+| `@last-rev/graphql-cms-helpers` | Update context creation for Sanity-specific context                                                   |
 
 ### Tier 2: Secondary Changes
 
-| Package | Required Changes |
-|---------|------------------|
-| `@last-rev/graphql-schema-gen` | **Significant changes**: Add Sanity schema generation that reads native Sanity schema types directly instead of Contentful-style `ContentType[]` |
-| `@last-rev/cms-path-util` | Update field access for Sanity structure |
-| `@last-rev/cms-sync-to-fs` | Handle native Sanity format |
-| `@last-rev/sanity-webhook-parser` | Remove `convertSanityDoc` dependency, pass through native documents |
-| `@last-rev/cms-webhook-handler` | Remove `convertSanityDoc` calls, simplify GROQ queries, CMS-aware handler logic |
+| Package                           | Required Changes                                                                                                                                 |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `@last-rev/graphql-schema-gen`    | **Significant changes**: Add Sanity schema generation that reads native Sanity schema types directly instead of Contentful-style `ContentType[]` |
+| `@last-rev/cms-path-util`         | Update field access for Sanity structure                                                                                                         |
+| `@last-rev/cms-sync-to-fs`        | Handle native Sanity format                                                                                                                      |
+| `@last-rev/sanity-webhook-parser` | Remove `convertSanityDoc` dependency, pass through native documents                                                                              |
+| `@last-rev/cms-webhook-handler`   | Remove `convertSanityDoc` calls, simplify GROQ queries, CMS-aware handler logic                                                                  |
 
 ### Tier 3: Unchanged
 
-| Package | Reason |
-|---------|--------|
-| All Contentful packages | Contentful path unchanged |
-| Cache layer packages | Work if loader interface maintained |
-| Infrastructure packages | No CMS dependency |
+| Package                 | Reason                              |
+| ----------------------- | ----------------------------------- |
+| All Contentful packages | Contentful path unchanged           |
+| Cache layer packages    | Work if loader interface maintained |
+| Infrastructure packages | No CMS dependency                   |
 
 ---
 
@@ -216,7 +218,7 @@ export type {
 
 // Internationalized array helper type
 export interface InternationalizedValue<T> {
-  _key: string;  // locale code
+  _key: string; // locale code
   value: T;
 }
 
@@ -275,27 +277,22 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string) => {
   };
 
   // Simple field value fetch
-  const fetchByFieldValue = async (
-    type: string,
-    field: string,
-    value: string,
-    preview: boolean
-  ) => {
+  const fetchByFieldValue = async (type: string, field: string, value: string, preview: boolean) => {
     const c = preview ? previewClient : client;
     // Handle slug fields specially
-    const query = field === 'slug'
-      ? `*[_type == $type && slug.current == $value][0]`
-      : `*[_type == $type && ${field} == $value][0]`;
+    const query =
+      field === 'slug'
+        ? `*[_type == $type && slug.current == $value][0]`
+        : `*[_type == $type && ${field} == $value][0]`;
     return c.fetch<SanityDocument | null>(query, { type, value });
   };
 
   // Asset fetch
   const fetchAssets = async (refs: string[], preview: boolean) => {
     const c = preview ? previewClient : client;
-    return c.fetch<SanityImageAsset[]>(
-      `*[_id in $refs && _type in ['sanity.imageAsset', 'sanity.fileAsset']]`,
-      { refs }
-    );
+    return c.fetch<SanityImageAsset[]>(`*[_id in $refs && _type in ['sanity.imageAsset', 'sanity.fileAsset']]`, {
+      refs
+    });
   };
 
   return {
@@ -310,6 +307,7 @@ const createLoaders = (config: LastRevAppConfig, defaultLocale: string) => {
 ```
 
 **Key Changes:**
+
 - Remove all `convertSanityDoc()` calls
 - Remove all `_translations` join logic
 - Remove `__i18n_lang` filtering
@@ -368,51 +366,47 @@ const getLocalizedValue = <T>(
   fallbackLocale: string
 ): T | undefined => {
   if (!field || !Array.isArray(field)) return undefined;
-  return field.find(v => v._key === locale)?.value
-      ?? field.find(v => v._key === fallbackLocale)?.value
-      ?? field[0]?.value;
+  return (
+    field.find((v) => v._key === locale)?.value ??
+    field.find((v) => v._key === fallbackLocale)?.value ??
+    field[0]?.value
+  );
 };
 
-const fieldResolver = (displayType: string) => async (
-  content: SanityDocument,
-  args: any,
-  ctx: ApolloContext,
-  info: GraphQLResolveInfo
-) => {
-  const { fieldName } = info;
-  const locale = ctx.locale || ctx.defaultLocale;
+const fieldResolver =
+  (displayType: string) => async (content: SanityDocument, args: any, ctx: ApolloContext, info: GraphQLResolveInfo) => {
+    const { fieldName } = info;
+    const locale = ctx.locale || ctx.defaultLocale;
 
-  let value = content[fieldName];
+    let value = content[fieldName];
 
-  // Handle internationalized array fields
-  if (Array.isArray(value) && value[0]?._key && 'value' in value[0]) {
-    value = getLocalizedValue(value, locale, ctx.defaultLocale);
-  }
+    // Handle internationalized array fields
+    if (Array.isArray(value) && value[0]?._key && 'value' in value[0]) {
+      value = getLocalizedValue(value, locale, ctx.defaultLocale);
+    }
 
-  // Handle slug
-  if (value?._type === 'slug') {
-    return value.current;
-  }
+    // Handle slug
+    if (value?._type === 'slug') {
+      return value.current;
+    }
 
-  // Handle single reference
-  if (value?._type === 'reference' && value._ref) {
-    return ctx.loaders.entryLoader.load({ id: value._ref, preview: ctx.preview });
-  }
+    // Handle single reference
+    if (value?._type === 'reference' && value._ref) {
+      return ctx.loaders.entryLoader.load({ id: value._ref, preview: ctx.preview });
+    }
 
-  // Handle image reference
-  if (value?._type === 'image' && value.asset?._ref) {
-    return ctx.loaders.assetLoader.load({ id: value.asset._ref, preview: ctx.preview });
-  }
+    // Handle image reference
+    if (value?._type === 'image' && value.asset?._ref) {
+      return ctx.loaders.assetLoader.load({ id: value.asset._ref, preview: ctx.preview });
+    }
 
-  // Handle array of references
-  if (Array.isArray(value) && value[0]?._type === 'reference') {
-    return ctx.loaders.entryLoader.loadMany(
-      value.map(ref => ({ id: ref._ref, preview: ctx.preview }))
-    );
-  }
+    // Handle array of references
+    if (Array.isArray(value) && value[0]?._type === 'reference') {
+      return ctx.loaders.entryLoader.loadMany(value.map((ref) => ({ id: ref._ref, preview: ctx.preview })));
+    }
 
-  return value;
-};
+    return value;
+  };
 ```
 
 #### Resolver Router
@@ -500,22 +494,15 @@ const basePageFields = `
 `;
 
 const isPage = (schemaType: SchemaType): boolean => {
-  return schemaType.fields?.some(f => f.name === 'slug') ?? false;
+  return schemaType.fields?.some((f) => f.name === 'slug') ?? false;
 };
 
-export const generateSanitySchema = (
-  typeMappings: Record<string, string>,
-  schemaTypes: SchemaType[]
-): string => {
+export const generateSanitySchema = (typeMappings: Record<string, string>, schemaTypes: SchemaType[]): string => {
   // Filter to document types only (not system types)
-  const documentTypes = schemaTypes.filter(
-    t => t.type === 'document' && !t.name.startsWith('sanity.')
-  );
+  const documentTypes = schemaTypes.filter((t) => t.type === 'document' && !t.name.startsWith('sanity.'));
 
   // Filter to object types (for nested objects)
-  const objectTypes = schemaTypes.filter(
-    t => t.type === 'object' && !t.name.startsWith('sanity.')
-  );
+  const objectTypes = schemaTypes.filter((t) => t.type === 'object' && !t.name.startsWith('sanity.'));
 
   const generateDocumentType = (schemaType: SchemaType): string => {
     const typeName = typeMappings[schemaType.name] ?? upperFirst(schemaType.name);
@@ -561,26 +548,21 @@ export const fetchers = async (
   source: 'Contentful' | 'Sanity',
   typeMappings: Record<string, string>,
   schemaTypes: ContentType[] | SchemaType[],
-  skipReferenceFields: boolean  // Ignored for Sanity
+  skipReferenceFields: boolean // Ignored for Sanity
 ): Promise<DocumentNode> => {
   let gqlStatements: string;
 
   if (source === 'Sanity') {
     // Sanity: placeholder types only, no field mapping
-    gqlStatements = generateSanitySchema(
-      typeMappings,
-      schemaTypes as SchemaType[]
-    );
+    gqlStatements = generateSanitySchema(typeMappings, schemaTypes as SchemaType[]);
   } else {
     // Contentful: full field mapping (unchanged)
-    gqlStatements = generateContentfulSchema(
-      typeMappings,
-      schemaTypes as ContentType[],
-      skipReferenceFields
-    );
+    gqlStatements = generateContentfulSchema(typeMappings, schemaTypes as ContentType[], skipReferenceFields);
   }
 
-  return gql`${gqlStatements}`;
+  return gql`
+    ${gqlStatements}
+  `;
 };
 ```
 
@@ -615,13 +597,13 @@ const typeDefs = gql`
 
 #### Key Differences from Contentful
 
-| Aspect | Contentful | Sanity |
-|--------|------------|--------|
-| **Field Generation** | Auto-generated from schema | None - via extensions |
-| **Schema Complexity** | Full field mapping | Placeholder stubs |
-| **Consumer Effort** | Minimal | Must define fields |
-| **Flexibility** | Schema-driven | Extension-driven |
-| **skipReferenceFields** | Used | Ignored |
+| Aspect                  | Contentful                 | Sanity                |
+| ----------------------- | -------------------------- | --------------------- |
+| **Field Generation**    | Auto-generated from schema | None - via extensions |
+| **Schema Complexity**   | Full field mapping         | Placeholder stubs     |
+| **Consumer Effort**     | Minimal                    | Must define fields    |
+| **Flexibility**         | Schema-driven              | Extension-driven      |
+| **skipReferenceFields** | Used                       | Ignored               |
 
 #### Benefits of This Approach
 
@@ -661,7 +643,7 @@ const getFieldValue = (item: any, fieldName: string, locale: string, cms: string
     const value = item[fieldName];
     // Internationalized array
     if (Array.isArray(value) && value[0]?._key) {
-      return value.find(v => v._key === locale)?.value ?? value[0]?.value;
+      return value.find((v) => v._key === locale)?.value ?? value[0]?.value;
     }
     // Slug
     if (value?._type === 'slug') return value.current;
@@ -759,7 +741,7 @@ const getData = async (config, type, env, itemId) => {
 
     // Simple query - no translation joins
     const doc = await client.fetch(`*[_id == $id][0]`, { id: itemId });
-    return doc;  // Return native, no conversion
+    return doc; // Return native, no conversion
   }
   // Contentful path unchanged
 };
@@ -770,9 +752,7 @@ const getData = async (config, type, env, itemId) => {
 ```typescript
 // Remove convertSanityDoc calls
 // For Sanity, pass body directly (it's already native)
-data = isTruncated && action !== 'delete'
-  ? await getData(config, type, env, itemId)
-  : body;  // Native Sanity document, no conversion
+data = isTruncated && action !== 'delete' ? await getData(config, type, env, itemId) : body; // Native Sanity document, no conversion
 ```
 
 #### Handler Types Update
@@ -784,7 +764,7 @@ The handlers in `cms-webhook-handler/src/handlers.ts` expect `BaseEntry` and `Ba
 export type ProcessCommand<T> = {
   isPreview: boolean;
   action: 'update' | 'delete';
-  data: T;  // Can be BaseEntry | SanityDocument | BaseAsset | SanityImageAsset
+  data: T; // Can be BaseEntry | SanityDocument | BaseAsset | SanityImageAsset
 };
 
 // Handler implementations need CMS-aware logic
@@ -793,14 +773,12 @@ export const createHandlers = (config: LastRevAppConfig) => {
 
   return {
     entry: async (command: ProcessCommand<BaseEntry | SanityDocument>) => {
-      const id = isSanity
-        ? (command.data as SanityDocument)._id
-        : (command.data as BaseEntry).sys.id;
+      const id = isSanity ? (command.data as SanityDocument)._id : (command.data as BaseEntry).sys.id;
       // Cache invalidation logic...
     },
     asset: async (command: ProcessCommand<BaseAsset | SanityImageAsset>) => {
       // Similar CMS-aware logic
-    },
+    }
     // ...
   };
 };
@@ -869,7 +847,7 @@ const syncAllEntriesForSchemaType = async (
   // Return native documents, no conversion
   return {
     syncToken: new Date().toISOString(),
-    items: entries  // Native Sanity documents
+    items: entries // Native Sanity documents
   };
 };
 
@@ -887,7 +865,7 @@ const syncAllAssets = async (
   // Return native documents, no conversion
   return {
     syncToken: new Date().toISOString(),
-    items: assets  // Native Sanity assets
+    items: assets // Native Sanity assets
   };
 };
 ```
@@ -897,7 +875,7 @@ const syncAllAssets = async (
 ```typescript
 // Remove mapSanityTypesToContentfulTypes
 // Use native Sanity schema types directly
-const contentTypes = config.sanity.schemaTypes;  // Already SchemaType[]
+const contentTypes = config.sanity.schemaTypes; // Already SchemaType[]
 ```
 
 **Estimated Hours:** 1-2
@@ -917,23 +895,24 @@ const contentTypes = config.sanity.schemaTypes;  // Already SchemaType[]
 
 ## Summary: Estimated Developer Hours
 
-| Phase | Description | Hours |
-|-------|-------------|-------|
-| Phase 1 | Types package updates | 2-3 |
-| Phase 2 | Sanity loader rewrite | 4-6 |
-| Phase 3 | GraphQL resolvers restructure | 6-10 |
-| Phase 4 | GraphQL schema generation (placeholders only) | 1-2 |
-| Phase 5 | Deprecate sanity-mapper | 1-2 |
-| Phase 6 | Path utilities update | 2-3 |
-| Phase 7 | Webhook handlers update | 2-3 |
-| Phase 7b | CMS sync-to-fs update | 1-2 |
-| Phase 8 | Testing & migration | 6-8 |
-| | | |
-| **Total** | | **25-39 hours** |
+| Phase     | Description                                   | Hours           |
+| --------- | --------------------------------------------- | --------------- |
+| Phase 1   | Types package updates                         | 2-3             |
+| Phase 2   | Sanity loader rewrite                         | 4-6             |
+| Phase 3   | GraphQL resolvers restructure                 | 6-10            |
+| Phase 4   | GraphQL schema generation (placeholders only) | 1-2             |
+| Phase 5   | Deprecate sanity-mapper                       | 1-2             |
+| Phase 6   | Path utilities update                         | 2-3             |
+| Phase 7   | Webhook handlers update                       | 2-3             |
+| Phase 7b  | CMS sync-to-fs update                         | 1-2             |
+| Phase 8   | Testing & migration                           | 6-8             |
+|           |                                               |                 |
+| **Total** |                                               | **25-39 hours** |
 
 ### Timeline
 
 For 4-6 hours/day:
+
 - **1 developer:** 4-10 days
 
 ---
@@ -979,13 +958,13 @@ Update schema fields to use internationalized arrays:
 defineField({
   name: 'title',
   type: 'string'
-})
+});
 
 // After
 defineField({
   name: 'title',
   type: 'internationalizedArrayString'
-})
+});
 ```
 
 ### 2. Migrate Existing Content
@@ -1001,7 +980,7 @@ If directly accessing content fields, update patterns:
 const title = content.fields.title[locale];
 
 // After (Sanity native)
-const title = content.title.find(t => t._key === locale)?.value;
+const title = content.title.find((t) => t._key === locale)?.value;
 ```
 
 ### 4. Update Dependencies
@@ -1016,12 +995,14 @@ npm install @last-rev/graphql-cms-core@^1.0.0
 ## Appendix: File Changes Summary
 
 ### Files to Create
+
 - `packages/graphql-cms-core/src/resolvers/sanity/fieldResolver.ts`
 - `packages/graphql-cms-core/src/resolvers/sanity/createResolvers.ts`
 - `packages/graphql-cms-core/src/utils/sanity/getLocalizedField.ts`
 - `packages/graphql-schema-gen/src/fetchers/sanity.ts`
 
 ### Files to Significantly Modify
+
 - `packages/types/index.d.ts` - Add Sanity type exports
 - `packages/sanity-cms-loader/src/index.ts` - Complete rewrite, simplified GROQ
 - `packages/graphql-cms-core/src/resolvers/index.ts` - Add CMS routing
@@ -1033,10 +1014,12 @@ npm install @last-rev/graphql-cms-core@^1.0.0
 - `packages/cms-sync-to-fs/src/sanitySync.ts` - Remove convertSanityDoc, simplify GROQ queries
 
 ### Files to Deprecate/Remove
+
 - `packages/sanity-mapper/src/index.ts` - Remove `convertSanityDoc`, `mapSanityValueToContentful`
 - `packages/sanity-mapper/src/richTextHelpers.ts` - Optional, keep if converting PT to Contentful RT
 
 ### Files Unchanged
+
 - All Contentful packages
 - All cache layer packages
 - Infrastructure packages
@@ -1054,4 +1037,4 @@ This architectural change significantly simplifies the Sanity integration:
 
 **Total Estimated Effort: 25-39 developer hours (4-10 days for 1 developer)**
 
-__Note: This does not include changes to consumers of the library. It is expected that consumers will need to update their code (mostly graphql extensions) to use the new Sanity native architecture. This is not included in the estimated effort.__
+**Note: This does not include changes to consumers of the library. It is expected that consumers will need to update their code (mostly graphql extensions) to use the new Sanity native architecture. This is not included in the estimated effort.**

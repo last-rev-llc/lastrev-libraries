@@ -54,10 +54,7 @@ const transform = (file: FileInfo, api: API, _options: Options): string | null =
       const funcName = callee.name;
 
       // For convertSanityDoc and mapSanityTypesToContentfulTypes, replace with the first argument
-      if (
-        funcName === 'convertSanityDoc' ||
-        funcName === 'mapSanityTypesToContentfulTypes'
-      ) {
+      if (funcName === 'convertSanityDoc' || funcName === 'mapSanityTypesToContentfulTypes') {
         const args = path.node.arguments;
         if (args.length > 0) {
           // Replace the call expression with just the first argument
@@ -77,11 +74,7 @@ const transform = (file: FileInfo, api: API, _options: Options): string | null =
           // If no arguments, add a comment
           const parent = path.parent;
           if (parent && parent.node) {
-            const comment = j.commentLine(
-              ' TODO: processTranslations removed - i18n is now field-level',
-              true,
-              false
-            );
+            const comment = j.commentLine(' TODO: processTranslations removed - i18n is now field-level', true, false);
             if (parent.node.comments) {
               parent.node.comments.push(comment);
             } else {
@@ -103,10 +96,7 @@ const transform = (file: FileInfo, api: API, _options: Options): string | null =
       if (property.type === 'Identifier') {
         const methodName = property.name;
 
-        if (
-          methodName === 'convertSanityDoc' ||
-          methodName === 'mapSanityTypesToContentfulTypes'
-        ) {
+        if (methodName === 'convertSanityDoc' || methodName === 'mapSanityTypesToContentfulTypes') {
           const args = path.node.arguments;
           if (args.length > 0) {
             j(path).replaceWith(args[0]);

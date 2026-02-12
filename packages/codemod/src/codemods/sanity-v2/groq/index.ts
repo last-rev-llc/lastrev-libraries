@@ -10,11 +10,7 @@ import type { API, FileInfo, Options, JSCodeshift } from 'jscodeshift';
  * This transform finds string literals and template literals that contain GROQ queries
  * and transforms them to remove document-level i18n patterns.
  */
-export function transformGroqQuery(
-  file: FileInfo,
-  api: API,
-  _options: Options
-): string | null {
+export function transformGroqQuery(file: FileInfo, api: API, _options: Options): string | null {
   const j: JSCodeshift = api.jscodeshift;
   const root = j(file.source);
   let hasChanges = false;

@@ -14,14 +14,7 @@ const emptyLookup: SideKickLookup = {
 };
 
 // Sanity system fields to exclude when iterating content fields
-const SANITY_SYSTEM_FIELDS = new Set([
-  '_id',
-  '_type',
-  '_rev',
-  '_createdAt',
-  '_updatedAt',
-  '_key'
-]);
+const SANITY_SYSTEM_FIELDS = new Set(['_id', '_type', '_rev', '_createdAt', '_updatedAt', '_key']);
 
 /**
  * Get field names from a content entry.

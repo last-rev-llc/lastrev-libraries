@@ -100,13 +100,14 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: any[]; config
           ctx.displayType = displayType;
 
           if (ids.length) {
-            return loadDocuments(ctx, ids.map((id) => ({ id, preview })));
+            return loadDocuments(
+              ctx,
+              ids.map((id) => ({ id, preview }))
+            );
           }
 
           if (contentTypes.length) {
-            const results = await Promise.all(
-              contentTypes.map((typeId) => loadDocumentsByType(ctx, typeId, preview))
-            );
+            const results = await Promise.all(contentTypes.map((typeId) => loadDocumentsByType(ctx, typeId, preview)));
             return results.flat().filter((r: any) => !isError(r));
           }
 
@@ -248,9 +249,12 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: any[]; config
             }
           }
 
-          const entries = (await loadDocuments(ctx, ids.map((id: string) => ({ id, preview })))).filter(
-            (e: any) => !!e && !isError(e)
-          ) as BaseEntry[];
+          const entries = (
+            await loadDocuments(
+              ctx,
+              ids.map((id: string) => ({ id, preview }))
+            )
+          ).filter((e: any) => !!e && !isError(e)) as BaseEntry[];
 
           const sitemapEntries = (
             await Promise.all(

@@ -25,7 +25,7 @@ describe('groqTransform', () => {
       const output = applyTransform(input);
       expect(output).not.toBeNull();
       // The query itself should not contain __i18n_lang (comments might)
-      expect(output).toContain("'*[_type == \"page\"]'");
+      expect(output).toContain('\'*[_type == "page"]\'');
       expect(output).toContain('WARNING');
     });
 
@@ -33,7 +33,7 @@ describe('groqTransform', () => {
       const input = `const query = '*[_type == "page" && __i18n_lang == "en"]';`;
       const output = applyTransform(input);
       expect(output).not.toBeNull();
-      expect(output).toContain("'*[_type == \"page\"]'");
+      expect(output).toContain('\'*[_type == "page"]\'');
     });
   });
 
@@ -43,14 +43,14 @@ describe('groqTransform', () => {
       const output = applyTransform(input);
       expect(output).not.toBeNull();
       // The query should have _translations removed
-      expect(output).toContain("'*[_type == \"page\"]{...}'");
+      expect(output).toContain('\'*[_type == "page"]{...}\'');
     });
 
     it('removes _translations from select', () => {
       const input = `const query = '*[_type == "page"]{title, _translations}';`;
       const output = applyTransform(input);
       expect(output).not.toBeNull();
-      expect(output).toContain("'*[_type == \"page\"]{title}'");
+      expect(output).toContain('\'*[_type == "page"]{title}\'');
     });
   });
 
@@ -83,7 +83,7 @@ describe('groqTransform', () => {
 
   describe('tagged template literals', () => {
     it('transforms groq tagged templates', () => {
-      const input = "const query = groq`*[_type == \"page\" && __i18n_lang == $locale]`;";
+      const input = 'const query = groq`*[_type == "page" && __i18n_lang == $locale]`;';
       const output = applyTransform(input);
       expect(output).not.toBeNull();
       // The query should be transformed

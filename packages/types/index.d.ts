@@ -232,7 +232,11 @@ export type LoadEntriesForPathFunction = (
   site?: string
 ) => Promise<PathEntries | null>;
 
-export type loadPathsForContentFunction<T extends CmsEntry = BaseEntry> = (entry: T, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
+export type loadPathsForContentFunction<T extends CmsEntry = BaseEntry> = (
+  entry: T,
+  ctx: ApolloContext,
+  site?: string
+) => Promise<PathInfo[]>;
 
 export type ApolloContext = {
   /**

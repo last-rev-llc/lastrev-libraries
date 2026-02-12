@@ -144,9 +144,7 @@ const createSanityLoaders = (config: LastRevAppConfig, fallbackLoaders: SanityLo
       // Document ids from Redis that are ready to load
       const docIdsToRequest: ItemKey[] = [];
 
-      const redisKeys = keys.map(
-        (key) => `${key.preview ? 'preview' : 'production'}:document_ids_by_type:${key.id}`
-      );
+      const redisKeys = keys.map((key) => `${key.preview ? 'preview' : 'production'}:document_ids_by_type:${key.id}`);
 
       const multi = client.multi();
 

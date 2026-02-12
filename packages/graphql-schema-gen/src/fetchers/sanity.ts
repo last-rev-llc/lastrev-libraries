@@ -17,10 +17,7 @@ const reservedFields: Record<string, string> = {
 /**
  * Map schema type name using typeMappings
  */
-const mapSchemaTypeName = (
-  schema: SanitySchemaType,
-  typeMappings: Record<string, string>
-): SanitySchemaType => {
+const mapSchemaTypeName = (schema: SanitySchemaType, typeMappings: Record<string, string>): SanitySchemaType => {
   let name = schema.name;
   if (has(typeMappings, name)) {
     name = typeMappings[name];
@@ -53,10 +50,7 @@ const generateObjectType = (schema: SanitySchemaType): string => {
 /**
  * Generate GraphQL schema from Sanity schema types
  */
-export const generateSanitySchema = (
-  typeMappings: Record<string, string>,
-  schemas: SanitySchemaType[]
-): string => {
+export const generateSanitySchema = (typeMappings: Record<string, string>, schemas: SanitySchemaType[]): string => {
   const mappedSchemas = schemas.map((s) => mapSchemaTypeName(s, typeMappings));
 
   const documents = mappedSchemas.filter((s) => s.type === 'document');

@@ -39,9 +39,7 @@ const transform = (file: FileInfo, api: API, _options: Options): string | null =
           }
 
           // Check if comment already exists
-          const hasComment = parent.node.comments.some(
-            (c: any) => c.value && c.value.includes(fieldName)
-          );
+          const hasComment = parent.node.comments.some((c: any) => c.value && c.value.includes(fieldName));
 
           if (!hasComment) {
             parent.node.comments.push(comment);
@@ -71,9 +69,7 @@ const transform = (file: FileInfo, api: API, _options: Options): string | null =
             parent.node.comments = [];
           }
 
-          const hasComment = parent.node.comments.some(
-            (c: any) => c.value && c.value.includes(fieldName)
-          );
+          const hasComment = parent.node.comments.some((c: any) => c.value && c.value.includes(fieldName));
 
           if (!hasComment) {
             parent.node.comments.push(comment);
@@ -144,9 +140,7 @@ const transform = (file: FileInfo, api: API, _options: Options): string | null =
               parent.node.comments = [];
             }
 
-            const hasComment = parent.node.comments.some(
-              (c: any) => c.value && c.value.includes(key.name)
-            );
+            const hasComment = parent.node.comments.some((c: any) => c.value && c.value.includes(key.name));
 
             if (!hasComment) {
               parent.node.comments.push(comment);

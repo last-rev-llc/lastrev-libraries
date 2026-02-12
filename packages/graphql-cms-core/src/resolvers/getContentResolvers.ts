@@ -98,9 +98,7 @@ const getContentResolvers = ({
   const contentTypeReps = collectContentTypes(contentTypes, mappers, typeMappings, cms);
   const virtualTypeReps = collectVirtualTypes(mappers, contentTypeReps);
 
-  const idResolver = cms === 'Sanity'
-    ? (content: any) => content?._id
-    : (content: any) => content?.sys?.id;
+  const idResolver = cms === 'Sanity' ? (content: any) => content?._id : (content: any) => content?.sys?.id;
 
   const contentResolvers = [...virtualTypeReps, ...contentTypeReps].reduce((acc, { typeName, fields }) => {
     return {

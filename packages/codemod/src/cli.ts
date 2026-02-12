@@ -14,10 +14,7 @@ import { registry } from './codemods';
 // Package info
 const pkg = require('../package.json');
 
-program
-  .name('codemod')
-  .description('Run codemods to transform your codebase')
-  .version(pkg.version);
+program.name('codemod').description('Run codemods to transform your codebase').version(pkg.version);
 
 // List command
 program
@@ -137,12 +134,7 @@ program.parse();
 /**
  * Print migration report to console
  */
-function printReport(
-  report: MigrationReport,
-  targetDir: string,
-  dryRun: boolean,
-  codemodName: string
-): void {
+function printReport(report: MigrationReport, targetDir: string, dryRun: boolean, codemodName: string): void {
   console.log('\n' + chalk.bold('Summary:'));
   console.log(chalk.gray('─'.repeat(40)));
   console.log(`  Total files scanned: ${chalk.white(report.totalFiles)}`);
@@ -188,11 +180,7 @@ function printReport(
 
   const reportFileName = `${codemodName}-migration-report.md`;
   if (!dryRun && report.changedFiles > 0) {
-    console.log(
-      '\n' +
-        chalk.green('✓ Migration complete! ') +
-        chalk.gray(`Report saved to: ${reportFileName}`)
-    );
+    console.log('\n' + chalk.green('✓ Migration complete! ') + chalk.gray(`Report saved to: ${reportFileName}`));
   } else if (dryRun) {
     console.log('\n' + chalk.yellow('Dry-run complete. ') + chalk.gray('No files were modified.'));
   }

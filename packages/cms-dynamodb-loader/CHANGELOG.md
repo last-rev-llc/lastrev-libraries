@@ -1,5 +1,11 @@
 # @last-rev/contentful-dynamodb-loader
 
+## 0.2.1
+
+### Patch Changes
+
+- @last-rev/logging@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

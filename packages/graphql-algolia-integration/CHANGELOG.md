@@ -1,5 +1,17 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.6.0
+
+### Minor Changes
+
+- 4a3d88c: Major update to Sanity path for libraries. Sanity object structure will now be preserved instead of mapping to Contentful objects.
+
+### Patch Changes
+
+- Updated dependencies [4a3d88c]
+  - @last-rev/sanity-webhook-parser@0.3.0
+  - @last-rev/contentful-webhook-parser@0.3.0
+
 ## 0.5.0
 
 ### Minor Changes

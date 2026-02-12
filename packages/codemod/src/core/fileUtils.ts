@@ -62,10 +62,7 @@ export async function findSourceFiles(
 /**
  * Find all GROQ files in a directory
  */
-export async function findGroqFiles(
-  targetDir: string,
-  ignore: string[] = DEFAULT_IGNORE_PATTERNS
-): Promise<string[]> {
+export async function findGroqFiles(targetDir: string, ignore: string[] = DEFAULT_IGNORE_PATTERNS): Promise<string[]> {
   const pattern = DEFAULT_GLOB_PATTERNS.groq;
 
   return glob(pattern, {

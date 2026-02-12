@@ -57,10 +57,7 @@ const syncAllEntriesForSchemaType = async (
   };
 };
 
-const syncAllAssets = async (
-  client: SanityClient,
-  syncToken?: string
-): Promise<SanitySyncCollection> => {
+const syncAllAssets = async (client: SanityClient, syncToken?: string): Promise<SanitySyncCollection> => {
   // Simple GROQ query - fetch assets with optional sync token filter
   const query = `*[_type in ['sanity.imageAsset', 'sanity.fileAsset']${
     syncToken ? ' && _updatedAt > $syncToken' : ''

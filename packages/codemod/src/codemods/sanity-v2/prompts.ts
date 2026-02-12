@@ -43,7 +43,11 @@ export function getPrompts(options: CodemodRunOptions): QuestionCollection {
         { name: 'Remove sanity-mapper (convertSanityDoc, etc.)', value: 'removeMapper', checked: true },
         { name: 'Utility migration (entry.fields → entry)', value: 'utilityMigration', checked: true },
         { name: 'Generic types (add <SanityDocument> parameter)', value: 'genericTypes', checked: true },
-        { name: 'Sys property access (.sys.id → ._id, .sys.contentType.sys.id → ._type)', value: 'sysPropertyAccess', checked: true }
+        {
+          name: 'Sys property access (.sys.id → ._id, .sys.contentType.sys.id → ._type)',
+          value: 'sysPropertyAccess',
+          checked: true
+        }
       ]
     },
     {
@@ -89,7 +93,7 @@ export function processAnswers(answers: Record<string, unknown>): Partial<Sanity
     utilityMigration: selectedTransforms.includes('utilityMigration'),
     genericTypes: selectedTransforms.includes('genericTypes'),
     sysPropertyAccess: selectedTransforms.includes('sysPropertyAccess'),
-    useInternationalizedArrays: answers.useInternationalizedArrays as boolean ?? true,
-    fallbackToDefaultLocale: answers.fallbackToDefaultLocale as boolean ?? false
+    useInternationalizedArrays: (answers.useInternationalizedArrays as boolean) ?? true,
+    fallbackToDefaultLocale: (answers.fallbackToDefaultLocale as boolean) ?? false
   };
 }

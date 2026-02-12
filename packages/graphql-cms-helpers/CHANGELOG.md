@@ -1,5 +1,24 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.3.0
+
+### Minor Changes
+
+- 4a3d88c: Major update to Sanity path for libraries. Sanity object structure will now be preserved instead of mapping to Contentful objects.
+
+### Patch Changes
+
+- Updated dependencies [4a3d88c]
+  - @last-rev/sanity-cms-loader@0.3.0
+  - @last-rev/cms-redis-loader@0.3.0
+  - @last-rev/cms-fs-loader@0.3.0
+  - @last-rev/cms-path-util@0.3.0
+  - @last-rev/app-config@0.7.0
+  - @last-rev/types@0.6.0
+  - @last-rev/cms-dynamodb-loader@0.2.1
+  - @last-rev/contentful-cms-loader@0.6.2
+  - @last-rev/cms-path-rules-engine@0.2.1
+
 ## 0.2.5
 
 ### Patch Changes

@@ -41,9 +41,9 @@ export const TYPE_MAPPINGS: TypeMapping[] = [
  * Directory and key constant mappings
  */
 export const DIRECTORY_MAPPINGS: Record<string, string> = {
-  'entries': 'documents',
-  'assets': 'documents',
-  'entry_ids_by_content_type': 'document_ids_by_type'
+  entries: 'documents',
+  assets: 'documents',
+  entry_ids_by_content_type: 'document_ids_by_type'
 };
 
 /**
@@ -58,11 +58,7 @@ export const REDIS_KEY_MAPPINGS: Record<string, string> = {
 /**
  * Imports to remove from @last-rev/sanity-mapper
  */
-export const SANITY_MAPPER_IMPORTS = [
-  'convertSanityDoc',
-  'mapSanityTypesToContentfulTypes',
-  'processTranslations'
-];
+export const SANITY_MAPPER_IMPORTS = ['convertSanityDoc', 'mapSanityTypesToContentfulTypes', 'processTranslations'];
 
 /**
  * Package to remove from dependencies
@@ -72,20 +68,12 @@ export const SANITY_MAPPER_PACKAGE = '@last-rev/sanity-mapper';
 /**
  * I18n field patterns to detect and transform
  */
-export const I18N_FIELD_PATTERNS = [
-  '__i18n_lang',
-  '_translations',
-  '__i18n_refs'
-];
+export const I18N_FIELD_PATTERNS = ['__i18n_lang', '_translations', '__i18n_refs'];
 
 /**
  * GROQ patterns for i18n that should be removed
  */
-export const GROQ_I18N_PATTERNS = [
-  '__i18n_lang == $locale',
-  '__i18n_lang == "',
-  '_translations[]->'
-];
+export const GROQ_I18N_PATTERNS = ['__i18n_lang == $locale', '__i18n_lang == "', '_translations[]->'];
 
 /**
  * File extensions to process

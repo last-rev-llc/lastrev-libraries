@@ -1,5 +1,12 @@
 # @last-rev/logging
 
+## 0.2.1
+
+### Patch Changes
+
+- Updated dependencies [4a3d88c]
+  - @last-rev/app-config@0.7.0
+
 ## 0.2.0
 
 ### Minor Changes

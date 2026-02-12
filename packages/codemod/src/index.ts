@@ -13,12 +13,7 @@ export {
   DEFAULT_GLOB_PATTERNS,
   DEFAULT_IGNORE_PATTERNS
 } from './core/fileUtils';
-export {
-  generateMarkdownReport,
-  createEmptyReport,
-  addResultToReport,
-  finalizeReport
-} from './core/reportGenerator';
+export { generateMarkdownReport, createEmptyReport, addResultToReport, finalizeReport } from './core/reportGenerator';
 
 // Codemods
 export { sanityV2Codemod } from './codemods/sanity-v2';
