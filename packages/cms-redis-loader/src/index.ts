@@ -1,12 +1,12 @@
 import DataLoader, { Options } from 'dataloader';
-import { ContentType, BaseEntry, BaseAsset } from '@last-rev/types';
+import { ContentType, BaseEntry, BaseAsset, SanityDocument } from '@last-rev/types';
 import { getWinstonLogger } from '@last-rev/logging';
 import { SimpleTimer as Timer } from '@last-rev/timer';
 import Redis from 'ioredis';
-import { ItemKey, CmsLoaders, FVLKey } from '@last-rev/types';
+import { ItemKey, CmsLoaders, SanityLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
 import { getKey, isError, isNil, parse, stringify } from './helpers';
-import { primeRedisEntriesByContentType, primeRedisEntriesOrAssets } from './primers';
+import { primeRedisEntriesByContentType, primeRedisEntriesOrAssets, primeRedisDocumentsByType } from './primers';
 
 const logger = getWinstonLogger({ package: 'cms-redis-loader', module: 'index', strategy: 'Redis' });
 
@@ -22,6 +22,13 @@ const getOptions = (maxBatchSize: number): Options<ItemKey, any, string> => ({
 const flvOptions: Options<FVLKey, any, string> = {
   cacheKeyFn: (key: FVLKey) => {
     const baseKey = `${key.contentType}-${key.field}-${key.value}`;
+    return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
+  }
+};
+
+const refByOptions: Options<RefByKey, any, string> = {
+  cacheKeyFn: (key: RefByKey) => {
+    const baseKey = `${key.contentType}-${key.field}-${key.id}`;
     return key.preview ? `${baseKey}-preview` : `${baseKey}-prod`;
   }
 };
@@ -43,7 +50,209 @@ const getClient = (config: LastRevAppConfig) => {
   return clients[key];
 };
 
-const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): CmsLoaders => {
+/**
+ * Create Sanity-specific loaders using unified documents key
+ */
+const createSanityLoaders = (config: LastRevAppConfig, fallbackLoaders: SanityLoaders): SanityLoaders => {
+  const client = getClient(config);
+
+  const maxBatchSize = config.redis.maxBatchSize || 1000;
+  const ttlSeconds = config.redis.ttlSeconds;
+
+  const fetchAndSetDocuments = async (
+    keys: readonly ItemKey[],
+    fallbackLoader: DataLoader<ItemKey, SanityDocument | null>
+  ): Promise<(SanityDocument | null)[]> => {
+    let timer = new Timer();
+    const redisKeys = keys.map((key) => getKey(key, 'documents'));
+
+    let unparsed: (string | null)[] = [];
+
+    try {
+      unparsed = await client.mget(...redisKeys);
+    } catch (err: any) {
+      logger.error(`mget() ${err.message}`, {
+        caller: 'fetchAndSetDocuments',
+        stack: err.stack
+      });
+      unparsed = redisKeys.map(() => null);
+    }
+
+    const results = unparsed.map(parse);
+
+    logger.debug('Fetched documents', {
+      caller: 'fetchAndSetDocuments',
+      elapsedMs: timer.end().millis,
+      itemsSuccessful: results.length,
+      itemsAttempted: redisKeys.length
+    });
+
+    const cacheMissIds: ItemKey[] = [];
+
+    results.forEach((result, index) => {
+      if (isNil(result)) {
+        cacheMissIds.push(keys[index]);
+      }
+    });
+
+    if (cacheMissIds.length) {
+      const sourceResults = await fallbackLoader.loadMany(cacheMissIds);
+
+      primeRedisEntriesOrAssets<SanityDocument | null>(
+        client,
+        cacheMissIds,
+        'documents',
+        sourceResults,
+        maxBatchSize,
+        ttlSeconds
+      );
+
+      keys.forEach((key, index) => {
+        if (isNil(results[index])) {
+          const cacheMissIndex = cacheMissIds.indexOf(key);
+          if (cacheMissIndex !== -1) {
+            results[index] = sourceResults[cacheMissIndex];
+          }
+        }
+      });
+    }
+
+    return results as (SanityDocument | null)[];
+  };
+
+  const getBatchDocumentFetcher = (): DataLoader.BatchLoadFn<ItemKey, SanityDocument | null> => async (keys) =>
+    fetchAndSetDocuments(keys, fallbackLoaders.documentLoader);
+
+  const getBatchDocumentsByTypeFetcher =
+    ({
+      documentLoader
+    }: {
+      documentLoader: DataLoader<ItemKey, SanityDocument | null>;
+    }): DataLoader.BatchLoadFn<ItemKey, SanityDocument[]> =>
+    async (keys) => {
+      // keys are types [{ id: 'typeName', preview: true}]
+      if (!keys.length) return [];
+      logger.debug(`attempting to load ${keys.length} document types`, {
+        caller: 'getBatchDocumentsByTypeFetcher'
+      });
+      let timer = new Timer();
+
+      // Map of typeName -> documents to be used as return
+      const out: { [typeName: string]: SanityDocument[] } = {};
+      // Type names for which we don't have Redis data
+      const cacheMissTypeIds: ItemKey[] = [];
+      // Document ids from Redis that are ready to load
+      const docIdsToRequest: ItemKey[] = [];
+
+      const redisKeys = keys.map(
+        (key) => `${key.preview ? 'preview' : 'production'}:document_ids_by_type:${key.id}`
+      );
+
+      const multi = client.multi();
+
+      // Get me all the ids inside Redis for every type in redisKeys
+      redisKeys.forEach((k) => multi.smembers(k));
+
+      let multiResults: [Error | null, unknown][] | null;
+
+      try {
+        // Array of arrays of ids for each type
+        multiResults = (await multi.exec()) || [];
+      } catch (err: any) {
+        logger.error(`multi.exec() ${err.message}`, {
+          caller: 'getBatchDocumentsByTypeFetcher',
+          stack: err.stack
+        });
+        return [];
+      }
+
+      timer.end();
+
+      // Fill docIdsToRequest with Redis data
+      let successfulTypeCount = 0;
+      multiResults.forEach(([err, arrayOfIds], index) => {
+        if (err || !arrayOfIds || !(arrayOfIds as any[]).length) {
+          // We don't have any ids for this type in Redis or there was an error
+          // Save for fallback
+          cacheMissTypeIds.push(keys[index]);
+        } else {
+          successfulTypeCount++;
+          // Aggregate all the document ids of each type
+          docIdsToRequest.push(
+            ...(arrayOfIds as any[]).filter((x) => !!x).map((id) => ({ id, preview: keys[index].preview }))
+          );
+        }
+      });
+
+      logger.debug('Fetched document IDs by type', {
+        caller: 'getBatchDocumentsByTypeFetcher',
+        elapsedMs: timer.millis,
+        itemsAttempted: keys.length,
+        itemsSuccessful: successfulTypeCount
+      });
+
+      // for every document id that was found in Redis
+      // Use loader to get the documents
+      if (docIdsToRequest.length) {
+        const docResults = await documentLoader.loadMany(docIdsToRequest);
+
+        docResults.forEach((doc) => {
+          if (isNil(doc) || isError(doc)) return;
+          const typeName = doc._type;
+          out[typeName] = out[typeName] || [];
+          out[typeName].push(doc);
+        });
+      }
+
+      // Use the fallback loader for every missing types in Redis
+      // Leverage getting the full documents + id to prime Redis
+      if (cacheMissTypeIds.length) {
+        const sourceResults = await fallbackLoaders.documentsByTypeLoader.loadMany(cacheMissTypeIds);
+
+        // Clean all errors and nulls
+        const filtered = sourceResults.filter((result) => !isError(result) && !isNil(result));
+
+        primeRedisDocumentsByType(client, filtered, cacheMissTypeIds, maxBatchSize, ttlSeconds);
+
+        // Add all the fallback results in the out map
+        (filtered as SanityDocument[][]).forEach((docArray, idx) => {
+          const { id: typeName } = cacheMissTypeIds[idx];
+          out[typeName] = docArray;
+        });
+      }
+
+      // build return array from out map
+      const outArray = keys.map(({ id: typeName }) => out[typeName] || []);
+      return outArray;
+    };
+
+  const getBatchDocumentByFieldValueFetcher = (): DataLoader.BatchLoadFn<FVLKey, SanityDocument | null> => {
+    return async (keys) => fallbackLoaders.documentByFieldValueLoader.loadMany(keys);
+  };
+
+  const getBatchDocumentsRefByFetcher = (): DataLoader.BatchLoadFn<RefByKey, SanityDocument[]> => {
+    return async (keys) => fallbackLoaders.documentsRefByLoader.loadMany(keys);
+  };
+
+  const options = getOptions(maxBatchSize);
+
+  const documentLoader = new DataLoader(getBatchDocumentFetcher(), options);
+  const documentsByTypeLoader = new DataLoader(getBatchDocumentsByTypeFetcher({ documentLoader }), options);
+  const documentByFieldValueLoader = new DataLoader(getBatchDocumentByFieldValueFetcher(), flvOptions);
+  const documentsRefByLoader = new DataLoader(getBatchDocumentsRefByFetcher(), refByOptions);
+
+  return {
+    documentLoader,
+    documentsByTypeLoader,
+    documentByFieldValueLoader,
+    documentsRefByLoader
+  };
+};
+
+/**
+ * Create Contentful-specific loaders using separate entries/assets keys
+ */
+const createContentfulLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): CmsLoaders => {
   const client = getClient(config);
 
   const maxBatchSize = config.redis.maxBatchSize || 1000;
@@ -288,5 +497,20 @@ const createLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsLoaders): C
     entriesRefByLoader: fallbackLoaders.entriesRefByLoader
   };
 };
+
+/**
+ * Create CMS loaders based on config.cms type
+ */
+function createLoaders(config: LastRevAppConfig, fallbackLoaders: SanityLoaders): SanityLoaders;
+function createLoaders(config: LastRevAppConfig, fallbackLoaders: CmsLoaders): CmsLoaders;
+function createLoaders(
+  config: LastRevAppConfig,
+  fallbackLoaders: CmsLoaders | SanityLoaders
+): CmsLoaders | SanityLoaders {
+  if (config.cms === 'Sanity') {
+    return createSanityLoaders(config, fallbackLoaders as SanityLoaders);
+  }
+  return createContentfulLoaders(config, fallbackLoaders as CmsLoaders);
+}
 
 export default createLoaders;

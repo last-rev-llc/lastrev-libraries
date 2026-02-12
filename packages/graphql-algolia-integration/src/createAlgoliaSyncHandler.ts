@@ -1,6 +1,10 @@
 import LastRevAppConfig from '@last-rev/app-config';
 import algoliasearch from 'algoliasearch';
-import parseWebhook from '@last-rev/contentful-webhook-parser';
+import {
+  parseWebhook as parseContentfulWebhook,
+  type WebhookParserResult
+} from '@last-rev/contentful-webhook-parser';
+import parseSanityWebhook from '@last-rev/sanity-webhook-parser';
 import { GraphQLClient } from 'graphql-request';
 import groupAlgoliaObjectsByIndex from './groupAlgoliaObjectsByIndex';
 import performAlgoliaQuery from './performAlgoliaQuery';
@@ -40,7 +44,18 @@ const createAlgoliaSyncHandler = (config: LastRevAppConfig, graphQlUrl: string) 
         : ['production'];
 
       try {
-        const parsed = parseWebhook(config, body, headers);
+        // CMS-aware webhook parsing
+        let parsed: WebhookParserResult;
+        switch (config.cms) {
+          case 'Sanity':
+            parsed = parseSanityWebhook(config, body, headers);
+            break;
+          case 'Contentful':
+          default:
+            parsed = parseContentfulWebhook(config, body, headers);
+            break;
+        }
+
         if (parsed.type === 'ContentType') {
           // don't do anything if only content type changed.
           return;

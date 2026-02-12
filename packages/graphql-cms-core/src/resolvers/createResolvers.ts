@@ -1,5 +1,5 @@
 import { GraphQLScalarType } from 'graphql';
-import { ContentType, ApolloContext, BaseEntry } from '@last-rev/types';
+import { ApolloContext, BaseEntry } from '@last-rev/types';
 import GraphQLJSON from 'graphql-type-json';
 import getContentResolvers from './getContentResolvers';
 import fieldsResolver from './fieldsResolver';
@@ -10,6 +10,7 @@ import LastRevAppConfig from '@last-rev/app-config';
 import buildSitemapFromEntries from '../utils/buildSitemapFromEntries';
 import { getWinstonLogger } from '@last-rev/logging';
 import getLocalizedField from '../utils/getLocalizedField';
+import { getContentId, getUpdatedAt, loadDocument, loadDocuments, loadDocumentsByType } from '../utils/contentUtils';
 import { pathNodeResolver } from '../utils/pathNodeResolver';
 
 const logger = getWinstonLogger({
@@ -17,7 +18,7 @@ const logger = getWinstonLogger({
   module: 'createResolvers'
 });
 
-const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]; config: LastRevAppConfig }) =>
+const createResolvers = ({ contentTypes, config }: { contentTypes: any[]; config: LastRevAppConfig }) =>
   merge(
     getContentResolvers({
       contentTypes,
@@ -72,7 +73,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           ctx.locale = locale || ctx.defaultLocale;
           ctx.displayType = displayType;
           // not locale specific. fieldsResolver handles that
-          const content = await ctx.loaders.entryLoader.load({ id, preview });
+          const content = await loadDocument(ctx, id, preview);
           // Add this to the content to be used by mappers and other resolvers
           if (content) {
             (content as any).displayType = displayType;
@@ -99,15 +100,14 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
           ctx.displayType = displayType;
 
           if (ids.length) {
-            return ctx.loaders.entryLoader.loadMany(ids.map((id) => ({ id, preview })));
+            return loadDocuments(ctx, ids.map((id) => ({ id, preview })));
           }
 
           if (contentTypes.length) {
-            const results = (
-              await ctx.loaders.entriesByContentTypeLoader.loadMany(contentTypes.map((type) => ({ id: type, preview })))
-            ).filter((r: any) => !isError(r)) as unknown as BaseEntry[];
-
-            return results.flat();
+            const results = await Promise.all(
+              contentTypes.map((typeId) => loadDocumentsByType(ctx, typeId, preview))
+            );
+            return results.flat().filter((r: any) => !isError(r));
           }
 
           return null;
@@ -248,7 +248,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
             }
           }
 
-          const entries = (await ctx.loaders.entryLoader.loadMany(ids.map((id: string) => ({ id, preview })))).filter(
+          const entries = (await loadDocuments(ctx, ids.map((id: string) => ({ id, preview })))).filter(
             (e: any) => !!e && !isError(e)
           ) as BaseEntry[];
 
@@ -256,12 +256,13 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
             await Promise.all(
               entries.map(async (entry) => {
                 // Filter out entries with seo.robots starting with 'noindex'
-                const seo = getLocalizedField(entry.fields, 'seo', ctx);
+                const seo = getLocalizedField(entry, 'seo', ctx);
                 if (seo?.['robots']?.value?.startsWith('noindex')) {
                   return [];
                 }
 
-                const pathNode = await pathNodeResolver(entry.sys.id, ctx);
+                const entryId = getContentId(entry, ctx);
+                const pathNode = await pathNodeResolver(entryId!, ctx);
 
                 if (pathNode?.data?.excludedLocales?.includes(locale)) {
                   return [];
@@ -271,7 +272,7 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
 
                 return paths.map((p: any) => ({
                   loc: buildSitemapPath(p.path),
-                  lastmod: entry.sys.updatedAt
+                  lastmod: getUpdatedAt(entry, ctx)
                 }));
               })
             )
@@ -294,9 +295,29 @@ const createResolvers = ({ contentTypes, config }: { contentTypes: ContentType[]
       Content: {
         __resolveType: (content: any, ctx: ApolloContext) => {
           if (ctx.displayType) return ctx.displayType;
-          if (content.sys && (content.sys.linkType == 'Asset' || content.sys.type === 'Asset')) return 'Media';
-          const contentTypeId = content.__typename ? content.__typename : content.sys.contentType.sys.id;
-          return getTypeName(contentTypeId, config.extensions.typeMappings);
+
+          // Handle Sanity documents
+          if (ctx.cms === 'Sanity') {
+            // Sanity image/file assets
+            if (
+              content._type === 'sanity.imageAsset' ||
+              content._type === 'sanity.fileAsset' ||
+              content._type === 'image' ||
+              content._type === 'file'
+            ) {
+              return 'Media';
+            }
+            const contentTypeId = content.__typename || content._type;
+            return getTypeName(contentTypeId, config.extensions.typeMappings, ctx.cms);
+          }
+
+          // Contentful assets
+          if (content.sys && (content.sys.linkType == 'Asset' || content.sys.type === 'Asset')) {
+            return 'Media';
+          }
+
+          const contentTypeId = content.__typename || content.sys.contentType.sys.id;
+          return getTypeName(contentTypeId, config.extensions.typeMappings, ctx.cms);
         }
       },
       // Scalars

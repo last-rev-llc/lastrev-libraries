@@ -93,3 +93,50 @@ export const stringify = (r: any, errorKey: string) => {
     return undefined;
   }
 };
+
+/**
+ * Check if an object is a Sanity document (has _id and _type)
+ */
+export const isSanityDocument = (item: any): boolean => {
+  return typeof item?._id === 'string' && typeof item?._type === 'string';
+};
+
+/**
+ * Add metadata to Sanity document for tracking
+ */
+export const enhanceSanityDocumentWithMetadata = (item: any) => {
+  return {
+    ...item,
+    lastrev_metadata: {
+      insert_date: new Date().toISOString(),
+      source: 'sanityWebhook'
+    }
+  };
+};
+
+/**
+ * Stringify a Sanity document for Redis storage
+ */
+export const stringifySanityDocument = (r: any, errorKey: string) => {
+  try {
+    if (isNil(r)) {
+      throw Error('nil');
+    }
+
+    if (isError(r)) {
+      throw Error(r.message);
+    }
+
+    if (!isSanityDocument(r)) {
+      throw Error(`Not a Sanity document: ${r}`);
+    }
+
+    return JSON.stringify(enhanceSanityDocumentWithMetadata(r));
+  } catch (err: any) {
+    logger.error(`Error stringifying Sanity document ${errorKey}: ${err.message}`, {
+      caller: 'stringifySanityDocument',
+      stack: err.stack
+    });
+    return undefined;
+  }
+};

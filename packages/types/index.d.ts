@@ -13,9 +13,49 @@ import {
 } from 'contentful';
 import { Block, Inline, Mark, Node, Text, Document } from '@contentful/rich-text-types';
 import { GraphQLSchema, Source, DocumentNode } from 'graphql';
+import {
+  SanityDocument,
+  SanityImageAsset,
+  SanityFileAsset,
+  Reference,
+  Slug,
+  PortableTextBlock,
+  SchemaType
+} from '@sanity/types';
+import { SanityClient } from '@sanity/client';
 
 export type BaseEntry = Entry<any, 'WITH_ALL_LOCALES' | 'WITHOUT_LINK_RESOLUTION'>;
 export type BaseAsset = Asset<'WITH_ALL_LOCALES' | 'WITHOUT_LINK_RESOLUTION'>;
+
+// Sanity type aliases (avoid naming collisions)
+export type SanityReference = Reference;
+export type SanitySlug = Slug;
+
+/**
+ * Helper type for internationalized array fields from sanity-plugin-internationalized-array.
+ *
+ * @example
+ * interface BlogPost extends SanityDocument {
+ *   title: InternationalizedValue<string>[];
+ *   body: InternationalizedValue<PortableTextBlock[]>[];
+ * }
+ */
+export interface InternationalizedValue<T> {
+  /** Locale code (e.g., 'en-US', 'es-ES') */
+  _key: string;
+  /** The localized value */
+  value: T;
+}
+
+/**
+ * CMS-agnostic entry type - handles content from either Contentful or Sanity.
+ */
+export type CmsEntry = BaseEntry | SanityDocument;
+
+/**
+ * CMS-agnostic asset type - handles assets from either Contentful or Sanity.
+ */
+export type CmsAsset = BaseAsset | SanityImageAsset | SanityFileAsset;
 
 export type ItemKey = {
   id: string;
@@ -53,37 +93,63 @@ export type RefByKey = {
   field: string;
 };
 
-export type CmsLoaders = {
+/**
+ * Contentful-specific loaders using Contentful types.
+ */
+export type ContentfulLoaders = {
   entryLoader: DataLoader<ItemKey, BaseEntry | null>;
   entriesRefByLoader: DataLoader<RefByKey, BaseEntry[]>;
   entryByFieldValueLoader: DataLoader<FVLKey, BaseEntry | null>;
   assetLoader: DataLoader<ItemKey, BaseAsset | null>;
   entriesByContentTypeLoader: DataLoader<ItemKey, BaseEntry[]>;
-  // pathLoader: DataLoader<PathKey, PathData2 | null>;
   fetchAllContentTypes: (preview: boolean) => Promise<ContentType[]>;
+};
+
+/**
+ * Legacy alias for backward compatibility.
+ * @deprecated Use ContentfulLoaders or SanityLoaders directly.
+ */
+export type CmsLoaders = ContentfulLoaders;
+
+/**
+ * Sanity-specific loaders returning native Sanity documents.
+ * Field-level i18n is handled at the resolver level via sanity-plugin-internationalized-array.
+ *
+ * Uses unified document model - no entry/asset distinction since Sanity treats
+ * all content (including assets) as documents with a _type field.
+ */
+export type SanityLoaders = {
+  /** Load any Sanity document by _id (entries, assets, or any document type) */
+  documentLoader: DataLoader<ItemKey, SanityDocument | null>;
+  /** Load all documents of a specific _type */
+  documentsByTypeLoader: DataLoader<ItemKey, SanityDocument[]>;
+  /** Load document by field value match */
+  documentByFieldValueLoader: DataLoader<FVLKey, SanityDocument | null>;
+  /** Load documents that reference a given document ID */
+  documentsRefByLoader: DataLoader<RefByKey, SanityDocument[]>;
 };
 
 export type TypeMappings = {
   [cmsType: string]: string;
 };
 
-export type CmsPathsGenerator = (
-  resolvedItem: BaseEntry,
-  loaders: CmsLoaders,
+export type CmsPathsGenerator<T extends CmsEntry = BaseEntry> = (
+  resolvedItem: T,
+  loaders: T extends SanityDocument ? SanityLoaders : CmsLoaders,
   defaultLocale: string,
   locales: string[],
   preview?: boolean,
   site?: string
 ) => Promise<PathDataMap>;
 
-export type ObjectBasedCmsPathsGenerator = ({
+export type ObjectBasedCmsPathsGenerator<T extends CmsEntry = BaseEntry> = ({
   ctx,
   item,
   site,
   preview
 }: {
   ctx: ApolloContext;
-  item: BaseEntry;
+  item: T;
   site?: string;
   preview?: boolean;
 }) => Promise<PathDataMap>;
@@ -136,14 +202,24 @@ export type ContentfulClients = {
   preview: ContentfulClientApi;
 };
 
-export type CmsClients =
-  | ContentfulClients
-  | {
-      prod: any;
-      preview: any;
-    };
+export type SanityClients = {
+  prod: SanityClient;
+  preview: SanityClient;
+};
 
-export type PathEntries = (BaseEntry | null)[];
+/**
+ * Sanity config subset for utilities that need access to i18n settings.
+ */
+export type SanityContextConfig = {
+  /** Controls field access pattern: true = i18n array [{ _key, value }], false = direct access */
+  useInternationalizedArrays?: boolean;
+  /** Controls locale fallback: true = fallback to default, false = return null */
+  fallbackToDefaultLocale?: boolean;
+};
+
+export type CmsClients = ContentfulClients | SanityClients;
+
+export type PathEntries<T extends CmsEntry = BaseEntry> = (T | null)[];
 
 export type PathInfo = {
   path: string;
@@ -156,10 +232,22 @@ export type LoadEntriesForPathFunction = (
   site?: string
 ) => Promise<PathEntries | null>;
 
-export type loadPathsForContentFunction = (entry: BaseEntry, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
+export type loadPathsForContentFunction<T extends CmsEntry = BaseEntry> = (entry: T, ctx: ApolloContext, site?: string) => Promise<PathInfo[]>;
 
 export type ApolloContext = {
-  loaders: CmsLoaders;
+  /**
+   * Legacy loaders field for Contentful backward compatibility.
+   * Always points to ContentfulLoaders.
+   */
+  loaders: ContentfulLoaders;
+
+  /** CMS-specific loaders - always available, throws error if wrong CMS accessed */
+  contentfulLoaders: ContentfulLoaders;
+  sanityLoaders: SanityLoaders;
+
+  /** Sanity config for utilities that need i18n settings */
+  sanityConfig?: SanityContextConfig;
+
   mappers: Mappers;
   defaultLocale: string;
   typeMappings: TypeMappings;
@@ -169,8 +257,8 @@ export type ApolloContext = {
   path?: string;
   locales: string[];
   preview?: boolean;
-  contentful?: CmsClients;
-  sanity?: CmsClients;
+  contentful?: ContentfulClients;
+  sanity?: SanityClients;
   pathReaders?: PathReaders;
   displayType?: string;
   pathEntries?: PathEntries;
@@ -273,3 +361,6 @@ export type {
 };
 
 export type { Block, Inline, Mark, Node, Text, Document };
+
+// Re-export Sanity types
+export type { SanityDocument, SanityImageAsset, SanityFileAsset, PortableTextBlock, SchemaType };

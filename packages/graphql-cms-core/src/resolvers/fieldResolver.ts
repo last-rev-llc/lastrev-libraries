@@ -1,10 +1,11 @@
 import { GraphQLResolveInfo } from 'graphql';
-import { ApolloContext, BaseAsset, BaseEntry } from '@last-rev/types';
+import { ApolloContext, CmsEntry } from '@last-rev/types';
 import getTypeName from '../utils/getTypeName';
 import isString from 'lodash/isString';
 import isFunction from 'lodash/isFunction';
 import { TypeMapper } from '@last-rev/types';
 import getLocalizedField from '../utils/getLocalizedField';
+import { getRefInfo, getContentType, loadDocument, loadDocuments } from '../utils/contentUtils';
 import { getWinstonLogger } from '@last-rev/logging';
 
 const logger = getWinstonLogger({
@@ -19,21 +20,34 @@ export type Resolver<TSource, TContext> = (
   info: GraphQLResolveInfo
 ) => Promise<any>;
 
-type FieldResolver = (displayType: string) => Resolver<BaseEntry | BaseAsset | any, ApolloContext>;
+type FieldResolver = (displayType: string) => Resolver<CmsEntry | any, ApolloContext>;
 
 const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content, args, ctx, info) => {
   const { fieldName: field } = info;
-  const { loaders, mappers, typeMappings, preview = false, displayType: overrideDisplayType } = ctx;
+  const { mappers, typeMappings, preview = false, displayType: overrideDisplayType } = ctx;
 
   const displayType = overrideDisplayType || displayTypeArg;
 
-  const contentType = content?.sys?.contentType?.sys?.id || content?.sys?.type || '';
+  const contentType = getContentType(content, ctx) || '';
 
-  const typeName = contentType ? getTypeName(contentType, typeMappings) : displayType;
+  // Handle Sanity assets - align with __resolveType in createResolvers
+  let typeName: string;
+  if (
+    ctx.cms === 'Sanity' &&
+    (contentType === 'sanity.imageAsset' ||
+      contentType === 'sanity.fileAsset' ||
+      contentType === 'image' ||
+      contentType === 'file')
+  ) {
+    typeName = 'Media';
+  } else {
+    typeName = contentType ? getTypeName(contentType, typeMappings) : displayType;
+  }
 
   const mapper = mappers?.[typeName]?.[displayType] as TypeMapper;
 
   let fieldValue: any;
+
   if (mapper && mapper[field]) {
     const fieldMapper = mapper[field];
     if (isFunction(fieldMapper)) {
@@ -48,43 +62,44 @@ const fieldResolver: FieldResolver = (displayTypeArg: string) => async (content,
         throw err;
       }
     } else if (isString(fieldMapper)) {
-      fieldValue = getLocalizedField(content.fields, fieldMapper as string, ctx);
+      // String mapper: use as alternate field name
+      fieldValue = getLocalizedField(content, fieldMapper as string, ctx);
     } else {
       logger.error(`Unsupported mapper type for ${typeName}.${displayType}: ${typeof fieldMapper}`, {
         caller: 'fieldResolver'
       });
       return null;
     }
-  } else if (content.fields) {
-    fieldValue = getLocalizedField(content.fields, field, ctx);
-  } else if (content[field]) {
-    fieldValue = content[field];
+  } else {
+    // Default field access - utility handles CMS differences
+    fieldValue = getLocalizedField(content, field, ctx);
   }
 
-  //Check if the field is a reference then resolve it
-  if (fieldValue?.sys?.linkType == 'Entry') {
-    return loaders.entryLoader.load({ id: fieldValue.sys.id, preview });
-  }
-  if (fieldValue?.sys?.linkType == 'Asset') {
-    return loaders.assetLoader.load({ id: fieldValue.sys.id, preview });
+  // Resolve single reference - uses CMS-aware loadDocument utility
+  const refInfo = getRefInfo(fieldValue, ctx);
+  if (refInfo.isReference && refInfo.id) {
+    return loadDocument(ctx, refInfo.id, preview, refInfo.isAsset);
   }
 
-  // Expand links
+  // Resolve array of references - uses CMS-aware loadDocuments utility
   if (Array.isArray(fieldValue) && fieldValue.length > 0) {
-    const firstItem = fieldValue[0];
-    // contentful cannot have mixed arrays, so it is okay to make assumptions based on the first item
-    if (firstItem?.sys?.linkType === 'Entry') {
-      return (await loaders.entryLoader.loadMany(fieldValue.map((x) => ({ id: x.sys.id, preview })))).filter(
-        (r) => r !== null
-      );
+    const firstRefInfo = getRefInfo(fieldValue[0], ctx);
+    if (firstRefInfo.isReference) {
+      const ids = fieldValue
+        .map((item) => getRefInfo(item, ctx))
+        .filter((info) => info.isReference && info.id)
+        .map((info) => ({ id: info.id!, preview }));
+
+      return loadDocuments(ctx, ids, firstRefInfo.isAsset);
     }
-    if (firstItem?.sys?.linkType === 'Asset') {
-      return (await loaders.assetLoader.loadMany(fieldValue.map((x) => ({ id: x.sys.id, preview })))).filter(
-        (r) => r !== null
-      );
-    }
+  }
+
+  // Handle Sanity slug fields - extract .current value
+  if (ctx.cms === 'Sanity' && fieldValue?._type === 'slug' && fieldValue?.current !== undefined) {
+    return fieldValue.current;
   }
 
   return fieldValue;
 };
+
 export default fieldResolver;

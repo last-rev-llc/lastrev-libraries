@@ -71,20 +71,7 @@ describe('LastRevAppConfig', () => {
       });
     });
 
-    test('throws error when version is v1, but generate full path tree is false', () => {
-      expect(
-        () =>
-          new LastRevAppConfig({
-            ...mockedConfig,
-            paths: {
-              version: 'v1',
-              generateFullPathTree: false
-            }
-          })
-      ).toThrow('Invalid paths configuration: generateFullPathTree must be true when using paths v1');
-    });
-
-    test('throws error when version is not defined, but generate full path tree is false', () => {
+    test('throws error when generateFullPathTree is false', () => {
       expect(
         () =>
           new LastRevAppConfig({
@@ -93,7 +80,7 @@ describe('LastRevAppConfig', () => {
               generateFullPathTree: false
             }
           })
-      ).toThrow('Invalid paths configuration: generateFullPathTree must be true when using paths v1');
+      ).toThrow('Invalid paths configuration: generateFullPathTree must be true');
     });
   });
 
@@ -445,31 +432,6 @@ describe('LastRevAppConfig', () => {
       Object.assign(mockedConfig.features!, { disableFederatedSchema: true });
       const appConfig = new LastRevAppConfig(mockedConfig);
       expect(appConfig.features.disableFederatedSchema).toBe(true);
-    });
-    test('enablePathsV2 defaults to false', () => {
-      const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.features.enablePathsV2).toBe(false);
-    });
-    test('enablePathsV2 set to true returns true', () => {
-      Object.assign(mockedConfig.features!, { enablePathsV2: true });
-      const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.features.enablePathsV2).toBe(true);
-    });
-    test('deprecated paths.version=V1 enablePathsV2 feature flag to false and warns user', () => {
-      Object.assign(mockedConfig.paths!, { version: 'v1' });
-      const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.features.enablePathsV2).toBe(false);
-      expect(consoleWarn).toHaveBeenCalledWith(
-        'The paths.version config option is deprecated. Use the features.enablePathsV2 option instead'
-      );
-    });
-    test('deprecated paths.version=V2 enablePathsV2 feature flag to true and warns user', () => {
-      Object.assign(mockedConfig.paths!, { version: 'v2' });
-      const appConfig = new LastRevAppConfig(mockedConfig);
-      expect(appConfig.features.enablePathsV2).toBe(true);
-      expect(consoleWarn).toHaveBeenCalledWith(
-        'The paths.version config option is deprecated. Use the features.enablePathsV2 option instead'
-      );
     });
   });
 });

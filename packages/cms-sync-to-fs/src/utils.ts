@@ -6,7 +6,7 @@ import { writeFile, ensureDir, createFile, readFile } from 'fs-extra';
 import { join } from 'path';
 import { BaseAsset, BaseEntry, ContentType } from '@last-rev/types';
 import { ContentTypeIdToContentIdsLookup, ContentTypeIdToSyncTokensLookup } from './types';
-import { CONTENT_TYPE_ENTRIES_DIRNAME } from './constants';
+import { CONTENT_TYPE_ENTRIES_DIRNAME, DOCUMENT_IDS_BY_TYPE_DIRNAME } from './constants';
 import { getWinstonLogger } from '@last-rev/logging';
 
 const logger = getWinstonLogger({
@@ -25,8 +25,17 @@ export const groupByContentTypeAndMapToIds = flow(
   mapValues((entries) => map(entries, 'sys.id'))
 );
 
+/**
+ * Group Sanity documents by _type and map to _id arrays.
+ * Used for building entry_ids_by_content_type lookup.
+ */
+export const groupSanityDocsByTypeAndMapToIds = flow(
+  groupBy('_type'),
+  mapValues((docs) => map(docs, '_id'))
+);
+
 export const writeItems = async (
-  items: (BaseEntry | BaseAsset | ContentType)[],
+  items: (BaseEntry | BaseAsset | ContentType | Record<string, any>)[],
   root: string,
   dirname: string
 ): Promise<void> => {
@@ -35,9 +44,20 @@ export const writeItems = async (
   await Promise.all(
     items.map((item) =>
       (async () => {
-        const {
-          sys: { id }
-        } = item;
+        // Handle both Contentful (sys.id) and Sanity (_id or name) formats
+        let id: string | undefined;
+        if ('sys' in item && (item as any).sys?.id) {
+          id = (item as any).sys.id;
+        } else if ('_id' in item) {
+          id = (item as any)._id;
+        } else if ('name' in item) {
+          id = (item as any).name;
+        }
+
+        if (!id) {
+          logger.warn('Item has no identifiable id field', { item });
+          return;
+        }
         const filename = join(dir, `${id}.json`);
         await writeFile(filename, JSON.stringify(item));
       })()
@@ -66,6 +86,28 @@ export const writeEntriesByContentTypeFiles = async (
             })()
           )
         );
+      })()
+    )
+  );
+};
+
+/**
+ * Write document IDs grouped by _type for Sanity (unified document model).
+ * Creates: document_ids_by_type/{typeName}/{docId} files
+ */
+export const writeDocumentIdsByTypeFiles = async (
+  lookup: Record<string, string[]>,
+  root: string
+): Promise<void> => {
+  const dir = join(root, DOCUMENT_IDS_BY_TYPE_DIRNAME);
+  await ensureDir(dir);
+
+  await Promise.all(
+    Object.entries(lookup).map(([typeName, ids]) =>
+      (async () => {
+        const typeDir = join(dir, typeName);
+        await ensureDir(typeDir);
+        await Promise.all(ids.map((id) => createFile(join(typeDir, id))));
       })()
     )
   );

@@ -21,34 +21,6 @@ jest.mock('@last-rev/timer', () => ({
   }))
 }));
 
-jest.mock('@last-rev/sanity-mapper', () => ({
-  convertSanityDoc: jest.fn((doc, _defaultLocale, _locales) => {
-    if (!doc) return null;
-    return {
-      sys: {
-        id: doc._id,
-        type: doc._type === 'sanityImageAsset' ? 'Asset' : 'Entry',
-        contentType: { sys: { id: doc._type } }
-      },
-      fields: {
-        title: doc.title || `Converted ${doc._type}`,
-        slug: doc.slug?.current || doc.slug,
-        ...doc
-      },
-      metadata: { tags: [] }
-    };
-  }),
-  mapSanityTypesToContentfulTypes: jest.fn((schemaTypes) => {
-    return (
-      schemaTypes?.map((type: any) => ({
-        sys: { type: 'ContentType', id: type.name },
-        name: type.title || type.name,
-        fields: []
-      })) || []
-    );
-  })
-}));
-
 const mockCreateClient = createClient as jest.MockedFunction<typeof createClient>;
 
 describe('sanity-cms-loader', () => {
@@ -91,12 +63,12 @@ describe('sanity-cms-loader', () => {
 
       const loaders = createLoaders(config, 'en');
 
-      expect(loaders).toHaveProperty('entryLoader');
-      expect(loaders).toHaveProperty('assetLoader');
-      expect(loaders).toHaveProperty('entriesByContentTypeLoader');
-      expect(loaders).toHaveProperty('entryByFieldValueLoader');
-      expect(loaders).toHaveProperty('entriesRefByLoader');
-      expect(loaders).toHaveProperty('fetchAllContentTypes');
+      // Sanity-native loaders (unified document model)
+      expect(loaders).toHaveProperty('documentLoader');
+      expect(loaders).toHaveProperty('documentsByTypeLoader');
+      expect(loaders).toHaveProperty('documentByFieldValueLoader');
+      expect(loaders).toHaveProperty('documentsRefByLoader');
+      // fetchAllContentTypes removed - schemas come from config.sanity.schemaTypes
     });
 
     it('should create clients with correct configuration', () => {
@@ -158,8 +130,8 @@ describe('sanity-cms-loader', () => {
     });
   });
 
-  describe('entryLoader', () => {
-    it('should load single entry successfully', async () => {
+  describe('documentLoader', () => {
+    it('should load single document and return native Sanity document', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -174,6 +146,9 @@ describe('sanity-cms-loader', () => {
       const mockDoc = {
         _id: 'doc1',
         _type: 'blog',
+        _createdAt: '2024-01-01T00:00:00Z',
+        _updatedAt: '2024-01-02T00:00:00Z',
+        _rev: 'abc123',
         title: 'Test Blog',
         slug: { current: 'test-blog' }
       };
@@ -181,23 +156,16 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue([mockDoc]);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entryLoader.load({ id: 'doc1', preview: false });
+      const result = await loaders.documentLoader.load({ id: 'doc1', preview: false });
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sys: expect.objectContaining({
-            id: 'doc1',
-            type: 'Entry'
-          }),
-          fields: expect.objectContaining({
-            title: 'Test Blog'
-          })
-        })
-      );
+      // Should return native Sanity document structure
+      expect(result).toEqual(mockDoc);
+      expect(result?._id).toBe('doc1');
+      expect(result?._type).toBe('blog');
       expect(mockProdClient.fetch).toHaveBeenCalled();
     });
 
-    it('should load preview entry', async () => {
+    it('should load preview document', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -219,23 +187,14 @@ describe('sanity-cms-loader', () => {
       mockPreviewClient.fetch.mockResolvedValue([mockDoc]);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entryLoader.load({ id: 'doc1', preview: true });
+      const result = await loaders.documentLoader.load({ id: 'doc1', preview: true });
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sys: expect.objectContaining({
-            id: 'doc1',
-            type: 'Entry'
-          }),
-          fields: expect.objectContaining({
-            title: 'Preview Blog'
-          })
-        })
-      );
+      expect(result).toEqual(mockDoc);
+      expect(result?._id).toBe('doc1');
       expect(mockPreviewClient.fetch).toHaveBeenCalled();
     });
 
-    it('should return null for non-existent entry', async () => {
+    it('should return null for non-existent document', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -250,12 +209,12 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue([]);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entryLoader.load({ id: 'nonexistent', preview: false });
+      const result = await loaders.documentLoader.load({ id: 'nonexistent', preview: false });
 
       expect(result).toBeNull();
     });
 
-    it('should batch load multiple entries', async () => {
+    it('should batch load multiple documents', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -275,22 +234,14 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue(mockDocs);
 
       const loaders = createLoaders(config, 'en');
-      const results = await loaders.entryLoader.loadMany([
+      const results = await loaders.documentLoader.loadMany([
         { id: 'doc1', preview: false },
         { id: 'doc2', preview: false }
       ]);
 
       expect(results).toHaveLength(2);
-      expect(results[0]).toEqual(
-        expect.objectContaining({
-          sys: expect.objectContaining({ id: 'doc1' })
-        })
-      );
-      expect(results[1]).toEqual(
-        expect.objectContaining({
-          sys: expect.objectContaining({ id: 'doc2' })
-        })
-      );
+      expect(results[0]).toEqual(expect.objectContaining({ _id: 'doc1' }));
+      expect(results[1]).toEqual(expect.objectContaining({ _id: 'doc2' }));
     });
 
     it('should handle mixed preview and production requests', async () => {
@@ -312,7 +263,7 @@ describe('sanity-cms-loader', () => {
       mockPreviewClient.fetch.mockResolvedValue([mockPreviewDoc]);
 
       const loaders = createLoaders(config, 'en');
-      const results = await loaders.entryLoader.loadMany([
+      const results = await loaders.documentLoader.loadMany([
         { id: 'doc1', preview: false },
         { id: 'doc2', preview: true }
       ]);
@@ -321,43 +272,8 @@ describe('sanity-cms-loader', () => {
       expect(mockProdClient.fetch).toHaveBeenCalled();
       expect(mockPreviewClient.fetch).toHaveBeenCalled();
     });
-  });
 
-  describe('assetLoader', () => {
-    it('should load asset successfully', async () => {
-      const config = baseConfig.clone({
-        cms: 'Sanity',
-        sanity: {
-          projectId: 'test-project',
-          dataset: 'production',
-          token: 'test-token',
-          supportedLanguages: [{ id: 'en', title: 'English' }],
-          schemaTypes: []
-        }
-      });
-
-      const mockAsset = {
-        _id: 'image-abc123',
-        _type: 'sanityImageAsset',
-        url: 'https://cdn.sanity.io/images/project/dataset/abc123.jpg'
-      };
-
-      mockProdClient.fetch.mockResolvedValue([mockAsset]);
-
-      const loaders = createLoaders(config, 'en');
-      const result = await loaders.assetLoader.load({ id: 'image-abc123', preview: false });
-
-      expect(result).toEqual(
-        expect.objectContaining({
-          sys: expect.objectContaining({
-            id: 'image-abc123',
-            type: 'Asset'
-          })
-        })
-      );
-    });
-
-    it('should return null for non-existent asset', async () => {
+    it('should use simplified GROQ query without translations', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -372,14 +288,48 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue([]);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.assetLoader.load({ id: 'nonexistent', preview: false });
+      await loaders.documentLoader.load({ id: 'doc1', preview: false });
 
-      expect(result).toBeNull();
+      // Should NOT include _translations or __i18n_lang filters
+      expect(mockProdClient.fetch).toHaveBeenCalledWith(
+        '*[_id in $ids]',
+        expect.objectContaining({ ids: ['doc1'] })
+      );
+    });
+
+    it('should load asset documents (unified document model)', async () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        sanity: {
+          projectId: 'test-project',
+          dataset: 'production',
+          token: 'test-token',
+          supportedLanguages: [{ id: 'en', title: 'English' }],
+          schemaTypes: []
+        }
+      });
+
+      const mockAsset = {
+        _id: 'image-abc123',
+        _type: 'sanity.imageAsset',
+        url: 'https://cdn.sanity.io/images/project/dataset/abc123.jpg',
+        metadata: { dimensions: { width: 800, height: 600 } }
+      };
+
+      mockProdClient.fetch.mockResolvedValue([mockAsset]);
+
+      const loaders = createLoaders(config, 'en');
+      // Same documentLoader handles both entries and assets (unified document model)
+      const result = await loaders.documentLoader.load({ id: 'image-abc123', preview: false });
+
+      expect(result).toEqual(mockAsset);
+      expect(result?._id).toBe('image-abc123');
+      expect(result?._type).toBe('sanity.imageAsset');
     });
   });
 
-  describe('entriesByContentTypeLoader', () => {
-    it('should load entries by content type', async () => {
+  describe('documentsByTypeLoader', () => {
+    it('should load documents by type', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -399,18 +349,11 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue(mockDocs);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entriesByContentTypeLoader.load({ id: 'blog', preview: false });
+      const result = await loaders.documentsByTypeLoader.load({ id: 'blog', preview: false });
 
       expect(result).toHaveLength(2);
-      expect(result[0]).toEqual(
-        expect.objectContaining({
-          sys: expect.objectContaining({ id: 'blog1' })
-        })
-      );
-      expect(mockProdClient.fetch).toHaveBeenCalledWith(
-        expect.stringContaining('*[_type == $type'),
-        expect.objectContaining({ type: 'blog', defaultLocale: 'en' })
-      );
+      expect(result[0]).toEqual(expect.objectContaining({ _id: 'blog1' }));
+      expect(mockProdClient.fetch).toHaveBeenCalledWith('*[_type == $type]', expect.objectContaining({ type: 'blog' }));
     });
 
     it('should handle preview mode', async () => {
@@ -430,13 +373,13 @@ describe('sanity-cms-loader', () => {
       mockPreviewClient.fetch.mockResolvedValue(mockDocs);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entriesByContentTypeLoader.load({ id: 'blog', preview: true });
+      const result = await loaders.documentsByTypeLoader.load({ id: 'blog', preview: true });
 
       expect(result).toHaveLength(1);
       expect(mockPreviewClient.fetch).toHaveBeenCalled();
     });
 
-    it('should return empty array for non-existent content types', async () => {
+    it('should return empty array for non-existent types', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -451,14 +394,14 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue([]);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entriesByContentTypeLoader.load({ id: 'nonexistent', preview: false });
+      const result = await loaders.documentsByTypeLoader.load({ id: 'nonexistent', preview: false });
 
       expect(result).toEqual([]);
     });
   });
 
-  describe('entryByFieldValueLoader', () => {
-    it('should find entry by field value', async () => {
+  describe('documentByFieldValueLoader', () => {
+    it('should find document by field value', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -480,29 +423,25 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue(mockDoc);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entryByFieldValueLoader.load({
+      const result = await loaders.documentByFieldValueLoader.load({
         contentType: 'blog',
         field: 'slug.current',
         value: 'test-slug',
         preview: false
       });
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sys: expect.objectContaining({ id: 'blog1' })
-        })
-      );
+      expect(result).toEqual(mockDoc);
+      expect(result?._id).toBe('blog1');
       expect(mockProdClient.fetch).toHaveBeenCalledWith(
-        expect.stringContaining('*[_type == $type && slug.current == $value'),
+        '*[_type == $type && slug.current == $value][0]',
         expect.objectContaining({
           type: 'blog',
-          value: 'test-slug',
-          defaultLocale: 'en'
+          value: 'test-slug'
         })
       );
     });
 
-    it('should return null when entry not found', async () => {
+    it('should return null when document not found', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -517,7 +456,7 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue(null);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entryByFieldValueLoader.load({
+      const result = await loaders.documentByFieldValueLoader.load({
         contentType: 'blog',
         field: 'slug.current',
         value: 'nonexistent',
@@ -548,24 +487,20 @@ describe('sanity-cms-loader', () => {
       mockPreviewClient.fetch.mockResolvedValue(mockDoc);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entryByFieldValueLoader.load({
+      const result = await loaders.documentByFieldValueLoader.load({
         contentType: 'blog',
         field: 'slug.current',
         value: 'preview-slug',
         preview: true
       });
 
-      expect(result).toEqual(
-        expect.objectContaining({
-          sys: expect.objectContaining({ id: 'blog1' })
-        })
-      );
+      expect(result).toEqual(mockDoc);
       expect(mockPreviewClient.fetch).toHaveBeenCalled();
     });
   });
 
-  describe('entriesRefByLoader', () => {
-    it('should load entries referencing a specific entry', async () => {
+  describe('documentsRefByLoader', () => {
+    it('should load documents referencing a specific document', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -585,7 +520,7 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue(mockReferencingDocs);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entriesRefByLoader.load({
+      const result = await loaders.documentsRefByLoader.load({
         contentType: 'article',
         field: 'author',
         id: 'author1',
@@ -593,22 +528,17 @@ describe('sanity-cms-loader', () => {
       });
 
       expect(result).toHaveLength(2);
-      expect(result[0]).toEqual(
-        expect.objectContaining({
-          sys: expect.objectContaining({ id: 'article1' })
-        })
-      );
+      expect(result[0]).toEqual(expect.objectContaining({ _id: 'article1' }));
       expect(mockProdClient.fetch).toHaveBeenCalledWith(
-        expect.stringContaining('*[_type == $type && (author._ref == $id || $id in author[]._ref)'),
+        '*[_type == $type && (author._ref == $id || $id in author[]._ref)]',
         expect.objectContaining({
           type: 'article',
-          id: 'author1',
-          defaultLocale: 'en'
+          id: 'author1'
         })
       );
     });
 
-    it('should handle preview mode for referenced entries', async () => {
+    it('should handle preview mode for referenced documents', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -625,7 +555,7 @@ describe('sanity-cms-loader', () => {
       mockPreviewClient.fetch.mockResolvedValue(mockReferencingDocs);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entriesRefByLoader.load({
+      const result = await loaders.documentsRefByLoader.load({
         contentType: 'article',
         field: 'category',
         id: 'cat1',
@@ -651,7 +581,7 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue([]);
 
       const loaders = createLoaders(config, 'en');
-      const result = await loaders.entriesRefByLoader.load({
+      const result = await loaders.documentsRefByLoader.load({
         contentType: 'article',
         field: 'author',
         id: 'nonexistent',
@@ -662,83 +592,8 @@ describe('sanity-cms-loader', () => {
     });
   });
 
-  describe('fetchAllContentTypes', () => {
-    it('should fetch content types from schema types', async () => {
-      const config = baseConfig.clone({
-        cms: 'Sanity',
-        sanity: {
-          projectId: 'test-project',
-          dataset: 'production',
-          token: 'test-token',
-          supportedLanguages: [{ id: 'en', title: 'English' }],
-          schemaTypes: [
-            { name: 'blog', title: 'Blog Post' },
-            { name: 'page', title: 'Page' }
-          ]
-        }
-      });
-
-      const loaders = createLoaders(config, 'en');
-      const result = await loaders.fetchAllContentTypes(false);
-
-      expect(result).toHaveLength(2);
-      expect(result[0]).toEqual({
-        sys: { type: 'ContentType', id: 'blog' },
-        name: 'Blog Post',
-        fields: []
-      });
-      expect(result[1]).toEqual({
-        sys: { type: 'ContentType', id: 'page' },
-        name: 'Page',
-        fields: []
-      });
-    });
-
-    it('should handle preview mode', async () => {
-      const config = baseConfig.clone({
-        cms: 'Sanity',
-        sanity: {
-          projectId: 'test-project',
-          dataset: 'production',
-          token: 'test-token',
-          supportedLanguages: [{ id: 'en', title: 'English' }],
-          schemaTypes: [{ name: 'blog', title: 'Blog Post' }]
-        }
-      });
-
-      const loaders = createLoaders(config, 'en');
-      const result = await loaders.fetchAllContentTypes(true);
-
-      expect(result).toHaveLength(2);
-      expect(result).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            sys: { type: 'ContentType', id: 'blog' },
-            name: 'Blog Post',
-            fields: []
-          })
-        ])
-      );
-    });
-
-    it('should return empty array on error', async () => {
-      const config = baseConfig.clone({
-        cms: 'Sanity',
-        sanity: {
-          projectId: 'test-project',
-          dataset: 'production',
-          token: 'test-token',
-          supportedLanguages: [{ id: 'en', title: 'English' }],
-          schemaTypes: undefined as any // This will cause an error
-        }
-      });
-
-      const loaders = createLoaders(config, 'en');
-      const result = await loaders.fetchAllContentTypes(false);
-
-      expect(Array.isArray(result)).toBe(true);
-    });
-  });
+  // fetchAllContentTypes removed - Sanity schemas come from config.sanity.schemaTypes
+  // Schema types should be accessed directly via config, not loaded at runtime
 
   describe('caching behavior', () => {
     it('should use different cache keys for preview vs production', async () => {
@@ -761,8 +616,8 @@ describe('sanity-cms-loader', () => {
       const loaders = createLoaders(config, 'en');
 
       // Load both versions
-      const prodResult = await loaders.entryLoader.load({ id: 'doc1', preview: false });
-      const previewResult = await loaders.entryLoader.load({ id: 'doc1', preview: true });
+      const prodResult = await loaders.documentLoader.load({ id: 'doc1', preview: false });
+      const previewResult = await loaders.documentLoader.load({ id: 'doc1', preview: true });
 
       expect(prodResult).toBeDefined();
       expect(previewResult).toBeDefined();
@@ -771,30 +626,8 @@ describe('sanity-cms-loader', () => {
     });
   });
 
-  describe('multilingual support', () => {
-    it('should handle multiple supported languages', () => {
-      const config = baseConfig.clone({
-        cms: 'Sanity',
-        sanity: {
-          projectId: 'test-project',
-          dataset: 'production',
-          token: 'test-token',
-          supportedLanguages: [
-            { id: 'en', title: 'English' },
-            { id: 'es', title: 'Spanish' },
-            { id: 'fr', title: 'French' }
-          ],
-          schemaTypes: []
-        }
-      });
-
-      const loaders = createLoaders(config, 'en');
-
-      expect(loaders).toHaveProperty('entryLoader');
-      expect(loaders).toHaveProperty('assetLoader');
-    });
-
-    it('should include translations in queries', async () => {
+  describe('field-level i18n support', () => {
+    it('should not include document-based i18n filters in queries', async () => {
       const config = baseConfig.clone({
         cms: 'Sanity',
         sanity: {
@@ -812,12 +645,55 @@ describe('sanity-cms-loader', () => {
       mockProdClient.fetch.mockResolvedValue([]);
 
       const loaders = createLoaders(config, 'en');
-      await loaders.entryLoader.load({ id: 'doc1', preview: false });
+      await loaders.documentLoader.load({ id: 'doc1', preview: false });
 
-      expect(mockProdClient.fetch).toHaveBeenCalledWith(
-        expect.stringContaining('_translations'),
-        expect.objectContaining({ defaultLocale: 'en' })
-      );
+      // Query should NOT include __i18n_lang or _translations
+      const calledQuery = mockProdClient.fetch.mock.calls[0][0];
+      expect(calledQuery).not.toContain('__i18n_lang');
+      expect(calledQuery).not.toContain('_translations');
+      expect(calledQuery).toBe('*[_id in $ids]');
+    });
+
+    it('should work with field-level internationalized values', async () => {
+      const config = baseConfig.clone({
+        cms: 'Sanity',
+        sanity: {
+          projectId: 'test-project',
+          dataset: 'production',
+          token: 'test-token',
+          supportedLanguages: [
+            { id: 'en', title: 'English' },
+            { id: 'es', title: 'Spanish' }
+          ],
+          schemaTypes: []
+        }
+      });
+
+      // Document with field-level i18n (sanity-plugin-internationalized-array format)
+      const mockDoc = {
+        _id: 'blog1',
+        _type: 'blog',
+        title: [
+          { _key: 'en', value: 'English Title' },
+          { _key: 'es', value: 'Titulo en Espanol' }
+        ],
+        body: [
+          { _key: 'en', value: [{ _type: 'block', children: [{ text: 'English content' }] }] },
+          { _key: 'es', value: [{ _type: 'block', children: [{ text: 'Contenido en espanol' }] }] }
+        ]
+      };
+
+      mockProdClient.fetch.mockResolvedValue([mockDoc]);
+
+      const loaders = createLoaders(config, 'en');
+      const result = await loaders.documentLoader.load({ id: 'blog1', preview: false });
+
+      // Should return native document with field-level i18n intact
+      expect(result).toEqual(mockDoc);
+      const doc = result as unknown as typeof mockDoc;
+      expect(doc.title).toHaveLength(2);
+      expect(doc.title[0]._key).toBe('en');
+      expect(doc.title[1]._key).toBe('es');
     });
   });
 });

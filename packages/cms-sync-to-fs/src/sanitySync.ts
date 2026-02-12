@@ -1,8 +1,8 @@
 import flatten from 'lodash/flatten';
 
 import { join } from 'path';
-import { ContentType } from '@last-rev/types';
 import { createClient, SanityClient } from '@sanity/client';
+import type { SchemaType } from 'sanity';
 import { SimpleTimer as Timer } from '@last-rev/timer';
 import { getWinstonLogger } from '@last-rev/logging';
 import LastRevAppConfig from '@last-rev/app-config';
@@ -12,14 +12,13 @@ import {
   validateArg,
   delay,
   writeItems,
-  writeEntriesByContentTypeFiles,
+  writeDocumentIdsByTypeFiles,
   readSyncTokens,
-  writeSyncTokens
+  writeSyncTokens,
+  groupSanityDocsByTypeAndMapToIds
 } from './utils';
-import { ENTRIES_DIRNAME, ASSETS_DIRNAME, CONTENT_TYPES_DIRNAME, SYNC_TOKEN_DIRNAME } from './constants';
+import { DOCUMENTS_DIRNAME, SYNC_TOKEN_DIRNAME } from './constants';
 import { ContentTypeIdToSyncTokensLookup } from './types';
-import { groupByContentTypeAndMapToIds } from './utils';
-import { mapSanityTypesToContentfulTypes, convertSanityDoc } from '@last-rev/sanity-mapper';
 
 export type SanitySyncCollection = {
   syncToken: string;
@@ -34,32 +33,22 @@ const logger = getWinstonLogger({
 const syncAllEntriesForSchemaType = async (
   client: SanityClient,
   contentTypeId: string,
-  config: LastRevAppConfig,
   syncToken?: string
 ): Promise<SanitySyncCollection> => {
-  const locales = config.sanity.supportedLanguages.map((locale) => locale.id);
-  const defaultLocale = locales[0];
-  const query = `*[_type == $contentTypeId${syncToken ? ' && _updatedAt > $syncToken' : ''} &&
-  (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
-  ...,
-  "_translations": *[
-    _type == "translation.metadata" &&
-    references(^._id)
-  ].translations[]{
-    "doc": value->{
-      ...
-    }
-  }[doc.__i18n_lang != $defaultLocale && defined(doc)]
-}`;
+  // Simple GROQ query - fetch documents by type with optional sync token filter
+  const query = `*[_type == $contentTypeId${syncToken ? ' && _updatedAt > $syncToken' : ''}]`;
   const params = {
     contentTypeId,
-    defaultLocale,
     ...(syncToken && { syncToken })
   };
 
   const entries = await client.fetch(query, params);
-  // TODO: remove this part when we fix localization
-  const items = entries.map((entry: any) => convertSanityDoc(entry, defaultLocale, locales));
+
+  // Store plain Sanity documents - normalize drafts. prefix
+  const items = entries.map((entry: any) => {
+    const id = entry._id?.startsWith('drafts.') ? entry._id.substring(7) : entry._id;
+    return { ...entry, _id: id };
+  });
   const currentDate = new Date().toISOString();
 
   return {
@@ -70,33 +59,23 @@ const syncAllEntriesForSchemaType = async (
 
 const syncAllAssets = async (
   client: SanityClient,
-  config: LastRevAppConfig,
   syncToken?: string
 ): Promise<SanitySyncCollection> => {
-  const locales = config.sanity.supportedLanguages.map((locale) => locale.id);
-  const defaultLocale = locales[0];
+  // Simple GROQ query - fetch assets with optional sync token filter
   const query = `*[_type in ['sanity.imageAsset', 'sanity.fileAsset']${
     syncToken ? ' && _updatedAt > $syncToken' : ''
-  } &&
-  (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
-  ...,
-  "_translations": *[
-    _type == "translation.metadata" &&
-    references(^._id)
-  ].translations[]{
-    "doc": value->{
-      ...
-    }
-  }[doc.__i18n_lang != $defaultLocale && defined(doc)]
-}`;
+  }]`;
   const params = {
-    defaultLocale,
     ...(syncToken && { syncToken })
   };
 
   const assets = await client.fetch(query, params);
-  // TODO: remove this part when we fix localization
-  const items = assets.map((asset: any) => convertSanityDoc(asset, defaultLocale, locales));
+
+  // Store plain Sanity documents - normalize drafts. prefix
+  const items = assets.map((asset: any) => {
+    const id = asset._id?.startsWith('drafts.') ? asset._id.substring(7) : asset._id;
+    return { ...asset, _id: id };
+  });
   const currentDate = new Date().toISOString();
 
   return {
@@ -107,22 +86,20 @@ const syncAllAssets = async (
 
 const syncAllEntries = async (
   client: SanityClient,
-  contentTypes: ContentType[],
-  syncTokens: ContentTypeIdToSyncTokensLookup,
-  config: LastRevAppConfig
+  contentTypes: SchemaType[],
+  syncTokens: ContentTypeIdToSyncTokensLookup
 ): Promise<SanitySyncCollection[]> => {
   return Promise.all(
     contentTypes.map((contentType, index) =>
       (async () => {
-        const {
-          sys: { id: contentTypeId }
-        } = contentType;
+        // Use Sanity schema type name instead of Contentful sys.id
+        const contentTypeId = contentType.name;
 
         if (!syncTokens[contentTypeId]) {
           await delay(index * 100);
         }
 
-        return syncAllEntriesForSchemaType(client, contentTypeId, config, syncTokens[contentTypeId]);
+        return syncAllEntriesForSchemaType(client, contentTypeId, syncTokens[contentTypeId]);
       })()
     )
   );
@@ -143,7 +120,8 @@ const sanitySync = async (config: LastRevAppConfig, usePreview: boolean, sites?:
     apiVersion: config.sanity.apiVersion
   });
 
-  const contentTypes = mapSanityTypesToContentfulTypes(config.sanity.schemaTypes);
+  // Use native Sanity schema types directly
+  const contentTypes: SchemaType[] = config.sanity.schemaTypes || [];
 
   const root = join(
     config.fs.contentDir,
@@ -155,24 +133,28 @@ const sanitySync = async (config: LastRevAppConfig, usePreview: boolean, sites?:
   let timer = new Timer();
   const syncTokens = await readSyncTokens(root, SYNC_TOKEN_DIRNAME);
   const [entriesResults, assetsResult] = await Promise.all([
-    syncAllEntries(client, contentTypes, syncTokens, config),
-    syncAllAssets(client, config, syncTokens['asset'])
+    syncAllEntries(client, contentTypes, syncTokens),
+    syncAllAssets(client, syncTokens['asset'])
   ]);
 
   const entries = flatten(entriesResults.map((result) => result.items));
   const assets = assetsResult.items;
 
-  logger.debug(`fetched entries and assets`, {
+  // Combine entries and assets into single documents array (unified document model)
+  const allDocuments = [...entries, ...assets];
+
+  logger.debug(`fetched documents`, {
     caller: 'sync',
     elapsedMs: timer.end().millis,
-    itemsSuccessful: entries.length + assets.length
+    itemsSuccessful: allDocuments.length
   });
 
-  const entryIdsByContentTypeLookup = groupByContentTypeAndMapToIds(entries);
+  // Group all documents by _type (includes both entries and asset types like sanity.imageAsset)
+  const documentIdsByTypeLookup = groupSanityDocsByTypeAndMapToIds(allDocuments);
   const nextSyncTokens: ContentTypeIdToSyncTokensLookup = contentTypes.reduce(
     (accum, contentType, idx) => ({
       ...accum,
-      [contentType?.sys?.id]: entriesResults[idx]?.syncToken
+      [contentType.name]: entriesResults[idx]?.syncToken
     }),
     {}
   );
@@ -180,17 +162,18 @@ const sanitySync = async (config: LastRevAppConfig, usePreview: boolean, sites?:
 
   timer = new Timer();
   await Promise.all([
-    writeItems(entries, root, ENTRIES_DIRNAME),
-    writeItems(assets, root, ASSETS_DIRNAME),
-    writeItems(contentTypes, root, CONTENT_TYPES_DIRNAME),
-    writeEntriesByContentTypeFiles(entryIdsByContentTypeLookup, root),
+    // Unified documents directory (no separate entries/assets)
+    writeItems(allDocuments, root, DOCUMENTS_DIRNAME),
+    // document_ids_by_type replaces entry_ids_by_content_type
+    writeDocumentIdsByTypeFiles(documentIdsByTypeLookup, root),
+    // Sync tokens for incremental sync
     writeSyncTokens(nextSyncTokens, root, SYNC_TOKEN_DIRNAME)
+    // Note: contentTypes not written - Sanity schemas come from config.sanity.schemaTypes
   ]);
   logger.debug('Wrote content files', {
     caller: 'sync',
     elapsedMs: timer.end().millis,
-    itemsSuccessful:
-      entries.length + assets.length + contentTypes.length + Object.keys(entryIdsByContentTypeLookup).length
+    itemsSuccessful: allDocuments.length + Object.keys(documentIdsByTypeLookup).length
   });
 
   timer = new Timer();

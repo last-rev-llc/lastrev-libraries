@@ -8,7 +8,13 @@ jest.mock('@sanity/client', () => ({
 }));
 
 // Mock other dependencies
-jest.mock('./createLoaders', () => jest.fn().mockReturnValue({ type: 'mockLoaders' }));
+jest.mock('./createLoaders', () =>
+  jest.fn().mockReturnValue({
+    loaders: { type: 'mockLoaders' },
+    sanityLoaders: { type: 'mockLoaders' },
+    contentfulLoaders: undefined
+  })
+);
 jest.mock('./createPathReaders', () => jest.fn().mockReturnValue(undefined));
 
 import createContext from './createContext';

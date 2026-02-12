@@ -1,4 +1,3 @@
-import { ContentType } from '@last-rev/types';
 import fieldsResolver from './fieldsResolver';
 import { Mappers, TypeMappings } from '@last-rev/types';
 import getTypeName from '../utils/getTypeName';
@@ -9,6 +8,21 @@ import { sideKickLookupResolver } from './sideKickLookupResolver';
 type ContentTypeRepresentation = {
   typeName: string;
   fields: string[];
+};
+
+/**
+ * Extract field names from content type (handles both Contentful and Sanity)
+ */
+const getFieldNames = (contentType: any): string[] => {
+  // Contentful: contentType.fields[].id
+  if (contentType.fields && Array.isArray(contentType.fields) && contentType.fields[0]?.id) {
+    return contentType.fields.map((x: any) => x.id);
+  }
+  // Sanity: contentType.fields[].name
+  if (contentType.fields && Array.isArray(contentType.fields) && contentType.fields[0]?.name) {
+    return contentType.fields.map((x: any) => x.name);
+  }
+  return [];
 };
 
 const collectVirtualTypes = (
@@ -39,12 +53,13 @@ const collectVirtualTypes = (
 };
 
 const collectContentTypes = (
-  contentTypes: ContentType[],
+  contentTypes: any[],
   mappers: Mappers,
-  typeMappings: TypeMappings
+  typeMappings: TypeMappings,
+  cms: 'Contentful' | 'Sanity'
 ): ContentTypeRepresentation[] => {
   return contentTypes.map((contentType) => {
-    const typeName = getTypeName(contentType, typeMappings);
+    const typeName = getTypeName(contentType, typeMappings, cms);
 
     // if there are any virtual fields when contentType === displayType, collect those here.
     const additionalFields = Object.keys(mappers).reduce((accum, mapperKey) => {
@@ -59,31 +74,39 @@ const collectContentTypes = (
 
     return {
       typeName,
-      fields: uniq([...contentType.fields.map((x) => x.id), ...additionalFields])
+      fields: uniq([...getFieldNames(contentType), ...additionalFields])
     };
   });
 };
 
+type MinimalConfig = {
+  cms?: 'Contentful' | 'Sanity';
+  extensions: { mappers: Mappers; typeMappings: TypeMappings };
+  features?: { disableCoreSidekickLookup?: boolean };
+};
+
 const getContentResolvers = ({
   contentTypes,
-
   config
 }: {
-  contentTypes: ContentType[];
-  config: LastRevAppConfig | { extensions: { mappers: Mappers; typeMappings: TypeMappings }; features?: any };
+  contentTypes: any[];
+  config: LastRevAppConfig | MinimalConfig;
 }): { [typeName: string]: { [fieldName: string]: Function } } => {
-  const {
-    features,
-    extensions: { mappers, typeMappings }
-  } = config;
-  const contentTypeReps = collectContentTypes(contentTypes, mappers, typeMappings);
+  const cms = config.cms ?? 'Contentful';
+  const features = config.features;
+  const { mappers, typeMappings } = config.extensions;
+  const contentTypeReps = collectContentTypes(contentTypes, mappers, typeMappings, cms);
   const virtualTypeReps = collectVirtualTypes(mappers, contentTypeReps);
+
+  const idResolver = cms === 'Sanity'
+    ? (content: any) => content?._id
+    : (content: any) => content?.sys?.id;
 
   const contentResolvers = [...virtualTypeReps, ...contentTypeReps].reduce((acc, { typeName, fields }) => {
     return {
       ...acc,
       [typeName]: {
-        id: (content: any) => content?.sys?.id,
+        id: idResolver,
         ...(features?.disableCoreSidekickLookup
           ? {}
           : {

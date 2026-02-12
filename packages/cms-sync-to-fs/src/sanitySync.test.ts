@@ -1,6 +1,5 @@
 import sanitySync from './sanitySync';
 import LastRevAppConfig from '@last-rev/app-config';
-import { ContentType } from '@last-rev/types';
 import { createClient } from '@sanity/client';
 import { SimpleTimer } from '@last-rev/timer';
 import { updateAllPaths } from '@last-rev/cms-path-util';
@@ -9,19 +8,17 @@ import {
   validateArg,
   delay,
   writeItems,
-  writeEntriesByContentTypeFiles,
+  writeDocumentIdsByTypeFiles,
   readSyncTokens,
   writeSyncTokens,
-  groupByContentTypeAndMapToIds
+  groupSanityDocsByTypeAndMapToIds
 } from './utils';
-import { mapSanityTypesToContentfulTypes, convertSanityDoc } from '@last-rev/sanity-mapper';
 
 // Mock dependencies
 jest.mock('@sanity/client');
 jest.mock('@last-rev/timer');
 jest.mock('@last-rev/cms-path-util');
 jest.mock('@last-rev/graphql-cms-helpers');
-jest.mock('@last-rev/sanity-mapper');
 jest.mock('./utils');
 jest.mock('@last-rev/logging', () => ({
   getWinstonLogger: () => ({
@@ -36,44 +33,19 @@ const mockCreateContext = createContext as jest.MockedFunction<typeof createCont
 const mockValidateArg = validateArg as jest.MockedFunction<typeof validateArg>;
 const mockDelay = delay as jest.MockedFunction<typeof delay>;
 const mockWriteItems = writeItems as jest.MockedFunction<typeof writeItems>;
-const mockWriteEntriesByContentTypeFiles = writeEntriesByContentTypeFiles as jest.MockedFunction<
-  typeof writeEntriesByContentTypeFiles
+const mockWriteDocumentIdsByTypeFiles = writeDocumentIdsByTypeFiles as jest.MockedFunction<
+  typeof writeDocumentIdsByTypeFiles
 >;
 const mockReadSyncTokens = readSyncTokens as jest.MockedFunction<typeof readSyncTokens>;
 const mockWriteSyncTokens = writeSyncTokens as jest.MockedFunction<typeof writeSyncTokens>;
-const mockGroupByContentTypeAndMapToIds = groupByContentTypeAndMapToIds as jest.MockedFunction<
-  typeof groupByContentTypeAndMapToIds
+const mockGroupSanityDocsByTypeAndMapToIds = groupSanityDocsByTypeAndMapToIds as jest.MockedFunction<
+  typeof groupSanityDocsByTypeAndMapToIds
 >;
-const mockMapSanityTypesToContentfulTypes = mapSanityTypesToContentfulTypes as jest.MockedFunction<
-  typeof mapSanityTypesToContentfulTypes
->;
-const mockConvertSanityDoc = convertSanityDoc as jest.MockedFunction<typeof convertSanityDoc>;
 
 // Mock data
 const mockSanityClient = {
   fetch: jest.fn()
 };
-
-const mockContentTypes: ContentType[] = [
-  {
-    sys: {
-      id: 'page'
-    },
-    name: 'Page',
-    description: 'Page content type',
-    displayField: 'title',
-    fields: []
-  } as unknown as ContentType,
-  {
-    sys: {
-      id: 'article'
-    },
-    name: 'Article',
-    description: 'Article content type',
-    displayField: 'title',
-    fields: []
-  } as unknown as ContentType
-];
 
 const mockSanityEntries = [
   {
@@ -99,24 +71,6 @@ const mockSanityAssets = [
     _updatedAt: '2023-01-01T00:00:00Z',
     url: 'https://example.com/image.jpg',
     _translations: []
-  }
-];
-
-const mockConvertedEntries = [
-  {
-    sys: { id: 'entry1', contentType: { sys: { id: 'page' } } },
-    fields: { title: { 'en-US': 'Home Page' } }
-  },
-  {
-    sys: { id: 'entry2', contentType: { sys: { id: 'article' } } },
-    fields: { title: { 'en-US': 'Test Article' } }
-  }
-];
-
-const mockConvertedAssets = [
-  {
-    sys: { id: 'asset1' },
-    fields: { file: { 'en-US': { url: 'https://example.com/image.jpg' } } }
   }
 ];
 
@@ -159,19 +113,12 @@ describe('sanitySync', () => {
     // Setup default mocks
     mockCreateClient.mockReturnValue(mockSanityClient as any);
     mockSimpleTimer.mockImplementation(() => mockTimer as any);
-    mockMapSanityTypesToContentfulTypes.mockReturnValue(mockContentTypes);
     mockReadSyncTokens.mockResolvedValue(mockSyncTokens);
-    mockGroupByContentTypeAndMapToIds.mockReturnValue({
+    mockGroupSanityDocsByTypeAndMapToIds.mockReturnValue({
       page: ['entry1'],
       article: ['entry2']
     });
     mockCreateContext.mockResolvedValue({} as any);
-    mockConvertSanityDoc.mockImplementation((doc) => {
-      if (doc._type === 'page') return mockConvertedEntries[0];
-      if (doc._type === 'article') return mockConvertedEntries[1];
-      if (doc._type === 'sanity.imageAsset') return mockConvertedAssets[0];
-      return doc;
-    });
 
     // Mock fetch responses
     mockSanityClient.fetch
@@ -214,15 +161,6 @@ describe('sanitySync', () => {
       });
     });
 
-    it('should map Sanity types to Contentful types', async () => {
-      await sanitySync(mockConfig, false);
-
-      expect(mockMapSanityTypesToContentfulTypes).toHaveBeenCalledWith([
-        { name: 'page', type: 'document' },
-        { name: 'article', type: 'document' }
-      ]);
-    });
-
     it('should read existing sync tokens', async () => {
       await sanitySync(mockConfig, false);
 
@@ -243,12 +181,11 @@ describe('sanitySync', () => {
       // Should make calls for each content type + assets
       expect(mockSanityClient.fetch).toHaveBeenCalledTimes(3);
 
-      // Check page query
+      // Check page query (simplified GROQ)
       expect(mockSanityClient.fetch).toHaveBeenCalledWith(
         expect.stringContaining('*[_type == $contentTypeId && _updatedAt > $syncToken'),
         {
           contentTypeId: 'page',
-          defaultLocale: 'en-US',
           syncToken: '2023-01-01T00:00:00Z'
         }
       );
@@ -258,7 +195,6 @@ describe('sanitySync', () => {
         expect.stringContaining('*[_type == $contentTypeId && _updatedAt > $syncToken'),
         {
           contentTypeId: 'article',
-          defaultLocale: 'en-US',
           syncToken: '2023-01-01T00:00:00Z'
         }
       );
@@ -270,7 +206,6 @@ describe('sanitySync', () => {
       expect(mockSanityClient.fetch).toHaveBeenCalledWith(
         expect.stringContaining("*[_type in ['sanity.imageAsset', 'sanity.fileAsset'] && _updatedAt > $syncToken"),
         {
-          defaultLocale: 'en-US',
           syncToken: '2023-01-01T00:00:00Z'
         }
       );
@@ -281,10 +216,10 @@ describe('sanitySync', () => {
 
       await sanitySync(mockConfig, false);
 
-      // Should query without syncToken parameter for initial sync
+      // Should query without syncToken filter for initial sync (no && clause)
       expect(mockSanityClient.fetch).toHaveBeenCalledWith(
-        expect.stringContaining('*[_type == $contentTypeId &&'),
-        expect.not.objectContaining({ syncToken: expect.anything() })
+        '*[_type == $contentTypeId]',
+        expect.objectContaining({ contentTypeId: expect.any(String) })
       );
     });
 
@@ -298,14 +233,18 @@ describe('sanitySync', () => {
       expect(mockDelay).toHaveBeenCalledWith(100); // article (index 1)
     });
 
-    it('should convert Sanity documents to Contentful format', async () => {
+    it('should store plain Sanity documents (no conversion)', async () => {
       await sanitySync(mockConfig, false);
 
-      // Should convert entries
-      expect(mockConvertSanityDoc).toHaveBeenCalledWith(mockSanityEntries[0], 'en-US', ['en-US', 'fr']);
-
-      // Should convert assets
-      expect(mockConvertSanityDoc).toHaveBeenCalledWith(mockSanityAssets[0], 'en-US', ['en-US', 'fr']);
+      // Should write all documents to unified 'documents' directory (entries + assets combined)
+      expect(mockWriteItems).toHaveBeenCalledWith(
+        expect.arrayContaining([
+          expect.objectContaining({ _id: 'entry1', _type: 'page' }),
+          expect.objectContaining({ _id: 'asset1', _type: 'sanity.imageAsset' })
+        ]),
+        expect.any(String),
+        'documents'
+      );
     });
   });
 
@@ -315,20 +254,21 @@ describe('sanitySync', () => {
 
       const expectedRoot = '/test/content/test-project/production/production';
 
-      // Should write entries
-      expect(mockWriteItems).toHaveBeenCalledWith(mockConvertedEntries, expectedRoot, 'entries');
-
-      // Should write assets
-      expect(mockWriteItems).toHaveBeenCalledWith(mockConvertedAssets, expectedRoot, 'assets');
-
-      // Should write content types (third call)
-      expect(mockWriteItems).toHaveBeenNthCalledWith(3, mockContentTypes, expectedRoot, 'content_types');
+      // Should write all documents to unified 'documents' directory (entries + assets combined)
+      expect(mockWriteItems).toHaveBeenCalledWith(
+        expect.arrayContaining([
+          expect.objectContaining({ _id: 'entry1', _type: 'page' }),
+          expect.objectContaining({ _id: 'asset1', _type: 'sanity.imageAsset' })
+        ]),
+        expectedRoot,
+        'documents'
+      );
     });
 
-    it('should write entries by content type files', async () => {
+    it('should write document IDs by type files', async () => {
       await sanitySync(mockConfig, false);
 
-      expect(mockWriteEntriesByContentTypeFiles).toHaveBeenCalledWith(
+      expect(mockWriteDocumentIdsByTypeFiles).toHaveBeenCalledWith(
         {
           page: ['entry1'],
           article: ['entry2']
@@ -409,19 +349,12 @@ describe('sanitySync', () => {
       // Setup default working mocks for error handling tests
       mockCreateClient.mockReturnValue(mockSanityClient as any);
       mockSimpleTimer.mockImplementation(() => mockTimer as any);
-      mockMapSanityTypesToContentfulTypes.mockReturnValue(mockContentTypes);
       mockReadSyncTokens.mockResolvedValue(mockSyncTokens);
-      mockGroupByContentTypeAndMapToIds.mockReturnValue({
+      mockGroupSanityDocsByTypeAndMapToIds.mockReturnValue({
         page: ['entry1'],
         article: ['entry2']
       });
       mockCreateContext.mockResolvedValue({} as any);
-      mockConvertSanityDoc.mockImplementation((doc) => {
-        if (doc._type === 'page') return mockConvertedEntries[0];
-        if (doc._type === 'article') return mockConvertedEntries[1];
-        if (doc._type === 'sanity.imageAsset') return mockConvertedAssets[0];
-        return doc;
-      });
       mockSanityClient.fetch
         .mockResolvedValueOnce(mockSanityEntries.filter((e) => e._type === 'page'))
         .mockResolvedValueOnce(mockSanityEntries.filter((e) => e._type === 'article'))
@@ -472,15 +405,14 @@ describe('sanitySync', () => {
 
       // Reset other mocks to their default working state
       mockSanityClient.fetch.mockResolvedValue(mockSanityEntries);
-      mockConvertSanityDoc.mockImplementation((doc) => doc);
       mockReadSyncTokens.mockResolvedValue({});
       mockWriteItems.mockResolvedValue(undefined);
-      mockWriteEntriesByContentTypeFiles.mockResolvedValue(undefined);
+      mockWriteDocumentIdsByTypeFiles.mockResolvedValue(undefined);
       mockWriteSyncTokens.mockResolvedValue(undefined);
       mockUpdateAllPaths.mockResolvedValue(undefined);
     });
 
-    it('should handle empty entries response', async () => {
+    it('should handle empty documents response', async () => {
       // Create a fresh mock client for this test
       const freshMockClient = {
         fetch: jest
@@ -496,33 +428,29 @@ describe('sanitySync', () => {
       // Setup fresh mocks for this specific test
       mockCreateClient.mockReturnValue(freshMockClient as any);
       mockSimpleTimer.mockImplementation(() => mockTimer as any);
-      mockMapSanityTypesToContentfulTypes.mockReturnValue(mockContentTypes);
       mockReadSyncTokens.mockResolvedValue(mockSyncTokens);
-      mockGroupByContentTypeAndMapToIds.mockReturnValue({});
+      mockGroupSanityDocsByTypeAndMapToIds.mockReturnValue({});
       mockCreateContext.mockResolvedValue({} as any);
       mockValidateArg.mockImplementation(() => {});
       mockWriteItems.mockResolvedValue(undefined);
-      mockWriteEntriesByContentTypeFiles.mockResolvedValue(undefined);
+      mockWriteDocumentIdsByTypeFiles.mockResolvedValue(undefined);
       mockWriteSyncTokens.mockResolvedValue(undefined);
       mockUpdateAllPaths.mockResolvedValue(undefined);
 
-      // Mock convertSanityDoc - shouldn't be called with empty arrays
-      mockConvertSanityDoc.mockImplementation(() => null);
-
       await sanitySync(mockConfig, false);
 
-      // Check that entries were written with empty array (first call)
-      expect(mockWriteItems).toHaveBeenNthCalledWith(1, [], expect.any(String), 'entries');
+      // Check that documents were written with empty array (unified documents directory)
+      expect(mockWriteItems).toHaveBeenCalledWith([], expect.any(String), 'documents');
     });
 
-    it('should handle empty assets response', async () => {
+    it('should handle entries with no assets', async () => {
       // Create a fresh mock client for this test
       const freshMockClient = {
         fetch: jest
           .fn()
-          .mockResolvedValueOnce([]) // page entries
-          .mockResolvedValueOnce([]) // article entries
-          .mockResolvedValueOnce([]) // assets
+          .mockResolvedValueOnce(mockSanityEntries.filter((e) => e._type === 'page')) // page entries
+          .mockResolvedValueOnce(mockSanityEntries.filter((e) => e._type === 'article')) // article entries
+          .mockResolvedValueOnce([]) // no assets
       };
 
       // Clear previous mock calls and setup fresh mocks
@@ -531,31 +459,37 @@ describe('sanitySync', () => {
       // Setup fresh mocks for this specific test
       mockCreateClient.mockReturnValue(freshMockClient as any);
       mockSimpleTimer.mockImplementation(() => mockTimer as any);
-      mockMapSanityTypesToContentfulTypes.mockReturnValue(mockContentTypes);
       mockReadSyncTokens.mockResolvedValue(mockSyncTokens);
-      mockGroupByContentTypeAndMapToIds.mockReturnValue({});
+      mockGroupSanityDocsByTypeAndMapToIds.mockReturnValue({
+        page: ['entry1'],
+        article: ['entry2']
+      });
       mockCreateContext.mockResolvedValue({} as any);
       mockValidateArg.mockImplementation(() => {});
       mockWriteItems.mockResolvedValue(undefined);
-      mockWriteEntriesByContentTypeFiles.mockResolvedValue(undefined);
+      mockWriteDocumentIdsByTypeFiles.mockResolvedValue(undefined);
       mockWriteSyncTokens.mockResolvedValue(undefined);
       mockUpdateAllPaths.mockResolvedValue(undefined);
 
-      // Mock convertSanityDoc - shouldn't be called with empty arrays
-      mockConvertSanityDoc.mockImplementation(() => null);
-
       await sanitySync(mockConfig, false);
 
-      // Check that assets were written with empty array (second call)
-      expect(mockWriteItems).toHaveBeenNthCalledWith(2, [], expect.any(String), 'assets');
+      // Check that documents were written with only entries (no assets)
+      expect(mockWriteItems).toHaveBeenCalledWith(
+        expect.arrayContaining([
+          expect.objectContaining({ _id: 'entry1', _type: 'page' }),
+          expect.objectContaining({ _id: 'entry2', _type: 'article' })
+        ]),
+        expect.any(String),
+        'documents'
+      );
     });
 
-    it('should handle content types without entries', async () => {
-      mockGroupByContentTypeAndMapToIds.mockReturnValue({});
+    it('should handle document types without documents', async () => {
+      mockGroupSanityDocsByTypeAndMapToIds.mockReturnValue({});
 
       await sanitySync(mockConfig, false);
 
-      expect(mockWriteEntriesByContentTypeFiles).toHaveBeenCalledWith({}, expect.any(String));
+      expect(mockWriteDocumentIdsByTypeFiles).toHaveBeenCalledWith({}, expect.any(String));
     });
 
     it('should handle single locale configuration', async () => {
@@ -565,25 +499,17 @@ describe('sanitySync', () => {
       // Setup fresh mocks
       mockCreateClient.mockReturnValue(mockSanityClient as any);
       mockSimpleTimer.mockImplementation(() => mockTimer as any);
-      mockMapSanityTypesToContentfulTypes.mockReturnValue(mockContentTypes);
       mockReadSyncTokens.mockResolvedValue(mockSyncTokens);
-      mockGroupByContentTypeAndMapToIds.mockReturnValue({
+      mockGroupSanityDocsByTypeAndMapToIds.mockReturnValue({
         page: ['entry1'],
         article: ['entry2']
       });
       mockCreateContext.mockResolvedValue({} as any);
       mockValidateArg.mockImplementation(() => {});
       mockWriteItems.mockResolvedValue(undefined);
-      mockWriteEntriesByContentTypeFiles.mockResolvedValue(undefined);
+      mockWriteDocumentIdsByTypeFiles.mockResolvedValue(undefined);
       mockWriteSyncTokens.mockResolvedValue(undefined);
       mockUpdateAllPaths.mockResolvedValue(undefined);
-
-      mockConvertSanityDoc.mockImplementation((doc) => {
-        if (doc._type === 'page') return mockConvertedEntries[0];
-        if (doc._type === 'article') return mockConvertedEntries[1];
-        if (doc._type === 'sanity.imageAsset') return mockConvertedAssets[0];
-        return doc;
-      });
 
       // Mock fetch responses
       mockSanityClient.fetch
@@ -601,7 +527,15 @@ describe('sanitySync', () => {
 
       await sanitySync(singleLocaleConfig, false);
 
-      expect(mockConvertSanityDoc).toHaveBeenCalledWith(expect.any(Object), 'en-US', ['en-US']);
+      // Should store plain Sanity documents regardless of locale configuration
+      expect(mockWriteItems).toHaveBeenCalledWith(
+        expect.arrayContaining([
+          expect.objectContaining({ _id: 'entry1', _type: 'page' }),
+          expect.objectContaining({ _id: 'asset1', _type: 'sanity.imageAsset' })
+        ]),
+        expect.any(String),
+        'documents'
+      );
     });
 
     it('should handle missing sync token for assets', async () => {
@@ -609,9 +543,10 @@ describe('sanitySync', () => {
 
       await sanitySync(mockConfig, false);
 
+      // Should query without syncToken filter for assets (no && clause)
       expect(mockSanityClient.fetch).toHaveBeenCalledWith(
-        expect.stringContaining("*[_type in ['sanity.imageAsset', 'sanity.fileAsset'] &&"),
-        expect.not.objectContaining({ syncToken: expect.anything() })
+        "*[_type in ['sanity.imageAsset', 'sanity.fileAsset']]",
+        {}
       );
     });
   });
@@ -626,10 +561,9 @@ describe('sanitySync', () => {
 
       // Reset other mocks to their default working state
       mockSanityClient.fetch.mockResolvedValue(mockSanityEntries);
-      mockConvertSanityDoc.mockImplementation((doc) => doc);
       mockReadSyncTokens.mockResolvedValue({});
       mockWriteItems.mockResolvedValue(undefined);
-      mockWriteEntriesByContentTypeFiles.mockResolvedValue(undefined);
+      mockWriteDocumentIdsByTypeFiles.mockResolvedValue(undefined);
       mockWriteSyncTokens.mockResolvedValue(undefined);
       mockUpdateAllPaths.mockResolvedValue(undefined);
     });

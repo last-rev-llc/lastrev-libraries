@@ -9,7 +9,6 @@ import { parseWebhook as parseContentfulWebhook, type WebhookParserResult } from
 import parseSanityWebhook from '@last-rev/sanity-webhook-parser';
 import { getWinstonLogger } from '@last-rev/logging';
 import jwt from 'jsonwebtoken';
-import { convertSanityDoc } from '@last-rev/sanity-mapper';
 
 export const supportedTypes = ['Entry', 'Asset', 'ContentType'];
 export const supportedActions = ['update', 'delete'];
@@ -46,30 +45,15 @@ const getData = async (
         return client.getContentTypes();
     }
   } else if (config.cms === 'Sanity') {
-    const locales = config.sanity.supportedLanguages.map((locale) => locale.id);
-    const defaultLocale = locales[0];
     const client = createSanityClient({
       projectId: config.sanity.projectId,
       dataset: env,
       apiVersion: '2024-03-18'
     });
 
-    let doc: any;
-    doc = await client.fetch(
-      `*[_id == $id && (!defined(__i18n_lang) || __i18n_lang == $defaultLocale)]{
-      ...,
-      "_translations": *[
-        _type == "translation.metadata" &&
-        references(^._id)
-      ].translations[]{
-        "doc": value->{
-          ...
-        }
-      }[doc.__i18n_lang != $defaultLocale && defined(doc)]
-    }`,
-      { id: itemId, defaultLocale }
-    );
-    return convertSanityDoc(doc, defaultLocale, locales);
+    // Simple GROQ query - fetch the document by ID
+    const doc = await client.fetch(`*[_id == $id][0]`, { id: itemId });
+    return doc; // Return plain Sanity document
   }
 
   // Provide clear error message for debugging unsupported CMS types
@@ -169,8 +153,16 @@ export const handleWebhook = async (config: LastRevAppConfig, body: any, headers
     try {
       if (!token) throw Error('No authorization token provided.');
       const decoded = (await jwt.verify(token, config.jwtSigningSecret)) as jwt.JwtPayload;
-      if (decoded?.spaceId !== config.contentful.spaceId) {
-        throw new Error('Invalid spaceId in JWT Token');
+
+      // CMS-aware validation
+      if (config.cms === 'Sanity') {
+        if (decoded?.projectId !== config.sanity.projectId) {
+          throw new Error('Invalid projectId in JWT Token');
+        }
+      } else {
+        if (decoded?.spaceId !== config.contentful.spaceId) {
+          throw new Error('Invalid spaceId in JWT Token');
+        }
       }
     } catch (e: any) {
       logger.error(e.message, {
@@ -186,13 +178,7 @@ export const handleWebhook = async (config: LastRevAppConfig, body: any, headers
     data =
       type === 'ContentType' || (isTruncated && action !== 'delete')
         ? await getData(config, type, env, itemId)
-        : config.cms === 'Sanity'
-        ? convertSanityDoc(
-            body,
-            config.sanity.supportedLanguages[0].id,
-            config.sanity.supportedLanguages.map((l) => l.id)
-          )
-        : body;
+        : body; // Pass through body directly (no conversion needed)
   } catch (error: any) {
     logger.error('Failed to retrieve data from CMS', {
       caller: 'handleWebhook',

@@ -16,7 +16,6 @@
     "@last-rev/app-config": "workspace:*",
     "@last-rev/rollup-config": "workspace:*",
     "@last-rev/testing-library": "workspace:*",
-    "@last-rev/sanity-mapper": "workspace:*",
     "@last-rev/types": "workspace:*",
     "@types/jest": "^30.0.0",
     "esbuild": "^0.25.5",

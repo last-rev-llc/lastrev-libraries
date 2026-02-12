@@ -6,8 +6,6 @@ export type LastRevStrategy = 'fs' | 'redis' | 'dynamodb';
 export type ContentStrategy = 'fs' | 'cms';
 export type CmsCacheStrategy = 'redis' | 'dynamodb' | 'none';
 
-export type PathVersion = 'v1' | 'v2';
-
 export type SupportedLanguage = {
   id: string;
   title: string;
@@ -48,6 +46,10 @@ export interface LastRevAppConfiguration {
     usePreview: boolean;
     schemaTypes: any[];
     supportedLanguages: SupportedLanguage[];
+    /** Controls field access pattern: true = i18n array format [{ _key, value }], false = direct access */
+    useInternationalizedArrays: boolean;
+    /** Controls locale fallback: true = fallback to default locale, false = return null if locale not found */
+    fallbackToDefaultLocale: boolean;
   };
   algolia: {
     applicationId: string;
@@ -77,7 +79,6 @@ export interface LastRevAppConfiguration {
   features: {
     disableCoreSidekickLookup: boolean;
     disableFederatedSchema: boolean;
-    enablePathsV2: boolean;
   };
 }
 
@@ -123,6 +124,10 @@ export type LastRevAppConfigArgs = {
     usePreview?: boolean;
     schemaTypes?: any[];
     supportedLanguages?: SupportedLanguage[];
+    /** Controls field access pattern: true = i18n array format [{ _key, value }], false = direct access */
+    useInternationalizedArrays?: boolean;
+    /** Controls locale fallback: true = fallback to default locale, false = return null if locale not found */
+    fallbackToDefaultLocale?: boolean;
   };
   algolia?: {
     applicationId?: string;
@@ -140,10 +145,6 @@ export type LastRevAppConfigArgs = {
   apolloServerOptions?: LRApolloServerOptions;
   sites?: string[];
   paths?: {
-    /*
-      @deprecated use features.enablePathsV2 instead
-    */
-    version?: PathVersion;
     generateFullPathTree?: boolean;
   };
   sitemap?: {
@@ -156,6 +157,5 @@ export type LastRevAppConfigArgs = {
   features?: {
     disableCoreSidekickLookup?: boolean;
     disableFederatedSchema?: boolean;
-    enablePathsV2?: boolean;
   };
 };

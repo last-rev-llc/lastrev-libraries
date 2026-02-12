@@ -4,6 +4,7 @@ import flow from 'lodash/fp/flow';
 import filter from 'lodash/fp/filter';
 import groupBy from 'lodash/fp/groupBy';
 import getLocalizedField from './getLocalizedField';
+import { getContentType, getUpdatedAt, loadDocument } from './contentUtils';
 
 const toSnakeCase = (str: string) => {
   return str.replace(/[A-Z]/g, (match) => `_${match.toLowerCase()}`);
@@ -13,10 +14,11 @@ const shouldIndex = (seo: any) => {
   return get(seo, ['robots', 'value'], '').indexOf('noindex') === -1;
 };
 
-const filterByShouldIndexAndGroupByLocaleAndContentType = flow(
-  filter(({ content, seo }: { content: any; seo: any; entry: SitemapPathEntry }) => !!content && shouldIndex(seo)),
-  groupBy((e) => `${e.entry.locale}-${toSnakeCase(e.content!.sys.contentType.sys.id)}`)
-);
+const createFilterAndGroupFn = (ctx: ApolloContext) =>
+  flow(
+    filter(({ content, seo }: { content: any; seo: any; entry: SitemapPathEntry }) => !!content && shouldIndex(seo)),
+    groupBy((e) => `${e.entry.locale}-${toSnakeCase(getContentType(e.content!, ctx) || '')}`)
+  );
 
 const buildSitemapFromEntries = async (
   root: string,
@@ -34,8 +36,8 @@ const buildSitemapFromEntries = async (
 
   const fleshedOut = await Promise.all(
     map(entries, async (entry) => {
-      const content = await ctx.loaders.entryLoader.load({ id: entry.contentId, preview });
-      const seo = content ? getLocalizedField(content.fields, 'seo', ctx) : undefined;
+      const content = await loadDocument(ctx, entry.contentId, preview);
+      const seo = content ? getLocalizedField(content, 'seo', ctx) : undefined;
       return {
         entry,
         content,
@@ -44,22 +46,23 @@ const buildSitemapFromEntries = async (
     })
   );
 
-  const keyed = filterByShouldIndexAndGroupByLocaleAndContentType(fleshedOut);
+  const keyed = createFilterAndGroupFn(ctx)(fleshedOut);
 
   const pages: SitemapPage[] = [];
 
   each(keyed, (entries, key) => {
     if (entries.length <= 1000) {
       const filename = `${key}-sitemap.xml`;
+      const maxEntry = maxBy(entries, (e) => {
+        return new Date(getUpdatedAt(e.content!, ctx) || '').getTime();
+      })!;
       pages.push({
         filename,
         loc: `${root}${filename}`,
-        lastmod: maxBy(entries, (e) => {
-          return new Date(e.content!.sys.updatedAt).getTime();
-        })!.content!.sys.updatedAt,
+        lastmod: getUpdatedAt(maxEntry.content!, ctx)!,
         entries: map(entries, (e) => ({
           loc: buildUrl(e.entry),
-          lastmod: e.content!.sys.updatedAt
+          lastmod: getUpdatedAt(e.content!, ctx)!
         }))
       });
     } else {
@@ -69,15 +72,16 @@ const buildSitemapFromEntries = async (
       while (pageNum <= totalPages) {
         const pageEntries = entries.slice(pageNum - 1, 1000);
         const filename = `${key}-sitemap-${pageNum}.xml`;
+        const maxEntry = maxBy(pageEntries, (e) => {
+          return new Date(getUpdatedAt(e.content!, ctx) || '').getTime();
+        })!;
         pages.push({
           filename,
           loc: `${root}${filename}`,
-          lastmod: maxBy(pageEntries, (e) => {
-            return new Date(e.content!.sys.updatedAt).getTime();
-          })!.content!.sys.updatedAt,
+          lastmod: getUpdatedAt(maxEntry.content!, ctx)!,
           entries: map(pageEntries, (e) => ({
             loc: buildUrl(e.entry),
-            lastmod: e.content!.sys.updatedAt
+            lastmod: getUpdatedAt(e.content!, ctx)!
           }))
         });
         pageNum += 1;
