@@ -128,11 +128,7 @@ const transform = (file: FileInfo, api: API, _options: Options): string | null =
       const fieldsAccess = path.node.object as any;
 
       // Replace entry?.fields.fieldName with entry?.fieldName
-      const newNode = j.optionalMemberExpression(
-        fieldsAccess.object,
-        path.node.property,
-        path.node.computed
-      );
+      const newNode = j.optionalMemberExpression(fieldsAccess.object, path.node.property, path.node.computed);
 
       j(path).replaceWith(newNode);
       hasChanges = true;

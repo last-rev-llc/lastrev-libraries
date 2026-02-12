@@ -4,11 +4,7 @@ import * as path from 'path';
 /**
  * Generate a markdown report from migration results
  */
-export function generateMarkdownReport(
-  report: MigrationReport,
-  targetDir: string,
-  codemodName = 'Codemod'
-): string {
+export function generateMarkdownReport(report: MigrationReport, targetDir: string, codemodName = 'Codemod'): string {
   const lines: string[] = [];
 
   lines.push(`# ${codemodName} Migration Report`);
@@ -47,9 +43,7 @@ export function generateMarkdownReport(
   if (reviewResults.length > 0) {
     lines.push('## Files Needing Manual Review');
     lines.push('');
-    lines.push(
-      'The following files contain patterns that could not be fully automated and may need manual review:'
-    );
+    lines.push('The following files contain patterns that could not be fully automated and may need manual review:');
     lines.push('');
     reviewResults.forEach((result) => {
       const relativePath = path.relative(targetDir, result.filePath);

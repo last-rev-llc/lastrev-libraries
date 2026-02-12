@@ -176,9 +176,7 @@ export const handleWebhook = async (config: LastRevAppConfig, body: any, headers
   let data;
   try {
     data =
-      type === 'ContentType' || (isTruncated && action !== 'delete')
-        ? await getData(config, type, env, itemId)
-        : body; // Pass through body directly (no conversion needed)
+      type === 'ContentType' || (isTruncated && action !== 'delete') ? await getData(config, type, env, itemId) : body; // Pass through body directly (no conversion needed)
   } catch (error: any) {
     logger.error('Failed to retrieve data from CMS', {
       caller: 'handleWebhook',

@@ -95,10 +95,7 @@ export const writeEntriesByContentTypeFiles = async (
  * Write document IDs grouped by _type for Sanity (unified document model).
  * Creates: document_ids_by_type/{typeName}/{docId} files
  */
-export const writeDocumentIdsByTypeFiles = async (
-  lookup: Record<string, string[]>,
-  root: string
-): Promise<void> => {
+export const writeDocumentIdsByTypeFiles = async (lookup: Record<string, string[]>, root: string): Promise<void> => {
   const dir = join(root, DOCUMENT_IDS_BY_TYPE_DIRNAME);
   await ensureDir(dir);
 

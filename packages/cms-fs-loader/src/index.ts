@@ -38,10 +38,7 @@ const refByOptions: Options<RefByKey, any, string> = {
 /**
  * Create Sanity-specific loaders using unified documents directory
  */
-const createSanityLoaders = (
-  config: LastRevAppConfig,
-  fallbackLoaders: SanityLoaders
-): SanityLoaders => {
+const createSanityLoaders = (config: LastRevAppConfig, fallbackLoaders: SanityLoaders): SanityLoaders => {
   const getUri = getGetUriFunction(config);
 
   const getBatchDocumentFetcher = (): DataLoader.BatchLoadFn<ItemKey, SanityDocument | null> => {

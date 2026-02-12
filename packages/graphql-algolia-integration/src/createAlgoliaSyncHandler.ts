@@ -1,9 +1,6 @@
 import LastRevAppConfig from '@last-rev/app-config';
 import algoliasearch from 'algoliasearch';
-import {
-  parseWebhook as parseContentfulWebhook,
-  type WebhookParserResult
-} from '@last-rev/contentful-webhook-parser';
+import { parseWebhook as parseContentfulWebhook, type WebhookParserResult } from '@last-rev/contentful-webhook-parser';
 import parseSanityWebhook from '@last-rev/sanity-webhook-parser';
 import { GraphQLClient } from 'graphql-request';
 import groupAlgoliaObjectsByIndex from './groupAlgoliaObjectsByIndex';

@@ -37,9 +37,7 @@ export function transformGroqI18n(query: string): GroqTransformResult {
   if (FILTER_REGEX.test(result)) {
     result = result.replace(FILTER_REGEX, '');
     changed = true;
-    warnings.push(
-      '__i18n_lang filter removed - field-level i18n does not filter by language at document level'
-    );
+    warnings.push('__i18n_lang filter removed - field-level i18n does not filter by language at document level');
   }
 
   // Reset regex lastIndex
@@ -49,9 +47,7 @@ export function transformGroqI18n(query: string): GroqTransformResult {
   if (TRANSLATION_PROJECTION_REGEX.test(result)) {
     result = result.replace(TRANSLATION_PROJECTION_REGEX, '');
     changed = true;
-    warnings.push(
-      '_translations projection removed - translations are now at field level'
-    );
+    warnings.push('_translations projection removed - translations are now at field level');
   }
 
   // Reset regex lastIndex
@@ -61,9 +57,7 @@ export function transformGroqI18n(query: string): GroqTransformResult {
   if (SIMPLE_TRANSLATION_REGEX.test(result)) {
     result = result.replace(SIMPLE_TRANSLATION_REGEX, '');
     changed = true;
-    warnings.push(
-      '_translations reference removed - translations are now at field level'
-    );
+    warnings.push('_translations reference removed - translations are now at field level');
   }
 
   // Reset regex lastIndex
@@ -73,9 +67,7 @@ export function transformGroqI18n(query: string): GroqTransformResult {
   if (I18N_REFS_REGEX.test(result)) {
     result = result.replace(I18N_REFS_REGEX, '');
     changed = true;
-    warnings.push(
-      '__i18n_refs reference removed - i18n references are now at field level'
-    );
+    warnings.push('__i18n_refs reference removed - i18n references are now at field level');
   }
 
   // Reset regex lastIndex
@@ -86,9 +78,7 @@ export function transformGroqI18n(query: string): GroqTransformResult {
 
   // Add warning about remaining __i18n patterns
   if (result.includes('__i18n')) {
-    warnings.push(
-      'Query still contains __i18n patterns that could not be automatically transformed'
-    );
+    warnings.push('Query still contains __i18n patterns that could not be automatically transformed');
   }
 
   return { query: result, changed, warnings };

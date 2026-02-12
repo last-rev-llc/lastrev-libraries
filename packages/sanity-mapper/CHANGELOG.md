@@ -1,5 +1,11 @@
 # @last-rev/sanity-mapper
 
+## 0.2.3
+
+### Patch Changes
+
+- @last-rev/logging@0.2.1
+
 ## 0.2.2
 
 ### Patch Changes

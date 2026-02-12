@@ -18,10 +18,7 @@ export type LoadersResult = {
  * Apply cache strategy to Sanity loaders
  * Note: DynamoDB cache is not yet supported for Sanity
  */
-const applySanityCacheStrategy = (
-  config: LastRevAppConfig,
-  baseLoaders: SanityLoaders
-): SanityLoaders => {
+const applySanityCacheStrategy = (config: LastRevAppConfig, baseLoaders: SanityLoaders): SanityLoaders => {
   if (config.contentStrategy === 'fs') {
     return createFsLoaders(config, baseLoaders);
   }
@@ -35,10 +32,7 @@ const applySanityCacheStrategy = (
 /**
  * Apply cache strategy to Contentful loaders
  */
-const applyContentfulCacheStrategy = (
-  config: LastRevAppConfig,
-  baseLoaders: ContentfulLoaders
-): ContentfulLoaders => {
+const applyContentfulCacheStrategy = (config: LastRevAppConfig, baseLoaders: ContentfulLoaders): ContentfulLoaders => {
   if (config.contentStrategy === 'fs') {
     return createFsLoaders(config, baseLoaders);
   }

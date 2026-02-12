@@ -15,11 +15,7 @@ interface ConfigMigrationOptions extends Options {
  * - useInternationalizedArrays: true/false
  * - fallbackToDefaultLocale: true/false
  */
-const transform = (
-  file: FileInfo,
-  api: API,
-  options: ConfigMigrationOptions
-): string | null => {
+const transform = (file: FileInfo, api: API, options: ConfigMigrationOptions): string | null => {
   const j: JSCodeshift = api.jscodeshift;
   const root: Collection = j(file.source);
   let hasChanges = false;
@@ -62,11 +58,7 @@ const transform = (
       // Add useInternationalizedArrays if not present
       if (!hasI18nArrays) {
         sanityProperties.push(
-          j.property(
-            'init',
-            j.identifier('useInternationalizedArrays'),
-            j.literal(useInternationalizedArrays)
-          )
+          j.property('init', j.identifier('useInternationalizedArrays'), j.literal(useInternationalizedArrays))
         );
         hasChanges = true;
       }
@@ -74,11 +66,7 @@ const transform = (
       // Add fallbackToDefaultLocale if not present
       if (!hasFallback) {
         sanityProperties.push(
-          j.property(
-            'init',
-            j.identifier('fallbackToDefaultLocale'),
-            j.literal(fallbackToDefaultLocale)
-          )
+          j.property('init', j.identifier('fallbackToDefaultLocale'), j.literal(fallbackToDefaultLocale))
         );
         hasChanges = true;
       }
@@ -86,18 +74,19 @@ const transform = (
   });
 
   // Also check for cms: 'Sanity' to ensure we're in the right file
-  const hasSanityCms = root
-    .find(j.Property, {
-      key: {
-        type: 'Identifier',
-        name: 'cms'
-      },
-      value: {
-        type: 'StringLiteral',
-        value: 'Sanity'
-      }
-    })
-    .size() > 0;
+  const hasSanityCms =
+    root
+      .find(j.Property, {
+        key: {
+          type: 'Identifier',
+          name: 'cms'
+        },
+        value: {
+          type: 'StringLiteral',
+          value: 'Sanity'
+        }
+      })
+      .size() > 0;
 
   // If this looks like a Sanity config but doesn't have a sanity object, add one
   if (hasSanityCms) {
@@ -107,11 +96,7 @@ const transform = (
       // Check if this has cms: 'Sanity'
       const cmsProp = properties.find((prop: any) => {
         if (prop.type === 'Property' || prop.type === 'ObjectProperty') {
-          return (
-            prop.key?.name === 'cms' &&
-            prop.value?.type === 'StringLiteral' &&
-            prop.value?.value === 'Sanity'
-          );
+          return prop.key?.name === 'cms' && prop.value?.type === 'StringLiteral' && prop.value?.value === 'Sanity';
         }
         return false;
       });
@@ -131,16 +116,8 @@ const transform = (
             'init',
             j.identifier('sanity'),
             j.objectExpression([
-              j.property(
-                'init',
-                j.identifier('useInternationalizedArrays'),
-                j.literal(useInternationalizedArrays)
-              ),
-              j.property(
-                'init',
-                j.identifier('fallbackToDefaultLocale'),
-                j.literal(fallbackToDefaultLocale)
-              )
+              j.property('init', j.identifier('useInternationalizedArrays'), j.literal(useInternationalizedArrays)),
+              j.property('init', j.identifier('fallbackToDefaultLocale'), j.literal(fallbackToDefaultLocale))
             ])
           );
           properties.push(sanityConfig);

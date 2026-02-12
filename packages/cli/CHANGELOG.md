@@ -1,5 +1,17 @@
 # @last-rev/cli
 
+## 0.7.6
+
+### Patch Changes
+
+- Updated dependencies [4a3d88c]
+  - @last-rev/graphql-cms-helpers@0.3.0
+  - @last-rev/graphql-cms-core@0.3.0
+  - @last-rev/cms-sync-to-fs@0.3.0
+  - @last-rev/app-config@0.7.0
+  - @last-rev/contentful-fragment-gen@0.4.1
+  - @last-rev/contentful-import-export@0.3.1
+
 ## 0.7.5
 
 ### Patch Changes

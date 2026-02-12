@@ -27,7 +27,7 @@ describe('contentUtils', () => {
       },
       loaders: {},
       ...overrides
-    }) as unknown as ApolloContext;
+    } as unknown as ApolloContext);
 
   const createContentfulContext = (overrides = {}): ApolloContext =>
     ({
@@ -47,7 +47,7 @@ describe('contentUtils', () => {
       },
       sanityLoaders: {},
       ...overrides
-    }) as unknown as ApolloContext;
+    } as unknown as ApolloContext);
 
   describe('getContentId', () => {
     it('returns _id for Sanity entries', () => {

@@ -54,13 +54,13 @@ Options:
 
 Transforms loader API calls from the old entry-based naming to the new document-based naming.
 
-| Old Pattern | New Pattern |
-|-------------|-------------|
-| `ctx.loaders.entryLoader` | `ctx.sanityLoaders.documentLoader` |
-| `ctx.loaders.assetLoader` | `ctx.sanityLoaders.documentLoader` |
-| `ctx.loaders.entriesByContentTypeLoader` | `ctx.sanityLoaders.documentsByTypeLoader` |
-| `ctx.loaders.entryByFieldValueLoader` | `ctx.sanityLoaders.documentByFieldValueLoader` |
-| `ctx.loaders.entriesRefByLoader` | `ctx.sanityLoaders.documentsRefByLoader` |
+| Old Pattern                              | New Pattern                                    |
+| ---------------------------------------- | ---------------------------------------------- |
+| `ctx.loaders.entryLoader`                | `ctx.sanityLoaders.documentLoader`             |
+| `ctx.loaders.assetLoader`                | `ctx.sanityLoaders.documentLoader`             |
+| `ctx.loaders.entriesByContentTypeLoader` | `ctx.sanityLoaders.documentsByTypeLoader`      |
+| `ctx.loaders.entryByFieldValueLoader`    | `ctx.sanityLoaders.documentByFieldValueLoader` |
+| `ctx.loaders.entriesRefByLoader`         | `ctx.sanityLoaders.documentsRefByLoader`       |
 
 ```typescript
 // Before
@@ -76,14 +76,14 @@ const docs = await ctx.sanityLoaders.documentsByTypeLoader.load({ contentType: '
 
 Updates type imports and annotations from Contentful-style to Sanity-style.
 
-| Old Type | New Type |
-|----------|----------|
-| `Entry` | `SanityDocument` |
-| `BaseEntry` | `SanityDocument` |
-| `Asset` | `SanityDocument` |
-| `BaseAsset` | `SanityDocument` |
-| `ContentfulLoaders` | `SanityLoaders` |
-| `CmsLoaders` | `SanityLoaders` |
+| Old Type            | New Type         |
+| ------------------- | ---------------- |
+| `Entry`             | `SanityDocument` |
+| `BaseEntry`         | `SanityDocument` |
+| `Asset`             | `SanityDocument` |
+| `BaseAsset`         | `SanityDocument` |
+| `ContentfulLoaders` | `SanityLoaders`  |
+| `CmsLoaders`        | `SanityLoaders`  |
 
 ```typescript
 // Before
@@ -99,10 +99,10 @@ const doc: SanityDocument;
 
 Updates directory paths and Redis key constants.
 
-| Old | New |
-|-----|-----|
-| `'entries'` | `'documents'` |
-| `'assets'` | `'documents'` |
+| Old                           | New                      |
+| ----------------------------- | ------------------------ |
+| `'entries'`                   | `'documents'`            |
+| `'assets'`                    | `'documents'`            |
 | `'entry_ids_by_content_type'` | `'document_ids_by_type'` |
 
 ### 4. Remove Sanity Mapper

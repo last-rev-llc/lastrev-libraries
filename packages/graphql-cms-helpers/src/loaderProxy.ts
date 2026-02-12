@@ -6,13 +6,16 @@ export function createUnavailableLoaderProxy<T extends object>(unavailableCms: '
   const activeCms = unavailableCms === 'Sanity' ? 'Contentful' : 'Sanity';
   const correctLoader = activeCms === 'Sanity' ? 'sanityLoaders' : 'loaders';
 
-  return new Proxy({}, {
-    get(_target, prop) {
-      if (typeof prop === 'symbol') return undefined;
-      throw new Error(
-        `Cannot access ${unavailableCms} loaders (property '${String(prop)}'). ` +
-          `This project uses ${activeCms}. Use ctx.${correctLoader} instead.`
-      );
+  return new Proxy(
+    {},
+    {
+      get(_target, prop) {
+        if (typeof prop === 'symbol') return undefined;
+        throw new Error(
+          `Cannot access ${unavailableCms} loaders (property '${String(prop)}'). ` +
+            `This project uses ${activeCms}. Use ctx.${correctLoader} instead.`
+        );
+      }
     }
-  }) as T;
+  ) as T;
 }

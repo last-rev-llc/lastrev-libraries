@@ -1,6 +1,6 @@
 {
   "name": "@last-rev/cli",
-  "version": "0.7.5",
+  "version": "0.7.6",
   "description": "",
   "bin": {
     "last-rev": "bin/last-rev"

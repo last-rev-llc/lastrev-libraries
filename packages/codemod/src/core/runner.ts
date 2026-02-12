@@ -2,27 +2,13 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import jscodeshift from 'jscodeshift';
 import { glob } from 'glob';
-import type {
-  CodemodDefinition,
-  CodemodRunOptions,
-  MigrationReport,
-  TransformResult,
-  Transform
-} from '../types';
-import {
-  createEmptyReport,
-  addResultToReport,
-  finalizeReport,
-  generateMarkdownReport
-} from './reportGenerator';
+import type { CodemodDefinition, CodemodRunOptions, MigrationReport, TransformResult, Transform } from '../types';
+import { createEmptyReport, addResultToReport, finalizeReport, generateMarkdownReport } from './reportGenerator';
 
 /**
  * Run a codemod against a target directory
  */
-export async function runCodemod(
-  codemod: CodemodDefinition,
-  options: CodemodRunOptions
-): Promise<MigrationReport> {
+export async function runCodemod(codemod: CodemodDefinition, options: CodemodRunOptions): Promise<MigrationReport> {
   const report = createEmptyReport();
   const { targetDir, dryRun, verbose } = options;
 
@@ -73,15 +59,10 @@ export async function runCodemod(
 /**
  * Get transforms to apply based on options
  */
-function getTransformsToApply(
-  codemod: CodemodDefinition,
-  options: CodemodRunOptions
-): Record<string, Transform> {
+function getTransformsToApply(codemod: CodemodDefinition, options: CodemodRunOptions): Record<string, Transform> {
   const { all, transforms: transformsOption } = options;
   // selectedTransforms comes from interactive prompts
-  const selectedTransforms = (options as Record<string, unknown>).selectedTransforms as
-    | string[]
-    | undefined;
+  const selectedTransforms = (options as Record<string, unknown>).selectedTransforms as string[] | undefined;
 
   // If --all flag, return all transforms
   if (all) {
@@ -124,10 +105,7 @@ function getTransformsToApply(
 /**
  * Find files to process based on codemod patterns
  */
-async function findFilesToProcess(
-  codemod: CodemodDefinition,
-  targetDir: string
-): Promise<string[]> {
+async function findFilesToProcess(codemod: CodemodDefinition, targetDir: string): Promise<string[]> {
   const patterns = codemod.filePatterns || {
     include: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
     exclude: ['**/node_modules/**', '**/dist/**', '**/build/**']

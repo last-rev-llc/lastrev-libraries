@@ -46,13 +46,7 @@ const transform = (file: FileInfo, api: API, _options: Options): string | null =
   return root.toSource({ quote: 'single' });
 };
 
-function processPath(
-  j: JSCodeshift,
-  path: any,
-  pattern: string[],
-  replacement: string,
-  onChanged: () => void
-): void {
+function processPath(j: JSCodeshift, path: any, pattern: string[], replacement: string, onChanged: () => void): void {
   const { chain, hasOptional } = getMemberExpressionChain(path.node);
 
   // Check if the chain ends with our pattern

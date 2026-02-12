@@ -1,5 +1,20 @@
 # @last-rev/contentful-webhook-handler
 
+## 0.3.0
+
+### Minor Changes
+
+- 4a3d88c: Major update to Sanity path for libraries. Sanity object structure will now be preserved instead of mapping to Contentful objects.
+
+### Patch Changes
+
+- Updated dependencies [4a3d88c]
+  - @last-rev/sanity-webhook-parser@0.3.0
+  - @last-rev/graphql-cms-helpers@0.3.0
+  - @last-rev/cms-path-util@0.3.0
+  - @last-rev/contentful-webhook-parser@0.3.0
+  - @last-rev/logging@0.2.1
+
 ## 0.2.5
 
 ### Patch Changes

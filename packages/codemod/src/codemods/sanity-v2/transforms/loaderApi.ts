@@ -96,10 +96,7 @@ function isLoadersAccess(_j: JSCodeshift, node: any): boolean {
   // Member expression like ctx.loaders or context.loaders
   if (node.type === 'MemberExpression') {
     const memberExpr = node as MemberExpression;
-    if (
-      memberExpr.property.type === 'Identifier' &&
-      memberExpr.property.name === 'loaders'
-    ) {
+    if (memberExpr.property.type === 'Identifier' && memberExpr.property.name === 'loaders') {
       return true;
     }
   }
@@ -122,10 +119,7 @@ function renameLoadersObject(_j: JSCodeshift, node: MemberExpression): void {
   // If object is member expression like ctx.loaders
   if (obj.type === 'MemberExpression') {
     const memberObj = obj as MemberExpression;
-    if (
-      memberObj.property.type === 'Identifier' &&
-      memberObj.property.name === 'loaders'
-    ) {
+    if (memberObj.property.type === 'Identifier' && memberObj.property.name === 'loaders') {
       memberObj.property.name = 'sanityLoaders';
     }
   }

@@ -1,5 +1,16 @@
 # @last-rev/contentful-path-util
 
+## 0.3.0
+
+### Minor Changes
+
+- 4a3d88c: Major update to Sanity path for libraries. Sanity object structure will now be preserved instead of mapping to Contentful objects.
+
+### Patch Changes
+
+- @last-rev/logging@0.2.1
+- @last-rev/cms-path-rules-engine@0.2.1
+
 ## 0.2.2
 
 ### Patch Changes

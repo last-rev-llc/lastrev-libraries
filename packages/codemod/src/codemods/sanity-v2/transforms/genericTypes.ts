@@ -34,9 +34,7 @@ const transform = (file: FileInfo, api: API, _options: Options): string | null =
         }
 
         // Add <SanityDocument> type parameter
-        path.node.typeParameters = j.tsTypeParameterInstantiation([
-          j.tsTypeReference(j.identifier('SanityDocument'))
-        ]);
+        path.node.typeParameters = j.tsTypeParameterInstantiation([j.tsTypeReference(j.identifier('SanityDocument'))]);
 
         hasChanges = true;
         needsSanityDocumentImport = true;

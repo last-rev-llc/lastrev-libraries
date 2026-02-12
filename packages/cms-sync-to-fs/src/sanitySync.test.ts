@@ -544,10 +544,7 @@ describe('sanitySync', () => {
       await sanitySync(mockConfig, false);
 
       // Should query without syncToken filter for assets (no && clause)
-      expect(mockSanityClient.fetch).toHaveBeenCalledWith(
-        "*[_type in ['sanity.imageAsset', 'sanity.fileAsset']]",
-        {}
-      );
+      expect(mockSanityClient.fetch).toHaveBeenCalledWith("*[_type in ['sanity.imageAsset', 'sanity.fileAsset']]", {});
     });
   });
 

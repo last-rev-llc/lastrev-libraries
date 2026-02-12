@@ -24,11 +24,7 @@ export const I18N_FILTER_PATTERNS = [
 /**
  * Patterns that indicate the query uses document-level i18n
  */
-export const DETECTION_PATTERNS = [
-  '__i18n_lang',
-  '_translations',
-  '__i18n_refs'
-];
+export const DETECTION_PATTERNS = ['__i18n_lang', '_translations', '__i18n_refs'];
 
 /**
  * Regex to find filter conditions with i18n
