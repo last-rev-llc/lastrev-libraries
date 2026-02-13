@@ -13,7 +13,7 @@
     "test:watch": "jest --watch"
   },
   "devDependencies": {
-    "@apollo/server": "^4.12.2",
+    "@apollo/server": "^5.4.0",
     "@last-rev/rollup-config": "workspace:*",
     "@last-rev/testing-library": "workspace:*",
     "@last-rev/types": "workspace:*",
@@ -31,5 +31,14 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/last-rev-llc/lastrev-libraries.git",
+    "directory": "packages/app-config"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }

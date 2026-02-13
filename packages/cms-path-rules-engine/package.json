@@ -29,5 +29,14 @@
   "license": "ISC",
   "dependencies": {
     "@last-rev/logging": "workspace:*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/last-rev-llc/lastrev-libraries.git",
+    "directory": "packages/cms-path-rules-engine"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

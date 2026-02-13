@@ -35,5 +35,14 @@
     "@last-rev/timer": "workspace:*",
     "dataloader": "^2.0.0",
     "ioredis": "^5.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/last-rev-llc/lastrev-libraries.git",
+    "directory": "packages/cms-redis-loader"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

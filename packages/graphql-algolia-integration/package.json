@@ -45,5 +45,14 @@
     "graphql-request": "^6.1.0",
     "graphql-tag": "^2.12.6",
     "lodash": "^4.17.21"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/last-rev-llc/lastrev-libraries.git",
+    "directory": "packages/graphql-algolia-integration"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

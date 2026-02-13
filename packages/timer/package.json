@@ -25,5 +25,14 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/last-rev-llc/lastrev-libraries.git",
+    "directory": "packages/timer"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
 }

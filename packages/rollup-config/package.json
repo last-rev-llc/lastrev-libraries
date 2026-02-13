@@ -28,5 +28,14 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.17.18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/last-rev-llc/lastrev-libraries.git",
+    "directory": "packages/rollup-config"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }
