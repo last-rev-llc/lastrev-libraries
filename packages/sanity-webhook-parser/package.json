@@ -30,5 +30,14 @@
   "license": "ISC",
   "dependencies": {
     "sanity": "^3.40.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/last-rev-llc/lastrev-libraries.git",
+    "directory": "packages/sanity-webhook-parser"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

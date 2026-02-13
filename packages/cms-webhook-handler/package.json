@@ -41,5 +41,14 @@
     "jsonwebtoken": "^9.0.0",
     "lodash": "^4.17.21",
     "sanity": "^3.40.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/last-rev-llc/lastrev-libraries.git",
+    "directory": "packages/cms-webhook-handler"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

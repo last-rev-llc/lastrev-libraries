@@ -43,5 +43,14 @@
     "lodash": "^4.17.21",
     "ora": "^5.4.1",
     "tslib": "^2.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/last-rev-llc/lastrev-libraries.git",
+    "directory": "packages/cms-sync-to-fs"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

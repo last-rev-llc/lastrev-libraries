@@ -29,5 +29,14 @@
   "license": "ISC",
   "dependencies": {
     "contentful": "^11.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/last-rev-llc/lastrev-libraries.git",
+    "directory": "packages/contentful-webhook-parser"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }
