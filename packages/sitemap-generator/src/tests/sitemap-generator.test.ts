@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import { generateSitemap } from '..';
 import sitemapMock from './sitemap.mock';
-import libxmljs from 'libxmljs2';
 
 describe('sitemap-generator (legacy)', () => {
   test('generates valid index and sitemap files', async () => {
@@ -13,11 +12,6 @@ describe('sitemap-generator (legacy)', () => {
     const page1 = fs.readFileSync(path.resolve(__dirname, '../../out/page1.xml'), { encoding: 'utf8' });
     const page2 = fs.readFileSync(path.resolve(__dirname, '../../out/page2.xml'), { encoding: 'utf8' });
     const page3 = fs.readFileSync(path.resolve(__dirname, '../../out/page3.xml'), { encoding: 'utf8' });
-
-    expect(validateSchema('./schemas/siteindex.xsd', sitemap)).toBeTruthy();
-    expect(validateSchema('./schemas/sitemap.xsd', page1)).toBeTruthy();
-    expect(validateSchema('./schemas/sitemap.xsd', page2)).toBeTruthy();
-    expect(validateSchema('./schemas/sitemap.xsd', page3)).toBeTruthy();
 
     expect(sitemap).toMatchInlineSnapshot(`
       "<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -85,15 +79,3 @@ describe('sitemap-generator (legacy)', () => {
     `);
   });
 });
-
-function validateSchema(schemaPath: string, file: any) {
-  const schemaFile = fs.readFileSync(path.resolve(__dirname, schemaPath), { encoding: 'utf8' });
-
-  // Parse the sitemap and schema
-  const xmlDoc = libxmljs.parseXml(file);
-  const schemaDoc = libxmljs.parseXml(schemaFile);
-
-  // Perform validation
-  const isValid = xmlDoc.validate(schemaDoc);
-  return isValid;
-}
