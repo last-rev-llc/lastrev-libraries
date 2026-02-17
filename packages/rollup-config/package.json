@@ -15,7 +15,7 @@
     "@rollup/plugin-terser": "^0.4.4",
     "@swc/core": "^1.12.6",
     "autoprefixer": "^9.7.5",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "rollup": "^4.44.0",
     "rollup-plugin-generate-declarations": "^1.1.2",
     "rollup-plugin-jsonlint": "^2.1.0",

@@ -40,7 +40,7 @@
     "@sanity/client": "^7.4.0",
     "contentful": "^11.7.2",
     "fs-extra": "^10.0.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "ora": "^5.4.1",
     "tslib": "^2.3.0"
   },
