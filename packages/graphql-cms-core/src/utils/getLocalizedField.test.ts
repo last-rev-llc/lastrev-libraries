@@ -11,7 +11,7 @@ const createSanityCtx = (overrides?: Partial<ApolloContext>): ApolloContext =>
       fallbackToDefaultLocale: false
     },
     ...overrides
-  }) as unknown as ApolloContext;
+  } as unknown as ApolloContext);
 
 const asDoc = (fields: Record<string, any>) => fields as unknown as CmsEntry;
 

@@ -1,5 +1,11 @@
 # @last-rev/graphql-contentful-core
 
+## 0.3.1
+
+### Patch Changes
+
+- b19dbbe: Fixed field check for localized fields in getLocalizedField
+
 ## 0.3.0
 
 ### Minor Changes
