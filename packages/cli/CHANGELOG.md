@@ -1,5 +1,12 @@
 # @last-rev/cli
 
+## 0.7.7
+
+### Patch Changes
+
+- Updated dependencies [b19dbbe]
+  - @last-rev/graphql-cms-core@0.3.1
+
 ## 0.7.6
 
 ### Patch Changes
