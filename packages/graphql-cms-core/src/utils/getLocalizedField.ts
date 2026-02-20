@@ -1,6 +1,8 @@
 import get from 'lodash/get';
 import { ApolloContext, CmsEntry } from '@last-rev/types';
 
+const isI18nArrayType = (type: string): boolean => /^internationalizedArray.*Value$/.test(type);
+
 /**
  * Get localized field value from any CMS entry.
  * Reads ctx.cms to determine access pattern.
@@ -43,9 +45,9 @@ const getSanityField = (doc: any, field: string, ctx: ApolloContext): any => {
   }
 
   // Check if this is an i18n array format
-  // i18n arrays have both _key (locale code) AND value property
-  // Regular Sanity arrays have _key (random ID) but no value property
-  if (!Array.isArray(fieldValue) || !fieldValue[0]?._key || !('value' in fieldValue[0])) {
+  // i18n arrays are identified by _type matching internationalizedArray*Value (from @sanity/document-internationalization)
+  // Regular Sanity arrays have _key (random ID) but a non-i18n _type
+  if (!Array.isArray(fieldValue) || !fieldValue[0]?._key || !isI18nArrayType(fieldValue[0]?._type)) {
     // Not an i18n array - return as-is (supports regular arrays, references, etc.)
     return fieldValue;
   }
