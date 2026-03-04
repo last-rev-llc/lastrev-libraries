@@ -409,4 +409,57 @@ describe('convertSanityDoc', () => {
       }
     });
   });
+
+  it('should preserve custom image fields under metadata.assetFields when mapping asset links', () => {
+    const doc = {
+      _id: '123',
+      _type: 'article',
+      _updatedAt: '2025-06-13T13:12:36Z',
+      _createdAt: '2021-12-16T19:21:12Z',
+      logo: {
+        _type: 'image',
+        alt: 'Logo alt',
+        description: 'logo alt description',
+        asset: {
+          _ref: 'image-7c0d292a720d2da7711cbd08682ba2b16e316808-1563x264-svg',
+          _type: 'reference'
+        }
+      }
+    };
+
+    const result = convertSanityDoc(doc, defaultLocale, locales);
+
+    expect(result).toEqual({
+      sys: {
+        id: '123',
+        type: 'Entry',
+        updatedAt: '2025-06-13T13:12:36Z',
+        createdAt: '2021-12-16T19:21:12Z',
+        contentType: {
+          sys: {
+            type: 'Link',
+            linkType: 'ContentType',
+            id: 'article'
+          }
+        }
+      },
+      fields: {
+        logo: {
+          'en-US': {
+            sys: {
+              type: 'Link',
+              linkType: 'Asset',
+              id: 'image-7c0d292a720d2da7711cbd08682ba2b16e316808-1563x264-svg'
+            },
+            metadata: {
+              assetFields: {
+                alt: 'Logo alt',
+                description: 'logo alt description'
+              }
+            }
+          }
+        }
+      }
+    });
+  });
 });
