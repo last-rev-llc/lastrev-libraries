@@ -38,28 +38,30 @@ export const isContentfulError = (item: any) => {
   return item?.sys?.type === 'Error';
 };
 
-export const stringify = (r: any, errorKey: string) => {
+export const stringify = (r: any, errorKey: string): string | undefined => {
   try {
-    if (isNil(r)) {
-      throw Error('nil');
-    }
-
-    if (isError(r)) {
-      throw Error(r.message);
-    }
-
-    if (isContentfulError(r)) {
-      throw Error(`Contentful Error: ${r.sys.id}`);
-    }
-
-    if (!isContentfulObject(r)) {
-      throw Error(`Not contentful Object: ${r}`);
-    }
-
-    return JSON.stringify(enhanceContentfulObjectWithMetadata(r));
+    if (isNil(r)) throw Error('nil');
+    if (isError(r)) throw Error(r.message);
+    return JSON.stringify(r);
   } catch (err: any) {
     logger.error(`Error stringifying ${errorKey}: ${err.message}`, {
       caller: 'stringify',
+      stack: err.stack
+    });
+    return undefined;
+  }
+};
+
+export const stringifyContentful = (r: any, errorKey: string): string | undefined => {
+  try {
+    if (isNil(r)) throw Error('nil');
+    if (isError(r)) throw Error(r.message);
+    if (isContentfulError(r)) throw Error(`Contentful Error: ${r.sys.id}`);
+    if (!isContentfulObject(r)) throw Error(`Not a valid Contentful object: ${r}`);
+    return JSON.stringify(enhanceContentfulObjectWithMetadata(r));
+  } catch (err: any) {
+    logger.error(`Error stringifying ${errorKey}: ${err.message}`, {
+      caller: 'stringifyContentful',
       stack: err.stack
     });
     return undefined;

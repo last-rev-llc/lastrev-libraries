@@ -1,7 +1,7 @@
 import Redis from 'ioredis';
 import { SimpleTimer as Timer } from '@last-rev/timer';
 import { BaseEntry, SanityDocument, ItemKey } from '@last-rev/types';
-import { getKey, isNil, isRejected, stringify } from './helpers';
+import { getKey, isNil, isRejected, stringify, stringifyContentful } from './helpers';
 import { getWinstonLogger } from '@last-rev/logging';
 
 const logger = getWinstonLogger({ package: 'cms-redis-loader', module: 'primers' });
@@ -12,7 +12,8 @@ export const primeRedisEntriesOrAssets = async <T>(
   dirname: string,
   sourceResults: (T | Error)[],
   maxBatchSize: number,
-  ttlSeconds: number
+  ttlSeconds: number,
+  serializer: (r: any, errorKey: string) => string | undefined = stringify
 ) => {
   try {
     const timer = new Timer();
@@ -22,8 +23,7 @@ export const primeRedisEntriesOrAssets = async <T>(
 
     for (let i = 0; i < cacheMissIds.length; i++) {
       const key = getKey(cacheMissIds[i], dirname);
-      const value = stringify(sourceResults[i], key);
-      // const value = isNil(sourceResults[i]) ? null : stringify(sourceResults[i], key);
+      const value = serializer(sourceResults[i], key);
       if (key && value) {
         toSet[key] = value;
         if (count++ % maxBatchSize === 0) {
@@ -97,7 +97,7 @@ export const primeRedisEntriesByContentType = async (
       }
 
       entries.forEach((entry) => {
-        const v = isNil(entry) ? null : stringify(entry, entry.sys.id);
+        const v = isNil(entry) ? null : stringifyContentful(entry, entry.sys.id);
         if (v) {
           msetKeys[getKey({ preview, id: entry.sys.id }, 'entries')] = v;
           // chunking to maxBatchSize

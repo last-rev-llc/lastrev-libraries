@@ -5,7 +5,7 @@ import { SimpleTimer as Timer } from '@last-rev/timer';
 import Redis from 'ioredis';
 import { ItemKey, CmsLoaders, SanityLoaders, FVLKey, RefByKey } from '@last-rev/types';
 import LastRevAppConfig from '@last-rev/app-config';
-import { getKey, isError, isNil, parse, stringify } from './helpers';
+import { getKey, isError, isNil, parse, stringifyContentful } from './helpers';
 import { primeRedisEntriesByContentType, primeRedisEntriesOrAssets, primeRedisDocumentsByType } from './primers';
 
 const logger = getWinstonLogger({ package: 'cms-redis-loader', module: 'index', strategy: 'Redis' });
@@ -296,7 +296,7 @@ const createContentfulLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsL
     if (cacheMissIds.length) {
       const sourceResults = await fallbackLoader.loadMany(cacheMissIds);
 
-      primeRedisEntriesOrAssets<T>(client, cacheMissIds, dirname, sourceResults, maxBatchSize, ttlSeconds);
+      primeRedisEntriesOrAssets<T>(client, cacheMissIds, dirname, sourceResults, maxBatchSize, ttlSeconds, stringifyContentful);
 
       keys.forEach((key, index) => {
         if (isNil(results[index])) {
@@ -449,7 +449,7 @@ const createContentfulLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsL
           const zipped: Record<string, string> = {};
 
           for (let i = 0; i < contentTypeIds.length; i++) {
-            const val = stringify(contentTypes[i], contentTypeIds[i]);
+            const val = stringifyContentful(contentTypes[i], contentTypeIds[i]);
             if (val) {
               zipped[contentTypeIds[i]] = val;
             }
