@@ -44,7 +44,15 @@ describe('primers', () => {
         { sys: { type: 'Entry', id: 'entry2' }, fields: { title: 'Entry 2' } }
       ];
 
-      await primeRedisEntriesOrAssets(mockClient as any, cacheMissIds, 'entries', sourceResults, 1000, 3600, stringifyContentful);
+      await primeRedisEntriesOrAssets(
+        mockClient as any,
+        cacheMissIds,
+        'entries',
+        sourceResults,
+        1000,
+        3600,
+        stringifyContentful
+      );
 
       // Check that entries were set in Redis
       const entry1 = await mockClient.get('production:entries:entry1');

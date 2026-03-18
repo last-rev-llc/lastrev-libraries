@@ -1,5 +1,11 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.1
+
+### Patch Changes
+
+- @last-rev/graphql-cms-helpers@0.3.1
+
 ## 0.3.0
 
 ### Minor Changes

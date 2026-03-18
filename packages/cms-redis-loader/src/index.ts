@@ -296,7 +296,15 @@ const createContentfulLoaders = (config: LastRevAppConfig, fallbackLoaders: CmsL
     if (cacheMissIds.length) {
       const sourceResults = await fallbackLoader.loadMany(cacheMissIds);
 
-      primeRedisEntriesOrAssets<T>(client, cacheMissIds, dirname, sourceResults, maxBatchSize, ttlSeconds, stringifyContentful);
+      primeRedisEntriesOrAssets<T>(
+        client,
+        cacheMissIds,
+        dirname,
+        sourceResults,
+        maxBatchSize,
+        ttlSeconds,
+        stringifyContentful
+      );
 
       keys.forEach((key, index) => {
         if (isNil(results[index])) {
