@@ -1,5 +1,11 @@
 # @last-rev/contentful-redis-loader
 
+## 0.3.1
+
+### Patch Changes
+
+- 044fd70: Updated cms redis loader to support sanity objects
+
 ## 0.3.0
 
 ### Minor Changes

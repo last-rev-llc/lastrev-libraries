@@ -1,5 +1,13 @@
 # @last-rev/cli
 
+## 0.7.8
+
+### Patch Changes
+
+- @last-rev/graphql-cms-core@0.3.2
+- @last-rev/graphql-cms-helpers@0.3.1
+- @last-rev/cms-sync-to-fs@0.3.1
+
 ## 0.7.7
 
 ### Patch Changes
