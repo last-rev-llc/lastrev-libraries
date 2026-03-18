@@ -1,6 +1,7 @@
 import { primeRedisEntriesOrAssets, primeRedisEntriesByContentType } from './primers';
 import RedisMock from 'ioredis-mock';
 import { BaseEntry, ItemKey } from '@last-rev/types';
+import { stringifyContentful } from './helpers';
 
 // Mock dependencies
 jest.mock('@last-rev/logging', () => ({
@@ -43,7 +44,7 @@ describe('primers', () => {
         { sys: { type: 'Entry', id: 'entry2' }, fields: { title: 'Entry 2' } }
       ];
 
-      await primeRedisEntriesOrAssets(mockClient as any, cacheMissIds, 'entries', sourceResults, 1000, 3600);
+      await primeRedisEntriesOrAssets(mockClient as any, cacheMissIds, 'entries', sourceResults, 1000, 3600, stringifyContentful);
 
       // Check that entries were set in Redis
       const entry1 = await mockClient.get('production:entries:entry1');

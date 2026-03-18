@@ -8,7 +8,8 @@ import {
   enhanceContentfulObjectWithMetadata,
   isContentfulObject,
   isContentfulError,
-  stringify
+  stringify,
+  stringifyContentful
 } from './helpers';
 
 // Mock the logger
@@ -180,55 +181,80 @@ describe('helpers', () => {
   });
 
   describe('stringify', () => {
-    it('should stringify valid Contentful entries', () => {
+    it('should stringify any valid object', () => {
+      const obj = { id: 'test', data: 'value' };
+      const result = stringify(obj, 'test-key');
+      expect(result).toBeDefined();
+      expect(JSON.parse(result!)).toEqual(obj);
+    });
+
+    it('should stringify Sanity documents', () => {
+      const doc = { _id: 'doc-1', _type: 'page', title: 'Hello' };
+      const result = stringify(doc, 'test-key');
+      expect(result).toBeDefined();
+      expect(JSON.parse(result!)).toEqual(doc);
+    });
+
+    it('should stringify Contentful entries without metadata', () => {
+      const entry = { sys: { type: 'Entry', id: 'test' }, fields: { title: 'Test' } };
+      const result = stringify(entry, 'test-key');
+      expect(result).toBeDefined();
+      const parsed = JSON.parse(result!);
+      expect(parsed.sys).toEqual(entry.sys);
+      expect(parsed.lastrev_metadata).toBeUndefined();
+    });
+
+    it('should return undefined for null input', () => {
+      expect(stringify(null, 'test-key')).toBeUndefined();
+    });
+
+    it('should return undefined for Error input', () => {
+      expect(stringify(new Error('test'), 'test-key')).toBeUndefined();
+    });
+  });
+
+  describe('stringifyContentful', () => {
+    it('should stringify valid Contentful entries with metadata', () => {
       const entry = {
         sys: { type: 'Entry', id: 'test' },
         fields: { title: 'Test Entry' }
       };
-
-      const result = stringify(entry, 'test-key');
+      const result = stringifyContentful(entry, 'test-key');
       expect(result).toBeDefined();
-
       const parsed = JSON.parse(result!);
       expect(parsed.sys).toEqual(entry.sys);
       expect(parsed.fields).toEqual(entry.fields);
       expect(parsed.lastrev_metadata).toBeDefined();
     });
 
-    it('should stringify valid Contentful assets', () => {
+    it('should stringify valid Contentful assets with metadata', () => {
       const asset = {
         sys: { type: 'Asset', id: 'test-asset' },
         fields: { file: { url: 'https://example.com/image.jpg' } }
       };
-
-      const result = stringify(asset, 'test-key');
+      const result = stringifyContentful(asset, 'test-key');
       expect(result).toBeDefined();
-
       const parsed = JSON.parse(result!);
       expect(parsed.sys).toEqual(asset.sys);
-      expect(parsed.fields).toEqual(asset.fields);
+      expect(parsed.lastrev_metadata).toBeDefined();
     });
 
     it('should return undefined for null input', () => {
-      const result = stringify(null, 'test-key');
-      expect(result).toBeUndefined();
+      expect(stringifyContentful(null, 'test-key')).toBeUndefined();
     });
 
     it('should return undefined for Error input', () => {
-      const result = stringify(new Error('test'), 'test-key');
-      expect(result).toBeUndefined();
+      expect(stringifyContentful(new Error('test'), 'test-key')).toBeUndefined();
     });
 
     it('should return undefined for Contentful Error objects', () => {
       const contentfulError = { sys: { type: 'Error', id: 'NotFound' } };
-      const result = stringify(contentfulError, 'test-key');
-      expect(result).toBeUndefined();
+      expect(stringifyContentful(contentfulError, 'test-key')).toBeUndefined();
     });
 
     it('should return undefined for non-Contentful objects', () => {
       const invalidObject = { id: 'test', data: 'value' };
-      const result = stringify(invalidObject, 'test-key');
-      expect(result).toBeUndefined();
+      expect(stringifyContentful(invalidObject, 'test-key')).toBeUndefined();
     });
   });
 });
