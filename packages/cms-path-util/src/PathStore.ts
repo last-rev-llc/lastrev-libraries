@@ -22,24 +22,14 @@ const previewOrProduction = (config: LastRevAppConfig) =>
       ? 'preview'
       : 'production'
     : config.contentful.usePreview
-      ? 'preview'
-      : 'production';
+    ? 'preview'
+    : 'production';
 
 const getRedisClient = (config: LastRevAppConfig) => {
   const key =
     config.cms === 'Sanity'
-      ? JSON.stringify([
-          config.redis,
-          config.sanity.projectId,
-          config.sanity.dataset,
-          config.sanity.usePreview
-        ])
-      : JSON.stringify([
-          config.redis,
-          config.contentful.spaceId,
-          config.contentful.env,
-          config.contentful.usePreview
-        ]);
+      ? JSON.stringify([config.redis, config.sanity.projectId, config.sanity.dataset, config.sanity.usePreview])
+      : JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env, config.contentful.usePreview]);
 
   if (!redisClients[key]) {
     const segment = previewOrProduction(config);
