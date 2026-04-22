@@ -1,5 +1,11 @@
 # @last-rev/contentful-path-util
 
+## 0.3.1
+
+### Patch Changes
+
+- e1b71c0: Added preview/prod to key of redis path data
+
 ## 0.3.0
 
 ### Minor Changes

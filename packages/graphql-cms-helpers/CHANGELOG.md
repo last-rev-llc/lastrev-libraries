@@ -1,5 +1,14 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.3.2
+
+### Patch Changes
+
+- e1b71c0: Added preview/prod to key of redis path data
+- Updated dependencies [e1b71c0]
+  - @last-rev/cms-redis-loader@0.3.2
+  - @last-rev/cms-path-util@0.3.1
+
 ## 0.3.1
 
 ### Patch Changes

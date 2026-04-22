@@ -1,5 +1,15 @@
 # @last-rev/cli
 
+## 0.7.9
+
+### Patch Changes
+
+- e1b71c0: Added preview/prod to key of redis path data
+- Updated dependencies [e1b71c0]
+  - @last-rev/graphql-cms-helpers@0.3.2
+  - @last-rev/graphql-cms-core@0.3.3
+  - @last-rev/cms-sync-to-fs@0.3.2
+
 ## 0.7.8
 
 ### Patch Changes
