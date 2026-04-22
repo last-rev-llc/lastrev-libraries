@@ -16,21 +16,39 @@ export interface PathStore {
 
 const redisClients: Record<string, Redis> = {};
 
+const previewOrProduction = (config: LastRevAppConfig) =>
+  config.cms === 'Sanity'
+    ? config.sanity.usePreview
+      ? 'preview'
+      : 'production'
+    : config.contentful.usePreview
+      ? 'preview'
+      : 'production';
+
 const getRedisClient = (config: LastRevAppConfig) => {
   const key =
     config.cms === 'Sanity'
-      ? JSON.stringify([config.redis, config.sanity.projectId, config.sanity.dataset])
-      : JSON.stringify([config.redis, config.contentful.spaceId, config.contentful.env]);
+      ? JSON.stringify([
+          config.redis,
+          config.sanity.projectId,
+          config.sanity.dataset,
+          config.sanity.usePreview
+        ])
+      : JSON.stringify([
+          config.redis,
+          config.contentful.spaceId,
+          config.contentful.env,
+          config.contentful.usePreview
+        ]);
 
   if (!redisClients[key]) {
+    const segment = previewOrProduction(config);
     redisClients[key] = new Redis({
       ...config.redis,
       keyPrefix:
         config.cms === 'Sanity'
-          ? `${config.sanity.projectId}:${config.sanity.dataset}:`
-          : `${config.contentful.spaceId}:${config.contentful.env}:${
-              config.contentful.usePreview ? 'preview' : 'production'
-            }`
+          ? `${config.sanity.projectId}:${config.sanity.dataset}:${segment}`
+          : `${config.contentful.spaceId}:${config.contentful.env}:${segment}`
     });
   }
   return redisClients[key];
