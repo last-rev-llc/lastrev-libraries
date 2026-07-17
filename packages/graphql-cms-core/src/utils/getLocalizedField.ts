@@ -23,7 +23,7 @@ const getLocalizedField = (entry: CmsEntry, field: string, ctx: ApolloContext): 
  *
  * Config options (from ctx.sanityConfig):
  * - useInternationalizedArrays (default: true)
- *   - true: Fields use [{ _key: 'en', value: ... }] format
+ *   - true: Fields use [{ _key: 'abc123', language: 'en', value: ... }] format
  *   - false: Fields accessed directly (doc.field)
  *
  * - fallbackToDefaultLocale (default: false)
@@ -45,21 +45,21 @@ const getSanityField = (doc: any, field: string, ctx: ApolloContext): any => {
   }
 
   // Check if this is an i18n array format
-  // i18n arrays are identified by _type matching internationalizedArray*Value (from @sanity/document-internationalization)
+  // i18n arrays are identified by _type matching internationalizedArray*Value (from sanity-plugin-internationalized-array)
   // Regular Sanity arrays have _key (random ID) but a non-i18n _type
   if (!Array.isArray(fieldValue) || !fieldValue[0]?._key || !isI18nArrayType(fieldValue[0]?._type)) {
     // Not an i18n array - return as-is (supports regular arrays, references, etc.)
     return fieldValue;
   }
 
-  // i18n array format: find by locale key
+  // i18n array format: find by locale
   const locale = ctx.locale ?? ctx.defaultLocale;
-  const localized = fieldValue.find((v: any) => v._key === locale);
+  const localized = fieldValue.find((v: any) => v.language === locale);
   if (localized?.value !== undefined) return localized.value;
 
   // Only fallback to default locale if configured
   if (fallbackToDefault && locale !== ctx.defaultLocale) {
-    const defaultLocalized = fieldValue.find((v: any) => v._key === ctx.defaultLocale);
+    const defaultLocalized = fieldValue.find((v: any) => v.language === ctx.defaultLocale);
     if (defaultLocalized?.value !== undefined) return defaultLocalized.value;
   }
 
