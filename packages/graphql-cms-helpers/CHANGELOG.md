@@ -1,5 +1,20 @@
 # @last-rev/graphql-contentful-helpers
 
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [e8c4236]
+  - @last-rev/cms-path-util@0.3.2
+  - @last-rev/types@0.6.1
+  - @last-rev/app-config@0.7.0
+  - @last-rev/cms-dynamodb-loader@0.2.1
+  - @last-rev/cms-fs-loader@0.3.0
+  - @last-rev/cms-path-rules-engine@0.2.1
+  - @last-rev/cms-redis-loader@0.3.2
+  - @last-rev/contentful-cms-loader@0.6.2
+  - @last-rev/sanity-cms-loader@0.3.0
+
 ## 0.3.2
 
 ### Patch Changes

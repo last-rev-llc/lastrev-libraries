@@ -1,5 +1,13 @@
 # @last-rev/contentful-sync-to-fs
 
+## 0.3.3
+
+### Patch Changes
+
+- Updated dependencies [e8c4236]
+  - @last-rev/cms-path-util@0.3.2
+  - @last-rev/graphql-cms-helpers@0.3.3
+
 ## 0.3.2
 
 ### Patch Changes
