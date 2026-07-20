@@ -1,5 +1,15 @@
 # @last-rev/cli
 
+## 0.7.10
+
+### Patch Changes
+
+- Updated dependencies [e8c4236]
+  - @last-rev/graphql-cms-core@0.3.4
+  - @last-rev/cms-sync-to-fs@0.3.3
+  - @last-rev/graphql-cms-helpers@0.3.3
+  - @last-rev/app-config@0.7.0
+
 ## 0.7.9
 
 ### Patch Changes

@@ -1,5 +1,22 @@
 # @last-rev/graphql-contentful-core
 
+## 0.3.4
+
+### Patch Changes
+
+- e8c4236: Update internationalized-array field locale resolution to match `sanity-plugin-internationalized-array` v5's storage shape, where the locale is stored on a `language` field instead of `_key` (`_key` is now a random array-item id, consistent with other Sanity array items). This is a breaking change from the pre-v5 `_key`-as-locale shape.
+
+  Also fixes `getDefaultFieldValue` so Sanity i18n array fields are correctly unwrapped to the default-locale value instead of returning the raw array.
+
+- Updated dependencies [e8c4236]
+  - @last-rev/types@0.6.1
+  - @last-rev/graphql-cms-helpers@0.3.3
+  - @last-rev/app-config@0.7.0
+  - @last-rev/cms-fs-loader@0.3.0
+  - @last-rev/cms-redis-loader@0.3.2
+  - @last-rev/contentful-cms-loader@0.6.2
+  - @last-rev/graphql-schema-gen@0.5.0
+
 ## 0.3.3
 
 ### Patch Changes

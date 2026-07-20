@@ -1,5 +1,15 @@
 # @last-rev/contentful-path-util
 
+## 0.3.2
+
+### Patch Changes
+
+- e8c4236: Update internationalized-array field locale resolution to match `sanity-plugin-internationalized-array` v5's storage shape, where the locale is stored on a `language` field instead of `_key` (`_key` is now a random array-item id, consistent with other Sanity array items). This is a breaking change from the pre-v5 `_key`-as-locale shape.
+
+  Also fixes `getDefaultFieldValue` so Sanity i18n array fields are correctly unwrapped to the default-locale value instead of returning the raw array.
+
+  - @last-rev/cms-path-rules-engine@0.2.1
+
 ## 0.3.1
 
 ### Patch Changes

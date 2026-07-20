@@ -32,7 +32,9 @@ describe('getDefaultFieldValue - Sanity', () => {
   });
 
   it('returns the field as-is when useInternationalizedArrays is false', () => {
-    const titleArray = [{ _key: 'abc123', language: 'en-US', _type: 'internationalizedArrayStringValue', value: 'Hello' }];
+    const titleArray = [
+      { _key: 'abc123', language: 'en-US', _type: 'internationalizedArrayStringValue', value: 'Hello' }
+    ];
     const doc = { title: titleArray } as unknown as SanityDocument;
     const ctx = createSanityCtx({ sanityConfig: { useInternationalizedArrays: false } });
     expect(getDefaultFieldValue(doc, 'title', ctx)).toEqual(titleArray);

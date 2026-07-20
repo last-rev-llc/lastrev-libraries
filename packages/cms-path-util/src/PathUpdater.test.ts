@@ -21,7 +21,9 @@ describe('getSlug - Sanity', () => {
 
   it('returns undefined when no entry matches the requested locale', () => {
     const entry = {
-      slug: [{ _key: 'abc123', language: 'es', _type: 'internationalizedArrayStringValue', value: { current: 'inicio' } }]
+      slug: [
+        { _key: 'abc123', language: 'es', _type: 'internationalizedArrayStringValue', value: { current: 'inicio' } }
+      ]
     };
     expect(getSlug(entry, 'en-US', true)).toBeUndefined();
   });
@@ -43,7 +45,9 @@ describe('getSlug - Sanity', () => {
 
   it('accesses the slug directly when useInternationalizedArrays is false', () => {
     const entry = {
-      slug: [{ _key: 'abc123', language: 'en-US', _type: 'internationalizedArrayStringValue', value: { current: 'home' } }]
+      slug: [
+        { _key: 'abc123', language: 'en-US', _type: 'internationalizedArrayStringValue', value: { current: 'home' } }
+      ]
     };
     expect(getSlug(entry, 'en-US', true, { useInternationalizedArrays: false })).toBeUndefined();
   });
