@@ -52,7 +52,7 @@ const hasSlug = (entry: any, isSanity: boolean): boolean => {
 /**
  * Get slug value from entry for a specific locale
  */
-const getSlug = (
+export const getSlug = (
   entry: any,
   locale: string,
   isSanity: boolean,
@@ -76,8 +76,8 @@ const getSlug = (
       return typeof fieldValue === 'string' ? fieldValue : fieldValue?.current;
     }
 
-    // i18n array format: find by locale key
-    const localized = fieldValue.find((v: any) => v._key === locale);
+    // i18n array format: find by locale
+    const localized = fieldValue.find((v: any) => v.language === locale);
     if (localized?.value !== undefined) {
       return typeof localized.value === 'string' ? localized.value : localized.value?.current;
     }

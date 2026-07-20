@@ -25,7 +25,8 @@ const getDefaultFieldValue = (
     // Sanity fields are directly on the document
     const val = (item as SanityDocument)[fieldName];
     if (ctx.sanityConfig?.useInternationalizedArrays && Array.isArray(val) && val[0]?._key) {
-      return val;
+      const defaultLocalized = val.find((v: any) => v.language === ctx.defaultLocale);
+      return defaultLocalized?.value ?? null;
     }
     return val;
   }

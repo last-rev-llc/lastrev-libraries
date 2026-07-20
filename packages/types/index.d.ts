@@ -41,8 +41,10 @@ export type SanitySlug = Slug;
  * }
  */
 export interface InternationalizedValue<T> {
-  /** Locale code (e.g., 'en-US', 'es-ES') */
+  /** Random array-item id (Sanity's standard `_key`, not the locale) */
   _key: string;
+  /** Locale code (e.g., 'en-US', 'es-ES') */
+  language: string;
   /** The localized value */
   value: T;
 }

@@ -19,8 +19,8 @@ describe('getLocalizedField - Sanity i18n arrays', () => {
   it('returns localized value when value property is present', () => {
     const doc = asDoc({
       title: [
-        { _key: 'en-US', _type: 'internationalizedArrayStringValue', value: 'Hello' },
-        { _key: 'es', _type: 'internationalizedArrayStringValue', value: 'Hola' }
+        { _key: 'abc123', language: 'en-US', _type: 'internationalizedArrayStringValue', value: 'Hello' },
+        { _key: 'def456', language: 'es', _type: 'internationalizedArrayStringValue', value: 'Hola' }
       ]
     });
     const ctx = createSanityCtx();
@@ -30,8 +30,8 @@ describe('getLocalizedField - Sanity i18n arrays', () => {
   it('returns localized value for non-default locale', () => {
     const doc = asDoc({
       title: [
-        { _key: 'en-US', _type: 'internationalizedArrayStringValue', value: 'Hello' },
-        { _key: 'es', _type: 'internationalizedArrayStringValue', value: 'Hola' }
+        { _key: 'abc123', language: 'en-US', _type: 'internationalizedArrayStringValue', value: 'Hello' },
+        { _key: 'def456', language: 'es', _type: 'internationalizedArrayStringValue', value: 'Hola' }
       ]
     });
     const ctx = createSanityCtx({ locale: 'es' });
@@ -40,7 +40,7 @@ describe('getLocalizedField - Sanity i18n arrays', () => {
 
   it('returns null when i18n array entry has no value property (only _key and _type)', () => {
     const doc = asDoc({
-      title: [{ _key: 'en-US', _type: 'internationalizedArrayStringValue' }]
+      title: [{ _key: 'abc123', language: 'en-US', _type: 'internationalizedArrayStringValue' }]
     });
     const ctx = createSanityCtx();
     expect(getLocalizedField(doc, 'title', ctx)).toBeNull();
@@ -48,7 +48,7 @@ describe('getLocalizedField - Sanity i18n arrays', () => {
 
   it('returns null when i18n array has entries for other locales but not the requested one', () => {
     const doc = asDoc({
-      title: [{ _key: 'es', _type: 'internationalizedArrayStringValue' }]
+      title: [{ _key: 'abc123', language: 'es', _type: 'internationalizedArrayStringValue' }]
     });
     const ctx = createSanityCtx({ locale: 'en-US' });
     expect(getLocalizedField(doc, 'title', ctx)).toBeNull();
@@ -56,7 +56,7 @@ describe('getLocalizedField - Sanity i18n arrays', () => {
 
   it('returns null for internationalizedArrayReferenceValue with no value', () => {
     const doc = asDoc({
-      image: [{ _key: 'en-US', _type: 'internationalizedArrayReferenceValue' }]
+      image: [{ _key: 'abc123', language: 'en-US', _type: 'internationalizedArrayReferenceValue' }]
     });
     const ctx = createSanityCtx();
     expect(getLocalizedField(doc, 'image', ctx)).toBeNull();
@@ -65,8 +65,8 @@ describe('getLocalizedField - Sanity i18n arrays', () => {
   it('returns null when fallback is disabled and requested locale has no value but default does', () => {
     const doc = asDoc({
       title: [
-        { _key: 'es', _type: 'internationalizedArrayStringValue' },
-        { _key: 'en-US', _type: 'internationalizedArrayStringValue', value: 'Default value' }
+        { _key: 'abc123', language: 'es', _type: 'internationalizedArrayStringValue' },
+        { _key: 'def456', language: 'en-US', _type: 'internationalizedArrayStringValue', value: 'Default value' }
       ]
     });
     const ctx = createSanityCtx({ locale: 'es' });
@@ -76,8 +76,8 @@ describe('getLocalizedField - Sanity i18n arrays', () => {
   it('falls back to default locale when configured and primary locale has no value', () => {
     const doc = asDoc({
       title: [
-        { _key: 'es', _type: 'internationalizedArrayStringValue' },
-        { _key: 'en-US', _type: 'internationalizedArrayStringValue', value: 'Fallback' }
+        { _key: 'abc123', language: 'es', _type: 'internationalizedArrayStringValue' },
+        { _key: 'def456', language: 'en-US', _type: 'internationalizedArrayStringValue', value: 'Fallback' }
       ]
     });
     const ctx = createSanityCtx({
@@ -93,8 +93,8 @@ describe('getLocalizedField - Sanity i18n arrays', () => {
   it('returns null when fallback is enabled but both locales have no value', () => {
     const doc = asDoc({
       title: [
-        { _key: 'es', _type: 'internationalizedArrayStringValue' },
-        { _key: 'en-US', _type: 'internationalizedArrayStringValue' }
+        { _key: 'abc123', language: 'es', _type: 'internationalizedArrayStringValue' },
+        { _key: 'def456', language: 'en-US', _type: 'internationalizedArrayStringValue' }
       ]
     });
     const ctx = createSanityCtx({
@@ -109,8 +109,8 @@ describe('getLocalizedField - Sanity i18n arrays', () => {
 
   it('returns array as-is when items have _key and value but non-i18n _type', () => {
     const options = [
-      { _key: 'en-US', _type: 'option', value: 'Option A' },
-      { _key: 'es', _type: 'option', value: 'Option B' }
+      { _key: 'abc123', language: 'en-US', _type: 'option', value: 'Option A' },
+      { _key: 'def456', language: 'es', _type: 'option', value: 'Option B' }
     ];
     const doc = asDoc({ options });
     const ctx = createSanityCtx();
