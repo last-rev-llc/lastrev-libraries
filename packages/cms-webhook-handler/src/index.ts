@@ -22,7 +22,8 @@ const getData = async (
   config: LastRevAppConfig,
   type: 'Entry' | 'Asset' | 'ContentType',
   env: string,
-  itemId: string
+  itemId: string,
+  isPreview: boolean
 ) => {
   if (config.cms === 'Contentful') {
     const client = createContentfulClient({
@@ -48,7 +49,12 @@ const getData = async (
     const client = createSanityClient({
       projectId: config.sanity.projectId,
       dataset: env,
-      apiVersion: '2024-03-18'
+      apiVersion: '2024-03-18',
+      token: config.sanity.token,
+      // itemId has already had any `drafts.` prefix stripped, so a draft is only
+      // reachable through the drafts perspective, which requires useCdn: false.
+      useCdn: false,
+      perspective: isPreview ? 'drafts' : 'published'
     });
 
     // Simple GROQ query - fetch the document by ID
@@ -176,7 +182,9 @@ export const handleWebhook = async (config: LastRevAppConfig, body: any, headers
   let data;
   try {
     data =
-      type === 'ContentType' || (isTruncated && action !== 'delete') ? await getData(config, type, env, itemId) : body; // Pass through body directly (no conversion needed)
+      type === 'ContentType' || (isTruncated && action !== 'delete')
+        ? await getData(config, type, env, itemId, contentStates.includes('preview'))
+        : body; // Pass through body directly (no conversion needed)
   } catch (error: any) {
     logger.error('Failed to retrieve data from CMS', {
       caller: 'handleWebhook',
@@ -196,7 +204,8 @@ export const handleWebhook = async (config: LastRevAppConfig, body: any, headers
         const command = {
           isPreview: env === 'preview',
           action: action,
-          data
+          data,
+          itemId
         };
         switch (type) {
           case 'Asset':

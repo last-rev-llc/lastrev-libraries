@@ -50,16 +50,21 @@ const parseWebhook = (config: LastRevAppConfig, body: any, headers: WebhookHeade
     throw Error('Project id in webhook does not match configuration.');
   }
 
-  let itemId = headers['sanity-document-id'] || body?._id;
-  if (itemId?.startsWith('drafts.')) itemId = itemId.substring(7);
+  // Sanity's default projection is "the whole document after the change", so a
+  // delete has no document body at all — the id only arrives in the header.
+  const headerId: string | undefined = headers['sanity-document-id'];
+  const bodyId: string | undefined = body?._id;
+  // Either source is enough: a delete has only the header, while a body-only
+  // payload still identifies the draft through its _id.
+  const isDraft = !!headerId?.startsWith('drafts.') || !!bodyId?.startsWith('drafts.');
+  const rawItemId = headerId || bodyId;
+  const itemId = (rawItemId?.startsWith('drafts.') ? rawItemId.substring(7) : rawItemId) ?? '';
 
   // isTruncated: true if body is empty or has no fields
   const isTruncated = body?._lr_truncated === true;
 
   // Determine contentStates based on draft status
-  let contentStates: ('preview' | 'production')[] = [];
-  if (body?._id?.startsWith('drafts.')) contentStates = ['preview'];
-  else contentStates = ['production'];
+  const contentStates: ('preview' | 'production')[] = isDraft ? ['preview'] : ['production'];
 
   return {
     action,
