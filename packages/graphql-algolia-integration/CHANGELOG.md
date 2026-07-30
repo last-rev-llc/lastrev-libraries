@@ -1,5 +1,12 @@
 # @last-rev/graphql-algolia-integration
 
+## 0.6.1
+
+### Patch Changes
+
+- Updated dependencies [30b0709]
+  - @last-rev/sanity-webhook-parser@0.3.1
+
 ## 0.6.0
 
 ### Minor Changes
