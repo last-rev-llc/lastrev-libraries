@@ -4,6 +4,7 @@ import mockAppConfig from '@last-rev/app-config/src/app-config.mock';
 import { parseWebhook as parseContentfulWebhook } from '@last-rev/contentful-webhook-parser';
 import parseSanityWebhook from '@last-rev/sanity-webhook-parser';
 import { createHandlers } from './handlers';
+import { createClient as createSanityClient } from '@sanity/client';
 import jwt from 'jsonwebtoken';
 
 // Mock external dependencies
@@ -37,6 +38,7 @@ jest.mock('@sanity/client', () => ({
 const mockParseContentfulWebhook = parseContentfulWebhook as jest.MockedFunction<typeof parseContentfulWebhook>;
 const mockParseSanityWebhook = parseSanityWebhook as jest.MockedFunction<typeof parseSanityWebhook>;
 const mockCreateHandlers = createHandlers as jest.MockedFunction<typeof createHandlers>;
+const mockCreateSanityClient = createSanityClient as jest.MockedFunction<typeof createSanityClient>;
 const mockJwtVerify = jwt.verify as jest.MockedFunction<any>;
 
 describe('cms-webhook-handler', () => {
@@ -94,7 +96,8 @@ describe('cms-webhook-handler', () => {
         expect(mockHandlers.entry).toHaveBeenCalledWith({
           isPreview: false,
           action: 'update',
-          data: mockBody
+          data: mockBody,
+          itemId: 'test-entry-id'
         });
         expect(mockHandlers.paths).toHaveBeenCalledWith(false, true);
       });
@@ -117,7 +120,8 @@ describe('cms-webhook-handler', () => {
         expect(mockHandlers.asset).toHaveBeenCalledWith({
           isPreview: true,
           action: 'delete',
-          data: mockBody
+          data: mockBody,
+          itemId: 'test-asset-id'
         });
         expect(mockHandlers.paths).toHaveBeenCalledWith(true, false);
       });
@@ -189,8 +193,63 @@ describe('cms-webhook-handler', () => {
         expect(mockHandlers.entry).toHaveBeenCalledWith({
           isPreview: false,
           action: 'update',
-          data: sanityMockBody
+          data: sanityMockBody,
+          itemId: 'test-sanity-id'
         });
+      });
+
+      it('should re-fetch a truncated draft payload through the drafts perspective', async () => {
+        const config = baseConfig.clone({ cms: 'Sanity' });
+        const truncatedBody = { _id: 'drafts.test-sanity-id', _type: 'page', _lr_truncated: true };
+        const webhookResult = {
+          type: 'Entry' as const,
+          action: 'update' as const,
+          contentStates: ['preview' as const],
+          env: 'production',
+          itemId: 'test-sanity-id',
+          isTruncated: true
+        };
+
+        const fetch = jest.fn().mockResolvedValue({ _id: 'test-sanity-id', _type: 'page' });
+        mockCreateSanityClient.mockReturnValue({ fetch } as any);
+        mockParseSanityWebhook.mockReturnValue(webhookResult);
+
+        await handleWebhook(config, truncatedBody, mockHeaders);
+
+        // Without a token the drafts perspective is unavailable, and without the
+        // perspective the stripped id resolves to the published document instead.
+        expect(mockCreateSanityClient).toHaveBeenCalledWith(
+          expect.objectContaining({
+            token: config.sanity.token,
+            useCdn: false,
+            perspective: 'drafts'
+          })
+        );
+        expect(fetch).toHaveBeenCalledWith(expect.any(String), { id: 'test-sanity-id' });
+      });
+
+      it('should re-fetch a truncated published payload through the published perspective', async () => {
+        const config = baseConfig.clone({ cms: 'Sanity' });
+        const truncatedBody = { _id: 'test-sanity-id', _type: 'page', _lr_truncated: true };
+        const webhookResult = {
+          type: 'Entry' as const,
+          action: 'update' as const,
+          contentStates: ['production' as const],
+          env: 'production',
+          itemId: 'test-sanity-id',
+          isTruncated: true
+        };
+
+        mockCreateSanityClient.mockReturnValue({
+          fetch: jest.fn().mockResolvedValue({ _id: 'test-sanity-id', _type: 'page' })
+        } as any);
+        mockParseSanityWebhook.mockReturnValue(webhookResult);
+
+        await handleWebhook(config, truncatedBody, mockHeaders);
+
+        expect(mockCreateSanityClient).toHaveBeenCalledWith(
+          expect.objectContaining({ token: config.sanity.token, perspective: 'published' })
+        );
       });
 
       it('should clone config when dataset differs', async () => {

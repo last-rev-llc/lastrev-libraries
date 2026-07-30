@@ -59,6 +59,43 @@ describe('parseWebhook', () => {
     );
   });
 
+  // Sanity's default projection is "the whole document after the change". A delete
+  // has no after-state, so the body carries no document — the operation and the id
+  // arrive in the headers instead.
+  describe('delete webhooks, which have no document body', () => {
+    const deleteHeaders = { ...baseHeaders, 'sanity-operation': 'delete' };
+
+    it('treats a discarded draft as preview', () => {
+      const result = parseWebhook(getConfig(), {}, { ...deleteHeaders, 'sanity-document-id': 'drafts.doc123' });
+      expect(result).toMatchObject({
+        action: 'delete',
+        contentStates: ['preview'],
+        itemId: 'doc123'
+      });
+    });
+
+    it('treats a deleted published document as production', () => {
+      const result = parseWebhook(getConfig(), {}, deleteHeaders);
+      expect(result).toMatchObject({
+        action: 'delete',
+        contentStates: ['production'],
+        itemId: 'doc123'
+      });
+    });
+
+    it('tolerates a completely absent body', () => {
+      const result = parseWebhook(getConfig(), undefined, { ...deleteHeaders, 'sanity-document-id': 'drafts.doc123' });
+      expect(result).toMatchObject({ action: 'delete', contentStates: ['preview'], itemId: 'doc123' });
+    });
+  });
+
+  it('falls back to the body _id when the document-id header is absent', () => {
+    const body = { _id: 'drafts.doc123', _type: 'article' };
+    const headers = { ...baseHeaders, 'sanity-document-id': '' };
+    const result = parseWebhook(getConfig(), body, headers);
+    expect(result).toMatchObject({ contentStates: ['preview'], itemId: 'doc123' });
+  });
+
   it('sets isTruncated true when _lr_truncated is true in the body', () => {
     const body = { _id: 'drafts.someId', _lr_truncated: true, _type: 'section' };
     const headers = { ...baseHeaders, 'sanity-document-id': 'drafts.someId' };
