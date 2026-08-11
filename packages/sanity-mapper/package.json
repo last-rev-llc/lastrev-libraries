@@ -33,7 +33,7 @@
   "dependencies": {
     "@last-rev/logging": "workspace:*",
     "@last-rev/timer": "workspace:*",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "tslib": "^2.3.0"
   },
   "repository": {

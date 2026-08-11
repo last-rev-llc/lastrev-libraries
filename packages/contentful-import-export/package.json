@@ -30,7 +30,7 @@
     "@last-rev/logging": "workspace:*",
     "contentful-export": "^7.19.141",
     "contentful-import": "^9.4.52",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.23"
   },
   "repository": {
     "type": "git",

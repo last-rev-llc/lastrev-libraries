@@ -16,7 +16,7 @@
   "author": "Jaime Morales",
   "license": "ISC",
   "dependencies": {
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.23"
   },
   "devDependencies": {
     "@last-rev/app-config": "workspace:*",

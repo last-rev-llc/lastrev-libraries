@@ -36,7 +36,7 @@
     "@last-rev/timer": "workspace:*",
     "dataloader": "^2.0.0",
     "fs-extra": "^10.0.0",
-    "lodash": "^4.17.21",
+    "lodash": "^4.17.23",
     "tslib": "^2.3.0"
   },
   "repository": {
