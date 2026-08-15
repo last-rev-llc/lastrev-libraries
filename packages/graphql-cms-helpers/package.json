@@ -27,7 +27,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/server": "^5.4.0",
+    "@apollo/server": "^5.5.0",
     "@last-rev/app-config": "workspace:*",
     "@last-rev/cms-dynamodb-loader": "workspace:*",
     "@last-rev/cms-fs-loader": "workspace:*",
