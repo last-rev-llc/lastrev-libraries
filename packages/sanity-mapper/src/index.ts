@@ -1,6 +1,22 @@
 import { mapSanityPortableTextArrayToContentfulRichText } from './richTextHelpers';
 import type { ContentType, BaseAsset, BaseEntry } from '@last-rev/types';
 
+const mapSanityAssetLinkMetadata = (value: any, defaultLocale: string): Record<string, any> | undefined => {
+  const { _type, asset, ...assetFields } = value || {};
+  if (!Object.keys(assetFields).length) return undefined;
+
+  const mappedAssetFields = Object.entries(assetFields).reduce((acc: Record<string, any>, [key, fieldValue]) => {
+    acc[key] = mapSanityValueToContentful(fieldValue, defaultLocale);
+    return acc;
+  }, {});
+
+  if (!Object.keys(mappedAssetFields).length) return undefined;
+
+  return {
+    assetFields: mappedAssetFields
+  };
+};
+
 export const mapSanityValueToContentful = (value: any, defaultLocale: string): any => {
   // Detect Sanity rich text (Block[])
   if (Array.isArray(value) && value[0] && (value[0]._type === 'block' || value[0]._type === 'break')) {
@@ -17,12 +33,14 @@ export const mapSanityValueToContentful = (value: any, defaultLocale: string): a
     // Handle Sanity asset reference (image/file) - must come before reference check
     // since image.asset has _type: 'reference'
     if ((value._type === 'image' || value._type === 'file') && value.asset?._ref) {
+      const metadata = mapSanityAssetLinkMetadata(value, defaultLocale);
       return {
         sys: {
           type: 'Link',
           linkType: 'Asset',
           id: value.asset._ref
-        }
+        },
+        ...(metadata && { metadata })
       };
     }
     // Handle Sanity reference
